@@ -11,8 +11,8 @@
     import type { Cache } from "../Cache";
     import { offset, shift } from "svelte-floating-ui/dom";
     import { createFloatingActions } from "svelte-floating-ui";
-    import {ensureTaskHasId} from "../TaskDependency";
-    import {replaceTaskWithTasks} from "../File";
+    import { ensureTaskHasId } from "../TaskDependency";
+    import { replaceTaskWithTasks } from "../File";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -75,9 +75,8 @@
 
     let blockingTasks: Task[] = [];
 
-    async function addWaitingOnTask(task: Task) {
-        const newTask = await ensureIdExists(task);
-        editableTask.waitingOn = [...editableTask.waitingOn, newTask];
+    function addWaitingOnTask(task: Task) {
+        editableTask.waitingOn = [...editableTask.waitingOn, task];
         waitingOnSearch = '';
         waitingOnSearchIndex = null;
     }
@@ -106,8 +105,6 @@
         const updatedTask = ensureTaskHasId(task, tasksWithId.map((task) => { return task.id }))
 
         await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
-
-        return updatedTask;
     }
 
     let isDescriptionValid: boolean = true;
@@ -457,7 +454,7 @@
         setTimeout(() => { editableTask.description = editableTask.description.replace(/[\r\n]+/g, ' ')}, 0);
     }
 
-    const _onSubmit = () => {
+    const _onSubmit = async () => {
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
             description = GlobalFilter.prependTo(description);
@@ -498,6 +495,10 @@
                 break;
             default:
                 parsedPriority = Priority.None;
+        }
+
+        for (const depTask of editableTask.waitingOn) {
+            await ensureIdExists(depTask);
         }
 
         const updatedTask = new Task({
