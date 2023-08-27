@@ -59,6 +59,7 @@
         doneDate: string;
         forwardOnly: boolean;
         waitingOn: Task[];
+        blocking: Task[];
     } = {
         description: '',
         status: Status.TODO,
@@ -70,10 +71,9 @@
         dueDate: '',
         doneDate: '',
         forwardOnly: true,
-        waitingOn: []
+        waitingOn: [],
+        blocking: []
     };
-
-    let blockingTasks: Task[] = [];
 
     function addWaitingOnTask(task: Task) {
         editableTask.waitingOn = [...editableTask.waitingOn, task];
@@ -86,16 +86,16 @@
     }
 
     function addBlockingTask(task: Task) {
-        blockingTasks = [...blockingTasks, task];
+        editableTask.blocking = [...editableTask.blocking, task];
         blockingSearch = '';
         blockingSearchIndex = null;
     }
 
     function removeBlockingTask(task: Task) {
-        blockingTasks = blockingTasks.filter((item) => item !== task)
+        editableTask.blocking = editableTask.blocking.filter((item) => item !== task)
     }
 
-    async function ensureIdExists(task: Task) {
+    async function serialiseTaskId(task: Task) {
         if (task.id !== "") return task;
 
         const tasksWithId = cache.getTasks().filter((task) => {
@@ -158,7 +158,7 @@
     }
 
     $: {
-        blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch, blockingTasks) : null;
+        blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch, editableTask.blocking) : null;
     }
 
     function taskKeydown(e: KeyboardEvent, field: "waitingOn" | "blocking") {
@@ -399,12 +399,14 @@
         const waitingOn: Task[] = [];
 
         for (const taskId of task.dependsOn) {
-            const depTask = cache.getTasks().find(cacheTask => cacheTask.id === taskId);
+            const depTask = cache.getTasks().find((cacheTask) => cacheTask.id === taskId);
 
             if (!depTask) continue;
 
             waitingOn.push(depTask);
         }
+
+        const blocking: Task[] = cache.getTasks().filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
         editableTask = {
             description,
@@ -417,7 +419,8 @@
             dueDate: new TasksDate(task.dueDate).formatAsDate(),
             doneDate: new TasksDate(task.doneDate).formatAsDate(),
             forwardOnly: true,
-            waitingOn
+            waitingOn,
+            blocking
         };
         setTimeout(() => {
             descriptionInput.focus();
@@ -498,7 +501,7 @@
         }
 
         for (const depTask of editableTask.waitingOn) {
-            await ensureIdExists(depTask);
+            await serialiseTaskId(depTask);
         }
 
         const updatedTask = new Task({
@@ -699,7 +702,7 @@
                 </ul>
             {/if}
             <div class="chip-container">
-                {#each blockingTasks as task}
+                {#each editableTask.blocking as task}
                     <div class="chip">
                         <div class="chip-name">{task.descriptionWithoutTags}</div>
 
