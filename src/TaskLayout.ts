@@ -74,9 +74,7 @@ export class TaskLayout {
         this.removeIf2(this.options.hideDoneDate, 'doneDate');
 
         const markHiddenQueryComponent = (hidden: boolean, hiddenComponentName: string) => {
-            if (hidden) {
-                this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
-            }
+            this.generateHiddenClassForTaskList(hidden, hiddenComponentName);
         };
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
@@ -93,7 +91,13 @@ export class TaskLayout {
         if (this.options.shortMode) this.taskListClasses.push('tasks-layout-short-mode');
     }
 
-    // Remove a component from the taskComponents array if the given layoutOption criteria is met,
+    private generateHiddenClassForTaskList(hidden: boolean, hiddenComponentName: string) {
+        if (hidden) {
+            this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
+        }
+    }
+
+// Remove a component from the taskComponents array if the given layoutOption criteria is met,
     // and add to the layout's specific classes list the class that denotes that this component
     // isn't in the layout
     private removeIf2(shouldRemove: boolean, componentToRemove: TaskLayoutComponent) {
