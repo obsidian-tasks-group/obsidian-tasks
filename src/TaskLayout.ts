@@ -99,6 +99,9 @@ export class TaskLayout {
     private removeIf2(hide: boolean, component: TaskLayoutComponent) {
         if (hide) {
             this.taskListClasses.push(`tasks-layout-hide-${component}`);
+        }
+
+        if (hide) {
             this.hiddenTaskLayoutComponents.push(component);
             this.shownTaskLayoutComponents = this.shownTaskLayoutComponents.filter((element) => element != component);
         }
