@@ -69,13 +69,13 @@ export class TaskLayout {
     applyOptions(layoutOptions: LayoutOptions): TaskLayoutComponent[] {
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
-        this.shownTaskLayoutComponents = this.removeIf2(layoutOptions.hidePriority, 'priority');
-        this.shownTaskLayoutComponents = this.removeIf2(layoutOptions.hideRecurrenceRule, 'recurrenceRule');
-        this.shownTaskLayoutComponents = this.removeIf2(layoutOptions.hideCreatedDate, 'createdDate');
-        this.shownTaskLayoutComponents = this.removeIf2(layoutOptions.hideStartDate, 'startDate');
-        this.shownTaskLayoutComponents = this.removeIf2(layoutOptions.hideScheduledDate, 'scheduledDate');
-        this.shownTaskLayoutComponents = this.removeIf2(layoutOptions.hideDueDate, 'dueDate');
-        this.shownTaskLayoutComponents = this.removeIf2(layoutOptions.hideDoneDate, 'doneDate');
+        this.removeIf2(layoutOptions.hidePriority, 'priority');
+        this.removeIf2(layoutOptions.hideRecurrenceRule, 'recurrenceRule');
+        this.removeIf2(layoutOptions.hideCreatedDate, 'createdDate');
+        this.removeIf2(layoutOptions.hideStartDate, 'startDate');
+        this.removeIf2(layoutOptions.hideScheduledDate, 'scheduledDate');
+        this.removeIf2(layoutOptions.hideDueDate, 'dueDate');
+        this.removeIf2(layoutOptions.hideDoneDate, 'doneDate');
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
 
         this.markHiddenQueryComponents(layoutOptions);
@@ -93,7 +93,6 @@ export class TaskLayout {
                 (element) => element != componentToRemove,
             );
         }
-        return this.shownTaskLayoutComponents;
     }
 
     private markHiddenQueryComponents(layoutOptions: LayoutOptions) {
