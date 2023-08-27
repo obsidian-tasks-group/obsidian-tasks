@@ -213,7 +213,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }: {
         tasks: Task[];
         content: HTMLDivElement;
-    }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
+    }): Promise<HTMLUListElement> {
         const layout = new TaskLayout(this.query.layoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
@@ -255,7 +255,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             taskList.appendChild(listItem);
         }
 
-        return { taskList, tasksCount: tasks.length };
+        return taskList;
     }
 
     private addEditButton(listItem: HTMLElement, task: Task) {
@@ -293,7 +293,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             // will be empty, and no headings will be added.
             this.addGroupHeadings(content, group.groupHeadings);
 
-            const { taskList } = await this.createTasksList({
+            const taskList = await this.createTasksList({
                 tasks: group.tasks,
                 content: content,
             });
