@@ -93,21 +93,21 @@ export class TaskLayout {
         }
     }
 
+    private generateHiddenClassForTaskList2(hide: boolean, component: string) {
+        if (hide) {
+            this.taskListClasses.push(`tasks-layout-hide-${component}`);
+        }
+    }
     // Remove a component from the taskComponents array if the given layoutOption criteria is met,
     // and add to the layout's specific classes list the class that denotes that this component
     // isn't in the layout
+
     private removeIf2(hide: boolean, component: TaskLayoutComponent) {
         this.generateHiddenClassForTaskList2(hide, component);
 
         if (hide) {
             this.hiddenTaskLayoutComponents.push(component);
             this.shownTaskLayoutComponents = this.shownTaskLayoutComponents.filter((element) => element != component);
-        }
-    }
-
-    private generateHiddenClassForTaskList2(hide: boolean, component: string) {
-        if (hide) {
-            this.taskListClasses.push(`tasks-layout-hide-${component}`);
         }
     }
 }
