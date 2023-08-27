@@ -7,6 +7,7 @@ export function ensureTaskHasId(childTask: Task, _existingIds: string[]) {
         const id = Math.random()
             .toString(36)
             .substring(2, 6 + 2);
+        // TODO: check id doesn't already exist
         newChild = new Task({ ...childTask, id });
     }
     return newChild;
