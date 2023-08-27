@@ -8,9 +8,11 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
-    import type { Cache } from "../Cache";
+    import { Cache } from "../Cache";
     import { offset, shift } from "svelte-floating-ui/dom";
     import { createFloatingActions } from "svelte-floating-ui";
+    import {ensureTaskHasId} from "../TaskDependency";
+    import {replaceTaskWithTasks} from "../File";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -72,8 +74,9 @@
     let waitingOnTasks: Task[] = [];
     let blockingTasks: Task[] = [];
 
-    function addWaitingOnTask(task: Task) {
-        waitingOnTasks = [...waitingOnTasks, task];
+    async function addWaitingOnTask(task: Task) {
+        const newTask = await ensureIdExists(task);
+        waitingOnTasks = [...waitingOnTasks, newTask];
         waitingOnSearch = '';
         waitingOnSearchIndex = null;
     }
@@ -90,6 +93,20 @@
 
     function removeBlockingTask(task: Task) {
         blockingTasks = blockingTasks.filter((item) => item !== task)
+    }
+
+    async function ensureIdExists(task: Task) {
+        if (task.id !== "") return task;
+
+        const tasksWithId = cache.getTasks().filter((task) => {
+            return task.id !== "";
+        })
+
+        const updatedTask = ensureTaskHasId(task, tasksWithId.map((task) => { return task.id }))
+
+        await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
+
+        return updatedTask;
     }
 
     let isDescriptionValid: boolean = true;
