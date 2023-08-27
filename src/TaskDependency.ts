@@ -1,16 +1,23 @@
 import { Task } from './Task';
 
-export function ensureTaskHasId(childTask: Task, _existingIds: string[]) {
-    let newChild = childTask;
-    if (childTask.id === '') {
+export function ensureTaskHasId(childTask: Task, existingIds: string[]) {
+    if (childTask.id !== '') return childTask;
+
+    let id = '';
+    let keepGenerating = true;
+
+    while (keepGenerating) {
         // from https://www.codemzy.com/blog/random-unique-id-javascript
-        const id = Math.random()
+        id = Math.random()
             .toString(36)
             .substring(2, 6 + 2);
-        // TODO: check id doesn't already exist
-        newChild = new Task({ ...childTask, id });
+
+        if (!existingIds.includes(id)) {
+            keepGenerating = false;
+        }
     }
-    return newChild;
+
+    return new Task({ ...childTask, id });
 }
 
 export function setDependenciesOnTasksWithIds(parentTask: Task, childTasksWithIds: Task[]): Task {
