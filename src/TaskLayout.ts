@@ -121,9 +121,11 @@ export class TaskLayout {
         if (shouldRemove) {
             this.taskListClasses.push(`tasks-layout-hide-${componentToRemove}`);
             this.hiddenTaskLayoutComponents.push(componentToRemove);
-            _taskComponents = _taskComponents.filter((element) => element != componentToRemove);
+            this.shownTaskLayoutComponents = this.shownTaskLayoutComponents.filter(
+                (element) => element != componentToRemove,
+            );
         }
-        return _taskComponents;
+        return this.shownTaskLayoutComponents;
     }
 
     private markHiddenQueryComponents(layoutOptions: LayoutOptions) {
