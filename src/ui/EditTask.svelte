@@ -11,7 +11,7 @@
     import type { Cache } from "../Cache";
     import { offset, shift } from "svelte-floating-ui/dom";
     import { createFloatingActions } from "svelte-floating-ui";
-    import {addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency} from "../TaskDependency";
+    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../TaskDependency";
     import { replaceTaskWithTasks } from "../File";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -82,7 +82,7 @@
     }
 
     function removeWaitingOnTask(task: Task) {
-        editableTask.waitingOn = editableTask.waitingOn.filter((item) => item !== task)
+        editableTask.waitingOn = editableTask.waitingOn.filter(item => item !== task)
     }
 
     function addBlockingTask(task: Task) {
@@ -92,7 +92,7 @@
     }
 
     function removeBlockingTask(task: Task) {
-        editableTask.blocking = editableTask.blocking.filter((item) => item !== task)
+        editableTask.blocking = editableTask.blocking.filter(item => item !== task)
     }
 
     async function serialiseTaskId(task: Task) {
@@ -399,14 +399,14 @@
         const waitingOn: Task[] = [];
 
         for (const taskId of task.dependsOn) {
-            const depTask = cache.getTasks().find((cacheTask) => cacheTask.id === taskId);
+            const depTask = cache.getTasks().find(cacheTask => cacheTask.id === taskId);
 
             if (!depTask) continue;
 
             waitingOn.push(depTask);
         }
 
-        originalBlocking = cache.getTasks().filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
+        originalBlocking = cache.getTasks().filter(cacheTask => cacheTask.dependsOn.includes(task.id));
 
         editableTask = {
             description,
