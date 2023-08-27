@@ -100,9 +100,10 @@ export class TaskLayout {
             this.taskListClasses.push(`tasks-layout-hide-${component}`);
         }
     }
-    // Remove a component from the taskComponents array if the given layoutOption criteria is met,
-    // and add to the layout's specific classes list the class that denotes that this component
-    // isn't in the layout
+
+    /**
+     * Move a component from the shown to hidden if the given layoutOption criteria is met.
+     */
     private hideComponent(hide: boolean, component: TaskLayoutComponent) {
         if (hide) {
             this.hiddenTaskLayoutComponents.push(component);
