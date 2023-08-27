@@ -185,8 +185,8 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const dataAttributes = getComponentDataAttribute('priority', task);
-        allAttributes = { ...allAttributes, ...dataAttributes };
+        const priorityDataAttribute = getComponentDataAttribute('priority', task);
+        allAttributes = { ...allAttributes, ...priorityDataAttribute };
     }
 
     return allAttributes;
