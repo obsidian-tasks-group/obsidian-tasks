@@ -93,9 +93,6 @@ export class TaskLayout {
         }
     }
 
-    // Remove a component from the taskComponents array if the given layoutOption criteria is met,
-    // and add to the layout's specific classes list the class that denotes that this component
-    // isn't in the layout
 
     private removeIf2(hide: boolean, component: TaskLayoutComponent) {
         this.generateHiddenClassForTaskList(hide, component);
@@ -103,6 +100,9 @@ export class TaskLayout {
         this.hideComponent(hide, component);
     }
 
+    // Remove a component from the taskComponents array if the given layoutOption criteria is met,
+    // and add to the layout's specific classes list the class that denotes that this component
+    // isn't in the layout
     private hideComponent(hide: boolean, component: TaskLayoutComponent) {
         if (hide) {
             this.hiddenTaskLayoutComponents.push(component);
