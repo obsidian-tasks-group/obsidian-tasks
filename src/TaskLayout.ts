@@ -50,7 +50,7 @@ export class TaskLayout {
     public shownTaskLayoutComponents: TaskLayoutComponent[];
     public hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     public options: LayoutOptions;
-    public taskListClasses: string[] = [];
+    public taskListHiddenClasses: string[] = [];
 
     constructor(options?: LayoutOptions) {
         if (options) {
@@ -92,12 +92,12 @@ export class TaskLayout {
         this.generateHiddenClassForTaskList(this.options.hideUrgency, 'urgency');
         this.generateHiddenClassForTaskList(this.options.hideBacklinks, 'backlinks');
         this.generateHiddenClassForTaskList(this.options.hideEditButton, 'edit-button');
-        if (this.options.shortMode) this.taskListClasses.push('tasks-layout-short-mode');
+        if (this.options.shortMode) this.taskListHiddenClasses.push('tasks-layout-short-mode');
     }
 
     private generateHiddenClassForTaskList(hide: boolean, component: string) {
         if (hide) {
-            this.taskListClasses.push(`tasks-layout-hide-${component}`);
+            this.taskListHiddenClasses.push(`tasks-layout-hide-${component}`);
         }
     }
 
