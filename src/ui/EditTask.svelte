@@ -502,6 +502,7 @@
                 .isValid()
                 ? window.moment(editableTask.doneDate, 'YYYY-MM-DD')
                 : null,
+            dependsOn: waitingOnTasks.map((task) => {return task.id})
         });
 
         onSubmit([updatedTask]);
