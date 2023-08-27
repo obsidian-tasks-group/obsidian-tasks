@@ -8,7 +8,7 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
-    import { Cache } from "../Cache";
+    import type { Cache } from "../Cache";
     import { offset, shift } from "svelte-floating-ui/dom";
     import { createFloatingActions } from "svelte-floating-ui";
     import {ensureTaskHasId} from "../TaskDependency";
@@ -58,6 +58,7 @@
         dueDate: string;
         doneDate: string;
         forwardOnly: boolean;
+        waitingOn: Task[];
     } = {
         description: '',
         status: Status.TODO,
@@ -68,21 +69,21 @@
         scheduledDate: '',
         dueDate: '',
         doneDate: '',
-        forwardOnly: true
+        forwardOnly: true,
+        waitingOn: []
     };
 
-    let waitingOnTasks: Task[] = [];
     let blockingTasks: Task[] = [];
 
     async function addWaitingOnTask(task: Task) {
         const newTask = await ensureIdExists(task);
-        waitingOnTasks = [...waitingOnTasks, newTask];
+        editableTask.waitingOn = [...editableTask.waitingOn, newTask];
         waitingOnSearch = '';
         waitingOnSearchIndex = null;
     }
 
     function removeWaitingOnTask(task: Task) {
-        waitingOnTasks = waitingOnTasks.filter((item) => item !== task)
+        editableTask.waitingOn = editableTask.waitingOn.filter((item) => item !== task)
     }
 
     function addBlockingTask(task: Task) {
@@ -156,14 +157,14 @@
     let blockingFocused = false;
 
     $: {
-        waitingOnSearchResults = waitingOnFocused ? generateSearchResults(waitingOnSearch, waitingOnTasks) : null;
+        waitingOnSearchResults = waitingOnFocused ? generateSearchResults(waitingOnSearch, editableTask.waitingOn) : null;
     }
 
     $: {
         blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch, blockingTasks) : null;
     }
 
-    function taskKeydown(e, field: "waitingOn" | "blocking") {
+    function taskKeydown(e: KeyboardEvent, field: "waitingOn" | "blocking") {
         const resultsList = field === "waitingOn" ? waitingOnSearchResults : blockingSearchResults;
         let searchIndex = field === "waitingOn" ? waitingOnSearchIndex : blockingSearchIndex;
 
@@ -398,6 +399,16 @@
             priority = 'highest';
         }
 
+        const waitingOn: Task[] = [];
+
+        for (const taskId of task.dependsOn) {
+            const depTask = cache.getTasks().find(cacheTask => cacheTask.id === taskId);
+
+            if (!depTask) continue;
+
+            waitingOn.push(depTask);
+        }
+
         editableTask = {
             description,
             status: task.status,
@@ -409,6 +420,7 @@
             dueDate: new TasksDate(task.dueDate).formatAsDate(),
             doneDate: new TasksDate(task.doneDate).formatAsDate(),
             forwardOnly: true,
+            waitingOn
         };
         setTimeout(() => {
             descriptionInput.focus();
@@ -502,7 +514,7 @@
                 .isValid()
                 ? window.moment(editableTask.doneDate, 'YYYY-MM-DD')
                 : null,
-            dependsOn: waitingOnTasks.map((task) => {return task.id})
+            dependsOn: editableTask.waitingOn.map((task) => {return task.id})
         });
 
         onSubmit([updatedTask]);
@@ -647,7 +659,7 @@
                 </ul>
             {/if}
             <div class="chip-container">
-                {#each waitingOnTasks as task}
+                {#each editableTask.waitingOn as task}
                     <div class="chip">
                         <div class="chip-name">{task.descriptionWithoutTags}</div>
 
