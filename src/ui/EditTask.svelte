@@ -11,7 +11,7 @@
     import type { Cache } from "../Cache";
     import { offset, shift } from "svelte-floating-ui/dom";
     import { createFloatingActions } from "svelte-floating-ui";
-    import { ensureTaskHasId } from "../TaskDependency";
+    import {addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency} from "../TaskDependency";
     import { replaceTaskWithTasks } from "../File";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -98,11 +98,9 @@
     async function serialiseTaskId(task: Task) {
         if (task.id !== "") return task;
 
-        const tasksWithId = cache.getTasks().filter((task) => {
-            return task.id !== "";
-        })
+        const tasksWithId = cache.getTasks().filter(task => task.id !== "");
 
-        const updatedTask = ensureTaskHasId(task, tasksWithId.map((task) => { return task.id }))
+        const updatedTask = ensureTaskHasId(task, tasksWithId.map(task => task.id));
 
         await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
     }
@@ -125,6 +123,8 @@
     let waitingOnSearch: string = '';
     let waitingOnSearchResults: Task[] | null = null;
     let waitingOnSearchIndex: null | number = null;
+
+    let originalBlocking: Task[] = [];
 
     let blockingSearch: string = '';
     let blockingSearchResults: Task[] | null = null;
@@ -406,7 +406,7 @@
             waitingOn.push(depTask);
         }
 
-        const blocking: Task[] = cache.getTasks().filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
+        originalBlocking = cache.getTasks().filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
         editableTask = {
             description,
@@ -420,7 +420,7 @@
             doneDate: new TasksDate(task.doneDate).formatAsDate(),
             forwardOnly: true,
             waitingOn,
-            blocking
+            blocking: originalBlocking
         };
         setTimeout(() => {
             descriptionInput.focus();
@@ -504,6 +504,28 @@
             await serialiseTaskId(depTask);
         }
 
+        let id = task.id;
+
+        if (editableTask.blocking.toString() !== originalBlocking.toString() || editableTask.blocking.length !== 0) {
+            if (task.id === "") {
+                id = generateUniqueId(cache.getTasks().filter(task => task.id !== ""));
+            }
+
+            const removedBlocking = originalBlocking.filter(task => !editableTask.blocking.includes(task))
+
+            for (const blocking of removedBlocking) {
+                const newParent = removeDependency(blocking, task)
+                await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
+            }
+
+            const addedBlocking = editableTask.blocking.filter(task => !originalBlocking.includes(task))
+
+            for (const blocking of addedBlocking) {
+                const newParent = addDependencyToParent(blocking, task)
+                await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
+            }
+        }
+
         const updatedTask = new Task({
             ...task,
             description,
@@ -518,7 +540,8 @@
                 .isValid()
                 ? window.moment(editableTask.doneDate, 'YYYY-MM-DD')
                 : null,
-            dependsOn: editableTask.waitingOn.map((task) => {return task.id})
+            dependsOn: editableTask.waitingOn.map(task => task.id),
+            id
         });
 
         onSubmit([updatedTask]);

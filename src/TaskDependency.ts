@@ -1,8 +1,6 @@
 import { Task } from './Task';
 
-export function ensureTaskHasId(childTask: Task, existingIds: string[]) {
-    if (childTask.id !== '') return childTask;
-
+export function generateUniqueId(existingIds: string[]) {
     let id = '';
     let keepGenerating = true;
 
@@ -16,8 +14,13 @@ export function ensureTaskHasId(childTask: Task, existingIds: string[]) {
             keepGenerating = false;
         }
     }
+    return id;
+}
 
-    return new Task({ ...childTask, id });
+export function ensureTaskHasId(childTask: Task, existingIds: string[]) {
+    if (childTask.id !== '') return childTask;
+
+    return new Task({ ...childTask, id: generateUniqueId(existingIds) });
 }
 
 export function setDependenciesOnTasksWithIds(parentTask: Task, childTasksWithIds: Task[]): Task {
@@ -32,16 +35,19 @@ export function setDependenciesOnTasksWithIds(parentTask: Task, childTasksWithId
     return newParent;
 }
 
+export function addDependencyToParent(parentTask: Task, child: Task) {
+    let newParent = parentTask;
+    if (!parentTask.dependsOn.includes(child.id)) {
+        const newDependsOn = [...parentTask.dependsOn, child.id];
+        newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
+    }
+    return newParent;
+}
+
 export function addDependency(parentTask: Task, childTask: Task, existingIds: string[]) {
     const newChild = ensureTaskHasId(childTask, existingIds);
 
-    let newParent = parentTask;
-    if (!parentTask.dependsOn.includes(newChild.id)) {
-        const newDependsOn = [...parentTask.dependsOn, newChild.id];
-        newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
-    }
-
-    return [newParent, newChild];
+    return [addDependencyToParent(parentTask, newChild), newChild];
 }
 
 export function removeDependency(parentTask: Task, childTask: Task) {
@@ -51,5 +57,5 @@ export function removeDependency(parentTask: Task, childTask: Task) {
         newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
     }
 
-    return [newParent, childTask];
+    return newParent;
 }

@@ -59,13 +59,11 @@ describe('TaskDependency', () => {
         const childTask = new TaskBuilder().id('123456').build();
         const parentTask = new TaskBuilder().dependsOn(['123456']).description('parent task').build();
 
-        const [newParent, newChild] = removeDependency(parentTask, childTask);
+        const newParent = removeDependency(parentTask, childTask);
 
         expect(parentTask.dependsOn).toEqual(['123456']);
         expect(newParent.dependsOn).toEqual([]);
         expect(childTask.id).toEqual('123456');
-        expect(newChild.id).toEqual('123456');
-        expect(newChild === childTask).toEqual(true);
     });
 
     it('Should make task depend on 3 child tasks', () => {
