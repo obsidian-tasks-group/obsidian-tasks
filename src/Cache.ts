@@ -241,12 +241,6 @@ export class Cache {
         this.notifySubscribers();
     }
 
-    public searchTasks(search_query: string): Task[] {
-        return this.tasks.filter((task) => {
-            return task.description.includes(search_query);
-        });
-    }
-
     private getTasksFromFileContent(
         fileContent: string,
         listItems: ListItemCache[],

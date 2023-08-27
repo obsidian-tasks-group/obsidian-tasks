@@ -133,7 +133,7 @@
     function generateSearchResults(search: string, currentList: Task[]) {
         if (!search) return [];
 
-        let results = cache.searchTasks(search);
+        let results = cache.getTasks().filter(task => task.description.includes(search));
 
         // remove results that this task already has a relationship with
         results = results.filter((item) => {
