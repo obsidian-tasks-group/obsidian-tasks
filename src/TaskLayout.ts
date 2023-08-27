@@ -65,13 +65,20 @@ export class TaskLayout {
     private applyOptions() {
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
-        this.removeIf2(this.options.hidePriority, 'priority');
-        this.removeIf2(this.options.hideRecurrenceRule, 'recurrenceRule');
-        this.removeIf2(this.options.hideCreatedDate, 'createdDate');
-        this.removeIf2(this.options.hideStartDate, 'startDate');
-        this.removeIf2(this.options.hideScheduledDate, 'scheduledDate');
-        this.removeIf2(this.options.hideDueDate, 'dueDate');
-        this.removeIf2(this.options.hideDoneDate, 'doneDate');
+        this.generateHiddenClassForTaskList(this.options.hidePriority, 'priority');
+        this.hideComponent(this.options.hidePriority, 'priority');
+        this.generateHiddenClassForTaskList(this.options.hideRecurrenceRule, 'recurrenceRule');
+        this.hideComponent(this.options.hideRecurrenceRule, 'recurrenceRule');
+        this.generateHiddenClassForTaskList(this.options.hideCreatedDate, 'createdDate');
+        this.hideComponent(this.options.hideCreatedDate, 'createdDate');
+        this.generateHiddenClassForTaskList(this.options.hideStartDate, 'startDate');
+        this.hideComponent(this.options.hideStartDate, 'startDate');
+        this.generateHiddenClassForTaskList(this.options.hideScheduledDate, 'scheduledDate');
+        this.hideComponent(this.options.hideScheduledDate, 'scheduledDate');
+        this.generateHiddenClassForTaskList(this.options.hideDueDate, 'dueDate');
+        this.hideComponent(this.options.hideDueDate, 'dueDate');
+        this.generateHiddenClassForTaskList(this.options.hideDoneDate, 'doneDate');
+        this.hideComponent(this.options.hideDoneDate, 'doneDate');
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
         this.generateHiddenClassForTaskList(this.options.hideTags, 'tags');
@@ -92,14 +99,6 @@ export class TaskLayout {
             this.taskListClasses.push(`tasks-layout-hide-${component}`);
         }
     }
-
-
-    private removeIf2(hide: boolean, component: TaskLayoutComponent) {
-        this.generateHiddenClassForTaskList(hide, component);
-
-        this.hideComponent(hide, component);
-    }
-
     // Remove a component from the taskComponents array if the given layoutOption criteria is met,
     // and add to the layout's specific classes list the class that denotes that this component
     // isn't in the layout
