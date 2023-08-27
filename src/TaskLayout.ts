@@ -59,10 +59,10 @@ export class TaskLayout {
             this.options = new LayoutOptions();
         }
         this.shownTaskLayoutComponents = this.defaultLayout;
-        this.applyOption2();
+        this.applyOptions();
     }
 
-    private applyOption2() {
+    private applyOptions() {
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
         this.removeIf2(this.options.hidePriority, 'priority');
