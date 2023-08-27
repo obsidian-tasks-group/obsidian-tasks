@@ -28,6 +28,8 @@ export type TaskLayoutComponent =
     | 'scheduledDate'
     | 'dueDate'
     | 'doneDate'
+    | 'dependsOn'
+    | 'id'
     | 'blockLink';
 
 /**
@@ -45,6 +47,8 @@ export class TaskLayout {
         'scheduledDate',
         'dueDate',
         'doneDate',
+        'dependsOn',
+        'id',
         'blockLink',
     ];
     public layoutComponents: TaskLayoutComponent[];

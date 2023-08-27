@@ -28,6 +28,8 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     scheduledDate: 'task-scheduled',
     doneDate: 'task-done',
     recurrenceRule: 'task-recurring',
+    dependsOn: '',
+    id: '',
     blockLink: '',
 };
 
