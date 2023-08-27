@@ -72,7 +72,6 @@ export class TaskLayout {
         this.removeIf2(this.options.hideScheduledDate, 'scheduledDate');
         this.removeIf2(this.options.hideDueDate, 'dueDate');
         this.removeIf2(this.options.hideDoneDate, 'doneDate');
-        // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
 
         this.markHiddenQueryComponents(this.options);
     }
@@ -97,6 +96,7 @@ export class TaskLayout {
             }
         };
 
+        // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
         markHiddenQueryComponent(layoutOptions.hideTags, 'tags');
 
         // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
