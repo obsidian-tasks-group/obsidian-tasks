@@ -5,7 +5,7 @@ describe('TaskDependency', () => {
     it('Should add id to task without id', () => {
         const task = new TaskBuilder().build();
 
-        const newTask = ensureTaskHasId(task);
+        const newTask = ensureTaskHasId(task, []);
 
         expect(newTask.id).not.toEqual('');
     });
@@ -13,7 +13,7 @@ describe('TaskDependency', () => {
     it('Should return original task if it already has id', () => {
         const task = new TaskBuilder().id('abc123').build();
 
-        const newTask = ensureTaskHasId(task);
+        const newTask = ensureTaskHasId(task, ['abc123']);
 
         expect(newTask === task).toEqual(true);
     });
@@ -22,7 +22,7 @@ describe('TaskDependency', () => {
         const childTask = new TaskBuilder().id('123456').build();
         const parentTask = new TaskBuilder().description('parent task').build();
 
-        const [newParent, newChild] = addDependency(parentTask, childTask);
+        const [newParent, newChild] = addDependency(parentTask, childTask, ['123456']);
 
         expect(parentTask.dependsOn).toEqual([]);
         expect(newParent.dependsOn).toEqual(['123456']);
@@ -35,7 +35,7 @@ describe('TaskDependency', () => {
         const childTask = new TaskBuilder().id('123456').build();
         const parentTask = new TaskBuilder().dependsOn(['123456']).description('parent task').build();
 
-        const [newParent, newChild] = addDependency(parentTask, childTask);
+        const [newParent, newChild] = addDependency(parentTask, childTask, ['123456']);
 
         expect(parentTask.dependsOn).toEqual(['123456']);
         expect(newParent.dependsOn).toEqual(['123456']);
@@ -49,7 +49,7 @@ describe('TaskDependency', () => {
         const childTask = new TaskBuilder().build();
         const parentTask = new TaskBuilder().description('parent task').build();
 
-        const [newParent, newChild] = addDependency(parentTask, childTask);
+        const [newParent, newChild] = addDependency(parentTask, childTask, []);
 
         expect(newChild.id).not.toEqual('');
         expect(newParent.dependsOn).toEqual([newChild.id]);

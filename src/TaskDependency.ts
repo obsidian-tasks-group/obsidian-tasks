@@ -1,6 +1,6 @@
 import { Task } from './Task';
 
-export function ensureTaskHasId(childTask: Task) {
+export function ensureTaskHasId(childTask: Task, _existingIds: string[]) {
     let newChild = childTask;
     if (childTask.id === '') {
         const id = 'abcdef';
@@ -21,8 +21,8 @@ export function setDependenciesOnTasksWithIds(parentTask: Task, childTasksWithId
     return newParent;
 }
 
-export function addDependency(parentTask: Task, childTask: Task) {
-    const newChild = ensureTaskHasId(childTask);
+export function addDependency(parentTask: Task, childTask: Task, existingIds: string[]) {
+    const newChild = ensureTaskHasId(childTask, existingIds);
 
     let newParent = parentTask;
     if (!parentTask.dependsOn.includes(newChild.id)) {
