@@ -78,7 +78,6 @@
     function addWaitingOnTask(task: Task) {
         editableTask.waitingOn = [...editableTask.waitingOn, task];
         waitingOnSearch = '';
-        waitingOnSearchIndex = null;
     }
 
     function removeWaitingOnTask(task: Task) {
@@ -88,7 +87,6 @@
     function addBlockingTask(task: Task) {
         editableTask.blocking = [...editableTask.blocking, task];
         blockingSearch = '';
-        blockingSearchIndex = null;
     }
 
     function removeBlockingTask(task: Task) {
@@ -189,10 +187,14 @@
                     e.preventDefault();
                     if (field === "waitingOn") {
                         addWaitingOnTask(resultsList[searchIndex]);
+                        searchIndex = null;
                     }
                     else {
                         addBlockingTask(resultsList[searchIndex]);
+                        searchIndex = null;
                     }
+                } else {
+                    _onDescriptionKeyDown(e);
                 }
                 break;
             default:
@@ -444,7 +446,7 @@
     const _onDescriptionKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            if (formIsValid && waitingOnSearchIndex === null && blockingSearchIndex === null) {
+            if (formIsValid) {
                 _onSubmit()
             }
         }
