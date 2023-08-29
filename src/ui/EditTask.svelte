@@ -11,6 +11,7 @@
     import type { Cache } from "../Cache";
     import { offset, shift } from "svelte-floating-ui/dom";
     import { createFloatingActions } from "svelte-floating-ui";
+    import { size } from "@floating-ui/core";
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../TaskDependency";
     import { replaceTaskWithTasks } from "../File";
 
@@ -20,12 +21,23 @@
     export let statusOptions: Status[];
     export let cache: Cache;
 
+    let waitingInputWidth: number;
+    let waitingEl: HTMLElement;
+    let blockingEl: HTMLElement;
+
     const [ waitingOnRef, waitingOnContent ] = createFloatingActions({
         strategy: "absolute",
         placement: "bottom",
         middleware: [
             offset(6),
-            shift()
+            shift(),
+            size({
+                apply({}) {
+                    Object.assign(waitingEl.style, {
+                        width: `${waitingInputWidth}px`,
+                    });
+                },
+            })
         ]
     });
 
@@ -34,7 +46,14 @@
         placement: "bottom",
         middleware: [
             offset(6),
-            shift()
+            shift(),
+            size({
+                apply({}) {
+                    Object.assign(blockingEl.style, {
+                        width: `${waitingInputWidth}px`,
+                    });
+                },
+            })
         ]
     });
 
@@ -461,6 +480,14 @@
         setTimeout(() => { editableTask.description = editableTask.description.replace(/[\r\n]+/g, ' ')}, 0);
     }
 
+    const _displayableFilePath = (path: string) => {
+        if (path === task.taskLocation.path) return "";
+
+        path = path.slice(0,-3);
+
+        return path.length > 20 ? path.substring(0, 17) + "..." : path;
+    }
+
     const _onSubmit = async () => {
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
@@ -524,8 +551,6 @@
 
             addedBlocking = editableTask.blocking.filter(task => !originalBlocking.includes(task))
         }
-
-        console.log(editableTask.waitingOn);
 
         const updatedTask = new Task({
             ...task,
@@ -674,24 +699,26 @@
             <!-- --------------------------------------------------------------------------- -->
             <label for="start">Waiting On</label>
             <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:value={waitingOnSearch}
-                on:keydown={(e) => taskKeydown(e, "waitingOn")}
-                on:focusin={() => waitingOnFocused = true}
-                on:focusout={() => waitingOnFocused = false}
-                id="waitingOn"
-                type="text"
-                placeholder="Type to search..."
-                use:waitingOnRef
-            />
+            <span bind:clientWidth={waitingInputWidth}>
+                <input
+                    bind:value={waitingOnSearch}
+                    on:keydown={(e) => taskKeydown(e, "waitingOn")}
+                    on:focusin={() => waitingOnFocused = true}
+                    id="waitingOn"
+                    type="text"
+                    placeholder="Type to search..."
+                    use:waitingOnRef
+                />
+            </span>
             {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
-                <ul class="tasks" use:waitingOnContent>
+                <ul class="tasks" use:waitingOnContent bind:this={waitingEl}>
                     {#each waitingOnSearchResults as searchTask, index}
                         <li on:click={() => addWaitingOnTask(searchTask)}
                             class:selected={waitingOnSearchIndex !== null && index === waitingOnSearchIndex}
-                            class:same_path={searchTask.taskLocation.path === task.taskLocation.path}
-                            on:mouseenter={() => waitingOnSearchIndex = index}>
-                            {searchTask.descriptionWithoutTags}
+                            on:mouseenter={() => waitingOnSearchIndex = index}
+                        >
+                            <div>{searchTask.descriptionWithoutTags}</div>
+                            <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
                         </li>
                     {/each}
                 </ul>
@@ -724,13 +751,13 @@
                 use:blockingRef
             />
             {#if blockingSearchResults && blockingSearchResults.length !== 0}
-                <ul class="tasks" use:blockingContent>
+                <ul class="tasks" use:blockingContent bind:this={blockingEl}>
                     {#each blockingSearchResults as searchTask, index}
                         <li on:click={() => addBlockingTask(searchTask)}
                             class:selected={blockingSearch !== null && index === blockingSearchIndex}
-                            class:same_path={searchTask.taskLocation.path === task.taskLocation.path}
                             on:mouseenter={() => blockingSearchIndex = index}>
                             {searchTask.descriptionWithoutTags}
+                            <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
                         </li>
                     {/each}
                 </ul>
