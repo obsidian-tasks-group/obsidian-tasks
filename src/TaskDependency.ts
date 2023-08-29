@@ -17,44 +17,44 @@ export function generateUniqueId(existingIds: string[]) {
     return id;
 }
 
-export function ensureTaskHasId(childTask: Task, existingIds: string[]) {
-    if (childTask.id !== '') return childTask;
+export function ensureTaskHasId(child: Task, existingIds: string[]) {
+    if (child.id !== '') return child;
 
-    return new Task({ ...childTask, id: generateUniqueId(existingIds) });
+    return new Task({ ...child, id: generateUniqueId(existingIds) });
 }
 
-export function setDependenciesOnTasksWithIds(parentTask: Task, childTasksWithIds: Task[]): Task {
-    const newDependsOn = childTasksWithIds.map((task) => {
+export function setDependenciesOnTasksWithIds(parent: Task, childrenWithIds: Task[]): Task {
+    const newDependsOn = childrenWithIds.map((task) => {
         return task.id;
     });
-    let newParent = parentTask;
-    if (parentTask.dependsOn.toString() !== newDependsOn.toString()) {
-        newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
+    let newParent = parent;
+    if (parent.dependsOn.toString() !== newDependsOn.toString()) {
+        newParent = new Task({ ...parent, dependsOn: newDependsOn });
     }
 
     return newParent;
 }
 
-export function addDependencyToParent(parentTask: Task, child: Task) {
-    let newParent = parentTask;
-    if (!parentTask.dependsOn.includes(child.id)) {
-        const newDependsOn = [...parentTask.dependsOn, child.id];
-        newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
+export function addDependencyToParent(parent: Task, child: Task) {
+    let newParent = parent;
+    if (!parent.dependsOn.includes(child.id)) {
+        const newDependsOn = [...parent.dependsOn, child.id];
+        newParent = new Task({ ...parent, dependsOn: newDependsOn });
     }
     return newParent;
 }
 
-export function addDependency(parentTask: Task, childTask: Task, existingIds: string[]) {
-    const newChild = ensureTaskHasId(childTask, existingIds);
+export function addDependency(parent: Task, child: Task, existingIds: string[]) {
+    const newChild = ensureTaskHasId(child, existingIds);
 
-    return [addDependencyToParent(parentTask, newChild), newChild];
+    return [addDependencyToParent(parent, newChild), newChild];
 }
 
-export function removeDependency(parentTask: Task, childTask: Task) {
-    let newParent = parentTask;
-    if (parentTask.dependsOn.includes(childTask.id)) {
-        const newDependsOn = parentTask.dependsOn.filter((dependsOn) => dependsOn !== childTask.id);
-        newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
+export function removeDependency(parent: Task, child: Task) {
+    let newParent = parent;
+    if (parent.dependsOn.includes(child.id)) {
+        const newDependsOn = parent.dependsOn.filter((dependsOn) => dependsOn !== child.id);
+        newParent = new Task({ ...parent, dependsOn: newDependsOn });
     }
 
     return newParent;
