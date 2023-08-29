@@ -508,7 +508,7 @@
 
         if (editableTask.blocking.toString() !== originalBlocking.toString() || editableTask.blocking.length !== 0) {
             if (task.id === "") {
-                id = generateUniqueId(cache.getTasks().filter(task => task.id !== ""));
+                id = generateUniqueId(cache.getTasks().filter(task => task.id !== "").map(task => task.id));
             }
 
             const removedBlocking = originalBlocking.filter(task => !editableTask.blocking.includes(task))
