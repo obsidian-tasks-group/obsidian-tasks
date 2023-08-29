@@ -101,6 +101,8 @@
         const updatedTask = ensureTaskHasId(task, tasksWithId.map(task => task.id));
 
         await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
+
+        return updatedTask;
     }
 
     let isDescriptionValid: boolean = true;
@@ -502,8 +504,11 @@
                 parsedPriority = Priority.None;
         }
 
+        let waitingOnWithIds = [];
+
         for (const depTask of editableTask.waitingOn) {
-            await serialiseTaskId(depTask);
+            const newDep = await serialiseTaskId(depTask);
+            waitingOnWithIds.push(newDep);
         }
 
         let id = task.id;
@@ -520,6 +525,8 @@
             addedBlocking = editableTask.blocking.filter(task => !originalBlocking.includes(task))
         }
 
+        console.log(editableTask.waitingOn);
+
         const updatedTask = new Task({
             ...task,
             description,
@@ -534,7 +541,7 @@
                 .isValid()
                 ? window.moment(editableTask.doneDate, 'YYYY-MM-DD')
                 : null,
-            dependsOn: editableTask.waitingOn.map(task => task.id),
+            dependsOn: waitingOnWithIds.map(task => task.id),
             id
         });
 
