@@ -507,25 +507,17 @@
         }
 
         let id = task.id;
+        let removedBlocking: Task[] = [];
+        let addedBlocking: Task[] = [];
 
         if (editableTask.blocking.toString() !== originalBlocking.toString() || editableTask.blocking.length !== 0) {
             if (task.id === "") {
                 id = generateUniqueId(cache.getTasks().filter(task => task.id !== "").map(task => task.id));
             }
 
-            const removedBlocking = originalBlocking.filter(task => !editableTask.blocking.includes(task))
+            removedBlocking = originalBlocking.filter(task => !editableTask.blocking.includes(task))
 
-            for (const blocking of removedBlocking) {
-                const newParent = removeDependency(blocking, task)
-                await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
-            }
-
-            const addedBlocking = editableTask.blocking.filter(task => !originalBlocking.includes(task))
-
-            for (const blocking of addedBlocking) {
-                const newParent = addDependencyToParent(blocking, task)
-                await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
-            }
+            addedBlocking = editableTask.blocking.filter(task => !originalBlocking.includes(task))
         }
 
         const updatedTask = new Task({
@@ -545,6 +537,16 @@
             dependsOn: editableTask.waitingOn.map(task => task.id),
             id
         });
+
+        for (const blocking of removedBlocking) {
+            const newParent = removeDependency(blocking, updatedTask)
+            await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
+        }
+
+        for (const blocking of addedBlocking) {
+            const newParent = addDependencyToParent(blocking, updatedTask)
+            await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
+        }
 
         onSubmit([updatedTask]);
     };
