@@ -32,10 +32,10 @@
             offset(6),
             shift(),
             size({
-                apply({}) {
-                    Object.assign(waitingEl.style, {
-                        width: `${waitingInputWidth}px`,
-                    });
+                apply() {
+                    waitingEl && Object.assign(waitingEl.style, {
+                                width: `${waitingInputWidth}px`,
+                            });
                 },
             })
         ]
@@ -48,10 +48,10 @@
             offset(6),
             shift(),
             size({
-                apply({}) {
-                    Object.assign(blockingEl.style, {
-                        width: `${waitingInputWidth}px`,
-                    });
+                apply() {
+                    blockingEl && Object.assign(blockingEl.style, {
+                            width: `${waitingInputWidth}px`,
+                        });
                 },
             })
         ]
