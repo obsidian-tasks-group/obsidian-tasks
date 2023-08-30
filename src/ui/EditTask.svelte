@@ -141,17 +141,15 @@
 
     let waitingOnSearch: string = '';
     let waitingOnSearchResults: Task[] | null = null;
-    let waitingOnSearchIndex: null | number = null;
+    let waitingOnSearchIndex: number | null = 0;
 
     let originalBlocking: Task[] = [];
 
     let blockingSearch: string = '';
     let blockingSearchResults: Task[] | null = null;
-    let blockingSearchIndex: null | number = null;
+    let blockingSearchIndex: number | null = 0;
 
     function generateSearchResults(search: string, currentList: Task[]) {
-        // if (!search) return [];
-
         let results = cache.getTasks().filter(task => task.description.includes(search));
 
         // remove results that this task already has a relationship with
@@ -230,7 +228,7 @@
                 }
                 break;
             default:
-                searchIndex = null;
+                searchIndex = 0;
                 break;
         }
 
