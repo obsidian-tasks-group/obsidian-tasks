@@ -154,7 +154,19 @@
 
         // remove results that this task already has a relationship with
         results = results.filter((item) => {
-            return item !== task && !currentList.includes(item);
+            console.log(item.descriptionWithoutTags)
+            const sameFile = item.description === task.description &&
+                item.taskLocation.path === task.taskLocation.path &&
+                item.taskLocation.lineNumber === task.taskLocation.lineNumber
+
+
+            console.log(item.description === task.description);
+            console.log(item.taskLocation.path === task.taskLocation.path);
+            console.log(item.taskLocation.lineNumber === task.taskLocation.lineNumber);
+            console.log(item.taskLocation.lineNumber)
+            console.log(task.taskLocation.lineNumber)
+
+            return !currentList.includes(item) && !sameFile;
         });
 
         // search results favour tasks from the same file as this task
