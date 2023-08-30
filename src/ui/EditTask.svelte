@@ -150,7 +150,7 @@
     let blockingSearchIndex: null | number = null;
 
     function generateSearchResults(search: string, currentList: Task[]) {
-        if (!search) return [];
+        // if (!search) return [];
 
         let results = cache.getTasks().filter(task => task.description.includes(search));
 
@@ -161,9 +161,20 @@
 
         // search results favour tasks from the same file as this task
         results.sort((a, b) => {
-            const locationA = a.taskLocation.path === task.taskLocation.path ? 1 : 0;
-            const locationB = b.taskLocation.path === task.taskLocation.path ? 1 : 0;
-            return locationB - locationA;
+            const aInSamePath = a.taskLocation.path === task.taskLocation.path;
+            const bInSamePath = b.taskLocation.path === task.taskLocation.path;
+
+            // prioritise tasks close to this task in the same file
+            if (aInSamePath && bInSamePath) {
+                return Math.abs(a.taskLocation.linenumber - task.taskLocation.linenumber)
+                    - Math.abs(b.taskLocation.linenumber - task.taskLocation.linenumber);
+            } else if (aInSamePath) {
+                return -1;
+            } else if (bInSamePath) {
+                return 1;
+            } else {
+                return 0;
+            }
         });
 
         return results.slice(0,5);
@@ -467,9 +478,7 @@
     const _onDescriptionKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            if (formIsValid) {
-                _onSubmit()
-            }
+            if (formIsValid) _onSubmit();
         }
     }
 
@@ -704,6 +713,7 @@
                     bind:value={waitingOnSearch}
                     on:keydown={(e) => taskKeydown(e, "waitingOn")}
                     on:focusin={() => waitingOnFocused = true}
+                    on:focusout={() => waitingOnFocused = false}
                     id="waitingOn"
                     type="text"
                     placeholder="Type to search..."
