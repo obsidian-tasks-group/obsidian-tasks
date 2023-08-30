@@ -21,42 +21,6 @@
     export let statusOptions: Status[];
     export let cache: Cache;
 
-    let waitingInputWidth: number;
-    let waitingEl: HTMLElement;
-    let blockingEl: HTMLElement;
-
-    const [ waitingOnRef, waitingOnContent ] = createFloatingActions({
-        strategy: "absolute",
-        placement: "bottom",
-        middleware: [
-            offset(6),
-            shift(),
-            size({
-                apply() {
-                    waitingEl && Object.assign(waitingEl.style, {
-                                width: `${waitingInputWidth}px`,
-                            });
-                },
-            })
-        ]
-    });
-
-    const [ blockingRef, blockingContent ] = createFloatingActions({
-        strategy: "absolute",
-        placement: "bottom",
-        middleware: [
-            offset(6),
-            shift(),
-            size({
-                apply() {
-                    blockingEl && Object.assign(blockingEl.style, {
-                            width: `${waitingInputWidth}px`,
-                        });
-                },
-            })
-        ]
-    });
-
     const {
         prioritySymbols,
         recurrenceSymbol,
@@ -94,36 +58,6 @@
         blocking: []
     };
 
-    function addWaitingOnTask(task: Task) {
-        editableTask.waitingOn = [...editableTask.waitingOn, task];
-        waitingOnSearch = '';
-    }
-
-    function removeWaitingOnTask(task: Task) {
-        editableTask.waitingOn = editableTask.waitingOn.filter(item => item !== task)
-    }
-
-    function addBlockingTask(task: Task) {
-        editableTask.blocking = [...editableTask.blocking, task];
-        blockingSearch = '';
-    }
-
-    function removeBlockingTask(task: Task) {
-        editableTask.blocking = editableTask.blocking.filter(item => item !== task)
-    }
-
-    async function serialiseTaskId(task: Task) {
-        if (task.id !== "") return task;
-
-        const tasksWithId = cache.getTasks().filter(task => task.id !== "");
-
-        const updatedTask = ensureTaskHasId(task, tasksWithId.map(task => task.id));
-
-        await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
-
-        return updatedTask;
-    }
-
     let isDescriptionValid: boolean = true;
     let parsedCreated: string = '';
     let parsedStartDate: string = '';
@@ -149,107 +83,10 @@
     let blockingSearchResults: Task[] | null = null;
     let blockingSearchIndex: number | null = 0;
 
-    function generateSearchResults(search: string, currentList: Task[]) {
-        let results = cache.getTasks().filter(task => task.description.includes(search));
-
-        // remove results that this task already has a relationship with
-        results = results.filter((item) => {
-            console.log(item.descriptionWithoutTags)
-            const sameFile = item.description === task.description &&
-                item.taskLocation.path === task.taskLocation.path &&
-                item.taskLocation.lineNumber === task.taskLocation.lineNumber
-
-
-            console.log(item.description === task.description);
-            console.log(item.taskLocation.path === task.taskLocation.path);
-            console.log(item.taskLocation.lineNumber === task.taskLocation.lineNumber);
-            console.log(item.taskLocation.lineNumber)
-            console.log(task.taskLocation.lineNumber)
-
-            return !currentList.includes(item) && !sameFile;
-        });
-
-        // search results favour tasks from the same file as this task
-        results.sort((a, b) => {
-            const aInSamePath = a.taskLocation.path === task.taskLocation.path;
-            const bInSamePath = b.taskLocation.path === task.taskLocation.path;
-
-            // prioritise tasks close to this task in the same file
-            if (aInSamePath && bInSamePath) {
-                return Math.abs(a.taskLocation.linenumber - task.taskLocation.linenumber)
-                    - Math.abs(b.taskLocation.linenumber - task.taskLocation.linenumber);
-            } else if (aInSamePath) {
-                return -1;
-            } else if (bInSamePath) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
-
-        return results.slice(0,5);
-    }
+    let displayResultsIfSearchEmpty = false;
 
     let waitingOnFocused = false;
     let blockingFocused = false;
-
-    $: {
-        waitingOnSearchResults = waitingOnFocused ? generateSearchResults(waitingOnSearch, editableTask.waitingOn) : null;
-    }
-
-    $: {
-        blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch, editableTask.blocking) : null;
-    }
-
-    function taskKeydown(e: KeyboardEvent, field: "waitingOn" | "blocking") {
-        const resultsList = field === "waitingOn" ? waitingOnSearchResults : blockingSearchResults;
-        let searchIndex = field === "waitingOn" ? waitingOnSearchIndex : blockingSearchIndex;
-
-        if (resultsList === null) return;
-
-        switch(e.key) {
-            case "ArrowUp":
-                e.preventDefault();
-                if (searchIndex === 0 || searchIndex === null) {
-                    searchIndex = resultsList.length - 1;
-                } else {
-                    searchIndex -= 1;
-                }
-                break;
-            case "ArrowDown":
-                e.preventDefault();
-                if (searchIndex === resultsList.length - 1 || searchIndex === null) {
-                    searchIndex = 0;
-                } else {
-                    searchIndex += 1;
-                }
-                break;
-            case "Enter":
-                if (searchIndex !== null) {
-                    e.preventDefault();
-                    if (field === "waitingOn") {
-                        addWaitingOnTask(resultsList[searchIndex]);
-                        searchIndex = null;
-                    }
-                    else {
-                        addBlockingTask(resultsList[searchIndex]);
-                        searchIndex = null;
-                    }
-                } else {
-                    _onDescriptionKeyDown(e);
-                }
-                break;
-            default:
-                searchIndex = 0;
-                break;
-        }
-
-        if (field === "waitingOn") {
-            waitingOnSearchIndex = searchIndex;
-        } else {
-            blockingSearchIndex = searchIndex;
-        }
-    }
 
     // 'weekend' abbreviation omitted due to lack of space.
     let datePlaceholder =
@@ -369,6 +206,133 @@
         return date;
     }
 
+    function addWaitingOnTask(task: Task) {
+        editableTask.waitingOn = [...editableTask.waitingOn, task];
+        waitingOnSearch = '';
+    }
+
+    function removeWaitingOnTask(task: Task) {
+        editableTask.waitingOn = editableTask.waitingOn.filter(item => item !== task)
+    }
+
+    function addBlockingTask(task: Task) {
+        editableTask.blocking = [...editableTask.blocking, task];
+        blockingSearch = '';
+    }
+
+    function removeBlockingTask(task: Task) {
+        editableTask.blocking = editableTask.blocking.filter(item => item !== task)
+    }
+
+    async function serialiseTaskId(task: Task) {
+        if (task.id !== "") return task;
+
+        const tasksWithId = cache.getTasks().filter(task => task.id !== "");
+
+        const updatedTask = ensureTaskHasId(task, tasksWithId.map(task => task.id));
+
+        await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
+
+        return updatedTask;
+    }
+
+    function generateSearchResults(search: string, currentList: Task[]) {
+        if (!search && !displayResultsIfSearchEmpty) return [];
+
+        displayResultsIfSearchEmpty = false;
+
+        let results = cache.getTasks().filter(task => task.description.includes(search));
+
+        // remove results that this task already has a relationship with
+        results = results.filter((item) => {
+            const sameFile = item.description === task.description &&
+                item.taskLocation.path === task.taskLocation.path &&
+                item.taskLocation.lineNumber === task.taskLocation.lineNumber
+
+            return !currentList.includes(item) && !sameFile;
+        });
+
+        // search results favour tasks from the same file as this task
+        results.sort((a, b) => {
+            const aInSamePath = a.taskLocation.path === task.taskLocation.path;
+            const bInSamePath = b.taskLocation.path === task.taskLocation.path;
+
+            // prioritise tasks close to this task in the same file
+            if (aInSamePath && bInSamePath) {
+                return Math.abs(a.taskLocation.linenumber - task.taskLocation.linenumber)
+                    - Math.abs(b.taskLocation.linenumber - task.taskLocation.linenumber);
+            } else if (aInSamePath) {
+                return -1;
+            } else if (bInSamePath) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
+        return results.slice(0,5);
+    }
+
+    function taskKeydown(e: KeyboardEvent, field: "waitingOn" | "blocking") {
+        const resultsList = field === "waitingOn" ? waitingOnSearchResults : blockingSearchResults;
+        let searchIndex = field === "waitingOn" ? waitingOnSearchIndex : blockingSearchIndex;
+
+        if (resultsList === null) return;
+
+        switch(e.key) {
+            case "ArrowUp":
+                e.preventDefault();
+                if (searchIndex === 0 || searchIndex === null) {
+                    searchIndex = resultsList.length - 1;
+                } else {
+                    searchIndex -= 1;
+                }
+                break;
+            case "ArrowDown":
+                e.preventDefault();
+                if (searchIndex === resultsList.length - 1 || searchIndex === null) {
+                    searchIndex = 0;
+                } else {
+                    searchIndex += 1;
+                }
+                break;
+            case "Enter":
+                if (searchIndex !== null) {
+                    e.preventDefault();
+                    if (field === "waitingOn") {
+                        addWaitingOnTask(resultsList[searchIndex]);
+                        searchIndex = null;
+                    }
+                    else {
+                        addBlockingTask(resultsList[searchIndex]);
+                        searchIndex = null;
+                    }
+                } else {
+                    _onDescriptionKeyDown(e);
+                }
+                break;
+            default:
+                searchIndex = 0;
+                break;
+        }
+
+        if (field === "waitingOn") {
+            waitingOnSearchIndex = searchIndex;
+        } else {
+            blockingSearchIndex = searchIndex;
+        }
+    }
+
+    function onWaitingFocused() {
+        waitingOnFocused = true;
+        displayResultsIfSearchEmpty = true
+    }
+
+    function onBlockingFocused() {
+        blockingFocused = true;
+        displayResultsIfSearchEmpty = true
+    }
+
     $: accesskey = (key: string) => withAccessKeys ? key : null;
     $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
@@ -416,6 +380,52 @@
         parsedCreated = parseTypedDateForDisplay('created', editableTask.createdDate);
         parsedDone = parseTypedDateForDisplay('done', editableTask.doneDate);
     }
+
+    $: {
+        waitingOnSearchResults = waitingOnFocused ? generateSearchResults(waitingOnSearch, editableTask.waitingOn) : null;
+    }
+
+    $: {
+        blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch, editableTask.blocking) : null;
+    }
+
+
+
+    let waitingInputWidth: number;
+    let waitingEl: HTMLElement;
+    let blockingEl: HTMLElement;
+
+    const [ waitingOnRef, waitingOnContent ] = createFloatingActions({
+        strategy: "absolute",
+        placement: "bottom",
+        middleware: [
+            offset(6),
+            shift(),
+            size({
+                apply() {
+                    waitingEl && Object.assign(waitingEl.style, {
+                        width: `${waitingInputWidth}px`,
+                    });
+                },
+            })
+        ]
+    });
+
+    const [ blockingRef, blockingContent ] = createFloatingActions({
+        strategy: "absolute",
+        placement: "bottom",
+        middleware: [
+            offset(6),
+            shift(),
+            size({
+                apply() {
+                    blockingEl && Object.assign(blockingEl.style, {
+                        width: `${waitingInputWidth}px`,
+                    });
+                },
+            })
+        ]
+    });
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
@@ -722,7 +732,7 @@
                 <input
                     bind:value={waitingOnSearch}
                     on:keydown={(e) => taskKeydown(e, "waitingOn")}
-                    on:focusin={() => waitingOnFocused = true}
+                    on:focusin={() => onWaitingFocused()}
                     on:focusout={() => waitingOnFocused = false}
                     id="waitingOn"
                     type="text"
@@ -763,7 +773,7 @@
             <input
                 bind:value={blockingSearch}
                 on:keydown={(e) => taskKeydown(e, "blocking")}
-                on:focusin={() => blockingFocused = true}
+                on:focusin={() => onBlockingFocused()}
                 on:focusout={() => blockingFocused = false}
                 id="blocking"
                 type="text"
