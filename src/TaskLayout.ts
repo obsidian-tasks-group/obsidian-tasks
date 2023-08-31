@@ -83,7 +83,9 @@ export class TaskLayout {
         const hide = this.options.hideTags;
         const component = 'tags';
         const generateClasses: [boolean, string][] = [[hide, component]];
-        this.generateHiddenClassForTaskList(hide, component);
+        for (const [hide, component] of generateClasses) {
+            this.generateHiddenClassForTaskList(hide, component);
+        }
 
         // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
         // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
