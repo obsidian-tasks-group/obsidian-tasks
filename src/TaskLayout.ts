@@ -79,7 +79,7 @@ export class TaskLayout {
             this.generateHiddenClassForTaskList(hide, component);
         }
 
-        const generateClasses: [boolean, string][] = [
+        const componentsToGenerateClassesOnly: [boolean, string][] = [
             // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
             [this.options.hideTags, 'tags'],
 
@@ -92,7 +92,7 @@ export class TaskLayout {
             [this.options.hideBacklinks, 'backlinks'],
             [this.options.hideEditButton, 'edit-button'],
         ];
-        for (const [hide, component] of generateClasses) {
+        for (const [hide, component] of componentsToGenerateClassesOnly) {
             this.generateHiddenClassForTaskList(hide, component);
         }
 
