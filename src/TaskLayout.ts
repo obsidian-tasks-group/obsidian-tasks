@@ -71,16 +71,15 @@ export class TaskLayout {
             [this.options.hideCreatedDate, 'createdDate'],
             [this.options.hideStartDate, 'startDate'],
             [this.options.hideScheduledDate, 'scheduledDate'],
+            [this.options.hideDueDate, 'dueDate'],
         ];
         for (const [hide, component] of hideAndGenerateClasses) {
             this.hideComponent(hide, component);
             this.generateHiddenClassForTaskList(hide, component);
         }
 
-        this.hideComponent(this.options.hideDueDate, 'dueDate');
         this.hideComponent(this.options.hideDoneDate, 'doneDate');
 
-        this.generateHiddenClassForTaskList(this.options.hideDueDate, 'dueDate');
         this.generateHiddenClassForTaskList(this.options.hideDoneDate, 'doneDate');
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
