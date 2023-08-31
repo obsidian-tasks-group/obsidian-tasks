@@ -82,6 +82,7 @@ export class TaskLayout {
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
         const hide = this.options.hideTags;
         const component = 'tags';
+        const generateClasses: [boolean, string][] = [[hide, component]];
         this.generateHiddenClassForTaskList(hide, component);
 
         // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
