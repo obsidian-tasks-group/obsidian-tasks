@@ -80,9 +80,7 @@ export class TaskLayout {
         }
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-        const hide = this.options.hideTags;
-        const component = 'tags';
-        const generateClasses: [boolean, string][] = [[hide, component]];
+        const generateClasses: [boolean, string][] = [[this.options.hideTags, 'tags']];
         for (const [hide, component] of generateClasses) {
             this.generateHiddenClassForTaskList(hide, component);
         }
