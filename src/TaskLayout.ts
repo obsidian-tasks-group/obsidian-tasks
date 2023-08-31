@@ -70,17 +70,16 @@ export class TaskLayout {
             [this.options.hideRecurrenceRule, 'recurrenceRule'],
             [this.options.hideCreatedDate, 'createdDate'],
             [this.options.hideStartDate, 'startDate'],
+            [this.options.hideScheduledDate, 'scheduledDate'],
         ];
         for (const [hide, component] of hideAndGenerateClasses) {
             this.hideComponent(hide, component);
             this.generateHiddenClassForTaskList(hide, component);
         }
 
-        this.hideComponent(this.options.hideScheduledDate, 'scheduledDate');
         this.hideComponent(this.options.hideDueDate, 'dueDate');
         this.hideComponent(this.options.hideDoneDate, 'doneDate');
 
-        this.generateHiddenClassForTaskList(this.options.hideScheduledDate, 'scheduledDate');
         this.generateHiddenClassForTaskList(this.options.hideDueDate, 'dueDate');
         this.generateHiddenClassForTaskList(this.options.hideDoneDate, 'doneDate');
 
