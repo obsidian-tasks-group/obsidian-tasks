@@ -67,6 +67,7 @@ export class TaskLayout {
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
         const hide = this.options.hidePriority;
         const component = 'priority';
+        const hideAndGenerateClasses: [boolean, TaskLayoutComponent][] = [[hide, component]];
         this.hideComponent(hide, component);
         this.hideComponent(this.options.hideRecurrenceRule, 'recurrenceRule');
         this.hideComponent(this.options.hideCreatedDate, 'createdDate');
