@@ -84,6 +84,7 @@ export class TaskLayout {
             [this.options.hideTags, 'tags'],
             [this.options.hideUrgency, 'urgency'],
             [this.options.hideBacklinks, 'backlinks'],
+            [this.options.hideEditButton, 'edit-button'],
         ];
         for (const [hide, component] of generateClasses) {
             this.generateHiddenClassForTaskList(hide, component);
@@ -94,7 +95,6 @@ export class TaskLayout {
         // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).
         // This can benefit from some refactoring, i.e. render these components in a similar flow rather than
         // separately.
-        this.generateHiddenClassForTaskList(this.options.hideEditButton, 'edit-button');
         if (this.options.shortMode) this.taskListHiddenClasses.push('tasks-layout-short-mode');
     }
 
