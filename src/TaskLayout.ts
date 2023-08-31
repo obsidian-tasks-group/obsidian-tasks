@@ -65,9 +65,7 @@ export class TaskLayout {
     private applyOptions() {
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
-        const hide = this.options.hidePriority;
-        const component = 'priority';
-        const hideAndGenerateClasses: [boolean, TaskLayoutComponent][] = [[hide, component]];
+        const hideAndGenerateClasses: [boolean, TaskLayoutComponent][] = [[this.options.hidePriority, 'priority']];
         for (const [hide, component] of hideAndGenerateClasses) {
             this.hideComponent(hide, component);
             this.generateHiddenClassForTaskList(hide, component);
