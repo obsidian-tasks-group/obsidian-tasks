@@ -3,8 +3,7 @@ import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../DateAbbreviations';
 import { Recurrence } from '../Recurrence';
 import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
-import * as task from '../Task';
-import { TaskRegularExpressions } from '../Task';
+import { Task, TaskRegularExpressions } from '../Task';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
@@ -411,7 +410,35 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
  *  - Is the global filter (if set) in the line?
  *  - Is the line a task line (with a checkbox)
  * @param line
+ * @param cursorPosition - the cursor position, when 0 is presumed to mean 'at the start of the line'.
+ *                          See 'ch' in https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition/EditorPosition
  */
-export function canSuggestForLine(line: string) {
-    return GlobalFilter.includedIn(line) && line.match(task.TaskRegularExpressions.taskRegex) !== null;
+export function canSuggestForLine(line: string, cursorPosition: number) {
+    return GlobalFilter.includedIn(line) && cursorIsInTaskLineDescription(line, cursorPosition);
+}
+
+/**
+ * Return true if:
+ * - line is a task line, that is, it is a list item with a checkbox.
+ * - the cursor is in a task line's description.
+ *
+ * Here, description includes any task signifiers, as well as the vanilla description.
+ * @param line
+ * @param cursorPosition
+ */
+function cursorIsInTaskLineDescription(line: string, cursorPosition: number) {
+    if (line.length === 0) {
+        return false;
+    }
+
+    const components = Task.extractTaskComponents(line);
+    if (!components) {
+        // It is not a task line, that is, it is not a list item with a checkbox:
+        return false;
+    }
+
+    // Reconstruct the contents of the line, up to the space after the closing ']' in the checkbox:
+    const beforeDescription = components.indentation + components.listMarker + ' [' + components.status.symbol + '] ';
+
+    return cursorPosition >= beforeDescription.length;
 }
