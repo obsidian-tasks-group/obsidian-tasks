@@ -260,4 +260,9 @@ describe('canSuggestForLine', () => {
     it('should not suggest when cursor is in empty line', () => {
         expect(canSuggestForLineWithCursor('|')).toEqual(false);
     });
+
+    it.failing('should not suggest when cursor is in the checkbox', () => {
+        expect(canSuggestForLineWithCursor('- [ |] ')).toEqual(false);
+        expect(canSuggestForLineWithCursor('- [ ]| ')).toEqual(false);
+    });
 });
