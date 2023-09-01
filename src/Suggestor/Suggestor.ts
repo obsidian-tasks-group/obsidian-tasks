@@ -3,7 +3,6 @@ import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../DateAbbreviations';
 import { Recurrence } from '../Recurrence';
 import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
-import * as task from '../Task';
 import { Task, TaskRegularExpressions } from '../Task';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import type { SuggestInfo, SuggestionBuilder } from '.';
@@ -415,11 +414,7 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
  *                          See 'ch' in https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition/EditorPosition
  */
 export function canSuggestForLine(line: string, cursorPosition: number) {
-    return (
-        GlobalFilter.includedIn(line) &&
-        line.match(task.TaskRegularExpressions.taskRegex) !== null &&
-        cursorIsInTaskLineDescription(line, cursorPosition)
-    );
+    return GlobalFilter.includedIn(line) && cursorIsInTaskLineDescription(line, cursorPosition);
 }
 
 /**
