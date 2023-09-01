@@ -256,4 +256,8 @@ describe('canSuggestForLine', () => {
         GlobalFilter.set('#todo');
         expect(canSuggestForLineWithCursor('- [ ] no global filter|')).toEqual(false);
     });
+
+    it('should not suggest when cursor is in empty line', () => {
+        expect(canSuggestForLineWithCursor('|')).toEqual(false);
+    });
 });
