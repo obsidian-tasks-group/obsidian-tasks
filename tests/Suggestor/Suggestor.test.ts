@@ -265,4 +265,18 @@ describe('canSuggestForLine', () => {
         expect(canSuggestForLineWithCursor('- [ |] ')).toEqual(false);
         expect(canSuggestForLineWithCursor('- [ ]| ')).toEqual(false);
     });
+
+    it('should suggest when the cursor is at least one character past the checkbox', () => {
+        expect(canSuggestForLineWithCursor('- [ ] |')).toEqual(true);
+    });
+
+    it.failing('should suggest correctly when task is in a numbered list', () => {
+        expect(canSuggestForLineWithCursor('1. [ ]|')).toEqual(false);
+        expect(canSuggestForLineWithCursor('1. [ ] |')).toEqual(true);
+    });
+
+    it.failing('should suggest correctly when task is indented', () => {
+        expect(canSuggestForLineWithCursor('    - [ ]|')).toEqual(false);
+        expect(canSuggestForLineWithCursor('    - [ ] |')).toEqual(true);
+    });
 });
