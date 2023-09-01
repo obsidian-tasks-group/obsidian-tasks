@@ -418,18 +418,20 @@ export function canSuggestForLine(line: string, cursorPosition: number) {
     return (
         GlobalFilter.includedIn(line) &&
         line.match(task.TaskRegularExpressions.taskRegex) !== null &&
-        cursorIsInDescription(line, cursorPosition)
+        cursorIsInTaskLineDescription(line, cursorPosition)
     );
 }
 
 /**
- * Return true if the cursor is in a task line's description.
+ * Return true if:
+ * - line is a task line, that is, it is a list item with a checkbox.
+ * - the cursor is in a task line's description.
  *
  * Here, description includes any task signifiers, as well as the vanilla description.
  * @param line
  * @param cursorPosition
  */
-function cursorIsInDescription(line: string, cursorPosition: number) {
+function cursorIsInTaskLineDescription(line: string, cursorPosition: number) {
     if (line.length === 0) {
         return false;
     }
