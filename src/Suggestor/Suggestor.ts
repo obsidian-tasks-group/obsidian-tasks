@@ -422,7 +422,12 @@ export function canSuggestForLine(line: string, cursorPosition: number) {
     );
 }
 
-function cursorIsInDescription(_line: string, _cursorPosition: number) {
+function cursorIsInDescription(_line: string, cursorPosition: number) {
+    // Initial hard-coded assumption that at least the characters '- [ ] ' must be present,
+    // for the cursor to be in the description:
+    if (cursorPosition < 6) {
+        return false;
+    }
     // TODO Implement via TDD
     return true;
 }
