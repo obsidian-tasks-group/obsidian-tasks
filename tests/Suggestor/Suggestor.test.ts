@@ -270,7 +270,7 @@ describe('canSuggestForLine', () => {
         expect(canSuggestForLineWithCursor('- [ ] |')).toEqual(true);
     });
 
-    it.failing('should suggest correctly when task is in a numbered list', () => {
+    it('should suggest correctly when task is in a numbered list', () => {
         expect(canSuggestForLineWithCursor('1. [ ]|')).toEqual(false);
         expect(canSuggestForLineWithCursor('1. [ ] |')).toEqual(true);
     });
