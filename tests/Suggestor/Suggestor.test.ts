@@ -28,6 +28,23 @@ afterAll(() => {
     chronoSpy.mockRestore();
 });
 
+/**
+ * Given a string with **exactly** one vertical bar (`|`), returns the string with the vertical bar removed
+ * and the index of the bar.
+ *
+ * This is used as a helper when writing tests, since it provides a less error prone
+ * and more readable way to represent a cursor's position, denoted by the vertical bar, and the string.
+ *
+ * @param line - A string that contains exactly one vertical bar (`|`)
+ * @returns A tuple of the line without the vertical bar, and the index of the vertical bar.
+ */
+function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: number] {
+    const line_without_cursor = line.replace(/\|/g, '');
+    // Check that the cursor marker appears exactly once in each input string:
+    expect(line_without_cursor.length).toEqual(line.length - 1);
+    return [line_without_cursor, line.indexOf('|')];
+}
+
 const MAX_GENERIC_SUGGESTIONS_FOR_TESTS = 50;
 
 describe.each([
@@ -167,23 +184,6 @@ describe('onlySuggestIfBracketOpen', () => {
     );
 
     const emptySuggestion = [] as unknown;
-
-    /**
-     * Given a string with **exactly** one vertical bar (`|`), returns the string with the vertical bar removed
-     * and the index of the bar.
-     *
-     * This is used as a helper when writing tests, since it provides a less error prone
-     * and more readable way to represent a cursor's position, denoted by the vertical bar, and the string.
-     *
-     * @param line - A string that contains exactly one vertical bar (`|`)
-     * @returns A tuple of the line without the vertical bar, and the index of the vertical bar.
-     */
-    function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: number] {
-        const line_without_cursor = line.replace(/\|/g, '');
-        // Check that the cursor marker appears exactly once in each input string:
-        expect(line_without_cursor.length).toEqual(line.length - 1);
-        return [line_without_cursor, line.indexOf('|')];
-    }
 
     it('should suggest if cursor at end of line with an open pair', () => {
         const settings = getSettings();
