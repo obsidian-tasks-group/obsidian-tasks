@@ -4,7 +4,7 @@ import { doAutocomplete } from '../DateAbbreviations';
 import { Recurrence } from '../Recurrence';
 import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
 import * as task from '../Task';
-import { TaskRegularExpressions } from '../Task';
+import { Task, TaskRegularExpressions } from '../Task';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
@@ -422,12 +422,26 @@ export function canSuggestForLine(line: string, cursorPosition: number) {
     );
 }
 
-function cursorIsInDescription(_line: string, cursorPosition: number) {
-    // Initial hard-coded assumption that at least the characters '- [ ] ' must be present,
-    // for the cursor to be in the description:
-    if (cursorPosition < 6) {
+/**
+ * Return true if the cursor is in a task line's description.
+ *
+ * Here, description includes any task signifiers, as well as the vanilla description.
+ * @param line
+ * @param cursorPosition
+ */
+function cursorIsInDescription(line: string, cursorPosition: number) {
+    if (line.length === 0) {
         return false;
     }
-    // TODO Implement via TDD
-    return true;
+
+    const components = Task.extractTaskComponents(line);
+    if (!components) {
+        // It is not a task line, that is, it is not a list item with a checkbox:
+        return false;
+    }
+
+    // Reconstruct the contents of the line, up to the space after the closing ']' in the checkbox:
+    const beforeDescription = components.listMarker + ' [' + components.status.symbol + '] ';
+
+    return cursorPosition >= beforeDescription.length;
 }
