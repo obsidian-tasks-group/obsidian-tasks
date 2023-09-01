@@ -233,6 +233,11 @@ describe('canSuggestForLine', () => {
         GlobalFilter.reset();
     });
 
+    it('should not suggest if there is no checkbox', () => {
+        GlobalFilter.reset();
+        expect(canSuggestForLine('- not a task line')).toEqual(false);
+    });
+
     it('should suggest if there is no global filter', () => {
         GlobalFilter.reset();
         expect(canSuggestForLine('- [ ] global filter is not set')).toEqual(true);
