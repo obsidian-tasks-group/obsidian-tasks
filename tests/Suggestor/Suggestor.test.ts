@@ -233,23 +233,27 @@ describe('canSuggestForLine', () => {
         GlobalFilter.reset();
     });
 
+    function canSuggestForLineWithCursor(line: string) {
+        return canSuggestForLine(...cursorPosition(line));
+    }
+
     it('should not suggest if there is no checkbox', () => {
         GlobalFilter.reset();
-        expect(canSuggestForLine(...cursorPosition('- not a task line|'))).toEqual(false);
+        expect(canSuggestForLineWithCursor('- not a task line|')).toEqual(false);
     });
 
     it('should suggest if there is no global filter', () => {
         GlobalFilter.reset();
-        expect(canSuggestForLine(...cursorPosition('- [ ] global filter is not set|'))).toEqual(true);
+        expect(canSuggestForLineWithCursor('- [ ] global filter is not set|')).toEqual(true);
     });
 
     it('should suggest if global filter missing from line', () => {
         GlobalFilter.set('#todo');
-        expect(canSuggestForLine(...cursorPosition('- [ ] #todo has global filter|'))).toEqual(true);
+        expect(canSuggestForLineWithCursor('- [ ] #todo has global filter|')).toEqual(true);
     });
 
     it('should not suggest if global filter missing from line', () => {
         GlobalFilter.set('#todo');
-        expect(canSuggestForLine(...cursorPosition('- [ ] no global filter|'))).toEqual(false);
+        expect(canSuggestForLineWithCursor('- [ ] no global filter|')).toEqual(false);
     });
 });
