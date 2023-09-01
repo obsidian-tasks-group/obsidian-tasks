@@ -275,7 +275,7 @@ describe('canSuggestForLine', () => {
         expect(canSuggestForLineWithCursor('1. [ ] |')).toEqual(true);
     });
 
-    it.failing('should suggest correctly when task is indented', () => {
+    it('should suggest correctly when task is indented', () => {
         expect(canSuggestForLineWithCursor('    - [ ]|')).toEqual(false);
         expect(canSuggestForLineWithCursor('    - [ ] |')).toEqual(true);
     });

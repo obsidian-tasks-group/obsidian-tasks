@@ -441,7 +441,7 @@ function cursorIsInDescription(line: string, cursorPosition: number) {
     }
 
     // Reconstruct the contents of the line, up to the space after the closing ']' in the checkbox:
-    const beforeDescription = components.listMarker + ' [' + components.status.symbol + '] ';
+    const beforeDescription = components.indentation + components.listMarker + ' [' + components.status.symbol + '] ';
 
     return cursorPosition >= beforeDescription.length;
 }
