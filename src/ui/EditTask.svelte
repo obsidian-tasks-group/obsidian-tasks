@@ -259,8 +259,8 @@
 
             // prioritise tasks close to this task in the same file
             if (aInSamePath && bInSamePath) {
-                return Math.abs(a.taskLocation.linenumber - task.taskLocation.linenumber)
-                    - Math.abs(b.taskLocation.linenumber - task.taskLocation.linenumber);
+                return Math.abs(a.taskLocation.lineNumber - task.taskLocation.lineNumber)
+                    - Math.abs(b.taskLocation.lineNumber - task.taskLocation.lineNumber);
             } else if (aInSamePath) {
                 return -1;
             } else if (bInSamePath) {
