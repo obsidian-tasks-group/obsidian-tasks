@@ -726,7 +726,7 @@
             <!-- --------------------------------------------------------------------------- -->
             <!--  Waiting on Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="start">Waiting On</label>
+            <label for="start" class="accesskey-first">Waiting On</label>
             <!-- svelte-ignore a11y-accesskey -->
             <span bind:clientWidth={waitingInputWidth}>
                 <input
@@ -734,6 +734,7 @@
                     on:keydown={(e) => taskKeydown(e, "waitingOn")}
                     on:focusin={() => onWaitingFocused()}
                     on:focusout={() => waitingOnFocused = false}
+                    accesskey={accesskey("w")}
                     id="waitingOn"
                     type="text"
                     placeholder="Type to search..."
@@ -769,13 +770,14 @@
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocking Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="start">Blocking</label>
+            <label for="start" class="accesskey-first">Blocking</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={blockingSearch}
                 on:keydown={(e) => taskKeydown(e, "blocking")}
                 on:focusin={() => onBlockingFocused()}
                 on:focusout={() => blockingFocused = false}
+                accesskey={accesskey("b")}
                 id="blocking"
                 type="text"
                 placeholder="Type to search..."
