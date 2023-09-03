@@ -743,12 +743,13 @@
             {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
                 <ul class="tasks" use:waitingOnContent bind:this={waitingEl}>
                     {#each waitingOnSearchResults as searchTask, index}
-                        <li on:click={() => addWaitingOnTask(searchTask)}
+                        <li
                             class:selected={waitingOnSearchIndex !== null && index === waitingOnSearchIndex}
-                            on:mouseenter={() => waitingOnSearchIndex = index}
-                        >
-                            <div>{searchTask.descriptionWithoutTags}</div>
-                            <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
+                            on:mouseenter={() => waitingOnSearchIndex = index}>
+                            <button on:click={() => addWaitingOnTask(searchTask)} type="button">
+                                <span>{searchTask.descriptionWithoutTags}</span>
+                                <span class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</span>
+                            </button>
                         </li>
                     {/each}
                 </ul>
@@ -783,11 +784,13 @@
             {#if blockingSearchResults && blockingSearchResults.length !== 0}
                 <ul class="tasks" use:blockingContent bind:this={blockingEl}>
                     {#each blockingSearchResults as searchTask, index}
-                        <li on:click={() => addBlockingTask(searchTask)}
-                            class:selected={blockingSearch !== null && index === blockingSearchIndex}
+                        <li
+                            class:selected={blockingSearchIndex !== null && index === blockingSearchIndex}
                             on:mouseenter={() => blockingSearchIndex = index}>
-                            {searchTask.descriptionWithoutTags}
-                            <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
+                            <button on:click={() => addBlockingTask(searchTask)} type="button">
+                                <span>{searchTask.descriptionWithoutTags}</span>
+                                <span class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</span>
+                            </button>
                         </li>
                     {/each}
                 </ul>

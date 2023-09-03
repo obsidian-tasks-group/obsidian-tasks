@@ -301,15 +301,24 @@
 }
 
 .tasks li {
-    padding: 5px;
     margin: 2px;
     border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between
 }
 
-.tasks li .dependency-location {
+.tasks button {
+    padding: 6px;
+    display: flex;
+    justify-content: space-between;
+    font-size: unset;
+    margin: 0;
+    width: 100%;
+    height: inherit;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.tasks .dependency-location {
     font-style: italic;
     color: var(--text-faint)
 }
