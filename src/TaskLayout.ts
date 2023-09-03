@@ -48,23 +48,20 @@ export class TaskLayout {
         'doneDate',
         'blockLink',
     ];
-    public layoutComponents: TaskLayoutComponent[];
-    public hiddenComponents: TaskLayoutComponent[] = [];
+    public shownTaskLayoutComponents: TaskLayoutComponent[];
+    public hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     public options: LayoutOptions;
-    public specificClasses: string[] = [];
+    public taskListClasses: string[] = [];
 
-    constructor(options?: LayoutOptions, components?: TaskLayoutComponent[]) {
+    constructor(options?: LayoutOptions) {
         if (options) {
             this.options = options;
         } else {
             this.options = new LayoutOptions();
         }
-        if (components) {
-            this.layoutComponents = components;
-        } else {
-            this.layoutComponents = this.defaultLayout;
-        }
-        this.layoutComponents = this.applyOptions(this.options);
+
+        this.shownTaskLayoutComponents = this.defaultLayout;
+        this.shownTaskLayoutComponents = this.applyOptions(this.options);
     }
 
     /**
@@ -80,8 +77,8 @@ export class TaskLayout {
             componentToRemove: TaskLayoutComponent,
         ) => {
             if (shouldRemove) {
-                this.specificClasses.push(`tasks-layout-hide-${componentToRemove}`);
-                this.hiddenComponents.push(componentToRemove);
+                this.taskListClasses.push(`tasks-layout-hide-${componentToRemove}`);
+                this.hiddenTaskLayoutComponents.push(componentToRemove);
                 return taskComponents.filter((element) => element != componentToRemove);
             } else {
                 return taskComponents;
@@ -89,12 +86,12 @@ export class TaskLayout {
         };
         const markHiddenQueryComponent = (hidden: boolean, hiddenComponentName: string) => {
             if (hidden) {
-                this.specificClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
+                this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
             }
         };
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
-        let newComponents = this.layoutComponents;
+        let newComponents = this.shownTaskLayoutComponents;
         newComponents = removeIf(newComponents, layoutOptions.hidePriority, 'priority');
         newComponents = removeIf(newComponents, layoutOptions.hideRecurrenceRule, 'recurrenceRule');
         newComponents = removeIf(newComponents, layoutOptions.hideCreatedDate, 'createdDate');
@@ -115,7 +112,7 @@ export class TaskLayout {
         markHiddenQueryComponent(layoutOptions.hideBacklinks, 'backlinks');
         markHiddenQueryComponent(layoutOptions.hideSnoozeButton, 'snooze-button');
         markHiddenQueryComponent(layoutOptions.hideEditButton, 'edit-button');
-        if (layoutOptions.shortMode) this.specificClasses.push('tasks-layout-short-mode');
+        if (layoutOptions.shortMode) this.taskListClasses.push('tasks-layout-short-mode');
         return newComponents;
     }
 }

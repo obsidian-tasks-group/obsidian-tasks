@@ -53,6 +53,21 @@ describe('parsing', () => {
         expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
+    it('parses a task from a line starting with plus sign', () => {
+        // Arrange
+        const line = '+ [ ] this is a task in asterisk list';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.listMarker).toEqual('+');
+        expect(task!.originalMarkdown).toStrictEqual(line);
+    });
+
     it('parses a task from a line (numbered)', () => {
         // Arrange
         const line = '1. [x] this is a done task';
@@ -85,6 +100,19 @@ describe('parsing', () => {
         expect(task!.description).toEqual('this is a todo task');
         expect(task!.status).toStrictEqual(Status.TODO);
         expect(task!.originalMarkdown).toStrictEqual(line);
+    });
+
+    it('done not parse a task from a line starting with @ sign', () => {
+        // Arrange
+        const line = '@ [ ] this is a task in asterisk list';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).toBeNull();
     });
 
     it('supports capitalised status characters', () => {
@@ -364,6 +392,13 @@ describe('parsing tags', () => {
             markdownTask: '>>> * [ ] Task inside a nested blockquote or callout #tagone',
             expectedDescription: 'Task inside a nested blockquote or callout #tagone',
             extractedTags: ['#tagone'],
+            globalFilter: '',
+        },
+        {
+            // Single # character should not be treated as a tag - see issue 1969
+            markdownTask: '- [ ] count the # of tomatoes #gardening',
+            expectedDescription: 'count the # of tomatoes #gardening',
+            extractedTags: ['#gardening'],
             globalFilter: '',
         },
     ])(

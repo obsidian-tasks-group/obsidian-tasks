@@ -160,9 +160,13 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async renderQuerySearchResults(tasks: Task[], state: State.Warm, content: HTMLDivElement) {
-        console.debug(
-            `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
-        );
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
+        const debug = false;
+        if (debug) {
+            console.debug(
+                `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
+            );
+        }
 
         if (this.query.layoutOptions.explainQuery) {
             this.createExplanation(content);
@@ -178,7 +182,9 @@ class QueryRenderChild extends MarkdownRenderChild {
         await this.addAllTaskGroups(queryResult.taskGroups, content);
 
         const totalTasksCount = queryResult.totalTasksCount;
-        console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
+        if (debug) {
+            console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
+        }
         this.addTaskCount(content, totalTasksCount);
     }
 
@@ -212,7 +218,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const layout = new TaskLayout(this.query.layoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
-        taskList.addClasses(layout.specificClasses);
+        taskList.addClasses(layout.taskListClasses);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
         for (let i = 0; i < tasksCount; i++) {

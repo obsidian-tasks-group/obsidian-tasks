@@ -381,6 +381,7 @@ describe('Query parsing', () => {
             'hide tags',
             'hide task count',
             'hide urgency',
+            'ignore global query',
             'limit 42',
             'limit groups 31',
             'limit groups to 31 tasks',

@@ -8,8 +8,29 @@ publish: true
 
 Tasks tracks your checklist items from your vault.
 The simplest way to create a new task is to create a new checklist item.
-The markdown syntax for checklist items is a list item that starts with spaced brackets: `- [ ] take out the trash`.
+The markdown syntax for checklist items is a list item that starts with spaced brackets:
+
+```text
+- [ ] take out the trash`
+```
+
 Now Tasks tracks that you need to take out the trash!
+
+> [!Info]
+> You can write tasks using any of the following list styles:
+>
+> ```text
+> - [ ] task starting with a hyphen
+>
+> * [ ] task starting with an asterisk
+>
+> + [ ] task starting with a plus sign
+>
+> 1. [ ] a task in a numbered list
+> ```
+
+> [!released]
+> Support for tasks with `+` was introduced in Tasks 4.5.0.
 
 To list all open tasks in a markdown file, simply add a [[About Queries|query]] as a tasks code block like so:
 

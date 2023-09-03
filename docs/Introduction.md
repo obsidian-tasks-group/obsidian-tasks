@@ -6,6 +6,9 @@ publish: true
 
 ## What's New?
 
+- 4.6.0: 🔥 Add `on or before` and `on or after` to [[Filters#Date search options|date search options]]
+- 4.6.0: 🔥 Add `in or before` and `in or after` to [[Filters#Date range options|date range search search options]]
+- 4.5.0: 🔥 Support task in list items starting with [[Getting Started#Finding tasks in your vault|`+` signs]]
 - 4.4.0: 🔥 Support [[Expressions#More complex expressions|variables, if statements, and functions]] in custom filters and groups
 - 4.3.0: 🔥 Bug fixes, usability improvements and `explain` support for [[Regular Expressions|regular expression]] searches
 - 4.2.0: 🔥 Add [[Custom Filters|custom filtering]]
