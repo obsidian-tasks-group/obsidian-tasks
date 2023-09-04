@@ -325,12 +325,25 @@
 
     function onWaitingFocused() {
         waitingOnFocused = true;
-        displayResultsIfSearchEmpty = true
+        displayResultsIfSearchEmpty = true;
     }
 
     function onBlockingFocused() {
         blockingFocused = true;
-        displayResultsIfSearchEmpty = true
+        displayResultsIfSearchEmpty = true;
+    }
+
+    function onWaitingUnfocused() {
+        setTimeout(() => {
+            waitingOnFocused = false;
+        }, 200);
+    }
+
+    function onBlockingUnfocused() {
+
+        setTimeout(() => {
+            blockingFocused = false;
+        }, 200);
     }
 
     $: accesskey = (key: string) => withAccessKeys ? key : null;
@@ -732,8 +745,8 @@
                 <input
                     bind:value={waitingOnSearch}
                     on:keydown={(e) => taskKeydown(e, "waitingOn")}
-                    on:focusin={() => onWaitingFocused()}
-                    on:focusout={() => waitingOnFocused = false}
+                    on:focus={onWaitingFocused}
+                    on:blur={onWaitingUnfocused}
                     accesskey={accesskey("w")}
                     id="waitingOn"
                     type="text"
@@ -775,8 +788,8 @@
             <input
                 bind:value={blockingSearch}
                 on:keydown={(e) => taskKeydown(e, "blocking")}
-                on:focusin={() => onBlockingFocused()}
-                on:focusout={() => blockingFocused = false}
+                on:focus={onBlockingFocused}
+                on:blur={onBlockingUnfocused}
                 accesskey={accesskey("b")}
                 id="blocking"
                 type="text"
