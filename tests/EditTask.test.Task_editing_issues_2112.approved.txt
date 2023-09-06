@@ -10,8 +10,8 @@ KEY: (globalFilter, set created date)
     '- [ ] list item, but no checkbox ➕ 2023-07-18'
 
 ('', true)
-    '- [ ] simple task' =>
-    '- [ ] simple task'
+    '- [ ] list item with checkbox' =>
+    '- [ ] list item with checkbox'
 
 ('', false)
     'plain text, not a list item' =>
@@ -22,8 +22,8 @@ KEY: (globalFilter, set created date)
     '- [ ] list item, but no checkbox'
 
 ('', false)
-    '- [ ] simple task' =>
-    '- [ ] simple task'
+    '- [ ] list item with checkbox' =>
+    '- [ ] list item with checkbox'
 
 ('#task', true)
     'plain text, not a list item' =>
@@ -34,8 +34,8 @@ KEY: (globalFilter, set created date)
     '- [ ] #task list item, but no checkbox ➕ 2023-07-18'
 
 ('#task', true)
-    '- [ ] simple task' =>
-    '- [ ] #task simple task'
+    '- [ ] list item with checkbox' =>
+    '- [ ] #task list item with checkbox'
 
 ('#task', false)
     'plain text, not a list item' =>
@@ -46,8 +46,8 @@ KEY: (globalFilter, set created date)
     '- [ ] #task list item, but no checkbox'
 
 ('#task', false)
-    '- [ ] simple task' =>
-    '- [ ] #task simple task'
+    '- [ ] list item with checkbox' =>
+    '- [ ] #task list item with checkbox'
 
 ('todo', true)
     'plain text, not a list item' =>
@@ -58,8 +58,8 @@ KEY: (globalFilter, set created date)
     '- [ ] todo list item, but no checkbox ➕ 2023-07-18'
 
 ('todo', true)
-    '- [ ] simple task' =>
-    '- [ ] todo simple task'
+    '- [ ] list item with checkbox' =>
+    '- [ ] todo list item with checkbox'
 
 ('todo', false)
     'plain text, not a list item' =>
@@ -70,5 +70,5 @@ KEY: (globalFilter, set created date)
     '- [ ] todo list item, but no checkbox'
 
 ('todo', false)
-    '- [ ] simple task' =>
-    '- [ ] todo simple task'
+    '- [ ] list item with checkbox' =>
+    '- [ ] todo list item with checkbox'
