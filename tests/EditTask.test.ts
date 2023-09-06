@@ -10,6 +10,8 @@ import EditTask from '../src/ui/EditTask.svelte';
 import { Status } from '../src/Status';
 import { DateFallback } from '../src/DateFallback';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
+import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { verifyAllCombinations2Async } from './TestingTools/CombinationApprovalsAsync';
 
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
@@ -141,8 +143,15 @@ describe('Task rendering', () => {
 });
 
 describe('Task editing', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-07-18'));
+    });
+
     afterEach(() => {
         GlobalFilter.reset();
+        resetSettings();
+        jest.useRealTimers();
     });
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
@@ -176,6 +185,26 @@ describe('Task editing', () => {
             `${globalFilter} ${oldDescription}`,
             newDescription,
             `${globalFilter} ${newDescription}`,
+        );
+    });
+
+    describe('issues', () => {
+        const initialTaskLine = '- [ ] simple task';
+        verifyAllCombinations2Async(
+            '2112',
+            'KEY: (globalFilter, set created date)\n',
+            async (globalFilter, setCreatedDate) => {
+                GlobalFilter.set(globalFilter as string);
+                // @ts-expect-error: TS2322: Type 'T2' is not assignable to type 'boolean | undefined'.
+                updateSettings({ setCreatedDate });
+                const editedTaskLine = await editTaskLine(initialTaskLine, 'simple task');
+                return `
+('${globalFilter}', ${setCreatedDate})
+    '${initialTaskLine}' =>
+    '${editedTaskLine}'`;
+            },
+            ['', '#task', 'todo'],
+            [true, false],
         );
     });
 });

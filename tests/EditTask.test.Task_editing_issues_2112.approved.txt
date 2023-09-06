@@ -1,0 +1,26 @@
+KEY: (globalFilter, set created date)
+
+
+('', true)
+    '- [ ] simple task' =>
+    '- [ ] simple task'
+
+('', false)
+    '- [ ] simple task' =>
+    '- [ ] simple task'
+
+('#task', true)
+    '- [ ] simple task' =>
+    '- [ ] #task simple task'
+
+('#task', false)
+    '- [ ] simple task' =>
+    '- [ ] #task simple task'
+
+('todo', true)
+    '- [ ] simple task' =>
+    '- [ ] todo simple task'
+
+('todo', false)
+    '- [ ] simple task' =>
+    '- [ ] todo simple task'
