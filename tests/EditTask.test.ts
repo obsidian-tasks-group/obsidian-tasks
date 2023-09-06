@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { fireEvent, render } from '@testing-library/svelte';
+import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import { describe, expect, it } from '@jest/globals';
 import moment from 'moment';
 import { taskFromLine } from '../src/Commands/CreateOrEditTaskParser';
@@ -110,7 +110,7 @@ describe('Task editing', () => {
             resolvePromise(serializedTask);
         };
 
-        const result = render(EditTask, { task, statusOptions, onSubmit });
+        const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit });
         const { container } = result;
         expect(() => container).toBeTruthy();
 
