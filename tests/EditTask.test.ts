@@ -20,6 +20,12 @@ function getAndCheckRenderedDescription(container: HTMLElement) {
     return renderedDescription;
 }
 
+function getAndCheckApplyButton(result: RenderResult<EditTask>) {
+    const submit = result.getByText('Apply') as HTMLButtonElement;
+    expect(submit).toBeTruthy();
+    return submit;
+}
+
 async function editDescriptionAndSubmit(
     description: HTMLInputElement,
     newDescription: string,
@@ -115,8 +121,7 @@ describe('Task editing', () => {
         expect(() => container).toBeTruthy();
 
         const description = getAndCheckRenderedDescription(container);
-        const submit = result.getByText('Apply') as HTMLButtonElement;
-        expect(submit).toBeTruthy();
+        const submit = getAndCheckApplyButton(result);
 
         const editedTask = await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
         expect(editedTask).toEqual(`- [ ] ${expectedDescription}`);
