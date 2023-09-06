@@ -298,7 +298,8 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         case 'blockLink':
             break;
         case 'priority': {
-            dataAttribute['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
+            const attributeName = 'taskPriority';
+            dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         }
         case 'createdDate':
