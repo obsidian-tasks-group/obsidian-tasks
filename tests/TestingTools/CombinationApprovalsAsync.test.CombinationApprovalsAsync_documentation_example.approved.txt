@@ -1,0 +1,9 @@
+sample outputs
+(0, hello, true) => 0 'hello' true
+(0, hello, false) => 0 'hello' false
+(0, world, true) => 0 'world' true
+(0, world, false) => 0 'world' false
+(1, hello, true) => 1 'hello' true
+(1, hello, false) => 1 'hello' false
+(1, world, true) => 1 'world' true
+(1, world, false) => 1 'world' false

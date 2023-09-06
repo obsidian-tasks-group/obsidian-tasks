@@ -131,4 +131,15 @@ describe('CombinationApprovalsAsync', () => {
         [14, 15],
         [16, 17],
     );
+
+    verifyAllCombinations3Async(
+        'documentation example',
+        'sample outputs',
+        async (a, b, c) => {
+            return `(${a}, ${b}, ${c}) => ${a} '${b}' ${c}`;
+        },
+        [0, 1],
+        ['hello', 'world'],
+        [true, false],
+    );
 });
