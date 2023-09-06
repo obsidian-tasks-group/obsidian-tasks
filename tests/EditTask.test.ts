@@ -71,7 +71,17 @@ function convertDescriptionToTaskLine(taskDescription: string): string {
     return `- [ ] ${taskDescription}`;
 }
 
-async function editTaskLine(line: string, newDescription: string) {
+/**
+ * Simulate the behaviour of:
+ *   - clicking on a line in Obsidian,
+ *   - opening the Edit task modal,
+ *   - optionally editing the description,
+ *   - and clicking Apply.
+ * @param line
+ * @param newDescription - the new value for the description field. if undefined, the description won't be edited.
+ * @returns The the edited task line
+ */
+async function editTaskLine(line: string, newDescription: string | undefined) {
     const task = taskFromLine({ line: line, path: '' });
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
@@ -79,7 +89,12 @@ async function editTaskLine(line: string, newDescription: string) {
     const description = getAndCheckRenderedDescriptionElement(container);
     const submit = getAndCheckApplyButton(result);
 
-    return await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
+    return await editDescriptionAndSubmit(
+        description,
+        newDescription ? newDescription : description!.value,
+        submit,
+        waitForClose,
+    );
 }
 
 describe('Task rendering', () => {
@@ -197,7 +212,7 @@ describe('Task editing', () => {
                 GlobalFilter.set(globalFilter as string);
                 // @ts-expect-error: TS2322: Type 'T2' is not assignable to type 'boolean | undefined'.
                 updateSettings({ setCreatedDate });
-                const editedTaskLine = await editTaskLine(initialTaskLine, 'simple task');
+                const editedTaskLine = await editTaskLine(initialTaskLine, undefined);
                 return `
 ('${globalFilter}', ${setCreatedDate})
     '${initialTaskLine}' =>
