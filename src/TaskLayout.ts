@@ -50,7 +50,7 @@ export class TaskLayout {
     public shownTaskLayoutComponents: TaskLayoutComponent[];
     public hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     public options: LayoutOptions;
-    public taskListClasses: string[] = [];
+    public taskListHiddenClasses: string[] = [];
 
     constructor(options?: LayoutOptions) {
         if (options) {
@@ -58,59 +58,60 @@ export class TaskLayout {
         } else {
             this.options = new LayoutOptions();
         }
-
         this.shownTaskLayoutComponents = this.defaultLayout;
-        this.shownTaskLayoutComponents = this.applyOptions(this.options);
+        this.applyOptions();
+    }
+
+    private applyOptions() {
+        // Remove components from the layout according to the task options. These represent the existing task options,
+        // so some components (e.g. the description) are not here because there are no layout options to remove them.
+        const componentsToHideAndGenerateClasses: [boolean, TaskLayoutComponent][] = [
+            [this.options.hidePriority, 'priority'],
+            [this.options.hideRecurrenceRule, 'recurrenceRule'],
+            [this.options.hideCreatedDate, 'createdDate'],
+            [this.options.hideStartDate, 'startDate'],
+            [this.options.hideScheduledDate, 'scheduledDate'],
+            [this.options.hideDueDate, 'dueDate'],
+            [this.options.hideDoneDate, 'doneDate'],
+        ];
+        for (const [hide, component] of componentsToHideAndGenerateClasses) {
+            this.hideComponent(hide, component);
+            this.generateHiddenClassForTaskList(hide, component);
+        }
+
+        const componentsToGenerateClassesOnly: [boolean, string][] = [
+            // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
+            [this.options.hideTags, 'tags'],
+
+            // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
+            // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
+            // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).
+            // This can benefit from some refactoring, i.e. render these components in a similar flow rather than
+            // separately.
+            [this.options.hideUrgency, 'urgency'],
+            [this.options.hideBacklinks, 'backlinks'],
+            [this.options.hideEditButton, 'edit-button'],
+        ];
+        for (const [hide, component] of componentsToGenerateClassesOnly) {
+            this.generateHiddenClassForTaskList(hide, component);
+        }
+
+        if (this.options.shortMode) this.taskListHiddenClasses.push('tasks-layout-short-mode');
+    }
+
+    private generateHiddenClassForTaskList(hide: boolean, component: string) {
+        if (hide) {
+            this.taskListHiddenClasses.push(`tasks-layout-hide-${component}`);
+        }
     }
 
     /**
-     * Return a new list of components with the given options applied.
+     * Move a component from the shown to hidden if the given layoutOption criteria is met.
      */
-    applyOptions(layoutOptions: LayoutOptions): TaskLayoutComponent[] {
-        // Remove a component from the taskComponents array if the given layoutOption criteria is met,
-        // and add to the layout's specific classes list the class that denotes that this component
-        // isn't in the layout
-        const removeIf = (
-            taskComponents: TaskLayoutComponent[],
-            shouldRemove: boolean,
-            componentToRemove: TaskLayoutComponent,
-        ) => {
-            if (shouldRemove) {
-                this.taskListClasses.push(`tasks-layout-hide-${componentToRemove}`);
-                this.hiddenTaskLayoutComponents.push(componentToRemove);
-                return taskComponents.filter((element) => element != componentToRemove);
-            } else {
-                return taskComponents;
-            }
-        };
-        const markHiddenQueryComponent = (hidden: boolean, hiddenComponentName: string) => {
-            if (hidden) {
-                this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
-            }
-        };
-        // Remove components from the layout according to the task options. These represent the existing task options,
-        // so some components (e.g. the description) are not here because there are no layout options to remove them.
-        let newComponents = this.shownTaskLayoutComponents;
-        newComponents = removeIf(newComponents, layoutOptions.hidePriority, 'priority');
-        newComponents = removeIf(newComponents, layoutOptions.hideRecurrenceRule, 'recurrenceRule');
-        newComponents = removeIf(newComponents, layoutOptions.hideCreatedDate, 'createdDate');
-        newComponents = removeIf(newComponents, layoutOptions.hideStartDate, 'startDate');
-        newComponents = removeIf(newComponents, layoutOptions.hideScheduledDate, 'scheduledDate');
-        newComponents = removeIf(newComponents, layoutOptions.hideDueDate, 'dueDate');
-        newComponents = removeIf(newComponents, layoutOptions.hideDoneDate, 'doneDate');
-
-        // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-        markHiddenQueryComponent(layoutOptions.hideTags, 'tags');
-
-        // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
-        // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
-        // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).
-        // This can benefit from some refactoring, i.e. render these components in a similar flow rather than
-        // separately.
-        markHiddenQueryComponent(layoutOptions.hideUrgency, 'urgency');
-        markHiddenQueryComponent(layoutOptions.hideBacklinks, 'backlinks');
-        markHiddenQueryComponent(layoutOptions.hideEditButton, 'edit-button');
-        if (layoutOptions.shortMode) this.taskListClasses.push('tasks-layout-short-mode');
-        return newComponents;
+    private hideComponent(hide: boolean, component: TaskLayoutComponent) {
+        if (hide) {
+            this.hiddenTaskLayoutComponents.push(component);
+            this.shownTaskLayoutComponents = this.shownTaskLayoutComponents.filter((element) => element != component);
+        }
     }
 }
