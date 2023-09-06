@@ -2,24 +2,72 @@ KEY: (globalFilter, set created date)
 
 
 ('', true)
+    'plain text, not a list item' =>
+    '- [ ] plain text, not a list item ➕ 2023-07-18'
+
+('', true)
+    '- list item, but no checkbox' =>
+    '- [ ] list item, but no checkbox ➕ 2023-07-18'
+
+('', true)
     '- [ ] simple task' =>
     '- [ ] simple task'
+
+('', false)
+    'plain text, not a list item' =>
+    '- [ ] plain text, not a list item'
+
+('', false)
+    '- list item, but no checkbox' =>
+    '- [ ] list item, but no checkbox'
 
 ('', false)
     '- [ ] simple task' =>
     '- [ ] simple task'
 
 ('#task', true)
+    'plain text, not a list item' =>
+    '- [ ] #task plain text, not a list item ➕ 2023-07-18'
+
+('#task', true)
+    '- list item, but no checkbox' =>
+    '- [ ] #task list item, but no checkbox ➕ 2023-07-18'
+
+('#task', true)
     '- [ ] simple task' =>
     '- [ ] #task simple task'
+
+('#task', false)
+    'plain text, not a list item' =>
+    '- [ ] #task plain text, not a list item'
+
+('#task', false)
+    '- list item, but no checkbox' =>
+    '- [ ] #task list item, but no checkbox'
 
 ('#task', false)
     '- [ ] simple task' =>
     '- [ ] #task simple task'
 
 ('todo', true)
+    'plain text, not a list item' =>
+    '- [ ] todo plain text, not a list item ➕ 2023-07-18'
+
+('todo', true)
+    '- list item, but no checkbox' =>
+    '- [ ] todo list item, but no checkbox ➕ 2023-07-18'
+
+('todo', true)
     '- [ ] simple task' =>
     '- [ ] todo simple task'
+
+('todo', false)
+    'plain text, not a list item' =>
+    '- [ ] todo plain text, not a list item'
+
+('todo', false)
+    '- list item, but no checkbox' =>
+    '- [ ] todo list item, but no checkbox'
 
 ('todo', false)
     '- [ ] simple task' =>

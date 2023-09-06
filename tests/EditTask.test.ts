@@ -223,7 +223,13 @@ describe('Task editing', () => {
             },
             ['', '#task', 'todo'],
             [true, false],
-            ['- [ ] simple task'],
+            [
+                // Force line break
+                // '', // Does not work with empty line, as fails error-checking in Edit task modal
+                'plain text, not a list item',
+                '- list item, but no checkbox',
+                '- [ ] simple task',
+            ],
         );
     });
 });
