@@ -21,13 +21,13 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
     return { result, container };
 }
 
-function getAndCheckRenderedDescription(container: HTMLElement) {
+function getAndCheckRenderedDescription(container: HTMLElement): HTMLInputElement {
     const renderedDescription = container.ownerDocument.getElementById('description') as HTMLInputElement;
     expect(() => renderedDescription).toBeTruthy();
     return renderedDescription;
 }
 
-function getAndCheckApplyButton(result: RenderResult<EditTask>) {
+function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonElement {
     const submit = result.getByText('Apply') as HTMLButtonElement;
     expect(submit).toBeTruthy();
     return submit;
@@ -38,13 +38,13 @@ async function editDescriptionAndSubmit(
     newDescription: string,
     submit: HTMLButtonElement,
     waitForClose: Promise<string>,
-) {
+): Promise<string> {
     await fireEvent.input(description, { target: { value: newDescription } });
     submit.click();
     return await waitForClose;
 }
 
-function convertDescriptionToTaskLine(taskDescription: string) {
+function convertDescriptionToTaskLine(taskDescription: string): string {
     return `- [ ] ${taskDescription}`;
 }
 
