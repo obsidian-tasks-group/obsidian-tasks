@@ -297,9 +297,10 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         case 'recurrenceRule':
         case 'blockLink':
             break;
-        case 'priority':
+        case 'priority': {
             dataAttribute['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
+        }
         case 'createdDate':
         case 'dueDate':
         case 'startDate':
