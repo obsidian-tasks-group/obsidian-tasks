@@ -48,6 +48,7 @@ describe('Task rendering', () => {
         const onSubmit = (_: Task[]): void => {};
         const { container } = render(EditTask, { task, statusOptions, onSubmit });
         expect(() => container).toBeTruthy();
+
         const renderedDescription = getAndCheckRenderedDescription(container);
         expect(renderedDescription!.value).toEqual(expectedDescription);
     }
