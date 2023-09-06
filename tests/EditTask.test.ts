@@ -135,7 +135,8 @@ describe('Task editing', () => {
     });
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
-        const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
+        const line = convertDescriptionToTaskLine(taskDescription);
+        const task = taskFromLine({ line: line, path: '' });
         const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
         const { result, container } = renderAndCheckModal(task, onSubmit);
 
