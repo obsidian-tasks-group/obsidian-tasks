@@ -131,7 +131,12 @@ describe('CombinationApprovalsAsync', () => {
         [14, 15],
         [16, 17],
     );
+});
 
+// begin-snippet: async-combination-approvals
+describe('demonstrate async combination approvals', () => {
+    // Note that we do not have an 'it' section here.
+    // verifyAllCombinations3Async() creates the 'it' block.
     verifyAllCombinations3Async(
         'documentation example',
         'sample outputs',
@@ -143,3 +148,4 @@ describe('CombinationApprovalsAsync', () => {
         [true, false],
     );
 });
+// end-snippet
