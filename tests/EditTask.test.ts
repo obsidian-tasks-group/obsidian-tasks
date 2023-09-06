@@ -77,8 +77,7 @@ async function editTaskLine(line: string, newDescription: string) {
     const description = getAndCheckRenderedDescriptionElement(container);
     const submit = getAndCheckApplyButton(result);
 
-    const editedTask = await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
-    return editedTask;
+    return await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
 }
 
 describe('Task rendering', () => {
