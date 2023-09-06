@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { fireEvent, render } from '@testing-library/svelte';
+import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import { describe, expect, it } from '@jest/globals';
 import moment from 'moment';
 import { taskFromLine } from '../src/Commands/CreateOrEditTaskParser';
@@ -14,19 +14,73 @@ import { GlobalFilter } from '../src/Config/GlobalFilter';
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
 
+/**
+ * Construct an onSubmit function for editing the given task, and when Apply is clicked,
+ * returning the edit task(s) converted to a string.
+ * @param task
+ */
+function constructSerialisingOnSubmit(task: Task) {
+    let resolvePromise: (input: string) => void;
+    const waitForClose = new Promise<string>((resolve, _) => {
+        resolvePromise = resolve;
+    });
+
+    const onSubmit = (updatedTasks: Task[]): void => {
+        const serializedTask = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
+            .map((task: Task) => task.toFileLineString())
+            .join('\n');
+        resolvePromise(serializedTask);
+    };
+
+    return { waitForClose, onSubmit };
+}
+
+function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void) {
+    const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit });
+    const { container } = result;
+    expect(() => container).toBeTruthy();
+    return { result, container };
+}
+
+function getAndCheckRenderedDescriptionElement(container: HTMLElement): HTMLInputElement {
+    const renderedDescription = container.ownerDocument.getElementById('description') as HTMLInputElement;
+    expect(() => renderedDescription).toBeTruthy();
+    return renderedDescription;
+}
+
+function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonElement {
+    const submit = result.getByText('Apply') as HTMLButtonElement;
+    expect(submit).toBeTruthy();
+    return submit;
+}
+
+async function editDescriptionAndSubmit(
+    description: HTMLInputElement,
+    newDescription: string,
+    submit: HTMLButtonElement,
+    waitForClose: Promise<string>,
+): Promise<string> {
+    await fireEvent.input(description, { target: { value: newDescription } });
+    submit.click();
+    return await waitForClose;
+}
+
+function convertDescriptionToTaskLine(taskDescription: string): string {
+    return `- [ ] ${taskDescription}`;
+}
+
 describe('Task rendering', () => {
     afterEach(() => {
         GlobalFilter.reset();
     });
 
     function testDescriptionRender(taskDescription: string, expectedDescription: string) {
-        const task = taskFromLine({ line: `- [ ] ${taskDescription}`, path: '' });
+        const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
 
         const onSubmit = (_: Task[]): void => {};
-        const { container } = render(EditTask, { task, statusOptions, onSubmit });
-        expect(() => container).toBeTruthy();
-        const renderedDescription = container.ownerDocument.getElementById('description') as HTMLInputElement;
-        expect(() => renderedDescription).toBeTruthy();
+        const { container } = renderAndCheckModal(task, onSubmit);
+
+        const renderedDescription = getAndCheckRenderedDescriptionElement(container);
         expect(renderedDescription!.value).toEqual(expectedDescription);
     }
 
@@ -81,31 +135,14 @@ describe('Task editing', () => {
     });
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
-        const task = taskFromLine({ line: `- [ ] ${taskDescription}`, path: '' });
+        const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
+        const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
+        const { result, container } = renderAndCheckModal(task, onSubmit);
 
-        let resolvePromise: (input: string) => void;
-        const waitForClose = new Promise<string>((resolve, _) => {
-            resolvePromise = resolve;
-        });
-        const onSubmit = (updatedTasks: Task[]): void => {
-            const serializedTask = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
-                .map((task: Task) => task.toFileLineString())
-                .join('\n');
-            resolvePromise(serializedTask);
-        };
+        const description = getAndCheckRenderedDescriptionElement(container);
+        const submit = getAndCheckApplyButton(result);
 
-        const result = render(EditTask, { task, statusOptions, onSubmit });
-        const { container } = result;
-        expect(() => container).toBeTruthy();
-
-        const description = container.ownerDocument.getElementById('description') as HTMLInputElement;
-        expect(description).toBeTruthy();
-        const submit = result.getByText('Apply') as HTMLButtonElement;
-        expect(submit).toBeTruthy();
-
-        await fireEvent.input(description, { target: { value: newDescription } });
-        submit.click();
-        const editedTask = await waitForClose;
+        const editedTask = await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
         expect(editedTask).toEqual(`- [ ] ${expectedDescription}`);
     }
 
