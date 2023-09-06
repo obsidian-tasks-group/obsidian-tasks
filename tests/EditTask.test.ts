@@ -14,6 +14,27 @@ import { GlobalFilter } from '../src/Config/GlobalFilter';
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
 
+/**
+ * Construct an onSubmit function for editing the given task, and when Apply is clicked,
+ * returning the edit task(s) converted to a string.
+ * @param task
+ */
+function constructSerialisingOnSubmit(task: Task) {
+    let resolvePromise: (input: string) => void;
+    const waitForClose = new Promise<string>((resolve, _) => {
+        resolvePromise = resolve;
+    });
+
+    const onSubmit = (updatedTasks: Task[]): void => {
+        const serializedTask = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
+            .map((task: Task) => task.toFileLineString())
+            .join('\n');
+        resolvePromise(serializedTask);
+    };
+
+    return { waitForClose, onSubmit };
+}
+
 function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void) {
     const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit });
     const { container } = result;
@@ -115,17 +136,7 @@ describe('Task editing', () => {
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
         const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
-
-        let resolvePromise: (input: string) => void;
-        const waitForClose = new Promise<string>((resolve, _) => {
-            resolvePromise = resolve;
-        });
-        const onSubmit = (updatedTasks: Task[]): void => {
-            const serializedTask = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
-                .map((task: Task) => task.toFileLineString())
-                .join('\n');
-            resolvePromise(serializedTask);
-        };
+        const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
         const { result, container } = renderAndCheckModal(task, onSubmit);
 
         const description = getAndCheckRenderedDescriptionElement(container);
