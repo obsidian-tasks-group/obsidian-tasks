@@ -286,7 +286,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         startDate: 'taskStart',
         scheduledDate: 'taskScheduled',
         doneDate: 'taskDone',
-        priority: '',
+        priority: 'taskPriority',
         description: '',
         recurrenceRule: '',
         blockLink: '',
@@ -298,7 +298,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         case 'blockLink':
             break;
         case 'priority': {
-            const attributeName = 'taskPriority';
+            const attributeName = dataAttributeNames[component];
             dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         }
