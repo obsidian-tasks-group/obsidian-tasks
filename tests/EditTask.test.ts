@@ -102,6 +102,13 @@ describe('Task rendering', () => {
     });
 });
 
+function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void) {
+    const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit });
+    const { container } = result;
+    expect(() => container).toBeTruthy();
+    return { result, container };
+}
+
 describe('Task editing', () => {
     afterEach(() => {
         GlobalFilter.reset();
@@ -120,10 +127,7 @@ describe('Task editing', () => {
                 .join('\n');
             resolvePromise(serializedTask);
         };
-
-        const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit });
-        const { container } = result;
-        expect(() => container).toBeTruthy();
+        const { result, container } = renderAndCheckModal(task, onSubmit);
 
         const description = getAndCheckRenderedDescription(container);
         const submit = getAndCheckApplyButton(result);
