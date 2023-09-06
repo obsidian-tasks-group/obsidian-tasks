@@ -21,7 +21,7 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
     return { result, container };
 }
 
-function getAndCheckRenderedDescription(container: HTMLElement): HTMLInputElement {
+function getAndCheckRenderedDescriptionElement(container: HTMLElement): HTMLInputElement {
     const renderedDescription = container.ownerDocument.getElementById('description') as HTMLInputElement;
     expect(() => renderedDescription).toBeTruthy();
     return renderedDescription;
@@ -59,7 +59,7 @@ describe('Task rendering', () => {
         const onSubmit = (_: Task[]): void => {};
         const { container } = renderAndCheckModal(task, onSubmit);
 
-        const renderedDescription = getAndCheckRenderedDescription(container);
+        const renderedDescription = getAndCheckRenderedDescriptionElement(container);
         expect(renderedDescription!.value).toEqual(expectedDescription);
     }
 
@@ -128,7 +128,7 @@ describe('Task editing', () => {
         };
         const { result, container } = renderAndCheckModal(task, onSubmit);
 
-        const description = getAndCheckRenderedDescription(container);
+        const description = getAndCheckRenderedDescriptionElement(container);
         const submit = getAndCheckApplyButton(result);
 
         const editedTask = await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
