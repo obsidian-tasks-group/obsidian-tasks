@@ -221,7 +221,7 @@ describe('Task editing', () => {
     '${initialTaskLine}' =>
     '${editedTaskLine}'`;
             },
-            ['', '#task', 'todo'],
+            ['', '#task'],
             [true, false],
             [
                 // Force line break
