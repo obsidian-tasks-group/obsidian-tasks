@@ -20,6 +20,17 @@ function getAndCheckRenderedDescription(container: HTMLElement) {
     return renderedDescription;
 }
 
+async function editDescriptionAndSubmit(
+    description: HTMLInputElement,
+    newDescription: string,
+    submit: HTMLButtonElement,
+    waitForClose: Promise<string>,
+) {
+    await fireEvent.input(description, { target: { value: newDescription } });
+    submit.click();
+    return await waitForClose;
+}
+
 describe('Task rendering', () => {
     afterEach(() => {
         GlobalFilter.reset();
@@ -107,9 +118,7 @@ describe('Task editing', () => {
         const submit = result.getByText('Apply') as HTMLButtonElement;
         expect(submit).toBeTruthy();
 
-        await fireEvent.input(description, { target: { value: newDescription } });
-        submit.click();
-        const editedTask = await waitForClose;
+        const editedTask = await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
         expect(editedTask).toEqual(`- [ ] ${expectedDescription}`);
     }
 
