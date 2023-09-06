@@ -204,7 +204,6 @@ describe('Task editing', () => {
     });
 
     describe('issues', () => {
-        const initialTaskLines = ['- [ ] simple task'];
         verifyAllCombinations3Async(
             '2112',
             'KEY: (globalFilter, set created date)\n',
@@ -224,7 +223,7 @@ describe('Task editing', () => {
             },
             ['', '#task', 'todo'],
             [true, false],
-            initialTaskLines,
+            ['- [ ] simple task'],
         );
     });
 });
