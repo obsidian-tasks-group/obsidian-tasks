@@ -14,6 +14,13 @@ import { GlobalFilter } from '../src/Config/GlobalFilter';
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
 
+function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void) {
+    const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit });
+    const { container } = result;
+    expect(() => container).toBeTruthy();
+    return { result, container };
+}
+
 function getAndCheckRenderedDescription(container: HTMLElement) {
     const renderedDescription = container.ownerDocument.getElementById('description') as HTMLInputElement;
     expect(() => renderedDescription).toBeTruthy();
@@ -100,13 +107,6 @@ describe('Task rendering', () => {
         );
     });
 });
-
-function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void) {
-    const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit });
-    const { container } = result;
-    expect(() => container).toBeTruthy();
-    return { result, container };
-}
 
 describe('Task editing', () => {
     afterEach(() => {
