@@ -89,12 +89,12 @@ async function editTaskLine(line: string, newDescription: string | undefined) {
     const description = getAndCheckRenderedDescriptionElement(container);
     const submit = getAndCheckApplyButton(result);
 
-    return await editDescriptionAndSubmit(
-        description,
-        newDescription ? newDescription : description!.value,
-        submit,
-        waitForClose,
-    );
+    let adjustedNewDescription = newDescription ? newDescription : description!.value;
+    if (!adjustedNewDescription) {
+        adjustedNewDescription = 'simulate user typing text in to empty description field';
+    }
+
+    return await editDescriptionAndSubmit(description, adjustedNewDescription, submit, waitForClose);
 }
 
 describe('Task rendering', () => {
@@ -225,8 +225,12 @@ describe('Task editing', () => {
             [true, false],
             [
                 // Force line break
-                // '', // Does not work with empty line, as fails error-checking in Edit task modal
+                '',
                 'plain text, not a list item',
+                '-',
+                '- ',
+                '- [ ]',
+                '- [ ] ',
                 '- list item, but no checkbox',
                 '- [ ] list item with checkbox',
             ],

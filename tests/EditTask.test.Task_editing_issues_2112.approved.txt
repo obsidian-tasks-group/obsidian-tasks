@@ -2,8 +2,28 @@ KEY: (globalFilter, set created date)
 
 
 ('', true)
+    '' =>
+    '- [ ] simulate user typing text in to empty description field ➕ 2023-07-18'
+
+('', true)
     'plain text, not a list item' =>
     '- [ ] plain text, not a list item ➕ 2023-07-18'
+
+('', true)
+    '-' =>
+    '- [ ] simulate user typing text in to empty description field ➕ 2023-07-18'
+
+('', true)
+    '- ' =>
+    '- [ ] simulate user typing text in to empty description field ➕ 2023-07-18'
+
+('', true)
+    '- [ ]' =>
+    '- [ ] simulate user typing text in to empty description field'
+
+('', true)
+    '- [ ] ' =>
+    '- [ ] simulate user typing text in to empty description field'
 
 ('', true)
     '- list item, but no checkbox' =>
@@ -14,8 +34,28 @@ KEY: (globalFilter, set created date)
     '- [ ] list item with checkbox'
 
 ('', false)
+    '' =>
+    '- [ ] simulate user typing text in to empty description field'
+
+('', false)
     'plain text, not a list item' =>
     '- [ ] plain text, not a list item'
+
+('', false)
+    '-' =>
+    '- [ ] simulate user typing text in to empty description field'
+
+('', false)
+    '- ' =>
+    '- [ ] simulate user typing text in to empty description field'
+
+('', false)
+    '- [ ]' =>
+    '- [ ] simulate user typing text in to empty description field'
+
+('', false)
+    '- [ ] ' =>
+    '- [ ] simulate user typing text in to empty description field'
 
 ('', false)
     '- list item, but no checkbox' =>
@@ -26,8 +66,28 @@ KEY: (globalFilter, set created date)
     '- [ ] list item with checkbox'
 
 ('#task', true)
+    '' =>
+    '- [ ] #task simulate user typing text in to empty description field ➕ 2023-07-18'
+
+('#task', true)
     'plain text, not a list item' =>
     '- [ ] #task plain text, not a list item ➕ 2023-07-18'
+
+('#task', true)
+    '-' =>
+    '- [ ] #task simulate user typing text in to empty description field ➕ 2023-07-18'
+
+('#task', true)
+    '- ' =>
+    '- [ ] #task simulate user typing text in to empty description field ➕ 2023-07-18'
+
+('#task', true)
+    '- [ ]' =>
+    '- [ ] #task simulate user typing text in to empty description field'
+
+('#task', true)
+    '- [ ] ' =>
+    '- [ ] #task simulate user typing text in to empty description field'
 
 ('#task', true)
     '- list item, but no checkbox' =>
@@ -38,8 +98,28 @@ KEY: (globalFilter, set created date)
     '- [ ] #task list item with checkbox'
 
 ('#task', false)
+    '' =>
+    '- [ ] #task simulate user typing text in to empty description field'
+
+('#task', false)
     'plain text, not a list item' =>
     '- [ ] #task plain text, not a list item'
+
+('#task', false)
+    '-' =>
+    '- [ ] #task simulate user typing text in to empty description field'
+
+('#task', false)
+    '- ' =>
+    '- [ ] #task simulate user typing text in to empty description field'
+
+('#task', false)
+    '- [ ]' =>
+    '- [ ] #task simulate user typing text in to empty description field'
+
+('#task', false)
+    '- [ ] ' =>
+    '- [ ] #task simulate user typing text in to empty description field'
 
 ('#task', false)
     '- list item, but no checkbox' =>
@@ -50,8 +130,28 @@ KEY: (globalFilter, set created date)
     '- [ ] #task list item with checkbox'
 
 ('todo', true)
+    '' =>
+    '- [ ] todo simulate user typing text in to empty description field ➕ 2023-07-18'
+
+('todo', true)
     'plain text, not a list item' =>
     '- [ ] todo plain text, not a list item ➕ 2023-07-18'
+
+('todo', true)
+    '-' =>
+    '- [ ] todo simulate user typing text in to empty description field ➕ 2023-07-18'
+
+('todo', true)
+    '- ' =>
+    '- [ ] todo simulate user typing text in to empty description field ➕ 2023-07-18'
+
+('todo', true)
+    '- [ ]' =>
+    '- [ ] todo simulate user typing text in to empty description field'
+
+('todo', true)
+    '- [ ] ' =>
+    '- [ ] todo simulate user typing text in to empty description field'
 
 ('todo', true)
     '- list item, but no checkbox' =>
@@ -62,8 +162,28 @@ KEY: (globalFilter, set created date)
     '- [ ] todo list item with checkbox'
 
 ('todo', false)
+    '' =>
+    '- [ ] todo simulate user typing text in to empty description field'
+
+('todo', false)
     'plain text, not a list item' =>
     '- [ ] todo plain text, not a list item'
+
+('todo', false)
+    '-' =>
+    '- [ ] todo simulate user typing text in to empty description field'
+
+('todo', false)
+    '- ' =>
+    '- [ ] todo simulate user typing text in to empty description field'
+
+('todo', false)
+    '- [ ]' =>
+    '- [ ] todo simulate user typing text in to empty description field'
+
+('todo', false)
+    '- [ ] ' =>
+    '- [ ] todo simulate user typing text in to empty description field'
 
 ('todo', false)
     '- list item, but no checkbox' =>
