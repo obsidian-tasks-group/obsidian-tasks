@@ -108,7 +108,7 @@ describe('Task editing', () => {
     });
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
-        const task = taskFromLine({ line: `- [ ] ${taskDescription}`, path: '' });
+        const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
 
         let resolvePromise: (input: string) => void;
         const waitForClose = new Promise<string>((resolve, _) => {
