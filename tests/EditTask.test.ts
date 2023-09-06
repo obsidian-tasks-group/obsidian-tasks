@@ -11,7 +11,7 @@ import { Status } from '../src/Status';
 import { DateFallback } from '../src/DateFallback';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
-import { verifyAllCombinations2Async } from './TestingTools/CombinationApprovalsAsync';
+import { verifyAllCombinations3Async } from './TestingTools/CombinationApprovalsAsync';
 
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
@@ -204,15 +204,19 @@ describe('Task editing', () => {
     });
 
     describe('issues', () => {
-        const initialTaskLine = '- [ ] simple task';
-        verifyAllCombinations2Async(
+        const initialTaskLines = ['- [ ] simple task'];
+        verifyAllCombinations3Async(
             '2112',
             'KEY: (globalFilter, set created date)\n',
-            async (globalFilter, setCreatedDate) => {
+            async (globalFilter, setCreatedDate, initialTaskLine) => {
                 GlobalFilter.set(globalFilter as string);
+
                 // @ts-expect-error: TS2322: Type 'T2' is not assignable to type 'boolean | undefined'.
                 updateSettings({ setCreatedDate });
+
+                // @ts-expect-error: TS2345: Argument of type 'T3' is not assignable to parameter of type 'string'.
                 const editedTaskLine = await editTaskLine(initialTaskLine, undefined);
+
                 return `
 ('${globalFilter}', ${setCreatedDate})
     '${initialTaskLine}' =>
@@ -220,6 +224,7 @@ describe('Task editing', () => {
             },
             ['', '#task', 'todo'],
             [true, false],
+            initialTaskLines,
         );
     });
 });
