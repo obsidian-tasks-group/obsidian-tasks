@@ -50,8 +50,7 @@ describe('Task rendering', () => {
         const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
 
         const onSubmit = (_: Task[]): void => {};
-        const { container } = render(EditTask, { task, statusOptions, onSubmit });
-        expect(() => container).toBeTruthy();
+        const { container } = renderAndCheckModal(task, onSubmit);
 
         const renderedDescription = getAndCheckRenderedDescription(container);
         expect(renderedDescription!.value).toEqual(expectedDescription);
