@@ -69,6 +69,18 @@ function convertDescriptionToTaskLine(taskDescription: string): string {
     return `- [ ] ${taskDescription}`;
 }
 
+async function editTaskLine(line: string, newDescription: string) {
+    const task = taskFromLine({ line: line, path: '' });
+    const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
+    const { result, container } = renderAndCheckModal(task, onSubmit);
+
+    const description = getAndCheckRenderedDescriptionElement(container);
+    const submit = getAndCheckApplyButton(result);
+
+    const editedTask = await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
+    return editedTask;
+}
+
 describe('Task rendering', () => {
     afterEach(() => {
         GlobalFilter.reset();
@@ -136,14 +148,7 @@ describe('Task editing', () => {
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
         const line = convertDescriptionToTaskLine(taskDescription);
-        const task = taskFromLine({ line: line, path: '' });
-        const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
-        const { result, container } = renderAndCheckModal(task, onSubmit);
-
-        const description = getAndCheckRenderedDescriptionElement(container);
-        const submit = getAndCheckApplyButton(result);
-
-        const editedTask = await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
+        const editedTask = await editTaskLine(line, newDescription);
         expect(editedTask).toEqual(`- [ ] ${expectedDescription}`);
     }
 
