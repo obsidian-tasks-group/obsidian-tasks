@@ -44,6 +44,8 @@ There is a brief overview of Approval tests at [approvaltests.com](https://appro
 
 These trivial examples exist just to walk through the behaviour of Approval Tests.
 
+#### Verify strings and stringable things
+
 Example test in [tests/TestingTools/ApprovalTestsDemo.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts), that saves its input in a text file:
 
 <!-- snippet: approval-test-as-text -->
@@ -61,6 +63,8 @@ The corresponding `approved` file, named [tests/TestingTools/ApprovalTestsDemo.t
 Hello From Approvals
 ```
 <!-- endSnippet -->
+
+#### Verify an object as a JSON string
 
 <!-- snippet: approval-test-as-json -->
 ```ts
