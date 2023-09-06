@@ -103,8 +103,7 @@ describe('Task editing', () => {
         const { container } = result;
         expect(() => container).toBeTruthy();
 
-        const description = container.ownerDocument.getElementById('description') as HTMLInputElement;
-        expect(description).toBeTruthy();
+        const description = getAndCheckRenderedDescription(container);
         const submit = result.getByText('Apply') as HTMLButtonElement;
         expect(submit).toBeTruthy();
 
