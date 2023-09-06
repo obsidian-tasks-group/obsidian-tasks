@@ -37,13 +37,17 @@ async function editDescriptionAndSubmit(
     return await waitForClose;
 }
 
+function convertDescriptionToTaskLine(taskDescription: string) {
+    return `- [ ] ${taskDescription}`;
+}
+
 describe('Task rendering', () => {
     afterEach(() => {
         GlobalFilter.reset();
     });
 
     function testDescriptionRender(taskDescription: string, expectedDescription: string) {
-        const task = taskFromLine({ line: `- [ ] ${taskDescription}`, path: '' });
+        const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
 
         const onSubmit = (_: Task[]): void => {};
         const { container } = render(EditTask, { task, statusOptions, onSubmit });
