@@ -105,13 +105,17 @@ describe('query used for QueryRenderer', () => {
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
         updateSettings({ globalQuery: globalQuerySource });
-        expect(getQueryForQueryRenderer(querySource).source).toEqual(`${globalQuerySource}\n${querySource}`);
+        const filePath = 'a/b/c.md';
+        const query = getQueryForQueryRenderer(querySource, filePath);
+        expect(query.source).toEqual(`${globalQuerySource}\n${querySource}`);
+        expect(query.filePath).toEqual(filePath);
     });
 
     it('should ignore the global query if "ignore global query" is set', () => {
         updateSettings({ globalQuery: 'path includes from_global_query' });
-        expect(getQueryForQueryRenderer('description includes from_block_query\nignore global query').source).toEqual(
-            'description includes from_block_query\nignore global query',
-        );
+        const filePath = 'a/b/c.md';
+        const query = getQueryForQueryRenderer('description includes from_block_query\nignore global query', filePath);
+        expect(query.source).toEqual('description includes from_block_query\nignore global query');
+        expect(query.filePath).toEqual(filePath);
     });
 });

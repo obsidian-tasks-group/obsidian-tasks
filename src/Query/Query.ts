@@ -1,3 +1,5 @@
+import { expandMustacheTemplate } from '../lib/ExpandTemplate';
+import { makeQueryContextFromPath } from '../lib/QueryContext';
 import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
@@ -12,7 +14,9 @@ import type { Filter } from './Filter/Filter';
 import { QueryResult } from './QueryResult';
 
 export class Query implements IQuery {
-    public source: string;
+    public readonly rawSource: string;
+    public readonly source: string;
+    public readonly filePath: string | undefined;
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
@@ -33,9 +37,50 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor({ source }: { source: string }) {
+    constructor({ source }: { source: string }, path: string | undefined = undefined) {
+        this.rawSource = source;
         this.source = source;
-        source
+        this.filePath = path;
+
+        if (this.source.includes('{{') && this.source.includes('}}')) {
+            if (this.filePath === undefined) {
+                this._error = `Input looks like it contains a template, with "{{" and "}}"
+but no file path has been supplied, so cannot expand template values.
+The query is:
+${this.source}`;
+                return;
+            }
+        }
+
+        // TODO Move this error-checking to expandMustacheTemplate()
+        // TODO Apply the template one line at a time
+        // TODO Optimise the template code and only do the expansion if {{ is in the text
+        // TODO Do not complain about any template errors in comment lines
+        // TODO Show the original and expanded text in explanations
+        // TODO Give user error info if they try and put a string in a regex search
+        let expandedSource: string = this.source;
+        if (path) {
+            const queryContext = makeQueryContextFromPath(path);
+            try {
+                expandedSource = expandMustacheTemplate(this.source, queryContext);
+            } catch (error) {
+                if (error instanceof Error) {
+                    this._error = `There was an error expanding the template.
+
+The error message was:
+${error.message.replace(/ > /g, '.')}`;
+                } else {
+                    this._error = 'Unknown error expanding the template.';
+                }
+                this._error += `
+
+The query is:
+${this.source}`;
+                return;
+            }
+        }
+
+        expandedSource
             .split('\n')
             .map((line: string) => line.trim())
             .forEach((line: string) => {
@@ -95,7 +140,7 @@ export class Query implements IQuery {
     public append(q2: Query): Query {
         if (this.source === '') return q2;
         if (q2.source === '') return this;
-        return new Query({ source: `${this.source}\n${q2.source}` });
+        return new Query({ source: `${this.source}\n${q2.source}` }, this.filePath);
     }
 
     /**
