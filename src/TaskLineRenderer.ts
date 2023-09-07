@@ -31,7 +31,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     blockLink: '',
 };
 
-const dataAttributeNames: { [c in TaskLayoutComponent]: string } = {
+const DataAttributeNames: { [c in TaskLayoutComponent]: string } = {
     createdDate: 'taskCreated',
     dueDate: 'taskDue',
     startDate: 'taskStart',
@@ -298,7 +298,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         case 'blockLink':
             break;
         case 'priority': {
-            const attributeName = dataAttributeNames[component];
+            const attributeName = DataAttributeNames[component];
             dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         }
@@ -311,7 +311,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
             if (date) {
                 const attributeValue = dateToAttribute(date);
                 if (attributeValue) {
-                    const attributeName = dataAttributeNames[component];
+                    const attributeName = DataAttributeNames[component];
                     dataAttribute[attributeName] = attributeValue;
                 }
             }
