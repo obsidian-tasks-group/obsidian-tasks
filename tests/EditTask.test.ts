@@ -203,8 +203,11 @@ describe('Task editing', () => {
         );
     });
 
+    // TODO Put in own describe block - with better name
+    // TODO Add explanatory comments
     describe('issues', () => {
-        verifyAllCombinations3Async(
+        verifyAllCombinations3Async<string, boolean, string>(
+            // TODO Better name
             '2112',
             'KEY: (globalFilter, set created date)\n',
             async (globalFilter, setCreatedDate, initialTaskLine) => {
@@ -224,7 +227,7 @@ describe('Task editing', () => {
             ['', '#task'],
             [false, true],
             [
-                // Force line break
+                // Force line break TODO Remove line
                 '',
                 'plain text, not a list item',
                 '-',
