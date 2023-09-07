@@ -13,37 +13,36 @@ for example to make sure no task gets accidentally missed.
 
 This page documents ways of setting this up.
 
-Assumptions:
+## Using pure Tasks blocks - with templating
 
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
+Tasks provides an automated way to include the location of the `tasks` block in a query.
+
+It is possible to use the `path` instruction, using the template text `{{query.file.path}}` which will be replaced with the path in the file containing the current query:
+
+    ## Summary of Tasks within this note
+
+    ```tasks
+    not done
+    path includes path includes {{query.file.path}}
+    ```
+
+The following queries are available:
+
+```text
+path includes {{query.file.path}}
+root includes {{query.file.root}}
+folder includes {{query.file.folder}}
+filename includes {{query.file.filename}}
+```
+
+## Using Dataview to generate Tasks blocks - the old way
+
+Assumptions:  
+  
 - We assume that you know how to install and enable the [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin.
-
-## Using pure Tasks blocks - fragile and error-prone
-
-Tasks does not provide an automated way to include the location of the `tasks` block in a query.
-
-It is possible to use the `path` instruction, but unfortunately you have to insert the path to the file yourself:
-
-    ## Summary of Tasks within this note
-
-    ```tasks
-    not done
-    path includes [insert current note's name or full path]
-    ```
-
-For example:
-
-    ## Summary of Tasks within this note
-
-    ```tasks
-    not done
-    path includes Obsidian/tasks/tasks user support/03 Done - tasks user support/1.11.0 release
-    ```
-
-> [!warning]
-> Using `path includes` to search for a particular file name or folder is error-prone, as if you rename the file,
-you have to remember to manually update the location in the tasks block, and this is very error-prone.
-
-## Using Dataview to generate Tasks blocks - safe and convenient
 
 There is a nice property that the [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin can write out code blocks that are then processed by other plugins.
 
