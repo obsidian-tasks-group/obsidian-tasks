@@ -20,7 +20,7 @@ This page documents ways of setting this up.
 
 Tasks provides an automated way to include the location of the `tasks` block in a query.
 
-It is possible to use the `path` instruction, using the template text `{{query.file.path}}` which will be replaced with the path in the file containing the current query:
+It is possible to use the `path` instruction, using the template text `{{query.file.path}}` which will be replaced with the path of the file containing the current query:
 
     ## Summary of Tasks within this note
 
