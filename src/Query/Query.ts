@@ -152,6 +152,12 @@ ${this.source}`;
     public explainQuery(): string {
         let result = '';
 
+        if (this.error !== undefined) {
+            result += 'Query has an error:\n';
+            result += this.error + '\n';
+            return result;
+        }
+
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {
             result += 'No filters supplied. All tasks will match the query.';

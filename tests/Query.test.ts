@@ -1031,6 +1031,17 @@ due 2012-01-23 =>
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
 
+        it('should include any error message in the explanation', () => {
+            const input = 'i am a nonsense query';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `Query has an error:
+do not understand query
+Problem line: "i am a nonsense query"
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
+
         it('should explain limit 5', () => {
             const input = 'limit 5';
             const query = new Query({ source: input });
