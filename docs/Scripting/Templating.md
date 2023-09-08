@@ -76,3 +76,7 @@ filename includes file path.md
 
 - Searching by today's date or time
 - Get date string from file names
+
+## Technical Details
+
+The templating library used is [mustache.js](https://www.npmjs.com/package/mustache).
