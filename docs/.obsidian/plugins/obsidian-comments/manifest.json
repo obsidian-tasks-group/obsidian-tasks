@@ -1,0 +1,10 @@
+{
+	"id": "obsidian-comments",
+	"name": "Comments",
+	"version": "0.2.0",
+	"minAppVersion": "0.10.11",
+	"description": "Add, track and easily navigate between a note's Comments",
+	"author": "darakah",
+	"authorUrl": "https://github.com/Darakah/",
+	"isDesktopOnly": false
+}
