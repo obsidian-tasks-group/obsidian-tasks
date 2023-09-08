@@ -90,4 +90,18 @@ explain`;
         checkExplainPresentAndVerify(blockQuery);
         verifyTaskBlockExplanation(blockQuery);
     });
+
+    it('templating', () => {
+        // Arrange
+        const instructions: string = `
+explain
+path includes {{query.file.path}}
+root includes {{query.file.root}}
+folder includes {{query.file.folder}}
+filename includes {{query.file.filename}}`;
+
+        // Act, Assert
+        checkExplainPresentAndVerify(instructions);
+        verifyTaskBlockExplanation(instructions);
+    });
 });
