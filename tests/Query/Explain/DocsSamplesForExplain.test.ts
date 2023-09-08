@@ -104,4 +104,17 @@ filename includes {{query.file.filename}}`;
         checkExplainPresentAndVerify(instructions);
         verifyTaskBlockExplanation(instructions);
     });
+
+    it('templating error', () => {
+        // Arrange
+        const instructions: string = `
+explain
+# query.file.fileName is invalid, because of the capital N.
+# query.file.filename is the correct property name.
+filename includes {{query.file.fileName}}`;
+
+        // Act, Assert
+        checkExplainPresentAndVerify(instructions);
+        verifyTaskBlockExplanation(instructions);
+    });
 });
