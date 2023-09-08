@@ -13,6 +13,9 @@ publish: true
 
 - Tasks provides a templating facility to enable filters to access the location of the query file.
 - Any known variable inside a pair of `{{` and `}}` strings is expanded to a value obtained from the query file's path.
+- For example,:
+  - `{{query.file.path}}` might get expanded to
+  - `some/sample/actions on my hobby.md` - for any Tasks queries inside that file.
 - The available values for use in template strings are listed in [[Query Properties]].
 
 ## Checking template variables
@@ -31,7 +34,7 @@ filename includes {{query.file.filename}}
 ```  
 <!-- endSnippet -->  
   
-the results begin with the following, which demonstrates how the template strings get expanded:  
+the results begin with the following, which demonstrates how each value inside `{{...}}` was expanded:  
   
 <!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.explanation.text -->  
 ```text  
