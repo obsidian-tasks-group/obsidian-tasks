@@ -9,7 +9,7 @@ import { makeQueryContext } from '../../src/lib/QueryContext';
 
 // https://github.com/janl/mustache.js
 
-describe('Mustache Experiments', () => {
+describe('ExpandTemplate', () => {
     it('hard-coded call', () => {
         const view = {
             title: 'Joe',
