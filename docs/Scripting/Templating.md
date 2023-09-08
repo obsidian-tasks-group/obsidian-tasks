@@ -15,8 +15,37 @@ publish: true
 - Any known variable inside a pair of `{{` and `}}` strings is expanded to a value obtained from the query file's path.
 - The available template strings are listed in [[Query Properties]].
 
--
-- using the following syntax:
+## Checking template variables
+
+The [[Explaining Queries|explain]] instruction shows how templates are interpreted. This can be used to understand how template variables are expanded.
+
+For example, when the following query with [[Query Properties]] in [[Templating|template variables]] is placed in a tasks query block in the file `some/sample/file path.md`:  
+  
+<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.query.text -->  
+```text  
+explain  
+path includes {{query.file.path}}  
+root includes {{query.file.root}}  
+folder includes {{query.file.folder}}  
+filename includes {{query.file.filename}}  
+```  
+<!-- endSnippet -->  
+  
+the results begin with the following, which demonstrates how the template strings get expanded:  
+  
+<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.explanation.text -->  
+```text  
+Explanation of this Tasks code block query:  
+  
+path includes some/sample/file path.md  
+  
+root includes some/  
+  
+folder includes some/sample/  
+  
+filename includes file path.md  
+```  
+<!-- endSnippet -->
 
 ## Tasks
 
