@@ -18,10 +18,6 @@ export class GlobalQuery {
         this._value = value;
     }
 
-    public get() {
-        return this._value;
-    }
-
     public query(): Query {
         return new Query({ source: this._value });
     }
