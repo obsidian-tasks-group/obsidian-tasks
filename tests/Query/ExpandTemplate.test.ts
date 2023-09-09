@@ -1,4 +1,4 @@
-import { expandMustacheTemplate } from '../../src/lib/ExpandTemplate';
+import { expandPlaceholders } from '../../src/lib/ExpandTemplate';
 import { makeQueryContext } from '../../src/lib/QueryContext';
 
 /**
@@ -16,7 +16,7 @@ describe('ExpandTemplate', () => {
             calc: () => 2 + 4,
         };
 
-        const output = expandMustacheTemplate('{{ title }} spends {{ calc }}', view);
+        const output = expandPlaceholders('{{ title }} spends {{ calc }}', view);
         expect(output).toMatchInlineSnapshot('"Joe spends 6"');
     });
 
@@ -26,7 +26,7 @@ filename includes {{query.file.filename}}`;
     it('fake query - with file path', () => {
         const path = 'a/b/path with space.md';
         const queryContext = makeQueryContext(path);
-        expect(expandMustacheTemplate(rawString, queryContext)).toMatchInlineSnapshot(`
+        expect(expandPlaceholders(rawString, queryContext)).toMatchInlineSnapshot(`
             "path includes a/b/path with space.md
             filename includes path with space.md"
         `);
@@ -38,6 +38,6 @@ filename includes {{query.file.filename}}`;
         };
 
         const source = '{{ title }} spends {{ unknownField }}';
-        expect(() => expandMustacheTemplate(source, view)).toThrow('Missing Mustache data property: unknownField');
+        expect(() => expandPlaceholders(source, view)).toThrow('Missing Mustache data property: unknownField');
     });
 });

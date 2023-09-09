@@ -1,4 +1,4 @@
-import { expandMustacheTemplate } from '../lib/ExpandTemplate';
+import { expandPlaceholders } from '../lib/ExpandTemplate';
 import { makeQueryContextFromPath } from '../lib/QueryContext';
 import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
@@ -62,7 +62,7 @@ ${this.source}`;
         if (path) {
             const queryContext = makeQueryContextFromPath(path);
             try {
-                expandedSource = expandMustacheTemplate(this.source, queryContext);
+                expandedSource = expandPlaceholders(this.source, queryContext);
             } catch (error) {
                 if (error instanceof Error) {
                     this._error = `There was an error expanding the template.

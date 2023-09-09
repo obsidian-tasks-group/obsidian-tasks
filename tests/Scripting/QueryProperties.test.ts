@@ -1,4 +1,4 @@
-import { expandMustacheTemplate } from '../../src/lib/ExpandTemplate';
+import { expandPlaceholders } from '../../src/lib/ExpandTemplate';
 import { makeQueryContext } from '../../src/lib/QueryContext';
 
 import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
@@ -10,7 +10,7 @@ describe('query', () => {
         const path = 'root/sub-folder/file containing query.md';
         const queryContext = makeQueryContext(path);
         for (const field of fields) {
-            const value1 = expandMustacheTemplate('{{' + field + '}}', queryContext);
+            const value1 = expandPlaceholders('{{' + field + '}}', queryContext);
             const cells = [
                 addBackticks(field),
                 addBackticks(determineExpressionType(value1)),
