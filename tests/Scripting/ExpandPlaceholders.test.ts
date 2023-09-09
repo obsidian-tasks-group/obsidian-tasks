@@ -20,10 +20,10 @@ describe('ExpandTemplate', () => {
         expect(output).toMatchInlineSnapshot('"Joe spends 6"');
     });
 
-    const rawString = `path includes {{query.file.path}}
+    it('fake query - with file path', () => {
+        const rawString = `path includes {{query.file.path}}
 filename includes {{query.file.filename}}`;
 
-    it('fake query - with file path', () => {
         const path = 'a/b/path with space.md';
         const queryContext = makeQueryContext(path);
         expect(expandPlaceholders(rawString, queryContext)).toMatchInlineSnapshot(`
