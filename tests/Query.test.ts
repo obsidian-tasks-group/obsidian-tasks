@@ -967,7 +967,7 @@ describe('Query', () => {
     });
 
     describe('placeholders', () => {
-        it('should expand placeholder values correctly', () => {
+        it('should expand placeholder values in filters, but not source', () => {
             // Arrange
             const rawQuery = 'path includes {{query.file.path}}';
             const path = 'a/b/path with space.md';
@@ -978,6 +978,8 @@ describe('Query', () => {
             // Assert
             expect(query.rawSource).toEqual(rawQuery);
             expect(query.source).toEqual(rawQuery); // Interesting that query.source still has the placeholder text
+            expect(query.filters.length).toEqual(1);
+            expect(query.filters[0].instruction).toEqual('path includes a/b/path with space.md');
         });
 
         it('should report error if placeholders used without query location', () => {
