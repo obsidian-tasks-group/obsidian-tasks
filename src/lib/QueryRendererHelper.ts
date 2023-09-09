@@ -19,8 +19,8 @@ import { Query } from '../Query/Query';
  *     * Explains the query described by {@link source}
  *
  * @param {string} source The source of the task block to explain
- * @returns {string}
  * @param globalQuery
+ * @returns {string}
  */
 export function explainResults(source: string, globalQuery: GlobalQuery): string {
     let result = '';
@@ -48,8 +48,8 @@ export function explainResults(source: string, globalQuery: GlobalQuery): string
  * This query is the result of joining the global query with the query in the task block
  *
  * @param {string} source The query source from the task block
- * @returns {Query} The query to execute
  * @param globalQuery
+ * @returns {Query} The query to execute
  */
 export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuery): Query {
     const tasksBlockQuery = new Query({ source });
