@@ -137,10 +137,13 @@ export class SettingsTab extends PluginSettingTab {
                     ),
                 )
                 .addTextArea((text) => {
+                    const settings = getSettings();
+
                     text.inputEl.rows = 4;
                     text.setPlaceholder('# For example...\npath does not include _templates/\nlimit 300\nshow urgency')
-                        .setValue(GlobalQuery.getInstance().get())
+                        .setValue(settings.globalQuery)
                         .onChange(async (value) => {
+                            updateSettings({ globalQuery: value });
                             GlobalQuery.getInstance().set(value);
                             await this.plugin.saveSettings();
                         });
