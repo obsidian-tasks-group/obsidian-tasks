@@ -21,4 +21,11 @@ describe('GlobalQuery tests', () => {
             expect(globalQuery.isEmpty()).toEqual(true);
         },
     );
+
+    it('should set the query', () => {
+        const globalQuery = new GlobalQuery();
+        globalQuery.set('description includes this should be the source of the query');
+
+        expect(globalQuery.query.source).toEqual('description includes this should be the source of the query');
+    });
 });
