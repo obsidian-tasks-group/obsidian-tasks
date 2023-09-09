@@ -18,8 +18,8 @@ export class GlobalQuery {
         this._source = source;
     }
 
-    public set(value: string) {
-        this._source = value;
+    public set(source: string) {
+        this._source = source;
     }
 
     public get query(): Query {
