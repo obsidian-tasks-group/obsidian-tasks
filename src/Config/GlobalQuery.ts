@@ -23,6 +23,6 @@ export class GlobalQuery {
     }
 
     public isEmpty() {
-        return this._value === GlobalQuery.empty;
+        return this._value.trim() === GlobalQuery.empty;
     }
 }
