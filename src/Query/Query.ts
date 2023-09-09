@@ -44,8 +44,8 @@ export class Query implements IQuery {
 
         if (this.source.includes('{{') && this.source.includes('}}')) {
             if (this.filePath === undefined) {
-                this._error = `Input looks like it contains a template, with "{{" and "}}"
-but no file path has been supplied, so cannot expand template values.
+                this._error = `The query looks like it contains a placeholder, with "{{" and "}}"
+but no file path has been supplied, so cannot expand placeholder values.
 The query is:
 ${this.source}`;
                 return;
