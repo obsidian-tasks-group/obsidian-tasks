@@ -40,7 +40,8 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query active', () => {
-        GlobalQuery.getInstance().set('description includes hello');
+        const globalQuery = GlobalQuery.getInstance();
+        globalQuery.set('description includes hello');
 
         const source = '';
         const query = new Query({ source });
@@ -53,11 +54,12 @@ Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, GlobalQuery.getInstance())).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, globalQuery)).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global query and global filter active', () => {
-        GlobalQuery.getInstance().set('description includes hello');
+        const globalQuery = GlobalQuery.getInstance();
+        globalQuery.set('description includes hello');
         GlobalFilter.set('#task');
 
         const source = '';
@@ -73,11 +75,12 @@ Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, GlobalQuery.getInstance())).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, globalQuery)).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global query set but ignored without the global query', () => {
-        GlobalQuery.getInstance().set('description includes hello');
+        const globalQuery = GlobalQuery.getInstance();
+        globalQuery.set('description includes hello');
 
         const source = 'ignore global query';
         const query = new Query({ source });
@@ -86,7 +89,7 @@ No filters supplied. All tasks will match the query.`;
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, GlobalQuery.getInstance())).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, globalQuery)).toEqual(expectedDisplayText);
     });
 });
 
