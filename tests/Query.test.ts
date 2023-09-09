@@ -553,7 +553,7 @@ Problem line: "${source}"`);
                 'There was an error expanding one or more placeholders.\n' +
                     '\n' +
                     'The error message was:\n' +
-                    'Missing Mustache data property: query.file.noSuchProperty\n' +
+                    'Unknown property: query.file.noSuchProperty\n' +
                     '\n' +
                     'The query is:\n' +
                     'path includes {{query.file.noSuchProperty}}',

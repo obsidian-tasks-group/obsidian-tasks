@@ -67,7 +67,7 @@ ${this.source}`;
                     this._error = `There was an error expanding one or more placeholders.
 
 The error message was:
-${error.message.replace(/ > /g, '.')}`;
+${error.message.replace(/ > /g, '.').replace('Missing Mustache data property', 'Unknown property')}`;
                 } else {
                     this._error = 'Unknown error expanding the template.';
                 }
