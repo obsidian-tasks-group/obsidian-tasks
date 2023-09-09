@@ -1,4 +1,4 @@
-import { expandPlaceholders } from '../lib/ExpandPlaceholders';
+import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContextFromPath } from '../lib/QueryContext';
 import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
