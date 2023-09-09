@@ -33,7 +33,7 @@ export function explainResults(source: string, globalQuery: GlobalQuery): string
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         if (!globalQuery.isEmpty()) {
-            result += `Explanation of the global query:\n\n${globalQuery.query().explainQuery()}\n`;
+            result += `Explanation of the global query:\n\n${globalQuery.query.explainQuery()}\n`;
         }
     }
 
@@ -58,5 +58,5 @@ export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuer
         return tasksBlockQuery;
     }
 
-    return globalQuery.query().append(tasksBlockQuery);
+    return globalQuery.query.append(tasksBlockQuery);
 }

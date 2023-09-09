@@ -18,7 +18,7 @@ export class GlobalQuery {
         this._value = value;
     }
 
-    public query(): Query {
+    public get query(): Query {
         return new Query({ source: this._value });
     }
 
