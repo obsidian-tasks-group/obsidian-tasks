@@ -73,7 +73,7 @@ export function verifyQueryExplanation(instructions: string, options?: Options):
  * @param options
  */
 export function verifyTaskBlockExplanation(instructions: string, options?: Options): void {
-    const explanation = explainResults(instructions);
+    const explanation = explainResults(instructions, GlobalQuery.getInstance());
 
     options = options || new Options();
     options = options.forFile().withFileExtention('explanation.text');
