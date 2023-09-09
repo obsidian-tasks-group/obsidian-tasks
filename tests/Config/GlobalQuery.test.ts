@@ -12,6 +12,10 @@ describe('GlobalQuery tests', () => {
         expect(Object.is(globalQuery1, globalQuery2)).toEqual(true);
     });
 
+    it('should have an empty source by default', () => {
+        expect(new GlobalQuery().isEmpty()).toEqual(true);
+    });
+
     it.each(['', ' ', '\n', '\n     \n    ', '  \n    \n'])(
         'should have empty source if line breaks and spaces were set in the query',
         (globalQuerySource) => {
