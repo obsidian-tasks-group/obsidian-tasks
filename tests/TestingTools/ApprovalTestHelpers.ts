@@ -1,5 +1,6 @@
 import { Options } from 'approvals/lib/Core/Options';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { Query } from '../../src/Query/Query';
 import { explainResults } from '../../src/lib/QueryRendererHelper';
 
@@ -73,7 +74,7 @@ export function verifyQueryExplanation(instructions: string, options?: Options):
  * @param options
  */
 export function verifyTaskBlockExplanation(instructions: string, options?: Options): void {
-    const explanation = explainResults(instructions, GlobalQuery.getInstance());
+    const explanation = explainResults(instructions, new GlobalQuery());
 
     options = options || new Options();
     options = options.forFile().withFileExtention('explanation.text');

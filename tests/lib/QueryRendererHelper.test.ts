@@ -99,14 +99,19 @@ describe('query used for QueryRenderer', () => {
     it('should be the result of combining the global query and the actual query', () => {
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
-        GlobalQuery.getInstance().set(globalQuerySource);
-        expect(getQueryForQueryRenderer(querySource, GlobalQuery.getInstance()).source).toEqual(`${globalQuerySource}\n${querySource}`);
+
+        const globalQuery = new GlobalQuery();
+        globalQuery.set(globalQuerySource);
+        expect(getQueryForQueryRenderer(querySource, globalQuery).source).toEqual(
+            `${globalQuerySource}\n${querySource}`,
+        );
     });
 
     it('should ignore the global query if "ignore global query" is set', () => {
-        GlobalQuery.getInstance().set('path includes from_global_query');
-        expect(getQueryForQueryRenderer('description includes from_block_query\nignore global query', GlobalQuery.getInstance()).source).toEqual(
-            'description includes from_block_query\nignore global query',
-        );
+        const globalQuery = new GlobalQuery();
+        globalQuery.set('path includes from_global_query');
+        expect(
+            getQueryForQueryRenderer('description includes from_block_query\nignore global query', globalQuery).source,
+        ).toEqual('description includes from_block_query\nignore global query');
     });
 });
