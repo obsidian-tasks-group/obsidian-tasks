@@ -1,6 +1,6 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
-import { Query } from '../Query/Query';
 import { GlobalQuery } from '../Config/GlobalQuery';
+import { Query } from '../Query/Query';
 
 /**
  * @summary
@@ -58,6 +58,5 @@ export function getQueryForQueryRenderer(source: string, globalQuery1: GlobalQue
         return tasksBlockQuery;
     }
 
-    const globalQuery = globalQuery1.query();
-    return globalQuery.append(tasksBlockQuery);
+    return globalQuery1.query().append(tasksBlockQuery);
 }
