@@ -976,7 +976,6 @@ describe('Query', () => {
             const query = new Query({ source: rawQuery }, path);
 
             // Assert
-            expect(query.rawSource).toEqual(rawQuery);
             expect(query.source).toEqual(rawQuery); // Interesting that query.source still has the placeholder text
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0].instruction).toEqual('path includes a/b/path with space.md');
