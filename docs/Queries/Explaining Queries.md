@@ -195,7 +195,7 @@ due next week =>
 > [!released]
 > Templating was introduced in Tasks X.Y.Z.
 
-For example, when the following query with [[Query Properties]] in [[Templating|template variables]] is placed in a tasks query block in the file `some/sample/file path.md`:
+For example, when the following query with [[Query Properties]] in [[Placeholders|placeholders]] is placed in a tasks query block in the file `some/sample/file path.md`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.query.text -->
 ```text

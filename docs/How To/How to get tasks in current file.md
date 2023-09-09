@@ -42,7 +42,7 @@ They can be used with any text filter, not just `path`, `file`, `folder`, `filen
 
 For more information, see:
 
-- [[Templating]]
+- [[Placeholders]]
 - [[Query Properties]]
 
 ## Using Dataview to generate Tasks blocks - the old way

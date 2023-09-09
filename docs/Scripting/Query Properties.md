@@ -13,13 +13,13 @@ publish: true
 
 In a growing number of locations, Tasks allows programmatic/scripting access to properties of the file containing the search query:
 
-- [[Templating]]
+- [[Placeholders]]
 
 This page documents all the available pieces of information in Queries that you can access.
 
 > [!warning]
 >
-> - These properties can currently only be used in [[Templating]].
+> - These properties can currently only be used in [[Placeholders]].
 > - They are not yet available via [[Custom Filters]] and [[Custom Grouping]].
 
 ## Values for Query File Properties

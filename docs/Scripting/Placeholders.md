@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Templating
+# Placeholders
 
 <span class="related-pages">#feature/scripting</span>
 
@@ -22,7 +22,7 @@ publish: true
 
 The [[Explaining Queries|explain]] instruction shows how templates are interpreted. This can be used to understand how template variables are expanded.
 
-For example, when the following query with [[Query Properties]] in [[Templating|template variables]] is placed in a tasks query block in the file `some/sample/file path.md`:
+For example, when the following query with [[Query Properties]] in [[Placeholders|template variables]] is placed in a tasks query block in the file `some/sample/file path.md`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.query.text -->
 ```text
