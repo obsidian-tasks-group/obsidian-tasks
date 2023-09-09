@@ -51,7 +51,7 @@ ${this.source}`;
             }
         }
 
-        // TODO Move this error-checking to expandMustacheTemplate()
+        // TODO Move this error-checking to expandPlaceholders()
         // TODO Apply the template one line at a time
         // TODO Optimise the template code and only do the expansion if {{ is in the text
         // TODO Do not complain about any template errors in comment lines
