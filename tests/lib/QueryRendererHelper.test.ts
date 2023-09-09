@@ -100,12 +100,12 @@ describe('query used for QueryRenderer', () => {
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
         GlobalQuery.getInstance().set(globalQuerySource);
-        expect(getQueryForQueryRenderer(querySource).source).toEqual(`${globalQuerySource}\n${querySource}`);
+        expect(getQueryForQueryRenderer(querySource, GlobalQuery.getInstance()).source).toEqual(`${globalQuerySource}\n${querySource}`);
     });
 
     it('should ignore the global query if "ignore global query" is set', () => {
         GlobalQuery.getInstance().set('path includes from_global_query');
-        expect(getQueryForQueryRenderer('description includes from_block_query\nignore global query').source).toEqual(
+        expect(getQueryForQueryRenderer('description includes from_block_query\nignore global query', GlobalQuery.getInstance()).source).toEqual(
             'description includes from_block_query\nignore global query',
         );
     });

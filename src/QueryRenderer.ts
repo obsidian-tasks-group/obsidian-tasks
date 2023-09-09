@@ -1,5 +1,6 @@
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
+import { GlobalQuery } from './Config/GlobalQuery';
 
 import type { IQuery } from './IQuery';
 import { State } from './Cache';
@@ -89,12 +90,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         // added later.
         switch (this.containerEl.className) {
             case 'block-language-tasks':
-                this.query = getQueryForQueryRenderer(this.source);
+                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance());
                 this.queryType = 'tasks';
                 break;
 
             default:
-                this.query = getQueryForQueryRenderer(this.source);
+                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance());
                 this.queryType = 'tasks';
                 break;
         }
@@ -135,7 +136,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
         this.queryReloadTimeout = setTimeout(() => {
-            this.query = getQueryForQueryRenderer(this.source);
+            this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance());
             // Process the current cache state:
             this.events.triggerRequestCacheUpdate(this.render.bind(this));
             this.reloadQueryAtMidnight();
