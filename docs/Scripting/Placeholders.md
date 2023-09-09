@@ -72,10 +72,10 @@ filename includes {{query.file.fileName}}
 Explanation of this Tasks code block query:
 
 Query has an error:
-There was an error expanding the template.
+There was an error expanding one or more placeholders.
 
 The error message was:
-Missing Mustache data property: query.file.fileName
+Unknown property: query.file.fileName
 
 The query is:
 
