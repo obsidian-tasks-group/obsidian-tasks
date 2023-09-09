@@ -966,6 +966,20 @@ describe('Query', () => {
         });
     });
 
+    describe('placeholders', () => {
+        it('should report error if placeholders used without query location', () => {
+            const input = 'path includes {{query.file.path}}';
+            const query = new Query({ source: input });
+            expect(query).not.toBeValid();
+            expect(query.error).toEqual(
+                'Input looks like it contains a template, with "{{" and "}}"\n' +
+                    'but no file path has been supplied, so cannot expand template values.\n' +
+                    'The query is:\n' +
+                    'path includes {{query.file.path}}',
+            );
+        });
+    });
+
     describe('sorting', () => {
         const doneTask = new TaskBuilder().status(Status.DONE).build();
         const todoTask = new TaskBuilder().status(Status.TODO).build();
