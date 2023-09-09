@@ -34,7 +34,7 @@ explain`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 
     it('boolean combinations', () => {
@@ -46,7 +46,7 @@ not done
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 
     it('nested boolean combinations', () => {
@@ -57,7 +57,7 @@ explain
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 
     it('regular expression', () => {
@@ -68,19 +68,20 @@ path regex matches /^Root/Sub-Folder/Sample File\\.md/i`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 
-    const globalQuery = `limit 50
+    const globalQueryLine = `limit 50
 heading includes tasks`;
     it('example global query', () => {
         // Act, Assert
-        verifyQuery(globalQuery);
+        verifyQuery(globalQueryLine);
     });
 
     it('explains task block with global query active', () => {
         // Arrange
-        GlobalQuery.getInstance().set(globalQuery);
+        const globalQuery = new GlobalQuery();
+        globalQuery.set(globalQueryLine);
 
         const blockQuery = `
 not done
@@ -89,6 +90,6 @@ explain`;
 
         // Act, Assert
         checkExplainPresentAndVerify(blockQuery);
-        verifyTaskBlockExplanation(blockQuery);
+        verifyTaskBlockExplanation(blockQuery, globalQuery);
     });
 });
