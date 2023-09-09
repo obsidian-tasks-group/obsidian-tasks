@@ -24,30 +24,30 @@ The [[Explaining Queries|explain]] instruction shows how templates are interpret
 
 For example, when the following query with [[Query Properties]] in [[Templating|template variables]] is placed in a tasks query block in the file `some/sample/file path.md`:  
   
-<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.query.text -->  
-```text  
-explain  
-path includes {{query.file.path}}  
-root includes {{query.file.root}}  
-folder includes {{query.file.folder}}  
-filename includes {{query.file.filename}}  
-```  
-<!-- endSnippet -->  
+<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.query.text -->
+```text
+explain
+path includes {{query.file.path}}
+root includes {{query.file.root}}
+folder includes {{query.file.folder}}
+filename includes {{query.file.filename}}
+```
+<!-- endSnippet -->
   
 the results begin with the following, which demonstrates how each value inside `{{...}}` was expanded:  
   
-<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.explanation.text -->  
-```text  
-Explanation of this Tasks code block query:  
-  
-path includes some/sample/file path.md  
-  
-root includes some/  
-  
-folder includes some/sample/  
-  
-filename includes file path.md  
-```  
+<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.explanation.text -->
+```text
+Explanation of this Tasks code block query:
+
+path includes some/sample/file path.md
+
+root includes some/
+
+folder includes some/sample/
+
+filename includes file path.md
+```
 <!-- endSnippet -->
 
 ## Things to be aware of
