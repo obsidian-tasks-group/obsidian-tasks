@@ -20,9 +20,9 @@ import { Query } from '../Query/Query';
  *
  * @param {string} source The source of the task block to explain
  * @returns {string}
- * @param globalQuery1
+ * @param globalQuery
  */
-export function explainResults(source: string, globalQuery1: GlobalQuery): string {
+export function explainResults(source: string, globalQuery: GlobalQuery): string {
     let result = '';
 
     if (!GlobalFilter.isEmpty()) {
@@ -32,8 +32,8 @@ export function explainResults(source: string, globalQuery1: GlobalQuery): strin
     const tasksBlockQuery = new Query({ source });
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
-        if (!globalQuery1.isEmpty()) {
-            result += `Explanation of the global query:\n\n${globalQuery1.query().explainQuery()}\n`;
+        if (!globalQuery.isEmpty()) {
+            result += `Explanation of the global query:\n\n${globalQuery.query().explainQuery()}\n`;
         }
     }
 
