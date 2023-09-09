@@ -982,14 +982,40 @@ describe('Query', () => {
         });
 
         it('should report error if placeholders used without query location', () => {
+            // Arrange
             const input = 'path includes {{query.file.path}}';
+
+            // Act
             const query = new Query({ source: input });
+
+            // Assert
             expect(query).not.toBeValid();
             expect(query.error).toEqual(
                 'The query looks like it contains a placeholder, with "{{" and "}}"\n' +
                     'but no file path has been supplied, so cannot expand placeholder values.\n' +
                     'The query is:\n' +
                     'path includes {{query.file.path}}',
+            );
+        });
+
+        it('should report error if non-existent placeholder used', () => {
+            // Arrange
+            const input = 'path includes {{query.file.noSuchProperty}}';
+            const path = 'a/b/path with space.md';
+
+            // Act
+            const query = new Query({ source: input }, path);
+
+            // Assert
+            expect(query).not.toBeValid();
+            expect(query.error).toEqual(
+                'There was an error expanding the template.\n' +
+                    '\n' +
+                    'The error message was:\n' +
+                    'Missing Mustache data property: query.file.noSuchProperty\n' +
+                    '\n' +
+                    'The query is:\n' +
+                    'path includes {{query.file.noSuchProperty}}',
             );
         });
     });
