@@ -40,7 +40,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query active', () => {
-        const globalQuery = GlobalQuery.getInstance();
+        const globalQuery = new GlobalQuery();
         globalQuery.set('description includes hello');
 
         const source = '';
@@ -58,7 +58,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query and global filter active', () => {
-        const globalQuery = GlobalQuery.getInstance();
+        const globalQuery = new GlobalQuery();
         globalQuery.set('description includes hello');
         GlobalFilter.set('#task');
 
@@ -79,7 +79,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query set but ignored without the global query', () => {
-        const globalQuery = GlobalQuery.getInstance();
+        const globalQuery = new GlobalQuery();
         globalQuery.set('description includes hello');
 
         const source = 'ignore global query';
