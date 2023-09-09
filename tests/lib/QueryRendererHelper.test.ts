@@ -40,8 +40,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query active', () => {
-        const globalQuery = new GlobalQuery();
-        globalQuery.set('description includes hello');
+        const globalQuery = new GlobalQuery('description includes hello');
 
         const source = '';
         const query = new Query({ source });
@@ -58,8 +57,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query and global filter active', () => {
-        const globalQuery = new GlobalQuery();
-        globalQuery.set('description includes hello');
+        const globalQuery = new GlobalQuery('description includes hello');
         GlobalFilter.set('#task');
 
         const source = '';
@@ -79,8 +77,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query set but ignored without the global query', () => {
-        const globalQuery = new GlobalQuery();
-        globalQuery.set('description includes hello');
+        const globalQuery = new GlobalQuery('description includes hello');
 
         const source = 'ignore global query';
         const query = new Query({ source });
@@ -103,16 +100,14 @@ describe('query used for QueryRenderer', () => {
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
 
-        const globalQuery = new GlobalQuery();
-        globalQuery.set(globalQuerySource);
+        const globalQuery = new GlobalQuery(globalQuerySource);
         expect(getQueryForQueryRenderer(querySource, globalQuery).source).toEqual(
             `${globalQuerySource}\n${querySource}`,
         );
     });
 
     it('should ignore the global query if "ignore global query" is set', () => {
-        const globalQuery = new GlobalQuery();
-        globalQuery.set('path includes from_global_query');
+        const globalQuery = new GlobalQuery('path includes from_global_query');
         expect(
             getQueryForQueryRenderer('description includes from_block_query\nignore global query', globalQuery).source,
         ).toEqual('description includes from_block_query\nignore global query');

@@ -19,16 +19,14 @@ describe('GlobalQuery tests', () => {
     it.each(['', ' ', '\n', '\n     \n    ', '  \n    \n'])(
         'should have empty source if line breaks and spaces were set in the query',
         (globalQuerySource) => {
-            const globalQuery = new GlobalQuery();
-            globalQuery.set(globalQuerySource);
+            const globalQuery = new GlobalQuery(globalQuerySource);
 
             expect(globalQuery.isEmpty()).toEqual(true);
         },
     );
 
     it('should set the query', () => {
-        const globalQuery = new GlobalQuery();
-        globalQuery.set('description includes this should be the source of the query');
+        const globalQuery = new GlobalQuery('description includes this should be the source of the query');
 
         expect(globalQuery.query.source).toEqual('description includes this should be the source of the query');
     });

@@ -80,9 +80,7 @@ heading includes tasks`;
 
     it('explains task block with global query active', () => {
         // Arrange
-        const globalQuery = new GlobalQuery();
-        globalQuery.set(globalQueryLine);
-
+        const globalQuery = new GlobalQuery(globalQueryLine);
         const blockQuery = `
 not done
 due next week
