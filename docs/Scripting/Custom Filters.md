@@ -44,7 +44,7 @@ The instructions look like this:
 
 - `filter by function <expression>`
 
-The expression is evaluated (calculated) on one task at a time from our vault.
+The expression is evaluated (calculated) on one task at a time from your vault.
 
 The expression must evaluate to a `boolean`, so `true` or `false`.
 
