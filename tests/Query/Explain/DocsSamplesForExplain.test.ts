@@ -108,13 +108,12 @@ filename includes {{query.file.filename}}`;
     it('templating error', () => {
         // Arrange
         const instructions: string = `
-explain
 # query.file.fileName is invalid, because of the capital N.
 # query.file.filename is the correct property name.
 filename includes {{query.file.fileName}}`;
 
         // Act, Assert
-        checkExplainPresentAndVerify(instructions);
+        verifyQuery(instructions); // This does not have an explain, so does not call checkExplainPresentAndVerify()
         verifyTaskBlockExplanation(instructions);
     });
 });
