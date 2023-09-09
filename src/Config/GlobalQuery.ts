@@ -4,7 +4,7 @@ export class GlobalQuery {
     private static instance: GlobalQuery;
 
     static empty = '';
-    private _value;
+    private _source;
 
     public static getInstance(): GlobalQuery {
         if (!GlobalQuery.instance) {
@@ -15,18 +15,18 @@ export class GlobalQuery {
     }
 
     constructor(source: string = GlobalQuery.empty) {
-        this._value = source;
+        this._source = source;
     }
 
     public set(value: string) {
-        this._value = value;
+        this._source = value;
     }
 
     public get query(): Query {
-        return new Query({ source: this._value });
+        return new Query({ source: this._source });
     }
 
     public isEmpty() {
-        return this._value.trim() === GlobalQuery.empty;
+        return this._source.trim() === GlobalQuery.empty;
     }
 }
