@@ -1,4 +1,4 @@
-import { expandPlaceholders } from '../../src/lib/ExpandTemplate';
+import { expandPlaceholders } from '../../src/lib/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/lib/QueryContext';
 
 import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
