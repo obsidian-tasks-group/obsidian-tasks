@@ -1009,7 +1009,7 @@ describe('Query', () => {
             // Assert
             expect(query).not.toBeValid();
             expect(query.error).toEqual(
-                'There was an error expanding the template.\n' +
+                'There was an error expanding one or more placeholders.\n' +
                     '\n' +
                     'The error message was:\n' +
                     'Missing Mustache data property: query.file.noSuchProperty\n' +

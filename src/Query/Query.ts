@@ -64,7 +64,7 @@ ${this.source}`;
                 expandedSource = expandPlaceholders(this.source, queryContext);
             } catch (error) {
                 if (error instanceof Error) {
-                    this._error = `There was an error expanding the template.
+                    this._error = `There was an error expanding one or more placeholders.
 
 The error message was:
 ${error.message.replace(/ > /g, '.')}`;
