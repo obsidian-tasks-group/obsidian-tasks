@@ -537,6 +537,7 @@ Problem line: "${source}"`);
                     'The query is:\n' +
                     'path includes {{query.file.path}}',
             );
+            expect(query.filters.length).toEqual(0);
         });
 
         it('should report error if non-existent placeholder used', () => {
@@ -558,6 +559,7 @@ Problem line: "${source}"`);
                     'The query is:\n' +
                     'path includes {{query.file.noSuchProperty}}',
             );
+            expect(query.filters.length).toEqual(0);
         });
     });
 });
