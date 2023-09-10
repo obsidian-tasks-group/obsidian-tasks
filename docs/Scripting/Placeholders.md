@@ -24,7 +24,7 @@ The [[Explaining Queries|explain]] instruction shows how templates are interpret
 
 For example, when the following query with [[Query Properties]] in [[Placeholders|template variables]] is placed in a tasks query block in the file `some/sample/file path.md`:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.query.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.query.text -->
 ```text
 explain
 path includes {{query.file.path}}
@@ -36,7 +36,7 @@ filename includes {{query.file.filename}}
 
 the results begin with the following, which demonstrates how each value inside `{{...}}` was expanded:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.explanation.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.explanation.text -->
 ```text
 Explanation of this Tasks code block query:
 
@@ -57,7 +57,7 @@ filename includes file path.md
 
 The templating error message does not know which exact line is the problem one, especially if there are multiple template values in a query. So this example problem query:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_templating_error.approved.query.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_placeholders_error.approved.query.text -->
 ```text
 # query.file.fileName is invalid, because of the capital N.
 # query.file.filename is the correct property name.
@@ -67,7 +67,7 @@ filename includes {{query.file.fileName}}
 
 ... generates this output, instead of the search <label class="ob-comment" title="" style=""> results <input type="checkbox"> <span style=""> I'm unsure if the 'Explanation of<br>this Tasks code block query'<br>text should be included </span></label>:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_templating_error.approved.explanation.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_placeholders_error.approved.explanation.text -->
 ```text
 Explanation of this Tasks code block query:
 

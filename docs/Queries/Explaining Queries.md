@@ -197,7 +197,7 @@ due next week =>
 
 For example, when the following query with [[Query Properties]] in [[Placeholders|placeholders]] is placed in a tasks query block in the file `some/sample/file path.md`:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.query.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.query.text -->
 ```text
 explain
 path includes {{query.file.path}}
@@ -209,7 +209,7 @@ filename includes {{query.file.filename}}
 
 the results begin with the following:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_templating.approved.explanation.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.explanation.text -->
 ```text
 Explanation of this Tasks code block query:
 
