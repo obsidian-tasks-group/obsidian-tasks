@@ -1,7 +1,7 @@
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
-import { TextField } from './TextField';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import { TextField } from './TextField';
 
 export class BacklinkField extends TextField {
     public fieldName(): string {
@@ -35,14 +35,11 @@ export class BacklinkField extends TextField {
                 return ['Unknown Location'];
             }
 
-            // Always escape the filename, to prevent any underscores being interpreted as markdown:
-            let result = filename;
-
             // Only append the heading if it differs from the filename:
             if (task.precedingHeader && task.precedingHeader !== filename) {
-                return [`[[${filename}#${task.precedingHeader}|${result} > ${task.precedingHeader}]]`];
+                return [`[[${filename}#${task.precedingHeader}|${filename} > ${task.precedingHeader}]]`];
             }
-            return ['[[' + result + ']]'];
+            return ['[[' + filename + ']]'];
         };
     }
 }
