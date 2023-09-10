@@ -40,6 +40,7 @@ export class BacklinkField extends TextField {
             if (header && header !== filename) {
                 return [`[[${filename}#${header}|${filename} > ${header}]]`];
             }
+
             return ['[[' + filename + ']]'];
         };
     }
