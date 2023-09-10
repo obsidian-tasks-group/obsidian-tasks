@@ -91,7 +91,7 @@ explain`;
         verifyTaskBlockExplanation(blockQuery);
     });
 
-    it('templating', () => {
+    it('placeholders', () => {
         // Arrange
         const instructions: string = `
 explain
@@ -105,7 +105,7 @@ filename includes {{query.file.filename}}`;
         verifyTaskBlockExplanation(instructions);
     });
 
-    it('templating error', () => {
+    it('placeholders error', () => {
         // Arrange
         const instructions: string = `
 # query.file.fileName is invalid, because of the capital N.
