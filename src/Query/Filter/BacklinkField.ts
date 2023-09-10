@@ -36,14 +36,15 @@ export class BacklinkField extends TextField {
             }
 
             // Always escape the filename, to prevent any underscores being interpreted as markdown:
-            let result = TextField.escapeMarkdownCharacters(filename);
+            let result = filename;
 
-            // Only append the heading if it differs from the un-escaped fileanme:
+            // Only append the heading if it differs from the filename:
             if (task.precedingHeader && task.precedingHeader !== filename) {
-                // We don't escape the heading, as any markdown characters in it really are markdown styling:
                 result += ' > ' + task.precedingHeader;
+
+                result = `${filename}#${task.precedingHeader}|${result}`;
             }
-            return [result];
+            return ['[[' + result + ']]'];
         };
     }
 }
