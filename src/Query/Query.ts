@@ -1,5 +1,5 @@
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
-import { makeQueryContextFromPath } from '../lib/QueryContext';
+import { makeQueryContext } from '../lib/QueryContext';
 import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
@@ -103,7 +103,7 @@ ${this.source}`;
         // TODO Give user error info if they try and put a string in a regex search
         let expandedSource: string = this.source;
         if (path) {
-            const queryContext = makeQueryContextFromPath(path);
+            const queryContext = makeQueryContext(path);
             try {
                 expandedSource = expandPlaceholders(this.source, queryContext);
             } catch (error) {

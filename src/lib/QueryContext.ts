@@ -14,7 +14,3 @@ export function makeQueryContext(path: string): QueryContext {
         },
     };
 }
-
-export function makeQueryContextFromPath(path: string) {
-    return makeQueryContext(path);
-}
