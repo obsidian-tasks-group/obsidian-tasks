@@ -52,9 +52,9 @@ ${this.source}`;
         }
 
         // TODO Move this error-checking to expandPlaceholders()
-        // TODO Apply the template one line at a time
-        // TODO Optimise the template code and only do the expansion if {{ is in the text
-        // TODO Do not complain about any template errors in comment lines
+        // TODO Apply the placeholders one line at a time
+        // TODO Optimise the placeholder code and only do the expansion if {{ is in the text
+        // TODO Do not complain about any placeholder errors in comment lines
         // TODO Show the original and expanded text in explanations
         // TODO Give user error info if they try and put a string in a regex search
         let expandedSource: string = this.source;
