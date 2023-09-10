@@ -40,7 +40,7 @@ export class BacklinkField extends TextField {
 
             // Only append the heading if it differs from the filename:
             if (task.precedingHeader && task.precedingHeader !== filename) {
-                result = `${filename}#${task.precedingHeader}|${result} > ${task.precedingHeader}`;
+                return [`[[${filename}#${task.precedingHeader}|${result} > ${task.precedingHeader}]]`];
             }
             return ['[[' + result + ']]'];
         };
