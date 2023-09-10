@@ -13,14 +13,16 @@ for example to make sure no task gets accidentally missed.
 
 This page documents ways of setting this up.
 
-## Using pure Tasks blocks - with templating
+## Using pure Tasks blocks - with placeholders
 
 > [!released]
-> Templating was introduced in Tasks X.Y.Z.
+> Placeholders were introduced in Tasks X.Y.Z.
+
+We want to search for tasks in the file with the same `path` that the query is in.
 
 Tasks now provides an automated way to include the location of the `tasks` block in a query.
 
-It is possible to use the `path` instruction, <label class="ob-comment" title="" style=""> using <input type="checkbox"> <span style="">This is misleading as it suggests<br>only `path` is supported</span></label> the template text `{{query.file.path}}` which will be replaced with the path of the file containing the current query:
+We can use the `path` instruction with the placeholder text `{{query.file.path}}` which will be replaced with the path of the file containing the current query, like this:
 
     ## Summary of Tasks within this note
 
@@ -29,7 +31,7 @@ It is possible to use the `path` instruction, <label class="ob-comment" title=""
     path includes path includes {{query.file.path}}
     ```
 
-The following queries are <label class="ob-comment" title="" style=""> available <input type="checkbox"> <span style=""> I really need to define the<br>vocabulary for the various<br>components of templating.  </span></label>:
+The following placeholders are available:
 
 ```text
 {{query.file.path}}
@@ -47,7 +49,7 @@ For more information, see:
 
 ## Using Dataview to generate Tasks blocks - the old way
 
-Assumptions:
+<label class="ob-comment" title="" style=""> Assumptions <input type="checkbox"> <span style=""> Move this to a separate note<br> - but retain the original heading<br> - and link to it from here </span></label>:
 
 - We assume that you know how to install and enable the [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin.
 
