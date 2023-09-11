@@ -2,6 +2,8 @@ import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 
 describe('ExpandTemplate', () => {
+    const path = 'a/b/path with space.md';
+
     it('hard-coded call', () => {
         const view = {
             title: 'Joe',
@@ -16,7 +18,6 @@ describe('ExpandTemplate', () => {
         const rawString = `path includes {{query.file.path}}
 filename includes {{query.file.filename}}`;
 
-        const path = 'a/b/path with space.md';
         const queryContext = makeQueryContext(path);
         expect(expandPlaceholders(rawString, queryContext)).toMatchInlineSnapshot(`
             "path includes a/b/path with space.md
