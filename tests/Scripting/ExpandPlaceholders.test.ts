@@ -32,4 +32,13 @@ filename includes {{query.file.filename}}`;
         const source = '{{ title }} spends {{ unknownField }}';
         expect(() => expandPlaceholders(source, view)).toThrow('Missing Mustache data property: unknownField');
     });
+
+    it('should throw an error if unknown template nested field used', () => {
+        const queryContext = makeQueryContext('stuff.md');
+        const source = '{{ query.file.nonsense }}';
+
+        expect(() => expandPlaceholders(source, queryContext)).toThrow(
+            'Missing Mustache data property: query > file > nonsense',
+        );
+    });
 });
