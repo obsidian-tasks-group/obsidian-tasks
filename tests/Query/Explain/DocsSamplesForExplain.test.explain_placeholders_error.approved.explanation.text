@@ -6,5 +6,5 @@ There was an error expanding one or more placeholders.
 The error message was:
 Unknown property: query.file.fileName
 
-The query is:
+The problem is in:
 filename includes {{query.file.fileName}}

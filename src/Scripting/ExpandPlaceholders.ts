@@ -38,7 +38,7 @@ ${error.message.replace(/ > /g, '.').replace('Missing Mustache data property', '
         }
         message += `
 
-The query is:
+The problem is in:
 ${template}`;
         throw Error(message);
     }

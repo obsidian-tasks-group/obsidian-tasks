@@ -35,7 +35,7 @@ filename includes {{query.file.filename}}`;
 The error message was:
 Unknown property: unknownField
 
-The query is:
+The problem is in:
 {{ title }} spends {{ unknownField }}`);
     });
 
@@ -49,7 +49,7 @@ The query is:
 The error message was:
 Unknown property: query.file.nonsense
 
-The query is:
+The problem is in:
 {{ query.file.nonsense }}`,
         );
     });

@@ -556,7 +556,7 @@ Problem line: "${source}"`);
                     'The error message was:\n' +
                     'Unknown property: query.file.noSuchProperty\n' +
                     '\n' +
-                    'The query is:\n' +
+                    'The problem is in:\n' +
                     'path includes {{query.file.noSuchProperty}}',
             );
             expect(query.filters.length).toEqual(0);
