@@ -44,10 +44,10 @@ filename includes {{query.file.filename}}`;
         expect(() => expandPlaceholders(source, view)).toThrow(`There was an error expanding one or more placeholders.
 
 The error message was:
-Unknown property: unknownField
+    Unknown property: unknownField
 
 The problem is in:
-{{ title }} spends {{ unknownField }}`);
+    {{ title }} spends {{ unknownField }}`);
     });
 
     it('should throw an error if unknown template nested field used', () => {
@@ -58,10 +58,10 @@ The problem is in:
             `There was an error expanding one or more placeholders.
 
 The error message was:
-Unknown property: query.file.nonsense
+    Unknown property: query.file.nonsense
 
 The problem is in:
-{{ query.file.nonsense }}`,
+    {{ query.file.nonsense }}`,
         );
     });
 });

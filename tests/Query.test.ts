@@ -554,10 +554,10 @@ Problem line: "${source}"`);
                 'There was an error expanding one or more placeholders.\n' +
                     '\n' +
                     'The error message was:\n' +
-                    'Unknown property: query.file.noSuchProperty\n' +
+                    '    Unknown property: query.file.noSuchProperty\n' +
                     '\n' +
                     'The problem is in:\n' +
-                    'path includes {{query.file.noSuchProperty}}',
+                    '    path includes {{query.file.noSuchProperty}}',
             );
             expect(query.filters.length).toEqual(0);
         });

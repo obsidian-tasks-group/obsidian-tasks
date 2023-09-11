@@ -4,7 +4,7 @@ Query has an error:
 There was an error expanding one or more placeholders.
 
 The error message was:
-Unknown property: query.file.fileName
+    Unknown property: query.file.fileName
 
 The problem is in:
-filename includes {{query.file.fileName}}
+    filename includes {{query.file.fileName}}
