@@ -34,7 +34,7 @@ export function expandPlaceholders(template: string, view: any): string {
 The error message was:
 ${error.message.replace(/ > /g, '.').replace('Missing Mustache data property', 'Unknown property')}`;
         } else {
-            message = 'Unknown error expanding the template.';
+            message = 'Unknown error expanding placeholders.';
         }
         message += `
 
