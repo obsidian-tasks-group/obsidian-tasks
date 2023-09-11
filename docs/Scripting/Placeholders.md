@@ -7,22 +7,22 @@ publish: true
 <span class="related-pages">#feature/scripting</span>
 
 > [!released]
-> Templating was introduced in Tasks X.Y.Z.
+> Placeholders were introduced in Tasks X.Y.Z.
 
 ## Summary
 
-- Tasks provides a templating facility to enable filters to access the location of the query file.
-- Any known variable inside a pair of `{{` and `}}` strings is expanded to a value obtained from the query file's path.
+- Tasks provides a placeholder facility to enable filters to access the location of the query file.
+- Any known property inside a pair of `{{` and `}}` strings is expanded to a value obtained from the query file's path.
 - For example,:
   - `{{query.file.path}}` might get expanded to
   - `some/sample/actions on my hobby.md` - for any Tasks queries inside that file.
-- The available values for use in template strings are listed in [[Query Properties]].
+- The available values for use in placeholders are listed in [[Query Properties]].
 
 ## Checking template variables
 
-The [[Explaining Queries|explain]] instruction shows how templates are interpreted. This can be used to understand how template variables are expanded.
+The [[Explaining Queries|explain]] instruction shows how any placeholders in the query are interpreted. This can be used to understand how placeholders are expanded generally.
 
-For example, when the following query with [[Query Properties]] in [[Placeholders|template variables]] is placed in a tasks query block in the file `some/sample/file path.md`:
+For example, when the following query with [[Query Properties]] in [[Placeholders|placeholders]] is placed in a tasks query block in the file `some/sample/file path.md`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.query.text -->
 ```text
@@ -64,7 +64,7 @@ filename includes {{query.file.fileName}}
 ```
 <!-- endSnippet -->
 
-... generates output similar to this:
+... generates this output:
 
 ```text
 Tasks query: There was an error expanding one or more placeholders.
@@ -97,34 +97,26 @@ The problem is in:
 
 ## Things to be aware of
 
-## Known Limitations
-
 - The symbols are case-sensitive:
   - `query.file.fileName` is not recognised
-  - `path includes {{query.file.fileName}}` gives:
-  - `Missing Mustache data property: query.file.fileName`
-- Error handling
-  - The reference to `Mustache` in error messages may be confusing??
-  - Use of unrecognised symbols inside `{{ }}` is spotted, and the name is written out
-  - But if you write `{{queryx.file.filename}}`, it doesn't get past `queryx`
-  - So the error would be:
-    - `Missing Mustache data property: queryx`
-- If there is an error, the entire input string is written out, and it can be hard to spot the problem line
-  - At the moment the whole query is checked as one string, so the error message contains the whole input, making any problem a little harder to space
-- It complains about any unrecognised template values in comments, even though comments are then ignored
-- explanations
-  - `explain` instructions only show the expanded text
-  - It would be nice to also show the original variable name, and then the expanded text
-- use in regular expressions is allowed
-  - but due to characters with special meanings in reg ex, it is not recommended to use them
-- when you rename a file containing a tasks query block with variable names in, the query block is not updated
+
+## Known Limitations
+
+- It complains about any unrecognised placeholders in comments, even though comments are then ignored.
+- Explanations:
+  - `explain` instructions only show the expanded text.
+  - It would be nice to also show the original variable name, and then the expanded text.
+- Use in regular expressions is allowed
+  - but due to [[Regular Expressions#Special characters|characters with special meanings]] in regular expressions, it is not recommended to use them.
+- When you rename a file containing a tasks query block with variable names in, the query block is not automatically updated:
   - the workaround is to close and re-open the file containing the query.
 
 ## Missing Features
 
 - Searching by today's date or time
-- Get date string from file names
+- Getting date strings from file names
 
 ## Technical Details
 
-The templating library used is [mustache.js](https://www.npmjs.com/package/mustache).
+- The templating library used is [mustache.js](https://www.npmjs.com/package/mustache).
+- Error-checking to detect use of unknown variables is implemented via [mustache-validator](https://www.npmjs.com/package/mustache-validator).
