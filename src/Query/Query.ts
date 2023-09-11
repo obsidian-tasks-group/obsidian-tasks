@@ -95,7 +95,6 @@ ${source}`;
             }
         }
 
-        // TODO Optimise the placeholder code and only do the expansion if {{ is in the text
         // TODO Do not complain about any placeholder errors in comment lines
         // TODO Show the original and expanded text in explanations
         // TODO Give user error info if they try and put a string in a regex search

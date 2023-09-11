@@ -25,6 +25,16 @@ filename includes {{query.file.filename}}`;
         `);
     });
 
+    it('should return the input string if no {{ in line', function () {
+        const queryContext = makeQueryContext(path);
+        const line = 'no braces here';
+
+        const result = expandPlaceholders(line, queryContext);
+
+        // This test revealed that Mustache itself returns the input string if no {{ present.
+        expect(Object.is(line, result)).toEqual(true);
+    });
+
     it('should throw an error if unknown template field used', () => {
         const view = {
             title: 'Joe',
