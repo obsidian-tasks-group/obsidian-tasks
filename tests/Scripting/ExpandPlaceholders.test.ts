@@ -30,7 +30,13 @@ filename includes {{query.file.filename}}`;
         };
 
         const source = '{{ title }} spends {{ unknownField }}';
-        expect(() => expandPlaceholders(source, view)).toThrow('Missing Mustache data property: unknownField');
+        expect(() => expandPlaceholders(source, view)).toThrow(`There was an error expanding one or more placeholders.
+
+The error message was:
+Unknown property: unknownField
+
+The query is:
+{{ title }} spends {{ unknownField }}`);
     });
 
     it('should throw an error if unknown template nested field used', () => {
@@ -38,7 +44,13 @@ filename includes {{query.file.filename}}`;
         const source = '{{ query.file.nonsense }}';
 
         expect(() => expandPlaceholders(source, queryContext)).toThrow(
-            'Missing Mustache data property: query > file > nonsense',
+            `There was an error expanding one or more placeholders.
+
+The error message was:
+Unknown property: query.file.nonsense
+
+The query is:
+{{ query.file.nonsense }}`,
         );
     });
 });

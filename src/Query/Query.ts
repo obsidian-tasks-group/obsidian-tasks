@@ -95,7 +95,6 @@ ${this.source}`;
             }
         }
 
-        // TODO Move this error-checking to expandPlaceholders()
         // TODO Apply the placeholders one line at a time
         // TODO Optimise the placeholder code and only do the expansion if {{ is in the text
         // TODO Do not complain about any placeholder errors in comment lines
@@ -108,17 +107,10 @@ ${this.source}`;
                 expandedSource = expandPlaceholders(this.source, queryContext);
             } catch (error) {
                 if (error instanceof Error) {
-                    this._error = `There was an error expanding one or more placeholders.
-
-The error message was:
-${error.message.replace(/ > /g, '.').replace('Missing Mustache data property', 'Unknown property')}`;
+                    this._error = error.message;
                 } else {
-                    this._error = 'Unknown error expanding the template.';
+                    this._error = 'Internal error. expandPlaceholders() threw something other than Error.';
                 }
-                this._error += `
-
-The query is:
-${this.source}`;
                 return this.source;
             }
         }

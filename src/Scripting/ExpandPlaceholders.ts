@@ -14,9 +14,8 @@ import proxyData from 'mustache-validator';
  * @throws Error
  *
  *      By using mustache-validator's proxyData, we ensure that any accesses of property names that are
- *      not in the view, we ensure that errors are detected immediately, with the error:
- *
- *         `Missing Mustache data property: ${pathSegments.join(" > ")`
+ *      not in the view, we ensure that errors are detected immediately.
+ *      The first unknown placeholder is included in Error.message.
  */
 export function expandPlaceholders(template: string, view: any): string {
     // Turn off HTML escaping of things like '/' in file paths:
@@ -25,5 +24,22 @@ export function expandPlaceholders(template: string, view: any): string {
         return text;
     };
 
-    return Mustache.render(template, proxyData(view));
+    try {
+        return Mustache.render(template, proxyData(view));
+    } catch (error) {
+        let message = '';
+        if (error instanceof Error) {
+            message = `There was an error expanding one or more placeholders.
+
+The error message was:
+${error.message.replace(/ > /g, '.').replace('Missing Mustache data property', 'Unknown property')}`;
+        } else {
+            message = 'Unknown error expanding the template.';
+        }
+        message += `
+
+The query is:
+${template}`;
+        throw Error(message);
+    }
 }
