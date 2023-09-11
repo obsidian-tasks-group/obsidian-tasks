@@ -41,7 +41,7 @@ export class Query implements IQuery {
         this.source = source;
         this.filePath = path;
 
-        const expandedSource = this.expandPlaceholders(path);
+        const expandedSource = this.expandPlaceholders(source, path);
         if (this.error !== undefined) {
             // There was an error expanding placeholders.
             return;
@@ -84,8 +84,7 @@ export class Query implements IQuery {
             });
     }
 
-    private expandPlaceholders(path: string | undefined) {
-        const source = this.source;
+    private expandPlaceholders(source: string, path: string | undefined) {
         if (source.includes('{{') && source.includes('}}')) {
             if (this.filePath === undefined) {
                 this._error = `The query looks like it contains a placeholder, with "{{" and "}}"
