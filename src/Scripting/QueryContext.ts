@@ -1,4 +1,4 @@
-import { TasksFile } from '../Scripting/TasksFile';
+import { TasksFile } from './TasksFile';
 
 /**
  * This interface is part of the implementation of placeholders.

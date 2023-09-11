@@ -1,5 +1,5 @@
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
-import { makeQueryContext } from '../lib/QueryContext';
+import { makeQueryContext } from '../Scripting/QueryContext';
 import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';

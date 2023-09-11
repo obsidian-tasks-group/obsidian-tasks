@@ -1,5 +1,5 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
-import { makeQueryContext } from '../../src/lib/QueryContext';
+import { makeQueryContext } from '../../src/Scripting/QueryContext';
 
 import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';

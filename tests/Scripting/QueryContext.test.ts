@@ -3,7 +3,7 @@ import { FilenameField } from '../../src/Query/Filter/FilenameField';
 import { FolderField } from '../../src/Query/Filter/FolderField';
 import { PathField } from '../../src/Query/Filter/PathField';
 import { RootField } from '../../src/Query/Filter/RootField';
-import { makeQueryContext } from '../../src/lib/QueryContext';
+import { makeQueryContext } from '../../src/Scripting/QueryContext';
 
 describe('QueryContext', () => {
     describe('values should all match their corresponding filters', () => {
