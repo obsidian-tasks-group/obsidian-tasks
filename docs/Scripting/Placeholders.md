@@ -52,10 +52,9 @@ filename includes file path.md
 
 ## Error checking: invalid variables
 
-> [!info]
-> Currently the template variable values are applied to the whole query in one go. This does make any template error messages a little verbose.
+If there are any unknown properties in the placeholders, a clear message is written.
 
-The templating error message does not know which exact line is the problem one, especially if there are multiple template values in a query. So this example problem query:
+For example, the following shows that the names of query properties are case-sensitive:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_placeholders_error.approved.query.text -->
 ```text
@@ -65,7 +64,20 @@ filename includes {{query.file.fileName}}
 ```
 <!-- endSnippet -->
 
-... generates this output, instead of the search <label class="ob-comment" title="" style=""> results <input type="checkbox"> <span style=""> I'm unsure if the 'Explanation of<br>this Tasks code block query'<br>text should be included </span></label>:
+... generates output similar to this:
+
+```text
+Tasks query: There was an error expanding one or more placeholders.
+
+The error message was:
+    Unknown property: query.file.fileName
+
+The problem is in:
+    filename includes {{query.file.fileName}}
+```
+
+%% ---------------------------------------------------------------------------
+IF THIS TEXT CHANGES, IT MEANS THE HARD-CODED OUTPUT ABOVE NEEDS TO BE UPDATED:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_placeholders_error.approved.explanation.text -->
 ```text
@@ -75,15 +87,13 @@ Query has an error:
 There was an error expanding one or more placeholders.
 
 The error message was:
-Unknown property: query.file.fileName
+    Unknown property: query.file.fileName
 
-The query is:
-
-# query.file.fileName is invalid, because of the capital N.
-# query.file.filename is the correct property name.
-filename includes {{query.file.fileName}}
+The problem is in:
+    filename includes {{query.file.fileName}}
 ```
 <!-- endSnippet -->
+--------------------------------------------------------------------------- %%
 
 ## Things to be aware of
 
