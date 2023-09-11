@@ -5,6 +5,9 @@ import proxyData from 'mustache-validator';
 
 /**
  * Expand any placeholder strings - {{....}} - in the given template, and return the result.
+ *
+ * The template implementation is currently provided by: [mustache.js](https://github.com/janl/mustache.js).
+ *
  * @param template - A template string, typically with placeholders such as {{query.task.folder}}
  * @param view - The property values
  *

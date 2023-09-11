@@ -1,14 +1,6 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 
-/**
- * @summary
- * This file contains experiments with the Mustache templates library.
- * It will likely be deleted once the library is in use.
- */
-
-// https://github.com/janl/mustache.js
-
 describe('ExpandTemplate', () => {
     it('hard-coded call', () => {
         const view = {
