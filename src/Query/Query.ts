@@ -41,16 +41,16 @@ export class Query implements IQuery {
         this.source = source;
         this.filePath = path;
 
-        const expandedSource = this.expandPlaceholders(source, path);
-        if (this.error !== undefined) {
-            // There was an error expanding placeholders.
-            return;
-        }
-
-        expandedSource
+        source
             .split('\n')
-            .map((line: string) => line.trim())
-            .forEach((line: string) => {
+            .map((rawLine: string) => rawLine.trim())
+            .forEach((rawLine: string) => {
+                const line = this.expandPlaceholders(rawLine, path);
+                if (this.error !== undefined) {
+                    // There was an error expanding placeholders.
+                    return;
+                }
+
                 switch (true) {
                     case line === '':
                         break;
@@ -95,7 +95,6 @@ ${source}`;
             }
         }
 
-        // TODO Apply the placeholders one line at a time
         // TODO Optimise the placeholder code and only do the expansion if {{ is in the text
         // TODO Do not complain about any placeholder errors in comment lines
         // TODO Show the original and expanded text in explanations
