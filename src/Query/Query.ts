@@ -85,13 +85,14 @@ export class Query implements IQuery {
     }
 
     private expandPlaceholders(path: string | undefined) {
-        if (this.source.includes('{{') && this.source.includes('}}')) {
+        const source = this.source;
+        if (source.includes('{{') && source.includes('}}')) {
             if (this.filePath === undefined) {
                 this._error = `The query looks like it contains a placeholder, with "{{" and "}}"
 but no file path has been supplied, so cannot expand placeholder values.
 The query is:
-${this.source}`;
-                return this.source;
+${source}`;
+                return source;
             }
         }
 
@@ -100,18 +101,18 @@ ${this.source}`;
         // TODO Do not complain about any placeholder errors in comment lines
         // TODO Show the original and expanded text in explanations
         // TODO Give user error info if they try and put a string in a regex search
-        let expandedSource: string = this.source;
+        let expandedSource: string = source;
         if (path) {
             const queryContext = makeQueryContext(path);
             try {
-                expandedSource = expandPlaceholders(this.source, queryContext);
+                expandedSource = expandPlaceholders(source, queryContext);
             } catch (error) {
                 if (error instanceof Error) {
                     this._error = error.message;
                 } else {
                     this._error = 'Internal error. expandPlaceholders() threw something other than Error.';
                 }
-                return this.source;
+                return source;
             }
         }
         return expandedSource;
