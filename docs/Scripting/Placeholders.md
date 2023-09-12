@@ -99,6 +99,8 @@ The problem is in:
 
 - The symbols are case-sensitive:
   - `query.file.fileName` is not recognised
+- When placeholders are used in custom filters and groups, they must be surrounded by quotes.
+  - For example: `'{{query.file.folder}}'`
 
 ## Known Limitations
 

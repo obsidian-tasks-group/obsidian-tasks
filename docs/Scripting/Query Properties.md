@@ -20,7 +20,8 @@ This page documents all the available pieces of information in Queries that you 
 > [!warning]
 >
 > - These properties can currently only be used in [[Placeholders]].
-> - They are not yet available via [[Custom Filters]] and [[Custom Grouping]].
+> - Placeholders can be in [[Custom Filters]] and [[Custom Grouping]], but must be surrounded by quotes. For example: `'{{query.file.folder}}'`.
+> - In a future release, we will allow expressions such as `query.file.folder` to be used directly in custom filters and groups.
 
 ## Values for Query File Properties
 
