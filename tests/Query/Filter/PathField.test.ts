@@ -157,6 +157,7 @@ describe('grouping by path', () => {
         // Assert
         expect({ grouper, tasks }).groupHeadingsToBe([
             // Why there is no path for empty path?
+            'a/b',
             'a/b/\\_c\\_',
             'a/b/c',
             'a/d/c',
