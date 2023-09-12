@@ -232,7 +232,16 @@ describe('file properties', () => {
                 ],
                 [
                     'filter by function task.file.folder.includes("Work/Projects/")',
-                    'Find tasks in files in any folder **and any sub-folders**',
+                    'Find tasks in files in a specific folder **and any sub-folders**',
+                ],
+                [
+                    "filter by function task.file.folder.includes( '{{query.file.folder}}' )",
+                    'Find tasks in files in the folder that contains the query **and any sub-folders**',
+                    'Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.',
+                ],
+                [
+                    "filter by function task.file.folder === '{{query.file.folder}}'",
+                    'Find tasks in files in the folder that contains the query only (**not tasks in any sub-folders**)',
                 ],
                 [
                     'filter by function task.file.folder.includes("Work/Projects")',

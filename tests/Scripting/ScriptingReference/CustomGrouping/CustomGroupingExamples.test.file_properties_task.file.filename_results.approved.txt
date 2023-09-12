@@ -7,6 +7,7 @@ Like 'group by filename' but does not link to the file.
 =>
 _c_.md
 a_b_c.md
+b.md
 c.md
 ====================================================================================
 
@@ -18,6 +19,7 @@ Like 'group by backlink' but links to the heading in the file.
 [[_c_#heading _italic text_]]
 [[#heading]]
 [[a_b_c#a_b_c]]
+[[b]]
 [[c]]
 [[c#c]]
 [[c#heading]]

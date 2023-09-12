@@ -6,6 +6,7 @@ group by function task.file.folder
 Same as 'group by folder'.
 =>
 /
+a/
 a/b/
 a/d/
 e/d/
@@ -21,6 +22,7 @@ Here's how it works:
     Then the trailing slash is added back, to ensure we do not get an empty string for files in the top level of the vault.
 =>
 /
+a/
 b/
 d/
 ====================================================================================

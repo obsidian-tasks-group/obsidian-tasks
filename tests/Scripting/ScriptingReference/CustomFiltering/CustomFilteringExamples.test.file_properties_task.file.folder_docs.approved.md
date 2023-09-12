@@ -4,7 +4,12 @@
     - Find tasks in files in any file in the given folder **only**, and not any sub-folders.
     - The equality test, `===`, requires that the trailing slash (`/`) be included.
 - ```filter by function task.file.folder.includes("Work/Projects/")```
-    - Find tasks in files in any folder **and any sub-folders**.
+    - Find tasks in files in a specific folder **and any sub-folders**.
+- ```filter by function task.file.folder.includes( '{{query.file.folder}}' )```
+    - Find tasks in files in the folder that contains the query **and any sub-folders**.
+    - Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.
+- ```filter by function task.file.folder === '{{query.file.folder}}'```
+    - Find tasks in files in the folder that contains the query only (**not tasks in any sub-folders**).
 - ```filter by function task.file.folder.includes("Work/Projects")```
     - By leaving off the trailing slash (`/`) this would also find tasks in any file inside folders such as:
         - `Work/Projects 2023/`

@@ -55,6 +55,6 @@ describe('grouping by folder', () => {
         const grouper = new FolderField().createNormalGrouper();
 
         // Assert
-        expect({ grouper, tasks }).groupHeadingsToBe(['/', 'a/b/', 'a/d/', 'e/d/']);
+        expect({ grouper, tasks }).groupHeadingsToBe(['/', 'a/', 'a/b/', 'a/d/', 'e/d/']);
     });
 });

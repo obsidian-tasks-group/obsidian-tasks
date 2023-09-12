@@ -90,4 +90,30 @@ explain`;
         checkExplainPresentAndVerify(blockQuery);
         verifyTaskBlockExplanation(blockQuery);
     });
+
+    it('placeholders', () => {
+        // Arrange
+        const instructions: string = `
+explain
+path includes {{query.file.path}}
+root includes {{query.file.root}}
+folder includes {{query.file.folder}}
+filename includes {{query.file.filename}}`;
+
+        // Act, Assert
+        checkExplainPresentAndVerify(instructions);
+        verifyTaskBlockExplanation(instructions);
+    });
+
+    it('placeholders error', () => {
+        // Arrange
+        const instructions: string = `
+# query.file.fileName is invalid, because of the capital N.
+# query.file.filename is the correct property name.
+filename includes {{query.file.fileName}}`;
+
+        // Act, Assert
+        verifyQuery(instructions); // This does not have an explain, so does not call checkExplainPresentAndVerify()
+        verifyTaskBlockExplanation(instructions);
+    });
 });

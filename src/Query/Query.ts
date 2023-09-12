@@ -1,3 +1,5 @@
+import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
+import { makeQueryContext } from '../Scripting/QueryContext';
 import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
@@ -12,7 +14,9 @@ import type { Filter } from './Filter/Filter';
 import { QueryResult } from './QueryResult';
 
 export class Query implements IQuery {
-    public source: string;
+    /** Note: source is the raw source, before expanding any placeholders */
+    public readonly source: string;
+    public readonly filePath: string | undefined;
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
@@ -33,12 +37,20 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor({ source }: { source: string }) {
+    constructor({ source }: { source: string }, path: string | undefined = undefined) {
         this.source = source;
+        this.filePath = path;
+
         source
             .split('\n')
-            .map((line: string) => line.trim())
-            .forEach((line: string) => {
+            .map((rawLine: string) => rawLine.trim())
+            .forEach((rawLine: string) => {
+                const line = this.expandPlaceholders(rawLine, path);
+                if (this.error !== undefined) {
+                    // There was an error expanding placeholders.
+                    return;
+                }
+
                 switch (true) {
                     case line === '':
                         break;
@@ -72,6 +84,37 @@ export class Query implements IQuery {
             });
     }
 
+    private expandPlaceholders(source: string, path: string | undefined) {
+        if (source.includes('{{') && source.includes('}}')) {
+            if (this.filePath === undefined) {
+                this._error = `The query looks like it contains a placeholder, with "{{" and "}}"
+but no file path has been supplied, so cannot expand placeholder values.
+The query is:
+${source}`;
+                return source;
+            }
+        }
+
+        // TODO Do not complain about any placeholder errors in comment lines
+        // TODO Show the original and expanded text in explanations
+        // TODO Give user error info if they try and put a string in a regex search
+        let expandedSource: string = source;
+        if (path) {
+            const queryContext = makeQueryContext(path);
+            try {
+                expandedSource = expandPlaceholders(source, queryContext);
+            } catch (error) {
+                if (error instanceof Error) {
+                    this._error = error.message;
+                } else {
+                    this._error = 'Internal error. expandPlaceholders() threw something other than Error.';
+                }
+                return source;
+            }
+        }
+        return expandedSource;
+    }
+
     /**
      *
      * Appends {@link q2} to this query.
@@ -95,7 +138,7 @@ export class Query implements IQuery {
     public append(q2: Query): Query {
         if (this.source === '') return q2;
         if (q2.source === '') return this;
-        return new Query({ source: `${this.source}\n${q2.source}` });
+        return new Query({ source: `${this.source}\n${q2.source}` }, this.filePath);
     }
 
     /**
@@ -106,6 +149,12 @@ export class Query implements IQuery {
      */
     public explainQuery(): string {
         let result = '';
+
+        if (this.error !== undefined) {
+            result += 'Query has an error:\n';
+            result += this.error + '\n';
+            return result;
+        }
 
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {

@@ -11,10 +11,30 @@ The equality test, `===`, requires that the trailing slash (`/`) be included.
 
 
 filter by function task.file.folder.includes("Work/Projects/")
-Find tasks in files in any folder **and any sub-folders**.
+Find tasks in files in a specific folder **and any sub-folders**.
 =>
 - [ ] In Work/Projects/general projects stuff.md
 - [ ] In Work/Projects/Detail/detailed.md
+====================================================================================
+
+
+filter by function task.file.folder.includes( '{{query.file.folder}}' )
+Find tasks in files in the folder that contains the query **and any sub-folders**.
+Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.
+=>
+- [ ] xyz in a/b.md
+- [ ] xyz in a/b/c.md
+- [ ] xyz in a/d/c.md
+- [ ] xyz in a/b/c.md
+- [ ] xyz in a/b/_c_.md
+- [ ] xyz in a/b/_c_.md
+====================================================================================
+
+
+filter by function task.file.folder === '{{query.file.folder}}'
+Find tasks in files in the folder that contains the query only (**not tasks in any sub-folders**).
+=>
+- [ ] xyz in a/b.md
 ====================================================================================
 
 
