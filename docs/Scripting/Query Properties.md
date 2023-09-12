@@ -7,7 +7,7 @@ publish: true
 <span class="related-pages">#feature/scripting</span>
 
 > [!released]
-> Query Properties were introduced in Tasks X.Y.Z.
+> Query Properties were introduced in Tasks 4.7.0.
 
 ## Introduction
 

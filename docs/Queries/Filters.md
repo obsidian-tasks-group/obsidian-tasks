@@ -985,7 +985,7 @@ Note that the path includes the `.md` extension.
 > [!released]
 >
 > - `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
-> - Placeholders were released in Tasks X.Y.Z.
+> - Placeholders were released in Tasks 4.7.0.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now possible, using `task.file.path`.
 
@@ -1007,7 +1007,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now p
 > [!released]
 >
 > - Introduced in Tasks 3.4.0.
-> - Placeholders were released in Tasks X.Y.Z.
+> - Placeholders were released in Tasks 4.7.0.
 
 The `root` is the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in the root of the vault.
 
@@ -1038,7 +1038,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by root folder** is now
 > [!released]
 >
 > - Introduced in Tasks 3.4.0.
-> - Placeholders were released in Tasks X.Y.Z.
+> - Placeholders were released in Tasks 4.7.0.
 
 This is the `folder` to the file that contains the task, which will be `/` for files in root of the vault.
 
@@ -1077,7 +1077,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now poss
 > [!released]
 >
 > - Introduced in Tasks 3.4.0.
-> - Placeholders were released in Tasks X.Y.Z.
+> - Placeholders were released in Tasks 4.7.0.
 
 Note that the file name includes the `.md` extension.
 
