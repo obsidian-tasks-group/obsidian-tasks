@@ -530,7 +530,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file path** is now p
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks X.Y.Z, the query's file path can be used in custom groups.
+Since Tasks 4.7.0, the query's file path can be used in custom groups.
 
 - It must be quoted: `'{{query.file.folder}}'`
 - Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
@@ -552,7 +552,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by root folder** is now
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks X.Y.Z, the query's file root can be used in custom groups.
+Since Tasks 4.7.0, the query's file root can be used in custom groups.
 
 - It must be quoted: `'{{query.file.root}}'`
 - Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
@@ -578,7 +578,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by folder** is now poss
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks X.Y.Z, the query's folder can be used in custom groups.
+Since Tasks 4.7.0, the query's folder can be used in custom groups.
 
 - It must be quoted: `'{{query.file.folder}}'`
 - Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
@@ -600,7 +600,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file name** is now p
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks X.Y.Z, the query's file name can be used in custom groups.
+Since Tasks 4.7.0, the query's file name can be used in custom groups.
 
 - It must be quoted: `'{{query.file.filename}}'`
 - Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.

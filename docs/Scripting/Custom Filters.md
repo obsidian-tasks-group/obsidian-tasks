@@ -45,7 +45,7 @@ The Reference section [[Query Properties]] shows all the query properties availa
 Any placeholders in custom filters must be surrounded by quotes.
 
 > [!released]
-> Query properties and placeholders were introduced in Tasks X.Y.Z.
+> Query properties and placeholders were introduced in Tasks 4.7.0.
 
 ### Expressions
 

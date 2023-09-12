@@ -193,7 +193,7 @@ due next week =>
 ### Template values are expanded
 
 > [!released]
-> Templating was introduced in Tasks X.Y.Z.
+> Templating was introduced in Tasks 4.7.0.
 
 For example, when the following query with [[Query Properties]] in [[Placeholders|placeholders]] is placed in a tasks query block in the file `some/sample/file path.md`:
 

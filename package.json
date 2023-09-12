@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tasks",
-  "version": "4.6.1",
+  "version": "4.7.0",
   "description": "Task management for the Obsidian knowledge base",
   "main": "main.js",
   "scripts": {

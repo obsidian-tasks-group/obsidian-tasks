@@ -16,7 +16,7 @@ This page documents ways of setting this up.
 ## Using pure Tasks blocks - with placeholders
 
 > [!released]
-> Placeholders were introduced in Tasks X.Y.Z.
+> Placeholders were introduced in Tasks 4.7.0.
 
 We want to search for tasks in the file with the same `path` that the query is in.
 
