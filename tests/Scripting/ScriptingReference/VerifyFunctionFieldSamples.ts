@@ -107,7 +107,11 @@ export function verifyFunctionFieldGrouperSamplesOnTasks(
     verifyAll('Results of custom groupers', customGroups, (group) => {
         const instruction = group[0];
         const comment = group.slice(1);
-        const grouper = new FunctionField().createGrouperFromLine(instruction);
+
+        const expandedInstruction = expandPlaceholders(instruction, makeQueryContext('a/b.md'));
+        const grouper = new FunctionField().createGrouperFromLine(expandedInstruction);
+        expect(grouper).not.toBeNull();
+
         const headings = groupHeadingsForTask(grouper!, tasks);
         return formatQueryAndResultsForApproving(instruction, comment, headings);
     });
