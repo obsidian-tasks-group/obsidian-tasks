@@ -530,6 +530,12 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file path** is now p
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+Since Tasks X.Y.Z, the query's file path can be used in custom groups.
+
+- It must be quoted: `'{{query.file.folder}}'`
+- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
+- Useful reading: [[Query Properties]] and [[Placeholders]].
+
 ### Root
 
 - `group by root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
@@ -545,6 +551,12 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by root folder** is now
   - Same as 'group by root'.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+Since Tasks X.Y.Z, the query's file root can be used in custom groups.
+
+- It must be quoted: `'{{query.file.root}}'`
+- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
+- Useful reading: [[Query Properties]] and [[Placeholders]].
 
 ### Folder
 
@@ -566,6 +578,12 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by folder** is now poss
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+Since Tasks X.Y.Z, the query's folder can be used in custom groups.
+
+- It must be quoted: `'{{query.file.folder}}'`
+- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
+- Useful reading: [[Query Properties]] and [[Placeholders]].
+
 ### File Name
 
 - `group by filename` (the link to the file that contains the task, without the `.md` extension)
@@ -581,6 +599,12 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file name** is now p
   - Like 'group by backlink' but links to the heading in the file.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+Since Tasks X.Y.Z, the query's file name can be used in custom groups.
+
+- It must be quoted: `'{{query.file.filename}}'`
+- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
+- Useful reading: [[Query Properties]] and [[Placeholders]].
 
 ### Backlink
 
