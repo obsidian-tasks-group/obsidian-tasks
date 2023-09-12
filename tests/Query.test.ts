@@ -506,6 +506,62 @@ Problem line: "${source}"`);
 Problem line: "${source}"`);
         });
     });
+
+    describe('parsing placeholders', () => {
+        it('should expand placeholder values in filters, but not source', () => {
+            // Arrange
+            const rawQuery = 'path includes {{query.file.path}}';
+            const path = 'a/b/path with space.md';
+
+            // Act
+            const query = new Query({ source: rawQuery }, path);
+
+            // Assert
+            expect(query.source).toEqual(rawQuery); // Interesting that query.source still has the placeholder text
+            expect(query.filters.length).toEqual(1);
+            expect(query.filters[0].instruction).toEqual('path includes a/b/path with space.md');
+        });
+
+        it('should report error if placeholders used without query location', () => {
+            // Arrange
+            const input = 'path includes {{query.file.path}}';
+
+            // Act
+            const query = new Query({ source: input });
+
+            // Assert
+            expect(query).not.toBeValid();
+            expect(query.error).toEqual(
+                'The query looks like it contains a placeholder, with "{{" and "}}"\n' +
+                    'but no file path has been supplied, so cannot expand placeholder values.\n' +
+                    'The query is:\n' +
+                    'path includes {{query.file.path}}',
+            );
+            expect(query.filters.length).toEqual(0);
+        });
+
+        it('should report error if non-existent placeholder used', () => {
+            // Arrange
+            const input = 'path includes {{query.file.noSuchProperty}}';
+            const path = 'a/b/path with space.md';
+
+            // Act
+            const query = new Query({ source: input }, path);
+
+            // Assert
+            expect(query).not.toBeValid();
+            expect(query.error).toEqual(
+                'There was an error expanding one or more placeholders.\n' +
+                    '\n' +
+                    'The error message was:\n' +
+                    '    Unknown property: query.file.noSuchProperty\n' +
+                    '\n' +
+                    'The problem is in:\n' +
+                    '    path includes {{query.file.noSuchProperty}}',
+            );
+            expect(query.filters.length).toEqual(0);
+        });
+    });
 });
 
 describe('Query', () => {
@@ -1027,6 +1083,17 @@ describe('Query', () => {
 
 due 2012-01-23 =>
   due date is on 2012-01-23 (Monday 23rd January 2012)
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
+
+        it('should include any error message in the explanation', () => {
+            const input = 'i am a nonsense query';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `Query has an error:
+do not understand query
+Problem line: "i am a nonsense query"
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });

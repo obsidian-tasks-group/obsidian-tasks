@@ -76,6 +76,7 @@ describe('grouping by backlink', () => {
             '\\_c\\_',
             '\\_c\\_ > heading _italic text_',
             'a\\_b\\_c',
+            'b',
             'c',
             'c > heading',
             'Unknown Location',

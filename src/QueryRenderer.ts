@@ -89,12 +89,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         // added later.
         switch (this.containerEl.className) {
             case 'block-language-tasks':
-                this.query = getQueryForQueryRenderer(this.source);
+                this.query = getQueryForQueryRenderer(this.source, this.filePath);
                 this.queryType = 'tasks';
                 break;
 
             default:
-                this.query = getQueryForQueryRenderer(this.source);
+                this.query = getQueryForQueryRenderer(this.source, this.filePath);
                 this.queryType = 'tasks';
                 break;
         }
@@ -135,7 +135,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
         this.queryReloadTimeout = setTimeout(() => {
-            this.query = getQueryForQueryRenderer(this.source);
+            this.query = getQueryForQueryRenderer(this.source, this.filePath);
             // Process the current cache state:
             this.events.triggerRequestCacheUpdate(this.render.bind(this));
             this.reloadQueryAtMidnight();
@@ -198,7 +198,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     // Use the 'explain' instruction to enable this
     private createExplanation(content: HTMLDivElement) {
-        const explanationAsString = explainResults(this.source);
+        const explanationAsString = explainResults(this.source, this.filePath);
 
         const explanationsBlock = content.createEl('pre');
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);

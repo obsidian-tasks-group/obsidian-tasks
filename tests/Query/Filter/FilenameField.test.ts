@@ -126,6 +126,6 @@ describe('grouping by filename', () => {
         const grouper = new FilenameField().createNormalGrouper();
 
         // Assert
-        expect({ grouper, tasks }).groupHeadingsToBe(['[[_c_]]', '[[a_b_c]]', '[[c]]', 'Unknown Location']);
+        expect({ grouper, tasks }).groupHeadingsToBe(['[[_c_]]', '[[a_b_c]]', '[[b]]', '[[c]]', 'Unknown Location']);
     });
 });
