@@ -103,7 +103,7 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
     });
 
-    it.failing('should add Created Date when the setting is set', () => {
+    it('should add Created Date when the setting is set', () => {
         updateSettings({ setCreatedDate: true });
         const line = '- [ ] without global filter and without created date';
         const path = 'a/b/c.md';
