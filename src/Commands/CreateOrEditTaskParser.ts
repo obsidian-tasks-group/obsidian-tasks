@@ -31,8 +31,10 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     const createdDate = setCreatedDate ? window.moment().startOf('d') : null;
 
     if (task !== null) {
-        if (setCreatedDate && task.createdDate === null) {
-            return new Task({ ...task, createdDate });
+        if (task.description === '') {
+            if (setCreatedDate && task.createdDate === null) {
+                return new Task({ ...task, createdDate });
+            }
         }
         return task;
     }

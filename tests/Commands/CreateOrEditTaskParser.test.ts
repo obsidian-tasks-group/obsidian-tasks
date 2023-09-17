@@ -112,11 +112,6 @@ describe('CreateOrEditTaskParser - created date', () => {
         ['- ', '- [ ]  ➕ 2023-09-17', '2023-09-17'], // bullet point only
         ['- [ ] ', '- [ ]  ➕ 2023-09-17', '2023-09-17'], // bullet point and a checkbox
         [
-            '- [ ] without global filter and without created date', // nominal use-case
-            '- [ ] without global filter and without created date ➕ 2023-09-17',
-            '2023-09-17',
-        ],
-        [
             '- [ ] without global filter and with ➕ 2023-01-20', // with an existing created date
             '- [ ] without global filter and with ➕ 2023-01-20',
             '2023-01-20',
@@ -133,4 +128,15 @@ describe('CreateOrEditTaskParser - created date', () => {
             expect(task.createdDate).toEqualMoment(moment(expectedCreatedDate));
         },
     );
+
+    it('should not add created date to a task line with description', () => {
+        updateSettings({ setCreatedDate: true });
+        const path = 'a/b/c.md';
+        const line = '- [ ] hope created date will not be added';
+
+        const task = taskFromLine({ line, path });
+
+        expect(task.toFileLineString()).toStrictEqual('- [ ] hope created date will not be added');
+        expect(task.createdDate).toEqual(null);
+    });
 });
