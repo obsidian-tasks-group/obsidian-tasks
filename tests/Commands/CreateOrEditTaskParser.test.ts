@@ -118,14 +118,14 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         ],
     ])(
         'line loaded into "Create or edit task" command: "%s"',
-        (line: string, expectedResult: string, createdDate: string) => {
+        (line: string, expectedTaskLine: string, expectedCreatedDate: string) => {
             updateSettings({ setCreatedDate: true });
             const path = 'a/b/c.md';
 
             const task = taskFromLine({ line, path });
 
-            expect(task.toFileLineString()).toStrictEqual(expectedResult);
-            expect(task.createdDate).toEqualMoment(moment(createdDate));
+            expect(task.toFileLineString()).toStrictEqual(expectedTaskLine);
+            expect(task.createdDate).toEqualMoment(moment(expectedCreatedDate));
         },
     );
 });
