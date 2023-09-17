@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { updateSettings } from '../../src/Config/Settings';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Priority } from '../../src/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
@@ -106,6 +106,7 @@ describe('CreateOrEditTaskParser - created date', () => {
 
     afterEach(() => {
         jest.useRealTimers();
+        resetSettings();
     });
 
     it.each([
