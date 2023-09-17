@@ -114,6 +114,28 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.createdDate).toEqualMoment(moment('2023-09-17'));
     });
 
+    it('should add Created Date to a task line without description when the setting is set', () => {
+        updateSettings({ setCreatedDate: true });
+        const line = '- [ ] ';
+        const path = 'a/b/c.md';
+
+        const task = taskFromLine({ line, path });
+
+        expect(task.toFileLineString()).toStrictEqual('- [ ]  ➕ 2023-09-17');
+        expect(task.createdDate).toEqualMoment(moment('2023-09-17'));
+    });
+
+    it('should add Created Date to a task line with just a bullet', () => {
+        updateSettings({ setCreatedDate: true });
+        const line = '-';
+        const path = 'a/b/c.md';
+
+        const task = taskFromLine({ line, path });
+
+        expect(task.toFileLineString()).toStrictEqual('- [ ]  ➕ 2023-09-17');
+        expect(task.createdDate).toEqualMoment(moment('2023-09-17'));
+    });
+
     it('should not change Created Date when it is already set', () => {
         updateSettings({ setCreatedDate: true });
         const line = '- [ ] without global filter and with ➕ 2023-01-20';
