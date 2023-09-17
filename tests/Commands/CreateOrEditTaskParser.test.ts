@@ -110,14 +110,14 @@ describe('CreateOrEditTaskParser - created date', () => {
 
     it.each([
         [
-            '- [ ] without global filter and without created date',
+            '- [ ] without global filter and without created date', // nominal use-case
             '- [ ] without global filter and without created date ➕ 2023-09-17',
             '2023-09-17',
         ],
-        ['- [ ] ', '- [ ]  ➕ 2023-09-17', '2023-09-17'],
-        ['- ', '- [ ]  ➕ 2023-09-17', '2023-09-17'],
+        ['- [ ] ', '- [ ]  ➕ 2023-09-17', '2023-09-17'], // bullet point and a checkbox
+        ['- ', '- [ ]  ➕ 2023-09-17', '2023-09-17'], // bullet point only
         [
-            '- [ ] without global filter and with ➕ 2023-01-20',
+            '- [ ] without global filter and with ➕ 2023-01-20', // with an existing created date
             '- [ ] without global filter and with ➕ 2023-01-20',
             '2023-01-20',
         ],
