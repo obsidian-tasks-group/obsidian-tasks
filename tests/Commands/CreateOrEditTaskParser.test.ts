@@ -103,16 +103,24 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
     });
 
-    it('should add Created Date when the setting is set', () => {
-        updateSettings({ setCreatedDate: true });
-        const line = '- [ ] without global filter and without created date';
-        const path = 'a/b/c.md';
+    it.each([
+        [
+            '- [ ] without global filter and without created date',
+            '- [ ] without global filter and without created date ➕ 2023-09-17',
+            '2023-09-17',
+        ],
+    ])(
+        'line loaded into "Create or edit task" command: "%s"',
+        (line: string, expectedResult: string, createdDate: string) => {
+            updateSettings({ setCreatedDate: true });
+            const path = 'a/b/c.md';
 
-        const task = taskFromLine({ line, path });
+            const task = taskFromLine({ line, path });
 
-        expect(task.toFileLineString()).toStrictEqual(`${line} ➕ 2023-09-17`);
-        expect(task.createdDate).toEqualMoment(moment('2023-09-17'));
-    });
+            expect(task.toFileLineString()).toStrictEqual(expectedResult);
+            expect(task.createdDate).toEqualMoment(moment(createdDate));
+        },
+    );
 
     it('should add Created Date to a task line without description when the setting is set', () => {
         updateSettings({ setCreatedDate: true });
