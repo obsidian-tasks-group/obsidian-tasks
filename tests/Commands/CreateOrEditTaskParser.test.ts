@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { updateSettings } from '../../src/Config/Settings';
 import { Priority } from '../../src/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
@@ -72,8 +73,14 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
 });
 
 describe('CreateOrEditTaskParser - task recognition', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-09-17'));
+    });
+
     afterEach(() => {
         GlobalFilter.reset();
+        jest.useRealTimers();
     });
 
     it('should recognize task details without global filter', () => {
@@ -94,5 +101,16 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.scheduledDate).toEqualMoment(moment('2023-06-13'));
         expect(task.dueDate).toEqualMoment(moment('2024-12-10'));
         expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
+    });
+
+    it.failing('should add Created Date when the setting is set', () => {
+        updateSettings({ setCreatedDate: true });
+        const line = '- [ ] without global filter and without created date';
+        const path = 'a/b/c.md';
+
+        const task = taskFromLine({ line, path });
+
+        expect(task.toFileLineString()).toStrictEqual(`${line} ➕ 2023-09-17`);
+        expect(task.createdDate).toEqualMoment(moment('2023-09-17'));
     });
 });
