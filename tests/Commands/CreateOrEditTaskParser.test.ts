@@ -73,14 +73,8 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
 });
 
 describe('CreateOrEditTaskParser - task recognition', () => {
-    beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-09-17'));
-    });
-
     afterEach(() => {
         GlobalFilter.reset();
-        jest.useRealTimers();
     });
 
     it('should recognize task details without global filter', () => {
@@ -101,6 +95,17 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.scheduledDate).toEqualMoment(moment('2023-06-13'));
         expect(task.dueDate).toEqualMoment(moment('2024-12-10'));
         expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
+    });
+});
+
+describe('CreateOrEditTaskParser - created date', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-09-17'));
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
     });
 
     it.each([
