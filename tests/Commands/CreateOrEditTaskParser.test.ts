@@ -113,4 +113,15 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.toFileLineString()).toStrictEqual(`${line} ➕ 2023-09-17`);
         expect(task.createdDate).toEqualMoment(moment('2023-09-17'));
     });
+
+    it('should not change Created Date when it is already set', () => {
+        updateSettings({ setCreatedDate: true });
+        const line = '- [ ] without global filter and with ➕ 2023-01-20';
+        const path = 'a/b/c.md';
+
+        const task = taskFromLine({ line, path });
+
+        expect(task.toFileLineString()).toStrictEqual(line);
+        expect(task.createdDate).toEqualMoment(moment('2023-01-20'));
+    });
 });
