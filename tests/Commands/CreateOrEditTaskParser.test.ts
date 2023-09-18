@@ -99,7 +99,7 @@ describe('CreateOrEditTaskParser - task recognition', () => {
 });
 
 describe('CreateOrEditTaskParser - created date', () => {
-    beforeAll(() => {
+    beforeEach(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date('2023-09-17'));
     });
