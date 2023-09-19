@@ -78,8 +78,9 @@ function convertDescriptionToTaskLine(taskDescription: string): string {
  *   - optionally editing the description,
  *   - and clicking Apply.
  * @param line
- * @param newDescription - the new value for the description field. if undefined, the description won't be edited.
- * @returns The the edited task line
+ * @param newDescription - the new value for the description field.
+ *                         If `undefined`, the description won't be edited, unless text is needed to enable the Apply button.
+ * @returns The edited task line.
  */
 async function editTaskLine(line: string, newDescription: string | undefined) {
     const task = taskFromLine({ line: line, path: '' });
