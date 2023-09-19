@@ -236,6 +236,7 @@ describe('Task editing', () => {
                 '- [ ] ',
                 '- list item, but no checkbox',
                 '- [ ] list item with checkbox',
+                '- [ ] list item with checkbox and created date ➕ 2023-01-01',
             ],
         );
     });

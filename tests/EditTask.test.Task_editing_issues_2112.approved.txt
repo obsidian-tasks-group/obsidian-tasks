@@ -33,6 +33,10 @@ KEY: (globalFilter, set created date)
     '- [ ] list item with checkbox' =>
     '- [ ] list item with checkbox'
 
+('', false)
+    '- [ ] list item with checkbox and created date ➕ 2023-01-01' =>
+    '- [ ] list item with checkbox and created date ➕ 2023-01-01'
+
 ('', true)
     '' =>
     '- [ ] simulate user typing text in to empty description field ➕ 2023-07-18'
@@ -64,6 +68,10 @@ KEY: (globalFilter, set created date)
 ('', true)
     '- [ ] list item with checkbox' =>
     '- [ ] list item with checkbox'
+
+('', true)
+    '- [ ] list item with checkbox and created date ➕ 2023-01-01' =>
+    '- [ ] list item with checkbox and created date ➕ 2023-01-01'
 
 ('#task', false)
     '' =>
@@ -97,6 +105,10 @@ KEY: (globalFilter, set created date)
     '- [ ] list item with checkbox' =>
     '- [ ] #task list item with checkbox'
 
+('#task', false)
+    '- [ ] list item with checkbox and created date ➕ 2023-01-01' =>
+    '- [ ] #task list item with checkbox and created date ➕ 2023-01-01'
+
 ('#task', true)
     '' =>
     '- [ ] #task simulate user typing text in to empty description field ➕ 2023-07-18'
@@ -128,3 +140,7 @@ KEY: (globalFilter, set created date)
 ('#task', true)
     '- [ ] list item with checkbox' =>
     '- [ ] #task list item with checkbox'
+
+('#task', true)
+    '- [ ] list item with checkbox and created date ➕ 2023-01-01' =>
+    '- [ ] #task list item with checkbox and created date ➕ 2023-01-01'
