@@ -159,15 +159,8 @@ describe('Task rendering', () => {
 });
 
 describe('Task editing', () => {
-    beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-07-18'));
-    });
-
     afterEach(() => {
         GlobalFilter.reset();
-        resetSettings();
-        jest.useRealTimers();
     });
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
@@ -203,13 +196,24 @@ describe('Task editing', () => {
             `${globalFilter} ${newDescription}`,
         );
     });
+});
 
-    // TODO Put in own describe block - with better name
-    // TODO Add explanatory comments
-    describe('issues', () => {
+// TODO Add explanatory comments
+describe('Exhaustive editing', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-07-18'));
+    });
+
+    afterEach(() => {
+        GlobalFilter.reset();
+        resetSettings();
+        jest.useRealTimers();
+    });
+
+    describe('Edit and save', () => {
         verifyAllCombinations3Async<string, boolean, string>(
-            // TODO Better name
-            '2112',
+            'All inputs',
             'KEY: (globalFilter, set created date)\n',
             async (globalFilter, setCreatedDate, initialTaskLine) => {
                 GlobalFilter.set(globalFilter as string);
