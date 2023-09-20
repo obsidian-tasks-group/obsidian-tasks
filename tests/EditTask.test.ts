@@ -212,9 +212,25 @@ describe('Exhaustive editing', () => {
     });
 
     describe('Edit and save', () => {
+        const name = 'All inputs';
+        const title = 'KEY: (globalFilter, set created date)\n';
+        const globalFilterValues = ['', '#task'];
+        const setCreatedDateValues = [false, true];
+        const initialTaskLineValues = [
+            '',
+            'plain text, not a list item',
+            '-',
+            '- ',
+            '- [ ]',
+            '- [ ] ',
+            '- list item, but no checkbox',
+            '- [ ] list item with checkbox',
+            '- [ ] list item with checkbox and created date ➕ 2023-01-01',
+        ];
+
         verifyAllCombinations3Async<string, boolean, string>(
-            'All inputs',
-            'KEY: (globalFilter, set created date)\n',
+            name,
+            title,
             async (globalFilter, setCreatedDate, initialTaskLine) => {
                 GlobalFilter.set(globalFilter as string);
 
@@ -229,20 +245,9 @@ describe('Exhaustive editing', () => {
     '${initialTaskLine}' =>
     '${editedTaskLine}'`;
             },
-            ['', '#task'],
-            [false, true],
-            [
-                // Force line break TODO Remove line
-                '',
-                'plain text, not a list item',
-                '-',
-                '- ',
-                '- [ ]',
-                '- [ ] ',
-                '- list item, but no checkbox',
-                '- [ ] list item with checkbox',
-                '- [ ] list item with checkbox and created date ➕ 2023-01-01',
-            ],
+            globalFilterValues,
+            setCreatedDateValues,
+            initialTaskLineValues,
         );
     });
 });
