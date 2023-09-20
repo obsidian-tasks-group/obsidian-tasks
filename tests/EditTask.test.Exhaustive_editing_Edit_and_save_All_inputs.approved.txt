@@ -37,6 +37,10 @@ KEY: (globalFilter, set created date)
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01'
 
+('', false)
+    '- [ ] #task checkbox with global filter string and initial description' =>
+    '- [ ] #task checkbox with global filter string and initial description'
+
 ('', true)
     '' =>
     '- [ ] simulate user typing text in to empty description field ➕ 2023-07-18'
@@ -72,6 +76,10 @@ KEY: (globalFilter, set created date)
 ('', true)
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01'
+
+('', true)
+    '- [ ] #task checkbox with global filter string and initial description' =>
+    '- [ ] #task checkbox with global filter string and initial description'
 
 ('#task', false)
     '' =>
@@ -109,6 +117,10 @@ KEY: (globalFilter, set created date)
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
     '- [ ] #task checkbox with initial description and created date ➕ 2023-01-01'
 
+('#task', false)
+    '- [ ] #task checkbox with global filter string and initial description' =>
+    '- [ ] #task checkbox with global filter string and initial description'
+
 ('#task', true)
     '' =>
     '- [ ] #task simulate user typing text in to empty description field ➕ 2023-07-18'
@@ -144,3 +156,7 @@ KEY: (globalFilter, set created date)
 ('#task', true)
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
     '- [ ] #task checkbox with initial description and created date ➕ 2023-01-01'
+
+('#task', true)
+    '- [ ] #task checkbox with global filter string and initial description' =>
+    '- [ ] #task checkbox with global filter string and initial description'

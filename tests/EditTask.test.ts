@@ -226,6 +226,7 @@ describe('Exhaustive editing', () => {
             '- list item, but no checkbox',
             '- [ ] checkbox with initial description',
             '- [ ] checkbox with initial description and created date ➕ 2023-01-01',
+            '- [ ] #task checkbox with global filter string and initial description',
         ];
 
         verifyAllCombinations3Async<string, boolean, string>(
