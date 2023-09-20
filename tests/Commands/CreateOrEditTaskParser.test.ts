@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Priority } from '../../src/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
@@ -94,5 +95,49 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.scheduledDate).toEqualMoment(moment('2023-06-13'));
         expect(task.dueDate).toEqualMoment(moment('2024-12-10'));
         expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
+    });
+});
+
+describe('CreateOrEditTaskParser - created date', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-09-17'));
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+        resetSettings();
+    });
+
+    it.each([
+        ['- ', '- [ ]  ➕ 2023-09-17', '2023-09-17'], // bullet point only
+        ['- [ ] ', '- [ ]  ➕ 2023-09-17', '2023-09-17'], // bullet point and a checkbox
+        [
+            '- [ ] without global filter and with ➕ 2023-01-20', // with an existing created date
+            '- [ ] without global filter and with ➕ 2023-01-20',
+            '2023-01-20',
+        ],
+    ])(
+        'line loaded into "Create or edit task" command: "%s"',
+        (line: string, expectedTaskLine: string, expectedCreatedDate: string) => {
+            updateSettings({ setCreatedDate: true });
+            const path = 'a/b/c.md';
+
+            const task = taskFromLine({ line, path });
+
+            expect(task.toFileLineString()).toStrictEqual(expectedTaskLine);
+            expect(task.createdDate).toEqualMoment(moment(expectedCreatedDate));
+        },
+    );
+
+    it('should not add created date to a task line with description', () => {
+        updateSettings({ setCreatedDate: true });
+        const path = 'a/b/c.md';
+        const line = '- [ ] hope created date will not be added';
+
+        const task = taskFromLine({ line, path });
+
+        expect(task.toFileLineString()).toStrictEqual('- [ ] hope created date will not be added');
+        expect(task.createdDate).toEqual(null);
     });
 });

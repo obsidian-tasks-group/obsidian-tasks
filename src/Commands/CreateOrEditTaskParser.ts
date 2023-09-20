@@ -27,12 +27,17 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         DateFallback.fromPath(path), // set the scheduled date from the filename, so it can be displayed in the dialog
     );
 
-    if (task !== null) {
-        return task;
-    }
-
     const { setCreatedDate } = getSettings();
     const createdDate = setCreatedDate ? window.moment() : null;
+
+    if (task !== null) {
+        if (task.description === '') {
+            if (setCreatedDate && task.createdDate === null) {
+                return new Task({ ...task, createdDate });
+            }
+        }
+        return task;
+    }
 
     // If we are not on a line of a task, we take what we have.
     // The non-task line can still be a checklist, for example if it is lacking the global filter.
