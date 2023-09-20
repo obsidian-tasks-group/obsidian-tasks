@@ -198,7 +198,12 @@ describe('Task editing', () => {
     });
 });
 
-// TODO Add explanatory comments
+/**
+ * @summary This tests behaviour under a wide variety of scenarios, such as multiple different user settings, and input lines.
+ *
+ * As the number of combinations of settings values increases, it becomes harder and harder
+ * to write sufficient tests manually, and to find corner cases in exploratory testing.
+ */
 describe('Exhaustive editing', () => {
     beforeEach(() => {
         jest.useFakeTimers();
@@ -211,6 +216,13 @@ describe('Exhaustive editing', () => {
         jest.useRealTimers();
     });
 
+    /**
+     * Test outcome of simply editing and saving a task line, under many conditions.
+     * Written as our previous test coverage was not good enough to detect the following:
+     *   - https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2112
+     *   - Since Tasks 4.0.1, using 'Create or edit task' on a line with a checkbox
+     *     but no global filter no longer adds the Created date.
+     */
     describe('Edit and save', () => {
         const name = 'All inputs';
         const title = 'KEY: (globalFilter, set created date)\n';
@@ -229,6 +241,8 @@ describe('Exhaustive editing', () => {
             '- [ ] #task checkbox with global filter string and initial description',
         ];
 
+        // For explanation of this call, see:
+        // https://publish.obsidian.md/tasks-contributing/Testing/Approval+Tests#Verify+the+results+of+multiple+input+values
         verifyAllCombinations3Async<string, boolean, string>(
             name,
             title,
