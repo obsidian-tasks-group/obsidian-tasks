@@ -1,7 +1,19 @@
 import { it } from '@jest/globals';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { EMPTY } from 'approvals/lib/Utilities/Printers';
+import { formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { runCombinations9 } from './RunCombinations';
+
+/**
+ * Add quotes around any string values.
+ *
+ * If the code in this file is ever published up-stream to Approvals.NodeJS, we can always copy
+ * formatToRepresentType() over too.
+ * @param x
+ */
+export function fmt(x: any): string {
+    return formatToRepresentType(x);
+}
 
 export function verifyAllCombinations2Async<T1, T2>(
     name: string,
@@ -13,7 +25,7 @@ export function verifyAllCombinations2Async<T1, T2>(
     let output = title + '\n';
     runCombinations9(
         (t1, t2, _t3, _t4, _t5, _t6, _t7, _t8, _t9) => {
-            it(`${name} ${t1} ${t2}`, async () => {
+            it(`${name} ${fmt(t1)} ${fmt(t2)}`, async () => {
                 output += (await func(t1, t2)) + '\n';
             });
         },
@@ -44,7 +56,7 @@ export function verifyAllCombinations3Async<T1, T2, T3>(
     let output = title + '\n';
     runCombinations9(
         (t1, t2, t3, _t4, _t5, _t6, _t7, _t8, _t9) => {
-            it(`${name} ${t1} ${t2} ${t3}`, async () => {
+            it(`${name} ${fmt(t1)} ${fmt(t2)} ${fmt(t3)}`, async () => {
                 output += (await func(t1, t2, t3)) + '\n';
             });
         },
@@ -76,7 +88,7 @@ export function verifyAllCombinations4Async<T1, T2, T3, T4>(
     let output = title + '\n';
     runCombinations9(
         (t1, t2, t3, t4, _t5, _t6, _t7, _t8, _t9) => {
-            it(`${name} ${t1} ${t2} ${t3} ${t4}`, async () => {
+            it(`${name} ${fmt(t1)} ${fmt(t2)} ${fmt(t3)} ${fmt(t4)}`, async () => {
                 output += (await func(t1, t2, t3, t4)) + '\n';
             });
         },
@@ -109,7 +121,7 @@ export function verifyAllCombinations5Async<T1, T2, T3, T4, T5>(
     let output = title + '\n';
     runCombinations9(
         (t1, t2, t3, t4, t5, _t6, _t7, _t8, _t9) => {
-            it(`${name} ${t1} ${t2} ${t3} ${t4} ${t5}`, async () => {
+            it(`${name} ${fmt(t1)} ${fmt(t2)} ${fmt(t3)} ${fmt(t4)} ${fmt(t5)}`, async () => {
                 output += (await func(t1, t2, t3, t4, t5)) + '\n';
             });
         },
@@ -143,7 +155,7 @@ export function verifyAllCombinations6Async<T1, T2, T3, T4, T5, T6>(
     let output = title + '\n';
     runCombinations9(
         (t1, t2, t3, t4, t5, t6, _t7, _t8, _t9) => {
-            it(`${name} ${t1} ${t2} ${t3} ${t4} ${t5} ${t6}`, async () => {
+            it(`${name} ${fmt(t1)} ${fmt(t2)} ${fmt(t3)} ${fmt(t4)} ${fmt(t5)} ${fmt(t6)}`, async () => {
                 output += (await func(t1, t2, t3, t4, t5, t6)) + '\n';
             });
         },
@@ -178,7 +190,7 @@ export function verifyAllCombinations7Async<T1, T2, T3, T4, T5, T6, T7>(
     let output = title + '\n';
     runCombinations9(
         (t1, t2, t3, t4, t5, t6, t7, _t8, _t9) => {
-            it(`${name} ${t1} ${t2} ${t3} ${t4} ${t5} ${t6} ${t7}`, async () => {
+            it(`${name} ${fmt(t1)} ${fmt(t2)} ${fmt(t3)} ${fmt(t4)} ${fmt(t5)} ${fmt(t6)} ${fmt(t7)}`, async () => {
                 output += (await func(t1, t2, t3, t4, t5, t6, t7)) + '\n';
             });
         },
@@ -223,7 +235,9 @@ export function verifyAllCombinations8Async<T1, T2, T3, T4, T5, T6, T7, T8>(
     let output = title + '\n';
     runCombinations9(
         (t1, t2, t3, t4, t5, t6, t7, t8, _t9) => {
-            it(`${name} ${t1} ${t2} ${t3} ${t4} ${t5} ${t6} ${t7} ${t8}`, async () => {
+            it(`${name} ${fmt(t1)} ${fmt(t2)} ${fmt(t3)} ${fmt(t4)} ${fmt(t5)} ${fmt(t6)} ${fmt(t7)} ${fmt(
+                t8,
+            )}`, async () => {
                 output += (await func(t1, t2, t3, t4, t5, t6, t7, t8)) + '\n';
             });
         },
@@ -270,7 +284,9 @@ export function verifyAllCombinations9Async<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
     let output = title + '\n';
     runCombinations9(
         (t1, t2, t3, t4, t5, t6, t7, t8, t9) => {
-            it(`${name} ${t1} ${t2} ${t3} ${t4} ${t5} ${t6} ${t7} ${t8} ${t9}`, async () => {
+            it(`${name} ${fmt(t1)} ${fmt(t2)} ${fmt(t3)} ${fmt(t4)} ${fmt(t5)} ${fmt(t6)} ${fmt(t7)} ${fmt(t8)} ${fmt(
+                t9,
+            )}`, async () => {
                 output += (await func(t1, t2, t3, t4, t5, t6, t7, t8, t9)) + '\n';
             });
         },
