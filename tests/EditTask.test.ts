@@ -224,8 +224,8 @@ describe('Exhaustive editing', () => {
             '- [ ]',
             '- [ ] ',
             '- list item, but no checkbox',
-            '- [ ] list item with checkbox',
-            '- [ ] list item with checkbox and created date ➕ 2023-01-01',
+            '- [ ] checkbox with initial description',
+            '- [ ] checkbox with initial description and created date ➕ 2023-01-01',
         ];
 
         verifyAllCombinations3Async<string, boolean, string>(

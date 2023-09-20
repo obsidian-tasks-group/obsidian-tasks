@@ -30,12 +30,12 @@ KEY: (globalFilter, set created date)
     '- [ ] list item, but no checkbox'
 
 ('', false)
-    '- [ ] list item with checkbox' =>
-    '- [ ] list item with checkbox'
+    '- [ ] checkbox with initial description' =>
+    '- [ ] checkbox with initial description'
 
 ('', false)
-    '- [ ] list item with checkbox and created date ➕ 2023-01-01' =>
-    '- [ ] list item with checkbox and created date ➕ 2023-01-01'
+    '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
+    '- [ ] checkbox with initial description and created date ➕ 2023-01-01'
 
 ('', true)
     '' =>
@@ -66,12 +66,12 @@ KEY: (globalFilter, set created date)
     '- [ ] list item, but no checkbox ➕ 2023-07-18'
 
 ('', true)
-    '- [ ] list item with checkbox' =>
-    '- [ ] list item with checkbox'
+    '- [ ] checkbox with initial description' =>
+    '- [ ] checkbox with initial description'
 
 ('', true)
-    '- [ ] list item with checkbox and created date ➕ 2023-01-01' =>
-    '- [ ] list item with checkbox and created date ➕ 2023-01-01'
+    '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
+    '- [ ] checkbox with initial description and created date ➕ 2023-01-01'
 
 ('#task', false)
     '' =>
@@ -102,12 +102,12 @@ KEY: (globalFilter, set created date)
     '- [ ] #task list item, but no checkbox'
 
 ('#task', false)
-    '- [ ] list item with checkbox' =>
-    '- [ ] #task list item with checkbox'
+    '- [ ] checkbox with initial description' =>
+    '- [ ] #task checkbox with initial description'
 
 ('#task', false)
-    '- [ ] list item with checkbox and created date ➕ 2023-01-01' =>
-    '- [ ] #task list item with checkbox and created date ➕ 2023-01-01'
+    '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
+    '- [ ] #task checkbox with initial description and created date ➕ 2023-01-01'
 
 ('#task', true)
     '' =>
@@ -138,9 +138,9 @@ KEY: (globalFilter, set created date)
     '- [ ] #task list item, but no checkbox ➕ 2023-07-18'
 
 ('#task', true)
-    '- [ ] list item with checkbox' =>
-    '- [ ] #task list item with checkbox'
+    '- [ ] checkbox with initial description' =>
+    '- [ ] #task checkbox with initial description'
 
 ('#task', true)
-    '- [ ] list item with checkbox and created date ➕ 2023-01-01' =>
-    '- [ ] #task list item with checkbox and created date ➕ 2023-01-01'
+    '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
+    '- [ ] #task checkbox with initial description and created date ➕ 2023-01-01'
