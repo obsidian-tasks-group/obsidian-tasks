@@ -10,6 +10,8 @@ import EditTask from '../src/ui/EditTask.svelte';
 import { Status } from '../src/Status';
 import { DateFallback } from '../src/DateFallback';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
+import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { verifyAllCombinations3Async } from './TestingTools/CombinationApprovalsAsync';
 
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
@@ -67,6 +69,33 @@ async function editDescriptionAndSubmit(
 
 function convertDescriptionToTaskLine(taskDescription: string): string {
     return `- [ ] ${taskDescription}`;
+}
+
+/**
+ * Simulate the behaviour of:
+ *   - clicking on a line in Obsidian,
+ *   - opening the Edit task modal,
+ *   - optionally editing the description,
+ *   - and clicking Apply.
+ * @param line
+ * @param newDescription - the new value for the description field.
+ *                         If `undefined`, the description won't be edited, unless text is needed to enable the Apply button.
+ * @returns The edited task line.
+ */
+async function editTaskLine(line: string, newDescription: string | undefined) {
+    const task = taskFromLine({ line: line, path: '' });
+    const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
+    const { result, container } = renderAndCheckModal(task, onSubmit);
+
+    const description = getAndCheckRenderedDescriptionElement(container);
+    const submit = getAndCheckApplyButton(result);
+
+    let adjustedNewDescription = newDescription ? newDescription : description!.value;
+    if (!adjustedNewDescription) {
+        adjustedNewDescription = 'simulate user typing text in to empty description field';
+    }
+
+    return await editDescriptionAndSubmit(description, adjustedNewDescription, submit, waitForClose);
 }
 
 describe('Task rendering', () => {
@@ -135,14 +164,8 @@ describe('Task editing', () => {
     });
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
-        const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
-        const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
-        const { result, container } = renderAndCheckModal(task, onSubmit);
-
-        const description = getAndCheckRenderedDescriptionElement(container);
-        const submit = getAndCheckApplyButton(result);
-
-        const editedTask = await editDescriptionAndSubmit(description, newDescription, submit, waitForClose);
+        const line = convertDescriptionToTaskLine(taskDescription);
+        const editedTask = await editTaskLine(line, newDescription);
         expect(editedTask).toEqual(`- [ ] ${expectedDescription}`);
     }
 
@@ -171,6 +194,75 @@ describe('Task editing', () => {
             `${globalFilter} ${oldDescription}`,
             newDescription,
             `${globalFilter} ${newDescription}`,
+        );
+    });
+});
+
+/**
+ * @summary This tests behaviour under a wide variety of scenarios, such as multiple different user settings, and input lines.
+ *
+ * As the number of combinations of settings values increases, it becomes harder and harder
+ * to write sufficient tests manually, and to find corner cases in exploratory testing.
+ */
+describe('Exhaustive editing', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-07-18'));
+    });
+
+    afterEach(() => {
+        GlobalFilter.reset();
+        resetSettings();
+        jest.useRealTimers();
+    });
+
+    /**
+     * Test outcome of simply editing and saving a task line, under many conditions.
+     * Written as our previous test coverage was not good enough to detect the following:
+     *   - https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2112
+     *   - Since Tasks 4.0.1, using 'Create or edit task' on a line with a checkbox
+     *     but no global filter no longer adds the Created date.
+     */
+    describe('Edit and save', () => {
+        const name = 'All inputs';
+        const title = 'KEY: (globalFilter, set created date)\n';
+        const globalFilterValues = ['', '#task'];
+        const setCreatedDateValues = [false, true];
+        const initialTaskLineValues = [
+            '',
+            'plain text, not a list item',
+            '-',
+            '- ',
+            '- [ ]',
+            '- [ ] ',
+            '- list item, but no checkbox',
+            '- [ ] checkbox with initial description',
+            '- [ ] checkbox with initial description and created date ➕ 2023-01-01',
+            '- [ ] #task checkbox with global filter string and initial description',
+        ];
+
+        // For explanation of this call, see:
+        // https://publish.obsidian.md/tasks-contributing/Testing/Approval+Tests#Verify+the+results+of+multiple+input+values
+        verifyAllCombinations3Async<string, boolean, string>(
+            name,
+            title,
+            async (globalFilter, setCreatedDate, initialTaskLine) => {
+                GlobalFilter.set(globalFilter as string);
+
+                // @ts-expect-error: TS2322: Type 'T2' is not assignable to type 'boolean | undefined'.
+                updateSettings({ setCreatedDate });
+
+                // @ts-expect-error: TS2345: Argument of type 'T3' is not assignable to parameter of type 'string'.
+                const editedTaskLine = await editTaskLine(initialTaskLine, undefined);
+
+                return `
+('${globalFilter}', ${setCreatedDate})
+    '${initialTaskLine}' =>
+    '${editedTaskLine}'`;
+            },
+            globalFilterValues,
+            setCreatedDateValues,
+            initialTaskLineValues,
         );
     });
 });
