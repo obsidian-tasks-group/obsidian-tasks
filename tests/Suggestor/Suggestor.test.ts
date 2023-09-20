@@ -242,7 +242,7 @@ describe('canSuggestForLine', () => {
         expect(canSuggestForLineWithCursor('- not a task line|')).toEqual(false);
     });
 
-    it('should suggest if there is no global filter', () => {
+    it('should suggest if there is no global filter and cursor is in the description', () => {
         GlobalFilter.reset();
         expect(canSuggestForLineWithCursor('- [ ] global filter is not set|')).toEqual(true);
     });
