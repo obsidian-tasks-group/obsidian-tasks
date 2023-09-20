@@ -59,11 +59,11 @@ KEY: (globalFilter, set created date)
 
 ('', true)
     '- [ ]' =>
-    '- [ ] simulate user typing text in to empty description field'
+    '- [ ] simulate user typing text in to empty description field ➕ 2023-07-18'
 
 ('', true)
     '- [ ] ' =>
-    '- [ ] simulate user typing text in to empty description field'
+    '- [ ] simulate user typing text in to empty description field ➕ 2023-07-18'
 
 ('', true)
     '- list item, but no checkbox' =>
@@ -139,11 +139,11 @@ KEY: (globalFilter, set created date)
 
 ('#task', true)
     '- [ ]' =>
-    '- [ ] #task simulate user typing text in to empty description field'
+    '- [ ] #task simulate user typing text in to empty description field ➕ 2023-07-18'
 
 ('#task', true)
     '- [ ] ' =>
-    '- [ ] #task simulate user typing text in to empty description field'
+    '- [ ] #task simulate user typing text in to empty description field ➕ 2023-07-18'
 
 ('#task', true)
     '- list item, but no checkbox' =>
