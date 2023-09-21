@@ -49,9 +49,14 @@ export function explainResults(source: string, globalQuery: GlobalQuery): string
  *
  * @param {string} source The query source from the task block
  * @param globalQuery
+ * @param _path
  * @returns {Query} The query to execute
  */
-export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuery): Query {
+export function getQueryForQueryRenderer(
+    source: string,
+    globalQuery: GlobalQuery,
+    _path: string | undefined = undefined,
+): Query {
     const tasksBlockQuery = new Query({ source });
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
