@@ -5,10 +5,15 @@ import moment from 'moment';
 import * as chrono from 'chrono-node';
 import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
-import { makeDefaultSuggestionBuilder, onlySuggestIfBracketOpen } from '../../src/Suggestor/Suggestor';
+import {
+    canSuggestForLine,
+    makeDefaultSuggestionBuilder,
+    onlySuggestIfBracketOpen,
+} from '../../src/Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
 import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
 window.moment = moment;
 
@@ -22,6 +27,23 @@ const chronoSpy = jest
 afterAll(() => {
     chronoSpy.mockRestore();
 });
+
+/**
+ * Given a string with **exactly** one vertical bar (`|`), returns the string with the vertical bar removed
+ * and the index of the bar.
+ *
+ * This is used as a helper when writing tests, since it provides a less error prone
+ * and more readable way to represent a cursor's position, denoted by the vertical bar, and the string.
+ *
+ * @param line - A string that contains exactly one vertical bar (`|`)
+ * @returns A tuple of the line without the vertical bar, and the index of the vertical bar.
+ */
+function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: number] {
+    const line_without_cursor = line.replace(/\|/g, '');
+    // Check that the cursor marker appears exactly once in each input string:
+    expect(line_without_cursor.length).toEqual(line.length - 1);
+    return [line_without_cursor, line.indexOf('|')];
+}
 
 const MAX_GENERIC_SUGGESTIONS_FOR_TESTS = 50;
 
@@ -163,23 +185,6 @@ describe('onlySuggestIfBracketOpen', () => {
 
     const emptySuggestion = [] as unknown;
 
-    /**
-     * Given a string with **exactly** one vertical bar (`|`), returns the string with the vertical bar removed
-     * and the index of the bar.
-     *
-     * This is used as a helper when writing tests, since it provides a less error prone
-     * and more readable way to represent a cursor's position, denoted by the vertical bar, and the string.
-     *
-     * @param line - A string that contains exactly one vertical bar (`|`)
-     * @returns A tuple of the line without the vertical bar, and the index of the vertical bar.
-     */
-    function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: number] {
-        const line_without_cursor = line.replace(/\|/g, '');
-        // Check that the cursor marker appears exactly once in each input string:
-        expect(line_without_cursor.length).toEqual(line.length - 1);
-        return [line_without_cursor, line.indexOf('|')];
-    }
-
     it('should suggest if cursor at end of line with an open pair', () => {
         const settings = getSettings();
         let suggestions = buildSuggestions(...cursorPosition('(hello world|'), settings);
@@ -220,5 +225,58 @@ describe('onlySuggestIfBracketOpen', () => {
     it("should not suggest if there's no open bracket at cursor position", () => {
         const suggestions = buildSuggestions(...cursorPosition('(hello world)|'), getSettings());
         expect(suggestions).toEqual(emptySuggestion);
+    });
+});
+
+describe('canSuggestForLine', () => {
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
+    function canSuggestForLineWithCursor(line: string) {
+        return canSuggestForLine(...cursorPosition(line));
+    }
+
+    it('should not suggest if there is no checkbox', () => {
+        GlobalFilter.reset();
+        expect(canSuggestForLineWithCursor('- not a task line|')).toEqual(false);
+    });
+
+    it('should suggest if there is no global filter and cursor is in the description', () => {
+        GlobalFilter.reset();
+        expect(canSuggestForLineWithCursor('- [ ] global filter is not set|')).toEqual(true);
+    });
+
+    it('should suggest if global filter missing from line', () => {
+        GlobalFilter.set('#todo');
+        expect(canSuggestForLineWithCursor('- [ ] #todo has global filter|')).toEqual(true);
+    });
+
+    it('should not suggest if global filter missing from line', () => {
+        GlobalFilter.set('#todo');
+        expect(canSuggestForLineWithCursor('- [ ] no global filter|')).toEqual(false);
+    });
+
+    it('should not suggest when cursor is in empty line', () => {
+        expect(canSuggestForLineWithCursor('|')).toEqual(false);
+    });
+
+    it('should not suggest when cursor is in the checkbox', () => {
+        expect(canSuggestForLineWithCursor('- [ |] ')).toEqual(false);
+        expect(canSuggestForLineWithCursor('- [ ]| ')).toEqual(false);
+    });
+
+    it('should suggest when the cursor is at least one character past the checkbox', () => {
+        expect(canSuggestForLineWithCursor('- [ ] |')).toEqual(true);
+    });
+
+    it('should suggest correctly when task is in a numbered list', () => {
+        expect(canSuggestForLineWithCursor('1. [ ]|')).toEqual(false);
+        expect(canSuggestForLineWithCursor('1. [ ] |')).toEqual(true);
+    });
+
+    it('should suggest correctly when task is indented', () => {
+        expect(canSuggestForLineWithCursor('    - [ ]|')).toEqual(false);
+        expect(canSuggestForLineWithCursor('    - [ ] |')).toEqual(true);
     });
 });

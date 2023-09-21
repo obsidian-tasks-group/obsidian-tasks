@@ -44,6 +44,8 @@ There is a brief overview of Approval tests at [approvaltests.com](https://appro
 
 These trivial examples exist just to walk through the behaviour of Approval Tests.
 
+#### Verify strings and stringable things
+
 Example test in [tests/TestingTools/ApprovalTestsDemo.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts), that saves its input in a text file:
 
 <!-- snippet: approval-test-as-text -->
@@ -61,6 +63,8 @@ The corresponding `approved` file, named [tests/TestingTools/ApprovalTestsDemo.t
 Hello From Approvals
 ```
 <!-- endSnippet -->
+
+#### Verify an object as a JSON string
 
 <!-- snippet: approval-test-as-json -->
 ```ts
@@ -82,6 +86,64 @@ The corresponding `approved` file, named [tests/TestingTools/ApprovalTestsDemo.t
 ```
 <!-- endSnippet -->
 
+#### Verify the results of multiple input values
+
+Sometimes we want to test a piece of code under multiple different input values.
+
+A Tasks-specific example is when a piece of code is affected by multiple different user settings values. Testing all the possible combinations of user settings manually is prohibitively tedious.
+
+Approval Tests provides a facility to test with multiple input values: [Combinations Approvals](https://github.com/approvals/Approvals.NodeJS/blob/master/docs/reference/CombinationApprovals.md).
+
+However, the 'Combinations' code in Approvals.NodeJS does not work with async/await code.
+
+So instead, the Tasks project provides its own set of functions:
+
+- `verifyAllCombinations2Async()` function (for 2 input parameters)
+- and similarly named ones for numbers of parameters up to 9.
+
+Below is a contrived example of its use.
+
+> [!Important]
+> Note that we do not have an `it` section here. `verifyAllCombinations3Async()` creates the 'it' block.
+
+<!-- snippet: async-combination-approvals -->
+```ts
+describe('demonstrate async combination approvals', () => {
+    // Note that we do not have an 'it' section here.
+    // verifyAllCombinations3Async() creates the 'it' block.
+    verifyAllCombinations3Async(
+        'documentation example',
+        'sample outputs',
+        async (a, b, c) => {
+            return `(${a}, ${b}, ${c}) => ${a} '${b}' ${c}`;
+        },
+        [0, 1],
+        ['hello', 'world'],
+        [true, false],
+    );
+});
+```
+<!-- endSnippet -->
+
+The corresponding `approved` file, named [tests/TestingTools/CombinationApprovalsAsync.test.demonstrate_async_combination_approvals_documentation_example.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/CombinationApprovalsAsync.test.demonstrate_async_combination_approvals_documentation_example.approved.txt):
+
+<!-- snippet: CombinationApprovalsAsync.test.demonstrate_async_combination_approvals_documentation_example.approved.txt -->
+```txt
+sample outputs
+(0, hello, true) => 0 'hello' true
+(0, hello, false) => 0 'hello' false
+(0, world, true) => 0 'world' true
+(0, world, false) => 0 'world' false
+(1, hello, true) => 1 'hello' true
+(1, hello, false) => 1 'hello' false
+(1, world, true) => 1 'world' true
+(1, world, false) => 1 'world' false
+```
+<!-- endSnippet -->
+
+> [!NOTE]
+> Note how all there is a line of output for each of the combinations of the `2 x 2 x 2` input values.
+
 ## Writing Approval Tests
 
 ### Summary of Approval Tests
@@ -97,6 +159,10 @@ We have these convenience helpers to make it easier to write Approvals-based tes
   - For saving various Tasks data types
 - [tests/TestingTools/VerifyMarkdownTable.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/VerifyMarkdownTable.ts)
   - For saving approved data in Markdown tables
+- [tests/TestingTools/CombinationApprovalsAsync.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/CombinationApprovalsAsync.ts)
+  - For using Combination Approvals that needs to call async code
+  - See example above: [[#Verify the results of multiple input values]]
+  - If you are testing non-async code, you can use the combinations facilities provided by  Approvals.NodeJS: [Combinations Approvals](https://github.com/approvals/Approvals.NodeJS/blob/master/docs/reference/CombinationApprovals.md)
 
 ## Running Approval Tests
 

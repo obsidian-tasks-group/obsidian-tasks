@@ -975,12 +975,17 @@ Note that the path includes the `.md` extension.
 
 - `path (includes|does not include) <path>`
   - Matches case-insensitive (disregards capitalization).
+  - Use `{{query.file.path}}` as a placeholder for the path of the file containing the current query.
+    - For example, `path equals {{query.file.path}}`
+    - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
 > [!released]
-`regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+>
+> - `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+> - Placeholders were released in Tasks 4.7.0.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now possible, using `task.file.path`.
 
@@ -1000,12 +1005,17 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now p
 ### Root
 
 > [!released]
-> Introduced in Tasks 3.4.0.
+>
+> - Introduced in Tasks 3.4.0.
+> - Placeholders were released in Tasks 4.7.0.
 
 The `root` is the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in the root of the vault.
 
 - `root (includes|does not include) <root>`
   - Matches case-insensitive (disregards capitalization).
+  - Use `{{query.file.root}}` as a placeholder for the root of the file containing the current query.
+    - For example, `root includes {{query.file.root}}`
+    - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `root (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
@@ -1026,12 +1036,17 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by root folder** is now
 ### Folder
 
 > [!released]
-> Introduced in Tasks 3.4.0.
+>
+> - Introduced in Tasks 3.4.0.
+> - Placeholders were released in Tasks 4.7.0.
 
 This is the `folder` to the file that contains the task, which will be `/` for files in root of the vault.
 
 - `folder (includes|does not include) <folder>`
   - Matches case-insensitive (disregards capitalization).
+  - Use `{{query.file.folder}}` as a placeholder for the folder of the file containing the current query.
+    - For example, `folder includes {{query.file.folder}}`, which will match tasks in the folder containing the query **and all sub-folders**.
+    - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `folder (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
@@ -1044,7 +1059,12 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now poss
   - Find tasks in files in any file in the given folder **only**, and not any sub-folders.
   - The equality test, `===`, requires that the trailing slash (`/`) be included.
 - ```filter by function task.file.folder.includes("Work/Projects/")```
-  - Find tasks in files in any folder **and any sub-folders**.
+  - Find tasks in files in a specific folder **and any sub-folders**.
+- ```filter by function task.file.folder.includes( '{{query.file.folder}}' )```
+  - Find tasks in files in the folder that contains the query **and any sub-folders**.
+  - Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.
+- ```filter by function task.file.folder === '{{query.file.folder}}'```
+  - Find tasks in files in the folder that contains the query only (**not tasks in any sub-folders**).
 - ```filter by function task.file.folder.includes("Work/Projects")```
   - By leaving off the trailing slash (`/`) this would also find tasks in any file inside folders such as:
     - `Work/Projects 2023/`
@@ -1055,12 +1075,17 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now poss
 ### File Name
 
 > [!released]
-Introduced in Tasks 1.13.0.
+>
+> - Introduced in Tasks 3.4.0.
+> - Placeholders were released in Tasks 4.7.0.
 
 Note that the file name includes the `.md` extension.
 
 - `filename (includes|does not include) <filename>`
   - Matches case-insensitive (disregards capitalization).
+  - Use `{{query.file.filename}}` as a placeholder for the file name of the file containing the current query.
+    - For example, `filename includes {{query.file.filename}}`
+    - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `filename (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].

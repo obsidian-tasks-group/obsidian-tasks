@@ -112,6 +112,7 @@ export class SampleTasks {
             ['', 'heading'],
 
             // no heading supplied
+            ['a/b.md', null],
             ['a/b/c.md', null],
 
             // File and heading, nominal case

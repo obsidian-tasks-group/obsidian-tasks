@@ -297,7 +297,12 @@ export class Task {
         });
     }
 
-    private static extractTaskComponents(line: string): TaskComponents | null {
+    /**
+     * Extract the component parts of the task line.
+     * @param line
+     * @returns a {@link TaskComponents} object containing the component parts of the task line
+     */
+    static extractTaskComponents(line: string): TaskComponents | null {
         // Check the line to see if it is a markdown task.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch === null) {

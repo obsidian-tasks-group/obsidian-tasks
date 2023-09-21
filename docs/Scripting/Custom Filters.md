@@ -38,13 +38,22 @@ The Reference section [[Task Properties]] shows all the task properties availabl
 
 The available task properties are also shown in the [[Quick Reference]] table.
 
+### Available Query Properties
+
+The Reference section [[Query Properties]] shows all the query properties available for use via [[Placeholders]] in custom filters.
+
+Any placeholders in custom filters must be surrounded by quotes.
+
+> [!released]
+> Query properties and placeholders were introduced in Tasks 4.7.0.
+
 ### Expressions
 
 The instructions look like this:
 
 - `filter by function <expression>`
 
-The expression is evaluated (calculated) on one task at a time from our vault.
+The expression is evaluated (calculated) on one task at a time from your vault.
 
 The expression must evaluate to a `boolean`, so `true` or `false`.
 
@@ -136,7 +145,12 @@ For users who are comfortable with JavaScript, these more complicated examples m
   - Find tasks in files in any file in the given folder **only**, and not any sub-folders.
   - The equality test, `===`, requires that the trailing slash (`/`) be included.
 - ```filter by function task.file.folder.includes("Work/Projects/")```
-  - Find tasks in files in any folder **and any sub-folders**.
+  - Find tasks in files in a specific folder **and any sub-folders**.
+- ```filter by function task.file.folder.includes( '{{query.file.folder}}' )```
+  - Find tasks in files in the folder that contains the query **and any sub-folders**.
+  - Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.
+- ```filter by function task.file.folder === '{{query.file.folder}}'```
+  - Find tasks in files in the folder that contains the query only (**not tasks in any sub-folders**).
 - ```filter by function task.file.folder.includes("Work/Projects")```
   - By leaving off the trailing slash (`/`) this would also find tasks in any file inside folders such as:
     - `Work/Projects 2023/`

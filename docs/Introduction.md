@@ -6,6 +6,7 @@ publish: true
 
 ## What's New?
 
+- 4.7.0: 🔥 Use [[Query Properties]] and [[Placeholders]] to filter and group with the query's file path, root, folder and name.
 - 4.6.0: 🔥 Add `on or before` and `on or after` to [[Filters#Date search options|date search options]]
 - 4.6.0: 🔥 Add `in or before` and `in or after` to [[Filters#Date range options|date range search search options]]
 - 4.5.0: 🔥 Support task in list items starting with [[Getting Started#Finding tasks in your vault|`+` signs]]

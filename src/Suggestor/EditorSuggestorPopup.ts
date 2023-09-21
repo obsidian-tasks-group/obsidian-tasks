@@ -1,9 +1,7 @@
 import { App, Editor, EditorSuggest, TFile } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
-
-import { GlobalFilter } from '../Config/GlobalFilter';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
-import * as task from '../Task';
+import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';
 
 export type SuggestInfoWithContext = SuggestInfo & {
@@ -21,7 +19,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
         if (!this.settings.autoSuggestInEditor) return null;
         const line = editor.getLine(cursor.line);
-        if (GlobalFilter.includedIn(line) && line.match(task.TaskRegularExpressions.taskRegex)) {
+        if (canSuggestForLine(line, cursor.ch)) {
             return {
                 start: { line: cursor.line, ch: 0 },
                 end: {
