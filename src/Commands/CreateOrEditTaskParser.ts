@@ -23,7 +23,7 @@ function shouldUpdateCreatedDateForTask(task: Task) {
         return false;
     }
 
-    return task.description === '' && setCreatedDate && true;
+    return task.description === '' && true && true;
 }
 
 /**
