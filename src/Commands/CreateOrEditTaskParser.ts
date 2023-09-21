@@ -23,7 +23,8 @@ function shouldUpdateCreatedDateForTask(task: Task) {
         return false;
     }
 
-    if (!(task.description === '')) {
+    const descriptionIsEmpty = task.description === '';
+    if (!descriptionIsEmpty) {
         // The task already had a description, so had been created previously: don't change it.
         return false;
     }
