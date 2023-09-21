@@ -20,7 +20,7 @@ import { Query } from '../Query/Query';
  *
  * @param {string} source The source of the task block to explain
  * @param globalQuery
- * @param path
+ * @param {string} path The location of the task block, if known
  * @returns {string}
  */
 export function explainResults(source: string, globalQuery: GlobalQuery, path: string | undefined = undefined): string {
@@ -50,7 +50,7 @@ export function explainResults(source: string, globalQuery: GlobalQuery, path: s
  *
  * @param {string} source The query source from the task block
  * @param globalQuery
- * @param path
+ * @param {string | undefined} path The path to the file containing the query, if available.
  * @returns {Query} The query to execute
  */
 export function getQueryForQueryRenderer(
