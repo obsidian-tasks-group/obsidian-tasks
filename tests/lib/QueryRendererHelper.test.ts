@@ -100,7 +100,7 @@ describe('query used for QueryRenderer', () => {
         // Arrange
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
-        const filePath = undefined;
+        const filePath = 'a/b/c.md';
 
         // Act
         const globalQuery = new GlobalQuery(globalQuerySource);
@@ -112,7 +112,7 @@ describe('query used for QueryRenderer', () => {
 
     it('should ignore the global query if "ignore global query" is set', () => {
         // Arrange
-        const filePath = undefined;
+        const filePath = 'a/b/c.md';
         const globalQuery = new GlobalQuery('path includes from_global_query');
 
         // Act
