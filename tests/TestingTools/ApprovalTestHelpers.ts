@@ -75,7 +75,7 @@ export function verifyQueryExplanation(instructions: string, options?: Options):
  * @param options
  */
 export function verifyTaskBlockExplanation(instructions: string, globalQuery: GlobalQuery, options?: Options): void {
-    const explanation = explainResults(instructions, globalQuery);
+    const explanation = explainResults(instructions, globalQuery, 'some/sample/file path.md');
 
     options = options || new Options();
     options = options.forFile().withFileExtention('explanation.text');
