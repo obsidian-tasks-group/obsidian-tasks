@@ -97,24 +97,32 @@ No filters supplied. All tasks will match the query.`;
  */
 describe('query used for QueryRenderer', () => {
     it('should be the result of combining the global query and the actual query', () => {
+        // Arrange
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
         const filePath = undefined;
 
+        // Act
         const globalQuery = new GlobalQuery(globalQuerySource);
         const query = getQueryForQueryRenderer(querySource, globalQuery, filePath);
 
+        // Assert
         expect(query.source).toEqual(`${globalQuerySource}\n${querySource}`);
     });
 
     it('should ignore the global query if "ignore global query" is set', () => {
+        // Arrange
         const filePath = undefined;
         const globalQuery = new GlobalQuery('path includes from_global_query');
+
+        // Act
         const query = getQueryForQueryRenderer(
             'description includes from_block_query\nignore global query',
             globalQuery,
             filePath,
         );
+
+        // Assert
         expect(query.source).toEqual('description includes from_block_query\nignore global query');
     });
 });
