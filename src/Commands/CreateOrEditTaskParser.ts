@@ -5,6 +5,11 @@ import { StatusRegistry } from '../StatusRegistry';
 import { TaskLocation } from '../TaskLocation';
 import { getSettings } from '../Config/Settings';
 
+function getDefaultCreatedDate() {
+    const { setCreatedDate } = getSettings();
+    return setCreatedDate ? window.moment() : null;
+}
+
 /**
  * Read any markdown line and treat it as a task, for the purposes of
  * the 'Create or edit task' modal.
@@ -27,8 +32,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         DateFallback.fromPath(path), // set the scheduled date from the filename, so it can be displayed in the dialog
     );
 
-    const { setCreatedDate } = getSettings();
-    const createdDate = setCreatedDate ? window.moment() : null;
+    const createdDate = getDefaultCreatedDate();
 
     if (task !== null) {
         if (task.description === '') {
