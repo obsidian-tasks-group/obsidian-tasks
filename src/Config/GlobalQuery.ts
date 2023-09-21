@@ -22,8 +22,8 @@ export class GlobalQuery {
         this._source = source;
     }
 
-    public query(_path: string | undefined = undefined): Query {
-        return new Query({ source: this._source }, _path);
+    public query(path: string | undefined = undefined): Query {
+        return new Query({ source: this._source }, path);
     }
 
     public isEmpty() {
