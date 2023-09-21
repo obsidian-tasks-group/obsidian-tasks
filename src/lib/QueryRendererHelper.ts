@@ -53,11 +53,7 @@ export function explainResults(source: string, globalQuery: GlobalQuery, path: s
  * @param {string | undefined} path The path to the file containing the query, if available.
  * @returns {Query} The query to execute
  */
-export function getQueryForQueryRenderer(
-    source: string,
-    globalQuery: GlobalQuery,
-    path: string | undefined = undefined,
-): Query {
+export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuery, path: string | undefined): Query {
     const tasksBlockQuery = new Query({ source }, path);
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
