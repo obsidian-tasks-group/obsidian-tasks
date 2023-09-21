@@ -107,6 +107,7 @@ describe('CreateOrEditTaskParser - created date', () => {
     afterEach(() => {
         jest.useRealTimers();
         resetSettings();
+        GlobalFilter.reset();
     });
 
     it.each([
@@ -149,6 +150,19 @@ describe('CreateOrEditTaskParser - created date', () => {
         const task = taskFromLine({ line, path });
 
         expect(task.toFileLineString()).toStrictEqual('- [ ] hope created date will not be added');
+        expect(task.createdDate).toEqual(null);
+    });
+
+    it.failing('should add created date if adding the global filter', () => {
+        updateSettings({ setCreatedDate: true });
+        GlobalFilter.set('#task');
+        const path = 'a/b/c.md';
+        const line = '- [ ] did not have the global filter';
+
+        const task = taskFromLine({ line, path });
+
+        // The global filter doesn't get added until the Modal rewrites the line
+        expect(task.toFileLineString()).toStrictEqual('- [ ] did not have the global filter ➕ 2023-09-17');
         expect(task.createdDate).toEqual(null);
     });
 });
