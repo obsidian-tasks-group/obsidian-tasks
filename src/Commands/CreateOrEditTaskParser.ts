@@ -40,8 +40,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     const createdDate = getDefaultCreatedDate();
 
     if (task !== null) {
-        const shouldUpdateCreatedDate = shouldUpdateCreatedDateForTask(task);
-        if (shouldUpdateCreatedDate) {
+        if (shouldUpdateCreatedDateForTask(task)) {
             return new Task({ ...task, createdDate });
         }
         return task;
