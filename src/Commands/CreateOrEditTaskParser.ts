@@ -24,7 +24,7 @@ function shouldUpdateCreatedDateForTask(task: Task) {
         return false;
     }
 
-    // If the task already had a description, treat it as new and add a creation date.
+    // If the description was empty, treat it as new and add a creation date.
     const descriptionIsEmpty = task.description === '';
 
     // If the global filter will be added when the task is saved, treat it as new and add a creation date.
