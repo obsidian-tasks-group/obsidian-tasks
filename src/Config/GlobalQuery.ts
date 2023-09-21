@@ -22,7 +22,7 @@ export class GlobalQuery {
         this._source = source;
     }
 
-    public query(): Query {
+    public query(_path: string | undefined = undefined): Query {
         return new Query({ source: this._source });
     }
 
