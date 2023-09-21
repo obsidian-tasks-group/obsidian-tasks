@@ -54,15 +54,15 @@ export function explainResults(
  *
  * @param {string} source The query source from the task block
  * @param globalQuery
- * @param _path
+ * @param path
  * @returns {Query} The query to execute
  */
 export function getQueryForQueryRenderer(
     source: string,
     globalQuery: GlobalQuery,
-    _path: string | undefined = undefined,
+    path: string | undefined = undefined,
 ): Query {
-    const tasksBlockQuery = new Query({ source }, _path);
+    const tasksBlockQuery = new Query({ source }, path);
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
         return tasksBlockQuery;
