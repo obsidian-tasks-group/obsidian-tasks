@@ -36,7 +36,8 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
 
     if (task !== null) {
         const { setCreatedDate } = getSettings();
-        if (task.description === '' && setCreatedDate && task.createdDate === null) {
+        const shouldUpdateCreatedDate = task.description === '' && setCreatedDate && task.createdDate === null;
+        if (shouldUpdateCreatedDate) {
             return new Task({ ...task, createdDate });
         }
         return task;
