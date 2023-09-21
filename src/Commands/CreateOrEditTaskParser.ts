@@ -10,6 +10,11 @@ function getDefaultCreatedDate() {
     return setCreatedDate ? window.moment() : null;
 }
 
+function shouldUpdateCreatedDateForTask(task: Task) {
+    const { setCreatedDate } = getSettings();
+    return task.description === '' && setCreatedDate && task.createdDate === null;
+}
+
 /**
  * Read any markdown line and treat it as a task, for the purposes of
  * the 'Create or edit task' modal.
@@ -35,8 +40,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     const createdDate = getDefaultCreatedDate();
 
     if (task !== null) {
-        const { setCreatedDate } = getSettings();
-        const shouldUpdateCreatedDate = task.description === '' && setCreatedDate && task.createdDate === null;
+        const shouldUpdateCreatedDate = shouldUpdateCreatedDateForTask(task);
         if (shouldUpdateCreatedDate) {
             return new Task({ ...task, createdDate });
         }
