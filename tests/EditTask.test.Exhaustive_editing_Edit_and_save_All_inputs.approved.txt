@@ -151,7 +151,7 @@ KEY: (globalFilter, set created date)
 
 ('#task', true)
     '- [ ] checkbox with initial description' =>
-    '- [ ] #task checkbox with initial description'
+    '- [ ] #task checkbox with initial description ➕ 2023-07-18'
 
 ('#task', true)
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
