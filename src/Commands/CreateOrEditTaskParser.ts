@@ -13,6 +13,11 @@ function getDefaultCreatedDate() {
 function shouldUpdateCreatedDateForTask(task: Task) {
     const { setCreatedDate } = getSettings();
 
+    if (!setCreatedDate) {
+        // Auto-adding of Created Date is disabled in settings.
+        return false;
+    }
+
     if (task.createdDate !== null) {
         // The task already had a created date, so don't change it.
         return false;
