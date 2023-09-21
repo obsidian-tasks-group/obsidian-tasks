@@ -63,7 +63,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     }
 
     // If we are not on a line of a task, we take what we have.
-    // The non-task line can still be a checklist, for example if it is lacking the global filter.
     const nonTaskMatch = line.match(TaskRegularExpressions.nonTaskRegex);
     if (nonTaskMatch === null) {
         // Should never happen; everything in the regex is optional.
