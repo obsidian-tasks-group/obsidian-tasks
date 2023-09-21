@@ -34,6 +34,20 @@ export class GlobalFilter {
         return GlobalFilter.get() + ' ' + description;
     }
 
+    static addGlobalFilterToDescriptionDependingOnSettings(description: string): string {
+        if (GlobalFilter.shouldAddGlobalFilter(description)) {
+            return GlobalFilter.prependTo(description);
+        } else {
+            return description;
+        }
+    }
+
+    private static shouldAddGlobalFilter(description: string): boolean {
+        const { autoInsertGlobalFilter } = getSettings();
+
+        return !GlobalFilter.isEmpty() && autoInsertGlobalFilter && !GlobalFilter.includedIn(description);
+    }
+
     static removeAsWordFromDependingOnSettings(description: string): string {
         const { removeGlobalFilter } = getSettings();
         if (removeGlobalFilter) {

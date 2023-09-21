@@ -80,7 +80,9 @@ export class TaskRegularExpressions {
 
     // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
     public static readonly listItemRegex = new RegExp(
-        TaskRegularExpressions.indentationRegex.source + TaskRegularExpressions.listMarkerRegex.source,
+        TaskRegularExpressions.indentationRegex.source +
+            TaskRegularExpressions.listMarkerRegex.source +
+            TaskRegularExpressions.afterCheckboxRegex.source,
     );
 
     // Match on block link at end.

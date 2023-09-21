@@ -3,6 +3,17 @@ import { StatusRegistry } from '../StatusRegistry';
 
 import { Task, TaskRegularExpressions } from '../Task';
 import { TaskLocation } from '../TaskLocation';
+import { GlobalFilter } from '../Config/GlobalFilter';
+
+/**
+ * Storage for the line item line, broken down in to sections.
+ * See {@link extractLineItemComponents} for use.
+ */
+interface LineItemComponents {
+    indentation: string;
+    listMarker: string;
+    body: string;
+}
 
 export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
     if (checking) {
@@ -82,16 +93,20 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
         // 4. a standard task, but which does not contain the global filter, to be toggled, but no done date added.
 
         // The task regex will match checklist items.
-        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
-        if (regexMatch !== null) {
+        const checklistRegexMatch = line.match(TaskRegularExpressions.taskRegex);
+        const lineItemComponents = extractLineItemComponents(line);
+        if (checklistRegexMatch !== null) {
             // Toggle the status of the checklist item.
-            const statusString = regexMatch[3];
+            const statusString = checklistRegexMatch[3];
             const status = StatusRegistry.getInstance().bySymbol(statusString);
             const newStatusString = status.nextStatusSymbol;
             return { text: line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $4`) };
-        } else if (TaskRegularExpressions.listItemRegex.test(line)) {
+        } else if (lineItemComponents) {
+            const { indentation, listMarker, body } = lineItemComponents;
             // Convert the list item to a checklist item.
-            const text = line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]');
+            const newBody = GlobalFilter.addGlobalFilterToDescriptionDependingOnSettings(body);
+
+            const text = `${indentation}${listMarker} [ ] ${newBody}`;
             return { text, moveTo: { ch: text.length } };
         } else {
             // Convert the line to a list item.
@@ -129,3 +144,26 @@ export const getNewCursorPosition = (startPos: EditorPosition, insertion: Editor
         ch: Math.min(moveTo.ch, destinationLineLength),
     };
 };
+
+/**
+ * Uses a regex to extract out the components of a list item
+ *
+ * Returns `null` if the line does not match
+ *
+ * @param line a line like `- write blog post`
+ * */
+function extractLineItemComponents(line: string): LineItemComponents | null {
+    // Check the line to see if it is a markdown list item.
+    const regexMatch = line.match(TaskRegularExpressions.listItemRegex);
+    if (regexMatch === null) {
+        return null;
+    }
+
+    const indentation = regexMatch[1];
+    const listMarker = regexMatch[2];
+
+    // match[3] includes the whole body of the list item after the list marker.
+    const body = regexMatch[3].trim();
+
+    return { indentation, listMarker, body };
+}
