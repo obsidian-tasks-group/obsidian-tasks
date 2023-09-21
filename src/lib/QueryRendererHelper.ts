@@ -20,21 +20,17 @@ import { Query } from '../Query/Query';
  *
  * @param {string} source The source of the task block to explain
  * @param globalQuery
- * @param _path
+ * @param path
  * @returns {string}
  */
-export function explainResults(
-    source: string,
-    globalQuery: GlobalQuery,
-    _path: string | undefined = undefined,
-): string {
+export function explainResults(source: string, globalQuery: GlobalQuery, path: string | undefined = undefined): string {
     let result = '';
 
     if (!GlobalFilter.isEmpty()) {
         result += `Only tasks containing the global filter '${GlobalFilter.get()}'.\n\n`;
     }
 
-    const tasksBlockQuery = new Query({ source }, _path);
+    const tasksBlockQuery = new Query({ source }, path);
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         if (!globalQuery.isEmpty()) {
