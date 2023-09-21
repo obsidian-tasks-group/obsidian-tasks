@@ -13,6 +13,7 @@ import { QueryResult } from './QueryResult';
 
 export class Query implements IQuery {
     public source: string;
+    public readonly filePath: string | undefined;
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
@@ -33,8 +34,10 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor({ source }: { source: string }) {
+    constructor({ source }: { source: string }, path: string | undefined = undefined) {
         this.source = source;
+        this.filePath = path;
+
         source
             .split('\n')
             .map((line: string) => line.trim())
