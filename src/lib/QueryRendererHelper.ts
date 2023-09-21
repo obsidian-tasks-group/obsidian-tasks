@@ -34,7 +34,7 @@ export function explainResults(
         result += `Only tasks containing the global filter '${GlobalFilter.get()}'.\n\n`;
     }
 
-    const tasksBlockQuery = new Query({ source });
+    const tasksBlockQuery = new Query({ source }, _path);
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         if (!globalQuery.isEmpty()) {
@@ -62,7 +62,7 @@ export function getQueryForQueryRenderer(
     globalQuery: GlobalQuery,
     _path: string | undefined = undefined,
 ): Query {
-    const tasksBlockQuery = new Query({ source });
+    const tasksBlockQuery = new Query({ source }, _path);
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
         return tasksBlockQuery;
