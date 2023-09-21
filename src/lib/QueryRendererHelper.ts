@@ -20,9 +20,14 @@ import { Query } from '../Query/Query';
  *
  * @param {string} source The source of the task block to explain
  * @param globalQuery
+ * @param _path
  * @returns {string}
  */
-export function explainResults(source: string, globalQuery: GlobalQuery): string {
+export function explainResults(
+    source: string,
+    globalQuery: GlobalQuery,
+    _path: string | undefined = undefined,
+): string {
     let result = '';
 
     if (!GlobalFilter.isEmpty()) {
