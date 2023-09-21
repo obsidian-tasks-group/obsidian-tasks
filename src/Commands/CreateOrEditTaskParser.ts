@@ -4,6 +4,7 @@ import { DateFallback } from '../DateFallback';
 import { StatusRegistry } from '../StatusRegistry';
 import { TaskLocation } from '../TaskLocation';
 import { getSettings } from '../Config/Settings';
+import { GlobalFilter } from '../Config/GlobalFilter';
 
 function getDefaultCreatedDate() {
     const { setCreatedDate } = getSettings();
@@ -26,7 +27,13 @@ function shouldUpdateCreatedDateForTask(task: Task) {
     // If the task already had a description, treat it as new and add a creation date.
     const descriptionIsEmpty = task.description === '';
 
-    return descriptionIsEmpty;
+    // If the global filter will be added when the task is saved, treat it as new and add a creation date.
+    // See issue #2112.
+    const globalFilterEnabled = !GlobalFilter.isEmpty();
+    const taskDoesNotContainGlobalFilter = !GlobalFilter.includedIn(task.description);
+    const needsGlobalFilterToBeAdded = globalFilterEnabled && taskDoesNotContainGlobalFilter;
+
+    return descriptionIsEmpty || needsGlobalFilterToBeAdded;
 }
 
 /**
