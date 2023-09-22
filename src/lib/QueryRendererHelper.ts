@@ -36,7 +36,7 @@ export function explainResults(
         result += `Only tasks containing the global filter '${globalFilter.get()}'.\n\n`;
     }
 
-    const tasksBlockQuery = new Query({ source }, path);
+    const tasksBlockQuery = new Query(source, path);
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         if (globalQuery.hasInstructions()) {
@@ -60,7 +60,7 @@ export function explainResults(
  * @returns {Query} The query to execute
  */
 export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuery, path: string | undefined): Query {
-    const tasksBlockQuery = new Query({ source }, path);
+    const tasksBlockQuery = new Query(source, path);
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
         return tasksBlockQuery;

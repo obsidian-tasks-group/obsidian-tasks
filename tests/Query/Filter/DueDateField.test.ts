@@ -570,7 +570,7 @@ describe('due date', () => {
         keywords.forEach((keyword) => {
             const newRow = [keyword];
             dates.forEach((date) => {
-                const query = new Query({ source: `due ${keyword}${date}` });
+                const query = new Query(`due ${keyword}${date}`);
                 expect(query.error).toBeUndefined();
 
                 newRow.push(query.explainQuery().replace(/(\n)/g, '<br>'));
