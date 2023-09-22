@@ -64,14 +64,14 @@ export class Query implements IQuery {
                         this._ignoreGlobalQuery = true;
                         break;
                     case this.limitRegexp.test(line):
-                        this.parseLimit({ line });
+                        this.parseLimit(line);
                         break;
-                    case this.parseSortBy({ line }):
+                    case this.parseSortBy(line):
                         break;
-                    case this.parseGroupBy({ line }):
+                    case this.parseGroupBy(line):
                         break;
                     case this.hideOptionsRegexp.test(line):
-                        this.parseHideOptions({ line });
+                        this.parseHideOptions(line);
                         break;
                     case this.commentRegexp.test(line):
                         // Comment lines are ignored
@@ -258,7 +258,7 @@ Problem line: "${line}"`;
         }
     }
 
-    private parseHideOptions({ line }: { line: string }): void {
+    private parseHideOptions(line: string): void {
         const hideOptionsMatch = line.match(this.hideOptionsRegexp);
         if (hideOptionsMatch !== null) {
             const hide = hideOptionsMatch[1] === 'hide';
@@ -320,7 +320,7 @@ Problem line: "${line}"`;
         return false;
     }
 
-    private parseLimit({ line }: { line: string }): void {
+    private parseLimit(line: string): void {
         const limitMatch = line.match(this.limitRegexp);
         if (limitMatch === null) {
             this.setError('do not understand query limit', line);
@@ -337,7 +337,7 @@ Problem line: "${line}"`;
         }
     }
 
-    private parseSortBy({ line }: { line: string }): boolean {
+    private parseSortBy(line: string): boolean {
         const sortingMaybe = FilterParser.parseSorter(line);
         if (sortingMaybe) {
             this._sorting.push(sortingMaybe);
@@ -353,7 +353,7 @@ Problem line: "${line}"`;
      * @param line
      * @private
      */
-    private parseGroupBy({ line }: { line: string }): boolean {
+    private parseGroupBy(line: string): boolean {
         const groupingMaybe = FilterParser.parseGrouper(line);
         if (groupingMaybe) {
             this._grouping.push(groupingMaybe);
