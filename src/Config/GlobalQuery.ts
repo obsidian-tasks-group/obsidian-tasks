@@ -6,16 +6,16 @@ export class GlobalQuery {
     static empty = '';
     private _source;
 
+    constructor(source: string = GlobalQuery.empty) {
+        this._source = source;
+    }
+
     public static getInstance(): GlobalQuery {
         if (!GlobalQuery.instance) {
             GlobalQuery.instance = new GlobalQuery();
         }
 
         return GlobalQuery.instance;
-    }
-
-    constructor(source: string = GlobalQuery.empty) {
-        this._source = source;
     }
 
     public set(source: string) {
