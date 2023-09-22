@@ -26,6 +26,10 @@ export class GlobalQuery {
         return new Query({ source: this._source }, path);
     }
 
+    /**
+     * Returns true if the Global Query contains characters except line breaks and spaces.
+     *
+     */
     public isEmpty() {
         return this._source.trim() === GlobalQuery.empty;
     }
