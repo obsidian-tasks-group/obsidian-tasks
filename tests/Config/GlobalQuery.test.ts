@@ -13,8 +13,10 @@ describe('GlobalQuery tests', () => {
     });
 
     it('should have no instructions by default', () => {
-        expect(new GlobalQuery().hasInstructions()).toEqual(false);
-        expect(new GlobalQuery().query().source).toEqual('');
+        const globalQuery = new GlobalQuery();
+
+        expect(globalQuery.hasInstructions()).toEqual(false);
+        expect(globalQuery.query().source).toEqual('');
     });
 
     it('should set the query', () => {
