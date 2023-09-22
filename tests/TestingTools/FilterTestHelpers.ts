@@ -43,7 +43,7 @@ export function testTaskFilter(filter: FilterOrErrorMessage, task: Task, expecte
  */
 export function testTaskFilterViaQuery(filter: string, task: Task, expected: boolean) {
     // Arrange
-    const query = new Query({ source: filter });
+    const query = new Query(filter);
 
     const tasks = [task];
 
@@ -70,7 +70,7 @@ export function shouldSupportFiltering(
     expectedResult: Array<string>,
 ) {
     // Arrange
-    const query = new Query({ source: filters.join('\n') });
+    const query = new Query(filters.join('\n'));
 
     const tasks = allTaskLines.map(
         (taskLine) =>
