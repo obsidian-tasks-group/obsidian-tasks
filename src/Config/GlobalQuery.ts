@@ -31,6 +31,6 @@ export class GlobalQuery {
      *
      */
     public hasInstructions() {
-        return this._source.trim() === GlobalQuery.empty;
+        return this._source.trim() !== GlobalQuery.empty;
     }
 }

@@ -13,7 +13,7 @@ describe('GlobalQuery tests', () => {
     });
 
     it('should have an empty source by default', () => {
-        expect(new GlobalQuery().hasInstructions()).toEqual(true);
+        expect(new GlobalQuery().hasInstructions()).toEqual(false);
     });
 
     it.each(['', ' ', '\n', '\n     \n    ', '  \n    \n'])(
@@ -21,7 +21,7 @@ describe('GlobalQuery tests', () => {
         (globalQuerySource) => {
             const globalQuery = new GlobalQuery(globalQuerySource);
 
-            expect(globalQuery.hasInstructions()).toEqual(true);
+            expect(globalQuery.hasInstructions()).toEqual(false);
         },
     );
 
