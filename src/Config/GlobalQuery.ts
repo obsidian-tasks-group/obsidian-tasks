@@ -30,7 +30,7 @@ export class GlobalQuery {
      * Returns true if the Global Query contains characters except line breaks and spaces.
      *
      */
-    public isEmpty() {
+    public hasInstructions() {
         return this._source.trim() === GlobalQuery.empty;
     }
 }
