@@ -1,5 +1,6 @@
 import { Options } from 'approvals/lib/Core/Options';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
+import type { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { Query } from '../../src/Query/Query';
 import { explainResults } from '../../src/lib/QueryRendererHelper';
 
@@ -70,10 +71,11 @@ export function verifyQueryExplanation(instructions: string, options?: Options):
  * See {@link verifyQueryExplanation} to just explain the query.
  *
  * @param instructions
+ * @param globalQuery
  * @param options
  */
-export function verifyTaskBlockExplanation(instructions: string, options?: Options): void {
-    const explanation = explainResults(instructions, 'some/sample/file path.md');
+export function verifyTaskBlockExplanation(instructions: string, globalQuery: GlobalQuery, options?: Options): void {
+    const explanation = explainResults(instructions, globalQuery, 'some/sample/file path.md');
 
     options = options || new Options();
     options = options.forFile().withFileExtention('explanation.text');
