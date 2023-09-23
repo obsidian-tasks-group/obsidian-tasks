@@ -128,7 +128,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     it('Should remove Global Filter from a string when Setting is set to false', () => {
         // Arrange
         GlobalFilter.set('todo');
-        updateSettings({ removeGlobalFilter: false });
+        GlobalFilter.setRemoveGlobalFilter(false);
 
         // Assert
         expect(GlobalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
@@ -139,7 +139,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     it('Should remove Global Filter from a string when Setting is set to true', () => {
         // Arrange
         GlobalFilter.set('todo');
-        updateSettings({ removeGlobalFilter: true });
+        GlobalFilter.setRemoveGlobalFilter(true);
 
         // Assert
         expect(GlobalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
@@ -160,7 +160,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     ])(
         'should not remove Global Filter (%s) if it is in a substring for a task "- [ ] %s"',
         async (globalFilter: string, description: string) => {
-            updateSettings({ removeGlobalFilter: true });
+            GlobalFilter.setRemoveGlobalFilter(true);
             GlobalFilter.set(globalFilter);
 
             expect(GlobalFilter.removeAsWordFrom(description)).toEqual(description);
