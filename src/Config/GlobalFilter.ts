@@ -44,12 +44,17 @@ export class GlobalFilter {
     }
 
     static removeAsWordFromDependingOnSettings(description: string): string {
-        const { removeGlobalFilter } = getSettings();
+        const removeGlobalFilter = GlobalFilter.getRemoveGlobalFilter();
         if (removeGlobalFilter) {
             return GlobalFilter.removeAsWordFrom(description);
         }
 
         return description;
+    }
+
+    static getRemoveGlobalFilter() {
+        const { removeGlobalFilter } = getSettings();
+        return removeGlobalFilter;
     }
 
     /**
