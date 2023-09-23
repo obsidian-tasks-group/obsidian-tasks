@@ -56,15 +56,13 @@ export class GlobalFilter {
      * @see setRemoveGlobalFilter
      */
     static getRemoveGlobalFilter() {
-        const { removeGlobalFilter } = getSettings();
-        return removeGlobalFilter;
+        return GlobalFilter._removeGlobalFilter;
     }
 
     /**
      * @see getRemoveGlobalFilter
      */
     static setRemoveGlobalFilter(removeGlobalFilter: boolean) {
-        updateSettings({ removeGlobalFilter: removeGlobalFilter });
         GlobalFilter._removeGlobalFilter = removeGlobalFilter;
     }
 

@@ -118,7 +118,7 @@ export class SettingsTab extends PluginSettingTab {
 
                 toggle.setValue(settings.removeGlobalFilter).onChange(async (value) => {
                     updateSettings({ removeGlobalFilter: value });
-
+                    GlobalFilter.setRemoveGlobalFilter(value);
                     await this.plugin.saveSettings();
                 });
             });
