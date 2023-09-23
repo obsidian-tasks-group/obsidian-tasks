@@ -50,6 +50,16 @@ describe('Global Filter tests', () => {
         expect(GlobalFilter.includedIn('Important #task inside')).toEqual(true);
     });
 
+    it('Should check equality correctly', () => {
+        // Arrange
+        GlobalFilter.set('#task');
+
+        // Assert
+        expect(GlobalFilter.equals('#task')).toEqual(true);
+        expect(GlobalFilter.equals('#tasks')).toEqual(false);
+        expect(GlobalFilter.equals('#TODO')).toEqual(false);
+    });
+
     it('Should not match a string without Global Filter', () => {
         // Arrange
         GlobalFilter.set('testValue');
