@@ -33,7 +33,7 @@ describe('GlobalQuery tests', () => {
     });
 
     it.each(['', ' ', '\n', '\n     \n    ', '  \n    \n'])(
-        'should have no instructions if line breaks and spaces were set in the query',
+        'should have no instructions if only line breaks and spaces were set in the query',
         (globalQuerySource) => {
             const globalQuery = new GlobalQuery(globalQuerySource);
 
