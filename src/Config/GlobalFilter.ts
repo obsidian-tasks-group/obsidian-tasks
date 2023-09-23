@@ -8,7 +8,7 @@ import { getSettings, updateSettings } from './Settings';
  * - All methods are static, so it is a collection of multiple static things
  *     - This is in contrast to {@link GlobalQuery} what has just the one static method, {@link GlobalQuery.getInstance}.
  * - It does not currently have any data of its own. All data is stored directly in the global {@link Settings}.
- * - It does not yet provide any interface to control {@link Settings.globalFilter}
+ * - It does not yet provide any interface to control {@link Settings.removeGlobalFilter}
  */
 export class GlobalFilter {
     static empty = '';
