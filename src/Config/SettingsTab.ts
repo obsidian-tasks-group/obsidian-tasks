@@ -103,6 +103,7 @@ export class SettingsTab extends PluginSettingTab {
                 text.setPlaceholder('e.g. #task or TODO')
                     .setValue(GlobalFilter.get())
                     .onChange(async (value) => {
+                        updateSettings({ globalFilter: value });
                         GlobalFilter.set(value);
                         await this.plugin.saveSettings();
                     });
