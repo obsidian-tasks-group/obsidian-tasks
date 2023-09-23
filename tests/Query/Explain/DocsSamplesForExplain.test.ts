@@ -2,8 +2,9 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { GlobalQuery } from '../../../src/Config/GlobalQuery';
 import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
-import { resetSettings, updateSettings } from '../../../src/Config/Settings';
+import { resetSettings } from '../../../src/Config/Settings';
 window.moment = moment;
 
 function checkExplainPresentAndVerify(blockQuery: string) {
@@ -33,7 +34,7 @@ explain`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 
     it('boolean combinations', () => {
@@ -45,7 +46,7 @@ not done
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 
     it('nested boolean combinations', () => {
@@ -56,7 +57,7 @@ explain
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 
     it('regular expression', () => {
@@ -67,20 +68,19 @@ path regex matches /^Root/Sub-Folder/Sample File\\.md/i`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 
-    const globalQuery = `limit 50
+    const globalQueryLine = `limit 50
 heading includes tasks`;
     it('example global query', () => {
         // Act, Assert
-        verifyQuery(globalQuery);
+        verifyQuery(globalQueryLine);
     });
 
     it('explains task block with global query active', () => {
         // Arrange
-        updateSettings({ globalQuery });
-
+        const globalQuery = new GlobalQuery(globalQueryLine);
         const blockQuery = `
 not done
 due next week
@@ -88,7 +88,7 @@ explain`;
 
         // Act, Assert
         checkExplainPresentAndVerify(blockQuery);
-        verifyTaskBlockExplanation(blockQuery);
+        verifyTaskBlockExplanation(blockQuery, globalQuery);
     });
 
     it('placeholders', () => {
@@ -102,7 +102,7 @@ filename includes {{query.file.filename}}`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 
     it('placeholders error', () => {
@@ -114,6 +114,6 @@ filename includes {{query.file.fileName}}`;
 
         // Act, Assert
         verifyQuery(instructions); // This does not have an explain, so does not call checkExplainPresentAndVerify()
-        verifyTaskBlockExplanation(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalQuery());
     });
 });

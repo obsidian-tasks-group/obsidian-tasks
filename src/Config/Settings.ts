@@ -15,6 +15,7 @@ import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
 import { GlobalFilter } from './GlobalFilter';
+import { GlobalQuery } from './GlobalQuery';
 
 interface SettingsMap {
     [key: string]: string | boolean;
@@ -90,7 +91,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-    globalQuery: '',
+    globalQuery: GlobalQuery.empty,
     globalFilter: GlobalFilter.empty,
     removeGlobalFilter: false,
     taskFormat: 'tasksPluginEmoji',
@@ -211,13 +212,4 @@ export const toggleFeature = (internalName: string, enabled: boolean): FeatureFl
  */
 export function getUserSelectedTaskFormat(): TaskFormat {
     return TASK_FORMATS[getSettings().taskFormat];
-}
-
-/**
- * Retrieves the source of the global {@link Query}
- *
- * @exports
- */
-export function getGlobalQuerySource(): { source: string } {
-    return { source: getSettings().globalQuery };
 }
