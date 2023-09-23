@@ -11,6 +11,7 @@ import { getSettings, updateSettings } from './Settings';
  */
 export class GlobalFilter {
     static empty = '';
+    static _globalFilter = '';
     static _removeGlobalFilter = false;
 
     static get(): string {
@@ -20,6 +21,7 @@ export class GlobalFilter {
 
     static set(value: string) {
         updateSettings({ globalFilter: value });
+        GlobalFilter._globalFilter = value;
     }
 
     static reset() {
