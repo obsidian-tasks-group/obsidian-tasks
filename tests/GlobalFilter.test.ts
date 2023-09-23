@@ -68,6 +68,14 @@ describe('Global Filter tests', () => {
         expect(GlobalFilter.includedIn('Without Global Filter')).toEqual(false);
     });
 
+    it('Should indicate whether to remove the global filter from displayed tasks', () => {
+        updateSettings({ removeGlobalFilter: false });
+        expect(GlobalFilter.getRemoveGlobalFilter()).toEqual(false);
+
+        updateSettings({ removeGlobalFilter: true });
+        expect(GlobalFilter.getRemoveGlobalFilter()).toEqual(true);
+    });
+
     it('Should remove Global Filter from the beginning of a string', () => {
         // Arrange
         const testValue = '#end';
