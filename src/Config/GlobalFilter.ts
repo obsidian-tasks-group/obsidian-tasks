@@ -1,13 +1,14 @@
 import * as RegExpTools from '../lib/RegExpTools';
-import { getSettings, updateSettings } from './Settings';
 
 /**
- * GlobalFilter is a wrapper around the {@link Settings.globalFilter} value in {@link Settings}.
+ * GlobalFilter has its own data, independent of {@link Settings.globalFilter} value in {@link Settings}.
+ *
+ * See https://publish.obsidian.md/tasks/Getting+Started/Global+Filter
  *
  * Limitations:
  * - All methods are static, so it is a collection of multiple static things
  *     - This is in contrast to {@link GlobalQuery} what has just the one static method, {@link GlobalQuery.getInstance}.
- * - It does not currently have any data of its own. All data is stored directly in the global {@link Settings}.
+ *     - These static methods will be made non-static in a future change.
  */
 export class GlobalFilter {
     static empty = '';
@@ -15,17 +16,15 @@ export class GlobalFilter {
     static _removeGlobalFilter = false;
 
     static get(): string {
-        const { globalFilter } = getSettings();
-        return globalFilter;
+        return GlobalFilter._globalFilter;
     }
 
     static set(value: string) {
-        updateSettings({ globalFilter: value });
         GlobalFilter._globalFilter = value;
     }
 
     static reset() {
-        updateSettings({ globalFilter: GlobalFilter.empty });
+        GlobalFilter.set(GlobalFilter.empty);
     }
 
     static isEmpty(): boolean {
