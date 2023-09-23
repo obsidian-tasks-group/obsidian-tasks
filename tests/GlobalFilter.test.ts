@@ -1,4 +1,4 @@
-import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { resetSettings } from '../src/Config/Settings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 
 describe('Global Filter tests', () => {
@@ -66,14 +66,6 @@ describe('Global Filter tests', () => {
 
         // Assert
         expect(GlobalFilter.includedIn('Without Global Filter')).toEqual(false);
-    });
-
-    it('Should indicate whether to remove the global filter from displayed tasks', () => {
-        updateSettings({ removeGlobalFilter: false });
-        expect(GlobalFilter.getRemoveGlobalFilter()).toEqual(false);
-
-        updateSettings({ removeGlobalFilter: true });
-        expect(GlobalFilter.getRemoveGlobalFilter()).toEqual(true);
     });
 
     it('Should control whether to remove the global filter from displayed tasks', () => {
