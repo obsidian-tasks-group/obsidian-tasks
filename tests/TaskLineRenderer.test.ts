@@ -118,7 +118,7 @@ describe('task line rendering', () => {
     };
 
     it('should render Global Filter when the Remove Global Filter is off', async () => {
-        updateSettings({ removeGlobalFilter: false });
+        GlobalFilter.setRemoveGlobalFilter(false);
         GlobalFilter.set('#global');
 
         const taskLine = '- [ ] This is a simple task with a #global filter';
@@ -128,7 +128,7 @@ describe('task line rendering', () => {
     });
 
     it('should not render Global Filter when the Remove Global Filter is on', async () => {
-        updateSettings({ removeGlobalFilter: true });
+        GlobalFilter.setRemoveGlobalFilter(true);
         GlobalFilter.set('#global');
 
         const taskLine = '- [ ] #global/subtag-shall-stay This is a simple task with a #global filter';
