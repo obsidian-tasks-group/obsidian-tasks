@@ -11,6 +11,7 @@ import { getSettings, updateSettings } from './Settings';
  */
 export class GlobalFilter {
     static empty = '';
+    static _removeGlobalFilter = false;
 
     static get(): string {
         const { globalFilter } = getSettings();
@@ -64,6 +65,7 @@ export class GlobalFilter {
      */
     static setRemoveGlobalFilter(removeGlobalFilter: boolean) {
         updateSettings({ removeGlobalFilter: removeGlobalFilter });
+        GlobalFilter._removeGlobalFilter = removeGlobalFilter;
     }
 
     /**
