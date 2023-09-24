@@ -30,38 +30,38 @@ export class GlobalFilter {
     }
 
     get(): string {
-        return GlobalFilter.getInstance()._globalFilter;
+        return this._globalFilter;
     }
 
     set(value: string) {
-        GlobalFilter.getInstance()._globalFilter = value;
+        this._globalFilter = value;
     }
 
     reset() {
-        GlobalFilter.getInstance().set(GlobalFilter.empty);
+        this.set(GlobalFilter.empty);
     }
 
     isEmpty(): boolean {
-        return GlobalFilter.getInstance().get() === GlobalFilter.empty;
+        return this.get() === GlobalFilter.empty;
     }
 
     equals(tag: string): boolean {
-        return GlobalFilter.getInstance().get() === tag;
+        return this.get() === tag;
     }
 
     includedIn(description: string): boolean {
-        const globalFilter = GlobalFilter.getInstance().get();
+        const globalFilter = this.get();
         return description.includes(globalFilter);
     }
 
     prependTo(description: string): string {
-        return GlobalFilter.getInstance().get() + ' ' + description;
+        return this.get() + ' ' + description;
     }
 
     removeAsWordFromDependingOnSettings(description: string): string {
-        const removeGlobalFilter = GlobalFilter.getInstance().getRemoveGlobalFilter();
+        const removeGlobalFilter = this.getRemoveGlobalFilter();
         if (removeGlobalFilter) {
-            return GlobalFilter.getInstance().removeAsWordFrom(description);
+            return this.removeAsWordFrom(description);
         }
 
         return description;
@@ -71,14 +71,14 @@ export class GlobalFilter {
      * @see setRemoveGlobalFilter
      */
     getRemoveGlobalFilter() {
-        return GlobalFilter.getInstance()._removeGlobalFilter;
+        return this._removeGlobalFilter;
     }
 
     /**
      * @see getRemoveGlobalFilter
      */
     setRemoveGlobalFilter(removeGlobalFilter: boolean) {
-        GlobalFilter.getInstance()._removeGlobalFilter = removeGlobalFilter;
+        this._removeGlobalFilter = removeGlobalFilter;
     }
 
     /**
@@ -88,15 +88,12 @@ export class GlobalFilter {
      * If the global filter exists as part of a nested tag, we keep it untouched.
      */
     removeAsWordFrom(description: string): string {
-        if (GlobalFilter.getInstance().isEmpty()) {
+        if (this.isEmpty()) {
             return description;
         }
 
         // This matches the global filter (after escaping it) only when it's a complete word
-        const theRegExp = RegExp(
-            '(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.getInstance().get()) + '($|\\s)',
-            'ug',
-        );
+        const theRegExp = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(this.get()) + '($|\\s)', 'ug');
 
         if (description.search(theRegExp) > -1) {
             description = description.replace(theRegExp, '$1$2').replace('  ', ' ').trim();
@@ -106,7 +103,7 @@ export class GlobalFilter {
     }
 
     removeAsSubstringFrom(description: string): string {
-        const globalFilter = GlobalFilter.getInstance().get();
+        const globalFilter = this.get();
         return description.replace(globalFilter, '').trim();
     }
 }
