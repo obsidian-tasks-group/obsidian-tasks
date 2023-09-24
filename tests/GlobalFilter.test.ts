@@ -6,6 +6,13 @@ describe('Global Filter tests', () => {
         GlobalFilter.reset();
     });
 
+    it('getInstance() should return the same object', () => {
+        const globalFilter1 = GlobalFilter.getInstance();
+        const globalFilter2 = GlobalFilter.getInstance();
+
+        expect(Object.is(globalFilter1, globalFilter2)).toEqual(true);
+    });
+
     it('Should provide Global Filter with the default value with get()', () => {
         expect(GlobalFilter.get()).toEqual('');
     });
