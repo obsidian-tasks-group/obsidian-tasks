@@ -67,8 +67,8 @@ function getOtherLayoutComponents(parentElement: HTMLElement): string[] {
 describe('task line rendering', () => {
     afterEach(() => {
         resetSettings();
-        GlobalFilter.reset();
-        GlobalFilter.setRemoveGlobalFilter(false);
+        GlobalFilter.getInstance().reset();
+        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
     });
 
     it('creates the correct span structure for a basic task', async () => {
@@ -120,8 +120,8 @@ describe('task line rendering', () => {
     };
 
     it('should render Global Filter when the Remove Global Filter is off', async () => {
-        GlobalFilter.setRemoveGlobalFilter(false);
-        GlobalFilter.set('#global');
+        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
+        GlobalFilter.getInstance().set('#global');
 
         const taskLine = '- [ ] This is a simple task with a #global filter';
         const descriptionWithFilter = await getDescriptionTest(taskLine);
@@ -130,8 +130,8 @@ describe('task line rendering', () => {
     });
 
     it('should not render Global Filter when the Remove Global Filter is on', async () => {
-        GlobalFilter.setRemoveGlobalFilter(true);
-        GlobalFilter.set('#global');
+        GlobalFilter.getInstance().setRemoveGlobalFilter(true);
+        GlobalFilter.getInstance().set('#global');
 
         const taskLine = '- [ ] #global/subtag-shall-stay This is a simple task with a #global filter';
         const descriptionWithoutFilter = await getDescriptionTest(taskLine);
