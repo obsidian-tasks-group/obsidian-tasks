@@ -235,7 +235,7 @@
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
         // when saving the task.
-        if (description != task.description || !GlobalFilter.includedIn(task.description)) {
+        if (description != task.description || !GlobalFilter.getInstance().includedIn(task.description)) {
             addGlobalFilterOnSave = true;
         }
         let priority: typeof editableTask.priority = 'none';

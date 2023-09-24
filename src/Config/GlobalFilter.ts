@@ -49,7 +49,7 @@ export class GlobalFilter {
         return GlobalFilter.getInstance().get() === tag;
     }
 
-    static includedIn(description: string): boolean {
+    includedIn(description: string): boolean {
         const globalFilter = GlobalFilter.getInstance().get();
         return description.includes(globalFilter);
     }
