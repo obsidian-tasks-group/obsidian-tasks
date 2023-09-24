@@ -61,7 +61,7 @@ export class GlobalFilter {
     removeAsWordFromDependingOnSettings(description: string): string {
         const removeGlobalFilter = GlobalFilter.getInstance().getRemoveGlobalFilter();
         if (removeGlobalFilter) {
-            return GlobalFilter.removeAsWordFrom(description);
+            return GlobalFilter.getInstance().removeAsWordFrom(description);
         }
 
         return description;
@@ -87,7 +87,7 @@ export class GlobalFilter {
      * or a space), because we don't want to cut-off nested tags like #task/subtag.
      * If the global filter exists as part of a nested tag, we keep it untouched.
      */
-    static removeAsWordFrom(description: string): string {
+    removeAsWordFrom(description: string): string {
         if (GlobalFilter.getInstance().isEmpty()) {
             return description;
         }
