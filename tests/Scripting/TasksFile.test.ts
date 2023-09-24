@@ -7,6 +7,12 @@ describe('TasksFile', () => {
         expect(file.path).toEqual(path);
     });
 
+    it('should provide access to path without extension', () => {
+        const path = 'a/b/c/d.md';
+        const file = new TasksFile(path);
+        expect(file.pathWithoutExtension).toEqual('a/b/c/d');
+    });
+
     it('should provide access to the root', () => {
         expect(new TasksFile('').root).toStrictEqual('/');
         expect(new TasksFile('outside/inside/A.md').root).toStrictEqual('outside/');
