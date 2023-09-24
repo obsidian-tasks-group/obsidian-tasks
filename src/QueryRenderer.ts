@@ -1,7 +1,8 @@
-import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
-import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, Notice, Plugin, TFile } from 'obsidian';
+import type { EventRef, MarkdownPostProcessorContext, MenuItem } from 'obsidian';
+import { TasksDate } from 'Scripting/TasksDate';
+import type { unitOfTime } from 'moment';
 import { GlobalQuery } from './Config/GlobalQuery';
-
 import type { IQuery } from './IQuery';
 import { State } from './Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
@@ -222,6 +223,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         taskList.addClasses(layout.taskListHiddenClasses);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
+
         for (let i = 0; i < tasksCount; i++) {
             const task = tasks[i];
             const isFilenameUnique = this.isFilenameUnique({ task });
@@ -243,12 +245,12 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const extrasSpan = listItem.createSpan('task-extras');
 
-            if (!this.query.layoutOptions.hideUrgency) {
-                this.addUrgency(extrasSpan, task);
+            if (!this.query.layoutOptions.hidePostponeButton) {
+                this.addPostponeButton(extrasSpan, task, shortMode);
             }
 
-            if (!this.query.layoutOptions.hideSnoozeButton) {
-                this.addSnoozeButton(extrasSpan, task, shortMode);
+            if (!this.query.layoutOptions.hideUrgency) {
+                this.addUrgency(extrasSpan, task);
             }
 
             if (!this.query.layoutOptions.hideBacklinks) {
@@ -399,45 +401,36 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
     }
 
-    private addSnoozeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
-        const snoozeButton = listItem.createSpan({ cls: 'tasks-snooze-button' });
-
-        const button = snoozeButton.createEl('button');
-
-        button.addClass('internal-button');
-        if (shortMode) {
-            button.addClass('internal-button-short-mode');
-        }
-
-        let buttonText: string;
-        if (shortMode) {
-            buttonText = ' ⏩';
-        } else {
-            buttonText = ' ⏩ Snooze';
-        }
-
-        button.setText(buttonText);
-
-        const updatedTask = new Task({ ...task, dueDate: window.moment().add(1, 'days') });
-        button.addEventListener('click', async () => {
-            replaceTaskWithTasks({
-                originalTask: task,
-                newTasks: updatedTask,
-            });
+    private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
+        const button = listItem.createEl('button', {
+            attr: {
+                id: 'postpone-button',
+                title: 'ℹ️ Postpone the task (right-click for more options)',
+            },
         });
 
-        button.addEventListener('mousedown', async (ev: MouseEvent) => {
-            // Open in a new tab on middle-click.
-            // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
-            // solely for this.
-            // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
-            // the 'click' event is more generic for touch devices etc.)
-            if (ev.button === 1) {
-                replaceTaskWithTasks({
-                    originalTask: task,
-                    newTasks: updatedTask,
-                });
-            }
+        const classNames = shortMode ? ['internal-button', 'internal-button-short-mode'] : ['internal-button'];
+        button.addClasses(classNames);
+        const buttonText = shortMode ? '⏩' : '⏩ Postpone';
+        button.setText(buttonText);
+
+        button.addEventListener('click', getTaskPostponeCallback(task, button, 'days'));
+
+        /** Open in a new tab on middle-click.
+         * This distinction is not available in the 'click' event, so we handle the 'mousedown' event solely for this.
+         * (for regular left-click we prefer the 'click' event, and not to just do everything here, because the 'click' event is more generic for touch devices etc.)
+         */
+        button.addEventListener('mousedown', getTaskPostponeCallback(task, button, 'days'));
+
+        /** Open a context menu on right-click.
+         * Give a choice of postponing for a week, month, or quarter.
+         */
+        button.addEventListener('contextmenu', async (ev: MouseEvent) => {
+            const menu = new Menu();
+            menu.addItem(getPostponeMenuItemCallback(task, button, 'week'));
+            menu.addItem(getPostponeMenuItemCallback(task, button, 'month'));
+            menu.addItem(getPostponeMenuItemCallback(task, button, 'quarter'));
+            menu.showAtPosition({ x: ev.screenX, y: ev.screenY });
         });
     }
 
@@ -475,4 +468,46 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
         return groupingRules.join(',');
     }
+}
+
+function getTaskPostponeCallback(
+    task: Task,
+    button: HTMLButtonElement,
+    timeUnit: unitOfTime.DurationConstructor = 'days',
+): (this: HTMLButtonElement, ev: MouseEvent) => any {
+    return async (ev?: MouseEvent) => {
+        const newDueDate = new TasksDate(task.dueDate).postpone(timeUnit);
+        const updatedTask = new Task({ ...task, dueDate: newDueDate });
+
+        if (ev?.button === 1) {
+            await replaceTaskWithTasks({
+                originalTask: task,
+                newTasks: updatedTask,
+            });
+            onPostponeSuccessCallback(button);
+        }
+    };
+}
+
+function getPostponeMenuItemCallback(
+    task: Task,
+    button: HTMLButtonElement,
+    timeUnit: unitOfTime.DurationConstructor = 'days',
+) {
+    const title = `Postpone for a ${timeUnit}`;
+    return (item: MenuItem) =>
+        item.setTitle(title).onClick(async () => {
+            const newDueDate = new TasksDate(task.dueDate).postpone(timeUnit);
+            await replaceTaskWithTasks({
+                originalTask: task,
+                newTasks: new Task({ ...task, dueDate: newDueDate }),
+            });
+            onPostponeSuccessCallback(button);
+        });
+}
+
+function onPostponeSuccessCallback(button: HTMLButtonElement) {
+    button.disabled = true;
+    button.setAttr('title', 'You can perform this action again after reloading the file.');
+    new Notice('Task postponed!');
 }
