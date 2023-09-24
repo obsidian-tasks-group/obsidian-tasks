@@ -22,9 +22,7 @@ describe('explain', () => {
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, GlobalFilter.getInstance(), new GlobalQuery())).toEqual(
-            expectedDisplayText,
-        );
+        expect(explainResults(query.source, new GlobalFilter(), new GlobalQuery())).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global filter active', () => {
@@ -57,7 +55,7 @@ Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, GlobalFilter.getInstance(), globalQuery)).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global query and global filter active', () => {
@@ -90,7 +88,7 @@ No filters supplied. All tasks will match the query.`;
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, GlobalFilter.getInstance(), globalQuery)).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toEqual(expectedDisplayText);
     });
 });
 
