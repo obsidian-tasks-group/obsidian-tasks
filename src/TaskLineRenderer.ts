@@ -44,16 +44,6 @@ export type TextRenderer = (
     obsidianComponent: Component | null, // null is allowed here only for tests
 ) => Promise<void>;
 
-async function obsidianMarkdownRenderer(
-    text: string,
-    element: HTMLSpanElement,
-    path: string,
-    obsidianComponent: Component | null,
-) {
-    if (!obsidianComponent) throw new Error('Must call the Obsidian renderer with an Obsidian Component object');
-    await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
-}
-
 /**
  * Renders a given Task object into an HTML List Item (LI) element, using the given renderDetails
  * configuration and a supplied TextRenderer (typically the Obsidian Markdown renderer, but for testing
@@ -443,5 +433,15 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
  * @param renderDetails
  */
 export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
+    async function obsidianMarkdownRenderer(
+        text: string,
+        element: HTMLSpanElement,
+        path: string,
+        obsidianComponent: Component | null,
+    ) {
+        if (!obsidianComponent) throw new Error('Must call the Obsidian renderer with an Obsidian Component object');
+        await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
+    }
+
     return renderTaskLine(task, renderDetails, obsidianMarkdownRenderer);
 }
