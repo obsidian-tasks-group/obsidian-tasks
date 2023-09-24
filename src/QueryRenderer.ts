@@ -300,12 +300,16 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.addGroupHeadings(content, group.groupHeadings);
 
             const tasks = group.tasks;
-            const taskList = await this.createTasksList({
-                tasks: tasks,
-                content: content,
-            });
-            content.appendChild(taskList);
+            await this.createTaskList2(tasks, content);
         }
+    }
+
+    private async createTaskList2(tasks: Task[], content: HTMLDivElement) {
+        const taskList = await this.createTasksList({
+            tasks: tasks,
+            content: content,
+        });
+        content.appendChild(taskList);
     }
 
     /**
