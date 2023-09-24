@@ -1,4 +1,4 @@
-import type { Moment } from 'moment';
+import type { Moment, unitOfTime } from 'moment';
 import { TaskRegularExpressions } from '../Task';
 
 /**
@@ -53,5 +53,9 @@ export class TasksDate {
      */
     public toISOString(keepOffset?: boolean): string | null {
         return this._date ? this._date!.toISOString(keepOffset) : '';
+    }
+
+    public postpone(unitOfTime: unitOfTime.DurationConstructor = 'days', amount: number = 1): Moment | null {
+        return this._date?.add(amount, unitOfTime) || null;
     }
 }
