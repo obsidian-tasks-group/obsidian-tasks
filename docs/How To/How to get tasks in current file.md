@@ -4,7 +4,7 @@ publish: true
 
 # How to get all tasks in the current file
 
-<span class="related-pages">#plugin/dataview</span>
+<span class="related-pages">#feature/scripting #plugin/dataview</span>
 
 ## Motivation and assumptions
 
@@ -13,37 +13,45 @@ for example to make sure no task gets accidentally missed.
 
 This page documents ways of setting this up.
 
-Assumptions:
+## Using pure Tasks blocks - with placeholders
+
+> [!released]
+> Placeholders were introduced in Tasks 4.7.0.
+
+We want to search for tasks in the file with the same `path` that the query is in.
+
+Tasks now provides an automated way to include the location of the `tasks` block in a query.
+
+We can use the `path` instruction with the placeholder text `{{query.file.path}}` which will be replaced with the path of the file containing the current query, like this:
+
+    ## Summary of Tasks within this note
+
+    ```tasks
+    not done
+    path includes path includes {{query.file.path}}
+    ```
+
+The following placeholders are available:
+
+```text
+{{query.file.path}}
+{{query.file.root}}
+{{query.file.folder}}
+{{query.file.filename}}
+```
+
+They can be used with any text filter, not just `path`, `file`, `folder`, `filename`. For example, they might be useful with `description` and `heading` filters.
+
+For more information, see:
+
+- [[Placeholders]]
+- [[Query Properties]]
+
+## Using Dataview to generate Tasks blocks - the old way
+
+<label class="ob-comment" title="" style=""> Assumptions <input type="checkbox"> <span style=""> Move this to a separate note<br> - but retain the original heading<br> - and link to it from here </span></label>:
 
 - We assume that you know how to install and enable the [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin.
-
-## Using pure Tasks blocks - fragile and error-prone
-
-Tasks does not provide an automated way to include the location of the `tasks` block in a query.
-
-It is possible to use the `path` instruction, but unfortunately you have to insert the path to the file yourself:
-
-    ## Summary of Tasks within this note
-
-    ```tasks
-    not done
-    path includes [insert current note's name or full path]
-    ```
-
-For example:
-
-    ## Summary of Tasks within this note
-
-    ```tasks
-    not done
-    path includes Obsidian/tasks/tasks user support/03 Done - tasks user support/1.11.0 release
-    ```
-
-> [!warning]
-> Using `path includes` to search for a particular file name or folder is error-prone, as if you rename the file,
-you have to remember to manually update the location in the tasks block, and this is very error-prone.
-
-## Using Dataview to generate Tasks blocks - safe and convenient
 
 There is a nice property that the [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin can write out code blocks that are then processed by other plugins.
 

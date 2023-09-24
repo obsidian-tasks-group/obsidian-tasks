@@ -2,6 +2,7 @@ import { Plugin } from 'obsidian';
 
 import { Cache } from './Cache';
 import { Commands } from './Commands';
+import { GlobalQuery } from './Config/GlobalQuery';
 import { TasksEvents } from './TasksEvents';
 import { initializeFile } from './File';
 import { InlineRenderer } from './InlineRenderer';
@@ -68,6 +69,7 @@ export default class TasksPlugin extends Plugin {
     async loadSettings() {
         const newSettings = await this.loadData();
         updateSettings(newSettings);
+        GlobalQuery.getInstance().set(newSettings.globalQuery);
         await this.loadTaskStatuses();
     }
 

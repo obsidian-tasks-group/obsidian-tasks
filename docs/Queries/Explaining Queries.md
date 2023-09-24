@@ -190,6 +190,39 @@ due next week =>
 ```
 <!-- endSnippet -->
 
+### Template values are expanded
+
+> [!released]
+> Templating was introduced in Tasks 4.7.0.
+
+For example, when the following query with [[Query Properties]] in [[Placeholders|placeholders]] is placed in a tasks query block in the file `some/sample/file path.md`:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.query.text -->
+```text
+explain
+path includes {{query.file.path}}
+root includes {{query.file.root}}
+folder includes {{query.file.folder}}
+filename includes {{query.file.filename}}
+```
+<!-- endSnippet -->
+
+the results begin with the following:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.explanation.text -->
+```text
+Explanation of this Tasks code block query:
+
+path includes some/sample/file path.md
+
+root includes some/
+
+folder includes some/sample/
+
+filename includes file path.md
+```
+<!-- endSnippet -->
+
 ## Styling explain results
 
 ### Default style
