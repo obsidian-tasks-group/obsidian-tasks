@@ -77,7 +77,7 @@ export class GlobalFilter {
     /**
      * @see getRemoveGlobalFilter
      */
-    static setRemoveGlobalFilter(removeGlobalFilter: boolean) {
+    setRemoveGlobalFilter(removeGlobalFilter: boolean) {
         GlobalFilter.getInstance()._removeGlobalFilter = removeGlobalFilter;
     }
 

@@ -80,10 +80,10 @@ describe('Global Filter tests', () => {
     });
 
     it('Should control whether to remove the global filter from displayed tasks', () => {
-        GlobalFilter.setRemoveGlobalFilter(false);
+        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
         expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(false);
 
-        GlobalFilter.setRemoveGlobalFilter(true);
+        GlobalFilter.getInstance().setRemoveGlobalFilter(true);
         expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(true);
     });
 
@@ -131,7 +131,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     it('Should remove Global Filter from a string when Setting is set to false', () => {
         // Arrange
         GlobalFilter.getInstance().set('todo');
-        GlobalFilter.setRemoveGlobalFilter(false);
+        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
 
         // Assert
         expect(GlobalFilter.getInstance().removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
@@ -142,7 +142,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     it('Should remove Global Filter from a string when Setting is set to true', () => {
         // Arrange
         GlobalFilter.getInstance().set('todo');
-        GlobalFilter.setRemoveGlobalFilter(true);
+        GlobalFilter.getInstance().setRemoveGlobalFilter(true);
 
         // Assert
         expect(GlobalFilter.getInstance().removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
@@ -163,7 +163,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     ])(
         'should not remove Global Filter (%s) if it is in a substring for a task "- [ ] %s"',
         async (globalFilter: string, description: string) => {
-            GlobalFilter.setRemoveGlobalFilter(true);
+            GlobalFilter.getInstance().setRemoveGlobalFilter(true);
             GlobalFilter.getInstance().set(globalFilter);
 
             expect(GlobalFilter.removeAsWordFrom(description)).toEqual(description);
