@@ -192,10 +192,6 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
 });
 
 describe('check removal of the global filter', () => {
-    afterEach(() => {
-        GlobalFilter.getInstance().reset();
-    });
-
     type GlobalFilterRemovalExpectation = {
         globalFilterValue: string;
         inputDescription: string;
@@ -316,10 +312,11 @@ describe('check removal of the global filter', () => {
         'should parse "$inputDescription" and extract "$expectedDescription"',
         ({ globalFilterValue, inputDescription, expectedDescription }) => {
             // Arrange
-            GlobalFilter.getInstance().set(globalFilterValue);
+            const globalFilter = new GlobalFilter();
+            globalFilter.set(globalFilterValue);
 
             // Assert
-            expect(GlobalFilter.getInstance().removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+            expect(globalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
         },
     );
 });
