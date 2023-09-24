@@ -1,20 +1,30 @@
 import * as RegExpTools from '../lib/RegExpTools';
-import { getSettings, updateSettings } from './Settings';
 
+/**
+ * GlobalFilter has its own data, independent of {@link Settings.globalFilter} value in {@link Settings}.
+ *
+ * See https://publish.obsidian.md/tasks/Getting+Started/Global+Filter
+ *
+ * Limitations:
+ * - All methods are static, so it is a collection of multiple static things
+ *     - This is in contrast to {@link GlobalQuery} what has just the one static method, {@link GlobalQuery.getInstance}.
+ *     - These static methods will be made non-static in a future change.
+ */
 export class GlobalFilter {
     static empty = '';
+    static _globalFilter = '';
+    static _removeGlobalFilter = false;
 
     static get(): string {
-        const { globalFilter } = getSettings();
-        return globalFilter;
+        return GlobalFilter._globalFilter;
     }
 
     static set(value: string) {
-        updateSettings({ globalFilter: value });
+        GlobalFilter._globalFilter = value;
     }
 
     static reset() {
-        updateSettings({ globalFilter: GlobalFilter.empty });
+        GlobalFilter.set(GlobalFilter.empty);
     }
 
     static isEmpty(): boolean {
@@ -35,12 +45,26 @@ export class GlobalFilter {
     }
 
     static removeAsWordFromDependingOnSettings(description: string): string {
-        const { removeGlobalFilter } = getSettings();
+        const removeGlobalFilter = GlobalFilter.getRemoveGlobalFilter();
         if (removeGlobalFilter) {
             return GlobalFilter.removeAsWordFrom(description);
         }
 
         return description;
+    }
+
+    /**
+     * @see setRemoveGlobalFilter
+     */
+    static getRemoveGlobalFilter() {
+        return GlobalFilter._removeGlobalFilter;
+    }
+
+    /**
+     * @see getRemoveGlobalFilter
+     */
+    static setRemoveGlobalFilter(removeGlobalFilter: boolean) {
+        GlobalFilter._removeGlobalFilter = removeGlobalFilter;
     }
 
     /**
