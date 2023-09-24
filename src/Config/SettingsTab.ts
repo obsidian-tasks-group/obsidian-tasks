@@ -104,7 +104,7 @@ export class SettingsTab extends PluginSettingTab {
                     .setValue(GlobalFilter.getInstance().get())
                     .onChange(async (value) => {
                         updateSettings({ globalFilter: value });
-                        GlobalFilter.set(value);
+                        GlobalFilter.getInstance().set(value);
                         await this.plugin.saveSettings();
                     });
             });

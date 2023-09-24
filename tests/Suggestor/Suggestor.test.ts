@@ -248,12 +248,12 @@ describe('canSuggestForLine', () => {
     });
 
     it('should suggest if global filter missing from line', () => {
-        GlobalFilter.set('#todo');
+        GlobalFilter.getInstance().set('#todo');
         expect(canSuggestForLineWithCursor('- [ ] #todo has global filter|')).toEqual(true);
     });
 
     it('should not suggest if global filter missing from line', () => {
-        GlobalFilter.set('#todo');
+        GlobalFilter.getInstance().set('#todo');
         expect(canSuggestForLineWithCursor('- [ ] no global filter|')).toEqual(false);
     });
 

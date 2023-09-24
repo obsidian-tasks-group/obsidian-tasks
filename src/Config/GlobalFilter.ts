@@ -33,12 +33,12 @@ export class GlobalFilter {
         return GlobalFilter.getInstance()._globalFilter;
     }
 
-    static set(value: string) {
+    set(value: string) {
         GlobalFilter.getInstance()._globalFilter = value;
     }
 
     static reset() {
-        GlobalFilter.set(GlobalFilter.empty);
+        GlobalFilter.getInstance().set(GlobalFilter.empty);
     }
 
     static isEmpty(): boolean {
