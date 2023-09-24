@@ -406,7 +406,7 @@ describe('parsing tags', () => {
         ({ markdownTask, expectedDescription, extractedTags, globalFilter }) => {
             // Arrange
             if (globalFilter != '') {
-                GlobalFilter.set(globalFilter);
+                GlobalFilter.getInstance().set(globalFilter);
             }
 
             // Act
@@ -436,7 +436,7 @@ describe('task parsing VS global filter', () => {
 
     it('returns null when task does not have global filter', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
         const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
 
         // Act
@@ -455,7 +455,7 @@ describe('task parsing VS global filter', () => {
         '- [ #task ] this is a task 🗓 2021-09-12',
     ])('should not parse task with global filter outside of the description: "%s"', (line: string) => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         // Act
         const task = fromLine({
@@ -468,7 +468,7 @@ describe('task parsing VS global filter', () => {
 
     it('should not consider task status when searching for global filter', () => {
         // Arrange
-        GlobalFilter.set('@');
+        GlobalFilter.getInstance().set('@');
 
         // Act
         const task = fromLine({
@@ -673,7 +673,7 @@ describe('to string', () => {
     it('retains the global filter', () => {
         // Arrange
         const line = '- [ ] This is a task with #t as a global filter and also #t/some tags';
-        GlobalFilter.set('#t');
+        GlobalFilter.getInstance().set('#t');
 
         // Act
         const task: Task = fromLine({

@@ -26,7 +26,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global filter active', () => {
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         const source = '';
         const query = new Query({ source });
@@ -58,7 +58,7 @@ No filters supplied. All tasks will match the query.`;
 
     it('should explain a task with global query and global filter active', () => {
         const globalQuery = new GlobalQuery('description includes hello');
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         const source = '';
         const query = new Query({ source });

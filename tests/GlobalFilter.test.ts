@@ -22,7 +22,7 @@ describe('Global Filter tests', () => {
         const testValue = 'newGlobalFilter';
 
         // Act
-        GlobalFilter.set(testValue);
+        GlobalFilter.getInstance().set(testValue);
 
         // Assert
         expect(GlobalFilter.getInstance().get()).toEqual(testValue);
@@ -31,7 +31,7 @@ describe('Global Filter tests', () => {
     it('Should reset the Global Filter', () => {
         // Arrange
         const testValue = '#important';
-        GlobalFilter.set(testValue);
+        GlobalFilter.getInstance().set(testValue);
 
         // Act
         GlobalFilter.reset();
@@ -47,7 +47,7 @@ describe('Global Filter tests', () => {
 
     it('Should indicate non-empty Global Filter after setting one', () => {
         // Arrange
-        GlobalFilter.set('newGlobalFilter');
+        GlobalFilter.getInstance().set('newGlobalFilter');
 
         // Assert
         expect(GlobalFilter.isEmpty()).toEqual(false);
@@ -55,7 +55,7 @@ describe('Global Filter tests', () => {
 
     it('Should match a string with Global Filter', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         // Assert
         expect(GlobalFilter.includedIn('Important #task inside')).toEqual(true);
@@ -63,7 +63,7 @@ describe('Global Filter tests', () => {
 
     it('Should check equality correctly', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         // Assert
         expect(GlobalFilter.equals('#task')).toEqual(true);
@@ -73,7 +73,7 @@ describe('Global Filter tests', () => {
 
     it('Should not match a string without Global Filter', () => {
         // Arrange
-        GlobalFilter.set('testValue');
+        GlobalFilter.getInstance().set('testValue');
 
         // Assert
         expect(GlobalFilter.includedIn('Without Global Filter')).toEqual(false);
@@ -92,7 +92,7 @@ describe('Global Filter tests', () => {
         const testValue = '#end';
         const testStringBefore = 'Important thing to do #end';
         const testStringAfter = 'Important thing to do';
-        GlobalFilter.set(testValue);
+        GlobalFilter.getInstance().set(testValue);
 
         // Assert
         expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
@@ -103,7 +103,7 @@ describe('Global Filter tests', () => {
         const testValue = '#beginning';
         const testStringBefore = '#beginning another important thing';
         const testStringAfter = 'another important thing';
-        GlobalFilter.set(testValue);
+        GlobalFilter.getInstance().set(testValue);
 
         // Assert
         expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
@@ -115,7 +115,7 @@ describe('Global Filter tests', () => {
         const testStringBefore = 'With the GF in the #middle of the string';
         // Note the 2 spaces where the 'newGlobalFilter' was
         const testStringAfter = 'With the GF in the  of the string';
-        GlobalFilter.set(testValue);
+        GlobalFilter.getInstance().set(testValue);
 
         // Assert
         expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
@@ -130,7 +130,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
 
     it('Should remove Global Filter from a string when Setting is set to false', () => {
         // Arrange
-        GlobalFilter.set('todo');
+        GlobalFilter.getInstance().set('todo');
         GlobalFilter.setRemoveGlobalFilter(false);
 
         // Assert
@@ -141,7 +141,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
 
     it('Should remove Global Filter from a string when Setting is set to true', () => {
         // Arrange
-        GlobalFilter.set('todo');
+        GlobalFilter.getInstance().set('todo');
         GlobalFilter.setRemoveGlobalFilter(true);
 
         // Assert
@@ -164,7 +164,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
         'should not remove Global Filter (%s) if it is in a substring for a task "- [ ] %s"',
         async (globalFilter: string, description: string) => {
             GlobalFilter.setRemoveGlobalFilter(true);
-            GlobalFilter.set(globalFilter);
+            GlobalFilter.getInstance().set(globalFilter);
 
             expect(GlobalFilter.removeAsWordFrom(description)).toEqual(description);
         },
@@ -296,7 +296,7 @@ describe('check removal of the global filter', () => {
         'should parse "$inputDescription" and extract "$expectedDescription"',
         ({ globalFilter, inputDescription, expectedDescription }) => {
             // Arrange
-            GlobalFilter.set(globalFilter);
+            GlobalFilter.getInstance().set(globalFilter);
 
             // Assert
             expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
@@ -345,7 +345,7 @@ describe('check removal of the global filter exhaustively', () => {
         '\\',
     ])('should parse global filter "%s" edge cases correctly', (globalFilter) => {
         // Arrange
-        GlobalFilter.set(globalFilter);
+        GlobalFilter.getInstance().set(globalFilter);
 
         // global filter removed at beginning, middle and end
         let inputDescription = `${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
@@ -374,7 +374,7 @@ describe('GlobalFilter.prepend() tests', () => {
         const globalFilter = 'awesome';
         const description = 'blossom';
 
-        GlobalFilter.set(globalFilter);
+        GlobalFilter.getInstance().set(globalFilter);
         expect(GlobalFilter.prependTo(description)).toEqual(`${globalFilter} ${description}`);
     });
 
