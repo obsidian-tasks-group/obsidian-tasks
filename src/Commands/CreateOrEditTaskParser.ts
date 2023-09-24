@@ -29,7 +29,7 @@ function shouldUpdateCreatedDateForTask(task: Task) {
 
     // If the global filter will be added when the task is saved, treat it as new and add a creation date.
     // See issue #2112.
-    const globalFilterEnabled = !GlobalFilter.isEmpty();
+    const globalFilterEnabled = !GlobalFilter.getInstance().isEmpty();
     const taskDoesNotContainGlobalFilter = !GlobalFilter.includedIn(task.description);
     const needsGlobalFilterToBeAdded = globalFilterEnabled && taskDoesNotContainGlobalFilter;
 

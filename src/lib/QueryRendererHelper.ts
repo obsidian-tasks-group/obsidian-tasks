@@ -26,7 +26,7 @@ import { Query } from '../Query/Query';
 export function explainResults(source: string, globalQuery: GlobalQuery, path: string | undefined = undefined): string {
     let result = '';
 
-    if (!GlobalFilter.isEmpty()) {
+    if (!GlobalFilter.getInstance().isEmpty()) {
         result += `Only tasks containing the global filter '${GlobalFilter.getInstance().get()}'.\n\n`;
     }
 

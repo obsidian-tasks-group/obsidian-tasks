@@ -41,7 +41,7 @@ export class GlobalFilter {
         GlobalFilter.getInstance().set(GlobalFilter.empty);
     }
 
-    static isEmpty(): boolean {
+    isEmpty(): boolean {
         return GlobalFilter.getInstance().get() === GlobalFilter.empty;
     }
 
@@ -88,7 +88,7 @@ export class GlobalFilter {
      * If the global filter exists as part of a nested tag, we keep it untouched.
      */
     static removeAsWordFrom(description: string): string {
-        if (GlobalFilter.isEmpty()) {
+        if (GlobalFilter.getInstance().isEmpty()) {
             return description;
         }
 
