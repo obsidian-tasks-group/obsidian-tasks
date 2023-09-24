@@ -29,36 +29,36 @@ export class GlobalFilter {
         return GlobalFilter.instance;
     }
 
-    get(): string {
+    public get(): string {
         return this._globalFilter;
     }
 
-    set(value: string) {
+    public set(value: string) {
         this._globalFilter = value;
     }
 
-    reset() {
+    public reset() {
         this.set(GlobalFilter.empty);
     }
 
-    isEmpty(): boolean {
+    public isEmpty(): boolean {
         return this.get() === GlobalFilter.empty;
     }
 
-    equals(tag: string): boolean {
+    public equals(tag: string): boolean {
         return this.get() === tag;
     }
 
-    includedIn(description: string): boolean {
+    public includedIn(description: string): boolean {
         const globalFilter = this.get();
         return description.includes(globalFilter);
     }
 
-    prependTo(description: string): string {
+    public prependTo(description: string): string {
         return this.get() + ' ' + description;
     }
 
-    removeAsWordFromDependingOnSettings(description: string): string {
+    public removeAsWordFromDependingOnSettings(description: string): string {
         const removeGlobalFilter = this.getRemoveGlobalFilter();
         if (removeGlobalFilter) {
             return this.removeAsWordFrom(description);
@@ -70,14 +70,14 @@ export class GlobalFilter {
     /**
      * @see setRemoveGlobalFilter
      */
-    getRemoveGlobalFilter() {
+    public getRemoveGlobalFilter() {
         return this._removeGlobalFilter;
     }
 
     /**
      * @see getRemoveGlobalFilter
      */
-    setRemoveGlobalFilter(removeGlobalFilter: boolean) {
+    public setRemoveGlobalFilter(removeGlobalFilter: boolean) {
         this._removeGlobalFilter = removeGlobalFilter;
     }
 
@@ -87,7 +87,7 @@ export class GlobalFilter {
      * or a space), because we don't want to cut-off nested tags like #task/subtag.
      * If the global filter exists as part of a nested tag, we keep it untouched.
      */
-    removeAsWordFrom(description: string): string {
+    public removeAsWordFrom(description: string): string {
         if (this.isEmpty()) {
             return description;
         }
@@ -102,7 +102,7 @@ export class GlobalFilter {
         return description;
     }
 
-    removeAsSubstringFrom(description: string): string {
+    public removeAsSubstringFrom(description: string): string {
         const globalFilter = this.get();
         return description.replace(globalFilter, '').trim();
     }
