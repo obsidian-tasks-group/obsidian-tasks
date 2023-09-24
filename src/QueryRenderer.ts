@@ -293,8 +293,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             // will be empty, and no headings will be added.
             this.addGroupHeadings(content, group.groupHeadings);
 
-            const tasks = group.tasks;
-            await this.createTaskList(tasks, content);
+            await this.createTaskList(group.tasks, content);
         }
     }
 
