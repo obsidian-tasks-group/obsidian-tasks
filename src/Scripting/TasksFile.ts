@@ -16,6 +16,14 @@ export class TasksFile {
     }
 
     /**
+     * Return the path to the file, with the filename extension removed.
+     */
+    get pathWithoutExtension(): string {
+        // Copied from PathField.grouper() initially
+        return this.path.replace('.md', '');
+    }
+
+    /**
      * Return the root to the file.
      */
     get root(): string {
