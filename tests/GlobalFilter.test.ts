@@ -1,4 +1,3 @@
-import { resetSettings } from '../src/Config/Settings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 
 describe('Global Filter tests', () => {
@@ -146,29 +145,26 @@ describe('Global Filter tests', () => {
 });
 
 describe('Global Filter tests with Remove Global Filter Setting', () => {
-    afterEach(() => {
-        GlobalFilter.getInstance().reset();
-        resetSettings();
-    });
-
     it('Should remove Global Filter from a string when Setting is set to false', () => {
         // Arrange
-        GlobalFilter.getInstance().set('todo');
-        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('todo');
+        globalFilter.setRemoveGlobalFilter(false);
 
         // Assert
-        expect(GlobalFilter.getInstance().removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
+        expect(globalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
             'This is absolutely todo',
         );
     });
 
     it('Should remove Global Filter from a string when Setting is set to true', () => {
         // Arrange
-        GlobalFilter.getInstance().set('todo');
-        GlobalFilter.getInstance().setRemoveGlobalFilter(true);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('todo');
+        globalFilter.setRemoveGlobalFilter(true);
 
         // Assert
-        expect(GlobalFilter.getInstance().removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
+        expect(globalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
             'This is absolutely',
         );
     });
@@ -186,10 +182,11 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     ])(
         'should not remove Global Filter (%s) if it is in a substring for a task "- [ ] %s"',
         async (globalFilterValue: string, description: string) => {
-            GlobalFilter.getInstance().setRemoveGlobalFilter(true);
-            GlobalFilter.getInstance().set(globalFilterValue);
+            const globalFilter = new GlobalFilter();
+            globalFilter.setRemoveGlobalFilter(true);
+            globalFilter.set(globalFilterValue);
 
-            expect(GlobalFilter.getInstance().removeAsWordFrom(description)).toEqual(description);
+            expect(globalFilter.removeAsWordFrom(description)).toEqual(description);
         },
     );
 });
