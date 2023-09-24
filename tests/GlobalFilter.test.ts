@@ -28,6 +28,20 @@ describe('Global Filter tests', () => {
         expect(GlobalFilter.getInstance().get()).toEqual(testValue);
     });
 
+    it.failing('Should allow independent values for independent instances', () => {
+        // Arrange
+        const globalFilter1 = new GlobalFilter();
+        const globalFilter2 = new GlobalFilter();
+
+        // Act
+        globalFilter1.set('1');
+        globalFilter2.set('2');
+
+        // Assert
+        expect(globalFilter1.get()).toEqual('1');
+        expect(globalFilter2.get()).toEqual('2');
+    });
+
     it('Should reset the Global Filter', () => {
         // Arrange
         const testValue = '#important';
