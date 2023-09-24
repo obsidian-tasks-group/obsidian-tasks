@@ -437,6 +437,12 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
     )})`;
 }
 
+/**
+ * Create an HTML rendered List Item element (LI) for a task.
+ * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
+ * @param task
+ * @param renderDetails
+ */
 export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails) {
     return renderTaskLine(task, renderDetails);
 }
