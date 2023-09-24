@@ -38,5 +38,7 @@ describe('TasksFile', () => {
         expect(new TasksFile('directory name/file in sub-directory.md').filenameWithoutExtension).toEqual(
             'file in sub-directory',
         );
+        // Check it only replaces the last .md
+        expect(new TasksFile('1.md.only-replace.2.md').filenameWithoutExtension).toEqual('1.md.only-replace.2');
     });
 });
