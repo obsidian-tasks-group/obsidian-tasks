@@ -28,7 +28,7 @@ describe('Global Filter tests', () => {
         expect(GlobalFilter.getInstance().get()).toEqual(testValue);
     });
 
-    it.failing('Should allow independent values for independent instances', () => {
+    it('Should allow independent values for independent instances', () => {
         // Arrange
         const globalFilter1 = new GlobalFilter();
         const globalFilter2 = new GlobalFilter();
