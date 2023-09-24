@@ -35,7 +35,6 @@ export class BacklinkField extends TextField {
                 return ['Unknown Location'];
             }
 
-            // Only append the heading if it differs from the filename:
             const header = task.precedingHeader;
             if (header === null) {
                 return ['[[' + filename + ']]'];
