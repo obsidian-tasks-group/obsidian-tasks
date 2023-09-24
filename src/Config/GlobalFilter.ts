@@ -45,7 +45,7 @@ export class GlobalFilter {
         return GlobalFilter.getInstance().get() === GlobalFilter.empty;
     }
 
-    static equals(tag: string): boolean {
+    equals(tag: string): boolean {
         return GlobalFilter.getInstance().get() === tag;
     }
 
