@@ -14,8 +14,8 @@ export class GlobalFilter {
     private static instance: GlobalFilter;
 
     static empty = '';
-    static _globalFilter = '';
-    static _removeGlobalFilter = false;
+    _globalFilter = '';
+    _removeGlobalFilter = false;
 
     /**
      * Provides access to the single global instance of GlobalFilter.
@@ -30,11 +30,11 @@ export class GlobalFilter {
     }
 
     static get(): string {
-        return GlobalFilter._globalFilter;
+        return GlobalFilter.getInstance()._globalFilter;
     }
 
     static set(value: string) {
-        GlobalFilter._globalFilter = value;
+        GlobalFilter.getInstance()._globalFilter = value;
     }
 
     static reset() {
@@ -71,14 +71,14 @@ export class GlobalFilter {
      * @see setRemoveGlobalFilter
      */
     static getRemoveGlobalFilter() {
-        return GlobalFilter._removeGlobalFilter;
+        return GlobalFilter.getInstance()._removeGlobalFilter;
     }
 
     /**
      * @see getRemoveGlobalFilter
      */
     static setRemoveGlobalFilter(removeGlobalFilter: boolean) {
-        GlobalFilter._removeGlobalFilter = removeGlobalFilter;
+        GlobalFilter.getInstance()._removeGlobalFilter = removeGlobalFilter;
     }
 
     /**
