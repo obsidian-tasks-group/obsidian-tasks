@@ -6,6 +6,7 @@ import type { IQuery } from './IQuery';
 import { State } from './Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
+import { taskToLi } from './TaskLineRenderer';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
@@ -223,7 +224,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         for (const [i, task] of tasks.entries()) {
             const isFilenameUnique = this.isFilenameUnique({ task });
 
-            const listItem = await task.toLi({
+            const listItem = await taskToLi(task, {
                 parentUlElement: taskList,
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
