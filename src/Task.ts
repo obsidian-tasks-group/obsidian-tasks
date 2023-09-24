@@ -239,7 +239,7 @@ export class Task {
 
         // return if the line does not have the global filter. Do this before
         // any other processing to improve performance.
-        if (!GlobalFilter.includedIn(taskComponents.body)) {
+        if (!GlobalFilter.getInstance().includedIn(taskComponents.body)) {
             return null;
         }
 
@@ -286,7 +286,7 @@ export class Task {
         taskInfo.tags = taskInfo.tags.map((tag) => tag.trim());
 
         // Remove the Global Filter if it is there
-        taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.equals(tag));
+        taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.getInstance().equals(tag));
 
         return new Task({
             ...taskComponents,

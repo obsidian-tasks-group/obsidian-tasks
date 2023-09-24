@@ -100,7 +100,7 @@ async function editTaskLine(line: string, newDescription: string | undefined) {
 
 describe('Task rendering', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     function testDescriptionRender(taskDescription: string, expectedDescription: string) {
@@ -118,29 +118,29 @@ describe('Task rendering', () => {
     });
 
     it('should display task description without non-tag Global Filter)', () => {
-        GlobalFilter.set('filter');
+        GlobalFilter.getInstance().set('filter');
         testDescriptionRender('filter important thing', 'important thing');
     });
 
     it('should display task description with complex non-tag Global Filter)', () => {
-        GlobalFilter.set('filter');
+        GlobalFilter.getInstance().set('filter');
         // This behavior is inconsistent with Obsidian's tag definition which includes nested tags
         testDescriptionRender('filter/important thing', 'filter/important thing');
     });
 
     it('should display task description without tag-like Global Filter', () => {
-        GlobalFilter.set('#todo');
+        GlobalFilter.getInstance().set('#todo');
         testDescriptionRender('#todo another plan', 'another plan');
     });
 
     it('should display task description with complex tag-like Global Filter', () => {
-        GlobalFilter.set('#todo');
+        GlobalFilter.getInstance().set('#todo');
         // This behavior is inconsistent with Obsidian's tag definition which includes nested tags
         testDescriptionRender('#todo/important another plan', '#todo/important another plan');
     });
 
     it('should display task description with emoji removed, when global filter is in initial line', () => {
-        GlobalFilter.set('#todo');
+        GlobalFilter.getInstance().set('#todo');
         testDescriptionRender(
             '#todo with global filter and with scheduled date ⏳ 2023-06-13',
             'with global filter and with scheduled date',
@@ -148,7 +148,7 @@ describe('Task rendering', () => {
     });
 
     it('should display task description with emoji removed, even if the global filter is missing from initial line (bug 2037)', () => {
-        GlobalFilter.set('#todo');
+        GlobalFilter.getInstance().set('#todo');
         // When written, this was a demonstration of the behaviour logged in
         // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2037
         testDescriptionRender(
@@ -160,7 +160,7 @@ describe('Task rendering', () => {
 
 describe('Task editing', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
@@ -181,7 +181,7 @@ describe('Task editing', () => {
     it('should not change the description if the task was not edited and keep Global Filter', async () => {
         const globalFilter = '#remember';
         const description = 'simple task';
-        GlobalFilter.set(globalFilter);
+        GlobalFilter.getInstance().set(globalFilter);
         await testDescriptionEdit(`${globalFilter} ${description}`, description, `${globalFilter} ${description}`);
     });
 
@@ -189,7 +189,7 @@ describe('Task editing', () => {
         const globalFilter = '#remember';
         const oldDescription = 'simple task';
         const newDescription = 'new plan';
-        GlobalFilter.set(globalFilter);
+        GlobalFilter.getInstance().set(globalFilter);
         await testDescriptionEdit(
             `${globalFilter} ${oldDescription}`,
             newDescription,
@@ -211,7 +211,7 @@ describe('Exhaustive editing', () => {
     });
 
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
         resetSettings();
         jest.useRealTimers();
     });
@@ -247,7 +247,7 @@ describe('Exhaustive editing', () => {
             name,
             title,
             async (globalFilter, setCreatedDate, initialTaskLine) => {
-                GlobalFilter.set(globalFilter as string);
+                GlobalFilter.getInstance().set(globalFilter as string);
 
                 // @ts-expect-error: TS2322: Type 'T2' is not assignable to type 'boolean | undefined'.
                 updateSettings({ setCreatedDate });

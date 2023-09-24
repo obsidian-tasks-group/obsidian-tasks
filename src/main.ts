@@ -70,8 +70,8 @@ export default class TasksPlugin extends Plugin {
     async loadSettings() {
         const newSettings = await this.loadData();
         updateSettings(newSettings);
-        GlobalFilter.set(newSettings.globalFilter);
-        GlobalFilter.setRemoveGlobalFilter(newSettings.removeGlobalFilter);
+        GlobalFilter.getInstance().set(newSettings.globalFilter);
+        GlobalFilter.getInstance().setRemoveGlobalFilter(newSettings.removeGlobalFilter);
         GlobalQuery.getInstance().set(newSettings.globalQuery);
         await this.loadTaskStatuses();
     }

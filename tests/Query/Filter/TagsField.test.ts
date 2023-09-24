@@ -38,7 +38,7 @@ describe('tag presence & absence', () => {
     });
 
     it('should filter together with the global filter ("has tags")', () => {
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         // Arrange
         const filter = new TagsField().createFilterOrErrorMessage('has tags');
@@ -51,11 +51,11 @@ describe('tag presence & absence', () => {
         expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one #two ');
         expect(filter).not.toMatchTaskFromLine('- [ ] #task global filter is not a tag');
 
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should filter together with the global filter ("no tags")', () => {
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         // Arrange
         const filter = new TagsField().createFilterOrErrorMessage('no tags');
@@ -68,7 +68,7 @@ describe('tag presence & absence', () => {
         expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one #two ');
         expect(filter).toMatchTaskFromLine('- [ ] #task global filter is not a tag');
 
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 });
 
@@ -221,7 +221,7 @@ describe('tag/tags', () => {
             'should filter tag with globalFilter %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
                 // Arrange
-                GlobalFilter.set('#task');
+                GlobalFilter.getInstance().set('#task');
 
                 // Run on the plural version of the filter first.
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
@@ -241,7 +241,7 @@ describe('tag/tags', () => {
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
                 // Cleanup
-                GlobalFilter.reset();
+                GlobalFilter.getInstance().reset();
             },
         );
 
@@ -276,14 +276,14 @@ describe('tag/tags', () => {
 
         it('should ignore the tag which is the global filter', () => {
             // Arrange
-            GlobalFilter.set('#task');
+            GlobalFilter.getInstance().set('#task');
             const filters: Array<string> = ['tags include task'];
 
             // Act, Assert
             shouldSupportFiltering(filters, defaultTasksWithTags, []);
 
             // Cleanup
-            GlobalFilter.reset();
+            GlobalFilter.getInstance().reset();
         });
     });
 
@@ -472,7 +472,7 @@ describe('Sort by tags', () => {
 
     it('should sort correctly by tag defaulting to first with global filter', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
         const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
@@ -499,12 +499,12 @@ describe('Sort by tags', () => {
         ).toEqual(expectedOrder);
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should sort correctly reversed by tag defaulting to first with global filter', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
         const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
@@ -531,12 +531,12 @@ describe('Sort by tags', () => {
         ).toEqual(expectedOrder);
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should sort correctly by second tag with global filter', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         const t1 = fromLine({ line: '- [ ] #task a #fff #aaa' });
         const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
@@ -558,12 +558,12 @@ describe('Sort by tags', () => {
         expect(result).toEqual(expectedOrder);
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should sort correctly reversed by second tag with global filter', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         const t1 = fromLine({ line: '- [ ] #task a #fff #aaa' });
         const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
@@ -585,7 +585,7 @@ describe('Sort by tags', () => {
         expect(result).toEqual(expectedOrder);
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     // Issue #1407 - Multiple 'sort by tag' lines ignored all but last one

@@ -1055,7 +1055,7 @@ describe('Query', () => {
 
     describe('explanations', () => {
         afterEach(() => {
-            GlobalFilter.reset();
+            GlobalFilter.getInstance().reset();
         });
 
         it('should explain 0 filters', () => {

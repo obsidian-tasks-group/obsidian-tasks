@@ -26,8 +26,8 @@ import { Query } from '../Query/Query';
 export function explainResults(source: string, globalQuery: GlobalQuery, path: string | undefined = undefined): string {
     let result = '';
 
-    if (!GlobalFilter.isEmpty()) {
-        result += `Only tasks containing the global filter '${GlobalFilter.get()}'.\n\n`;
+    if (!GlobalFilter.getInstance().isEmpty()) {
+        result += `Only tasks containing the global filter '${GlobalFilter.getInstance().get()}'.\n\n`;
     }
 
     const tasksBlockQuery = new Query({ source }, path);

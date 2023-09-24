@@ -11,7 +11,7 @@ window.moment = moment;
 
 describe('CreateOrEditTaskParser - testing edited task if line is saved unchanged', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it.each([
@@ -63,7 +63,7 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
     ])(
         'line loaded into "Create or edit task" command: "%s"',
         (line: string, expectedResult: string, globalFilter: string) => {
-            GlobalFilter.set(globalFilter);
+            GlobalFilter.getInstance().set(globalFilter);
             const path = 'a/b/c.md';
             const task = taskFromLine({ line, path });
             expect(task.toFileLineString()).toStrictEqual(expectedResult);
@@ -74,11 +74,11 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
 
 describe('CreateOrEditTaskParser - task recognition', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should recognize task details without global filter', () => {
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
         const taskLine =
             '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-10 ✅ 2023-06-22';
         const path = 'a/b/c.md';
@@ -107,7 +107,7 @@ describe('CreateOrEditTaskParser - created date', () => {
     afterEach(() => {
         jest.useRealTimers();
         resetSettings();
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it.each([
@@ -155,7 +155,7 @@ describe('CreateOrEditTaskParser - created date', () => {
 
     it('should add created date if adding the global filter', () => {
         updateSettings({ setCreatedDate: true });
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
         const path = 'a/b/c.md';
         const line = '- [ ] did not have the global filter';
 

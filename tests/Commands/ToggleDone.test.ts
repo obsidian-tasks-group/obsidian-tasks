@@ -78,7 +78,7 @@ function testToggleLineForOutOfRangeCursorPositions(
 
 describe('ToggleDone', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment('2022-09-04').valueOf());
@@ -93,7 +93,7 @@ describe('ToggleDone', () => {
         testToggleLine('|', '- |');
         testToggleLine('foo|bar', '- foobar|');
 
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         testToggleLine('|', '- |');
         testToggleLine('foo|bar', '- foobar|');
@@ -104,7 +104,7 @@ describe('ToggleDone', () => {
         testToggleLine('- |', '- [ ] |');
         testToggleLine('- |foobar', '- [ ] foobar|');
 
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
@@ -118,7 +118,7 @@ describe('ToggleDone', () => {
         // Issue #449 - cursor jumped 13 characters to the right on completion
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description ✅ 2022-09-04');
 
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         testToggleLine('|- [ ] ', '|- [x] ');
         testToggleLine('- [ ] |', '- [x] |');
@@ -134,7 +134,7 @@ describe('ToggleDone', () => {
         // Issue #449 - cursor jumped 13 characters to the left on un-completion
         testToggleLine('- [x] I have a proper description| ✅ 2022-09-04', '- [ ] I have a proper description|');
 
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         // Done date is not removed if task does not match global filter
         testToggleLine('|- [x]  ✅ 2022-09-04', '|- [ ] ✅ 2022-09-04');
@@ -162,7 +162,7 @@ describe('ToggleDone', () => {
 - [x] I am a recurring task| 🔁 every day 📅 2022-09-04 ✅ 2022-09-04`,
         );
 
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         // Tasks do not recur, and no done-date added, if not matching global filter
         testToggleLine(
@@ -180,7 +180,7 @@ describe('ToggleDone', () => {
 
     describe('should honour next status character', () => {
         afterEach(() => {
-            GlobalFilter.reset();
+            GlobalFilter.getInstance().reset();
         });
 
         // Arrange
@@ -201,7 +201,7 @@ describe('ToggleDone', () => {
         });
 
         it('when there is a global filter and task with global filter is toggled', () => {
-            GlobalFilter.set('#task');
+            GlobalFilter.getInstance().set('#task');
 
             const line1 = '- [C] #task this is a task starting at Con';
 
@@ -214,7 +214,7 @@ describe('ToggleDone', () => {
         });
 
         it('when there is a global filter and task without global filter is toggled', () => {
-            GlobalFilter.set('#task');
+            GlobalFilter.getInstance().set('#task');
 
             const line1 = '- [P] this is a task starting at Pro, not matching the global filter';
 
