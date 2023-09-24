@@ -100,7 +100,7 @@ async function editTaskLine(line: string, newDescription: string | undefined) {
 
 describe('Task rendering', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     function testDescriptionRender(taskDescription: string, expectedDescription: string) {
@@ -160,7 +160,7 @@ describe('Task rendering', () => {
 
 describe('Task editing', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
@@ -211,7 +211,7 @@ describe('Exhaustive editing', () => {
     });
 
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
         resetSettings();
         jest.useRealTimers();
     });

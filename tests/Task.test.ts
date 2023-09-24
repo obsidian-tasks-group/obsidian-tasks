@@ -423,7 +423,7 @@ describe('parsing tags', () => {
 
             // Cleanup
             if (globalFilter != '') {
-                GlobalFilter.reset();
+                GlobalFilter.getInstance().reset();
             }
         },
     );
@@ -431,7 +431,7 @@ describe('parsing tags', () => {
 
 describe('task parsing VS global filter', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('returns null when task does not have global filter', () => {
@@ -684,7 +684,7 @@ describe('to string', () => {
         const expectedLine = 'This is a task with #t as a global filter and also #t/some tags';
         expect(task.toString()).toStrictEqual(expectedLine);
         resetSettings();
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 });
 
@@ -1159,7 +1159,7 @@ describe('created dates on recurring task', () => {
     afterEach(() => {
         jest.useRealTimers();
         resetSettings();
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should not set created date with disabled setting', () => {
@@ -1216,13 +1216,13 @@ describe('order of recurring tasks', () => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 5 - 1, 16));
         resetSettings();
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     afterAll(() => {
         jest.useRealTimers();
         resetSettings();
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should put new task before old, by default', () => {

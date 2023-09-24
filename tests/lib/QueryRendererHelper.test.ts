@@ -11,7 +11,7 @@ window.moment = moment;
 
 describe('explain', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should explain a task', () => {

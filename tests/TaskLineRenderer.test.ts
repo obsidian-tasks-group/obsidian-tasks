@@ -67,7 +67,7 @@ function getOtherLayoutComponents(parentElement: HTMLElement): string[] {
 describe('task line rendering', () => {
     afterEach(() => {
         resetSettings();
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
         GlobalFilter.setRemoveGlobalFilter(false);
     });
 

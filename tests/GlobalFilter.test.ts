@@ -3,7 +3,7 @@ import { GlobalFilter } from '../src/Config/GlobalFilter';
 
 describe('Global Filter tests', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('getInstance() should return the same object', () => {
@@ -34,7 +34,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.getInstance().set(testValue);
 
         // Act
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
 
         // Assert
         expect(GlobalFilter.getInstance().get()).toEqual('');
@@ -124,7 +124,7 @@ describe('Global Filter tests', () => {
 
 describe('Global Filter tests with Remove Global Filter Setting', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
         resetSettings();
     });
 
@@ -173,7 +173,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
 
 describe('check removal of the global filter', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     type GlobalFilterRemovalExpectation = {
@@ -306,7 +306,7 @@ describe('check removal of the global filter', () => {
 
 describe('check removal of the global filter exhaustively', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     test.each<string>([
@@ -367,7 +367,7 @@ describe('check removal of the global filter exhaustively', () => {
 
 describe('GlobalFilter.prepend() tests', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('Should prepend Global Filter', () => {
