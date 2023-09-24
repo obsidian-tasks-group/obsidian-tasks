@@ -322,10 +322,6 @@ describe('check removal of the global filter', () => {
 });
 
 describe('check removal of the global filter exhaustively', () => {
-    afterEach(() => {
-        GlobalFilter.getInstance().reset();
-    });
-
     test.each<string>([
         '#t',
         // The characters listed below are the ones that are - or were - escaped by
@@ -362,23 +358,24 @@ describe('check removal of the global filter exhaustively', () => {
         '\\',
     ])('should parse global filter "%s" edge cases correctly', (globalFilterValue) => {
         // Arrange
-        GlobalFilter.getInstance().set(globalFilterValue);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(globalFilterValue);
 
         // global filter removed at beginning, middle and end
         let inputDescription = `${globalFilterValue} 1 ${globalFilterValue} 2 ${globalFilterValue}`;
         let expectedDescription = '1 2';
-        expect(GlobalFilter.getInstance().removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+        expect(globalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
         // global filter not removed if non-empty non-tag characters before or after it
         inputDescription = `${globalFilterValue}x 1 x${globalFilterValue} ${globalFilterValue}x 2 x${globalFilterValue}`;
         expectedDescription = `${globalFilterValue}x 1 x${globalFilterValue} ${globalFilterValue}x 2 x${globalFilterValue}`;
-        expect(GlobalFilter.getInstance().removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+        expect(globalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
         // global filter not removed if non-empty sub-tag characters after it.
         // Include at least one occurrence of global filter, so we don't pass by luck.
         inputDescription = `${globalFilterValue}/x 1 x${globalFilterValue} ${globalFilterValue}/x 2 ${globalFilterValue} ${globalFilterValue}/x`;
         expectedDescription = `${globalFilterValue}/x 1 x${globalFilterValue} ${globalFilterValue}/x 2 ${globalFilterValue}/x`;
-        expect(GlobalFilter.getInstance().removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+        expect(globalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
     });
 });
 
