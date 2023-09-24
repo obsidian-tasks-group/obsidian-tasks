@@ -190,10 +190,10 @@ due next week =>
 ```
 <!-- endSnippet -->
 
-### Template values are expanded
+### Placeholder values are expanded
 
 > [!released]
-> Templating was introduced in Tasks 4.7.0.
+> Placeholders were introduced in Tasks 4.7.0.
 
 For example, when the following query with [[Query Properties]] in [[Placeholders|placeholders]] is placed in a tasks query block in the file `some/sample/file path.md`:
 
