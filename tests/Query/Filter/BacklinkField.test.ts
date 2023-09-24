@@ -52,7 +52,7 @@ describe('grouping by backlink', () => {
         // Underscores in filename component are not escaped
         ['a/b/_c_.md', null, ['[[_c_]]']],
 
-        // Underscores in the heading component are not escaped too
+        // Underscores in the heading component are not escaped either
         ['a/b/_c_.md', 'heading _italic text_', ['[[_c_#heading _italic text_|_c_ > heading _italic text_]]']],
     ])(
         'path "%s" and heading "%s" should have groups: %s',
