@@ -31,4 +31,12 @@ describe('TasksFile', () => {
         expect(new TasksFile('file in root.md').filename).toEqual('file in root.md');
         expect(new TasksFile('directory name/file in sub-directory.md').filename).toEqual('file in sub-directory.md');
     });
+
+    it('should provide access to the filename without extension', () => {
+        expect(new TasksFile('').filenameWithoutExtension).toEqual('');
+        expect(new TasksFile('file in root.md').filenameWithoutExtension).toEqual('file in root');
+        expect(new TasksFile('directory name/file in sub-directory.md').filenameWithoutExtension).toEqual(
+            'file in sub-directory',
+        );
+    });
 });

@@ -66,4 +66,8 @@ export class TasksFile {
             return '';
         }
     }
+
+    get filenameWithoutExtension(): string {
+        return this.withoutExtension(this.filename);
+    }
 }
