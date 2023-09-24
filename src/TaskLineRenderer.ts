@@ -64,9 +64,8 @@ async function obsidianMarkdownRenderer(
 export async function renderTaskLine(
     task: Task,
     renderDetails: TaskLineRenderDetails,
-    textRenderer: TextRenderer | null = null,
+    textRenderer: TextRenderer,
 ): Promise<HTMLLIElement> {
-    if (!textRenderer) textRenderer = obsidianMarkdownRenderer;
     const li: HTMLLIElement = document.createElement('li');
     renderDetails.parentUlElement.appendChild(li);
 
@@ -444,5 +443,5 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
  * @param renderDetails
  */
 export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
-    return renderTaskLine(task, renderDetails);
+    return renderTaskLine(task, renderDetails, obsidianMarkdownRenderer);
 }
