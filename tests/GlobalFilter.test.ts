@@ -81,10 +81,10 @@ describe('Global Filter tests', () => {
 
     it('Should control whether to remove the global filter from displayed tasks', () => {
         GlobalFilter.setRemoveGlobalFilter(false);
-        expect(GlobalFilter.getRemoveGlobalFilter()).toEqual(false);
+        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(false);
 
         GlobalFilter.setRemoveGlobalFilter(true);
-        expect(GlobalFilter.getRemoveGlobalFilter()).toEqual(true);
+        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(true);
     });
 
     it('Should remove Global Filter from the beginning of a string', () => {
