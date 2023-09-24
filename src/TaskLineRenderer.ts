@@ -443,6 +443,6 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
  * @param task
  * @param renderDetails
  */
-export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails) {
+export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
     return renderTaskLine(task, renderDetails);
 }
