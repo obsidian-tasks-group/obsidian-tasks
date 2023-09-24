@@ -35,7 +35,7 @@ explain`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions, GlobalFilter.getInstance(), new GlobalQuery());
+        verifyTaskBlockExplanation(instructions, new GlobalFilter(), new GlobalQuery());
     });
 
     it('boolean combinations', () => {
@@ -47,7 +47,7 @@ not done
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions, GlobalFilter.getInstance(), new GlobalQuery());
+        verifyTaskBlockExplanation(instructions, new GlobalFilter(), new GlobalQuery());
     });
 
     it('nested boolean combinations', () => {
@@ -58,7 +58,7 @@ explain
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions, GlobalFilter.getInstance(), new GlobalQuery());
+        verifyTaskBlockExplanation(instructions, new GlobalFilter(), new GlobalQuery());
     });
 
     it('regular expression', () => {
@@ -69,7 +69,7 @@ path regex matches /^Root/Sub-Folder/Sample File\\.md/i`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions, GlobalFilter.getInstance(), new GlobalQuery());
+        verifyTaskBlockExplanation(instructions, new GlobalFilter(), new GlobalQuery());
     });
 
     const globalQueryLine = `limit 50
@@ -89,7 +89,7 @@ explain`;
 
         // Act, Assert
         checkExplainPresentAndVerify(blockQuery);
-        verifyTaskBlockExplanation(blockQuery, GlobalFilter.getInstance(), globalQuery);
+        verifyTaskBlockExplanation(blockQuery, new GlobalFilter(), globalQuery);
     });
 
     it('placeholders', () => {
@@ -103,7 +103,7 @@ filename includes {{query.file.filename}}`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
-        verifyTaskBlockExplanation(instructions, GlobalFilter.getInstance(), new GlobalQuery());
+        verifyTaskBlockExplanation(instructions, new GlobalFilter(), new GlobalQuery());
     });
 
     it('placeholders error', () => {
@@ -115,6 +115,6 @@ filename includes {{query.file.fileName}}`;
 
         // Act, Assert
         verifyQuery(instructions); // This does not have an explain, so does not call checkExplainPresentAndVerify()
-        verifyTaskBlockExplanation(instructions, GlobalFilter.getInstance(), new GlobalQuery());
+        verifyTaskBlockExplanation(instructions, new GlobalFilter(), new GlobalQuery());
     });
 });
