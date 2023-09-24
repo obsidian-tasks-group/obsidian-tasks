@@ -44,10 +44,10 @@ describe('grouping by backlink', () => {
         ['a/b/c.md', 'heading', ['[[c#heading|c > heading]]']],
 
         // If file name and heading are identical, avoid duplication ('c > c')
-        ['a/b/c.md', 'c', ['[[c]]']],
+        ['a/b/c.md', 'c', ['[[c#c|c > c]]']],
 
         // If file name and heading are identical, avoid duplication, even if there are underscores in the file name
-        ['a_b_c.md', 'a_b_c', ['[[a_b_c]]']],
+        ['a_b_c.md', 'a_b_c', ['[[a_b_c#a_b_c|a_b_c > a_b_c]]']],
 
         // Underscores in filename component are not escaped
         ['a/b/_c_.md', null, ['[[_c_]]']],
@@ -75,9 +75,10 @@ describe('grouping by backlink', () => {
         expect({ grouper, tasks }).groupHeadingsToBe([
             '[[_c_]]',
             '[[_c_#heading _italic text_|_c_ > heading _italic text_]]',
-            '[[a_b_c]]',
+            '[[a_b_c#a_b_c|a_b_c > a_b_c]]',
             '[[b]]',
             '[[c]]',
+            '[[c#c|c > c]]',
             '[[c#heading|c > heading]]',
             'Unknown Location',
         ]);
