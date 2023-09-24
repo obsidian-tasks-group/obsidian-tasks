@@ -20,6 +20,8 @@ describe('Global Filter tests', () => {
     it('Should set new Global Filter', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
+
+        // Act
         GlobalFilter.set(testValue);
 
         // Assert
@@ -30,6 +32,8 @@ describe('Global Filter tests', () => {
         // Arrange
         const testValue = '#important';
         GlobalFilter.set(testValue);
+
+        // Act
         GlobalFilter.reset();
 
         // Assert
