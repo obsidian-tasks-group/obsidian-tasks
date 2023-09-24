@@ -19,8 +19,8 @@ import { Query } from '../Query/Query';
  *     * Explains the query described by {@link source}
  *
  * @param {string} source The source of the task block to explain
- * @param globalFilter
- * @param globalQuery
+ * @param {GlobalFilter} globalFilter The global filter. In `src/`, generally pass in {@link GlobalFilter.getInstance}
+ * @param {GlobalQuery} globalQuery The global query. In `src/`, generally pass in {@link GlobalQuery.getInstance}
  * @param {string} path The location of the task block, if known
  * @returns {string}
  */
