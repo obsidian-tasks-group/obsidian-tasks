@@ -1,4 +1,5 @@
 import type { Moment } from 'moment';
+import { taskToLi } from './TaskLineRenderer';
 import type { TaskLocation } from './TaskLocation';
 import type { Recurrence } from './Recurrence';
 import { getSettings, getUserSelectedTaskFormat } from './Config/Settings';
@@ -6,7 +7,6 @@ import { GlobalFilter } from './Config/GlobalFilter';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
-import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
@@ -109,10 +109,6 @@ interface TaskComponents {
     status: Status;
     body: string;
     blockLink: string;
-}
-
-function taskToLi(task: Task, renderDetails: TaskLineRenderDetails) {
-    return renderTaskLine(task, renderDetails);
 }
 
 /**

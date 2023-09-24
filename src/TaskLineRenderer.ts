@@ -436,3 +436,7 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
         window.moment().startOf('day'),
     )})`;
 }
+
+export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails) {
+    return renderTaskLine(task, renderDetails);
+}
