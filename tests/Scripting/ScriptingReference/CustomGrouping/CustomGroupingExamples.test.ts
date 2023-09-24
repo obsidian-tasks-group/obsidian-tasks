@@ -234,7 +234,7 @@ describe('file properties', () => {
             [
                 ['group by function task.file.filename', "Like 'group by filename' but does not link to the file"],
                 [
-                    "group by function  '[[' + task.file.filename.replace('.md', '') + ( task.hasHeading ? ('#' + task.heading) : '')  + ']]'",
+                    "group by function  '[[' + task.file.filenameWithoutExtension + ( task.hasHeading ? ('#' + task.heading) : '')  + ']]'",
                     "Like 'group by backlink' but links to the heading in the file",
                 ],
             ],
