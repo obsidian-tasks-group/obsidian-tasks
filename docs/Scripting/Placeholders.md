@@ -18,7 +18,7 @@ publish: true
   - `some/sample/actions on my hobby.md` - for any Tasks queries inside that file.
 - The available values for use in placeholders are listed in [[Query Properties]].
 
-## Checking template variables
+## Checking placeholder values
 
 The [[Explaining Queries|explain]] instruction shows how any placeholders in the query are interpreted. This can be used to understand how placeholders are expanded generally.
 

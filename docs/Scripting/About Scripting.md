@@ -15,7 +15,7 @@ We are using the word 'scripting' in a very loose sense here:
 - For now, it refers only to writing JavaScript expressions in Tasks query blocks.
 - It is intended to evolve in to something broader over time.
 
-## Templating capabilities
+## Placeholder capabilities
 
 - [[Placeholders]] - use placeholder text in native Tasks queries, such as  `{{query.file.path}}` to refer to some properties of the file containing the query.
 
