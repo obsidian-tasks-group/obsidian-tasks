@@ -58,7 +58,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.getInstance().set('#task');
 
         // Assert
-        expect(GlobalFilter.includedIn('Important #task inside')).toEqual(true);
+        expect(GlobalFilter.getInstance().includedIn('Important #task inside')).toEqual(true);
     });
 
     it('Should check equality correctly', () => {
@@ -76,7 +76,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.getInstance().set('testValue');
 
         // Assert
-        expect(GlobalFilter.includedIn('Without Global Filter')).toEqual(false);
+        expect(GlobalFilter.getInstance().includedIn('Without Global Filter')).toEqual(false);
     });
 
     it('Should control whether to remove the global filter from displayed tasks', () => {

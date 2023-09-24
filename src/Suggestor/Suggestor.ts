@@ -414,7 +414,7 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
  *                          See 'ch' in https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition/EditorPosition
  */
 export function canSuggestForLine(line: string, cursorPosition: number) {
-    return GlobalFilter.includedIn(line) && cursorIsInTaskLineDescription(line, cursorPosition);
+    return GlobalFilter.getInstance().includedIn(line) && cursorIsInTaskLineDescription(line, cursorPosition);
 }
 
 /**
