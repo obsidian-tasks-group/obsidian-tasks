@@ -30,12 +30,16 @@ This page documents all the available pieces of information in Queries that you 
 | Field | Type | Example |
 | ----- | ----- | ----- |
 | `query.file.path` | `string` | `'root/sub-folder/file containing query.md'` |
+| `query.file.pathWithoutExtension` | `string` | `'root/sub-folder/file containing query'` |
 | `query.file.root` | `string` | `'root/'` |
 | `query.file.folder` | `string` | `'root/sub-folder/'` |
 | `query.file.filename` | `string` | `'file containing query.md'` |
+| `query.file.filenameWithoutExtension` | `string` | `'file containing query'` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 1. `query.file` is a `TasksFile` object.
 1. You can see the current [TasksFile source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksFile.ts), to explore its capabilities.
 1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
+1. `query.file.pathWithoutExtension` was added in Tasks X.Y.Z.
+1. `query.file.filenameWithoutExtension` was added in Tasks X.Y.Z.
