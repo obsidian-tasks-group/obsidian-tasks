@@ -54,7 +54,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('with non-tag as global filter - all tags included', () => {
@@ -70,7 +70,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 });
 
@@ -90,7 +90,7 @@ describe('description', () => {
         testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('works without a global filter', () => {
@@ -106,7 +106,7 @@ describe('description', () => {
         testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('works with regex', () => {

@@ -37,7 +37,7 @@ export class GlobalFilter {
         GlobalFilter.getInstance()._globalFilter = value;
     }
 
-    static reset() {
+    reset() {
         GlobalFilter.getInstance().set(GlobalFilter.empty);
     }
 

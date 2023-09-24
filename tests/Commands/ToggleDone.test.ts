@@ -78,7 +78,7 @@ function testToggleLineForOutOfRangeCursorPositions(
 
 describe('ToggleDone', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment('2022-09-04').valueOf());
@@ -180,7 +180,7 @@ describe('ToggleDone', () => {
 
     describe('should honour next status character', () => {
         afterEach(() => {
-            GlobalFilter.reset();
+            GlobalFilter.getInstance().reset();
         });
 
         // Arrange

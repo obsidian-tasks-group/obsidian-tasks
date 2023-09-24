@@ -11,7 +11,7 @@ window.moment = moment;
 
 describe('CreateOrEditTaskParser - testing edited task if line is saved unchanged', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it.each([
@@ -74,7 +74,7 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
 
 describe('CreateOrEditTaskParser - task recognition', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should recognize task details without global filter', () => {
@@ -107,7 +107,7 @@ describe('CreateOrEditTaskParser - created date', () => {
     afterEach(() => {
         jest.useRealTimers();
         resetSettings();
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it.each([
