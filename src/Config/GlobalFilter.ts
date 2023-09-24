@@ -11,9 +11,23 @@ import * as RegExpTools from '../lib/RegExpTools';
  *     - These static methods will be made non-static in a future change.
  */
 export class GlobalFilter {
+    private static instance: GlobalFilter;
+
     static empty = '';
     static _globalFilter = '';
     static _removeGlobalFilter = false;
+
+    /**
+     * Provides access to the single global instance of GlobalFilter.
+     * This should eventually only be used in the plugin code.
+     */
+    public static getInstance(): GlobalFilter {
+        if (!GlobalFilter.instance) {
+            GlobalFilter.instance = new GlobalFilter();
+        }
+
+        return GlobalFilter.instance;
+    }
 
     static get(): string {
         return GlobalFilter._globalFilter;
