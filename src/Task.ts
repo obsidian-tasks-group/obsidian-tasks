@@ -111,6 +111,10 @@ interface TaskComponents {
     blockLink: string;
 }
 
+function taskToLi(task: Task, renderDetails: TaskLineRenderDetails) {
+    return renderTaskLine(task, renderDetails);
+}
+
 /**
  * Task encapsulates the properties of the MarkDown task along with
  * the extensions provided by this plugin. This is used to parse and
@@ -337,7 +341,7 @@ export class Task {
      */
     public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
         const task = this;
-        return renderTaskLine(task, renderDetails);
+        return taskToLi(task, renderDetails);
     }
 
     /**
