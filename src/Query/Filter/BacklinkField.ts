@@ -39,10 +39,10 @@ export class BacklinkField extends TextField {
             const header = task.precedingHeader;
             if (header === null) {
                 return ['[[' + filename + ']]'];
-            } else {
-                if (header !== filename) {
-                    return [`[[${filename}#${header}|${filename} > ${header}]]`];
-                }
+            }
+
+            if (header !== filename) {
+                return [`[[${filename}#${header}|${filename} > ${header}]]`];
             }
 
             return ['[[' + filename + ']]'];
