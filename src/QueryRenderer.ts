@@ -213,17 +213,14 @@ class QueryRenderChild extends MarkdownRenderChild {
     }: {
         tasks: Task[];
         content: HTMLDivElement;
-    }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
-        const tasksCount = tasks.length;
-
+    }): Promise<HTMLUListElement> {
         const layout = new TaskLayout(this.query.layoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
         taskList.addClasses(layout.taskListHiddenClasses);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
-        for (let i = 0; i < tasksCount; i++) {
-            const task = tasks[i];
+        for (const [i, task] of tasks.entries()) {
             const isFilenameUnique = this.isFilenameUnique({ task });
 
             const listItem = await task.toLi({
@@ -239,8 +236,6 @@ class QueryRenderChild extends MarkdownRenderChild {
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
             footnotes.forEach((footnote) => footnote.remove());
 
-            const shortMode = this.query.layoutOptions.shortMode;
-
             const extrasSpan = listItem.createSpan('task-extras');
 
             if (!this.query.layoutOptions.hideUrgency) {
@@ -248,6 +243,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             }
 
             if (!this.query.layoutOptions.hideBacklinks) {
+                const shortMode = this.query.layoutOptions.shortMode;
                 this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
             }
 
@@ -258,7 +254,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             taskList.appendChild(listItem);
         }
 
-        return { taskList, tasksCount };
+        return taskList;
     }
 
     private addEditButton(listItem: HTMLElement, task: Task) {
@@ -296,7 +292,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             // will be empty, and no headings will be added.
             this.addGroupHeadings(content, group.groupHeadings);
 
-            const { taskList } = await this.createTasksList({
+            const taskList = await this.createTasksList({
                 tasks: group.tasks,
                 content: content,
             });
