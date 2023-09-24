@@ -264,6 +264,14 @@ class QueryRenderChild extends MarkdownRenderChild {
         return taskList;
     }
 
+    private async createTaskList2(tasks: Task[], content: HTMLDivElement) {
+        const taskList = await this.createTasksList({
+            tasks: tasks,
+            content: content,
+        });
+        content.appendChild(taskList);
+    }
+
     private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = listItem.createEl('a', {
             cls: 'tasks-edit',
@@ -302,14 +310,6 @@ class QueryRenderChild extends MarkdownRenderChild {
             const tasks = group.tasks;
             await this.createTaskList2(tasks, content);
         }
-    }
-
-    private async createTaskList2(tasks: Task[], content: HTMLDivElement) {
-        const taskList = await this.createTasksList({
-            tasks: tasks,
-            content: content,
-        });
-        content.appendChild(taskList);
     }
 
     /**
