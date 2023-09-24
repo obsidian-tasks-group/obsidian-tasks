@@ -1,5 +1,6 @@
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
+import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
 
 import type { IQuery } from './IQuery';
@@ -199,7 +200,12 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     // Use the 'explain' instruction to enable this
     private createExplanation(content: HTMLDivElement) {
-        const explanationAsString = explainResults(this.source, GlobalQuery.getInstance(), this.filePath);
+        const explanationAsString = explainResults(
+            this.source,
+            GlobalFilter.getInstance(),
+            GlobalQuery.getInstance(),
+            this.filePath,
+        );
 
         const explanationsBlock = content.createEl('pre');
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
