@@ -1,5 +1,4 @@
 import type { Moment } from 'moment';
-import { taskToLi } from './TaskLineRenderer';
 import type { TaskLocation } from './TaskLocation';
 import type { Recurrence } from './Recurrence';
 import { getSettings, getUserSelectedTaskFormat } from './Config/Settings';
@@ -7,7 +6,6 @@ import { GlobalFilter } from './Config/GlobalFilter';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
-import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
 import { TasksDate } from './Scripting/TasksDate';
@@ -329,16 +327,6 @@ export class Task {
         }
         return { indentation, listMarker, status, body, blockLink };
     }
-
-    /**
-     * Create an HTML rendered List Item element (LI) for the current task.
-     * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
-     * @param renderDetails
-     */
-    public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
-        return taskToLi(this, renderDetails);
-    }
-
     /**
      * Flatten the task as a string that includes all its components.
      *
