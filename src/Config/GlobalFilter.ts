@@ -29,7 +29,7 @@ export class GlobalFilter {
         return GlobalFilter.instance;
     }
 
-    static get(): string {
+    get(): string {
         return GlobalFilter.getInstance()._globalFilter;
     }
 
@@ -42,20 +42,20 @@ export class GlobalFilter {
     }
 
     static isEmpty(): boolean {
-        return GlobalFilter.get() === GlobalFilter.empty;
+        return GlobalFilter.getInstance().get() === GlobalFilter.empty;
     }
 
     static equals(tag: string): boolean {
-        return GlobalFilter.get() === tag;
+        return GlobalFilter.getInstance().get() === tag;
     }
 
     static includedIn(description: string): boolean {
-        const globalFilter = GlobalFilter.get();
+        const globalFilter = GlobalFilter.getInstance().get();
         return description.includes(globalFilter);
     }
 
     static prependTo(description: string): string {
-        return GlobalFilter.get() + ' ' + description;
+        return GlobalFilter.getInstance().get() + ' ' + description;
     }
 
     static removeAsWordFromDependingOnSettings(description: string): string {
@@ -93,7 +93,10 @@ export class GlobalFilter {
         }
 
         // This matches the global filter (after escaping it) only when it's a complete word
-        const theRegExp = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.get()) + '($|\\s)', 'ug');
+        const theRegExp = RegExp(
+            '(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.getInstance().get()) + '($|\\s)',
+            'ug',
+        );
 
         if (description.search(theRegExp) > -1) {
             description = description.replace(theRegExp, '$1$2').replace('  ', ' ').trim();
@@ -103,7 +106,7 @@ export class GlobalFilter {
     }
 
     static removeAsSubstringFrom(description: string): string {
-        const globalFilter = GlobalFilter.get();
+        const globalFilter = GlobalFilter.getInstance().get();
         return description.replace(globalFilter, '').trim();
     }
 }
