@@ -11,6 +11,7 @@ describe('TasksFile', () => {
         const path = 'a/b/c/d.md';
         const file = new TasksFile(path);
         expect(file.pathWithoutExtension).toEqual('a/b/c/d');
+        expect(new TasksFile('/root/folder.mds/file.md').pathWithoutExtension).toStrictEqual('/root/folder.mds/file');
     });
 
     it('should provide access to the root', () => {
@@ -40,5 +41,8 @@ describe('TasksFile', () => {
         );
         // Check it only replaces the last .md
         expect(new TasksFile('1.md.only-replace.2.md').filenameWithoutExtension).toEqual('1.md.only-replace.2');
+
+        // Check it escapes the '.' in the file extension
+        expect(new TasksFile('1.md.only-replace.2,md').filenameWithoutExtension).toEqual('1.md.only-replace.2,md');
     });
 });

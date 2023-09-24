@@ -23,7 +23,7 @@ export class TasksFile {
     }
 
     private withoutExtension(value: string) {
-        return value.replace(/.md$/, '');
+        return value.replace(/\.md$/, '');
     }
 
     /**
