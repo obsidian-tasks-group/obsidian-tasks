@@ -105,7 +105,7 @@ export class GlobalFilter {
         return description;
     }
 
-    static removeAsSubstringFrom(description: string): string {
+    removeAsSubstringFrom(description: string): string {
         const globalFilter = GlobalFilter.getInstance().get();
         return description.replace(globalFilter, '').trim();
     }
