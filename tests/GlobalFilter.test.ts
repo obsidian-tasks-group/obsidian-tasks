@@ -166,7 +166,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
             GlobalFilter.getInstance().setRemoveGlobalFilter(true);
             GlobalFilter.getInstance().set(globalFilter);
 
-            expect(GlobalFilter.removeAsWordFrom(description)).toEqual(description);
+            expect(GlobalFilter.getInstance().removeAsWordFrom(description)).toEqual(description);
         },
     );
 });
@@ -299,7 +299,7 @@ describe('check removal of the global filter', () => {
             GlobalFilter.getInstance().set(globalFilter);
 
             // Assert
-            expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+            expect(GlobalFilter.getInstance().removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
         },
     );
 });
@@ -350,18 +350,18 @@ describe('check removal of the global filter exhaustively', () => {
         // global filter removed at beginning, middle and end
         let inputDescription = `${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
         let expectedDescription = '1 2';
-        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+        expect(GlobalFilter.getInstance().removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
         // global filter not removed if non-empty non-tag characters before or after it
         inputDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
         expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
-        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+        expect(GlobalFilter.getInstance().removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
         // global filter not removed if non-empty sub-tag characters after it.
         // Include at least one occurrence of global filter, so we don't pass by luck.
         inputDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
         expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
-        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+        expect(GlobalFilter.getInstance().removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
     });
 });
 
