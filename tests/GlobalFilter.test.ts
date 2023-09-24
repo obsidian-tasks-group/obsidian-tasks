@@ -375,12 +375,12 @@ describe('GlobalFilter.prepend() tests', () => {
         const description = 'blossom';
 
         GlobalFilter.getInstance().set(globalFilter);
-        expect(GlobalFilter.prependTo(description)).toEqual(`${globalFilter} ${description}`);
+        expect(GlobalFilter.getInstance().prependTo(description)).toEqual(`${globalFilter} ${description}`);
     });
 
     it('Should prepend not prepend empty Global Filter', () => {
         // Note that an empty space is currently prepended in case the Global Filter is empty
         // Not fixing this for now in a refactoring PR
-        expect(GlobalFilter.prependTo('description')).toEqual(' description');
+        expect(GlobalFilter.getInstance().prependTo('description')).toEqual(' description');
     });
 });

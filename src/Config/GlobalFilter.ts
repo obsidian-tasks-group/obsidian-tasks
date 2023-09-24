@@ -54,7 +54,7 @@ export class GlobalFilter {
         return description.includes(globalFilter);
     }
 
-    static prependTo(description: string): string {
+    prependTo(description: string): string {
         return GlobalFilter.getInstance().get() + ' ' + description;
     }
 
