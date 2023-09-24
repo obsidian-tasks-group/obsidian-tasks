@@ -608,7 +608,7 @@ Since Tasks 4.7.0, the query's file name can be used in custom groups.
 
 ### Backlink
 
-- `group by backlink` (the text that would be shown in the task's [[Backlinks|backlink]], combining the task's file name and heading, but with no link added)
+- `group by backlink` (the text that would be shown in the task's [[Backlinks|backlink]], combining the task's file name and heading, with a link)
 
 ### Heading
 
