@@ -14,8 +14,8 @@ export class GlobalFilter {
     private static instance: GlobalFilter;
 
     static empty = '';
-    _globalFilter = '';
-    _removeGlobalFilter = false;
+    private _globalFilter = '';
+    private _removeGlobalFilter = false;
 
     /**
      * Provides access to the single global instance of GlobalFilter.
