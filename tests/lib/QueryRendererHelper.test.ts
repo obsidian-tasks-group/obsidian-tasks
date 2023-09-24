@@ -10,10 +10,6 @@ import { GlobalQuery } from '../../src/Config/GlobalQuery';
 window.moment = moment;
 
 describe('explain', () => {
-    afterEach(() => {
-        GlobalFilter.getInstance().reset();
-    });
-
     it('should explain a task', () => {
         const source = '';
         const query = new Query({ source });
@@ -22,11 +18,12 @@ describe('explain', () => {
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, new GlobalQuery())).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, new GlobalFilter(), new GlobalQuery())).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global filter active', () => {
-        GlobalFilter.getInstance().set('#task');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('#task');
 
         const source = '';
         const query = new Query({ source });
@@ -36,7 +33,7 @@ No filters supplied. All tasks will match the query.`;
 Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
-        expect(explainResults(query.source, new GlobalQuery())).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, globalFilter, new GlobalQuery())).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global query active', () => {
@@ -53,12 +50,13 @@ Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, globalQuery)).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global query and global filter active', () => {
         const globalQuery = new GlobalQuery('description includes hello');
-        GlobalFilter.getInstance().set('#task');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('#task');
 
         const source = '';
         const query = new Query({ source });
@@ -73,7 +71,7 @@ Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, globalQuery)).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, globalFilter, globalQuery)).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global query set but ignored without the global query', () => {
@@ -86,7 +84,7 @@ No filters supplied. All tasks will match the query.`;
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source, globalQuery)).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toEqual(expectedDisplayText);
     });
 });
 
