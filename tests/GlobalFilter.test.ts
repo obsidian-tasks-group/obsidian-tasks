@@ -14,7 +14,7 @@ describe('Global Filter tests', () => {
     });
 
     it('Should provide Global Filter with the default value with get()', () => {
-        expect(GlobalFilter.get()).toEqual('');
+        expect(GlobalFilter.getInstance().get()).toEqual('');
     });
 
     it('Should set new Global Filter', () => {
@@ -25,7 +25,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.get()).toEqual(testValue);
+        expect(GlobalFilter.getInstance().get()).toEqual(testValue);
     });
 
     it('Should reset the Global Filter', () => {
@@ -37,7 +37,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.reset();
 
         // Assert
-        expect(GlobalFilter.get()).toEqual('');
+        expect(GlobalFilter.getInstance().get()).toEqual('');
     });
 
     it('Should indicate empty Global Filter by default', () => {
