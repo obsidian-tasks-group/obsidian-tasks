@@ -95,7 +95,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.getInstance().set(testValue);
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+        expect(GlobalFilter.getInstance().removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
     it('Should remove Global Filter from the end of a string', () => {
@@ -106,7 +106,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.getInstance().set(testValue);
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+        expect(GlobalFilter.getInstance().removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
     it('Should remove Global Filter in the middle of a string', () => {
@@ -118,7 +118,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.getInstance().set(testValue);
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+        expect(GlobalFilter.getInstance().removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 });
 

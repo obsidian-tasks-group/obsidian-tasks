@@ -25,7 +25,7 @@ export class DescriptionField extends TextField {
         // Remove global filter from description match if present.
         // This is necessary to match only on the content of the task, not
         // the global filter.
-        return GlobalFilter.removeAsSubstringFrom(task.description);
+        return GlobalFilter.getInstance().removeAsSubstringFrom(task.description);
     }
 
     public supportsSorting(): boolean {
@@ -55,7 +55,7 @@ export class DescriptionField extends TextField {
      * Properly reads links [[like this|one]] (note pipe).
      */
     public static cleanDescription(description: string): string {
-        description = GlobalFilter.removeAsSubstringFrom(description);
+        description = GlobalFilter.getInstance().removeAsSubstringFrom(description);
 
         const startsWithLinkRegex = /^\[\[?([^\]]*)]]?/;
         const linkRegexMatch = description.match(startsWithLinkRegex);
