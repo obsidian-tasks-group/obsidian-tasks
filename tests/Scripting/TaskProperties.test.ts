@@ -84,9 +84,11 @@ describe('task', () => {
     it('file properties', () => {
         verifyFieldDataForReferenceDocs([
             'task.file.path',
+            'task.file.pathWithoutExtension',
             'task.file.root',
             'task.file.folder',
             'task.file.filename',
+            'task.file.filenameWithoutExtension',
             'task.hasHeading',
             'task.heading',
         ]);

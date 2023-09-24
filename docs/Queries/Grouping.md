@@ -532,7 +532,9 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file path** is now p
 
 Since Tasks 4.7.0, the query's file path can be used in custom groups.
 
-- It must be quoted: `'{{query.file.folder}}'`
+- It must be quoted:
+  - `'{{query.file.path}}'` or
+  - `'{{query.file.pathWithoutExtension}}'` (since Tasks X.Y.Z)
 - Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
 - Useful reading: [[Query Properties]] and [[Placeholders]].
 
@@ -595,14 +597,16 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file name** is now p
 
 - ```group by function task.file.filename```
   - Like 'group by filename' but does not link to the file.
-- ```group by function  '[[' + task.file.filename.replace('.md', '') + ( task.hasHeading ? ('#' + task.heading) : '')  + ']]'```
+- ```group by function  '[[' + task.file.filenameWithoutExtension + ( task.hasHeading ? ('#' + task.heading) : '')  + ']]'```
   - Like 'group by backlink' but links to the heading in the file.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 Since Tasks 4.7.0, the query's file name can be used in custom groups.
 
-- It must be quoted: `'{{query.file.filename}}'`
+- It must be quoted:
+  - `'{{query.file.filename}}'` or
+  - `'{{query.file.filenameWithoutExtension}}'` (since Tasks X.Y.Z)
 - Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
 - Useful reading: [[Query Properties]] and [[Placeholders]].
 

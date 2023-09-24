@@ -975,7 +975,7 @@ Note that the path includes the `.md` extension.
 
 - `path (includes|does not include) <path>`
   - Matches case-insensitive (disregards capitalization).
-  - Use `{{query.file.path}}` as a placeholder for the path of the file containing the current query.
+  - Use `{{query.file.path}}` or `{{query.file.pathWithoutExtension}}` as a placeholder for the path of the file containing the current query.
     - For example, `path equals {{query.file.path}}`
     - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
@@ -988,6 +988,8 @@ Note that the path includes the `.md` extension.
 > - Placeholders were released in Tasks 4.7.0.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now possible, using `task.file.path`.
+
+In Tasks X.Y.Z `task.file.pathWithoutExtension` was added.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
 
@@ -1083,7 +1085,7 @@ Note that the file name includes the `.md` extension.
 
 - `filename (includes|does not include) <filename>`
   - Matches case-insensitive (disregards capitalization).
-  - Use `{{query.file.filename}}` as a placeholder for the file name of the file containing the current query.
+  - Use `{{query.file.filename}}`  or `{{query.file.filenameWithoutExtension}}` as a placeholder for the file name of the file containing the current query.
     - For example, `filename includes {{query.file.filename}}`
     - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `filename (regex matches|regex does not match) /<JavaScript-style Regex>/`
@@ -1091,6 +1093,8 @@ Note that the file name includes the `.md` extension.
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file name** is now possible, using `task.file.filename`.
+
+In Tasks X.Y.Z `task.file.filenameWithoutExtension` was added.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
 

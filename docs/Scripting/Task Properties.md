@@ -97,9 +97,11 @@ For more information, including adding your own customised statuses, see [[Statu
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
 | `task.file.path` | `string` | `'some/folder/fileName.md'` | `string` | `''` |
+| `task.file.pathWithoutExtension` | `string` | `'some/folder/fileName'` | `string` | `''` |
 | `task.file.root` | `string` | `'some/'` | `string` | `'/'` |
 | `task.file.folder` | `string` | `'some/folder/'` | `string` | `'/'` |
 | `task.file.filename` | `string` | `'fileName.md'` | `string` | `''` |
+| `task.file.filenameWithoutExtension` | `string` | `'fileName'` | `string` | `''` |
 | `task.hasHeading` | `boolean` | `true` | `boolean` | `false` |
 | `task.heading` | `string` | `'My Header'` | `null` | `null` |
 
@@ -108,3 +110,5 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `task.file` is a `TasksFile` object.
 1. You can see the current [TasksFile source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksFile.ts), to explore its capabilities.
 1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
+1. `task.file.pathWithoutExtension` was added in Tasks X.Y.Z.
+1. `task.file.filenameWithoutExtension` was added in Tasks X.Y.Z.
