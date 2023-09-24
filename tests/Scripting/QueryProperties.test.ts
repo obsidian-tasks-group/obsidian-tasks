@@ -24,9 +24,11 @@ describe('query', () => {
     it('file properties', () => {
         verifyFieldDataForReferenceDocs([
             'query.file.path',
+            'query.file.pathWithoutExtension',
             'query.file.root',
             'query.file.folder',
             'query.file.filename',
+            'query.file.filenameWithoutExtension',
         ]);
     });
 });
