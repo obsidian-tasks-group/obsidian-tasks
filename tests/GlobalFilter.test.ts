@@ -66,9 +66,9 @@ describe('Global Filter tests', () => {
         GlobalFilter.getInstance().set('#task');
 
         // Assert
-        expect(GlobalFilter.equals('#task')).toEqual(true);
-        expect(GlobalFilter.equals('#tasks')).toEqual(false);
-        expect(GlobalFilter.equals('#TODO')).toEqual(false);
+        expect(GlobalFilter.getInstance().equals('#task')).toEqual(true);
+        expect(GlobalFilter.getInstance().equals('#tasks')).toEqual(false);
+        expect(GlobalFilter.getInstance().equals('#TODO')).toEqual(false);
     });
 
     it('Should not match a string without Global Filter', () => {
