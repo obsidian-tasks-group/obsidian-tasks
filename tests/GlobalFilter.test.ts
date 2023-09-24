@@ -42,7 +42,7 @@ describe('Global Filter tests', () => {
 
     it('Should indicate empty Global Filter by default', () => {
         // Assert
-        expect(GlobalFilter.isEmpty()).toEqual(true);
+        expect(GlobalFilter.getInstance().isEmpty()).toEqual(true);
     });
 
     it('Should indicate non-empty Global Filter after setting one', () => {
@@ -50,7 +50,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.getInstance().set('newGlobalFilter');
 
         // Assert
-        expect(GlobalFilter.isEmpty()).toEqual(false);
+        expect(GlobalFilter.getInstance().isEmpty()).toEqual(false);
     });
 
     it('Should match a string with Global Filter', () => {
