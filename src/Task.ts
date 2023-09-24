@@ -340,8 +340,7 @@ export class Task {
      * @param renderDetails
      */
     public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
-        const task = this;
-        return taskToLi(task, renderDetails);
+        return taskToLi(this, renderDetails);
     }
 
     /**
