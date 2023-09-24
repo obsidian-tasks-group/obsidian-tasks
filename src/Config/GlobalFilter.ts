@@ -58,7 +58,7 @@ export class GlobalFilter {
         return GlobalFilter.getInstance().get() + ' ' + description;
     }
 
-    static removeAsWordFromDependingOnSettings(description: string): string {
+    removeAsWordFromDependingOnSettings(description: string): string {
         const removeGlobalFilter = GlobalFilter.getRemoveGlobalFilter();
         if (removeGlobalFilter) {
             return GlobalFilter.removeAsWordFrom(description);

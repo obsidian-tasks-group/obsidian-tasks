@@ -139,7 +139,7 @@ async function taskToHtml(
         let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
             if (component === 'description') {
-                componentString = GlobalFilter.removeAsWordFromDependingOnSettings(componentString);
+                componentString = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(componentString);
             }
             // Create the text span that will hold the rendered component
             const span = document.createElement('span');
