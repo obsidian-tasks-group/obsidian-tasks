@@ -23,8 +23,7 @@ export class TasksFile {
     }
 
     private withoutExtension(value: string) {
-        // Copied from PathField.grouper() initially
-        return value.replace('.md', '');
+        return value.replace(/.md$/, '');
     }
 
     /**
