@@ -2,10 +2,6 @@ import { resetSettings } from '../src/Config/Settings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 
 describe('Global Filter tests', () => {
-    afterEach(() => {
-        GlobalFilter.getInstance().reset();
-    });
-
     it('getInstance() should return the same object', () => {
         const globalFilter1 = GlobalFilter.getInstance();
         const globalFilter2 = GlobalFilter.getInstance();
@@ -14,18 +10,20 @@ describe('Global Filter tests', () => {
     });
 
     it('Should provide Global Filter with the default value with get()', () => {
-        expect(GlobalFilter.getInstance().get()).toEqual('');
+        const globalFilter = new GlobalFilter();
+        expect(globalFilter.get()).toEqual('');
     });
 
     it('Should set new Global Filter', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
+        const globalFilter = new GlobalFilter();
 
         // Act
-        GlobalFilter.getInstance().set(testValue);
+        globalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.getInstance().get()).toEqual(testValue);
+        expect(globalFilter.get()).toEqual(testValue);
     });
 
     it('Should allow independent values for independent instances', () => {
@@ -45,60 +43,68 @@ describe('Global Filter tests', () => {
     it('Should reset the Global Filter', () => {
         // Arrange
         const testValue = '#important';
-        GlobalFilter.getInstance().set(testValue);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(testValue);
 
         // Act
-        GlobalFilter.getInstance().reset();
+        globalFilter.reset();
 
         // Assert
-        expect(GlobalFilter.getInstance().get()).toEqual('');
+        expect(globalFilter.get()).toEqual('');
     });
 
     it('Should indicate empty Global Filter by default', () => {
         // Assert
-        expect(GlobalFilter.getInstance().isEmpty()).toEqual(true);
+        const globalFilter = new GlobalFilter();
+        expect(globalFilter.isEmpty()).toEqual(true);
     });
 
     it('Should indicate non-empty Global Filter after setting one', () => {
         // Arrange
-        GlobalFilter.getInstance().set('newGlobalFilter');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('newGlobalFilter');
 
         // Assert
-        expect(GlobalFilter.getInstance().isEmpty()).toEqual(false);
+        expect(globalFilter.isEmpty()).toEqual(false);
     });
 
     it('Should match a string with Global Filter', () => {
         // Arrange
-        GlobalFilter.getInstance().set('#task');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('#task');
 
         // Assert
-        expect(GlobalFilter.getInstance().includedIn('Important #task inside')).toEqual(true);
+        expect(globalFilter.includedIn('Important #task inside')).toEqual(true);
     });
 
     it('Should check equality correctly', () => {
         // Arrange
-        GlobalFilter.getInstance().set('#task');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('#task');
 
         // Assert
-        expect(GlobalFilter.getInstance().equals('#task')).toEqual(true);
-        expect(GlobalFilter.getInstance().equals('#tasks')).toEqual(false);
-        expect(GlobalFilter.getInstance().equals('#TODO')).toEqual(false);
+        expect(globalFilter.equals('#task')).toEqual(true);
+        expect(globalFilter.equals('#tasks')).toEqual(false);
+        expect(globalFilter.equals('#TODO')).toEqual(false);
     });
 
     it('Should not match a string without Global Filter', () => {
         // Arrange
-        GlobalFilter.getInstance().set('testValue');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('testValue');
 
         // Assert
-        expect(GlobalFilter.getInstance().includedIn('Without Global Filter')).toEqual(false);
+        expect(globalFilter.includedIn('Without Global Filter')).toEqual(false);
     });
 
     it('Should control whether to remove the global filter from displayed tasks', () => {
-        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
-        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(false);
+        const globalFilter = new GlobalFilter();
 
-        GlobalFilter.getInstance().setRemoveGlobalFilter(true);
-        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(true);
+        globalFilter.setRemoveGlobalFilter(false);
+        expect(globalFilter.getRemoveGlobalFilter()).toEqual(false);
+
+        globalFilter.setRemoveGlobalFilter(true);
+        expect(globalFilter.getRemoveGlobalFilter()).toEqual(true);
     });
 
     it('Should remove Global Filter from the beginning of a string', () => {
@@ -106,10 +112,11 @@ describe('Global Filter tests', () => {
         const testValue = '#end';
         const testStringBefore = 'Important thing to do #end';
         const testStringAfter = 'Important thing to do';
-        GlobalFilter.getInstance().set(testValue);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.getInstance().removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+        expect(globalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
     it('Should remove Global Filter from the end of a string', () => {
@@ -117,10 +124,11 @@ describe('Global Filter tests', () => {
         const testValue = '#beginning';
         const testStringBefore = '#beginning another important thing';
         const testStringAfter = 'another important thing';
-        GlobalFilter.getInstance().set(testValue);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.getInstance().removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+        expect(globalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
     it('Should remove Global Filter in the middle of a string', () => {
@@ -129,10 +137,11 @@ describe('Global Filter tests', () => {
         const testStringBefore = 'With the GF in the #middle of the string';
         // Note the 2 spaces where the 'newGlobalFilter' was
         const testStringAfter = 'With the GF in the  of the string';
-        GlobalFilter.getInstance().set(testValue);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.getInstance().removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+        expect(globalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 });
 
