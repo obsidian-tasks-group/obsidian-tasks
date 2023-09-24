@@ -134,7 +134,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
         GlobalFilter.setRemoveGlobalFilter(false);
 
         // Assert
-        expect(GlobalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
+        expect(GlobalFilter.getInstance().removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
             'This is absolutely todo',
         );
     });
@@ -145,7 +145,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
         GlobalFilter.setRemoveGlobalFilter(true);
 
         // Assert
-        expect(GlobalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
+        expect(GlobalFilter.getInstance().removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
             'This is absolutely',
         );
     });
