@@ -40,6 +40,7 @@ export class BacklinkField extends TextField {
                 return ['[[' + filename + ']]'];
             }
 
+            // Always append the header, to ensure we navigate to the correct section of the file:
             return [`[[${filename}#${header}|${filename} > ${header}]]`];
         };
     }
