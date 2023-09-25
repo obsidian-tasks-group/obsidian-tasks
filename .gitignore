@@ -19,6 +19,10 @@ yarn-error.log
 # jest coverage files
 /coverage
 
+# Code analysis output files
+/cyclic-deps.png
+/cyclic-deps.txt
+
 # approval test files
 *.received.*
 
