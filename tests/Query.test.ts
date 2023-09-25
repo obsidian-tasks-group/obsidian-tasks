@@ -146,7 +146,7 @@ describe('Query parsing', () => {
     describe('should recognise every supported filter', () => {
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
-            const query = new Query({ source: filter });
+            const query = new Query(filter);
 
             // Assert
             expect(query.error).toBeUndefined();
@@ -192,7 +192,7 @@ describe('Query parsing', () => {
             // For every sub-query from the filters list above, compose a boolean query that is always
             // true, in the format (expression) OR NOT (expression)
             const queryString = `(${filter}) OR NOT (${filter})`;
-            const query = new Query({ source: queryString });
+            const query = new Query(queryString);
 
             const taskLine = '- [ ] this is a task due 📅 2021-09-12 #inside_tag ⏫ #some/tags_with_underscore';
             const task = fromLine({
@@ -250,7 +250,7 @@ describe('Query parsing', () => {
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
-            const query = new Query({ source: filter });
+            const query = new Query(filter);
 
             // Assert
             expect(query.error).toBeUndefined();
@@ -331,7 +331,7 @@ describe('Query parsing', () => {
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
-            const query = new Query({ source: filter });
+            const query = new Query(filter);
 
             // Assert
             expect(query.error).toBeUndefined();
@@ -403,7 +403,7 @@ describe('Query parsing', () => {
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
-            const query = new Query({ source: filter });
+            const query = new Query(filter);
 
             // Assert
             expect(query.error).toBeUndefined();
@@ -423,7 +423,7 @@ describe('Query parsing', () => {
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
-            const query = new Query({ source: filter });
+            const query = new Query(filter);
 
             // Assert
             expect(query.error).toBeUndefined();
@@ -431,19 +431,19 @@ describe('Query parsing', () => {
     });
 
     it('should parse ambiguous sort by queries correctly', () => {
-        expect(new Query({ source: 'sort by status' }).sorting[0].property).toEqual('status');
-        expect(new Query({ source: 'sort by status.name' }).sorting[0].property).toEqual('status.name');
+        expect(new Query('sort by status').sorting[0].property).toEqual('status');
+        expect(new Query('sort by status.name').sorting[0].property).toEqual('status.name');
     });
 
     it('should parse ambiguous group by queries correctly', () => {
-        expect(new Query({ source: 'group by status' }).grouping[0].property).toEqual('status');
-        expect(new Query({ source: 'group by status.name' }).grouping[0].property).toEqual('status.name');
-        expect(new Query({ source: 'group by status.type' }).grouping[0].property).toEqual('status.type');
+        expect(new Query('group by status').grouping[0].property).toEqual('status');
+        expect(new Query('group by status.name').grouping[0].property).toEqual('status.name');
+        expect(new Query('group by status.type').grouping[0].property).toEqual('status.type');
     });
 
     describe('should include instruction in parsing error messages', () => {
         function getQueryError(source: string) {
-            return new Query({ source: source }).error;
+            return new Query(source).error;
         }
 
         it('for invalid regular expression filter', () => {
@@ -514,7 +514,7 @@ Problem line: "${source}"`);
             const path = 'a/b/path with space.md';
 
             // Act
-            const query = new Query({ source: rawQuery }, path);
+            const query = new Query(rawQuery, path);
 
             // Assert
             expect(query.source).toEqual(rawQuery); // Interesting that query.source still has the placeholder text
@@ -524,10 +524,10 @@ Problem line: "${source}"`);
 
         it('should report error if placeholders used without query location', () => {
             // Arrange
-            const input = 'path includes {{query.file.path}}';
+            const source = 'path includes {{query.file.path}}';
 
             // Act
-            const query = new Query({ source: input });
+            const query = new Query(source);
 
             // Assert
             expect(query).not.toBeValid();
@@ -542,11 +542,11 @@ Problem line: "${source}"`);
 
         it('should report error if non-existent placeholder used', () => {
             // Arrange
-            const input = 'path includes {{query.file.noSuchProperty}}';
+            const source = 'path includes {{query.file.noSuchProperty}}';
             const path = 'a/b/path with space.md';
 
             // Act
-            const query = new Query({ source: input }, path);
+            const query = new Query(source, path);
 
             // Assert
             expect(query).not.toBeValid();
@@ -606,8 +606,8 @@ describe('Query', () => {
                     createdDate: null,
                 }),
             ];
-            const input = 'path includes ab/c d';
-            const query = new Query({ source: input });
+            const source = 'path includes ab/c d';
+            const query = new Query(source);
 
             // Act
             let filteredTasks = [...tasks];
@@ -1033,7 +1033,7 @@ describe('Query', () => {
             // rather than a test of the **required** behaviour.
             // If the behaviour changes and '0' is returned instead of '-0',
             // that is absolutely fine.
-            const query = new Query({ source: 'sort by status reverse' });
+            const query = new Query('sort by status reverse');
             const sorter = query.sorting[0];
 
             expect(sorter!.comparator(todoTask, doneTask)).toEqual(1);
@@ -1045,8 +1045,8 @@ describe('Query', () => {
     describe('comments', () => {
         it('ignores comments', () => {
             // Arrange
-            const input = '# I am a comment, which will be ignored';
-            const query = new Query({ source: input });
+            const source = '# I am a comment, which will be ignored';
+            const query = new Query(source);
 
             // Assert
             expect(query.error).toBeUndefined();
@@ -1059,16 +1059,16 @@ describe('Query', () => {
         });
 
         it('should explain 0 filters', () => {
-            const input = '';
-            const query = new Query({ source: input });
+            const source = '';
+            const query = new Query(source);
 
             const expectedDisplayText = 'No filters supplied. All tasks will match the query.';
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
 
         it('should explain 1 filter', () => {
-            const input = 'description includes hello';
-            const query = new Query({ source: input });
+            const source = 'description includes hello';
+            const query = new Query(source);
 
             const expectedDisplayText = `description includes hello
 `;
@@ -1076,8 +1076,8 @@ describe('Query', () => {
         });
 
         it('should explain 2 filters', () => {
-            const input = 'description includes hello\ndue 2012-01-23';
-            const query = new Query({ source: input });
+            const source = 'description includes hello\ndue 2012-01-23';
+            const query = new Query(source);
 
             const expectedDisplayText = `description includes hello
 
@@ -1088,8 +1088,8 @@ due 2012-01-23 =>
         });
 
         it('should include any error message in the explanation', () => {
-            const input = 'i am a nonsense query';
-            const query = new Query({ source: input });
+            const source = 'i am a nonsense query';
+            const query = new Query(source);
 
             const expectedDisplayText = `Query has an error:
 do not understand query
@@ -1099,8 +1099,8 @@ Problem line: "i am a nonsense query"
         });
 
         it('should explain limit 5', () => {
-            const input = 'limit 5';
-            const query = new Query({ source: input });
+            const source = 'limit 5';
+            const query = new Query(source);
 
             const expectedDisplayText = `No filters supplied. All tasks will match the query.
 
@@ -1110,8 +1110,8 @@ At most 5 tasks.
         });
 
         it('should explain limit 1', () => {
-            const input = 'limit 1';
-            const query = new Query({ source: input });
+            const source = 'limit 1';
+            const query = new Query(source);
 
             const expectedDisplayText = `No filters supplied. All tasks will match the query.
 
@@ -1121,8 +1121,8 @@ At most 1 task.
         });
 
         it('should explain limit 0', () => {
-            const input = 'limit 0';
-            const query = new Query({ source: input });
+            const source = 'limit 0';
+            const query = new Query(source);
 
             const expectedDisplayText = `No filters supplied. All tasks will match the query.
 
@@ -1132,8 +1132,8 @@ At most 0 tasks.
         });
 
         it('should explain group limit 4', () => {
-            const input = 'limit groups 4';
-            const query = new Query({ source: input });
+            const source = 'limit groups 4';
+            const query = new Query(source);
 
             const expectedDisplayText = `No filters supplied. All tasks will match the query.
 
@@ -1143,8 +1143,8 @@ At most 4 tasks per group (if any "group by" options are supplied).
         });
 
         it('should explain all limit options', () => {
-            const input = 'limit 127\nlimit groups to 8 tasks';
-            const query = new Query({ source: input });
+            const source = 'limit 127\nlimit groups to 8 tasks';
+            const query = new Query(source);
 
             const expectedDisplayText = `No filters supplied. All tasks will match the query.
 
@@ -1163,7 +1163,7 @@ At most 8 tasks per group (if any "group by" options are supplied).
         it('should default to ungrouped', () => {
             // Arrange
             const source = '';
-            const query = new Query({ source });
+            const query = new Query(source);
 
             // Assert
             expect(query.grouping.length).toEqual(0);
@@ -1171,8 +1171,8 @@ At most 8 tasks per group (if any "group by" options are supplied).
 
         it('should parse a supported group command without error', () => {
             // Arrange
-            const input = 'group by path';
-            const query = new Query({ source: input });
+            const source = 'group by path';
+            const query = new Query(source);
 
             // Assert
             expect(query.error).toBeUndefined();
@@ -1181,18 +1181,18 @@ At most 8 tasks per group (if any "group by" options are supplied).
 
         it('should log meaningful error for supported group type', () => {
             // Arrange
-            const input = 'group by xxxx';
-            const query = new Query({ source: input });
+            const source = 'group by xxxx';
+            const query = new Query(source);
 
             // Assert
             // Check that the error message contains the actual problem line
-            expect(query.error).toContain(input);
+            expect(query.error).toContain(source);
             expect(query.grouping.length).toEqual(0);
         });
 
         it('should apply limit correctly, after sorting tasks', () => {
             // Arrange
-            const input = `
+            const source = `
                 # sorting by status will move the incomplete tasks first
                 sort by status
 
@@ -1202,7 +1202,7 @@ At most 8 tasks per group (if any "group by" options are supplied).
                 # Apply a limit, to test which tasks make it to
                 limit 2
                 `;
-            const query = new Query({ source: input });
+            const query = new Query(source);
 
             const tasksAsMarkdown = `
 - [x] Task 1 - should not appear in output
@@ -1230,7 +1230,7 @@ At most 8 tasks per group (if any "group by" options are supplied).
 
         it('should apply group limit correctly, after sorting tasks', () => {
             // Arrange
-            const input = `
+            const source = `
                 # sorting by description will sort the tasks alphabetically
                 sort by description
 
@@ -1240,7 +1240,7 @@ At most 8 tasks per group (if any "group by" options are supplied).
                 # Apply a limit, to test which tasks make it to
                 limit groups 3
                 `;
-            const query = new Query({ source: input });
+            const query = new Query(source);
 
             const tasksAsMarkdown = `
 - [x] Task 2 - will be in the first group and sorted after next one
@@ -1276,8 +1276,8 @@ At most 8 tasks per group (if any "group by" options are supplied).
     describe('error handling', () => {
         it('should catch an exception that occurs during searching', () => {
             // Arrange
-            const input = 'filter by function wibble';
-            const query = new Query({ source: input });
+            const source = 'filter by function wibble';
+            const query = new Query(source);
             const task = TaskBuilder.createFullyPopulatedTask();
 
             // Act
