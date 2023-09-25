@@ -31,18 +31,6 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     blockLink: '',
 };
 
-const DataAttributeNames: { [c in TaskLayoutComponent]: string } = {
-    createdDate: 'taskCreated',
-    dueDate: 'taskDue',
-    startDate: 'taskStart',
-    scheduledDate: 'taskScheduled',
-    doneDate: 'taskDone',
-    priority: 'taskPriority',
-    description: '',
-    recurrenceRule: '',
-    blockLink: '',
-};
-
 const MAX_DAY_VALUE_RANGE = 7;
 const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
 
@@ -291,6 +279,18 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
  */
 function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     const dataAttribute: AttributesDictionary = {};
+
+    const DataAttributeNames: { [c in TaskLayoutComponent]: string } = {
+        createdDate: 'taskCreated',
+        dueDate: 'taskDue',
+        startDate: 'taskStart',
+        scheduledDate: 'taskScheduled',
+        doneDate: 'taskDone',
+        priority: 'taskPriority',
+        description: '',
+        recurrenceRule: '',
+        blockLink: '',
+    };
 
     switch (component) {
         case 'description':
