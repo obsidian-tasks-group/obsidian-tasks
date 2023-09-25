@@ -1,4 +1,6 @@
 import type { Moment, unitOfTime } from 'moment';
+import moment from 'moment';
+import { Notice } from 'obsidian';
 import { TaskRegularExpressions } from '../Task';
 
 /**
@@ -55,7 +57,17 @@ export class TasksDate {
         return this._date ? this._date!.toISOString(keepOffset) : '';
     }
 
-    public postpone(unitOfTime: unitOfTime.DurationConstructor = 'days', amount: number = 1): Moment | null {
-        return this._date?.add(amount, unitOfTime) || null;
+    public postpone(unitOfTime: unitOfTime.DurationConstructor = 'days', amount: number = 1) {
+        console.debug('🚀 ~ postpone ~ unitOfTime:', unitOfTime);
+        if (!this._date) throw new Notice('Cannot postpone a null date');
+
+        const today = moment().startOf('day');
+        // According to the moment.js docs, isBefore is not stable so we use !isSameOrAfter: https://momentjs.com/docs/#/query/is-before/
+        const isDateBeforeToday = !this._date.isSameOrAfter(today, 'day');
+        if (!isDateBeforeToday) {
+            return today.add(amount, unitOfTime);
+        }
+
+        return this._date.add(amount, unitOfTime);
     }
 }

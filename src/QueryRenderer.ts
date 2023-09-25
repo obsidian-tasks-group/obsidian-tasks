@@ -401,6 +401,15 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
     }
 
+    /* 
+        - [x] I'm not sure that users will be able to figure out what 'Snooze' actually means
+        - [x] It shows the snooze button even when there is no due date which is a bit non-obvious
+                It's got a fast forward icon but if the date is ahead of tomorrow it goes backwards to tomorrow
+        - [x] I think that if the date is already in the future then it should just add one day
+        - [x] I think that if the date was in the past it should probably fast forward to the current date
+        - [x] If a task has a scheduled date only, currently the snooze button adds a due date for tomorrow. I think in this situation it should probably edit the schedule date instead.
+        - [x] emoji выглядит как кнопка в некоторых случаях
+    */
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
         const button = listItem.createEl('button', {
             attr: {
@@ -414,22 +423,25 @@ class QueryRenderChild extends MarkdownRenderChild {
         const buttonText = shortMode ? '⏩' : '⏩ Postpone';
         button.setText(buttonText);
 
-        button.addEventListener('click', getTaskPostponeCallback(task, button, 'days'));
-
-        /** Open in a new tab on middle-click.
-         * This distinction is not available in the 'click' event, so we handle the 'mousedown' event solely for this.
-         * (for regular left-click we prefer the 'click' event, and not to just do everything here, because the 'click' event is more generic for touch devices etc.)
-         */
-        button.addEventListener('mousedown', getTaskPostponeCallback(task, button, 'days'));
+        button.addEventListener('click', () => this.getOnClickCallback(task, button, 'days'));
 
         /** Open a context menu on right-click.
          * Give a choice of postponing for a week, month, or quarter.
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
             const menu = new Menu();
-            menu.addItem(getPostponeMenuItemCallback(task, button, 'week'));
-            menu.addItem(getPostponeMenuItemCallback(task, button, 'month'));
-            menu.addItem(getPostponeMenuItemCallback(task, button, 'quarter'));
+            const commonTitle = 'Postpone for a';
+
+            const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor) => {
+                item.setTitle(`${commonTitle} ${timeUnit}`).onClick(() =>
+                    this.getOnClickCallback(task, button, timeUnit),
+                );
+            };
+
+            menu.addItem((item) => getMenuItemCallback(item, 'week'));
+            menu.addItem((item) => getMenuItemCallback(item, 'month'));
+            menu.addItem((item) => getMenuItemCallback(item, 'quarter'));
+
             menu.showAtPosition({ x: ev.screenX, y: ev.screenY });
         });
     }
@@ -468,46 +480,41 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
         return groupingRules.join(',');
     }
-}
 
-function getTaskPostponeCallback(
-    task: Task,
-    button: HTMLButtonElement,
-    timeUnit: unitOfTime.DurationConstructor = 'days',
-): (this: HTMLButtonElement, ev: MouseEvent) => any {
-    return async (ev?: MouseEvent) => {
-        const newDueDate = new TasksDate(task.dueDate).postpone(timeUnit);
-        const updatedTask = new Task({ ...task, dueDate: newDueDate });
+    private async getOnClickCallback(
+        task: Task,
+        button: HTMLButtonElement,
+        timeUnit: unitOfTime.DurationConstructor = 'days',
+    ) {
+        const errorMessage = '⚠️ Postponement requires a date: due or scheduled.';
+        if (!task.dueDate && !task.scheduledDate) return new Notice(errorMessage, 10000);
+        const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
+        const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
+        console.debug('🚀 ~ return ~ dateTypeToUpdate:', dateTypeToUpdate, timeUnit);
+        if (dateTypeToUpdate === null) return;
 
-        if (ev?.button === 1) {
-            await replaceTaskWithTasks({
-                originalTask: task,
-                newTasks: updatedTask,
-            });
-            onPostponeSuccessCallback(button);
-        }
-    };
-}
+        const dateToUpdate = task[dateTypeToUpdate];
+        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit);
+        const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
 
-function getPostponeMenuItemCallback(
-    task: Task,
-    button: HTMLButtonElement,
-    timeUnit: unitOfTime.DurationConstructor = 'days',
-) {
-    const title = `Postpone for a ${timeUnit}`;
-    return (item: MenuItem) =>
-        item.setTitle(title).onClick(async () => {
-            const newDueDate = new TasksDate(task.dueDate).postpone(timeUnit);
-            await replaceTaskWithTasks({
-                originalTask: task,
-                newTasks: new Task({ ...task, dueDate: newDueDate }),
-            });
-            onPostponeSuccessCallback(button);
+        await replaceTaskWithTasks({
+            originalTask: task,
+            newTasks,
         });
-}
 
-function onPostponeSuccessCallback(button: HTMLButtonElement) {
-    button.disabled = true;
-    button.setAttr('title', 'You can perform this action again after reloading the file.');
-    new Notice('Task postponed!');
+        const postponedDateString = postponedDate?.format('DD MMM YYYY');
+        this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDateString);
+    }
+
+    private onPostponeSuccessCallback(
+        button: HTMLButtonElement,
+        updatedDateType: 'dueDate' | 'scheduledDate',
+        postponedDateString: string,
+    ) {
+        // Disable the button to prevent update error due to the task not being reloaded yet.
+        button.disabled = true;
+        button.setAttr('title', 'You can perform this action again after reloading the file.');
+        new Notice(`Task's ${updatedDateType} postponed untill ${postponedDateString}`, 5000);
+        this.events.triggerRequestCacheUpdate(this.render.bind(this));
+    }
 }
