@@ -45,6 +45,9 @@ jobs:
           path: |
             resources/sample_vaults/Tasks-Demo
 
+      - name: Install graphviz
+        run: sudo apt-get install -y graphviz
+
       - name: Identify cyclic dependencies
         run: |
           yarn run cyclic-deps-text || echo continuing after error message
