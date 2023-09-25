@@ -43,7 +43,6 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
-    "graphviz-cli": "^2.0.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "madge": "^6.1.0",
