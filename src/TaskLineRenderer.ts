@@ -280,6 +280,11 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
 function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     const dataAttribute: AttributesDictionary = {};
 
+    // If a TaskLayoutComponent needs a data attribute in the task's <span>, add the data attribute name
+    // to this dictionary: key is the component, value is the data attribute name.
+    // Otherwise, just leave an empty string ('') as the value.
+    // Also add the new component to the switch-case below in this function. This is where
+    // the data attribute value shall be calculated and set in the returned dictionary.
     const DataAttributeNames: { [c in TaskLayoutComponent]: string } = {
         createdDate: 'taskCreated',
         dueDate: 'taskDue',
