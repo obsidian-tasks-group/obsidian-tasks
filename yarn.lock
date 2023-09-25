@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@adobe/css-tools/-/css-tools-4.3.1.tgz#abfccb8ca78075a2b6187345c26243c1a0842f28"
   integrity sha512-/62yikz7NLScCGAAST5SHdnjaDJQBDq0M2muyRTpf2VQhw6StBg2ALiu73zSJQ4fMVLA+0uBhBHAle7Wg+2kSg==
 
+"@aduh95/viz.js@3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@aduh95/viz.js/-/viz.js-3.7.0.tgz#a20d86c5fc8f6abebdc39b96a4326e10375d77c0"
+  integrity sha512-20Pk2Z98fbPLkECcrZSJszKos/OgtvJJR3NcbVfgCJ6EQjDNzW2P1BKqImOz3tJ952dvO2DWEhcLhQ1Wz1e9ng==
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -3345,6 +3350,13 @@ graphemer@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/graphemer/-/graphemer-1.4.0.tgz#fb2f1d55e0e3a1849aeffc90c4fa0dd53a0e66c6"
   integrity sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==
+
+graphviz-cli@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/graphviz-cli/-/graphviz-cli-2.0.0.tgz#33e6462a73100c566bafc9f2e889e22f0391abdd"
+  integrity sha512-DsjHNZTbH+mhcsMsgVh9xSXcpGX8ve7fn1nDywToFSXsamrfV+EyIpBGiOTqxk+FjEYm1985OQhO5PLw7wk17g==
+  dependencies:
+    "@aduh95/viz.js" "3.7.0"
 
 has-bigints@^1.0.1, has-bigints@^1.0.2:
   version "1.0.2"
