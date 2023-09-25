@@ -8,9 +8,12 @@ It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with 
 =>
 - [ ] my description 🔁 every 4 months on the 3rd Wednesday
 - [ ] my description 🔁 every month
+- [ ] my description 🔁 every month on the 2nd
+- [ ] my description 🔁 every month on the 2nd when done
 - [ ] my description 🔁 every week on Tuesday
 - [ ] my description 🔁 every week on Tuesday when done
 - [ ] my description 🔁 every week
+- [ ] my description 🔁 every 3 weeks on Thursday
 - [ ] my description 🔁 every 4 weeks
 - [ ] my description 🔁 every 6 days
 - [ ] my description 🔁 every 8 days
@@ -24,9 +27,6 @@ filter by function !task.isRecurring
 This is identical to `is not recurring`.
 It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
 =>
-- [ ] my description
-- [ ] my description
-- [ ] my description
 - [ ] my description
 - [ ] dodgy recurrence
 ====================================================================================

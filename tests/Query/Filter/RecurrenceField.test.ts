@@ -99,6 +99,7 @@ describe('grouping by recurrence', () => {
         const tasks = SampleTasks.withAllRecurrences();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
+            'every 3 weeks on Thursday',
             'every 4 months on the 3rd Wednesday',
             'every 4 weeks',
             'every 6 days',
@@ -106,6 +107,8 @@ describe('grouping by recurrence', () => {
             'every 8 days when done',
             'every day',
             'every month',
+            'every month on the 2nd',
+            'every month on the 2nd when done',
             'every week',
             'every week on Tuesday',
             'every week on Tuesday when done',

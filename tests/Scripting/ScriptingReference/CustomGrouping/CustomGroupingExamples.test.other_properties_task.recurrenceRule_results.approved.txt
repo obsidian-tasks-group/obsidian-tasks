@@ -5,6 +5,7 @@ Results of custom groupers
 group by function task.recurrenceRule.replace('when done', '==when done==')
 Group by recurrence rule, highlighting any occurrences of the words "when done".
 =>
+every 3 weeks on Thursday
 every 4 months on the 3rd Wednesday
 every 4 weeks
 every 6 days
@@ -12,6 +13,8 @@ every 8 days
 every 8 days ==when done==
 every day
 every month
+every month on the 2nd
+every month on the 2nd ==when done==
 every week
 every week on Tuesday
 every week on Tuesday ==when done==

@@ -75,14 +75,14 @@ export class SampleTasks {
             // Months
             'every 4 months on the 3rd Wednesday',
             'every month',
-            'every second of month',
-            'every second of month when done',
+            'every month on the 2nd',
+            'every month on the 2nd when done',
 
             // Weeks
             'every Tuesday',
             'every Tuesday when done',
             'every week',
-            'every 3rd Thursday',
+            'every 3 weeks on Thursday',
             'every 4 weeks',
 
             // Days
