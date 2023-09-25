@@ -125,6 +125,8 @@ export async function renderTaskLine(
     return li;
 }
 
+export type AttributesDictionary = { [key: string]: string };
+
 async function taskToHtml(
     task: Task,
     renderDetails: TaskLineRenderDetails,
@@ -241,8 +243,6 @@ async function renderComponentText(
         span.innerHTML = componentString;
     }
 }
-
-export type AttributesDictionary = { [key: string]: string };
 
 /**
  * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from LayoutClasses.
