@@ -114,6 +114,8 @@ export async function renderTaskLine(
     return li;
 }
 
+export type AttributesDictionary = { [key: string]: string };
+
 async function taskToHtml(
     task: Task,
     renderDetails: TaskLineRenderDetails,
@@ -154,18 +156,18 @@ async function taskToHtml(
                 const componentClass = getTaskComponentClass(component, task);
                 span.classList.add(...componentClass);
 
-                // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
-                const dataAttributes = getTaskDataAttributes(component, task);
-                for (const key in dataAttributes) span.dataset[key] = dataAttributes[key];
-                allAttributes = { ...allAttributes, ...dataAttributes };
+                // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
+                const componentDataAttribute = getComponentDataAttribute(component, task);
+                for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
+                allAttributes = { ...allAttributes, ...componentDataAttribute };
             }
         }
     }
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const dataAttributes = getTaskDataAttributes(component, task);
-        allAttributes = { ...allAttributes, ...dataAttributes };
+        const hiddenComponentDataAttribute = getComponentDataAttribute(component, task);
+        allAttributes = { ...allAttributes, ...hiddenComponentDataAttribute };
     }
 
     // If a task has no priority field set, its priority will not be rendered as part of the loop above and
@@ -174,8 +176,8 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const dataAttributes = getTaskDataAttributes('priority', task);
-        allAttributes = { ...allAttributes, ...dataAttributes };
+        const priorityDataAttribute = getComponentDataAttribute('priority', task);
+        allAttributes = { ...allAttributes, ...priorityDataAttribute };
     }
 
     return allAttributes;
@@ -231,8 +233,6 @@ async function renderComponentText(
     }
 }
 
-export type AttributesDictionary = { [key: string]: string };
-
 /**
  * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from LayoutClasses.
  */
@@ -264,52 +264,55 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
 }
 
 /**
- * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
+ * The data attribute describes the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
-function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
-    const dataAttributes: AttributesDictionary = {};
+function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
+    const dataAttribute: AttributesDictionary = {};
 
-    function addDateDataAttributes(date: moment.Moment | null, attributeName: string) {
-        if (date) {
-            const dateValue = dateToAttribute(date);
-            if (dateValue) {
-                dataAttributes[attributeName] = dateValue;
-            }
-        }
-    }
+    // If a TaskLayoutComponent needs a data attribute in the task's <span>, add the data attribute name
+    // to this dictionary: key is the component, value is the data attribute name.
+    // Otherwise, just leave an empty string ('') as the value.
+    // Also add the new component to the switch-case below in this function. This is where
+    // the data attribute value shall be calculated and set in the returned dictionary.
+    const DataAttributeNames: { [c in TaskLayoutComponent]: string } = {
+        createdDate: 'taskCreated',
+        dueDate: 'taskDue',
+        startDate: 'taskStart',
+        scheduledDate: 'taskScheduled',
+        doneDate: 'taskDone',
+        priority: 'taskPriority',
+        description: '',
+        recurrenceRule: '',
+        blockLink: '',
+    };
 
-    // Update data attributes
     switch (component) {
         case 'description':
-        case 'recurrenceRule': {
+        case 'recurrenceRule':
+        case 'blockLink':
             break;
-        }
         case 'priority': {
-            dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
+            const attributeName = DataAttributeNames[component];
+            dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         }
-        case 'createdDate': {
-            addDateDataAttributes(task.createdDate, 'taskCreated');
-            break;
-        }
-        case 'dueDate': {
-            addDateDataAttributes(task.dueDate, 'taskDue');
-            break;
-        }
-        case 'startDate': {
-            addDateDataAttributes(task.startDate, 'taskStart');
-            break;
-        }
-        case 'scheduledDate': {
-            addDateDataAttributes(task.scheduledDate, 'taskScheduled');
-            break;
-        }
+        case 'createdDate':
+        case 'dueDate':
+        case 'startDate':
+        case 'scheduledDate':
         case 'doneDate': {
-            addDateDataAttributes(task.doneDate, 'taskDone');
+            const date = task[component];
+            if (date) {
+                const attributeValue = dateToAttribute(date);
+                if (attributeValue) {
+                    const attributeName = DataAttributeNames[component];
+                    dataAttribute[attributeName] = attributeValue;
+                }
+            }
             break;
         }
     }
-    return dataAttributes;
+    return dataAttribute;
 }
 
 /*
