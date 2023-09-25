@@ -1,7 +1,7 @@
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
-import { TextField } from './TextField';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import { TextField } from './TextField';
 
 export class BacklinkField extends TextField {
     public fieldName(): string {
@@ -35,15 +35,13 @@ export class BacklinkField extends TextField {
                 return ['Unknown Location'];
             }
 
-            // Always escape the filename, to prevent any underscores being interpreted as markdown:
-            let result = TextField.escapeMarkdownCharacters(filename);
-
-            // Only append the heading if it differs from the un-escaped fileanme:
-            if (task.precedingHeader && task.precedingHeader !== filename) {
-                // We don't escape the heading, as any markdown characters in it really are markdown styling:
-                result += ' > ' + task.precedingHeader;
+            const header = task.precedingHeader;
+            if (header === null) {
+                return ['[[' + filename + ']]'];
             }
-            return [result];
+
+            // Always append the header, to ensure we navigate to the correct section of the file:
+            return [`[[${filename}#${header}|${filename} > ${header}]]`];
         };
     }
 }
