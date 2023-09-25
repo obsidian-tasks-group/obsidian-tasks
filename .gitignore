@@ -20,8 +20,8 @@ yarn-error.log
 /coverage
 
 # Code analysis output files
-/cyclic-deps.png
-/cyclic-deps.txt
+/circular-deps.png
+/circular-deps.txt
 
 # approval test files
 *.received.*

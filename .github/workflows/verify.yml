@@ -48,15 +48,15 @@ jobs:
       - name: Install graphviz
         run: sudo apt-get install -y graphviz
 
-      - name: Identify cyclic dependencies
+      - name: Identify circular dependencies
         run: |
-          yarn run cyclic-deps-text || echo continuing after error message
-          yarn run cyclic-deps-image
+          yarn run circular-deps-text || echo continuing after error message
+          yarn run circular-deps-image
 
-      - name: Archive cyclic dependencies results
+      - name: Archive circular dependencies results
         uses: actions/upload-artifact@v3
         with:
-          name: cyclic-dependencies
+          name: circular-dependencies
           path: |
-            cyclic-deps.png
-            cyclic-deps.txt
+            circular-deps.png
+            circular-deps.txt
