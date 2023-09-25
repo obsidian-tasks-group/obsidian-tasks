@@ -43,10 +43,10 @@ describe('grouping by backlink', () => {
         // File and heading, nominal case
         ['a/b/c.md', 'heading', ['[[c#heading|c > heading]]']],
 
-        // If file name and heading are identical, avoid duplication ('c > c')
+        // If file name and heading are identical, allow duplication ('c > c'), in order to link to correct section
         ['a/b/c.md', 'c', ['[[c#c|c > c]]']],
 
-        // If file name and heading are identical, avoid duplication, even if there are underscores in the file name
+        // If file name and heading are identical, allow duplication, even if there are underscores in the file name
         ['a_b_c.md', 'a_b_c', ['[[a_b_c#a_b_c|a_b_c > a_b_c]]']],
 
         // Underscores in filename component are not escaped
