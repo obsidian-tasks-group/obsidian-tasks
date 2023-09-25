@@ -44,3 +44,16 @@ jobs:
           name: Tasks-Demo-VerifyCommit-Build${{ github.run_number }}-Run${{ github.run_attempt }}
           path: |
             resources/sample_vaults/Tasks-Demo
+
+      - name: Identify cyclic dependencies
+        run: |
+          yarn run cyclic-deps-text || echo continuing after error message
+          yarn run cyclic-deps-image
+
+      - name: Archive cyclic dependencies results
+        uses: actions/upload-artifact@v3
+        with:
+          name: cyclic-dependencies
+          path: |
+            cyclic-deps.png
+            cyclic-deps.txt
