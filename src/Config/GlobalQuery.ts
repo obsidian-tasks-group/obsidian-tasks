@@ -49,7 +49,7 @@ export class GlobalQuery {
      * @param path
      */
     public query(path: string | undefined = undefined): Query {
-        return new Query({ source: this._source }, path);
+        return new Query(this._source, path);
     }
 
     /**

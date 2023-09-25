@@ -12,7 +12,7 @@ window.moment = moment;
 describe('explain', () => {
     it('should explain a task', () => {
         const source = '';
-        const query = new Query({ source });
+        const query = new Query(source);
 
         const expectedDisplayText = `Explanation of this Tasks code block query:
 
@@ -26,7 +26,7 @@ No filters supplied. All tasks will match the query.`;
         globalFilter.set('#task');
 
         const source = '';
-        const query = new Query({ source });
+        const query = new Query(source);
 
         const expectedDisplayText = `Only tasks containing the global filter '#task'.
 
@@ -40,7 +40,7 @@ No filters supplied. All tasks will match the query.`;
         const globalQuery = new GlobalQuery('description includes hello');
 
         const source = '';
-        const query = new Query({ source });
+        const query = new Query(source);
 
         const expectedDisplayText = `Explanation of the global query:
 
@@ -59,7 +59,7 @@ No filters supplied. All tasks will match the query.`;
         globalFilter.set('#task');
 
         const source = '';
-        const query = new Query({ source });
+        const query = new Query(source);
 
         const expectedDisplayText = `Only tasks containing the global filter '#task'.
 
@@ -78,7 +78,7 @@ No filters supplied. All tasks will match the query.`;
         const globalQuery = new GlobalQuery('description includes hello');
 
         const source = 'ignore global query';
-        const query = new Query({ source });
+        const query = new Query(source);
 
         const expectedDisplayText = `Explanation of this Tasks code block query:
 
