@@ -26,10 +26,11 @@ export class QueryResult {
 
     public totalTasksCountDisplayText() {
         const tasksCount = this.totalTasksCount;
-        if (tasksCount === this.totalTasksCountBeforeLimit) {
+        const tasksCountBeforeLimit = this.totalTasksCountBeforeLimit;
+        if (tasksCount === tasksCountBeforeLimit) {
             return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
         } else {
-            return `${tasksCount} of ${this.totalTasksCountBeforeLimit} task${tasksCount !== 1 ? 's' : ''}`;
+            return `${tasksCount} of ${tasksCountBeforeLimit} task${tasksCountBeforeLimit !== 1 ? 's' : ''}`;
         }
     }
 
