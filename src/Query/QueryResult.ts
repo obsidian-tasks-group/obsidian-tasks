@@ -34,7 +34,7 @@ export class QueryResult {
         if (tasksCount === tasksCountBeforeLimit) {
             return `${tasksCount} ${taskCountPluralised(tasksCount)}`;
         } else {
-            return `${tasksCount} of ${tasksCountBeforeLimit} task${tasksCountBeforeLimit !== 1 ? 's' : ''}`;
+            return `${tasksCount} of ${tasksCountBeforeLimit} ${taskCountPluralised(tasksCountBeforeLimit)}`;
         }
     }
 
