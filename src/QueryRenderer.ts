@@ -391,9 +391,8 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
         if (!this.query.layoutOptions.hideTaskCount) {
-            const tasksCountLabel = queryResult.totalTasksCountDisplayText();
             content.createDiv({
-                text: tasksCountLabel,
+                text: queryResult.totalTasksCountDisplayText(),
                 cls: 'tasks-count',
             });
         }
