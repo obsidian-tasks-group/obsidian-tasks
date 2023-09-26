@@ -32,8 +32,7 @@ export class QueryResult {
         const tasksCount = this.totalTasksCount;
         const tasksCountBeforeLimit = this.totalTasksCountBeforeLimit;
         if (tasksCount === tasksCountBeforeLimit) {
-            const pluralised = taskCountPluralised(tasksCount);
-            return `${tasksCount} ${pluralised}`;
+            return `${tasksCount} ${taskCountPluralised(tasksCount)}`;
         } else {
             return `${tasksCount} of ${tasksCountBeforeLimit} task${tasksCountBeforeLimit !== 1 ? 's' : ''}`;
         }
