@@ -189,7 +189,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         if (debug) {
             console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
         }
-        this.addTaskCount(content, totalTasksCount, queryResult);
+        this.addTaskCount(content, queryResult);
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
@@ -389,7 +389,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
     }
 
-    private addTaskCount(content: HTMLDivElement, _tasksCount: number, queryResult: QueryResult) {
+    private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
         if (!this.query.layoutOptions.hideTaskCount) {
             const tasksCount = queryResult.totalTasksCount;
             content.createDiv({
