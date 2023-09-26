@@ -3,10 +3,13 @@ import type { TaskGroup } from './TaskGroup';
 
 export class QueryResult {
     public readonly taskGroups: TaskGroups;
+    public readonly totalTasksCountBeforeLimit: number = 0;
+
     private _searchErrorMessage: string | undefined = undefined;
 
-    constructor(groups: TaskGroups) {
+    constructor(groups: TaskGroups, totalTasksCountBeforeLimit: number) {
         this.taskGroups = groups;
+        this.totalTasksCountBeforeLimit = totalTasksCountBeforeLimit;
     }
 
     public get searchErrorMessage(): string | undefined {
@@ -31,7 +34,7 @@ export class QueryResult {
     }
 
     static fromError(message: string): QueryResult {
-        const result = new QueryResult(new TaskGroups([], []));
+        const result = new QueryResult(new TaskGroups([], []), 0);
         result._searchErrorMessage = message;
         return result;
     }

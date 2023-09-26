@@ -8,7 +8,7 @@ describe('QueryResult', () => {
     function createUngroupedQueryResult(tasks: Task[]) {
         const groupers: Grouper[] = [];
         const groups = new TaskGroups(groupers, tasks);
-        return new QueryResult(groups);
+        return new QueryResult(groups, tasks.length);
     }
 
     it('should create a QueryResult from TaskGroups', () => {
@@ -18,7 +18,7 @@ describe('QueryResult', () => {
         const groups = new TaskGroups(groupers, tasks);
 
         // Act
-        const queryResult = new QueryResult(groups);
+        const queryResult = new QueryResult(groups, 0);
 
         // Assert
         expect(queryResult.totalTasksCount).toEqual(0);
