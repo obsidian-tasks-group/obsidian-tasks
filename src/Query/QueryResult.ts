@@ -32,11 +32,7 @@ export class QueryResult {
     }
 
     public tasksCountDisplayText() {
-        return tasksCountDisplayText(this);
+        const tasksCount = this.totalTasksCount;
+        return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
     }
-}
-
-export function tasksCountDisplayText(queryResult: QueryResult): string {
-    const tasksCount = queryResult.totalTasksCount;
-    return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
 }
