@@ -21,6 +21,11 @@ export class QueryResult {
         return this.taskGroups.totalTasksCount();
     }
 
+    public totalTasksCountDisplayText() {
+        const tasksCount = this.totalTasksCount;
+        return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
+    }
+
     public get groups(): TaskGroup[] {
         return this.taskGroups.groups;
     }
