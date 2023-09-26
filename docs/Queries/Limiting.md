@@ -27,3 +27,11 @@ Shorthand is `limit groups <number>`.
 
 > [!released]
 > `limit groups to <number> tasks` was introduced in Tasks 3.8.0.
+
+## Seeing the total number of tasks found
+
+If either `limit` option prevents any tasks from being displayed in the results, the total number number will be shown, for example:
+
+```text
+50 of 686 tasks
+```
