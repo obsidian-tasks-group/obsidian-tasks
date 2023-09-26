@@ -6,9 +6,14 @@ import { fromLine } from '../TestHelpers';
 
 describe('QueryResult', () => {
     function createUngroupedQueryResult(tasks: Task[]) {
+        const totalTasksCountBeforeLimit = tasks.length;
+        return createUngroupedQueryResultWithLimit(tasks, totalTasksCountBeforeLimit);
+    }
+
+    function createUngroupedQueryResultWithLimit(tasks: Task[], totalTasksCountBeforeLimit: number) {
         const groupers: Grouper[] = [];
         const groups = new TaskGroups(groupers, tasks);
-        return new QueryResult(groups, tasks.length);
+        return new QueryResult(groups, totalTasksCountBeforeLimit);
     }
 
     it('should create a QueryResult from TaskGroups', () => {
