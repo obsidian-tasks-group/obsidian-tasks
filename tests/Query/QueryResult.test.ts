@@ -6,8 +6,7 @@ import { fromLine } from '../TestHelpers';
 
 describe('QueryResult', () => {
     function createUngroupedQueryResult(tasks: Task[]) {
-        const totalTasksCountBeforeLimit = tasks.length;
-        return createUngroupedQueryResultWithLimit(tasks, totalTasksCountBeforeLimit);
+        return createUngroupedQueryResultWithLimit(tasks, tasks.length);
     }
 
     function createUngroupedQueryResultWithLimit(tasks: Task[], totalTasksCountBeforeLimit: number) {
