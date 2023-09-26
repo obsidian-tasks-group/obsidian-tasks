@@ -41,6 +41,7 @@ describe('QueryResult', () => {
     });
 
     describe('Text representation of tasks count', () => {
+        // Simple cases - where no limit was applied
         it('should pluralise "tasks" if 0 matches', () => {
             const tasks: Task[] = [];
             const queryResult = createUngroupedQueryResult(tasks);
@@ -60,6 +61,19 @@ describe('QueryResult', () => {
             ];
             const queryResult = createUngroupedQueryResult(tasks);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('2 tasks');
+        });
+
+        // Cases where a limit was applied
+        // 0 of 1 tasks
+        // 1 of 2 tasks
+        // 2 of 9 tasks
+        it('should show original number of matching tasks if limit was applied', () => {
+            const tasks = [
+                fromLine({ line: '- [ ] Do something more complicated 1' }),
+                fromLine({ line: '- [ ] Do something more complicated 2' }),
+            ];
+            const queryResult = createUngroupedQueryResultWithLimit(tasks, 9);
+            expect(queryResult.totalTasksCountDisplayText()).toEqual('2 of 9 tasks');
         });
     });
 });
