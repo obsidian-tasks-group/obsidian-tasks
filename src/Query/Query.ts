@@ -251,7 +251,7 @@ Problem line: "${line}"`;
                 taskGroups.applyTaskLimit(this._taskGroupLimit);
             }
 
-            return new QueryResult(taskGroups);
+            return new QueryResult(taskGroups, tasksSorted.length);
         } catch (e) {
             const description = 'Search failed';
             return QueryResult.fromError(errorMessageForException(description, e));
