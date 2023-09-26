@@ -30,8 +30,11 @@ Shorthand is `limit groups <number>`.
 
 ## Seeing the total number of tasks found
 
-If either `limit` option prevents any tasks from being displayed in the results, the total number number will be shown, for example:
+If either `limit` option prevents any tasks from being displayed in the results, the total number will be shown, for example:
 
 ```text
 50 of 686 tasks
 ```
+
+> [!released]
+> Display of the total number of tasks was added in Tasks X.Y.Z.
