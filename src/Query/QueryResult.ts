@@ -21,6 +21,11 @@ export class QueryResult {
         return this.taskGroups.totalTasksCount();
     }
 
+    public tasksCountDisplayText() {
+        const tasksCount = this.totalTasksCount;
+        return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
+    }
+
     public get groups(): TaskGroup[] {
         return this.taskGroups.groups;
     }
@@ -29,10 +34,5 @@ export class QueryResult {
         const result = new QueryResult(new TaskGroups([], []));
         result._searchErrorMessage = message;
         return result;
-    }
-
-    public tasksCountDisplayText() {
-        const tasksCount = this.totalTasksCount;
-        return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
     }
 }
