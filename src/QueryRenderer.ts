@@ -43,6 +43,11 @@ export class QueryRenderer {
     }
 }
 
+function tasksCountDisplayText(queryResult: QueryResult): string {
+    const tasksCount = queryResult.totalTasksCount;
+    return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
+}
+
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: TasksEvents;
@@ -391,8 +396,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
         if (!this.query.layoutOptions.hideTaskCount) {
-            const tasksCount = queryResult.totalTasksCount;
-            const tasksCountLabel = `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
+            const tasksCountLabel = tasksCountDisplayText(queryResult);
             content.createDiv({
                 text: tasksCountLabel,
                 cls: 'tasks-count',
