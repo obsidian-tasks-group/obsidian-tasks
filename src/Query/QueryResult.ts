@@ -31,3 +31,8 @@ export class QueryResult {
         return result;
     }
 }
+
+export function tasksCountDisplayText(queryResult: QueryResult): string {
+    const tasksCount = queryResult.totalTasksCount;
+    return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
+}

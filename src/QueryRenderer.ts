@@ -15,6 +15,7 @@ import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
 import type { QueryResult } from './Query/QueryResult';
+import { tasksCountDisplayText } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
 
 export class QueryRenderer {
@@ -41,11 +42,6 @@ export class QueryRenderer {
             }),
         );
     }
-}
-
-function tasksCountDisplayText(queryResult: QueryResult): string {
-    const tasksCount = queryResult.totalTasksCount;
-    return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
 }
 
 class QueryRenderChild extends MarkdownRenderChild {
