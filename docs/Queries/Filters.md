@@ -989,7 +989,7 @@ Note that the path includes the `.md` extension.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now possible, using `task.file.path`.
 
-In Tasks X.Y.Z `task.file.pathWithoutExtension` was added.
+In Tasks 4.8.0 `task.file.pathWithoutExtension` was added.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
 
@@ -1094,7 +1094,7 @@ Note that the file name includes the `.md` extension.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file name** is now possible, using `task.file.filename`.
 
-In Tasks X.Y.Z `task.file.filenameWithoutExtension` was added.
+In Tasks 4.8.0 `task.file.filenameWithoutExtension` was added.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
 
