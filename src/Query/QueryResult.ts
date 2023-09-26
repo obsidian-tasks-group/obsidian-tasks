@@ -21,7 +21,7 @@ export class QueryResult {
         return this.taskGroups.totalTasksCount();
     }
 
-    public tasksCountDisplayText() {
+    public totalTasksCountDisplayText() {
         const tasksCount = this.totalTasksCount;
         return `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`;
     }
