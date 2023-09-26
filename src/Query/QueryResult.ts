@@ -1,6 +1,10 @@
 import { TaskGroups } from './TaskGroups';
 import type { TaskGroup } from './TaskGroup';
 
+function taskCountPluralised(tasksCount: number) {
+    return `task${tasksCount !== 1 ? 's' : ''}`;
+}
+
 export class QueryResult {
     public readonly taskGroups: TaskGroups;
     public readonly totalTasksCountBeforeLimit: number = 0;
@@ -28,7 +32,7 @@ export class QueryResult {
         const tasksCount = this.totalTasksCount;
         const tasksCountBeforeLimit = this.totalTasksCountBeforeLimit;
         if (tasksCount === tasksCountBeforeLimit) {
-            const pluralised = `task${tasksCount !== 1 ? 's' : ''}`;
+            const pluralised = taskCountPluralised(tasksCount);
             return `${tasksCount} ${pluralised}`;
         } else {
             return `${tasksCount} of ${tasksCountBeforeLimit} task${tasksCountBeforeLimit !== 1 ? 's' : ''}`;
