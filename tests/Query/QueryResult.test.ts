@@ -2,6 +2,7 @@ import { TaskGroups } from '../../src/Query/TaskGroups';
 import type { Grouper } from '../../src/Query/Grouper';
 import type { Task } from '../../src/Task';
 import { QueryResult } from '../../src/Query/QueryResult';
+import { fromLine } from '../TestHelpers';
 
 describe('QueryResult', () => {
     it('should create a QueryResult from TaskGroups', () => {
@@ -27,5 +28,13 @@ describe('QueryResult', () => {
         // Assert
         expect(result.searchErrorMessage).toEqual(message);
         expect(result.taskGroups.totalTasksCount()).toEqual(0);
+    });
+
+    it('should not pluralise "task" if only one match', () => {
+        const groupers: Grouper[] = [];
+        const tasks = [fromLine({ line: '- [ ] Do something' })];
+        const groups = new TaskGroups(groupers, tasks);
+        const queryResult = new QueryResult(groups);
+        expect(queryResult.totalTasksCountDisplayText()).toEqual('1 task');
     });
 });

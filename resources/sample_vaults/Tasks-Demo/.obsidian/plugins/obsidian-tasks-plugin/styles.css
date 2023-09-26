@@ -83,6 +83,11 @@
     white-space: nowrap;
 }
 
+/* Hide tags that Obsidian recognises, if `hide tags` instruction was used. */
+.tasks-layout-hide-tags .task-description a.tag {
+    display: none;
+}
+
 .tasks-setting-important {
     color: red;
     font-weight: bold;
