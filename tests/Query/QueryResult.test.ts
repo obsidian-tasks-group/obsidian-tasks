@@ -5,6 +5,12 @@ import { QueryResult } from '../../src/Query/QueryResult';
 import { fromLine } from '../TestHelpers';
 
 describe('QueryResult', () => {
+    function createUngroupedQueryResult(tasks: Task[]) {
+        const groupers: Grouper[] = [];
+        const groups = new TaskGroups(groupers, tasks);
+        return new QueryResult(groups);
+    }
+
     it('should create a QueryResult from TaskGroups', () => {
         // Arrange
         const groupers: Grouper[] = [];
@@ -31,10 +37,8 @@ describe('QueryResult', () => {
     });
 
     it('should not pluralise "task" if only one match', () => {
-        const groupers: Grouper[] = [];
         const tasks = [fromLine({ line: '- [ ] Do something' })];
-        const groups = new TaskGroups(groupers, tasks);
-        const queryResult = new QueryResult(groups);
+        const queryResult = createUngroupedQueryResult(tasks);
         expect(queryResult.totalTasksCountDisplayText()).toEqual('1 task');
     });
 });
