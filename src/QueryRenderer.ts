@@ -14,6 +14,7 @@ import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
+import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
 
 export class QueryRenderer {
@@ -188,7 +189,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         if (debug) {
             console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
         }
-        this.addTaskCount(content, totalTasksCount);
+        this.addTaskCount(content, queryResult);
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
@@ -388,10 +389,10 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
     }
 
-    private addTaskCount(content: HTMLDivElement, tasksCount: number) {
+    private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
         if (!this.query.layoutOptions.hideTaskCount) {
             content.createDiv({
-                text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
+                text: queryResult.totalTasksCountDisplayText(),
                 cls: 'tasks-count',
             });
         }
