@@ -41,5 +41,5 @@ This page documents all the available pieces of information in Queries that you 
 1. `query.file` is a `TasksFile` object.
 1. You can see the current [TasksFile source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksFile.ts), to explore its capabilities.
 1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
-1. `query.file.pathWithoutExtension` was added in Tasks X.Y.Z.
-1. `query.file.filenameWithoutExtension` was added in Tasks X.Y.Z.
+1. `query.file.pathWithoutExtension` was added in Tasks 4.8.0.
+1. `query.file.filenameWithoutExtension` was added in Tasks 4.8.0.
