@@ -15,7 +15,6 @@ import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
 import type { QueryResult } from './Query/QueryResult';
-import { tasksCountDisplayText } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
 
 export class QueryRenderer {
@@ -392,7 +391,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
         if (!this.query.layoutOptions.hideTaskCount) {
-            const tasksCountLabel = tasksCountDisplayText(queryResult);
+            const tasksCountLabel = queryResult.tasksCountDisplayText();
             content.createDiv({
                 text: tasksCountLabel,
                 cls: 'tasks-count',

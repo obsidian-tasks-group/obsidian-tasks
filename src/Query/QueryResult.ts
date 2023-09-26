@@ -30,6 +30,10 @@ export class QueryResult {
         result._searchErrorMessage = message;
         return result;
     }
+
+    public tasksCountDisplayText() {
+        return tasksCountDisplayText(this);
+    }
 }
 
 export function tasksCountDisplayText(queryResult: QueryResult): string {
