@@ -68,11 +68,16 @@ export default class TasksPlugin extends Plugin {
     }
 
     async loadSettings() {
-        const newSettings = await this.loadData();
+        let newSettings = await this.loadData();
         updateSettings(newSettings);
+
+        // Fetch the updated settings, in case the user has not yet edited the settings,
+        // in which case newSettings is currently empty.
+        newSettings = getSettings();
         GlobalFilter.getInstance().set(newSettings.globalFilter);
         GlobalFilter.getInstance().setRemoveGlobalFilter(newSettings.removeGlobalFilter);
         GlobalQuery.getInstance().set(newSettings.globalQuery);
+
         await this.loadTaskStatuses();
     }
 
