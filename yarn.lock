@@ -1045,6 +1045,11 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@lemons_dev/parsinom@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@lemons_dev/parsinom/-/parsinom-0.0.9.tgz#1f2a2dc2a8864d2cfe32eeea88e7df1426124768"
+  integrity sha512-CaNAawDs8Nlsxww6Pd0+FUVIwhvALdcq7epI0/ckIOA+WJDR6QgbyW1Tw/cwjoPUOPCLAZlmRfLBgMNGAUmLsA==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"

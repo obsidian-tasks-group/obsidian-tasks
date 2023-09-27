@@ -63,6 +63,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@lemons_dev/parsinom": "^0.0.9",
     "boon-js": "^2.0.4",
     "chrono-node": "2.3.9",
     "eventemitter2": "^6.4.5",
