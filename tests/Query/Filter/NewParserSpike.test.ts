@@ -24,16 +24,58 @@ describe('new parser', () => {
     }
     const andParser = P_UTILS.binaryLeft(P.string('AND'), parensAndWhiteSpace, andCombine);
 
-    it('should combine expressions with AND', () => {
-        expect(andParser.tryParse('(expression)').success).toEqual(true);
+    it('should recognise single expressions with no AND', () => {
+        const one = andParser.tryParse('(expression)');
+        expect(one.success).toEqual(true);
+        expect(one.value).toMatchInlineSnapshot('"expression"');
+    });
 
+    it('should recognise two expressions with AND', () => {
         const two = andParser.tryParse('(expression) AND (expression)');
         expect(two.success).toEqual(true);
-        console.log(two.value);
+        expect(two.value).toMatchInlineSnapshot(`
+            {
+              "left": "expression",
+              "operator": "AND",
+              "right": "expression",
+            }
+        `);
+    });
 
+    it('should recognise three expressions with AND', () => {
         const three = andParser.tryParse('(a) AND (b) AND (c)');
         expect(three.success).toEqual(true);
-        console.log(three.value);
+        expect(three.value).toMatchInlineSnapshot(`
+            {
+              "left": {
+                "left": "a",
+                "operator": "AND",
+                "right": "b",
+              },
+              "operator": "AND",
+              "right": "c",
+            }
+        `);
+    });
+
+    it('should recognise four expressions with AND', () => {
+        const four = andParser.tryParse('(a) AND (b) AND (c) AND (d)');
+        expect(four.success).toEqual(true);
+        expect(four.value).toMatchInlineSnapshot(`
+            {
+              "left": {
+                "left": {
+                  "left": "a",
+                  "operator": "AND",
+                  "right": "b",
+                },
+                "operator": "AND",
+                "right": "c",
+              },
+              "operator": "AND",
+              "right": "d",
+            }
+        `);
 
         // Think about writing a recursive function
         //  Left is an object so pass it in to AND function
