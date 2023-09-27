@@ -4,24 +4,27 @@ import { P_UTILS } from '@lemons_dev/parsinom/lib/ParserUtils';
 describe('new parser', () => {
     const expressionParser = P_UTILS.letters();
 
-    it('create a new variable', () => {
+    it('should create a new variable', () => {
         expect(expressionParser.tryParse('expression').success).toEqual(true);
         expect(expressionParser.tryParse('expression').value).toEqual('expression');
         const tryParse = expressionParser.tryParse('123');
         expect(tryParse.success).toEqual(false);
+    });
 
-        const parensAndWhiteSpace = expressionParser
-            .trim(P_UTILS.optionalWhitespace())
-            .wrap(P.string('('), P.string(')'));
+    const parensAndWhiteSpace = expressionParser.trim(P_UTILS.optionalWhitespace()).wrap(P.string('('), P.string(')'));
+
+    it('should parse an expression surrounded by parenthesis and optionally whitespace', () => {
         // Both parens and spaces removed
         expect(parensAndWhiteSpace.tryParse('(expression)').value).toEqual('expression');
         expect(parensAndWhiteSpace.tryParse('(   expression   )').value).toEqual('expression');
+    });
 
-        function andCombine(left: any, operator: string, right: string) {
-            return { left: left, right: right, operator: operator };
-        }
-        const andParser = P_UTILS.binaryLeft(P.string('AND'), parensAndWhiteSpace, andCombine);
+    function andCombine(left: any, operator: string, right: string) {
+        return { left: left, right: right, operator: operator };
+    }
+    const andParser = P_UTILS.binaryLeft(P.string('AND'), parensAndWhiteSpace, andCombine);
 
+    it('should combine expressions with AND', () => {
         expect(andParser.tryParse('(expression)').success).toEqual(true);
 
         const two = andParser.tryParse('(expression) AND (expression)');
@@ -31,6 +34,7 @@ describe('new parser', () => {
         const three = andParser.tryParse('(a) AND (b) AND (c)');
         expect(three.success).toEqual(true);
         console.log(three.value);
+
         // Think about writing a recursive function
         //  Left is an object so pass it in to AND function
         // Think of it as a tree structure
