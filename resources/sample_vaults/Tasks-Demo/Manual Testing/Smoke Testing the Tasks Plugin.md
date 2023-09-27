@@ -130,3 +130,21 @@ heading includes Rendering of Task Blocks
     7. **Check** that values you entered in the modal have been copied in to the list item above
     8. **Check** that the `#task` tag has been added to the start of the task
 - [ ] #task **check**: Checked all above steps for **creating a task via the modal** worked
+
+---
+
+## Check the plugin starts OK with no `data.json` settings file
+
+- Preparation
+  - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**
+  - Quit Obsidian
+  - Open the `obsidian-tasks-plugin` folder
+  - Delete `data.json`
+- Test
+  - Restart obsidian
+  - Go to Settings
+  - Check that `Tasks` is shown in the list of **Community plugins**
+  - View -> Toggle Developer Tools
+  - Open the console
+  - Confirm that there are no red messages mentioning Tasks
+- [ ] #task **check**: Checked that Tasks works correctly when **there is no `data.json` present**
