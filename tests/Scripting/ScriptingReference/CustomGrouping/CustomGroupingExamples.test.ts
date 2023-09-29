@@ -304,6 +304,10 @@ describe('statuses', () => {
                     'group by function task.status.type',
                     'Unlike "group by status.type", this sorts the status types in alphabetical order',
                 ],
+                [
+                    'group by function task.status.typeGroupText',
+                    'This sorts the status types in the same order as "group by status.type"',
+                ],
             ],
             SampleTasks.withAllStatuses(),
         ],
@@ -426,9 +430,9 @@ describe('other properties', () => {
                     "Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'",
                 ],
                 [
-                    "group by function '%%' + task.priorityNumber.toString() + '%%' + task.priorityName +' priority'",
+                    'group by function task.priorityNameGroupText',
                     "Group by the task's priority name",
-                    'The hidden priority number ensures that the headings are written from highest to lowest priority.',
+                    'The priority names are displayed from highest to lowest priority.',
                     "Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'",
                 ],
             ],
