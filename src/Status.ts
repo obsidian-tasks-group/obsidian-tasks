@@ -113,6 +113,7 @@ export class Status {
     /**
      * Returns the text to be used to represent the {@link StatusType} in group headings.
      *
+     * The status types are in the same order as given by 'group by status.type'.
      * This is provided as a convenience for use in custom grouping.
      */
     public get typeGroupText(): string {
