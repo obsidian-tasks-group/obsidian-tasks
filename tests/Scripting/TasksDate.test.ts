@@ -57,10 +57,10 @@ describe('TasksDate', () => {
     });
 
     it('should categorise dates with a name, relative to today', () => {
-        expect(overdue.category).toEqual('Overdue');
-        expect(today.category).toEqual('Today');
-        expect(future.category).toEqual('Future');
-        expect(undated.category).toEqual('Undated');
+        expect(overdue.categoryName).toEqual('Overdue');
+        expect(today.categoryName).toEqual('Today');
+        expect(future.categoryName).toEqual('Future');
+        expect(undated.categoryName).toEqual('Undated');
     });
 
     it('should categorise dates with a number, relative to today', () => {

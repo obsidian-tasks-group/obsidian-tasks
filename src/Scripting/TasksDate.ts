@@ -55,7 +55,7 @@ export class TasksDate {
         return this._date ? this._date!.toISOString(keepOffset) : '';
     }
 
-    public get category(): string {
+    public get categoryName(): string {
         const today = window.moment();
         const date = this.moment;
         if (!date) {
@@ -86,6 +86,6 @@ export class TasksDate {
     }
 
     public get categoryGroupText(): string {
-        return `%%${this.categoryNumber}%% ${this.category}`;
+        return `%%${this.categoryNumber}%% ${this.categoryName}`;
     }
 }
