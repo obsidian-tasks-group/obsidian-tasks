@@ -92,7 +92,7 @@ export class PriorityField extends Field {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            return priorityGroupText(task.priority);
+            return [priorityGroupText(task.priority)];
         };
     }
 }
