@@ -7,6 +7,13 @@ import { Field } from './Field';
 import { Filter } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
+function priorityGroupText(priority: Priority) {
+    const priorityName = PriorityTools.priorityNameUsingNormal(priority);
+    // Text inside the %%..%% comments is used to control the sort order.
+    // The comments are hidden by Obsidian when the headings are rendered.
+    return [`%%${priority}%%${priorityName} priority`];
+}
+
 export class PriorityField extends Field {
     // The trick in the following to manage whitespace with optional values
     // is to capture them in Nested Capture Groups, like this:
@@ -94,10 +101,7 @@ export class PriorityField extends Field {
     public grouper(): GrouperFunction {
         return (task: Task) => {
             const priority = task.priority;
-            const priorityName = PriorityTools.priorityNameUsingNormal(priority);
-            // Text inside the %%..%% comments is used to control the sort order.
-            // The comments are hidden by Obsidian when the headings are rendered.
-            return [`%%${priority}%%${priorityName} priority`];
+            return priorityGroupText(priority);
         };
     }
 }
