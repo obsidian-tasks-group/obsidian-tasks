@@ -756,3 +756,10 @@ export class Task {
         return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
     }
 }
+
+export function priorityGroupText(priority: Priority) {
+    const priorityName = PriorityTools.priorityNameUsingNormal(priority);
+    // Text inside the %%..%% comments is used to control the sort order.
+    // The comments are hidden by Obsidian when the headings are rendered.
+    return [`%%${priority}%%${priorityName} priority`];
+}
