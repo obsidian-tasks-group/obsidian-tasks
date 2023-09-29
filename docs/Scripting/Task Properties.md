@@ -29,6 +29,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.isDone` | `boolean` | `false` | `boolean` | `false` |
 | `task.status.name` | `string` | `'Todo'` | `string` | `'In Progress'` |
 | `task.status.type` | `string` | `'TODO'` | `string` | `'IN_PROGRESS'` |
+| `task.status.typeGroupText` | `string` | `'%%2%%TODO'` | `string` | `'%%1%%IN_PROGRESS'` |
 | `task.status.symbol` | `string` | `' '` | `string` | `'/'` |
 | `task.status.nextSymbol` | `string` | `'x'` | `string` | `'x'` |
 

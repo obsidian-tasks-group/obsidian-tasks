@@ -100,10 +100,14 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status names** is no
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status types** is now possible.
 
+`task.status.typeGroupText` was added in Tasks X.Y.Z.
+
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.statuses_task.status.type_docs.approved.md -->
 
 - ```group by function task.status.type```
   - Unlike "group by status.type", this sorts the status types in alphabetical order.
+- ```group by function task.status.typeGroupText```
+  - This sorts the status types in the same order as "group by status.type".
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
