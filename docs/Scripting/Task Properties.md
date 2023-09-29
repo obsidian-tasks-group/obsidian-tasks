@@ -52,11 +52,43 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
-1. The `TasksDate` formatting methods use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+1. Each of these values is a `TasksDate` object. The [[#Values in TasksDate Properties]] section below shows what can be done with them.
 1. Note that currently all stored dates have no time, or rather, their time is midnight at the start of the day, local time.
 1. For example uses of date properties, see [[Grouping#Due Date]].
 1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
+
+## Values in TasksDate Properties
+
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_date_fields.approved.md -->
+
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
+| `task.due.moment` | `Moment` | `moment('2023-07-04 00:00')` | `null` | `null` |
+| `task.due.formatAsDate()` | `string` | `'2023-07-04'` | `string` | `''` |
+| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.formatAsDateAndTime()` | `string` | `'2023-07-04 00:00'` | `string` | `''` |
+| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.format('dddd')` | `string` | `'Tuesday'` | `string` | `''` |
+| `task.due.toISOString()` | `string` | `'2023-07-04T00:00:00.000Z'` | `string` | `''` |
+| `task.due.toISOString(true)` | `string` | `'2023-07-04T00:00:00.000+00:00'` | `string` | `''` |
+| `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |
+| `task.due.category.number` | `number` | `3` | `number` | `4` |
+| `task.due.category.groupText` | `string` | `'%%3%% Future'` | `string` | `'%%4%% Undated'` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+1. These examples refer to `task.due`, but they can be used on any of the date properties show in the section [[#Values for Dates in Tasks]] above.
+1. The `TasksDate` formatting methods use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its implementation.
+1. `task.due.toISOString(true)` prevents UTC conversion - see the [moment documentation](https://momentjs.com/docs/#/displaying/as-iso-string/)
+1. `category` divides dates in to 4 named groups:
+    - `Overdue`
+    - `Today`
+    - `Future`
+    - `Undated`
+    - And they are numbered 1, 2, 3 and 4, in the order listed above.
+1. The `category` properties were added in Tasks X.Y.Z.
 
 ## Values for Other Task Properties
 
