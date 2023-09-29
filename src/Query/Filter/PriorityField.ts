@@ -93,10 +93,11 @@ export class PriorityField extends Field {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            const priorityName = PriorityTools.priorityNameUsingNormal(task.priority);
+            const priority = task.priority;
+            const priorityName = PriorityTools.priorityNameUsingNormal(priority);
             // Text inside the %%..%% comments is used to control the sort order.
             // The comments are hidden by Obsidian when the headings are rendered.
-            return [`%%${task.priority}%%${priorityName} priority`];
+            return [`%%${priority}%%${priorityName} priority`];
         };
     }
 }
