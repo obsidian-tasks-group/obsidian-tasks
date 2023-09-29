@@ -111,6 +111,15 @@ export class Status {
     }
 
     /**
+     * Returns the text to be used to represent the {@link StatusType} in group headings.
+     *
+     * This is provided as a convenience for use in custom grouping.
+     */
+    public get typeGroupText(): string {
+        return typeAsGroupingText(this.type);
+    }
+
+    /**
      * Creates an instance of Status. The registry will be added later in the case
      * of the default statuses.
      *
