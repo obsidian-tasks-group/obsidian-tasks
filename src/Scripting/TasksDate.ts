@@ -54,4 +54,49 @@ export class TasksDate {
     public toISOString(keepOffset?: boolean): string | null {
         return this._date ? this._date!.toISOString(keepOffset) : '';
     }
+
+    public get category(): string {
+        const today = window.moment();
+        const date = this.moment;
+        if (!date) {
+            return 'Undated';
+        }
+        if (date.isBefore(today, 'day')) {
+            return 'Overdue';
+        }
+        if (date.isSame(today, 'day')) {
+            return 'Today';
+        }
+        return 'Future';
+    }
+
+    public get categoryNumber(): number {
+        const today = window.moment();
+        const date = this.moment;
+        if (!date) {
+            return 4;
+        }
+        if (date.isBefore(today, 'day')) {
+            return 1;
+        }
+        if (date.isSame(today, 'day')) {
+            return 2;
+        }
+        return 3;
+    }
+
+    public get categoryGroupText(): string {
+        const today = window.moment();
+        const date = this.moment;
+        if (!date) {
+            return '%%4%% Undated';
+        }
+        if (date.isBefore(today, 'day')) {
+            return '%%1%% Overdue';
+        }
+        if (date.isSame(today, 'day')) {
+            return '%%2%% Today';
+        }
+        return '%%3%% Future';
+    }
 }

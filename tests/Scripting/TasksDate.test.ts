@@ -17,6 +17,11 @@ afterEach(() => {
     jest.useRealTimers();
 });
 
+const overdue = new TasksDate(moment('2023-06-10'));
+const today = new TasksDate(moment('2023-06-11'));
+const future = new TasksDate(moment('2023-06-12'));
+const undated = new TasksDate(null);
+
 describe('TasksDate', () => {
     it('should format valid dates', () => {
         const date = '2023-10-13';
@@ -49,5 +54,26 @@ describe('TasksDate', () => {
         expect(tasksDate.formatAsDate()).toEqual('Invalid date');
         expect(tasksDate.formatAsDateAndTime()).toEqual('Invalid date');
         expect(tasksDate.toISOString()).toBeNull();
+    });
+
+    it('should categorise dates with a name, relative to today', () => {
+        expect(overdue.category).toEqual('Overdue');
+        expect(today.category).toEqual('Today');
+        expect(future.category).toEqual('Future');
+        expect(undated.category).toEqual('Undated');
+    });
+
+    it('should categorise dates with a number, relative to today', () => {
+        expect(overdue.categoryNumber).toEqual(1);
+        expect(today.categoryNumber).toEqual(2);
+        expect(future.categoryNumber).toEqual(3);
+        expect(undated.categoryNumber).toEqual(4);
+    });
+
+    it('should categorise dates for grouping, relative to today', () => {
+        expect(overdue.categoryGroupText).toEqual('%%1%% Overdue');
+        expect(today.categoryGroupText).toEqual('%%2%% Today');
+        expect(future.categoryGroupText).toEqual('%%3%% Future');
+        expect(undated.categoryGroupText).toEqual('%%4%% Undated');
     });
 });
