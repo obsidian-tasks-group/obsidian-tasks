@@ -100,8 +100,7 @@ export class PriorityField extends Field {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            const priority = task.priority;
-            return priorityGroupText(priority);
+            return priorityGroupText(task.priority);
         };
     }
 }
