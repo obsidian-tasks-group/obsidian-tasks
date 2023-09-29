@@ -56,27 +56,6 @@ describe('TasksDate', () => {
         expect(tasksDate.toISOString()).toBeNull();
     });
 
-    it('should categorise dates with a name, relative to today', () => {
-        expect(overdue.categoryName).toEqual('Overdue');
-        expect(today.categoryName).toEqual('Today');
-        expect(future.categoryName).toEqual('Future');
-        expect(undated.categoryName).toEqual('Undated');
-    });
-
-    it('should categorise dates with a number, relative to today', () => {
-        expect(overdue.categoryNumber).toEqual(1);
-        expect(today.categoryNumber).toEqual(2);
-        expect(future.categoryNumber).toEqual(3);
-        expect(undated.categoryNumber).toEqual(4);
-    });
-
-    it('should categorise dates for grouping, relative to today', () => {
-        expect(overdue.categoryGroupText).toEqual('%%1%% Overdue');
-        expect(today.categoryGroupText).toEqual('%%2%% Today');
-        expect(future.categoryGroupText).toEqual('%%3%% Future');
-        expect(undated.categoryGroupText).toEqual('%%4%% Undated');
-    });
-
     it('should categorise dates for grouping, relative to today - with Category object', () => {
         expect(overdue.category.groupText).toEqual('%%1%% Overdue');
         expect(today.category.groupText).toEqual('%%2%% Today');
