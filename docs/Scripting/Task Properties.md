@@ -35,6 +35,8 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+1. `task.status.typeGroupText` (added in Tasks X.Y.Z) is a convenient way to sort status types in to a natural order in custom grouping functions.
+
 ## Values for Dates in Tasks
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_dates.approved.md -->
@@ -66,6 +68,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.descriptionWithoutTags` | `string` | `'Do exercises'` | `string` | `'minimal task'` |
 | `task.priorityNumber` | `number` | `2` | `number` | `3` |
 | `task.priorityName` | `string` | `'Medium'` | `string` | `'Normal'` |
+| `task.priorityNameGroupText` | `string` | `'%%2%%Medium priority'` | `string` | `'%%3%%Normal priority'` |
 | `task.urgency` | `number` | `3.3000000000000007` | `number` | `1.9500000000000002` |
 | `task.isRecurring` | `boolean` | `true` | `boolean` | `false` |
 | `task.recurrenceRule` | `string` | `'every day when done'` | `string` | `''` |
@@ -76,6 +79,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. `task.description` has spaces at the start and end stripped off.
 1. `task.description` includes any tags.
+1. `task.priorityNameGroupText` (added in Tasks X.Y.Z) is a convenient way to sort priority names in to a natural order in custom grouping functions.
 1. `task.isRecurring` is:
     - `true` if the Task has a **valid** recurrence rule,
     - `false` if:
