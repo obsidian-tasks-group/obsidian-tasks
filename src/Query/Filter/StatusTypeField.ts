@@ -113,30 +113,6 @@ export class StatusTypeField extends Field {
     }
 
     private static groupName(task: Task) {
-        let prefix: string;
-        // Add a numeric prefix to sort in to a meaningful order for users
-        switch (task.status.type) {
-            case StatusType.IN_PROGRESS:
-                prefix = '1';
-                break;
-            case StatusType.TODO:
-                prefix = '2';
-                break;
-            case StatusType.DONE:
-                prefix = '3';
-                break;
-            case StatusType.CANCELLED:
-                prefix = '4';
-                break;
-            case StatusType.NON_TASK:
-                prefix = '5';
-                break;
-            case StatusType.EMPTY:
-                prefix = '6';
-                break;
-        }
-        // Text inside the %%..%% comments is used to control the sorting in both sorting of tasks and naming of groups.
-        // The comments are hidden by Obsidian when the headings are rendered.
-        return `%%${prefix}%%${task.status.type}`;
+        return task.status.typeGroupText;
     }
 }

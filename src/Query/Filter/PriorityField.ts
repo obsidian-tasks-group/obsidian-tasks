@@ -2,7 +2,6 @@ import { Priority, Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import type { GrouperFunction } from '../Grouper';
-import { PriorityTools } from '../../lib/PriorityTools';
 import { Field } from './Field';
 import { Filter } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -93,10 +92,7 @@ export class PriorityField extends Field {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            const priorityName = PriorityTools.priorityNameUsingNormal(task.priority);
-            // Text inside the %%..%% comments is used to control the sort order.
-            // The comments are hidden by Obsidian when the headings are rendered.
-            return [`%%${task.priority}%%${priorityName} priority`];
+            return [task.priorityNameGroupText];
         };
     }
 }

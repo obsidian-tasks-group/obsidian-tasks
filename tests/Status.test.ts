@@ -123,6 +123,11 @@ describe('Status', () => {
         expect(status.type).toEqual(StatusType.NON_TASK);
         expect(status.availableAsCommand).toEqual(false);
     });
+
+    it('should provide text with sorting comments for convenience of custom grouping', () => {
+        const status = Status.makeCancelled();
+        expect(status.typeGroupText).toEqual('%%4%%CANCELLED');
+    });
 });
 
 describe('identicalTo', () => {

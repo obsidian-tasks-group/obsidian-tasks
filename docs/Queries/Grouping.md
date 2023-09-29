@@ -100,10 +100,14 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status names** is no
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status types** is now possible.
 
+`task.status.typeGroupText` was added in Tasks X.Y.Z.
+
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.statuses_task.status.type_docs.approved.md -->
 
 - ```group by function task.status.type```
   - Unlike "group by status.type", this sorts the status types in alphabetical order.
+- ```group by function task.status.typeGroupText```
+  - This sorts the status types in the same order as "group by status.type".
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -366,6 +370,8 @@ The value `task.descriptionWithoutTags` returns a copy of the description with a
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by priority name and number** is now possible.
 
+`task.priorityNameGroupText` was added in Tasks X.Y.Z.
+
 Using the priority name:
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.priorityName_docs.approved.md -->
@@ -374,9 +380,9 @@ Using the priority name:
   - Group by the task's priority name.
   - The priority names are displayed in alphabetical order.
   - Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'.
-- ```group by function '%%' + task.priorityNumber.toString() + '%%' + task.priorityName +' priority'```
+- ```group by function task.priorityNameGroupText```
   - Group by the task's priority name.
-  - The hidden priority number ensures that the headings are written from highest to lowest priority.
+  - The priority names are displayed from highest to lowest priority.
   - Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
