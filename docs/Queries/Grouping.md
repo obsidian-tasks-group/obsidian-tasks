@@ -158,6 +158,10 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
 
 - ```group by function task.due.format("YYYY-MM-DD dddd")```
   - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
+- ```group by function task.due.category.groupText```
+  - Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
+  - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
+  - The values `task.due.category.name` and `task.due.category.number` are also available.
 - ```group by function task.due.formatAsDate()```
   - Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date.
 - ```group by function task.due.formatAsDateAndTime()```
@@ -201,6 +205,7 @@ DON'T PANIC! For users who are comfortable with JavaScript, these more complicat
   - The key technique is to say that if the day is Sunday (`0`), then force it to be displayed as date number `8`, so it comes after the other days of the week.
   - Note that because we use variables to avoid repetition of values, we need to add `return`
 - ```group by function const date = task.due.moment; return (!date) ? '%%4%% Undated' : date.isBefore(moment(), 'day') ? '%%1%% Overdue' : date.isSame(moment(), 'day') ? '%%2%% Today' : '%%3%% Future'```
+  - This gives exactly the same output as `group by function task.due.category.groupText`, and is shown here in case you want to customise the behaviour in some way.
   - Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
   - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
   - A limitation of Tasks expressions is that they each need to fit on a single line, so this uses nested ternary operators, making it powerful but very hard to read.
