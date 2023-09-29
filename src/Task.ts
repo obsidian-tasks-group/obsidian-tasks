@@ -761,5 +761,5 @@ export function priorityGroupText(priority: Priority) {
     const priorityName = PriorityTools.priorityNameUsingNormal(priority);
     // Text inside the %%..%% comments is used to control the sort order.
     // The comments are hidden by Obsidian when the headings are rendered.
-    return [`%%${priority}%%${priorityName} priority`];
+    return `%%${priority}%%${priorityName} priority`;
 }
