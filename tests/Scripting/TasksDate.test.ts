@@ -62,4 +62,11 @@ describe('TasksDate', () => {
         expect(future.category.groupText).toEqual('%%3%% Future');
         expect(undated.category.groupText).toEqual('%%4%% Undated');
     });
+
+    it('should categorise dates for grouping, relative to today - with Category object', () => {
+        expect(overdue.fromNow).toEqual('%%1%% %%20230609%%2 days ago');
+        expect(today.fromNow).toEqual('%%1%% %%20230611%%20 hours ago');
+        expect(future.fromNow).toEqual('%%3%% %%20230612%%in 4 hours');
+        expect(undated.fromNow).toEqual('');
+    });
 });

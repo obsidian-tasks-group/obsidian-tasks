@@ -83,4 +83,21 @@ export class TasksDate {
         }
         return new Category('Future', 3);
     }
+
+    // This will eventually return a Category object
+    public get fromNow(): string {
+        const date = this.moment;
+        if (!date) {
+            return '';
+        }
+        const now = window.moment();
+        const words = date.fromNow(true).split(' ');
+        // @ts-expect-error: TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+        const multiplier = isNaN(words[0]) ? 1 : words[0];
+        const earlier = date.isSameOrBefore(now, 'day');
+        // @ts-expect-error: TS2769: No overload matches this call.
+        const groupDate = earlier ? now.subtract(multiplier, words[1]) : now.add(multiplier, words[1]);
+        const sorter = earlier ? 1 : 3;
+        return '%%' + sorter + '%% %%' + groupDate.format('YYYYMMDD') + '%%' + date.fromNow();
+    }
 }
