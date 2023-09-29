@@ -2,6 +2,10 @@
 
 - ```group by function task.due.format("YYYY-MM-DD dddd")```
     - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
+- ```group by function task.due.category.groupText```
+    - Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
+    - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
+    - The values `task.due.category.name` and `task.due.category.number` are also available.
 - ```group by function task.due.formatAsDate()```
     - Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date.
 - ```group by function task.due.formatAsDateAndTime()```
