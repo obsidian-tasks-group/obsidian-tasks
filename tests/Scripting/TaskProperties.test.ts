@@ -48,6 +48,7 @@ describe('task', () => {
             'task.isDone',
             'task.status.name',
             'task.status.type',
+            'task.status.typeGroupText',
             'task.status.symbol',
             'task.status.nextSymbol',
         ]);
