@@ -1,4 +1,4 @@
-import { Priority, Task, priorityGroupText } from '../../Task';
+import { Priority, Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import type { GrouperFunction } from '../Grouper';
@@ -92,7 +92,7 @@ export class PriorityField extends Field {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            return [priorityGroupText(task.priority)];
+            return [task.priorityGroupText];
         };
     }
 }
