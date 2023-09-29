@@ -98,6 +98,6 @@ export class TasksDate {
         // @ts-expect-error: TS2769: No overload matches this call.
         const groupDate = earlier ? now.subtract(multiplier, words[1]) : now.add(multiplier, words[1]);
         const sorter = earlier ? 1 : 3;
-        return '%%' + sorter + '%% %%' + groupDate.format('YYYYMMDD') + '%%' + date.fromNow();
+        return '%%' + sorter + '%% %%' + groupDate.format('YYYYMMDD') + '%% ' + date.fromNow();
     }
 }
