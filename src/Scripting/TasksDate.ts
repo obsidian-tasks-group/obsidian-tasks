@@ -86,17 +86,6 @@ export class TasksDate {
     }
 
     public get categoryGroupText(): string {
-        const today = window.moment();
-        const date = this.moment;
-        if (!date) {
-            return '%%4%% Undated';
-        }
-        if (date.isBefore(today, 'day')) {
-            return '%%1%% Overdue';
-        }
-        if (date.isSame(today, 'day')) {
-            return '%%2%% Today';
-        }
-        return '%%3%% Future';
+        return `%%${this.categoryNumber}%% ${this.category}`;
     }
 }
