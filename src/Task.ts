@@ -480,7 +480,11 @@ export class Task {
      * {@link Priority.Highest} to {@link Priority.Lowest}.
      */
     public get priorityGroupText(): string {
-        return priorityGroupText(this.priority);
+        const priority = this.priority;
+        const priorityName = PriorityTools.priorityNameUsingNormal(priority);
+        // Text inside the %%..%% comments is used to control the sort order.
+        // The comments are hidden by Obsidian when the headings are rendered.
+        return `%%${priority}%%${priorityName} priority`;
     }
 
     /**
@@ -765,11 +769,4 @@ export class Task {
     public static extractHashtags(description: string): string[] {
         return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
     }
-}
-
-export function priorityGroupText(priority: Priority) {
-    const priorityName = PriorityTools.priorityNameUsingNormal(priority);
-    // Text inside the %%..%% comments is used to control the sort order.
-    // The comments are hidden by Obsidian when the headings are rendered.
-    return `%%${priority}%%${priorityName} priority`;
 }
