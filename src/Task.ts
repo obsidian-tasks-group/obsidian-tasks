@@ -480,11 +480,10 @@ export class Task {
      * {@link Priority.Highest} to {@link Priority.Lowest}.
      */
     public get priorityGroupText(): string {
-        const priority = this.priority;
-        const priorityName = PriorityTools.priorityNameUsingNormal(priority);
+        const priorityName = PriorityTools.priorityNameUsingNormal(this.priority);
         // Text inside the %%..%% comments is used to control the sort order.
         // The comments are hidden by Obsidian when the headings are rendered.
-        return `%%${priority}%%${priorityName} priority`;
+        return `%%${this.priority}%%${priorityName} priority`;
     }
 
     /**
