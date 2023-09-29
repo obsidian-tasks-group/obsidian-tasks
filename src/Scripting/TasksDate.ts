@@ -104,6 +104,17 @@ export class TasksDate {
     }
 
     public get category(): Category {
-        return new Category(this.categoryName, this.categoryNumber);
+        const today = window.moment();
+        const date = this.moment;
+        if (!date) {
+            return new Category('Undated', 4);
+        }
+        if (date.isBefore(today, 'day')) {
+            return new Category('Overdue', 1);
+        }
+        if (date.isSame(today, 'day')) {
+            return new Category('Today', 2);
+        }
+        return new Category('Future', 3);
     }
 }
