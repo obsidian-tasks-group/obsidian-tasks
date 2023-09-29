@@ -71,6 +71,7 @@ describe('task', () => {
             'task.descriptionWithoutTags',
             'task.priorityNumber',
             'task.priorityName',
+            'task.priorityNameGroupText',
             'task.urgency',
             'task.isRecurring',
             'task.recurrenceRule',
