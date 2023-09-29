@@ -1,6 +1,20 @@
 import type { Moment } from 'moment';
 import { TaskRegularExpressions } from '../Task';
 
+class Category {
+    public readonly name: string;
+    public readonly number: number;
+
+    constructor(name: string, number: number) {
+        this.name = name;
+        this.number = number;
+    }
+
+    public get groupText(): string {
+        return `%%${this.number}%% ${this.name}`;
+    }
+}
+
 /**
  * TasksDate encapsulates a date, for simplifying the JavaScript expressions users need to
  * write in 'group by function' lines.
@@ -87,5 +101,9 @@ export class TasksDate {
 
     public get categoryGroupText(): string {
         return `%%${this.categoryNumber}%% ${this.categoryName}`;
+    }
+
+    public get category(): Category {
+        return new Category(this.categoryName, this.categoryNumber);
     }
 }
