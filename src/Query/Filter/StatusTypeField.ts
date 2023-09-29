@@ -3,7 +3,6 @@ import type { GrouperFunction } from '../Grouper';
 import { StatusType } from '../../StatusConfiguration';
 import type { Comparator } from '../Sorter';
 import { Explanation } from '../Explain/Explanation';
-import { typeAsGroupingText } from '../../Status';
 import { Field } from './Field';
 import { Filter } from './Filter';
 import type { FilterFunction } from './Filter';
@@ -114,7 +113,6 @@ export class StatusTypeField extends Field {
     }
 
     private static groupName(task: Task) {
-        const type = task.status.type;
-        return typeAsGroupingText(type);
+        return task.status.typeGroupText;
     }
 }
