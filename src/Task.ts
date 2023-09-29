@@ -474,6 +474,16 @@ export class Task {
     }
 
     /**
+     * Returns the text to be used to represent the {@link priority} in group headings.
+     *
+     * Hidden text is used to sort the priorities in decreasing order, from
+     * {@link Priority.Highest} to {@link Priority.Lowest}.
+     */
+    public get priorityGroupText(): string {
+        return priorityGroupText(this.priority);
+    }
+
+    /**
      * Return a copy of the description, with any tags removed.
      *
      * Note that this removes tags recognised by Tasks (including removing #123, for example),
