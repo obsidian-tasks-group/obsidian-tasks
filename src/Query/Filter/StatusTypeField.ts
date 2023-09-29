@@ -8,16 +8,7 @@ import { Filter } from './Filter';
 import type { FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
-function typeAsGroupingText(
-    type:
-        | StatusType
-        | StatusType.IN_PROGRESS
-        | StatusType.TODO
-        | StatusType.DONE
-        | StatusType.CANCELLED
-        | StatusType.NON_TASK
-        | StatusType.EMPTY,
-) {
+function typeAsGroupingText(type: StatusType) {
     let prefix: string;
     // Add a numeric prefix to sort in to a meaningful order for users
     switch (type) {
