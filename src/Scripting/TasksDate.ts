@@ -91,9 +91,18 @@ export class TasksDate {
             return '';
         }
         const now = window.moment();
+
+        // https://momentjs.com/docs/#/displaying/fromnow/
+        // 'If you pass true, you can get the value without the suffix.'
         const words = date.fromNow(true).split(' ');
+
+        let multiplier: number | string;
         // @ts-expect-error: TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-        const multiplier = isNaN(words[0]) ? 1 : words[0];
+        if (isNaN(words[0])) {
+            multiplier = 1; // examples: 'a year', 'a month', 'a day'
+        } else {
+            multiplier = words[0]; // examples: '10 years', '6 months', '11 hours'
+        }
         const earlier = date.isSameOrBefore(now, 'day');
         // @ts-expect-error: TS2769: No overload matches this call.
         const groupDate = earlier ? now.subtract(multiplier, words[1]) : now.add(multiplier, words[1]);
