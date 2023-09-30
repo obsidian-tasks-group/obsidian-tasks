@@ -97,11 +97,11 @@ export class TasksDate {
         const words = date.fromNow(true).split(' ');
 
         let multiplier: number;
-        const firstWord = words[0];
-        if (isNaN(Number(firstWord))) {
+        const word0AsNumber = Number(words[0]);
+        if (isNaN(word0AsNumber)) {
             multiplier = 1; // examples: 'a year', 'a month', 'a day'
         } else {
-            multiplier = Number(firstWord); // examples: '10 years', '6 months', '11 hours'
+            multiplier = word0AsNumber; // examples: '10 years', '6 months', '11 hours'
         }
         const earlier = date.isSameOrBefore(now, 'day');
         // @ts-expect-error: TS2769: No overload matches this call.
