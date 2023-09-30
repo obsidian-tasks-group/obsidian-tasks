@@ -104,8 +104,8 @@ export class TasksDate {
             multiplier = word0AsNumber; // examples: '10 years', '6 months', '11 hours'
         }
         const earlier = date.isSameOrBefore(now, 'day');
-        const word1 = words[1] as DurationInputArg2;
-        const groupDate = earlier ? now.subtract(multiplier, word1) : now.add(multiplier, word1);
+        const unit = words[1] as DurationInputArg2; // day, days, weeks, month, year
+        const groupDate = earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
         const sorter = earlier ? 1 : 3;
         return '%%' + sorter + '%% %%' + groupDate.format('YYYYMMDD') + '%% ' + date.fromNow();
     }
