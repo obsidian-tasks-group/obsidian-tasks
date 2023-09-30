@@ -107,6 +107,6 @@ export class TasksDate {
         const unit = words[1] as DurationInputArg2; // day, days, weeks, month, year
         const groupDate = earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
         const sorter = earlier ? 1 : 3;
-        return '%%' + sorter + '%% %%' + groupDate.format('YYYYMMDD') + '%% ' + date.fromNow();
+        return '%%' + sorter + groupDate.format('YYYYMMDD') + '%% ' + date.fromNow();
     }
 }
