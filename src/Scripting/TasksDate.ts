@@ -1,4 +1,4 @@
-import type { Moment } from 'moment';
+import type { DurationInputArg2, Moment } from 'moment';
 import { TaskRegularExpressions } from '../Task';
 
 class Category {
@@ -104,8 +104,7 @@ export class TasksDate {
             multiplier = word0AsNumber; // examples: '10 years', '6 months', '11 hours'
         }
         const earlier = date.isSameOrBefore(now, 'day');
-        const word1 = words[1];
-        // @ts-expect-error: TS2769: No overload matches this call.
+        const word1 = words[1] as DurationInputArg2;
         const groupDate = earlier ? now.subtract(multiplier, word1) : now.add(multiplier, word1);
         const sorter = earlier ? 1 : 3;
         return '%%' + sorter + '%% %%' + groupDate.format('YYYYMMDD') + '%% ' + date.fromNow();
