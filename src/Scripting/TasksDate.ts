@@ -98,8 +98,7 @@ export class TasksDate {
 
         let multiplier: number | string;
         const firstWord = words[0];
-        // @ts-expect-error: TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-        if (isNaN(firstWord)) {
+        if (isNaN(Number(firstWord))) {
             multiplier = 1; // examples: 'a year', 'a month', 'a day'
         } else {
             multiplier = firstWord; // examples: '10 years', '6 months', '11 hours'
