@@ -205,14 +205,14 @@ describe('TasksDate', () => {
         'should categorise dates for grouping, relative to today: on "%s" - expected "%s"',
         (date: string, expectedResult: string) => {
             const tasksDate = new TasksDate(moment(date));
-            expect(tasksDate.fromNow).toEqual(expectedResult);
+            expect(tasksDate.fromNow.groupText).toEqual(expectedResult);
         },
     );
 
     it('should categorise edge-case dates for grouping, relative to today', () => {
-        expect(new TasksDate(null).fromNow).toEqual('');
+        expect(new TasksDate(null).fromNow.groupText).toEqual('');
         // Invalid dates always get sorted next to current date
-        expect(new TasksDate(moment('1999-02-31')).fromNow).toEqual('%%320230611%% Invalid date');
-        expect(new TasksDate(moment('2023-02-31')).fromNow).toEqual('%%320230611%% Invalid date');
+        expect(new TasksDate(moment('1999-02-31')).fromNow.groupText).toEqual('%%320230611%% Invalid date');
+        expect(new TasksDate(moment('2023-02-31')).fromNow.groupText).toEqual('%%320230611%% Invalid date');
     });
 });

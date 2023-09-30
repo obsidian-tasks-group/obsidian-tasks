@@ -5,13 +5,18 @@ class Category {
     public readonly name: string;
     public readonly number: number;
 
+    // Pass in an empty name if you want groupText to be ''
     constructor(name: string, number: number) {
         this.name = name;
         this.number = number;
     }
 
     public get groupText(): string {
-        return `%%${this.number}%% ${this.name}`;
+        if (this.name !== '') {
+            return `%%${this.number}%% ${this.name}`;
+        } else {
+            return '';
+        }
     }
 }
 
@@ -84,11 +89,10 @@ export class TasksDate {
         return new Category('Future', 3);
     }
 
-    // This will eventually return a Category object
-    public get fromNow(): string {
+    public get fromNow(): Category {
         const date = this.moment;
         if (!date) {
-            return '';
+            return new Category('', 0);
         }
         const now = window.moment();
 
@@ -107,6 +111,6 @@ export class TasksDate {
         const unit = words[1] as DurationInputArg2; // day, days, weeks, month, year
         const groupDate = earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
         const sorter = earlier ? 1 : 3;
-        return '%%' + sorter + groupDate.format('YYYYMMDD') + '%% ' + date.fromNow();
+        return new Category(date.fromNow(), Number(sorter + groupDate.format('YYYYMMDD')));
     }
 }
