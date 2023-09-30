@@ -97,11 +97,12 @@ export class TasksDate {
         const words = date.fromNow(true).split(' ');
 
         let multiplier: number | string;
+        const firstWord = words[0];
         // @ts-expect-error: TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-        if (isNaN(words[0])) {
+        if (isNaN(firstWord)) {
             multiplier = 1; // examples: 'a year', 'a month', 'a day'
         } else {
-            multiplier = words[0]; // examples: '10 years', '6 months', '11 hours'
+            multiplier = firstWord; // examples: '10 years', '6 months', '11 hours'
         }
         const earlier = date.isSameOrBefore(now, 'day');
         // @ts-expect-error: TS2769: No overload matches this call.
