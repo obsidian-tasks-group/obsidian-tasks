@@ -200,4 +200,11 @@ describe('TasksDate', () => {
             expect(tasksDate.fromNow).toEqual(expectedResult);
         },
     );
+
+    it('should categorise edge-case dates for grouping, relative to today', () => {
+        expect(new TasksDate(null).fromNow).toEqual('');
+        // Invalid dates always get sorted next to current date
+        expect(new TasksDate(moment('1999-02-31')).fromNow).toEqual('%%3%% %%20230611%% Invalid date');
+        expect(new TasksDate(moment('2023-02-31')).fromNow).toEqual('%%3%% %%20230611%% Invalid date');
+    });
 });
