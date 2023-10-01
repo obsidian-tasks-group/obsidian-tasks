@@ -7,17 +7,17 @@ import { TaskRegularExpressions } from '../Task';
 // TODO Add JSdoc
 class Category {
     public readonly name: string;
-    public readonly number: number; // TODO Rename to order
+    public readonly sortOrder: number;
 
     // Pass in an empty name if you want groupText to be ''
     constructor(name: string, number: number) {
         this.name = name;
-        this.number = number;
+        this.sortOrder = number;
     }
 
     public get groupText(): string {
         if (this.name !== '') {
-            return `%%${this.number}%% ${this.name}`;
+            return `%%${this.sortOrder}%% ${this.name}`;
         } else {
             return '';
         }

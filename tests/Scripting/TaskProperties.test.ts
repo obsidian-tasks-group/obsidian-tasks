@@ -77,10 +77,10 @@ describe('task', () => {
             'task.due.toISOString()',
             'task.due.toISOString(true)', // https://momentjs.com/docs/#/displaying/as-iso-string/ - true prevents UTC conversion
             'task.due.category.name',
-            'task.due.category.number',
+            'task.due.category.sortOrder',
             'task.due.category.groupText',
             'task.due.fromNow.name',
-            'task.due.fromNow.number',
+            'task.due.fromNow.sortOrder',
             'task.due.fromNow.groupText',
         ]);
     });
