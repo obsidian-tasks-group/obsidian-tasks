@@ -2,16 +2,6 @@ Results of custom groupers
 
 
 
-group by function task.due.format("YYYY-MM-DD dddd")
-Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
-=>
-2023-05-30 Tuesday
-2023-05-31 Wednesday
-2023-06-01 Thursday
-Invalid date
-====================================================================================
-
-
 group by function task.due.category.groupText
 Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
 Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
@@ -32,6 +22,16 @@ It users an empty string (so no heading) if there is no due date.
 %%120230531%% 20 hours ago
 %%320230531%% Invalid date
 %%320230601%% in 4 hours
+====================================================================================
+
+
+group by function task.due.format("YYYY-MM-DD dddd")
+Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
+=>
+2023-05-30 Tuesday
+2023-05-31 Wednesday
+2023-06-01 Thursday
+Invalid date
 ====================================================================================
 
 
