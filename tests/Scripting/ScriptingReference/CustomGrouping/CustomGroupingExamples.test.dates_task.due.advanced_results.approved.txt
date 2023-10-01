@@ -2,18 +2,6 @@ Results of custom groupers
 
 
 
-group by function task.due.moment?.fromNow() || ""
-Group by the time from now, for example "8 days ago".
-Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value.
-Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
-=>
-2 days ago
-20 hours ago
-in 4 hours
-Invalid date
-====================================================================================
-
-
 group by function task.due.format("dddd")
 Group by day of the week (Monday, Tuesday, etc).
 The day names are sorted alphabetically.
@@ -53,6 +41,7 @@ Undated
 
 
 group by function const date = task.due.moment; return (!date) ? '%%4%% Undated' : date.isBefore(moment(), 'day') ? '%%1%% Overdue' : date.isSame(moment(), 'day') ? '%%2%% Today' : '%%3%% Future'
+This gives exactly the same output as `group by function task.due.category.groupText`, and is shown here in case you want to customise the behaviour in some way.
 Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
 Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 A limitation of Tasks expressions is that they each need to fit on a single line, so this uses nested ternary operators, making it powerful but very hard to read.
