@@ -101,7 +101,12 @@ export class TasksDate {
     private fromNowOrder(date: moment.Moment) {
         const now = window.moment();
         const earlier = date.isSameOrBefore(now, 'day');
+        const groupDate = this.fromNowStartDateOfGroup(date, earlier, now);
+        const sorter = earlier ? 1 : 3;
+        return Number(sorter + groupDate.format('YYYYMMDD'));
+    }
 
+    private fromNowStartDateOfGroup(date: moment.Moment, earlier: boolean, now: any) {
         // https://momentjs.com/docs/#/displaying/fromnow/
         // 'If you pass true, you can get the value without the suffix.'
         const words = date.fromNow(true).split(' ');
@@ -114,8 +119,6 @@ export class TasksDate {
             multiplier = word0AsNumber; // examples: '10 years', '6 months', '11 hours'
         }
         const unit = words[1] as DurationInputArg2; // day, days, weeks, month, year
-        const groupDate = earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
-        const sorter = earlier ? 1 : 3;
-        return Number(sorter + groupDate.format('YYYYMMDD'));
+        return earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
     }
 }
