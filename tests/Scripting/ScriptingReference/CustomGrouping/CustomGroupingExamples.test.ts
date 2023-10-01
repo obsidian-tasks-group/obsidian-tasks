@@ -66,6 +66,11 @@ describe('dates', () => {
                     'The values `task.due.category.name` and `task.due.category.number` are also available.',
                 ],
                 [
+                    'group by function task.due.fromNow.groupText',
+                    'Group by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example `8 days ago`, `in 11 hours`.',
+                    'It users an empty string (so no heading) if there is no due date.',
+                ],
+                [
                     'group by function task.due.formatAsDate()',
                     'Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date',
                 ],
@@ -98,12 +103,6 @@ describe('dates', () => {
         [
             'task.due.advanced',
             [
-                [
-                    'group by function task.due.moment?.fromNow() || ""',
-                    'Group by the time from now, for example "8 days ago".',
-                    'Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value.',
-                    'Whilst interesting, the alphabetical sort order makes the headings a little hard to read',
-                ],
                 [
                     'group by function task.due.format("dddd")',
                     'Group by day of the week (Monday, Tuesday, etc).',

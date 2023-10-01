@@ -2,18 +2,6 @@ Results of custom groupers
 
 
 
-group by function task.due.moment?.fromNow() || ""
-Group by the time from now, for example "8 days ago".
-Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value.
-Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
-=>
-2 days ago
-20 hours ago
-in 4 hours
-Invalid date
-====================================================================================
-
-
 group by function task.due.format("dddd")
 Group by day of the week (Monday, Tuesday, etc).
 The day names are sorted alphabetically.

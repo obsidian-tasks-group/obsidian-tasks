@@ -79,6 +79,9 @@ describe('task', () => {
             'task.due.category.name',
             'task.due.category.number',
             'task.due.category.groupText',
+            'task.due.fromNow.name',
+            'task.due.fromNow.number',
+            'task.due.fromNow.groupText',
         ]);
     });
 

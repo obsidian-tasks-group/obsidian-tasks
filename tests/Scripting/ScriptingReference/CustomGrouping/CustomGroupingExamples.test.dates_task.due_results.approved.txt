@@ -24,6 +24,17 @@ The values `task.due.category.name` and `task.due.category.number` are also avai
 ====================================================================================
 
 
+group by function task.due.fromNow.groupText
+Group by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example `8 days ago`, `in 11 hours`.
+It users an empty string (so no heading) if there is no due date.
+=>
+%%120230529%% 2 days ago
+%%120230531%% 20 hours ago
+%%320230531%% Invalid date
+%%320230601%% in 4 hours
+====================================================================================
+
+
 group by function task.due.formatAsDate()
 Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date.
 =>
