@@ -1,9 +1,13 @@
 import type { DurationInputArg2, Moment } from 'moment';
 import { TaskRegularExpressions } from '../Task';
 
+// TODO Rename to PropertyCategory?
+// TODO Move to separate file
+// TODO Add tests
+// TODO Add JSdoc
 class Category {
     public readonly name: string;
-    public readonly number: number;
+    public readonly number: number; // TODO Rename to order
 
     // Pass in an empty name if you want groupText to be ''
     constructor(name: string, number: number) {
