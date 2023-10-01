@@ -106,8 +106,8 @@ export class TasksDate {
         const now = window.moment();
         const earlier = date.isSameOrBefore(now, 'day');
         const startDateOfThisGroup = this.fromNowStartDateOfGroup(date, earlier, now);
-        const sorter = earlier ? 1 : 3;
-        return Number(sorter + startDateOfThisGroup.format('YYYYMMDD'));
+        const splitPastAndFutureDates = earlier ? 1 : 3;
+        return Number(splitPastAndFutureDates + startDateOfThisGroup.format('YYYYMMDD'));
     }
 
     private fromNowStartDateOfGroup(date: moment.Moment, earlier: boolean, now: any) {
