@@ -94,6 +94,11 @@ export class TasksDate {
         if (!date) {
             return new Category('', 0);
         }
+        const order = this.fromNowOrder(date);
+        return new Category(date.fromNow(), order);
+    }
+
+    private fromNowOrder(date: moment.Moment) {
         const now = window.moment();
 
         // https://momentjs.com/docs/#/displaying/fromnow/
@@ -111,7 +116,6 @@ export class TasksDate {
         const unit = words[1] as DurationInputArg2; // day, days, weeks, month, year
         const groupDate = earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
         const sorter = earlier ? 1 : 3;
-        const order = Number(sorter + groupDate.format('YYYYMMDD'));
-        return new Category(date.fromNow(), order);
+        return Number(sorter + groupDate.format('YYYYMMDD'));
     }
 }
