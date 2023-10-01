@@ -43,7 +43,7 @@ export class TasksDate {
      * @param fallBackText - the string to use if the date is null. Defaults to empty string.
      */
     public format(format: string, fallBackText: string = ''): string {
-        return this._date ? this._date!.format(format) : fallBackText;
+        return this._date ? this._date.format(format) : fallBackText;
     }
 
     /**
@@ -53,7 +53,7 @@ export class TasksDate {
      *            OR an empty string if no date, OR null for an invalid date.
      */
     public toISOString(keepOffset?: boolean): string | null {
-        return this._date ? this._date!.toISOString(keepOffset) : '';
+        return this._date ? this._date.toISOString(keepOffset) : '';
     }
 
     public get category(): PropertyCategory {
