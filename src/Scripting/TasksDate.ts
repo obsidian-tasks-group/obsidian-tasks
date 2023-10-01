@@ -105,9 +105,9 @@ export class TasksDate {
     private fromNowOrder(date: moment.Moment) {
         const now = window.moment();
         const earlier = date.isSameOrBefore(now, 'day');
-        const groupDate = this.fromNowStartDateOfGroup(date, earlier, now);
+        const startDateOfThisGroup = this.fromNowStartDateOfGroup(date, earlier, now);
         const sorter = earlier ? 1 : 3;
-        return Number(sorter + groupDate.format('YYYYMMDD'));
+        return Number(sorter + startDateOfThisGroup.format('YYYYMMDD'));
     }
 
     private fromNowStartDateOfGroup(date: moment.Moment, earlier: boolean, now: any) {
