@@ -1,4 +1,3 @@
-// TODO Add tests
 // TODO Add JSdoc
 export class PropertyCategory {
     public readonly name: string;
