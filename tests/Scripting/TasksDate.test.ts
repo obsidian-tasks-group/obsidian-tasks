@@ -56,7 +56,7 @@ describe('TasksDate', () => {
         expect(tasksDate.toISOString()).toBeNull();
     });
 
-    it('should categorise dates for grouping, relative to today - with Category object', () => {
+    it('should categorise dates for grouping, relative to today - with PropertyCategory object', () => {
         expect(overdue.category.groupText).toEqual('%%1%% Overdue');
         expect(today.category.groupText).toEqual('%%2%% Today');
         expect(future.category.groupText).toEqual('%%3%% Future');
