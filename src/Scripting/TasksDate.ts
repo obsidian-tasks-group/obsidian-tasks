@@ -1,11 +1,10 @@
 import type { DurationInputArg2, Moment } from 'moment';
 import { TaskRegularExpressions } from '../Task';
 
-// TODO Rename to PropertyCategory?
 // TODO Move to separate file
 // TODO Add tests
 // TODO Add JSdoc
-class Category {
+class PropertyCategory {
     public readonly name: string;
     public readonly sortOrder: number;
 
@@ -78,28 +77,28 @@ export class TasksDate {
         return this._date ? this._date!.toISOString(keepOffset) : '';
     }
 
-    public get category(): Category {
+    public get category(): PropertyCategory {
         const today = window.moment();
         const date = this.moment;
         if (!date) {
-            return new Category('Undated', 4);
+            return new PropertyCategory('Undated', 4);
         }
         if (date.isBefore(today, 'day')) {
-            return new Category('Overdue', 1);
+            return new PropertyCategory('Overdue', 1);
         }
         if (date.isSame(today, 'day')) {
-            return new Category('Today', 2);
+            return new PropertyCategory('Today', 2);
         }
-        return new Category('Future', 3);
+        return new PropertyCategory('Future', 3);
     }
 
-    public get fromNow(): Category {
+    public get fromNow(): PropertyCategory {
         const date = this.moment;
         if (!date) {
-            return new Category('', 0);
+            return new PropertyCategory('', 0);
         }
         const order = this.fromNowOrder(date);
-        return new Category(date.fromNow(), order);
+        return new PropertyCategory(date.fromNow(), order);
     }
 
     private fromNowOrder(date: moment.Moment) {
