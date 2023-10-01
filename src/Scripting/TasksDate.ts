@@ -103,6 +103,10 @@ export class TasksDate {
     }
 
     private fromNowOrder(date: moment.Moment) {
+        // Calculate a number that:
+        //   - is the same for all dates with the same 'fromNow()' name,
+        //   - sorts in ascending order of the date.
+
         const now = window.moment();
         const earlier = date.isSameOrBefore(now, 'day');
         const startDateOfThisGroup = this.fromNowStartDateOfGroup(date, earlier, now);
@@ -111,6 +115,8 @@ export class TasksDate {
     }
 
     private fromNowStartDateOfGroup(date: moment.Moment, earlier: boolean, now: any) {
+        // Calculate the earliest of all dates with the same 'fromNow()' name.
+
         // https://momentjs.com/docs/#/displaying/fromnow/
         // 'If you pass true, you can get the value without the suffix.'
         const words = date.fromNow(true).split(' ');
