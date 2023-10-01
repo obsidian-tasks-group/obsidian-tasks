@@ -75,6 +75,9 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |
 | `task.due.category.number` | `number` | `3` | `number` | `4` |
 | `task.due.category.groupText` | `string` | `'%%3%% Future'` | `string` | `'%%4%% Undated'` |
+| `task.due.fromNow.name` | `string` | `'in 22 days'` | `string` | `''` |
+| `task.due.fromNow.number` | `number` | `320230704` | `number` | `0` |
+| `task.due.fromNow.groupText` | `string` | `'%%320230704%% in 22 days'` | `string` | `''` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -88,7 +91,15 @@ For more information, including adding your own customised statuses, see [[Statu
     - `Future`
     - `Undated`
     - And they are numbered 1, 2, 3 and 4, in the order listed above.
+1. `fromNow` groups dates by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example:
+    - `2 months ago`
+    - `8 days ago`
+    - `in 11 hours`
+    - `in 5 days`
+    - `in 3 months`
+    - `in a year`
 1. The `category` properties were added in Tasks X.Y.Z.
+1. The `fromNow` properties were added in Tasks X.Y.Z.
 
 ## Values for Other Task Properties
 
