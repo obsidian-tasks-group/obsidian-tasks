@@ -65,6 +65,26 @@ describe('task', () => {
         ]);
     });
 
+    it('date fields', () => {
+        verifyFieldDataForReferenceDocs([
+            'task.due',
+            'task.due.moment',
+            'task.due.formatAsDate()',
+            "task.due.formatAsDate('undated')",
+            'task.due.formatAsDateAndTime()',
+            "task.due.formatAsDate('undated')",
+            "task.due.format('dddd')",
+            'task.due.toISOString()',
+            'task.due.toISOString(true)', // https://momentjs.com/docs/#/displaying/as-iso-string/ - true prevents UTC conversion
+            'task.due.category.name',
+            'task.due.category.sortOrder',
+            'task.due.category.groupText',
+            'task.due.fromNow.name',
+            'task.due.fromNow.sortOrder',
+            'task.due.fromNow.groupText',
+        ]);
+    });
+
     it('other fields', () => {
         verifyFieldDataForReferenceDocs([
             'task.description',

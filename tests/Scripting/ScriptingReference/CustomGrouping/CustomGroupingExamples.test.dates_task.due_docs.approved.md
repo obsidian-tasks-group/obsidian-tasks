@@ -1,5 +1,13 @@
 <!-- placeholder to force blank line before included text -->
 
+- ```group by function task.due.category.groupText```
+    - Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
+    - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
+    - The values `task.due.category.name` and `task.due.category.sortOrder` are also available.
+- ```group by function task.due.fromNow.groupText```
+    - Group by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example `8 days ago`, `in 11 hours`.
+    - It users an empty string (so no heading) if there is no due date.
+    - The values `task.due.fromNow.name` and `task.due.fromNow.sortOrder` are also available.
 - ```group by function task.due.format("YYYY-MM-DD dddd")```
     - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
 - ```group by function task.due.formatAsDate()```
