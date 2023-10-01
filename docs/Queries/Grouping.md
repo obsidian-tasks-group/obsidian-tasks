@@ -150,7 +150,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by next status symbol**
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by due date** is now possible.
 
-These examples all use  `task.due` property, which is a `TasksDate` object. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
+These examples all use  `task.due` property, which is a `TasksDate` object. See [[Task Properties#Values in TasksDate Properties|Values in TasksDate Properties]] to explore its capabilities.
 
 Some of these examples use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
 
