@@ -1,27 +1,6 @@
 import type { DurationInputArg2, Moment } from 'moment';
 import { TaskRegularExpressions } from '../Task';
-
-// TODO Move to separate file
-// TODO Add tests
-// TODO Add JSdoc
-class PropertyCategory {
-    public readonly name: string;
-    public readonly sortOrder: number;
-
-    // Pass in an empty name if you want groupText to be ''
-    constructor(name: string, number: number) {
-        this.name = name;
-        this.sortOrder = number;
-    }
-
-    public get groupText(): string {
-        if (this.name !== '') {
-            return `%%${this.sortOrder}%% ${this.name}`;
-        } else {
-            return '';
-        }
-    }
-}
+import { PropertyCategory } from '../lib/PropertyCategory';
 
 /**
  * TasksDate encapsulates a date, for simplifying the JavaScript expressions users need to
