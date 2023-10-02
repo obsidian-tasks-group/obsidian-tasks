@@ -11,11 +11,9 @@ class BlockingField extends FilterInstructionsBasedField {
         this._filters.add('is blocking', (task) => {
             if (task.id === '') return false;
 
-            for (const cacheTask of this._allTasks) {
-                if (cacheTask.dependsOn.includes(task.id)) return true;
-            }
-
-            return false;
+            return this._allTasks.some((cacheTask) => {
+                return cacheTask.dependsOn.includes(task.id);
+            });
         });
     }
 
