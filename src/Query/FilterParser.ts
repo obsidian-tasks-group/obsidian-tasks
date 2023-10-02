@@ -1,3 +1,4 @@
+import type { Task } from '../Task';
 import type { Field } from './Filter/Field';
 import { DescriptionField } from './Filter/DescriptionField';
 import { CreatedDateField } from './Filter/CreatedDateField';
@@ -65,7 +66,7 @@ const fieldCreators: EndsWith<BooleanField> = [
 type EndsWith<End, T extends Field = Field> = [...Array<() => T>, () => End];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {
-    for (const creator of getFieldCreators()) {
+    for (const creator of getFieldCreators([])) {
         const field = creator();
         if (field.canCreateFilterForLine(filterString)) return field.createFilterOrErrorMessage(filterString);
     }
@@ -82,7 +83,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of getFieldCreators()) {
+    for (const creator of getFieldCreators([])) {
         const field = creator();
         const sorter = field.createSorterFromLine(sorterString);
         if (sorter) {
@@ -102,7 +103,7 @@ export function parseGrouper(line: string): Grouper | null {
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of getFieldCreators()) {
+    for (const creator of getFieldCreators([])) {
         const field = creator();
         const grouper = field.createGrouperFromLine(line);
         if (grouper) {
@@ -112,6 +113,6 @@ export function parseGrouper(line: string): Grouper | null {
     return null;
 }
 
-export function getFieldCreators() {
+export function getFieldCreators(_allTasks: Task[]) {
     return fieldCreators;
 }

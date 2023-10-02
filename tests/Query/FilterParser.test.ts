@@ -8,6 +8,6 @@ describe('FilterParser', () => {
     });
 
     it('should provide a function to get the parsers', () => {
-        expect(getFieldCreators().length).not.toEqual(0);
+        expect(getFieldCreators([]).length).not.toEqual(0);
     });
 });

@@ -21,7 +21,7 @@ interface NamedField {
     name: string;
     field: Field;
 }
-const namedFields: ReadonlyArray<NamedField> = getFieldCreators()
+const namedFields: ReadonlyArray<NamedField> = getFieldCreators([])
     .map((creator) => {
         const field = creator();
         return { name: field.fieldName(), field };
