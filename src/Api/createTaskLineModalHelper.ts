@@ -19,5 +19,6 @@ export const defaultTaskModalFactory: taskModalFactory = (
     onSubmit: (updatedTasks: Task[]) => void,
 ): ITaskModal => {
     const task = taskFromLine({ line: '', path: '' });
+    // @ts-expect-error TS2345: Argument of type '{ app: App; task: Task; onSubmit: (updatedTasks: Task[]) =&gt; void; }' is not assignable to parameter of type ...
     return new TaskModal({ app, task, onSubmit }) as ITaskModal;
 };

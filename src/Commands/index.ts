@@ -19,6 +19,7 @@ export class Commands {
             name: 'Create or edit task',
             icon: 'pencil',
             editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
+                // @ts-expect-error TS2345: Argument of type 'Cache | undefined' is not assignable to parameter of type 'Cache'.
                 return createOrEdit(checking, editor, view as View, this.app, this.plugin.cache);
             },
         });

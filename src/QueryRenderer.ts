@@ -269,6 +269,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             };
 
             // Need to create a new instance every time, as cursor/task can change.
+            // @ts-expect-error TS2345: Argument of type '{ app: App; task: Task; onSubmit: (updatedTasks: Task[]) =&gt; void; }' is not assignable to parameter of type ...
             const taskModal = new TaskModal({
                 app: this.app,
                 task,
