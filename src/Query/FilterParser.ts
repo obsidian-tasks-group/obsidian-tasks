@@ -28,13 +28,14 @@ import type { Grouper } from './Grouper';
 import { FolderField } from './Filter/FolderField';
 import { RootField } from './Filter/RootField';
 import { BacklinkField } from './Filter/BacklinkField';
+import { BlockingField } from './Filter/BlockingField';
 
 // When parsing a query the fields are tested one by one according to this order.
 // Since BooleanField is a meta-field, which needs to aggregate a few fields together, it is intended to
 // be kept last.
 // When adding new fields keep this order in mind, putting fields that are more specific before fields that
 // may contain them, and keep BooleanField last.
-export function getFieldCreators(_allTasks: Task[]) {
+export function getFieldCreators(allTasks: Task[]) {
     const fieldCreators: EndsWith<BooleanField> = [
         () => new StatusNameField(), // status.name is before status, to avoid ambiguity
         () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
@@ -59,6 +60,7 @@ export function getFieldCreators(_allTasks: Task[]) {
         () => new UrgencyField(),
         () => new RecurrenceField(),
         () => new FunctionField(),
+        () => new BlockingField(allTasks),
         () => new BooleanField(), // --- Please make sure to keep BooleanField last (see comment above) ---
     ];
 
