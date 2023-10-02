@@ -110,3 +110,7 @@ export function parseGrouper(line: string): Grouper | null {
     }
     return null;
 }
+
+export function getFieldCreators() {
+    return fieldCreators;
+}
