@@ -19,6 +19,8 @@ export class Commands {
             name: 'Create or edit task',
             icon: 'pencil',
             editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
+                // TODO The simplest fix is to change this to this.plugin.cache! - but a better one
+                //      is to pass in the task list instead.
                 // @ts-expect-error TS2345: Argument of type 'Cache | undefined' is not assignable to parameter of type 'Cache'.
                 return createOrEdit(checking, editor, view as View, this.app, this.plugin.cache);
             },

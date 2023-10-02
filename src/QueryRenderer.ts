@@ -17,6 +17,7 @@ export class QueryRenderer {
     private readonly app: App;
     private readonly events: TasksEvents;
 
+    // TODO Change this argument from Plugin to TasksPlugin
     constructor({ plugin, events }: { plugin: Plugin; events: TasksEvents }) {
         this.app = plugin.app;
         this.events = events;
@@ -28,6 +29,7 @@ export class QueryRenderer {
 
     private async _addQueryRenderChild(source: string, element: HTMLElement, context: MarkdownPostProcessorContext) {
         context.addChild(
+            // TODO Pass in Cache - or later, allTasks
             new QueryRenderChild({
                 app: this.app,
                 events: this.events,
@@ -64,6 +66,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
+    // TODO Add a parameter to receive the Cache or allTasks, and save it, in order to use it in addEditButton()
     constructor({
         app,
         events,
@@ -269,6 +272,10 @@ class QueryRenderChild extends MarkdownRenderChild {
             };
 
             // Need to create a new instance every time, as cursor/task can change.
+            // TODO This is missing the cache argument.
+            //      It's likely the reason why editing tasks via the Pencil icon in Tasks results blocks fails,
+            //      writing a console error.
+            //      See TODOs added above for how to fix...
             // @ts-expect-error TS2345: Argument of type '{ app: App; task: Task; onSubmit: (updatedTasks: Task[]) =&gt; void; }' is not assignable to parameter of type ...
             const taskModal = new TaskModal({
                 app: this.app,
