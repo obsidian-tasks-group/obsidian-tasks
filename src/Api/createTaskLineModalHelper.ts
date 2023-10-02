@@ -25,6 +25,6 @@ export const defaultTaskModalFactory: taskModalFactory = (
     //      As a published API, to change the parameters would be a breaking change.
     //      One option is to make the allTasks parameter to the Edit task modal be optional,
     //      and if it's not provided, then hide the dependency fields in the modal.
-    // @ts-expect-error TS2345: Argument of type '{ app: App; task: Task; onSubmit: (updatedTasks: Task[]) =&gt; void; }' is not assignable to parameter of type ...
-    return new TaskModal({ app, task, onSubmit }) as ITaskModal;
+    //      For now, we pass in an empty list of tasks.
+    return new TaskModal({ app, task, onSubmit, allTasks: [] }) as ITaskModal;
 };
