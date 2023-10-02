@@ -34,36 +34,39 @@ import { BacklinkField } from './Filter/BacklinkField';
 // be kept last.
 // When adding new fields keep this order in mind, putting fields that are more specific before fields that
 // may contain them, and keep BooleanField last.
-// Access this by calling getFieldCreators()
-const fieldCreators: EndsWith<BooleanField> = [
-    () => new StatusNameField(), // status.name is before status, to avoid ambiguity
-    () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
-    () => new StatusField(),
-    () => new RecurringField(),
-    () => new PriorityField(),
-    () => new HappensDateField(),
-    () => new CreatedDateField(),
-    () => new StartDateField(),
-    () => new ScheduledDateField(),
-    () => new DueDateField(),
-    () => new DoneDateField(),
-    () => new PathField(),
-    () => new FolderField(),
-    () => new RootField(),
-    () => new BacklinkField(),
-    () => new DescriptionField(),
-    () => new TagsField(),
-    () => new HeadingField(),
-    () => new ExcludeSubItemsField(),
-    () => new FilenameField(),
-    () => new UrgencyField(),
-    () => new RecurrenceField(),
-    () => new FunctionField(),
-    () => new BooleanField(), // --- Please make sure to keep BooleanField last (see comment above) ---
-];
+export function getFieldCreators(_allTasks: Task[]) {
+    const fieldCreators: EndsWith<BooleanField> = [
+        () => new StatusNameField(), // status.name is before status, to avoid ambiguity
+        () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
+        () => new StatusField(),
+        () => new RecurringField(),
+        () => new PriorityField(),
+        () => new HappensDateField(),
+        () => new CreatedDateField(),
+        () => new StartDateField(),
+        () => new ScheduledDateField(),
+        () => new DueDateField(),
+        () => new DoneDateField(),
+        () => new PathField(),
+        () => new FolderField(),
+        () => new RootField(),
+        () => new BacklinkField(),
+        () => new DescriptionField(),
+        () => new TagsField(),
+        () => new HeadingField(),
+        () => new ExcludeSubItemsField(),
+        () => new FilenameField(),
+        () => new UrgencyField(),
+        () => new RecurrenceField(),
+        () => new FunctionField(),
+        () => new BooleanField(), // --- Please make sure to keep BooleanField last (see comment above) ---
+    ];
 
-// This type helps verify that BooleanField is kept last
-type EndsWith<End, T extends Field = Field> = [...Array<() => T>, () => End];
+    // This type helps verify that BooleanField is kept last
+    type EndsWith<End, T extends Field = Field> = [...Array<() => T>, () => End];
+
+    return fieldCreators;
+}
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {
     for (const creator of getFieldCreators([])) {
@@ -111,8 +114,4 @@ export function parseGrouper(line: string): Grouper | null {
         }
     }
     return null;
-}
-
-export function getFieldCreators(_allTasks: Task[]) {
-    return fieldCreators;
 }
