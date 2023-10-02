@@ -33,7 +33,8 @@ import { BacklinkField } from './Filter/BacklinkField';
 // be kept last.
 // When adding new fields keep this order in mind, putting fields that are more specific before fields that
 // may contain them, and keep BooleanField last.
-export const fieldCreators: EndsWith<BooleanField> = [
+// Access this by calling getFieldCreators()
+const fieldCreators: EndsWith<BooleanField> = [
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
     () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
     () => new StatusField(),
@@ -64,7 +65,7 @@ export const fieldCreators: EndsWith<BooleanField> = [
 type EndsWith<End, T extends Field = Field> = [...Array<() => T>, () => End];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {
-    for (const creator of fieldCreators) {
+    for (const creator of getFieldCreators()) {
         const field = creator();
         if (field.canCreateFilterForLine(filterString)) return field.createFilterOrErrorMessage(filterString);
     }
@@ -81,7 +82,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of fieldCreators) {
+    for (const creator of getFieldCreators()) {
         const field = creator();
         const sorter = field.createSorterFromLine(sorterString);
         if (sorter) {
@@ -101,7 +102,7 @@ export function parseGrouper(line: string): Grouper | null {
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of fieldCreators) {
+    for (const creator of getFieldCreators()) {
         const field = creator();
         const grouper = field.createGrouperFromLine(line);
         if (grouper) {

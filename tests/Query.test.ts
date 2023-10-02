@@ -7,7 +7,7 @@ import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { TaskLocation } from '../src/TaskLocation';
-import { fieldCreators } from '../src/Query/FilterParser';
+import { getFieldCreators } from '../src/Query/FilterParser';
 import type { Field } from '../src/Query/Filter/Field';
 import type { BooleanField } from '../src/Query/Filter/BooleanField';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
@@ -21,7 +21,7 @@ interface NamedField {
     name: string;
     field: Field;
 }
-const namedFields: ReadonlyArray<NamedField> = fieldCreators
+const namedFields: ReadonlyArray<NamedField> = getFieldCreators()
     .map((creator) => {
         const field = creator();
         return { name: field.fieldName(), field };
