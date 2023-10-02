@@ -1,4 +1,4 @@
-import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
@@ -12,14 +12,16 @@ import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
 import type { TaskGroups } from './Query/TaskGroups';
+import type TasksPlugin from './main';
 
 export class QueryRenderer {
     private readonly app: App;
+    private plugin: TasksPlugin;
     private readonly events: TasksEvents;
 
-    // TODO Change this argument from Plugin to TasksPlugin
-    constructor({ plugin, events }: { plugin: Plugin; events: TasksEvents }) {
+    constructor({ plugin, events }: { plugin: TasksPlugin; events: TasksEvents }) {
         this.app = plugin.app;
+        this.plugin = plugin;
         this.events = events;
 
         plugin.registerMarkdownCodeBlockProcessor('tasks', this._addQueryRenderChild.bind(this));
@@ -29,9 +31,9 @@ export class QueryRenderer {
 
     private async _addQueryRenderChild(source: string, element: HTMLElement, context: MarkdownPostProcessorContext) {
         context.addChild(
-            // TODO Pass in Cache - or later, allTasks
             new QueryRenderChild({
                 app: this.app,
+                plugin: this.plugin,
                 events: this.events,
                 container: element,
                 source,
@@ -43,6 +45,7 @@ export class QueryRenderer {
 
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
+    private plugin: TasksPlugin;
     private readonly events: TasksEvents;
 
     /**
@@ -66,15 +69,16 @@ class QueryRenderChild extends MarkdownRenderChild {
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
-    // TODO Add a parameter to receive the Cache or allTasks, and save it, in order to use it in addEditButton()
     constructor({
         app,
+        plugin,
         events,
         container,
         source,
         filePath,
     }: {
         app: App;
+        plugin: TasksPlugin;
         events: TasksEvents;
         container: HTMLElement;
         source: string;
@@ -83,6 +87,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         super(container);
 
         this.app = app;
+        this.plugin = plugin;
         this.events = events;
         this.source = source;
         this.filePath = filePath;
@@ -248,7 +253,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
-                this.addEditButton(extrasSpan, task);
+                // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
+                this.addEditButton(extrasSpan, task, this.plugin.getTasks()!);
             }
 
             taskList.appendChild(listItem);
@@ -257,7 +263,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         return { taskList, tasksCount };
     }
 
-    private addEditButton(listItem: HTMLElement, task: Task) {
+    private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[]) {
         const editTaskPencil = listItem.createEl('a', {
             cls: 'tasks-edit',
         });
@@ -272,15 +278,11 @@ class QueryRenderChild extends MarkdownRenderChild {
             };
 
             // Need to create a new instance every time, as cursor/task can change.
-            // TODO This is missing the cache argument.
-            //      It's likely the reason why editing tasks via the Pencil icon in Tasks results blocks fails,
-            //      writing a console error.
-            //      See TODOs added above for how to fix...
-            // @ts-expect-error TS2345: Argument of type '{ app: App; task: Task; onSubmit: (updatedTasks: Task[]) =&gt; void; }' is not assignable to parameter of type ...
             const taskModal = new TaskModal({
                 app: this.app,
                 task,
                 onSubmit,
+                allTasks,
             });
             taskModal.open();
         });
