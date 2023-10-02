@@ -23,10 +23,7 @@ describe('Task rendering', () => {
         const task = taskFromLine({ line: `- [ ] ${taskDescription}`, path: '' });
 
         const onSubmit = (_: Task[]): void => {};
-        // TODO This crashes, likely because it is missing the 4th argument - the cache
-        //      Since we can't create a Cache object in tests, it's likely to change
-        //      EditTask so that instead of taking a Cache, it takes an allTasks parameter.
-        const { container } = render(EditTask, { task, statusOptions, onSubmit });
+        const { container } = render(EditTask, { task, statusOptions, onSubmit, allTasks: [task] });
         expect(() => container).toBeTruthy();
         const renderedDescription = container.ownerDocument.getElementById('description') as HTMLInputElement;
         expect(() => renderedDescription).toBeTruthy();
@@ -97,7 +94,7 @@ describe('Task editing', () => {
             resolvePromise(serializedTask);
         };
 
-        const result = render(EditTask, { task, statusOptions, onSubmit });
+        const result = render(EditTask, { task, statusOptions, onSubmit, allTasks: [task] });
         const { container } = result;
         expect(() => container).toBeTruthy();
 

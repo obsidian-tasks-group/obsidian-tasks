@@ -8,7 +8,6 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
-    import type { Cache } from "../Cache";
     import { offset, shift } from "svelte-floating-ui/dom";
     import { createFloatingActions } from "svelte-floating-ui";
     import { size } from "@floating-ui/core";
@@ -19,7 +18,7 @@
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
-    export let cache: Cache;
+    export let allTasks: Task[];
 
     const {
         prioritySymbols,
@@ -227,7 +226,7 @@
     async function serialiseTaskId(task: Task) {
         if (task.id !== "") return task;
 
-        const tasksWithId = cache.getTasks().filter(task => task.id !== "");
+        const tasksWithId = allTasks.filter(task => task.id !== "");
 
         const updatedTask = ensureTaskHasId(task, tasksWithId.map(task => task.id));
 
@@ -241,7 +240,7 @@
 
         displayResultsIfSearchEmpty = false;
 
-        let results = cache.getTasks().filter(task => task.description.includes(search));
+        let results = allTasks.filter(task => task.description.includes(search));
 
         // remove results that this task already has a relationship with
         results = results.filter((item) => {
@@ -466,14 +465,14 @@
         const waitingOn: Task[] = [];
 
         for (const taskId of task.dependsOn) {
-            const depTask = cache.getTasks().find(cacheTask => cacheTask.id === taskId);
+            const depTask = allTasks.find(cacheTask => cacheTask.id === taskId);
 
             if (!depTask) continue;
 
             waitingOn.push(depTask);
         }
 
-        originalBlocking = cache.getTasks().filter(cacheTask => cacheTask.dependsOn.includes(task.id));
+        originalBlocking = allTasks.filter(cacheTask => cacheTask.dependsOn.includes(task.id));
 
         editableTask = {
             description,
@@ -586,7 +585,7 @@
 
         if (editableTask.blocking.toString() !== originalBlocking.toString() || editableTask.blocking.length !== 0) {
             if (task.id === "") {
-                id = generateUniqueId(cache.getTasks().filter(task => task.id !== "").map(task => task.id));
+                id = generateUniqueId(allTasks.filter(task => task.id !== "").map(task => task.id));
             }
 
             removedBlocking = originalBlocking.filter(task => !editableTask.blocking.includes(task))
