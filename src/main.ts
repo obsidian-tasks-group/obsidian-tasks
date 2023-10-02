@@ -17,7 +17,7 @@ import type { Task } from './Task';
 import { tasksApiV1 } from './Api';
 
 export default class TasksPlugin extends Plugin {
-    public cache: Cache | undefined;
+    private cache: Cache | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
 
