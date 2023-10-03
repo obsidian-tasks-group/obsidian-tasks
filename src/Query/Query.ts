@@ -308,7 +308,7 @@ Problem line: "${line}"`;
     }
 
     private parseFilter(line: string) {
-        const filterOrError = FilterParser.parseFilter(line);
+        const filterOrError = FilterParser.parseFilter(line, []);
         if (filterOrError != null) {
             if (filterOrError.filter) {
                 this._filters.push(filterOrError.filter);
@@ -338,7 +338,7 @@ Problem line: "${line}"`;
     }
 
     private parseSortBy(line: string): boolean {
-        const sortingMaybe = FilterParser.parseSorter(line);
+        const sortingMaybe = FilterParser.parseSorter(line, []);
         if (sortingMaybe) {
             this._sorting.push(sortingMaybe);
             return true;
@@ -354,7 +354,7 @@ Problem line: "${line}"`;
      * @private
      */
     private parseGroupBy(line: string): boolean {
-        const groupingMaybe = FilterParser.parseGrouper(line);
+        const groupingMaybe = FilterParser.parseGrouper(line, []);
         if (groupingMaybe) {
             this._grouping.push(groupingMaybe);
             return true;

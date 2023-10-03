@@ -70,15 +70,15 @@ export function getFieldCreators(allTasks: Task[]) {
     return fieldCreators;
 }
 
-export function parseFilter(filterString: string): FilterOrErrorMessage | null {
-    for (const creator of getFieldCreators([])) {
+export function parseFilter(filterString: string, allTasks: Task[]): FilterOrErrorMessage | null {
+    for (const creator of getFieldCreators(allTasks)) {
         const field = creator();
         if (field.canCreateFilterForLine(filterString)) return field.createFilterOrErrorMessage(filterString);
     }
     return null;
 }
 
-export function parseSorter(sorterString: string): Sorter | null {
+export function parseSorter(sorterString: string, allTasks: Task[]): Sorter | null {
     // New style parsing, using sorting which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'sort by'
@@ -88,7 +88,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of getFieldCreators([])) {
+    for (const creator of getFieldCreators(allTasks)) {
         const field = creator();
         const sorter = field.createSorterFromLine(sorterString);
         if (sorter) {
@@ -98,7 +98,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     return null;
 }
 
-export function parseGrouper(line: string): Grouper | null {
+export function parseGrouper(line: string, allTasks: Task[]): Grouper | null {
     // New style parsing, using grouping which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'group by'
@@ -108,7 +108,7 @@ export function parseGrouper(line: string): Grouper | null {
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of getFieldCreators([])) {
+    for (const creator of getFieldCreators(allTasks)) {
         const field = creator();
         const grouper = field.createGrouperFromLine(line);
         if (grouper) {
