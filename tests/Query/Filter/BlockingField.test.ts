@@ -18,4 +18,18 @@ describe('blocking', () => {
         expect(filter).not.toMatchTaskInTaskList(parent, allTasks);
         expect(filter).not.toMatchTaskInTaskList(childWithoutParent, allTasks);
     });
+
+    it('is blocking - with circular dependencies, all tasks are matched', () => {
+        const id1 = '1';
+        const id2 = '2';
+        const id3 = '3';
+        const task1 = new TaskBuilder().id(id1).dependsOn([id2]).build();
+        const task2 = new TaskBuilder().id(id2).dependsOn([id3]).build();
+        const task3 = new TaskBuilder().id(id3).dependsOn([id1]).build();
+        const allTasks = [task1, task2, task3];
+
+        expect(filter).toMatchTaskInTaskList(task1, allTasks);
+        expect(filter).toMatchTaskInTaskList(task2, allTasks);
+        expect(filter).toMatchTaskInTaskList(task3, allTasks);
+    });
 });
