@@ -6,6 +6,15 @@ publish: true
 
 ## What's New?
 
+- X.Y.Z: 🔥 Add [[Task Properties|task properties]] `task.priorityNameGroupText` and `task.status.typeGroupText`
+- X.Y.Z: 🔥 Add [[Task Properties#Values in TasksDate Properties|task date properties]] for categorising dates, for example`task.due.category.groupText`
+- X.Y.Z: 🔥 Add [[Task Properties#Values in TasksDate Properties|task date properties]] for grouping dates by [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example `task.due.fromNow.groupText`
+- 4.8.0: 🔥 Add [[Query Properties#Values for Query File Properties|query file properties]] `query.file.pathWithoutExtension` and `query.file.filenameWithoutExtension`
+- 4.8.0: 🔥 Add [[Task Properties#Values for File Properties|task file properties]] `task.file.pathWithoutExtension` and `task.file.filenameWithoutExtension`
+- 4.7.0: 🔥 Use [[Query Properties]] and [[Placeholders]] to filter and group with the query's file path, root, folder and name.
+- 4.6.0: 🔥 Add `on or before` and `on or after` to [[Filters#Date search options|date search options]]
+- 4.6.0: 🔥 Add `in or before` and `in or after` to [[Filters#Date range options|date range search search options]]
+- 4.5.0: 🔥 Support task in list items starting with [[Getting Started#Finding tasks in your vault|`+` signs]]
 - 4.4.0: 🔥 Support [[Expressions#More complex expressions|variables, if statements, and functions]] in custom filters and groups
 - 4.3.0: 🔥 Bug fixes, usability improvements and `explain` support for [[Regular Expressions|regular expression]] searches
 - 4.2.0: 🔥 Add [[Custom Filters|custom filtering]]

@@ -108,7 +108,7 @@ describe('explains regular expression searches', () => {
             tags regex does not match /(home|town)/
             tags regex matches /(home|pc_mac|town)/
 `;
-        const query = new Query({ source });
+        const query = new Query(source);
 
         // Assert
         verify(query.explainQuery() + `\nError: ${query.error ?? 'None'}`);

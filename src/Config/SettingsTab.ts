@@ -12,6 +12,7 @@ import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
+import { GlobalQuery } from './GlobalQuery';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -100,9 +101,10 @@ export class SettingsTab extends PluginSettingTab {
                 // but wasn't able to figure out how to make the text box
                 // wide enough for the whole string to be visible.
                 text.setPlaceholder('e.g. #task or TODO')
-                    .setValue(GlobalFilter.get())
+                    .setValue(GlobalFilter.getInstance().get())
                     .onChange(async (value) => {
-                        GlobalFilter.set(value);
+                        updateSettings({ globalFilter: value });
+                        GlobalFilter.getInstance().set(value);
                         await this.plugin.saveSettings();
                     });
             });
@@ -117,7 +119,7 @@ export class SettingsTab extends PluginSettingTab {
 
                 toggle.setValue(settings.removeGlobalFilter).onChange(async (value) => {
                     updateSettings({ removeGlobalFilter: value });
-
+                    GlobalFilter.getInstance().setRemoveGlobalFilter(value);
                     await this.plugin.saveSettings();
                 });
             });
@@ -143,7 +145,7 @@ export class SettingsTab extends PluginSettingTab {
                         .setValue(settings.globalQuery)
                         .onChange(async (value) => {
                             updateSettings({ globalQuery: value });
-
+                            GlobalQuery.getInstance().set(value);
                             await this.plugin.saveSettings();
                         });
                 }),

@@ -65,10 +65,14 @@ Work through all the tasks below, until zero tasks remain in this query:
 
 ### Un-completion of tasks
 
-- [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05
-- [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05
-- [x] #task Mark this task not complete by clicking on it in **Live Preview** ✅ 2022-07-05
-- [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked
+<!-- markdownlint-disable ul-style -->
+
+* [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05
+* [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05
+* [x] #task Mark this task not complete by clicking on it in **Live Preview** ✅ 2022-07-05
+* [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked
+
+<!-- markdownlint-enable ul-style -->
 
 ### Recurring Tasks
 
@@ -88,9 +92,13 @@ Confirm that when a recurring task is completed, a new task is created, all the 
 
 Steps to do:
 
-- [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
-- [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
-- [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
+<!-- markdownlint-disable ul-style -->
+
++ [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
++ [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
++ [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
+
+<!-- markdownlint-enable ul-style -->
 
 ---
 
@@ -122,3 +130,21 @@ heading includes Rendering of Task Blocks
     7. **Check** that values you entered in the modal have been copied in to the list item above
     8. **Check** that the `#task` tag has been added to the start of the task
 - [ ] #task **check**: Checked all above steps for **creating a task via the modal** worked
+
+---
+
+## Check the plugin starts OK with no `data.json` settings file
+
+- Preparation
+  - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**
+  - Quit Obsidian
+  - Open the `obsidian-tasks-plugin` folder
+  - Delete `data.json`
+- Test
+  - Restart obsidian
+  - Go to Settings
+  - Check that `Tasks` is shown in the list of **Community plugins**
+  - View -> Toggle Developer Tools
+  - Open the console
+  - Confirm that there are no red messages mentioning Tasks
+- [ ] #task **check**: Checked that Tasks works correctly when **there is no `data.json` present**

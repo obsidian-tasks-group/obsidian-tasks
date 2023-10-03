@@ -6,7 +6,7 @@
 
 Only supports Dark mode.
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_LYT_Mode_Tasks.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.Theme_LYT_Mode_Tasks.approved.md -->
 
 - [ ] #task `space` Unchecked
 - [x] #task `x` Checked
@@ -31,7 +31,7 @@ Only supports Dark mode.
 - [u] #task `u` Up
 - [d] #task `d` Down
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type
 

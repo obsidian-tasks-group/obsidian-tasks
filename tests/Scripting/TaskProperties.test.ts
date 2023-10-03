@@ -48,6 +48,7 @@ describe('task', () => {
             'task.isDone',
             'task.status.name',
             'task.status.type',
+            'task.status.typeGroupText',
             'task.status.symbol',
             'task.status.nextSymbol',
         ]);
@@ -64,12 +65,33 @@ describe('task', () => {
         ]);
     });
 
+    it('date fields', () => {
+        verifyFieldDataForReferenceDocs([
+            'task.due',
+            'task.due.moment',
+            'task.due.formatAsDate()',
+            "task.due.formatAsDate('undated')",
+            'task.due.formatAsDateAndTime()',
+            "task.due.formatAsDate('undated')",
+            "task.due.format('dddd')",
+            'task.due.toISOString()',
+            'task.due.toISOString(true)', // https://momentjs.com/docs/#/displaying/as-iso-string/ - true prevents UTC conversion
+            'task.due.category.name',
+            'task.due.category.sortOrder',
+            'task.due.category.groupText',
+            'task.due.fromNow.name',
+            'task.due.fromNow.sortOrder',
+            'task.due.fromNow.groupText',
+        ]);
+    });
+
     it('other fields', () => {
         verifyFieldDataForReferenceDocs([
             'task.description',
             'task.descriptionWithoutTags',
             'task.priorityNumber',
             'task.priorityName',
+            'task.priorityNameGroupText',
             'task.urgency',
             'task.isRecurring',
             'task.recurrenceRule',
@@ -84,9 +106,11 @@ describe('task', () => {
     it('file properties', () => {
         verifyFieldDataForReferenceDocs([
             'task.file.path',
+            'task.file.pathWithoutExtension',
             'task.file.root',
             'task.file.folder',
             'task.file.filename',
+            'task.file.filenameWithoutExtension',
             'task.hasHeading',
             'task.heading',
         ]);

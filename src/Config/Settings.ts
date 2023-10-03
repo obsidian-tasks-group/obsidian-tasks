@@ -1,4 +1,8 @@
-import { DEFAULT_MAX_GENERIC_SUGGESTIONS, makeDefaultSuggestionBuilder } from '../Suggestor/Suggestor';
+import {
+    DEFAULT_MAX_GENERIC_SUGGESTIONS,
+    makeDefaultSuggestionBuilder,
+    onlySuggestIfBracketOpen,
+} from '../Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../TaskSerializer/DataviewTaskSerializer';
 import { StatusConfiguration } from '../StatusConfiguration';
@@ -10,7 +14,6 @@ import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
-import { GlobalFilter } from './GlobalFilter';
 
 interface SettingsMap {
     [key: string]: string | boolean;
@@ -43,7 +46,13 @@ export const TASK_FORMATS = {
     dataview: {
         displayName: 'Dataview',
         taskSerializer: new DataviewTaskSerializer(),
-        buildSuggestions: makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS),
+        buildSuggestions: onlySuggestIfBracketOpen(
+            makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS),
+            [
+                ['(', ')'],
+                ['[', ']'],
+            ],
+        ),
     },
 } as const;
 
@@ -81,7 +90,7 @@ export interface Settings {
 
 const defaultSettings: Settings = {
     globalQuery: '',
-    globalFilter: GlobalFilter.empty,
+    globalFilter: '',
     removeGlobalFilter: false,
     taskFormat: 'tasksPluginEmoji',
     setCreatedDate: false,
@@ -201,13 +210,4 @@ export const toggleFeature = (internalName: string, enabled: boolean): FeatureFl
  */
 export function getUserSelectedTaskFormat(): TaskFormat {
     return TASK_FORMATS[getSettings().taskFormat];
-}
-
-/**
- * Retrieves the source of the global {@link Query}
- *
- * @exports
- */
-export function getGlobalQuerySource(): { source: string } {
-    return { source: getSettings().globalQuery };
 }

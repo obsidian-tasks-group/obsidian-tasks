@@ -12,3 +12,14 @@ IN_PROGRESS
 TODO
 ====================================================================================
 
+
+group by function task.status.typeGroupText
+This sorts the status types in the same order as "group by status.type".
+=>
+%%1%%IN_PROGRESS
+%%2%%TODO
+%%3%%DONE
+%%4%%CANCELLED
+%%6%%EMPTY
+====================================================================================
+

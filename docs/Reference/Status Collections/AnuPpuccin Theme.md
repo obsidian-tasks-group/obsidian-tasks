@@ -55,7 +55,7 @@ publish: true
 
 Tasks' setting pane has a one-click button to add the following information, representing the custom checkboxes in this plugin.
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_AnuPpuccin_Table.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.Theme_AnuPpuccin_Table.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -88,4 +88,4 @@ Tasks' setting pane has a one-click button to add the following information, rep
 | `8` | `8` | Speech bubble 8 | `NON_TASK` | Yes |
 | `9` | `9` | Speech bubble 9 | `NON_TASK` | Yes |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->

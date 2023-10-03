@@ -86,10 +86,10 @@ Run `mdsnippets` - see [[#Running mdsnippets]]
 
 Your `include: ...` line will be converted to this:
 
-{ <!-- include: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
+{<!-- include: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
   "name": "fred",
   "age": 30
-} <!-- endInclude -->
+}<!-- endInclude -->
 
 ### Embedding files in .obsidian folders by path
 

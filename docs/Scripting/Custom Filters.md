@@ -38,13 +38,22 @@ The Reference section [[Task Properties]] shows all the task properties availabl
 
 The available task properties are also shown in the [[Quick Reference]] table.
 
+### Available Query Properties
+
+The Reference section [[Query Properties]] shows all the query properties available for use via [[Placeholders]] in custom filters.
+
+Any placeholders in custom filters must be surrounded by quotes.
+
+> [!released]
+> Query properties and placeholders were introduced in Tasks 4.7.0.
+
 ### Expressions
 
 The instructions look like this:
 
 - `filter by function <expression>`
 
-The expression is evaluated (calculated) on one task at a time from our vault.
+The expression is evaluated (calculated) on one task at a time from your vault.
 
 The expression must evaluate to a `boolean`, so `true` or `false`.
 
@@ -60,26 +69,26 @@ You can find many more examples by searching for `filter by function` in the [[F
 
 ### Text property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.description_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.description_docs.approved.md -->
 
 - ```filter by function task.description.length > 100```
   - Find tasks with long descriptions.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Date property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
 
 - ```filter by function task.due.format('dddd') === 'Tuesday'```
   - Find tasks due on Tuesdays, that is, any Tuesday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 For users who are comfortable with JavaScript, these more complicated examples may also be of interest:
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
 
 - ```filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false```
   - Find all tasks due today or earlier.
@@ -93,11 +102,11 @@ For users who are comfortable with JavaScript, these more complicated examples m
 - ```filter by function task.due.moment?.isSame(moment('2023-05-31'), 'week') || false```
   - Find all tasks due in the week of 31 May 2023.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Number property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
 
 - ```filter by function task.urgency > 8.9999```
   - Find tasks with an urgency score above `9.0`.
@@ -126,20 +135,25 @@ For users who are comfortable with JavaScript, these more complicated examples m
       - `10.289999999999999147348717087880`
   - These values are **not exactly equal**, so the test fails to find any matching tasks.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### File property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
 - ```filter by function task.file.folder === "Work/Projects/"```
   - Find tasks in files in any file in the given folder **only**, and not any sub-folders.
   - The equality test, `===`, requires that the trailing slash (`/`) be included.
 - ```filter by function task.file.folder.includes("Work/Projects/")```
-  - Find tasks in files in any folder **and any sub-folders**.
+  - Find tasks in files in a specific folder **and any sub-folders**.
+- ```filter by function task.file.folder.includes( '{{query.file.folder}}' )```
+  - Find tasks in files in the folder that contains the query **and any sub-folders**.
+  - Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.
+- ```filter by function task.file.folder === '{{query.file.folder}}'```
+  - Find tasks in files in the folder that contains the query only (**not tasks in any sub-folders**).
 - ```filter by function task.file.folder.includes("Work/Projects")```
   - By leaving off the trailing slash (`/`) this would also find tasks in any file inside folders such as:
     - `Work/Projects 2023/`
     - `Work/Projects Top Secret/`
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->

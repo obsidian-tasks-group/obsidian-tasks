@@ -43,7 +43,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 
     it('with tag as global filter - all tags included', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
 
         const task = fromLine({
             line: '- [ ] #task Initial  description  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag ',
@@ -54,12 +54,12 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('with non-tag as global filter - all tags included', () => {
         // Arrange
-        GlobalFilter.set('global-filter');
+        GlobalFilter.getInstance().set('global-filter');
 
         const task = fromLine({
             line: '- [ ] global-filter Initial  description  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag ',
@@ -70,14 +70,14 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 });
 
 describe('description', () => {
     it('ignores the global filter when filtering', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
         const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');
 
         // Act, Assert
@@ -90,12 +90,12 @@ describe('description', () => {
         testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('works without a global filter', () => {
         // Arrange
-        GlobalFilter.set('');
+        GlobalFilter.getInstance().set('');
         const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');
 
         // Act, Assert
@@ -106,7 +106,7 @@ describe('description', () => {
         testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('works with regex', () => {

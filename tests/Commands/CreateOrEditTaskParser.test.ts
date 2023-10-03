@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Priority } from '../../src/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
@@ -10,7 +11,7 @@ window.moment = moment;
 
 describe('CreateOrEditTaskParser - testing edited task if line is saved unchanged', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it.each([
@@ -62,7 +63,7 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
     ])(
         'line loaded into "Create or edit task" command: "%s"',
         (line: string, expectedResult: string, globalFilter: string) => {
-            GlobalFilter.set(globalFilter);
+            GlobalFilter.getInstance().set(globalFilter);
             const path = 'a/b/c.md';
             const task = taskFromLine({ line, path });
             expect(task.toFileLineString()).toStrictEqual(expectedResult);
@@ -73,11 +74,11 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
 
 describe('CreateOrEditTaskParser - task recognition', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     it('should recognize task details without global filter', () => {
-        GlobalFilter.set('#task');
+        GlobalFilter.getInstance().set('#task');
         const taskLine =
             '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-10 ✅ 2023-06-22';
         const path = 'a/b/c.md';
@@ -94,5 +95,74 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.scheduledDate).toEqualMoment(moment('2023-06-13'));
         expect(task.dueDate).toEqualMoment(moment('2024-12-10'));
         expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
+    });
+});
+
+describe('CreateOrEditTaskParser - created date', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-09-17'));
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+        resetSettings();
+        GlobalFilter.getInstance().reset();
+    });
+
+    it.each([
+        [
+            // bullet point only
+            '- ',
+            '- [ ]  ➕ 2023-09-17',
+            '2023-09-17',
+        ],
+        [
+            // bullet point and a checkbox
+            '- [ ] ',
+            '- [ ]  ➕ 2023-09-17',
+            '2023-09-17',
+        ],
+        [
+            // with an existing created date
+            '- [ ] without global filter and with ➕ 2023-01-20',
+            '- [ ] without global filter and with ➕ 2023-01-20',
+            '2023-01-20',
+        ],
+    ])(
+        'line loaded into "Create or edit task" command: "%s"',
+        (line: string, expectedTaskLine: string, expectedCreatedDate: string) => {
+            updateSettings({ setCreatedDate: true });
+            const path = 'a/b/c.md';
+
+            const task = taskFromLine({ line, path });
+
+            expect(task.toFileLineString()).toStrictEqual(expectedTaskLine);
+            expect(task.createdDate).toEqualMoment(moment(expectedCreatedDate));
+        },
+    );
+
+    it('should not add created date to a task line with description', () => {
+        updateSettings({ setCreatedDate: true });
+        const path = 'a/b/c.md';
+        const line = '- [ ] hope created date will not be added';
+
+        const task = taskFromLine({ line, path });
+
+        expect(task.toFileLineString()).toStrictEqual('- [ ] hope created date will not be added');
+        expect(task.createdDate).toEqual(null);
+    });
+
+    it('should add created date if adding the global filter', () => {
+        updateSettings({ setCreatedDate: true });
+        GlobalFilter.getInstance().set('#task');
+        const path = 'a/b/c.md';
+        const line = '- [ ] did not have the global filter';
+
+        const task = taskFromLine({ line, path });
+
+        // The global filter doesn't get added until the Modal rewrites the line
+        expect(task.toFileLineString()).toStrictEqual('- [ ] did not have the global filter ➕ 2023-09-17');
+        expect(task.createdDate).toEqualMoment(moment('2023-09-17'));
     });
 });

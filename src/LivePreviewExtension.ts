@@ -64,7 +64,8 @@ class LivePreviewExtension implements PluginValue {
             fallbackDate: null,
         });
 
-        console.debug(`Live Preview Extension: toggle called. Position: ${position} Line: ${line.text}`);
+        // Temporary edit - See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
+        // console.debug(`Live Preview Extension: toggle called. Position: ${position} Line: ${line.text}`);
 
         // Only handle checkboxes of tasks.
         if (task === null) {

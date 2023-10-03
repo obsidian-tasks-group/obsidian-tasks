@@ -3,48 +3,44 @@
  */
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { explainResults, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { GlobalQuery } from '../../src/Config/GlobalQuery';
 
 window.moment = moment;
 
 describe('explain', () => {
-    afterEach(() => {
-        resetSettings();
-        GlobalFilter.reset();
-    });
-
     it('should explain a task', () => {
         const source = '';
-        const query = new Query({ source });
+        const query = new Query(source);
 
         const expectedDisplayText = `Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source)).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, new GlobalFilter(), new GlobalQuery())).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global filter active', () => {
-        GlobalFilter.set('#task');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('#task');
 
         const source = '';
-        const query = new Query({ source });
+        const query = new Query(source);
 
         const expectedDisplayText = `Only tasks containing the global filter '#task'.
 
 Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
-        expect(explainResults(query.source)).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, globalFilter, new GlobalQuery())).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global query active', () => {
-        updateSettings({ globalQuery: 'description includes hello' });
+        const globalQuery = new GlobalQuery('description includes hello');
 
         const source = '';
-        const query = new Query({ source });
+        const query = new Query(source);
 
         const expectedDisplayText = `Explanation of the global query:
 
@@ -54,15 +50,16 @@ Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source)).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toEqual(expectedDisplayText);
     });
 
     it('should explain a task with global query and global filter active', () => {
-        updateSettings({ globalQuery: 'description includes hello' });
-        GlobalFilter.set('#task');
+        const globalQuery = new GlobalQuery('description includes hello');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('#task');
 
         const source = '';
-        const query = new Query({ source });
+        const query = new Query(source);
 
         const expectedDisplayText = `Only tasks containing the global filter '#task'.
 
@@ -74,7 +71,20 @@ Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
 
-        expect(explainResults(query.source)).toEqual(expectedDisplayText);
+        expect(explainResults(query.source, globalFilter, globalQuery)).toEqual(expectedDisplayText);
+    });
+
+    it('should explain a task with global query set but ignored without the global query', () => {
+        const globalQuery = new GlobalQuery('description includes hello');
+
+        const source = 'ignore global query';
+        const query = new Query(source);
+
+        const expectedDisplayText = `Explanation of this Tasks code block query:
+
+No filters supplied. All tasks will match the query.`;
+
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toEqual(expectedDisplayText);
     });
 });
 
@@ -84,14 +94,35 @@ No filters supplied. All tasks will match the query.`;
  *       the right query.
  */
 describe('query used for QueryRenderer', () => {
-    afterEach(() => {
-        resetSettings();
-    });
-
     it('should be the result of combining the global query and the actual query', () => {
+        // Arrange
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
-        updateSettings({ globalQuery: globalQuerySource });
-        expect(getQueryForQueryRenderer(querySource).source).toEqual(`${globalQuerySource}\n${querySource}`);
+        const filePath = 'a/b/c.md';
+
+        // Act
+        const globalQuery = new GlobalQuery(globalQuerySource);
+        const query = getQueryForQueryRenderer(querySource, globalQuery, filePath);
+
+        // Assert
+        expect(query.source).toEqual(`${globalQuerySource}\n${querySource}`);
+        expect(query.filePath).toEqual(filePath);
+    });
+
+    it('should ignore the global query if "ignore global query" is set', () => {
+        // Arrange
+        const globalQuery = new GlobalQuery('path includes from_global_query');
+        const filePath = 'a/b/c.md';
+
+        // Act
+        const query = getQueryForQueryRenderer(
+            'description includes from_block_query\nignore global query',
+            globalQuery,
+            filePath,
+        );
+
+        // Assert
+        expect(query.source).toEqual('description includes from_block_query\nignore global query');
+        expect(query.filePath).toEqual(filePath);
     });
 });

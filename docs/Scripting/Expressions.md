@@ -43,7 +43,7 @@ expression => result
 
 Some example expressions:
 
-<!-- placeholder to force blank line before included text --> <!-- include: Expression.test.Expression_result.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: Expression.test.Expression_result.approved.md -->
 
 ~~~text
 'hello' => 'hello'
@@ -67,7 +67,7 @@ undefined || "No value" => 'No value'
 "I _am_ not _italic_".replaceAll("_", "\\_") => 'I \_am\_ not \_italic\_'
 ~~~
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 Note:
 
@@ -85,7 +85,7 @@ As of Tasks 4.4.0, it is also possible to use more complex constructs in express
 - `if` statements
 - functions
 
-<!-- placeholder to force blank line before included text --> <!-- include: Expression.test.Expression_returns_and_functions.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: Expression.test.Expression_returns_and_functions.approved.md -->
 
 ~~~text
 return 42 => 42
@@ -94,4 +94,4 @@ if (1 === 1) { return "yes"; } else { return "no" } => 'yes'
 function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1) => 'yes'
 ~~~
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->

@@ -1,5 +1,6 @@
-import type { Moment } from 'moment';
+import type { DurationInputArg2, Moment } from 'moment';
 import { TaskRegularExpressions } from '../Task';
+import { PropertyCategory } from '../lib/PropertyCategory';
 
 /**
  * TasksDate encapsulates a date, for simplifying the JavaScript expressions users need to
@@ -42,7 +43,7 @@ export class TasksDate {
      * @param fallBackText - the string to use if the date is null. Defaults to empty string.
      */
     public format(format: string, fallBackText: string = ''): string {
-        return this._date ? this._date!.format(format) : fallBackText;
+        return this._date ? this._date.format(format) : fallBackText;
     }
 
     /**
@@ -52,6 +53,60 @@ export class TasksDate {
      *            OR an empty string if no date, OR null for an invalid date.
      */
     public toISOString(keepOffset?: boolean): string | null {
-        return this._date ? this._date!.toISOString(keepOffset) : '';
+        return this._date ? this._date.toISOString(keepOffset) : '';
+    }
+
+    public get category(): PropertyCategory {
+        const today = window.moment();
+        const date = this.moment;
+        if (!date) {
+            return new PropertyCategory('Undated', 4);
+        }
+        if (date.isBefore(today, 'day')) {
+            return new PropertyCategory('Overdue', 1);
+        }
+        if (date.isSame(today, 'day')) {
+            return new PropertyCategory('Today', 2);
+        }
+        return new PropertyCategory('Future', 3);
+    }
+
+    public get fromNow(): PropertyCategory {
+        const date = this.moment;
+        if (!date) {
+            return new PropertyCategory('', 0);
+        }
+        const order = this.fromNowOrder(date);
+        return new PropertyCategory(date.fromNow(), order);
+    }
+
+    private fromNowOrder(date: moment.Moment) {
+        // Calculate a number that:
+        //   - is the same for all dates with the same 'fromNow()' name,
+        //   - sorts in ascending order of the date.
+
+        const now = window.moment();
+        const earlier = date.isSameOrBefore(now, 'day');
+        const startDateOfThisGroup = this.fromNowStartDateOfGroup(date, earlier, now);
+        const splitPastAndFutureDates = earlier ? 1 : 3;
+        return Number(splitPastAndFutureDates + startDateOfThisGroup.format('YYYYMMDD'));
+    }
+
+    private fromNowStartDateOfGroup(date: moment.Moment, earlier: boolean, now: any) {
+        // Calculate the earliest of all dates with the same 'fromNow()' name.
+
+        // https://momentjs.com/docs/#/displaying/fromnow/
+        // 'If you pass true, you can get the value without the suffix.'
+        const words = date.fromNow(true).split(' ');
+
+        let multiplier: number;
+        const word0AsNumber = Number(words[0]);
+        if (isNaN(word0AsNumber)) {
+            multiplier = 1; // examples: 'a year', 'a month', 'a day'
+        } else {
+            multiplier = word0AsNumber; // examples: '10 years', '6 months', '11 hours'
+        }
+        const unit = words[1] as DurationInputArg2; // day, days, weeks, month, year
+        return earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
     }
 }

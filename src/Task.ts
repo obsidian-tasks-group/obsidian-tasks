@@ -6,8 +6,6 @@ import { GlobalFilter } from './Config/GlobalFilter';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
-import { renderTaskLine } from './TaskLineRenderer';
-import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
 import { TasksDate } from './Scripting/TasksDate';
@@ -42,8 +40,8 @@ export class TaskRegularExpressions {
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
 
-    // Matches - or * list markers, or numbered list markers (eg 1.)
-    public static readonly listMarkerRegex = /([-*]|[0-9]+\.)/;
+    // Matches - * and + list markers, or numbered list markers (eg 1.)
+    public static readonly listMarkerRegex = /([-*+]|[0-9]+\.)/;
 
     // Matches a checkbox and saves the status character inside
     public static readonly checkboxRegex = /\[(.)\]/u;
@@ -93,7 +91,9 @@ export class TaskRegularExpressions {
     // EXAMPLE:
     // description: '#dog #car http://www/ddd#ere #house'
     // matches: #dog, #car, #house
-    public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
+    // MAINTENANCE NOTE:
+    //  If hashTags is modified, please update 'Recognising Tags' in Tags.md in the docs.
+    public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]+/g;
     public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
 }
 
@@ -249,7 +249,7 @@ export class Task {
 
         // return if the line does not have the global filter. Do this before
         // any other processing to improve performance.
-        if (!GlobalFilter.includedIn(taskComponents.body)) {
+        if (!GlobalFilter.getInstance().includedIn(taskComponents.body)) {
             return null;
         }
 
@@ -296,7 +296,7 @@ export class Task {
         taskInfo.tags = taskInfo.tags.map((tag) => tag.trim());
 
         // Remove the Global Filter if it is there
-        taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.equals(tag));
+        taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.getInstance().equals(tag));
 
         return new Task({
             ...taskComponents,
@@ -307,7 +307,12 @@ export class Task {
         });
     }
 
-    private static extractTaskComponents(line: string): TaskComponents | null {
+    /**
+     * Extract the component parts of the task line.
+     * @param line
+     * @returns a {@link TaskComponents} object containing the component parts of the task line
+     */
+    static extractTaskComponents(line: string): TaskComponents | null {
         // Check the line to see if it is a markdown task.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch === null) {
@@ -334,16 +339,6 @@ export class Task {
         }
         return { indentation, listMarker, status, body, blockLink };
     }
-
-    /**
-     * Create an HTML rendered List Item element (LI) for the current task.
-     * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
-     * @param renderDetails
-     */
-    public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
-        return renderTaskLine(this, renderDetails);
-    }
-
     /**
      * Flatten the task as a string that includes all its components.
      *
@@ -488,6 +483,19 @@ export class Task {
      */
     public get priorityNumber(): number {
         return Number.parseInt(this.priority);
+    }
+
+    /**
+     * Returns the text to be used to represent the {@link priority} in group headings.
+     *
+     * Hidden text is used to sort the priorities in decreasing order, from
+     * {@link Priority.Highest} to {@link Priority.Lowest}.
+     */
+    public get priorityNameGroupText(): string {
+        const priorityName = PriorityTools.priorityNameUsingNormal(this.priority);
+        // Text inside the %%..%% comments is used to control the sort order.
+        // The comments are hidden by Obsidian when the headings are rendered.
+        return `%%${this.priority}%%${priorityName} priority`;
     }
 
     /**

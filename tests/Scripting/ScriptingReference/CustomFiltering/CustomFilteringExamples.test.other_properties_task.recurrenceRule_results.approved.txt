@@ -16,9 +16,9 @@ Similar to `recurrence does not include every week`, but case-sensitive.
 =>
 - [ ] my description 🔁 every 4 months on the 3rd Wednesday
 - [ ] my description 🔁 every month
-- [ ] my description
-- [ ] my description
-- [ ] my description
+- [ ] my description 🔁 every month on the 2nd
+- [ ] my description 🔁 every month on the 2nd when done
+- [ ] my description 🔁 every 3 weeks on Thursday
 - [ ] my description 🔁 every 4 weeks
 - [ ] my description 🔁 every 6 days
 - [ ] my description 🔁 every 8 days

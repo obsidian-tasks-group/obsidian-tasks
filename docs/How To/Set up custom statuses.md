@@ -43,7 +43,7 @@ You can read about it in [[Status Settings]].
 
 Suppose that you wanted to create a set of 3 statuses that cycle between each other, perhaps to make important tasks stand-out from everything else:
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -51,7 +51,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 | `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
 | `X` | `!` | Done - Important | `DONE` | Yes |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### The Steps
 
@@ -120,7 +120,7 @@ Repeat again:
 
 ## Related pages
 
-<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
+<!-- force a blank line --><!-- include: snippet-statuses-overview.md -->
 
 > [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
@@ -137,4 +137,4 @@ Repeat again:
 > - Optionally, update your tasks searches to take advantage of the new flexibility
 >   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
-<!-- force a blank line --> <!-- endInclude -->
+<!-- force a blank line --><!-- endInclude -->

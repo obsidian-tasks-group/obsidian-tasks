@@ -2,6 +2,7 @@ import { Plugin } from 'obsidian';
 
 import { Cache } from './Cache';
 import { Commands } from './Commands';
+import { GlobalQuery } from './Config/GlobalQuery';
 import { TasksEvents } from './TasksEvents';
 import { initializeFile } from './File';
 import { InlineRenderer } from './InlineRenderer';
@@ -15,6 +16,7 @@ import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
 import type { Task } from './Task';
 import { tasksApiV1 } from './Api';
+import { GlobalFilter } from './Config/GlobalFilter';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -66,8 +68,16 @@ export default class TasksPlugin extends Plugin {
     }
 
     async loadSettings() {
-        const newSettings = await this.loadData();
+        let newSettings = await this.loadData();
         updateSettings(newSettings);
+
+        // Fetch the updated settings, in case the user has not yet edited the settings,
+        // in which case newSettings is currently empty.
+        newSettings = getSettings();
+        GlobalFilter.getInstance().set(newSettings.globalFilter);
+        GlobalFilter.getInstance().setRemoveGlobalFilter(newSettings.removeGlobalFilter);
+        GlobalQuery.getInstance().set(newSettings.globalQuery);
+
         await this.loadTaskStatuses();
     }
 
