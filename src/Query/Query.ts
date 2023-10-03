@@ -240,7 +240,7 @@ Problem line: "${line}"`;
     public applyQueryToTasks(tasks: Task[]): QueryResult {
         try {
             this.filters.forEach((filter) => {
-                tasks = tasks.filter(filter.filterFunction);
+                tasks = tasks.filter((task) => filter.filterFunction(task));
             });
 
             const { debugSettings } = getSettings();
