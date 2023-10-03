@@ -1,7 +1,6 @@
 import type { GlobalFilter } from '../Config/GlobalFilter';
 import type { GlobalQuery } from '../Config/GlobalQuery';
 import { Query } from '../Query/Query';
-import type { Task } from '../Task';
 
 /**
  * @summary
@@ -58,16 +57,10 @@ export function explainResults(
  * @param {string} source The query source from the task block
  * @param globalQuery
  * @param {string | undefined} path The path to the file containing the query, if available.
- * @param allTasks
  * @returns {Query} The query to execute
  */
-export function getQueryForQueryRenderer(
-    source: string,
-    globalQuery: GlobalQuery,
-    path: string | undefined,
-    allTasks: Task[] = [],
-): Query {
-    const tasksBlockQuery = new Query(source, path, allTasks);
+export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuery, path: string | undefined): Query {
+    const tasksBlockQuery = new Query(source, path);
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
         return tasksBlockQuery;

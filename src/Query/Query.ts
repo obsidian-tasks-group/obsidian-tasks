@@ -17,8 +17,6 @@ export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
     public readonly filePath: string | undefined;
-    // @ts-ignore
-    private readonly allTasks: Task[];
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
@@ -39,10 +37,9 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor(source: string, path: string | undefined = undefined, allTasks: Task[] = []) {
+    constructor(source: string, path: string | undefined = undefined) {
         this.source = source;
         this.filePath = path;
-        this.allTasks = allTasks;
 
         source
             .split('\n')
