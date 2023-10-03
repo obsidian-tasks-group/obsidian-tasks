@@ -1,5 +1,6 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { BlockingField } from '../../../src/Query/Filter/BlockingField';
+import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 
 describe('blocking', () => {
     const isBlocking = new BlockingField().createFilterOrErrorMessage('is blocking');
@@ -30,5 +31,18 @@ describe('blocking', () => {
         expect(isBlocking).toMatchTaskInTaskList(task1, allTasks);
         expect(isBlocking).toMatchTaskInTaskList(task2, allTasks);
         expect(isBlocking).toMatchTaskInTaskList(task3, allTasks);
+    });
+
+    it('should work with Boolean filters', function () {
+        const id = 'abc';
+        const task1 = new TaskBuilder().id(id).build();
+        const task2 = new TaskBuilder().dependsOn([id]).build();
+        const allTasks = [task1, task2];
+
+        const booleanFilter = new BooleanField().createFilterOrErrorMessage('NOT ( NOT ( is blocking ) )');
+
+        // This test ensures that BooleanField passes the task list down to individual filters
+        expect(booleanFilter).toMatchTaskInTaskList(task1, allTasks);
+        expect(booleanFilter).not.toMatchTaskInTaskList(task2, allTasks);
     });
 });
