@@ -35,7 +35,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-1. `task.status.typeGroupText` (added in Tasks X.Y.Z) is a convenient way to sort status types in to a natural order in custom grouping functions.
+1. `task.status.typeGroupText` (added in Tasks 4.9.0) is a convenient way to sort status types in to a natural order in custom grouping functions.
 
 ## Values for Dates in Tasks
 
@@ -98,8 +98,8 @@ For more information, including adding your own customised statuses, see [[Statu
     - `in 5 days`
     - `in 3 months`
     - `in a year`
-1. The `category` properties were added in Tasks X.Y.Z.
-1. The `fromNow` properties were added in Tasks X.Y.Z.
+1. The `category` properties were added in Tasks 4.9.0.
+1. The `fromNow` properties were added in Tasks 4.9.0.
 
 ## Values for Other Task Properties
 
@@ -122,7 +122,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. `task.description` has spaces at the start and end stripped off.
 1. `task.description` includes any tags.
-1. `task.priorityNameGroupText` (added in Tasks X.Y.Z) is a convenient way to sort priority names in to a natural order in custom grouping functions.
+1. `task.priorityNameGroupText` (added in Tasks 4.9.0) is a convenient way to sort priority names in to a natural order in custom grouping functions.
 1. `task.isRecurring` is:
     - `true` if the Task has a **valid** recurrence rule,
     - `false` if:
