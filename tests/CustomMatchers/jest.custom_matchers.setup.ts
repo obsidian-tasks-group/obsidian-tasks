@@ -22,6 +22,7 @@ import {
     toHaveExplanation,
     toMatchTask,
     toMatchTaskFromLine,
+    toMatchTaskInTaskList,
     toMatchTaskWithDescription,
     toMatchTaskWithHeading,
     toMatchTaskWithPath,
@@ -30,6 +31,7 @@ import {
 expect.extend({
     toBeValid,
     toHaveExplanation,
+    toMatchTaskInTaskList,
     toMatchTask,
     toMatchTaskFromLine,
     toMatchTaskWithDescription,

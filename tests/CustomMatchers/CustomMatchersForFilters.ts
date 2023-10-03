@@ -65,6 +65,7 @@ declare global {
         interface Matchers<R> {
             toBeValid(): R;
             toHaveExplanation(expectedExplanation: string): R;
+            toMatchTaskInTaskList(task: Task, allTasks: Task[]): R;
             toMatchTask(task: Task): R;
             toMatchTaskFromLine(line: string): R;
             toMatchTaskWithDescription(description: string): R;
@@ -76,6 +77,7 @@ declare global {
         interface Expect {
             toBeValid(): any;
             toHaveExplanation(expectedExplanation: string): any;
+            toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithDescription(description: string): any;
@@ -87,6 +89,7 @@ declare global {
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
             toHaveExplanation(expectedExplanation: string): any;
+            toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithDescription(description: string): any;
@@ -141,8 +144,14 @@ export function toHaveExplanation(filter: FilterOrErrorMessage, expectedExplanat
     };
 }
 
-export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
-    const matches = filter.filterFunction!(task, [task]); // TODO Pass in allTasks
+/**
+ * Use this test matcher for any filters that need access to all the tasks in the vault.
+ * @param filter
+ * @param task
+ * @param allTasks
+ */
+export function toMatchTaskInTaskList(filter: FilterOrErrorMessage, task: Task, allTasks: Task[]) {
+    const matches = filter.filterFunction!(task, allTasks);
     if (!matches) {
         return {
             message: () => `unexpected failure to match
@@ -158,6 +167,10 @@ task:        "${task.toFileLineString()}"
 with filter: "${filter.instruction}"`,
         pass: true,
     };
+}
+
+export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
+    return toMatchTaskInTaskList(filter, task, [task]);
 }
 
 export function toMatchTaskFromLine(filter: FilterOrErrorMessage, line: string) {
