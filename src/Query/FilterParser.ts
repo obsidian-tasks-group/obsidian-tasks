@@ -35,7 +35,7 @@ import { BlockingField } from './Filter/BlockingField';
 // be kept last.
 // When adding new fields keep this order in mind, putting fields that are more specific before fields that
 // may contain them, and keep BooleanField last.
-export function getFieldCreators(allTasks: Task[]) {
+export function getFieldCreators(_allTasks: Task[]) {
     const fieldCreators: EndsWith<BooleanField> = [
         () => new StatusNameField(), // status.name is before status, to avoid ambiguity
         () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
@@ -60,7 +60,7 @@ export function getFieldCreators(allTasks: Task[]) {
         () => new UrgencyField(),
         () => new RecurrenceField(),
         () => new FunctionField(),
-        () => new BlockingField(allTasks),
+        () => new BlockingField(),
         () => new BooleanField(), // --- Please make sure to keep BooleanField last (see comment above) ---
     ];
 

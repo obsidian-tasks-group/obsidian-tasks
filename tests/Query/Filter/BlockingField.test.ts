@@ -9,7 +9,7 @@ describe('blocking', () => {
 
     const allTasks = [notBlocking, child, parent];
 
-    const filter = new BlockingField(allTasks).createFilterOrErrorMessage('is blocking');
+    const filter = new BlockingField().createFilterOrErrorMessage('is blocking');
 
     it('is blocking', () => {
         expect(filter).toBeValid();
