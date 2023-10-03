@@ -6,9 +6,12 @@ publish: true
 
 ## What's New?
 
-- X.Y.Z: 🔥 Add [[Task Properties|task properties]] `task.priorityNameGroupText` and `task.status.typeGroupText`
-- X.Y.Z: 🔥 Add [[Task Properties#Values in TasksDate Properties|task date properties]] for categorising dates, for example`task.due.category.groupText`
-- X.Y.Z: 🔥 Add [[Task Properties#Values in TasksDate Properties|task date properties]] for grouping dates by [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example `task.due.fromNow.groupText`
+- X.Y.Z: 🔥 Add [[Task Properties|task properties]] `task.priorityNameGroupText` and `task.status.typeGroupText`, for example:
+  - `group by function task.priorityNameGroupText + ': ' + task.status.typeGroupText`
+- X.Y.Z: 🔥 Add [[Task Properties#Values in TasksDate Properties|task date properties]] for categorising dates, for example:
+  - `group by function task.due.category.groupText`
+- X.Y.Z: 🔥 Add [[Task Properties#Values in TasksDate Properties|task date properties]] for grouping dates by [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example:
+  - `group by function task.due.fromNow.groupText`
 - 4.8.0: 🔥 Add [[Query Properties#Values for Query File Properties|query file properties]] `query.file.pathWithoutExtension` and `query.file.filenameWithoutExtension`
 - 4.8.0: 🔥 Add [[Task Properties#Values for File Properties|task file properties]] `task.file.pathWithoutExtension` and `task.file.filenameWithoutExtension`
 - 4.7.0: 🔥 Use [[Query Properties]] and [[Placeholders]] to filter and group with the query's file path, root, folder and name.
