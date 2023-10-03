@@ -77,7 +77,7 @@ describe('status.name', () => {
 
     it('status.name with invalid line is parsed and user sees helpful message', () => {
         // Arrange
-        const filter = FilterParser.parseFilter('status.type gobbledygook', []);
+        const filter = FilterParser.parseFilter('status.type gobbledygook');
 
         // Assert
         expect(filter).not.toBeValid();

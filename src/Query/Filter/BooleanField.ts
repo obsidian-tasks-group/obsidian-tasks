@@ -64,7 +64,7 @@ export class BooleanField extends Field {
                 if (token.name === 'IDENTIFIER' && token.value) {
                     const identifier = token.value.trim();
                     if (!(identifier in this.subFields)) {
-                        const parsedField = parseFilter(identifier, []);
+                        const parsedField = parseFilter(identifier);
                         if (parsedField === null) {
                             return FilterOrErrorMessage.fromError(
                                 line,

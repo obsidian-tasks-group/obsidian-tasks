@@ -1,4 +1,3 @@
-import type { Task } from '../Task';
 import type { Field } from './Filter/Field';
 import { DescriptionField } from './Filter/DescriptionField';
 import { CreatedDateField } from './Filter/CreatedDateField';
@@ -35,7 +34,7 @@ import { BlockingField } from './Filter/BlockingField';
 // be kept last.
 // When adding new fields keep this order in mind, putting fields that are more specific before fields that
 // may contain them, and keep BooleanField last.
-export function getFieldCreators(_allTasks: Task[]) {
+export function getFieldCreators() {
     const fieldCreators: EndsWith<BooleanField> = [
         () => new StatusNameField(), // status.name is before status, to avoid ambiguity
         () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
@@ -70,15 +69,15 @@ export function getFieldCreators(_allTasks: Task[]) {
     return fieldCreators;
 }
 
-export function parseFilter(filterString: string, allTasks: Task[]): FilterOrErrorMessage | null {
-    for (const creator of getFieldCreators(allTasks)) {
+export function parseFilter(filterString: string): FilterOrErrorMessage | null {
+    for (const creator of getFieldCreators()) {
         const field = creator();
         if (field.canCreateFilterForLine(filterString)) return field.createFilterOrErrorMessage(filterString);
     }
     return null;
 }
 
-export function parseSorter(sorterString: string, allTasks: Task[]): Sorter | null {
+export function parseSorter(sorterString: string): Sorter | null {
     // New style parsing, using sorting which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'sort by'
@@ -88,7 +87,7 @@ export function parseSorter(sorterString: string, allTasks: Task[]): Sorter | nu
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of getFieldCreators(allTasks)) {
+    for (const creator of getFieldCreators()) {
         const field = creator();
         const sorter = field.createSorterFromLine(sorterString);
         if (sorter) {
@@ -98,7 +97,7 @@ export function parseSorter(sorterString: string, allTasks: Task[]): Sorter | nu
     return null;
 }
 
-export function parseGrouper(line: string, allTasks: Task[]): Grouper | null {
+export function parseGrouper(line: string): Grouper | null {
     // New style parsing, using grouping which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'group by'
@@ -108,7 +107,7 @@ export function parseGrouper(line: string, allTasks: Task[]): Grouper | null {
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of getFieldCreators(allTasks)) {
+    for (const creator of getFieldCreators()) {
         const field = creator();
         const grouper = field.createGrouperFromLine(line);
         if (grouper) {

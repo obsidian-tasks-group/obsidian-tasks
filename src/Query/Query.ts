@@ -17,6 +17,7 @@ export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
     public readonly filePath: string | undefined;
+    // @ts-ignore
     private readonly allTasks: Task[];
 
     private _limit: number | undefined = undefined;
@@ -311,7 +312,7 @@ Problem line: "${line}"`;
     }
 
     private parseFilter(line: string) {
-        const filterOrError = FilterParser.parseFilter(line, this.allTasks);
+        const filterOrError = FilterParser.parseFilter(line);
         if (filterOrError != null) {
             if (filterOrError.filter) {
                 this._filters.push(filterOrError.filter);
@@ -341,7 +342,7 @@ Problem line: "${line}"`;
     }
 
     private parseSortBy(line: string): boolean {
-        const sortingMaybe = FilterParser.parseSorter(line, this.allTasks);
+        const sortingMaybe = FilterParser.parseSorter(line);
         if (sortingMaybe) {
             this._sorting.push(sortingMaybe);
             return true;
@@ -357,7 +358,7 @@ Problem line: "${line}"`;
      * @private
      */
     private parseGroupBy(line: string): boolean {
-        const groupingMaybe = FilterParser.parseGrouper(line, this.allTasks);
+        const groupingMaybe = FilterParser.parseGrouper(line);
         if (groupingMaybe) {
             this._grouping.push(groupingMaybe);
             return true;
