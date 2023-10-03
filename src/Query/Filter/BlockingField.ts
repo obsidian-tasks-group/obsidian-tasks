@@ -8,10 +8,10 @@ export class BlockingField extends FilterInstructionsBasedField {
     constructor(allTasks: Task[]) {
         super();
         this._allTasks = allTasks;
-        this._filters.add('is blocking', (task) => {
+        this._filters.add('is blocking', (task, allTasks: Task[]) => {
             if (task.id === '') return false;
 
-            return this._allTasks.some((cacheTask) => {
+            return allTasks.some((cacheTask) => {
                 return cacheTask.dependsOn.includes(task.id);
             });
         });

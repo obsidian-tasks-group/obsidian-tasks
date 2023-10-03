@@ -13,9 +13,9 @@ describe('blocking', () => {
 
     it('is blocking', () => {
         expect(filter).toBeValid();
-        expect(filter).not.toMatchTask(notBlocking);
-        expect(filter).toMatchTask(child);
-        expect(filter).not.toMatchTask(parent);
-        expect(filter).not.toMatchTask(childWithoutParent);
+        expect(filter).not.toMatchTaskInTaskList(notBlocking, allTasks);
+        expect(filter).toMatchTaskInTaskList(child, allTasks);
+        expect(filter).not.toMatchTaskInTaskList(parent, allTasks);
+        expect(filter).not.toMatchTaskInTaskList(childWithoutParent, allTasks);
     });
 });
