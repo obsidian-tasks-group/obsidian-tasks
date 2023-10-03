@@ -13,10 +13,10 @@
 | `task.due.toISOString(true)` | `string` | `'2023-07-04T00:00:00.000+00:00'` | `string` | `''` |
 | `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |
 | `task.due.category.sortOrder` | `number` | `3` | `number` | `4` |
-| `task.due.category.groupText` | `string` | `'%%3%% Future'` | `string` | `'%%4%% Undated'` |
+| `task.due.category.groupText` | `string` | `'%%3%% Future'` [^commented] | `string` | `'%%4%% Undated'` [^commented] |
 | `task.due.fromNow.name` | `string` | `'in 22 days'` | `string` | `''` |
 | `task.due.fromNow.sortOrder` | `number` | `320230704` | `number` | `0` |
-| `task.due.fromNow.groupText` | `string` | `'%%320230704%% in 22 days'` | `string` | `''` |
+| `task.due.fromNow.groupText` | `string` | `'%%320230704%% in 22 days'` [^commented] | `string` | `''` |
 
 
 <!-- placeholder to force blank line after included text -->

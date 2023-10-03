@@ -29,7 +29,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.isDone` | `boolean` | `false` | `boolean` | `false` |
 | `task.status.name` | `string` | `'Todo'` | `string` | `'In Progress'` |
 | `task.status.type` | `string` | `'TODO'` | `string` | `'IN_PROGRESS'` |
-| `task.status.typeGroupText` | `string` | `'%%2%%TODO'` | `string` | `'%%1%%IN_PROGRESS'` |
+| `task.status.typeGroupText` | `string` | `'%%2%%TODO'` [^commented] | `string` | `'%%1%%IN_PROGRESS'` [^commented] |
 | `task.status.symbol` | `string` | `' '` | `string` | `'/'` |
 | `task.status.nextSymbol` | `string` | `'x'` | `string` | `'x'` |
 
@@ -74,10 +74,10 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.due.toISOString(true)` | `string` | `'2023-07-04T00:00:00.000+00:00'` | `string` | `''` |
 | `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |
 | `task.due.category.sortOrder` | `number` | `3` | `number` | `4` |
-| `task.due.category.groupText` | `string` | `'%%3%% Future'` | `string` | `'%%4%% Undated'` |
+| `task.due.category.groupText` | `string` | `'%%3%% Future'` [^commented] | `string` | `'%%4%% Undated'` [^commented] |
 | `task.due.fromNow.name` | `string` | `'in 22 days'` | `string` | `''` |
 | `task.due.fromNow.sortOrder` | `number` | `320230704` | `number` | `0` |
-| `task.due.fromNow.groupText` | `string` | `'%%320230704%% in 22 days'` | `string` | `''` |
+| `task.due.fromNow.groupText` | `string` | `'%%320230704%% in 22 days'` [^commented] | `string` | `''` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -111,7 +111,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.descriptionWithoutTags` | `string` | `'Do exercises'` | `string` | `'minimal task'` |
 | `task.priorityNumber` | `number` | `2` | `number` | `3` |
 | `task.priorityName` | `string` | `'Medium'` | `string` | `'Normal'` |
-| `task.priorityNameGroupText` | `string` | `'%%2%%Medium priority'` | `string` | `'%%3%%Normal priority'` |
+| `task.priorityNameGroupText` | `string` | `'%%2%%Medium priority'` [^commented] | `string` | `'%%3%%Normal priority'` [^commented] |
 | `task.urgency` | `number` | `3.3000000000000007` | `number` | `1.9500000000000002` |
 | `task.isRecurring` | `boolean` | `true` | `boolean` | `false` |
 | `task.recurrenceRule` | `string` | `'every day when done'` | `string` | `''` |
@@ -160,3 +160,5 @@ For more information, including adding your own customised statuses, see [[Statu
 1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
 1. `task.file.pathWithoutExtension` was added in Tasks 4.8.0.
 1. `task.file.filenameWithoutExtension` was added in Tasks 4.8.0.
+
+[^commented]: Text inside `%% ... %%` comments is hidden from view. It is used to control the order that group headings are sorted in.
