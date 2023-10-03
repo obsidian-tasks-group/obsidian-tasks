@@ -180,7 +180,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     function filterAllStatuses(filter: FilterOrErrorMessage) {
         const cells: string[] = [`Matches \`${filter!.instruction}\``];
         tasks.forEach((task) => {
-            const matchedText = filter!.filter?.filterFunction(task) ? 'YES' : 'no';
+            const matchedText = filter!.filter?.filterFunction(task, [task]) ? 'YES' : 'no';
             cells.push(matchedText);
         });
         table.addRow(cells);

@@ -137,7 +137,7 @@ export class BooleanField extends Field {
                 // task for each identifier that we find in the postfix expression.
                 if (token.value == null) throw Error('null token value'); // This should not happen
                 const filter = this.subFields[token.value.trim()];
-                const result = filter.filterFunction(task);
+                const result = filter.filterFunction(task, [task]); // TODO Pass in allTasks
                 booleanStack.push(toString(result));
             } else if (token.name === 'OPERATOR') {
                 // To evaluate an operator we need to pop the required number of items from the boolean stack,

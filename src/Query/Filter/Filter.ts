@@ -4,8 +4,12 @@ import type { Explanation } from '../Explain/Explanation';
 /**
  * A filtering function, that takes a Task object and returns
  * whether it matches a particular filtering instruction.
+ *
+ * The complete list of tasks is also passed in, to allow the filter
+ * to optionally use information from other tasks in the vault.
+ * For example, this is needed for filters involving task dependencies.
  */
-export type FilterFunction = (task: Task) => boolean;
+export type FilterFunction = (task: Task, allTasks: Task[]) => boolean;
 
 /**
  * A class that represents a parsed filtering instruction from a tasks code block.
