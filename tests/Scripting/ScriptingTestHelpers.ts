@@ -25,7 +25,12 @@ export function formatToRepresentType(x: any): string {
 }
 
 export function addBackticks(x: any) {
-    return '`' + x + '`';
+    const quotedText = '`' + x + '`';
+    if (typeof x === 'string' && x.includes('%%')) {
+        // Link to footnote that explains comments are not rendered...
+        return `${quotedText} [^commented]`;
+    }
+    return quotedText;
 }
 
 export function determineExpressionType(value: any) {
