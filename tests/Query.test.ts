@@ -617,7 +617,7 @@ describe('Query', () => {
             // Act
             let filteredTasks = [...tasks];
             query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter(filter.filterFunction);
+                filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task));
             });
 
             // Assert

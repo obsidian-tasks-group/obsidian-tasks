@@ -50,7 +50,7 @@ export function testTaskFilterViaQuery(filter: string, task: Task, expected: boo
     // Act
     let filteredTasks = [...tasks];
     query.filters.forEach((filter) => {
-        filteredTasks = filteredTasks.filter(filter.filterFunction);
+        filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task));
     });
     const matched = filteredTasks.length === 1;
 
@@ -84,7 +84,7 @@ export function shouldSupportFiltering(
     // Act
     let filteredTasks = [...tasks];
     query.filters.forEach((filter) => {
-        filteredTasks = filteredTasks.filter(filter.filterFunction);
+        filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task));
     });
 
     // Assert
