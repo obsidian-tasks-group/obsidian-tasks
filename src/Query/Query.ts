@@ -17,6 +17,7 @@ export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
     public readonly filePath: string | undefined;
+    private readonly allTasks: Task[];
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
@@ -37,9 +38,10 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor(source: string, path: string | undefined = undefined) {
+    constructor(source: string, path: string | undefined = undefined, allTasks: Task[] = []) {
         this.source = source;
         this.filePath = path;
+        this.allTasks = allTasks;
 
         source
             .split('\n')
@@ -308,7 +310,7 @@ Problem line: "${line}"`;
     }
 
     private parseFilter(line: string) {
-        const filterOrError = FilterParser.parseFilter(line, []);
+        const filterOrError = FilterParser.parseFilter(line, this.allTasks);
         if (filterOrError != null) {
             if (filterOrError.filter) {
                 this._filters.push(filterOrError.filter);
@@ -338,7 +340,7 @@ Problem line: "${line}"`;
     }
 
     private parseSortBy(line: string): boolean {
-        const sortingMaybe = FilterParser.parseSorter(line, []);
+        const sortingMaybe = FilterParser.parseSorter(line, this.allTasks);
         if (sortingMaybe) {
             this._sorting.push(sortingMaybe);
             return true;
@@ -354,7 +356,7 @@ Problem line: "${line}"`;
      * @private
      */
     private parseGroupBy(line: string): boolean {
-        const groupingMaybe = FilterParser.parseGrouper(line, []);
+        const groupingMaybe = FilterParser.parseGrouper(line, this.allTasks);
         if (groupingMaybe) {
             this._grouping.push(groupingMaybe);
             return true;
