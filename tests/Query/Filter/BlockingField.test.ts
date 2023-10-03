@@ -9,7 +9,7 @@ describe('blocking', () => {
         const child = new TaskBuilder().id('12345').build();
         const childWithoutParent = new TaskBuilder().id('23456').build();
         const parent = new TaskBuilder().dependsOn(['12345']).build();
-        const allTasks = [notBlocking, child, parent];
+        const allTasks = [notBlocking, child, childWithoutParent, parent];
 
         expect(isBlocking).toBeValid();
         expect(isBlocking).not.toMatchTaskInTaskList(notBlocking, allTasks);
