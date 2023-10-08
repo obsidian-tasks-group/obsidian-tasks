@@ -240,7 +240,7 @@
 
         displayResultsIfSearchEmpty = false;
 
-        let results = allTasks.filter(task => task.description.includes(search));
+        let results = allTasks.filter(task => task.description.toLowerCase().includes(search.toLowerCase()));
 
         // remove results that this task already has a relationship with
         results = results.filter((item) => {
