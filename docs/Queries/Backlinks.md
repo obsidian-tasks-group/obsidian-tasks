@@ -33,10 +33,6 @@ You can click on a backlink to navigate directly to the task's source line.
 > [!released]
 > Navigating directly to the task line was introduced in Tasks 3.4.0.
 
-## Limitations
-
-None, currently.
-
 ## Support
 
 We use the label `scope: backlinks` to track feedback on backlinks:
