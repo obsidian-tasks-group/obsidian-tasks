@@ -1,6 +1,7 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { BlockingField } from '../../../src/Query/Filter/BlockingField';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
+import { Status } from '../../../src/Status';
 
 describe('blocking', () => {
     const notBlocking = new TaskBuilder().build();
@@ -48,16 +49,34 @@ describe('blocking', () => {
 });
 
 describe('is not blocked', () => {
-    const id = 'abc';
-    const blocking = new TaskBuilder().id(id).build();
-    const blocked = new TaskBuilder().dependsOn([id]).build();
-    const allTasks = [blocking, blocked];
-
     const isNotBlocked = new BlockingField().createFilterOrErrorMessage('is not blocked');
+    const blockingId = 'abc';
+    const blocking = new TaskBuilder().id(blockingId).build();
 
     it('should hide blocked tasks', () => {
+        const blocked = new TaskBuilder().dependsOn([blockingId]).build();
+        const allTasks = [blocking, blocked];
+
         expect(isNotBlocked).toBeValid();
-        expect(isNotBlocked).toMatchTaskInTaskList(blocked, allTasks);
-        expect(isNotBlocked).not.toMatchTaskInTaskList(blocking, allTasks);
+        expect(isNotBlocked).not.toMatchTaskInTaskList(blocked, allTasks);
+        expect(isNotBlocked).toMatchTaskInTaskList(blocking, allTasks);
+    });
+
+    it('should treat completed deps as non-blocking', () => {
+        const blockingCompletedId = 'def';
+        const blockingCompleted = new TaskBuilder().id(blockingCompletedId).status(Status.DONE).build();
+
+        const blockedByIncomplete = new TaskBuilder().dependsOn([blockingId]).build();
+        const blockedByComplete = new TaskBuilder().dependsOn([blockingCompletedId]).build();
+        const blockedByAll = new TaskBuilder().dependsOn([blockingId, blockingCompletedId]).build();
+
+        const allTasks = [blocking, blockedByIncomplete, blockedByComplete, blockedByAll];
+
+        expect(isNotBlocked).toMatchTaskInTaskList(blockingCompleted, allTasks);
+        expect(isNotBlocked).toMatchTaskInTaskList(blockedByComplete, allTasks);
+        expect(isNotBlocked).not.toMatchTaskInTaskList(blockedByIncomplete, allTasks);
+        expect(isNotBlocked).not.toMatchTaskInTaskList(blockedByAll, allTasks);
+
+        blocking.status.isCompleted();
     });
 });

@@ -11,8 +11,16 @@ export class BlockingField extends FilterInstructionsBasedField {
                 return cacheTask.dependsOn.includes(task.id);
             });
         });
-        this._filters.add('is not blocked', (task, _allTasks) => {
-            if (task.dependsOn.length === 0) return false;
+        this._filters.add('is not blocked', (task, allTasks) => {
+            if (task.dependsOn.length === 0) return true;
+
+            for (const depId of task.dependsOn) {
+                const depTask = allTasks.find((task) => task.id === depId);
+
+                if (!depTask) continue;
+
+                if (!depTask.status.isCompleted()) return false;
+            }
 
             return true;
         });
