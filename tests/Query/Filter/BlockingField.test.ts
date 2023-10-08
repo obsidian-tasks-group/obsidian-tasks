@@ -3,15 +3,15 @@ import { BlockingField } from '../../../src/Query/Filter/BlockingField';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 
 describe('blocking', () => {
+    const notBlocking = new TaskBuilder().build();
+    const child = new TaskBuilder().id('12345').build();
+    const childWithoutParent = new TaskBuilder().id('23456').build();
+    const parent = new TaskBuilder().dependsOn(['12345']).build();
+    const allTasks = [notBlocking, child, childWithoutParent, parent];
+
     const isBlocking = new BlockingField().createFilterOrErrorMessage('is blocking');
 
     it('is blocking', () => {
-        const notBlocking = new TaskBuilder().build();
-        const child = new TaskBuilder().id('12345').build();
-        const childWithoutParent = new TaskBuilder().id('23456').build();
-        const parent = new TaskBuilder().dependsOn(['12345']).build();
-        const allTasks = [notBlocking, child, childWithoutParent, parent];
-
         expect(isBlocking).toBeValid();
         expect(isBlocking).not.toMatchTaskInTaskList(notBlocking, allTasks);
         expect(isBlocking).toMatchTaskInTaskList(child, allTasks);
@@ -44,5 +44,20 @@ describe('blocking', () => {
         // This test ensures that BooleanField passes the task list down to individual filters
         expect(booleanFilter).toMatchTaskInTaskList(task1, allTasks);
         expect(booleanFilter).not.toMatchTaskInTaskList(task2, allTasks);
+    });
+});
+
+describe('is not blocked', () => {
+    // const id = 'abc';
+    // const blocking = new TaskBuilder().id(id).build();
+    // const blocked = new TaskBuilder().dependsOn([id]).build();
+    // const _allTasks = [blocking, blocked];
+
+    const isNotBlocked = new BlockingField().createFilterOrErrorMessage('is not blocked');
+
+    it('should hide blocked tasks', () => {
+        expect(isNotBlocked).toBeValid();
+        // expect(isBlocking).not.toMatchTaskInTaskList(notBlocking, allTasks);
+        // expect(isBlocking).toMatchTaskInTaskList(child, allTasks);
     });
 });
