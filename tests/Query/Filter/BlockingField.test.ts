@@ -48,16 +48,16 @@ describe('blocking', () => {
 });
 
 describe('is not blocked', () => {
-    // const id = 'abc';
-    // const blocking = new TaskBuilder().id(id).build();
-    // const blocked = new TaskBuilder().dependsOn([id]).build();
-    // const _allTasks = [blocking, blocked];
+    const id = 'abc';
+    const blocking = new TaskBuilder().id(id).build();
+    const blocked = new TaskBuilder().dependsOn([id]).build();
+    const allTasks = [blocking, blocked];
 
     const isNotBlocked = new BlockingField().createFilterOrErrorMessage('is not blocked');
 
     it('should hide blocked tasks', () => {
         expect(isNotBlocked).toBeValid();
-        // expect(isBlocking).not.toMatchTaskInTaskList(notBlocking, allTasks);
-        // expect(isBlocking).toMatchTaskInTaskList(child, allTasks);
+        expect(isNotBlocked).toMatchTaskInTaskList(blocked, allTasks);
+        expect(isNotBlocked).not.toMatchTaskInTaskList(blocking, allTasks);
     });
 });
