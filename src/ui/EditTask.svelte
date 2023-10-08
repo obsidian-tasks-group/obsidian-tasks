@@ -8,9 +8,7 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
-    import { offset, shift } from "svelte-floating-ui/dom";
-    import { createFloatingActions } from "svelte-floating-ui";
-    import { size } from "@floating-ui/core";
+    import { computePosition, offset, shift, size } from "@floating-ui/dom";
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../TaskDependency";
     import { replaceTaskWithTasks } from "../File";
 
@@ -402,42 +400,60 @@
     }
 
 
-
     let waitingInputWidth: number;
-    let waitingEl: HTMLElement;
-    let blockingEl: HTMLElement;
+    let waitingOnRef: HTMLElement;
+    let waitingOnContent: HTMLElement;
 
-    const [ waitingOnRef, waitingOnContent ] = createFloatingActions({
-        strategy: "absolute",
-        placement: "bottom",
-        middleware: [
-            offset(6),
-            shift(),
-            size({
-                apply() {
-                    waitingEl && Object.assign(waitingEl.style, {
-                        width: `${waitingInputWidth}px`,
-                    });
-                },
-            })
-        ]
-    });
+    $: {
+        if (waitingOnRef && waitingOnContent) {
+            computePosition(waitingOnRef, waitingOnContent, {
+                middleware: [
+                    offset(6),
+                    shift(),
+                    size({
+                        apply() {
+                            waitingOnContent && Object.assign(waitingOnContent.style, {
+                                width: `${waitingInputWidth}px`,
+                            });
+                        },
+                    })
 
-    const [ blockingRef, blockingContent ] = createFloatingActions({
-        strategy: "absolute",
-        placement: "bottom",
-        middleware: [
-            offset(6),
-            shift(),
-            size({
-                apply() {
-                    blockingEl && Object.assign(blockingEl.style, {
-                        width: `${waitingInputWidth}px`,
-                    });
-                },
-            })
-        ]
-    });
+                ]
+            }).then(({x, y}) => {
+                Object.assign(waitingOnContent.style, {
+                    left: `${x}px`,
+                    top: `${y}px`,
+                });
+            });
+        }
+    }
+
+    let blockingRef: HTMLElement;
+    let blockingContent: HTMLElement;
+
+    $: {
+        if (blockingRef && blockingContent) {
+            computePosition(blockingRef, blockingContent, {
+                middleware: [
+                    offset(6),
+                    shift(),
+                    size({
+                        apply() {
+                            blockingContent && Object.assign(blockingContent.style, {
+                                width: `${waitingInputWidth}px`,
+                            });
+                        },
+                    })
+
+                ]
+            }).then(({x, y}) => {
+                Object.assign(blockingContent.style, {
+                    left: `${x}px`,
+                    top: `${y}px`,
+                });
+            });
+        }
+    }
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
@@ -742,6 +758,7 @@
             <!-- svelte-ignore a11y-accesskey -->
             <span bind:clientWidth={waitingInputWidth}>
                 <input
+                    bind:this={waitingOnRef}
                     bind:value={waitingOnSearch}
                     on:keydown={(e) => taskKeydown(e, "waitingOn")}
                     on:focus={onWaitingFocused}
@@ -750,11 +767,10 @@
                     id="waitingOn"
                     type="text"
                     placeholder="Type to search..."
-                    use:waitingOnRef
                 />
             </span>
             {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
-                <ul class="tasks" use:waitingOnContent bind:this={waitingEl}>
+                <ul class="tasks" bind:this={waitingOnContent}>
                     {#each waitingOnSearchResults as searchTask, index}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <li on:click={() => addWaitingOnTask(searchTask)}
@@ -785,6 +801,7 @@
             <label for="start" class="accesskey-first">Blocking</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
+                bind:this={blockingRef}
                 bind:value={blockingSearch}
                 on:keydown={(e) => taskKeydown(e, "blocking")}
                 on:focus={onBlockingFocused}
@@ -793,10 +810,9 @@
                 id="blocking"
                 type="text"
                 placeholder="Type to search..."
-                use:blockingRef
             />
             {#if blockingSearchResults && blockingSearchResults.length !== 0}
-                <ul class="tasks" use:blockingContent bind:this={blockingEl}>
+                <ul class="tasks" bind:this={blockingContent}>
                     {#each blockingSearchResults as searchTask, index}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <li on:click={() => addBlockingTask(searchTask)}

@@ -290,6 +290,9 @@
 
 .tasks {
     list-style: none;
+    position: absolute;
+    top: 0;
+    left: 0;
     padding: 4px;
     margin: 0;
     background-color: var(--background-primary);

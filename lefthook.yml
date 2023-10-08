@@ -7,8 +7,8 @@ pre-push:
       run: yarn lint
     lint-markdown:
       run: yarn lint:markdown
-#    test:
-#      run: yarn test
+    test:
+      run: yarn test
 
 pre-commit:
   parallel: true
@@ -19,6 +19,6 @@ pre-commit:
     lint-markdown:
       glob: '*.md'
       run: yarn lint:markdown && git add {staged_files}
-#    test:
-#      glob: '*.ts'
-#      run: yarn test {staged_files} --findRelatedTests --passWithNoTests
+    test:
+      glob: '*.ts'
+      run: yarn test {staged_files} --findRelatedTests --passWithNoTests
