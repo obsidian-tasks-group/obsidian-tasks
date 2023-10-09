@@ -233,20 +233,20 @@
         return updatedTask;
     }
 
-    function generateSearchResults(search: string, currentList: Task[]) {
+    function generateSearchResults(search: string) {
         if (!search && !displayResultsIfSearchEmpty) return [];
 
         displayResultsIfSearchEmpty = false;
 
         let results = allTasks.filter(task => task.description.toLowerCase().includes(search.toLowerCase()));
 
-        // remove results that this task already has a relationship with
+        // remove itself, and tasks this task already has a relationship with from results
         results = results.filter((item) => {
             const sameFile = item.description === task.description &&
                 item.taskLocation.path === task.taskLocation.path &&
                 item.taskLocation.lineNumber === task.taskLocation.lineNumber
 
-            return !currentList.includes(item) && !sameFile;
+            return ![...editableTask.waitingOn, ...editableTask.blocking].includes(item) && !sameFile;
         });
 
         // search results favour tasks from the same file as this task
@@ -391,11 +391,11 @@
     }
 
     $: {
-        waitingOnSearchResults = waitingOnFocused ? generateSearchResults(waitingOnSearch, editableTask.waitingOn) : null;
+        waitingOnSearchResults = waitingOnFocused ? generateSearchResults(waitingOnSearch) : null;
     }
 
     $: {
-        blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch, editableTask.blocking) : null;
+        blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch) : null;
     }
 
 
