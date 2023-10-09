@@ -263,8 +263,15 @@
     /*margin: 4px;*/
 
     grid-column: 2 !important;
-}
 
+    .incomplete {
+        background-color: var(--color-yellow);
+    }
+
+    .complete {
+        background-color: var(--color-green);
+    }
+}
 .chip {
     display: inline-flex;
     background-color: var(--interactive-normal);
@@ -319,6 +326,20 @@
 
 .tasks li.selected {
     background-color: var(--text-selection);
+}
+
+.blocking-tooltip {
+    display: none;
+    width: max-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #222;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 90%;
 }
 
 

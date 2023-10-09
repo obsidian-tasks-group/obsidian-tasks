@@ -337,7 +337,6 @@
     }
 
     function onBlockingUnfocused() {
-
         setTimeout(() => {
             blockingFocused = false;
         }, 200);
@@ -453,6 +452,31 @@
                 });
             });
         }
+    }
+
+    let waitingOnChips: HTMLElement[] = [];
+
+    function showWaitingOnTooltip(element: HTMLElement, task: Task) {
+        const tooltip = element.createDiv();
+        tooltip.addClasses(['tooltip', 'pop-up']);
+        tooltip.innerText = task.isDone ? "complete" : "incomplete";
+
+        computePosition(element, tooltip, {
+            placement: "top",
+            middleware: [
+                offset(-18),
+                shift()
+            ]
+        }).then(({x, y}) => {
+            Object.assign(tooltip.style, {
+                left: `${x}px`,
+                top: `${y}px`,
+            });
+        });
+
+        element.addEventListener('mouseleave', () => {
+            tooltip.remove();
+        });
     }
 
     onMount(() => {
@@ -783,9 +807,11 @@
                     {/each}
                 </ul>
             {/if}
-            <div class="chip-container">
-                {#each editableTask.waitingOn as task}
-                    <div class="chip">
+            <div class="chip-container" >
+                {#each editableTask.waitingOn as task, idx}
+                    <div class="chip {task.isDone ? 'complete' : 'incomplete'}"
+                         bind:this={waitingOnChips[idx]}
+                         on:mouseenter={() => showWaitingOnTooltip(waitingOnChips[idx], task)}>
                         <div class="chip-name">{task.descriptionWithoutTags}</div>
 
                         <button on:click={() => removeWaitingOnTask(task)} type="button" class="chip-close">
