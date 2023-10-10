@@ -10,7 +10,7 @@ This page is an experimental work-in-progress.
 
 ![[Getting Started/Getting Started#Limitations and warnings]]
 
-## Getting Started/Create or edit Task
+## Editing Tasks: Create or edit Task
 
 ![[Getting Started/Create or edit Task#Known limitations]]
 
@@ -22,11 +22,11 @@ This page is an experimental work-in-progress.
 
 ![[Getting Started/Tags#Limitations]]
 
-## Concepts: Statuses/Status Settings
+## Concepts: Status Settings
 
 ![[Getting Started/Statuses/Status Settings#Limitations and Issues]]
 
-## Concepts: Statuses/Editing a Status
+## Concepts: Editing a Status
 
 ![[Getting Started/Statuses/Editing a Status#Limitations and Issues]]
 
@@ -50,6 +50,6 @@ This page is an experimental work-in-progress.
 
 ![[Reference/Task Formats/Dataview Format#Limitations of Dataview Format]]
 
-## Writing Tasks: About Task Formats
+## Writing Tasks: Task Formats
 
 ![[Reference/Task Formats/About Task Formats#Limitations of task format support]]
