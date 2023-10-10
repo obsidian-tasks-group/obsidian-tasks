@@ -33,7 +33,7 @@ describe('DateField', () => {
             async (instruction: string) => {
                 const filter = new ScheduledDateField().createFilterOrErrorMessage(instruction);
                 expect(filter).not.toBeValid();
-                expect(filter.error).toContain('Instruction contains unexpanded template instructions');
+                expect(filter.error).toContain('Instruction contains unexpanded template text');
             },
         );
     });

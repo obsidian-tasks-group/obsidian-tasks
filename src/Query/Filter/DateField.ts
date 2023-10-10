@@ -274,7 +274,7 @@ export abstract class DateField extends Field {
         const templateTexts = ['<%', 'YYYY-MM-DD'];
         for (const templateText of templateTexts) {
             if (line.includes(templateText)) {
-                return 'Instruction contains unexpanded template instructions - and cannot be interpreted.';
+                return `Instruction contains unexpanded template text: "${templateText}" - and cannot be interpreted.`;
             }
         }
         return null;
