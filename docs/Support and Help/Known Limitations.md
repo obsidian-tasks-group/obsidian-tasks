@@ -14,6 +14,10 @@ This page is an experimental work-in-progress.
 
 ![[Reference/Task Formats/About Task Formats#Limitations of task format support]]
 
+## Writing Tasks: Tasks Emoji Format
+
+![[Reference/Task Formats/Tasks Emoji Format#Limitations of Tasks Emoji Format]]
+
 ## Writing Tasks: Dataview Format
 
 ![[Reference/Task Formats/Dataview Format#Limitations of Dataview Format]]
