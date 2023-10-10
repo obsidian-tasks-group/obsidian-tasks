@@ -115,8 +115,7 @@ We are tracking this in [issue #2061](https://github.com/obsidian-tasks-group/ob
 
 ### Tasks in Numbered lists
 
-> [!warning]
-> Tasks can read tasks that are in **numbered lists**.
+Tasks can read tasks that are in **numbered lists**.
 
 > [!released]
 Reading tasks inside numbered lists was introduced in Tasks 1.20.0.
@@ -131,27 +130,30 @@ For example:
 
 Editing and toggling tasks in numbered lists works fine: the original number is preserved.
 
-However, when these tasks are displayed in tasks blocks they are displayed as ordinary bullet list items.
+> [!warning]
+> However, when these tasks are displayed in tasks blocks they are displayed as ordinary bullet list items.
 
 This is because they will usually be displayed in a completely different order than in the original list, often mixed in with tasks from bullet lists. The original numbers in this case just don't make sense.
 
 ### Tasks in Blockquotes and Callouts
 
-> [!warning]
-> Tasks can read tasks that are inside [blockquotes](https://www.markdownguide.org/basic-syntax/#blockquotes-1) or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
+Tasks can read tasks that are inside [blockquotes](https://www.markdownguide.org/basic-syntax/#blockquotes-1) or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
 
 > [!released]
 Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
 
-However, under the following very specific circumstance, Tasks cannot add or remove completion dates or make the next copy of a recurring task:
-
-- Obsidian is in Live Preview editor mode (pencil icon in lower right corner),
-- AND the task's markdown is in a callout,
-- AND the user clicked on the task's checkbox to complete or re-open the task.
+> [!warning]
+> However, under the following very specific circumstance, Tasks cannot add or remove completion dates or make the next copy of a recurring task:
+ >
+ > - Obsidian is in **Live Preview** editor mode (pencil icon in lower right corner),
+ > - AND the task's markdown is in a **callout**,
+ > - AND the user **clicked on the task's checkbox** to complete or re-open the task.
 
 If you toggle a task's status in this situation, you will see a warning. Use the command `Tasks: Toggle Done`, or switch to Reading View (book icon in lower right corner) to click the checkbox.
 
 Completing a task by clicking its checkbox from a `tasks` query block _will_ work in any editor mode, even if the query is inside a callout.
+
+We are tracking this in [issue #1768](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1768).
 
 > [!warning]
 > When tasks are in callouts, any preceding heading in the callout is not read by Tasks, so `group by heading` uses the previous heading outside the callout - or `(No Heading)` if none.
@@ -166,7 +168,7 @@ We are tracking this in [issue #1989](https://github.com/obsidian-tasks-group/ob
 We are tracking this in [issue #2100](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2100).
 
 > [!warning]
-> Tasks prevents checking off/completing tasks in **Obsidian Canvas cards**.
+> Tasks sometimes prevents checking off/completing tasks in **Obsidian Canvas cards**.
 
 We are tracking this in [issue #2130](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2130).
 
@@ -177,13 +179,13 @@ We are tracking this in [issue #2130](https://github.com/obsidian-tasks-group/ob
 
 ### Tasks inside Comments
 
-> [!warning]
-> Obsidian supports two styles of **comments**:
+Obsidian supports two styles of **comments**:
 
 - `<!-- I am text in a comment -->`
 - `%% I am text in a comment %%`
 
-Tasks does read any tasks that are inside these comments, because Obsidian does not read them.
+> [!warning]
+> By design, Tasks does read any tasks that are inside these comments, because Obsidian does not read them.
 
 ### Tasks with Footnotes
 
