@@ -271,7 +271,8 @@ export abstract class DateField extends Field {
     }
 
     private checkForUnexpandedTemplateText(line: string): null | string {
-        if (line.includes('<%')) {
+        const templateText = '<%';
+        if (line.includes(templateText)) {
             return 'Instruction contains unexpanded template instructions - and cannot be interpreted.';
         }
         return null;
