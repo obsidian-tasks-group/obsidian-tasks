@@ -6,8 +6,6 @@ publish: true
 
 This page is an experimental work-in-progress.
 
-# Getting Started
-
 ## Writing Tasks: Basics
 
 ![[Getting Started/Getting Started#Limitations and warnings]]
@@ -32,8 +30,6 @@ This page is an experimental work-in-progress.
 
 ![[Getting Started/Statuses/Editing a Status#Limitations and Issues]]
 
-# Queries
-
 ## Queries: Basics
 
 ![[Queries/About Queries#Limitations of Queries]]
@@ -42,19 +38,13 @@ This page is an experimental work-in-progress.
 
 ![[Queries/Regular Expressions#Known limitations]]
 
-# Scripting
-
 ## Scripting: Placeholders
 
 ![[Scripting/Placeholders#Known Limitations]]
 
-# Advanced
-
 ## Advanced: Styling
 
 ![[Advanced/Styling#Limitations of styling]]
-
-# Task Formats
 
 ## Writing Tasks: Dataview Format
 
