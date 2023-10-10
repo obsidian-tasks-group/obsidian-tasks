@@ -4,7 +4,7 @@
 
 import moment from 'moment';
 
-import { ScheduledDateField } from './ScheduledDateField';
+import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
 
 window.moment = moment;
 
