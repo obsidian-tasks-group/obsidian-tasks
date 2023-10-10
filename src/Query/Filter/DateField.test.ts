@@ -20,11 +20,14 @@ afterEach(() => {
 describe('DateField', () => {
     describe('Error Checking', () => {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2324
-        it('should reject any date searches that contain unexpanded templater text', () => {
-            const instruction = 'scheduled before <%+ tp.date.now("YYYY-MM-DD", 0, tp.file.title , "YYYY-MM-DD") %>';
-            const filter = new ScheduledDateField().createFilterOrErrorMessage(instruction);
-            expect(filter).not.toBeValid();
-            expect(filter.error).toContain('Instruction contains unexpanded template instructions');
-        });
+        // All instructions should be scheduled, as test uses ScheduledDateField
+        it.each(['scheduled before <%+ tp.date.now("YYYY-MM-DD", 0, tp.file.title , "YYYY-MM-DD") %>'])(
+            'should reject date search containing unexpanded template text for instruction "%s"',
+            async (instruction: string) => {
+                const filter = new ScheduledDateField().createFilterOrErrorMessage(instruction);
+                expect(filter).not.toBeValid();
+                expect(filter.error).toContain('Instruction contains unexpanded template instructions');
+            },
+        );
     });
 });
