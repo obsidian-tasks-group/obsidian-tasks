@@ -18,6 +18,10 @@ This page is an experimental work-in-progress.
 
 ![[Reference/Task Formats/Dataview Format#Limitations of Dataview Format]]
 
+## Writing Tasks: Using filename as default date
+
+![[Use Filename as Default Date#Limitations]]
+
 ## Editing Tasks: Create or edit Task
 
 ![[Getting Started/Create or edit Task#Known limitations]]
