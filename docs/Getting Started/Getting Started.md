@@ -79,10 +79,12 @@ For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 
 ## Limitations and warnings
 
+### Restart after updating Tasks plugin
+
 > [!warning]
 > Whenever Tasks behaves in an unexpected way, **please try restarting Obsidian**.
 
----
+### Multi-line checklist items
 
 > [!warning]
 > Tasks only supports **single-line checklist items**.
@@ -109,10 +111,11 @@ The following _does not work:_
         and then its description continues on the next line
 ```
 
----
+We are tracking this in [issue #2061](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2061).
 
-> [!warning]
-> Tasks can read tasks that are in **numbered lists**.
+### Tasks in Numbered lists
+
+Tasks can read tasks that are in **numbered lists**.
 
 > [!released]
 Reading tasks inside numbered lists was introduced in Tasks 1.20.0.
@@ -127,49 +130,64 @@ For example:
 
 Editing and toggling tasks in numbered lists works fine: the original number is preserved.
 
-However, when these tasks are displayed in tasks blocks they are displayed as ordinary bullet list items.
+> [!warning]
+> However, when these tasks are displayed in tasks blocks they are displayed as ordinary bullet list items.
 
 This is because they will usually be displayed in a completely different order than in the original list, often mixed in with tasks from bullet lists. The original numbers in this case just don't make sense.
 
----
+### Tasks in Blockquotes and Callouts
 
-> [!warning]
-> Tasks can read tasks that are inside **blockquotes** or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
+Tasks can read tasks that are inside [blockquotes](https://www.markdownguide.org/basic-syntax/#blockquotes-1) or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
 
 > [!released]
 Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
 
-However, under the following very specific circumstance, Tasks cannot add or remove completion dates or make the next copy of a recurring task:
-
-- Obsidian is in Live Preview editor mode (pencil icon in lower right corner),
-- AND the task's markdown is in a callout,
-- AND the user clicked on the task's checkbox to complete or re-open the task.
+> [!warning]
+> However, under the following very specific circumstance, Tasks cannot add or remove completion dates or make the next copy of a recurring task:
+ >
+ > - Obsidian is in **Live Preview** editor mode (pencil icon in lower right corner),
+ > - AND the task's markdown is in a **callout**,
+ > - AND the user **clicked on the task's checkbox** to complete or re-open the task.
 
 If you toggle a task's status in this situation, you will see a warning. Use the command `Tasks: Toggle Done`, or switch to Reading View (book icon in lower right corner) to click the checkbox.
 
 Completing a task by clicking its checkbox from a `tasks` query block _will_ work in any editor mode, even if the query is inside a callout.
 
----
+We are tracking this in [issue #1768](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1768).
+
+> [!warning]
+> When tasks are in callouts, any preceding heading in the callout is not read by Tasks, so `group by heading` uses the previous heading outside the callout - or `(No Heading)` if none.
+
+We are tracking this in [issue #1989](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1989).
+
+### Tasks in Canvas
 
 > [!warning]
 > Tasks cannot read tasks that are in **Obsidian Canvas cards**.
 
----
+We are tracking this in [issue #2100](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2100).
+
+> [!warning]
+> Tasks sometimes prevents checking off/completing tasks in **Obsidian Canvas cards**.
+
+We are tracking this in [issue #2130](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2130).
+
+### Tasks in Code Blocks
 
 > [!warning]
 > Tasks cannot read tasks that are **inside code blocks**, such as the ones used by the **Admonitions plugin**. Use Obsidian's built-in callouts instead.
 
----
+### Tasks in Comments
 
-> [!warning]
-> Obsidian supports two styles of **comments**:
+Obsidian supports two styles of **comments**:
 
 - `<!-- I am text in a comment -->`
 - `%% I am text in a comment %%`
 
-Tasks does read any tasks that are inside these comments, because Obsidian does not read them.
+> [!warning]
+> By design, Tasks does read any tasks that are inside these comments, because Obsidian does not read them.
 
----
+### Tasks with Footnotes
 
 > [!warning]
 > Tasks can only render **inline footnotes**. Regular footnotes are not supported.
@@ -179,15 +197,15 @@ Tasks does read any tasks that are inside these comments, because Obsidian does 
 -   [ ] This footnote _will not work_[^notworking]
 ```
 
----
+### Tasks with Blockquotes
 
 > [!warning]
-> Tasks' support for **block quotes inside tasks** is limited. It renders correctly, but since Tasks only supports a single line, the meta-data of the task will be inside the block quote.
+> Tasks' support for **blockquotes inside tasks** is limited. It renders correctly, but since Tasks only supports a single line, the meta-data of the task will be inside the blockquote.
 
----
+### Rendering tasks in 'loose' lists
 
 > [!warning]
-> Tasks won't render **spaces around list items** if you have a list with empty lines.
+> Tasks won't render **spaces around list items** if you have a list with empty lines (typically known as ['loose' lists](https://spec.commonmark.org/0.30/#loose)).
 
 ```markdown
 -   [ ] First task before the empty line
@@ -195,7 +213,7 @@ Tasks does read any tasks that are inside these comments, because Obsidian does 
 -   [ ] Another task. The empty line above will _not_ result in the tasks being more spaced out.
 ```
 
----
+### Order of metadata/emojis
 
 > [!warning]
 > Tasks reads task lines **backwards from the end of the line**, looking for metadata emojis with values, tags and block links. As soon as it finds a value that it does not recognise, it stops reading.
@@ -209,6 +227,8 @@ This means that you can only put **block links** (`^link-name`) and **tags** aft
 -   [ ] Task with block link _works_ 📅 2021-04-09 ^e5bebf
 ```
 
+We are tracking this in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).
+
 If you are concerned that some values in a task are not being parsed as you intended, perhaps because a task is not being found by Tasks searches, you can view the task in the [[Create or edit Task|‘Create or edit Task’ Modal]].
 
 If there are any **Tasks emojis visible in the Description field**, close the modal and delete or move to the left any unrecognised text.
@@ -216,7 +236,7 @@ If there are any **Tasks emojis visible in the Description field**, close the mo
 ![Create or Edit Modal](../images/modal-showing-unparsed-emoji.png)
 <br>The `Tasks: Create or edit` modal showing a due date that was not parsed, due to trailing `other text`.
 
----
+### Supported file names
 
 > [!warning]
 > Tasks only supports checklist items in markdown files with the file extension `.md`.
