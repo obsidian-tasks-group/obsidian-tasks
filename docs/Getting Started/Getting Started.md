@@ -172,12 +172,12 @@ We are tracking this in [issue #2100](https://github.com/obsidian-tasks-group/ob
 
 We are tracking this in [issue #2130](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2130).
 
-### Tasks inside Code Blocks
+### Tasks in Code Blocks
 
 > [!warning]
 > Tasks cannot read tasks that are **inside code blocks**, such as the ones used by the **Admonitions plugin**. Use Obsidian's built-in callouts instead.
 
-### Tasks inside Comments
+### Tasks in Comments
 
 Obsidian supports two styles of **comments**:
 
@@ -197,7 +197,7 @@ Obsidian supports two styles of **comments**:
 -   [ ] This footnote _will not work_[^notworking]
 ```
 
-### Blockquotes in tasks
+### Tasks with Blockquotes
 
 > [!warning]
 > Tasks' support for **blockquotes inside tasks** is limited. It renders correctly, but since Tasks only supports a single line, the meta-data of the task will be inside the blockquote.
