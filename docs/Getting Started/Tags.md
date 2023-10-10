@@ -86,7 +86,7 @@ For now, see [Find tasks in notes with particular tag](https://github.com/obsidi
 - If you use a tag for the global filter, do not include it in your searches.
 - Tasks does not read tags (or any other information) from file Frontmatter/YAML/Properties: tag values are only read from task lines
   - We are tracking this in [discussion #232](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/232).
-  - See [[#Using tags in YAML, Frontmatter or file Properties]] above for a dataview-assisted workaround.
+  - See [[Tags#Using tags in YAML, Frontmatter or file Properties]] above for a dataview-assisted workaround.
 
 ## Tags and the Global Filter
 
