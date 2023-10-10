@@ -136,7 +136,7 @@ This is because they will usually be displayed in a completely different order t
 ### Tasks in Blockquotes and Callouts
 
 > [!warning]
-> Tasks can read tasks that are inside **blockquotes** or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
+> Tasks can read tasks that are inside [blockquotes](https://www.markdownguide.org/basic-syntax/#blockquotes-1) or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
 
 > [!released]
 Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
@@ -181,10 +181,10 @@ Tasks does read any tasks that are inside these comments, because Obsidian does 
 -   [ ] This footnote _will not work_[^notworking]
 ```
 
-### Block quotes in tasks
+### Blockquotes in tasks
 
 > [!warning]
-> Tasks' support for **block quotes inside tasks** is limited. It renders correctly, but since Tasks only supports a single line, the meta-data of the task will be inside the block quote.
+> Tasks' support for **blockquotes inside tasks** is limited. It renders correctly, but since Tasks only supports a single line, the meta-data of the task will be inside the blockquote.
 
 ### Rendering tasks in 'loose' lists
 
