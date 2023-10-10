@@ -79,10 +79,12 @@ For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 
 ## Limitations and warnings
 
+### Restart after updating Tasks plugin
+
 > [!warning]
 > Whenever Tasks behaves in an unexpected way, **please try restarting Obsidian**.
 
----
+### Multi-line checklist items
 
 > [!warning]
 > Tasks only supports **single-line checklist items**.
@@ -109,7 +111,7 @@ The following _does not work:_
         and then its description continues on the next line
 ```
 
----
+### Tasks in Numbered lists
 
 > [!warning]
 > Tasks can read tasks that are in **numbered lists**.
@@ -131,7 +133,7 @@ However, when these tasks are displayed in tasks blocks they are displayed as or
 
 This is because they will usually be displayed in a completely different order than in the original list, often mixed in with tasks from bullet lists. The original numbers in this case just don't make sense.
 
----
+### Tasks in Blockquotes and Callouts
 
 > [!warning]
 > Tasks can read tasks that are inside **blockquotes** or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
@@ -149,17 +151,17 @@ If you toggle a task's status in this situation, you will see a warning. Use the
 
 Completing a task by clicking its checkbox from a `tasks` query block _will_ work in any editor mode, even if the query is inside a callout.
 
----
+### Tasks in Canvas
 
 > [!warning]
 > Tasks cannot read tasks that are in **Obsidian Canvas cards**.
 
----
+### Tasks inside Code Blocks
 
 > [!warning]
 > Tasks cannot read tasks that are **inside code blocks**, such as the ones used by the **Admonitions plugin**. Use Obsidian's built-in callouts instead.
 
----
+### Tasks inside Comments
 
 > [!warning]
 > Obsidian supports two styles of **comments**:
@@ -169,7 +171,7 @@ Completing a task by clicking its checkbox from a `tasks` query block _will_ wor
 
 Tasks does read any tasks that are inside these comments, because Obsidian does not read them.
 
----
+### Tasks with Footnotes
 
 > [!warning]
 > Tasks can only render **inline footnotes**. Regular footnotes are not supported.
@@ -179,15 +181,15 @@ Tasks does read any tasks that are inside these comments, because Obsidian does 
 -   [ ] This footnote _will not work_[^notworking]
 ```
 
----
+### Block quotes in tasks
 
 > [!warning]
 > Tasks' support for **block quotes inside tasks** is limited. It renders correctly, but since Tasks only supports a single line, the meta-data of the task will be inside the block quote.
 
----
+### Rendering tasks in 'loose' lists
 
 > [!warning]
-> Tasks won't render **spaces around list items** if you have a list with empty lines.
+> Tasks won't render **spaces around list items** if you have a list with empty lines (typically known as ['loose' lists](https://spec.commonmark.org/0.30/#loose)).
 
 ```markdown
 -   [ ] First task before the empty line
@@ -195,7 +197,7 @@ Tasks does read any tasks that are inside these comments, because Obsidian does 
 -   [ ] Another task. The empty line above will _not_ result in the tasks being more spaced out.
 ```
 
----
+### Order of metadata/emojis
 
 > [!warning]
 > Tasks reads task lines **backwards from the end of the line**, looking for metadata emojis with values, tags and block links. As soon as it finds a value that it does not recognise, it stops reading.
@@ -216,7 +218,7 @@ If there are any **Tasks emojis visible in the Description field**, close the mo
 ![Create or Edit Modal](../images/modal-showing-unparsed-emoji.png)
 <br>The `Tasks: Create or edit` modal showing a due date that was not parsed, due to trailing `other text`.
 
----
+### Supported file names
 
 > [!warning]
 > Tasks only supports checklist items in markdown files with the file extension `.md`.
