@@ -111,6 +111,8 @@ The following _does not work:_
         and then its description continues on the next line
 ```
 
+We are tracking this in [issue #2061](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2061).
+
 ### Tasks in Numbered lists
 
 > [!warning]
@@ -151,10 +153,22 @@ If you toggle a task's status in this situation, you will see a warning. Use the
 
 Completing a task by clicking its checkbox from a `tasks` query block _will_ work in any editor mode, even if the query is inside a callout.
 
+> [!warning]
+> When tasks are in callouts, any preceding heading in the callout is not read by Tasks, so `group by heading` uses the previous heading outside the callout - or `(No Heading)` if none.
+
+We are tracking this in [issue #1989](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1989).
+
 ### Tasks in Canvas
 
 > [!warning]
 > Tasks cannot read tasks that are in **Obsidian Canvas cards**.
+
+We are tracking this in [issue #2100](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2100).
+
+> [!warning]
+> Tasks prevents checking off/completing tasks in **Obsidian Canvas cards**.
+
+We are tracking this in [issue #2130](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2130).
 
 ### Tasks inside Code Blocks
 
@@ -210,6 +224,8 @@ This means that you can only put **block links** (`^link-name`) and **tags** aft
 -   [ ] Task with date placed before other text _date will be not recognized_ 📅 2021-04-09 other text
 -   [ ] Task with block link _works_ 📅 2021-04-09 ^e5bebf
 ```
+
+We are tracking this in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).
 
 If you are concerned that some values in a task are not being parsed as you intended, perhaps because a task is not being found by Tasks searches, you can view the task in the [[Create or edit Task|‘Create or edit Task’ Modal]].
 
