@@ -8,13 +8,17 @@ This page is an experimental work-in-progress.
 
 # Getting Started
 
+## Getting Started/Getting Started
+
+![[Getting Started/Getting Started#Limitations and warnings]]
+
 ## Getting Started/Create or edit Task
 
 ![[Getting Started/Create or edit Task#Known limitations]]
 
-## Getting Started/Getting Started
+## Getting Started/Recurring Tasks
 
-![[Getting Started/Getting Started#Limitations and warnings]]
+![[Getting Started/Recurring Tasks#Limitations of Recurring Tasks]]
 
 ## Getting Started/Tags
 
@@ -28,23 +32,7 @@ This page is an experimental work-in-progress.
 
 ![[Getting Started/Statuses/Editing a Status#Limitations and Issues]]
 
-## Getting Started/Recurring Tasks
-
-![[Getting Started/Recurring Tasks#Limitations of Recurring Tasks]]
-
-# Advanced
-
-## Advanced/Styling
-
-![[Advanced/Styling#Limitations of styling]]
-
-# Scripting
-
-## Scripting/Placeholders
-
-![[Scripting/Placeholders#Known Limitations]]
-
-## Queries
+# Queries
 
 ## Queries/About Queries
 
@@ -53,6 +41,18 @@ This page is an experimental work-in-progress.
 ## Queries/Regular Expressions
 
 ![[Queries/Regular Expressions#Known limitations]]
+
+# Scripting
+
+## Scripting/Placeholders
+
+![[Scripting/Placeholders#Known Limitations]]
+
+# Advanced
+
+## Advanced/Styling
+
+![[Advanced/Styling#Limitations of styling]]
 
 # Task Formats
 
