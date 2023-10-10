@@ -45,6 +45,9 @@ export abstract class DateField extends Field {
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        // There have been multiple "bug reports", where the query had un-expanded
+        // template text to signify the search date.
+        // Enough to explicitly trap any such text for date searches:
         const errorText = this.checkForUnexpandedTemplateText(line);
         if (errorText) {
             return FilterOrErrorMessage.fromError(line, errorText);
