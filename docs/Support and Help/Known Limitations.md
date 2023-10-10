@@ -30,11 +30,11 @@ This page is an experimental work-in-progress.
 
 ![[Getting Started/Tags#Limitations]]
 
-## Concepts: Status Settings
+## Settings: Status Settings
 
 ![[Getting Started/Statuses/Status Settings#Limitations and Issues]]
 
-## Concepts: Editing a Status
+## Settings: Editing a Status
 
 ![[Getting Started/Statuses/Editing a Status#Limitations and Issues]]
 
