@@ -10,6 +10,14 @@ This page is an experimental work-in-progress.
 
 ![[Getting Started/Getting Started#Limitations and warnings]]
 
+## Writing Tasks: Task Formats
+
+![[Reference/Task Formats/About Task Formats#Limitations of task format support]]
+
+## Writing Tasks: Dataview Format
+
+![[Reference/Task Formats/Dataview Format#Limitations of Dataview Format]]
+
 ## Editing Tasks: Create or edit Task
 
 ![[Getting Started/Create or edit Task#Known limitations]]
@@ -45,11 +53,3 @@ This page is an experimental work-in-progress.
 ## Advanced: Styling
 
 ![[Advanced/Styling#Limitations of styling]]
-
-## Writing Tasks: Dataview Format
-
-![[Reference/Task Formats/Dataview Format#Limitations of Dataview Format]]
-
-## Writing Tasks: Task Formats
-
-![[Reference/Task Formats/About Task Formats#Limitations of task format support]]
