@@ -30,14 +30,6 @@ This page is an experimental work-in-progress.
 
 ![[Getting Started/Tags#Limitations]]
 
-## Settings: Status Settings
-
-![[Getting Started/Statuses/Status Settings#Limitations and Issues]]
-
-## Settings: Editing a Status
-
-![[Getting Started/Statuses/Editing a Status#Limitations and Issues]]
-
 ## Queries: Basics
 
 ![[Queries/About Queries#Limitations of Queries]]
@@ -45,6 +37,14 @@ This page is an experimental work-in-progress.
 ## Queries: Regular Expressions
 
 ![[Queries/Regular Expressions#Known limitations]]
+
+## Settings: Status Settings
+
+![[Getting Started/Statuses/Status Settings#Limitations and Issues]]
+
+## Settings: Editing a Status
+
+![[Getting Started/Statuses/Editing a Status#Limitations and Issues]]
 
 ## Scripting: Placeholders
 
