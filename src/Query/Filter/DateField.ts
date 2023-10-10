@@ -45,6 +45,11 @@ export abstract class DateField extends Field {
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        const errorText = this.checkForUnexpandedTemplateText(line);
+        if (errorText) {
+            return FilterOrErrorMessage.fromError(line, errorText);
+        }
+
         const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
         if (filterResult.filter !== undefined) {
             return filterResult;
@@ -263,5 +268,12 @@ export abstract class DateField extends Field {
             }
             return [date.format('YYYY-MM-DD dddd')];
         };
+    }
+
+    private checkForUnexpandedTemplateText(line: string): null | string {
+        if (line.includes('<%')) {
+            return 'Instruction contains unexpanded template instructions - and cannot be interpreted.';
+        }
+        return null;
     }
 }
