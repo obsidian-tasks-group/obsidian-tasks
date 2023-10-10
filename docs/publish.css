@@ -92,3 +92,29 @@ pre {
     --callout-color: 0, 200, 83;
     --callout-icon: lucide-rocket;
 }
+
+/* When embedding sections of files, such as in 'Known Limitations.md,
+   headings from the original file are not included in the Table of Contents.
+   To work around this, we add a level 2 heading in the file containing the embed,
+   and hide the level 2 heading from the embedded content.
+*/
+body .markdown-embed h2 {
+    display: none;
+}
+
+/* Try to make embedded content look more like the original content.
+   Based on https://gist.github.com/h7b/18cd8f7bc8543501438318c7105896ec#file-clean-embeds-all-css-L94-L100
+   TODO: Remove the indentation from embedded content.
+*/
+.markdown-preview-view .markdown-embed-content,
+.markdown-preview-view .markdown-embed-content > .markdown-preview-view {
+    max-height: unset;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+/* Don't display a blue border down the left hand side of embedded content. */
+body {
+    --embed-border-left: unset;
+}

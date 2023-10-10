@@ -72,3 +72,15 @@ Examples:
 
 > [!warning]
 > Folders with a comma (`,`) in their name are not supported.
+
+## Limitations
+
+### Recognised date formats
+
+It is not possible to change the format of dates recognised by [[Use Filename as Default Date]]: only `YYYY-MM-DD` or `YYYYMMDD` are recognised.
+
+We are tracking this in [issue #1369](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1369).
+
+### Apply setting to selected folders
+
+Folders with a comma (`,`) in their name are not supported.

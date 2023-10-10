@@ -8,4 +8,5 @@ publish: true
 
 ## Pages in this section
 
+- [[Known Limitations]]
 - [[Report a Bug]]

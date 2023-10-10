@@ -42,3 +42,27 @@ For more information, see [[Priority]].
 ```
 
 For more information, see [[Recurring Tasks]].
+
+## Limitations of Tasks Emoji Format
+
+### Non-breaking spaces: NBSP characters
+
+When copying and pasting text from websites, spaces are sometimes pasted in as `NBSP` characters.
+
+These are generally visible in text editors, but in Obsidian they look like ordinary spaces.
+
+Tasks does not currently treat these characters as spaces, and so emojis and their values may not be read correctly.
+
+We are tracking this in [issue #606](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/606).
+
+### Manual 'double up' arrow emoji not recognised
+
+See [[Tasks Emoji Format#Unicode Variation Selectors]] below.
+
+### Unicode Variation Selectors
+
+Tasks does not understand unicode [Variation Selectors](https://en.wikipedia.org/wiki/Variation_Selectors_(Unicode_block)).
+
+There has been a report of this preventing Tasks from reading the High Priority emoji (⏫) correctly, when added manually.
+
+We are tracking this in [issue #2273](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2273).
