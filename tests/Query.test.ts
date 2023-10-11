@@ -82,6 +82,7 @@ describe('Query parsing', () => {
         'heading includes AND', // Verify Query doesn't confuse this with a boolean query
         'heading includes wibble',
         'is blocking',
+        'is not blocked',
         'is not recurring',
         'is recurring',
         'no created date',
