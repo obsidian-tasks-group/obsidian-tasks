@@ -7,3 +7,35 @@
 - [ ] #task Craft a conclusion ⤵️ mvplec 🆔 0wigip
 - [ ] #task Proofread and edit ⤵️ 0wigip 🆔 5ti6bf
 - [ ] #task Publish the article ⤵️ 5ti6bf
+
+## Blocking Tasks
+
+```tasks
+is blocking
+
+path includes {{query.file.path}}
+```
+
+## Blocked Tasks
+
+```tasks
+is not blocked
+
+path includes {{query.file.path}}
+```
+
+## Show/Hide Instructions
+
+### Hide Id
+
+```tasks
+hide id
+path includes {{query.file.path}}
+```
+
+### Hide dependsOn
+
+```tasks
+hide depends on
+path includes {{query.file.path}}
+```
