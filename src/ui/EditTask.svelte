@@ -803,7 +803,7 @@
                             class:selected={waitingOnSearchIndex !== null && index === waitingOnSearchIndex}
                             on:mouseenter={() => waitingOnSearchIndex = index}
                         >
-                            <div>{searchTask.descriptionWithoutTags}</div>
+                            <div>[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
                             <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
                         </li>
                     {/each}
@@ -811,10 +811,10 @@
             {/if}
             <div class="chip-container" >
                 {#each editableTask.waitingOn as task, idx}
-                    <div class="chip {task.isDone ? 'complete' : 'incomplete'}"
+                    <div class="chip"
                          bind:this={waitingOnChips[idx]}
                          on:mouseenter={() => showWaitingOnTooltip(waitingOnChips[idx], task)}>
-                        <div class="chip-name">{task.descriptionWithoutTags}</div>
+                        <div class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</div>
 
                         <button on:click={() => removeWaitingOnTask(task)} type="button" class="chip-close">
                             <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -846,7 +846,7 @@
                         <li on:click={() => addBlockingTask(searchTask)}
                             class:selected={blockingSearch !== null && index === blockingSearchIndex}
                             on:mouseenter={() => blockingSearchIndex = index}>
-                            {searchTask.descriptionWithoutTags}
+                            [{searchTask.status.symbol}]  {searchTask.descriptionWithoutTags}
                             <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
                         </li>
                     {/each}
@@ -855,7 +855,7 @@
             <div class="chip-container">
                 {#each editableTask.blocking as task}
                     <div class="chip">
-                        <div class="chip-name">{task.descriptionWithoutTags}</div>
+                        <div class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</div>
 
                         <button on:click={() => removeBlockingTask(task)} type="button" class="chip-close">
                             <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
