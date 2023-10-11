@@ -31,6 +31,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     dependsOn: 'task-dependsOn',
     id: 'task-id',
     blockLink: '',
+    // MAINTENANCE: If adding a new value here, add it to Styling.md's 'Generic Classes and Data Attributes' section.
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
@@ -290,6 +291,8 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         id: '',
         dependsOn: '',
         blockLink: '',
+        // MAINTENANCE: If adding a new value here, add it to the list of supported data attributes in
+        //              Styling.md's 'Generic Classes and Data Attributes' section.
     };
 
     switch (component) {
