@@ -248,6 +248,8 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
         case 'description':
         case 'priority':
         case 'recurrenceRule':
+        case 'id':
+        case 'dependsOn':
             componentClassContainer.push(componentClass);
             break;
         case 'createdDate':
