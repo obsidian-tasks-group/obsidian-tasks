@@ -156,6 +156,17 @@ To close the modal and cancel your edits, do one of:
 
 ## Known limitations
 
+### Editing status on Edit task modal
+
+> [!warning]
+> Editing the Status in the modal does not yet add, remove or update the Done date.
+>
+> Also, completing a recurring task via the Status in the modal does not yet add the new recurrence.
+>
+> We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
+>
+> For now, you should still complete tasks via command or by clicking on task checkboxes.
+
 ### Need to scroll on phone screens
 
 On phone screens the 'Create or edit Task' Modal may be too tall to fit on the screen.

@@ -100,7 +100,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status names** is no
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status types** is now possible.
 
-`task.status.typeGroupText` was added in Tasks X.Y.Z.
+`task.status.typeGroupText` was added in Tasks 4.9.0.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.statuses_task.status.type_docs.approved.md -->
 
@@ -375,7 +375,7 @@ The value `task.descriptionWithoutTags` returns a copy of the description with a
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by priority name and number** is now possible.
 
-`task.priorityNameGroupText` was added in Tasks X.Y.Z.
+`task.priorityNameGroupText` was added in Tasks 4.9.0.
 
 Using the priority name:
 
