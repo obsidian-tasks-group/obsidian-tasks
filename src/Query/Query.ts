@@ -28,7 +28,7 @@ export class Query implements IQuery {
     private _ignoreGlobalQuery: boolean = false;
 
     private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency|tags)/;
+        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency|tags|depends on|id)/;
     private readonly shortModeRegexp = /^short/;
     private readonly explainQueryRegexp = /^explain/;
     private readonly ignoreGlobalQueryRegexp = /^ignore global query/;
@@ -301,6 +301,12 @@ Problem line: "${line}"`;
                     break;
                 case 'tags':
                     this._layoutOptions.hideTags = hide;
+                    break;
+                case 'id':
+                    this._layoutOptions.hideId = hide;
+                    break;
+                case 'depends on':
+                    this._layoutOptions.hideDependsOn = hide;
                     break;
                 default:
                     this.setError('do not understand hide/show option', line);

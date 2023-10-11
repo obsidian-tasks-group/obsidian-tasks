@@ -15,6 +15,8 @@ export class LayoutOptions {
     hideEditButton: boolean = false;
     hideUrgency: boolean = true;
     hideTags: boolean = false;
+    hideId: boolean = false;
+    hideDependsOn: boolean = false;
     shortMode: boolean = false;
     explainQuery: boolean = false;
 }
@@ -77,6 +79,8 @@ export class TaskLayout {
             [this.options.hideScheduledDate, 'scheduledDate'],
             [this.options.hideDueDate, 'dueDate'],
             [this.options.hideDoneDate, 'doneDate'],
+            [this.options.hideDependsOn, 'dependsOn'],
+            [this.options.hideId, 'id'],
         ];
         for (const [hide, component] of componentsToHideAndGenerateClasses) {
             this.hideComponent(hide, component);

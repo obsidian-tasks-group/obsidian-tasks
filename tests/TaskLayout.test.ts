@@ -37,8 +37,6 @@ describe('TaskLayout tests', () => {
 
         expect(taskLayout.shownTaskLayoutComponents.join('\n')).toMatchInlineSnapshot(`
             "description
-            dependsOn
-            id
             blockLink"
         `);
         expect(taskLayout.hiddenTaskLayoutComponents.join('\n')).toMatchInlineSnapshot(`
@@ -48,7 +46,9 @@ describe('TaskLayout tests', () => {
             startDate
             scheduledDate
             dueDate
-            doneDate"
+            doneDate
+            dependsOn
+            id"
         `);
         expect(taskLayout.taskListHiddenClasses.join('\n')).toMatchInlineSnapshot(`
             "tasks-layout-hide-priority
@@ -58,6 +58,8 @@ describe('TaskLayout tests', () => {
             tasks-layout-hide-scheduledDate
             tasks-layout-hide-dueDate
             tasks-layout-hide-doneDate
+            tasks-layout-hide-dependsOn
+            tasks-layout-hide-id
             tasks-layout-hide-tags
             tasks-layout-hide-backlinks
             tasks-layout-hide-edit-button

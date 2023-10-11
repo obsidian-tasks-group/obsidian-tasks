@@ -221,6 +221,24 @@ describe('task line rendering', () => {
         );
     });
 
+    it('renders without id', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🆔 12345',
+            { hideId: true },
+            'Full task',
+            [' ⏫', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+        );
+    });
+
+    it('renders without depends on', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ⤵️ 12345',
+            { hideDependsOn: true },
+            'Full task',
+            [' ⏫', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+        );
+    });
+
     it('marks nonexistent task priority as "normal" priority', async () => {
         await testLiAttributes(
             '- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',

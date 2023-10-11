@@ -1381,6 +1381,18 @@ describe('identicalTo', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().tags(['#stuff']));
     });
 
+    it('should check id', () => {
+        const lhs = new TaskBuilder().id('');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().id(''));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().id('12345'));
+    });
+
+    it('should check dependsOn', () => {
+        const lhs = new TaskBuilder().dependsOn([]);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().dependsOn([]));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dependsOn(['12345']));
+    });
+
     it('should correctly compare a task with status read from user settings', () => {
         // This was added when fixing:
         // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2044
