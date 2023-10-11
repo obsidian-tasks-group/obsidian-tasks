@@ -29,19 +29,19 @@ This page gathers together all the documentation on known limitations of the plu
 
 ## Writing Tasks: Basics
 
-![[Getting Started/Getting Started#Limitations and warnings]]
+![[Getting Started#Limitations and warnings]]
 
 ## Writing Tasks: Task Formats
 
-![[Reference/Task Formats/About Task Formats#Limitations of task format support]]
+![[About Task Formats#Limitations of task format support]]
 
 ## Writing Tasks: Tasks Emoji Format
 
-![[Reference/Task Formats/Tasks Emoji Format#Limitations of Tasks Emoji Format]]
+![[Tasks Emoji Format#Limitations of Tasks Emoji Format]]
 
 ## Writing Tasks: Dataview Format
 
-![[Reference/Task Formats/Dataview Format#Limitations of Dataview Format]]
+![[Dataview Format#Limitations of Dataview Format]]
 
 ## Writing Tasks: Using filename as default date
 
@@ -49,36 +49,36 @@ This page gathers together all the documentation on known limitations of the plu
 
 ## Editing Tasks: Create or edit Task
 
-![[Getting Started/Create or edit Task#Known limitations]]
+![[Create or edit Task#Known limitations]]
 
 ## Concepts: Recurring Tasks
 
-![[Getting Started/Recurring Tasks#Limitations of Recurring Tasks]]
+![[Recurring Tasks#Limitations of Recurring Tasks]]
 
 ## Concepts: Tags
 
-![[Getting Started/Tags#Limitations]]
+![[Tags#Limitations]]
 
 ## Queries: Basics
 
-![[Queries/About Queries#Limitations of Queries]]
+![[About Queries#Limitations of Queries]]
 
 ## Queries: Regular Expressions
 
-![[Queries/Regular Expressions#Known limitations]]
+![[Regular Expressions#Known limitations]]
 
 ## Settings: Status Settings
 
-![[Getting Started/Statuses/Status Settings#Limitations and Issues]]
+![[Status Settings#Limitations and Issues]]
 
 ## Settings: Editing a Status
 
-![[Getting Started/Statuses/Editing a Status#Limitations and Issues]]
+![[Editing a Status#Limitations and Issues]]
 
 ## Scripting: Placeholders
 
-![[Scripting/Placeholders#Known Limitations]]
+![[Placeholders#Known Limitations]]
 
 ## Advanced: Styling
 
-![[Advanced/Styling#Limitations of styling]]
+![[Styling#Limitations of styling]]
