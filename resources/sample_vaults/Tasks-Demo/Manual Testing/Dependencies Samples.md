@@ -8,21 +8,65 @@
 - [ ] #task Proofread and edit ⤵️ 0wigip 🆔 5ti6bf
 - [ ] #task Publish the article ⤵️ 5ti6bf
 
+---
+
+## Do Next
+
+```tasks
+((is blocking) AND (is not blocked)) OR (is not blocked)
+not done
+
+path includes {{query.file.path}}
+explain
+```
+
+---
+
 ## Blocking Tasks
+
+### Blocking Tasks - Any Status
 
 ```tasks
 is blocking
 
 path includes {{query.file.path}}
+explain
 ```
 
+### Blocking Tasks - Not Done
+
+```tasks
+is blocking
+not done
+
+path includes {{query.file.path}}
+explain
+```
+
+---
+
 ## Blocked Tasks
+
+### Blocked Tasks  - Any Status
 
 ```tasks
 is not blocked
 
 path includes {{query.file.path}}
+explain
 ```
+
+### Blocked Tasks  - Not Done
+
+```tasks
+is not blocked
+not done
+
+path includes {{query.file.path}}
+explain
+```
+
+---
 
 ## Show/Hide Instructions
 
@@ -31,6 +75,7 @@ path includes {{query.file.path}}
 ```tasks
 hide id
 path includes {{query.file.path}}
+explain
 ```
 
 ### Hide dependsOn
@@ -38,4 +83,5 @@ path includes {{query.file.path}}
 ```tasks
 hide depends on
 path includes {{query.file.path}}
+explain
 ```
