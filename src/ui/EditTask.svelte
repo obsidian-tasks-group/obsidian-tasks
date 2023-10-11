@@ -242,9 +242,11 @@
 
         // remove itself, and tasks this task already has a relationship with from results
         results = results.filter((item) => {
+            // line number is unavailable for the task being edited
+            // Known issue - filters out duplicate lines in task file
             const sameFile = item.description === task.description &&
                 item.taskLocation.path === task.taskLocation.path &&
-                item.taskLocation.lineNumber === task.taskLocation.lineNumber
+                item.originalMarkdown === task.originalMarkdown
 
             return ![...editableTask.waitingOn, ...editableTask.blocking].includes(item) && !sameFile;
         });
