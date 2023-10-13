@@ -1,4 +1,5 @@
 import { TemplatingPluginTools } from '../../src/lib/TemplatingPluginTools';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 
 describe('TemplatingPluginTools', () => {
     const checker = new TemplatingPluginTools();
@@ -20,4 +21,11 @@ describe('TemplatingPluginTools', () => {
             expect(message).toContain('Instruction contains unexpanded template text');
         },
     );
+
+    it('date templating error sample for docs', () => {
+        const instruction = 'happens before <% today %>';
+        const message = checker.findUnexpandedDateText(instruction);
+        expect(message).not.toBeNull();
+        verifyWithFileExtension(message!, 'text');
+    });
 });
