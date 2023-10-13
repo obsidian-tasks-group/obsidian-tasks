@@ -2,7 +2,7 @@
 
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
-<p align="center"><a href="https://publish.obsidian.md/tasks/">Documentation</a></p>
+<p align="center"><a href="https://publish.obsidian.md/tasks/">User Guide</a> - <a href="https://publish.obsidian.md/tasks-contributing/">Contributing Guide</a> - <a href="https://github.com/orgs/obsidian-tasks-group/projects/4/views/1">Roadmap</a></p>
 
 Track tasks across your entire vault. Query them and mark them as done wherever you want. Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
