@@ -6,6 +6,7 @@ import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
 import type { GrouperFunction } from '../Grouper';
+import { TemplatingPluginTools } from '../../lib/TemplatingPluginTools';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
@@ -274,12 +275,6 @@ export abstract class DateField extends Field {
     }
 
     private checkForUnexpandedTemplateText(line: string): null | string {
-        const templateTexts = ['<%', 'YYYY-MM-DD'];
-        for (const templateText of templateTexts) {
-            if (line.includes(templateText)) {
-                return `Instruction contains unexpanded template text: "${templateText}" - and cannot be interpreted.`;
-            }
-        }
-        return null;
+        return new TemplatingPluginTools().findUnexpandedDateText(line);
     }
 }
