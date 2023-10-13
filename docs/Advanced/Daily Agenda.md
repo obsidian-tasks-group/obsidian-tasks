@@ -54,3 +54,19 @@ make sure new notes are created via one of these two plugins, and not `Daily-not
     ```tasks
     done on {{date:YYYY-MM-DD}}
     ```
+
+## Troubleshooting Daily Agenda queries
+
+### Instruction contains unexpanded template text
+
+To guard against accidental running of Tasks searches on template files, all built-in Tasks date searches check for text that looks like template rules.
+
+If found, they will refuse to run the search, as experience has found that the results are rarely what the user intended.
+
+The error message will then contain this text:
+
+<!-- snippet: TemplatingPluginTools.test.TemplatingPluginTools_date_templating_error_sample_for_docs.approved.text -->
+```text
+Instruction contains unexpanded template text: "<%" - and cannot be interpreted.
+```
+<!-- endSnippet -->
