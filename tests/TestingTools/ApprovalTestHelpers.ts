@@ -28,7 +28,20 @@ export function verifyAll<T1>(func: (i: T1) => any, params1: T1[]) {
 }
 
 /**
- * Save an instructions block to disc, so that it can be embedded in
+ Save text to disk, so that it can be embedded in
+ to documentation, using a 'snippet' line.
+ * @param text
+ * @param extensionWithoutDot, such as 'text' or 'explanation.text'. Needed to override the Approvals default of 'txt'.
+ * @param options
+ */
+export function verifyWithFileExtension(text: string, extensionWithoutDot: string, options?: Options): void {
+    options = options || new Options();
+    options = options.forFile().withFileExtention(extensionWithoutDot);
+    verify(text, options);
+}
+
+/**
+ * Save an instructions block to disk, so that it can be embedded in
  * to documentation, using a 'snippet' line.
  * @todo Figure out how to include the '```tasks' and '```' lines:
  *       see discussion in https://github.com/SimonCropp/MarkdownSnippets/issues/537
@@ -36,9 +49,7 @@ export function verifyAll<T1>(func: (i: T1) => any, params1: T1[]) {
  * @param options
  */
 export function verifyQuery(instructions: string, options?: Options): void {
-    options = options || new Options();
-    options = options.forFile().withFileExtention('query.text');
-    verify(instructions, options);
+    verifyWithFileExtension(instructions, 'query.text', options);
 }
 
 /**
@@ -58,9 +69,7 @@ export function verifyQueryExplanation(instructions: string, options?: Options):
 
     expect(query.error).toBeUndefined();
 
-    options = options || new Options();
-    options = options.forFile().withFileExtention('explanation.text');
-    verify(explanation, options);
+    verifyWithFileExtension(explanation, 'explanation.text', options);
 }
 
 /**
@@ -84,7 +93,5 @@ export function verifyTaskBlockExplanation(
 ): void {
     const explanation = explainResults(instructions, globalFilter, globalQuery, 'some/sample/file path.md');
 
-    options = options || new Options();
-    options = options.forFile().withFileExtention('explanation.text');
-    verify(explanation, options);
+    verifyWithFileExtension(explanation, 'explanation.text', options);
 }
