@@ -28,8 +28,10 @@ export function verifyAll<T1>(func: (i: T1) => any, params1: T1[]) {
 }
 
 /**
+ Save text to disk, so that it can be embedded in
+ to documentation, using a 'snippet' line.
  * @param text
- * @param extensionWithoutDot
+ * @param extensionWithoutDot, such as 'text' or 'explanation.text'. Needed to override the Approvals default of 'txt'.
  * @param options
  */
 export function verifyWithFileExtension(text: string, extensionWithoutDot: string, options?: Options): void {
@@ -39,7 +41,7 @@ export function verifyWithFileExtension(text: string, extensionWithoutDot: strin
 }
 
 /**
- * Save an instructions block to disc, so that it can be embedded in
+ * Save an instructions block to disk, so that it can be embedded in
  * to documentation, using a 'snippet' line.
  * @todo Figure out how to include the '```tasks' and '```' lines:
  *       see discussion in https://github.com/SimonCropp/MarkdownSnippets/issues/537
