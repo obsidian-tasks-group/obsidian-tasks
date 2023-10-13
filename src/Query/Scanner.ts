@@ -6,7 +6,7 @@
  * @returns modified input
  */
 export function continue_lines(input: string): string {
-    return input.replace(/(?<!\\)\\\n/g, '').replace(/\\\\\n/g, '\\\n');
+    return input.replace(/\\\n/g, '');
 }
 /**
  * Take an input string and split it into a list of statements.
