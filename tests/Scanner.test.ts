@@ -1,3 +1,6 @@
+/* Note: some tests are sensitive to whitespace changes. Ensure your editor preserves
+ * trailing whitespace.
+ */
 import { continue_lines, scan } from '../src/Query/Scanner';
 
 describe('continue_lines', () => {
@@ -15,7 +18,7 @@ continued`;
         const text = String.raw`line1 \\
 
 line2`;
-        expect(continue_lines(text)).toEqual(String.raw`line1 \
+        expect(continue_lines(text)).toEqual(String.raw`line1 \ 
 line2`);
     });
     it('preserves non-final backslashes', () => {
@@ -23,14 +26,27 @@ line2`);
 continued \\\
 
 line2`;
-        expect(continue_lines(text)).toEqual(String.raw`line\1 continued \\
+        expect(continue_lines(text)).toEqual(String.raw`line\1 continued \\ 
 line2`);
     });
     it('ignores interleaved continuations', () => {
         const text = String.raw`line1\\
 
 line2`;
-        expect(continue_lines(text)).toEqual(String.raw`line1\
+        expect(continue_lines(text)).toEqual(String.raw`line1\ 
+line2`);
+    });
+    it('compresses surrounding spaces', () => {
+        const text = String.raw`line1    \
+            continued`;
+        expect(continue_lines(text)).toEqual(String.raw`line1 continued`);
+    });
+    it('compresses surrounding tabs', () => {
+        const text = `line1\t\\
+\t\tcontinued\\
+
+line2`;
+        expect(continue_lines(text)).toEqual(String.raw`line1 continued 
 line2`);
     });
 });
@@ -44,7 +60,7 @@ due this week`;
     it('strips whitespace', () => {
         const text = String.raw` not done   
         due this week
-        
+
         
         `;
         expect(scan(text)).toEqual(['not done', 'due this week']);
@@ -52,12 +68,12 @@ due this week`;
     it('supports line continuation', () => {
         const text = String.raw`( property1 ) AND \
  (property2)`;
-        expect(scan(text)).toEqual(['( property1 ) AND  (property2)']);
+        expect(scan(text)).toEqual(['( property1 ) AND (property2)']);
     });
     it('drops empty lines', () => {
         const text = String.raw`line1    
  line2 
- 
+
  
   line3
   
