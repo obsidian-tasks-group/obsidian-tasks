@@ -1312,11 +1312,11 @@ At most 8 tasks per group (if any "group by" options are supplied).
             const query = new Query(source);
             expect(query.error).toBeUndefined();
         });
-        it('should', () => {
+        it('should be explained correctly in boolean queries', () => {
             const source = String.raw`explain
-(description includes line 1) OR \
-(description includes line 1 continued\
- with \ backslash)`;
+(description includes line 1) OR        \
+  (description includes line 1 continued\
+with \ backslash)`;
             const query = new Query(source);
 
             const expectedDisplayText = String.raw`(description includes line 1) OR (description includes line 1 continued with \ backslash) =>
