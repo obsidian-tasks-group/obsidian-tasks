@@ -21,6 +21,7 @@ describe('DateField', () => {
     describe('Error Checking', () => {
         // All instructions should be scheduled, as test uses ScheduledDateField
         it.each([
+            // A Templater 'dynamic command', which has a + after <%
             // From https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2324:
             'scheduled before <%+ tp.date.now("YYYY-MM-DD", 0, tp.file.title , "YYYY-MM-DD") %>',
             // From https://publish.obsidian.md/tasks/Advanced/Daily+Agenda.
