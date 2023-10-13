@@ -45,8 +45,12 @@ function formatQueryAndCommentsForDocs(filters: QueryInstructionLineAndDescripti
             const instruction = filter[0];
             const comments = filter.slice(1);
             const punctuatedComments: string[] = punctuateComments(comments);
-            markdown += `- \`\`\`${instruction}\`\`\`
-${punctuatedComments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}
+            markdown += `
+\`\`\`text
+${instruction}
+\`\`\`
+
+${punctuatedComments.map((l) => l.replace(/^( *)/, '$1- ')).join('\n')}
 `;
         }
     }
