@@ -6,6 +6,40 @@ import { continue_lines, scan } from '../src/Query/Scanner';
 // Context: https://stackoverflow.com/questions/42604680/string-raw-when-last-character-is
 const bs = '\\';
 
+const querySource = [
+    '',
+    'description includes 1 hello world    ',
+    '',
+    'description includes 2 hello   \\',
+    '   world   ',
+    '',
+    'description includes 3 hello \\',
+    'world',
+    '',
+    'description includes 4 hello    \\',
+    'world',
+    '',
+    'description includes 5 hello    \\\\',
+    'description includes 6 world',
+    '',
+    'description includes 7 hello world\\',
+    '',
+    'description includes 8 hello world\\\\',
+    '',
+    'description includes 9 hello world\\',
+    'description includes 10 hello world\\\\',
+    '',
+    'description includes 11 hello world\\\\',
+    'description includes 12 hello world',
+    '',
+    'description includes 13 hello world\\\\',
+    'description includes 14 hello world\\\\',
+    '',
+    'description includes 15 hello world\\',
+    '',
+    '',
+].join('\n');
+
 describe('continue_lines', () => {
     it('keeps non-continued text the same', () => {
         const text = [
@@ -99,6 +133,21 @@ describe('continue_lines', () => {
             ].join('\n'),
         );
     });
+
+    it('visualise continue_lines', () => {
+        const output = `
+input:
+-------------------------------------
+${querySource}
+-------------------------------------
+
+result after calling continue_lines():
+-------------------------------------
+${continue_lines(querySource)}
+-------------------------------------
+`;
+        verify(output);
+    });
 });
 
 describe('scan', () => {
@@ -147,40 +196,6 @@ describe('scan', () => {
     });
 
     it('visualise scanning', () => {
-        const querySource = [
-            '',
-            'description includes 1 hello world    ',
-            '',
-            'description includes 2 hello   \\',
-            '   world   ',
-            '',
-            'description includes 3 hello \\',
-            'world',
-            '',
-            'description includes 4 hello    \\',
-            'world',
-            '',
-            'description includes 5 hello    \\\\',
-            'description includes 6 world',
-            '',
-            'description includes 7 hello world\\',
-            '',
-            'description includes 8 hello world\\\\',
-            '',
-            'description includes 9 hello world\\',
-            'description includes 10 hello world\\\\',
-            '',
-            'description includes 11 hello world\\\\',
-            'description includes 12 hello world',
-            '',
-            'description includes 13 hello world\\\\',
-            'description includes 14 hello world\\\\',
-            '',
-            'description includes 15 hello world\\',
-            '',
-            '',
-        ].join('\n');
-
         const output = `
 input:
 -------------------------------------
