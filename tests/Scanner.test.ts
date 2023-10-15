@@ -2,21 +2,27 @@ import { continue_lines, scan } from '../src/Query/Scanner';
 
 describe('continue_lines', () => {
     it('keeps non-continued text the same', () => {
-        const text = String.raw`not done
-due this week`;
+        const text = [
+            String.raw`not done
+due this week`,
+        ].join('\n');
         expect(continue_lines(text)).toEqual(text);
     });
 
     it('removes backslashed newlines', () => {
-        const text = String.raw`line1 \
-continued`;
+        const text = [
+            String.raw`line1 \
+continued`,
+        ].join('\n');
         expect(continue_lines(text)).toEqual('line1 continued');
     });
 
     it('only consumes one backslash', () => {
-        const text = String.raw`line1 \\
+        const text = [
+            String.raw`line1 \\
 
-line2`;
+line2`,
+        ].join('\n');
         expect(continue_lines(text)).toEqual(
             [
                 // force linebreak
@@ -27,10 +33,12 @@ line2`;
     });
 
     it('preserves non-final backslashes', () => {
-        const text = String.raw`line\1 \
+        const text = [
+            String.raw`line\1 \
 continued \\\
 
-line2`;
+line2`,
+        ].join('\n');
         expect(continue_lines(text)).toEqual(
             [
                 // force linebreak
@@ -41,9 +49,11 @@ line2`;
     });
 
     it('ignores interleaved continuations', () => {
-        const text = String.raw`line1\\
+        const text = [
+            String.raw`line1\\
 
-line2`;
+line2`,
+        ].join('\n');
         expect(continue_lines(text)).toEqual(
             [
                 // force linebreak
@@ -54,8 +64,10 @@ line2`;
     });
 
     it('compresses surrounding spaces', () => {
-        const text = String.raw`line1    \
-            continued`;
+        const text = [
+            String.raw`line1    \
+            continued`,
+        ].join('\n');
         expect(continue_lines(text)).toEqual(String.raw`line1 continued`);
     });
 
@@ -76,8 +88,10 @@ line2`;
 
 describe('scan', () => {
     it('works on an easy case', () => {
-        const text = String.raw`not done
-due this week`;
+        const text = [
+            String.raw`not done
+due this week`,
+        ].join('\n');
         expect(scan(text)).toEqual(['not done', 'due this week']);
     });
 
@@ -94,8 +108,10 @@ due this week`;
     });
 
     it('supports line continuation', () => {
-        const text = String.raw`( property1 ) AND \
- (property2)`;
+        const text = [
+            String.raw`( property1 ) AND \
+ (property2)`,
+        ].join('\n');
         expect(scan(text)).toEqual(['( property1 ) AND (property2)']);
     });
 
