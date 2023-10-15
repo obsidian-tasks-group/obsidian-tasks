@@ -420,6 +420,9 @@ describe('Query parsing', () => {
             '(description includes wibble) OR (has due date)',
             '(has due date) OR ((has start date) AND (due after 2021-12-27))',
             '(is not recurring) XOR ((path includes ab/c) OR (happens before 2021-12-27))',
+            String.raw`(description includes line 1) OR \
+(description includes line 1 continued\
+ with \ backslash)`,
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
@@ -1293,6 +1296,35 @@ At most 8 tasks per group (if any "group by" options are supplied).
             expect(queryResult.searchErrorMessage).toEqual(
                 'Error: Search failed.\nThe error message was:\n    "ReferenceError: wibble is not defined"',
             );
+        });
+    });
+
+    describe('line continuations', () => {
+        it('should work in group by functions', () => {
+            const source = String.raw`group by function \
+                const date = task.due.moment; \
+                const now = moment(); \
+                const label = (order, name) => '%%'+order+'%% =='+name+'=='; \
+                if (!date) return label(4, 'Undated'); \
+                if (date.isBefore(now, 'day')) return label(1, 'Overdue'); \
+                if (date.isSame(now, 'day')) return label(2, 'Today'); \
+                return label(3, 'Future');`;
+            const query = new Query(source);
+            expect(query.error).toBeUndefined();
+        });
+        it('should be explained correctly in boolean queries', () => {
+            const source = String.raw`explain
+(description includes line 1) OR        \
+  (description includes line 1 continued\
+with \ backslash)`;
+            const query = new Query(source);
+
+            const expectedDisplayText = String.raw`(description includes line 1) OR (description includes line 1 continued with \ backslash) =>
+  OR (At least one of):
+    description includes line 1
+    description includes line 1 continued with \ backslash
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
     });
 });

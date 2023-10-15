@@ -12,6 +12,7 @@ import * as FilterParser from './FilterParser';
 import type { Grouper } from './Grouper';
 import type { Filter } from './Filter/Filter';
 import { QueryResult } from './QueryResult';
+import { scan } from './Scanner';
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
@@ -41,47 +42,42 @@ export class Query implements IQuery {
         this.source = source;
         this.filePath = path;
 
-        source
-            .split('\n')
-            .map((rawLine: string) => rawLine.trim())
-            .forEach((rawLine: string) => {
-                const line = this.expandPlaceholders(rawLine, path);
-                if (this.error !== undefined) {
-                    // There was an error expanding placeholders.
-                    return;
-                }
+        scan(source).forEach((rawLine: string) => {
+            const line = this.expandPlaceholders(rawLine, path);
+            if (this.error !== undefined) {
+                // There was an error expanding placeholders.
+                return;
+            }
 
-                switch (true) {
-                    case line === '':
-                        break;
-                    case this.shortModeRegexp.test(line):
-                        this._layoutOptions.shortMode = true;
-                        break;
-                    case this.explainQueryRegexp.test(line):
-                        this._layoutOptions.explainQuery = true;
-                        break;
-                    case this.ignoreGlobalQueryRegexp.test(line):
-                        this._ignoreGlobalQuery = true;
-                        break;
-                    case this.limitRegexp.test(line):
-                        this.parseLimit(line);
-                        break;
-                    case this.parseSortBy(line):
-                        break;
-                    case this.parseGroupBy(line):
-                        break;
-                    case this.hideOptionsRegexp.test(line):
-                        this.parseHideOptions(line);
-                        break;
-                    case this.commentRegexp.test(line):
-                        // Comment lines are ignored
-                        break;
-                    case this.parseFilter(line):
-                        break;
-                    default:
-                        this.setError('do not understand query', line);
-                }
-            });
+            switch (true) {
+                case this.shortModeRegexp.test(line):
+                    this._layoutOptions.shortMode = true;
+                    break;
+                case this.explainQueryRegexp.test(line):
+                    this._layoutOptions.explainQuery = true;
+                    break;
+                case this.ignoreGlobalQueryRegexp.test(line):
+                    this._ignoreGlobalQuery = true;
+                    break;
+                case this.limitRegexp.test(line):
+                    this.parseLimit(line);
+                    break;
+                case this.parseSortBy(line):
+                    break;
+                case this.parseGroupBy(line):
+                    break;
+                case this.hideOptionsRegexp.test(line):
+                    this.parseHideOptions(line);
+                    break;
+                case this.commentRegexp.test(line):
+                    // Comment lines are ignored
+                    break;
+                case this.parseFilter(line):
+                    break;
+                default:
+                    this.setError('do not understand query', line);
+            }
+        });
     }
 
     private expandPlaceholders(source: string, path: string | undefined) {
