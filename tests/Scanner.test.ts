@@ -1,6 +1,3 @@
-/* Note: some tests are sensitive to whitespace changes. Ensure your editor preserves
- * trailing whitespace.
- */
 import { continue_lines, scan } from '../src/Query/Scanner';
 
 describe('continue_lines', () => {
@@ -18,23 +15,38 @@ continued`;
         const text = String.raw`line1 \\
 
 line2`;
-        expect(continue_lines(text)).toEqual(String.raw`line1 \ 
-line2`);
+        expect(continue_lines(text)).toEqual(
+            [
+                // force linebreak
+                String.raw`line1 \ `,
+                'line2',
+            ].join('\n'),
+        );
     });
     it('preserves non-final backslashes', () => {
         const text = String.raw`line\1 \
 continued \\\
 
 line2`;
-        expect(continue_lines(text)).toEqual(String.raw`line\1 continued \\ 
-line2`);
+        expect(continue_lines(text)).toEqual(
+            [
+                // force linebreak
+                String.raw`line\1 continued \\ `,
+                'line2',
+            ].join('\n'),
+        );
     });
     it('ignores interleaved continuations', () => {
         const text = String.raw`line1\\
 
 line2`;
-        expect(continue_lines(text)).toEqual(String.raw`line1\ 
-line2`);
+        expect(continue_lines(text)).toEqual(
+            [
+                // force linebreak
+                String.raw`line1\ `,
+                'line2',
+            ].join('\n'),
+        );
     });
     it('compresses surrounding spaces', () => {
         const text = String.raw`line1    \
@@ -46,8 +58,13 @@ line2`);
 \t\tcontinued\\
 
 line2`;
-        expect(continue_lines(text)).toEqual(String.raw`line1 continued 
-line2`);
+        expect(continue_lines(text)).toEqual(
+            [
+                // force linebreak
+                'line1 continued ',
+                'line2',
+            ].join('\n'),
+        );
     });
 });
 
@@ -58,11 +75,14 @@ due this week`;
         expect(scan(text)).toEqual(['not done', 'due this week']);
     });
     it('strips whitespace', () => {
-        const text = String.raw` not done   
-        due this week
-
-        
-        `;
+        const text = [
+            // force line break
+            ' not done   ',
+            '        due this week',
+            '',
+            '        ',
+            '        ',
+        ].join('\n');
         expect(scan(text)).toEqual(['not done', 'due this week']);
     });
     it('supports line continuation', () => {
@@ -71,13 +91,16 @@ due this week`;
         expect(scan(text)).toEqual(['( property1 ) AND (property2)']);
     });
     it('drops empty lines', () => {
-        const text = String.raw`line1    
- line2 
-
- 
-  line3
-  
-  `;
+        const text = [
+            // force line break
+            'line1    ',
+            ' line2 ',
+            '',
+            ' ',
+            '  line3',
+            '  ',
+            '  ',
+        ].join('\n');
         expect(scan(text)).toEqual(['line1', 'line2', 'line3']);
     });
 });
