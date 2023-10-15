@@ -17,6 +17,10 @@ function stripLeadingWhitespace(adjustedInputLine: string) {
     return adjustedInputLine.replace(/^[ \t]*/, '');
 }
 
+function stripEndingSlashAndPrecedingWhitespace(adjustedInputLine: string) {
+    return adjustedInputLine.replace(/[ \t]*\\$/, '');
+}
+
 /**
  * Incremental reworking of {@link continue_lines} away from regular expressions
  * @param input
@@ -30,10 +34,13 @@ export function continue_lines_v2(input: string): string {
         if (joinToNext) {
             adjustedLine = stripLeadingWhitespace(inputLine);
         }
+        if (endsWith1Slash(inputLine)) {
+            adjustedLine = stripEndingSlashAndPrecedingWhitespace(adjustedLine);
+        }
 
         // Save this line:
         if (joinToNext) {
-            outputLines[outputLines.length - 1] += adjustedLine;
+            outputLines[outputLines.length - 1] += ' ' + adjustedLine;
         } else {
             outputLines.push(inputLine);
         }
