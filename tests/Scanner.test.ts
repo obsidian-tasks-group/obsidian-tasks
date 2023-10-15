@@ -8,25 +8,28 @@ const bs = '\\';
 describe('continue_lines', () => {
     it('keeps non-continued text the same', () => {
         const text = [
-            String.raw`not done
-due this week`,
+            // force linebreak
+            'not done',
+            'due this week',
         ].join('\n');
         expect(continue_lines(text)).toEqual(text);
     });
 
     it('removes backslashed newlines', () => {
         const text = [
-            String.raw`line1 ${bs}
-continued`,
+            // force linebreak
+            String.raw`line1 ${bs}`,
+            'continued',
         ].join('\n');
         expect(continue_lines(text)).toEqual('line1 continued');
     });
 
     it('only consumes one backslash', () => {
         const text = [
-            String.raw`line1 ${bs}${bs}
-
-line2`,
+            // force linebreak
+            String.raw`line1 ${bs}${bs}`,
+            '',
+            'line2',
         ].join('\n');
         expect(continue_lines(text)).toEqual(
             [
@@ -39,10 +42,11 @@ line2`,
 
     it('preserves non-final backslashes', () => {
         const text = [
-            String.raw`line\1 ${bs}
-continued ${bs}${bs}${bs}
-
-line2`,
+            // force linebreak
+            String.raw`line\1 ${bs}`,
+            `continued ${bs}${bs}${bs}`,
+            '',
+            'line2',
         ].join('\n');
         expect(continue_lines(text)).toEqual(
             [
@@ -55,9 +59,10 @@ line2`,
 
     it('ignores interleaved continuations', () => {
         const text = [
-            String.raw`line1${bs}${bs}
-
-line2`,
+            // force linebreak
+            String.raw`line1${bs}${bs}`,
+            '',
+            'line2',
         ].join('\n');
         expect(continue_lines(text)).toEqual(
             [
@@ -70,8 +75,9 @@ line2`,
 
     it('compresses surrounding spaces', () => {
         const text = [
-            String.raw`line1    ${bs}
-            continued`,
+            // force linebreak
+            String.raw`line1    ${bs}`,
+            'continued',
         ].join('\n');
         expect(continue_lines(text)).toEqual(String.raw`line1 continued`);
     });
