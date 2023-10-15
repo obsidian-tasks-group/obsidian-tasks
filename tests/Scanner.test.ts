@@ -137,6 +137,20 @@ describe('continue_lines', () => {
         );
     });
 
+    it('should combine together over multiple lines', () => {
+        const text = [
+            // force line break
+            'description includes \\',
+            '   one \\',
+            '   two \\',
+            '   three \\',
+            '   four \\',
+            '   five \\',
+            '   six',
+        ].join('\n');
+        expect(continue_lines(text)).toEqual('description includes one two three four five six');
+    });
+
     it('visualise continue_lines', () => {
         const output = `
 input:
