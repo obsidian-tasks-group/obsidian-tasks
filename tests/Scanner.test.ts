@@ -162,9 +162,7 @@ describe('continue_lines', () => {
             '   five \\',
             '   six',
         ].join('\n');
-        expect(continue_lines_v2(text)).toEqual(
-            'description includes \\   one \\   two \\   three \\   four \\   five \\   six',
-        );
+        expect(continue_lines_v2(text)).toEqual('description includes \\one \\two \\three \\four \\five \\six');
     });
 
     it('visualise continue_lines', () => {

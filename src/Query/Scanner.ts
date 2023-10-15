@@ -13,6 +13,10 @@ function endsWith1Slash(inputLine: string) {
     return inputLine.endsWith('\\');
 }
 
+function stripLeadingWhitespace(adjustedInputLine: string) {
+    return adjustedInputLine.replace(/^[ \t]*/, '');
+}
+
 /**
  * Incremental reworking of {@link continue_lines} away from regular expressions
  * @param input
@@ -22,7 +26,7 @@ export function continue_lines_v2(input: string): string {
     let joinToNext = false;
     for (const inputLine of input.split('\n')) {
         if (joinToNext) {
-            outputLines[outputLines.length - 1] += inputLine;
+            outputLines[outputLines.length - 1] += stripLeadingWhitespace(inputLine);
         } else {
             outputLines.push(inputLine);
         }
