@@ -1,3 +1,4 @@
+import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { continue_lines, scan } from '../src/Query/Scanner';
 
 // There is no way to have a literal \ at the end of a raw string.
@@ -143,5 +144,54 @@ describe('scan', () => {
             '  ',
         ].join('\n');
         expect(scan(text)).toEqual(['line1', 'line2', 'line3']);
+    });
+
+    it('visualise scanning', () => {
+        const querySource = [
+            '',
+            'description includes 1 hello world    ',
+            '',
+            'description includes 2 hello   \\',
+            '   world   ',
+            '',
+            'description includes 3 hello \\',
+            'world',
+            '',
+            'description includes 4 hello    \\',
+            'world',
+            '',
+            'description includes 5 hello    \\\\',
+            'description includes 6 world',
+            '',
+            'description includes 7 hello world\\',
+            '',
+            'description includes 8 hello world\\\\',
+            '',
+            'description includes 9 hello world\\',
+            'description includes 10 hello world\\\\',
+            '',
+            'description includes 11 hello world\\\\',
+            'description includes 12 hello world',
+            '',
+            'description includes 13 hello world\\\\',
+            'description includes 14 hello world\\\\',
+            '',
+            'description includes 15 hello world\\',
+            '',
+            '',
+        ].join('\n');
+
+        const output = `
+input:
+-------------------------------------
+${querySource}
+-------------------------------------
+
+result after removing continuation characters:
+-------------------------------------
+${scan(querySource).join('\n')}
+-------------------------------------
+`;
+        verify(output);
     });
 });
