@@ -8,6 +8,16 @@
 export function continue_lines(input: string): string {
     return input.replace(/[ \t]*\\\n[ \t]*/g, ' ');
 }
+
+/**
+ * Incremental reworking of {@link continue_lines} away from regular expressions
+ * @param input
+ */
+export function continue_lines_v2(input: string): string {
+    const inputLines = input.split('\n');
+    return inputLines.join('\n');
+}
+
 /**
  * Take an input string and split it into a list of statements.
  *
