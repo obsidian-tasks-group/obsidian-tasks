@@ -37,6 +37,9 @@ const querySource = [
     '',
     'description includes 15 hello world\\',
     '',
+    'description includes 16 hello world \\ ',
+    'description includes 17 hello world \\\\ ',
+    '',
     '',
 ].join('\n');
 
