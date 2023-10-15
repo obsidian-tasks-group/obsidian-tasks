@@ -124,8 +124,9 @@ describe('scan', () => {
 
     it('supports line continuation', () => {
         const text = [
-            String.raw`( property1 ) AND \
- (property2)`,
+            // force line break
+            String.raw`( property1 ) AND ${bs}`,
+            ' (property2)',
         ].join('\n');
         expect(scan(text)).toEqual(['( property1 ) AND (property2)']);
     });
