@@ -22,7 +22,7 @@ export function continue_lines_v2(input: string): string {
     let joinToNext = false;
     for (const inputLine of input.split('\n')) {
         if (joinToNext) {
-            outputLines[outputLines.length - 1] = outputLines[outputLines.length - 1] + inputLine;
+            outputLines[outputLines.length - 1] += inputLine;
         } else {
             outputLines.push(inputLine);
         }
