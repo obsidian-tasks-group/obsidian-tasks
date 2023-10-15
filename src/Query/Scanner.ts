@@ -42,7 +42,7 @@ export function continue_lines_v2(input: string): string {
         if (joinToNext) {
             outputLines[outputLines.length - 1] += ' ' + adjustedLine;
         } else {
-            outputLines.push(inputLine);
+            outputLines.push(adjustedLine);
         }
 
         // Decide what to do with the next line:
