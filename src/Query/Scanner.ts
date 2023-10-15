@@ -10,6 +10,21 @@ function stripEndingSlashAndPrecedingWhitespace(adjustedInputLine: string) {
     return adjustedInputLine.replace(/[ \t]*\\$/, '');
 }
 
+function adjustLine(inputLine: string, joinToNext: boolean) {
+    let adjustedLine = inputLine;
+    if (joinToNext) {
+        // The new line will be appended to the previous one,
+        // so discard any leading white space:
+        adjustedLine = stripLeadingWhitespace(inputLine);
+    }
+    if (endsWith1Slash(inputLine)) {
+        // This is a continuation line, so remove its trailing backslash
+        // and any spare white space beforehand.
+        adjustedLine = stripEndingSlashAndPrecedingWhitespace(adjustedLine);
+    }
+    return adjustedLine;
+}
+
 /**
  * Removes newlines escaped by a backslash.
  * A trailing backslash at the end of a line can be escaped by doubling it.
@@ -21,14 +36,7 @@ export function continue_lines(input: string): string {
     const outputLines: string[] = [];
     let joinToNext = false;
     for (const inputLine of input.split('\n')) {
-        // Adjust the line:
-        let adjustedLine = inputLine;
-        if (joinToNext) {
-            adjustedLine = stripLeadingWhitespace(inputLine);
-        }
-        if (endsWith1Slash(inputLine)) {
-            adjustedLine = stripEndingSlashAndPrecedingWhitespace(adjustedLine);
-        }
+        const adjustedLine = adjustLine(inputLine, joinToNext);
 
         // Save this line:
         if (joinToNext) {
