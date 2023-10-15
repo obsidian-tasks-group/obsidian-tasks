@@ -83,10 +83,12 @@ describe('continue_lines', () => {
     });
 
     it('compresses surrounding tabs', () => {
-        const text = `line1\t\\
+        const text = [
+            `line1\t\\
 \t\tcontinued\\
 
-line2`;
+line2`,
+        ].join('\n');
         expect(continue_lines(text)).toEqual(
             [
                 // force linebreak
