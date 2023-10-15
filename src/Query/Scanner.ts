@@ -25,12 +25,20 @@ export function continue_lines_v2(input: string): string {
     const outputLines: string[] = [];
     let joinToNext = false;
     for (const inputLine of input.split('\n')) {
+        // Adjust the line:
+        let adjustedLine = inputLine;
         if (joinToNext) {
-            const adjustedLine = stripLeadingWhitespace(inputLine);
+            adjustedLine = stripLeadingWhitespace(inputLine);
+        }
+
+        // Save this line:
+        if (joinToNext) {
             outputLines[outputLines.length - 1] += adjustedLine;
         } else {
             outputLines.push(inputLine);
         }
+
+        // Decide what to do with the next line:
         joinToNext = endsWith1Slash(inputLine);
     }
     return outputLines.join('\n');
