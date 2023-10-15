@@ -26,7 +26,8 @@ export function continue_lines_v2(input: string): string {
     let joinToNext = false;
     for (const inputLine of input.split('\n')) {
         if (joinToNext) {
-            outputLines[outputLines.length - 1] += stripLeadingWhitespace(inputLine);
+            const adjustedLine = stripLeadingWhitespace(inputLine);
+            outputLines[outputLines.length - 1] += adjustedLine;
         } else {
             outputLines.push(inputLine);
         }
