@@ -84,10 +84,11 @@ describe('continue_lines', () => {
 
     it('compresses surrounding tabs', () => {
         const text = [
-            `line1\t\\
-\t\tcontinued\\
-
-line2`,
+            // force linebreak
+            'line1\t\\',
+            '\t\tcontinued\\',
+            '',
+            'line2',
         ].join('\n');
         expect(continue_lines(text)).toEqual(
             [
@@ -102,8 +103,9 @@ line2`,
 describe('scan', () => {
     it('works on an easy case', () => {
         const text = [
-            String.raw`not done
-due this week`,
+            // force line break
+            'not done',
+            'due this week',
         ].join('\n');
         expect(scan(text)).toEqual(['not done', 'due this week']);
     });
