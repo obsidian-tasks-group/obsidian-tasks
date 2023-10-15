@@ -1,5 +1,10 @@
 import { continue_lines, scan } from '../src/Query/Scanner';
 
+// There is no way to have a literal \ at the end of a raw string.
+// In such cases, we use substitution instead.
+// Context: https://stackoverflow.com/questions/42604680/string-raw-when-last-character-is
+const bs = '\\';
+
 describe('continue_lines', () => {
     it('keeps non-continued text the same', () => {
         const text = [
@@ -11,7 +16,7 @@ due this week`,
 
     it('removes backslashed newlines', () => {
         const text = [
-            String.raw`line1 \
+            String.raw`line1 ${bs}
 continued`,
         ].join('\n');
         expect(continue_lines(text)).toEqual('line1 continued');
@@ -19,7 +24,7 @@ continued`,
 
     it('only consumes one backslash', () => {
         const text = [
-            String.raw`line1 \\
+            String.raw`line1 ${bs}${bs}
 
 line2`,
         ].join('\n');
@@ -34,8 +39,8 @@ line2`,
 
     it('preserves non-final backslashes', () => {
         const text = [
-            String.raw`line\1 \
-continued \\\
+            String.raw`line\1 ${bs}
+continued ${bs}${bs}${bs}
 
 line2`,
         ].join('\n');
@@ -50,7 +55,7 @@ line2`,
 
     it('ignores interleaved continuations', () => {
         const text = [
-            String.raw`line1\\
+            String.raw`line1${bs}${bs}
 
 line2`,
         ].join('\n');
@@ -65,7 +70,7 @@ line2`,
 
     it('compresses surrounding spaces', () => {
         const text = [
-            String.raw`line1    \
+            String.raw`line1    ${bs}
             continued`,
         ].join('\n');
         expect(continue_lines(text)).toEqual(String.raw`line1 continued`);
