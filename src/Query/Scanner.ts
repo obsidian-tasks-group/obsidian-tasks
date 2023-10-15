@@ -14,8 +14,11 @@ export function continue_lines(input: string): string {
  * @param input
  */
 export function continue_lines_v2(input: string): string {
-    const inputLines = input.split('\n');
-    return inputLines.join('\n');
+    const outputLines = [];
+    for (const inputLine of input.split('\n')) {
+        outputLines.push(inputLine);
+    }
+    return outputLines.join('\n');
 }
 
 /**
