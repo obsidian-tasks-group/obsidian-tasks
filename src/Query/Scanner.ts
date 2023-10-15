@@ -9,14 +9,24 @@ export function continue_lines(input: string): string {
     return input.replace(/[ \t]*\\\n[ \t]*/g, ' ');
 }
 
+function endsWith1Slash(inputLine: string) {
+    return inputLine.endsWith('\\');
+}
+
 /**
  * Incremental reworking of {@link continue_lines} away from regular expressions
  * @param input
  */
 export function continue_lines_v2(input: string): string {
-    const outputLines = [];
+    const outputLines: string[] = [];
+    let joinToNext = false;
     for (const inputLine of input.split('\n')) {
-        outputLines.push(inputLine);
+        if (joinToNext) {
+            outputLines[outputLines.length - 1] = outputLines[outputLines.length - 1] + inputLine;
+        } else {
+            outputLines.push(inputLine);
+        }
+        joinToNext = endsWith1Slash(inputLine);
     }
     return outputLines.join('\n');
 }
