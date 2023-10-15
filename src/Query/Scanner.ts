@@ -1,14 +1,3 @@
-/**
- * Removes newlines escaped by a backslash.
- * A trailing backslash at the end of a line can be escaped by doubling it.
- *
- * @param input input string
- * @returns modified input
- */
-export function continue_lines(input: string): string {
-    return input.replace(/[ \t]*\\\n[ \t]*/g, ' ');
-}
-
 function endsWith1Slash(inputLine: string) {
     return inputLine.endsWith('\\');
 }
@@ -22,10 +11,13 @@ function stripEndingSlashAndPrecedingWhitespace(adjustedInputLine: string) {
 }
 
 /**
- * Incremental reworking of {@link continue_lines} away from regular expressions
- * @param input
+ * Removes newlines escaped by a backslash.
+ * A trailing backslash at the end of a line can be escaped by doubling it.
+ *
+ * @param input input string
+ * @returns modified input
  */
-export function continue_lines_v2(input: string): string {
+export function continue_lines(input: string): string {
     const outputLines: string[] = [];
     let joinToNext = false;
     for (const inputLine of input.split('\n')) {
