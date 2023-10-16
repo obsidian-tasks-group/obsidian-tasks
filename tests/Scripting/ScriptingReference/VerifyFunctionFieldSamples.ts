@@ -5,6 +5,7 @@ import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrou
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
 import { expandPlaceholders } from '../../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../../src/Scripting/QueryContext';
+import { scan } from '../../../src/Query/Scanner';
 
 /** For example, 'task.due' */
 type TaskPropertyName = string;
@@ -14,6 +15,12 @@ export type CustomPropertyDocsTestData = [TaskPropertyName, QueryInstructionLine
 // -----------------------------------------------------------------------------------------------------------------
 // Helper functions
 // -----------------------------------------------------------------------------------------------------------------
+
+function preprocessSingleInstruction(instruction: string, path: string) {
+    const instructions = scan(instruction);
+    expect(instructions.length).toEqual(1);
+    return expandPlaceholders(instructions[0], makeQueryContext(path));
+}
 
 function punctuateComments(comments: string[]) {
     return comments.map((comment) => {
@@ -69,7 +76,7 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
         const instruction = filter[0];
         const comment = filter.slice(1);
 
-        const expandedInstruction = expandPlaceholders(instruction, makeQueryContext('a/b.md'));
+        const expandedInstruction = preprocessSingleInstruction(instruction, 'a/b.md');
         const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(expandedInstruction);
         expect(filterOrErrorMessage).toBeValid();
 
@@ -112,7 +119,7 @@ export function verifyFunctionFieldGrouperSamplesOnTasks(
         const instruction = group[0];
         const comment = group.slice(1);
 
-        const expandedInstruction = expandPlaceholders(instruction, makeQueryContext('a/b.md'));
+        const expandedInstruction = preprocessSingleInstruction(instruction, 'a/b.md');
         const grouper = new FunctionField().createGrouperFromLine(expandedInstruction);
         expect(grouper).not.toBeNull();
 
