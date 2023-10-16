@@ -6,6 +6,13 @@ publish: true
 
 ## What's New?
 
+_In recent releases..._
+
+<!--
+    Keep to around 4 to 6 lines, so that 'Navigation around this site' is visible.
+    Move the older ones down to the top of the comment block below...
+-->
+
 - X.Y.Z: 🔥 Add new Help pages [[Known Limitations]] and [[Breaking Changes]].
 - 4.9.0: 🔥 Add [[Task Properties|task properties]] `task.priorityNameGroupText` and `task.status.typeGroupText`, for example:
   - `group by function task.priorityNameGroupText + ': ' + task.status.typeGroupText`
@@ -15,6 +22,8 @@ publish: true
   - `group by function task.due.fromNow.groupText`
 - 4.8.0: 🔥 Add [[Query Properties#Values for Query File Properties|query file properties]] `query.file.pathWithoutExtension` and `query.file.filenameWithoutExtension`
 - 4.8.0: 🔥 Add [[Task Properties#Values for File Properties|task file properties]] `task.file.pathWithoutExtension` and `task.file.filenameWithoutExtension`
+
+<!--
 - 4.7.0: 🔥 Use [[Query Properties]] and [[Placeholders]] to filter and group with the query's file path, root, folder and name.
 - 4.6.0: 🔥 Add `on or before` and `on or after` to [[Filters#Date search options|date search options]]
 - 4.6.0: 🔥 Add `in or before` and `in or after` to [[Filters#Date range options|date range search search options]]
@@ -34,6 +43,7 @@ publish: true
 - 3.4.0: 🔥 Clicking on a [[Backlinks|Backlink]] jumps to the exact task line.
 - 3.4.0: Tasks now requires at least Obsidian 1.1.1.
 - 3.3.0: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]].
+-->
 
 ## Navigation around this site
 
