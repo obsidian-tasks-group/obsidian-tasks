@@ -14,9 +14,9 @@ function stripEndingSlashAndPrecedingWhitespace(adjustedInputLine: string) {
     return adjustedInputLine.replace(/[ \t]*\\$/, '');
 }
 
-function adjustLine(inputLine: string, joinToNext: boolean) {
+function adjustLine(inputLine: string, continuePreviousLine: boolean) {
     let adjustedLine = inputLine;
-    if (joinToNext) {
+    if (continuePreviousLine) {
         // The new line will be appended to the previous one,
         // so discard any leading white space:
         adjustedLine = stripLeadingWhitespace(inputLine);
