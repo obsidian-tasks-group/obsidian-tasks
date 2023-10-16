@@ -18,11 +18,10 @@ Filters|custom filters]], and other queries that may be difficult to read on one
 
 Line continuations are treated as whitespace, and any extra indentation or whitespace around the backslash is compressed into a single space.
 
-In the rare case that a trailing backslash is needed for a query, the trailing backslash may be escaped by adding a space at the end of the line, or by adding an extra backslash and a blank line:
+In the rare case that a trailing backslash is needed for a query, the trailing backslash may be escaped by adding a space at the end of the line, or by adding an extra backslash:
 
     ```tasks
     # Searches for a single backslash
     description includes \\
-    
     explain
     ```
