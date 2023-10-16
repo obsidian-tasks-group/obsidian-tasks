@@ -13,8 +13,7 @@ Long queries can be organized across multiple lines using a trailing backslash:
         (priority is lowest)
     ```
 
-This can be helpful for long [[Combining Filters|combined filters]],  [[Custom
-Filters|custom filters]], and other queries that may be difficult to read on one line.
+This can be helpful for long [[Combining Filters|combined filters]],  [[Custom Filters|custom filters]], and other queries that may be difficult to read on one line.
 
 Line continuations are treated as whitespace, and any extra indentation or whitespace around the backslash is compressed into a single space.
 
