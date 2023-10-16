@@ -6,7 +6,7 @@ publish: true
 
 ## What's New?
 
-- X.Y.Z: 🔥 Add new Help page [[Known Limitations]].
+- X.Y.Z: 🔥 Add new Help pages [[Known Limitations]] and [[Breaking Changes]].
 - 4.9.0: 🔥 Add [[Task Properties|task properties]] `task.priorityNameGroupText` and `task.status.typeGroupText`, for example:
   - `group by function task.priorityNameGroupText + ': ' + task.status.typeGroupText`
 - 4.9.0: 🔥 Add [[Task Properties#Values in TasksDate Properties|task date properties]] for categorising dates, for example:
