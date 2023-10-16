@@ -25,8 +25,8 @@ function adjustLine(inputLine: string, joinToNext: boolean) {
     return adjustedLine;
 }
 
-function saveLine(outputLines: string[], joinToNext: boolean, adjustedLine: string) {
-    if (joinToNext) {
+function saveLine(outputLines: string[], continuePreviousLine: boolean, adjustedLine: string) {
+    if (continuePreviousLine) {
         outputLines[outputLines.length - 1] += ' ' + adjustedLine;
     } else {
         outputLines.push(adjustedLine);
@@ -42,13 +42,13 @@ function saveLine(outputLines: string[], joinToNext: boolean, adjustedLine: stri
  */
 export function continue_lines(input: string): string {
     const outputLines: string[] = [];
-    let joinToNext = false;
+    let continuePreviousLine = false;
     for (const inputLine of input.split('\n')) {
-        const adjustedLine = adjustLine(inputLine, joinToNext);
-        saveLine(outputLines, joinToNext, adjustedLine);
+        const adjustedLine = adjustLine(inputLine, continuePreviousLine);
+        saveLine(outputLines, continuePreviousLine, adjustedLine);
 
         // Decide what to do with the next line:
-        joinToNext = endsWith1Slash(inputLine);
+        continuePreviousLine = endsWith1Slash(inputLine);
     }
     return outputLines.join('\n');
 }
