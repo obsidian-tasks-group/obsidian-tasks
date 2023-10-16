@@ -14,7 +14,9 @@ filter by function task.status.symbol !== ' '
 - Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`.
 
 ```text
-filter by function const symbol = task.status.symbol; return symbol === 'P' || symbol === 'C' || symbol === 'Q' || symbol === 'A'
+filter by function \
+    const symbol = task.status.symbol; \
+    return symbol === 'P' || symbol === 'C' || symbol === 'Q' || symbol === 'A';
 ```
 
 - Note that because we use a variable to avoid repetition, we need to add `return`
