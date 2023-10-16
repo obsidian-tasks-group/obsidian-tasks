@@ -72,7 +72,8 @@ describe('continue_lines', () => {
         expect(continue_lines(text)).toEqual(
             [
                 // force linebreak
-                String.raw`line1 \ `,
+                String.raw`line1 ${bs}`,
+                '',
                 'line2',
             ].join('\n'),
         );
@@ -89,7 +90,8 @@ describe('continue_lines', () => {
         expect(continue_lines(text)).toEqual(
             [
                 // force linebreak
-                String.raw`line\1 continued \\ `,
+                String.raw`line\1 continued \\`,
+                '',
                 'line2',
             ].join('\n'),
         );
@@ -105,7 +107,8 @@ describe('continue_lines', () => {
         expect(continue_lines(text)).toEqual(
             [
                 // force linebreak
-                String.raw`line1\ `,
+                String.raw`line1${bs}`,
+                '',
                 'line2',
             ].join('\n'),
         );

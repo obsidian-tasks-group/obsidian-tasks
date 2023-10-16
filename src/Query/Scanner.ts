@@ -2,6 +2,10 @@ function endsWith1Slash(inputLine: string) {
     return inputLine.endsWith('\\');
 }
 
+function endsWith2Slashes(inputLine: string) {
+    return inputLine.endsWith('\\\\');
+}
+
 function stripLeadingWhitespace(adjustedInputLine: string) {
     return adjustedInputLine.replace(/^[ \t]*/, '');
 }
@@ -17,7 +21,12 @@ function adjustLine(inputLine: string, joinToNext: boolean) {
         // so discard any leading white space:
         adjustedLine = stripLeadingWhitespace(inputLine);
     }
-    if (endsWith1Slash(inputLine)) {
+
+    if (endsWith2Slashes(adjustedLine)) {
+        // This has at least 2 backslashes at the end of the line,
+        // so convert '\\' to '\':
+        adjustedLine = adjustedLine.slice(0, -1);
+    } else if (endsWith1Slash(inputLine)) {
         // This is a continuation line, so remove its trailing backslash
         // and any spare white space beforehand.
         adjustedLine = stripEndingSlashAndPrecedingWhitespace(adjustedLine);
@@ -48,7 +57,11 @@ export function continue_lines(input: string): string {
         saveLine(outputLines, continuePreviousLine, adjustedLine);
 
         // Decide what to do with the next line:
-        continuePreviousLine = endsWith1Slash(inputLine);
+        if (endsWith2Slashes(inputLine)) {
+            continuePreviousLine = false;
+        } else {
+            continuePreviousLine = endsWith1Slash(inputLine);
+        }
     }
     return outputLines.join('\n');
 }
