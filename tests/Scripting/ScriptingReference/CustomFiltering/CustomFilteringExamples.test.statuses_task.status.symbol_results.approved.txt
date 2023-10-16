@@ -25,7 +25,9 @@ Find tasks with anything but the space character as their status symbol, that is
 ====================================================================================
 
 
-filter by function const symbol = task.status.symbol; return symbol === 'P' || symbol === 'C' || symbol === 'Q' || symbol === 'A'
+filter by function \
+    const symbol = task.status.symbol; \
+    return symbol === 'P' || symbol === 'C' || symbol === 'Q' || symbol === 'A';
 Note that because we use a variable to avoid repetition, we need to add `return`
 Find tasks with status symbol `P`, `C`, `Q` or `A`.
 This can get quite verbose, the more symbols you want to search for.
