@@ -6,7 +6,7 @@ publish: true
 
 ## What's New?
 
-_In recent releases..._
+_In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)..._
 
 <!--
     Keep to around 2 to 4 lines, so that 'Navigation around this site' is visible.
@@ -26,7 +26,7 @@ _In recent releases..._
 - 4.8.0: 🔥 Add [[Task Properties#Values for File Properties|task file properties]] `task.file.pathWithoutExtension` and `task.file.filenameWithoutExtension`
 - 4.7.0: 🔥 Use [[Query Properties]] and [[Placeholders]] to filter and group with the query's file path, root, folder and name.
 - 4.6.0: 🔥 Add `on or before` and `on or after` to [[Filters#Date search options|date search options]]
-- 4.6.0: 🔥 Add `in or before` and `in or after` to [[Filters#Date range options|date range search search options]]
+- 4.6.0: 🔥 Add `in or before` and `in or after` to [[Filters#Date range options|date range search options]]
 - 4.5.0: 🔥 Support task in list items starting with [[Getting Started#Finding tasks in your vault|`+` signs]]
 - 4.4.0: 🔥 Support [[Expressions#More complex expressions|variables, if statements, and functions]] in custom filters and groups
 - 4.3.0: 🔥 Bug fixes, usability improvements and `explain` support for [[Regular Expressions|regular expression]] searches
