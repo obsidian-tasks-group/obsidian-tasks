@@ -54,7 +54,13 @@ not done
         // Arrange
         const instructions: string = `
 explain
-( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7)`;
+(                                                                                       \\
+    (description includes 1) AND (description includes 2) AND (description includes 3)  \\
+) OR (                                                                                  \\
+    (description includes 5) AND (description includes 6) AND (description includes 7)  \\
+)                                                                                       \\
+AND NOT (description includes 7)
+`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);

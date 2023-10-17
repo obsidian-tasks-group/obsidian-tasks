@@ -85,13 +85,29 @@ As of Tasks 4.4.0, it is also possible to use more complex constructs in express
 - `if` statements
 - functions
 
+As of Tasks X.Y.Z, it is also possible to make longer expressions more readable using [[Line Continuations|line continuations]].
+
 <!-- placeholder to force blank line before included text --><!-- include: Expression.test.Expression_returns_and_functions.approved.md -->
 
 ~~~text
-return 42 => 42
-const x = 1 + 1; return x * x => 4
-if (1 === 1) { return "yes"; } else { return "no" } => 'yes'
-function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1) => 'yes'
+return 42
+=> 42
+
+const x = 1 + 1; return x * x
+=> 4
+
+if (1 === 1) { return "yes"; } else { return "no" }
+=> 'yes'
+
+function f(value) {                 \
+    if (value === 1 ) {             \
+        return "yes";               \
+    } else {                        \
+        return "no";                \
+    }                               \
+}                                   \
+return f(1);
+=> 'yes'
 ~~~
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->

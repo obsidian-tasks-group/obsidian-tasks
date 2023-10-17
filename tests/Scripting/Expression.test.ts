@@ -12,6 +12,7 @@ import {
 } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { continue_lines } from '../../src/Query/Scanner';
 import { formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -98,12 +99,26 @@ describe('Expression', () => {
         });
     });
 
-    function verifyExpressionsForDocs(expressions: string[]) {
+    const extraBlankLineBetweenExpressions = true;
+    const noBlankLineBetweenExpressions = false;
+
+    /**
+     * Generate Markdown strings showing expressions and their evaluation results, for use in docs.
+     * @param expressions - a list of expressions to be evaluated
+     * @param addBlankLineBetweenExpressions - use either {@link extraBlankLineBetweenExpressions} or {@link noBlankLineBetweenExpressions},
+     *                                         depending on the length of lines in {@link expressions}.
+     */
+    function verifyExpressionsForDocs(expressions: string[], addBlankLineBetweenExpressions: boolean) {
         let markdown = '~~~text\n';
-        for (const expression of expressions) {
-            const result = parseAndEvaluateExpression(task, expression);
-            markdown += `${expression} => ${formatToRepresentType(result)}\n`;
-        }
+        const separator = addBlankLineBetweenExpressions ? '\n\n' : '\n';
+        const resultSeparator = addBlankLineBetweenExpressions ? '\n' : ' ';
+        markdown +=
+            expressions
+                .map((expression) => {
+                    const result = parseAndEvaluateExpression(task, continue_lines(expression));
+                    return `${expression}${resultSeparator}=> ${formatToRepresentType(result)}`;
+                })
+                .join(separator) + '\n';
         markdown += '~~~\n';
         verifyMarkdownForDocs(markdown);
     }
@@ -131,7 +146,7 @@ describe('Expression', () => {
             // Should allow manual escaping of markdown
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
-        verifyExpressionsForDocs(expressions);
+        verifyExpressionsForDocs(expressions, noBlankLineBetweenExpressions);
     });
 
     it('returns and functions', () => {
@@ -139,8 +154,15 @@ describe('Expression', () => {
             'return 42',
             'const x = 1 + 1; return x * x',
             'if (1 === 1) { return "yes"; } else { return "no" }',
-            'function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1)',
+            `function f(value) {                 \\
+    if (value === 1 ) {             \\
+        return "yes";               \\
+    } else {                        \\
+        return "no";                \\
+    }                               \\
+}                                   \\
+return f(1);`,
         ];
-        verifyExpressionsForDocs(expressions);
+        verifyExpressionsForDocs(expressions, extraBlankLineBetweenExpressions);
     });
 });

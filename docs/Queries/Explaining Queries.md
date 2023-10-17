@@ -111,14 +111,21 @@ not done
 
 ### More complex combinations are displayed
 
-With complex Boolean combinations of filters, it is easy to get parentheses in the wrong place. With `explain`, the interpreted logic is easily visible.
+With complex Boolean combinations of filters, it is easy to get parentheses in the wrong place, even when using [[Line Continuations]] to improve readability.
+
+With `explain`, the interpreted logic is easily visible.
 
 For example, when the following text is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_nested_boolean_combinations.approved.query.text -->
 ```text
 explain
-( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7)
+(                                                                                       \
+    (description includes 1) AND (description includes 2) AND (description includes 3)  \
+) OR (                                                                                  \
+    (description includes 5) AND (description includes 6) AND (description includes 7)  \
+)                                                                                       \
+AND NOT (description includes 7)
 ```
 <!-- endSnippet -->
 
