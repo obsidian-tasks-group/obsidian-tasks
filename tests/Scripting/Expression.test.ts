@@ -98,12 +98,25 @@ describe('Expression', () => {
         });
     });
 
-    function verifyExpressionsForDocs(expressions: string[]) {
+    const extraBlankLineBetweenExpressions = true;
+    const noBlankLineBetweenExpressions = false;
+
+    /**
+     * Generate Markdown strings showing expressions and their evaluation results, for use in docs.
+     * @param expressions - a list of expressions to be evaluated
+     * @param addBlankLineBetweenExpressions - use either {@link extraBlankLineBetweenExpressions} or {@link noBlankLineBetweenExpressions},
+     *                                         depending on the length of lines in {@link expressions}.
+     */
+    function verifyExpressionsForDocs(expressions: string[], addBlankLineBetweenExpressions: boolean) {
         let markdown = '~~~text\n';
-        for (const expression of expressions) {
-            const result = parseAndEvaluateExpression(task, expression);
-            markdown += `${expression} => ${formatToRepresentType(result)}\n`;
-        }
+        const separator = addBlankLineBetweenExpressions ? '\n\n' : '\n';
+        markdown +=
+            expressions
+                .map((expression) => {
+                    const result = parseAndEvaluateExpression(task, expression);
+                    return `${expression} => ${formatToRepresentType(result)}`;
+                })
+                .join(separator) + '\n';
         markdown += '~~~\n';
         verifyMarkdownForDocs(markdown);
     }
@@ -131,7 +144,7 @@ describe('Expression', () => {
             // Should allow manual escaping of markdown
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
-        verifyExpressionsForDocs(expressions);
+        verifyExpressionsForDocs(expressions, noBlankLineBetweenExpressions);
     });
 
     it('returns and functions', () => {
@@ -141,6 +154,6 @@ describe('Expression', () => {
             'if (1 === 1) { return "yes"; } else { return "no" }',
             'function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1)',
         ];
-        verifyExpressionsForDocs(expressions);
+        verifyExpressionsForDocs(expressions, extraBlankLineBetweenExpressions);
     });
 });

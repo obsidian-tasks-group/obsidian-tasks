@@ -89,8 +89,11 @@ As of Tasks 4.4.0, it is also possible to use more complex constructs in express
 
 ~~~text
 return 42 => 42
+
 const x = 1 + 1; return x * x => 4
+
 if (1 === 1) { return "yes"; } else { return "no" } => 'yes'
+
 function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1) => 'yes'
 ~~~
 
