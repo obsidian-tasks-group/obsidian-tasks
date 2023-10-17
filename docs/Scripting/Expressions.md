@@ -84,7 +84,8 @@ As of Tasks 4.4.0, it is also possible to use more complex constructs in express
 - named variables
 - `if` statements
 - functions
-- [[Line Continuations|line continuations]]
+
+As of Tasks X.Y.Z, it is also possible to make longer expressions more readable using [[Line Continuations|line continuations]].
 
 <!-- placeholder to force blank line before included text --><!-- include: Expression.test.Expression_returns_and_functions.approved.md -->
 
