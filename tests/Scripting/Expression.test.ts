@@ -111,11 +111,12 @@ describe('Expression', () => {
     function verifyExpressionsForDocs(expressions: string[], addBlankLineBetweenExpressions: boolean) {
         let markdown = '~~~text\n';
         const separator = addBlankLineBetweenExpressions ? '\n\n' : '\n';
+        const resultSeparator = addBlankLineBetweenExpressions ? '\n' : ' ';
         markdown +=
             expressions
                 .map((expression) => {
                     const result = parseAndEvaluateExpression(task, continue_lines(expression));
-                    return `${expression} => ${formatToRepresentType(result)}`;
+                    return `${expression}${resultSeparator}=> ${formatToRepresentType(result)}`;
                 })
                 .join(separator) + '\n';
         markdown += '~~~\n';
