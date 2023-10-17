@@ -12,6 +12,7 @@ import {
 } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { continue_lines } from '../../src/Query/Scanner';
 import { formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -113,7 +114,7 @@ describe('Expression', () => {
         markdown +=
             expressions
                 .map((expression) => {
-                    const result = parseAndEvaluateExpression(task, expression);
+                    const result = parseAndEvaluateExpression(task, continue_lines(expression));
                     return `${expression} => ${formatToRepresentType(result)}`;
                 })
                 .join(separator) + '\n';
@@ -152,7 +153,14 @@ describe('Expression', () => {
             'return 42',
             'const x = 1 + 1; return x * x',
             'if (1 === 1) { return "yes"; } else { return "no" }',
-            'function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1)',
+            `function f(value) {                 \\
+    if (value === 1 ) {             \\
+        return "yes";               \\
+    } else {                        \\
+        return "no";                \\
+    }                               \\
+}                                   \\
+return f(1);`,
         ];
         verifyExpressionsForDocs(expressions, extraBlankLineBetweenExpressions);
     });
