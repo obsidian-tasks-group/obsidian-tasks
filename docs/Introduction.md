@@ -13,6 +13,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- X.Y.X: 🔥 Add [[Line Continuations|line continuations]]
 - X.Y.X: 🔥 Document [[Comments#Inline comments|inline comments]]
 - X.Y.Z: 🔥 Add new Help pages [[Known Limitations]] and [[Breaking Changes]].
 

@@ -3,24 +3,80 @@ publish: true
 ---
 
 # Line Continuations
+
 > [!released]
 > Introduced in Tasks X.Y.Z.
 
-Long queries can be organized across multiple lines using a trailing backslash:
+## Wrap long lines in queries
 
-    ```tasks
-    (priority is highest) OR \
-        (priority is lowest)
-    ```
+In Tasks code blocks, **a backslash (`\`)** is a 'line continuation character'. If a backslash is placed at the end of a line, the line is considered to continue on the next line.
 
-This can be helpful for long [[Combining Filters|combined filters]],  [[Custom Filters|custom filters]], and other queries that may be difficult to read on one line.
+This is useful for dividing up long queries across multiple lines, for better readability.
 
-Line continuations are treated as whitespace, and any extra indentation or whitespace around the backslash is compressed into a single space.
+For example this query:
 
-In the rare case that a trailing backslash is needed for a query, the trailing backslash may be escaped by adding a space at the end of the line, or by adding an extra backslash:
+<!-- snippet: DocsSamplesForExplain.test.explain_line_continuation_-_single_slash.approved.query.text -->
+```text
+(priority is highest) OR       \
+    (priority is lowest)
+explain
+```
+<!-- endSnippet -->
 
-    ```tasks
-    # Searches for a single backslash
-    description includes \\
-    explain
-    ```
+... runs this search:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_line_continuation_-_single_slash.approved.explanation.text -->
+```text
+Explanation of this Tasks code block query:
+
+(priority is highest) OR (priority is lowest) =>
+  OR (At least one of):
+    priority is highest
+    priority is lowest
+```
+<!-- endSnippet -->
+
+This facility will be helpful for long [[Combining Filters]], [[Custom Filters]], and [[Custom Grouping]] lines, and other queries that may be difficult to read on one line.
+
+There are some more realistic examples towards the end of the [[Grouping#Due Date|Due date custom grouping examples]].
+
+Points to note:
+
+- To be a continuation character, the `\` must be the **very last character** on the line.
+- All the `\` and all whitespace around it is compressed down to a single space.
+- Consider indenting the second and subsequent lines, so the structure of the query immediately clear.
+- Consider aligning the `\` characters for readability.
+- If in doubt, add the `explain` instruction to inspect how your code block is interpreted.
+
+## Searches needing a trailing backslash
+
+In Tasks code blocks, **two backslashes (`\\`) at the very end of a line** are treated as a **single backslash**.
+
+This enables searching in the rare case that a trailing backslash is needed for a query.
+
+For example this query:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_line_continuation_-_double_slash.approved.query.text -->
+```text
+# Search for a single backslash:
+description includes \\
+explain
+```
+<!-- endSnippet -->
+
+... runs this search:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_line_continuation_-_double_slash.approved.explanation.text -->
+```text
+Explanation of this Tasks code block query:
+
+description includes \
+```
+<!-- endSnippet -->
+
+Points to note:
+
+- Alternatively, you can add one or more spaces after the trailing `\` to prevent it being continuation character.
+  - This is risky though, as some editors and linters remove unnecessary trailing spaces.
+  - So the **two backslashes option is safer**.
+- If in doubt, add the `explain` instruction to inspect how your code block is interpreted.
