@@ -28,5 +28,7 @@ line:
     short mode {{! This comment will be ignored }}
     ```
 
+Such comments will be removed when Tasks processes [[Placeholders]] in the query.
+
 Any text between the `{{!` and `}}` of a line will be ignored. Multiline comments are
 not supported (except perhaps in combination with [[Line Continuations|line continuations]]).
