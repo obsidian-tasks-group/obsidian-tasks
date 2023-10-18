@@ -20,8 +20,8 @@ publish: true
 
 - Language is JavaScript.
 - The expression is a string instruction.
-- It must fit on one line.
-  - As of Tasks 4.4.0, variables, functions, `if` blocks and similar can be used. See [[#More complex expressions]].
+- As of Tasks 4.4.0, variables, functions, `if` blocks and similar can be used. See [[#More complex expressions]].
+- As of Tasks X.Y.Z, long expressions can be written over multiple lines thanks to [[Line Continuations]].
 - Depending on the context, one or two tasks are passed in to the expression, and a calculation is performed.
   - As of Tasks 4.0.0, in fact only a single task is passed in, to implement [[Custom Grouping]].
   - As of Tasks 4.2.0, a single task is passed in, to implement [[Custom Filters]].
