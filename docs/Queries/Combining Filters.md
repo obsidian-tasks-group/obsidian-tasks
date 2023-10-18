@@ -36,7 +36,7 @@ The following rules apply:
 - The operators are case-sensitive: they must be capitalised.
 - The operators must be surrounded by spaces.
 - Use more `(` and `)` to nest further filters together.
-- A trailing backslash may be used to break a long filter over several lines, as described in [[Line Continuations]].
+- A trailing backslash (`\`) may be used to break a long filter over several lines, as described in [[Line Continuations]].
 - There is no practical limit to the number of filters combined on each line, nor the level of nesting of parentheses.
 
 Recommendations:

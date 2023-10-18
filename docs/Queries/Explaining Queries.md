@@ -211,6 +211,8 @@ path includes {{query.file.path}}
 root includes {{query.file.root}}
 folder includes {{query.file.folder}}
 filename includes {{query.file.filename}}
+
+description includes Some Cryptic String {{! Inline comments are removed before search }}
 ```
 <!-- endSnippet -->
 
@@ -227,6 +229,8 @@ root includes some/
 folder includes some/sample/
 
 filename includes file path.md
+
+description includes Some Cryptic String
 ```
 <!-- endSnippet -->
 
