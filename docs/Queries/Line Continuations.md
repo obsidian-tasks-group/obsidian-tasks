@@ -5,7 +5,9 @@ publish: true
 # Line Continuations
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+>
+> - Introduced in Tasks X.Y.Z.
+> - **Important**: This facility changed the meaning of a final backslash (`\`) character on a query line. See [[#Appendix Updating pre-X.Y.Z searches with trailing backslashes]] below to update queries.
 
 ## Wrap long lines in queries
 
@@ -80,3 +82,18 @@ Points to note:
   - This is risky though, as some editors and linters remove unnecessary trailing spaces.
   - So the **two backslashes option is safer**.
 - If in doubt, add the `explain` instruction to inspect how your code block is interpreted.
+
+## Appendix: Updating pre-X.Y.Z searches with trailing backslashes
+
+> [!Warning]
+> In Tasks X.Y.Z the meaning of a **final backslash (`\`) character** on a query line changed **from**:
+>
+> - `search for a backslash character`
+>
+> **to:**
+>
+> - `join the next query line to this one`
+>
+> To retain the previous search behaviour, use `\\` at the end of query lines instead of `\`.
+>
+> For details, see [[Line Continuations#Searches needing a trailing backslash|Searches needing a trailing backslash]] in [[Line Continuations]].
