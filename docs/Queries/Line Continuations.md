@@ -46,7 +46,7 @@ Points to note:
 
 - To be a continuation character, the `\` must be the **very last character** on the line.
 - All the `\` and all whitespace around it is compressed down to a single space.
-- Consider indenting the second and subsequent lines, so the structure of the query immediately clear.
+- Consider indenting the second and subsequent lines, so the structure of the query is immediately clear.
 - Consider aligning the `\` characters for readability.
 - If in doubt, add the `explain` instruction to inspect how your code block is interpreted.
 
