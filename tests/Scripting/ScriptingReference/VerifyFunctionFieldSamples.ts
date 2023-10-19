@@ -52,8 +52,16 @@ function formatQueryAndCommentsForDocs(filters: QueryInstructionLineAndDescripti
             const instruction = filter[0];
             const comments = filter.slice(1);
             const punctuatedComments: string[] = punctuateComments(comments);
+
+            // Using javascript as the fenced code block language makes the
+            // published documentation easier to read, as the syntax highlighting
+            // breaks up an otherwise long wall of text.
+            // If using WebStorm IDE, it will complain about invalid JavaScript.
+            // Turn off checking: https://www.jetbrains.com/help/webstorm/markdown.html#disable-injection-in-code-blocks
+            const language = 'javascript';
+
             markdown += `
-\`\`\`text
+\`\`\`${language}
 ${instruction}
 \`\`\`
 

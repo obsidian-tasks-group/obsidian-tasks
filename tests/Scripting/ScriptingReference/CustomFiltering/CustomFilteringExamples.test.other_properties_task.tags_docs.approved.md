@@ -1,13 +1,13 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.tags.length === 1
 ```
 
 - Find tasks with exactly 1 tag (other than any global filter).
 
-```text
+```javascript
 filter by function task.tags.length > 1
 ```
 

@@ -1,7 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function \
     const taskDate = task.due.moment; \
     const wanted = '2023-06-11'; \
@@ -13,7 +13,7 @@ filter by function \
   - **or** do not have a due date, and their preceding heading contains the same date as a string: `2023-06-11`.
 - Note that because we use variables to avoid repetition of values, we need to add `return`.
 
-```text
+```javascript
 filter by function \
     const taskDate = task.due.moment; \
     const now = moment(); \
@@ -24,7 +24,7 @@ filter by function \
   - **either** due on today's date,
   - **or** do not have a due date, and their preceding heading contains today's date as a string, formatted as `YYYY-MM-DD`.
 
-```text
+```javascript
 filter by function \
     const wanted = '#context/home'; \
     return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;

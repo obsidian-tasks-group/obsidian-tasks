@@ -1,7 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 group by function task.priorityName
 ```
 
@@ -9,7 +9,7 @@ group by function task.priorityName
 - The priority names are displayed in alphabetical order.
 - Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'.
 
-```text
+```javascript
 group by function task.priorityNameGroupText
 ```
 
