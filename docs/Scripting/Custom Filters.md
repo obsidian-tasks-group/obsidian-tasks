@@ -71,7 +71,7 @@ You can find many more examples by searching for `filter by function` in the [[F
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.description_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.description.length > 100
 ```
 
@@ -83,7 +83,7 @@ filter by function task.description.length > 100
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.due.format('dddd') === 'Tuesday'
 ```
 
@@ -96,7 +96,7 @@ For users who are comfortable with JavaScript, these more complicated examples m
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false
 ```
 
@@ -105,19 +105,19 @@ filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false
 - As the second parameter determines the precision, and not just a single value to check, using 'day' will check for year, month and day.
 - See the documentation of [isSameOrBefore](https://momentjscom.readthedocs.io/en/latest/moment/05-query/04-is-same-or-before/).
 
-```text
+```javascript
 filter by function task.due.moment?.isSameOrAfter(moment(), 'day') || false
 ```
 
 - Due today or later.
 
-```text
+```javascript
 filter by function task.due.moment?.isSame(moment('2023-05-31'), 'day') || false
 ```
 
 - Find all tasks due on 31 May 2023.
 
-```text
+```javascript
 filter by function task.due.moment?.isSame(moment('2023-05-31'), 'week') || false
 ```
 
@@ -129,7 +129,7 @@ filter by function task.due.moment?.isSame(moment('2023-05-31'), 'week') || fals
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.urgency > 8.9999
 ```
 
@@ -137,13 +137,13 @@ filter by function task.urgency > 8.9999
 - Note that limiting value used is `8.9999`.
 - Searches that compare two urgency values for 'less than' or 'more than' (using one of `>`, `>=`, `<` or `<=`) **must adjust their values slightly to allow for rounding**.
 
-```text
+```javascript
 filter by function task.urgency > 7.9999 && task.urgency < 11.0001
 ```
 
 - Find tasks with an urgency score between `8.0` and `11.0`, inclusive.
 
-```text
+```javascript
 filter by function task.urgency.toFixed(2) === 1.95.toFixed(2)
 ```
 
@@ -152,13 +152,13 @@ filter by function task.urgency.toFixed(2) === 1.95.toFixed(2)
 - The `.toFixed(2)` on both sides of the `===` ensures that two numbers being compared are both rounded to the same number of decimal places (2).
 - This is important, to prevent being tripped up `10.29` being not exactly the same when comparing non-integer numbers.
 
-```text
+```javascript
 filter by function task.urgency.toFixed(2) !== 1.95.toFixed(2)
 ```
 
 - Find tasks with any urgency other than the default score of `1.95`.
 
-```text
+```javascript
 filter by function task.urgency === 10.29
 ```
 
@@ -181,33 +181,33 @@ filter by function task.urgency === 10.29
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.file.folder === "Work/Projects/"
 ```
 
 - Find tasks in files in any file in the given folder **only**, and not any sub-folders.
 - The equality test, `===`, requires that the trailing slash (`/`) be included.
 
-```text
+```javascript
 filter by function task.file.folder.includes("Work/Projects/")
 ```
 
 - Find tasks in files in a specific folder **and any sub-folders**.
 
-```text
+```javascript
 filter by function task.file.folder.includes( '{{query.file.folder}}' )
 ```
 
 - Find tasks in files in the folder that contains the query **and any sub-folders**.
 - Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.
 
-```text
+```javascript
 filter by function task.file.folder === '{{query.file.folder}}'
 ```
 
 - Find tasks in files in the folder that contains the query only (**not tasks in any sub-folders**).
 
-```text
+```javascript
 filter by function task.file.folder.includes("Work/Projects")
 ```
 

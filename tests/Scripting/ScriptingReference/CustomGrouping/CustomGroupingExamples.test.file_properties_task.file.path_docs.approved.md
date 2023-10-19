@@ -1,13 +1,13 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 group by function task.file.path
 ```
 
 - Like 'group by path' but includes the file extension.
 
-```text
+```javascript
 group by function task.file.path.replace('{{query.file.folder}}', '')
 ```
 

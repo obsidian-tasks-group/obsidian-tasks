@@ -1,13 +1,13 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.file.path.includes('tasks releases/4.1.0 Release.md')
 ```
 
 - Like 'path includes', except that it is **case-sensitive**: capitalisation matters.
 
-```text
+```javascript
 filter by function task.file.path === 'tasks releases/4.1.0 Release.md'
 ```
 
@@ -15,7 +15,7 @@ filter by function task.file.path === 'tasks releases/4.1.0 Release.md'
 - Note that the file extension needs to be included too.
 - With built-in searches, this could only be done using a regular expression, with special characters `^` and `$`, and escaping any characters with special meaning such as `/`.
 
-```text
+```javascript
 filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase()
 ```
 

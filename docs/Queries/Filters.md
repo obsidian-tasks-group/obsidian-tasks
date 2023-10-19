@@ -293,13 +293,13 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status** is now poss
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.isDone_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.isDone
 ```
 
 - Same as the `done` filter, but might be useful in conjunction with other expressions on the same line.
 
-```text
+```javascript
 filter by function ! task.isDone
 ```
 
@@ -329,7 +329,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status names** is no
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.statuses_task.status.name_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.status.name === 'Unknown'
 ```
 
@@ -357,20 +357,20 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status type** is now
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.statuses_task.status.type_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.status.type === 'NON_TASK'
 ```
 
 - Find tasks of type `NON_TASK`.
 
-```text
+```javascript
 filter by function 'TODO,IN_PROGRESS'.includes(task.status.type)
 ```
 
 - Find tasks that are either type `TODO` or type `IN_PROGRESS`.
 - This can be more convenient than doing Boolean `OR` searches.
 
-```text
+```javascript
 filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)
 ```
 
@@ -386,19 +386,19 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status symbol** is n
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.statuses_task.status.symbol_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.status.symbol === '-'
 ```
 
 - Find tasks with a checkbox `[-]`, which is conventionally used to mean "cancelled".
 
-```text
+```javascript
 filter by function task.status.symbol !== ' '
 ```
 
 - Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`.
 
-```text
+```javascript
 filter by function \
     const symbol = task.status.symbol; \
     return symbol === 'P' || symbol === 'C' || symbol === 'Q' || symbol === 'A';
@@ -408,14 +408,14 @@ filter by function \
 - Find tasks with status symbol `P`, `C`, `Q` or `A`.
 - This can get quite verbose, the more symbols you want to search for.
 
-```text
+```javascript
 filter by function 'PCQA'.includes(task.status.symbol)
 ```
 
 - Find tasks with status symbol `P`, `C`, `Q` or `A`.
 - This is a convenient shortcut over a longer statement testing each allowed value independently.
 
-```text
+```javascript
 filter by function !' -x/'.includes(task.status.symbol)
 ```
 
@@ -431,7 +431,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by next status symbol**
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.statuses_task.status.nextSymbol_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.status.symbol === task.status.nextSymbol
 ```
 
@@ -479,7 +479,7 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.due.format('dddd') === 'Tuesday'
 ```
 
@@ -492,7 +492,7 @@ For users who are comfortable with JavaScript, these more complicated examples m
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false
 ```
 
@@ -501,19 +501,19 @@ filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false
 - As the second parameter determines the precision, and not just a single value to check, using 'day' will check for year, month and day.
 - See the documentation of [isSameOrBefore](https://momentjscom.readthedocs.io/en/latest/moment/05-query/04-is-same-or-before/).
 
-```text
+```javascript
 filter by function task.due.moment?.isSameOrAfter(moment(), 'day') || false
 ```
 
 - Due today or later.
 
-```text
+```javascript
 filter by function task.due.moment?.isSame(moment('2023-05-31'), 'day') || false
 ```
 
 - Find all tasks due on 31 May 2023.
 
-```text
+```javascript
 filter by function task.due.moment?.isSame(moment('2023-05-31'), 'week') || false
 ```
 
@@ -546,7 +546,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by done date** is now p
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.done_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.done.format('dddd') === 'Thursday'
 ```
 
@@ -582,7 +582,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by scheduled date** is 
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.scheduled_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.scheduled.format('dddd') === 'Wednesday'
 ```
 
@@ -618,7 +618,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by start date** is now 
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.start_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.start.format('dddd') === 'Sunday'
 ```
 
@@ -684,7 +684,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by created date** is no
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.created_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.created.format('dddd') === 'Monday'
 ```
 
@@ -724,7 +724,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by happens date** is no
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.happens_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.happens.format('dddd') === 'Friday'
 ```
 
@@ -805,7 +805,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by description** is now
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.description_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.description.length > 100
 ```
 
@@ -845,7 +845,7 @@ Using the priority name:
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.priorityName_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.priorityName !== 'Normal'
 ```
 
@@ -857,7 +857,7 @@ Using the priority number:
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.priorityNumber_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.priorityNumber % 2 === 0
 ```
 
@@ -893,7 +893,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by urgency** is now pos
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.urgency > 8.9999
 ```
 
@@ -901,13 +901,13 @@ filter by function task.urgency > 8.9999
 - Note that limiting value used is `8.9999`.
 - Searches that compare two urgency values for 'less than' or 'more than' (using one of `>`, `>=`, `<` or `<=`) **must adjust their values slightly to allow for rounding**.
 
-```text
+```javascript
 filter by function task.urgency > 7.9999 && task.urgency < 11.0001
 ```
 
 - Find tasks with an urgency score between `8.0` and `11.0`, inclusive.
 
-```text
+```javascript
 filter by function task.urgency.toFixed(2) === 1.95.toFixed(2)
 ```
 
@@ -916,13 +916,13 @@ filter by function task.urgency.toFixed(2) === 1.95.toFixed(2)
 - The `.toFixed(2)` on both sides of the `===` ensures that two numbers being compared are both rounded to the same number of decimal places (2).
 - This is important, to prevent being tripped up `10.29` being not exactly the same when comparing non-integer numbers.
 
-```text
+```javascript
 filter by function task.urgency.toFixed(2) !== 1.95.toFixed(2)
 ```
 
 - Find tasks with any urgency other than the default score of `1.95`.
 
-```text
+```javascript
 filter by function task.urgency === 10.29
 ```
 
@@ -964,21 +964,21 @@ Using `task.isRecurring`:
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.isRecurring_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.isRecurring
 ```
 
 - This is identical to `is recurring`.
 - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
 
-```text
+```javascript
 filter by function !task.isRecurring
 ```
 
 - This is identical to `is not recurring`.
 - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
 
-```text
+```javascript
 filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁')
 ```
 
@@ -993,25 +993,25 @@ Using `task.recurrenceRule` - please read [[Task Properties#Values for Other Tas
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.recurrenceRule_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.recurrenceRule.includes("every week")
 ```
 
 - Similar to `recurrence includes every week`, but case-sensitive.
 
-```text
+```javascript
 filter by function !task.recurrenceRule.includes("every week")
 ```
 
 - Similar to `recurrence does not include every week`, but case-sensitive.
 
-```text
+```javascript
 filter by function task.recurrenceRule.includes("every week") && task.recurrenceRule.includes("when done")
 ```
 
 - Find tasks that are due every week, and **do** contain `when done` in their recurrence rule.
 
-```text
+```javascript
 filter by function task.recurrenceRule.includes("every week") && !task.recurrenceRule.includes("when done")
 ```
 
@@ -1056,13 +1056,13 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by tags** is now possib
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.tags_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.tags.length === 1
 ```
 
 - Find tasks with exactly 1 tag (other than any global filter).
 
-```text
+```javascript
 filter by function task.tags.length > 1
 ```
 
@@ -1074,13 +1074,13 @@ These are more complicated examples, which you might like to copy if you use tas
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.tags.find( (tag) => tag.includes('/') ) && true || false
 ```
 
 - Find all tasks that have at least one nested tag.
 
-```text
+```javascript
 filter by function task.tags.find( (tag) => tag.split('/').length >= 3 ) && true || false
 ```
 
@@ -1139,13 +1139,13 @@ In Tasks 4.8.0 `task.file.pathWithoutExtension` was added.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.file.path.includes('tasks releases/4.1.0 Release.md')
 ```
 
 - Like 'path includes', except that it is **case-sensitive**: capitalisation matters.
 
-```text
+```javascript
 filter by function task.file.path === 'tasks releases/4.1.0 Release.md'
 ```
 
@@ -1153,7 +1153,7 @@ filter by function task.file.path === 'tasks releases/4.1.0 Release.md'
 - Note that the file extension needs to be included too.
 - With built-in searches, this could only be done using a regular expression, with special characters `^` and `$`, and escaping any characters with special meaning such as `/`.
 
-```text
+```javascript
 filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase()
 ```
 
@@ -1183,14 +1183,14 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by root folder** is now
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.root_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.file.root === '/'
 ```
 
 - Find tasks in files in the root of the vault.
 - Note that this is **case-sensitive**: capitalisation matters.
 
-```text
+```javascript
 filter by function task.file.root === 'Work/'
 ```
 
@@ -1221,33 +1221,33 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now poss
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.file.folder === "Work/Projects/"
 ```
 
 - Find tasks in files in any file in the given folder **only**, and not any sub-folders.
 - The equality test, `===`, requires that the trailing slash (`/`) be included.
 
-```text
+```javascript
 filter by function task.file.folder.includes("Work/Projects/")
 ```
 
 - Find tasks in files in a specific folder **and any sub-folders**.
 
-```text
+```javascript
 filter by function task.file.folder.includes( '{{query.file.folder}}' )
 ```
 
 - Find tasks in files in the folder that contains the query **and any sub-folders**.
 - Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.
 
-```text
+```javascript
 filter by function task.file.folder === '{{query.file.folder}}'
 ```
 
 - Find tasks in files in the folder that contains the query only (**not tasks in any sub-folders**).
 
-```text
+```javascript
 filter by function task.file.folder.includes("Work/Projects")
 ```
 
@@ -1281,14 +1281,14 @@ In Tasks 4.8.0 `task.file.filenameWithoutExtension` was added.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
 
-```text
+```javascript
 filter by function task.file.filename === "4.1.0 Release.md"
 ```
 
 - Find tasks in files with the exact file name, but in any folder.
 - The equality test, `===`, requires that the file extension `.md` be included.
 
-```text
+```javascript
 filter by function task.file.filename.includes("4.1.0 Release")
 ```
 
@@ -1325,7 +1325,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by heading** is now pos
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.heading_docs.approved.md -->
 
-```text
+```javascript
 filter by function \
     const taskDate = task.due.moment; \
     const wanted = '2023-06-11'; \
@@ -1337,7 +1337,7 @@ filter by function \
   - **or** do not have a due date, and their preceding heading contains the same date as a string: `2023-06-11`.
 - Note that because we use variables to avoid repetition of values, we need to add `return`.
 
-```text
+```javascript
 filter by function \
     const taskDate = task.due.moment; \
     const now = moment(); \
@@ -1348,7 +1348,7 @@ filter by function \
   - **either** due on today's date,
   - **or** do not have a due date, and their preceding heading contains today's date as a string, formatted as `YYYY-MM-DD`.
 
-```text
+```javascript
 filter by function \
     const wanted = '#context/home'; \
     return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;

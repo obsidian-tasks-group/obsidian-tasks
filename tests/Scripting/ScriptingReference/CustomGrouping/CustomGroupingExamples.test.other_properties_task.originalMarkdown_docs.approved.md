@@ -1,7 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 group by function '``' + task.originalMarkdown + '``'
 ```
 
@@ -9,7 +9,7 @@ group by function '``' + task.originalMarkdown + '``'
 - Note the pairs of backtick characters ('`'), to preserve even single backtick characters in the task line.
 - It's important to prevent the task checkbox (for example, '[ ]') from being rendered in the heading, as it gets very confusing if there are checkboxes on both headings and tasks.
 
-```text
+```javascript
 group by function task.originalMarkdown.replace(/^[^\[\]]+\[.\] */, '')
 ```
 

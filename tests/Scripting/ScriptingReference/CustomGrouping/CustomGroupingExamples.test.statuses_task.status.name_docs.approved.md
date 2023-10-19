@@ -1,13 +1,13 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 group by function task.status.name
 ```
 
 - Identical to "group by status.name".
 
-```text
+```javascript
 group by function task.status.name.toUpperCase()
 ```
 

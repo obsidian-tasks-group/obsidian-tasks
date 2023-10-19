@@ -1,14 +1,14 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.file.root === '/'
 ```
 
 - Find tasks in files in the root of the vault.
 - Note that this is **case-sensitive**: capitalisation matters.
 
-```text
+```javascript
 filter by function task.file.root === 'Work/'
 ```
 

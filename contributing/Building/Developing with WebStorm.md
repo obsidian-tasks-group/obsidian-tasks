@@ -32,3 +32,11 @@ Tell it to ignore `main.js`:
 - After you have built the plugin, find `main.js` in the `Project` view
 - Right-click on it and select `Override File Type`
 - Select `Plain Text`
+
+## Stop WebStorm complaining about invalid JavaScript in markdown
+
+We have started using JavaScript as the fenced code block language for some documentation, as it makes the published documentation easier to read. The syntax highlighting breaks up an otherwise long wall of text.  
+
+If using WebStorm IDE, it will complain very strongly about invalid JavaScript, as the code samples include things like `group by function` and line continuation characters.
+
+So turn off this checking, follow the steps in [Disable coding assistance in code blocks](https://www.jetbrains.com/help/webstorm/markdown.html#disable-injection-in-code-blocks).

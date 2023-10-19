@@ -1,13 +1,13 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 group by function task.file.folder
 ```
 
 - Same as 'group by folder'.
 
-```text
+```javascript
 group by function task.file.folder.slice(0, -1).split('/').pop() + '/'
 ```
 
