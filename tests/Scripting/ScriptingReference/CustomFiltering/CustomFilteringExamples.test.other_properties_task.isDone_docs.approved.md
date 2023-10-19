@@ -1,13 +1,13 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.isDone
 ```
 
 - Same as the `done` filter, but might be useful in conjunction with other expressions on the same line.
 
-```text
+```javascript
 filter by function ! task.isDone
 ```
 

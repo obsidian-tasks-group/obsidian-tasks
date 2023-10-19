@@ -1,14 +1,14 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.file.filename === "4.1.0 Release.md"
 ```
 
 - Find tasks in files with the exact file name, but in any folder.
 - The equality test, `===`, requires that the file extension `.md` be included.
 
-```text
+```javascript
 filter by function task.file.filename.includes("4.1.0 Release")
 ```
 

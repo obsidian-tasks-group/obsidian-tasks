@@ -1,25 +1,25 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.recurrenceRule.includes("every week")
 ```
 
 - Similar to `recurrence includes every week`, but case-sensitive.
 
-```text
+```javascript
 filter by function !task.recurrenceRule.includes("every week")
 ```
 
 - Similar to `recurrence does not include every week`, but case-sensitive.
 
-```text
+```javascript
 filter by function task.recurrenceRule.includes("every week") && task.recurrenceRule.includes("when done")
 ```
 
 - Find tasks that are due every week, and **do** contain `when done` in their recurrence rule.
 
-```text
+```javascript
 filter by function task.recurrenceRule.includes("every week") && !task.recurrenceRule.includes("when done")
 ```
 

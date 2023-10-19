@@ -60,7 +60,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status** is now poss
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.isDone_docs.approved.md -->
 
-```text
+```javascript
 group by function task.isDone ? "Action Required" : "Nothing To Do"
 ```
 
@@ -80,13 +80,13 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status names** is no
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.statuses_task.status.name_docs.approved.md -->
 
-```text
+```javascript
 group by function task.status.name
 ```
 
 - Identical to "group by status.name".
 
-```text
+```javascript
 group by function task.status.name.toUpperCase()
 ```
 
@@ -114,13 +114,13 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status types** is no
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.statuses_task.status.type_docs.approved.md -->
 
-```text
+```javascript
 group by function task.status.type
 ```
 
 - Unlike "group by status.type", this sorts the status types in alphabetical order.
 
-```text
+```javascript
 group by function task.status.typeGroupText
 ```
 
@@ -136,7 +136,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status symbol** is n
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.statuses_task.status.symbol_docs.approved.md -->
 
-```text
+```javascript
 group by function "Status symbol: " + task.status.symbol.replace(" ", "space")
 ```
 
@@ -152,7 +152,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by next status symbol**
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.statuses_task.status.nextSymbol_docs.approved.md -->
 
-```text
+```javascript
 group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "space")
 ```
 
@@ -179,7 +179,7 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.due_docs.approved.md -->
 
-```text
+```javascript
 group by function task.due.category.groupText
 ```
 
@@ -187,7 +187,7 @@ group by function task.due.category.groupText
 - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 - The values `task.due.category.name` and `task.due.category.sortOrder` are also available.
 
-```text
+```javascript
 group by function task.due.fromNow.groupText
 ```
 
@@ -195,19 +195,19 @@ group by function task.due.fromNow.groupText
 - It users an empty string (so no heading) if there is no due date.
 - The values `task.due.fromNow.name` and `task.due.fromNow.sortOrder` are also available.
 
-```text
+```javascript
 group by function task.due.format("YYYY-MM-DD dddd")
 ```
 
 - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
 
-```text
+```javascript
 group by function task.due.formatAsDate()
 ```
 
 - Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date.
 
-```text
+```javascript
 group by function task.due.formatAsDateAndTime()
 ```
 
@@ -217,7 +217,7 @@ group by function task.due.formatAsDateAndTime()
   - Currently the Tasks plugin does not support storing of times.
   - Do not add times to your tasks, as it will break the reading of task data.
 
-```text
+```javascript
 group by function task.due.format("YYYY[%%]-MM[%%] MMM", "no due date")
 ```
 
@@ -227,7 +227,7 @@ group by function task.due.format("YYYY[%%]-MM[%%] MMM", "no due date")
 - The hidden month number is added, commented-out between two `%%` strings, to control the sort order of headings.
 - To escape characters in format strings, you can wrap the characters in square brackets (here, `[%%]`).
 
-```text
+```javascript
 group by function task.due.format("YYYY[%%]-MM[%%] MMM [- Week] WW")
 ```
 
@@ -241,21 +241,21 @@ DON'T PANIC! For users who are comfortable with JavaScript, these more complicat
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.due.advanced_docs.approved.md -->
 
-```text
+```javascript
 group by function task.due.format("dddd")
 ```
 
 - Group by day of the week (Monday, Tuesday, etc).
 - The day names are sorted alphabetically.
 
-```text
+```javascript
 group by function task.due.format("[%%]d[%%]dddd")
 ```
 
 - Group by day of the week (Sunday, Monday, Tuesday, etc).
 - The day names are sorted in date order, starting with Sunday.
 
-```text
+```javascript
 group by function                                   \
     const date = task.due;                          \
     if (!date.moment) {                             \
@@ -275,7 +275,7 @@ group by function                                   \
 - To add comments, we can use `{{! ... }}`
 - To make the expression more readable, we put a `\` at the end of several lines, to continue the expression on the next line.
 
-```text
+```javascript
 group by function \
     const date = task.due.moment; \
     return \
@@ -290,7 +290,7 @@ group by function \
 - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 - Note that because we use variables to avoid repetition of values, we need to add `return`
 
-```text
+```javascript
 group by function \
     const date = task.due.moment; \
     return \
@@ -303,7 +303,7 @@ group by function \
 - As above, but the headings `Overdue`, `Today`, `Future` and `Undated` are highlighted.
 - See the sample screenshot below.
 
-```text
+```javascript
 group by function \
     const date = task.due.moment; \
     const now = moment(); \
@@ -335,7 +335,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by done date** is now p
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.done_docs.approved.md -->
 
-```text
+```javascript
 group by function task.done.format("YYYY-MM-DD dddd")
 ```
 
@@ -358,7 +358,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by scheduled date** is 
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.scheduled_docs.approved.md -->
 
-```text
+```javascript
 group by function task.scheduled.format("YYYY-MM-DD dddd")
 ```
 
@@ -381,7 +381,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by start date** is now 
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.start_docs.approved.md -->
 
-```text
+```javascript
 group by function task.start.format("YYYY-MM-DD dddd")
 ```
 
@@ -403,7 +403,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by created date** is no
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.created_docs.approved.md -->
 
-```text
+```javascript
 group by function task.created.format("YYYY-MM-DD dddd")
 ```
 
@@ -425,7 +425,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by happens date** is no
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.happens_docs.approved.md -->
 
-```text
+```javascript
 group by function task.happens.format("YYYY-MM-DD dddd")
 ```
 
@@ -447,26 +447,26 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by description** is now
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.description_docs.approved.md -->
 
-```text
+```javascript
 group by function task.description
 ```
 
 - group by description.
 - This might be useful for finding completed recurrences of the same task.
 
-```text
+```javascript
 group by function task.description.toUpperCase()
 ```
 
 - Convert the description to capitals.
 
-```text
+```javascript
 group by function task.description.slice(0, 25)
 ```
 
 - Truncate descriptions to at most their first 25 characters, and group by that string.
 
-```text
+```javascript
 group by function task.description.replace('short', '==short==')
 ```
 
@@ -482,7 +482,7 @@ The value `task.descriptionWithoutTags` returns a copy of the description with a
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
 
-```text
+```javascript
 group by function task.descriptionWithoutTags
 ```
 
@@ -514,7 +514,7 @@ Using the priority name:
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.priorityName_docs.approved.md -->
 
-```text
+```javascript
 group by function task.priorityName
 ```
 
@@ -522,7 +522,7 @@ group by function task.priorityName
 - The priority names are displayed in alphabetical order.
 - Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'.
 
-```text
+```javascript
 group by function task.priorityNameGroupText
 ```
 
@@ -536,7 +536,7 @@ Using the priority number:
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.priorityNumber_docs.approved.md -->
 
-```text
+```javascript
 group by function task.priorityNumber
 ```
 
@@ -559,7 +559,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by urgency** is now pos
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.urgency_docs.approved.md -->
 
-```text
+```javascript
 group by function task.urgency.toFixed(3)
 ```
 
@@ -583,7 +583,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by recurrence** is now 
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.isRecurring_docs.approved.md -->
 
-```text
+```javascript
 group by function task.isRecurring ? "Recurring" : "Non-Recurring"
 ```
 
@@ -593,7 +593,7 @@ group by function task.isRecurring ? "Recurring" : "Non-Recurring"
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.recurrenceRule_docs.approved.md -->
 
-```text
+```javascript
 group by function task.recurrenceRule.replace('when done', '==when done==')
 ```
 
@@ -616,32 +616,32 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by tags** is now possib
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.tags_docs.approved.md -->
 
-```text
+```javascript
 group by function task.tags
 ```
 
 - Like "group by tags" except that tasks with no tags have no heading instead of "(No tags)".
 
-```text
+```javascript
 group by function task.tags.join(", ")
 ```
 
 - Tasks with multiple tags are listed once, with a heading that combines all the tags.
 - Separating with commas means the tags are clickable in the headings.
 
-```text
+```javascript
 group by function task.tags.sort().join(", ")
 ```
 
 - As above, but sorting the tags first ensures that the final headings are independent of order of tags in the tasks.
 
-```text
+```javascript
 group by function task.tags.filter( (tag) => tag.includes("#context/") )
 ```
 
 - Only create headings for tags that contain "#context/".
 
-```text
+```javascript
 group by function task.tags.filter( (tag) => ! tag.includes("#tag") )
 ```
 
@@ -653,49 +653,49 @@ These are more complicated examples, which you might like to copy if you use tas
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
 
-```text
+```javascript
 group by function task.tags.map( (tag) => tag.split('/')[0].replace('#', '') )
 ```
 
 - `#tag/subtag/sub-sub-tag` gives **`tag`**.
 
-```text
+```javascript
 group by function task.tags.map( (tag) => tag.split('/')[1] ? tag.split('/').slice(1, 2) : '')
 ```
 
 - `#tag/subtag/sub-sub-tag` gives **`subtag`**.
 
-```text
+```javascript
 group by function task.tags.map( (tag) => tag.split('/')[2] ? tag.split('/').slice(2, 3) : '')
 ```
 
 - `#tag/subtag/sub-sub-tag` gives **`sub-sub-tag`**.
 
-```text
+```javascript
 group by function task.tags.map( (tag) => tag.split('/')[3] ? tag.split('/').slice(3, 4) : '')
 ```
 
 - `#tag/subtag/sub-sub-tag` gives no heading, as there is no value at the 4th level.
 
-```text
+```javascript
 group by function task.tags.map( (tag) => tag.split('/')[0] )
 ```
 
 - `#tag/subtag/sub-sub-tag` gives **`#tag`**.
 
-```text
+```javascript
 group by function task.tags.map( (tag) => tag.split('/')[1] ? tag.split('/').slice(0, 2).join('/') : '')
 ```
 
 - `#tag/subtag/sub-sub-tag` gives **`#tag/subtag`**.
 
-```text
+```javascript
 group by function task.tags.map( (tag) => tag.split('/')[2] ? tag.split('/').slice(0, 3).join('/') : '')
 ```
 
 - `#tag/subtag/sub-sub-tag` gives **`#tag/subtag/sub-sub-tag`**.
 
-```text
+```javascript
 group by function task.tags.map( (tag) => tag.split('/')[3] ? tag.split('/').slice(0, 4).join('/') : '')
 ```
 
@@ -713,7 +713,7 @@ For example, this could be used to extract information from `task.originalMarkdo
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.originalMarkdown_docs.approved.md -->
 
-```text
+```javascript
 group by function '``' + task.originalMarkdown + '``'
 ```
 
@@ -721,7 +721,7 @@ group by function '``' + task.originalMarkdown + '``'
 - Note the pairs of backtick characters ('`'), to preserve even single backtick characters in the task line.
 - It's important to prevent the task checkbox (for example, '[ ]') from being rendered in the heading, as it gets very confusing if there are checkboxes on both headings and tasks.
 
-```text
+```javascript
 group by function task.originalMarkdown.replace(/^[^\[\]]+\[.\] */, '')
 ```
 
@@ -740,13 +740,13 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file path** is now p
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.file_properties_task.file.path_docs.approved.md -->
 
-```text
+```javascript
 group by function task.file.path
 ```
 
 - Like 'group by path' but includes the file extension.
 
-```text
+```javascript
 group by function task.file.path.replace('{{query.file.folder}}', '')
 ```
 
@@ -776,7 +776,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by root folder** is now
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.file_properties_task.file.root_docs.approved.md -->
 
-```text
+```javascript
 group by function task.file.root
 ```
 
@@ -798,13 +798,13 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by folder** is now poss
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
-```text
+```javascript
 group by function task.file.folder
 ```
 
 - Same as 'group by folder'.
 
-```text
+```javascript
 group by function task.file.folder.slice(0, -1).split('/').pop() + '/'
 ```
 
@@ -832,13 +832,13 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file name** is now p
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.file_properties_task.file.filename_docs.approved.md -->
 
-```text
+```javascript
 group by function task.file.filename
 ```
 
 - Like 'group by filename' but does not link to the file.
 
-```text
+```javascript
 group by function task.file.filename.filenameWithoutExtension + (task.hasHeading ? (' > ' + task.heading) : '')
 ```
 
@@ -866,7 +866,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by heading** is now pos
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.file_properties_task.heading_docs.approved.md -->
 
-```text
+```javascript
 group by function (task.heading + '.md' === task.file.filename) ? '' : task.heading
 ```
 

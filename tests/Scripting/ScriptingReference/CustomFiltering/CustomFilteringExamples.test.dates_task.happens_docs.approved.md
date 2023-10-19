@@ -1,7 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.happens.format('dddd') === 'Friday'
 ```
 

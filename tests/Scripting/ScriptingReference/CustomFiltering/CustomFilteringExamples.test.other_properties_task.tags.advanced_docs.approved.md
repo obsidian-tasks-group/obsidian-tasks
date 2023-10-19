@@ -1,13 +1,13 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.tags.find( (tag) => tag.includes('/') ) && true || false
 ```
 
 - Find all tasks that have at least one nested tag.
 
-```text
+```javascript
 filter by function task.tags.find( (tag) => tag.split('/').length >= 3 ) && true || false
 ```
 

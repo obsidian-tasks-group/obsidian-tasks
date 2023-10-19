@@ -1,7 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "space")
 ```
 

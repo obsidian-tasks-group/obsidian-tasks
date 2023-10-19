@@ -1,21 +1,21 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 group by function task.due.format("dddd")
 ```
 
 - Group by day of the week (Monday, Tuesday, etc).
 - The day names are sorted alphabetically.
 
-```text
+```javascript
 group by function task.due.format("[%%]d[%%]dddd")
 ```
 
 - Group by day of the week (Sunday, Monday, Tuesday, etc).
 - The day names are sorted in date order, starting with Sunday.
 
-```text
+```javascript
 group by function                                   \
     const date = task.due;                          \
     if (!date.moment) {                             \
@@ -35,7 +35,7 @@ group by function                                   \
 - To add comments, we can use `{{! ... }}`
 - To make the expression more readable, we put a `\` at the end of several lines, to continue the expression on the next line.
 
-```text
+```javascript
 group by function \
     const date = task.due.moment; \
     return \
@@ -50,7 +50,7 @@ group by function \
 - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 - Note that because we use variables to avoid repetition of values, we need to add `return`
 
-```text
+```javascript
 group by function \
     const date = task.due.moment; \
     return \
@@ -63,7 +63,7 @@ group by function \
 - As above, but the headings `Overdue`, `Today`, `Future` and `Undated` are highlighted.
 - See the sample screenshot below.
 
-```text
+```javascript
 group by function \
     const date = task.due.moment; \
     const now = moment(); \

@@ -77,7 +77,7 @@ The `expression` must:
 > [!warning]
 > The strings returned are rendered as-is. This means, for example, that if the text you return has underscores in (`_`) that are not meant to indicate italics, you should escape them with backslashes ('\_') like this:
 >
-> ```text
+> ```javascript
 > group by function task.description.replaceAll('_', '\\_')
 >```
 
@@ -91,26 +91,26 @@ You can find many more examples by searching for `group by function` in the [[Gr
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.description_docs.approved.md -->
 
-```text
+```javascript
 group by function task.description
 ```
 
 - group by description.
 - This might be useful for finding completed recurrences of the same task.
 
-```text
+```javascript
 group by function task.description.toUpperCase()
 ```
 
 - Convert the description to capitals.
 
-```text
+```javascript
 group by function task.description.slice(0, 25)
 ```
 
 - Truncate descriptions to at most their first 25 characters, and group by that string.
 
-```text
+```javascript
 group by function task.description.replace('short', '==short==')
 ```
 
@@ -122,7 +122,7 @@ group by function task.description.replace('short', '==short==')
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.due_docs.approved.md -->
 
-```text
+```javascript
 group by function task.due.category.groupText
 ```
 
@@ -130,7 +130,7 @@ group by function task.due.category.groupText
 - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 - The values `task.due.category.name` and `task.due.category.sortOrder` are also available.
 
-```text
+```javascript
 group by function task.due.fromNow.groupText
 ```
 
@@ -138,19 +138,19 @@ group by function task.due.fromNow.groupText
 - It users an empty string (so no heading) if there is no due date.
 - The values `task.due.fromNow.name` and `task.due.fromNow.sortOrder` are also available.
 
-```text
+```javascript
 group by function task.due.format("YYYY-MM-DD dddd")
 ```
 
 - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
 
-```text
+```javascript
 group by function task.due.formatAsDate()
 ```
 
 - Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date.
 
-```text
+```javascript
 group by function task.due.formatAsDateAndTime()
 ```
 
@@ -160,7 +160,7 @@ group by function task.due.formatAsDateAndTime()
   - Currently the Tasks plugin does not support storing of times.
   - Do not add times to your tasks, as it will break the reading of task data.
 
-```text
+```javascript
 group by function task.due.format("YYYY[%%]-MM[%%] MMM", "no due date")
 ```
 
@@ -170,7 +170,7 @@ group by function task.due.format("YYYY[%%]-MM[%%] MMM", "no due date")
 - The hidden month number is added, commented-out between two `%%` strings, to control the sort order of headings.
 - To escape characters in format strings, you can wrap the characters in square brackets (here, `[%%]`).
 
-```text
+```javascript
 group by function task.due.format("YYYY[%%]-MM[%%] MMM [- Week] WW")
 ```
 
@@ -186,7 +186,7 @@ There are many more date examples in [[Grouping#Due Date]].
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.urgency_docs.approved.md -->
 
-```text
+```javascript
 group by function task.urgency.toFixed(3)
 ```
 
@@ -198,13 +198,13 @@ group by function task.urgency.toFixed(3)
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
-```text
+```javascript
 group by function task.file.folder
 ```
 
 - Same as 'group by folder'.
 
-```text
+```javascript
 group by function task.file.folder.slice(0, -1).split('/').pop() + '/'
 ```
 

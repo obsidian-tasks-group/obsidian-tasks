@@ -1,7 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 group by function task.scheduled.format("YYYY-MM-DD dddd")
 ```
 

@@ -1,21 +1,21 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.isRecurring
 ```
 
 - This is identical to `is recurring`.
 - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
 
-```text
+```javascript
 filter by function !task.isRecurring
 ```
 
 - This is identical to `is not recurring`.
 - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
 
-```text
+```javascript
 filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁')
 ```
 

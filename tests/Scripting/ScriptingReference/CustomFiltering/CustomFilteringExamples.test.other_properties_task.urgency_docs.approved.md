@@ -1,7 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 
-```text
+```javascript
 filter by function task.urgency > 8.9999
 ```
 
@@ -9,13 +9,13 @@ filter by function task.urgency > 8.9999
 - Note that limiting value used is `8.9999`.
 - Searches that compare two urgency values for 'less than' or 'more than' (using one of `>`, `>=`, `<` or `<=`) **must adjust their values slightly to allow for rounding**.
 
-```text
+```javascript
 filter by function task.urgency > 7.9999 && task.urgency < 11.0001
 ```
 
 - Find tasks with an urgency score between `8.0` and `11.0`, inclusive.
 
-```text
+```javascript
 filter by function task.urgency.toFixed(2) === 1.95.toFixed(2)
 ```
 
@@ -24,13 +24,13 @@ filter by function task.urgency.toFixed(2) === 1.95.toFixed(2)
 - The `.toFixed(2)` on both sides of the `===` ensures that two numbers being compared are both rounded to the same number of decimal places (2).
 - This is important, to prevent being tripped up `10.29` being not exactly the same when comparing non-integer numbers.
 
-```text
+```javascript
 filter by function task.urgency.toFixed(2) !== 1.95.toFixed(2)
 ```
 
 - Find tasks with any urgency other than the default score of `1.95`.
 
-```text
+```javascript
 filter by function task.urgency === 10.29
 ```
 
