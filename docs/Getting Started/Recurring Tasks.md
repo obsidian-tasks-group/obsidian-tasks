@@ -43,7 +43,7 @@ Alternatively, if you have enabled addition of [[Dates#Created date|created date
 - [x] take out the trash 🔁 every Sunday 📅 2021-04-25 ✅ 2023-03-10
 ```
 
-## Order of the new task
+### Order of the new task
 
 Use this setting to control where the recurring task is inserted. The default is to put the new task before the original one.
 
