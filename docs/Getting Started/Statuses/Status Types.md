@@ -36,7 +36,7 @@ The `DONE` type is used to determine:
 - whether to add or remove the Done date when toggling a task.
 - whether to create new instances of recurring tasks, when they are done.
 
-The [[Recurring Tasks]] documentation has several [[Recurring Tasks#Recurring Tasks with Custom Statuses|worked examples]] explaining the above points fully.
+The page [[Recurring Tasks and Custom Statuses]] has several worked examples to explain the above points fully.
 
 ### CANCELLED
 
