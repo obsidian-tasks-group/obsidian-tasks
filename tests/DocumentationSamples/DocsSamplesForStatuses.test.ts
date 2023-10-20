@@ -101,8 +101,8 @@ function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
     const markdown = `
 \`\`\`${language}
 flowchart LR
-${nodes.join('\n')};
-${edges.join('\n')};
+${nodes.join('\n')}
+${edges.join('\n')}
 \`\`\`
 `;
     verifyWithFileExtension(markdown, 'mermaid.md');
