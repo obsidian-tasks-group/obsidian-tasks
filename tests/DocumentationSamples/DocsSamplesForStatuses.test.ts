@@ -71,6 +71,11 @@ function constructStatuses(importedStatuses: StatusCollection) {
     return statuses;
 }
 
+function verifyStatusesInMultipleFormats(statuses: Status[]) {
+    verifyStatusesAsMarkdownTable(statuses, false);
+    verifyStatusesAsMermaidDiagram(statuses);
+}
+
 function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
     const registry = new StatusRegistry();
 
@@ -129,8 +134,7 @@ describe('DefaultStatuses', () => {
             ['x', 'Done', ' ', 'DONE'],
         ];
         const statuses = constructStatuses(importantCycle);
-        verifyStatusesAsMarkdownTable(statuses, false);
-        verifyStatusesAsMermaidDiagram(statuses);
+        verifyStatusesInMultipleFormats(statuses);
     });
 
     it('pro-con-cycle', () => {
