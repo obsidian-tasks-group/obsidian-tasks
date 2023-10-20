@@ -188,6 +188,30 @@ describe('StatusRegistry', () => {
         `);
     });
 
+    it('should not include unknown nextStatusSymbols in mermaid diagrams', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        statusRegistry.clearStatuses();
+        statusRegistry.add(new StatusConfiguration(' ', 'Todo', '/', false, StatusType.TODO));
+        // Leave '/' as not registered
+        const originalNumberOfStatuses = statusRegistry.registeredStatuses.length;
+
+        // Act
+        const mermaidText = statusRegistry.mermaidDiagram();
+
+        // Assert
+        expect(statusRegistry.registeredStatuses.length).toEqual(originalNumberOfStatuses);
+        expect(mermaidText).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1[Todo]
+
+            \`\`\`
+            "
+        `);
+    });
+
     describe('toggling', () => {
         it('should allow task to toggle through standard transitions', () => {
             // Arrange

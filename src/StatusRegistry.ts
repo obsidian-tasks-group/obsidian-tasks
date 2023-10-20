@@ -305,10 +305,16 @@ export class StatusRegistry {
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
             nodes.push(`${index + 1}[${status.name}]`);
+
+            // Check the next status:
             const nextStatus = this.getNextStatus(status);
-            // TODO What if (nextStatus.type === StatusType.EMPTY)
             const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
-            edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
+            const nextStatusIsKnown = nextStatusIndex !== -1;
+            const nextStatusIsNotInternal = nextStatus.type !== StatusType.EMPTY;
+
+            if (nextStatusIsKnown && nextStatusIsNotInternal) {
+                edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
+            }
         });
 
         return `
