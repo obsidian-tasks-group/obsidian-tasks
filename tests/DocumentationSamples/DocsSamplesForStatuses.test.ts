@@ -13,6 +13,8 @@ import * as Themes from '../../src/Config/Themes';
 import { StatusValidator } from '../../src/StatusValidator';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { StatusRegistry } from '../../src/StatusRegistry';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 
 function getPrintableSymbol(symbol: string) {
     const result = symbol !== ' ' ? symbol : 'space';
@@ -70,19 +72,29 @@ function constructStatuses(importedStatuses: StatusCollection) {
     return statuses;
 }
 
+function verifyStatusesInMultipleFormats(statuses: Status[], showQueryInstructions: boolean) {
+    verifyStatusesAsMarkdownTable(statuses, showQueryInstructions);
+    verifyStatusesAsMermaidDiagram(statuses);
+}
+
+function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
+    // Set the registry up to exactly match the supplied statuses
+    const registry = new StatusRegistry();
+    registry.set(statuses);
+
+    const markdown = registry.mermaidDiagram();
+    verifyWithFileExtension(markdown, 'mermaid.md');
+}
+
 describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
-    // TODO There are hand-created Mermaid diagrams of some of this in 'Example Statuses'.
-    //      If ever the statuses are changed here, or new examples added, spend a few
-    //      minutes to write out the Mermaid diagrams automatically, and embed the
-    //      generated mermaid files inside the docs, replacing the hand-crafted ones.
     it('core-statuses', () => {
-        verifyStatusesAsMarkdownTable([Status.makeTodo(), Status.makeDone()], true);
+        verifyStatusesInMultipleFormats([Status.makeTodo(), Status.makeDone()], true);
     });
 
     it('custom-statuses', () => {
-        verifyStatusesAsMarkdownTable([Status.makeInProgress(), Status.makeCancelled()], true);
+        verifyStatusesInMultipleFormats([Status.makeInProgress(), Status.makeCancelled()], true);
     });
 
     it('important-cycle', () => {
@@ -91,7 +103,7 @@ describe('DefaultStatuses', () => {
             ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
             ['X', 'Done - Important', '!', 'DONE'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
     });
 
     it('todo-in_progress-done', () => {
@@ -100,7 +112,7 @@ describe('DefaultStatuses', () => {
             ['/', 'In Progress', 'x', 'IN_PROGRESS'],
             ['x', 'Done', ' ', 'DONE'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
     });
 
     it('pro-con-cycle', () => {
@@ -108,7 +120,7 @@ describe('DefaultStatuses', () => {
             ['P', 'Pro', 'C', 'NON_TASK'],
             ['C', 'Con', 'P', 'NON_TASK'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
     });
 
     it('toggle-does-nothing', () => {
@@ -119,7 +131,7 @@ describe('DefaultStatuses', () => {
             ['P', 'Paraphrase', 'P', 'NON_TASK'],
             ['Q', 'Quote', 'Q', 'NON_TASK'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
     });
 });
 
@@ -144,7 +156,7 @@ describe('Theme', () => {
         });
 
         it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
+            verifyStatusesInMultipleFormats(constructStatuses(statuses), true);
         });
 
         it('Tasks', () => {
