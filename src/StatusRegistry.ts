@@ -311,13 +311,12 @@ export class StatusRegistry {
             edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
         });
 
-        const markdown = `
+        return `
 \`\`\`${language}
 flowchart LR
 ${nodes.join('\n')}
 ${edges.join('\n')}
 \`\`\`
 `;
-        return markdown;
     }
 }
