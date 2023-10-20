@@ -112,11 +112,11 @@ describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
     it('core-statuses', () => {
-        verifyStatusesAsMarkdownTable([Status.makeTodo(), Status.makeDone()], true);
+        verifyStatusesInMultipleFormats([Status.makeTodo(), Status.makeDone()], true);
     });
 
     it('custom-statuses', () => {
-        verifyStatusesAsMarkdownTable([Status.makeInProgress(), Status.makeCancelled()], true);
+        verifyStatusesInMultipleFormats([Status.makeInProgress(), Status.makeCancelled()], true);
     });
 
     it('important-cycle', () => {
@@ -125,7 +125,7 @@ describe('DefaultStatuses', () => {
             ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
             ['X', 'Done - Important', '!', 'DONE'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
     });
 
     it('todo-in_progress-done', () => {
@@ -142,7 +142,7 @@ describe('DefaultStatuses', () => {
             ['P', 'Pro', 'C', 'NON_TASK'],
             ['C', 'Con', 'P', 'NON_TASK'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
     });
 
     it('toggle-does-nothing', () => {
@@ -153,7 +153,7 @@ describe('DefaultStatuses', () => {
             ['P', 'Paraphrase', 'P', 'NON_TASK'],
             ['Q', 'Quote', 'Q', 'NON_TASK'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
     });
 });
 
@@ -178,7 +178,7 @@ describe('Theme', () => {
         });
 
         it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
+            verifyStatusesInMultipleFormats(constructStatuses(statuses), true);
         });
 
         it('Tasks', () => {
