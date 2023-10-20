@@ -13,6 +13,7 @@ import * as Themes from '../../src/Config/Themes';
 import { StatusValidator } from '../../src/StatusValidator';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { StatusRegistry } from '../../src/StatusRegistry';
 
 function getPrintableSymbol(symbol: string) {
     const result = symbol !== ' ' ? symbol : 'space';
@@ -70,13 +71,40 @@ function constructStatuses(importedStatuses: StatusCollection) {
     return statuses;
 }
 
+function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
+    const registry = new StatusRegistry();
+
+    // Set the registry up to exactly match the supplied statuses
+    registry.clearStatuses();
+    statuses.forEach((status) => {
+        registry.add(status);
+    });
+
+    const language = 'mermaid';
+
+    let nodes = '';
+    let edges = '';
+    statuses.forEach((status, index) => {
+        nodes += `${index}[${status.name}]\n`;
+        const nextStatus = registry.getNextStatus(status);
+        // TODO What if (nextStatus.type === StatusType.EMPTY)
+        const nextStatusIndex = statuses.findIndex((status) => status.symbol === nextStatus.symbol);
+        edges += `${index + 1} --> ${nextStatusIndex + 1}\n`;
+    });
+
+    const markdown = `
+\`\`\`${language}
+flowchart LR
+${nodes}
+${edges}
+\`\`\`
+`;
+    verify(markdown);
+}
+
 describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
-    // TODO There are hand-created Mermaid diagrams of some of this in 'Example Statuses'.
-    //      If ever the statuses are changed here, or new examples added, spend a few
-    //      minutes to write out the Mermaid diagrams automatically, and embed the
-    //      generated mermaid files inside the docs, replacing the hand-crafted ones.
     it('core-statuses', () => {
         verifyStatusesAsMarkdownTable([Status.makeTodo(), Status.makeDone()], true);
     });
@@ -100,7 +128,9 @@ describe('DefaultStatuses', () => {
             ['/', 'In Progress', 'x', 'IN_PROGRESS'],
             ['x', 'Done', ' ', 'DONE'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        const statuses = constructStatuses(importantCycle);
+        verifyStatusesAsMarkdownTable(statuses, false);
+        verifyStatusesAsMermaidDiagram(statuses);
     });
 
     it('pro-con-cycle', () => {
