@@ -77,13 +77,17 @@ function verifyStatusesInMultipleFormats(statuses: Status[], showQueryInstructio
     verifyStatusesAsMermaidDiagram(statuses);
 }
 
-function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
+function verifyStatusesAsMermaidDiagramImpl(statuses: Status[], detailed: boolean, extensionWithoutDot: string) {
     // Set the registry up to exactly match the supplied statuses
     const registry = new StatusRegistry();
     registry.set(statuses);
 
-    const markdown = registry.mermaidDiagram();
-    verifyWithFileExtension(markdown, 'mermaid.md');
+    const markdown = registry.mermaidDiagram(detailed);
+    verifyWithFileExtension(markdown, extensionWithoutDot);
+}
+
+function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
+    verifyStatusesAsMermaidDiagramImpl(statuses, false, 'mermaid.md');
 }
 
 describe('DefaultStatuses', () => {
