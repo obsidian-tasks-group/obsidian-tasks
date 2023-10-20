@@ -70,31 +70,31 @@ When you click on the checkbox of a task, the Tasks plugin applies the following
 
 #### Starting point
 
-1. Suppose that we have adjusted the default Tasks settings slightly, to give us the **following Tasks status settings**:
+Suppose that we have adjusted the default Tasks settings slightly, to give us the **following Tasks status settings**:
 
-    <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.detailed.mermaid.md -->
-    ```mermaid
-    flowchart LR
-    1["[ ] -> [/] 'Todo' (TODO)"]
-    2["[/] -> [x] 'In Progress' (IN_PROGRESS)"]
-    3["[x] -> [ ] 'Done' (DONE)"]
-    1 --> 2
-    2 --> 3
-    3 --> 1
-    ```
-    <!-- endInclude -->
+<!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.detailed.mermaid.md -->
+```mermaid
+flowchart LR
+1["[ ] -> [/] 'Todo' (TODO)"]
+2["[/] -> [x] 'In Progress' (IN_PROGRESS)"]
+3["[x] -> [ ] 'Done' (DONE)"]
+1 --> 2
+2 --> 3
+3 --> 1
+```
+<!-- endInclude -->
 
-2. And we have selected the Tasks setting to put [[#Order of the new task|the new recurrence below the initial one]].
+And we have selected the Tasks setting to put [[#Order of the new task|the new recurrence below the initial one]].
 
-3. Now imagine we have the **following task line**:
+Now imagine we have the **following task line**:
 
-    ```text
-    - [ ] Do something 🔁 every day 📅 2023-10-15
-    ```
+```text
+- [ ] Do something 🔁 every day 📅 2023-10-15
+```
 
-    - It is a recurring task.
-    - It recurs every day.
-    - And it is due on `2023-10-15` (today).
+- It is a recurring task.
+- It recurs every day.
+- And it is due on `2023-10-15` (today).
 
 #### First click - advances to IN_PROGRESS
 
