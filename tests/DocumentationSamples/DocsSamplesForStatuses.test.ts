@@ -77,10 +77,7 @@ function verifyStatusesInMultipleFormats(statuses: Status[], showQueryInstructio
     verifyStatusesAsMermaidDiagram(statuses);
 }
 
-function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
-    // Set the registry up to exactly match the supplied statuses
-    const registry = new StatusRegistry();
-    registry.set(statuses);
+function makeMermaidDiagram(registry: StatusRegistry) {
     const uniqueStatuses = registry.registeredStatuses;
 
     const language = 'mermaid';
@@ -102,6 +99,15 @@ ${nodes.join('\n')}
 ${edges.join('\n')}
 \`\`\`
 `;
+    return markdown;
+}
+
+function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
+    // Set the registry up to exactly match the supplied statuses
+    const registry = new StatusRegistry();
+    registry.set(statuses);
+
+    const markdown = makeMermaidDiagram(registry);
     verifyWithFileExtension(markdown, 'mermaid.md');
 }
 
