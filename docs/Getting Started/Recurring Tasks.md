@@ -58,7 +58,7 @@ Use this setting to control where the recurring task is inserted. The default is
 
 When you click on the checkbox of a task, the Tasks plugin applies the following logic: ^[Except when the task status has type `NON_TASK`. See [[#When the current status type is NON_TASK]] for an example.]
 
-1. When a task line checkbox is clicked, the next status symbol is looked up in the user's Task status settings.
+1. When a task line checkbox is clicked, the next status symbol is looked up in the user's Task plugin's [[Status Settings]].
 2. If the next status symbol is of type `DONE`:
     - A [[Dates#Done date|Done date]] is added (if enabled in user settings).
     - If the task line has a Recurrence rule, an new task is created, with the next status symbol after the `DONE` symbol.
