@@ -293,8 +293,7 @@ export class StatusRegistry {
      * The text can be pasted in to an Obsidian note to visualise the transitions between
      * statuses.
      *
-     * Note: Currently, the behaviour is undefined if any of the 'next status symbols'
-     *       are not in the registry.
+     * Note: Any of the 'next status symbols' that are not in the registry are ignored, and invisble.
      */
     public mermaidDiagram() {
         const uniqueStatuses = this.registeredStatuses;
