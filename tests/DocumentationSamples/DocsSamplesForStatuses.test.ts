@@ -133,8 +133,7 @@ describe('DefaultStatuses', () => {
             ['/', 'In Progress', 'x', 'IN_PROGRESS'],
             ['x', 'Done', ' ', 'DONE'],
         ];
-        const statuses = constructStatuses(importantCycle);
-        verifyStatusesInMultipleFormats(statuses);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle));
     });
 
     it('pro-con-cycle', () => {
