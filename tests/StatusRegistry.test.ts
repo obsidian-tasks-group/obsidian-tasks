@@ -167,11 +167,9 @@ describe('StatusRegistry', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
 
-        // Act
-        const mermaidText = statusRegistry.mermaidDiagram();
-
         // Assert
-        expect(mermaidText).toMatchInlineSnapshot(`
+        // Without detail:
+        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -179,6 +177,23 @@ describe('StatusRegistry', () => {
             2[In Progress]
             3[Done]
             4[Cancelled]
+            1 --> 3
+            2 --> 3
+            3 --> 1
+            4 --> 1
+            \`\`\`
+            "
+        `);
+
+        // With detail:
+        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["'Todo'<br>[ ] -> [x]<br>(TODO)"]
+            2["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]
+            3["'Done'<br>[x] -> [ ]<br>(DONE)"]
+            4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]
             1 --> 3
             2 --> 3
             3 --> 1

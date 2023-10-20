@@ -293,9 +293,11 @@ export class StatusRegistry {
      * The text can be pasted in to an Obsidian note to visualise the transitions between
      * statuses.
      *
-     * Note: Any of the 'next status symbols' that are not in the registry are ignored, and invisble.
+     * Note: Any of the 'next status symbols' that are not in the registry are ignored, and invisible.
+     *
+     * @param {boolean} includeDetails - whether to include the status symbols and types in the diagram. Defaults to false.
      */
-    public mermaidDiagram() {
+    public mermaidDiagram(includeDetails = false) {
         const uniqueStatuses = this.registeredStatuses;
 
         const language = 'mermaid';
@@ -303,7 +305,15 @@ export class StatusRegistry {
         const nodes: string[] = [];
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
-            nodes.push(`${index + 1}[${status.name}]`);
+            if (includeDetails) {
+                const transition = `[${status.symbol}] -> [${status.nextStatusSymbol}]`;
+                const statusName = `'${status.name}'`;
+                const statusType = `(${status.type})`;
+                const text = `${index + 1}["${statusName}<br>${transition}<br>${statusType}"]`;
+                nodes.push(text);
+            } else {
+                nodes.push(`${index + 1}[${status.name}]`);
+            }
 
             // Check the next status:
             const nextStatus = this.getNextStatus(status);
