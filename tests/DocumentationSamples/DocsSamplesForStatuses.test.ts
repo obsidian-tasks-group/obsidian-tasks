@@ -82,21 +82,21 @@ function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
 
     const language = 'mermaid';
 
-    let nodes = '';
-    let edges = '';
+    const nodes: string[] = [];
+    const edges: string[] = [];
     statuses.forEach((status, index) => {
-        nodes += `${index}[${status.name}]\n`;
+        nodes.push(`${index}[${status.name}]`);
         const nextStatus = registry.getNextStatus(status);
         // TODO What if (nextStatus.type === StatusType.EMPTY)
         const nextStatusIndex = statuses.findIndex((status) => status.symbol === nextStatus.symbol);
-        edges += `${index + 1} --> ${nextStatusIndex + 1}\n`;
+        edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
     });
 
     const markdown = `
 \`\`\`${language}
 flowchart LR
-${nodes}
-${edges}
+${nodes.join('\n')};
+${edges.join('\n')};
 \`\`\`
 `;
     verify(markdown);
