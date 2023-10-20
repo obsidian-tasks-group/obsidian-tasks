@@ -14,6 +14,7 @@ import { StatusValidator } from '../../src/StatusValidator';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 import { StatusRegistry } from '../../src/StatusRegistry';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 
 function getPrintableSymbol(symbol: string) {
     const result = symbol !== ' ' ? symbol : 'space';
@@ -104,7 +105,7 @@ ${nodes.join('\n')};
 ${edges.join('\n')};
 \`\`\`
 `;
-    verify(markdown);
+    verifyWithFileExtension(markdown, 'mermaid.md');
 }
 
 describe('DefaultStatuses', () => {
