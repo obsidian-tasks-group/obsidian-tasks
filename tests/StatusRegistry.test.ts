@@ -163,6 +163,31 @@ describe('StatusRegistry', () => {
         expect(status2).toStrictEqual(status);
     });
 
+    it('should create a mermaid diagram of default statuses', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+
+        // Act
+        const mermaidText = statusRegistry.mermaidDiagram();
+
+        // Assert
+        expect(mermaidText).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1[Todo]
+            2[In Progress]
+            3[Done]
+            4[Cancelled]
+            1 --> 3
+            2 --> 3
+            3 --> 1
+            4 --> 1
+            \`\`\`
+            "
+        `);
+    });
+
     describe('toggling', () => {
         it('should allow task to toggle through standard transitions', () => {
             // Arrange

@@ -286,4 +286,38 @@ export class StatusRegistry {
             this.add(status);
         });
     }
+
+    /**
+     * Create a Mermaid diagram from the statuses in this registry.
+     *
+     * The text can be pasted in to an Obsidian note to visualise the transitions between
+     * statuses.
+     *
+     * Note: Currently, the behaviour is undefined if any of the 'next status symbols'
+     *       are not in the registry.
+     */
+    public mermaidDiagram() {
+        const uniqueStatuses = this.registeredStatuses;
+
+        const language = 'mermaid';
+
+        const nodes: string[] = [];
+        const edges: string[] = [];
+        uniqueStatuses.forEach((status, index) => {
+            nodes.push(`${index + 1}[${status.name}]`);
+            const nextStatus = this.getNextStatus(status);
+            // TODO What if (nextStatus.type === StatusType.EMPTY)
+            const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
+            edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
+        });
+
+        const markdown = `
+\`\`\`${language}
+flowchart LR
+${nodes.join('\n')}
+${edges.join('\n')}
+\`\`\`
+`;
+        return markdown;
+    }
 }

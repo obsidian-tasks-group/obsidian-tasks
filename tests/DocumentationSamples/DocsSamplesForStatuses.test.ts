@@ -78,28 +78,7 @@ function verifyStatusesInMultipleFormats(statuses: Status[], showQueryInstructio
 }
 
 function makeMermaidDiagram(registry: StatusRegistry) {
-    const uniqueStatuses = registry.registeredStatuses;
-
-    const language = 'mermaid';
-
-    const nodes: string[] = [];
-    const edges: string[] = [];
-    uniqueStatuses.forEach((status, index) => {
-        nodes.push(`${index + 1}[${status.name}]`);
-        const nextStatus = registry.getNextStatus(status);
-        // TODO What if (nextStatus.type === StatusType.EMPTY)
-        const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
-        edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
-    });
-
-    const markdown = `
-\`\`\`${language}
-flowchart LR
-${nodes.join('\n')}
-${edges.join('\n')}
-\`\`\`
-`;
-    return markdown;
+    return registry.mermaidDiagram();
 }
 
 function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
