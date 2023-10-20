@@ -91,7 +91,7 @@ function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
     const nodes: string[] = [];
     const edges: string[] = [];
     statuses.forEach((status, index) => {
-        nodes.push(`${index}[${status.name}]`);
+        nodes.push(`${index + 1}[${status.name}]`);
         const nextStatus = registry.getNextStatus(status);
         // TODO What if (nextStatus.type === StatusType.EMPTY)
         const nextStatusIndex = statuses.findIndex((status) => status.symbol === nextStatus.symbol);
