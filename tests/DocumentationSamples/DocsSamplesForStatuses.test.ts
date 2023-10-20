@@ -71,8 +71,8 @@ function constructStatuses(importedStatuses: StatusCollection) {
     return statuses;
 }
 
-function verifyStatusesInMultipleFormats(statuses: Status[]) {
-    verifyStatusesAsMarkdownTable(statuses, false);
+function verifyStatusesInMultipleFormats(statuses: Status[], showQueryInstructions: boolean) {
+    verifyStatusesAsMarkdownTable(statuses, showQueryInstructions);
     verifyStatusesAsMermaidDiagram(statuses);
 }
 
@@ -133,7 +133,7 @@ describe('DefaultStatuses', () => {
             ['/', 'In Progress', 'x', 'IN_PROGRESS'],
             ['x', 'Done', ' ', 'DONE'],
         ];
-        verifyStatusesInMultipleFormats(constructStatuses(importantCycle));
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
     });
 
     it('pro-con-cycle', () => {
