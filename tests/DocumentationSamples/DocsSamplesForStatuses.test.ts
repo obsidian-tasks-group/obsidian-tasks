@@ -81,16 +81,17 @@ function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
     // Set the registry up to exactly match the supplied statuses
     const registry = new StatusRegistry();
     registry.set(statuses);
+    const uniqueStatuses = registry.registeredStatuses;
 
     const language = 'mermaid';
 
     const nodes: string[] = [];
     const edges: string[] = [];
-    statuses.forEach((status, index) => {
+    uniqueStatuses.forEach((status, index) => {
         nodes.push(`${index + 1}[${status.name}]`);
         const nextStatus = registry.getNextStatus(status);
         // TODO What if (nextStatus.type === StatusType.EMPTY)
-        const nextStatusIndex = statuses.findIndex((status) => status.symbol === nextStatus.symbol);
+        const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
         edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
     });
 
