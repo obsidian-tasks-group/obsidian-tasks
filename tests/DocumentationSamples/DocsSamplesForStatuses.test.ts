@@ -77,13 +77,21 @@ function verifyStatusesInMultipleFormats(statuses: Status[], showQueryInstructio
     verifyStatusesAsMermaidDiagram(statuses);
 }
 
-function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
+function verifyStatusesAsMermaidDiagramImpl(statuses: Status[], detailed: boolean, extensionWithoutDot: string) {
     // Set the registry up to exactly match the supplied statuses
     const registry = new StatusRegistry();
     registry.set(statuses);
 
-    const markdown = registry.mermaidDiagram();
-    verifyWithFileExtension(markdown, 'mermaid.md');
+    const markdown = registry.mermaidDiagram(detailed);
+    verifyWithFileExtension(markdown, extensionWithoutDot);
+}
+
+function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
+    verifyStatusesAsMermaidDiagramImpl(statuses, false, 'mermaid.md');
+}
+
+function verifyStatusesAsDetailedMermaidDiagram(statuses: Status[]) {
+    verifyStatusesAsMermaidDiagramImpl(statuses, true, 'detailed.mermaid.md');
 }
 
 describe('DefaultStatuses', () => {
@@ -113,6 +121,7 @@ describe('DefaultStatuses', () => {
             ['x', 'Done', ' ', 'DONE'],
         ];
         verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(importantCycle));
     });
 
     it('pro-con-cycle', () => {
@@ -121,6 +130,7 @@ describe('DefaultStatuses', () => {
             ['C', 'Con', 'P', 'NON_TASK'],
         ];
         verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(importantCycle));
     });
 
     it('toggle-does-nothing', () => {
@@ -132,6 +142,31 @@ describe('DefaultStatuses', () => {
             ['Q', 'Quote', 'Q', 'NON_TASK'],
         ];
         verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
+    });
+
+    it('done-toggles-to-cancelled', () => {
+        // See issue #2089.
+        // DONE is followed by CANCELLED, which currently causes unexpected behaviour in recurrent tasks.
+        // This uses the 4 default statuses, and just customises their order.
+        const statuses: StatusCollection = [
+            [' ', 'Todo', '/', 'TODO'],
+            ['x', 'Done', '-', 'DONE'],
+            ['/', 'In Progress', 'x', 'IN_PROGRESS'],
+            ['-', 'Cancelled', ' ', 'CANCELLED'],
+        ];
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
+    });
+
+    it('done-toggles-to-cancelled-with-unconventional-symbols', () => {
+        // See issue #2304.
+        // DONE is followed by CANCELLED, which currently causes unexpected behaviour in recurrent tasks.
+        // This doesn't follow the standard convention of 'x' means DONE. It has 'x' means CANCELLED.
+        const statuses: StatusCollection = [
+            [' ', 'Todo', '*', 'TODO'],
+            ['*', 'Done', 'x', 'DONE'],
+            ['x', 'Cancelled', ' ', 'CANCELLED'],
+        ];
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 });
 

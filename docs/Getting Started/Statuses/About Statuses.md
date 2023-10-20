@@ -19,6 +19,10 @@ This section provides more detail to flesh out the introductory material in [[St
 - [[Status Settings]]
 - [[Editing a Status]]
 
+## Statuses in Use
+
+- [[Recurring Tasks and Custom Statuses]]
+
 ## Ideas - what you can do with Statuses
 
 - [[Example Statuses]]

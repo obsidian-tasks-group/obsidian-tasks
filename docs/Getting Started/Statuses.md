@@ -90,6 +90,8 @@ It is the Task Status Type changing **from** `DONE` that controls when:
 
 - tasks **lose** their Done dates (if Done dates are enabled in settings).
 
+See [[Recurring Tasks and Custom Statuses]] for a more thorough explanation of the above.
+
 ## What can Statuses do?
 
 Now we have seen what is in a Status, what can we do with them?

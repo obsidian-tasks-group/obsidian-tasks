@@ -52,6 +52,11 @@ Use this setting to control where the recurring task is inserted. The default is
 > [!released]
 > Control of the location (or order) of the new task was introduced in Tasks 3.8.0
 
+### Recurring Tasks with Custom Statuses
+
+> [!Warning]
+> If you use [[Custom Statuses]], please see [[Recurring Tasks and Custom Statuses]] for important information about how these two facilities interact.
+
 ## Repeating a Task Based on the Original Due Date or the Completion Date
 
 When you create a recurring task, you can decide whether the next occurrence should be based on the original dates or the date when you completed the task.
