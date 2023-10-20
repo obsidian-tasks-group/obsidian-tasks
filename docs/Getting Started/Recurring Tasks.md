@@ -244,7 +244,7 @@ In this case, that would be `2022-03-31`.
 In the editor there is no direct feedback to whether your recurrence rule is valid.
 You can validate that tasks understands your rule by using the `Tasks: Create or edit` command when creating or editing a task.
 
-## Known Issues
+### Known Issues
 
 1. You can _not_ use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and doesn't know how often it occurred.
 2. You can _not_ use rules where recurrence ends on a specific date (`until "date"`). There is a bug in [`rrule`](https://github.com/jakubroztocil/rrule) where `until "date"` rules are not converted to the correct text. As a consequence, every subsequent task's "until" date will be one day earlier than the one before. We are tracking this in [issue #1818](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1818).
