@@ -75,9 +75,9 @@ Suppose that we have adjusted the default Tasks settings slightly, to give us th
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.detailed.mermaid.md -->
 ```mermaid
 flowchart LR
-1["[ ] -> [/] 'Todo' (TODO)"]
-2["[/] -> [x] 'In Progress' (IN_PROGRESS)"]
-3["[x] -> [ ] 'Done' (DONE)"]
+1["'Todo'<br>[ ] -> [/]<br>(TODO)"]
+2["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]
+3["'Done'<br>[x] -> [ ]<br>(DONE)"]
 1 --> 2
 2 --> 3
 3 --> 1
@@ -152,10 +152,10 @@ In the following example, `DONE` is followed by `CANCELLED`.
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_done-toggles-to-cancelled.approved.detailed.mermaid.md -->
 ```mermaid
 flowchart LR
-1["[ ] -> [/] 'Todo' (TODO)"]
-2["[x] -> [-] 'Done' (DONE)"]
-3["[/] -> [x] 'In Progress' (IN_PROGRESS)"]
-4["[-] -> [ ] 'Cancelled' (CANCELLED)"]
+1["'Todo'<br>[ ] -> [/]<br>(TODO)"]
+2["'Done'<br>[x] -> [-]<br>(DONE)"]
+3["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]
+4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]
 1 --> 3
 2 --> 4
 3 --> 2
@@ -202,8 +202,8 @@ Note that the new task has `CANCELLED` status, so will not typically show up in 
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_pro-con-cycle.approved.detailed.mermaid.md -->
 ```mermaid
 flowchart LR
-1["[P] -> [C] 'Pro' (NON_TASK)"]
-2["[C] -> [P] 'Con' (NON_TASK)"]
+1["'Pro'<br>[P] -> [C]<br>(NON_TASK)"]
+2["'Con'<br>[C] -> [P]<br>(NON_TASK)"]
 1 --> 2
 2 --> 1
 ```
