@@ -78,13 +78,9 @@ function verifyStatusesInMultipleFormats(statuses: Status[], showQueryInstructio
 }
 
 function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
-    const registry = new StatusRegistry();
-
     // Set the registry up to exactly match the supplied statuses
-    registry.clearStatuses();
-    statuses.forEach((status) => {
-        registry.add(status);
-    });
+    const registry = new StatusRegistry();
+    registry.set(statuses);
 
     const language = 'mermaid';
 

@@ -58,6 +58,23 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.registeredStatuses.length).toEqual(0);
     });
 
+    it('should allow setting the entire set of statuses', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        const statuses = [
+            new StatusConfiguration('Q', 'Question', 'A', false, StatusType.NON_TASK),
+            new StatusConfiguration('A', 'Answer', 'Q', false, StatusType.NON_TASK),
+        ];
+
+        // Act
+        statusRegistry.set(statuses);
+
+        // Assert
+        expect(statusRegistry.registeredStatuses.length).toEqual(2);
+        expect(statusRegistry.registeredStatuses[0].symbol).toStrictEqual('Q');
+        expect(statusRegistry.registeredStatuses[1].symbol).toStrictEqual('A');
+    });
+
     it('should return empty status for lookup by unknown symbol with bySymbol()', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();

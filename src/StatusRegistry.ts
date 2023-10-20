@@ -36,6 +36,19 @@ export class StatusRegistry {
     }
 
     /**
+     * Reset this instance to contain only the given status list, in the supplied order.
+     *
+     * Duplicate status symbols are ignored.
+     * @param statuses
+     */
+    public set(statuses: StatusConfiguration[] | Status[]) {
+        this.clearStatuses();
+        statuses.forEach((status) => {
+            this.add(status);
+        });
+    }
+
+    /**
      * Returns all the registered statuses minus the empty status.
      *
      * @readonly
