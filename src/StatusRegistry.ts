@@ -309,7 +309,7 @@ export class StatusRegistry {
                 const transition = `[${status.symbol}] -> [${status.nextStatusSymbol}]`;
                 const statusName = `'${status.name}'`;
                 const statusType = `(${status.type})`;
-                const text = `${index + 1}["${transition} ${statusName} ${statusType}"]`;
+                const text = `${index + 1}["${statusName}<br>${transition}<br>${statusType}"]`;
                 nodes.push(text);
             } else {
                 nodes.push(`${index + 1}[${status.name}]`);

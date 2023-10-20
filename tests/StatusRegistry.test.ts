@@ -190,10 +190,10 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1["[ ] -> [x] 'Todo' (TODO)"]
-            2["[/] -> [x] 'In Progress' (IN_PROGRESS)"]
-            3["[x] -> [ ] 'Done' (DONE)"]
-            4["[-] -> [ ] 'Cancelled' (CANCELLED)"]
+            1["'Todo'<br>[ ] -> [x]<br>(TODO)"]
+            2["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]
+            3["'Done'<br>[x] -> [ ]<br>(DONE)"]
+            4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]
             1 --> 3
             2 --> 3
             3 --> 1
