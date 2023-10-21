@@ -225,7 +225,28 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 ### Recurring tasks must have at least one date
 
 > [!important]
-> A recurring task should have a due date. The due date and the recurrence rule must appear after the task's description.
+> To be useful in date-based searches, a recurring task must have at least one of Due, Scheduled or Start dates. The so-called Reference date and the Recurrence rule must appear after the task's description.
+
+This is now enforced by the [[Create or edit Task]] modal:
+
+![The 'Create or edit Task', with error message saying a date must be set on a recurring task.](../images/modal-showing-date-needed-on-recurring-task.png)
+
+*Above: The 'Create or edit Task', with an error message saying a date must be set on a recurring task.*
+
+> [!info] Detail
+> Technically, you _can_ add a recurrence rule to a task without any dates, and there is nothing stopping anyone editing a task like to give it a recurrence rule but no date.
+>
+> However, it is not clear that the behaviour is useful, and based on Tasks support requests, it has been seen to confuse a number of users who misunderstand the expected search results.
+>
+> Here is a recurring task without any dates, that has been completed twice:
+>
+> ```text
+> - [x] Do stuff 🔁 every day ✅ 2023-02-11
+> - [x] Do stuff 🔁 every day ✅ 2023-02-13
+> - [ ] Do stuff 🔁 every day
+> ```
+>
+> These tasks are not searchable by the usual Due, Schedule, Starts or Happens date searches: we believe the majority of Tasks users find their tasks by searching for dates.
 
 ### Next recurrence is on non-existent date
 
