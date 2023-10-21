@@ -47,7 +47,7 @@ Alternatively, if you have enabled addition of [[Dates#Created date|created date
 
 Use this setting to control where the recurring task is inserted. The default is to put the new task before the original one.
 
-![Setting for next recurrence appearance](../../images/settings-recurrence-location.png)
+![Setting for next recurrence appearance](../images/settings-recurrence-location.png)
 
 > [!released]
 > Control of the location (or order) of the new task was introduced in Tasks 3.8.0
