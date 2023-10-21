@@ -23,5 +23,5 @@ To help users updating across multiple Tasks releases, we collect here links to 
   - For example, see comment mentioning `3.0.0` in the CSS sample in [[How to style backlinks#Using CSS to replace the backlinks with icons|Using CSS to replace the backlinks with icons]].
 - Tasks [4.0.0](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/4.0.0) (15 June 2023):
   - The order of `group by urgency` [[Grouping#Urgency|was reversed]].
-- Tasks [X.Y.Z](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/X.Y.Z) (October 2023):
+- Tasks [X.Y.Z](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/X.Y.Z) (21 October 2023):
   - The meaning of final backslash (`\`) characters on query lines [[Line Continuations#Appendix Updating pre-X.Y.Z searches with trailing backslashes|has changed]].
