@@ -227,7 +227,7 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 > [!important]
 > To be useful in date-based searches, a recurring task must have at least one of Due, Scheduled or Start dates. The so-called Reference date and the Recurrence rule must appear after the task's description.
 
-This is now enforced by the [[Create or edit Task]] modal:
+Since Tasks 5.0.0, this is enforced by the [[Create or edit Task]] modal:
 
 ![The 'Create or edit Task', with error message saying a date must be set on a recurring task.](../images/modal-showing-date-needed-on-recurring-task.png)
 
