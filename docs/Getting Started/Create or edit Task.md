@@ -58,6 +58,10 @@ See [[Priority|priority]].
 
 Here you can make the task recur, so that when it is marked as done, a new task is created, with newer dates.
 
+> [!Tip]
+> A task with a recurrence rule is required to also have at least one of Due, Scheduled or Starts dates.<br>
+> See [[Recurring Tasks#Recurring tasks must have at least one date|Recurring tasks must have at least one date]].
+
 See [[Recurring Tasks|recurring tasks (repetition)]].
 
 ### Dates
