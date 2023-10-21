@@ -218,7 +218,7 @@
                 parsedRecurrence = '<i>invalid recurrence rule</i>';
                 isRecurrenceValid = false;
             } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
-                parsedRecurrence = '<i>due/scheduled/start date needs to be set</i>';
+                parsedRecurrence = '<i>due, scheduled or start date required</i>';
                 isRecurrenceValid = false;
             } else {
                 parsedRecurrence = recurrenceFromText;
