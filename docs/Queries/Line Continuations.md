@@ -96,4 +96,10 @@ Points to note:
 >
 > To retain the previous search behaviour, use `\\` at the end of query lines instead of `\`.
 >
+> For example:
+>
+> | Old instruction                   | Use this instruction instead       |
+> | --------------------------------- | ---------------------------------- |
+> | `description includes something\` | `description includes something\\` |
+>
 > For details, see [[Line Continuations#Searches needing a trailing backslash|Searches needing a trailing backslash]] in [[Line Continuations]].
