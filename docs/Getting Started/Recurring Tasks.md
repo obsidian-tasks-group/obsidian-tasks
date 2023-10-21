@@ -265,7 +265,32 @@ You can _not_ use rules where recurrence ends on a specific date (`until "date"`
 
 ### Recurrence rule lost if highest priority date is invalid
 
-If the highest priority date in a task does not exist (for example, due date is February 30th), when the task is completed the recurrence rule will disappear, and no new task will be created. This is detectable prior to completing the task by viewing the task in Live Preview: the recurrence rule will be hidden, and the date will be displayed as 'Invalid date'.
+> [!important]
+> If the highest priority date in a task does not exist (for example, due date is February 30th), when the task is completed the recurrence rule will disappear, and no new task will be created.
+
+For example, consider the following task:
+
+```text
+- [ ] Do stuff 🔁 every year 🛫 2024-02-27 ⏳ 2024-02-28 📅 2024-02-30
+```
+
+Its highest priority date is the Due date - see [[Recurring Tasks#Priority of Dates|Priority of Dates]] -  which is invalid:  `2024-02-30`.
+
+When this task is completed, the result will be:
+
+```text
+- [x] #task Do stuff 🛫 2024-02-27 ⏳ 2024-02-28 📅 Invalid date ✅ 2023-10-21
+```
+
+Note that:
+
+- The recurrence rule has disappeared.
+- No new task has been created.
+
+This is detectable prior to completing the task by viewing the task in Reading Mode:
+
+- the recurrence rule will be hidden,
+- and the date will be displayed as 'Invalid date'.
 
 ## Technical Details
 
