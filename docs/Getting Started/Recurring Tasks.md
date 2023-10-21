@@ -222,8 +222,12 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 
 ## Limitations of Recurring Tasks
 
+### Recurring tasks must have at least one date
+
 > [!important]
 > A recurring task should have a due date. The due date and the recurrence rule must appear after the task's description.
+
+### Next recurrence is on non-existent date
 
 > [!important]
 > There are edge cases for tasks that recur monthly or yearly.
@@ -246,14 +250,22 @@ In that case, Tasks moves the next occurrence **forwards** to the next valid dat
 skipping over recurrences with invalid dates.
 In this case, that would be `2022-03-31`.
 
+### In Reading mode, no feedback if rule is invalid
+
 In the editor there is no direct feedback to whether your recurrence rule is valid.
 You can validate that tasks understands your rule by using the `Tasks: Create or edit` command when creating or editing a task.
 
-### Known Issues
+### No way to recur for x times
 
-1. You can _not_ use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and doesn't know how often it occurred.
-2. You can _not_ use rules where recurrence ends on a specific date (`until "date"`). There is a bug in [`rrule`](https://github.com/jakubroztocil/rrule) where `until "date"` rules are not converted to the correct text. As a consequence, every subsequent task's "until" date will be one day earlier than the one before. We are tracking this in [issue #1818](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1818).
-3. If the highest priority date in a task does not exist (for example, due date is February 30th), when the task is completed the recurrence rule will disappear, and no new task will be created. This is detectable prior to completing the task by viewing the task in Live Preview: the recurrence rule will be hidden, and the date will be displayed as 'Invalid date'.
+You can _not_ use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and doesn't know how often it occurred.
+
+### No way to recur until a specific date
+
+You can _not_ use rules where recurrence ends on a specific date (`until "date"`). There is a bug in [`rrule`](https://github.com/jakubroztocil/rrule) where `until "date"` rules are not converted to the correct text. As a consequence, every subsequent task's "until" date will be one day earlier than the one before. We are tracking this in [issue #1818](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1818).
+
+### Recurrence rule lost if highest priority date is invalid
+
+If the highest priority date in a task does not exist (for example, due date is February 30th), when the task is completed the recurrence rule will disappear, and no new task will be created. This is detectable prior to completing the task by viewing the task in Live Preview: the recurrence rule will be hidden, and the date will be displayed as 'Invalid date'.
 
 ## Technical Details
 
