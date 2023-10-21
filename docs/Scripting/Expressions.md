@@ -21,7 +21,7 @@ publish: true
 - Language is JavaScript.
 - The expression is a string instruction.
 - As of Tasks 4.4.0, variables, functions, `if` blocks and similar can be used. See [[#More complex expressions]].
-- As of Tasks X.Y.Z, long expressions can be written over multiple lines thanks to [[Line Continuations]].
+- As of Tasks 5.0.0, long expressions can be written over multiple lines thanks to [[Line Continuations]].
 - Depending on the context, one or two tasks are passed in to the expression, and a calculation is performed.
   - As of Tasks 4.0.0, in fact only a single task is passed in, to implement [[Custom Grouping]].
   - As of Tasks 4.2.0, a single task is passed in, to implement [[Custom Filters]].
@@ -85,7 +85,7 @@ As of Tasks 4.4.0, it is also possible to use more complex constructs in express
 - `if` statements
 - functions
 
-As of Tasks X.Y.Z, it is also possible to make longer expressions more readable using [[Line Continuations|line continuations]].
+As of Tasks 5.0.0, it is also possible to make longer expressions more readable using [[Line Continuations|line continuations]].
 
 <!-- placeholder to force blank line before included text --><!-- include: Expression.test.Expression_returns_and_functions.approved.md -->
 

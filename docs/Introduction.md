@@ -14,10 +14,10 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
 -->
 
 - X.Y.X: 🔥 Add [[Line Continuations|line continuations]].
-  - **Warning**: This is a [[Line Continuations#Appendix Updating pre-X.Y.Z searches with trailing backslashes|potentially breaking change]] if you search for backslash (`\`) characters.
+  - **Warning**: This is a [[Line Continuations#Appendix Updating pre-5.0.0 searches with trailing backslashes|potentially breaking change]] if you search for backslash (`\`) characters.
 - X.Y.X: 🔥 Document [[Comments#Inline comments|inline comments]]
-- X.Y.Z: 🔥 Document [[Recurring Tasks and Custom Statuses|recurring tasks and custom statuses]]
-- X.Y.Z: 🔥 Add new Help pages [[Known Limitations]] and [[Breaking Changes]].
+- 5.0.0: 🔥 Document [[Recurring Tasks and Custom Statuses|recurring tasks and custom statuses]]
+- 5.0.0: 🔥 Add new Help pages [[Known Limitations]] and [[Breaking Changes]].
 
 <!--
 - 4.9.0: 🔥 Add [[Task Properties|task properties]] `task.priorityNameGroupText` and `task.status.typeGroupText`, for example:
