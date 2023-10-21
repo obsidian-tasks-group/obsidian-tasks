@@ -6,8 +6,8 @@ publish: true
 
 > [!released]
 >
-> - Introduced in Tasks X.Y.Z.
-> - **Important**: This facility changed the meaning of a final backslash (`\`) character on a query line. See [[#Appendix Updating pre-X.Y.Z searches with trailing backslashes]] below to update queries.
+> - Introduced in Tasks 5.0.0.
+> - **Important**: This facility changed the meaning of a final backslash (`\`) character on a query line. See [[#Appendix Updating pre-5.0.0 searches with trailing backslashes]] below to update queries.
 
 ## Wrap long lines in queries
 
@@ -83,10 +83,10 @@ Points to note:
   - So the **two backslashes option is safer**.
 - If in doubt, add the `explain` instruction to inspect how your code block is interpreted.
 
-## Appendix: Updating pre-X.Y.Z searches with trailing backslashes
+## Appendix: Updating pre-5.0.0 searches with trailing backslashes
 
 > [!Warning]
-> In Tasks X.Y.Z the meaning of a **final backslash (`\`) character** on a query line changed **from**:
+> In Tasks 5.0.0 the meaning of a **final backslash (`\`) character** on a query line changed **from**:
 >
 > - `search for a backslash character`
 >

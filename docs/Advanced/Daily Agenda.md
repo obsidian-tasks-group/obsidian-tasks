@@ -85,4 +85,4 @@ See: https://publish.obsidian.md/tasks/Advanced/Instruction+contains+unexpanded+
 <!-- endSnippet -->
 
 > [!released]
-> The check for unexpanded template text was introduced in Tasks X.Y.Z.
+> The check for unexpanded template text was introduced in Tasks 5.0.0.
