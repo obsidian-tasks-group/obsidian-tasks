@@ -83,3 +83,6 @@ Possible causes:
 See: https://publish.obsidian.md/tasks/Advanced/Instruction+contains+unexpanded+template+text
 ```
 <!-- endSnippet -->
+
+> [!released]
+> The check for unexpanded template text was introduced in Tasks X.Y.Z.
