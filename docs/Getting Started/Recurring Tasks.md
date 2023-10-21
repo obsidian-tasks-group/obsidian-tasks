@@ -169,7 +169,7 @@ This is intentional. As well as matching what the user requested, it matches the
 
 > Recurrence rules may generate recurrence instances with an invalid
  date (e.g., February 30) or nonexistent local time (e.g., 1:30 AM
- on a day where the local time is moved forward by an hour at 1:00
+ on a day when the local time is moved forward by an hour at 1:00
  AM).  Such recurrence instances MUST be ignored and MUST NOT be
  counted as part of the recurrence set.
 
@@ -182,7 +182,7 @@ When a task has multiple dates, one of them is selected as reference date based 
 2. Scheduled date
 3. Start date
 
-If more dates than the reference date exist on the orginial recurring task, the next occurrence will have the same dates.
+If more dates than the reference date exist on the original recurring task, the next occurrence will have the same dates.
 All dates of the next occurring task will have the relative distance to the reference date that they had on the original task.
 
 For example: A task has a due date and a scheduled date.
@@ -278,7 +278,7 @@ You can validate that tasks understands your rule by using the `Tasks: Create or
 
 ### No way to recur for x times
 
-You can _not_ use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and doesn't know how often it occurred.
+You can _not_ use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and does not know how often it occurred.
 
 ### No way to recur until a specific date
 
