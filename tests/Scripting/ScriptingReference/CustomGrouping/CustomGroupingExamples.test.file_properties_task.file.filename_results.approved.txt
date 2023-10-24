@@ -12,13 +12,16 @@ c.md
 ====================================================================================
 
 
-group by function task.file.filename.filenameWithoutExtension + (task.hasHeading ? (' > ' + task.heading) : '')
+group by function task.file.filenameWithoutExtension + (task.hasHeading ? (' > ' + task.heading) : '')
 Like 'group by backlink' but does not link to the heading in the file.
 =>
-undefined
-undefined > a_b_c
-undefined > c
-undefined > heading
-undefined > heading _italic text_
+ > heading
+_c_
+_c_ > heading _italic text_
+a_b_c > a_b_c
+b
+c
+c > c
+c > heading
 ====================================================================================
 
