@@ -8,6 +8,7 @@ import { Status } from '../../../src/Status';
 import { Priority } from '../../../src/Task';
 import { toGroupTaskFromBuilder, toGroupTaskWithPath } from '../../CustomMatchers/CustomMatchersForGrouping';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { SearchInfo } from '../../../src/Query/SearchInfo';
 
 window.moment = moment;
 
@@ -43,7 +44,7 @@ describe('FunctionField - filtering', () => {
         // Assert
         expect(filter).toBeValid();
         const t = () => {
-            filter.filterFunction!(new TaskBuilder().build());
+            filter.filterFunction!(new TaskBuilder().build(), new SearchInfo() /* TODO Pass SearchInfo in */);
         };
         expect(t).toThrow(Error);
         expect(t).toThrowError('filtering function must return true or false. This returned "undefined".');

@@ -6,6 +6,7 @@ import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
 import { expandPlaceholders } from '../../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../../src/Scripting/QueryContext';
 import { scan } from '../../../src/Query/Scanner';
+import { SearchInfo } from '../../../src/Query/SearchInfo';
 
 /** For example, 'task.due' */
 type TaskPropertyName = string;
@@ -91,7 +92,7 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
         const filterFunction = filterOrErrorMessage.filterFunction!;
         const matchingTasks: string[] = [];
         for (const task of tasks) {
-            const matches = filterFunction(task);
+            const matches = filterFunction(task, new SearchInfo() /* TODO Pass SearchInfo in */);
             if (matches) {
                 matchingTasks.push(task.toFileLineString());
             }

@@ -5,6 +5,7 @@ import { fromLine } from '../TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import type { StatusConfiguration } from '../../src/StatusConfiguration';
 import { Status } from '../../src/Status';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 
 /**
  @summary
@@ -142,7 +143,7 @@ export function toHaveExplanation(filter: FilterOrErrorMessage, expectedExplanat
 }
 
 export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
-    const matches = filter.filterFunction!(task);
+    const matches = filter.filterFunction!(task, new SearchInfo() /* TODO Pass SearchInfo in */);
     if (!matches) {
         return {
             message: () => `unexpected failure to match
