@@ -15,6 +15,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 
 function getPrintableSymbol(symbol: string) {
     const result = symbol !== ' ' ? symbol : 'space';
@@ -227,7 +228,9 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     function filterAllStatuses(filter: FilterOrErrorMessage) {
         const cells: string[] = [`Matches \`${filter!.instruction}\``];
         tasks.forEach((task) => {
-            const matchedText = filter!.filter?.filterFunction(task) ? 'YES' : 'no';
+            const matchedText = filter!.filter?.filterFunction(task, new SearchInfo() /* TODO Pass SearchInfo in */)
+                ? 'YES'
+                : 'no';
             cells.push(matchedText);
         });
         table.addRow(cells);

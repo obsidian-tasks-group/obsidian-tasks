@@ -10,6 +10,7 @@ import { TaskLocation } from '../src/TaskLocation';
 import { fieldCreators } from '../src/Query/FilterParser';
 import type { Field } from '../src/Query/Filter/Field';
 import type { BooleanField } from '../src/Query/Filter/BooleanField';
+import { SearchInfo } from '../src/Query/SearchInfo';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -204,7 +205,7 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-            expect(query.filters[0].filterFunction(task)).toBeTruthy();
+            expect(query.filters[0].filterFunction(task, new SearchInfo() /* TODO Pass SearchInfo in */)).toBeTruthy();
         });
     });
 

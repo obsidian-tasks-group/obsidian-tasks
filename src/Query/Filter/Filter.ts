@@ -1,11 +1,15 @@
 import type { Task } from '../../Task';
 import type { Explanation } from '../Explain/Explanation';
+import type { SearchInfo } from '../SearchInfo';
 
 /**
  * A filtering function, that takes a Task object and returns
  * whether it matches a particular filtering instruction.
+ *
+ * SearchInfo is being introduced as a Parameter Object, in order to later allow
+ * more data to be passed from the Query down in to the individual filters.
  */
-export type FilterFunction = (task: Task) => boolean;
+export type FilterFunction = (task: Task, searchInfo: SearchInfo) => boolean;
 
 /**
  * A class that represents a parsed filtering instruction from a tasks code block.
