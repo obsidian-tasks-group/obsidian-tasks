@@ -143,7 +143,8 @@ export function toHaveExplanation(filter: FilterOrErrorMessage, expectedExplanat
 }
 
 export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
-    const matches = filter.filterFunction!(task, new SearchInfo() /* TODO Pass SearchInfo in */);
+    const searchInfo = new SearchInfo();
+    const matches = filter.filterFunction!(task, searchInfo);
     if (!matches) {
         return {
             message: () => `unexpected failure to match
