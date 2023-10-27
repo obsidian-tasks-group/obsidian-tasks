@@ -66,6 +66,7 @@ declare global {
         interface Matchers<R> {
             toBeValid(): R;
             toHaveExplanation(expectedExplanation: string): R;
+            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): R;
             toMatchTask(task: Task): R;
             toMatchTaskFromLine(line: string): R;
             toMatchTaskWithDescription(description: string): R;
@@ -77,6 +78,7 @@ declare global {
         interface Expect {
             toBeValid(): any;
             toHaveExplanation(expectedExplanation: string): any;
+            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithDescription(description: string): any;
@@ -88,6 +90,7 @@ declare global {
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
             toHaveExplanation(expectedExplanation: string): any;
+            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithDescription(description: string): any;
