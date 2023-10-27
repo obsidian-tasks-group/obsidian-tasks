@@ -227,8 +227,9 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
 
     function filterAllStatuses(filter: FilterOrErrorMessage) {
         const cells: string[] = [`Matches \`${filter!.instruction}\``];
+        const searchInfo = new SearchInfo(tasks);
         tasks.forEach((task) => {
-            const matchedText = filter!.filter?.filterFunction(task, new SearchInfo([task])) ? 'YES' : 'no';
+            const matchedText = filter!.filter?.filterFunction(task, searchInfo) ? 'YES' : 'no';
             cells.push(matchedText);
         });
         table.addRow(cells);
