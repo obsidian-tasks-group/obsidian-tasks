@@ -13,6 +13,7 @@ import type { Grouper } from './Grouper';
 import type { Filter } from './Filter/Filter';
 import { QueryResult } from './QueryResult';
 import { scan } from './Scanner';
+import { SearchInfo } from './SearchInfo';
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
@@ -232,9 +233,10 @@ Problem line: "${line}"`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
+        const searchInfo = new SearchInfo(tasks);
         try {
             this.filters.forEach((filter) => {
-                tasks = tasks.filter(filter.filterFunction);
+                tasks = tasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
 
             const { debugSettings } = getSettings();
