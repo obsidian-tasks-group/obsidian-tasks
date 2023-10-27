@@ -28,7 +28,7 @@ export function testFilter(filter: FilterOrErrorMessage, taskBuilder: TaskBuilde
 export function testTaskFilter(filter: FilterOrErrorMessage, task: Task, expected: boolean) {
     expect(filter.filterFunction).toBeDefined();
     expect(filter.error).toBeUndefined();
-    expect(filter.filterFunction!(task, new SearchInfo() /* TODO Pass SearchInfo in */)).toEqual(expected);
+    expect(filter.filterFunction!(task, new SearchInfo())).toEqual(expected);
 }
 
 /**

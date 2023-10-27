@@ -205,7 +205,7 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-            expect(query.filters[0].filterFunction(task, new SearchInfo() /* TODO Pass SearchInfo in */)).toBeTruthy();
+            expect(query.filters[0].filterFunction(task, new SearchInfo())).toBeTruthy();
         });
     });
 

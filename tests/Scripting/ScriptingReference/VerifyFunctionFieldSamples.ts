@@ -92,7 +92,7 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
         const filterFunction = filterOrErrorMessage.filterFunction!;
         const matchingTasks: string[] = [];
         for (const task of tasks) {
-            const matches = filterFunction(task, new SearchInfo() /* TODO Pass SearchInfo in */);
+            const matches = filterFunction(task, new SearchInfo());
             if (matches) {
                 matchingTasks.push(task.toFileLineString());
             }
