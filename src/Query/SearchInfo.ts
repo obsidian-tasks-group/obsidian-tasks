@@ -8,6 +8,8 @@ import type { Task } from '../Task';
  * the function signatures of all the layers in between.
  */
 export class SearchInfo {
+    /** The list of tasks being searched.
+     */
     public readonly allTasks: Readonly<Task[]>;
 
     public constructor(allTasks: Task[]) {
