@@ -233,10 +233,10 @@ Problem line: "${line}"`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
-        const allTasks = tasks;
+        const searchInfo = new SearchInfo(tasks);
         try {
             this.filters.forEach((filter) => {
-                tasks = tasks.filter((task) => filter.filterFunction(task, new SearchInfo(allTasks)));
+                tasks = tasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
 
             const { debugSettings } = getSettings();
