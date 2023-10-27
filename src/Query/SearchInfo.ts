@@ -8,8 +8,7 @@ import type { Task } from '../Task';
  * the function signatures of all the layers in between.
  */
 export class SearchInfo {
-    // TODO This needs to be really Readonly
-    public readonly allTasks: Task[];
+    public readonly allTasks: Readonly<Task[]>;
 
     public constructor(allTasks: Task[]) {
         this.allTasks = allTasks;
