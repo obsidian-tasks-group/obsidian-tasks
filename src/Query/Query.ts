@@ -208,6 +208,17 @@ ${source}`;
         return this._filters;
     }
 
+    /**
+     * Add a new filter to this Query.
+     *
+     * At the time of writing, it is intended to allow tests to create filters
+     * programatically, for things that can not yet be done via 'filter by function'.
+     * @param filter
+     */
+    public addFilter(filter: Filter) {
+        this._filters.push(filter);
+    }
+
     public get sorting() {
         return this._sorting;
     }

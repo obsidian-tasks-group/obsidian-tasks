@@ -14,6 +14,7 @@ import { SearchInfo } from '../src/Query/SearchInfo';
 import { FilterOrErrorMessage } from '../src/Query/Filter/FilterOrErrorMessage';
 import { Explanation } from '../src/Query/Explain/Explanation';
 import { Filter } from '../src/Query/Filter/Filter';
+import { DescriptionField } from '../src/Query/Filter/DescriptionField';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -1027,6 +1028,22 @@ describe('Query', () => {
             ],
         ])('should support boolean filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
             shouldSupportFiltering(filters, allTaskLines, expectedResult);
+        });
+    });
+
+    describe('filtering with code-based custom filters', () => {
+        it('should allow a Filter to be added', () => {
+            // Arrange
+            const filterOrErrorMessage = new DescriptionField().createFilterOrErrorMessage('description includes xxx');
+            expect(filterOrErrorMessage).toBeValid();
+            const query = new Query('');
+            expect(query.filters.length).toEqual(0);
+
+            // Act
+            query.addFilter(filterOrErrorMessage.filter!);
+
+            // Assert
+            expect(query.filters.length).toEqual(1);
         });
     });
 
