@@ -13,6 +13,6 @@ export class SearchInfo {
     public readonly allTasks: Readonly<Task[]>;
 
     public constructor(allTasks: Task[]) {
-        this.allTasks = allTasks;
+        this.allTasks = [...allTasks];
     }
 }

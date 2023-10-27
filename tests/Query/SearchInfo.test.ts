@@ -2,7 +2,7 @@ import { SearchInfo } from '../../src/Query/SearchInfo';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 describe('SearchInfo', () => {
-    it('should not be able to modify the tasks in SearchInfo.allTasks directly', () => {
+    it('should not be able to modify SearchInfo.allTasks directly', () => {
         const tasks = [new TaskBuilder().build()];
         const searchInfo = new SearchInfo(tasks);
         expect(searchInfo.allTasks.length).toEqual(1);
@@ -14,7 +14,7 @@ describe('SearchInfo', () => {
         // searchInfo.allTasks[0] = new TaskBuilder().description('cannot replace a task').build();
     });
 
-    it.failing('should not be able to modify the tasks in SearchInfo.allTasks indirectly', () => {
+    it('should not be able to modify SearchInfo.allTasks indirectly', () => {
         const tasks = [new TaskBuilder().build()];
         const searchInfo = new SearchInfo(tasks);
 
