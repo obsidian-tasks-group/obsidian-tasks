@@ -8,7 +8,8 @@ import { Explanation } from '../../src/Query/Explain/Explanation';
 describe('CustomMatchersForFilters', () => {
     it('should check filter with supplied SearchInfo', () => {
         // Arrange
-        const initialSearchInfo = new SearchInfo();
+        const task = new TaskBuilder().build();
+        const initialSearchInfo = new SearchInfo([task]);
         const checkSearchInfoPassedThrough = (_task: Task, searchInfo: SearchInfo) => {
             return Object.is(initialSearchInfo, searchInfo);
         };
@@ -17,6 +18,6 @@ describe('CustomMatchersForFilters', () => {
         );
 
         // Act, Assert
-        expect(filter).toMatchTaskWithSearchInfo(new TaskBuilder().build(), initialSearchInfo);
+        expect(filter).toMatchTaskWithSearchInfo(task, initialSearchInfo);
     });
 });

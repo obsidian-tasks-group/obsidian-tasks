@@ -171,7 +171,7 @@ with filter: "${filter.instruction}"`,
 }
 
 export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
-    return toMatchTaskWithSearchInfo(filter, task, new SearchInfo());
+    return toMatchTaskWithSearchInfo(filter, task, new SearchInfo([task]));
 }
 
 export function toMatchTaskFromLine(filter: FilterOrErrorMessage, line: string) {
