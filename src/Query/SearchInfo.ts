@@ -1,7 +1,7 @@
 import type { Task } from '../Task';
 
 /**
- * SearchInfo will soon contain selected data passed in from the {@link Query} being executed.
+ * SearchInfo contains selected data passed in from the {@link Query} being executed.
  *
  * This is the Parameter Object pattern: it is a container for information that needs
  * to be passed down through multiple levels of code, without having to update
