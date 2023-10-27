@@ -28,7 +28,7 @@ export function testFilter(filter: FilterOrErrorMessage, taskBuilder: TaskBuilde
 export function testTaskFilter(filter: FilterOrErrorMessage, task: Task, expected: boolean) {
     expect(filter.filterFunction).toBeDefined();
     expect(filter.error).toBeUndefined();
-    expect(filter.filterFunction!(task, new SearchInfo())).toEqual(expected);
+    expect(filter.filterFunction!(task, new SearchInfo([task]))).toEqual(expected);
 }
 
 /**
@@ -50,8 +50,9 @@ export function testTaskFilterViaQuery(filter: string, task: Task, expected: boo
 
     // Act
     let filteredTasks = [...tasks];
+    const searchInfo = new SearchInfo(tasks);
     query.filters.forEach((filter) => {
-        filteredTasks = filteredTasks.filter(filter.filterFunction);
+        filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, searchInfo));
     });
     const matched = filteredTasks.length === 1;
 
@@ -84,8 +85,9 @@ export function shouldSupportFiltering(
 
     // Act
     let filteredTasks = [...tasks];
+    const searchInfo = new SearchInfo(tasks);
     query.filters.forEach((filter) => {
-        filteredTasks = filteredTasks.filter(filter.filterFunction);
+        filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, searchInfo));
     });
 
     // Assert

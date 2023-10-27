@@ -11,6 +11,9 @@ import { fieldCreators } from '../src/Query/FilterParser';
 import type { Field } from '../src/Query/Filter/Field';
 import type { BooleanField } from '../src/Query/Filter/BooleanField';
 import { SearchInfo } from '../src/Query/SearchInfo';
+import { FilterOrErrorMessage } from '../src/Query/Filter/FilterOrErrorMessage';
+import { Explanation } from '../src/Query/Explain/Explanation';
+import { Filter } from '../src/Query/Filter/Filter';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -205,7 +208,7 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-            expect(query.filters[0].filterFunction(task, new SearchInfo())).toBeTruthy();
+            expect(query.filters[0].filterFunction(task, new SearchInfo([task]))).toBeTruthy();
         });
     });
 
@@ -615,8 +618,9 @@ describe('Query', () => {
 
             // Act
             let filteredTasks = [...tasks];
+            const searchInfo = new SearchInfo(tasks);
             query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter(filter.filterFunction);
+                filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
 
             // Assert
@@ -1023,6 +1027,29 @@ describe('Query', () => {
             ],
         ])('should support boolean filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
             shouldSupportFiltering(filters, allTaskLines, expectedResult);
+        });
+    });
+
+    describe('SearchInfo', () => {
+        it('should pass SearchInfo through to filter functions', () => {
+            // Arrange
+            const same1 = new TaskBuilder().description('duplicate').build();
+            const same2 = new TaskBuilder().description('duplicate').build();
+            const different = new TaskBuilder().description('different').build();
+            const allTasks = [same1, same2, different];
+
+            const moreThanOneTaskHasThisDescription = (task: Task, searchInfo: SearchInfo) => {
+                return searchInfo.allTasks.filter((t) => t.description === task.description).length > 1;
+            };
+            const filter = FilterOrErrorMessage.fromFilter(
+                new Filter('stuff', moreThanOneTaskHasThisDescription, new Explanation('explanation of stuff')),
+            );
+
+            // Act, Assert
+            const searchInfo = new SearchInfo(allTasks);
+            expect(filter).toMatchTaskWithSearchInfo(same1, searchInfo);
+            expect(filter).toMatchTaskWithSearchInfo(same2, searchInfo);
+            expect(filter).not.toMatchTaskWithSearchInfo(different, searchInfo);
         });
     });
 
