@@ -142,8 +142,13 @@ export function toHaveExplanation(filter: FilterOrErrorMessage, expectedExplanat
     };
 }
 
-export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
-    const searchInfo = new SearchInfo();
+/**
+ * Use this test matcher for any filters that need access to any data from the search.
+ * @param filter
+ * @param task
+ * @param searchInfo
+ */
+export function toMatchTaskWithSearchInfo(filter: FilterOrErrorMessage, task: Task, searchInfo: SearchInfo) {
     const matches = filter.filterFunction!(task, searchInfo);
     if (!matches) {
         return {
@@ -160,6 +165,10 @@ task:        "${task.toFileLineString()}"
 with filter: "${filter.instruction}"`,
         pass: true,
     };
+}
+
+export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
+    return toMatchTaskWithSearchInfo(filter, task, new SearchInfo());
 }
 
 export function toMatchTaskFromLine(filter: FilterOrErrorMessage, line: string) {
