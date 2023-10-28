@@ -29,4 +29,22 @@ describe('SearchInfo', () => {
 
         expect(searchInfo.queryPath).toEqual(path);
     });
+
+    it('should create a QueryContext from a known path', () => {
+        const path = 'a/b/c.md';
+        const searchInfo = new SearchInfo(path, []);
+
+        const queryContext = searchInfo.queryContext();
+
+        expect(queryContext).not.toBeUndefined();
+        expect(queryContext!.query.file.path).toEqual(path);
+    });
+
+    it('should not create a QueryContext from unknown path', () => {
+        const searchInfo = new SearchInfo(undefined, []);
+
+        const queryContext = searchInfo.queryContext();
+
+        expect(queryContext).toBeUndefined();
+    });
 });
