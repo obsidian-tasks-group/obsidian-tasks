@@ -90,7 +90,7 @@ describe('Expression', () => {
         });
 
         it('should report unknown for invalid task property', () => {
-            expect(parseAndEvaluateExpression(task, 'task.iAmNotAKnownTaskProperty')).toEqual(undefined);
+            expect(parseAndEvaluateExpression(task, 'task.iAmNotAKnownTaskProperty', undefined)).toEqual(undefined);
         });
     });
 
@@ -110,7 +110,7 @@ describe('Expression', () => {
         markdown +=
             expressions
                 .map((expression) => {
-                    const result = parseAndEvaluateExpression(task, continue_lines(expression));
+                    const result = parseAndEvaluateExpression(task, continue_lines(expression), undefined);
                     return `${expression}${resultSeparator}=> ${formatToRepresentType(result)}`;
                 })
                 .join(separator) + '\n';
