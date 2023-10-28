@@ -1,8 +1,15 @@
-import { TaskExpression } from '../../src/Scripting/TaskExpression';
+import { TaskExpression, constructArguments } from '../../src/Scripting/TaskExpression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 
 describe('TaskExpression', () => {
+    describe('low level functions', () => {
+        it('should allow passing QueryContext or null to constructArguments()', () => {
+            const task = new TaskBuilder().build();
+            constructArguments(task, null);
+        });
+    });
+
     describe('parsing', () => {
         it('should report that a parsable line is valid', () => {
             const line = 'task.description';

@@ -7,8 +7,9 @@ import type { QueryContext } from './QueryContext';
  *      A parameter is a variable in a function definition. It is a placeholder and hence does not have a concrete value.
  *      An argument is a value passed during function invocation.
  * @param task - during parsing, this can be null. During evaluation, it must be a Task
+ * @param _queryContext
  */
-export function constructArguments(task: Task | null) {
+export function constructArguments(task: Task | null, _queryContext: null) {
     const paramsArgs: [string, any][] = [
         // TODO Later, pass in the Query too, for access to file properties
         ['task', task],
@@ -28,7 +29,7 @@ export function constructArguments(task: Task | null) {
  * See also {@link FunctionField} which exposes this facility to users.
  */
 export function parseAndEvaluateExpression(task: Task, arg: string) {
-    const paramsArgs = constructArguments(task);
+    const paramsArgs = constructArguments(task, null);
 
     const functionOrError = parseExpression(paramsArgs, arg);
     if (functionOrError.error) {
@@ -47,7 +48,7 @@ export class TaskExpression {
 
     public constructor(line: string) {
         this.line = line;
-        this.functionOrError = parseExpression(constructArguments(null), line);
+        this.functionOrError = parseExpression(constructArguments(null, null), line);
     }
 
     public isValid() {
@@ -71,7 +72,7 @@ export class TaskExpression {
                 `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`,
             );
         }
-        return evaluateExpression(this.functionOrError.queryComponent!, constructArguments(task));
+        return evaluateExpression(this.functionOrError.queryComponent!, constructArguments(task, null));
     }
 
     /**
@@ -85,6 +86,10 @@ export class TaskExpression {
         if (!this.isValid()) {
             return `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`;
         }
-        return evaluateExpressionOrCatch(this.functionOrError.queryComponent!, constructArguments(task), this.line);
+        return evaluateExpressionOrCatch(
+            this.functionOrError.queryComponent!,
+            constructArguments(task, null),
+            this.line,
+        );
     }
 }
