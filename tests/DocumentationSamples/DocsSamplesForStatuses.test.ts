@@ -16,6 +16,7 @@ import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMark
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { SearchInfo } from '../../src/Query/SearchInfo';
+import type { GrouperFunction } from '../../src/Query/Grouper';
 
 function getPrintableSymbol(symbol: string) {
     const result = symbol !== ' ' ? symbol : 'space';
@@ -227,7 +228,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
 
     function filterAllStatuses(filter: FilterOrErrorMessage) {
         const cells: string[] = [`Matches \`${filter!.instruction}\``];
-        const searchInfo = new SearchInfo(tasks);
+        const searchInfo = SearchInfo.fromAllTasks(tasks);
         tasks.forEach((task) => {
             const matchedText = filter!.filter?.filterFunction(task, searchInfo) ? 'YES' : 'no';
             cells.push(matchedText);
@@ -247,10 +248,10 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     filterAllStatuses(FilterParser.parseFilter('status.name includes done')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
 
-    function showGroupNamesForAllTasks(groupName: string, grouperFunction: (task: Task) => string[]) {
+    function showGroupNamesForAllTasks(groupName: string, grouperFunction: GrouperFunction) {
         const cells: string[] = ['Name for `group by ' + groupName + '`'];
         tasks.forEach((task) => {
-            const groupNamesForTask = grouperFunction(task);
+            const groupNamesForTask = grouperFunction(task, SearchInfo.fromAllTasks([task]));
             const names = groupNamesForTask.join(',');
             cells.push(names);
         });

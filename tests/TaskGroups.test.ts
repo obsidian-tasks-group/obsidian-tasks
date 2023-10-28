@@ -12,9 +12,14 @@ import { TaskGroups } from '../src/Query/TaskGroups';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import { HappensDateField } from '../src/Query/Filter/HappensDateField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
+import { SearchInfo } from '../src/Query/SearchInfo';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
+
+function makeTasksGroups(grouping: Grouper[], inputs: Task[]): any {
+    return new TaskGroups(grouping, inputs, SearchInfo.fromAllTasks(inputs));
+}
 
 describe('Grouping tasks', () => {
     it('groups correctly by path', () => {
@@ -26,7 +31,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping = [new PathField().createNormalGrouper()];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
 
         // Assert
         expect(groups.groupers).toStrictEqual(grouping);
@@ -61,7 +66,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping: Grouper[] = [];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
 
         // Assert
         // No grouping specified, so no headings generated
@@ -86,7 +91,7 @@ describe('Grouping tasks', () => {
         const grouping = [new PathField().createNormalGrouper()];
 
         // Act
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
 
         // Assert
         expect(groups.groups.length).toEqual(1);
@@ -110,7 +115,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const grouping = [new PathField().createNormalGrouper()];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "Groupers (if any):
             - path
@@ -150,7 +155,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b];
 
         const grouping = [new FilenameField().createNormalGrouper()];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "Groupers (if any):
             - filename
@@ -180,7 +185,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping: Grouper[] = [new DueDateField().createGrouperFromLine('group by due reverse')!];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
 
         // Assert
         // No grouping specified, so no headings generated
@@ -218,7 +223,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const grouping = [new TagsField().createNormalGrouper()];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "Groupers (if any):
             - tags
@@ -253,7 +258,7 @@ describe('Grouping tasks', () => {
 
         const groupByTags: GrouperFunction = (task: Task) => task.tags;
         const grouper = new Grouper('custom tag grouper', groupByTags, false);
-        const groups = new TaskGroups([grouper], inputs);
+        const groups = makeTasksGroups([grouper], inputs);
 
         expect(groups.totalTasksCount()).toEqual(2);
 
@@ -304,7 +309,7 @@ describe('Grouping tasks', () => {
         ];
 
         // Act
-        const groups = new TaskGroups(grouping, tasks);
+        const groups = makeTasksGroups(grouping, tasks);
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
@@ -353,7 +358,7 @@ describe('Grouping tasks', () => {
             new StatusTypeField().createNormalGrouper(), // Two group levels
             new HappensDateField().createNormalGrouper(),
         ];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
         // This result is incorrect. The '2 TODO' heading is shown before
         // the last group instead of before the first one.
         expect(groups.toString()).toMatchInlineSnapshot(`
@@ -397,7 +402,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping = [new PathField().createNormalGrouper()];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
         groups.applyTaskLimit(2);
 
         // Assert
@@ -441,7 +446,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping = [new TagsField().createNormalGrouper()];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
         groups.applyTaskLimit(1);
 
         // Assert
@@ -483,7 +488,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping: Grouper[] = [];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = makeTasksGroups(grouping, inputs);
         groups.applyTaskLimit(1);
 
         // Assert

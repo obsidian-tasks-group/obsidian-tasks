@@ -1,5 +1,6 @@
 import { TaskGroups } from './TaskGroups';
 import type { TaskGroup } from './TaskGroup';
+import { SearchInfo } from './SearchInfo';
 
 function taskCountPluralised(tasksCount: number) {
     return `task${tasksCount !== 1 ? 's' : ''}`;
@@ -43,7 +44,7 @@ export class QueryResult {
     }
 
     static fromError(message: string): QueryResult {
-        const result = new QueryResult(new TaskGroups([], []), 0);
+        const result = new QueryResult(new TaskGroups([], [], SearchInfo.fromAllTasks([])), 0);
         result._searchErrorMessage = message;
         return result;
     }
