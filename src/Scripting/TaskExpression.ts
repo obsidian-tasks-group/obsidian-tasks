@@ -82,17 +82,17 @@ export class TaskExpression {
     /**
      * Evaluate the expression on this task, or return error text if the calculation failed
      * @param task
+     * @param queryContext
      *
-     * @param _queryContext
      * @see evaluate
      */
-    public evaluateOrCatch(task: Task, _queryContext: QueryContext) {
+    public evaluateOrCatch(task: Task, queryContext: QueryContext) {
         if (!this.isValid()) {
             return `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`;
         }
         return evaluateExpressionOrCatch(
             this.functionOrError.queryComponent!,
-            constructArguments(task, null),
+            constructArguments(task, queryContext ? queryContext : null),
             this.line,
         );
     }
