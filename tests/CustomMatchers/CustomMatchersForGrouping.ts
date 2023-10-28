@@ -92,6 +92,24 @@ export function groupHeadingsToBe(
  * @param expectedGroupNames
  */
 export function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNames: string[]) {
+    const tasks = [task];
+    const searchInfo = SearchInfo.fromAllTasks(tasks);
+    return toGroupTaskUsingSearchInfo(grouper, task, searchInfo, expectedGroupNames);
+}
+
+/**
+ * Test that applying the grouper to the task, with the given SearchInfo, generates the expected group names.
+ * @param grouper
+ * @param task
+ * @param searchInfo
+ * @param expectedGroupNames
+ */
+function toGroupTaskUsingSearchInfo(
+    grouper: Grouper | null,
+    task: Task,
+    searchInfo: SearchInfo,
+    expectedGroupNames: string[],
+) {
     if (grouper === undefined) {
         return {
             message: () => 'unexpected null grouper: check your instruction matches your filter class.',
@@ -99,7 +117,7 @@ export function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNa
         };
     }
 
-    expect(grouper!.grouper(task, SearchInfo.fromAllTasks([task]))).toEqual(expectedGroupNames);
+    expect(grouper!.grouper(task, searchInfo)).toEqual(expectedGroupNames);
 }
 
 /**
