@@ -104,7 +104,7 @@ export function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNa
  * @param searchInfo
  * @param expectedGroupNames
  */
-function toGroupTaskUsingSearchInfo(
+export function toGroupTaskUsingSearchInfo(
     grouper: Grouper | null,
     task: Task,
     searchInfo: SearchInfo,
