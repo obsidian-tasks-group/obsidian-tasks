@@ -1,4 +1,4 @@
-import { TaskExpression, constructArguments } from '../../src/Scripting/TaskExpression';
+import { TaskExpression, constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 
@@ -8,6 +8,23 @@ describe('TaskExpression', () => {
             const task = new TaskBuilder().build();
             constructArguments(task, null);
             constructArguments(task, makeQueryContext('dummy.md'));
+        });
+
+        it('should calculate an expression value from a QueryContext', () => {
+            const queryContext = makeQueryContext('test.md');
+            const task = new TaskBuilder().build();
+            const result = parseAndEvaluateExpression(task, 'query.file.path', queryContext);
+            expect(result).toEqual('test.md');
+        });
+
+        it('should behave predictably if no QueryContext supplied', () => {
+            const task = new TaskBuilder().build();
+            const result = parseAndEvaluateExpression(task, 'query.file.path', undefined);
+            expect(result).toMatchInlineSnapshot(`
+                "Error: Failed calculating expression "query.file.path".
+                The error message was:
+                    "TypeError: Cannot read properties of null (reading 'file')""
+            `);
         });
     });
 

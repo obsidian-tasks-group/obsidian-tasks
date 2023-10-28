@@ -110,7 +110,7 @@ function createGrouperFunctionFromLine(line: string): GrouperFunction {
 
 export function groupByFunction(task: Task, arg: GroupingArg): string[] {
     try {
-        const result = parseAndEvaluateExpression(task, arg);
+        const result = parseAndEvaluateExpression(task, arg, undefined);
 
         if (Array.isArray(result)) {
             return result.map((h) => h.toString());

@@ -7,12 +7,12 @@ import type { QueryContext } from './QueryContext';
  *      A parameter is a variable in a function definition. It is a placeholder and hence does not have a concrete value.
  *      An argument is a value passed during function invocation.
  * @param task - during parsing, this can be null. During evaluation, it must be a Task
- * @param _queryContext
+ * @param queryContext - during parsing, this can be null. During evaluation, it must be a QueryContext
  */
-export function constructArguments(task: Task | null, _queryContext: QueryContext | null) {
+export function constructArguments(task: Task | null, queryContext: QueryContext | null) {
     const paramsArgs: [string, any][] = [
-        // TODO Later, pass in the Query too, for access to file properties
         ['task', task],
+        ['query', queryContext ? queryContext.query : null],
     ];
     return paramsArgs;
 }
@@ -21,6 +21,7 @@ export function constructArguments(task: Task | null, _queryContext: QueryContex
  * Evaluate an arbitrary JavaScript expression on a Task object
  * @param task - a {@link Task} object
  * @param arg - a string, such as `task.path.startsWith("journal/") ? "journal/" : task.path`
+ * @param queryContext - a {@link QueryContext} object
  *
  * Currently any errors are returned as string error messages, starting with the word 'Error'.
  *
@@ -28,8 +29,8 @@ export function constructArguments(task: Task | null, _queryContext: QueryContex
  *
  * See also {@link FunctionField} which exposes this facility to users.
  */
-export function parseAndEvaluateExpression(task: Task, arg: string) {
-    const paramsArgs = constructArguments(task, null);
+export function parseAndEvaluateExpression(task: Task, arg: string, queryContext?: QueryContext) {
+    const paramsArgs = constructArguments(task, queryContext ? queryContext : null);
 
     const functionOrError = parseExpression(paramsArgs, arg);
     if (functionOrError.error) {
