@@ -129,11 +129,12 @@ export function verifyFunctionFieldGrouperSamplesOnTasks(
         const instruction = group[0];
         const comment = group.slice(1);
 
-        const expandedInstruction = preprocessSingleInstruction(instruction, 'a/b.md');
+        const path = 'a/b.md';
+        const expandedInstruction = preprocessSingleInstruction(instruction, path);
         const grouper = new FunctionField().createGrouperFromLine(expandedInstruction);
         expect(grouper).not.toBeNull();
 
-        const headings = groupHeadingsForTask(grouper!, tasks);
+        const headings = groupHeadingsForTask(grouper!, tasks, new SearchInfo(path, tasks));
         return formatQueryAndResultsForApproving(instruction, comment, headings);
     });
 }
