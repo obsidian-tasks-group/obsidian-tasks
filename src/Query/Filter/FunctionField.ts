@@ -3,6 +3,8 @@ import type { GrouperFunction } from '../Grouper';
 import { Grouper } from '../Grouper';
 import { Explanation } from '../Explain/Explanation';
 import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
+import type { QueryContext } from '../../Scripting/QueryContext';
+import type { SearchInfo } from '../SearchInfo';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -103,14 +105,15 @@ export function filterByFunction(expression: TaskExpression, task: Task): boolea
 type GroupingArg = string;
 
 function createGrouperFunctionFromLine(line: string): GrouperFunction {
-    return (task: Task) => {
-        return groupByFunction(task, line);
+    return (task: Task, searchInfo: SearchInfo) => {
+        const queryContext = searchInfo.queryContext();
+        return groupByFunction(task, line, queryContext);
     };
 }
 
-export function groupByFunction(task: Task, arg: GroupingArg): string[] {
+export function groupByFunction(task: Task, arg: GroupingArg, queryContext?: QueryContext): string[] {
     try {
-        const result = parseAndEvaluateExpression(task, arg, undefined);
+        const result = parseAndEvaluateExpression(task, arg, queryContext);
 
         if (Array.isArray(result)) {
             return result.map((h) => h.toString());
