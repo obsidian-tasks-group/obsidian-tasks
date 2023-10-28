@@ -1,9 +1,8 @@
-import { parseAndEvaluateExpression } from '../../Scripting/Expression';
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { Grouper } from '../Grouper';
 import { Explanation } from '../Explain/Explanation';
-import { TaskExpression } from '../../Scripting/TaskExpression';
+import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
