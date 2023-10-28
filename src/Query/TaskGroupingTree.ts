@@ -2,7 +2,7 @@ import type { Task } from '../Task';
 import type { Grouper } from './Grouper';
 import { GroupingTreeNode } from './GroupingTreeNode';
 import type { TaskGroupingTreeStorage } from './TaskGroupingTreeStorage';
-import { SearchInfo } from './SearchInfo';
+import type { SearchInfo } from './SearchInfo';
 
 /*
  * A tree of tasks where every level in the tree corresponds to a grouping property.
@@ -49,12 +49,11 @@ export class TaskGroupingTree {
      * @param tasks The tasks that match the task block's Query
      * @param searchInfo
      */
-    constructor(groupers: Grouper[], tasks: Task[], searchInfo?: SearchInfo) {
-        // TODO Make searchInfo non-optional
+    constructor(groupers: Grouper[], tasks: Task[], searchInfo: SearchInfo) {
         // The root of the tree contains all the tasks.
         this.root = new TaskGroupingTreeNode(tasks);
 
-        this.buildGroupingTree(groupers, searchInfo ? searchInfo : new SearchInfo(undefined, tasks));
+        this.buildGroupingTree(groupers, searchInfo);
     }
 
     private buildGroupingTree(groupers: Grouper[], searchInfo: SearchInfo) {

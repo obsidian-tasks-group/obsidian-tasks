@@ -55,7 +55,7 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
  * @param tasks
  */
 export function groupHeadingsForTask(grouper: Grouper, tasks: Task[]) {
-    const groups = new TaskGroups([grouper], tasks);
+    const groups = new TaskGroups([grouper], tasks, new SearchInfo(undefined, tasks));
 
     const headings: string[] = [];
     groups.groups.forEach((taskGroup) => {
