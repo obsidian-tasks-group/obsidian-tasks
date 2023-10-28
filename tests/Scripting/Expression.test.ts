@@ -3,16 +3,11 @@
  */
 import moment from 'moment';
 
-import {
-    constructArguments,
-    evaluateExpression,
-    evaluateExpressionOrCatch,
-    parseAndEvaluateExpression,
-    parseExpression,
-} from '../../src/Scripting/Expression';
+import { evaluateExpression, evaluateExpressionOrCatch, parseExpression } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 import { continue_lines } from '../../src/Query/Scanner';
+import { constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
