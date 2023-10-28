@@ -14,6 +14,7 @@ import { HappensDateField } from '../src/Query/Filter/HappensDateField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { SearchInfo } from '../src/Query/SearchInfo';
 import { fromLine } from './TestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -97,6 +98,25 @@ describe('Grouping tasks', () => {
         expect(groups.groups.length).toEqual(1);
         expect(groups.groups[0].groups.length).toEqual(0);
         expect(groups.groups[0].tasks.length).toEqual(0);
+    });
+
+    it('should provide access to SearchInfo', () => {
+        // Arrange
+        const groupByQueryPath: GrouperFunction = (_task: Task, searchInfo: SearchInfo) => {
+            return [searchInfo.queryPath ? searchInfo.queryPath : 'No SearchInfo'];
+        };
+        const grouper: Grouper = new Grouper('test', groupByQueryPath, false);
+
+        const filename = 'somewhere/anything.md';
+        const tasks = [new TaskBuilder().build()];
+        const searchInfo = new SearchInfo(filename, tasks);
+
+        // Act
+        const groups = new TaskGroups([grouper], tasks, searchInfo);
+
+        // Assert
+        expect(groups.groups.length).toEqual(1);
+        expect(groups.groups[0].groups).toEqual([filename]);
     });
 
     it('sorts group names correctly', () => {
