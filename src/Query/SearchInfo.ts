@@ -11,8 +11,10 @@ export class SearchInfo {
     /** The list of tasks being searched.
      */
     public readonly allTasks: Readonly<Task[]>;
+    public readonly queryPath: string | undefined;
 
-    public constructor(allTasks: Task[]) {
+    public constructor(queryPath: string | undefined, allTasks: Task[]) {
+        this.queryPath = queryPath;
         this.allTasks = [...allTasks];
     }
 }

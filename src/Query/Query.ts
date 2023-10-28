@@ -244,7 +244,7 @@ Problem line: "${line}"`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
-        const searchInfo = new SearchInfo(tasks);
+        const searchInfo = new SearchInfo(this.filePath, tasks);
         try {
             this.filters.forEach((filter) => {
                 tasks = tasks.filter((task) => filter.filterFunction(task, searchInfo));

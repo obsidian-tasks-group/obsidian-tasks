@@ -16,8 +16,8 @@ import { Explanation } from '../src/Query/Explain/Explanation';
 import { Filter } from '../src/Query/Filter/Filter';
 import { DescriptionField } from '../src/Query/Filter/DescriptionField';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
-import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
+import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -209,7 +209,7 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-            expect(query.filters[0].filterFunction(task, new SearchInfo([task]))).toBeTruthy();
+            expect(query.filters[0].filterFunction(task, new SearchInfo(undefined, [task]))).toBeTruthy();
         });
     });
 
@@ -619,7 +619,7 @@ describe('Query', () => {
 
             // Act
             let filteredTasks = [...tasks];
-            const searchInfo = new SearchInfo(tasks);
+            const searchInfo = new SearchInfo(undefined, tasks);
             query.filters.forEach((filter) => {
                 filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
@@ -1063,10 +1063,31 @@ describe('Query', () => {
             );
 
             // Act, Assert
-            const searchInfo = new SearchInfo(allTasks);
+            const searchInfo = new SearchInfo(undefined, allTasks);
             expect(filter).toMatchTaskWithSearchInfo(same1, searchInfo);
             expect(filter).toMatchTaskWithSearchInfo(same2, searchInfo);
             expect(filter).not.toMatchTaskWithSearchInfo(different, searchInfo);
+        });
+
+        it('should pass the query path through to filter functions', () => {
+            // Arrange
+            const queryPath = 'this/was/passed/in/correctly.md';
+            const query = new Query('', queryPath);
+
+            const matchesIfSearchInfoHasCorrectPath = (_task: Task, searchInfo: SearchInfo) => {
+                return searchInfo.queryPath === queryPath;
+            };
+            query.addFilter(
+                new Filter('instruction', matchesIfSearchInfoHasCorrectPath, new Explanation('explanation')),
+            );
+
+            // Act
+            const task = new TaskBuilder().build();
+            const results = query.applyQueryToTasks([task]);
+
+            // Assert
+            // The task will match if the correct path.
+            expect(results.totalTasksCount).toEqual(1);
         });
     });
 
