@@ -58,7 +58,7 @@ describe('TaskExpression', () => {
 
             // Try again, using evaluate()
             const t = () => {
-                taskExpression.evaluate(new TaskBuilder().build());
+                taskExpression.evaluate(new TaskBuilder().build(), queryContext);
             };
             expect(t).toThrow(ReferenceError);
             expect(t).toThrowError('wibble is not defined');
@@ -79,7 +79,7 @@ describe('TaskExpression', () => {
 
             // Try again, using evaluate()
             const t = () => {
-                taskExpression.evaluate(new TaskBuilder().build());
+                taskExpression.evaluate(new TaskBuilder().build(), queryContext);
             };
             expect(t).toThrow(Error);
             expect(t).toThrowError(expectedErrorMessage);
