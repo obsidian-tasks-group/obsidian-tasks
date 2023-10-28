@@ -75,6 +75,7 @@ describe('TaskExpression', () => {
 
             // Act, Assert
             expect(taskExpression.evaluate(task, queryContext)).toEqual('dummy.md');
+            expect(taskExpression.evaluateOrCatch(task, queryContext)).toEqual('dummy.md');
         });
 
         it('should return error string as output if evaluating an expression that parsed OK fails at execution', () => {
