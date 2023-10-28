@@ -16,6 +16,7 @@ import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMark
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { SearchInfo } from '../../src/Query/SearchInfo';
+import type { GrouperFunction } from '../../src/Query/Grouper';
 
 function getPrintableSymbol(symbol: string) {
     const result = symbol !== ' ' ? symbol : 'space';
@@ -247,7 +248,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     filterAllStatuses(FilterParser.parseFilter('status.name includes done')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
 
-    function showGroupNamesForAllTasks(groupName: string, grouperFunction: (task: Task) => string[]) {
+    function showGroupNamesForAllTasks(groupName: string, grouperFunction: GrouperFunction) {
         const cells: string[] = ['Name for `group by ' + groupName + '`'];
         tasks.forEach((task) => {
             const groupNamesForTask = grouperFunction(task);
