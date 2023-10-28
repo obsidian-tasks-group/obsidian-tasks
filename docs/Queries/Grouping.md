@@ -756,13 +756,11 @@ group by function task.file.path.replace(query.file.folder, '')
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks 4.7.0, the query's file path can be used in custom groups.
+Since Tasks X.Y.Z, the query's file path can be used conveniently in custom groups.
 
-- It must be quoted:
-  - `'{{query.file.path}}'` or
-  - `'{{query.file.pathWithoutExtension}}'` (since Tasks 4.8.0)
-- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
-- Useful reading: [[Query Properties]] and [[Placeholders]].
+- `query.file.path` or
+- `query.file.pathWithoutExtension`
+- Useful reading: [[Query Properties]].
 
 ### Root
 
@@ -783,11 +781,10 @@ group by function task.file.root
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks 4.7.0, the query's file root can be used in custom groups.
+Since Tasks X.Y.Z, the query's file root can be used conveniently in custom groups.
 
-- It must be quoted: `'{{query.file.root}}'`
-- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
-- Useful reading: [[Query Properties]] and [[Placeholders]].
+- `query.file.root`
+- Useful reading: [[Query Properties]].
 
 ### Folder
 
@@ -816,11 +813,10 @@ group by function task.file.folder.slice(0, -1).split('/').pop() + '/'
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks 4.7.0, the query's folder can be used in custom groups.
+Since Tasks X.Y.Z, the query's folder can be used conveniently in custom groups.
 
-- It must be quoted: `'{{query.file.folder}}'`
-- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
-- Useful reading: [[Query Properties]] and [[Placeholders]].
+- `query.file.folder`
+- Useful reading: [[Query Properties]].
 
 ### File Name
 
@@ -845,13 +841,11 @@ group by function task.file.filenameWithoutExtension + (task.hasHeading ? (' > '
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks 4.7.0, the query's file name can be used in custom groups.
+Since Tasks X.Y.Z, the query's file name can be used conveniently in custom groups.
 
-- It must be quoted:
-  - `'{{query.file.filename}}'` or
-  - `'{{query.file.filenameWithoutExtension}}'` (since Tasks 4.8.0)
-- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
-- Useful reading: [[Query Properties]] and [[Placeholders]].
+- `query.file.filename` or
+- `query.file.filenameWithoutExtension`
+- Useful reading: [[Query Properties]].
 
 ### Backlink
 
