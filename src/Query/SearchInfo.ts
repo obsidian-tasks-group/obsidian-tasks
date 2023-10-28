@@ -1,4 +1,5 @@
 import type { Task } from '../Task';
+import { type QueryContext, makeQueryContext } from '../Scripting/QueryContext';
 
 /**
  * SearchInfo contains selected data passed in from the {@link Query} being executed.
@@ -20,5 +21,13 @@ export class SearchInfo {
 
     public static fromAllTasks(tasks: Task[]): SearchInfo {
         return new SearchInfo(undefined, tasks);
+    }
+
+    /**
+     * Construct a {@link QueryContext} from this, for use in the placeholder
+     * facility and scripting code.
+     */
+    public queryContext(): QueryContext | undefined {
+        return this.queryPath ? makeQueryContext(this.queryPath) : undefined;
     }
 }
