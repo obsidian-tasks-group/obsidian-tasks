@@ -45,7 +45,7 @@ describe('FunctionField - filtering', () => {
         expect(filter).toBeValid();
         const t = () => {
             const task = new TaskBuilder().build();
-            filter.filterFunction!(task, new SearchInfo(undefined, [task]));
+            filter.filterFunction!(task, SearchInfo.fromAllTasks([task]));
         };
         expect(t).toThrow(Error);
         expect(t).toThrowError('filtering function must return true or false. This returned "undefined".');

@@ -18,7 +18,7 @@ export class SearchInfo {
         this.allTasks = [...allTasks];
     }
 
-    public static fromAllTasks(tasks: Task[]) {
+    public static fromAllTasks(tasks: Task[]): SearchInfo {
         return new SearchInfo(undefined, tasks);
     }
 }

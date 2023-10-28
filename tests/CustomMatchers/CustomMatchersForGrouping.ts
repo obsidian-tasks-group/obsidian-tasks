@@ -55,7 +55,7 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
  * @param tasks
  */
 export function groupHeadingsForTask(grouper: Grouper, tasks: Task[]) {
-    const groups = new TaskGroups([grouper], tasks, new SearchInfo(undefined, tasks));
+    const groups = new TaskGroups([grouper], tasks, SearchInfo.fromAllTasks(tasks));
 
     const headings: string[] = [];
     groups.groups.forEach((taskGroup) => {
@@ -99,7 +99,7 @@ export function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNa
         };
     }
 
-    expect(grouper!.grouper(task, new SearchInfo(undefined, [task]))).toEqual(expectedGroupNames);
+    expect(grouper!.grouper(task, SearchInfo.fromAllTasks([task]))).toEqual(expectedGroupNames);
 }
 
 /**
