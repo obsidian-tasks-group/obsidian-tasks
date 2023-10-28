@@ -22,6 +22,7 @@ export class FunctionField extends Field {
         }
 
         const expression = match[1];
+        // TODO When filters are allowed to start using the QueryContext, will need to pass in actual QueryContext
         const taskExpression = new TaskExpression(expression);
         if (!taskExpression.isValid()) {
             return FilterOrErrorMessage.fromError(line, taskExpression.parseError!);
