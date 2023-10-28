@@ -251,7 +251,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     function showGroupNamesForAllTasks(groupName: string, grouperFunction: GrouperFunction) {
         const cells: string[] = ['Name for `group by ' + groupName + '`'];
         tasks.forEach((task) => {
-            const groupNamesForTask = grouperFunction(task);
+            const groupNamesForTask = grouperFunction(task, new SearchInfo(undefined, [task]));
             const names = groupNamesForTask.join(',');
             cells.push(names);
         });
