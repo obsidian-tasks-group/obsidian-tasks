@@ -7,6 +7,7 @@ describe('TaskExpression', () => {
         it('should allow passing QueryContext or null to constructArguments()', () => {
             const task = new TaskBuilder().build();
             constructArguments(task, null);
+            constructArguments(task, makeQueryContext('dummy.md'));
         });
     });
 
