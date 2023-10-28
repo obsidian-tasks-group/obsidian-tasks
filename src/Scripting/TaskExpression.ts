@@ -9,7 +9,7 @@ import type { QueryContext } from './QueryContext';
  * @param task - during parsing, this can be null. During evaluation, it must be a Task
  * @param _queryContext
  */
-export function constructArguments(task: Task | null, _queryContext: null) {
+export function constructArguments(task: Task | null, _queryContext: QueryContext | null) {
     const paramsArgs: [string, any][] = [
         // TODO Later, pass in the Query too, for access to file properties
         ['task', task],
