@@ -4,6 +4,7 @@ import type { Task } from 'Task';
 import type { Field } from '../../src/Query/Filter/Field';
 import { TaskGroups } from '../../src/Query/TaskGroups';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 
 declare global {
     namespace jest {
@@ -98,7 +99,7 @@ export function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNa
         };
     }
 
-    expect(grouper!.grouper(task)).toEqual(expectedGroupNames);
+    expect(grouper!.grouper(task, new SearchInfo(undefined, [task]))).toEqual(expectedGroupNames);
 }
 
 /**
