@@ -70,7 +70,7 @@ describe('Expression', () => {
 
     describe('detect errors at evaluation time', () => {
         const line = 'nonExistentVariable';
-        const paramsArgs = constructArguments(task);
+        const paramsArgs = constructArguments(task, null);
         const expression = parseExpression(paramsArgs, line);
         it('evaluateExpressionAndCatch() should report meaningful error message for invalid variable', () => {
             expect(expression.error).toBeUndefined();
