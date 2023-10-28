@@ -12,12 +12,13 @@ import { TaskGroups } from '../src/Query/TaskGroups';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import { HappensDateField } from '../src/Query/Filter/HappensDateField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
+import { SearchInfo } from '../src/Query/SearchInfo';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
 
 function makeTasksGroups(grouping: Grouper[], inputs: Task[]): any {
-    return new TaskGroups(grouping, inputs);
+    return new TaskGroups(grouping, inputs, new SearchInfo(undefined, inputs));
 }
 
 describe('Grouping tasks', () => {
@@ -257,7 +258,7 @@ describe('Grouping tasks', () => {
 
         const groupByTags: GrouperFunction = (task: Task) => task.tags;
         const grouper = new Grouper('custom tag grouper', groupByTags, false);
-        const groups = new TaskGroups([grouper], inputs);
+        const groups = makeTasksGroups([grouper], inputs);
 
         expect(groups.totalTasksCount()).toEqual(2);
 
@@ -308,7 +309,7 @@ describe('Grouping tasks', () => {
         ];
 
         // Act
-        const groups = new TaskGroups(grouping, tasks);
+        const groups = makeTasksGroups(grouping, tasks);
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`

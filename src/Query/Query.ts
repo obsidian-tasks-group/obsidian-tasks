@@ -254,7 +254,7 @@ Problem line: "${line}"`;
             const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks);
             const tasksSortedLimited = tasksSorted.slice(0, this.limit);
 
-            const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited);
+            const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited, searchInfo);
 
             if (this._taskGroupLimit !== undefined) {
                 taskGroups.applyTaskLimit(this._taskGroupLimit);

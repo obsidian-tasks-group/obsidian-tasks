@@ -9,6 +9,7 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 import type { Grouper } from '../../../src/Query/Grouper';
 import { TaskGroups } from '../../../src/Query/TaskGroups';
+import { SearchInfo } from '../../../src/Query/SearchInfo';
 
 describe('tag presence & absence', () => {
     it.each(['has tag', 'has tags'])('should have "%s" filtering', (filterLine: string) => {
@@ -652,7 +653,7 @@ describe('grouping by tag', () => {
 
         // Act
         const grouping: Grouper[] = [new TagsField().createGrouperFromLine('group by tags reverse')!];
-        const groups = new TaskGroups(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs, new SearchInfo(undefined, inputs));
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
