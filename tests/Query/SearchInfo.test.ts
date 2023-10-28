@@ -4,7 +4,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 describe('SearchInfo', () => {
     it('should not be able to modify SearchInfo.allTasks directly', () => {
         const tasks = [new TaskBuilder().build()];
-        const searchInfo = new SearchInfo(undefined, tasks);
+        const searchInfo = SearchInfo.fromAllTasks(tasks);
         expect(searchInfo.allTasks.length).toEqual(1);
 
         // Success: Does not compile

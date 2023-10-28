@@ -17,4 +17,8 @@ export class SearchInfo {
         this.queryPath = queryPath;
         this.allTasks = [...allTasks];
     }
+
+    public static fromAllTasks(tasks: Task[]) {
+        return new SearchInfo(undefined, tasks);
+    }
 }
