@@ -1,5 +1,6 @@
 import type { Task } from '../Task';
 import { FunctionOrError, evaluateExpression, evaluateExpressionOrCatch, parseExpression } from './Expression';
+import type { QueryContext } from './QueryContext';
 
 /**
  *  From: https://www.educative.io/answers/parameter-vs-argument
@@ -76,9 +77,10 @@ export class TaskExpression {
      * Evaluate the expression on this task, or return error text if the calculation failed
      * @param task
      *
+     * @param _queryContext
      * @see evaluate
      */
-    public evaluateOrCatch(task: Task) {
+    public evaluateOrCatch(task: Task, _queryContext: QueryContext) {
         if (!this.isValid()) {
             return `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`;
         }

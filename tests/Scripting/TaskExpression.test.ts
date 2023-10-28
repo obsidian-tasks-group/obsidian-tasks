@@ -1,5 +1,6 @@
 import { TaskExpression } from '../../src/Scripting/TaskExpression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { makeQueryContext } from '../../src/Scripting/QueryContext';
 
 describe('TaskExpression', () => {
     describe('parsing', () => {
@@ -31,12 +32,13 @@ describe('TaskExpression', () => {
     });
 
     describe('evaluating', () => {
+        const queryContext = makeQueryContext('dummy.md');
         it('should evaluate a valid line and give correct result', () => {
             // Arrange
             const taskExpression = new TaskExpression('task.description');
 
             // Act
-            const result = taskExpression.evaluateOrCatch(new TaskBuilder().description('hello').build());
+            const result = taskExpression.evaluateOrCatch(new TaskBuilder().description('hello').build(), queryContext);
 
             // Assert
             expect(result).toEqual('hello');
@@ -47,7 +49,7 @@ describe('TaskExpression', () => {
             const taskExpression = new TaskExpression('wibble');
 
             // Act
-            const result = taskExpression.evaluateOrCatch(new TaskBuilder().build());
+            const result = taskExpression.evaluateOrCatch(new TaskBuilder().build(), queryContext);
 
             // Assert
             expect(result).toEqual(
@@ -68,7 +70,7 @@ describe('TaskExpression', () => {
             expect(taskExpression.isValid()).toEqual(false);
 
             // Act
-            const result = taskExpression.evaluateOrCatch(new TaskBuilder().build());
+            const result = taskExpression.evaluateOrCatch(new TaskBuilder().build(), queryContext);
 
             // Assert
             const expectedErrorMessage =
