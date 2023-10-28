@@ -62,9 +62,10 @@ export class TaskExpression {
      * Evaluate the expression on this task, or throw an exception if the calculation failed
      * @param task
      *
+     * @param _queryContext
      * @see evaluateOrCatch
      */
-    public evaluate(task: Task) {
+    public evaluate(task: Task, _queryContext?: QueryContext) {
         if (!this.isValid()) {
             throw Error(
                 `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`,
