@@ -61,12 +61,11 @@ describe('TaskExpression', () => {
         it('should evaluate a valid line and give correct result', () => {
             // Arrange
             const taskExpression = new TaskExpression('task.description');
+            const task = new TaskBuilder().description('hello').build();
 
-            // Act
-            const result = taskExpression.evaluateOrCatch(new TaskBuilder().description('hello').build(), queryContext);
-
-            // Assert
-            expect(result).toEqual('hello');
+            // Act, Assert
+            expect(taskExpression.evaluate(task, queryContext)).toEqual('hello');
+            expect(taskExpression.evaluateOrCatch(task, queryContext)).toEqual('hello');
         });
 
         it('should return error string as output if evaluating an expression that parsed OK fails at execution', () => {
