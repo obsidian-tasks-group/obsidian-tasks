@@ -2,6 +2,7 @@ import type { Task } from '../Task';
 import type { Grouper } from './Grouper';
 import { GroupingTreeNode } from './GroupingTreeNode';
 import type { TaskGroupingTreeStorage } from './TaskGroupingTreeStorage';
+import type { SearchInfo } from './SearchInfo';
 
 /*
  * A tree of tasks where every level in the tree corresponds to a grouping property.
@@ -46,15 +47,16 @@ export class TaskGroupingTree {
      * Group a list of tasks, according to one or more task properties.
      * @param groupers 0 or more Grouping values, one per 'group by' line
      * @param tasks The tasks that match the task block's Query
+     * @param searchInfo
      */
-    constructor(groupers: Grouper[], tasks: Task[]) {
+    constructor(groupers: Grouper[], tasks: Task[], searchInfo: SearchInfo) {
         // The root of the tree contains all the tasks.
         this.root = new TaskGroupingTreeNode(tasks);
 
-        this.buildGroupingTree(groupers);
+        this.buildGroupingTree(groupers, searchInfo);
     }
 
-    private buildGroupingTree(groupers: Grouper[]) {
+    private buildGroupingTree(groupers: Grouper[], searchInfo: SearchInfo) {
         // The tree is build layer by layer, starting from the root.
         // At every level, we iterate on the nodes of that level to generate
         // the next one using the next grouping.
@@ -66,7 +68,7 @@ export class TaskGroupingTree {
                 for (const task of currentTreeNode.values) {
                     // Get properties of a task for the grouper
                     // The returned string is rendered, so special Markdown characters will be escaped
-                    const groupNames = grouper.grouper(task);
+                    const groupNames = grouper.grouper(task, searchInfo);
 
                     if (groupNames.length === 0) {
                         // Create a fake empty group-name so that we can add these tasks

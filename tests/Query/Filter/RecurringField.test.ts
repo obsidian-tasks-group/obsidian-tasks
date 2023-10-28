@@ -96,10 +96,11 @@ describe('grouping by recurring', () => {
         ['- [ ] a 🔁 every Sunday', ['Recurring']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new RecurringField().createNormalGrouper().grouper;
+        const grouper = new RecurringField().createNormalGrouper();
 
         // Assert
-        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
+        const tasks = [fromLine({ line: taskLine })];
+        expect({ grouper, tasks }).groupHeadingsToBe(groups);
     });
 
     it('should sort groups for RecurringField', () => {

@@ -595,8 +595,8 @@ describe('grouping by due date', () => {
         const taskWithoutDate = new TaskBuilder().build();
 
         // Assert
-        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
-        expect(grouper.grouper(taskWithoutDate)).toEqual(['No due date']);
+        expect({ grouper, tasks: [taskWithDate] }).groupHeadingsToBe(['1970-01-01 Thursday']);
+        expect({ grouper, tasks: [taskWithoutDate] }).groupHeadingsToBe(['No due date']);
     });
 
     it('should sort groups for DueDateField', () => {

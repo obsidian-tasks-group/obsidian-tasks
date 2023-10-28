@@ -3,6 +3,7 @@ import type { Grouper } from '../../src/Query/Grouper';
 import type { Task } from '../../src/Task';
 import { QueryResult } from '../../src/Query/QueryResult';
 import { fromLine } from '../TestHelpers';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 
 describe('QueryResult', () => {
     function createUngroupedQueryResult(tasks: Task[]) {
@@ -11,7 +12,7 @@ describe('QueryResult', () => {
 
     function createUngroupedQueryResultWithLimit(tasks: Task[], totalTasksCountBeforeLimit: number) {
         const groupers: Grouper[] = [];
-        const groups = new TaskGroups(groupers, tasks);
+        const groups = new TaskGroups(groupers, tasks, SearchInfo.fromAllTasks(tasks));
         return new QueryResult(groups, totalTasksCountBeforeLimit);
     }
 
@@ -19,7 +20,7 @@ describe('QueryResult', () => {
         // Arrange
         const groupers: Grouper[] = [];
         const tasks: Task[] = [];
-        const groups = new TaskGroups(groupers, tasks);
+        const groups = new TaskGroups(groupers, tasks, SearchInfo.fromAllTasks(tasks));
 
         // Act
         const queryResult = new QueryResult(groups, 0);

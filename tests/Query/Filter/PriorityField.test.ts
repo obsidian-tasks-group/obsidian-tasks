@@ -208,10 +208,11 @@ describe('grouping by priority', () => {
         ['- [ ] a ⏬', ['%%5%%Lowest priority']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new PriorityField().createNormalGrouper().grouper;
+        const grouper = new PriorityField().createNormalGrouper();
 
         // Assert
-        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
+        const tasks = [fromLine({ line: taskLine })];
+        expect({ grouper, tasks }).groupHeadingsToBe(groups);
     });
 
     it('should sort groups for PriorityField', () => {

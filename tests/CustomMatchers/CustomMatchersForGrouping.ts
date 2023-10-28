@@ -4,6 +4,7 @@ import type { Task } from 'Task';
 import type { Field } from '../../src/Query/Filter/Field';
 import { TaskGroups } from '../../src/Query/TaskGroups';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 
 declare global {
     namespace jest {
@@ -54,7 +55,7 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
  * @param tasks
  */
 export function groupHeadingsForTask(grouper: Grouper, tasks: Task[]) {
-    const groups = new TaskGroups([grouper], tasks);
+    const groups = new TaskGroups([grouper], tasks, SearchInfo.fromAllTasks(tasks));
 
     const headings: string[] = [];
     groups.groups.forEach((taskGroup) => {
@@ -98,7 +99,7 @@ export function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNa
         };
     }
 
-    expect(grouper!.grouper(task)).toEqual(expectedGroupNames);
+    expect(grouper!.grouper(task, SearchInfo.fromAllTasks([task]))).toEqual(expectedGroupNames);
 }
 
 /**
