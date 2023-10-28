@@ -58,7 +58,7 @@ describe('TaskExpression', () => {
 
     describe('evaluating', () => {
         const queryContext = makeQueryContext('dummy.md');
-        it('should evaluate a valid line and give correct result', () => {
+        it('should evaluate a valid task property and give correct result', () => {
             // Arrange
             const taskExpression = new TaskExpression('task.description');
             const task = new TaskBuilder().description('hello').build();
@@ -66,6 +66,15 @@ describe('TaskExpression', () => {
             // Act, Assert
             expect(taskExpression.evaluate(task, queryContext)).toEqual('hello');
             expect(taskExpression.evaluateOrCatch(task, queryContext)).toEqual('hello');
+        });
+
+        it('should evaluate a valid query property and give correct result', () => {
+            // Arrange
+            const taskExpression = new TaskExpression('query.file.path');
+            const task = new TaskBuilder().build();
+
+            // Act, Assert
+            expect(taskExpression.evaluate(task, queryContext)).toEqual('dummy.md');
         });
 
         it('should return error string as output if evaluating an expression that parsed OK fails at execution', () => {
