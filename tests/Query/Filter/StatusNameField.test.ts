@@ -94,8 +94,8 @@ describe('grouping by status.name', () => {
         const grouper = new StatusNameField().createNormalGrouper();
 
         // // Assert
-        expect(grouper.grouper(todoTask)).toEqual(['Todo']);
-        expect(grouper.grouper(inprTask)).toEqual(['In Progress']);
+        expect({ grouper, tasks: [todoTask] }).groupHeadingsToBe(['Todo']);
+        expect({ grouper, tasks: [inprTask] }).groupHeadingsToBe(['In Progress']);
     });
 
     it('should sort groups for StatusNameField', () => {

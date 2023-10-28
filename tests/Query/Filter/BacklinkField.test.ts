@@ -58,11 +58,12 @@ describe('grouping by backlink', () => {
         'path "%s" and heading "%s" should have groups: %s',
         (path: string, heading: string | null, groups: string[]) => {
             // Arrange
-            const grouper = new BacklinkField().createNormalGrouper().grouper;
+            const grouper = new BacklinkField().createNormalGrouper();
             const t = '- [ ] xyz';
 
             // Assert
-            expect(grouper(fromLine({ line: t, path: path, precedingHeader: heading }))).toEqual(groups);
+            const tasks = [fromLine({ line: t, path: path, precedingHeader: heading })];
+            expect({ grouper, tasks }).groupHeadingsToBe(groups);
         },
     );
 

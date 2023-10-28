@@ -46,10 +46,11 @@ describe('grouping by root', () => {
         ['- [ ] a', 'a.md', ['/']],
     ])('task "%s" with path "%s" should have groups: %s', (taskLine: string, path: string, groups: string[]) => {
         // Arrange
-        const grouper = new RootField().createNormalGrouper().grouper;
+        const grouper = new RootField().createNormalGrouper();
 
         // Assert
-        expect(grouper(fromLine({ line: taskLine, path: path }))).toEqual(groups);
+        const tasks = [fromLine({ line: taskLine, path: path })];
+        expect({ grouper, tasks }).groupHeadingsToBe(groups);
     });
 
     it('should sort groups for FilenameField', () => {
