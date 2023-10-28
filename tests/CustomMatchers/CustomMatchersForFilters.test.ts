@@ -9,7 +9,7 @@ describe('CustomMatchersForFilters', () => {
     it('should check filter with supplied SearchInfo', () => {
         // Arrange
         const task = new TaskBuilder().build();
-        const initialSearchInfo = new SearchInfo(undefined, [task]);
+        const initialSearchInfo = SearchInfo.fromAllTasks([task]);
         const checkSearchInfoPassedThrough = (_task: Task, searchInfo: SearchInfo) => {
             return Object.is(initialSearchInfo, searchInfo);
         };

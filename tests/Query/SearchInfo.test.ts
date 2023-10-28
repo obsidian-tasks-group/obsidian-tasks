@@ -16,7 +16,7 @@ describe('SearchInfo', () => {
 
     it('should not be able to modify SearchInfo.allTasks indirectly', () => {
         const tasks = [new TaskBuilder().build()];
-        const searchInfo = new SearchInfo(undefined, tasks);
+        const searchInfo = SearchInfo.fromAllTasks(tasks);
 
         // Check that updating the original list of tasks does not change the tasks saved in searchInfo.allTasks
         tasks.push(new TaskBuilder().description('I should not be added to searchInfo.allTasks').build());

@@ -653,7 +653,7 @@ describe('grouping by tag', () => {
 
         // Act
         const grouping: Grouper[] = [new TagsField().createGrouperFromLine('group by tags reverse')!];
-        const groups = new TaskGroups(grouping, inputs, new SearchInfo(undefined, inputs));
+        const groups = new TaskGroups(grouping, inputs, SearchInfo.fromAllTasks(inputs));
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`

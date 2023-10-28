@@ -12,7 +12,7 @@ describe('QueryResult', () => {
 
     function createUngroupedQueryResultWithLimit(tasks: Task[], totalTasksCountBeforeLimit: number) {
         const groupers: Grouper[] = [];
-        const groups = new TaskGroups(groupers, tasks, new SearchInfo(undefined, tasks));
+        const groups = new TaskGroups(groupers, tasks, SearchInfo.fromAllTasks(tasks));
         return new QueryResult(groups, totalTasksCountBeforeLimit);
     }
 
@@ -20,7 +20,7 @@ describe('QueryResult', () => {
         // Arrange
         const groupers: Grouper[] = [];
         const tasks: Task[] = [];
-        const groups = new TaskGroups(groupers, tasks, new SearchInfo(undefined, tasks));
+        const groups = new TaskGroups(groupers, tasks, SearchInfo.fromAllTasks(tasks));
 
         // Act
         const queryResult = new QueryResult(groups, 0);

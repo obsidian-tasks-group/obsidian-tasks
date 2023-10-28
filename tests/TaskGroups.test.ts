@@ -18,7 +18,7 @@ import { fromLine } from './TestHelpers';
 window.moment = moment;
 
 function makeTasksGroups(grouping: Grouper[], inputs: Task[]): any {
-    return new TaskGroups(grouping, inputs, new SearchInfo(undefined, inputs));
+    return new TaskGroups(grouping, inputs, SearchInfo.fromAllTasks(inputs));
 }
 
 describe('Grouping tasks', () => {

@@ -91,7 +91,7 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
 
         const filterFunction = filterOrErrorMessage.filterFunction!;
         const matchingTasks: string[] = [];
-        const searchInfo = new SearchInfo(undefined, tasks);
+        const searchInfo = SearchInfo.fromAllTasks(tasks);
         for (const task of tasks) {
             const matches = filterFunction(task, searchInfo);
             if (matches) {

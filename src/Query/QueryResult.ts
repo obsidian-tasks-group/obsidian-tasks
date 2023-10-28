@@ -44,7 +44,7 @@ export class QueryResult {
     }
 
     static fromError(message: string): QueryResult {
-        const result = new QueryResult(new TaskGroups([], [], new SearchInfo(undefined, [])), 0);
+        const result = new QueryResult(new TaskGroups([], [], SearchInfo.fromAllTasks([])), 0);
         result._searchErrorMessage = message;
         return result;
     }

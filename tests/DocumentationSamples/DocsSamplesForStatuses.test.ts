@@ -228,7 +228,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
 
     function filterAllStatuses(filter: FilterOrErrorMessage) {
         const cells: string[] = [`Matches \`${filter!.instruction}\``];
-        const searchInfo = new SearchInfo(undefined, tasks);
+        const searchInfo = SearchInfo.fromAllTasks(tasks);
         tasks.forEach((task) => {
             const matchedText = filter!.filter?.filterFunction(task, searchInfo) ? 'YES' : 'no';
             cells.push(matchedText);
@@ -251,7 +251,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     function showGroupNamesForAllTasks(groupName: string, grouperFunction: GrouperFunction) {
         const cells: string[] = ['Name for `group by ' + groupName + '`'];
         tasks.forEach((task) => {
-            const groupNamesForTask = grouperFunction(task, new SearchInfo(undefined, [task]));
+            const groupNamesForTask = grouperFunction(task, SearchInfo.fromAllTasks([task]));
             const names = groupNamesForTask.join(',');
             cells.push(names);
         });

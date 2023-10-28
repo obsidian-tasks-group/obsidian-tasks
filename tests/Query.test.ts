@@ -209,7 +209,7 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-            expect(query.filters[0].filterFunction(task, new SearchInfo(undefined, [task]))).toBeTruthy();
+            expect(query.filters[0].filterFunction(task, SearchInfo.fromAllTasks([task]))).toBeTruthy();
         });
     });
 
@@ -619,7 +619,7 @@ describe('Query', () => {
 
             // Act
             let filteredTasks = [...tasks];
-            const searchInfo = new SearchInfo(undefined, tasks);
+            const searchInfo = SearchInfo.fromAllTasks(tasks);
             query.filters.forEach((filter) => {
                 filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
@@ -1063,7 +1063,7 @@ describe('Query', () => {
             );
 
             // Act, Assert
-            const searchInfo = new SearchInfo(undefined, allTasks);
+            const searchInfo = SearchInfo.fromAllTasks(allTasks);
             expect(filter).toMatchTaskWithSearchInfo(same1, searchInfo);
             expect(filter).toMatchTaskWithSearchInfo(same2, searchInfo);
             expect(filter).not.toMatchTaskWithSearchInfo(different, searchInfo);
