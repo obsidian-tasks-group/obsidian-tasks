@@ -13,7 +13,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
-- X.Y.Z: 🔥 Enable [[Custom Grouping|custom grouping]] to use [[Query Properties|query properties]] directly - no placeholders required.
+- X.Y.Z: 🔥 Enable [[Custom Filters|custom filters]] and [[Custom Grouping|custom grouping]] to use [[Query Properties|query properties]] directly - no placeholders required.
 
 <!--
 - 5.0.0: 🔥 Add [[Line Continuations|line continuations]].
