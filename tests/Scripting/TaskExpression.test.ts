@@ -29,8 +29,20 @@ describe('TaskExpression', () => {
     });
 
     describe('parsing', () => {
-        it('should report that a parsable line is valid', () => {
+        it('should report that a parsable line using task is valid', () => {
             const line = 'task.description';
+
+            // Act
+            const taskExpression = new TaskExpression(line);
+
+            // Assert
+            expect(taskExpression.isValid()).toEqual(true);
+            expect(taskExpression.line).toEqual(line);
+            expect(taskExpression.parseError).toBeUndefined();
+        });
+
+        it('should report that a parsable line using query is valid', () => {
+            const line = 'query.file.path';
 
             // Act
             const taskExpression = new TaskExpression(line);
