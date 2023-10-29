@@ -16,8 +16,9 @@ publish: true
 - The expression must evaluate to a `boolean`, so `true` or `false`.
 - There are loads of examples in [[Filters]].
   - Search for `filter by function` in that file.
-- Find all the supported tasks properties in [[Task Properties]] and [[Quick Reference]].
+- Find all the **supported tasks properties** in [[Task Properties]] and [[Quick Reference]].
   - A number of properties are only available for custom filters and grouping, and not for built-in grouping instructions.
+- Find all the **supported query properties** in [[Query Properties]].
 - Learn a bit about how expressions work in [[Expressions]].
 
 ## Custom filters introduction
@@ -40,12 +41,12 @@ The available task properties are also shown in the [[Quick Reference]] table.
 
 ### Available Query Properties
 
-The Reference section [[Query Properties]] shows all the query properties available for use via [[Placeholders]] in custom filters.
-
-Any placeholders in custom filters must be surrounded by quotes.
+The Reference section [[Query Properties]] shows all the query properties available for use in custom filters.
 
 > [!released]
-> Query properties and placeholders were introduced in Tasks 4.7.0.
+>
+> - Query properties and placeholders were introduced in Tasks 4.7.0, accessible via Placeholders.
+> - Direct access to Query properties was introduced in Tasks X.Y.Z.
 
 ### Expressions
 
