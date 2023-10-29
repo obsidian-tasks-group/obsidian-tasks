@@ -68,7 +68,6 @@ export class TaskExpression {
      * @see evaluateOrCatch
      */
     public evaluate(task: Task, queryContext?: QueryContext) {
-        // TODO When 'filter by function' supports query properties, make queryContext non-optional and simplify its use below.
         if (!this.isValid()) {
             throw Error(
                 `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`,
