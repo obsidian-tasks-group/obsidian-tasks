@@ -1137,12 +1137,6 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now p
 
 In Tasks 4.8.0 `task.file.pathWithoutExtension` was added.
 
-Since Tasks X.Y.Z, the query's file path can be used conveniently in custom filters:
-
-- `query.file.path` or
-- `query.file.pathWithoutExtension`
-- Useful reading: [[Query Properties]].
-
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
 
 ```javascript
@@ -1187,11 +1181,6 @@ The `root` is the top-level folder of the file that contains the task, that is, 
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by root folder** is now possible, using `task.file.root`.
 
-Since Tasks X.Y.Z, the query's file root can be used conveniently in custom filters:
-
-- `query.file.root`
-- Useful reading: [[Query Properties]].
-
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.root_docs.approved.md -->
 
 ```javascript
@@ -1229,11 +1218,6 @@ This is the `folder` to the file that contains the task, which will be `/` for f
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now possible, using `task.file.folder`.
-
-Since Tasks X.Y.Z, the query's file root can be used conveniently in custom filters:
-
-- `query.file.root`
-- Useful reading: [[Query Properties]].
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
@@ -1293,12 +1277,6 @@ Note that the file name includes the `.md` extension.
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file name** is now possible, using `task.file.filename`.
 
 In Tasks 4.8.0 `task.file.filenameWithoutExtension` was added.
-
-Since Tasks X.Y.Z, the query's file name can be used conveniently in custom filters:
-
-- `query.file.filename` or
-- `query.file.filenameWithoutExtension`
-- Useful reading: [[Query Properties]].
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
 
