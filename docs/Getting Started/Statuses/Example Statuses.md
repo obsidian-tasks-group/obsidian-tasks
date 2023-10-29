@@ -19,9 +19,9 @@ This might be useful if you have a few slightly more time-consuming tasks to kee
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.mermaid.md -->
 ```mermaid
 flowchart LR
-1[Todo]
-2[In Progress]
-3[Done]
+1["Todo"]
+2["In Progress"]
+3["Done"]
 1 --> 2
 2 --> 3
 3 --> 1
@@ -47,9 +47,9 @@ By using non-standard symbols for the `IN_PROGRESS` and `DONE` statuses, if I de
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.mermaid.md -->
 ```mermaid
 flowchart LR
-1[Important]
-2[Doing - Important]
-3[Done - Important]
+1["Important"]
+2["Doing - Important"]
+3["Done - Important"]
 1 --> 2
 2 --> 3
 3 --> 1
@@ -77,8 +77,8 @@ Either way, I can make them toggle to each other, and by giving them the type `N
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_pro-con-cycle.approved.mermaid.md -->
 ```mermaid
 flowchart LR
-1[Pro]
-2[Con]
+1["Pro"]
+2["Con"]
 1 --> 2
 2 --> 1
 ```
@@ -104,11 +104,11 @@ Here are some statuses from the ITS Theme where this behaviour might be useful.
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_toggle-does-nothing.approved.mermaid.md -->
 ```mermaid
 flowchart LR
-1[Bookmark]
-2[Example]
-3[Information]
-4[Paraphrase]
-5[Quote]
+1["Bookmark"]
+2["Example"]
+3["Information"]
+4["Paraphrase"]
+5["Quote"]
 1 --> 1
 2 --> 2
 3 --> 3

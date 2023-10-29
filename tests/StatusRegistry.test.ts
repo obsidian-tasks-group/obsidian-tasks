@@ -173,10 +173,10 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1[Todo]
-            2[In Progress]
-            3[Done]
-            4[Cancelled]
+            1["Todo"]
+            2["In Progress"]
+            3["Done"]
+            4["Cancelled"]
             1 --> 3
             2 --> 3
             3 --> 1
@@ -203,6 +203,55 @@ describe('StatusRegistry', () => {
         `);
     });
 
+    it('should encode symbols in mermaid diagrams when necessary', () => {
+        // This tests the fix for:
+        //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2355
+        //      Fix the handling of special characters in Mermaid status diagrams
+
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        statusRegistry.clearStatuses();
+        statusRegistry.add(new StatusConfiguration('<', 'Todo <', '<', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('>', 'Todo >', '>', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('"', 'Todo "', '"', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('&', 'Todo &', '&', false, StatusType.TODO));
+
+        // Assert
+        // Without detail:
+        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["Todo &lt;"]
+            2["Todo &gt;"]
+            3["Todo &quot;"]
+            4["Todo &amp;"]
+            1 --> 1
+            2 --> 2
+            3 --> 3
+            4 --> 4
+            \`\`\`
+            "
+        `);
+
+        // With detail:
+        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["'Todo &lt;'<br>[&lt;] -> [&lt;]<br>(TODO)"]
+            2["'Todo &gt;'<br>[&gt;] -> [&gt;]<br>(TODO)"]
+            3["'Todo &quot;'<br>[&quot;] -> [&quot;]<br>(TODO)"]
+            4["'Todo &amp;'<br>[&amp;] -> [&amp;]<br>(TODO)"]
+            1 --> 1
+            2 --> 2
+            3 --> 3
+            4 --> 4
+            \`\`\`
+            "
+        `);
+    });
+
     it('should not include unknown nextStatusSymbols in mermaid diagrams', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
@@ -220,7 +269,7 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1[Todo]
+            1["Todo"]
 
             \`\`\`
             "
