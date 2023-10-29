@@ -5,6 +5,9 @@
 export function htmlEncode(s: string) {
     const charactersToEntityNames: { [index: string]: string } = {
         '<': '&lt;',
+        '>': '&gt;',
+        '&': '&amp;',
+        '"': '&quot;',
     };
 
     const candidateEntityName = charactersToEntityNames[s];
