@@ -1,10 +1,10 @@
 /**
  * Convert any single reserved HTML character to its entity name.
- * @param s
+ * @param character
  *
  * @see htmlEncodeString
  */
-export function htmlEncodeCharacter(s: string) {
+export function htmlEncodeCharacter(character: string) {
     const charactersToEntityNames: { [index: string]: string } = {
         '<': '&lt;',
         '>': '&gt;',
@@ -12,22 +12,22 @@ export function htmlEncodeCharacter(s: string) {
         '"': '&quot;',
     };
 
-    const candidateEntityName = charactersToEntityNames[s];
+    const candidateEntityName = charactersToEntityNames[character];
     if (candidateEntityName !== undefined) {
         return candidateEntityName;
     }
 
-    return s;
+    return character;
 }
 
 /**
  * Convert reserved HTML characters to their entity names.
- * @param s
+ * @param characters
  *
  * @see htmlEncodeCharacter
  */
-export function htmlEncodeString(s: string) {
-    const chars = [...s];
+export function htmlEncodeString(characters: string) {
+    const chars = [...characters];
     let result = '';
     chars.forEach((c) => {
         result += htmlEncodeCharacter(c);
