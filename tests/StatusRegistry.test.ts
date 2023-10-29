@@ -173,10 +173,10 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1[Todo]
-            2[In Progress]
-            3[Done]
-            4[Cancelled]
+            1["Todo"]
+            2["In Progress"]
+            3["Done"]
+            4["Cancelled"]
             1 --> 3
             2 --> 3
             3 --> 1
@@ -222,10 +222,10 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1[Todo <]
-            2[Todo >]
-            3[Todo "]
-            4[Todo &]
+            1["Todo &lt;"]
+            2["Todo &gt;"]
+            3["Todo &quot;"]
+            4["Todo &amp;"]
             1 --> 1
             2 --> 2
             3 --> 3
@@ -269,7 +269,7 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1[Todo]
+            1["Todo"]
 
             \`\`\`
             "
