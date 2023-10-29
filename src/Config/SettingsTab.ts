@@ -587,11 +587,6 @@ export class SettingsTab extends PluginSettingTab {
                     const statusRegistry = StatusRegistry.getInstance();
                     const fileContent = createStatusRegistryReport(statusRegistry, buttonName, version);
 
-                    // Ideas
-                    // - Actually make it a plugin report, that reports any issues in settings with duplicate symbols.
-                    // - Show any 'next status symbols' that are not known to the plugin.
-                    // - Show any status transitions that won't work with recurring tasks currently, as DONE not followed by TODO.
-
                     // Save the file
                     const file = await app.vault.create(filename, fileContent);
 
