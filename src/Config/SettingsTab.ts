@@ -14,6 +14,24 @@ import settingsJson from './settingsConfiguration.json';
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
 
+function createStatusRegistryReport(statusRegistry: StatusRegistry, buttonName: string) {
+    const detailed = true;
+    const mermaidText = statusRegistry.mermaidDiagram(detailed);
+    const fileContent = `
+# ${buttonName}
+
+This file was created by the Obsidian Tasks plugin, to help visualise the
+task statuses in this vault.
+
+You can delete this file any time.
+
+<!-- Switch to Live Preview or Reading Mode to see the diagram. -->
+
+${mermaidText}
+`;
+    return fileContent;
+}
+
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
     // custom function and specify it from the json file. It will
@@ -582,20 +600,7 @@ export class SettingsTab extends PluginSettingTab {
                     const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
 
                     const statusRegistry = StatusRegistry.getInstance();
-                    const detailed = true;
-                    const mermaidText = statusRegistry.mermaidDiagram(detailed);
-                    const fileContent = `
-# ${buttonName}
-
-This file was created by the Obsidian Tasks plugin, to help visualise the
-task statuses in this vault.
-
-You can delete this file any time.
-
-<!-- Switch to Live Preview or Reading Mode to see the diagram. -->
-
-${mermaidText}
-`;
+                    const fileContent = createStatusRegistryReport(statusRegistry, buttonName);
 
                     // Ideas
                     // - Actually make it a plugin report, that reports any issues in settings with duplicate symbols.
