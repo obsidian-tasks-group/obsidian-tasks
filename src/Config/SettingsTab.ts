@@ -581,8 +581,9 @@ export class SettingsTab extends PluginSettingTab {
                     const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
                     const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
 
+                    const statusRegistry = StatusRegistry.getInstance();
                     const detailed = true;
-                    const mermaidText = StatusRegistry.getInstance().mermaidDiagram(detailed);
+                    const mermaidText = statusRegistry.mermaidDiagram(detailed);
                     const fileContent = `
 # ${buttonName}
 
