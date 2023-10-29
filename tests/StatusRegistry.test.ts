@@ -222,10 +222,10 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1["'Todo <'<br>[<] -> [<]<br>(TODO)"]
-            2["'Todo >'<br>[>] -> [>]<br>(TODO)"]
-            3["'Todo "'<br>["] -> ["]<br>(TODO)"]
-            4["'Todo &'<br>[&] -> [&]<br>(TODO)"]
+            1["'Todo &lt;'<br>[&lt;] -> [&lt;]<br>(TODO)"]
+            2["'Todo &gt;'<br>[&gt;] -> [&gt;]<br>(TODO)"]
+            3["'Todo &quot;'<br>[&quot;] -> [&quot;]<br>(TODO)"]
+            4["'Todo &amp;'<br>[&amp;] -> [&amp;]<br>(TODO)"]
             1 --> 1
             2 --> 2
             3 --> 3
