@@ -581,9 +581,10 @@ export class SettingsTab extends PluginSettingTab {
                     const now = window.moment();
                     const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
                     const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
+                    const version = this.plugin.manifest.version;
 
                     const statusRegistry = StatusRegistry.getInstance();
-                    const fileContent = createStatusRegistryReport(statusRegistry, buttonName);
+                    const fileContent = createStatusRegistryReport(statusRegistry, buttonName, version);
 
                     // Ideas
                     // - Actually make it a plugin report, that reports any issues in settings with duplicate symbols.
