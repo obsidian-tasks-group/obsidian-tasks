@@ -232,7 +232,10 @@ export class StatusRegistry {
             // And add it to our local registry, to prevent duplicates.
             newStatusRegistry.add(newStatus);
         });
-        return namedUniqueStatuses;
+
+        return namedUniqueStatuses.sort((status1, status2) => {
+            return status1.symbol.localeCompare(status2.symbol, undefined, { numeric: true });
+        });
     }
 
     private static copyStatusWithNewName(s: Status, newName: string) {

@@ -74,7 +74,9 @@ You can find a full list, with screenshots and complete details of the supported
 ### Add All Unknown Status Types
 
 This searches all the tasks in your vault for any with status symbols that are not already in Tasks settings.
-It then creates a new symbol for each unknown status symbol.
+It then creates a new custom status for each unknown status symbol.
+
+The new statuses are sort by their symbols.
 This can be a convenient way to populate the Custom Statuses settings.
 
 For example, in a vault that has already used a few custom statuses, we might see:

@@ -396,7 +396,7 @@ describe('StatusRegistry', () => {
             expect(toggled?.status.symbol).toEqual('D');
         });
 
-        it('should bulk-add unknown statuses', () => {
+        it('should find unknown statuses from tasks in the vault, sorted by symbol', () => {
             // Arrange
             const registry = new StatusRegistry();
             expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
@@ -426,12 +426,12 @@ describe('StatusRegistry', () => {
             expect(s1.name).toEqual('Unknown (!)');
 
             s1 = unknownStatuses[1];
-            expect(s1.type).toEqual(StatusType.DONE);
-            expect(s1.name).toEqual('Unknown (X)');
-
-            s1 = unknownStatuses[2];
             expect(s1.type).toEqual(StatusType.IN_PROGRESS);
             expect(s1.name).toEqual('Unknown (d)');
+
+            s1 = unknownStatuses[2];
+            expect(s1.type).toEqual(StatusType.DONE);
+            expect(s1.name).toEqual('Unknown (X)');
         });
     });
 });
