@@ -1,5 +1,6 @@
 import { Status } from './Status';
 import { StatusConfiguration, StatusType } from './StatusConfiguration';
+import { htmlEncodeCharacter, htmlEncodeString } from './lib/HTMLCharacterEntities';
 
 /**
  * Tracks all the registered statuses a task can have.
@@ -305,14 +306,20 @@ export class StatusRegistry {
         const nodes: string[] = [];
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
+            const statusName = htmlEncodeString(status.name);
             if (includeDetails) {
-                const transition = `[${status.symbol}] -> [${status.nextStatusSymbol}]`;
-                const statusName = `'${status.name}'`;
-                const statusType = `(${status.type})`;
-                const text = `${index + 1}["${statusName}<br>${transition}<br>${statusType}"]`;
+                const statusSymbol = htmlEncodeCharacter(status.symbol);
+                const statusNextStatusSymbol = htmlEncodeCharacter(status.nextStatusSymbol);
+                const statusType = status.type;
+
+                const transitionText = `[${statusSymbol}] -> [${statusNextStatusSymbol}]`;
+                const statusNameText = `'${statusName}'`;
+                const statusTypeText = `(${statusType})`;
+
+                const text = `${index + 1}["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]`;
                 nodes.push(text);
             } else {
-                nodes.push(`${index + 1}[${status.name}]`);
+                nodes.push(`${index + 1}["${statusName}"]`);
             }
 
             // Check the next status:
