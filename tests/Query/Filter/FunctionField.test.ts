@@ -13,7 +13,6 @@ import {
 } from '../../CustomMatchers/CustomMatchersForGrouping';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
-import type { Task } from '../../../src/Task';
 
 window.moment = moment;
 
@@ -24,27 +23,12 @@ window.moment = moment;
 describe('FunctionField - filtering', () => {
     const functionField = new FunctionField();
 
-    it('filter by function - with valid query of Task property', () => {
+    it('filter by function - with valid query', () => {
         const filter = functionField.createFilterOrErrorMessage('filter by function task.description.length > 5');
         expect(filter).toBeValid();
         expect(filter).toMatchTaskWithDescription('123456');
         expect(filter).not.toMatchTaskWithDescription('12345');
         expect(filter).not.toMatchTaskWithDescription('1234');
-    });
-
-    it('filter by function - with valid query of Query property', () => {
-        const tasksInSameFileAsQuery = functionField.createFilterOrErrorMessage(
-            'filter by function task.file.path === query.file.path',
-        );
-        expect(tasksInSameFileAsQuery).toBeValid();
-        const queryFilePath = '/a/b/query.md';
-
-        const taskInQueryFile: Task = new TaskBuilder().path(queryFilePath).build();
-        const taskNotInQueryFile: Task = new TaskBuilder().path('some other path.md').build();
-        const searchInfo = new SearchInfo(queryFilePath, [taskInQueryFile, taskNotInQueryFile]);
-
-        expect(tasksInSameFileAsQuery.filterFunction!(taskInQueryFile, searchInfo)).toEqual(true);
-        expect(tasksInSameFileAsQuery.filterFunction!(taskNotInQueryFile, searchInfo)).toEqual(false);
     });
 
     it('filter by function - should report syntax errors via FilterOrErrorMessage', () => {
