@@ -2,7 +2,7 @@ import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import type { Task } from '../../../src/Task';
 import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrouping';
-import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { expandPlaceholders } from '../../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../../src/Scripting/QueryContext';
 import { scan } from '../../../src/Query/Scanner';
