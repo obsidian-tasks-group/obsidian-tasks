@@ -306,10 +306,10 @@ export class StatusRegistry {
         const nodes: string[] = [];
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
+            const statusName = htmlEncodeString(status.name);
             if (includeDetails) {
                 const statusSymbol = htmlEncodeCharacter(status.symbol);
                 const statusNextStatusSymbol = htmlEncodeCharacter(status.nextStatusSymbol);
-                const statusName = htmlEncodeString(status.name);
                 const statusType = status.type;
 
                 const transitionText = `[${statusSymbol}] -> [${statusNextStatusSymbol}]`;
@@ -319,7 +319,7 @@ export class StatusRegistry {
                 const text = `${index + 1}["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]`;
                 nodes.push(text);
             } else {
-                nodes.push(`${index + 1}[${status.name}]`);
+                nodes.push(`${index + 1}["${statusName}"]`);
             }
 
             // Check the next status:
