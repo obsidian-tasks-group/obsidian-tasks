@@ -6,7 +6,11 @@ import moment from 'moment';
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import { Status } from '../../../src/Status';
 import { Priority } from '../../../src/Task';
-import { toGroupTaskFromBuilder, toGroupTaskWithPath } from '../../CustomMatchers/CustomMatchersForGrouping';
+import {
+    toGroupTaskFromBuilder,
+    toGroupTaskUsingSearchInfo,
+    toGroupTaskWithPath,
+} from '../../CustomMatchers/CustomMatchersForGrouping';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 
@@ -235,5 +239,12 @@ describe('FunctionField - grouping - example functions', () => {
         toGroupTaskFromBuilder(grouper, new TaskBuilder().tags(['#context/pc_home', '#topic/sys_admin']), [
             '#context/pc_home',
         ]);
+    });
+
+    it('group by a query property', () => {
+        const line = 'group by function query.file.filename';
+        const grouper = createGrouper(line);
+        const task = new TaskBuilder().build();
+        toGroupTaskUsingSearchInfo(grouper, task, new SearchInfo('queries/query file.md', [task]), ['query file.md']);
     });
 });

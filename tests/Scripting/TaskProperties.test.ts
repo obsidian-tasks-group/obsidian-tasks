@@ -20,8 +20,8 @@ describe('task', () => {
         const task1 = TaskBuilder.createFullyPopulatedTask();
         const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
         for (const field of fields) {
-            const value1 = parseAndEvaluateExpression(task1, field);
-            const value2 = parseAndEvaluateExpression(task2, field);
+            const value1 = parseAndEvaluateExpression(task1, field, undefined);
+            const value2 = parseAndEvaluateExpression(task2, field, undefined);
             const cells = [
                 addBackticks(field),
                 addBackticks(determineExpressionType(value1)),

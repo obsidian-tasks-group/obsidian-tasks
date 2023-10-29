@@ -3,6 +3,8 @@ import type { GrouperFunction } from '../Grouper';
 import { Grouper } from '../Grouper';
 import { Explanation } from '../Explain/Explanation';
 import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
+import type { QueryContext } from '../../Scripting/QueryContext';
+import type { SearchInfo } from '../SearchInfo';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -20,6 +22,7 @@ export class FunctionField extends Field {
         }
 
         const expression = match[1];
+        // TODO When filters are allowed to start using the QueryContext, will need to pass in actual QueryContext
         const taskExpression = new TaskExpression(expression);
         if (!taskExpression.isValid()) {
             return FilterOrErrorMessage.fromError(line, taskExpression.parseError!);
@@ -85,7 +88,7 @@ function createFilterFunctionFromLine(expression: TaskExpression): FilterFunctio
 export function filterByFunction(expression: TaskExpression, task: Task): boolean {
     // Allow exceptions to propagate to caller, since this will be called in a tight loop.
     // In searches, it will be caught by Query.applyQueryToTasks().
-    const result = expression.evaluate(task);
+    const result = expression.evaluate(task, undefined); // TODO when supporting query.file in filtering, add a QueryContext parameter
 
     // We insist that 'filter by function' returns booleans,
     // to avoid users having to understand truthy and falsey values.
@@ -103,14 +106,15 @@ export function filterByFunction(expression: TaskExpression, task: Task): boolea
 type GroupingArg = string;
 
 function createGrouperFunctionFromLine(line: string): GrouperFunction {
-    return (task: Task) => {
-        return groupByFunction(task, line);
+    return (task: Task, searchInfo: SearchInfo) => {
+        const queryContext = searchInfo.queryContext();
+        return groupByFunction(task, line, queryContext);
     };
 }
 
-export function groupByFunction(task: Task, arg: GroupingArg): string[] {
+export function groupByFunction(task: Task, arg: GroupingArg, queryContext?: QueryContext): string[] {
     try {
-        const result = parseAndEvaluateExpression(task, arg);
+        const result = parseAndEvaluateExpression(task, arg, queryContext);
 
         if (Array.isArray(result)) {
             return result.map((h) => h.toString());
