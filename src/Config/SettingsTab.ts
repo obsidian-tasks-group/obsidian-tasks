@@ -577,12 +577,13 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText(buttonName)
                 .setCta()
                 .onClick(async () => {
-                    // Create a new file unique file and insert the mermaid text
+                    // Generate a new file unique file name, in the root of the vault
                     const now = window.moment();
                     const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
                     const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
-                    const version = this.plugin.manifest.version;
 
+                    // Create the report
+                    const version = this.plugin.manifest.version;
                     const statusRegistry = StatusRegistry.getInstance();
                     const fileContent = createStatusRegistryReport(statusRegistry, buttonName, version);
 
@@ -591,6 +592,7 @@ export class SettingsTab extends PluginSettingTab {
                     // - Show any 'next status symbols' that are not known to the plugin.
                     // - Show any status transitions that won't work with recurring tasks currently, as DONE not followed by TODO.
 
+                    // Save the file
                     const file = await app.vault.create(filename, fileContent);
 
                     // And open the new file
