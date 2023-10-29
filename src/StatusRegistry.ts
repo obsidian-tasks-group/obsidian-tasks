@@ -306,10 +306,10 @@ export class StatusRegistry {
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
             if (includeDetails) {
-                const transition = `[${status.symbol}] -> [${status.nextStatusSymbol}]`;
-                const statusName = `'${status.name}'`;
-                const statusType = `(${status.type})`;
-                const text = `${index + 1}["${statusName}<br>${transition}<br>${statusType}"]`;
+                const transitionText = `[${status.symbol}] -> [${status.nextStatusSymbol}]`;
+                const statusNameText = `'${status.name}'`;
+                const statusTypeText = `(${status.type})`;
+                const text = `${index + 1}["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]`;
                 nodes.push(text);
             } else {
                 nodes.push(`${index + 1}[${status.name}]`);
