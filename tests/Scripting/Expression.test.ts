@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { evaluateExpression, evaluateExpressionOrCatch, parseExpression } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { continue_lines } from '../../src/Query/Scanner';
 import { constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';

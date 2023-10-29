@@ -12,7 +12,7 @@ import type { StatusCollection, StatusCollectionEntry } from '../../src/StatusCo
 import * as Themes from '../../src/Config/Themes';
 import { StatusValidator } from '../../src/StatusValidator';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { SearchInfo } from '../../src/Query/SearchInfo';

@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Status } from '../../src/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
