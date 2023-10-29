@@ -7,7 +7,7 @@ import { htmlEncodeCharacter, htmlEncodeString } from './lib/HTMLCharacterEntiti
  *
  * There are two ways of using this class.
  * - In 'production' code, that is in the actual plugin code that is released,
- *   call `StatusRegistry.getInstance()` to obtain the single global instance.
+ *   call `StatusRegistry.getInstance()` - {@link getInstance} - to obtain the single global instance.
  *   Any changes to the statuses in that instance are reflected everywhere throughout
  *   the plugin.
  *   For example, the code to toggle task statuses use the global instance.

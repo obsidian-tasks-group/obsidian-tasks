@@ -6,7 +6,14 @@ import type { StatusCollection } from '../StatusCollection';
 /**
  * Class for encapsulating the settings that control custom statuses.
  *
+ * There are two lists of {@link StatusConfiguration} objects:
+ *
+ * - {@link coreStatuses} - which will always have two values in.
+ * - {@link customStatuses} - which starts two values, but these can be deleted and more added.
+ *
  * Most methods are static to allow them to be called from call-backs.
+ *
+ * Use {@link applyToStatusRegistry} to apply these settings to a {@link StatusRegistry}
  *
  * @see Status
  */
