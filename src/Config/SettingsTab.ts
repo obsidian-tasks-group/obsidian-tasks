@@ -570,7 +570,7 @@ export class SettingsTab extends PluginSettingTab {
         });
         addAllUnknownStatuses.infoEl.remove();
 
-        /* -------------------- 'Create file with Mermaid diagram of Statuses' button -------------------- */
+        /* -------------------- 'Review and check your Statuses' button -------------------- */
         const createMermaidDiagram = new Setting(containerEl).addButton((button) => {
             const buttonName = 'Review and check your Statuses';
             button
