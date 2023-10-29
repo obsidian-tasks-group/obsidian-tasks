@@ -304,6 +304,7 @@ describe('Query parsing', () => {
             'group by folder',
             'group by folder reverse',
             'group by function reverse task.status.symbol.replace(" ", "space")',
+            'group by function task.file.path.replace(query.file.folder, "")',
             'group by function task.status.symbol.replace(" ", "space")',
             'group by happens',
             'group by happens reverse',
@@ -1246,6 +1247,20 @@ At most 8 tasks per group (if any "group by" options are supplied).
             // Assert
             expect(query.error).toBeUndefined();
             expect(query.grouping.length).toEqual(1);
+        });
+
+        it('should work with a custom group that uses query information', () => {
+            // Arrange
+            const source = 'group by function query.file.path';
+            const query = new Query(source, 'hello.md');
+
+            // Act
+            const results = query.applyQueryToTasks([new TaskBuilder().build()]);
+
+            // Assert
+            const groups = results.taskGroups;
+            expect(groups.groups.length).toEqual(1);
+            expect(groups.groups[0].groups).toEqual(['hello.md']);
         });
 
         it('should log meaningful error for supported group type', () => {

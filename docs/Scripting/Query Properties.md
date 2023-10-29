@@ -7,21 +7,23 @@ publish: true
 <span class="related-pages">#feature/scripting</span>
 
 > [!released]
-> Query Properties were introduced in Tasks 4.7.0.
+>
+> - Query Properties were introduced in Tasks 4.7.0.
+> - Their direct use in Custom Groups, without the use of Placeholders, was introduced in Tasks X.Y.Z.
 
 ## Introduction
 
 In a growing number of locations, Tasks allows programmatic/scripting access to properties of the file containing the search query:
 
 - [[Placeholders]]
+- [[Custom Grouping]]
 
 This page documents all the available pieces of information in Queries that you can access.
 
 > [!warning]
 >
-> - These properties can currently only be used in [[Placeholders]].
-> - Placeholders can be in [[Custom Filters]] and [[Custom Grouping]], but must be surrounded by quotes. For example: `'{{query.file.folder}}'`.
-> - In a future release, we will allow expressions such as `query.file.folder` to be used directly in custom filters and groups.
+> - Placeholders can be in [[Custom Filters]], but must be surrounded by quotes. For example: `'{{query.file.folder}}'`.
+> - In a future release, we will allow expressions such as `query.file.folder` to be used directly in custom filters.
 
 ## Values for Query File Properties
 

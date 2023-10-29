@@ -15,8 +15,9 @@ publish: true
   - `group by function task.urgency.toFixed(3)`
 - There are loads of examples in [[Grouping]].
   - Search for `group by function` in that file.
-- Find all the supported tasks properties in [[Task Properties]] and [[Quick Reference]].
+- Find all the **supported tasks properties** in [[Task Properties]] and [[Quick Reference]].
   - A number of properties are only available for custom grouping and filters, and not for built-in grouping instructions.
+- Find all the **supported query properties** in [[Query Properties]].
 - Learn a bit about how expressions work in [[Expressions]].
 
 ## Custom grouping introduction
@@ -280,7 +281,9 @@ Tasks with custom date groups, including formatting.
   - `group by function 6 * 7`
   - `group by function undefined`
 - See [[Expressions]] for more examples to try out.
-- A task, whose data you can access via all the [[Task Properties]].
+- You can use:
+  - A task, whose data you can access via all the [[Task Properties]].
+  - Some information about the file containing the query, which you can access via all the [[Query Properties]].
 - The generated text is rendered by Obsidian, so you can insert markdown characters to add formatting to your headings.
 
 ## Troubleshooting

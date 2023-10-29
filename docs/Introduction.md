@@ -13,13 +13,14 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- X.Y.Z: 🔥 Enable [[Custom Grouping|custom grouping]] to use [[Query Properties|query properties]] directly - no placeholders required.
+
+<!--
 - 5.0.0: 🔥 Add [[Line Continuations|line continuations]].
   - **Warning**: This is a [[Line Continuations#Appendix Updating pre-5.0.0 searches with trailing backslashes|potentially breaking change]] if you search for backslash (`\`) characters.
 - 5.0.0: 🔥 Document [[Comments#Inline comments|inline comments]]
 - 5.0.0: 🔥 Document [[Recurring Tasks and Custom Statuses|recurring tasks and custom statuses]]
 - 5.0.0: 🔥 Add new Help pages [[Known Limitations]] and [[Breaking Changes]].
-
-<!--
 - 4.9.0: 🔥 Add [[Task Properties|task properties]] `task.priorityNameGroupText` and `task.status.typeGroupText`, for example:
   - `group by function task.priorityNameGroupText + ': ' + task.status.typeGroupText`
 - 4.9.0: 🔥 Add [[Task Properties#Values in TasksDate Properties|task date properties]] for categorising dates, for example:
