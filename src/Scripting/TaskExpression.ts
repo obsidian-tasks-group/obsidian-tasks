@@ -93,7 +93,7 @@ export class TaskExpression {
         }
         return evaluateExpressionOrCatch(
             this.functionOrError.queryComponent!,
-            constructArguments(task, queryContext ? queryContext : null),
+            constructArguments(task, queryContext),
             this.line,
         );
     }
