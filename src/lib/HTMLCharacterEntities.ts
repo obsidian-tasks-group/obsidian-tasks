@@ -3,8 +3,14 @@
  * @param s
  */
 export function htmlEncode(s: string) {
-    if (s === '<') {
-        return '&lt;';
+    const charactersToEntityNames: { [index: string]: string } = {
+        '<': '&lt;',
+    };
+
+    const candidateEntityName = charactersToEntityNames[s];
+    if (candidateEntityName !== undefined) {
+        return candidateEntityName;
     }
+
     return s;
 }
