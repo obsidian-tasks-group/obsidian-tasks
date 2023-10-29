@@ -1,4 +1,3 @@
-
 # Review and check your Statuses
 
 This file was created by the Obsidian Tasks plugin (version x.y.z) to help visualise the task statuses in this vault.
@@ -6,7 +5,6 @@ This file was created by the Obsidian Tasks plugin (version x.y.z) to help visua
 You can delete this file any time.
 
 <!-- Switch to Live Preview or Reading Mode to see the diagram. -->
-
 
 ```mermaid
 flowchart LR
@@ -23,4 +21,3 @@ flowchart LR
 5 --> 6
 6 --> 5
 ```
-
