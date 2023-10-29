@@ -2,7 +2,7 @@
  * Convert any reserved HTML characters to entity names.
  * @param s
  */
-export function htmlEncode(s: string) {
+export function htmlEncodeCharacter(s: string) {
     const charactersToEntityNames: { [index: string]: string } = {
         '<': '&lt;',
         '>': '&gt;',
