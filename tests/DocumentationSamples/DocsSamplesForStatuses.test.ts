@@ -45,7 +45,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions
         const needsCustomStyling = status.symbol !== ' ' && status.symbol !== 'x' ? 'Yes' : 'No';
         table.addRow([statusCharacter, nextStatusCharacter, status.name, type, needsCustomStyling]);
     }
-    table.verifyForDocs();
+    verifyMarkdownForDocs(table.markdown);
 }
 
 function verifyStatusesAsTasksList(statuses: Status[]) {
@@ -262,7 +262,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     showGroupNamesForAllTasks('status.type', new StatusTypeField().createNormalGrouper().grouper);
     showGroupNamesForAllTasks('status.name', new StatusNameField().createNormalGrouper().grouper);
 
-    table.verifyForDocs();
+    verifyMarkdownForDocs(table.markdown);
 }
 
 describe('Status Transitions', () => {

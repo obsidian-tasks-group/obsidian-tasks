@@ -1,7 +1,7 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 
-import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('query', () => {
@@ -18,7 +18,7 @@ describe('query', () => {
             ];
             markdownTable.addRow(cells);
         }
-        markdownTable.verifyForDocs();
+        verifyMarkdownForDocs(markdownTable.markdown);
     }
 
     it('file properties', () => {

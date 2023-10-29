@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Status } from '../../src/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
@@ -31,7 +31,7 @@ describe('task', () => {
             ];
             markdownTable.addRow(cells);
         }
-        markdownTable.verifyForDocs();
+        verifyMarkdownForDocs(markdownTable.markdown);
     }
 
     beforeAll(() => {
