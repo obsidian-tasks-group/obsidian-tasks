@@ -4,6 +4,7 @@ import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 import type { StatusCollection } from '../StatusCollection';
+import { createStatusRegistryReport } from '../StatusRegistryReport';
 import * as Themes from './Themes';
 import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
@@ -13,23 +14,6 @@ import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
-
-function createStatusRegistryReport(statusRegistry: StatusRegistry, buttonName: string) {
-    const detailed = true;
-    const mermaidText = statusRegistry.mermaidDiagram(detailed);
-    return `
-# ${buttonName}
-
-This file was created by the Obsidian Tasks plugin, to help visualise the
-task statuses in this vault.
-
-You can delete this file any time.
-
-<!-- Switch to Live Preview or Reading Mode to see the diagram. -->
-
-${mermaidText}
-`;
-}
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
