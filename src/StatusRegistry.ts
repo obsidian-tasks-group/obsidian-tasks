@@ -1,5 +1,6 @@
 import { Status } from './Status';
 import { StatusConfiguration, StatusType } from './StatusConfiguration';
+import { htmlEncodeCharacter, htmlEncodeString } from './lib/HTMLCharacterEntities';
 
 /**
  * Tracks all the registered statuses a task can have.
@@ -306,9 +307,9 @@ export class StatusRegistry {
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
             if (includeDetails) {
-                const statusSymbol = status.symbol;
-                const statusNextStatusSymbol = status.nextStatusSymbol;
-                const statusName = status.name;
+                const statusSymbol = htmlEncodeCharacter(status.symbol);
+                const statusNextStatusSymbol = htmlEncodeCharacter(status.nextStatusSymbol);
+                const statusName = htmlEncodeString(status.name);
                 const statusType = status.type;
 
                 const transitionText = `[${statusSymbol}] -> [${statusNextStatusSymbol}]`;
