@@ -576,14 +576,13 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText(buttonName)
                 .setCta()
                 .onClick(async () => {
-                    const detailed = true;
-                    const mermaidText = StatusRegistry.getInstance().mermaidDiagram(detailed);
-
                     // Create a new file unique file and insert the mermaid text
                     const now = window.moment();
                     const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
                     const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
 
+                    const detailed = true;
+                    const mermaidText = StatusRegistry.getInstance().mermaidDiagram(detailed);
                     const fileContent = `
 # ${buttonName}
 
