@@ -571,8 +571,9 @@ export class SettingsTab extends PluginSettingTab {
 
         /* -------------------- 'Create file with Mermaid diagram of Statuses' button -------------------- */
         const createMermaidDiagram = new Setting(containerEl).addButton((button) => {
+            const buttonName = 'Review and check your Statuses';
             button
-                .setButtonText('Review and check your Statuses')
+                .setButtonText(buttonName)
                 .setCta()
                 .onClick(async () => {
                     const detailed = true;
@@ -581,10 +582,10 @@ export class SettingsTab extends PluginSettingTab {
                     // Create a new file unique file and insert the mermaid text
                     const now = window.moment();
                     const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
-                    const filename = `Tasks Plugin - Review and check your Statuses ${formattedDateTime}.md`;
+                    const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
 
                     const fileContent = `
-# Review and check your Statuses
+# ${buttonName}
 
 This file was created by the Obsidian Tasks plugin, to help visualise the
 task statuses in this vault.
