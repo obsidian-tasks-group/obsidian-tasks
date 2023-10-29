@@ -217,6 +217,23 @@ describe('StatusRegistry', () => {
         statusRegistry.add(new StatusConfiguration('&', 'Todo &', '&', false, StatusType.TODO));
 
         // Assert
+        // Without detail:
+        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1[Todo <]
+            2[Todo >]
+            3[Todo "]
+            4[Todo &]
+            1 --> 1
+            2 --> 2
+            3 --> 3
+            4 --> 4
+            \`\`\`
+            "
+        `);
+
         // With detail:
         expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
             "
