@@ -12,8 +12,9 @@ import {
 } from '../../src/Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
-import { MarkdownTable, verifyMarkdown } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdown } from '../TestingTools/VerifyMarkdownTable';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
 
 window.moment = moment;
 

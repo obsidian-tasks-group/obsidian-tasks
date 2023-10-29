@@ -1,7 +1,8 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 
-import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('query', () => {

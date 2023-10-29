@@ -12,11 +12,12 @@ import type { StatusCollection, StatusCollectionEntry } from '../../src/StatusCo
 import * as Themes from '../../src/Config/Themes';
 import { StatusValidator } from '../../src/StatusValidator';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { GrouperFunction } from '../../src/Query/Grouper';
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
 
 function getPrintableSymbol(symbol: string) {
     const result = symbol !== ' ' ? symbol : 'space';

@@ -12,8 +12,9 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { Query } from '../../../src/Query/Query';
-import { MarkdownTable, verifyMarkdown } from '../../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdown } from '../../TestingTools/VerifyMarkdownTable';
 import { SampleTasks } from '../../TestHelpers';
+import { MarkdownTable } from '../../../src/lib/MarkdownTable';
 
 window.moment = moment;
 
