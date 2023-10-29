@@ -203,6 +203,38 @@ describe('StatusRegistry', () => {
         `);
     });
 
+    it('should encode symbols in detailed mermaid diagrams when necessary', () => {
+        // This tests the fix for:
+        //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2355
+        //      Fix the handling of special characters in Mermaid status diagrams
+
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        statusRegistry.clearStatuses();
+        statusRegistry.add(new StatusConfiguration('<', 'Todo <', '<', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('>', 'Todo >', '>', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('"', 'Todo "', '"', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('&', 'Todo &', '&', false, StatusType.TODO));
+
+        // Assert
+        // With detail:
+        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["'Todo <'<br>[<] -> [<]<br>(TODO)"]
+            2["'Todo >'<br>[>] -> [>]<br>(TODO)"]
+            3["'Todo "'<br>["] -> ["]<br>(TODO)"]
+            4["'Todo &'<br>[&] -> [&]<br>(TODO)"]
+            1 --> 1
+            2 --> 2
+            3 --> 3
+            4 --> 4
+            \`\`\`
+            "
+        `);
+    });
+
     it('should not include unknown nextStatusSymbols in mermaid diagrams', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
