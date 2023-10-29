@@ -203,7 +203,7 @@ describe('StatusRegistry', () => {
         `);
     });
 
-    it('should encode symbols in detailed mermaid diagrams when necessary', () => {
+    it('should encode symbols in mermaid diagrams when necessary', () => {
         // This tests the fix for:
         //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2355
         //      Fix the handling of special characters in Mermaid status diagrams
