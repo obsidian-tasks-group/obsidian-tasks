@@ -12,7 +12,7 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { Query } from '../../../src/Query/Query';
-import { MarkdownTable } from '../../TestingTools/VerifyMarkdownTable';
+import { MarkdownTable, verifyMarkdown } from '../../TestingTools/VerifyMarkdownTable';
 import { SampleTasks } from '../../TestHelpers';
 
 window.moment = moment;
@@ -579,7 +579,7 @@ describe('due date', () => {
             table.addRow(newRow);
         });
 
-        table.verify();
+        verifyMarkdown(table.markdown);
     });
 });
 

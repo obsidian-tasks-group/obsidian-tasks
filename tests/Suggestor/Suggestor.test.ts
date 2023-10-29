@@ -12,7 +12,7 @@ import {
 } from '../../src/Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
-import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { MarkdownTable, verifyMarkdown } from '../TestingTools/VerifyMarkdownTable';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
 window.moment = moment;
@@ -169,7 +169,7 @@ describe.each([
 
         // For help if this test fails and you are new to Approval Tests, see:
         //    https://publish.obsidian.md/tasks-contributing/Testing/Approval+Tests
-        markdownTable.verify();
+        verifyMarkdown(markdownTable.markdown);
     });
 });
 
