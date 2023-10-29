@@ -41,6 +41,10 @@ KEY: (globalFilter, set created date)
     '- [ ] #task checkbox with global filter string and initial description' =>
     '- [ ] #task checkbox with global filter string and initial description'
 
+('', false)
+    '- [ ] checkbox with initial description ending with task tag at end #task' =>
+    '- [ ] checkbox with initial description ending with task tag at end #task'
+
 ('', true)
     '' =>
     '- [ ] simulate user typing text in to empty description field ➕ 2023-07-18'
@@ -80,6 +84,10 @@ KEY: (globalFilter, set created date)
 ('', true)
     '- [ ] #task checkbox with global filter string and initial description' =>
     '- [ ] #task checkbox with global filter string and initial description'
+
+('', true)
+    '- [ ] checkbox with initial description ending with task tag at end #task' =>
+    '- [ ] checkbox with initial description ending with task tag at end #task'
 
 ('#task', false)
     '' =>
@@ -121,6 +129,10 @@ KEY: (globalFilter, set created date)
     '- [ ] #task checkbox with global filter string and initial description' =>
     '- [ ] #task checkbox with global filter string and initial description'
 
+('#task', false)
+    '- [ ] checkbox with initial description ending with task tag at end #task' =>
+    '- [ ] #task checkbox with initial description ending with task tag at end'
+
 ('#task', true)
     '' =>
     '- [ ] #task simulate user typing text in to empty description field ➕ 2023-07-18'
@@ -160,3 +172,7 @@ KEY: (globalFilter, set created date)
 ('#task', true)
     '- [ ] #task checkbox with global filter string and initial description' =>
     '- [ ] #task checkbox with global filter string and initial description'
+
+('#task', true)
+    '- [ ] checkbox with initial description ending with task tag at end #task' =>
+    '- [ ] #task checkbox with initial description ending with task tag at end'
