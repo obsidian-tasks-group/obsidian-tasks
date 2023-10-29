@@ -85,14 +85,13 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
         const instruction = filter[0];
         const comment = filter.slice(1);
 
-        const path = 'a/b.md';
-        const expandedInstruction = preprocessSingleInstruction(instruction, path);
+        const expandedInstruction = preprocessSingleInstruction(instruction, 'a/b.md');
         const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(expandedInstruction);
         expect(filterOrErrorMessage).toBeValid();
 
         const filterFunction = filterOrErrorMessage.filterFunction!;
         const matchingTasks: string[] = [];
-        const searchInfo = new SearchInfo(path, tasks);
+        const searchInfo = SearchInfo.fromAllTasks(tasks);
         for (const task of tasks) {
             const matches = filterFunction(task, searchInfo);
             if (matches) {
