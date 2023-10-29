@@ -569,6 +569,50 @@ export class SettingsTab extends PluginSettingTab {
         });
         addAllUnknownStatuses.infoEl.remove();
 
+        /* -------------------- 'Create file with Mermaid diagram of Statuses' button -------------------- */
+        const createMermaidDiagram = new Setting(containerEl).addButton((button) => {
+            button
+                .setButtonText('Create file with Mermaid diagram of Statuses')
+                .setCta()
+                .onClick(async () => {
+                    const detailed = true;
+                    const mermaidText = StatusRegistry.getInstance().mermaidDiagram(detailed);
+
+                    // Create a new file unique file and insert the mermaid text
+                    const now = window.moment();
+                    const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
+                    const filename = `Tasks Plugin Diagram of Statuses ${formattedDateTime}.md`;
+
+                    const fileContent = `
+# Diagram of Tasks Plugin Statuses
+
+This file was created by the Obsidian Tasks plugin, to help visualise the
+task statuses in this vault.
+
+You can delete this file any time.
+
+<!-- Switch to Live Preview or Reading Mode to see the diagram. -->
+
+${mermaidText}
+`;
+
+                    // Ideas
+                    // - Actually make it a plugin report, that reports any issues in settings with duplicate symbols.
+                    // - Show any 'next status symbols' that are not known to the plugin.
+                    // - Show any status transitions that won't work with recurring tasks currently, as DONE not followed by TODO.
+
+                    const file = await app.vault.create(filename, fileContent);
+
+                    // And open the new file
+                    const leaf = this.app.workspace.getLeaf(true);
+                    await leaf.openFile(file);
+                });
+            button.setTooltip(
+                'Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings.',
+            );
+        });
+        createMermaidDiagram.infoEl.remove();
+
         /* -------------------- 'Reset Custom Status Types to Defaults' button -------------------- */
         const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
             button
