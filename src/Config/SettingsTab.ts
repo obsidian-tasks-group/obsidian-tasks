@@ -581,7 +581,7 @@ export class SettingsTab extends PluginSettingTab {
                     // Create a new file unique file and insert the mermaid text
                     const now = window.moment();
                     const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
-                    const filename = `Tasks Plugin Diagram of Statuses ${formattedDateTime}.md`;
+                    const filename = `Tasks Plugin - Review and check your Statuses ${formattedDateTime}.md`;
 
                     const fileContent = `
 # Review and check your Statuses
