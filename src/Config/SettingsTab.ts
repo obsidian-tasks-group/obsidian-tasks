@@ -17,7 +17,7 @@ import { GlobalQuery } from './GlobalQuery';
 function createStatusRegistryReport(statusRegistry: StatusRegistry, buttonName: string) {
     const detailed = true;
     const mermaidText = statusRegistry.mermaidDiagram(detailed);
-    const fileContent = `
+    return `
 # ${buttonName}
 
 This file was created by the Obsidian Tasks plugin, to help visualise the
@@ -29,7 +29,6 @@ You can delete this file any time.
 
 ${mermaidText}
 `;
-    return fileContent;
 }
 
 export class SettingsTab extends PluginSettingTab {
