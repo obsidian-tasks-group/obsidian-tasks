@@ -26,6 +26,8 @@ export class SearchInfo {
     /**
      * Construct a {@link QueryContext} from this, for use in the placeholder
      * facility and scripting code.
+     *
+     * @return A QueryContext, or undefined if the path to the query file is unknown.
      */
     public queryContext(): QueryContext | undefined {
         return this.queryPath ? makeQueryContext(this.queryPath) : undefined;
