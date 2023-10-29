@@ -83,8 +83,4 @@ export class MarkdownTable {
         });
         return row;
     }
-
-    public verify() {
-        verifyMarkdown(this.markdown);
-    }
 }
