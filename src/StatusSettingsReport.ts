@@ -4,10 +4,21 @@ import type { StatusConfiguration } from './StatusConfiguration';
 import { getPrintableSymbol } from './StatusRegistryReport';
 import { Status } from './Status';
 
-function getProblemsForStatus(status: StatusConfiguration) {
+function getFirstIndex(statusConfigurations: StatusConfiguration[], wantedSymbol: string) {
+    return statusConfigurations.findIndex((s) => s.symbol === wantedSymbol);
+}
+
+function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusConfiguration, index: number) {
     const problems: string[] = [];
     if (status.symbol === Status.EMPTY.symbol) {
         problems.push('Empty symbol: this status will be ignored');
+        return problems;
+    }
+
+    const firstIndex = getFirstIndex(statuses, status.symbol);
+    if (firstIndex != index) {
+        problems.push(`Duplicate symbol '${status.symbol}': this status will be ignored`);
+        return problems;
     }
 
     return problems;
@@ -26,14 +37,14 @@ export function tabulateStatusSettings(statusSettings: StatusSettings) {
     ]);
 
     const statuses: StatusConfiguration[] = StatusSettings.allStatuses(statusSettings);
-    for (const status of statuses) {
+    statuses.forEach((status, index) => {
         table.addRow([
             getPrintableSymbol(status.symbol),
             getPrintableSymbol(status.nextStatusSymbol),
             status.name,
             getPrintableSymbol(status.type),
-            getProblemsForStatus(status).join('<br>'),
+            getProblemsForStatus(statuses, status, index).join('<br>'),
         ]);
-    }
+    });
     return table.markdown;
 }

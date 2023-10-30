@@ -13,6 +13,8 @@ describe('StatusSettingsReport', () => {
 
     it('should include problems in table', () => {
         const customStatusesData: StatusCollection = [
+            ['/', 'In Progress', 'x', 'IN_PROGRESS'],
+            ['/', 'In Progress DUPLICATE', 'x', 'IN_PROGRESS'],
             ['', '', '', 'TODO'], // A new, unedited status
         ];
         const { statusSettings } = createStatuses(coreStatusesData, customStatusesData);
