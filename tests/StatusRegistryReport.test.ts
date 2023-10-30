@@ -38,7 +38,7 @@ describe('StatusRegistryReport', function () {
 
         // Act
         const version = 'x.y.z'; // lower-case, as the capitalised version would get edited at the next release.
-        const report = createStatusRegistryReport(statusRegistry, reportName, version);
+        const report = createStatusRegistryReport(statusSettings, statusRegistry, reportName, version);
 
         // Assert
         verifyWithFileExtension(report, '.md');

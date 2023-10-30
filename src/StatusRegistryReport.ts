@@ -1,6 +1,12 @@
 import type { StatusRegistry } from './StatusRegistry';
+import type { StatusSettings } from './Config/StatusSettings';
 
-export function createStatusRegistryReport(statusRegistry: StatusRegistry, buttonName: string, versionString: string) {
+export function createStatusRegistryReport(
+    _statusSettings: StatusSettings,
+    statusRegistry: StatusRegistry,
+    buttonName: string,
+    versionString: string,
+) {
     // Ideas for further improvement
     // - Actually make it an informative report, that shows any issues in settings with duplicate symbols.
     // - Show any 'next status symbols' that are not known to the plugin.
