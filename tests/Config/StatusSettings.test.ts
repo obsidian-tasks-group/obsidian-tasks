@@ -159,6 +159,18 @@ describe('StatusSettings', () => {
         `);
     });
 
+    it('should return a combined list of all statuses', () => {
+        // Arrange
+        const settings = new StatusSettings();
+
+        // Act
+        const allStatuses = StatusSettings.allStatuses(settings);
+
+        // Assert
+        const allSymbolsInOrder = allStatuses.map((status) => status.symbol).join('|');
+        expect(allSymbolsInOrder).toEqual(' |x|/|-');
+    });
+
     it('should apply settings to a StatusRegistry', () => {
         // Arrange
         const settings = new StatusSettings();
