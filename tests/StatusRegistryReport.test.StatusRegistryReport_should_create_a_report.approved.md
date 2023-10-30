@@ -29,7 +29,7 @@ These are the status values in the Core and Custom statuses sections.
 | `-` | `space` | Cancelled | `CANCELLED` |  |
 | `Q` | `A` | Question | `NON_TASK` |  |
 | `A` | `Q` | Answer | `NON_TASK` |  |
-| `` | `` |  | `TODO` | Empty symbol: this status will be ignored |
+| `` | `` |  | `TODO` | Empty symbol: this status will be ignored. |
 
 ## Loaded Settings
 

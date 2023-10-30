@@ -46,24 +46,24 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
     if (nextStatus) {
         if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
             problems.push(
-                `This DONE status is followed by ${nextStatus.type}, not TODO or IN_PROGRESS: this will not work well for recurring tasks`,
+                `This DONE status is followed by ${nextStatus.type}, not TODO or IN_PROGRESS: this will not work well for recurring tasks.`,
             );
         }
     } else {
-        problems.push('Unexpected failure to find the next status');
+        problems.push('Unexpected failure to find the next status.');
     }
 }
 
 function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusConfiguration, index: number) {
     const problems: string[] = [];
     if (status.symbol === Status.EMPTY.symbol) {
-        problems.push('Empty symbol: this status will be ignored');
+        problems.push('Empty symbol: this status will be ignored.');
         return problems;
     }
 
     const firstIndex = getFirstIndex(statuses, status.symbol);
     if (firstIndex != index) {
-        problems.push(`Duplicate symbol '${status.symbol}': this status will be ignored`);
+        problems.push(`Duplicate symbol '${status.symbol}': this status will be ignored.`);
         return problems;
     }
 
