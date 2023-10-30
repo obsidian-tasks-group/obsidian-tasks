@@ -178,10 +178,7 @@ export class StatusSettings {
      */
     public static applyToStatusRegistry(statusSettings: StatusSettings, statusRegistry: StatusRegistry) {
         statusRegistry.clearStatuses();
-        statusSettings.coreStatuses.forEach((statusType) => {
-            statusRegistry.add(statusType);
-        });
-        statusSettings.customStatuses.forEach((statusType) => {
+        StatusSettings.allStatuses(statusSettings).forEach((statusType) => {
             statusRegistry.add(statusType);
         });
     }
