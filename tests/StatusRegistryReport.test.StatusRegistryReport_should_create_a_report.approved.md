@@ -4,6 +4,19 @@ This file was created by the Obsidian Tasks plugin (version x.y.z) to help visua
 
 You can delete this file any time.
 
+## Status Settings
+
+| Status Symbol | Next Status Symbol | Status Name | Status Type |
+| ----- | ----- | ----- | ----- |
+| `space` | `x` | Todo | `TODO` |
+| `x` | `space` | Done | `DONE` |
+| `/` | `x` | In Progress | `IN_PROGRESS` |
+| `-` | `space` | Cancelled | `CANCELLED` |
+| `Q` | `A` | Question | `NON_TASK` |
+| `A` | `Q` | Answer | `NON_TASK` |
+
+## Loaded Settings
+
 <!-- Switch to Live Preview or Reading Mode to see the diagram. -->
 
 ```mermaid

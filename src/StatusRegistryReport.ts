@@ -22,7 +22,7 @@ export function tabulateStatusSettings(statusSettings: StatusSettings) {
 }
 
 export function createStatusRegistryReport(
-    _statusSettings: StatusSettings,
+    statusSettings: StatusSettings,
     statusRegistry: StatusRegistry,
     buttonName: string,
     versionString: string,
@@ -33,12 +33,18 @@ export function createStatusRegistryReport(
     // - Show any status transitions that won't work with recurring tasks currently, as DONE not followed by TODO.
 
     const detailed = true;
+    const settingsTable = tabulateStatusSettings(statusSettings);
     const mermaidText = statusRegistry.mermaidDiagram(detailed);
     return `# ${buttonName}
 
 This file was created by the Obsidian Tasks plugin (version ${versionString}) to help visualise the task statuses in this vault.
 
 You can delete this file any time.
+
+## Status Settings
+
+${settingsTable}
+## Loaded Settings
 
 <!-- Switch to Live Preview or Reading Mode to see the diagram. -->
 ${mermaidText}`;
