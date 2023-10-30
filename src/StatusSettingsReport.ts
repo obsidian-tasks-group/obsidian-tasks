@@ -9,6 +9,23 @@ function getFirstIndex(statusConfigurations: StatusConfiguration[], wantedSymbol
     return statusConfigurations.findIndex((s) => s.symbol === wantedSymbol);
 }
 
+function checkIfConventionalType(status: StatusConfiguration, problems: string[]) {
+    // Check if conventional type is being used:
+    const conventionalType = Status.getTypeForUnknownSymbol(status.symbol);
+    if (status.type !== conventionalType) {
+        let showError = true;
+        if (conventionalType === StatusType.TODO && status.symbol !== ' ') {
+            // This was likely a default TODO - ignore it.
+            showError = false;
+        }
+        if (showError) {
+            problems.push(
+                `For information, the conventional type for status symbol ${status.symbol} is ${conventionalType}: you may wish to review this type.`,
+            );
+        }
+    }
+}
+
 function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusConfiguration, problems: string[]) {
     // Check if next symbol is known
     const indexOfNextSymbol = getFirstIndex(statuses, status.nextStatusSymbol);
@@ -46,6 +63,7 @@ function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusCon
         return problems;
     }
 
+    checkIfConventionalType(status, problems);
     checkNextStatusSymbol(statuses, status, problems);
     return problems;
 }
