@@ -36,18 +36,21 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
         return;
     }
 
-    // If done, check that next status type is TODO
-    if (status.type === StatusType.DONE) {
-        const nextStatus = statuses[indexOfNextSymbol];
-        if (nextStatus) {
-            if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
-                problems.push(
-                    `This DONE status is followed by ${nextStatus.type}, not TODO or IN_PROGRESS: this will not work well for recurring tasks`,
-                );
-            }
-        } else {
-            problems.push('Unexpected failure to find the next status');
+    if (status.type !== StatusType.DONE) {
+        return;
+    }
+
+    // This type is DONE: check that next status type is TODO or IN_PROGRESS.
+    // See issues #2089 and #2304.
+    const nextStatus = statuses[indexOfNextSymbol];
+    if (nextStatus) {
+        if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
+            problems.push(
+                `This DONE status is followed by ${nextStatus.type}, not TODO or IN_PROGRESS: this will not work well for recurring tasks`,
+            );
         }
+    } else {
+        problems.push('Unexpected failure to find the next status');
     }
 }
 
