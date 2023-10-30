@@ -33,19 +33,20 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
         problems.push(
             `Next symbol ${status.nextStatusSymbol} is unknown: create a status with symbol ${status.nextStatusSymbol}.`,
         );
-    } else {
-        // If done, check that next status type is TODO
-        if (status.type === StatusType.DONE) {
-            const nextStatus = statuses[indexOfNextSymbol];
-            if (nextStatus) {
-                if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
-                    problems.push(
-                        `This DONE status is followed by ${nextStatus.type}, not TODO or IN_PROGRESS: this will not work well for recurring tasks`,
-                    );
-                }
-            } else {
-                problems.push('Unexpected failure to find the next status');
+        return;
+    }
+
+    // If done, check that next status type is TODO
+    if (status.type === StatusType.DONE) {
+        const nextStatus = statuses[indexOfNextSymbol];
+        if (nextStatus) {
+            if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
+                problems.push(
+                    `This DONE status is followed by ${nextStatus.type}, not TODO or IN_PROGRESS: this will not work well for recurring tasks`,
+                );
             }
+        } else {
+            problems.push('Unexpected failure to find the next status');
         }
     }
 }
