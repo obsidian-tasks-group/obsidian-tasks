@@ -37,16 +37,32 @@ export function createStatusRegistryReport(
     const mermaidText = statusRegistry.mermaidDiagram(detailed);
     return `# ${buttonName}
 
+## About this file
+
 This file was created by the Obsidian Tasks plugin (version ${versionString}) to help visualise the task statuses in this vault.
+
+If you change the Tasks status settings, you can get an updated report by:
+
+- Going to \`Settings\` -> \`Tasks\`.
+- Clicking on \`Review and check your Statuses\`.
 
 You can delete this file any time.
 
 ## Status Settings
 
+<!--
+Switch to Live Preview or Reading Mode to see the table.
+If there are any Markdown formatting characters in status names, such as '*' or '_' Obsidian may only render the table correctly in Reading Mode.
+-->
+
+These are the status values in the Core and Custom statuses sections.
+
 ${settingsTable}
 ## Loaded Settings
 
 <!-- Switch to Live Preview or Reading Mode to see the diagram. -->
+
+These are the settings actually used by Tasks.
 ${mermaidText}`;
 }
 
