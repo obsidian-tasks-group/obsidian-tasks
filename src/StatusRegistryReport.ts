@@ -1,5 +1,5 @@
 import type { StatusRegistry } from './StatusRegistry';
-import type { StatusSettings } from './Config/StatusSettings';
+import { StatusSettings } from './Config/StatusSettings';
 import { MarkdownTable } from './lib/MarkdownTable';
 import type { StatusConfiguration } from './StatusConfiguration';
 
@@ -9,9 +9,7 @@ export function tabulateStatusSettings(statusSettings: StatusSettings) {
 
     const table = new MarkdownTable(['Status Symbol', 'Next Status Symbol', 'Status Name', 'Status Type']);
 
-    const statuses: StatusConfiguration[] = [];
-    statuses.push(...statusSettings.coreStatuses);
-    statuses.push(...statusSettings.customStatuses);
+    const statuses: StatusConfiguration[] = StatusSettings.allStatuses(statusSettings);
     for (const status of statuses) {
         table.addRow([
             getPrintableSymbol(status.symbol),
