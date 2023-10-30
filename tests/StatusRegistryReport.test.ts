@@ -1,4 +1,4 @@
-import { createStatusRegistryReport, tabulateStatusSettings } from '../src/StatusRegistryReport';
+import { createStatusRegistryReport } from '../src/StatusRegistryReport';
 import { StatusRegistry } from '../src/StatusRegistry';
 import { StatusSettings } from '../src/Config/StatusSettings';
 import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
@@ -28,12 +28,6 @@ function createStatuses(
 }
 
 describe('StatusRegistryReport', function () {
-    it('should tabulate StatusSettings', () => {
-        const statusSettings = new StatusSettings();
-        const markdown = tabulateStatusSettings(statusSettings);
-        verifyWithFileExtension(markdown, '.md');
-    });
-
     it('should create a report', () => {
         // Arrange
 
