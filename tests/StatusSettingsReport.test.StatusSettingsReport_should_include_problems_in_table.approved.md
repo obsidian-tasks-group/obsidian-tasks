@@ -5,7 +5,7 @@
 | `/` | `x` | In Progress | `IN_PROGRESS` |  |
 | `/` | `x` | In Progress DUPLICATE | `IN_PROGRESS` | Duplicate symbol '`/`': this status will be ignored. |
 | `X` | `space` | X - conventionally DONE, but this is CANCELLED | `CANCELLED` | For information, the conventional type for status symbol `X` is `DONE`: you may wish to review this type. |
-| `` | `` |  | `TODO` | Empty symbol: this status will be ignored. |
+|  |  |  | `TODO` | Empty symbol: this status will be ignored. |
 | `p` | `q` | Unknown next symbol | `TODO` | Next symbol `q` is unknown: create a status with symbol `q`. |
 | `c` | `d` | Followed by d | `TODO` | Next symbol `d` is unknown: create a status with symbol `d`. |
 | `1` | `space` | DONE followed by TODO | `DONE` |  |
