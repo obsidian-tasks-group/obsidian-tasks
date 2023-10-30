@@ -9,6 +9,11 @@ describe('StatusRegistryReport', function () {
     it('should create a report', () => {
         // Arrange
 
+        const coreStatusesData: StatusCollection = [
+            [' ', 'Todo', 'x', 'TODO'],
+            ['x', 'Done', ' ', 'DONE'],
+        ];
+
         const customStatusesData: StatusCollection = [
             ['Q', 'Question', 'A', 'NON_TASK'],
             ['A', 'Answer', 'Q', 'NON_TASK'],
@@ -16,6 +21,11 @@ describe('StatusRegistryReport', function () {
 
         // Populate StatusSettings:
         const statusSettings = new StatusSettings();
+
+        const core = statusSettings.coreStatuses;
+        StatusSettings.replaceStatus(core, core[0], Status.createFromImportedValue(coreStatusesData[0]));
+        StatusSettings.replaceStatus(core, core[1], Status.createFromImportedValue(coreStatusesData[1]));
+
         customStatusesData.map((entry: StatusCollectionEntry) => {
             StatusSettings.addStatus(statusSettings.customStatuses, Status.createFromImportedValue(entry));
         });
