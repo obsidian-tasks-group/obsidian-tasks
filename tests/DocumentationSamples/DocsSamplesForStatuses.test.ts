@@ -18,11 +18,7 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { GrouperFunction } from '../../src/Query/Grouper';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
-
-function getPrintableSymbol(symbol: string) {
-    const result = symbol !== ' ' ? symbol : 'space';
-    return '`' + result + '`';
-}
+import { getPrintableSymbol } from '../../src/StatusRegistryReport';
 
 function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions: boolean) {
     let statusName = 'Status Name';
