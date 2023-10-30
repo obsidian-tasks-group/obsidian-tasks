@@ -23,3 +23,8 @@ You can delete this file any time.
 <!-- Switch to Live Preview or Reading Mode to see the diagram. -->
 ${mermaidText}`;
 }
+
+export function getPrintableSymbol(symbol: string) {
+    const result = symbol !== ' ' ? symbol : 'space';
+    return '`' + result + '`';
+}
