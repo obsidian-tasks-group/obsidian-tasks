@@ -1,14 +1,29 @@
-import { StatusRegistry } from '../src/StatusRegistry';
-import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { createStatusRegistryReport } from '../src/StatusRegistryReport';
+import { StatusRegistry } from '../src/StatusRegistry';
+import { StatusSettings } from '../src/Config/StatusSettings';
+import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
+import { Status } from '../src/Status';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 
 describe('StatusRegistryReport', function () {
     it('should create a report', () => {
         // Arrange
+
+        const customStatusesData: StatusCollection = [
+            ['Q', 'Question', 'A', 'NON_TASK'],
+            ['A', 'Answer', 'Q', 'NON_TASK'],
+        ];
+
+        // Populate StatusSettings:
+        const statusSettings = new StatusSettings();
+        customStatusesData.map((entry: StatusCollectionEntry) => {
+            StatusSettings.addStatus(statusSettings.customStatuses, Status.createFromImportedValue(entry));
+        });
+
+        // Populate StatusRegistry:
         const statusRegistry = new StatusRegistry();
-        statusRegistry.add(new StatusConfiguration('Q', 'Question', 'A', false, StatusType.NON_TASK));
-        statusRegistry.add(new StatusConfiguration('A', 'Answer', 'Q', false, StatusType.NON_TASK));
+        StatusSettings.applyToStatusRegistry(statusSettings, statusRegistry);
+
         const reportName = 'Review and check your Statuses';
 
         // Act
