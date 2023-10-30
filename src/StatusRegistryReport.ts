@@ -13,10 +13,12 @@ export function tabulateStatusSettings(statusSettings: StatusSettings) {
     statuses.push(...statusSettings.coreStatuses);
     statuses.push(...statusSettings.customStatuses);
     for (const status of statuses) {
-        const statusCharacter = getPrintableSymbol(status.symbol);
-        const nextStatusCharacter = getPrintableSymbol(status.nextStatusSymbol);
-        const type = getPrintableSymbol(status.type);
-        table.addRow([statusCharacter, nextStatusCharacter, status.name, type]);
+        table.addRow([
+            getPrintableSymbol(status.symbol),
+            getPrintableSymbol(status.nextStatusSymbol),
+            status.name,
+            getPrintableSymbol(status.type),
+        ]);
     }
     return table.markdown;
 }
