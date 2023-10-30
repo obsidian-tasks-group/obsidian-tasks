@@ -44,6 +44,7 @@ describe('StatusRegistryReport', function () {
         const customStatusesData: StatusCollection = [
             ['Q', 'Question', 'A', 'NON_TASK'],
             ['A', 'Answer', 'Q', 'NON_TASK'],
+            ['', '', '', 'TODO'], // A new, unedited status
         ];
         const { statusSettings, statusRegistry } = createStatuses(coreStatusesData, customStatusesData);
 
