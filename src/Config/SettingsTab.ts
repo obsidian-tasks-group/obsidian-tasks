@@ -483,6 +483,36 @@ export class SettingsTab extends PluginSettingTab {
                 true, // isCoreStatus
             );
         });
+
+        /* -------------------- 'Review and check your Statuses' button -------------------- */
+        const createMermaidDiagram = new Setting(containerEl).addButton((button) => {
+            const buttonName = 'Review and check your Statuses';
+            button
+                .setButtonText(buttonName)
+                .setCta()
+                .onClick(async () => {
+                    // Generate a new file unique file name, in the root of the vault
+                    const now = window.moment();
+                    const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
+                    const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
+
+                    // Create the report
+                    const version = this.plugin.manifest.version;
+                    const statusRegistry = StatusRegistry.getInstance();
+                    const fileContent = createStatusRegistryReport(statusSettings, statusRegistry, buttonName, version);
+
+                    // Save the file
+                    const file = await app.vault.create(filename, fileContent);
+
+                    // And open the new file
+                    const leaf = this.app.workspace.getLeaf(true);
+                    await leaf.openFile(file);
+                });
+            button.setTooltip(
+                'Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings.',
+            );
+        });
+        createMermaidDiagram.infoEl.remove();
     }
 
     /**
@@ -569,36 +599,6 @@ export class SettingsTab extends PluginSettingTab {
                 });
         });
         addAllUnknownStatuses.infoEl.remove();
-
-        /* -------------------- 'Review and check your Statuses' button -------------------- */
-        const createMermaidDiagram = new Setting(containerEl).addButton((button) => {
-            const buttonName = 'Review and check your Statuses';
-            button
-                .setButtonText(buttonName)
-                .setCta()
-                .onClick(async () => {
-                    // Generate a new file unique file name, in the root of the vault
-                    const now = window.moment();
-                    const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
-                    const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
-
-                    // Create the report
-                    const version = this.plugin.manifest.version;
-                    const statusRegistry = StatusRegistry.getInstance();
-                    const fileContent = createStatusRegistryReport(statusSettings, statusRegistry, buttonName, version);
-
-                    // Save the file
-                    const file = await app.vault.create(filename, fileContent);
-
-                    // And open the new file
-                    const leaf = this.app.workspace.getLeaf(true);
-                    await leaf.openFile(file);
-                });
-            button.setTooltip(
-                'Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings.',
-            );
-        });
-        createMermaidDiagram.infoEl.remove();
 
         /* -------------------- 'Reset Custom Status Types to Defaults' button -------------------- */
         const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
