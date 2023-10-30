@@ -4,6 +4,7 @@ import { StatusSettings } from '../src/Config/StatusSettings';
 import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
 import { Status } from '../src/Status';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
+import { coreStatusesData } from './TestingTools/StatusesTestHelpers';
 
 function createStatuses(
     coreStatusesData: Array<StatusCollectionEntry>,
@@ -30,11 +31,6 @@ function createStatuses(
 describe('StatusRegistryReport', function () {
     it('should create a report', () => {
         // Arrange
-
-        const coreStatusesData: StatusCollection = [
-            [' ', 'Todo', 'x', 'TODO'],
-            ['x', 'Done', ' ', 'DONE'],
-        ];
 
         const customStatusesData: StatusCollection = [
             ['/', 'In Progress', 'x', 'IN_PROGRESS'],
