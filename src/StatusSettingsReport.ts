@@ -16,18 +16,16 @@ function checkIfConventionalType(status: StatusConfiguration, problems: string[]
         return;
     }
 
-    let showError = true;
     if (conventionalType === StatusType.TODO && status.symbol !== ' ') {
         // This was likely a default TODO - ignore it.
-        showError = false;
+        return;
     }
-    if (showError) {
-        problems.push(
-            `For information, the conventional type for status symbol ${getPrintableSymbol(
-                status.symbol,
-            )} is ${getPrintableSymbol(conventionalType)}: you may wish to review this type.`,
-        );
-    }
+
+    problems.push(
+        `For information, the conventional type for status symbol ${getPrintableSymbol(
+            status.symbol,
+        )} is ${getPrintableSymbol(conventionalType)}: you may wish to review this type.`,
+    );
 }
 
 function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusConfiguration, problems: string[]) {
