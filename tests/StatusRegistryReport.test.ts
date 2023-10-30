@@ -1,4 +1,4 @@
-import { createStatusRegistryReport } from '../src/StatusRegistryReport';
+import { createStatusRegistryReport, tabulateStatusSettings } from '../src/StatusRegistryReport';
 import { StatusRegistry } from '../src/StatusRegistry';
 import { StatusSettings } from '../src/Config/StatusSettings';
 import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
@@ -16,6 +16,7 @@ function createStatuses(
     StatusSettings.replaceStatus(core, core[0], Status.createFromImportedValue(coreStatusesData[0]));
     StatusSettings.replaceStatus(core, core[1], Status.createFromImportedValue(coreStatusesData[1]));
 
+    StatusSettings.deleteAllCustomStatuses(statusSettings);
     customStatusesData.map((entry: StatusCollectionEntry) => {
         StatusSettings.addStatus(statusSettings.customStatuses, Status.createFromImportedValue(entry));
     });
@@ -27,6 +28,12 @@ function createStatuses(
 }
 
 describe('StatusRegistryReport', function () {
+    it('should tabulate StatusSettings', () => {
+        const statusSettings = new StatusSettings();
+        const markdown = tabulateStatusSettings(statusSettings);
+        verifyWithFileExtension(markdown, '.md');
+    });
+
     it('should create a report', () => {
         // Arrange
 
@@ -36,8 +43,11 @@ describe('StatusRegistryReport', function () {
         ];
 
         const customStatusesData: StatusCollection = [
+            ['/', 'In Progress', 'x', 'IN_PROGRESS'],
+            ['-', 'Cancelled', ' ', 'CANCELLED'],
             ['Q', 'Question', 'A', 'NON_TASK'],
             ['A', 'Answer', 'Q', 'NON_TASK'],
+            ['', '', '', 'TODO'], // A new, unedited status
         ];
         const { statusSettings, statusRegistry } = createStatuses(coreStatusesData, customStatusesData);
 

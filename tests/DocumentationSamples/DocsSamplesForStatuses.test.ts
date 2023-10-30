@@ -18,13 +18,11 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { GrouperFunction } from '../../src/Query/Grouper';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
-
-function getPrintableSymbol(symbol: string) {
-    const result = symbol !== ' ' ? symbol : 'space';
-    return '`' + result + '`';
-}
+import { getPrintableSymbol } from '../../src/StatusRegistryReport';
 
 function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions: boolean) {
+    // Note: There is very similar code in tabulateStatusSettings() in StatusRegistryReport.ts.
+    //       Maybe try unifying the common code one day?
     let statusName = 'Status Name';
     let statusType = 'Status Type';
     if (showQueryInstructions) {
