@@ -16,6 +16,7 @@ describe('StatusSettingsReport', () => {
             ['/', 'In Progress', 'x', 'IN_PROGRESS'],
             ['/', 'In Progress DUPLICATE', 'x', 'IN_PROGRESS'],
             ['', '', '', 'TODO'], // A new, unedited status
+            ['p', 'Unknown next symbol', 'q', 'TODO'],
         ];
         const { statusSettings } = createStatuses(coreStatusesData, customStatusesData);
 

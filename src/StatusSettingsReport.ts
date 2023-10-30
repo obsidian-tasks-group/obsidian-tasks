@@ -8,6 +8,16 @@ function getFirstIndex(statusConfigurations: StatusConfiguration[], wantedSymbol
     return statusConfigurations.findIndex((s) => s.symbol === wantedSymbol);
 }
 
+function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusConfiguration, problems: string[]) {
+    // Check if next symbol is known
+    const indexOfNextSymbol = getFirstIndex(statuses, status.nextStatusSymbol);
+    if (indexOfNextSymbol === -1) {
+        problems.push(
+            `Next symbol ${status.nextStatusSymbol} is unknown: create a status with symbol ${status.nextStatusSymbol}.`,
+        );
+    }
+}
+
 function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusConfiguration, index: number) {
     const problems: string[] = [];
     if (status.symbol === Status.EMPTY.symbol) {
@@ -21,6 +31,7 @@ function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusCon
         return problems;
     }
 
+    checkNextStatusSymbol(statuses, status, problems);
     return problems;
 }
 
