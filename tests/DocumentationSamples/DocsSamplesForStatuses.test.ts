@@ -21,6 +21,8 @@ import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { getPrintableSymbol } from '../../src/StatusRegistryReport';
 
 function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions: boolean) {
+    // Note: There is very similar code in tabulateStatusSettings() in StatusRegistryReport.ts.
+    //       Maybe try unifying the common code one day?
     let statusName = 'Status Name';
     let statusType = 'Status Type';
     if (showQueryInstructions) {

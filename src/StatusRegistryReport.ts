@@ -1,5 +1,25 @@
 import type { StatusRegistry } from './StatusRegistry';
 import type { StatusSettings } from './Config/StatusSettings';
+import { MarkdownTable } from './lib/MarkdownTable';
+import type { StatusConfiguration } from './StatusConfiguration';
+
+export function tabulateStatusSettings(statusSettings: StatusSettings) {
+    // Note: There is very similar code in verifyStatusesAsMarkdownTable() in DocsSamplesForStatuses.test.ts.
+    //       Maybe try unifying the common code one day?
+
+    const table = new MarkdownTable(['Status Symbol', 'Next Status Symbol', 'Status Name', 'Status Type']);
+
+    const statuses: StatusConfiguration[] = [];
+    statuses.push(...statusSettings.coreStatuses);
+    statuses.push(...statusSettings.customStatuses);
+    for (const status of statuses) {
+        const statusCharacter = getPrintableSymbol(status.symbol);
+        const nextStatusCharacter = getPrintableSymbol(status.nextStatusSymbol);
+        const type = getPrintableSymbol(status.type);
+        table.addRow([statusCharacter, nextStatusCharacter, status.name, type]);
+    }
+    return table.markdown;
+}
 
 export function createStatusRegistryReport(
     _statusSettings: StatusSettings,
