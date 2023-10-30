@@ -585,7 +585,7 @@ export class SettingsTab extends PluginSettingTab {
                     // Create the report
                     const version = this.plugin.manifest.version;
                     const statusRegistry = StatusRegistry.getInstance();
-                    const fileContent = createStatusRegistryReport(statusRegistry, buttonName, version);
+                    const fileContent = createStatusRegistryReport(statusSettings, statusRegistry, buttonName, version);
 
                     // Save the file
                     const file = await app.vault.create(filename, fileContent);
