@@ -1,5 +1,4 @@
-import type { StatusCollection } from '../../src/StatusCollection';
-import type { StatusCollectionEntry } from '../../src/StatusCollection';
+import type { StatusCollection, StatusCollectionEntry } from '../../src/StatusCollection';
 import { StatusSettings } from '../../src/Config/StatusSettings';
 import { Status } from '../../src/Status';
 import { StatusRegistry } from '../../src/StatusRegistry';
@@ -21,7 +20,7 @@ export function createStatuses(
     StatusSettings.replaceStatus(core, core[1], Status.createFromImportedValue(coreStatusesData[1]));
 
     StatusSettings.deleteAllCustomStatuses(statusSettings);
-    customStatusesData.map((entry: StatusCollectionEntry) => {
+    customStatusesData.forEach((entry: StatusCollectionEntry) => {
         StatusSettings.addStatus(statusSettings.customStatuses, Status.createFromImportedValue(entry));
     });
 
