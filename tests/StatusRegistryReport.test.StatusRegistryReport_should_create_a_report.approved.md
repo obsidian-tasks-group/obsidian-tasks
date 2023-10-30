@@ -15,7 +15,8 @@ You can delete this file any time.
 
 <!--
 Switch to Live Preview or Reading Mode to see the table.
-If there are any Markdown formatting characters in status names, such as '*' or '_' Obsidian may only render the table correctly in Reading Mode.
+If there are any Markdown formatting characters in status names, such as '*' or '_',
+Obsidian may only render the table correctly in Reading Mode.
 -->
 
 These are the status values in the Core and Custom statuses sections.
