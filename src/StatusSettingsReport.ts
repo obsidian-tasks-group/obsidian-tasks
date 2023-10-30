@@ -12,19 +12,21 @@ function getFirstIndex(statusConfigurations: StatusConfiguration[], wantedSymbol
 function checkIfConventionalType(status: StatusConfiguration, problems: string[]) {
     // Check if conventional type is being used:
     const conventionalType = Status.getTypeForUnknownSymbol(status.symbol);
-    if (status.type !== conventionalType) {
-        let showError = true;
-        if (conventionalType === StatusType.TODO && status.symbol !== ' ') {
-            // This was likely a default TODO - ignore it.
-            showError = false;
-        }
-        if (showError) {
-            problems.push(
-                `For information, the conventional type for status symbol ${getPrintableSymbol(
-                    status.symbol,
-                )} is ${getPrintableSymbol(conventionalType)}: you may wish to review this type.`,
-            );
-        }
+    if (status.type === conventionalType) {
+        return;
+    }
+
+    let showError = true;
+    if (conventionalType === StatusType.TODO && status.symbol !== ' ') {
+        // This was likely a default TODO - ignore it.
+        showError = false;
+    }
+    if (showError) {
+        problems.push(
+            `For information, the conventional type for status symbol ${getPrintableSymbol(
+                status.symbol,
+            )} is ${getPrintableSymbol(conventionalType)}: you may wish to review this type.`,
+        );
     }
 }
 
