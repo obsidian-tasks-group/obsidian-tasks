@@ -20,7 +20,9 @@ function checkIfConventionalType(status: StatusConfiguration, problems: string[]
         }
         if (showError) {
             problems.push(
-                `For information, the conventional type for status symbol ${status.symbol} is ${conventionalType}: you may wish to review this type.`,
+                `For information, the conventional type for status symbol ${getPrintableSymbol(
+                    status.symbol,
+                )} is ${getPrintableSymbol(conventionalType)}: you may wish to review this type.`,
             );
         }
     }
@@ -31,7 +33,9 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
     const indexOfNextSymbol = getFirstIndex(statuses, status.nextStatusSymbol);
     if (indexOfNextSymbol === -1) {
         problems.push(
-            `Next symbol ${status.nextStatusSymbol} is unknown: create a status with symbol ${status.nextStatusSymbol}.`,
+            `Next symbol ${getPrintableSymbol(
+                status.nextStatusSymbol,
+            )} is unknown: create a status with symbol ${getPrintableSymbol(status.nextStatusSymbol)}.`,
         );
         return;
     }
@@ -46,7 +50,9 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
     if (nextStatus) {
         if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
             problems.push(
-                `This DONE status is followed by ${nextStatus.type}, not TODO or IN_PROGRESS: this will not work well for recurring tasks.`,
+                `This \`DONE\` status is followed by ${getPrintableSymbol(
+                    nextStatus.type,
+                )}, not \`TODO\` or \`IN_PROGRESS\`: this will not work well for recurring tasks.`,
             );
         }
     } else {
@@ -63,7 +69,7 @@ function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusCon
 
     const firstIndex = getFirstIndex(statuses, status.symbol);
     if (firstIndex != index) {
-        problems.push(`Duplicate symbol '${status.symbol}': this status will be ignored.`);
+        problems.push(`Duplicate symbol '${getPrintableSymbol(status.symbol)}': this status will be ignored.`);
         return problems;
     }
 
