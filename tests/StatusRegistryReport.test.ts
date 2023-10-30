@@ -16,6 +16,7 @@ function createStatuses(
     StatusSettings.replaceStatus(core, core[0], Status.createFromImportedValue(coreStatusesData[0]));
     StatusSettings.replaceStatus(core, core[1], Status.createFromImportedValue(coreStatusesData[1]));
 
+    StatusSettings.deleteAllCustomStatuses(statusSettings);
     customStatusesData.map((entry: StatusCollectionEntry) => {
         StatusSettings.addStatus(statusSettings.customStatuses, Status.createFromImportedValue(entry));
     });
@@ -42,6 +43,8 @@ describe('StatusRegistryReport', function () {
         ];
 
         const customStatusesData: StatusCollection = [
+            ['/', 'In Progress', 'x', 'IN_PROGRESS'],
+            ['-', 'Cancelled', ' ', 'CANCELLED'],
             ['Q', 'Question', 'A', 'NON_TASK'],
             ['A', 'Answer', 'Q', 'NON_TASK'],
             ['', '', '', 'TODO'], // A new, unedited status
