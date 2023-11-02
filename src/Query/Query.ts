@@ -5,6 +5,7 @@ import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
 import { errorMessageForException } from '../lib/ExceptionTools';
+import { logging } from '../lib/logging';
 import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
 import { TaskGroups } from './TaskGroups';
@@ -35,13 +36,22 @@ export class Query implements IQuery {
     private readonly explainQueryRegexp = /^explain/;
     private readonly ignoreGlobalQueryRegexp = /^ignore global query/;
 
+    logger = logging.getLogger('tasks.Query');
+    // Used internally to uniquely log each query execution in the console.
+    private _queryId: string = '';
+
     private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/;
 
     private readonly commentRegexp = /^#.*/;
 
     constructor(source: string, path: string | undefined = undefined) {
+        this._queryId = this.generateQueryId(10);
+
         this.source = source;
         this.filePath = path;
+
+        this.logger.debugWithId(this._queryId, 'Source Path', this.filePath);
+        this.logger.infoWithId(this._queryId, 'Source Query', this.source);
 
         scan(source).forEach((rawLine: string) => {
             const line = this.expandPlaceholders(rawLine, path);
@@ -244,6 +254,8 @@ Problem line: "${line}"`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
+        this.logger.infoWithId(this._queryId, `Executing query: [${this.source}]`);
+
         const searchInfo = new SearchInfo(this.filePath, tasks);
         try {
             this.filters.forEach((filter) => {
@@ -369,5 +381,21 @@ Problem line: "${line}"`;
             return true;
         }
         return false;
+    }
+
+    /**
+     * Creates a unique ID for correlation of console logging.
+     *
+     * @private
+     * @param {number} length
+     * @return {*}  {string}
+     * @memberof Query
+     */
+    private generateQueryId(length: number): string {
+        const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+        const randomArray = Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]);
+
+        const randomString = randomArray.join('');
+        return randomString;
     }
 }

@@ -61,7 +61,8 @@
   "loggingOptions": {
     "minLevels": {
       "": "info",
-      "tasks": "info"
+      "tasks": "info",
+      "tasks.Query": "info"
     }
   }
 }
