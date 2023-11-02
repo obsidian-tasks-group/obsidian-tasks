@@ -131,6 +131,7 @@ const defaultSettings: Settings = {
         minLevels: {
             '': 'info',
             tasks: 'info',
+            Query: 'info',
         },
     },
 };
