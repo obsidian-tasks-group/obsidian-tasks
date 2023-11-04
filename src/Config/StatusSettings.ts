@@ -6,7 +6,14 @@ import type { StatusCollection } from '../StatusCollection';
 /**
  * Class for encapsulating the settings that control custom statuses.
  *
+ * There are two lists of {@link StatusConfiguration} objects:
+ *
+ * - {@link coreStatuses} - which will always have two values in.
+ * - {@link customStatuses} - which starts two values, but these can be deleted and more added.
+ *
  * Most methods are static to allow them to be called from call-backs.
+ *
+ * Use {@link applyToStatusRegistry} to apply these settings to a {@link StatusRegistry}
  *
  * @see Status
  */
@@ -157,16 +164,21 @@ export class StatusSettings {
     }
 
     /**
+     * Retun a list of all the statuses in the settings - first the core ones, then the custom ones.
+     * @param statusSettings
+     */
+    public static allStatuses(statusSettings: StatusSettings) {
+        return statusSettings.coreStatuses.concat(statusSettings.customStatuses);
+    }
+
+    /**
      * Apply the custom statuses in the statusSettings object to the statusRegistry.
      * @param statusSettings
      * @param statusRegistry
      */
     public static applyToStatusRegistry(statusSettings: StatusSettings, statusRegistry: StatusRegistry) {
         statusRegistry.clearStatuses();
-        statusSettings.coreStatuses.forEach((statusType) => {
-            statusRegistry.add(statusType);
-        });
-        statusSettings.customStatuses.forEach((statusType) => {
+        StatusSettings.allStatuses(statusSettings).forEach((statusType) => {
             statusRegistry.add(statusType);
         });
     }

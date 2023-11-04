@@ -54,7 +54,13 @@ not done
         // Arrange
         const instructions: string = `
 explain
-( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7)`;
+(                                                                                       \\
+    (description includes 1) AND (description includes 2) AND (description includes 3)  \\
+) OR (                                                                                  \\
+    (description includes 5) AND (description includes 6) AND (description includes 7)  \\
+)                                                                                       \\
+AND NOT (description includes 7)
+`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
@@ -99,7 +105,10 @@ explain
 path includes {{query.file.path}}
 root includes {{query.file.root}}
 folder includes {{query.file.folder}}
-filename includes {{query.file.filename}}`;
+filename includes {{query.file.filename}}
+
+description includes Some Cryptic String {{! Inline comments are removed before search }}
+`;
 
         // Act, Assert
         checkExplainPresentAndVerify(instructions);
@@ -115,6 +124,32 @@ filename includes {{query.file.fileName}}`;
 
         // Act, Assert
         verifyQuery(instructions); // This does not have an explain, so does not call checkExplainPresentAndVerify()
+        verifyTaskBlockExplanation(instructions, new GlobalFilter(), new GlobalQuery());
+    });
+
+    it('line continuation - single slash', () => {
+        // Arrange
+        const instructions: string = `
+(priority is highest) OR       \\
+    (priority is lowest)
+explain
+`;
+
+        // Act, Assert
+        checkExplainPresentAndVerify(instructions);
+        verifyTaskBlockExplanation(instructions, new GlobalFilter(), new GlobalQuery());
+    });
+
+    it('line continuation - double slash', () => {
+        // Arrange
+        const instructions: string = `
+# Search for a single backslash:
+description includes \\\\
+explain
+`;
+
+        // Act, Assert
+        checkExplainPresentAndVerify(instructions);
         verifyTaskBlockExplanation(instructions, new GlobalFilter(), new GlobalQuery());
     });
 });

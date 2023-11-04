@@ -1,4 +1,5 @@
 import type { Task } from '../Task';
+import type { SearchInfo } from './SearchInfo';
 
 /**
  * A group-naming function, that takes a Task object and returns zero or more
@@ -7,8 +8,11 @@ import type { Task } from '../Task';
  * For example, if a {@link GrouperFunction} implemented grouping by tag,
  * passing in a task that has two tags, #tag1 and #tag2 to this tag-grouper function
  * would return ['tag1', 'tag2']
+ *
+ * The {@link SearchInfo} parameter allows implementations to inspect selected information
+ * about the {@link Query} containing the search being run.
  */
-export type GrouperFunction = (task: Task) => string[];
+export type GrouperFunction = (task: Task, searchInfo: SearchInfo) => string[];
 
 /**
  * A named function that is used to determine the group heading name(s) to use for a {@link Task} object.

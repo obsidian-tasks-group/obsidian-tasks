@@ -56,6 +56,18 @@ describe('dates', () => {
             'task.due',
             [
                 [
+                    'group by function task.due.category.groupText',
+                    'Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.',
+                    'Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.',
+                    'The values `task.due.category.name` and `task.due.category.sortOrder` are also available.',
+                ],
+                [
+                    'group by function task.due.fromNow.groupText',
+                    'Group by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example `8 days ago`, `in 11 hours`.',
+                    'It users an empty string (so no heading) if there is no due date.',
+                    'The values `task.due.fromNow.name` and `task.due.fromNow.sortOrder` are also available.',
+                ],
+                [
                     'group by function task.due.format("YYYY-MM-DD dddd")',
                     'Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date',
                 ],
@@ -93,12 +105,6 @@ describe('dates', () => {
             'task.due.advanced',
             [
                 [
-                    'group by function task.due.moment?.fromNow() || ""',
-                    'Group by the time from now, for example "8 days ago".',
-                    'Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value.',
-                    'Whilst interesting, the alphabetical sort order makes the headings a little hard to read',
-                ],
-                [
                     'group by function task.due.format("dddd")',
                     'Group by day of the week (Monday, Tuesday, etc).',
                     'The day names are sorted alphabetically',
@@ -109,28 +115,56 @@ describe('dates', () => {
                     'The day names are sorted in date order, starting with Sunday',
                 ],
                 [
-                    'group by function const date = task.due; return date.moment ? ( date.moment.day() === 0 ? date.format("[%%][8][%%]dddd") : date.format("[%%]d[%%]dddd") ) : "Undated"',
+                    `group by function                                   \\
+    const date = task.due;                          \\
+    if (!date.moment) {                             \\
+        return "Undated";                           \\
+    }                                               \\
+    if (date.moment.day() === 0) {                  \\
+        {{! Put the Sunday group last: }}           \\
+        return date.format("[%%][8][%%]dddd");      \\
+    }                                               \\
+    return date.format("[%%]d[%%]dddd");`,
                     'Group by day of the week (Monday, Tuesday, etc).',
                     'The day names are sorted in date order, starting with Monday.',
                     'Tasks without due dates are displayed at the end, under a heading "Undated".',
-                    'This is best understood by pasting it in to a Tasks block in Obsidian and then deleting parts of the expression.',
                     'The key technique is to say that if the day is Sunday (`0`), then force it to be displayed as date number `8`, so it comes after the other days of the week',
+                    'To add comments, we can use `{{! ... }}`',
+                    'To make the expression more readable, we put a `\\` at the end of several lines, to continue the expression on the next line.',
+                ],
+                [
+                    `group by function \\
+    const date = task.due.moment; \\
+    return \\
+        (!date)                           ? '%%4%% Undated' : \\
+        date.isBefore(moment(), 'day')    ? '%%1%% Overdue' : \\
+        date.isSame(moment(), 'day')      ? '%%2%% Today'   : \\
+        '%%3%% Future';`,
+                    'This gives exactly the same output as `group by function task.due.category.groupText`, and is shown here in case you want to customise the behaviour in some way',
+                    'Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.',
+                    'Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.',
                     'Note that because we use variables to avoid repetition of values, we need to add `return`',
                 ],
                 [
-                    "group by function const date = task.due.moment; return (!date) ? '%%4%% Undated' : date.isBefore(moment(), 'day') ? '%%1%% Overdue' : date.isSame(moment(), 'day') ? '%%2%% Today' : '%%3%% Future'",
-                    'Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.',
-                    'Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.',
-                    'A limitation of Tasks expressions is that they each need to fit on a single line, so this uses nested ternary operators, making it powerful but very hard to read.',
-                    'In fact, for ease of development and testing, it was written in a full-fledged development environment as a series of if/else blocks, and then automatically refactored in these nested ternary operators',
-                ],
-                [
-                    "group by function const date = task.due.moment; return (!date) ? '%%4%% ==Undated==' : date.isBefore(moment(), 'day') ? '%%1%% ==Overdue==' : date.isSame(moment(), 'day') ? '%%2%% ==Today==' : '%%3%% ==Future=='",
+                    `group by function \\
+    const date = task.due.moment; \\
+    return \\
+        (!date)                           ? '%%4%% ==Undated==' : \\
+        date.isBefore(moment(), 'day')    ? '%%1%% ==Overdue==' : \\
+        date.isSame(moment(), 'day')      ? '%%2%% ==Today=='   : \\
+        '%%3%% ==Future==';`,
                     'As above, but the headings `Overdue`, `Today`, `Future` and `Undated` are highlighted.',
                     'See the sample screenshot below',
                 ],
                 [
-                    "group by function const date = task.due.moment; const now = moment(); const label = (order, name) => `%%${order}%% ==${name}==`; if (!date) return label(4, 'Undated'); if (date.isBefore(now, 'day')) return label(1, 'Overdue'); if (date.isSame(now, 'day')) return label(2, 'Today'); return label(3, 'Future');",
+                    `group by function \\
+    const date = task.due.moment; \\
+    const now = moment(); \\
+    const label = (order, name) => \`%%\${order}%% ==\${name}==\`; \\
+    if (!date)                      return label(4, 'Undated'); \\
+    if (date.isBefore(now, 'day'))  return label(1, 'Overdue'); \\
+    if (date.isSame(now, 'day'))    return label(2, 'Today'); \\
+    return label(3, 'Future');`,
                     'As above, but using a local function, and `if` statements',
                 ],
             ],
@@ -192,11 +226,10 @@ describe('file properties', () => {
                 // comment to force line break
                 ['group by function task.file.path', "Like 'group by path' but includes the file extension"],
                 [
-                    "group by function task.file.path.replace('{{query.file.folder}}', '')",
+                    "group by function task.file.path.replace(query.file.folder, '')",
                     "Group by the task's file path, but remove the query's folder from the group.",
                     "For tasks in the query's folder or a sub-folder, this is a nice way of seeing shortened paths.",
-                    'Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.',
-                    "This is provided to give ideas: it's a bit of a lazy implementation, as it doesn't check that `'{{query.file.folder}}'` is at the start of the line.",
+                    "This is provided to give ideas: it's a bit of a lazy implementation, as it doesn't check that `query.file.folder` is at the start of the line.",
                 ],
             ],
             SampleTasks.withAllRootsPathsHeadings(),
@@ -234,8 +267,8 @@ describe('file properties', () => {
             [
                 ['group by function task.file.filename', "Like 'group by filename' but does not link to the file"],
                 [
-                    "group by function  '[[' + task.file.filenameWithoutExtension + ( task.hasHeading ? ('#' + task.heading) : '')  + ']]'",
-                    "Like 'group by backlink' but links to the heading in the file",
+                    "group by function task.file.filenameWithoutExtension + (task.hasHeading ? (' > ' + task.heading) : '')",
+                    "Like 'group by backlink' but does not link to the heading in the file",
                 ],
             ],
             SampleTasks.withAllRootsPathsHeadings(),
@@ -303,6 +336,10 @@ describe('statuses', () => {
                 [
                     'group by function task.status.type',
                     'Unlike "group by status.type", this sorts the status types in alphabetical order',
+                ],
+                [
+                    'group by function task.status.typeGroupText',
+                    'This sorts the status types in the same order as "group by status.type"',
                 ],
             ],
             SampleTasks.withAllStatuses(),
@@ -426,9 +463,9 @@ describe('other properties', () => {
                     "Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'",
                 ],
                 [
-                    "group by function '%%' + task.priorityNumber.toString() + '%%' + task.priorityName +' priority'",
+                    'group by function task.priorityNameGroupText',
                     "Group by the task's priority name",
-                    'The hidden priority number ensures that the headings are written from highest to lowest priority.',
+                    'The priority names are displayed from highest to lowest priority.',
                     "Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'",
                 ],
             ],

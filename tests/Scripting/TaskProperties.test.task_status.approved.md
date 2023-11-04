@@ -5,6 +5,7 @@
 | `task.isDone` | `boolean` | `false` | `boolean` | `false` |
 | `task.status.name` | `string` | `'Todo'` | `string` | `'In Progress'` |
 | `task.status.type` | `string` | `'TODO'` | `string` | `'IN_PROGRESS'` |
+| `task.status.typeGroupText` | `string` | `'%%2%%TODO'` [^commented] | `string` | `'%%1%%IN_PROGRESS'` [^commented] |
 | `task.status.symbol` | `string` | `' '` | `string` | `'/'` |
 | `task.status.nextSymbol` | `string` | `'x'` | `string` | `'x'` |
 

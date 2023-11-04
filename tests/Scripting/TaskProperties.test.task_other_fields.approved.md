@@ -6,6 +6,7 @@
 | `task.descriptionWithoutTags` | `string` | `'Do exercises'` | `string` | `'minimal task'` |
 | `task.priorityNumber` | `number` | `2` | `number` | `3` |
 | `task.priorityName` | `string` | `'Medium'` | `string` | `'Normal'` |
+| `task.priorityNameGroupText` | `string` | `'%%2%%Medium priority'` [^commented] | `string` | `'%%3%%Normal priority'` [^commented] |
 | `task.urgency` | `number` | `3.3000000000000007` | `number` | `1.9500000000000002` |
 | `task.isRecurring` | `boolean` | `true` | `boolean` | `false` |
 | `task.recurrenceRule` | `string` | `'every day when done'` | `string` | `''` |

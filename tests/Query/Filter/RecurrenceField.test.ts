@@ -88,10 +88,11 @@ describe('grouping by recurrence', () => {
         ['- [ ] a 🔁 every 6 months on the 2nd Wednesday', ['every 6 months on the 2nd Wednesday']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new RecurrenceField().createNormalGrouper().grouper;
+        const grouper = new RecurrenceField().createNormalGrouper();
 
         // Assert
-        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
+        const tasks = [fromLine({ line: taskLine })];
+        expect({ grouper, tasks }).groupHeadingsToBe(groups);
     });
 
     it('should sort groups for RecurrenceField', () => {
@@ -99,6 +100,7 @@ describe('grouping by recurrence', () => {
         const tasks = SampleTasks.withAllRecurrences();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
+            'every 3 weeks on Thursday',
             'every 4 months on the 3rd Wednesday',
             'every 4 weeks',
             'every 6 days',
@@ -106,6 +108,8 @@ describe('grouping by recurrence', () => {
             'every 8 days when done',
             'every day',
             'every month',
+            'every month on the 2nd',
+            'every month on the 2nd when done',
             'every week',
             'every week on Tuesday',
             'every week on Tuesday when done',

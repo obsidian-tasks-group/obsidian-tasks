@@ -12,14 +12,17 @@ import type { StatusCollection, StatusCollectionEntry } from '../../src/StatusCo
 import * as Themes from '../../src/Config/Themes';
 import { StatusValidator } from '../../src/StatusValidator';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
-
-function getPrintableSymbol(symbol: string) {
-    const result = symbol !== ' ' ? symbol : 'space';
-    return '`' + result + '`';
-}
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
+import { StatusRegistry } from '../../src/StatusRegistry';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { SearchInfo } from '../../src/Query/SearchInfo';
+import type { GrouperFunction } from '../../src/Query/Grouper';
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
+import { getPrintableSymbol } from '../../src/StatusRegistryReport';
 
 function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions: boolean) {
+    // Note: There is very similar code in tabulateStatusSettings() in StatusRegistryReport.ts.
+    //       Maybe try unifying the common code one day?
     let statusName = 'Status Name';
     let statusType = 'Status Type';
     if (showQueryInstructions) {
@@ -41,7 +44,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions
         const needsCustomStyling = status.symbol !== ' ' && status.symbol !== 'x' ? 'Yes' : 'No';
         table.addRow([statusCharacter, nextStatusCharacter, status.name, type, needsCustomStyling]);
     }
-    table.verifyForDocs();
+    verifyMarkdownForDocs(table.markdown);
 }
 
 function verifyStatusesAsTasksList(statuses: Status[]) {
@@ -70,19 +73,37 @@ function constructStatuses(importedStatuses: StatusCollection) {
     return statuses;
 }
 
+function verifyStatusesInMultipleFormats(statuses: Status[], showQueryInstructions: boolean) {
+    verifyStatusesAsMarkdownTable(statuses, showQueryInstructions);
+    verifyStatusesAsMermaidDiagram(statuses);
+}
+
+function verifyStatusesAsMermaidDiagramImpl(statuses: Status[], detailed: boolean, extensionWithoutDot: string) {
+    // Set the registry up to exactly match the supplied statuses
+    const registry = new StatusRegistry();
+    registry.set(statuses);
+
+    const markdown = registry.mermaidDiagram(detailed);
+    verifyWithFileExtension(markdown, extensionWithoutDot);
+}
+
+function verifyStatusesAsMermaidDiagram(statuses: Status[]) {
+    verifyStatusesAsMermaidDiagramImpl(statuses, false, 'mermaid.md');
+}
+
+function verifyStatusesAsDetailedMermaidDiagram(statuses: Status[]) {
+    verifyStatusesAsMermaidDiagramImpl(statuses, true, 'detailed.mermaid.md');
+}
+
 describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
-    // TODO There are hand-created Mermaid diagrams of some of this in 'Example Statuses'.
-    //      If ever the statuses are changed here, or new examples added, spend a few
-    //      minutes to write out the Mermaid diagrams automatically, and embed the
-    //      generated mermaid files inside the docs, replacing the hand-crafted ones.
     it('core-statuses', () => {
-        verifyStatusesAsMarkdownTable([Status.makeTodo(), Status.makeDone()], true);
+        verifyStatusesInMultipleFormats([Status.makeTodo(), Status.makeDone()], true);
     });
 
     it('custom-statuses', () => {
-        verifyStatusesAsMarkdownTable([Status.makeInProgress(), Status.makeCancelled()], true);
+        verifyStatusesInMultipleFormats([Status.makeInProgress(), Status.makeCancelled()], true);
     });
 
     it('important-cycle', () => {
@@ -91,7 +112,7 @@ describe('DefaultStatuses', () => {
             ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
             ['X', 'Done - Important', '!', 'DONE'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
     });
 
     it('todo-in_progress-done', () => {
@@ -100,7 +121,8 @@ describe('DefaultStatuses', () => {
             ['/', 'In Progress', 'x', 'IN_PROGRESS'],
             ['x', 'Done', ' ', 'DONE'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(importantCycle));
     });
 
     it('pro-con-cycle', () => {
@@ -108,7 +130,8 @@ describe('DefaultStatuses', () => {
             ['P', 'Pro', 'C', 'NON_TASK'],
             ['C', 'Con', 'P', 'NON_TASK'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(importantCycle));
     });
 
     it('toggle-does-nothing', () => {
@@ -119,7 +142,32 @@ describe('DefaultStatuses', () => {
             ['P', 'Paraphrase', 'P', 'NON_TASK'],
             ['Q', 'Quote', 'Q', 'NON_TASK'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
+    });
+
+    it('done-toggles-to-cancelled', () => {
+        // See issue #2089.
+        // DONE is followed by CANCELLED, which currently causes unexpected behaviour in recurrent tasks.
+        // This uses the 4 default statuses, and just customises their order.
+        const statuses: StatusCollection = [
+            [' ', 'Todo', '/', 'TODO'],
+            ['x', 'Done', '-', 'DONE'],
+            ['/', 'In Progress', 'x', 'IN_PROGRESS'],
+            ['-', 'Cancelled', ' ', 'CANCELLED'],
+        ];
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
+    });
+
+    it('done-toggles-to-cancelled-with-unconventional-symbols', () => {
+        // See issue #2304.
+        // DONE is followed by CANCELLED, which currently causes unexpected behaviour in recurrent tasks.
+        // This doesn't follow the standard convention of 'x' means DONE. It has 'x' means CANCELLED.
+        const statuses: StatusCollection = [
+            [' ', 'Todo', '*', 'TODO'],
+            ['*', 'Done', 'x', 'DONE'],
+            ['x', 'Cancelled', ' ', 'CANCELLED'],
+        ];
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 });
 
@@ -144,7 +192,7 @@ describe('Theme', () => {
         });
 
         it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
+            verifyStatusesInMultipleFormats(constructStatuses(statuses), true);
         });
 
         it('Tasks', () => {
@@ -179,8 +227,9 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
 
     function filterAllStatuses(filter: FilterOrErrorMessage) {
         const cells: string[] = [`Matches \`${filter!.instruction}\``];
+        const searchInfo = SearchInfo.fromAllTasks(tasks);
         tasks.forEach((task) => {
-            const matchedText = filter!.filter?.filterFunction(task) ? 'YES' : 'no';
+            const matchedText = filter!.filter?.filterFunction(task, searchInfo) ? 'YES' : 'no';
             cells.push(matchedText);
         });
         table.addRow(cells);
@@ -198,10 +247,10 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     filterAllStatuses(FilterParser.parseFilter('status.name includes done')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
 
-    function showGroupNamesForAllTasks(groupName: string, grouperFunction: (task: Task) => string[]) {
+    function showGroupNamesForAllTasks(groupName: string, grouperFunction: GrouperFunction) {
         const cells: string[] = ['Name for `group by ' + groupName + '`'];
         tasks.forEach((task) => {
-            const groupNamesForTask = grouperFunction(task);
+            const groupNamesForTask = grouperFunction(task, SearchInfo.fromAllTasks([task]));
             const names = groupNamesForTask.join(',');
             cells.push(names);
         });
@@ -212,7 +261,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     showGroupNamesForAllTasks('status.type', new StatusTypeField().createNormalGrouper().grouper);
     showGroupNamesForAllTasks('status.name', new StatusNameField().createNormalGrouper().grouper);
 
-    table.verifyForDocs();
+    verifyMarkdownForDocs(table.markdown);
 }
 
 describe('Status Transitions', () => {

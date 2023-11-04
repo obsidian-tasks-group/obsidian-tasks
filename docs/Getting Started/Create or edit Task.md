@@ -58,6 +58,10 @@ See [[Priority|priority]].
 
 Here you can make the task recur, so that when it is marked as done, a new task is created, with newer dates.
 
+> [!Tip]
+> A task with a recurrence rule is required to also have at least one of Due, Scheduled or Starts dates.<br>
+> See [[Recurring Tasks#Recurring tasks must have at least one date|Recurring tasks must have at least one date]].
+
 See [[Recurring Tasks|recurring tasks (repetition)]].
 
 ### Dates
@@ -155,6 +159,17 @@ To close the modal and cancel your edits, do one of:
 - hit the `Esc` key.
 
 ## Known limitations
+
+### Editing status on Edit task modal
+
+> [!warning]
+> Editing the Status in the modal does not yet add, remove or update the Done date.
+>
+> Also, completing a recurring task via the Status in the modal does not yet add the new recurrence.
+>
+> We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
+>
+> For now, you should still complete tasks via command or by clicking on task checkboxes.
 
 ### Need to scroll on phone screens
 

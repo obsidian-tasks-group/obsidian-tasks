@@ -37,6 +37,7 @@ Therefore, Tasks allows you to set query options to filter the tasks that you wa
 - [[Global Query]]
 - [[Combining Filters]]
 - [[Regular Expressions]]
+- [[Line Continuations]]
 
 ### Viewing the results
 

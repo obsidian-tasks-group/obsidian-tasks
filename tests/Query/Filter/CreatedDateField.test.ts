@@ -103,8 +103,8 @@ describe('grouping by created date', () => {
         const taskWithoutDate = new TaskBuilder().build();
 
         // Assert
-        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
-        expect(grouper.grouper(taskWithoutDate)).toEqual(['No created date']);
+        expect({ grouper, tasks: [taskWithDate] }).groupHeadingsToBe(['1970-01-01 Thursday']);
+        expect({ grouper, tasks: [taskWithoutDate] }).groupHeadingsToBe(['No created date']);
     });
 
     it('should sort groups for CreatedDateField', () => {

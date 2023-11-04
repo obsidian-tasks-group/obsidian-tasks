@@ -2,6 +2,7 @@ import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorM
 import { Task } from '../../src/Task';
 import { Query } from '../../src/Query/Query';
 import { TaskLocation } from '../../src/TaskLocation';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { TaskBuilder } from './TaskBuilder';
 
 /**
@@ -27,7 +28,7 @@ export function testFilter(filter: FilterOrErrorMessage, taskBuilder: TaskBuilde
 export function testTaskFilter(filter: FilterOrErrorMessage, task: Task, expected: boolean) {
     expect(filter.filterFunction).toBeDefined();
     expect(filter.error).toBeUndefined();
-    expect(filter.filterFunction!(task)).toEqual(expected);
+    expect(filter.filterFunction!(task, SearchInfo.fromAllTasks([task]))).toEqual(expected);
 }
 
 /**
@@ -43,14 +44,15 @@ export function testTaskFilter(filter: FilterOrErrorMessage, task: Task, expecte
  */
 export function testTaskFilterViaQuery(filter: string, task: Task, expected: boolean) {
     // Arrange
-    const query = new Query({ source: filter });
+    const query = new Query(filter);
 
     const tasks = [task];
 
     // Act
     let filteredTasks = [...tasks];
+    const searchInfo = SearchInfo.fromAllTasks(tasks);
     query.filters.forEach((filter) => {
-        filteredTasks = filteredTasks.filter(filter.filterFunction);
+        filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, searchInfo));
     });
     const matched = filteredTasks.length === 1;
 
@@ -70,7 +72,7 @@ export function shouldSupportFiltering(
     expectedResult: Array<string>,
 ) {
     // Arrange
-    const query = new Query({ source: filters.join('\n') });
+    const query = new Query(filters.join('\n'));
 
     const tasks = allTaskLines.map(
         (taskLine) =>
@@ -83,8 +85,9 @@ export function shouldSupportFiltering(
 
     // Act
     let filteredTasks = [...tasks];
+    const searchInfo = SearchInfo.fromAllTasks(tasks);
     query.filters.forEach((filter) => {
-        filteredTasks = filteredTasks.filter(filter.filterFunction);
+        filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, searchInfo));
     });
 
     // Assert

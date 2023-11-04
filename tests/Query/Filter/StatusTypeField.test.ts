@@ -152,13 +152,13 @@ describe('grouping by status.type', () => {
         const grouper = new StatusTypeField().createNormalGrouper();
 
         // // Assert
-        expect(grouper.grouper(inprTask)).toEqual(['%%1%%IN_PROGRESS']);
-        expect(grouper.grouper(todoTask)).toEqual(['%%2%%TODO']);
-        expect(grouper.grouper(unknTask)).toEqual(['%%2%%TODO']);
-        expect(grouper.grouper(doneTask)).toEqual(['%%3%%DONE']);
-        expect(grouper.grouper(cancTask)).toEqual(['%%4%%CANCELLED']);
-        expect(grouper.grouper(non_Task)).toEqual(['%%5%%NON_TASK']);
-        expect(grouper.grouper(emptTask)).toEqual(['%%6%%EMPTY']); // won't be seen by users
+        expect({ grouper, tasks: [inprTask] }).groupHeadingsToBe(['%%1%%IN_PROGRESS']);
+        expect({ grouper, tasks: [todoTask] }).groupHeadingsToBe(['%%2%%TODO']);
+        expect({ grouper, tasks: [unknTask] }).groupHeadingsToBe(['%%2%%TODO']);
+        expect({ grouper, tasks: [doneTask] }).groupHeadingsToBe(['%%3%%DONE']);
+        expect({ grouper, tasks: [cancTask] }).groupHeadingsToBe(['%%4%%CANCELLED']);
+        expect({ grouper, tasks: [non_Task] }).groupHeadingsToBe(['%%5%%NON_TASK']);
+        expect({ grouper, tasks: [emptTask] }).groupHeadingsToBe(['%%6%%EMPTY']); // won't be seen by users
     });
 
     it('should sort groups for StatusTypeField', () => {

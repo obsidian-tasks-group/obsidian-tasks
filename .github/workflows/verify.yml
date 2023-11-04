@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install modules
         run: yarn
@@ -44,3 +44,19 @@ jobs:
           name: Tasks-Demo-VerifyCommit-Build${{ github.run_number }}-Run${{ github.run_attempt }}
           path: |
             resources/sample_vaults/Tasks-Demo
+
+      - name: Install graphviz
+        run: sudo apt-get install -y graphviz
+
+      - name: Identify circular dependencies
+        run: |
+          yarn run circular-deps-text || echo continuing after error message
+          yarn run circular-deps-image
+
+      - name: Archive circular dependencies results
+        uses: actions/upload-artifact@v3
+        with:
+          name: circular-dependencies
+          path: |
+            circular-deps.png
+            circular-deps.txt

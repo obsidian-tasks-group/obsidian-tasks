@@ -28,7 +28,7 @@ We can use the `path` instruction with the placeholder text `{{query.file.path}}
 
     ```tasks
     not done
-    path includes path includes {{query.file.path}}
+    path includes {{query.file.path}}
     ```
 
 The following placeholders are available:

@@ -3,11 +3,12 @@
  */
 
 import moment from 'moment';
-import { parseAndEvaluateExpression } from '../../src/Scripting/Expression';
 import { Status } from '../../src/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
+import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -20,8 +21,8 @@ describe('task', () => {
         const task1 = TaskBuilder.createFullyPopulatedTask();
         const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
         for (const field of fields) {
-            const value1 = parseAndEvaluateExpression(task1, field);
-            const value2 = parseAndEvaluateExpression(task2, field);
+            const value1 = parseAndEvaluateExpression(task1, field, undefined);
+            const value2 = parseAndEvaluateExpression(task2, field, undefined);
             const cells = [
                 addBackticks(field),
                 addBackticks(determineExpressionType(value1)),
@@ -31,7 +32,7 @@ describe('task', () => {
             ];
             markdownTable.addRow(cells);
         }
-        markdownTable.verifyForDocs();
+        verifyMarkdownForDocs(markdownTable.markdown);
     }
 
     beforeAll(() => {
@@ -48,6 +49,7 @@ describe('task', () => {
             'task.isDone',
             'task.status.name',
             'task.status.type',
+            'task.status.typeGroupText',
             'task.status.symbol',
             'task.status.nextSymbol',
         ]);
@@ -64,12 +66,33 @@ describe('task', () => {
         ]);
     });
 
+    it('date fields', () => {
+        verifyFieldDataForReferenceDocs([
+            'task.due',
+            'task.due.moment',
+            'task.due.formatAsDate()',
+            "task.due.formatAsDate('undated')",
+            'task.due.formatAsDateAndTime()',
+            "task.due.formatAsDate('undated')",
+            "task.due.format('dddd')",
+            'task.due.toISOString()',
+            'task.due.toISOString(true)', // https://momentjs.com/docs/#/displaying/as-iso-string/ - true prevents UTC conversion
+            'task.due.category.name',
+            'task.due.category.sortOrder',
+            'task.due.category.groupText',
+            'task.due.fromNow.name',
+            'task.due.fromNow.sortOrder',
+            'task.due.fromNow.groupText',
+        ]);
+    });
+
     it('other fields', () => {
         verifyFieldDataForReferenceDocs([
             'task.description',
             'task.descriptionWithoutTags',
             'task.priorityNumber',
             'task.priorityName',
+            'task.priorityNameGroupText',
             'task.urgency',
             'task.isRecurring',
             'task.recurrenceRule',

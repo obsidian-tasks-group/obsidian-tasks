@@ -54,3 +54,35 @@ make sure new notes are created via one of these two plugins, and not `Daily-not
     ```tasks
     done on {{date:YYYY-MM-DD}}
     ```
+
+## Troubleshooting Daily Agenda queries
+
+### Instruction contains unexpanded template text
+
+<!-- If the above heading name changes, please update the source code,
+so that the new URL is shown in the error message below. -->
+
+To guard against accidental running of Tasks searches on template files, all built-in Tasks date searches check for text that looks like template rules.
+
+If found, they will refuse to run the search, as experience has found that the results are rarely what the user intended.
+
+The error message will then contain this text:
+
+<!-- snippet: TemplatingPluginTools.test.TemplatingPluginTools_date_templating_error_sample_for_docs.approved.text -->
+```text
+Instruction contains unexpanded template text: "<%" - and cannot be interpreted.
+
+Possible causes:
+- The query is an a template file, and is not intended to be searched.
+- A command such as "Replace templates in the active file" needs to be run.
+- The core "Daily notes" plugin is in use, and the template contained
+  date calculations that it does not support.
+- Some sample template text was accidentally pasted in to a tasks query,
+  instead of in to a template file.
+
+See: https://publish.obsidian.md/tasks/Advanced/Instruction+contains+unexpanded+template+text
+```
+<!-- endSnippet -->
+
+> [!released]
+> The check for unexpanded template text was introduced in Tasks 5.0.0.

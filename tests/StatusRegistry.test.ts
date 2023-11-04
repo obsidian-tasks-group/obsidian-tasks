@@ -58,6 +58,23 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.registeredStatuses.length).toEqual(0);
     });
 
+    it('should allow setting the entire set of statuses', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        const statuses = [
+            new StatusConfiguration('Q', 'Question', 'A', false, StatusType.NON_TASK),
+            new StatusConfiguration('A', 'Answer', 'Q', false, StatusType.NON_TASK),
+        ];
+
+        // Act
+        statusRegistry.set(statuses);
+
+        // Assert
+        expect(statusRegistry.registeredStatuses.length).toEqual(2);
+        expect(statusRegistry.registeredStatuses[0].symbol).toStrictEqual('Q');
+        expect(statusRegistry.registeredStatuses[1].symbol).toStrictEqual('A');
+    });
+
     it('should return empty status for lookup by unknown symbol with bySymbol()', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
@@ -144,6 +161,119 @@ describe('StatusRegistry', () => {
         // Assert
         const status2 = statusRegistry.bySymbol('a');
         expect(status2).toStrictEqual(status);
+    });
+
+    it('should create a mermaid diagram of default statuses', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+
+        // Assert
+        // Without detail:
+        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["Todo"]
+            2["In Progress"]
+            3["Done"]
+            4["Cancelled"]
+            1 --> 3
+            2 --> 3
+            3 --> 1
+            4 --> 1
+            \`\`\`
+            "
+        `);
+
+        // With detail:
+        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["'Todo'<br>[ ] -> [x]<br>(TODO)"]
+            2["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]
+            3["'Done'<br>[x] -> [ ]<br>(DONE)"]
+            4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]
+            1 --> 3
+            2 --> 3
+            3 --> 1
+            4 --> 1
+            \`\`\`
+            "
+        `);
+    });
+
+    it('should encode symbols in mermaid diagrams when necessary', () => {
+        // This tests the fix for:
+        //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2355
+        //      Fix the handling of special characters in Mermaid status diagrams
+
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        statusRegistry.clearStatuses();
+        statusRegistry.add(new StatusConfiguration('<', 'Todo <', '<', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('>', 'Todo >', '>', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('"', 'Todo "', '"', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('&', 'Todo &', '&', false, StatusType.TODO));
+
+        // Assert
+        // Without detail:
+        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["Todo &lt;"]
+            2["Todo &gt;"]
+            3["Todo &quot;"]
+            4["Todo &amp;"]
+            1 --> 1
+            2 --> 2
+            3 --> 3
+            4 --> 4
+            \`\`\`
+            "
+        `);
+
+        // With detail:
+        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["'Todo &lt;'<br>[&lt;] -> [&lt;]<br>(TODO)"]
+            2["'Todo &gt;'<br>[&gt;] -> [&gt;]<br>(TODO)"]
+            3["'Todo &quot;'<br>[&quot;] -> [&quot;]<br>(TODO)"]
+            4["'Todo &amp;'<br>[&amp;] -> [&amp;]<br>(TODO)"]
+            1 --> 1
+            2 --> 2
+            3 --> 3
+            4 --> 4
+            \`\`\`
+            "
+        `);
+    });
+
+    it('should not include unknown nextStatusSymbols in mermaid diagrams', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        statusRegistry.clearStatuses();
+        statusRegistry.add(new StatusConfiguration(' ', 'Todo', '/', false, StatusType.TODO));
+        // Leave '/' as not registered
+        const originalNumberOfStatuses = statusRegistry.registeredStatuses.length;
+
+        // Act
+        const mermaidText = statusRegistry.mermaidDiagram();
+
+        // Assert
+        expect(statusRegistry.registeredStatuses.length).toEqual(originalNumberOfStatuses);
+        expect(mermaidText).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["Todo"]
+
+            \`\`\`
+            "
+        `);
     });
 
     describe('toggling', () => {
@@ -266,7 +396,7 @@ describe('StatusRegistry', () => {
             expect(toggled?.status.symbol).toEqual('D');
         });
 
-        it('should bulk-add unknown statuses', () => {
+        it('should find unknown statuses from tasks in the vault, sorted by symbol', () => {
             // Arrange
             const registry = new StatusRegistry();
             expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
@@ -296,12 +426,12 @@ describe('StatusRegistry', () => {
             expect(s1.name).toEqual('Unknown (!)');
 
             s1 = unknownStatuses[1];
-            expect(s1.type).toEqual(StatusType.DONE);
-            expect(s1.name).toEqual('Unknown (X)');
-
-            s1 = unknownStatuses[2];
             expect(s1.type).toEqual(StatusType.IN_PROGRESS);
             expect(s1.name).toEqual('Unknown (d)');
+
+            s1 = unknownStatuses[2];
+            expect(s1.type).toEqual(StatusType.DONE);
+            expect(s1.name).toEqual('Unknown (X)');
         });
     });
 });

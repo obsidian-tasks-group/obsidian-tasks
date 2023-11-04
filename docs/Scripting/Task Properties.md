@@ -29,10 +29,13 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.isDone` | `boolean` | `false` | `boolean` | `false` |
 | `task.status.name` | `string` | `'Todo'` | `string` | `'In Progress'` |
 | `task.status.type` | `string` | `'TODO'` | `string` | `'IN_PROGRESS'` |
+| `task.status.typeGroupText` | `string` | `'%%2%%TODO'` [^commented] | `string` | `'%%1%%IN_PROGRESS'` [^commented] |
 | `task.status.symbol` | `string` | `' '` | `string` | `'/'` |
 | `task.status.nextSymbol` | `string` | `'x'` | `string` | `'x'` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+1. `task.status.typeGroupText` (added in Tasks 4.9.0) is a convenient way to sort status types in to a natural order in custom grouping functions.
 
 ## Values for Dates in Tasks
 
@@ -49,11 +52,54 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
-1. The `TasksDate` formatting methods use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+1. Each of these values is a `TasksDate` object. The [[#Values in TasksDate Properties]] section below shows what can be done with them.
 1. Note that currently all stored dates have no time, or rather, their time is midnight at the start of the day, local time.
 1. For example uses of date properties, see [[Grouping#Due Date]].
 1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
+
+## Values in TasksDate Properties
+
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_date_fields.approved.md -->
+
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
+| `task.due.moment` | `Moment` | `moment('2023-07-04 00:00')` | `null` | `null` |
+| `task.due.formatAsDate()` | `string` | `'2023-07-04'` | `string` | `''` |
+| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.formatAsDateAndTime()` | `string` | `'2023-07-04 00:00'` | `string` | `''` |
+| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.format('dddd')` | `string` | `'Tuesday'` | `string` | `''` |
+| `task.due.toISOString()` | `string` | `'2023-07-04T00:00:00.000Z'` | `string` | `''` |
+| `task.due.toISOString(true)` | `string` | `'2023-07-04T00:00:00.000+00:00'` | `string` | `''` |
+| `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |
+| `task.due.category.sortOrder` | `number` | `3` | `number` | `4` |
+| `task.due.category.groupText` | `string` | `'%%3%% Future'` [^commented] | `string` | `'%%4%% Undated'` [^commented] |
+| `task.due.fromNow.name` | `string` | `'in 22 days'` | `string` | `''` |
+| `task.due.fromNow.sortOrder` | `number` | `320230704` | `number` | `0` |
+| `task.due.fromNow.groupText` | `string` | `'%%320230704%% in 22 days'` [^commented] | `string` | `''` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+1. These examples refer to `task.due`, but they can be used on any of the date properties show in the section [[#Values for Dates in Tasks]] above.
+1. The `TasksDate` formatting methods use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its implementation.
+1. `task.due.toISOString(true)` prevents UTC conversion - see the [moment documentation](https://momentjs.com/docs/#/displaying/as-iso-string/)
+1. `category` divides dates in to 4 named groups:
+    - `Overdue`
+    - `Today`
+    - `Future`
+    - `Undated`
+    - And they are numbered 1, 2, 3 and 4, in the order listed above.
+1. `fromNow` groups dates by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example:
+    - `2 months ago`
+    - `8 days ago`
+    - `in 11 hours`
+    - `in 5 days`
+    - `in 3 months`
+    - `in a year`
+1. The `category` properties were added in Tasks 4.9.0.
+1. The `fromNow` properties were added in Tasks 4.9.0.
 
 ## Values for Other Task Properties
 
@@ -65,6 +111,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.descriptionWithoutTags` | `string` | `'Do exercises'` | `string` | `'minimal task'` |
 | `task.priorityNumber` | `number` | `2` | `number` | `3` |
 | `task.priorityName` | `string` | `'Medium'` | `string` | `'Normal'` |
+| `task.priorityNameGroupText` | `string` | `'%%2%%Medium priority'` [^commented] | `string` | `'%%3%%Normal priority'` [^commented] |
 | `task.urgency` | `number` | `3.3000000000000007` | `number` | `1.9500000000000002` |
 | `task.isRecurring` | `boolean` | `true` | `boolean` | `false` |
 | `task.recurrenceRule` | `string` | `'every day when done'` | `string` | `''` |
@@ -75,6 +122,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. `task.description` has spaces at the start and end stripped off.
 1. `task.description` includes any tags.
+1. `task.priorityNameGroupText` (added in Tasks 4.9.0) is a convenient way to sort priority names in to a natural order in custom grouping functions.
 1. `task.isRecurring` is:
     - `true` if the Task has a **valid** recurrence rule,
     - `false` if:
@@ -110,5 +158,7 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `task.file` is a `TasksFile` object.
 1. You can see the current [TasksFile source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksFile.ts), to explore its capabilities.
 1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
-1. `task.file.pathWithoutExtension` was added in Tasks X.Y.Z.
-1. `task.file.filenameWithoutExtension` was added in Tasks X.Y.Z.
+1. `task.file.pathWithoutExtension` was added in Tasks 4.8.0.
+1. `task.file.filenameWithoutExtension` was added in Tasks 4.8.0.
+
+[^commented]: Text inside `%% ... %%` comments is hidden from view. It is used to control the order that group headings are sorted in.

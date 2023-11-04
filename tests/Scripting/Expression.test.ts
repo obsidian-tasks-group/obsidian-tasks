@@ -3,15 +3,12 @@
  */
 import moment from 'moment';
 
-import {
-    constructArguments,
-    evaluateExpression,
-    evaluateExpressionOrCatch,
-    parseAndEvaluateExpression,
-    parseExpression,
-} from '../../src/Scripting/Expression';
+import { evaluateExpression, evaluateExpressionOrCatch, parseExpression } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
+import { continue_lines } from '../../src/Query/Scanner';
+import { constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
+import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -57,6 +54,7 @@ describe('Expression', () => {
     });
 
     const task = TaskBuilder.createFullyPopulatedTask();
+    const queryContext = makeQueryContext('temp.md');
 
     describe('detect errors at parse stage', () => {
         it('should report meaningful error message for parentheses too few parentheses', () => {
@@ -74,7 +72,7 @@ describe('Expression', () => {
 
     describe('detect errors at evaluation time', () => {
         const line = 'nonExistentVariable';
-        const paramsArgs = constructArguments(task);
+        const paramsArgs = constructArguments(task, queryContext);
         const expression = parseExpression(paramsArgs, line);
         it('evaluateExpressionAndCatch() should report meaningful error message for invalid variable', () => {
             expect(expression.error).toBeUndefined();
@@ -94,16 +92,30 @@ describe('Expression', () => {
         });
 
         it('should report unknown for invalid task property', () => {
-            expect(parseAndEvaluateExpression(task, 'task.iAmNotAKnownTaskProperty')).toEqual(undefined);
+            expect(parseAndEvaluateExpression(task, 'task.iAmNotAKnownTaskProperty', queryContext)).toEqual(undefined);
         });
     });
 
-    function verifyExpressionsForDocs(expressions: string[]) {
+    const extraBlankLineBetweenExpressions = true;
+    const noBlankLineBetweenExpressions = false;
+
+    /**
+     * Generate Markdown strings showing expressions and their evaluation results, for use in docs.
+     * @param expressions - a list of expressions to be evaluated
+     * @param addBlankLineBetweenExpressions - use either {@link extraBlankLineBetweenExpressions} or {@link noBlankLineBetweenExpressions},
+     *                                         depending on the length of lines in {@link expressions}.
+     */
+    function verifyExpressionsForDocs(expressions: string[], addBlankLineBetweenExpressions: boolean) {
         let markdown = '~~~text\n';
-        for (const expression of expressions) {
-            const result = parseAndEvaluateExpression(task, expression);
-            markdown += `${expression} => ${formatToRepresentType(result)}\n`;
-        }
+        const separator = addBlankLineBetweenExpressions ? '\n\n' : '\n';
+        const resultSeparator = addBlankLineBetweenExpressions ? '\n' : ' ';
+        markdown +=
+            expressions
+                .map((expression) => {
+                    const result = parseAndEvaluateExpression(task, continue_lines(expression), queryContext);
+                    return `${expression}${resultSeparator}=> ${formatToRepresentType(result)}`;
+                })
+                .join(separator) + '\n';
         markdown += '~~~\n';
         verifyMarkdownForDocs(markdown);
     }
@@ -131,7 +143,7 @@ describe('Expression', () => {
             // Should allow manual escaping of markdown
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
-        verifyExpressionsForDocs(expressions);
+        verifyExpressionsForDocs(expressions, noBlankLineBetweenExpressions);
     });
 
     it('returns and functions', () => {
@@ -139,8 +151,15 @@ describe('Expression', () => {
             'return 42',
             'const x = 1 + 1; return x * x',
             'if (1 === 1) { return "yes"; } else { return "no" }',
-            'function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1)',
+            `function f(value) {                 \\
+    if (value === 1 ) {             \\
+        return "yes";               \\
+    } else {                        \\
+        return "no";                \\
+    }                               \\
+}                                   \\
+return f(1);`,
         ];
-        verifyExpressionsForDocs(expressions);
+        verifyExpressionsForDocs(expressions, extraBlankLineBetweenExpressions);
     });
 });

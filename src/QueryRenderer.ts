@@ -15,6 +15,7 @@ import { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
+import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
 
 export class QueryRenderer {
@@ -189,7 +190,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         if (debug) {
             console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
         }
-        this.addTaskCount(content, totalTasksCount);
+        this.addTaskCount(content, queryResult);
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
@@ -215,13 +216,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         content.appendChild(explanationsBlock);
     }
 
-    private async createTasksList({
-        tasks,
-        content,
-    }: {
-        tasks: Task[];
-        content: HTMLDivElement;
-    }): Promise<HTMLUListElement> {
+    private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
         const layout = new TaskLayout(this.query.layoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
@@ -275,7 +270,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             taskList.appendChild(listItem);
         }
 
-        return taskList;
+        content.appendChild(taskList);
     }
 
     private addEditButton(listItem: HTMLElement, task: Task) {
@@ -313,11 +308,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             // will be empty, and no headings will be added.
             this.addGroupHeadings(content, group.groupHeadings);
 
-            const taskList = await this.createTasksList({
-                tasks: group.tasks,
-                content: content,
-            });
-            content.appendChild(taskList);
+            await this.createTaskList(group.tasks, content);
         }
     }
 
@@ -412,15 +403,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
     }
 
-    /* 
-        - [x] I'm not sure that users will be able to figure out what 'Snooze' actually means
-        - [x] It shows the snooze button even when there is no due date which is a bit non-obvious
-                It's got a fast forward icon but if the date is ahead of tomorrow it goes backwards to tomorrow
-        - [x] I think that if the date is already in the future then it should just add one day
-        - [x] I think that if the date was in the past it should probably fast forward to the current date
-        - [x] If a task has a scheduled date only, currently the snooze button adds a due date for tomorrow. I think in this situation it should probably edit the schedule date instead.
-        - [x] emoji выглядит как кнопка в некоторых случаях
-    */
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
         const button = listItem.createEl('button', {
             attr: {
@@ -460,10 +442,10 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
     }
 
-    private addTaskCount(content: HTMLDivElement, tasksCount: number) {
+    private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
         if (!this.query.layoutOptions.hideTaskCount) {
             content.createDiv({
-                text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
+                text: queryResult.totalTasksCountDisplayText(),
                 cls: 'tasks-count',
             });
         }
