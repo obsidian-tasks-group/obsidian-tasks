@@ -441,10 +441,10 @@ class QueryRenderChild extends MarkdownRenderChild {
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
             const menu = new Menu();
-            const commonTitle = 'Postpone for a';
+            const commonTitle = 'Postpone for';
 
             const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
-                item.setTitle(`${commonTitle} ${timeUnit}`).onClick(() =>
+                item.setTitle(`${commonTitle} ${amount > 1 ? amount : 'a '} ${timeUnit}`).onClick(() =>
                     this.getOnClickCallback(task, button, timeUnit, amount),
                 );
             };
