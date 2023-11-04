@@ -444,7 +444,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             const commonTitle = 'Postpone for';
 
             const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
-                item.setTitle(`${commonTitle} ${amount > 1 ? amount : 'a '} ${timeUnit}`).onClick(() =>
+                const amountOrArticle = amount > 1 ? amount : 'a';
+                item.setTitle(`${commonTitle} ${amountOrArticle} ${timeUnit}`).onClick(() =>
                     this.getOnClickCallback(task, button, timeUnit, amount),
                 );
             };
@@ -454,9 +455,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             menu.addItem((item) => getMenuItemCallback(item, 'week'));
             menu.addItem((item) => getMenuItemCallback(item, 'weeks', 2));
             menu.addItem((item) => getMenuItemCallback(item, 'month'));
-            menu.addItem((item) => getMenuItemCallback(item, 'quarter'));
 
-            menu.showAtPosition({ x: ev.screenX, y: ev.screenY });
+            menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
     }
 
