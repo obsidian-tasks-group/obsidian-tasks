@@ -78,7 +78,6 @@
     padding: 0;
     background-color: transparent;
     display: contents;
-    font-size: var(--font-ui-large);
     cursor: pointer;
 }
 
