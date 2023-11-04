@@ -413,7 +413,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const classNames = shortMode ? ['internal-button', 'internal-button-short-mode'] : ['internal-button'];
         button.addClasses(classNames);
-        const buttonText = shortMode ? '⏩' : '⏩ Postpone';
+        const buttonText = shortMode ? ' ⏩' : ' ⏩ Postpone';
         button.setText(buttonText);
 
         button.addEventListener('click', () => this.getOnClickCallback(task, button, 'days'));
