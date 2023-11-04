@@ -3,10 +3,12 @@ import type { EventRef, MarkdownPostProcessorContext, MenuItem } from 'obsidian'
 import { TasksDate } from 'Scripting/TasksDate';
 import type { unitOfTime } from 'moment';
 import { GlobalQuery } from './Config/GlobalQuery';
+import { GlobalFilter } from './Config/GlobalFilter';
 import type { IQuery } from './IQuery';
 import { State } from './Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
+import { taskToLi } from './TaskLineRenderer';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import { Task } from './Task';
@@ -200,7 +202,12 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     // Use the 'explain' instruction to enable this
     private createExplanation(content: HTMLDivElement) {
-        const explanationAsString = explainResults(this.source, GlobalQuery.getInstance(), this.filePath);
+        const explanationAsString = explainResults(
+            this.source,
+            GlobalFilter.getInstance(),
+            GlobalQuery.getInstance(),
+            this.filePath,
+        );
 
         const explanationsBlock = content.createEl('pre');
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
@@ -214,21 +221,17 @@ class QueryRenderChild extends MarkdownRenderChild {
     }: {
         tasks: Task[];
         content: HTMLDivElement;
-    }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
-        const tasksCount = tasks.length;
-
+    }): Promise<HTMLUListElement> {
         const layout = new TaskLayout(this.query.layoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
         taskList.addClasses(layout.taskListHiddenClasses);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
-
-        for (let i = 0; i < tasksCount; i++) {
-            const task = tasks[i];
+        for (const [i, task] of tasks.entries()) {
             const isFilenameUnique = this.isFilenameUnique({ task });
 
-            const listItem = await task.toLi({
+            const listItem = await taskToLi(task, {
                 parentUlElement: taskList,
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
@@ -254,6 +257,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             }
 
             if (!this.query.layoutOptions.hideBacklinks) {
+                const shortMode = this.query.layoutOptions.shortMode;
                 this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
             }
 
@@ -261,10 +265,17 @@ class QueryRenderChild extends MarkdownRenderChild {
                 this.addEditButton(extrasSpan, task);
             }
 
+            // NEW
+            // if (!this.query.layoutOptions.hideSnoozeButton) {
+            //     this.addUnSnoozeButton(extrasSpan, task, shortMode);
+            //     this.addSnoozeButton1Day(extrasSpan, task, shortMode);
+            //     this.addSnoozeButton3Days(extrasSpan, task, shortMode);
+            // }
+
             taskList.appendChild(listItem);
         }
 
-        return { taskList, tasksCount };
+        return taskList;
     }
 
     private addEditButton(listItem: HTMLElement, task: Task) {
@@ -302,7 +313,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             // will be empty, and no headings will be added.
             this.addGroupHeadings(content, group.groupHeadings);
 
-            const { taskList } = await this.createTasksList({
+            const taskList = await this.createTasksList({
                 tasks: group.tasks,
                 content: content,
             });
@@ -432,13 +443,16 @@ class QueryRenderChild extends MarkdownRenderChild {
             const menu = new Menu();
             const commonTitle = 'Postpone for a';
 
-            const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor) => {
+            const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
                 item.setTitle(`${commonTitle} ${timeUnit}`).onClick(() =>
-                    this.getOnClickCallback(task, button, timeUnit),
+                    this.getOnClickCallback(task, button, timeUnit, amount),
                 );
             };
 
+            menu.addItem((item) => getMenuItemCallback(item, 'days', 2));
+            menu.addItem((item) => getMenuItemCallback(item, 'days', 3));
             menu.addItem((item) => getMenuItemCallback(item, 'week'));
+            menu.addItem((item) => getMenuItemCallback(item, 'weeks', 2));
             menu.addItem((item) => getMenuItemCallback(item, 'month'));
             menu.addItem((item) => getMenuItemCallback(item, 'quarter'));
 
@@ -485,16 +499,16 @@ class QueryRenderChild extends MarkdownRenderChild {
         task: Task,
         button: HTMLButtonElement,
         timeUnit: unitOfTime.DurationConstructor = 'days',
+        amount = 1,
     ) {
         const errorMessage = '⚠️ Postponement requires a date: due or scheduled.';
         if (!task.dueDate && !task.scheduledDate) return new Notice(errorMessage, 10000);
         const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
         const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
-        console.debug('🚀 ~ return ~ dateTypeToUpdate:', dateTypeToUpdate, timeUnit);
         if (dateTypeToUpdate === null) return;
 
         const dateToUpdate = task[dateTypeToUpdate];
-        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit);
+        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
         const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
 
         await replaceTaskWithTasks({

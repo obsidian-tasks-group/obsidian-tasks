@@ -230,7 +230,7 @@ describe('onlySuggestIfBracketOpen', () => {
 
 describe('canSuggestForLine', () => {
     afterEach(() => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
     });
 
     function canSuggestForLineWithCursor(line: string) {
@@ -238,22 +238,22 @@ describe('canSuggestForLine', () => {
     }
 
     it('should not suggest if there is no checkbox', () => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
         expect(canSuggestForLineWithCursor('- not a task line|')).toEqual(false);
     });
 
     it('should suggest if there is no global filter and cursor is in the description', () => {
-        GlobalFilter.reset();
+        GlobalFilter.getInstance().reset();
         expect(canSuggestForLineWithCursor('- [ ] global filter is not set|')).toEqual(true);
     });
 
     it('should suggest if global filter missing from line', () => {
-        GlobalFilter.set('#todo');
+        GlobalFilter.getInstance().set('#todo');
         expect(canSuggestForLineWithCursor('- [ ] #todo has global filter|')).toEqual(true);
     });
 
     it('should not suggest if global filter missing from line', () => {
-        GlobalFilter.set('#todo');
+        GlobalFilter.getInstance().set('#todo');
         expect(canSuggestForLineWithCursor('- [ ] no global filter|')).toEqual(false);
     });
 

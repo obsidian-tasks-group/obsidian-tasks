@@ -6,8 +6,6 @@ import { GlobalFilter } from './Config/GlobalFilter';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
-import { renderTaskLine } from './TaskLineRenderer';
-import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
 import { TasksDate } from './Scripting/TasksDate';
@@ -239,7 +237,7 @@ export class Task {
 
         // return if the line does not have the global filter. Do this before
         // any other processing to improve performance.
-        if (!GlobalFilter.includedIn(taskComponents.body)) {
+        if (!GlobalFilter.getInstance().includedIn(taskComponents.body)) {
             return null;
         }
 
@@ -286,7 +284,7 @@ export class Task {
         taskInfo.tags = taskInfo.tags.map((tag) => tag.trim());
 
         // Remove the Global Filter if it is there
-        taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.equals(tag));
+        taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.getInstance().equals(tag));
 
         return new Task({
             ...taskComponents,
@@ -329,16 +327,6 @@ export class Task {
         }
         return { indentation, listMarker, status, body, blockLink };
     }
-
-    /**
-     * Create an HTML rendered List Item element (LI) for the current task.
-     * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
-     * @param renderDetails
-     */
-    public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
-        return renderTaskLine(this, renderDetails);
-    }
-
     /**
      * Flatten the task as a string that includes all its components.
      *

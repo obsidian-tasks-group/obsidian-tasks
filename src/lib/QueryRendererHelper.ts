@@ -1,4 +1,4 @@
-import { GlobalFilter } from '../Config/GlobalFilter';
+import type { GlobalFilter } from '../Config/GlobalFilter';
 import type { GlobalQuery } from '../Config/GlobalQuery';
 import { Query } from '../Query/Query';
 
@@ -19,15 +19,21 @@ import { Query } from '../Query/Query';
  *     * Explains the query described by {@link source}
  *
  * @param {string} source The source of the task block to explain
- * @param globalQuery
+ * @param {GlobalFilter} globalFilter The global filter. In `src/`, generally pass in {@link GlobalFilter.getInstance}
+ * @param {GlobalQuery} globalQuery The global query. In `src/`, generally pass in {@link GlobalQuery.getInstance}
  * @param {string} path The location of the task block, if known
  * @returns {string}
  */
-export function explainResults(source: string, globalQuery: GlobalQuery, path: string | undefined = undefined): string {
+export function explainResults(
+    source: string,
+    globalFilter: GlobalFilter,
+    globalQuery: GlobalQuery,
+    path: string | undefined = undefined,
+): string {
     let result = '';
 
-    if (!GlobalFilter.isEmpty()) {
-        result += `Only tasks containing the global filter '${GlobalFilter.get()}'.\n\n`;
+    if (!globalFilter.isEmpty()) {
+        result += `Only tasks containing the global filter '${globalFilter.get()}'.\n\n`;
     }
 
     const tasksBlockQuery = new Query({ source }, path);

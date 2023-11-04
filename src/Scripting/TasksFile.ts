@@ -16,6 +16,17 @@ export class TasksFile {
     }
 
     /**
+     * Return the path to the file, with the filename extension removed.
+     */
+    get pathWithoutExtension(): string {
+        return this.withoutExtension(this.path);
+    }
+
+    private withoutExtension(value: string) {
+        return value.replace(/\.md$/, '');
+    }
+
+    /**
      * Return the root to the file.
      */
     get root(): string {
@@ -53,5 +64,9 @@ export class TasksFile {
         } else {
             return '';
         }
+    }
+
+    get filenameWithoutExtension(): string {
+        return this.withoutExtension(this.filename);
     }
 }

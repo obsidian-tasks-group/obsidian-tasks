@@ -1,46 +1,84 @@
 import * as RegExpTools from '../lib/RegExpTools';
-import { getSettings, updateSettings } from './Settings';
 
+/**
+ * GlobalFilter has its own data, independent of {@link Settings.globalFilter} value in {@link Settings}.
+ *
+ * See https://publish.obsidian.md/tasks/Getting+Started/Global+Filter
+ *
+ * Limitations:
+ * - All methods are static, so it is a collection of multiple static things
+ *     - This is in contrast to {@link GlobalQuery} what has just the one static method, {@link GlobalQuery.getInstance}.
+ *     - These static methods will be made non-static in a future change.
+ */
 export class GlobalFilter {
+    private static instance: GlobalFilter;
+
     static empty = '';
+    private _globalFilter = '';
+    private _removeGlobalFilter = false;
 
-    static get(): string {
-        const { globalFilter } = getSettings();
-        return globalFilter;
+    /**
+     * Provides access to the single global instance of GlobalFilter.
+     * This should eventually only be used in the plugin code.
+     */
+    public static getInstance(): GlobalFilter {
+        if (!GlobalFilter.instance) {
+            GlobalFilter.instance = new GlobalFilter();
+        }
+
+        return GlobalFilter.instance;
     }
 
-    static set(value: string) {
-        updateSettings({ globalFilter: value });
+    public get(): string {
+        return this._globalFilter;
     }
 
-    static reset() {
-        updateSettings({ globalFilter: GlobalFilter.empty });
+    public set(value: string) {
+        this._globalFilter = value;
     }
 
-    static isEmpty(): boolean {
-        return GlobalFilter.get() === GlobalFilter.empty;
+    public reset() {
+        this.set(GlobalFilter.empty);
     }
 
-    static equals(tag: string): boolean {
-        return GlobalFilter.get() === tag;
+    public isEmpty(): boolean {
+        return this.get() === GlobalFilter.empty;
     }
 
-    static includedIn(description: string): boolean {
-        const globalFilter = GlobalFilter.get();
+    public equals(tag: string): boolean {
+        return this.get() === tag;
+    }
+
+    public includedIn(description: string): boolean {
+        const globalFilter = this.get();
         return description.includes(globalFilter);
     }
 
-    static prependTo(description: string): string {
-        return GlobalFilter.get() + ' ' + description;
+    public prependTo(description: string): string {
+        return this.get() + ' ' + description;
     }
 
-    static removeAsWordFromDependingOnSettings(description: string): string {
-        const { removeGlobalFilter } = getSettings();
+    public removeAsWordFromDependingOnSettings(description: string): string {
+        const removeGlobalFilter = this.getRemoveGlobalFilter();
         if (removeGlobalFilter) {
-            return GlobalFilter.removeAsWordFrom(description);
+            return this.removeAsWordFrom(description);
         }
 
         return description;
+    }
+
+    /**
+     * @see setRemoveGlobalFilter
+     */
+    public getRemoveGlobalFilter() {
+        return this._removeGlobalFilter;
+    }
+
+    /**
+     * @see getRemoveGlobalFilter
+     */
+    public setRemoveGlobalFilter(removeGlobalFilter: boolean) {
+        this._removeGlobalFilter = removeGlobalFilter;
     }
 
     /**
@@ -49,13 +87,13 @@ export class GlobalFilter {
      * or a space), because we don't want to cut-off nested tags like #task/subtag.
      * If the global filter exists as part of a nested tag, we keep it untouched.
      */
-    static removeAsWordFrom(description: string): string {
-        if (GlobalFilter.isEmpty()) {
+    public removeAsWordFrom(description: string): string {
+        if (this.isEmpty()) {
             return description;
         }
 
         // This matches the global filter (after escaping it) only when it's a complete word
-        const theRegExp = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.get()) + '($|\\s)', 'ug');
+        const theRegExp = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(this.get()) + '($|\\s)', 'ug');
 
         if (description.search(theRegExp) > -1) {
             description = description.replace(theRegExp, '$1$2').replace('  ', ' ').trim();
@@ -64,8 +102,8 @@ export class GlobalFilter {
         return description;
     }
 
-    static removeAsSubstringFrom(description: string): string {
-        const globalFilter = GlobalFilter.get();
+    public removeAsSubstringFrom(description: string): string {
+        const globalFilter = this.get();
         return description.replace(globalFilter, '').trim();
     }
 }

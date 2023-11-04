@@ -38,22 +38,22 @@ describe('grouping by backlink', () => {
         ['', 'heading', ['Unknown Location']],
 
         // no heading supplied
-        ['a/b/c.md', null, ['c']],
+        ['a/b/c.md', null, ['[[c]]']],
 
         // File and heading, nominal case
-        ['a/b/c.md', 'heading', ['c > heading']],
+        ['a/b/c.md', 'heading', ['[[c#heading|c > heading]]']],
 
-        // If file name and heading are identical, avoid duplication ('c > c')
-        ['a/b/c.md', 'c', ['c']],
+        // If file name and heading are identical, allow duplication ('c > c'), in order to link to correct section
+        ['a/b/c.md', 'c', ['[[c#c|c > c]]']],
 
-        // If file name and heading are identical, avoid duplication, even if there are underscores in the file name
-        ['a_b_c.md', 'a_b_c', ['a\\_b\\_c']],
+        // If file name and heading are identical, allow duplication, even if there are underscores in the file name
+        ['a_b_c.md', 'a_b_c', ['[[a_b_c#a_b_c|a_b_c > a_b_c]]']],
 
-        // Underscores in file name component are escaped
-        ['a/b/_c_.md', null, ['\\_c\\_']],
+        // Underscores in filename component are not escaped
+        ['a/b/_c_.md', null, ['[[_c_]]']],
 
-        // But underscores in the heading component are not
-        ['a/b/_c_.md', 'heading _italic text_', ['\\_c\\_ > heading _italic text_']],
+        // Underscores in the heading component are not escaped either
+        ['a/b/_c_.md', 'heading _italic text_', ['[[_c_#heading _italic text_|_c_ > heading _italic text_]]']],
     ])(
         'path "%s" and heading "%s" should have groups: %s',
         (path: string, heading: string | null, groups: string[]) => {
@@ -73,12 +73,13 @@ describe('grouping by backlink', () => {
 
         // Assert
         expect({ grouper, tasks }).groupHeadingsToBe([
-            '\\_c\\_',
-            '\\_c\\_ > heading _italic text_',
-            'a\\_b\\_c',
-            'b',
-            'c',
-            'c > heading',
+            '[[_c_]]',
+            '[[_c_#heading _italic text_|_c_ > heading _italic text_]]',
+            '[[a_b_c#a_b_c|a_b_c > a_b_c]]',
+            '[[b]]',
+            '[[c]]',
+            '[[c#c|c > c]]',
+            '[[c#heading|c > heading]]',
             'Unknown Location',
         ]);
     });

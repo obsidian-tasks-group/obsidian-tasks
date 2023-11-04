@@ -44,16 +44,6 @@ export type TextRenderer = (
     obsidianComponent: Component | null, // null is allowed here only for tests
 ) => Promise<void>;
 
-async function obsidianMarkdownRenderer(
-    text: string,
-    element: HTMLSpanElement,
-    path: string,
-    obsidianComponent: Component | null,
-) {
-    if (!obsidianComponent) throw new Error('Must call the Obsidian renderer with an Obsidian Component object');
-    await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
-}
-
 /**
  * Renders a given Task object into an HTML List Item (LI) element, using the given renderDetails
  * configuration and a supplied TextRenderer (typically the Obsidian Markdown renderer, but for testing
@@ -64,9 +54,8 @@ async function obsidianMarkdownRenderer(
 export async function renderTaskLine(
     task: Task,
     renderDetails: TaskLineRenderDetails,
-    textRenderer: TextRenderer | null = null,
+    textRenderer: TextRenderer,
 ): Promise<HTMLLIElement> {
-    if (!textRenderer) textRenderer = obsidianMarkdownRenderer;
     const li: HTMLLIElement = document.createElement('li');
     renderDetails.parentUlElement.appendChild(li);
 
@@ -139,7 +128,7 @@ async function taskToHtml(
         let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
             if (component === 'description') {
-                componentString = GlobalFilter.removeAsWordFromDependingOnSettings(componentString);
+                componentString = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(componentString);
             }
             // Create the text span that will hold the rendered component
             const span = document.createElement('span');
@@ -435,4 +424,24 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
     return `${signifier} ${date.format(taskModule.TaskRegularExpressions.dateFormat)} (${date.from(
         window.moment().startOf('day'),
     )})`;
+}
+
+/**
+ * Create an HTML rendered List Item element (LI) for a task.
+ * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
+ * @param task
+ * @param renderDetails
+ */
+export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
+    async function obsidianMarkdownRenderer(
+        text: string,
+        element: HTMLSpanElement,
+        path: string,
+        obsidianComponent: Component | null,
+    ) {
+        if (!obsidianComponent) throw new Error('Must call the Obsidian renderer with an Obsidian Component object');
+        await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
+    }
+
+    return renderTaskLine(task, renderDetails, obsidianMarkdownRenderer);
 }

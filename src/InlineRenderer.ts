@@ -2,6 +2,7 @@ import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { Task } from './Task';
+import { taskToLi } from './TaskLineRenderer';
 import { TaskLocation } from './TaskLocation';
 
 export class InlineRenderer {
@@ -46,7 +47,7 @@ export class InlineRenderer {
                 return false;
             }
 
-            return GlobalFilter.includedIn(firstLineText);
+            return GlobalFilter.getInstance().includedIn(firstLineText);
         });
         if (renderedElements.length === 0) {
             // No tasks means nothing to do.
@@ -99,7 +100,7 @@ export class InlineRenderer {
 
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const listIndex: number = Number.parseInt(dataLine, 10);
-            const taskElement = await task.toLi({
+            const taskElement = await taskToLi(task, {
                 parentUlElement: element,
                 listIndex,
                 obsidianComponent: childComponent,

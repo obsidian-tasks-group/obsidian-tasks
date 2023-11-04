@@ -1,61 +1,109 @@
-import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 
 describe('Global Filter tests', () => {
-    afterEach(() => {
-        GlobalFilter.reset();
+    it('getInstance() should return the same object', () => {
+        const globalFilter1 = GlobalFilter.getInstance();
+        const globalFilter2 = GlobalFilter.getInstance();
+
+        expect(Object.is(globalFilter1, globalFilter2)).toEqual(true);
     });
 
     it('Should provide Global Filter with the default value with get()', () => {
-        expect(GlobalFilter.get()).toEqual('');
+        const globalFilter = new GlobalFilter();
+        expect(globalFilter.get()).toEqual('');
     });
 
     it('Should set new Global Filter', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
-        GlobalFilter.set(testValue);
+        const globalFilter = new GlobalFilter();
+
+        // Act
+        globalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.get()).toEqual(testValue);
+        expect(globalFilter.get()).toEqual(testValue);
+    });
+
+    it('Should allow independent values for independent instances', () => {
+        // Arrange
+        const globalFilter1 = new GlobalFilter();
+        const globalFilter2 = new GlobalFilter();
+
+        // Act
+        globalFilter1.set('1');
+        globalFilter2.set('2');
+
+        // Assert
+        expect(globalFilter1.get()).toEqual('1');
+        expect(globalFilter2.get()).toEqual('2');
     });
 
     it('Should reset the Global Filter', () => {
         // Arrange
         const testValue = '#important';
-        GlobalFilter.set(testValue);
-        GlobalFilter.reset();
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(testValue);
+
+        // Act
+        globalFilter.reset();
 
         // Assert
-        expect(GlobalFilter.get()).toEqual('');
+        expect(globalFilter.get()).toEqual('');
     });
 
     it('Should indicate empty Global Filter by default', () => {
         // Assert
-        expect(GlobalFilter.isEmpty()).toEqual(true);
+        const globalFilter = new GlobalFilter();
+        expect(globalFilter.isEmpty()).toEqual(true);
     });
 
     it('Should indicate non-empty Global Filter after setting one', () => {
         // Arrange
-        GlobalFilter.set('newGlobalFilter');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('newGlobalFilter');
 
         // Assert
-        expect(GlobalFilter.isEmpty()).toEqual(false);
+        expect(globalFilter.isEmpty()).toEqual(false);
     });
 
     it('Should match a string with Global Filter', () => {
         // Arrange
-        GlobalFilter.set('#task');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('#task');
 
         // Assert
-        expect(GlobalFilter.includedIn('Important #task inside')).toEqual(true);
+        expect(globalFilter.includedIn('Important #task inside')).toEqual(true);
+    });
+
+    it('Should check equality correctly', () => {
+        // Arrange
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('#task');
+
+        // Assert
+        expect(globalFilter.equals('#task')).toEqual(true);
+        expect(globalFilter.equals('#tasks')).toEqual(false);
+        expect(globalFilter.equals('#TODO')).toEqual(false);
     });
 
     it('Should not match a string without Global Filter', () => {
         // Arrange
-        GlobalFilter.set('testValue');
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('testValue');
 
         // Assert
-        expect(GlobalFilter.includedIn('Without Global Filter')).toEqual(false);
+        expect(globalFilter.includedIn('Without Global Filter')).toEqual(false);
+    });
+
+    it('Should control whether to remove the global filter from displayed tasks', () => {
+        const globalFilter = new GlobalFilter();
+
+        globalFilter.setRemoveGlobalFilter(false);
+        expect(globalFilter.getRemoveGlobalFilter()).toEqual(false);
+
+        globalFilter.setRemoveGlobalFilter(true);
+        expect(globalFilter.getRemoveGlobalFilter()).toEqual(true);
     });
 
     it('Should remove Global Filter from the beginning of a string', () => {
@@ -63,10 +111,11 @@ describe('Global Filter tests', () => {
         const testValue = '#end';
         const testStringBefore = 'Important thing to do #end';
         const testStringAfter = 'Important thing to do';
-        GlobalFilter.set(testValue);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+        expect(globalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
     it('Should remove Global Filter from the end of a string', () => {
@@ -74,10 +123,11 @@ describe('Global Filter tests', () => {
         const testValue = '#beginning';
         const testStringBefore = '#beginning another important thing';
         const testStringAfter = 'another important thing';
-        GlobalFilter.set(testValue);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+        expect(globalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
     it('Should remove Global Filter in the middle of a string', () => {
@@ -86,37 +136,35 @@ describe('Global Filter tests', () => {
         const testStringBefore = 'With the GF in the #middle of the string';
         // Note the 2 spaces where the 'newGlobalFilter' was
         const testStringAfter = 'With the GF in the  of the string';
-        GlobalFilter.set(testValue);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+        expect(globalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 });
 
 describe('Global Filter tests with Remove Global Filter Setting', () => {
-    afterEach(() => {
-        GlobalFilter.reset();
-        resetSettings();
-    });
-
     it('Should remove Global Filter from a string when Setting is set to false', () => {
         // Arrange
-        GlobalFilter.set('todo');
-        updateSettings({ removeGlobalFilter: false });
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('todo');
+        globalFilter.setRemoveGlobalFilter(false);
 
         // Assert
-        expect(GlobalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
+        expect(globalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
             'This is absolutely todo',
         );
     });
 
     it('Should remove Global Filter from a string when Setting is set to true', () => {
         // Arrange
-        GlobalFilter.set('todo');
-        updateSettings({ removeGlobalFilter: true });
+        const globalFilter = new GlobalFilter();
+        globalFilter.set('todo');
+        globalFilter.setRemoveGlobalFilter(true);
 
         // Assert
-        expect(GlobalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
+        expect(globalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
             'This is absolutely',
         );
     });
@@ -133,153 +181,147 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
         ['TODO', 'at the end TODO/maybe'],
     ])(
         'should not remove Global Filter (%s) if it is in a substring for a task "- [ ] %s"',
-        async (globalFilter: string, description: string) => {
-            updateSettings({ removeGlobalFilter: true });
-            GlobalFilter.set(globalFilter);
+        async (globalFilterValue: string, description: string) => {
+            const globalFilter = new GlobalFilter();
+            globalFilter.setRemoveGlobalFilter(true);
+            globalFilter.set(globalFilterValue);
 
-            expect(GlobalFilter.removeAsWordFrom(description)).toEqual(description);
+            expect(globalFilter.removeAsWordFrom(description)).toEqual(description);
         },
     );
 });
 
 describe('check removal of the global filter', () => {
-    afterEach(() => {
-        GlobalFilter.reset();
-    });
-
     type GlobalFilterRemovalExpectation = {
-        globalFilter: string;
+        globalFilterValue: string;
         inputDescription: string;
         expectedDescription: string;
     };
 
     test.each<GlobalFilterRemovalExpectation>([
         {
-            globalFilter: '#task',
+            globalFilterValue: '#task',
             inputDescription: '#task this is a very simple task',
             expectedDescription: 'this is a very simple task',
         },
         {
-            globalFilter: '',
+            globalFilterValue: '',
             inputDescription: '#task this is a very simple task',
             expectedDescription: '#task this is a very simple task',
         },
         {
-            globalFilter: '🞋',
+            globalFilterValue: '🞋',
             inputDescription: 'task with emoji 🞋 global filter',
             expectedDescription: 'task with emoji global filter',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: 'task with #t global filter in the middle',
             expectedDescription: 'task with global filter in the middle',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: 'task with global filter in the end #t',
             expectedDescription: 'task with global filter in the end',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: 'task #t with #t several global #t filters #t',
             // Trailing spaces present after the first removal
             expectedDescription: 'task with  several global  filters',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: 'task with global filter in the end and some spaces  #t  ',
             expectedDescription: 'task with global filter in the end and some spaces',
         },
         {
-            globalFilter: '#complex/global/filter',
+            globalFilterValue: '#complex/global/filter',
             inputDescription: 'task with #complex/global/filter in the middle',
             expectedDescription: 'task with in the middle',
         },
         {
-            globalFilter: '#task',
+            globalFilterValue: '#task',
             inputDescription: 'task with an extension of the global filter #task/with/extension',
             expectedDescription: 'task with an extension of the global filter #task/with/extension',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: 'task with #t multiple global filters #t',
             expectedDescription: 'task with multiple global filters',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: '#t', // confirm behaviour when the description is empty
             expectedDescription: '',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: '#t #t',
             // Wrong behaviour - the expected should be empty
             expectedDescription: '#t',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: '#t #t #t',
             // Wrong behaviour - the expected should be empty
             expectedDescription: '#t',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: '#t #t #t #t',
             // Wrong behaviour - the expected should be empty
             expectedDescription: '#t #t',
         },
         {
-            globalFilter: '#t',
+            globalFilterValue: '#t',
             inputDescription: '#t #t #t #t #t',
             // Wrong behaviour - the expected should be empty
             expectedDescription: '#t #t',
         },
         {
-            globalFilter: 'some',
+            globalFilterValue: 'some',
             inputDescription: 'some', // confirm behaviour when the description is empty
             expectedDescription: '',
         },
         {
-            globalFilter: 'some',
+            globalFilterValue: 'some',
             inputDescription: 'some some',
             // Wrong behaviour - the expected should be empty
             expectedDescription: 'some',
         },
         {
-            globalFilter: 'some',
+            globalFilterValue: 'some',
             inputDescription: 'some some some',
             // Wrong behaviour - the expected should be empty
             expectedDescription: 'some',
         },
         {
-            globalFilter: 'some',
+            globalFilterValue: 'some',
             inputDescription: 'some some some some',
             // Wrong behaviour - the expected should be empty
             expectedDescription: 'some some',
         },
         {
-            globalFilter: 'some',
+            globalFilterValue: 'some',
             inputDescription: 'some some some some some',
             // Wrong behaviour - the expected should be empty
             expectedDescription: 'some some',
         },
     ])(
         'should parse "$inputDescription" and extract "$expectedDescription"',
-        ({ globalFilter, inputDescription, expectedDescription }) => {
+        ({ globalFilterValue, inputDescription, expectedDescription }) => {
             // Arrange
-            GlobalFilter.set(globalFilter);
+            const globalFilter = new GlobalFilter();
+            globalFilter.set(globalFilterValue);
 
             // Assert
-            expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+            expect(globalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
         },
     );
 });
 
 describe('check removal of the global filter exhaustively', () => {
-    afterEach(() => {
-        GlobalFilter.reset();
-    });
-
     test.each<string>([
         '#t',
         // The characters listed below are the ones that are - or were - escaped by
@@ -314,44 +356,43 @@ describe('check removal of the global filter exhaustively', () => {
         // Failed attempt at creating a failing test for when / was not escaped
         '///',
         '\\',
-    ])('should parse global filter "%s" edge cases correctly', (globalFilter) => {
+    ])('should parse global filter "%s" edge cases correctly', (globalFilterValue) => {
         // Arrange
-        GlobalFilter.set(globalFilter);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(globalFilterValue);
 
         // global filter removed at beginning, middle and end
-        let inputDescription = `${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
+        let inputDescription = `${globalFilterValue} 1 ${globalFilterValue} 2 ${globalFilterValue}`;
         let expectedDescription = '1 2';
-        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+        expect(globalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
         // global filter not removed if non-empty non-tag characters before or after it
-        inputDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
-        expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
-        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+        inputDescription = `${globalFilterValue}x 1 x${globalFilterValue} ${globalFilterValue}x 2 x${globalFilterValue}`;
+        expectedDescription = `${globalFilterValue}x 1 x${globalFilterValue} ${globalFilterValue}x 2 x${globalFilterValue}`;
+        expect(globalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
         // global filter not removed if non-empty sub-tag characters after it.
         // Include at least one occurrence of global filter, so we don't pass by luck.
-        inputDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
-        expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
-        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
+        inputDescription = `${globalFilterValue}/x 1 x${globalFilterValue} ${globalFilterValue}/x 2 ${globalFilterValue} ${globalFilterValue}/x`;
+        expectedDescription = `${globalFilterValue}/x 1 x${globalFilterValue} ${globalFilterValue}/x 2 ${globalFilterValue}/x`;
+        expect(globalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
     });
 });
 
 describe('GlobalFilter.prepend() tests', () => {
-    afterEach(() => {
-        GlobalFilter.reset();
-    });
-
     it('Should prepend Global Filter', () => {
-        const globalFilter = 'awesome';
+        const globalFilterValue = 'awesome';
         const description = 'blossom';
 
-        GlobalFilter.set(globalFilter);
-        expect(GlobalFilter.prependTo(description)).toEqual(`${globalFilter} ${description}`);
+        const globalFilter = new GlobalFilter();
+        globalFilter.set(globalFilterValue);
+        expect(globalFilter.prependTo(description)).toEqual(`${globalFilterValue} ${description}`);
     });
 
     it('Should prepend not prepend empty Global Filter', () => {
         // Note that an empty space is currently prepended in case the Global Filter is empty
         // Not fixing this for now in a refactoring PR
-        expect(GlobalFilter.prependTo('description')).toEqual(' description');
+        const globalFilter = new GlobalFilter();
+        expect(globalFilter.prependTo('description')).toEqual(' description');
     });
 });

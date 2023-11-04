@@ -16,6 +16,7 @@ import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
 import type { Task } from './Task';
 import { tasksApiV1 } from './Api';
+import { GlobalFilter } from './Config/GlobalFilter';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -69,6 +70,8 @@ export default class TasksPlugin extends Plugin {
     async loadSettings() {
         const newSettings = await this.loadData();
         updateSettings(newSettings);
+        GlobalFilter.getInstance().set(newSettings.globalFilter);
+        GlobalFilter.getInstance().setRemoveGlobalFilter(newSettings.removeGlobalFilter);
         GlobalQuery.getInstance().set(newSettings.globalQuery);
         await this.loadTaskStatuses();
     }
