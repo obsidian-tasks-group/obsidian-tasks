@@ -165,11 +165,7 @@ export const getSettings = (): Settings => {
     // Check to see if any new logging options need to be added to the user's settings.
     const defaultLoggingLevels: { [p: string]: string } = defaultSettings.loggingOptions.minLevels;
     const userValues = settings.loggingOptions.minLevels;
-    for (const key in defaultLoggingLevels) {
-        if (userValues[key] === undefined) {
-            userValues[key] = defaultLoggingLevels[key];
-        }
-    }
+    addNewOptionsToUserSettings(defaultLoggingLevels, userValues);
 
     // In case saves pre-dated StatusConfiguration.type
     // TODO Special case for symbol 'X' or 'x' (just in case)
