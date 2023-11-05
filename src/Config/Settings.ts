@@ -131,12 +131,24 @@ const defaultSettings: Settings = {
         minLevels: {
             '': 'info',
             tasks: 'info',
-            Query: 'info',
+            'tasks.Cache': 'info', // Cache.ts
+            'tasks.Events': 'info', // TasksEvents.ts
+            'tasks.File': 'info', // File.ts
+            'tasks.Query': 'info', // Query.ts & QueryRenderer.ts
+            'tasks.Task': 'info', // Task.ts
         },
     },
 };
 
 let settings: Settings = { ...defaultSettings };
+
+function addNewOptionsToUserSettings<KeysAndValues>(defaultValues: KeysAndValues, userValues: KeysAndValues) {
+    for (const flag in defaultValues) {
+        if (userValues[flag] === undefined) {
+            userValues[flag] = defaultValues[flag];
+        }
+    }
+}
 
 /**
  * Returns the current settings as a object, it will also check and
@@ -148,11 +160,10 @@ let settings: Settings = { ...defaultSettings };
  */
 export const getSettings = (): Settings => {
     // Check to see if there is a new flag and if so add it to the users settings.
-    for (const flag in Feature.settingsFlags) {
-        if (settings.features[flag] === undefined) {
-            settings.features[flag] = Feature.settingsFlags[flag];
-        }
-    }
+    addNewOptionsToUserSettings(Feature.settingsFlags, settings.features);
+
+    // Check to see if any new logging options need to be added to the user's settings.
+    addNewOptionsToUserSettings(defaultSettings.loggingOptions.minLevels, settings.loggingOptions.minLevels);
 
     // In case saves pre-dated StatusConfiguration.type
     // TODO Special case for symbol 'X' or 'x' (just in case)
