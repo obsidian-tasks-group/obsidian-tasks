@@ -142,7 +142,7 @@ const defaultSettings: Settings = {
 
 let settings: Settings = { ...defaultSettings };
 
-function addNewOptionsToUserSettings(defaultValues: FeatureFlag, userValues: FeatureFlag) {
+function addNewOptionsToUserSettings<KeysAndValues>(defaultValues: KeysAndValues, userValues: KeysAndValues) {
     for (const flag in defaultValues) {
         if (userValues[flag] === undefined) {
             userValues[flag] = defaultValues[flag];
@@ -164,9 +164,10 @@ export const getSettings = (): Settings => {
 
     // Check to see if any new logging options need to be added to the user's settings.
     const defaultLoggingLevels: { [p: string]: string } = defaultSettings.loggingOptions.minLevels;
+    const userValues = settings.loggingOptions.minLevels;
     for (const key in defaultLoggingLevels) {
-        if (settings.loggingOptions.minLevels[key] === undefined) {
-            settings.loggingOptions.minLevels[key] = defaultLoggingLevels[key];
+        if (userValues[key] === undefined) {
+            userValues[key] = defaultLoggingLevels[key];
         }
     }
 
