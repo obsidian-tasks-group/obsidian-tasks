@@ -50,8 +50,8 @@ export class Query implements IQuery {
         this.source = source;
         this.filePath = path;
 
-        this.logger.debugWithId(this._queryId, 'Source Path', this.filePath);
-        this.logger.infoWithId(this._queryId, 'Source Query', this.source);
+        this.debug('Source Path', this.filePath);
+        this.debug('Source Query', this.source);
 
         scan(source).forEach((rawLine: string) => {
             const line = this.expandPlaceholders(rawLine, path);
@@ -397,5 +397,9 @@ Problem line: "${line}"`;
 
         const randomString = randomArray.join('');
         return randomString;
+    }
+
+    public debug(message: string, objects?: any): void {
+        this.logger.debugWithId(this._queryId, `"${this.filePath}": ${message}`, objects);
     }
 }
