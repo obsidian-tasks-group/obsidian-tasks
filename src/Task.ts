@@ -12,6 +12,7 @@ import { TasksDate } from './Scripting/TasksDate';
 import { StatusType } from './StatusConfiguration';
 import { TasksFile } from './Scripting/TasksFile';
 import { PriorityTools } from './lib/PriorityTools';
+import { logging } from './lib/logging';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -366,6 +367,11 @@ export class Task {
      *
      */
     public toggle(): Task[] {
+        const logger = logging.getLogger('tasks.Task');
+        logger.trace(
+            `toggling task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown}`,
+        );
+
         const newStatus = StatusRegistry.getInstance().getNextStatusOrCreate(this.status);
 
         let newDoneDate = null;
