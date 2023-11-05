@@ -50,7 +50,7 @@ export class Query implements IQuery {
         this.source = source;
         this.filePath = path;
 
-        this.debug(`Creating query: [${this.source.split('\n').join(' ; ')}]`);
+        this.debug(`Creating query: [${this.formatQueryForLogging()}]`);
 
         scan(source).forEach((rawLine: string) => {
             const line = this.expandPlaceholders(rawLine, path);
@@ -88,6 +88,10 @@ export class Query implements IQuery {
                     this.setError('do not understand query', line);
             }
         });
+    }
+
+    private formatQueryForLogging() {
+        return this.source.split('\n').join(' ; ');
     }
 
     private expandPlaceholders(source: string, path: string | undefined) {
@@ -253,7 +257,7 @@ Problem line: "${line}"`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
-        this.debug(`Executing query: [${this.source.split('\n').join(' ; ')}]`);
+        this.debug(`Executing query: [${this.formatQueryForLogging()}]`);
 
         const searchInfo = new SearchInfo(this.filePath, tasks);
         try {
