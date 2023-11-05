@@ -50,8 +50,7 @@ export class Query implements IQuery {
         this.source = source;
         this.filePath = path;
 
-        this.debug('Source Path', this.filePath);
-        this.debug('Source Query', this.source);
+        this.debug(`Creating query: [${this.source.split('\n').join(' ; ')}]`);
 
         scan(source).forEach((rawLine: string) => {
             const line = this.expandPlaceholders(rawLine, path);
