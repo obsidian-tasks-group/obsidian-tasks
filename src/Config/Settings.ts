@@ -152,9 +152,11 @@ let settings: Settings = { ...defaultSettings };
  */
 export const getSettings = (): Settings => {
     // Check to see if there is a new flag and if so add it to the users settings.
-    for (const flag in Feature.settingsFlags) {
-        if (settings.features[flag] === undefined) {
-            settings.features[flag] = Feature.settingsFlags[flag];
+    const defaultValues = Feature.settingsFlags;
+    const userValues = settings.features;
+    for (const flag in defaultValues) {
+        if (userValues[flag] === undefined) {
+            userValues[flag] = defaultValues[flag];
         }
     }
 
