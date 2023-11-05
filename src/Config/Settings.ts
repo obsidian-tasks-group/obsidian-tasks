@@ -131,11 +131,11 @@ const defaultSettings: Settings = {
         minLevels: {
             '': 'info',
             tasks: 'info',
-            Cache: 'info',
-            Events: 'info',
-            File: 'info',
-            Query: 'info',
-            Task: 'info',
+            'tasks.Cache': 'info',
+            'tasks.Events': 'info',
+            'tasks.File': 'info',
+            'tasks.Query': 'info',
+            'tasks.Task': 'info',
         },
     },
 };
@@ -155,6 +155,14 @@ export const getSettings = (): Settings => {
     for (const flag in Feature.settingsFlags) {
         if (settings.features[flag] === undefined) {
             settings.features[flag] = Feature.settingsFlags[flag];
+        }
+    }
+
+    // Check to see if any new logging options need to be added to the user's settings.
+    const defaultLoggingLevels: { [p: string]: string } = defaultSettings.loggingOptions.minLevels;
+    for (const key in defaultLoggingLevels) {
+        if (settings.loggingOptions.minLevels[key] === undefined) {
+            settings.loggingOptions.minLevels[key] = defaultLoggingLevels[key];
         }
     }
 
