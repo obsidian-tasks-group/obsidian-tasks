@@ -131,11 +131,11 @@ const defaultSettings: Settings = {
         minLevels: {
             '': 'info',
             tasks: 'info',
-            'tasks.Cache': 'info',
-            'tasks.Events': 'info',
-            'tasks.File': 'info',
-            'tasks.Query': 'info',
-            'tasks.Task': 'info',
+            'tasks.Cache': 'info', // Cache.ts
+            'tasks.Events': 'info', // TasksEvents.ts
+            'tasks.File': 'info', // File.ts
+            'tasks.Query': 'info', // Query.ts & QueryRenderer.ts
+            'tasks.Task': 'info', // Task.ts
         },
     },
 };
