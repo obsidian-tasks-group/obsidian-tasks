@@ -67,4 +67,14 @@ export interface IQuery {
      * This is currently displayed as a <pre> block, retaining indentation.
      */
     explainQuery: () => string;
+
+    /**
+     * Write a debug log message.
+     *
+     * This is provided to allow the query rendering code to log progress on the rendering,
+     * including meaningful information about the query being rendered.
+     * @param message
+     * @param objects
+     */
+    debug(message: string, objects?: any): void;
 }
