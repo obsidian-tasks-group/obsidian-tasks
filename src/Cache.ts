@@ -43,7 +43,7 @@ export class Cache {
     private loadedAfterFirstResolve: boolean;
 
     constructor({ metadataCache, vault, events }: { metadataCache: MetadataCache; vault: Vault; events: TasksEvents }) {
-        this.logger.info('Creating Cache object');
+        this.logger.debug('Creating Cache object');
 
         this.metadataCache = metadataCache;
         this.metadataCacheEventReferences = [];
