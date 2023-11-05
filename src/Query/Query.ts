@@ -254,7 +254,7 @@ Problem line: "${line}"`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
-        this.logger.infoWithId(this._queryId, `Executing query: [${this.source}]`);
+        this.debug(`Executing query: [${this.source.split('\n').join(' ; ')}]`);
 
         const searchInfo = new SearchInfo(this.filePath, tasks);
         try {
