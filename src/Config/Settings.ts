@@ -142,6 +142,14 @@ const defaultSettings: Settings = {
 
 let settings: Settings = { ...defaultSettings };
 
+function addNewOptionsToUserSettings(defaultValues: FeatureFlag, userValues: FeatureFlag) {
+    for (const flag in defaultValues) {
+        if (userValues[flag] === undefined) {
+            userValues[flag] = defaultValues[flag];
+        }
+    }
+}
+
 /**
  * Returns the current settings as a object, it will also check and
  * update the flags to make sure they are all shown in the data.json
@@ -154,11 +162,7 @@ export const getSettings = (): Settings => {
     // Check to see if there is a new flag and if so add it to the users settings.
     const defaultValues = Feature.settingsFlags;
     const userValues = settings.features;
-    for (const flag in defaultValues) {
-        if (userValues[flag] === undefined) {
-            userValues[flag] = defaultValues[flag];
-        }
-    }
+    addNewOptionsToUserSettings(defaultValues, userValues);
 
     // Check to see if any new logging options need to be added to the user's settings.
     const defaultLoggingLevels: { [p: string]: string } = defaultSettings.loggingOptions.minLevels;
