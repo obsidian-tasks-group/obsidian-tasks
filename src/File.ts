@@ -10,7 +10,7 @@ let workspace: Workspace | undefined;
 
 const supportedFileExtensions = ['md'];
 
-const logger = logging.getLogger('tasks');
+const logger = logging.getLogger('tasks.File');
 
 export type ErrorLoggingFunction = (message: string) => void;
 
