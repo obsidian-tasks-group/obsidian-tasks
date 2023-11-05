@@ -160,9 +160,7 @@ function addNewOptionsToUserSettings(defaultValues: FeatureFlag, userValues: Fea
  */
 export const getSettings = (): Settings => {
     // Check to see if there is a new flag and if so add it to the users settings.
-    const defaultValues = Feature.settingsFlags;
-    const userValues = settings.features;
-    addNewOptionsToUserSettings(defaultValues, userValues);
+    addNewOptionsToUserSettings(Feature.settingsFlags, settings.features);
 
     // Check to see if any new logging options need to be added to the user's settings.
     const defaultLoggingLevels: { [p: string]: string } = defaultSettings.loggingOptions.minLevels;
