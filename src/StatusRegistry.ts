@@ -326,26 +326,35 @@ export class StatusRegistry {
         return `
 \`\`\`${language}
 flowchart LR
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
 ${nodes.join('\n')}
 ${edges.join('\n')}
+
+linkStyle default stroke:gray
 \`\`\`
 `;
     }
 
     private getMermaidNodeLabel(status: Status, includeDetails: boolean) {
         const statusName = htmlEncodeString(status.name);
+        const statusType = status.type;
         if (includeDetails) {
             const statusSymbol = htmlEncodeCharacter(status.symbol);
             const statusNextStatusSymbol = htmlEncodeCharacter(status.nextStatusSymbol);
-            const statusType = status.type;
 
             const transitionText = `[${statusSymbol}] -> [${statusNextStatusSymbol}]`;
             const statusNameText = `'${statusName}'`;
             const statusTypeText = `(${statusType})`;
 
-            return `["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]`;
+            return `["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]:::${statusType}`;
         } else {
-            return `["${statusName}"]`;
+            return `["${statusName}"]:::${statusType}`;
         }
     }
 }
