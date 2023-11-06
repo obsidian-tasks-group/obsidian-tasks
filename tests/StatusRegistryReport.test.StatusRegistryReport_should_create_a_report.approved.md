@@ -39,16 +39,25 @@ These are the settings actually used by Tasks.
 
 ```mermaid
 flowchart LR
-1["'Todo'<br>[ ] -> [x]<br>(TODO)"]
-2["'Done'<br>[x] -> [ ]<br>(DONE)"]
-3["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]
-4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]
-5["'Question'<br>[Q] -> [A]<br>(NON_TASK)"]
-6["'Answer'<br>[A] -> [Q]<br>(NON_TASK)"]
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+1["'Todo'<br>[ ] -> [x]<br>(TODO)"]:::TODO
+2["'Done'<br>[x] -> [ ]<br>(DONE)"]:::DONE
+3["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]:::IN_PROGRESS
+4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]:::CANCELLED
+5["'Question'<br>[Q] -> [A]<br>(NON_TASK)"]:::NON_TASK
+6["'Answer'<br>[A] -> [Q]<br>(NON_TASK)"]:::NON_TASK
 1 --> 2
 2 --> 1
 3 --> 2
 4 --> 1
 5 --> 6
 6 --> 5
+
+linkStyle default stroke:gray
 ```
