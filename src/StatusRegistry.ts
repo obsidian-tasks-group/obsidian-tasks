@@ -309,21 +309,8 @@ export class StatusRegistry {
         const nodes: string[] = [];
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
-            const statusName = htmlEncodeString(status.name);
-            if (includeDetails) {
-                const statusSymbol = htmlEncodeCharacter(status.symbol);
-                const statusNextStatusSymbol = htmlEncodeCharacter(status.nextStatusSymbol);
-                const statusType = status.type;
-
-                const transitionText = `[${statusSymbol}] -> [${statusNextStatusSymbol}]`;
-                const statusNameText = `'${statusName}'`;
-                const statusTypeText = `(${statusType})`;
-
-                const text = `${index + 1}["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]`;
-                nodes.push(text);
-            } else {
-                nodes.push(`${index + 1}["${statusName}"]`);
-            }
+            const label = this.getMermaidNodeLabel(status, includeDetails);
+            nodes.push(`${index + 1}${label}`);
 
             // Check the next status:
             const nextStatus = this.getNextStatus(status);
@@ -339,9 +326,35 @@ export class StatusRegistry {
         return `
 \`\`\`${language}
 flowchart LR
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
 ${nodes.join('\n')}
 ${edges.join('\n')}
+
+linkStyle default stroke:gray
 \`\`\`
 `;
+    }
+
+    private getMermaidNodeLabel(status: Status, includeDetails: boolean) {
+        const statusName = htmlEncodeString(status.name);
+        const statusType = status.type;
+        if (includeDetails) {
+            const statusSymbol = htmlEncodeCharacter(status.symbol);
+            const statusNextStatusSymbol = htmlEncodeCharacter(status.nextStatusSymbol);
+
+            const transitionText = `[${statusSymbol}] -> [${statusNextStatusSymbol}]`;
+            const statusNameText = `'${statusName}'`;
+            const statusTypeText = `(${statusType})`;
+
+            return `["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]:::${statusType}`;
+        } else {
+            return `["${statusName}"]:::${statusType}`;
+        }
     }
 }
