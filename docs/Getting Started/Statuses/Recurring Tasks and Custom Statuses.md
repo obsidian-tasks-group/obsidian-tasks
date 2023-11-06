@@ -100,7 +100,7 @@ Let's look at the **second of those two lines**:
   - ... because the next status symbol after `x` is ``.
 - And the Due date has advanced a day.
 
-## When DONE is not followed by TODO
+## When DONE is not followed by TODO or IN_PROGRESS
 
 In the following example, `DONE` is followed by `CANCELLED`.
 

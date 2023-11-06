@@ -49,6 +49,12 @@ ${mermaidText}`;
 }
 
 export function getPrintableSymbol(symbol: string) {
+    // Do not put backticks around an empty symbol, as the two backticks are rendered
+    // by Obsidian as ordinary characters and the meaning is unclear.
+    // Better to just display nothing in this situation.
+    if (symbol === '') {
+        return symbol;
+    }
     const result = symbol !== ' ' ? symbol : 'space';
     return '`' + result + '`';
 }
