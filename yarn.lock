@@ -1561,10 +1561,10 @@ app-module-path@^2.2.0:
   resolved "https://registry.yarnpkg.com/app-module-path/-/app-module-path-2.2.0.tgz#641aa55dfb7d6a6f0a8141c4b9c0aa50b6c24dd5"
   integrity sha512-gkco+qxENJV+8vFcDiiFhuoSvRXb2a/QPqpSoWhVz829VNJfOTnELbBmPmNKFxf3xdNnw4DWCkzkDaavcX/1YQ==
 
-approvals@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/approvals/-/approvals-6.2.1.tgz#29b4fc9719901a91b76e6a4b49ab4aaf3924d52e"
-  integrity sha512-6w5Y1gGF7tciklqZOe9w8uhX2KnDimFzRX8888HDg8W12pmShM5IZ9zJpTHMy7TVafVxM0llIua3jhuG8ir50w==
+approvals@^6.2.4:
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/approvals/-/approvals-6.2.4.tgz#8523ff17f8fd7519a37d3fd84c0def692fd1c401"
+  integrity sha512-AdHO4salMqPf+5FpcUhx+Aong+YL2rlDMbbCK1AyBC0kEy/VzVmmWbtJ+BwZMdKA0jaiKEsYFKoj1RUDkEBbNg==
   dependencies:
     callsite "^1.0.0"
     chalk "^4.1.0"
