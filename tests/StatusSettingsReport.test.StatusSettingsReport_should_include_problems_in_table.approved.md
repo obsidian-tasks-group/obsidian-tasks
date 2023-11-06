@@ -8,7 +8,9 @@
 |  |  |  | `TODO` | Empty symbol: this status will be ignored. |
 | `p` | `q` | Unknown next symbol | `TODO` | Next symbol `q` is unknown: create a status with symbol `q`. |
 | `c` | `d` | Followed by d | `TODO` | Next symbol `d` is unknown: create a status with symbol `d`. |
+| `n` | `n` | Non-task | `NON_TASK` |  |
 | `1` | `space` | DONE followed by TODO | `DONE` |  |
 | `2` | `/` | DONE followed by IN_PROGRESS | `DONE` |  |
 | `3` | `x` | DONE followed by DONE | `DONE` | This `DONE` status is followed by `DONE`, not `TODO` or `IN_PROGRESS`: this will not work well for recurring tasks. See [Recurring Tasks and Custom Statuses](https://publish.obsidian.md/tasks/Getting+Started/Statuses/Recurring+Tasks+and+Custom+Statuses). |
 | `4` | `X` | DONE followed by CANCELLED | `DONE` | This `DONE` status is followed by `CANCELLED`, not `TODO` or `IN_PROGRESS`: this will not work well for recurring tasks. See [Recurring Tasks and Custom Statuses](https://publish.obsidian.md/tasks/Getting+Started/Statuses/Recurring+Tasks+and+Custom+Statuses). |
+| `5` | `n` | DONE followed by NON_TASK | `DONE` | This `DONE` status is followed by `NON_TASK`, not `TODO` or `IN_PROGRESS`: this will not work well for recurring tasks. See [Recurring Tasks and Custom Statuses](https://publish.obsidian.md/tasks/Getting+Started/Statuses/Recurring+Tasks+and+Custom+Statuses). |
