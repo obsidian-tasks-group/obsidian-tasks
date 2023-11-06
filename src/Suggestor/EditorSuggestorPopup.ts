@@ -14,6 +14,19 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     constructor(app: App, settings: Settings) {
         super(app);
         this.settings = settings;
+
+        // EditorSuggestor swallows tabs while the suggestor popup is open
+        // This is a hack to support indenting while popup is open
+        app.scope.register([], 'Tab', () => {
+            const editor = this.context?.editor;
+            if (editor) {
+                editor.exec('indentMore');
+                // Returning false triggers preventDefault
+                // Should prevent double indent if tabs start to get passed through
+                return false;
+            }
+            return true;
+        });
     }
 
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
@@ -49,6 +62,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
     selectSuggestion(value: SuggestInfoWithContext, _evt: MouseEvent | KeyboardEvent) {
         const editor = value.context.editor;
+
         if (value.suggestionType === 'empty') {
             // Close the suggestion dialog and simulate an Enter press to the editor
             this.close();
