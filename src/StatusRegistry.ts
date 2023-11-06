@@ -309,21 +309,7 @@ export class StatusRegistry {
         const nodes: string[] = [];
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
-            let label = '';
-            const statusName = htmlEncodeString(status.name);
-            if (includeDetails) {
-                const statusSymbol = htmlEncodeCharacter(status.symbol);
-                const statusNextStatusSymbol = htmlEncodeCharacter(status.nextStatusSymbol);
-                const statusType = status.type;
-
-                const transitionText = `[${statusSymbol}] -> [${statusNextStatusSymbol}]`;
-                const statusNameText = `'${statusName}'`;
-                const statusTypeText = `(${statusType})`;
-
-                label = `["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]`;
-            } else {
-                label = `["${statusName}"]`;
-            }
+            const label = this.getMermaidNodeLabel(status, includeDetails);
             nodes.push(`${index + 1}${label}`);
 
             // Check the next status:
@@ -344,5 +330,22 @@ ${nodes.join('\n')}
 ${edges.join('\n')}
 \`\`\`
 `;
+    }
+
+    private getMermaidNodeLabel(status: Status, includeDetails: boolean) {
+        const statusName = htmlEncodeString(status.name);
+        if (includeDetails) {
+            const statusSymbol = htmlEncodeCharacter(status.symbol);
+            const statusNextStatusSymbol = htmlEncodeCharacter(status.nextStatusSymbol);
+            const statusType = status.type;
+
+            const transitionText = `[${statusSymbol}] -> [${statusNextStatusSymbol}]`;
+            const statusNameText = `'${statusName}'`;
+            const statusTypeText = `(${statusType})`;
+
+            return `["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]`;
+        } else {
+            return `["${statusName}"]`;
+        }
     }
 }
