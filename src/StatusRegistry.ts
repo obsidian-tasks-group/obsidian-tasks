@@ -309,6 +309,7 @@ export class StatusRegistry {
         const nodes: string[] = [];
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
+            let label = '';
             const statusName = htmlEncodeString(status.name);
             if (includeDetails) {
                 const statusSymbol = htmlEncodeCharacter(status.symbol);
@@ -319,11 +320,11 @@ export class StatusRegistry {
                 const statusNameText = `'${statusName}'`;
                 const statusTypeText = `(${statusType})`;
 
-                const text = `${index + 1}["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]`;
-                nodes.push(text);
+                label = `["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]`;
             } else {
-                nodes.push(`${index + 1}["${statusName}"]`);
+                label = `["${statusName}"]`;
             }
+            nodes.push(`${index + 1}${label}`);
 
             // Check the next status:
             const nextStatus = this.getNextStatus(status);
