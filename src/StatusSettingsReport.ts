@@ -49,10 +49,12 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
     const nextStatus = statuses[indexOfNextSymbol];
     if (nextStatus) {
         if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
+            const helpURL =
+                'https://publish.obsidian.md/tasks/Getting+Started/Statuses/Recurring+Tasks+and+Custom+Statuses';
             problems.push(
                 `This \`DONE\` status is followed by ${getPrintableSymbol(
                     nextStatus.type,
-                )}, not \`TODO\` or \`IN_PROGRESS\`: this will not work well for recurring tasks.`,
+                )}, not \`TODO\` or \`IN_PROGRESS\`: this will not work well for recurring tasks. See [Recurring Tasks and Custom Statuses](${helpURL}).`,
             );
         }
     } else {
