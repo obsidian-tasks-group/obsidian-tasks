@@ -173,14 +173,23 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1["Todo"]
-            2["In Progress"]
-            3["Done"]
-            4["Cancelled"]
+
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["Todo"]:::TODO
+            2["In Progress"]:::IN_PROGRESS
+            3["Done"]:::DONE
+            4["Cancelled"]:::CANCELLED
             1 --> 3
             2 --> 3
             3 --> 1
             4 --> 1
+
+            linkStyle default stroke:gray
             \`\`\`
             "
         `);
@@ -190,14 +199,23 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1["'Todo'<br>[ ] -> [x]<br>(TODO)"]
-            2["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]
-            3["'Done'<br>[x] -> [ ]<br>(DONE)"]
-            4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]
+
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["'Todo'<br>[ ] -> [x]<br>(TODO)"]:::TODO
+            2["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]:::IN_PROGRESS
+            3["'Done'<br>[x] -> [ ]<br>(DONE)"]:::DONE
+            4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]:::CANCELLED
             1 --> 3
             2 --> 3
             3 --> 1
             4 --> 1
+
+            linkStyle default stroke:gray
             \`\`\`
             "
         `);
@@ -222,14 +240,23 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1["Todo &lt;"]
-            2["Todo &gt;"]
-            3["Todo &quot;"]
-            4["Todo &amp;"]
+
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["Todo &lt;"]:::TODO
+            2["Todo &gt;"]:::TODO
+            3["Todo &quot;"]:::TODO
+            4["Todo &amp;"]:::TODO
             1 --> 1
             2 --> 2
             3 --> 3
             4 --> 4
+
+            linkStyle default stroke:gray
             \`\`\`
             "
         `);
@@ -239,14 +266,23 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1["'Todo &lt;'<br>[&lt;] -> [&lt;]<br>(TODO)"]
-            2["'Todo &gt;'<br>[&gt;] -> [&gt;]<br>(TODO)"]
-            3["'Todo &quot;'<br>[&quot;] -> [&quot;]<br>(TODO)"]
-            4["'Todo &amp;'<br>[&amp;] -> [&amp;]<br>(TODO)"]
+
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["'Todo &lt;'<br>[&lt;] -> [&lt;]<br>(TODO)"]:::TODO
+            2["'Todo &gt;'<br>[&gt;] -> [&gt;]<br>(TODO)"]:::TODO
+            3["'Todo &quot;'<br>[&quot;] -> [&quot;]<br>(TODO)"]:::TODO
+            4["'Todo &amp;'<br>[&amp;] -> [&amp;]<br>(TODO)"]:::TODO
             1 --> 1
             2 --> 2
             3 --> 3
             4 --> 4
+
+            linkStyle default stroke:gray
             \`\`\`
             "
         `);
@@ -269,8 +305,17 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1["Todo"]
 
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["Todo"]:::TODO
+
+
+            linkStyle default stroke:gray
             \`\`\`
             "
         `);
