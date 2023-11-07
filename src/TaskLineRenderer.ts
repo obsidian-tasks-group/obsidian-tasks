@@ -304,6 +304,18 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         blockLink: '',
     };
 
+    const appleSauce = appleSauceDictionary[component];
+    if (appleSauce) {
+        const date = task[component];
+        if (date instanceof window.moment) {
+            const attributeValue = dateToAttribute(date);
+            if (attributeValue) {
+                const attributeName = DataAttributeNames[component];
+                dataAttribute[attributeName] = attributeValue;
+            }
+        }
+    }
+
     switch (component) {
         case 'description':
         case 'recurrenceRule':
@@ -314,7 +326,6 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
             dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         }
-        case 'createdDate':
         case 'dueDate':
         case 'startDate':
         case 'scheduledDate':
