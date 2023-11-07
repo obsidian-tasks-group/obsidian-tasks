@@ -310,7 +310,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         if (date instanceof window.moment) {
             const attributeValue = dateToAttribute(date);
             if (attributeValue) {
-                const attributeName = DataAttributeNames[component];
+                const attributeName = appleSauce.dataAtrributeName;
                 dataAttribute[attributeName] = attributeValue;
             }
         }
