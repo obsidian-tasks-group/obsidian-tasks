@@ -59,6 +59,17 @@ const appleSauceDictionary: { [name: string]: AppleSauce } = {
 
         return null;
     }),
+    dueDate: new AppleSauce('task-due', 'taskDue', (_component, _task) => {
+        const date = _task[_component];
+        if (date instanceof window.moment) {
+            const attributeValue = dateToAttribute(date);
+            if (attributeValue) {
+                return attributeValue;
+            }
+        }
+
+        return null;
+    }),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
@@ -283,7 +294,6 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
         case 'recurrenceRule':
             componentClassContainer.push(componentClass);
             break;
-        case 'dueDate':
         case 'startDate':
         case 'scheduledDate':
         case 'doneDate': {
@@ -339,7 +349,6 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
             dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         }
-        case 'dueDate':
         case 'startDate':
         case 'scheduledDate':
         case 'doneDate': {
