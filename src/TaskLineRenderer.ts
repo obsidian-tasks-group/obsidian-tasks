@@ -1,13 +1,13 @@
-import { Component, MarkdownRenderer } from 'obsidian';
 import type { Moment } from 'moment';
+import { Component, MarkdownRenderer } from 'obsidian';
+import { GlobalFilter } from './Config/GlobalFilter';
+import { TASK_FORMATS, getSettings } from './Config/Settings';
+import { replaceTaskWithTasks } from './File';
+import { PriorityTools } from './lib/PriorityTools';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
-import { replaceTaskWithTasks } from './File';
-import { TASK_FORMATS, getSettings } from './Config/Settings';
-import { GlobalFilter } from './Config/GlobalFilter';
-import { PriorityTools } from './lib/PriorityTools';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -38,6 +38,10 @@ export class AppleSauce {
         this.className = className;
     }
 }
+
+const appleSauceDictionary: { [name: string]: AppleSauce } = {
+    createdDate: new AppleSauce('task-created'),
+};
 
 const MAX_DAY_VALUE_RANGE = 7;
 const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
@@ -247,6 +251,11 @@ async function renderComponentText(
 function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
     const componentClassContainer: string[] = [];
 
+    const appleSauce = appleSauceDictionary[component];
+    if (appleSauce) {
+        componentClassContainer.push(appleSauce.className);
+    }
+
     const componentClass = LayoutClasses[component];
     switch (component) {
         case 'blockLink':
@@ -256,7 +265,6 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
         case 'recurrenceRule':
             componentClassContainer.push(componentClass);
             break;
-        case 'createdDate':
         case 'dueDate':
         case 'startDate':
         case 'scheduledDate':
