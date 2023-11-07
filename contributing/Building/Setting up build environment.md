@@ -14,3 +14,5 @@ yarn lint:markdown
 ```
 
 Make sure you build, test and lint before pushing to the repository. Lefthook is used to cover these checks before commit and push.
+
+Then see [[Local development]] for how to build and run Tasks.
