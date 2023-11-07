@@ -64,6 +64,7 @@ const appleSauceDictionary: { [name: string]: AppleSauce } = {
     dueDate: new AppleSauce('task-due', 'taskDue', dateDataAttributeCalculator),
     startDate: new AppleSauce('task-start', 'taskStart', dateDataAttributeCalculator),
     scheduledDate: new AppleSauce('task-scheduled', 'taskScheduled', dateDataAttributeCalculator),
+    doneDate: new AppleSauce('task-done', 'taskDone', dateDataAttributeCalculator),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
@@ -271,7 +272,7 @@ async function renderComponentText(
 /**
  * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from LayoutClasses.
  */
-function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
+function getTaskComponentClass(component: TaskLayoutComponent, _task: Task) {
     const componentClassContainer: string[] = [];
 
     const appleSauce = appleSauceDictionary[component];
@@ -288,13 +289,6 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
         case 'recurrenceRule':
             componentClassContainer.push(componentClass);
             break;
-        case 'doneDate': {
-            const date = task[component];
-            if (date) {
-                componentClassContainer.push(componentClass);
-            }
-            break;
-        }
     }
     return componentClassContainer;
 }
@@ -339,17 +333,6 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         case 'priority': {
             const attributeName = DataAttributeNames[component];
             dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
-            break;
-        }
-        case 'doneDate': {
-            const date = task[component];
-            if (date) {
-                const attributeValue = dateToAttribute(date);
-                if (attributeValue) {
-                    const attributeName = DataAttributeNames[component];
-                    dataAttribute[attributeName] = attributeValue;
-                }
-            }
             break;
         }
     }
