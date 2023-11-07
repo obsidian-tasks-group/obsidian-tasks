@@ -305,11 +305,9 @@ function getTaskComponentClass(component: TaskLayoutComponent) {
 function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     const dataAttribute: AttributesDictionary = {};
 
-    // If a TaskLayoutComponent needs a data attribute in the task's <span>, add the data attribute name
-    // to this dictionary: key is the component, value is the data attribute name.
-    // Otherwise, just leave an empty string ('') as the value.
-    // Also add the new component to the switch-case below in this function. This is where
-    // the data attribute value shall be calculated and set in the returned dictionary.
+    // If a TaskLayoutComponent needs a data attribute in the task's <span>, get the data attribute name (key) &
+    // data attribute value (value). Otherwise, just leave an empty string ('') as the value.
+    // The value is calculated based on AppleSauce.attributeValueCalculator
     const appleSauce = appleSauceDictionary[component];
     if (appleSauce) {
         const attributeValue = appleSauce.attributeValueCalculator(component, task);
