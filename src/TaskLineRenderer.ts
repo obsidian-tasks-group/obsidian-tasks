@@ -60,17 +60,7 @@ function dateDataAttributeCalculator(_component: TaskLayoutComponent, _task: Tas
 }
 
 const appleSauceDictionary: { [name: string]: AppleSauce } = {
-    createdDate: new AppleSauce('task-created', 'taskCreated', (_component, _task) => {
-        const date = _task[_component];
-        if (date instanceof window.moment) {
-            const attributeValue = dateToAttribute(date);
-            if (attributeValue) {
-                return attributeValue;
-            }
-        }
-
-        return null;
-    }),
+    createdDate: new AppleSauce('task-created', 'taskCreated', dateDataAttributeCalculator),
     dueDate: new AppleSauce('task-due', 'taskDue', dateDataAttributeCalculator),
 };
 
