@@ -71,6 +71,7 @@ const appleSauceDictionary: { [name: string]: AppleSauce } = {
     doneDate: new AppleSauce('task-done', 'taskDone', dateDataAttributeCalculator),
 
     description: new AppleSauce('task-description', '', noDataAttribute),
+    recurrenceRule: new AppleSauce('task-recurring', '', noDataAttribute),
 
     blockLink: new AppleSauce('', '', noDataAttribute),
 };
@@ -294,7 +295,6 @@ function getTaskComponentClass(component: TaskLayoutComponent) {
     const componentClass = LayoutClasses[component];
     switch (component) {
         case 'priority':
-        case 'recurrenceRule':
             componentClassContainer.push(componentClass);
             break;
     }
@@ -334,8 +334,6 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     }
 
     switch (component) {
-        case 'recurrenceRule':
-            break;
         case 'priority': {
             const attributeName = DataAttributeNames[component];
             dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
