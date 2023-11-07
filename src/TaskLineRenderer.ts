@@ -34,15 +34,23 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
 export class AppleSauce {
     className: string;
     dataAtrributeName: string;
+    attributeValueCalculator: (_component: TaskLayoutComponent, _task: Task) => string | null;
 
-    constructor(className: string, dataAttributeName: string) {
+    constructor(
+        className: string,
+        dataAttributeName: string,
+        attributeValueCalculator: (_component: TaskLayoutComponent, _task: Task) => string | null,
+    ) {
         this.className = className;
         this.dataAtrributeName = dataAttributeName;
+        this.attributeValueCalculator = attributeValueCalculator;
     }
 }
 
 const appleSauceDictionary: { [name: string]: AppleSauce } = {
-    createdDate: new AppleSauce('task-created', 'taskCreated'),
+    createdDate: new AppleSauce('task-created', 'taskCreated', () => {
+        return '';
+    }),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;

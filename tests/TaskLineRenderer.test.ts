@@ -651,8 +651,18 @@ describe('Visualise HTML', () => {
 
 describe('Apple Sauce tests', () => {
     it('should supply a class name and a data attribute name', () => {
-        const sauce = new AppleSauce('stuff', 'taskAttribute');
+        const sauce = new AppleSauce('stuff', 'taskAttribute', () => {
+            return '';
+        });
         expect(sauce.className).toEqual('stuff');
         expect(sauce.dataAtrributeName).toEqual('taskAttribute');
+    });
+
+    it('should calculate data attribute value', () => {
+        const sauce = new AppleSauce('foo', 'bar', () => {
+            return 'someValue';
+        });
+        const attributeValue = sauce.attributeValueCalculator('createdDate', new TaskBuilder().build());
+        expect(attributeValue).toEqual('someValue');
     });
 });
