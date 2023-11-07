@@ -189,7 +189,7 @@ async function taskToHtml(
                 addInternalClasses(component, internalSpan);
 
                 // Add the component's CSS class describing what this component is (priority, due date etc.)
-                const componentClass = getTaskComponentClass(component, task);
+                const componentClass = getTaskComponentClass(component);
                 span.classList.add(...componentClass);
 
                 // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
@@ -272,7 +272,7 @@ async function renderComponentText(
 /**
  * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from LayoutClasses.
  */
-function getTaskComponentClass(component: TaskLayoutComponent, _task: Task) {
+function getTaskComponentClass(component: TaskLayoutComponent) {
     const componentClassContainer: string[] = [];
 
     const appleSauce = appleSauceDictionary[component];
