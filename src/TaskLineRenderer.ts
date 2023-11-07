@@ -47,6 +47,18 @@ export class AppleSauce {
     }
 }
 
+function dateDataAttributeCalculator(_component: TaskLayoutComponent, _task: Task) {
+    const date = _task[_component];
+    if (date instanceof window.moment) {
+        const attributeValue = dateToAttribute(date);
+        if (attributeValue) {
+            return attributeValue;
+        }
+    }
+
+    return null;
+}
+
 const appleSauceDictionary: { [name: string]: AppleSauce } = {
     createdDate: new AppleSauce('task-created', 'taskCreated', (_component, _task) => {
         const date = _task[_component];
@@ -59,17 +71,7 @@ const appleSauceDictionary: { [name: string]: AppleSauce } = {
 
         return null;
     }),
-    dueDate: new AppleSauce('task-due', 'taskDue', (_component, _task) => {
-        const date = _task[_component];
-        if (date instanceof window.moment) {
-            const attributeValue = dateToAttribute(date);
-            if (attributeValue) {
-                return attributeValue;
-            }
-        }
-
-        return null;
-    }),
+    dueDate: new AppleSauce('task-due', 'taskDue', dateDataAttributeCalculator),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
