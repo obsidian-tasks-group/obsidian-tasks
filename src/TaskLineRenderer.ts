@@ -73,6 +73,10 @@ const appleSauceDictionary: { [name: string]: AppleSauce } = {
     description: new AppleSauce('task-description', '', noDataAttribute),
     recurrenceRule: new AppleSauce('task-recurring', '', noDataAttribute),
 
+    priority: new AppleSauce('task-priority', 'taskPriority', (_component, task) => {
+        return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
+    }),
+
     blockLink: new AppleSauce('', '', noDataAttribute),
 };
 
@@ -292,12 +296,6 @@ function getTaskComponentClass(component: TaskLayoutComponent) {
         }
     }
 
-    const componentClass = LayoutClasses[component];
-    switch (component) {
-        case 'priority':
-            componentClassContainer.push(componentClass);
-            break;
-    }
     return componentClassContainer;
 }
 
@@ -312,18 +310,6 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     // Otherwise, just leave an empty string ('') as the value.
     // Also add the new component to the switch-case below in this function. This is where
     // the data attribute value shall be calculated and set in the returned dictionary.
-    const DataAttributeNames: { [c in TaskLayoutComponent]: string } = {
-        createdDate: 'taskCreated',
-        dueDate: 'taskDue',
-        startDate: 'taskStart',
-        scheduledDate: 'taskScheduled',
-        doneDate: 'taskDone',
-        priority: 'taskPriority',
-        description: '',
-        recurrenceRule: '',
-        blockLink: '',
-    };
-
     const appleSauce = appleSauceDictionary[component];
     if (appleSauce) {
         const attributeValue = appleSauce.attributeValueCalculator(component, task);
@@ -333,13 +319,6 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         }
     }
 
-    switch (component) {
-        case 'priority': {
-            const attributeName = DataAttributeNames[component];
-            dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
-            break;
-        }
-    }
     return dataAttribute;
 }
 
