@@ -34,12 +34,12 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
 export class AppleSauce {
     className: string;
     dataAtrributeName: string;
-    attributeValueCalculator: (_component: TaskLayoutComponent, _task: Task) => string | null;
+    attributeValueCalculator: (component: TaskLayoutComponent, task: Task) => string | null;
 
     constructor(
         className: string,
         dataAttributeName: string,
-        attributeValueCalculator: (_component: TaskLayoutComponent, _task: Task) => string | null,
+        attributeValueCalculator: (component: TaskLayoutComponent, task: Task) => string | null,
     ) {
         this.className = className;
         this.dataAtrributeName = dataAttributeName;
@@ -47,8 +47,8 @@ export class AppleSauce {
     }
 }
 
-function dateDataAttributeCalculator(_component: TaskLayoutComponent, _task: Task) {
-    const date = _task[_component];
+function dateDataAttributeCalculator(component: TaskLayoutComponent, task: Task) {
+    const date = task[component];
     if (date instanceof window.moment) {
         const attributeValue = dateToAttribute(date);
         if (attributeValue) {
