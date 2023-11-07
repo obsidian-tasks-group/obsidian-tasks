@@ -31,6 +31,14 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     blockLink: '',
 };
 
+export class AppleSauce {
+    className: string;
+
+    constructor(className: string) {
+        this.className = className;
+    }
+}
+
 const MAX_DAY_VALUE_RANGE = 7;
 const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
 

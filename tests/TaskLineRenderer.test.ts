@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
+import { AppleSauce, LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
 import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
 import { DebugSettings } from '../src/Config/DebugSettings';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
@@ -648,13 +648,6 @@ describe('Visualise HTML', () => {
         await renderAndVerifyHTML(minimalTask, layoutOptionsShortMode());
     });
 });
-
-class AppleSauce {
-    className: string;
-    constructor(className: string) {
-        this.className = className;
-    }
-}
 
 describe('Apple Sauce tests', () => {
     it('should supply a class name', () => {
