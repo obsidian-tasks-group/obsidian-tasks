@@ -648,3 +648,17 @@ describe('Visualise HTML', () => {
         await renderAndVerifyHTML(minimalTask, layoutOptionsShortMode());
     });
 });
+
+class AppleSauce {
+    className: string;
+    constructor(className: string) {
+        this.className = className;
+    }
+}
+
+describe('Apple Sauce tests', () => {
+    it('should supply a class name', () => {
+        const sauce = new AppleSauce('stuff');
+        expect(sauce.className).toEqual('stuff');
+    });
+});
