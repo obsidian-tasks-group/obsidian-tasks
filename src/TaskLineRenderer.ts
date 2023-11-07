@@ -59,6 +59,10 @@ function dateDataAttributeCalculator(component: TaskLayoutComponent, task: Task)
     return null;
 }
 
+const noDataAttribute = () => {
+    return null;
+};
+
 const appleSauceDictionary: { [name: string]: AppleSauce } = {
     createdDate: new AppleSauce('task-created', 'taskCreated', dateDataAttributeCalculator),
     dueDate: new AppleSauce('task-due', 'taskDue', dateDataAttributeCalculator),
@@ -66,9 +70,7 @@ const appleSauceDictionary: { [name: string]: AppleSauce } = {
     scheduledDate: new AppleSauce('task-scheduled', 'taskScheduled', dateDataAttributeCalculator),
     doneDate: new AppleSauce('task-done', 'taskDone', dateDataAttributeCalculator),
 
-    description: new AppleSauce('task-description', '', () => {
-        return null;
-    }),
+    description: new AppleSauce('task-description', '', noDataAttribute),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
