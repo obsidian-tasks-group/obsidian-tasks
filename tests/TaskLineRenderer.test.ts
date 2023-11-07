@@ -625,15 +625,8 @@ describe('Visualise HTML', () => {
     }
 
     function layoutOptionsShortMode(): LayoutOptions {
-        const layoutOptions = new LayoutOptions();
+        const layoutOptions = layoutOptionsFullMode();
 
-        // Show every Task field (not entirely true)
-        Object.keys(layoutOptions).forEach((key) => {
-            const key2 = key as keyof LayoutOptions;
-            layoutOptions[key2] = false;
-        });
-
-        // Enable short mode
         layoutOptions.shortMode = true;
 
         return layoutOptions;
