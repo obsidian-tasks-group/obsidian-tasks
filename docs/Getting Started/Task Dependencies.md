@@ -4,24 +4,56 @@ publish: true
 
 # Task Dependencies
 
-## Introduction
-
-At a high level, task dependencies define the order in which you want to work on tasks.
-
-This can be useful in mapping out larger projects.  
-
-Obsidian tasks exclusively allows for Finish to start (FS) dependencies, meaning Task A needs to be finished before you start on Task B.
-
-<https://en.wikipedia.org/wiki/Dependency_(project_management)>
-
 > [!released]
 > Introduced in Tasks X.Y.Z.
 
+## Introduction
+
+At a high level, task dependencies define the order in which you want to work on a set of tasks.
+This can be useful for mapping out projects, where one part needs to be completed before the other.
+By specifying these dependencies, Obsidian Tasks can streamline your workflow by displaying only the tasks that are actionable at any given moment.
+
+Note: Obsidian tasks exclusively allows for Finish to start (FS) dependencies, meaning Task A needs to be finished before you start on Task B. You can learn more about this concept [here](https://en.wikipedia.org/wiki/Dependency_(project_management)).
+
+## Example
+
+To illustrate the concept of task dependencies, let's consider a scenario where we are outlining the tasks required to develop an application. Two tasks are identified:
+
 ```text
-- [ ] test 1 🆔 rib277
-- [ ] test 2 🆔 5gdmsd
-- [ ] test 3 🆔 knzxte
-- [ ] mega-blocked ⤵️ rib277,5gdmsd,knzxte
+- [ ] Build a first draft
+- [ ] Test with users
+```
+
+In this scenario, testing with users can only occur after the initial draft is completed. To establish this relationship, you can create a dependency between the two tasks using either of the following methods.
+
+1. Open the 'Build a first draft' task in the Edit Task Modal and specify 'Test with users' as a 'Blocking' task
+2. Alternatively, open the 'Test with users' task in the Edit Task Modal and add 'Build a first draft' as a 'Blocked By' task
+![[task-dependencies-blocked-by-example.png]]
+
+By implementing either of these methods, the task list is updated to reflect the dependency relationship:
+
+```text
+- [ ] Build a first draft 🆔 4ijuhy
+- [ ] Test with users ⤵️ 4ijuhy
+```
+
+Then, if the query `is not blocked` is used
+
+    ```tasks
+    is not blocked
+    ```
+
+We only see 'Build a first draft'
+
+```text
+- [ ] Build a first draft 🆔 4ijuhy
+```
+
+Until this task is marked as complete, at which time Obsidian Tasks sees that 'Test with users' is no longer blocked, and displays it as well
+
+```text
+- [x] Build a first draft 🆔 4ijuhy
+- [ ] Test with users ⤵️ 4ijuhyz
 ```
 
 ## Nomenclature
