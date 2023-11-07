@@ -49,7 +49,7 @@ export class AppleSauce {
     }
 }
 
-const dateDataAttributeCalculator = (component: TaskLayoutComponent, task: Task) => {
+const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => {
     const date = task[component];
     if (date instanceof window.moment) {
         const attributeValue = dateToAttribute(date);
@@ -61,7 +61,7 @@ const dateDataAttributeCalculator = (component: TaskLayoutComponent, task: Task)
     return null;
 };
 
-const noDataAttribute = () => {
+const noDataAttribute: AttributeValueCalculator = () => {
     return null;
 };
 
