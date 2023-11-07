@@ -10,7 +10,7 @@ import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
-import { AppleSauce, LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
+import { FieldLayoutDetail, LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
@@ -649,20 +649,20 @@ describe('Visualise HTML', () => {
     });
 });
 
-describe('Apple Sauce tests', () => {
+describe('Field Layout Detail tests', () => {
     it('should supply a class name and a data attribute name', () => {
-        const sauce = new AppleSauce('stuff', 'taskAttribute', () => {
+        const fieldLayoutDetail = new FieldLayoutDetail('stuff', 'taskAttribute', () => {
             return '';
         });
-        expect(sauce.className).toEqual('stuff');
-        expect(sauce.dataAtrributeName).toEqual('taskAttribute');
+        expect(fieldLayoutDetail.className).toEqual('stuff');
+        expect(fieldLayoutDetail.dataAtrributeName).toEqual('taskAttribute');
     });
 
     it('should calculate data attribute value', () => {
-        const sauce = new AppleSauce('foo', 'bar', () => {
+        const fieldLayoutDetail = new FieldLayoutDetail('foo', 'bar', () => {
             return 'someValue';
         });
-        const attributeValue = sauce.attributeValueCalculator('createdDate', new TaskBuilder().build());
+        const attributeValue = fieldLayoutDetail.attributeValueCalculator('createdDate', new TaskBuilder().build());
         expect(attributeValue).toEqual('someValue');
     });
 });

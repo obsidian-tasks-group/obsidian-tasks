@@ -33,7 +33,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string | null;
 
-export class AppleSauce {
+export class FieldLayoutDetail {
     className: string | null;
     dataAtrributeName: string;
     attributeValueCalculator: AttributeValueCalculator;
@@ -65,21 +65,21 @@ const noDataAttribute: AttributeValueCalculator = () => {
     return null;
 };
 
-const appleSauceDictionary: { [name: string]: AppleSauce } = {
-    createdDate: new AppleSauce('task-created', 'taskCreated', dateDataAttributeCalculator),
-    dueDate: new AppleSauce('task-due', 'taskDue', dateDataAttributeCalculator),
-    startDate: new AppleSauce('task-start', 'taskStart', dateDataAttributeCalculator),
-    scheduledDate: new AppleSauce('task-scheduled', 'taskScheduled', dateDataAttributeCalculator),
-    doneDate: new AppleSauce('task-done', 'taskDone', dateDataAttributeCalculator),
+const FieldLayouts: { [name: string]: FieldLayoutDetail } = {
+    createdDate: new FieldLayoutDetail('task-created', 'taskCreated', dateDataAttributeCalculator),
+    dueDate: new FieldLayoutDetail('task-due', 'taskDue', dateDataAttributeCalculator),
+    startDate: new FieldLayoutDetail('task-start', 'taskStart', dateDataAttributeCalculator),
+    scheduledDate: new FieldLayoutDetail('task-scheduled', 'taskScheduled', dateDataAttributeCalculator),
+    doneDate: new FieldLayoutDetail('task-done', 'taskDone', dateDataAttributeCalculator),
 
-    description: new AppleSauce('task-description', '', noDataAttribute),
-    recurrenceRule: new AppleSauce('task-recurring', '', noDataAttribute),
+    description: new FieldLayoutDetail('task-description', '', noDataAttribute),
+    recurrenceRule: new FieldLayoutDetail('task-recurring', '', noDataAttribute),
 
-    priority: new AppleSauce('task-priority', 'taskPriority', (_component, task) => {
+    priority: new FieldLayoutDetail('task-priority', 'taskPriority', (_component, task) => {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),
 
-    blockLink: new AppleSauce('', '', noDataAttribute),
+    blockLink: new FieldLayoutDetail('', '', noDataAttribute),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
@@ -290,9 +290,9 @@ async function renderComponentText(
 function getTaskComponentClass(component: TaskLayoutComponent) {
     const componentClassContainer: string[] = [];
 
-    const appleSauce = appleSauceDictionary[component];
-    if (appleSauce) {
-        const className = appleSauce.className;
+    const fieldLayoutDetail = FieldLayouts[component];
+    if (fieldLayoutDetail) {
+        const className = fieldLayoutDetail.className;
         if (className) {
             componentClassContainer.push(className);
         }
@@ -309,12 +309,12 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
 
     // If a TaskLayoutComponent needs a data attribute in the task's <span>, get the data attribute name (key) &
     // data attribute value (value). Otherwise, just leave an empty string ('') as the value.
-    // The value is calculated based on AppleSauce.attributeValueCalculator
-    const appleSauce = appleSauceDictionary[component];
-    if (appleSauce) {
-        const attributeValue = appleSauce.attributeValueCalculator(component, task);
+    // The value is calculated based on FieldLayoutDetail.attributeValueCalculator
+    const fieldLayoutDetail = FieldLayouts[component];
+    if (fieldLayoutDetail) {
+        const attributeValue = fieldLayoutDetail.attributeValueCalculator(component, task);
         if (attributeValue) {
-            const attributeName = appleSauce.dataAtrributeName;
+            const attributeName = fieldLayoutDetail.dataAtrributeName;
             dataAttribute[attributeName] = attributeValue;
         }
     }
