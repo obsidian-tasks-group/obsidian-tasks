@@ -31,15 +31,17 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     blockLink: '',
 };
 
+type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string | null;
+
 export class AppleSauce {
     className: string | null;
     dataAtrributeName: string;
-    attributeValueCalculator: (component: TaskLayoutComponent, task: Task) => string | null;
+    attributeValueCalculator: AttributeValueCalculator;
 
     constructor(
         className: string | null,
         dataAttributeName: string,
-        attributeValueCalculator: (component: TaskLayoutComponent, task: Task) => string | null,
+        attributeValueCalculator: AttributeValueCalculator,
     ) {
         this.className = className;
         this.dataAtrributeName = dataAttributeName;
