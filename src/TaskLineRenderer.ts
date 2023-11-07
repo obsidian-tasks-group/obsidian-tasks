@@ -65,6 +65,10 @@ const appleSauceDictionary: { [name: string]: AppleSauce } = {
     startDate: new AppleSauce('task-start', 'taskStart', dateDataAttributeCalculator),
     scheduledDate: new AppleSauce('task-scheduled', 'taskScheduled', dateDataAttributeCalculator),
     doneDate: new AppleSauce('task-done', 'taskDone', dateDataAttributeCalculator),
+
+    description: new AppleSauce('task-description', '', () => {
+        return null;
+    }),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
@@ -284,7 +288,6 @@ function getTaskComponentClass(component: TaskLayoutComponent) {
     switch (component) {
         case 'blockLink':
             break;
-        case 'description':
         case 'priority':
         case 'recurrenceRule':
             componentClassContainer.push(componentClass);
@@ -326,7 +329,6 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     }
 
     switch (component) {
-        case 'description':
         case 'recurrenceRule':
         case 'blockLink':
             break;
