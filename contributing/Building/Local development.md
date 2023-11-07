@@ -1,5 +1,7 @@
 # Local development
 
+First follow [[Setting up build environment]].
+
 ## Building Tasks
 
 - When developing locally, you can use the `yarn dev` command to start a development build.
