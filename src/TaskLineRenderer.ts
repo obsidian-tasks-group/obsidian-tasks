@@ -48,8 +48,16 @@ export class AppleSauce {
 }
 
 const appleSauceDictionary: { [name: string]: AppleSauce } = {
-    createdDate: new AppleSauce('task-created', 'taskCreated', () => {
-        return '';
+    createdDate: new AppleSauce('task-created', 'taskCreated', (_component, _task) => {
+        const date = _task[_component];
+        if (date instanceof window.moment) {
+            const attributeValue = dateToAttribute(date);
+            if (attributeValue) {
+                return attributeValue;
+            }
+        }
+
+        return null;
     }),
 };
 
@@ -314,13 +322,10 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
 
     const appleSauce = appleSauceDictionary[component];
     if (appleSauce) {
-        const date = task[component];
-        if (date instanceof window.moment) {
-            const attributeValue = dateToAttribute(date);
-            if (attributeValue) {
-                const attributeName = appleSauce.dataAtrributeName;
-                dataAttribute[attributeName] = attributeValue;
-            }
+        const attributeValue = appleSauce.attributeValueCalculator(component, task);
+        if (attributeValue) {
+            const attributeName = appleSauce.dataAtrributeName;
+            dataAttribute[attributeName] = attributeValue;
         }
     }
 
