@@ -2,15 +2,15 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { AppleSauce, LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
-import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
 import { DebugSettings } from '../src/Config/DebugSettings';
-import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
-import { LayoutOptions } from '../src/TaskLayout';
+import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import { DateParser } from '../src/Query/DateParser';
+import { LayoutOptions } from '../src/TaskLayout';
+import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
+import { AppleSauce, LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
@@ -650,8 +650,9 @@ describe('Visualise HTML', () => {
 });
 
 describe('Apple Sauce tests', () => {
-    it('should supply a class name', () => {
-        const sauce = new AppleSauce('stuff');
+    it('should supply a class name and a data attribute name', () => {
+        const sauce = new AppleSauce('stuff', 'taskAttribute');
         expect(sauce.className).toEqual('stuff');
+        expect(sauce.dataAtrributeName).toEqual('taskAttribute');
     });
 });

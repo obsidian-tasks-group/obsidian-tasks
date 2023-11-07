@@ -33,14 +33,16 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
 
 export class AppleSauce {
     className: string;
+    dataAtrributeName: string;
 
-    constructor(className: string) {
+    constructor(className: string, dataAttributeName: string) {
         this.className = className;
+        this.dataAtrributeName = dataAttributeName;
     }
 }
 
 const appleSauceDictionary: { [name: string]: AppleSauce } = {
-    createdDate: new AppleSauce('task-created'),
+    createdDate: new AppleSauce('task-created', 'taskCreated'),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
