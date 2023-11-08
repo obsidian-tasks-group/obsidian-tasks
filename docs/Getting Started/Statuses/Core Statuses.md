@@ -4,6 +4,8 @@ publish: true
 
 # Core Statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Overview
 
 Core statuses represent conventional markdown tasks:

@@ -4,6 +4,8 @@ publish: true
 
 # Example Statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Overview
 
 Once we know what [[Statuses]] are, what can we do with them?

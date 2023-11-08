@@ -4,6 +4,8 @@ publish: true
 
 # Recurring Tasks and Custom Statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 > [!Note]
 > This page assumes basic familiarity with [[Recurring Tasks]].
 >

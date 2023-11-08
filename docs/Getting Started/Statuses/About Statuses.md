@@ -4,7 +4,7 @@ publish: true
 
 # About Statuses
 
-<span class="related-pages">#index-pages</span>
+<span class="related-pages">#index-pages #feature/statuses</span>
 
 This section provides more detail to flesh out the introductory material in [[Statuses]].
 

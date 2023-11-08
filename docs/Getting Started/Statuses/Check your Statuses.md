@@ -4,6 +4,8 @@ publish: true
 
 # Check your Statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 > [!released]
 > Introduced in Tasks X.Y.Z.
 
