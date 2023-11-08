@@ -6,7 +6,7 @@ aliases:
 
 # About Status Collections
 
-<span class="related-pages">#index-pages</span>
+<span class="related-pages">#index-pages #feature/statuses</span>
 
 ## Background
 

@@ -4,7 +4,7 @@ publish: true
 
 # Style custom statuses
 
-<span class="related-pages">#css</span>
+<span class="related-pages">#css #feature/statuses</span>
 
 ## Summary
 

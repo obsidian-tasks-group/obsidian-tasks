@@ -4,6 +4,8 @@ publish: true
 
 # Status Settings
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Overview
 
 This is what you see in the Tasks settings when you first look at the Task Statuses section:

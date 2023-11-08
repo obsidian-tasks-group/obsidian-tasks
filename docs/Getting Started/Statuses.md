@@ -4,6 +4,8 @@ publish: true
 
 # Statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Introduction
 
 > [!released]

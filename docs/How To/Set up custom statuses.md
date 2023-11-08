@@ -4,6 +4,8 @@ publish: true
 
 # Set up custom statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Motivation
 
 This page shows you how to customise the statuses used in your Tasks vault, once you have decided which letters and symbols inside `[` and `]` you wish to use, and what they should be called.
