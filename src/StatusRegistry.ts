@@ -1,12 +1,13 @@
 import { Status } from './Status';
 import { StatusConfiguration, StatusType } from './StatusConfiguration';
+import { htmlEncodeCharacter, htmlEncodeString } from './lib/HTMLCharacterEntities';
 
 /**
  * Tracks all the registered statuses a task can have.
  *
  * There are two ways of using this class.
  * - In 'production' code, that is in the actual plugin code that is released,
- *   call `StatusRegistry.getInstance()` to obtain the single global instance.
+ *   call `StatusRegistry.getInstance()` - {@link getInstance} - to obtain the single global instance.
  *   Any changes to the statuses in that instance are reflected everywhere throughout
  *   the plugin.
  *   For example, the code to toggle task statuses use the global instance.
@@ -231,7 +232,10 @@ export class StatusRegistry {
             // And add it to our local registry, to prevent duplicates.
             newStatusRegistry.add(newStatus);
         });
-        return namedUniqueStatuses;
+
+        return namedUniqueStatuses.sort((status1, status2) => {
+            return status1.symbol.localeCompare(status2.symbol, undefined, { numeric: true });
+        });
     }
 
     private static copyStatusWithNewName(s: Status, newName: string) {
@@ -305,15 +309,8 @@ export class StatusRegistry {
         const nodes: string[] = [];
         const edges: string[] = [];
         uniqueStatuses.forEach((status, index) => {
-            if (includeDetails) {
-                const transition = `[${status.symbol}] -> [${status.nextStatusSymbol}]`;
-                const statusName = `'${status.name}'`;
-                const statusType = `(${status.type})`;
-                const text = `${index + 1}["${statusName}<br>${transition}<br>${statusType}"]`;
-                nodes.push(text);
-            } else {
-                nodes.push(`${index + 1}[${status.name}]`);
-            }
+            const label = this.getMermaidNodeLabel(status, includeDetails);
+            nodes.push(`${index + 1}${label}`);
 
             // Check the next status:
             const nextStatus = this.getNextStatus(status);
@@ -329,9 +326,35 @@ export class StatusRegistry {
         return `
 \`\`\`${language}
 flowchart LR
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
 ${nodes.join('\n')}
 ${edges.join('\n')}
+
+linkStyle default stroke:gray
 \`\`\`
 `;
+    }
+
+    private getMermaidNodeLabel(status: Status, includeDetails: boolean) {
+        const statusName = htmlEncodeString(status.name);
+        const statusType = status.type;
+        if (includeDetails) {
+            const statusSymbol = htmlEncodeCharacter(status.symbol);
+            const statusNextStatusSymbol = htmlEncodeCharacter(status.nextStatusSymbol);
+
+            const transitionText = `[${statusSymbol}] -> [${statusNextStatusSymbol}]`;
+            const statusNameText = `'${statusName}'`;
+            const statusTypeText = `(${statusType})`;
+
+            return `["${statusNameText}<br>${transitionText}<br>${statusTypeText}"]:::${statusType}`;
+        } else {
+            return `["${statusName}"]:::${statusType}`;
+        }
     }
 }

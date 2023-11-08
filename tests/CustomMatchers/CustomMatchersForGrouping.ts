@@ -4,6 +4,7 @@ import type { Task } from 'Task';
 import type { Field } from '../../src/Query/Filter/Field';
 import { TaskGroups } from '../../src/Query/TaskGroups';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 
 declare global {
     namespace jest {
@@ -52,9 +53,10 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
  * Collate all the headings obtained when grouping the tasks by the grouper
  * @param grouper
  * @param tasks
+ * @param searchInfo
  */
-export function groupHeadingsForTask(grouper: Grouper, tasks: Task[]) {
-    const groups = new TaskGroups([grouper], tasks);
+export function groupHeadingsForTask(grouper: Grouper, tasks: Task[], searchInfo: SearchInfo) {
+    const groups = new TaskGroups([grouper], tasks, searchInfo);
 
     const headings: string[] = [];
     groups.groups.forEach((taskGroup) => {
@@ -70,7 +72,7 @@ export function groupHeadingsToBe(
     expectedGroupHeadings: string[],
 ): jest.CustomMatcherResult {
     tasks.sort(() => Math.random() - 0.5);
-    const groupHeadings = groupHeadingsForTask(grouper, tasks);
+    const groupHeadings = groupHeadingsForTask(grouper, tasks, SearchInfo.fromAllTasks(tasks));
 
     const pass: boolean = groupHeadings.join() === expectedGroupHeadings.join();
     const message: () => string = () =>
@@ -91,6 +93,27 @@ export function groupHeadingsToBe(
  * @param expectedGroupNames
  */
 export function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNames: string[]) {
+    const tasks = [task];
+    const searchInfo = SearchInfo.fromAllTasks(tasks);
+    return toGroupTaskUsingSearchInfo(grouper, task, searchInfo, expectedGroupNames);
+}
+
+/**
+ * Test that applying the grouper to the task, with the given SearchInfo, generates the expected group names.
+ *
+ * Unless the grouper needs access to the path to the query, use {@link toGroupTask} instead.
+ *
+ * @param grouper
+ * @param task
+ * @param searchInfo
+ * @param expectedGroupNames
+ */
+export function toGroupTaskUsingSearchInfo(
+    grouper: Grouper | null,
+    task: Task,
+    searchInfo: SearchInfo,
+    expectedGroupNames: string[],
+) {
     if (grouper === undefined) {
         return {
             message: () => 'unexpected null grouper: check your instruction matches your filter class.',
@@ -98,7 +121,7 @@ export function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNa
         };
     }
 
-    expect(grouper!.grouper(task)).toEqual(expectedGroupNames);
+    expect(grouper!.grouper(task, searchInfo)).toEqual(expectedGroupNames);
 }
 
 /**

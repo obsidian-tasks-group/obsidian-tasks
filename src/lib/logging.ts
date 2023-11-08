@@ -352,7 +352,7 @@ export const logCall = (target: Object, propertyKey: string, descriptor: Propert
 export function logCallDetails() {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
-        const logger = logging.getLogger('taskssql');
+        const logger = logging.getLogger('tasks');
 
         descriptor.value = async function (...args: any[]) {
             const startTime = new Date(Date.now());
@@ -379,7 +379,7 @@ export function logCallDetails() {
  * @param {string} message
  */
 export function log(logLevel: TLogLevelName, message: string) {
-    const logger = logging.getLogger('taskssql');
+    const logger = logging.getLogger('tasks');
 
     switch (logLevel) {
         case 'trace':
@@ -416,7 +416,7 @@ export function monkeyPatchConsole(plugin: Plugin) {
         return;
     }
 
-    const logFile = `${plugin.manifest.dir}/tasks-sql-logs.txt`;
+    const logFile = `${plugin.manifest.dir}/tasks-logs.txt`;
     const logs: string[] = [];
     const logMessages =
         (prefix: string) =>

@@ -10,9 +10,14 @@ import { TaskLocation } from '../src/TaskLocation';
 import { fieldCreators } from '../src/Query/FilterParser';
 import type { Field } from '../src/Query/Filter/Field';
 import type { BooleanField } from '../src/Query/Filter/BooleanField';
+import { SearchInfo } from '../src/Query/SearchInfo';
+import { FilterOrErrorMessage } from '../src/Query/Filter/FilterOrErrorMessage';
+import { Explanation } from '../src/Query/Explain/Explanation';
+import { Filter } from '../src/Query/Filter/Filter';
+import { DescriptionField } from '../src/Query/Filter/DescriptionField';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
-import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
+import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -204,7 +209,7 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-            expect(query.filters[0].filterFunction(task)).toBeTruthy();
+            expect(query.filters[0].filterFunction(task, SearchInfo.fromAllTasks([task]))).toBeTruthy();
         });
     });
 
@@ -299,6 +304,7 @@ describe('Query parsing', () => {
             'group by folder',
             'group by folder reverse',
             'group by function reverse task.status.symbol.replace(" ", "space")',
+            'group by function task.file.path.replace(query.file.folder, "")',
             'group by function task.status.symbol.replace(" ", "space")',
             'group by happens',
             'group by happens reverse',
@@ -614,8 +620,9 @@ describe('Query', () => {
 
             // Act
             let filteredTasks = [...tasks];
+            const searchInfo = SearchInfo.fromAllTasks(tasks);
             query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter(filter.filterFunction);
+                filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
 
             // Assert
@@ -1025,6 +1032,66 @@ describe('Query', () => {
         });
     });
 
+    describe('filtering with code-based custom filters', () => {
+        it('should allow a Filter to be added', () => {
+            // Arrange
+            const filterOrErrorMessage = new DescriptionField().createFilterOrErrorMessage('description includes xxx');
+            expect(filterOrErrorMessage).toBeValid();
+            const query = new Query('');
+            expect(query.filters.length).toEqual(0);
+
+            // Act
+            query.addFilter(filterOrErrorMessage.filter!);
+
+            // Assert
+            expect(query.filters.length).toEqual(1);
+        });
+    });
+
+    describe('SearchInfo', () => {
+        it('should pass SearchInfo through to filter functions', () => {
+            // Arrange
+            const same1 = new TaskBuilder().description('duplicate').build();
+            const same2 = new TaskBuilder().description('duplicate').build();
+            const different = new TaskBuilder().description('different').build();
+            const allTasks = [same1, same2, different];
+
+            const moreThanOneTaskHasThisDescription = (task: Task, searchInfo: SearchInfo) => {
+                return searchInfo.allTasks.filter((t) => t.description === task.description).length > 1;
+            };
+            const filter = FilterOrErrorMessage.fromFilter(
+                new Filter('stuff', moreThanOneTaskHasThisDescription, new Explanation('explanation of stuff')),
+            );
+
+            // Act, Assert
+            const searchInfo = SearchInfo.fromAllTasks(allTasks);
+            expect(filter).toMatchTaskWithSearchInfo(same1, searchInfo);
+            expect(filter).toMatchTaskWithSearchInfo(same2, searchInfo);
+            expect(filter).not.toMatchTaskWithSearchInfo(different, searchInfo);
+        });
+
+        it('should pass the query path through to filter functions', () => {
+            // Arrange
+            const queryPath = 'this/was/passed/in/correctly.md';
+            const query = new Query('', queryPath);
+
+            const matchesIfSearchInfoHasCorrectPath = (_task: Task, searchInfo: SearchInfo) => {
+                return searchInfo.queryPath === queryPath;
+            };
+            query.addFilter(
+                new Filter('instruction', matchesIfSearchInfoHasCorrectPath, new Explanation('explanation')),
+            );
+
+            // Act
+            const task = new TaskBuilder().build();
+            const results = query.applyQueryToTasks([task]);
+
+            // Assert
+            // The task will match if the correct path.
+            expect(results.totalTasksCount).toEqual(1);
+        });
+    });
+
     describe('sorting', () => {
         const doneTask = new TaskBuilder().status(Status.DONE).build();
         const todoTask = new TaskBuilder().status(Status.TODO).build();
@@ -1180,6 +1247,20 @@ At most 8 tasks per group (if any "group by" options are supplied).
             // Assert
             expect(query.error).toBeUndefined();
             expect(query.grouping.length).toEqual(1);
+        });
+
+        it('should work with a custom group that uses query information', () => {
+            // Arrange
+            const source = 'group by function query.file.path';
+            const query = new Query(source, 'hello.md');
+
+            // Act
+            const results = query.applyQueryToTasks([new TaskBuilder().build()]);
+
+            // Assert
+            const groups = results.taskGroups;
+            expect(groups.groups.length).toEqual(1);
+            expect(groups.groups[0].groups).toEqual(['hello.md']);
         });
 
         it('should log meaningful error for supported group type', () => {

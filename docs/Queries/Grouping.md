@@ -747,23 +747,20 @@ group by function task.file.path
 - Like 'group by path' but includes the file extension.
 
 ```javascript
-group by function task.file.path.replace('{{query.file.folder}}', '')
+group by function task.file.path.replace(query.file.folder, '')
 ```
 
 - Group by the task's file path, but remove the query's folder from the group.
 - For tasks in the query's folder or a sub-folder, this is a nice way of seeing shortened paths.
-- Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.
-- This is provided to give ideas: it's a bit of a lazy implementation, as it doesn't check that `'{{query.file.folder}}'` is at the start of the line.
+- This is provided to give ideas: it's a bit of a lazy implementation, as it doesn't check that `query.file.folder` is at the start of the line.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks 4.7.0, the query's file path can be used in custom groups.
+Since Tasks X.Y.Z, the query's file path can be used conveniently in custom groups.
 
-- It must be quoted:
-  - `'{{query.file.path}}'` or
-  - `'{{query.file.pathWithoutExtension}}'` (since Tasks 4.8.0)
-- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
-- Useful reading: [[Query Properties]] and [[Placeholders]].
+- `query.file.path` or
+- `query.file.pathWithoutExtension`
+- Useful reading: [[Query Properties]].
 
 ### Root
 
@@ -784,11 +781,10 @@ group by function task.file.root
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks 4.7.0, the query's file root can be used in custom groups.
+Since Tasks X.Y.Z, the query's file root can be used conveniently in custom groups.
 
-- It must be quoted: `'{{query.file.root}}'`
-- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
-- Useful reading: [[Query Properties]] and [[Placeholders]].
+- `query.file.root`
+- Useful reading: [[Query Properties]].
 
 ### Folder
 
@@ -817,11 +813,10 @@ group by function task.file.folder.slice(0, -1).split('/').pop() + '/'
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks 4.7.0, the query's folder can be used in custom groups.
+Since Tasks X.Y.Z, the query's folder can be used conveniently in custom groups.
 
-- It must be quoted: `'{{query.file.folder}}'`
-- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
-- Useful reading: [[Query Properties]] and [[Placeholders]].
+- `query.file.folder`
+- Useful reading: [[Query Properties]].
 
 ### File Name
 
@@ -839,20 +834,18 @@ group by function task.file.filename
 - Like 'group by filename' but does not link to the file.
 
 ```javascript
-group by function task.file.filename.filenameWithoutExtension + (task.hasHeading ? (' > ' + task.heading) : '')
+group by function task.file.filenameWithoutExtension + (task.hasHeading ? (' > ' + task.heading) : '')
 ```
 
 - Like 'group by backlink' but does not link to the heading in the file.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks 4.7.0, the query's file name can be used in custom groups.
+Since Tasks X.Y.Z, the query's file name can be used conveniently in custom groups.
 
-- It must be quoted:
-  - `'{{query.file.filename}}'` or
-  - `'{{query.file.filenameWithoutExtension}}'` (since Tasks 4.8.0)
-- Beware if using placeholder text in regular expressions: Any special characters in filenames would need to be escaped.
-- Useful reading: [[Query Properties]] and [[Placeholders]].
+- `query.file.filename` or
+- `query.file.filenameWithoutExtension`
+- Useful reading: [[Query Properties]].
 
 ### Backlink
 

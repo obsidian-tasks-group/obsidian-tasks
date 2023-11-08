@@ -1,34 +1,41 @@
 
 ```mermaid
 flowchart LR
-1[Unchecked]
-2[Checked]
-3[Rescheduled]
-4[Scheduled]
-5[Important]
-6[Cancelled]
-7[In Progress]
-8[Question]
-9[Star]
-10[Note]
-11[Location]
-12[Information]
-13[Idea]
-14[Amount]
-15[Pro]
-16[Con]
-17[Bookmark]
-18[Quote]
-19[Speech bubble 0]
-20[Speech bubble 1]
-21[Speech bubble 2]
-22[Speech bubble 3]
-23[Speech bubble 4]
-24[Speech bubble 5]
-25[Speech bubble 6]
-26[Speech bubble 7]
-27[Speech bubble 8]
-28[Speech bubble 9]
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+1["Unchecked"]:::TODO
+2["Checked"]:::DONE
+3["Rescheduled"]:::TODO
+4["Scheduled"]:::TODO
+5["Important"]:::TODO
+6["Cancelled"]:::CANCELLED
+7["In Progress"]:::IN_PROGRESS
+8["Question"]:::TODO
+9["Star"]:::TODO
+10["Note"]:::TODO
+11["Location"]:::TODO
+12["Information"]:::TODO
+13["Idea"]:::TODO
+14["Amount"]:::TODO
+15["Pro"]:::TODO
+16["Con"]:::TODO
+17["Bookmark"]:::TODO
+18["Quote"]:::TODO
+19["Speech bubble 0"]:::NON_TASK
+20["Speech bubble 1"]:::NON_TASK
+21["Speech bubble 2"]:::NON_TASK
+22["Speech bubble 3"]:::NON_TASK
+23["Speech bubble 4"]:::NON_TASK
+24["Speech bubble 5"]:::NON_TASK
+25["Speech bubble 6"]:::NON_TASK
+26["Speech bubble 7"]:::NON_TASK
+27["Speech bubble 8"]:::NON_TASK
+28["Speech bubble 9"]:::NON_TASK
 1 --> 2
 2 --> 1
 3 --> 2
@@ -57,4 +64,6 @@ flowchart LR
 26 --> 26
 27 --> 27
 28 --> 28
+
+linkStyle default stroke:gray
 ```

@@ -12,8 +12,9 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { Query } from '../../../src/Query/Query';
-import { MarkdownTable } from '../../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdown } from '../../TestingTools/VerifyMarkdown';
 import { SampleTasks } from '../../TestHelpers';
+import { MarkdownTable } from '../../../src/lib/MarkdownTable';
 
 window.moment = moment;
 
@@ -579,7 +580,7 @@ describe('due date', () => {
             table.addRow(newRow);
         });
 
-        table.verify();
+        verifyMarkdown(table.markdown);
     });
 });
 
@@ -595,8 +596,8 @@ describe('grouping by due date', () => {
         const taskWithoutDate = new TaskBuilder().build();
 
         // Assert
-        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
-        expect(grouper.grouper(taskWithoutDate)).toEqual(['No due date']);
+        expect({ grouper, tasks: [taskWithDate] }).groupHeadingsToBe(['1970-01-01 Thursday']);
+        expect({ grouper, tasks: [taskWithoutDate] }).groupHeadingsToBe(['No due date']);
     });
 
     it('should sort groups for DueDateField', () => {

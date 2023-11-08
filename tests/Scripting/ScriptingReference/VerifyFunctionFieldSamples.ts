@@ -2,10 +2,11 @@ import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import type { Task } from '../../../src/Task';
 import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrouping';
-import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { expandPlaceholders } from '../../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../../src/Scripting/QueryContext';
 import { scan } from '../../../src/Query/Scanner';
+import { SearchInfo } from '../../../src/Query/SearchInfo';
 
 /** For example, 'task.due' */
 type TaskPropertyName = string;
@@ -84,14 +85,16 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
         const instruction = filter[0];
         const comment = filter.slice(1);
 
-        const expandedInstruction = preprocessSingleInstruction(instruction, 'a/b.md');
+        const path = 'a/b.md';
+        const expandedInstruction = preprocessSingleInstruction(instruction, path);
         const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(expandedInstruction);
         expect(filterOrErrorMessage).toBeValid();
 
         const filterFunction = filterOrErrorMessage.filterFunction!;
         const matchingTasks: string[] = [];
+        const searchInfo = new SearchInfo(path, tasks);
         for (const task of tasks) {
-            const matches = filterFunction(task);
+            const matches = filterFunction(task, searchInfo);
             if (matches) {
                 matchingTasks.push(task.toFileLineString());
             }
@@ -127,11 +130,12 @@ export function verifyFunctionFieldGrouperSamplesOnTasks(
         const instruction = group[0];
         const comment = group.slice(1);
 
-        const expandedInstruction = preprocessSingleInstruction(instruction, 'a/b.md');
+        const path = 'a/b.md';
+        const expandedInstruction = preprocessSingleInstruction(instruction, path);
         const grouper = new FunctionField().createGrouperFromLine(expandedInstruction);
         expect(grouper).not.toBeNull();
 
-        const headings = groupHeadingsForTask(grouper!, tasks);
+        const headings = groupHeadingsForTask(grouper!, tasks, new SearchInfo(path, tasks));
         return formatQueryAndResultsForApproving(instruction, comment, headings);
     });
 }

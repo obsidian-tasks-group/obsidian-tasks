@@ -4,6 +4,8 @@ publish: true
 
 # Example Statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Overview
 
 Once we know what [[Statuses]] are, what can we do with them?
@@ -19,12 +21,21 @@ This might be useful if you have a few slightly more time-consuming tasks to kee
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.mermaid.md -->
 ```mermaid
 flowchart LR
-1[Todo]
-2[In Progress]
-3[Done]
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+1["Todo"]:::TODO
+2["In Progress"]:::IN_PROGRESS
+3["Done"]:::DONE
 1 --> 2
 2 --> 3
 3 --> 1
+
+linkStyle default stroke:gray
 ```
 <!-- endInclude -->
 
@@ -47,12 +58,21 @@ By using non-standard symbols for the `IN_PROGRESS` and `DONE` statuses, if I de
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.mermaid.md -->
 ```mermaid
 flowchart LR
-1[Important]
-2[Doing - Important]
-3[Done - Important]
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+1["Important"]:::TODO
+2["Doing - Important"]:::IN_PROGRESS
+3["Done - Important"]:::DONE
 1 --> 2
 2 --> 3
 3 --> 1
+
+linkStyle default stroke:gray
 ```
 <!-- endInclude -->
 
@@ -77,10 +97,19 @@ Either way, I can make them toggle to each other, and by giving them the type `N
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_pro-con-cycle.approved.mermaid.md -->
 ```mermaid
 flowchart LR
-1[Pro]
-2[Con]
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+1["Pro"]:::NON_TASK
+2["Con"]:::NON_TASK
 1 --> 2
 2 --> 1
+
+linkStyle default stroke:gray
 ```
 <!-- endInclude -->
 
@@ -104,16 +133,25 @@ Here are some statuses from the ITS Theme where this behaviour might be useful.
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_toggle-does-nothing.approved.mermaid.md -->
 ```mermaid
 flowchart LR
-1[Bookmark]
-2[Example]
-3[Information]
-4[Paraphrase]
-5[Quote]
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+1["Bookmark"]:::NON_TASK
+2["Example"]:::NON_TASK
+3["Information"]:::NON_TASK
+4["Paraphrase"]:::NON_TASK
+5["Quote"]:::NON_TASK
 1 --> 1
 2 --> 2
 3 --> 3
 4 --> 4
 5 --> 5
+
+linkStyle default stroke:gray
 ```
 <!-- endInclude -->
 

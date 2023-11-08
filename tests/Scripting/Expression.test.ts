@@ -3,16 +3,12 @@
  */
 import moment from 'moment';
 
-import {
-    constructArguments,
-    evaluateExpression,
-    evaluateExpressionOrCatch,
-    parseAndEvaluateExpression,
-    parseExpression,
-} from '../../src/Scripting/Expression';
+import { evaluateExpression, evaluateExpressionOrCatch, parseExpression } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { continue_lines } from '../../src/Query/Scanner';
+import { constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
+import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -58,6 +54,7 @@ describe('Expression', () => {
     });
 
     const task = TaskBuilder.createFullyPopulatedTask();
+    const queryContext = makeQueryContext('temp.md');
 
     describe('detect errors at parse stage', () => {
         it('should report meaningful error message for parentheses too few parentheses', () => {
@@ -75,7 +72,7 @@ describe('Expression', () => {
 
     describe('detect errors at evaluation time', () => {
         const line = 'nonExistentVariable';
-        const paramsArgs = constructArguments(task);
+        const paramsArgs = constructArguments(task, queryContext);
         const expression = parseExpression(paramsArgs, line);
         it('evaluateExpressionAndCatch() should report meaningful error message for invalid variable', () => {
             expect(expression.error).toBeUndefined();
@@ -95,7 +92,7 @@ describe('Expression', () => {
         });
 
         it('should report unknown for invalid task property', () => {
-            expect(parseAndEvaluateExpression(task, 'task.iAmNotAKnownTaskProperty')).toEqual(undefined);
+            expect(parseAndEvaluateExpression(task, 'task.iAmNotAKnownTaskProperty', queryContext)).toEqual(undefined);
         });
     });
 
@@ -115,7 +112,7 @@ describe('Expression', () => {
         markdown +=
             expressions
                 .map((expression) => {
-                    const result = parseAndEvaluateExpression(task, continue_lines(expression));
+                    const result = parseAndEvaluateExpression(task, continue_lines(expression), queryContext);
                     return `${expression}${resultSeparator}=> ${formatToRepresentType(result)}`;
                 })
                 .join(separator) + '\n';

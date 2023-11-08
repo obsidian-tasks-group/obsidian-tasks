@@ -4,6 +4,8 @@ publish: true
 
 # Editing a Status
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Overview
 
 This page describes features of the modal used for editing a Status.

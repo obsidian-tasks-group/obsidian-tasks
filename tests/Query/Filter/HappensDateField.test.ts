@@ -153,7 +153,8 @@ describe('grouping by happens date', () => {
         const grouper = new HappensDateField().createNormalGrouper();
 
         // Assert
-        expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
+        const tasks = [fromLine({ line: taskLine })];
+        expect({ grouper, tasks }).groupHeadingsToBe(expectedResult);
     });
 
     it('should sort groups for HappensDateField', () => {

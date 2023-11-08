@@ -63,7 +63,8 @@ class QueryRenderChild extends MarkdownRenderChild {
     private readonly filePath: string;
 
     private query: IQuery;
-    private queryType: string;
+    // @ts-expect-error: TS6133: 'queryType' is declared but its value is never read
+    private queryType: string; // whilst there is only one query type, there is no point logging this value
 
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
@@ -165,12 +166,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private async renderQuerySearchResults(tasks: Task[], state: State.Warm, content: HTMLDivElement) {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
-        const debug = false;
-        if (debug) {
-            console.debug(
-                `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
-            );
-        }
+        this.query.debug(`Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
         if (this.query.layoutOptions.explainQuery) {
             this.createExplanation(content);
@@ -186,10 +182,9 @@ class QueryRenderChild extends MarkdownRenderChild {
         await this.addAllTaskGroups(queryResult.taskGroups, content);
 
         const totalTasksCount = queryResult.totalTasksCount;
-        if (debug) {
-            console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
-        }
         this.addTaskCount(content, queryResult);
+
+        this.query.debug(`${totalTasksCount} tasks displayed`);
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {

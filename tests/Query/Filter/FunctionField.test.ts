@@ -6,8 +6,14 @@ import moment from 'moment';
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import { Status } from '../../../src/Status';
 import { Priority } from '../../../src/Task';
-import { toGroupTaskFromBuilder, toGroupTaskWithPath } from '../../CustomMatchers/CustomMatchersForGrouping';
+import {
+    toGroupTaskFromBuilder,
+    toGroupTaskUsingSearchInfo,
+    toGroupTaskWithPath,
+} from '../../CustomMatchers/CustomMatchersForGrouping';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { SearchInfo } from '../../../src/Query/SearchInfo';
+import type { Task } from '../../../src/Task';
 
 window.moment = moment;
 
@@ -18,12 +24,27 @@ window.moment = moment;
 describe('FunctionField - filtering', () => {
     const functionField = new FunctionField();
 
-    it('filter by function - with valid query', () => {
+    it('filter by function - with valid query of Task property', () => {
         const filter = functionField.createFilterOrErrorMessage('filter by function task.description.length > 5');
         expect(filter).toBeValid();
         expect(filter).toMatchTaskWithDescription('123456');
         expect(filter).not.toMatchTaskWithDescription('12345');
         expect(filter).not.toMatchTaskWithDescription('1234');
+    });
+
+    it('filter by function - with valid query of Query property', () => {
+        const tasksInSameFileAsQuery = functionField.createFilterOrErrorMessage(
+            'filter by function task.file.path === query.file.path',
+        );
+        expect(tasksInSameFileAsQuery).toBeValid();
+        const queryFilePath = '/a/b/query.md';
+
+        const taskInQueryFile: Task = new TaskBuilder().path(queryFilePath).build();
+        const taskNotInQueryFile: Task = new TaskBuilder().path('some other path.md').build();
+        const searchInfo = new SearchInfo(queryFilePath, [taskInQueryFile, taskNotInQueryFile]);
+
+        expect(tasksInSameFileAsQuery.filterFunction!(taskInQueryFile, searchInfo)).toEqual(true);
+        expect(tasksInSameFileAsQuery.filterFunction!(taskNotInQueryFile, searchInfo)).toEqual(false);
     });
 
     it('filter by function - should report syntax errors via FilterOrErrorMessage', () => {
@@ -43,7 +64,8 @@ describe('FunctionField - filtering', () => {
         // Assert
         expect(filter).toBeValid();
         const t = () => {
-            filter.filterFunction!(new TaskBuilder().build());
+            const task = new TaskBuilder().build();
+            filter.filterFunction!(task, SearchInfo.fromAllTasks([task]));
         };
         expect(t).toThrow(Error);
         expect(t).toThrowError('filtering function must return true or false. This returned "undefined".');
@@ -233,5 +255,12 @@ describe('FunctionField - grouping - example functions', () => {
         toGroupTaskFromBuilder(grouper, new TaskBuilder().tags(['#context/pc_home', '#topic/sys_admin']), [
             '#context/pc_home',
         ]);
+    });
+
+    it('group by a query property', () => {
+        const line = 'group by function query.file.filename';
+        const grouper = createGrouper(line);
+        const task = new TaskBuilder().build();
+        toGroupTaskUsingSearchInfo(grouper, task, new SearchInfo('queries/query file.md', [task]), ['query file.md']);
     });
 });
