@@ -615,7 +615,7 @@ describe('Visualise HTML', () => {
     function layoutOptionsFullMode(): LayoutOptions {
         const layoutOptions = new LayoutOptions();
 
-        // Show every Task field (not entirely true)
+        // Show every Task field, disable short mode, do not explain the query
         Object.keys(layoutOptions).forEach((key) => {
             const key2 = key as keyof LayoutOptions;
             layoutOptions[key2] = false;
