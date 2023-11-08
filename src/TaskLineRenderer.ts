@@ -28,7 +28,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     scheduledDate: 'task-scheduled',
     doneDate: 'task-done',
     recurrenceRule: 'task-recurring',
-    blockLink: '',
+    blockLink: 'block-link',
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
@@ -242,7 +242,6 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
     const componentClass = LayoutClasses[component];
     switch (component) {
         case 'blockLink':
-            break;
         case 'description':
         case 'priority':
         case 'recurrenceRule':

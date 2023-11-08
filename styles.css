@@ -88,6 +88,10 @@
     display: none;
 }
 
+.task-list-item .block-link{
+    display: none;
+}
+
 .tasks-setting-important {
     color: red;
     font-weight: bold;
