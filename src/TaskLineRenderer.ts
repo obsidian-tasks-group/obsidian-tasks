@@ -65,7 +65,7 @@ const noDataAttribute: AttributeValueCalculator = () => {
     return null;
 };
 
-const FieldLayouts: { [name: string]: FieldLayoutDetail } = {
+const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
     createdDate: new FieldLayoutDetail('task-created', 'taskCreated', dateDataAttributeCalculator),
     dueDate: new FieldLayoutDetail('task-due', 'taskDue', dateDataAttributeCalculator),
     startDate: new FieldLayoutDetail('task-start', 'taskStart', dateDataAttributeCalculator),
@@ -291,11 +291,9 @@ function getTaskComponentClass(component: TaskLayoutComponent) {
     const componentClassContainer: string[] = [];
 
     const fieldLayoutDetail = FieldLayouts[component];
-    if (fieldLayoutDetail) {
-        const className = fieldLayoutDetail.className;
-        if (className) {
-            componentClassContainer.push(className);
-        }
+    const className = fieldLayoutDetail.className;
+    if (className) {
+        componentClassContainer.push(className);
     }
 
     return componentClassContainer;
@@ -311,12 +309,10 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     // data attribute value (value). Otherwise, just leave an empty string ('') as the value.
     // The value is calculated based on FieldLayoutDetail.attributeValueCalculator
     const fieldLayoutDetail = FieldLayouts[component];
-    if (fieldLayoutDetail) {
-        const attributeValue = fieldLayoutDetail.attributeValueCalculator(component, task);
-        if (attributeValue) {
-            const attributeName = fieldLayoutDetail.dataAtrributeName;
-            dataAttribute[attributeName] = attributeValue;
-        }
+    const attributeValue = fieldLayoutDetail.attributeValueCalculator(component, task);
+    if (attributeValue) {
+        const attributeName = fieldLayoutDetail.dataAtrributeName;
+        dataAttribute[attributeName] = attributeValue;
     }
 
     return dataAttribute;
