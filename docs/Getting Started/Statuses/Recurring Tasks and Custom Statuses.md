@@ -155,6 +155,8 @@ Note that the new task has `CANCELLED` status, so will not typically show up in 
 
 > [!Tip]
 > Currently, if you plan to use recurring tasks, you should always ensure that any statuses of type `DONE` are always followed by statuses of type `TODO`.
+>
+> You can [[Check your Statuses]] for any statuses that do not follow this guideline.
 
 > [!Note]
 > When [[Custom Statuses]] were introduced, and we had to figure out how integrate them with recurring tasks, we expected that users would always following `DONE` with `TODO`.

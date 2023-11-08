@@ -18,6 +18,7 @@ This section provides more detail to flesh out the introductory material in [[St
 
 - [[Status Settings]]
 - [[Editing a Status]]
+- [[Check your Statuses]]
 
 ## Statuses in Use
 
