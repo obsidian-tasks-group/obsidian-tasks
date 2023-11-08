@@ -32,12 +32,12 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
 };
 
 export class AppleSauce {
-    className: string;
+    className: string | null;
     dataAtrributeName: string;
     attributeValueCalculator: (component: TaskLayoutComponent, task: Task) => string | null;
 
     constructor(
-        className: string,
+        className: string | null,
         dataAttributeName: string,
         attributeValueCalculator: (component: TaskLayoutComponent, task: Task) => string | null,
     ) {
@@ -283,7 +283,10 @@ function getTaskComponentClass(component: TaskLayoutComponent) {
 
     const appleSauce = appleSauceDictionary[component];
     if (appleSauce) {
-        componentClassContainer.push(appleSauce.className);
+        const className = appleSauce.className;
+        if (className) {
+            componentClassContainer.push(className);
+        }
     }
 
     const componentClass = LayoutClasses[component];
