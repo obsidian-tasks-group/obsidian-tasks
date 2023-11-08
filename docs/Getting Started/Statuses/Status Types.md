@@ -4,6 +4,8 @@ publish: true
 
 # Status Types
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Overview
 
 With the new ability to create a variety of [[Custom Statuses]], Tasks needs to know enough about each status that it can decide:

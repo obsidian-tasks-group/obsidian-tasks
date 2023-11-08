@@ -6,7 +6,7 @@ aliases:
 
 # About Status Collections
 
-<span class="related-pages">#index-pages</span>
+<span class="related-pages">#index-pages #feature/statuses</span>
 
 ## Background
 
@@ -29,6 +29,7 @@ You can control the behaviour of your tasks (such as what happens when you click
 >   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
 >   - [[Set up custom statuses|How to set up your custom statuses]]
+>   - [[Check your Statuses]]
 > - Optionally, update your tasks searches to take advantage of the new flexibility
 >   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 

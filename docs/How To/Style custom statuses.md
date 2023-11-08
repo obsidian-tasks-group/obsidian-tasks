@@ -4,7 +4,7 @@ publish: true
 
 # Style custom statuses
 
-<span class="related-pages">#css</span>
+<span class="related-pages">#css #feature/statuses</span>
 
 ## Summary
 
@@ -96,6 +96,7 @@ Now the above three tasks look more colourful, and tasks with `[x]` and `[X]` ar
 >   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
 >   - [[Set up custom statuses|How to set up your custom statuses]]
+>   - [[Check your Statuses]]
 > - Optionally, update your tasks searches to take advantage of the new flexibility
 >   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
