@@ -12,6 +12,8 @@ import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
 import { DateParser } from '../src/Query/DateParser';
 import { fromLine } from './TestHelpers';
+import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -594,5 +596,62 @@ describe('task line rendering', () => {
             {},
             { task: '-', taskStatusName: 'Cancelled', taskStatusType: 'CANCELLED' },
         );
+    });
+});
+
+describe('Visualise HTML', () => {
+    async function renderAndVerifyHTML(task: Task, layoutOptions: LayoutOptions) {
+        const parentRender = await createMockParentAndRender(task, layoutOptions);
+        const taskAsHTML = parentRender.innerHTML
+            .replace(/ data-/g, '\n    data-')
+            .replace(/<span/g, '\n        <span');
+
+        verifyWithFileExtension(taskAsHTML, 'html');
+    }
+
+    const fullTask = TaskBuilder.createFullyPopulatedTask();
+    const minimalTask = fromLine({ line: '- [-] empty' });
+
+    function layoutOptionsFullMode(): LayoutOptions {
+        const layoutOptions = new LayoutOptions();
+
+        // Show every Task field (not entirely true)
+        Object.keys(layoutOptions).forEach((key) => {
+            const key2 = key as keyof LayoutOptions;
+            layoutOptions[key2] = false;
+        });
+
+        return layoutOptions;
+    }
+
+    function layoutOptionsShortMode(): LayoutOptions {
+        const layoutOptions = new LayoutOptions();
+
+        // Show every Task field (not entirely true)
+        Object.keys(layoutOptions).forEach((key) => {
+            const key2 = key as keyof LayoutOptions;
+            layoutOptions[key2] = false;
+        });
+
+        // Enable short mode
+        layoutOptions.shortMode = true;
+
+        return layoutOptions;
+    }
+
+    it('Full task - full mode', async () => {
+        await renderAndVerifyHTML(fullTask, layoutOptionsFullMode());
+    });
+
+    it('Full task - short mode', async () => {
+        await renderAndVerifyHTML(fullTask, layoutOptionsShortMode());
+    });
+
+    it('Minimal task - full mode', async () => {
+        await renderAndVerifyHTML(minimalTask, layoutOptionsFullMode());
+    });
+
+    it('Minimal task - short mode', async () => {
+        await renderAndVerifyHTML(minimalTask, layoutOptionsShortMode());
     });
 });
