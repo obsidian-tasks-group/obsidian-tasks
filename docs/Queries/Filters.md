@@ -1137,7 +1137,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now p
 
 In Tasks 4.8.0 `task.file.pathWithoutExtension` was added.
 
-Since Tasks X.Y.Z, the query's file path can be used conveniently in custom filters:
+Since Tasks 5.1.0, the query's file path can be used conveniently in custom filters:
 
 - `query.file.path` or
 - `query.file.pathWithoutExtension`
@@ -1187,7 +1187,7 @@ The `root` is the top-level folder of the file that contains the task, that is, 
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by root folder** is now possible, using `task.file.root`.
 
-Since Tasks X.Y.Z, the query's file root can be used conveniently in custom filters:
+Since Tasks 5.1.0, the query's file root can be used conveniently in custom filters:
 
 - `query.file.root`
 - Useful reading: [[Query Properties]].
@@ -1230,7 +1230,7 @@ This is the `folder` to the file that contains the task, which will be `/` for f
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now possible, using `task.file.folder`.
 
-Since Tasks X.Y.Z, the query's file root can be used conveniently in custom filters:
+Since Tasks 5.1.0, the query's file root can be used conveniently in custom filters:
 
 - `query.file.root`
 - Useful reading: [[Query Properties]].
@@ -1294,7 +1294,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file name** is now p
 
 In Tasks 4.8.0 `task.file.filenameWithoutExtension` was added.
 
-Since Tasks X.Y.Z, the query's file name can be used conveniently in custom filters:
+Since Tasks 5.1.0, the query's file name can be used conveniently in custom filters:
 
 - `query.file.filename` or
 - `query.file.filenameWithoutExtension`

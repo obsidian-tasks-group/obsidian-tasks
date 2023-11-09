@@ -9,7 +9,7 @@ publish: true
 > [!released]
 >
 > - Query Properties were introduced in Tasks 4.7.0.
-> - Their direct use in Custom Filters and Custom Groups, without the use of Placeholders, was introduced in Tasks X.Y.Z.
+> - Their direct use in Custom Filters and Custom Groups, without the use of Placeholders, was introduced in Tasks 5.1.0.
 
 ## Introduction
 
