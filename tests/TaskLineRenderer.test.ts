@@ -602,11 +602,14 @@ describe('task line rendering', () => {
 describe('Visualise HTML', () => {
     async function renderAndVerifyHTML(task: Task, layoutOptions: LayoutOptions) {
         const parentRender = await createMockParentAndRender(task, layoutOptions);
+        const taskAsMarkdown = `<!--
+${task.toFileLineString()}
+-->\n\n`;
         const taskAsHTML = parentRender.innerHTML
             .replace(/ data-/g, '\n    data-')
             .replace(/<span/g, '\n        <span');
 
-        verifyWithFileExtension(taskAsHTML, 'html');
+        verifyWithFileExtension(taskAsMarkdown + taskAsHTML, 'html');
     }
 
     const fullTask = TaskBuilder.createFullyPopulatedTask();
