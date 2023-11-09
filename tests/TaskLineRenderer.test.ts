@@ -601,7 +601,14 @@ describe('task line rendering', () => {
 
 describe('Visualise HTML', () => {
     async function renderAndVerifyHTML(task: Task, layoutOptions: LayoutOptions) {
-        const parentRender = await createMockParentAndRender(task, layoutOptions);
+        const mockHTMLRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
+            // Contrary to the default mockTextRenderer() in createMockParentAndRender(),
+            // instead of the rendered HTMLSpanElement.innerText,
+            // we need the plain HTML here like in TaskLineRenderer.renderComponentText().
+            element.innerHTML = text;
+        };
+
+        const parentRender = await createMockParentAndRender(task, layoutOptions, mockHTMLRenderer);
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
 -->\n\n`;
