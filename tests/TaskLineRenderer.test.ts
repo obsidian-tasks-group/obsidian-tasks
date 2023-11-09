@@ -626,6 +626,9 @@ ${task.toFileLineString()}
         const layoutOptions = new LayoutOptions();
 
         // Show every Task field, disable short mode, do not explain the query
+        // Also note that urgency, backlinks and edit button are rendered in QueryRender.createTaskList(),
+        // so they won't be visible in this test it is using TaskLineRenderer.renderTaskLine().
+        // See also comments in TaskLayout.applyOptions().
         Object.keys(layoutOptions).forEach((key) => {
             const key2 = key as keyof LayoutOptions;
             layoutOptions[key2] = false;
