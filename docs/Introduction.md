@@ -13,8 +13,8 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
-- X.Y.Z: 🔥 Add 'Review and check your Statuses' facility: see [[Check your Statuses|check your statuses]].
-- X.Y.Z: 🔥 Enable [[Custom Filters|custom filters]] and [[Custom Grouping|custom grouping]] to use [[Query Properties|query properties]] directly - no placeholders required.
+- 5.1.0: 🔥 Add 'Review and check your Statuses' facility: see [[Check your Statuses|check your statuses]].
+- 5.1.0: 🔥 Enable [[Custom Filters|custom filters]] and [[Custom Grouping|custom grouping]] to use [[Query Properties|query properties]] directly - no placeholders required.
 
 <!--
 - 5.0.0: 🔥 Add [[Line Continuations|line continuations]].

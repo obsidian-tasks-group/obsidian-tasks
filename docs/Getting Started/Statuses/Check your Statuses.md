@@ -7,7 +7,7 @@ publish: true
 <span class="related-pages">#feature/statuses</span>
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 5.1.0.
 
 ## Overview
 

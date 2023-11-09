@@ -46,7 +46,7 @@ The Reference section [[Query Properties]] shows all the query properties availa
 > [!released]
 >
 > - Query properties and placeholders were introduced in Tasks 4.7.0, accessible via Placeholders.
-> - Direct access to Query properties was introduced in Tasks X.Y.Z.
+> - Direct access to Query properties was introduced in Tasks 5.1.0.
 
 ### Expressions
 

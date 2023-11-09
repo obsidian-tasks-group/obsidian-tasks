@@ -756,7 +756,7 @@ group by function task.file.path.replace(query.file.folder, '')
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks X.Y.Z, the query's file path can be used conveniently in custom groups.
+Since Tasks 5.1.0, the query's file path can be used conveniently in custom groups.
 
 - `query.file.path` or
 - `query.file.pathWithoutExtension`
@@ -781,7 +781,7 @@ group by function task.file.root
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks X.Y.Z, the query's file root can be used conveniently in custom groups.
+Since Tasks 5.1.0, the query's file root can be used conveniently in custom groups.
 
 - `query.file.root`
 - Useful reading: [[Query Properties]].
@@ -813,7 +813,7 @@ group by function task.file.folder.slice(0, -1).split('/').pop() + '/'
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks X.Y.Z, the query's folder can be used conveniently in custom groups.
+Since Tasks 5.1.0, the query's folder can be used conveniently in custom groups.
 
 - `query.file.folder`
 - Useful reading: [[Query Properties]].
@@ -841,7 +841,7 @@ group by function task.file.filenameWithoutExtension + (task.hasHeading ? (' > '
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-Since Tasks X.Y.Z, the query's file name can be used conveniently in custom groups.
+Since Tasks 5.1.0, the query's file name can be used conveniently in custom groups.
 
 - `query.file.filename` or
 - `query.file.filenameWithoutExtension`
