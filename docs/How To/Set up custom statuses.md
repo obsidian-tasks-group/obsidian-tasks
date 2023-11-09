@@ -4,6 +4,8 @@ publish: true
 
 # Set up custom statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Motivation
 
 This page shows you how to customise the statuses used in your Tasks vault, once you have decided which letters and symbols inside `[` and `]` you wish to use, and what they should be called.
@@ -134,6 +136,7 @@ Repeat again:
 >   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
 >   - [[Set up custom statuses|How to set up your custom statuses]]
+>   - [[Check your Statuses]]
 > - Optionally, update your tasks searches to take advantage of the new flexibility
 >   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 

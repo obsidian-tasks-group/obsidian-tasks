@@ -88,6 +88,12 @@
     display: none;
 }
 
+/* Workaround for issue #2073: Enabling the plugin causes blockIds to be not hidden in reading view
+   https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2073 */
+.task-list-item .task-block-link{
+    display: none;
+}
+
 .tasks-setting-important {
     color: red;
     font-weight: bold;

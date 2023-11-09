@@ -28,7 +28,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     scheduledDate: 'task-scheduled',
     doneDate: 'task-done',
     recurrenceRule: 'task-recurring',
-    blockLink: '',
+    blockLink: 'task-block-link',
 };
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string | null;
@@ -79,7 +79,7 @@ const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),
 
-    blockLink: new FieldLayoutDetail('', '', noDataAttribute),
+    blockLink: new FieldLayoutDetail('task-block-link', '', noDataAttribute),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;

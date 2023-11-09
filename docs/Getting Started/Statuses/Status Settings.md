@@ -4,6 +4,8 @@ publish: true
 
 # Status Settings
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Overview
 
 This is what you see in the Tasks settings when you first look at the Task Statuses section:
@@ -99,3 +101,6 @@ This allows you to try out each of the buttons above, and if you don't like them
   - The mechanism to remember which sections were collapsed is not yet working.
 - Usability wise, it would be good if the 'Add New Task Status' button opened the modal to immediately edit the new status.
 - Ideally, the lists of statuses, with their delete and edit buttons, would be a table instead, with the ability to edit the properties directly in the table, instead of having to open up a modal.
+
+> [!Tip]
+> Use [[Check your Statuses]] to easily find any issues with your Custom Statuses.

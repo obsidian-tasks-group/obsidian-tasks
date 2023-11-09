@@ -4,6 +4,8 @@ publish: true
 
 # Statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Introduction
 
 > [!released]
@@ -22,6 +24,7 @@ Once you're comfortable with the background information in this page, further in
 - [[Style custom statuses|How to style custom statuses]].
 - [[Set up custom statuses|How to set up your custom statuses]].
 - [[About Status Collections]].
+- [[Check your Statuses]].
 
 ## Do I need to set up statuses?
 
@@ -154,6 +157,7 @@ What Tasks' custom statuses allow you to do is to **also customise the behaviour
 >   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
 >   - [[Set up custom statuses|How to set up your custom statuses]]
+>   - [[Check your Statuses]]
 > - Optionally, update your tasks searches to take advantage of the new flexibility
 >   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
