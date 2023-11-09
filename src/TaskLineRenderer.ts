@@ -38,13 +38,9 @@ export class FieldLayoutDetail {
     attributeName: string;
     attributeValueCalculator: AttributeValueCalculator;
 
-    constructor(
-        className: string | null,
-        dataAttributeName: string,
-        attributeValueCalculator: AttributeValueCalculator,
-    ) {
+    constructor(className: string | null, attributeName: string, attributeValueCalculator: AttributeValueCalculator) {
         this.className = className;
-        this.attributeName = dataAttributeName;
+        this.attributeName = attributeName;
         this.attributeValueCalculator = attributeValueCalculator;
     }
 }
