@@ -601,12 +601,23 @@ describe('task line rendering', () => {
 
 describe('Visualise HTML', () => {
     async function renderAndVerifyHTML(task: Task, layoutOptions: LayoutOptions) {
-        const parentRender = await createMockParentAndRender(task, layoutOptions);
+        const mockHTMLRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
+            // Contrary to the default mockTextRenderer() in createMockParentAndRender(),
+            // instead of the rendered HTMLSpanElement.innerText,
+            // we need the plain HTML here like in TaskLineRenderer.renderComponentText(),
+            // in order to ensure that any description and tags are retained.
+            element.innerHTML = text;
+        };
+
+        const parentRender = await createMockParentAndRender(task, layoutOptions, mockHTMLRenderer);
+        const taskAsMarkdown = `<!--
+${task.toFileLineString()}
+-->\n\n`;
         const taskAsHTML = parentRender.innerHTML
             .replace(/ data-/g, '\n    data-')
             .replace(/<span/g, '\n        <span');
 
-        verifyWithFileExtension(taskAsHTML, 'html');
+        verifyWithFileExtension(taskAsMarkdown + taskAsHTML, 'html');
     }
 
     const fullTask = TaskBuilder.createFullyPopulatedTask();
@@ -616,6 +627,9 @@ describe('Visualise HTML', () => {
         const layoutOptions = new LayoutOptions();
 
         // Show every Task field, disable short mode, do not explain the query
+        // Also note that urgency, backlinks and edit button are rendered in QueryRender.createTaskList(),
+        // so they won't be visible in this test it is using TaskLineRenderer.renderTaskLine().
+        // See also comments in TaskLayout.applyOptions().
         Object.keys(layoutOptions).forEach((key) => {
             const key2 = key as keyof LayoutOptions;
             layoutOptions[key2] = false;
