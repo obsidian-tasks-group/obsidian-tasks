@@ -35,7 +35,7 @@ type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => 
 
 export class FieldLayoutDetail {
     className: string | null;
-    dataAtrributeName: string;
+    attributeName: string;
     attributeValueCalculator: AttributeValueCalculator;
 
     constructor(
@@ -44,7 +44,7 @@ export class FieldLayoutDetail {
         attributeValueCalculator: AttributeValueCalculator,
     ) {
         this.className = className;
-        this.dataAtrributeName = dataAttributeName;
+        this.attributeName = dataAttributeName;
         this.attributeValueCalculator = attributeValueCalculator;
     }
 }
@@ -311,7 +311,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     const fieldLayoutDetail = FieldLayouts[component];
     const attributeValue = fieldLayoutDetail.attributeValueCalculator(component, task);
     if (attributeValue) {
-        const attributeName = fieldLayoutDetail.dataAtrributeName;
+        const attributeName = fieldLayoutDetail.attributeName;
         dataAttribute[attributeName] = attributeValue;
     }
 

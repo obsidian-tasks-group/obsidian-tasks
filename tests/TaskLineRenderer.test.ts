@@ -669,7 +669,7 @@ describe('Field Layout Detail tests', () => {
             return '';
         });
         expect(fieldLayoutDetail.className).toEqual('stuff');
-        expect(fieldLayoutDetail.dataAtrributeName).toEqual('taskAttribute');
+        expect(fieldLayoutDetail.attributeName).toEqual('taskAttribute');
     });
 
     it('should calculate data attribute value', () => {
