@@ -43,6 +43,18 @@ export class FieldLayoutDetail {
         return '';
     };
 
+    /**
+     * @param className CSS class of the component.
+     * @param attributeName if the component needs data attribute (`data-key="value"`) this is the key.
+     * Otherwise, set this to {@link FieldLayoutDetail.noAttributeName}.
+     * @param attributeValueCalculator And this is the value.
+     * Set to {@link FieldLayoutDetail.noAttributeValueCalculator} if shall be empty.
+     *
+     * There is a relation between {@link attributeName} and {@link attributeValueCalculator}.
+     * For a component to have the data attribute, both need to be set to values other than
+     * {@link FieldLayoutDetail.noAttributeName} and {@link FieldLayoutDetail.noAttributeValueCalculator} respectively.
+     * This means that having an empty data attribute (`data-key=""`) is not supported.
+     */
     constructor(className: string, attributeName: string, attributeValueCalculator: AttributeValueCalculator) {
         // If className is empty, `span.classList.add(...componentClass);` will fail in runtime.
         if (className === '') {
