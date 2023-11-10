@@ -21,6 +21,8 @@ export type TaskLineRenderDetails = {
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
+export type AttributesDictionary = { [key: string]: string };
+
 export class FieldLayoutsContainer {
     private details = FieldLayoutDetails;
 
@@ -246,8 +248,6 @@ export async function renderTaskLine(
 
     return li;
 }
-
-export type AttributesDictionary = { [key: string]: string };
 
 async function taskToHtml(
     task: Task,
