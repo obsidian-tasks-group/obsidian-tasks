@@ -107,7 +107,7 @@ export class InlineRenderer {
                 parentUlElement: element,
                 listIndex,
                 layoutOptions: new LayoutOptions(),
-            }).renderTaskLine(task);
+            }).renderTaskLine(task, listIndex);
 
             // If the rendered element contains a sub-list or sub-div (e.g. the
             // folding arrow), we need to keep it.

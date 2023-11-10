@@ -41,7 +41,7 @@ async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptio
         listIndex: 0,
         layoutOptions: layoutOptions ?? new LayoutOptions(),
     });
-    await taskLineRenderer.renderTaskLine(task);
+    await taskLineRenderer.renderTaskLine(task, 0);
     return parentElement;
 }
 
