@@ -233,8 +233,8 @@ export class TaskLineRenderer {
      *
      * @returns an HTML rendered List Item element (LI) for a task.
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
-     * @param task
-     * @param taskIndex
+     * @param task The task to be rendered.
+     * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
      */
     public async renderTaskLine(task: Task, taskIndex: number): Promise<HTMLLIElement> {
         const li: HTMLLIElement = document.createElement('li');
