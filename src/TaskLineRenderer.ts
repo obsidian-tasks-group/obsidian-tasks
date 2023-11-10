@@ -240,9 +240,9 @@ export class TaskLineRenderer {
      * @returns an HTML rendered List Item element (LI) for a task.
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
      * @param task
-     * @param _taskIndex
+     * @param taskIndex
      */
-    public async renderTaskLine(task: Task, _taskIndex: number): Promise<HTMLLIElement> {
+    public async renderTaskLine(task: Task, taskIndex: number): Promise<HTMLLIElement> {
         const li: HTMLLIElement = document.createElement('li');
         this.parentUlElement.appendChild(li);
 
@@ -289,10 +289,10 @@ export class TaskLineRenderer {
 
         // Set these to be compatible with stock obsidian lists:
         li.setAttribute('data-task', task.status.symbol.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
-        li.setAttribute('data-line', this.listIndex.toString());
+        li.setAttribute('data-line', taskIndex.toString());
         li.setAttribute('data-task-status-name', task.status.name);
         li.setAttribute('data-task-status-type', task.status.type);
-        checkbox.setAttribute('data-line', this.listIndex.toString());
+        checkbox.setAttribute('data-line', taskIndex.toString());
 
         if (this.layoutOptions.shortMode) {
             addTooltip({ task, element: textSpan, isFilenameUnique: this.isFilenameUnique });
