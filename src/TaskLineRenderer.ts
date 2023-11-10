@@ -348,54 +348,43 @@ export class AppleSauce {
         task: Task,
         textRenderer: TextRenderer,
     ) {
-        await renderComponentText(span, componentString, component, task, textRenderer, this.obsidianComponent);
-    }
-}
-
-async function renderComponentText(
-    span: HTMLSpanElement,
-    componentString: string,
-    component: TaskLayoutComponent,
-    task: Task,
-    textRenderer: TextRenderer,
-    obsidianComponent: Component | null,
-) {
-    if (component === 'description') {
-        const { debugSettings } = getSettings();
-        if (debugSettings.showTaskHiddenData) {
-            // Add some debug output to enable hidden information in the task to be inspected.
-            componentString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
-        }
-        await textRenderer(componentString, span, task.path, obsidianComponent);
-
-        // If the task is a block quote, the block quote wraps the p-tag that contains the content.
-        // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
-        // Otherwise, we unwrap the p-tag as a direct descendant of the span.
-        const blockQuote = span.querySelector('blockquote');
-        const directParentOfPTag = blockQuote ?? span;
-
-        // Unwrap the p-tag that was created by the MarkdownRenderer:
-        const pElement = directParentOfPTag.querySelector('p');
-        if (pElement !== null) {
-            while (pElement.firstChild) {
-                directParentOfPTag.insertBefore(pElement.firstChild, pElement);
+        if (component === 'description') {
+            const { debugSettings } = getSettings();
+            if (debugSettings.showTaskHiddenData) {
+                // Add some debug output to enable hidden information in the task to be inspected.
+                componentString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
             }
-            pElement.remove();
-        }
+            await textRenderer(componentString, span, task.path, this.obsidianComponent);
 
-        // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
-        span.querySelectorAll('p').forEach((pElement) => {
-            if (!pElement.hasChildNodes()) {
+            // If the task is a block quote, the block quote wraps the p-tag that contains the content.
+            // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
+            // Otherwise, we unwrap the p-tag as a direct descendant of the span.
+            const blockQuote = span.querySelector('blockquote');
+            const directParentOfPTag = blockQuote ?? span;
+
+            // Unwrap the p-tag that was created by the MarkdownRenderer:
+            const pElement = directParentOfPTag.querySelector('p');
+            if (pElement !== null) {
+                while (pElement.firstChild) {
+                    directParentOfPTag.insertBefore(pElement.firstChild, pElement);
+                }
                 pElement.remove();
             }
-        });
 
-        // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
-        span.querySelectorAll('.footnotes').forEach((footnoteElement) => {
-            footnoteElement.remove();
-        });
-    } else {
-        span.innerHTML = componentString;
+            // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
+            span.querySelectorAll('p').forEach((pElement) => {
+                if (!pElement.hasChildNodes()) {
+                    pElement.remove();
+                }
+            });
+
+            // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
+            span.querySelectorAll('.footnotes').forEach((footnoteElement) => {
+                footnoteElement.remove();
+            });
+        } else {
+            span.innerHTML = componentString;
+        }
     }
 }
 
