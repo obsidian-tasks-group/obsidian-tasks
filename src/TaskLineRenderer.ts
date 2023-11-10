@@ -224,8 +224,14 @@ export class TaskLineRenderer {
      * Renders a given Task object into an HTML List Item (LI) element, using the given renderDetails
      * configuration and a supplied TextRenderer (typically the Obsidian Markdown renderer, but for testing
      * purposes it can be a simpler one).
+     *
      * The element includes the task and its various components (description, priority, block link etc), the
      * checkbox on the left with its event handling of completing the task, and the button for editing the task.
+     *
+     * @returns an HTML rendered List Item element (LI) for a task.
+     * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
+     * @param task
+     * @param textRenderer
      */
     public async renderTaskLine(task: Task, textRenderer: TextRenderer): Promise<HTMLLIElement> {
         const li: HTMLLIElement = document.createElement('li');
@@ -490,12 +496,6 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
     )})`;
 }
 
-/**
- * Create an HTML rendered List Item element (LI) for a task.
- * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
- * @param task
- * @param renderDetails
- */
 export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
     const taskLineRenderer = new TaskLineRenderer(renderDetails);
     return taskLineRenderer.renderTaskLine(task, TaskLineRenderer.obsidianMarkdownRenderer);
