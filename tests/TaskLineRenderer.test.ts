@@ -2,15 +2,15 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
-import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
 import { DebugSettings } from '../src/Config/DebugSettings';
-import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
-import { LayoutOptions } from '../src/TaskLayout';
+import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import { DateParser } from '../src/Query/DateParser';
+import { LayoutOptions } from '../src/TaskLayout';
+import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
+import { FieldLayoutDetail, FieldLayouts, renderTaskLine } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
@@ -60,7 +60,7 @@ function getOtherLayoutComponents(parentElement: HTMLElement): string[] {
     const textSpan = getTextSpan(parentElement);
     const components: string[] = [];
     for (const childSpan of Array.from(textSpan.children)) {
-        if (childSpan.classList.contains(LayoutClasses.description)) continue;
+        if (childSpan.classList.contains(FieldLayouts.description.className)) continue;
         if (childSpan?.textContent) components.push(childSpan.textContent);
     }
     return components;
@@ -353,19 +353,19 @@ describe('task line rendering', () => {
         await testComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             {},
-            LayoutClasses.priority,
+            FieldLayouts.priority.className,
             { taskPriority: 'high' },
         );
         await testComponentClasses(
             '- [ ] Full task 🔼 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             {},
-            LayoutClasses.priority,
+            FieldLayouts.priority.className,
             { taskPriority: 'medium' },
         );
         await testComponentClasses(
             '- [ ] Full task 🔽 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             {},
-            LayoutClasses.priority,
+            FieldLayouts.priority.className,
             { taskPriority: 'low' },
         );
     });
@@ -374,158 +374,174 @@ describe('task line rendering', () => {
         await testComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             {},
-            LayoutClasses.recurrenceRule,
+            FieldLayouts.recurrenceRule.className,
             {},
         );
     });
 
     it('adds a correct "today" CSS class to dates', async () => {
         const today = DateParser.parseDate('today').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${today}`, {}, LayoutClasses.createdDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${today}`, {}, FieldLayouts.createdDate.className, {
             taskCreated: 'today',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${today}`, {}, LayoutClasses.dueDate, { taskDue: 'today' });
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${today}`, {}, LayoutClasses.scheduledDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${today}`, {}, FieldLayouts.dueDate.className, {
+            taskDue: 'today',
+        });
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${today}`, {}, FieldLayouts.scheduledDate.className, {
             taskScheduled: 'today',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${today}`, {}, LayoutClasses.startDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${today}`, {}, FieldLayouts.startDate.className, {
             taskStart: 'today',
         });
-        await testComponentClasses(`- [x] Done task ✅ ${today}`, {}, LayoutClasses.doneDate, { taskDone: 'today' });
+        await testComponentClasses(`- [x] Done task ✅ ${today}`, {}, FieldLayouts.doneDate.className, {
+            taskDone: 'today',
+        });
     });
 
     it('adds a correct "future-1d" CSS class to dates', async () => {
         const future = DateParser.parseDate('tomorrow').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, {}, LayoutClasses.createdDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, {}, FieldLayouts.createdDate.className, {
             taskCreated: 'future-1d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, LayoutClasses.dueDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, FieldLayouts.dueDate.className, {
             taskDue: 'future-1d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, LayoutClasses.scheduledDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, FieldLayouts.scheduledDate.className, {
             taskScheduled: 'future-1d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, LayoutClasses.startDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, FieldLayouts.startDate.className, {
             taskStart: 'future-1d',
         });
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, LayoutClasses.doneDate, {
+        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, FieldLayouts.doneDate.className, {
             taskDone: 'future-1d',
         });
     });
 
     it('adds a correct "future-7d" CSS class to dates', async () => {
         const future = DateParser.parseDate('in 7 days').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, {}, LayoutClasses.createdDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, {}, FieldLayouts.createdDate.className, {
             taskCreated: 'future-7d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, LayoutClasses.dueDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, FieldLayouts.dueDate.className, {
             taskDue: 'future-7d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, LayoutClasses.scheduledDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, FieldLayouts.scheduledDate.className, {
             taskScheduled: 'future-7d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, LayoutClasses.startDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, FieldLayouts.startDate.className, {
             taskStart: 'future-7d',
         });
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, LayoutClasses.doneDate, {
+        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, FieldLayouts.doneDate.className, {
             taskDone: 'future-7d',
         });
     });
 
     it('adds a correct "past-1d" CSS class to dates', async () => {
         const past = DateParser.parseDate('yesterday').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, LayoutClasses.createdDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, FieldLayouts.createdDate.className, {
             taskCreated: 'past-1d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, LayoutClasses.dueDate, { taskDue: 'past-1d' });
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, LayoutClasses.scheduledDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, FieldLayouts.dueDate.className, {
+            taskDue: 'past-1d',
+        });
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, FieldLayouts.scheduledDate.className, {
             taskScheduled: 'past-1d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, LayoutClasses.startDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, FieldLayouts.startDate.className, {
             taskStart: 'past-1d',
         });
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, LayoutClasses.doneDate, { taskDone: 'past-1d' });
+        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, FieldLayouts.doneDate.className, {
+            taskDone: 'past-1d',
+        });
     });
 
     it('adds a correct "past-7d" CSS class to dates', async () => {
         const past = DateParser.parseDate('7 days ago').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, LayoutClasses.createdDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, FieldLayouts.createdDate.className, {
             taskCreated: 'past-7d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, LayoutClasses.dueDate, { taskDue: 'past-7d' });
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, LayoutClasses.scheduledDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, FieldLayouts.dueDate.className, {
+            taskDue: 'past-7d',
+        });
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, FieldLayouts.scheduledDate.className, {
             taskScheduled: 'past-7d',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, LayoutClasses.startDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, FieldLayouts.startDate.className, {
             taskStart: 'past-7d',
         });
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, LayoutClasses.doneDate, { taskDone: 'past-7d' });
+        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, FieldLayouts.doneDate.className, {
+            taskDone: 'past-7d',
+        });
     });
 
     it('adds the classes "...future-far" and "...past-far" to dates that are further than 7 days', async () => {
         const future = DateParser.parseDate('in 8 days').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, {}, LayoutClasses.createdDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, {}, FieldLayouts.createdDate.className, {
             taskCreated: 'future-far',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, LayoutClasses.dueDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, FieldLayouts.dueDate.className, {
             taskDue: 'future-far',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, LayoutClasses.scheduledDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, FieldLayouts.scheduledDate.className, {
             taskScheduled: 'future-far',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, LayoutClasses.startDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, FieldLayouts.startDate.className, {
             taskStart: 'future-far',
         });
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, LayoutClasses.doneDate, {
+        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, FieldLayouts.doneDate.className, {
             taskDone: 'future-far',
         });
         const past = DateParser.parseDate('8 days ago').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, LayoutClasses.createdDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, FieldLayouts.createdDate.className, {
             taskCreated: 'past-far',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, LayoutClasses.dueDate, { taskDue: 'past-far' });
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, LayoutClasses.scheduledDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, FieldLayouts.dueDate.className, {
+            taskDue: 'past-far',
+        });
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, FieldLayouts.scheduledDate.className, {
             taskScheduled: 'past-far',
         });
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, LayoutClasses.startDate, {
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, FieldLayouts.startDate.className, {
             taskStart: 'past-far',
         });
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, LayoutClasses.doneDate, { taskDone: 'past-far' });
+        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, FieldLayouts.doneDate.className, {
+            taskDone: 'past-far',
+        });
     });
 
     it('does not add specific classes to invalid dates', async () => {
-        await testComponentClasses('- [ ] Full task ⏫ 📅 2023-02-29', {}, LayoutClasses.dueDate, {});
+        await testComponentClasses('- [ ] Full task ⏫ 📅 2023-02-29', {}, FieldLayouts.dueDate.className, {});
     });
 
     it('does not render hidden components but sets their specific classes to the upper li element', async () => {
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hidePriority: true },
-            LayoutClasses.priority,
+            FieldLayouts.priority.className,
             { taskPriority: 'high' },
         );
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 ➕ 2022-07-04 🔁 every day',
             { hideCreatedDate: true },
-            LayoutClasses.createdDate,
+            FieldLayouts.createdDate.className,
             { taskCreated: 'past-far' },
         );
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideDueDate: true },
-            LayoutClasses.dueDate,
+            FieldLayouts.dueDate.className,
             { taskDue: 'past-far' },
         );
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideScheduledDate: true },
-            LayoutClasses.scheduledDate,
+            FieldLayouts.scheduledDate.className,
             { taskScheduled: 'past-far' },
         );
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideStartDate: true },
-            LayoutClasses.startDate,
+            FieldLayouts.startDate.className,
             { taskStart: 'past-far' },
         );
     });
@@ -660,5 +676,23 @@ ${task.toFileLineString()}
 
     it('Minimal task - short mode', async () => {
         await renderAndVerifyHTML(minimalTask, layoutOptionsShortMode());
+    });
+});
+
+describe('Field Layout Detail tests', () => {
+    it('should supply a class name and a data attribute name', () => {
+        const fieldLayoutDetail = new FieldLayoutDetail('stuff', 'taskAttribute', () => {
+            return '';
+        });
+        expect(fieldLayoutDetail.className).toEqual('stuff');
+        expect(fieldLayoutDetail.attributeName).toEqual('taskAttribute');
+    });
+
+    it('should calculate data attribute value', () => {
+        const fieldLayoutDetail = new FieldLayoutDetail('foo', 'bar', () => {
+            return 'someValue';
+        });
+        const attributeValue = fieldLayoutDetail.attributeValueCalculator('createdDate', new TaskBuilder().build());
+        expect(attributeValue).toEqual('someValue');
     });
 });

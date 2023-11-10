@@ -1,13 +1,13 @@
-import { Component, MarkdownRenderer } from 'obsidian';
 import type { Moment } from 'moment';
+import { Component, MarkdownRenderer } from 'obsidian';
+import { GlobalFilter } from './Config/GlobalFilter';
+import { TASK_FORMATS, getSettings } from './Config/Settings';
+import { replaceTaskWithTasks } from './File';
+import { PriorityTools } from './lib/PriorityTools';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
-import { replaceTaskWithTasks } from './File';
-import { TASK_FORMATS, getSettings } from './Config/Settings';
-import { GlobalFilter } from './Config/GlobalFilter';
-import { PriorityTools } from './lib/PriorityTools';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -19,16 +19,80 @@ export type TaskLineRenderDetails = {
     taskLayout?: TaskLayout;
 };
 
-export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
-    description: 'task-description',
-    priority: 'task-priority',
-    dueDate: 'task-due',
-    startDate: 'task-start',
-    createdDate: 'task-created',
-    scheduledDate: 'task-scheduled',
-    doneDate: 'task-done',
-    recurrenceRule: 'task-recurring',
-    blockLink: 'task-block-link',
+type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
+
+export class FieldLayoutDetail {
+    className: string;
+    attributeName: string;
+    attributeValueCalculator: AttributeValueCalculator;
+
+    public static noAttributeName = '';
+    public static noAttributeValueCalculator: AttributeValueCalculator = () => {
+        return '';
+    };
+
+    /**
+     * @param className CSS class of the component.
+     * @param attributeName if the component needs data attribute (`data-key="value"`) this is the key.
+     * Otherwise, set this to {@link FieldLayoutDetail.noAttributeName}.
+     * @param attributeValueCalculator And this is the value.
+     * Set to {@link FieldLayoutDetail.noAttributeValueCalculator} if shall be empty.
+     *
+     * There is a relation between {@link attributeName} and {@link attributeValueCalculator}.
+     * For a component to have the data attribute, both need to be set to values other than
+     * {@link FieldLayoutDetail.noAttributeName} and {@link FieldLayoutDetail.noAttributeValueCalculator} respectively.
+     * This means that having an empty data attribute (`data-key=""`) is not supported.
+     */
+    constructor(className: string, attributeName: string, attributeValueCalculator: AttributeValueCalculator) {
+        // If className is empty, `span.classList.add(...componentClass);` will fail in runtime.
+        if (className === '') {
+            throw Error('Developer note: CSS class cannot be an empty string, please specify one.');
+        }
+        this.className = className;
+        this.attributeName = attributeName;
+        this.attributeValueCalculator = attributeValueCalculator;
+    }
+}
+
+const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => {
+    const date = task[component];
+    if (date instanceof window.moment) {
+        const attributeValue = dateToAttribute(date);
+        if (attributeValue) {
+            return attributeValue;
+        }
+    }
+
+    return '';
+};
+
+export const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
+    createdDate: new FieldLayoutDetail('task-created', 'taskCreated', dateDataAttributeCalculator),
+    dueDate: new FieldLayoutDetail('task-due', 'taskDue', dateDataAttributeCalculator),
+    startDate: new FieldLayoutDetail('task-start', 'taskStart', dateDataAttributeCalculator),
+    scheduledDate: new FieldLayoutDetail('task-scheduled', 'taskScheduled', dateDataAttributeCalculator),
+    doneDate: new FieldLayoutDetail('task-done', 'taskDone', dateDataAttributeCalculator),
+
+    description: new FieldLayoutDetail(
+        'task-description',
+        FieldLayoutDetail.noAttributeName,
+        FieldLayoutDetail.noAttributeValueCalculator,
+    ),
+    recurrenceRule: new FieldLayoutDetail(
+        'task-recurring',
+        FieldLayoutDetail.noAttributeName,
+        FieldLayoutDetail.noAttributeValueCalculator,
+    ),
+
+    priority: new FieldLayoutDetail('task-priority', 'taskPriority', (_component, task) => {
+        return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
+    }),
+
+    blockLink: new FieldLayoutDetail(
+        'task-block-link',
+        FieldLayoutDetail.noAttributeName,
+        FieldLayoutDetail.noAttributeValueCalculator,
+    ),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
@@ -153,7 +217,7 @@ async function taskToHtml(
                 addInternalClasses(component, internalSpan);
 
                 // Add the component's CSS class describing what this component is (priority, due date etc.)
-                const componentClass = getTaskComponentClass(component, task);
+                const componentClass = getTaskComponentClass(component);
                 span.classList.add(...componentClass);
 
                 // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
@@ -234,31 +298,17 @@ async function renderComponentText(
 }
 
 /**
- * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from LayoutClasses.
+ * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from FieldLayouts.
+ *
+ * **Important**: The caller is responsible for ensuring that the Task being rendered does actually have a value for this field,
+ * that is, that `task[component]` has a value. Only call this if task has this value.
  */
-function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
+function getTaskComponentClass(component: TaskLayoutComponent) {
     const componentClassContainer: string[] = [];
 
-    const componentClass = LayoutClasses[component];
-    switch (component) {
-        case 'blockLink':
-        case 'description':
-        case 'priority':
-        case 'recurrenceRule':
-            componentClassContainer.push(componentClass);
-            break;
-        case 'createdDate':
-        case 'dueDate':
-        case 'startDate':
-        case 'scheduledDate':
-        case 'doneDate': {
-            const date = task[component];
-            if (date) {
-                componentClassContainer.push(componentClass);
-            }
-            break;
-        }
-    }
+    const fieldLayoutDetail = FieldLayouts[component];
+    componentClassContainer.push(fieldLayoutDetail.className);
+
     return componentClassContainer;
 }
 
@@ -268,49 +318,15 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
 function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     const dataAttribute: AttributesDictionary = {};
 
-    // If a TaskLayoutComponent needs a data attribute in the task's <span>, add the data attribute name
-    // to this dictionary: key is the component, value is the data attribute name.
-    // Otherwise, just leave an empty string ('') as the value.
-    // Also add the new component to the switch-case below in this function. This is where
-    // the data attribute value shall be calculated and set in the returned dictionary.
-    const DataAttributeNames: { [c in TaskLayoutComponent]: string } = {
-        createdDate: 'taskCreated',
-        dueDate: 'taskDue',
-        startDate: 'taskStart',
-        scheduledDate: 'taskScheduled',
-        doneDate: 'taskDone',
-        priority: 'taskPriority',
-        description: '',
-        recurrenceRule: '',
-        blockLink: '',
-    };
-
-    switch (component) {
-        case 'description':
-        case 'recurrenceRule':
-        case 'blockLink':
-            break;
-        case 'priority': {
-            const attributeName = DataAttributeNames[component];
-            dataAttribute[attributeName] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
-            break;
-        }
-        case 'createdDate':
-        case 'dueDate':
-        case 'startDate':
-        case 'scheduledDate':
-        case 'doneDate': {
-            const date = task[component];
-            if (date) {
-                const attributeValue = dateToAttribute(date);
-                if (attributeValue) {
-                    const attributeName = DataAttributeNames[component];
-                    dataAttribute[attributeName] = attributeValue;
-                }
-            }
-            break;
-        }
+    // If a TaskLayoutComponent needs a data attribute in the task's <span>, get the data attribute name (key) &
+    // data attribute value (value). Otherwise, just leave an empty string ('') as the value.
+    // The value is calculated based on FieldLayoutDetail.attributeValueCalculator
+    const fieldLayoutDetail = FieldLayouts[component];
+    const attributeName = fieldLayoutDetail.attributeName;
+    if (attributeName !== FieldLayoutDetail.noAttributeName) {
+        dataAttribute[attributeName] = fieldLayoutDetail.attributeValueCalculator(component, task);
     }
+
     return dataAttribute;
 }
 
@@ -410,7 +426,7 @@ function addTooltip({
     });
 }
 
-function addDateToTooltip(tooltip: HTMLDivElement, date: moment.Moment | null, signifier: string) {
+function addDateToTooltip(tooltip: HTMLDivElement, date: Moment | null, signifier: string) {
     if (date) {
         const createdDateDiv = tooltip.createDiv();
         createdDateDiv.setText(
