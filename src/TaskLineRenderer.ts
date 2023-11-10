@@ -409,19 +409,15 @@ export class TaskLineRenderer {
      * elements.
      */
     private addInternalClasses(component: TaskLayoutComponent, internalSpan: HTMLSpanElement) {
-        addInternalClasses(component, internalSpan);
-    }
-}
-
-function addInternalClasses(component: TaskLayoutComponent, renderedComponent: HTMLSpanElement) {
-    if (component === 'description') {
-        const tags = renderedComponent.getElementsByClassName('tag');
-        for (let i = 0; i < tags.length; i++) {
-            const tagName = tags[i].textContent;
-            if (tagName) {
-                const className = tagToAttributeValue(tagName);
-                const element = tags[i] as HTMLElement;
-                if (className) element.dataset.tagName = className;
+        if (component === 'description') {
+            const tags = internalSpan.getElementsByClassName('tag');
+            for (let i = 0; i < tags.length; i++) {
+                const tagName = tags[i].textContent;
+                if (tagName) {
+                    const className = tagToAttributeValue(tagName);
+                    const element = tags[i] as HTMLElement;
+                    if (className) element.dataset.tagName = className;
+                }
             }
         }
     }
