@@ -231,7 +231,7 @@ export class AppleSauce {
         const textSpan = document.createElement('span');
         li.appendChild(textSpan);
         textSpan.classList.add('tasks-list-text');
-        const attributes = await taskToHtml(task, this, textSpan, textRenderer);
+        const attributes = await this.taskToHtml(task, textSpan, textRenderer);
         for (const key in attributes) li.dataset[key] = attributes[key];
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
@@ -274,6 +274,14 @@ export class AppleSauce {
         }
 
         return li;
+    }
+
+    private async taskToHtml(
+        task: Task,
+        parentElement: HTMLElement,
+        textRenderer: TextRenderer,
+    ): Promise<AttributesDictionary> {
+        return taskToHtml(task, this, parentElement, textRenderer);
     }
 }
 
