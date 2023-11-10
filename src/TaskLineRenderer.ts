@@ -21,18 +21,6 @@ export type TaskLineRenderDetails = {
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
-const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => {
-    const date = task[component];
-    if (date instanceof window.moment) {
-        const attributeValue = dateToAttribute(date);
-        if (attributeValue) {
-            return attributeValue;
-        }
-    }
-
-    return '';
-};
-
 export class FieldLayoutsContainer {
     private details = FieldLayoutDetails;
 
@@ -65,7 +53,16 @@ export class FieldLayoutDetail {
     public static noAttributeValueCalculator: AttributeValueCalculator = () => {
         return '';
     };
-    public static dateAttributeCalculator = dateDataAttributeCalculator;
+    public static dateAttributeCalculator = (component: TaskLayoutComponent, task: Task) => {
+        const date = task[component];
+        if (date instanceof window.moment) {
+            const attributeValue = dateToAttribute(date);
+            if (attributeValue) {
+                return attributeValue;
+            }
+        }
+        return '';
+    };
 
     /**
      * @param className CSS class that describes what the component is, e.g. a due date or a priority.
