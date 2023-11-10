@@ -159,16 +159,6 @@ export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail
 
 const FieldLayouts = new FieldLayoutsContainer();
 
-export type TaskLineRenderDetails = {
-    parentUlElement: HTMLElement;
-    /** The nth item in this list (including non-tasks). */
-    listIndex: number;
-    obsidianComponent: Component | null;
-    layoutOptions?: LayoutOptions;
-    isFilenameUnique?: boolean;
-    taskLayout?: TaskLayout;
-};
-
 /**
  * The function used to render a Markdown task line into an existing HTML element.
  */
