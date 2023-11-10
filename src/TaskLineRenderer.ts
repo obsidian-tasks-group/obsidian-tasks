@@ -170,9 +170,23 @@ export type TaskLineRenderDetails = {
 };
 
 export class AppleSauce {
-    localRenderDetails: TaskLineRenderDetails;
+    localRenderDetails: {
+        parentUlElement: HTMLElement;
+        listIndex: number;
+        obsidianComponent: Component | null;
+        layoutOptions?: LayoutOptions;
+        isFilenameUnique?: boolean;
+        taskLayout?: TaskLayout;
+    };
 
-    constructor(renderDetails: TaskLineRenderDetails) {
+    constructor(renderDetails: {
+        parentUlElement: HTMLElement;
+        listIndex: number;
+        obsidianComponent: Component | null;
+        layoutOptions?: LayoutOptions;
+        isFilenameUnique?: boolean;
+        taskLayout?: TaskLayout;
+    }) {
         this.localRenderDetails = renderDetails;
     }
 
