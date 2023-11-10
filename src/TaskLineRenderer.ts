@@ -191,7 +191,8 @@ export class AppleSauce {
     }
 
     public async renderTaskLine(task: Task, textRenderer: TextRenderer) {
-        return renderTaskLine(task, this.localRenderDetails, textRenderer);
+        const renderDetails = this.localRenderDetails;
+        return renderTaskLine(task, renderDetails, textRenderer);
     }
 }
 
