@@ -317,7 +317,7 @@ export class TaskLineRenderer {
                     const internalSpan = document.createElement('span');
                     span.appendChild(internalSpan);
                     await this.renderComponentText(internalSpan, componentString, component, task);
-                    addInternalClasses(component, internalSpan);
+                    this.addInternalClasses(component, internalSpan);
 
                     // Add the component's CSS class describing what this component is (priority, due date etc.)
                     const fieldLayoutDetails = FieldLayoutDetails[component];
@@ -399,6 +399,10 @@ export class TaskLineRenderer {
         } else {
             span.innerHTML = componentString;
         }
+    }
+
+    private addInternalClasses(component: TaskLayoutComponent, internalSpan: HTMLSpanElement) {
+        addInternalClasses(component, internalSpan);
     }
 }
 
