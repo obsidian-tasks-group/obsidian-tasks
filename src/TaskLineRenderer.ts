@@ -300,7 +300,8 @@ async function renderComponentText(
 /**
  * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from FieldLayouts.
  *
- * When calling this you have to make sure that the `component` is actually present in {@link FieldLayouts}.
+ * **Important**: The caller is responsible for ensuring that the Task being rendered does actually have a value for this field,
+ * that is, that `task[component]` has a value. Only call this if task has this value.
  */
 function getTaskComponentClass(component: TaskLayoutComponent) {
     const componentClassContainer: string[] = [];
