@@ -39,6 +39,10 @@ export class FieldLayoutDetail {
     attributeValueCalculator: AttributeValueCalculator;
 
     constructor(className: string, attributeName: string, attributeValueCalculator: AttributeValueCalculator) {
+        // If className is empty, `span.classList.add(...componentClass);` will fail in runtime.
+        if (className === '') {
+            throw Error('Developer note: CSS class cannot be an empty string, please specify one.');
+        }
         this.className = className;
         this.attributeName = attributeName;
         this.attributeValueCalculator = attributeValueCalculator;
