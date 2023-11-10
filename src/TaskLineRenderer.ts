@@ -9,16 +9,6 @@ import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 
-export type TaskLineRenderDetails = {
-    parentUlElement: HTMLElement;
-    /** The nth item in this list (including non-tasks). */
-    listIndex: number;
-    obsidianComponent: Component | null;
-    layoutOptions?: LayoutOptions;
-    isFilenameUnique?: boolean;
-    taskLayout?: TaskLayout;
-};
-
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
 export type AttributesDictionary = { [key: string]: string };
@@ -168,6 +158,16 @@ export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail
 };
 
 const FieldLayouts = new FieldLayoutsContainer();
+
+export type TaskLineRenderDetails = {
+    parentUlElement: HTMLElement;
+    /** The nth item in this list (including non-tasks). */
+    listIndex: number;
+    obsidianComponent: Component | null;
+    layoutOptions?: LayoutOptions;
+    isFilenameUnique?: boolean;
+    taskLayout?: TaskLayout;
+};
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
