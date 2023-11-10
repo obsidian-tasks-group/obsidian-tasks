@@ -10,7 +10,7 @@ import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
-import { FieldLayoutDetail, FieldLayoutDetails, FieldLayoutsContainer, renderTaskLine } from '../src/TaskLineRenderer';
+import { AppleSauce, FieldLayoutDetail, FieldLayoutDetails, FieldLayoutsContainer } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
@@ -35,7 +35,8 @@ async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptio
         layoutOptions: layoutOptions,
         obsidianComponent: null,
     };
-    await renderTaskLine(task, renderDetails, mockTextRenderer);
+    const appleSauce = new AppleSauce(renderDetails);
+    await appleSauce.renderTaskLine(task, mockTextRenderer);
     return parentElement;
 }
 
