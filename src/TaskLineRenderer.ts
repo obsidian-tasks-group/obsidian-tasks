@@ -237,7 +237,7 @@ async function taskToHtml(
                 }
 
                 // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
-                const componentDataAttribute = getComponentDataAttribute(component, task);
+                const componentDataAttribute = FieldLayouts[component].getDataAttribute(component, task);
                 for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
                 allAttributes = { ...allAttributes, ...componentDataAttribute };
             }
@@ -246,7 +246,7 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const hiddenComponentDataAttribute = getComponentDataAttribute(component, task);
+        const hiddenComponentDataAttribute = FieldLayouts[component].getDataAttribute(component, task);
         allAttributes = { ...allAttributes, ...hiddenComponentDataAttribute };
     }
 
@@ -256,7 +256,7 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const priorityDataAttribute = getComponentDataAttribute('priority', task);
+        const priorityDataAttribute = FieldLayouts['priority'].getDataAttribute('priority', task);
         allAttributes = { ...allAttributes, ...priorityDataAttribute };
     }
 
@@ -311,16 +311,6 @@ async function renderComponentText(
     } else {
         span.innerHTML = componentString;
     }
-}
-
-/**
- * The data attribute describes the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
- */
-function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
-    // If a TaskLayoutComponent needs a data attribute in the task's <span>, get the data attribute name (key) &
-    // data attribute value (value). Otherwise, just leave an empty string ('') as the value.
-    // The value is calculated based on FieldLayoutDetail.attributeValueCalculator
-    return FieldLayouts[component].getDataAttribute(component, task);
 }
 
 /*
