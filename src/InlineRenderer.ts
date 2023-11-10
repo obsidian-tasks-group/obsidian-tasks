@@ -105,7 +105,7 @@ export class InlineRenderer {
                 parentUlElement: element,
                 listIndex,
                 obsidianComponent: childComponent,
-            }).renderTaskLine(task, TaskLineRenderer.obsidianMarkdownRenderer);
+            }).renderTaskLine(task);
 
             // If the rendered element contains a sub-list or sub-div (e.g. the
             // folding arrow), we need to keep it.

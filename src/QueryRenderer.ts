@@ -228,7 +228,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 isFilenameUnique,
                 taskLayout: layout,
                 obsidianComponent: this,
-            }).renderTaskLine(task, TaskLineRenderer.obsidianMarkdownRenderer);
+            }).renderTaskLine(task);
 
             // Remove all footnotes. They don't re-appear in another document.
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');

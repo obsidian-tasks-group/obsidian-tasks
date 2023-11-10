@@ -42,7 +42,7 @@ async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptio
         obsidianComponent: null,
     };
     const taskLineRenderer = new TaskLineRenderer(renderDetails);
-    await taskLineRenderer.renderTaskLine(task, mockTextRenderer);
+    await taskLineRenderer.renderTaskLine(task);
     return parentElement;
 }
 
