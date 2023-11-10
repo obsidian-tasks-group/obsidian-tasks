@@ -281,78 +281,69 @@ export class AppleSauce {
         parentElement: HTMLElement,
         textRenderer: TextRenderer,
     ): Promise<AttributesDictionary> {
-        return taskToHtml(task, this, parentElement, textRenderer);
-    }
-}
-
-async function taskToHtml(
-    task: Task,
-    renderDetails: TaskLineRenderDetails,
-    parentElement: HTMLElement,
-    textRenderer: TextRenderer,
-): Promise<AttributesDictionary> {
-    let allAttributes: AttributesDictionary = {};
-    const taskLayout = new TaskLayout(renderDetails.layoutOptions);
-    const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
-    // Render and build classes for all the task's visible components
-    for (const component of taskLayout.shownTaskLayoutComponents) {
-        let componentString = emojiSerializer.componentToString(task, taskLayout, component);
-        if (componentString) {
-            if (component === 'description') {
-                componentString = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(componentString);
-            }
-            // Create the text span that will hold the rendered component
-            const span = document.createElement('span');
-            parentElement.appendChild(span);
-            if (span) {
-                // Inside that text span, we are creating another internal span, that will hold the text itself.
-                // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
-                // to differentiate between the container of the text and the text itself, so it will be possible
-                // to do things like surrouding only the text (rather than its whole placeholder) with a highlight
-                const internalSpan = document.createElement('span');
-                span.appendChild(internalSpan);
-                await renderComponentText(
-                    internalSpan,
-                    componentString,
-                    component,
-                    task,
-                    textRenderer,
-                    renderDetails.obsidianComponent,
-                );
-                addInternalClasses(component, internalSpan);
-
-                // Add the component's CSS class describing what this component is (priority, due date etc.)
-                const fieldLayoutDetails = FieldLayoutDetails[component];
-                if (fieldLayoutDetails) {
-                    const componentClass = [fieldLayoutDetails.className];
-                    span.classList.add(...componentClass);
+        let allAttributes: AttributesDictionary = {};
+        const taskLayout = new TaskLayout(this.layoutOptions);
+        const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
+        // Render and build classes for all the task's visible components
+        for (const component of taskLayout.shownTaskLayoutComponents) {
+            let componentString = emojiSerializer.componentToString(task, taskLayout, component);
+            if (componentString) {
+                if (component === 'description') {
+                    componentString = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(componentString);
                 }
+                // Create the text span that will hold the rendered component
+                const span = document.createElement('span');
+                parentElement.appendChild(span);
+                if (span) {
+                    // Inside that text span, we are creating another internal span, that will hold the text itself.
+                    // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
+                    // to differentiate between the container of the text and the text itself, so it will be possible
+                    // to do things like surrouding only the text (rather than its whole placeholder) with a highlight
+                    const internalSpan = document.createElement('span');
+                    span.appendChild(internalSpan);
+                    await renderComponentText(
+                        internalSpan,
+                        componentString,
+                        component,
+                        task,
+                        textRenderer,
+                        this.obsidianComponent,
+                    );
+                    addInternalClasses(component, internalSpan);
 
-                // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
-                const componentDataAttribute = FieldLayouts.dataAttribute(component, task);
-                for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
-                allAttributes = { ...allAttributes, ...componentDataAttribute };
+                    // Add the component's CSS class describing what this component is (priority, due date etc.)
+                    const fieldLayoutDetails = FieldLayoutDetails[component];
+                    if (fieldLayoutDetails) {
+                        const componentClass = [fieldLayoutDetails.className];
+                        span.classList.add(...componentClass);
+                    }
+
+                    // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
+                    const componentDataAttribute = FieldLayouts.dataAttribute(component, task);
+                    for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
+                    allAttributes = { ...allAttributes, ...componentDataAttribute };
+                }
             }
         }
-    }
 
-    // Now build classes for the hidden task components without rendering them
-    for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const hiddenComponentDataAttribute = FieldLayouts.dataAttribute(component, task);
-        allAttributes = { ...allAttributes, ...hiddenComponentDataAttribute };
-    }
+        // Now build classes for the hidden task components without rendering them
+        for (const component of taskLayout.hiddenTaskLayoutComponents) {
+            const hiddenComponentDataAttribute = FieldLayouts.dataAttribute(component, task);
+            allAttributes = { ...allAttributes, ...hiddenComponentDataAttribute };
+        }
 
-    // If a task has no priority field set, its priority will not be rendered as part of the loop above and
-    // it will not be set a priority data attribute.
-    // In such a case we want the upper task LI element to mark the task has a 'normal' priority.
-    // So if the priority was not rendered, force it through the pipe of getting the component data for the
-    // priority field.
-    if (allAttributes.taskPriority === undefined) {
-        const priorityDataAttribute = FieldLayouts.dataAttribute('priority', task);
-        allAttributes = { ...allAttributes, ...priorityDataAttribute };
-    }
+        // If a task has no priority field set, its priority will not be rendered as part of the loop above and
+        // it will not be set a priority data attribute.
+        // In such a case we want the upper task LI element to mark the task has a 'normal' priority.
+        // So if the priority was not rendered, force it through the pipe of getting the component data for the
+        // priority field.
+        if (allAttributes.taskPriority === undefined) {
+            const priorityDataAttribute = FieldLayouts.dataAttribute('priority', task);
+            allAttributes = { ...allAttributes, ...priorityDataAttribute };
+        }
 
-    return allAttributes;
+        return allAttributes;
+    }
 }
 
 /*
