@@ -303,6 +303,16 @@ async function renderComponentText(
     }
 }
 
+function extracted(fieldLayoutDetail: FieldLayoutDetail, component: TaskLayoutComponent, task: Task) {
+    const dataAttribute: AttributesDictionary = {};
+    const attributeName = fieldLayoutDetail.attributeName;
+    if (attributeName !== FieldLayoutDetail.noAttributeName) {
+        dataAttribute[attributeName] = fieldLayoutDetail.attributeValueCalculator(component, task);
+    }
+
+    return dataAttribute;
+}
+
 /**
  * The data attribute describes the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
@@ -311,13 +321,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     // data attribute value (value). Otherwise, just leave an empty string ('') as the value.
     // The value is calculated based on FieldLayoutDetail.attributeValueCalculator
     const fieldLayoutDetail = FieldLayouts[component];
-    const dataAttribute: AttributesDictionary = {};
-    const attributeName = fieldLayoutDetail.attributeName;
-    if (attributeName !== FieldLayoutDetail.noAttributeName) {
-        dataAttribute[attributeName] = fieldLayoutDetail.attributeValueCalculator(component, task);
-    }
-
-    return dataAttribute;
+    return extracted(fieldLayoutDetail, component, task);
 }
 
 /*
