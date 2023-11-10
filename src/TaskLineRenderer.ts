@@ -218,82 +218,63 @@ export class AppleSauce {
      * checkbox on the left with its event handling of completing the task, and the button for editing the task.
      */
     public async renderTaskLine(task: Task, textRenderer: TextRenderer): Promise<HTMLLIElement> {
-        return renderTaskLine(
-            task,
-            {
-                parentUlElement: this.parentUlElement,
-                listIndex: this.listIndex,
-                obsidianComponent: this.obsidianComponent,
-                layoutOptions: this.layoutOptions,
-                isFilenameUnique: this.isFilenameUnique,
-                taskLayout: this.taskLayout,
-            },
-            textRenderer,
-        );
-    }
-}
+        const li: HTMLLIElement = document.createElement('li');
+        this.parentUlElement.appendChild(li);
 
-export async function renderTaskLine(
-    task: Task,
-    renderDetails: TaskLineRenderDetails,
-    textRenderer: TextRenderer,
-): Promise<HTMLLIElement> {
-    const li: HTMLLIElement = document.createElement('li');
-    renderDetails.parentUlElement.appendChild(li);
+        li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-    li.classList.add('task-list-item', 'plugin-tasks-list-item');
+        // Maintenance note:
+        //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
+        //  when running tests, and we want the tests to be able to create the full div and span structure,
+        //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
+        //  appendChild() calls.
+        const textSpan = document.createElement('span');
+        li.appendChild(textSpan);
+        textSpan.classList.add('tasks-list-text');
+        const attributes = await taskToHtml(task, this, textSpan, textRenderer);
+        for (const key in attributes) li.dataset[key] = attributes[key];
 
-    // Maintenance note:
-    //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
-    //  when running tests, and we want the tests to be able to create the full div and span structure,
-    //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
-    //  appendChild() calls.
-    const textSpan = document.createElement('span');
-    li.appendChild(textSpan);
-    textSpan.classList.add('tasks-list-text');
-    const attributes = await taskToHtml(task, renderDetails, textSpan, textRenderer);
-    for (const key in attributes) li.dataset[key] = attributes[key];
+        // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
+        // moving the code, remember to update that reference too.
+        const checkbox = document.createElement('input');
+        li.appendChild(checkbox);
+        checkbox.classList.add('task-list-item-checkbox');
+        checkbox.type = 'checkbox';
+        if (task.status.symbol !== ' ') {
+            checkbox.checked = true;
+            li.classList.add('is-checked');
+        }
 
-    // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
-    // moving the code, remember to update that reference too.
-    const checkbox = document.createElement('input');
-    li.appendChild(checkbox);
-    checkbox.classList.add('task-list-item-checkbox');
-    checkbox.type = 'checkbox';
-    if (task.status.symbol !== ' ') {
-        checkbox.checked = true;
-        li.classList.add('is-checked');
-    }
+        checkbox.addEventListener('click', (event: MouseEvent) => {
+            event.preventDefault();
+            // It is required to stop propagation so that obsidian won't write the file with the
+            // checkbox (un)checked. Obsidian would write after us and overwrite our change.
+            event.stopPropagation();
 
-    checkbox.addEventListener('click', (event: MouseEvent) => {
-        event.preventDefault();
-        // It is required to stop propagation so that obsidian won't write the file with the
-        // checkbox (un)checked. Obsidian would write after us and overwrite our change.
-        event.stopPropagation();
-
-        // Should be re-rendered as enabled after update in file.
-        checkbox.disabled = true;
-        const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
-        replaceTaskWithTasks({
-            originalTask: task,
-            newTasks: toggledTasks,
+            // Should be re-rendered as enabled after update in file.
+            checkbox.disabled = true;
+            const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
+            replaceTaskWithTasks({
+                originalTask: task,
+                newTasks: toggledTasks,
+            });
         });
-    });
 
-    li.prepend(checkbox);
+        li.prepend(checkbox);
 
-    // Set these to be compatible with stock obsidian lists:
-    li.setAttribute('data-task', task.status.symbol.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
-    li.setAttribute('data-line', renderDetails.listIndex.toString());
-    li.setAttribute('data-task-status-name', task.status.name);
-    li.setAttribute('data-task-status-type', task.status.type);
-    checkbox.setAttribute('data-line', renderDetails.listIndex.toString());
+        // Set these to be compatible with stock obsidian lists:
+        li.setAttribute('data-task', task.status.symbol.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
+        li.setAttribute('data-line', this.listIndex.toString());
+        li.setAttribute('data-task-status-name', task.status.name);
+        li.setAttribute('data-task-status-type', task.status.type);
+        checkbox.setAttribute('data-line', this.listIndex.toString());
 
-    if (renderDetails.layoutOptions?.shortMode) {
-        addTooltip({ task, element: textSpan, isFilenameUnique: renderDetails.isFilenameUnique });
+        if (this.layoutOptions?.shortMode) {
+            addTooltip({ task, element: textSpan, isFilenameUnique: this.isFilenameUnique });
+        }
+
+        return li;
     }
-
-    return li;
 }
 
 async function taskToHtml(
