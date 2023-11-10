@@ -38,7 +38,7 @@ async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptio
         textRenderer: mockTextRenderer,
         parentUlElement: parentElement,
         listIndex: 0,
-        layoutOptions: layoutOptions,
+        layoutOptions: layoutOptions ?? new LayoutOptions(),
         obsidianComponent: null,
     };
     const taskLineRenderer = new TaskLineRenderer(renderDetails);
