@@ -38,6 +38,11 @@ export class FieldLayoutDetail {
     attributeName: string;
     attributeValueCalculator: AttributeValueCalculator;
 
+    public static noAttributeName = '';
+    public static noDataAttribute: AttributeValueCalculator = () => {
+        return '';
+    };
+
     constructor(className: string, attributeName: string, attributeValueCalculator: AttributeValueCalculator) {
         // If className is empty, `span.classList.add(...componentClass);` will fail in runtime.
         if (className === '') {
@@ -61,10 +66,6 @@ const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLa
     return '';
 };
 
-const noDataAttribute: AttributeValueCalculator = () => {
-    return '';
-};
-
 const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
     createdDate: new FieldLayoutDetail('task-created', 'taskCreated', dateDataAttributeCalculator),
     dueDate: new FieldLayoutDetail('task-due', 'taskDue', dateDataAttributeCalculator),
@@ -72,14 +73,26 @@ const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
     scheduledDate: new FieldLayoutDetail('task-scheduled', 'taskScheduled', dateDataAttributeCalculator),
     doneDate: new FieldLayoutDetail('task-done', 'taskDone', dateDataAttributeCalculator),
 
-    description: new FieldLayoutDetail('task-description', '', noDataAttribute),
-    recurrenceRule: new FieldLayoutDetail('task-recurring', '', noDataAttribute),
+    description: new FieldLayoutDetail(
+        'task-description',
+        FieldLayoutDetail.noAttributeName,
+        FieldLayoutDetail.noDataAttribute,
+    ),
+    recurrenceRule: new FieldLayoutDetail(
+        'task-recurring',
+        FieldLayoutDetail.noAttributeName,
+        FieldLayoutDetail.noDataAttribute,
+    ),
 
     priority: new FieldLayoutDetail('task-priority', 'taskPriority', (_component, task) => {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),
 
-    blockLink: new FieldLayoutDetail('task-block-link', '', noDataAttribute),
+    blockLink: new FieldLayoutDetail(
+        'task-block-link',
+        FieldLayoutDetail.noAttributeName,
+        FieldLayoutDetail.noDataAttribute,
+    ),
 };
 
 const MAX_DAY_VALUE_RANGE = 7;
