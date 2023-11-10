@@ -56,6 +56,16 @@ export class FieldLayoutDetail {
         this.attributeValueCalculator = attributeValueCalculator;
     }
 
+    /**
+     * @returns the data attribute, associated to with a task's component, added in the task's `<span>`.
+     * For example, a task with medium priority and done yesterday will have
+     * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes.
+     *
+     * Calculation of the value is done with {@link FieldLayoutDetail.attributeValueCalculator}.
+     *
+     * @param component the component of the task for which the data attribute has to be generated.
+     * @param task the task from which the data shall be taken
+     */
     public getDataAttribute(component: TaskLayoutComponent, task: Task) {
         const dataAttribute: AttributesDictionary = {};
 
