@@ -171,9 +171,9 @@ export type TextRenderer = (
 
 export class TaskLineRenderer {
     textRenderer: TextRenderer;
+    obsidianComponent: Component | null;
     parentUlElement: HTMLElement;
     listIndex: number;
-    obsidianComponent: Component | null;
     layoutOptions: LayoutOptions;
     isFilenameUnique?: boolean;
 
@@ -189,23 +189,23 @@ export class TaskLineRenderer {
 
     constructor({
         textRenderer,
+        obsidianComponent,
         parentUlElement,
         listIndex,
-        obsidianComponent,
         layoutOptions,
         isFilenameUnique,
     }: {
         textRenderer: TextRenderer;
+        obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         listIndex: number;
-        obsidianComponent: Component | null;
         layoutOptions: LayoutOptions;
         isFilenameUnique?: boolean;
     }) {
         this.textRenderer = textRenderer;
+        this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
         this.listIndex = listIndex;
-        this.obsidianComponent = obsidianComponent;
         this.layoutOptions = layoutOptions;
         this.isFilenameUnique = isFilenameUnique;
     }
