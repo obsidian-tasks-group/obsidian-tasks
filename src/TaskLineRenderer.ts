@@ -210,6 +210,13 @@ export class AppleSauce {
         this.taskLayout = taskLayout;
     }
 
+    /**
+     * Renders a given Task object into an HTML List Item (LI) element, using the given renderDetails
+     * configuration and a supplied TextRenderer (typically the Obsidian Markdown renderer, but for testing
+     * purposes it can be a simpler one).
+     * The element includes the task and its various components (description, priority, block link etc), the
+     * checkbox on the left with its event handling of completing the task, and the button for editing the task.
+     */
     public async renderTaskLine(task: Task, textRenderer: TextRenderer) {
         return renderTaskLine(
             task,
@@ -226,13 +233,6 @@ export class AppleSauce {
     }
 }
 
-/**
- * Renders a given Task object into an HTML List Item (LI) element, using the given renderDetails
- * configuration and a supplied TextRenderer (typically the Obsidian Markdown renderer, but for testing
- * purposes it can be a simpler one).
- * The element includes the task and its various components (description, priority, block link etc), the
- * checkbox on the left with its event handling of completing the task, and the button for editing the task.
- */
 export async function renderTaskLine(
     task: Task,
     renderDetails: TaskLineRenderDetails,
