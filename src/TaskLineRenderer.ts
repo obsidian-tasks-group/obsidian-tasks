@@ -187,6 +187,16 @@ export class TaskLineRenderer {
     isFilenameUnique?: boolean;
     taskLayout?: TaskLayout;
 
+    static async obsidianMarkdownRenderer(
+        text: string,
+        element: HTMLSpanElement,
+        path: string,
+        obsidianComponent: Component | null,
+    ) {
+        if (!obsidianComponent) throw new Error('Must call the Obsidian renderer with an Obsidian Component object');
+        await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
+    }
+
     constructor({
         parentUlElement,
         listIndex,
@@ -487,16 +497,6 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
  * @param renderDetails
  */
 export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
-    async function obsidianMarkdownRenderer(
-        text: string,
-        element: HTMLSpanElement,
-        path: string,
-        obsidianComponent: Component | null,
-    ) {
-        if (!obsidianComponent) throw new Error('Must call the Obsidian renderer with an Obsidian Component object');
-        await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
-    }
-
     const taskLineRenderer = new TaskLineRenderer(renderDetails);
-    return taskLineRenderer.renderTaskLine(task, obsidianMarkdownRenderer);
+    return taskLineRenderer.renderTaskLine(task, TaskLineRenderer.obsidianMarkdownRenderer);
 }
