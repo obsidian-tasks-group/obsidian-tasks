@@ -170,6 +170,7 @@ export type TextRenderer = (
 ) => Promise<void>;
 
 export class TaskLineRenderer {
+    textRenderer?: TextRenderer;
     parentUlElement: HTMLElement;
     listIndex: number;
     obsidianComponent: Component | null;
@@ -188,6 +189,7 @@ export class TaskLineRenderer {
     }
 
     constructor({
+        textRenderer,
         parentUlElement,
         listIndex,
         obsidianComponent,
@@ -195,6 +197,7 @@ export class TaskLineRenderer {
         isFilenameUnique,
         taskLayout,
     }: {
+        textRenderer?: TextRenderer;
         parentUlElement: HTMLElement;
         listIndex: number;
         obsidianComponent: Component | null;
@@ -202,6 +205,7 @@ export class TaskLineRenderer {
         isFilenameUnique?: boolean;
         taskLayout?: TaskLayout;
     }) {
+        this.textRenderer = textRenderer;
         this.parentUlElement = parentUlElement;
         this.listIndex = listIndex;
         this.obsidianComponent = obsidianComponent;
