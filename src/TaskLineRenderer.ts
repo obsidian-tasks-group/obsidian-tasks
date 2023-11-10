@@ -22,9 +22,9 @@ export type TaskLineRenderDetails = {
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
 export class FieldLayoutDetail {
-    className: string;
-    attributeName: string;
-    attributeValueCalculator: AttributeValueCalculator;
+    readonly className: string;
+    readonly attributeName: string;
+    readonly attributeValueCalculator: AttributeValueCalculator;
 
     public static noAttributeName = '';
     public static noAttributeValueCalculator: AttributeValueCalculator = () => {
