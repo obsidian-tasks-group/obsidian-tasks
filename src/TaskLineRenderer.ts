@@ -54,6 +54,12 @@ export class FieldLayoutDetail {
         return '';
     };
     public static dateAttributeCalculator = (component: TaskLayoutComponent, task: Task) => {
+        /**
+         * Translate a relative date to a CSS class: 'today', 'future-1d' (for tomorrow), 'past-1d' (for yesterday)
+         * etc.
+         * A cutoff (in days) is defined in MAX_DAY_VALUE_RANGE, from beyond that a generic 'far' postfix will be added.
+         * (the cutoff exists because we don't want to flood the DOM with potentially hundreds of unique classes.)
+         */
         function renameTo_dateToAttribute(date: Moment) {
             return dateToAttribute(date);
         }
@@ -373,12 +379,6 @@ function addInternalClasses(component: TaskLayoutComponent, renderedComponent: H
     }
 }
 
-/**
- * Translate a relative date to a CSS class: 'today', 'future-1d' (for tomorrow), 'past-1d' (for yesterday)
- * etc.
- * A cutoff (in days) is defined in MAX_DAY_VALUE_RANGE, from beyond that a generic 'far' postfix will be added.
- * (the cutoff exists because we don't want to flood the DOM with potentially hundreds of unique classes.)
- */
 function dateToAttribute(date: Moment) {
     const today = window.moment().startOf('day');
     let result = '';
