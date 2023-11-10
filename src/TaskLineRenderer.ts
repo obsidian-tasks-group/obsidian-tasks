@@ -436,63 +436,57 @@ export class TaskLineRenderer {
     }
 
     private addTooltip(task: Task, element: HTMLSpanElement) {
-        addTooltip({ task, element: element, isFilenameUnique: this.isFilenameUnique });
-    }
-}
+        const {
+            recurrenceSymbol,
+            startDateSymbol,
+            createdDateSymbol,
+            scheduledDateSymbol,
+            dueDateSymbol,
+            doneDateSymbol,
+        } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
-function addTooltip({
-    task,
-    element,
-    isFilenameUnique,
-}: {
-    task: Task;
-    element: HTMLElement;
-    isFilenameUnique: boolean | undefined;
-}): void {
-    const { recurrenceSymbol, startDateSymbol, createdDateSymbol, scheduledDateSymbol, dueDateSymbol, doneDateSymbol } =
-        TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
-
-    element.addEventListener('mouseenter', () => {
-        function addDateToTooltip(tooltip: HTMLDivElement, date: Moment | null, signifier: string) {
-            if (date) {
-                const createdDateDiv = tooltip.createDiv();
-                createdDateDiv.setText(
-                    toTooltipDate({
-                        signifier: signifier,
-                        date: date,
-                    }),
-                );
+        element.addEventListener('mouseenter', () => {
+            function addDateToTooltip(tooltip: HTMLDivElement, date: Moment | null, signifier: string) {
+                if (date) {
+                    const createdDateDiv = tooltip.createDiv();
+                    createdDateDiv.setText(
+                        toTooltipDate({
+                            signifier: signifier,
+                            date: date,
+                        }),
+                    );
+                }
             }
-        }
 
-        function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-            return `${signifier} ${date.format(taskModule.TaskRegularExpressions.dateFormat)} (${date.from(
-                window.moment().startOf('day'),
-            )})`;
-        }
+            function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
+                return `${signifier} ${date.format(taskModule.TaskRegularExpressions.dateFormat)} (${date.from(
+                    window.moment().startOf('day'),
+                )})`;
+            }
 
-        const tooltip = element.createDiv();
-        tooltip.addClasses(['tooltip', 'pop-up']);
+            const tooltip = element.createDiv();
+            tooltip.addClasses(['tooltip', 'pop-up']);
 
-        if (task.recurrence) {
-            const recurrenceDiv = tooltip.createDiv();
-            recurrenceDiv.setText(`${recurrenceSymbol} ${task.recurrence.toText()}`);
-        }
+            if (task.recurrence) {
+                const recurrenceDiv = tooltip.createDiv();
+                recurrenceDiv.setText(`${recurrenceSymbol} ${task.recurrence.toText()}`);
+            }
 
-        addDateToTooltip(tooltip, task.createdDate, createdDateSymbol);
-        addDateToTooltip(tooltip, task.startDate, startDateSymbol);
-        addDateToTooltip(tooltip, task.scheduledDate, scheduledDateSymbol);
-        addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
-        addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
+            addDateToTooltip(tooltip, task.createdDate, createdDateSymbol);
+            addDateToTooltip(tooltip, task.startDate, startDateSymbol);
+            addDateToTooltip(tooltip, task.scheduledDate, scheduledDateSymbol);
+            addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
+            addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
 
-        const linkText = task.getLinkText({ isFilenameUnique });
-        if (linkText) {
-            const backlinkDiv = tooltip.createDiv();
-            backlinkDiv.setText(`🔗 ${linkText}`);
-        }
+            const linkText = task.getLinkText({ isFilenameUnique: this.isFilenameUnique });
+            if (linkText) {
+                const backlinkDiv = tooltip.createDiv();
+                backlinkDiv.setText(`🔗 ${linkText}`);
+            }
 
-        element.addEventListener('mouseleave', () => {
-            tooltip.remove();
+            element.addEventListener('mouseleave', () => {
+                tooltip.remove();
+            });
         });
-    });
+    }
 }
