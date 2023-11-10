@@ -61,7 +61,19 @@ export class FieldLayoutDetail {
          * (the cutoff exists because we don't want to flood the DOM with potentially hundreds of unique classes.)
          */
         function renameTo_dateToAttribute(date: Moment) {
-            return dateToAttribute(date);
+            const today = window.moment().startOf('day');
+            let result = '';
+            const diffDays = today.diff(date, 'days');
+            if (isNaN(diffDays)) return null;
+            if (diffDays === 0) return 'today';
+            else if (diffDays > 0) result += 'past-';
+            else if (diffDays < 0) result += 'future-';
+            if (Math.abs(diffDays) <= MAX_DAY_VALUE_RANGE) {
+                result += Math.abs(diffDays).toString() + 'd';
+            } else {
+                result += DAY_VALUE_OVER_RANGE_POSTFIX;
+            }
+            return result;
         }
 
         const date = task[component];
@@ -377,22 +389,6 @@ function addInternalClasses(component: TaskLayoutComponent, renderedComponent: H
             }
         }
     }
-}
-
-function dateToAttribute(date: Moment) {
-    const today = window.moment().startOf('day');
-    let result = '';
-    const diffDays = today.diff(date, 'days');
-    if (isNaN(diffDays)) return null;
-    if (diffDays === 0) return 'today';
-    else if (diffDays > 0) result += 'past-';
-    else if (diffDays < 0) result += 'future-';
-    if (Math.abs(diffDays) <= MAX_DAY_VALUE_RANGE) {
-        result += Math.abs(diffDays).toString() + 'd';
-    } else {
-        result += DAY_VALUE_OVER_RANGE_POSTFIX;
-    }
-    return result;
 }
 
 /*
