@@ -65,6 +65,7 @@ export class FieldLayoutDetail {
     public static noAttributeValueCalculator: AttributeValueCalculator = () => {
         return '';
     };
+    public static dateAttributeCalculator = dateDataAttributeCalculator;
 
     /**
      * @param className CSS class that describes what the component is, e.g. a due date or a priority.
