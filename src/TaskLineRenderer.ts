@@ -55,6 +55,10 @@ export class FieldLayoutDetail {
         this.attributeName = attributeName;
         this.attributeValueCalculator = attributeValueCalculator;
     }
+
+    public getDataAttribute(component: TaskLayoutComponent, task: Task) {
+        return extracted(this, component, task);
+    }
 }
 
 const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => {

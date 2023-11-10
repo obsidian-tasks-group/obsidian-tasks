@@ -695,4 +695,14 @@ describe('Field Layout Detail tests', () => {
         const attributeValue = fieldLayoutDetail.attributeValueCalculator('createdDate', new TaskBuilder().build());
         expect(attributeValue).toEqual('someValue');
     });
+
+    it('should return a data attribute', () => {
+        const fieldLayoutDetail = new FieldLayoutDetail('dataAttributeTest', 'aKey', () => {
+            return 'aValue';
+        });
+        const dataAttribute = fieldLayoutDetail.getDataAttribute('description', new TaskBuilder().build());
+
+        expect(Object.keys(dataAttribute).length).toEqual(1);
+        expect(dataAttribute['aKey']).toEqual('aValue');
+    });
 });
