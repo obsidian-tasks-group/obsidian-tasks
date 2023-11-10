@@ -319,10 +319,9 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     // data attribute value (value). Otherwise, just leave an empty string ('') as the value.
     // The value is calculated based on FieldLayoutDetail.attributeValueCalculator
     const fieldLayoutDetail = FieldLayouts[component];
-    const attributeValue = fieldLayoutDetail.attributeValueCalculator(component, task);
     const attributeName = fieldLayoutDetail.attributeName;
     if (attributeName !== FieldLayoutDetail.noAttributeName) {
-        dataAttribute[attributeName] = attributeValue;
+        dataAttribute[attributeName] = fieldLayoutDetail.attributeValueCalculator(component, task);
     }
 
     return dataAttribute;
