@@ -21,6 +21,18 @@ export type TaskLineRenderDetails = {
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
+const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => {
+    const date = task[component];
+    if (date instanceof window.moment) {
+        const attributeValue = dateToAttribute(date);
+        if (attributeValue) {
+            return attributeValue;
+        }
+    }
+
+    return '';
+};
+
 export class FieldLayoutsContainer {
     private details = FieldLayoutDetails;
 
@@ -100,18 +112,6 @@ export class FieldLayoutDetail {
         return dataAttribute;
     }
 }
-
-const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => {
-    const date = task[component];
-    if (date instanceof window.moment) {
-        const attributeValue = dateToAttribute(date);
-        if (attributeValue) {
-            return attributeValue;
-        }
-    }
-
-    return '';
-};
 
 export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
     createdDate: new FieldLayoutDetail('task-created', 'taskCreated', dateDataAttributeCalculator),
