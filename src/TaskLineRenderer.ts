@@ -179,7 +179,14 @@ export class AppleSauce {
         taskLayout?: TaskLayout;
     };
 
-    constructor(renderDetails: {
+    constructor({
+        parentUlElement,
+        listIndex,
+        obsidianComponent,
+        layoutOptions,
+        isFilenameUnique,
+        taskLayout,
+    }: {
         parentUlElement: HTMLElement;
         listIndex: number;
         obsidianComponent: Component | null;
@@ -187,7 +194,14 @@ export class AppleSauce {
         isFilenameUnique?: boolean;
         taskLayout?: TaskLayout;
     }) {
-        this.localRenderDetails = renderDetails;
+        this.localRenderDetails = {
+            parentUlElement,
+            listIndex,
+            obsidianComponent,
+            layoutOptions,
+            isFilenameUnique,
+            taskLayout,
+        };
     }
 
     public async renderTaskLine(task: Task, textRenderer: TextRenderer) {
