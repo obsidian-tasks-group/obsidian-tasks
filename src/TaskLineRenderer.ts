@@ -169,6 +169,14 @@ export type TaskLineRenderDetails = {
     taskLayout?: TaskLayout;
 };
 
+export class AppleSauce {
+    localRenderDetails: TaskLineRenderDetails;
+
+    constructor(renderDetails: TaskLineRenderDetails) {
+        this.localRenderDetails = renderDetails;
+    }
+}
+
 /**
  * The function used to render a Markdown task line into an existing HTML element.
  */
