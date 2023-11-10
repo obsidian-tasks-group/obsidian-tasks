@@ -301,14 +301,7 @@ export class AppleSauce {
                     // to do things like surrouding only the text (rather than its whole placeholder) with a highlight
                     const internalSpan = document.createElement('span');
                     span.appendChild(internalSpan);
-                    await renderComponentText(
-                        internalSpan,
-                        componentString,
-                        component,
-                        task,
-                        textRenderer,
-                        this.obsidianComponent,
-                    );
+                    await this.renderComponentText(internalSpan, componentString, component, task, textRenderer);
                     addInternalClasses(component, internalSpan);
 
                     // Add the component's CSS class describing what this component is (priority, due date etc.)
@@ -343,6 +336,16 @@ export class AppleSauce {
         }
 
         return allAttributes;
+    }
+
+    private async renderComponentText(
+        span: HTMLSpanElement,
+        componentString: string,
+        component: TaskLayoutComponent,
+        task: Task,
+        textRenderer: TextRenderer,
+    ) {
+        await renderComponentText(span, componentString, component, task, textRenderer, this.obsidianComponent);
     }
 }
 
