@@ -34,11 +34,11 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string | null;
 
 export class FieldLayoutDetail {
-    className: string | null;
+    className: string;
     attributeName: string;
     attributeValueCalculator: AttributeValueCalculator;
 
-    constructor(className: string | null, attributeName: string, attributeValueCalculator: AttributeValueCalculator) {
+    constructor(className: string, attributeName: string, attributeValueCalculator: AttributeValueCalculator) {
         this.className = className;
         this.attributeName = attributeName;
         this.attributeValueCalculator = attributeValueCalculator;
@@ -287,10 +287,7 @@ function getTaskComponentClass(component: TaskLayoutComponent) {
     const componentClassContainer: string[] = [];
 
     const fieldLayoutDetail = FieldLayouts[component];
-    const className = fieldLayoutDetail.className;
-    if (className) {
-        componentClassContainer.push(className);
-    }
+    componentClassContainer.push(fieldLayoutDetail.className);
 
     return componentClassContainer;
 }
