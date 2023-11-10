@@ -179,7 +179,7 @@ export type TextRenderer = (
     obsidianComponent: Component | null, // null is allowed here only for tests
 ) => Promise<void>;
 
-export class AppleSauce {
+export class TaskLineRenderer {
     parentUlElement: HTMLElement;
     listIndex: number;
     obsidianComponent: Component | null;
@@ -497,6 +497,6 @@ export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails): Prom
         await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
     }
 
-    const appleSauce = new AppleSauce(renderDetails);
-    return appleSauce.renderTaskLine(task, obsidianMarkdownRenderer);
+    const taskLineRenderer = new TaskLineRenderer(renderDetails);
+    return taskLineRenderer.renderTaskLine(task, obsidianMarkdownRenderer);
 }
