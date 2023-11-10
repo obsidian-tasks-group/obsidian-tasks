@@ -225,9 +225,8 @@ export class TaskLineRenderer {
      * @returns an HTML rendered List Item element (LI) for a task.
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
      * @param task
-     * @param textRenderer
      */
-    public async renderTaskLine(task: Task, textRenderer: TextRenderer): Promise<HTMLLIElement> {
+    public async renderTaskLine(task: Task): Promise<HTMLLIElement> {
         const li: HTMLLIElement = document.createElement('li');
         this.parentUlElement.appendChild(li);
 
@@ -241,7 +240,7 @@ export class TaskLineRenderer {
         const textSpan = document.createElement('span');
         li.appendChild(textSpan);
         textSpan.classList.add('tasks-list-text');
-        const attributes = await this.taskToHtml(task, textSpan, textRenderer);
+        const attributes = await this.taskToHtml(task, textSpan, this.textRenderer);
         for (const key in attributes) li.dataset[key] = attributes[key];
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
