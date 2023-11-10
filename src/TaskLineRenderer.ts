@@ -60,7 +60,7 @@ export class FieldLayoutDetail {
          * A cutoff (in days) is defined in MAX_DAY_VALUE_RANGE, from beyond that a generic 'far' postfix will be added.
          * (the cutoff exists because we don't want to flood the DOM with potentially hundreds of unique classes.)
          */
-        function renameTo_dateToAttribute(date: Moment) {
+        function dateToAttribute(date: Moment) {
             const today = window.moment().startOf('day');
             let result = '';
             const diffDays = today.diff(date, 'days');
@@ -79,7 +79,7 @@ export class FieldLayoutDetail {
         const date = task[component];
 
         if (date instanceof window.moment) {
-            const attributeValue = renameTo_dateToAttribute(date);
+            const attributeValue = dateToAttribute(date);
             if (attributeValue) {
                 return attributeValue;
             }
