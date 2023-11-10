@@ -115,11 +115,11 @@ export class FieldLayoutDetail {
 }
 
 export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
-    createdDate: new FieldLayoutDetail('task-created', 'taskCreated', dateDataAttributeCalculator),
-    dueDate: new FieldLayoutDetail('task-due', 'taskDue', dateDataAttributeCalculator),
-    startDate: new FieldLayoutDetail('task-start', 'taskStart', dateDataAttributeCalculator),
-    scheduledDate: new FieldLayoutDetail('task-scheduled', 'taskScheduled', dateDataAttributeCalculator),
-    doneDate: new FieldLayoutDetail('task-done', 'taskDone', dateDataAttributeCalculator),
+    createdDate: new FieldLayoutDetail('task-created', 'taskCreated', FieldLayoutDetail.dateAttributeCalculator),
+    dueDate: new FieldLayoutDetail('task-due', 'taskDue', FieldLayoutDetail.dateAttributeCalculator),
+    startDate: new FieldLayoutDetail('task-start', 'taskStart', FieldLayoutDetail.dateAttributeCalculator),
+    scheduledDate: new FieldLayoutDetail('task-scheduled', 'taskScheduled', FieldLayoutDetail.dateAttributeCalculator),
+    doneDate: new FieldLayoutDetail('task-done', 'taskDone', FieldLayoutDetail.dateAttributeCalculator),
 
     description: new FieldLayoutDetail(
         'task-description',
