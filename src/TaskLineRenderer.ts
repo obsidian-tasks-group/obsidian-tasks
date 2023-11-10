@@ -57,7 +57,13 @@ export class FieldLayoutDetail {
     }
 
     public getDataAttribute(component: TaskLayoutComponent, task: Task) {
-        return extracted(this, component, task);
+        const dataAttribute: AttributesDictionary = {};
+        const attributeName = this.attributeName;
+        if (attributeName !== FieldLayoutDetail.noAttributeName) {
+            dataAttribute[attributeName] = this.attributeValueCalculator(component, task);
+        }
+
+        return dataAttribute;
     }
 }
 
@@ -305,16 +311,6 @@ async function renderComponentText(
     } else {
         span.innerHTML = componentString;
     }
-}
-
-function extracted(fieldLayoutDetail: FieldLayoutDetail, component: TaskLayoutComponent, task: Task) {
-    const dataAttribute: AttributesDictionary = {};
-    const attributeName = fieldLayoutDetail.attributeName;
-    if (attributeName !== FieldLayoutDetail.noAttributeName) {
-        dataAttribute[attributeName] = fieldLayoutDetail.attributeValueCalculator(component, task);
-    }
-
-    return dataAttribute;
 }
 
 /**
