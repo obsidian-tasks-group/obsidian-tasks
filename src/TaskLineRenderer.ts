@@ -175,6 +175,10 @@ export class AppleSauce {
     constructor(renderDetails: TaskLineRenderDetails) {
         this.localRenderDetails = renderDetails;
     }
+
+    public async renderTaskLine(task: Task, textRenderer: TextRenderer) {
+        return renderTaskLine(task, this.localRenderDetails, textRenderer);
+    }
 }
 
 /**
