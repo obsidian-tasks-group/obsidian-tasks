@@ -1,21 +1,21 @@
-import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
+import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
+import { DateFallback } from './DateFallback';
+import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 
 import type { IQuery } from './IQuery';
-import { State } from './Cache';
-import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
-import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
-import { taskToLi } from './TaskLineRenderer';
-import { TaskModal } from './TaskModal';
-import type { TasksEvents } from './TasksEvents';
-import type { Task } from './Task';
-import { DateFallback } from './DateFallback';
-import { TaskLayout } from './TaskLayout';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
+import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
+import type { Task } from './Task';
+import { TaskLayout } from './TaskLayout';
+import { TaskLineRenderer } from './TaskLineRenderer';
+import { TaskModal } from './TaskModal';
+import type { TasksEvents } from './TasksEvents';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -220,14 +220,14 @@ class QueryRenderChild extends MarkdownRenderChild {
         for (const [i, task] of tasks.entries()) {
             const isFilenameUnique = this.isFilenameUnique({ task });
 
-            const listItem = await taskToLi(task, {
+            const listItem = await new TaskLineRenderer({
                 parentUlElement: taskList,
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
                 taskLayout: layout,
                 obsidianComponent: this,
-            });
+            }).renderTaskLine(task, TaskLineRenderer.obsidianMarkdownRenderer);
 
             // Remove all footnotes. They don't re-appear in another document.
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');

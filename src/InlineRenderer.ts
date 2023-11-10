@@ -2,7 +2,7 @@ import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { Task } from './Task';
-import { taskToLi } from './TaskLineRenderer';
+import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskLocation } from './TaskLocation';
 
 export class InlineRenderer {
@@ -100,11 +100,11 @@ export class InlineRenderer {
 
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const listIndex: number = Number.parseInt(dataLine, 10);
-            const taskElement = await taskToLi(task, {
+            const taskElement = await new TaskLineRenderer({
                 parentUlElement: element,
                 listIndex,
                 obsidianComponent: childComponent,
-            });
+            }).renderTaskLine(task, TaskLineRenderer.obsidianMarkdownRenderer);
 
             // If the rendered element contains a sub-list or sub-div (e.g. the
             // folding arrow), we need to keep it.
