@@ -224,7 +224,6 @@ class QueryRenderChild extends MarkdownRenderChild {
                 textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
                 obsidianComponent: this,
                 parentUlElement: taskList,
-                listIndex: i,
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
             });

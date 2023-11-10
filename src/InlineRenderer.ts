@@ -105,7 +105,6 @@ export class InlineRenderer {
                 textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
                 obsidianComponent: childComponent,
                 parentUlElement: element,
-                listIndex,
                 layoutOptions: new LayoutOptions(),
             }).renderTaskLine(task, listIndex);
 
