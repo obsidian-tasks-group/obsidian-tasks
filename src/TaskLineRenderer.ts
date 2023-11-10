@@ -173,7 +173,6 @@ export class TaskLineRenderer {
     textRenderer: TextRenderer;
     obsidianComponent: Component | null;
     parentUlElement: HTMLElement;
-    listIndex: number;
     layoutOptions: LayoutOptions;
     isFilenameUnique?: boolean;
 
@@ -198,8 +197,6 @@ export class TaskLineRenderer {
      *
      * @param parentUlElement HTML element where the task shall be rendered.
      *
-     * @param listIndex Task's index in the list. This affects `data-line` data attributes of the list item.
-     *
      * @param layoutOptions See {@link LayoutOptions}.
      *
      * @param isFilenameUnique Whether the name of the file that contains the task is unique in the vault.
@@ -210,21 +207,18 @@ export class TaskLineRenderer {
         textRenderer,
         obsidianComponent,
         parentUlElement,
-        listIndex,
         layoutOptions,
         isFilenameUnique,
     }: {
         textRenderer: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
-        listIndex: number;
         layoutOptions: LayoutOptions;
         isFilenameUnique?: boolean;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
-        this.listIndex = listIndex;
         this.layoutOptions = layoutOptions;
         this.isFilenameUnique = isFilenameUnique;
     }
