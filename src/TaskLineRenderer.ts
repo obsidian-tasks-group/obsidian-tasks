@@ -525,5 +525,6 @@ export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails): Prom
         await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
     }
 
-    return renderTaskLine(task, renderDetails, obsidianMarkdownRenderer);
+    const appleSauce = new AppleSauce(renderDetails);
+    return appleSauce.renderTaskLine(task, obsidianMarkdownRenderer);
 }
