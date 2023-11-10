@@ -304,9 +304,7 @@ async function renderComponentText(
  * that is, that `task[component]` has a value. Only call this if task has this value.
  */
 function getTaskComponentClass(component: TaskLayoutComponent) {
-    const componentClassContainer: string[] = [];
-
-    componentClassContainer.push(FieldLayouts[component].className);
+    const componentClassContainer: string[] = [FieldLayouts[component].className];
 
     return componentClassContainer;
 }
