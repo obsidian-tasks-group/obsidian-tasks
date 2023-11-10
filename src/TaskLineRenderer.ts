@@ -338,6 +338,9 @@ export class AppleSauce {
         return allAttributes;
     }
 
+    /*
+     * Renders the given component into the given HTML span element.
+     */
     private async renderComponentText(
         span: HTMLSpanElement,
         componentString: string,
@@ -349,9 +352,6 @@ export class AppleSauce {
     }
 }
 
-/*
- * Renders the given component into the given HTML span element.
- */
 async function renderComponentText(
     span: HTMLSpanElement,
     componentString: string,
