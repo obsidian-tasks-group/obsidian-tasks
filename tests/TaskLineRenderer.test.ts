@@ -44,8 +44,7 @@ async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptio
 
 function getTextSpan(parentElement: HTMLElement) {
     const li = parentElement.children[0];
-    const textSpan = li.children[1] as HTMLSpanElement;
-    return textSpan;
+    return li.children[1] as HTMLSpanElement;
 }
 
 function getDescriptionText(parentElement: HTMLElement) {
