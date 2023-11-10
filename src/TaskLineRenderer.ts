@@ -497,6 +497,5 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
 }
 
 export function taskToLi(task: Task, renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
-    const taskLineRenderer = new TaskLineRenderer(renderDetails);
-    return taskLineRenderer.renderTaskLine(task, TaskLineRenderer.obsidianMarkdownRenderer);
+    return new TaskLineRenderer(renderDetails).renderTaskLine(task, TaskLineRenderer.obsidianMarkdownRenderer);
 }
