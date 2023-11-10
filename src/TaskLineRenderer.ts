@@ -320,8 +320,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     // If a TaskLayoutComponent needs a data attribute in the task's <span>, get the data attribute name (key) &
     // data attribute value (value). Otherwise, just leave an empty string ('') as the value.
     // The value is calculated based on FieldLayoutDetail.attributeValueCalculator
-    const fieldLayoutDetail = FieldLayouts[component];
-    return fieldLayoutDetail.getDataAttribute(component, task);
+    return FieldLayouts[component].getDataAttribute(component, task);
 }
 
 /*
