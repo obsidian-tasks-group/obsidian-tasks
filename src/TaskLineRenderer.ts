@@ -187,6 +187,25 @@ export class TaskLineRenderer {
         await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
     }
 
+    /**
+     * Builds a renderer for tasks with various options.
+     *
+     * @param textRenderer The renderer to be used. For live/prod rendering use {@link TaskLineRenderer.obsidianMarkdownRenderer}.
+     * For test purposes mock renderers shall be used.
+     *
+     * @param obsidianComponent One of the parameters needed by `MarkdownRenderer.renderMarkdown()` Obsidian API,
+     * that is called by {@link TaskLineRenderer.obsidianMarkdownRenderer}.
+     *
+     * @param parentUlElement HTML element where the task shall be rendered.
+     *
+     * @param listIndex Task's index in the list. This affects `data-line` data attributes of the list item.
+     *
+     * @param layoutOptions See {@link LayoutOptions}.
+     *
+     * @param isFilenameUnique Whether the name of the file that contains the task is unique in the vault.
+     * If it is undefined, the outcome will be the same as with a unique file name: the file name only.
+     * If set to `true`, the full path will be returned.
+     */
     constructor({
         textRenderer,
         obsidianComponent,
