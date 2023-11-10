@@ -29,16 +29,13 @@ async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptio
         mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
             element.innerText = text;
         };
-    await renderTaskLine(
-        task,
-        {
-            parentUlElement: parentElement,
-            listIndex: 0,
-            layoutOptions: layoutOptions,
-            obsidianComponent: null,
-        },
-        mockTextRenderer,
-    );
+    const renderDetails = {
+        parentUlElement: parentElement,
+        listIndex: 0,
+        layoutOptions: layoutOptions,
+        obsidianComponent: null,
+    };
+    await renderTaskLine(task, renderDetails, mockTextRenderer);
     return parentElement;
 }
 
