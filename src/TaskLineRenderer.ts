@@ -201,15 +201,18 @@ export class AppleSauce {
     }
 
     public async renderTaskLine(task: Task, textRenderer: TextRenderer) {
-        const renderDetails = {
-            parentUlElement: this.parentUlElement,
-            listIndex: this.listIndex,
-            obsidianComponent: this.obsidianComponent,
-            layoutOptions: this.layoutOptions,
-            isFilenameUnique: this.isFilenameUnique,
-            taskLayout: this.taskLayout,
-        };
-        return renderTaskLine(task, renderDetails, textRenderer);
+        return renderTaskLine(
+            task,
+            {
+                parentUlElement: this.parentUlElement,
+                listIndex: this.listIndex,
+                obsidianComponent: this.obsidianComponent,
+                layoutOptions: this.layoutOptions,
+                isFilenameUnique: this.isFilenameUnique,
+                taskLayout: this.taskLayout,
+            },
+            textRenderer,
+        );
     }
 }
 
