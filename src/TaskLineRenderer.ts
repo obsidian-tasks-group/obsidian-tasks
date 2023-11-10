@@ -423,7 +423,7 @@ function addTooltip({
     });
 }
 
-function addDateToTooltip(tooltip: HTMLDivElement, date: moment.Moment | null, signifier: string) {
+function addDateToTooltip(tooltip: HTMLDivElement, date: Moment | null, signifier: string) {
     if (date) {
         const createdDateDiv = tooltip.createDiv();
         createdDateDiv.setText(
