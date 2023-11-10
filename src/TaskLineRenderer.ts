@@ -220,11 +220,11 @@ async function taskToHtml(
                 addInternalClasses(component, internalSpan);
 
                 // Add the component's CSS class describing what this component is (priority, due date etc.)
-                //
-                //  It is important to ensure that the Task being rendered does actually have a value for this
-                //  field, that is, that `task[component]` has a value. Only call this if task has this value.
-                const componentClass = [FieldLayouts[component].className];
-                span.classList.add(...componentClass);
+                const fieldLayoutDetails = FieldLayouts[component];
+                if (fieldLayoutDetails) {
+                    const componentClass = [fieldLayoutDetails.className];
+                    span.classList.add(...componentClass);
+                }
 
                 // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
                 const componentDataAttribute = getComponentDataAttribute(component, task);
