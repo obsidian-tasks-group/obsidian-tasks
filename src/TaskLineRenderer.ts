@@ -170,7 +170,7 @@ export type TextRenderer = (
 ) => Promise<void>;
 
 export class TaskLineRenderer {
-    textRenderer?: TextRenderer;
+    textRenderer: TextRenderer;
     parentUlElement: HTMLElement;
     listIndex: number;
     obsidianComponent: Component | null;
@@ -197,7 +197,7 @@ export class TaskLineRenderer {
         isFilenameUnique,
         taskLayout,
     }: {
-        textRenderer?: TextRenderer;
+        textRenderer: TextRenderer;
         parentUlElement: HTMLElement;
         listIndex: number;
         obsidianComponent: Component | null;

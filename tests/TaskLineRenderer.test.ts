@@ -35,6 +35,7 @@ async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptio
             element.innerText = text;
         };
     const renderDetails = {
+        textRenderer: mockTextRenderer,
         parentUlElement: parentElement,
         listIndex: 0,
         layoutOptions: layoutOptions,
