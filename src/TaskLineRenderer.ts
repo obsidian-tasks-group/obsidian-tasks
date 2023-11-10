@@ -176,7 +176,6 @@ export class TaskLineRenderer {
     obsidianComponent: Component | null;
     layoutOptions: LayoutOptions;
     isFilenameUnique?: boolean;
-    taskLayout?: TaskLayout;
 
     static async obsidianMarkdownRenderer(
         text: string,
@@ -195,7 +194,6 @@ export class TaskLineRenderer {
         obsidianComponent,
         layoutOptions,
         isFilenameUnique,
-        taskLayout,
     }: {
         textRenderer: TextRenderer;
         parentUlElement: HTMLElement;
@@ -203,7 +201,6 @@ export class TaskLineRenderer {
         obsidianComponent: Component | null;
         layoutOptions: LayoutOptions;
         isFilenameUnique?: boolean;
-        taskLayout?: TaskLayout;
     }) {
         this.textRenderer = textRenderer;
         this.parentUlElement = parentUlElement;
@@ -211,7 +208,6 @@ export class TaskLineRenderer {
         this.obsidianComponent = obsidianComponent;
         this.layoutOptions = layoutOptions;
         this.isFilenameUnique = isFilenameUnique;
-        this.taskLayout = taskLayout;
     }
 
     /**
