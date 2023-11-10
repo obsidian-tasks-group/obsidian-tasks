@@ -306,7 +306,7 @@ export class TaskLineRenderer {
                     // to do things like surrouding only the text (rather than its whole placeholder) with a highlight
                     const internalSpan = document.createElement('span');
                     span.appendChild(internalSpan);
-                    await this.renderComponentText(internalSpan, componentString, component, task, this.textRenderer);
+                    await this.renderComponentText(internalSpan, componentString, component, task);
                     addInternalClasses(component, internalSpan);
 
                     // Add the component's CSS class describing what this component is (priority, due date etc.)
@@ -351,7 +351,6 @@ export class TaskLineRenderer {
         componentString: string,
         component: TaskLayoutComponent,
         task: Task,
-        textRenderer: TextRenderer,
     ) {
         if (component === 'description') {
             const { debugSettings } = getSettings();
@@ -359,7 +358,7 @@ export class TaskLineRenderer {
                 // Add some debug output to enable hidden information in the task to be inspected.
                 componentString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
             }
-            await textRenderer(componentString, span, task.path, this.obsidianComponent);
+            await this.textRenderer(componentString, span, task.path, this.obsidianComponent);
 
             // If the task is a block quote, the block quote wraps the p-tag that contains the content.
             // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
