@@ -170,14 +170,12 @@ export type TaskLineRenderDetails = {
 };
 
 export class AppleSauce {
-    localRenderDetails: {
-        parentUlElement: HTMLElement;
-        listIndex: number;
-        obsidianComponent: Component | null;
-        layoutOptions?: LayoutOptions;
-        isFilenameUnique?: boolean;
-        taskLayout?: TaskLayout;
-    };
+    parentUlElement: HTMLElement;
+    listIndex: number;
+    obsidianComponent: Component | null;
+    layoutOptions?: LayoutOptions;
+    isFilenameUnique?: boolean;
+    taskLayout?: TaskLayout;
 
     constructor({
         parentUlElement,
@@ -194,18 +192,23 @@ export class AppleSauce {
         isFilenameUnique?: boolean;
         taskLayout?: TaskLayout;
     }) {
-        this.localRenderDetails = {
-            parentUlElement,
-            listIndex,
-            obsidianComponent,
-            layoutOptions,
-            isFilenameUnique,
-            taskLayout,
-        };
+        this.parentUlElement = parentUlElement;
+        this.listIndex = listIndex;
+        this.obsidianComponent = obsidianComponent;
+        this.layoutOptions = layoutOptions;
+        this.isFilenameUnique = isFilenameUnique;
+        this.taskLayout = taskLayout;
     }
 
     public async renderTaskLine(task: Task, textRenderer: TextRenderer) {
-        const renderDetails = this.localRenderDetails;
+        const renderDetails = {
+            parentUlElement: this.parentUlElement,
+            listIndex: this.listIndex,
+            obsidianComponent: this.obsidianComponent,
+            layoutOptions: this.layoutOptions,
+            isFilenameUnique: this.isFilenameUnique,
+            taskLayout: this.taskLayout,
+        };
         return renderTaskLine(task, renderDetails, textRenderer);
     }
 }
