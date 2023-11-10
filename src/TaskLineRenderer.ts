@@ -58,9 +58,9 @@ export class FieldLayoutDetail {
 
     public getDataAttribute(component: TaskLayoutComponent, task: Task) {
         const dataAttribute: AttributesDictionary = {};
-        const attributeName = this.attributeName;
-        if (attributeName !== FieldLayoutDetail.noAttributeName) {
-            dataAttribute[attributeName] = this.attributeValueCalculator(component, task);
+
+        if (this.attributeName !== FieldLayoutDetail.noAttributeName) {
+            dataAttribute[this.attributeName] = this.attributeValueCalculator(component, task);
         }
 
         return dataAttribute;
