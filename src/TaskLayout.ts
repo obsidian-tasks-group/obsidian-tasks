@@ -19,6 +19,9 @@ export class LayoutOptions {
     explainQuery: boolean = false;
 }
 
+/** TODO if this is migrated to `keyof Task` type, there will be no need
+ * to check whether FieldDetails[component] is resolved to a non null value.
+ */
 export type TaskLayoutComponent =
     | 'description'
     | 'priority'
