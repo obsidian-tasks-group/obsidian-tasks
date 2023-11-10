@@ -217,7 +217,7 @@ export class AppleSauce {
      * The element includes the task and its various components (description, priority, block link etc), the
      * checkbox on the left with its event handling of completing the task, and the button for editing the task.
      */
-    public async renderTaskLine(task: Task, textRenderer: TextRenderer) {
+    public async renderTaskLine(task: Task, textRenderer: TextRenderer): Promise<HTMLLIElement> {
         return renderTaskLine(
             task,
             {
