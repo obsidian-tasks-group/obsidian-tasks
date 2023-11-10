@@ -306,8 +306,7 @@ async function renderComponentText(
 function getTaskComponentClass(component: TaskLayoutComponent) {
     const componentClassContainer: string[] = [];
 
-    const fieldLayoutDetail = FieldLayouts[component];
-    componentClassContainer.push(fieldLayoutDetail.className);
+    componentClassContainer.push(FieldLayouts[component].className);
 
     return componentClassContainer;
 }
