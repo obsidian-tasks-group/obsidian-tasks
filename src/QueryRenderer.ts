@@ -220,14 +220,15 @@ class QueryRenderChild extends MarkdownRenderChild {
         for (const [i, task] of tasks.entries()) {
             const isFilenameUnique = this.isFilenameUnique({ task });
 
-            const listItem = await new TaskLineRenderer({
+            const taskLineRenderer = new TaskLineRenderer({
                 textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
                 obsidianComponent: this,
                 parentUlElement: taskList,
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
-            }).renderTaskLine(task);
+            });
+            const listItem = await taskLineRenderer.renderTaskLine(task);
 
             // Remove all footnotes. They don't re-appear in another document.
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
