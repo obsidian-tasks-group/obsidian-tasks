@@ -217,7 +217,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         taskList.addClasses(layout.taskListHiddenClasses);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
-        for (const [i, task] of tasks.entries()) {
+        for (const [taskIndex, task] of tasks.entries()) {
             const isFilenameUnique = this.isFilenameUnique({ task });
 
             const taskLineRenderer = new TaskLineRenderer({
@@ -227,7 +227,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
             });
-            const listItem = await taskLineRenderer.renderTaskLine(task, i);
+            const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex);
 
             // Remove all footnotes. They don't re-appear in another document.
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
