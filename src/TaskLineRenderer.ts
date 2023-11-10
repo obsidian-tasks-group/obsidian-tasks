@@ -54,11 +54,11 @@ export class FieldLayoutDetail {
         return '';
     };
     public static dateAttributeCalculator = (component: TaskLayoutComponent, task: Task) => {
-        const date = task[component];
-
         function renameTo_dateToAttribute(date: Moment) {
             return dateToAttribute(date);
         }
+
+        const date = task[component];
 
         if (date instanceof window.moment) {
             const attributeValue = renameTo_dateToAttribute(date);
