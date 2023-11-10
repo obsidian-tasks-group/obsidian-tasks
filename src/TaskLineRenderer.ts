@@ -409,6 +409,20 @@ export class TaskLineRenderer {
      * elements.
      */
     private addInternalClasses(component: TaskLayoutComponent, internalSpan: HTMLSpanElement) {
+        /*
+         * Sanitize tag names so they will be valid attribute values according to the HTML spec:
+         * https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state
+         */
+        function tagToAttributeValue(tag: string) {
+            // eslint-disable-next-line no-control-regex
+            const illegalChars = /["&\x00\r\n]/g;
+            let sanitizedTag = tag.replace(illegalChars, '-');
+            // And if after sanitazation the name starts with dashes or underscores, remove them.
+            sanitizedTag = sanitizedTag.replace(/^[-_]+/, '');
+            if (sanitizedTag.length > 0) return sanitizedTag;
+            else return null;
+        }
+
         if (component === 'description') {
             const tags = internalSpan.getElementsByClassName('tag');
             for (let i = 0; i < tags.length; i++) {
@@ -421,20 +435,6 @@ export class TaskLineRenderer {
             }
         }
     }
-}
-
-/*
- * Sanitize tag names so they will be valid attribute values according to the HTML spec:
- * https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state
- */
-function tagToAttributeValue(tag: string) {
-    // eslint-disable-next-line no-control-regex
-    const illegalChars = /["&\x00\r\n]/g;
-    let sanitizedTag = tag.replace(illegalChars, '-');
-    // And if after sanitazation the name starts with dashes or underscores, remove them.
-    sanitizedTag = sanitizedTag.replace(/^[-_]+/, '');
-    if (sanitizedTag.length > 0) return sanitizedTag;
-    else return null;
 }
 
 function addTooltip({
