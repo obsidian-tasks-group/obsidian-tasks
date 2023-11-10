@@ -174,7 +174,7 @@ export class TaskLineRenderer {
     parentUlElement: HTMLElement;
     listIndex: number;
     obsidianComponent: Component | null;
-    layoutOptions?: LayoutOptions;
+    layoutOptions: LayoutOptions;
     isFilenameUnique?: boolean;
     taskLayout?: TaskLayout;
 
@@ -201,7 +201,7 @@ export class TaskLineRenderer {
         parentUlElement: HTMLElement;
         listIndex: number;
         obsidianComponent: Component | null;
-        layoutOptions?: LayoutOptions;
+        layoutOptions: LayoutOptions;
         isFilenameUnique?: boolean;
         taskLayout?: TaskLayout;
     }) {
@@ -278,7 +278,7 @@ export class TaskLineRenderer {
         li.setAttribute('data-task-status-type', task.status.type);
         checkbox.setAttribute('data-line', this.listIndex.toString());
 
-        if (this.layoutOptions?.shortMode) {
+        if (this.layoutOptions.shortMode) {
             addTooltip({ task, element: textSpan, isFilenameUnique: this.isFilenameUnique });
         }
 

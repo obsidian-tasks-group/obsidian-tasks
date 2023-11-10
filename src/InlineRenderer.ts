@@ -2,6 +2,7 @@ import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { Task } from './Task';
+import { LayoutOptions } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskLocation } from './TaskLocation';
 
@@ -105,6 +106,7 @@ export class InlineRenderer {
                 parentUlElement: element,
                 listIndex,
                 obsidianComponent: childComponent,
+                layoutOptions: new LayoutOptions(),
             }).renderTaskLine(task);
 
             // If the rendered element contains a sub-list or sub-div (e.g. the
