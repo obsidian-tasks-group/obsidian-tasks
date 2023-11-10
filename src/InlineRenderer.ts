@@ -103,9 +103,9 @@ export class InlineRenderer {
             const listIndex: number = Number.parseInt(dataLine, 10);
             const taskElement = await new TaskLineRenderer({
                 textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
+                obsidianComponent: childComponent,
                 parentUlElement: element,
                 listIndex,
-                obsidianComponent: childComponent,
                 layoutOptions: new LayoutOptions(),
             }).renderTaskLine(task);
 

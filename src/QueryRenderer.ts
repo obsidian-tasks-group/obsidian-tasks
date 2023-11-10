@@ -222,11 +222,11 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const listItem = await new TaskLineRenderer({
                 textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
+                obsidianComponent: this,
                 parentUlElement: taskList,
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
-                obsidianComponent: this,
             }).renderTaskLine(task);
 
             // Remove all footnotes. They don't re-appear in another document.
