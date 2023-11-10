@@ -298,7 +298,9 @@ async function renderComponentText(
 }
 
 /**
- * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from LayoutClasses.
+ * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from FieldLayouts.
+ *
+ * When calling this you have to make sure that the `component` is actually present in {@link FieldLayouts}.
  */
 function getTaskComponentClass(component: TaskLayoutComponent) {
     const componentClassContainer: string[] = [];
