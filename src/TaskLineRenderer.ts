@@ -242,7 +242,7 @@ export class TaskLineRenderer {
      * @param task
      * @param _taskIndex
      */
-    public async renderTaskLine(task: Task, _taskIndex: number = 0): Promise<HTMLLIElement> {
+    public async renderTaskLine(task: Task, _taskIndex: number): Promise<HTMLLIElement> {
         const li: HTMLLIElement = document.createElement('li');
         this.parentUlElement.appendChild(li);
 
