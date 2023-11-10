@@ -401,18 +401,18 @@ export class TaskLineRenderer {
         }
     }
 
+    /*
+     * Adds internal classes for various components (right now just tags actually), meaning that we modify the existing
+     * rendered element to add classes inside it.
+     * In the case of tags, Obsidian renders a Markdown description with <a class="tag"> elements for tags. We want to
+     * enable users to style these, so we modify the rendered Markdown by adding the specific tag classes for these <a>
+     * elements.
+     */
     private addInternalClasses(component: TaskLayoutComponent, internalSpan: HTMLSpanElement) {
         addInternalClasses(component, internalSpan);
     }
 }
 
-/*
- * Adds internal classes for various components (right now just tags actually), meaning that we modify the existing
- * rendered element to add classes inside it.
- * In the case of tags, Obsidian renders a Markdown description with <a class="tag"> elements for tags. We want to
- * enable users to style these, so we modify the rendered Markdown by adding the specific tag classes for these <a>
- * elements.
- */
 function addInternalClasses(component: TaskLayoutComponent, renderedComponent: HTMLSpanElement) {
     if (component === 'description') {
         const tags = renderedComponent.getElementsByClassName('tag');
