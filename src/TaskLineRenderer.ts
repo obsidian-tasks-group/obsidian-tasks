@@ -60,6 +60,8 @@ export class FieldLayoutDetail {
          * A cutoff (in days) is defined in MAX_DAY_VALUE_RANGE, from beyond that a generic 'far' postfix will be added.
          * (the cutoff exists because we don't want to flood the DOM with potentially hundreds of unique classes.)
          */
+        const MAX_DAY_VALUE_RANGE = 7;
+        const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
         function dateToAttribute(date: Moment) {
             const today = window.moment().startOf('day');
             let result = '';
@@ -164,9 +166,6 @@ export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail
 };
 
 const FieldLayouts = new FieldLayoutsContainer();
-
-const MAX_DAY_VALUE_RANGE = 7;
-const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
