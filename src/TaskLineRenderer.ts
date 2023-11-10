@@ -39,7 +39,7 @@ export class FieldLayoutDetail {
     attributeValueCalculator: AttributeValueCalculator;
 
     public static noAttributeName = '';
-    public static noDataAttribute: AttributeValueCalculator = () => {
+    public static noAttributeValueCalculator: AttributeValueCalculator = () => {
         return '';
     };
 
@@ -76,12 +76,12 @@ const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
     description: new FieldLayoutDetail(
         'task-description',
         FieldLayoutDetail.noAttributeName,
-        FieldLayoutDetail.noDataAttribute,
+        FieldLayoutDetail.noAttributeValueCalculator,
     ),
     recurrenceRule: new FieldLayoutDetail(
         'task-recurring',
         FieldLayoutDetail.noAttributeName,
-        FieldLayoutDetail.noDataAttribute,
+        FieldLayoutDetail.noAttributeValueCalculator,
     ),
 
     priority: new FieldLayoutDetail('task-priority', 'taskPriority', (_component, task) => {
@@ -91,7 +91,7 @@ const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
     blockLink: new FieldLayoutDetail(
         'task-block-link',
         FieldLayoutDetail.noAttributeName,
-        FieldLayoutDetail.noDataAttribute,
+        FieldLayoutDetail.noAttributeValueCalculator,
     ),
 };
 
