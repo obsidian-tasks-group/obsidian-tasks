@@ -453,6 +453,24 @@ function addTooltip({
         TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     element.addEventListener('mouseenter', () => {
+        function addDateToTooltip(tooltip: HTMLDivElement, date: Moment | null, signifier: string) {
+            if (date) {
+                const createdDateDiv = tooltip.createDiv();
+                createdDateDiv.setText(
+                    toTooltipDate({
+                        signifier: signifier,
+                        date: date,
+                    }),
+                );
+            }
+        }
+
+        function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
+            return `${signifier} ${date.format(taskModule.TaskRegularExpressions.dateFormat)} (${date.from(
+                window.moment().startOf('day'),
+            )})`;
+        }
+
         const tooltip = element.createDiv();
         tooltip.addClasses(['tooltip', 'pop-up']);
 
@@ -477,22 +495,4 @@ function addTooltip({
             tooltip.remove();
         });
     });
-}
-
-function addDateToTooltip(tooltip: HTMLDivElement, date: Moment | null, signifier: string) {
-    if (date) {
-        const createdDateDiv = tooltip.createDiv();
-        createdDateDiv.setText(
-            toTooltipDate({
-                signifier: signifier,
-                date: date,
-            }),
-        );
-    }
-}
-
-function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-    return `${signifier} ${date.format(taskModule.TaskRegularExpressions.dateFormat)} (${date.from(
-        window.moment().startOf('day'),
-    )})`;
 }
