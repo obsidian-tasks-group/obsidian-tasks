@@ -19,18 +19,6 @@ export type TaskLineRenderDetails = {
     taskLayout?: TaskLayout;
 };
 
-export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
-    description: 'task-description',
-    priority: 'task-priority',
-    dueDate: 'task-due',
-    startDate: 'task-start',
-    createdDate: 'task-created',
-    scheduledDate: 'task-scheduled',
-    doneDate: 'task-done',
-    recurrenceRule: 'task-recurring',
-    blockLink: 'task-block-link',
-};
-
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
 export class FieldLayoutDetail {
@@ -78,7 +66,7 @@ const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLa
     return '';
 };
 
-const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
+export const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
     createdDate: new FieldLayoutDetail('task-created', 'taskCreated', dateDataAttributeCalculator),
     dueDate: new FieldLayoutDetail('task-due', 'taskDue', dateDataAttributeCalculator),
     startDate: new FieldLayoutDetail('task-start', 'taskStart', dateDataAttributeCalculator),
