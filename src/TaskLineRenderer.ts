@@ -31,7 +31,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     blockLink: 'task-block-link',
 };
 
-type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string | null;
+type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
 export class FieldLayoutDetail {
     className: string;
@@ -58,11 +58,11 @@ const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLa
         }
     }
 
-    return null;
+    return '';
 };
 
 const noDataAttribute: AttributeValueCalculator = () => {
-    return null;
+    return '';
 };
 
 const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
@@ -307,7 +307,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     // The value is calculated based on FieldLayoutDetail.attributeValueCalculator
     const fieldLayoutDetail = FieldLayouts[component];
     const attributeValue = fieldLayoutDetail.attributeValueCalculator(component, task);
-    if (attributeValue) {
+    if (attributeValue !== '') {
         const attributeName = fieldLayoutDetail.attributeName;
         dataAttribute[attributeName] = attributeValue;
     }
