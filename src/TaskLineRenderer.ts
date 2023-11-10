@@ -289,7 +289,7 @@ export class TaskLineRenderer {
         checkbox.setAttribute('data-line', taskIndex.toString());
 
         if (this.layoutOptions.shortMode) {
-            addTooltip({ task, element: textSpan, isFilenameUnique: this.isFilenameUnique });
+            this.addTooltip(task, textSpan);
         }
 
         return li;
@@ -400,7 +400,6 @@ export class TaskLineRenderer {
             span.innerHTML = componentString;
         }
     }
-
     /*
      * Adds internal classes for various components (right now just tags actually), meaning that we modify the existing
      * rendered element to add classes inside it.
@@ -434,6 +433,10 @@ export class TaskLineRenderer {
                 }
             }
         }
+    }
+
+    private addTooltip(task: Task, element: HTMLSpanElement) {
+        addTooltip({ task, element: element, isFilenameUnique: this.isFilenameUnique });
     }
 }
 
