@@ -169,6 +169,16 @@ export type TaskLineRenderDetails = {
     taskLayout?: TaskLayout;
 };
 
+/**
+ * The function used to render a Markdown task line into an existing HTML element.
+ */
+export type TextRenderer = (
+    text: string,
+    element: HTMLSpanElement,
+    path: string,
+    obsidianComponent: Component | null, // null is allowed here only for tests
+) => Promise<void>;
+
 export class AppleSauce {
     parentUlElement: HTMLElement;
     listIndex: number;
@@ -215,16 +225,6 @@ export class AppleSauce {
         );
     }
 }
-
-/**
- * The function used to render a Markdown task line into an existing HTML element.
- */
-export type TextRenderer = (
-    text: string,
-    element: HTMLSpanElement,
-    path: string,
-    obsidianComponent: Component | null, // null is allowed here only for tests
-) => Promise<void>;
 
 /**
  * Renders a given Task object into an HTML List Item (LI) element, using the given renderDetails
