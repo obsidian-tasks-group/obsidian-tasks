@@ -8,7 +8,7 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
-    import { computePosition, offset, shift, size } from "@floating-ui/dom";
+    import {computePosition, flip, offset, shift, size} from "@floating-ui/dom";
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../TaskDependency";
     import { replaceTaskWithTasks } from "../File";
 
@@ -301,10 +301,12 @@
                     if (field === "waitingOn") {
                         addWaitingOnTask(resultsList[searchIndex]);
                         searchIndex = null;
+                        waitingOnFocused = false
                     }
                     else {
                         addBlockingTask(resultsList[searchIndex]);
                         searchIndex = null;
+                        blockingFocused = false
                     }
                 } else {
                     _onDescriptionKeyDown(e);
@@ -414,6 +416,7 @@
                 middleware: [
                     offset(6),
                     shift(),
+                    flip(),
                     size({
                         apply() {
                             waitingOnContent && Object.assign(waitingOnContent.style, {
@@ -441,6 +444,7 @@
                 middleware: [
                     offset(6),
                     shift(),
+                    flip(),
                     size({
                         apply() {
                             blockingContent && Object.assign(blockingContent.style, {
@@ -816,7 +820,9 @@
                 />
             </span>
             {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
-                <ul class="suggested-tasks" bind:this={waitingOnContent}>
+                <ul class="suggested-tasks"
+                    bind:this={waitingOnContent}
+                    on:mouseleave={() => waitingOnSearchIndex = null}>
                     {#each waitingOnSearchResults as searchTask, index}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <li on:click={() => addWaitingOnTask(searchTask)}
@@ -860,7 +866,9 @@
                 placeholder="Type to search..."
             />
             {#if blockingSearchResults && blockingSearchResults.length !== 0}
-                <ul class="suggested-tasks" bind:this={blockingContent}>
+                <ul class="suggested-tasks"
+                    bind:this={blockingContent}
+                    on:mouseleave={() => blockingSearchIndex = null}>
                     {#each blockingSearchResults as searchTask, index}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <li on:click={() => addBlockingTask(searchTask)}
