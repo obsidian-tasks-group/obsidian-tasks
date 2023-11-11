@@ -263,6 +263,11 @@
     /*margin: 4px;*/
 
     grid-column: 2 !important;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 
     .incomplete {
         background-color: var(--color-yellow);
@@ -278,11 +283,14 @@
     box-shadow: var(--input-shadow);
     border-radius: 28px;
     padding: 6px 8px 6px 12px;
-    margin: 4px;
 }
 
 .chip-name {
     font-size: 14px;
+    overflow: hidden;
+    max-width: 160px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .chip-close {

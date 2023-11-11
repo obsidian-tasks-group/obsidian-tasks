@@ -460,11 +460,12 @@
     }
 
     let waitingOnChips: HTMLElement[] = [];
+    let blockingChips: HTMLElement[] = [];
 
-    function showWaitingOnTooltip(element: HTMLElement, task: Task) {
+    function showDescriptionTooltip(element: HTMLElement, task: Task) {
         const tooltip = element.createDiv();
         tooltip.addClasses(['tooltip', 'pop-up']);
-        tooltip.innerText = task.isDone ? "complete" : "incomplete";
+        tooltip.innerText = task.descriptionWithoutTags;
 
         computePosition(element, tooltip, {
             placement: "top",
@@ -832,8 +833,8 @@
                 {#each editableTask.waitingOn as task, idx}
                     <div class="chip"
                          bind:this={waitingOnChips[idx]}
-                         on:mouseenter={() => showWaitingOnTooltip(waitingOnChips[idx], task)}>
-                        <div class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</div>
+                         on:mouseenter={() => showDescriptionTooltip(waitingOnChips[idx], task)}>
+                        <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
 
                         <button on:click={() => removeWaitingOnTask(task)} type="button" class="chip-close">
                             <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -872,9 +873,11 @@
                 </ul>
             {/if}
             <div class="chip-container">
-                {#each editableTask.blocking as task}
-                    <div class="chip">
-                        <div class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</div>
+                {#each editableTask.blocking as task, idx}
+                    <div class="chip"
+                         bind:this={blockingChips[idx]}
+                         on:mouseenter={() => showDescriptionTooltip(blockingChips[idx], task)}>
+                        <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
 
                         <button on:click={() => removeBlockingTask(task)} type="button" class="chip-close">
                             <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
