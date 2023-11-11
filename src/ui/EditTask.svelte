@@ -348,7 +348,7 @@
     function onBlockingBlur() {
         if (cursorInsideBlocking) return;
 
-        waitingOnFocused = false;
+        blockingFocused = false;
     }
 
     function onWaitingFocused() {
