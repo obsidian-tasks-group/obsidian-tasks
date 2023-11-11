@@ -816,14 +816,14 @@
                 />
             </span>
             {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
-                <ul class="tasks" bind:this={waitingOnContent}>
+                <ul class="suggested-tasks" bind:this={waitingOnContent}>
                     {#each waitingOnSearchResults as searchTask, index}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <li on:click={() => addWaitingOnTask(searchTask)}
                             class:selected={waitingOnSearchIndex !== null && index === waitingOnSearchIndex}
                             on:mouseenter={() => waitingOnSearchIndex = index}
                         >
-                            <div>[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
+                            <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
                             <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
                         </li>
                     {/each}
@@ -860,13 +860,13 @@
                 placeholder="Type to search..."
             />
             {#if blockingSearchResults && blockingSearchResults.length !== 0}
-                <ul class="tasks" bind:this={blockingContent}>
+                <ul class="suggested-tasks" bind:this={blockingContent}>
                     {#each blockingSearchResults as searchTask, index}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <li on:click={() => addBlockingTask(searchTask)}
                             class:selected={blockingSearch !== null && index === blockingSearchIndex}
                             on:mouseenter={() => blockingSearchIndex = index}>
-                            [{searchTask.status.symbol}]  {searchTask.descriptionWithoutTags}
+                            <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
                             <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
                         </li>
                     {/each}

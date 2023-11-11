@@ -287,8 +287,8 @@
 
 .chip-name {
     font-size: 14px;
-    overflow: hidden;
     max-width: 160px;
+    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
@@ -303,7 +303,7 @@
     background-color: var(--background-primary) !important;
 }
 
-.tasks {
+.suggested-tasks {
     list-style: none;
     position: absolute;
     top: 0;
@@ -318,7 +318,7 @@
     z-index: 99;
 }
 
-.tasks li {
+.suggested-tasks li {
     padding: 5px;
     margin: 2px;
     border-radius: 6px;
@@ -326,13 +326,24 @@
     display: flex;
     justify-content: space-between
 }
+.suggested-tasks li .dependency-name {
+    width: calc(60%);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
-.tasks li .dependency-location {
+.suggested-tasks li .dependency-location {
+    width: calc(33%);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-style: italic;
+    text-align: right;
     color: var(--text-faint)
 }
 
-.tasks li.selected {
+.suggested-tasks li.selected {
     background-color: var(--text-selection);
 }
 
