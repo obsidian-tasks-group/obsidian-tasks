@@ -781,6 +781,22 @@
             <code>{startDateSymbol} {@html parsedStartDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
+            <!--  Only future dates  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <div>
+                <label for="forwardOnly">Only
+                    <span class="accesskey-first">future</span> dates:</label>
+                <!-- svelte-ignore a11y-accesskey -->
+                <input
+                    bind:checked={editableTask.forwardOnly}
+                    id="forwardOnly"
+                    type="checkbox"
+                    class="task-list-item-checkbox tasks-modal-checkbox"
+                    accesskey={accesskey("f")}
+                />
+            </div>
+
+            <!-- --------------------------------------------------------------------------- -->
             <!--  Waiting on Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="start" class="accesskey-first">Waiting On</label>
@@ -865,22 +881,6 @@
                         </button>
                     </div>
                 {/each}
-            </div>
-
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Only future dates  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <div>
-                <label for="forwardOnly">Only
-                    <span class="accesskey-first">future</span> dates:</label>
-                <!-- svelte-ignore a11y-accesskey -->
-                <input
-                    bind:checked={editableTask.forwardOnly}
-                    id="forwardOnly"
-                    type="checkbox"
-                    class="task-list-item-checkbox tasks-modal-checkbox"
-                    accesskey={accesskey("f")}
-                />
             </div>
         </div>
 
