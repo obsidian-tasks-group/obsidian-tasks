@@ -206,6 +206,7 @@
     function addWaitingOnTask(task: Task) {
         editableTask.waitingOn = [...editableTask.waitingOn, task];
         waitingOnSearch = '';
+        waitingOnFocused = false;
     }
 
     function removeWaitingOnTask(task: Task) {
@@ -215,6 +216,7 @@
     function addBlockingTask(task: Task) {
         editableTask.blocking = [...editableTask.blocking, task];
         blockingSearch = '';
+        blockingFocused = false;
     }
 
     function removeBlockingTask(task: Task) {
@@ -324,6 +326,31 @@
         }
     }
 
+    let cursorInsideWaitingOn = false;
+    let cursorInsideBlocking = false;
+
+    function onCursorLeftWaiting() {
+        cursorInsideWaitingOn = false;
+        waitingOnSearchIndex = null;
+    }
+
+    function onCursorLeftBlocking() {
+        cursorInsideBlocking = false;
+        waitingOnSearchIndex = null;
+    }
+
+    function onWaitingBlur() {
+        if (cursorInsideWaitingOn) return;
+
+        waitingOnFocused = false;
+    }
+
+    function onBlockingBlur() {
+        if (cursorInsideBlocking) return;
+
+        waitingOnFocused = false;
+    }
+
     function onWaitingFocused() {
         waitingOnFocused = true;
         displayResultsIfSearchEmpty = true;
@@ -332,18 +359,6 @@
     function onBlockingFocused() {
         blockingFocused = true;
         displayResultsIfSearchEmpty = true;
-    }
-
-    function onWaitingUnfocused() {
-        setTimeout(() => {
-            waitingOnFocused = false;
-        }, 200);
-    }
-
-    function onBlockingUnfocused() {
-        setTimeout(() => {
-            blockingFocused = false;
-        }, 200);
     }
 
     $: accesskey = (key: string) => withAccessKeys ? key : null;
@@ -812,7 +827,7 @@
                     bind:value={waitingOnSearch}
                     on:keydown={(e) => taskKeydown(e, "waitingOn")}
                     on:focus={onWaitingFocused}
-                    on:blur={onWaitingUnfocused}
+                    on:blur={onWaitingBlur}
                     accesskey={accesskey("w")}
                     id="waitingOn"
                     type="text"
@@ -822,7 +837,8 @@
             {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
                 <ul class="suggested-tasks"
                     bind:this={waitingOnContent}
-                    on:mouseleave={() => waitingOnSearchIndex = null}>
+                    on:mouseenter={() => cursorInsideWaitingOn = true}
+                    on:mouseleave={onCursorLeftWaiting}>
                     {#each waitingOnSearchResults as searchTask, index}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <li on:click={() => addWaitingOnTask(searchTask)}
@@ -859,7 +875,7 @@
                 bind:value={blockingSearch}
                 on:keydown={(e) => taskKeydown(e, "blocking")}
                 on:focus={onBlockingFocused}
-                on:blur={onBlockingUnfocused}
+                on:blur={onBlockingBlur}
                 accesskey={accesskey("b")}
                 id="blocking"
                 type="text"
@@ -868,7 +884,8 @@
             {#if blockingSearchResults && blockingSearchResults.length !== 0}
                 <ul class="suggested-tasks"
                     bind:this={blockingContent}
-                    on:mouseleave={() => blockingSearchIndex = null}>
+                    on:mouseenter={() => cursorInsideBlocking = true}
+                    on:mouseleave={onCursorLeftBlocking}>
                     {#each blockingSearchResults as searchTask, index}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <li on:click={() => addBlockingTask(searchTask)}
