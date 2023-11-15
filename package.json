@@ -41,7 +41,7 @@
     "async-mutex": "^0.4.0",
     "builtin-modules": "^3.3.0",
     "esbuild": "0.15.6",
-    "esbuild-svelte": "^0.7.3",
+    "esbuild-svelte": "^0.8.0",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
