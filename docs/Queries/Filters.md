@@ -278,8 +278,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 ### Status
 
-- `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
-- `not done` - matches status types with type `TODO` and `IN_PROGRESS`
+- `done` - matches tasks with status types `DONE`, `CANCELLED` and `NON_TASK`
+- `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
 
 > [!info]
 > Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
