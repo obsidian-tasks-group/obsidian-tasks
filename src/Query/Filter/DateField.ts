@@ -69,7 +69,7 @@ export abstract class DateField extends Field {
         }
 
         const keywordAndDateString = fieldNameKeywordDate[1]; // The whole line except the field name
-        const fieldKeyword = fieldNameKeywordDate[2]; // 'on', 'in', 'before', 'after', 'on|in or before|after' or undefined
+        const fieldKeyword = fieldNameKeywordDate[2]?.toLowerCase(); // 'on', 'in', 'before', 'after', 'on|in or before|after' or undefined
         const fieldDateString = fieldNameKeywordDate[3]; // The remainder of the instruction
 
         // Try interpreting everything after the keyword as a date range:

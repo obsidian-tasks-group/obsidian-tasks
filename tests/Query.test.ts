@@ -625,8 +625,8 @@ describe('Query parsing', () => {
     describe('should recognize boolean queries', () => {
         const filters: ReadonlyArray<string> = [
             '# Comment lines are ignored',
-            '(description includes wibble) OR (has due date)',
-            '(has due date) OR ((has start date) AND (due after 2021-12-27))',
+            '(DESCRIPTION INCLUDES wibble) OR (has due date)',
+            '(has due date) OR ((HAS START DATE) AND (due after 2021-12-27))',
             '(is not recurring) XOR ((path includes ab/c) OR (happens before 2021-12-27))',
             String.raw`(description includes line 1) OR \
 (description includes line 1 continued\
@@ -643,13 +643,21 @@ describe('Query parsing', () => {
 
     it('should parse ambiguous sort by queries correctly', () => {
         expect(new Query('sort by status').sorting[0].property).toEqual('status');
+        expect(new Query('SORT BY STATUS').sorting[0].property).toEqual('status');
+
         expect(new Query('sort by status.name').sorting[0].property).toEqual('status.name');
+        expect(new Query('SORT BY STATUS.NAME').sorting[0].property).toEqual('status.name');
     });
 
     it('should parse ambiguous group by queries correctly', () => {
         expect(new Query('group by status').grouping[0].property).toEqual('status');
+        expect(new Query('GROUP BY STATUS').grouping[0].property).toEqual('status');
+
         expect(new Query('group by status.name').grouping[0].property).toEqual('status.name');
+        expect(new Query('GROUP BY STATUS.NAME').grouping[0].property).toEqual('status.name');
+
         expect(new Query('group by status.type').grouping[0].property).toEqual('status.type');
+        expect(new Query('GROUP BY STATUS.TYPE').grouping[0].property).toEqual('status.type');
     });
 
     describe('should include instruction in parsing error messages', () => {
@@ -695,26 +703,38 @@ Problem line: "${source}"`,
 
         it('for invalid sort by', () => {
             const source = 'sort by nonsense';
+            const sourceUpperCase = source.toUpperCase();
             expect(getQueryError(source)).toEqual(`do not understand query
 Problem line: "${source}"`);
+            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
+Problem line: "${sourceUpperCase}"`);
         });
 
         it('for invalid group by', () => {
             const source = 'group by nonsense';
+            const sourceUpperCase = source.toUpperCase();
             expect(getQueryError(source)).toEqual(`do not understand query
 Problem line: "${source}"`);
+            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
+Problem line: "${sourceUpperCase}"`);
         });
 
         it('for invalid hide', () => {
             const source = 'hide nonsense';
+            const sourceUpperCase = source.toUpperCase();
             expect(getQueryError(source)).toEqual(`do not understand query
 Problem line: "${source}"`);
+            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
+Problem line: "${sourceUpperCase}"`);
         });
 
         it('for unknown instruction', () => {
             const source = 'spaghetti';
+            const sourceUpperCase = source.toUpperCase();
             expect(getQueryError(source)).toEqual(`do not understand query
 Problem line: "${source}"`);
+            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
+Problem line: "${sourceUpperCase}"`);
         });
     });
 
@@ -849,9 +869,39 @@ describe('Query', () => {
                 },
             ],
             [
+                'by due date presence uppercase',
+                {
+                    filters: ['HAS DUE DATE'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                    ],
+                },
+            ],
+            [
                 'by start date presence',
                 {
                     filters: ['has start date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 🛫 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 🛫 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'by start date presence uppercase',
+                {
+                    filters: ['HAS START DATE'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -879,9 +929,36 @@ describe('Query', () => {
                 },
             ],
             [
+                'by scheduled date presence uppercase',
+                {
+                    filters: ['HAS SCHEDULED DATE'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                    ],
+                },
+            ],
+            [
                 'by due date absence',
                 {
                     filters: ['no due date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
+                'by due date absence uppercase',
+                {
+                    filters: ['NO DUE DATE'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -903,6 +980,18 @@ describe('Query', () => {
                 },
             ],
             [
+                'by start date absence uppercase',
+                {
+                    filters: ['NO START DATE'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 🛫 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
                 'by scheduled date absence',
                 {
                     filters: ['no scheduled date'],
@@ -915,9 +1004,37 @@ describe('Query', () => {
                 },
             ],
             [
+                'by scheduled date absence uppercase',
+                {
+                    filters: ['NO SCHEDULED DATE'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
                 'by start date (before)',
                 {
                     filters: ['starts before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-15',
+                        '- [ ] task 3 🛫 2022-04-20',
+                        '- [ ] task 4 🛫 2022-04-25',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 1', // reference: https://publish.obsidian.md/tasks/Queries/Filters#Start+Date
+                        '- [ ] task 2 🛫 2022-04-15',
+                    ],
+                },
+            ],
+            [
+                'by start date (before) uppercase',
+                {
+                    filters: ['STARTS BEFORE 2022-04-20'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] task 2 🛫 2022-04-15',
@@ -944,9 +1061,33 @@ describe('Query', () => {
                 },
             ],
             [
+                'by scheduled date (before) uppercase',
+                {
+                    filters: ['SCHEDULED BEFORE 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 ⏳ 2022-04-15',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                        '- [ ] task 4 ⏳ 2022-04-25',
+                    ],
+                    expectedResult: ['- [ ] task 2 ⏳ 2022-04-15'],
+                },
+            ],
+            [
                 'by done date (before)',
                 {
                     filters: ['done before 2022-12-23'],
+                    tasks: [
+                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
+                        '- [ ] I have no done date, so should fail',
+                    ],
+                    expectedResult: ['- [ ] I am done before filter, and should pass ✅ 2022-12-01'],
+                },
+            ],
+            [
+                'by done date (before) uppercase',
+                {
+                    filters: ['DONE BEFORE 2022-12-23'],
                     tasks: [
                         '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
                         '- [ ] I have no done date, so should fail',
@@ -1111,6 +1252,23 @@ describe('Query', () => {
                 },
             ],
             [
+                'simple OR UpperCase',
+                {
+                    filters: ['"HAS DUE DATE" OR (DESCRIPTION INCLUDES special)'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                },
+            ],
+            [
                 'simple AND',
                 {
                     filters: ['(has start date) AND "description includes some"'],
@@ -1124,9 +1282,35 @@ describe('Query', () => {
                 },
             ],
             [
+                'simple AND UpperCase',
+                {
+                    filters: ['(HAS START DATE) AND "DESCRIPTION INCLUDES some"'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: ['- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20'],
+                },
+            ],
+            [
                 'simple AND NOT',
                 {
                     filters: ['(has start date) AND NOT (description includes some)'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: ['- [ ] any task 3 🛫 2022-04-20'],
+                },
+            ],
+            [
+                'simple AND NOT UpperCase',
+                {
+                    filters: ['(HAS START DATE) AND NOT (DESCRIPTION INCLUDES some)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -1154,9 +1338,39 @@ describe('Query', () => {
                 },
             ],
             [
+                'simple OR NOT UpperCase',
+                {
+                    filters: ['(HAS START DATE) OR NOT (DESCRIPTION INCLUDES special)'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                    ],
+                },
+            ],
+            [
                 'simple XOR',
                 {
                     filters: ['(has start date) XOR (description includes special)'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] special task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: ['- [ ] any task 3 🛫 2022-04-20', '- [ ] special task 4'],
+                },
+            ],
+            [
+                'simple XOR UpperCase',
+                {
+                    filters: ['(HAS START DATE) XOR (DESCRIPTION INCLUDES special)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] special task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -1180,9 +1394,39 @@ describe('Query', () => {
                 },
             ],
             [
+                'simple NOT UpperCase',
+                {
+                    filters: ['NOT (HAS START DATE)'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] special task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: ['- [ ] task 1', '- [ ] special task 4'],
+                },
+            ],
+            [
                 'AND-first composition',
                 {
                     filters: ['(has start date) AND ((description includes some) OR (has due date))'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: [
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'AND-first composition UpperCase',
+                {
+                    filters: ['(HAS START DATE) AND ((DESCRIPTION INCLUDES some) OR (HAS DUE DATE))'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -1216,9 +1460,42 @@ describe('Query', () => {
                 },
             ],
             [
+                'OR-first composition UpperCase',
+                {
+                    filters: ['(HAS START DATE) OR ((DESCRIPTION INCLUDES special) AND (HAS DUE DATE))'],
+                    tasks: [
+                        '- [ ] special task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                        '- [ ] special task 4 📅 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                        '- [ ] special task 4 📅 2022-04-20',
+                    ],
+                },
+            ],
+            [
                 'NOT-first composition',
                 {
                     filters: ['NOT ((has start date) OR (description includes special))'],
+                    tasks: [
+                        '- [ ] regular task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                        '- [ ] special task 4 📅 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] regular task 1'],
+                },
+            ],
+            [
+                'NOT-first composition UpperCase',
+                {
+                    filters: ['NOT ((HAS START DATE) OR (DESCRIPTION INCLUDES special))'],
                     tasks: [
                         '- [ ] regular task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -1445,35 +1722,54 @@ At most 8 tasks per group (if any "group by" options are supplied).
             // Arrange
             const source = 'group by path';
             const query = new Query(source);
+            const queryUpper = new Query(source.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
+            expect(queryUpper.error).toBeUndefined();
+
             expect(query.grouping.length).toEqual(1);
+            expect(queryUpper.grouping.length).toEqual(1);
         });
 
         it('should work with a custom group that uses query information', () => {
             // Arrange
             const source = 'group by function query.file.path';
+            const sourceUpper = 'GROUP BY FUNCTION query.file.path';
+
             const query = new Query(source, 'hello.md');
+            const queryUpper = new Query(sourceUpper, 'hello.md');
 
             // Act
             const results = query.applyQueryToTasks([new TaskBuilder().build()]);
+            const resultsUpper = queryUpper.applyQueryToTasks([new TaskBuilder().build()]);
 
             // Assert
             const groups = results.taskGroups;
+            const groupsUpper = resultsUpper.taskGroups;
+
             expect(groups.groups.length).toEqual(1);
+            expect(groupsUpper.groups.length).toEqual(1);
+
             expect(groups.groups[0].groups).toEqual(['hello.md']);
+            expect(groupsUpper.groups[0].groups).toEqual(['hello.md']);
         });
 
         it('should log meaningful error for supported group type', () => {
             // Arrange
             const source = 'group by xxxx';
+            const sourceUpper = source.toUpperCase();
+
             const query = new Query(source);
+            const queryUpperr = new Query(sourceUpper);
 
             // Assert
             // Check that the error message contains the actual problem line
             expect(query.error).toContain(source);
+            expect(queryUpperr.error).toContain(sourceUpper);
+
             expect(query.grouping.length).toEqual(0);
+            expect(queryUpperr.grouping.length).toEqual(0);
         });
 
         it('should apply limit correctly, after sorting tasks', () => {
@@ -1488,7 +1784,9 @@ At most 8 tasks per group (if any "group by" options are supplied).
                 # Apply a limit, to test which tasks make it to
                 limit 2
                 `;
+            const sourceUpper = source.toUpperCase();
             const query = new Query(source);
+            const queryUpper = new Query(sourceUpper);
 
             const tasksAsMarkdown = `
 - [x] Task 1 - should not appear in output
@@ -1503,18 +1801,26 @@ At most 8 tasks per group (if any "group by" options are supplied).
 
             // Act
             const queryResult = query.applyQueryToTasks(tasks);
+            const queryUpperResult = queryUpper.applyQueryToTasks(tasks);
 
             // Assert
             expect(queryResult.groups.length).toEqual(1);
+            expect(queryUpperResult.groups.length).toEqual(1);
+
             const soleTaskGroup = queryResult.groups[0];
+            const soleTaskGroupUpper = queryUpperResult.groups[0];
             const expectedTasks = `
 - [ ] Task 3 - will be sorted to 1st place, so should pass limit
 - [ ] Task 4 - will be sorted to 2nd place, so should pass limit
 `;
             expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(expectedTasks);
+            expect('\n' + soleTaskGroupUpper.tasksAsStringOfLines()).toStrictEqual(expectedTasks);
 
             expect(queryResult.taskGroups.totalTasksCount()).toEqual(2);
+            expect(queryUpperResult.taskGroups.totalTasksCount()).toEqual(2);
+
             expect(queryResult.totalTasksCountBeforeLimit).toEqual(6);
+            expect(queryUpperResult.totalTasksCountBeforeLimit).toEqual(6);
         });
 
         it('should apply group limit correctly, after sorting tasks', () => {
@@ -1529,7 +1835,9 @@ At most 8 tasks per group (if any "group by" options are supplied).
                 # Apply a limit, to test which tasks make it to
                 limit groups 3
                 `;
+            const sourceUpper = source.toUpperCase();
             const query = new Query(source);
+            const queryUpper = new Query(sourceUpper);
 
             const tasksAsMarkdown = `
 - [x] Task 2 - will be in the first group and sorted after next one
@@ -1544,16 +1852,33 @@ At most 8 tasks per group (if any "group by" options are supplied).
 
             // Act
             const queryResult = query.applyQueryToTasks(tasks);
+            const queryUpperResult = queryUpper.applyQueryToTasks(tasks);
 
             // Assert
             expect(queryResult.groups.length).toEqual(2);
+            expect(queryUpperResult.groups.length).toEqual(2);
+
             expect(queryResult.totalTasksCount).toEqual(5);
+            expect(queryUpperResult.totalTasksCount).toEqual(5);
+
             expect(queryResult.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
                 "- [x] Task 1 - will be in the first group
                 - [x] Task 2 - will be in the first group and sorted after next one
                 "
             `);
+            expect(queryUpperResult.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+                "- [x] Task 1 - will be in the first group
+                - [x] Task 2 - will be in the first group and sorted after next one
+                "
+            `);
+
             expect(queryResult.groups[1].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+                "- [ ] Task 3 - will be sorted to 1st place in the second group and pass the limit
+                - [ ] Task 4 - will be sorted to 2nd place in the second group and pass the limit
+                - [ ] Task 5 - will be sorted to 3nd place in the second group and pass the limit
+                "
+            `);
+            expect(queryUpperResult.groups[1].tasksAsStringOfLines()).toMatchInlineSnapshot(`
                 "- [ ] Task 3 - will be sorted to 1st place in the second group and pass the limit
                 - [ ] Task 4 - will be sorted to 2nd place in the second group and pass the limit
                 - [ ] Task 5 - will be sorted to 3nd place in the second group and pass the limit
@@ -1561,7 +1886,10 @@ At most 8 tasks per group (if any "group by" options are supplied).
             `);
 
             expect(queryResult.taskGroups.totalTasksCount()).toEqual(5);
+            expect(queryUpperResult.taskGroups.totalTasksCount()).toEqual(5);
+
             expect(queryResult.totalTasksCountBeforeLimit).toEqual(6);
+            expect(queryUpperResult.totalTasksCountBeforeLimit).toEqual(6);
         });
     });
 
@@ -1570,14 +1898,19 @@ At most 8 tasks per group (if any "group by" options are supplied).
             // Arrange
             const source = 'filter by function wibble';
             const query = new Query(source);
+            const queryUpper = new Query(source.toUpperCase());
             const task = TaskBuilder.createFullyPopulatedTask();
 
             // Act
             const queryResult = query.applyQueryToTasks([task]);
+            const queryResultUpper = queryUpper.applyQueryToTasks([task]);
 
             // Assert
             expect(queryResult.searchErrorMessage).toEqual(
                 'Error: Search failed.\nThe error message was:\n    "ReferenceError: wibble is not defined"',
+            );
+            expect(queryResultUpper.searchErrorMessage).toEqual(
+                'Error: Search failed.\nThe error message was:\n    "ReferenceError: WIBBLE is not defined"',
             );
         });
     });
