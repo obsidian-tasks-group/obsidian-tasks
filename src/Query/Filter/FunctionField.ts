@@ -37,7 +37,7 @@ export class FunctionField extends Field {
     }
 
     protected filterRegExp(): RegExp | null {
-        return new RegExp(`^filter by ${this.fieldNameSingularEscaped()} (.*)`);
+        return new RegExp(`^filter by ${this.fieldNameSingularEscaped()} (.*)`, 'i');
     }
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -42,7 +42,7 @@ describe('Query parsing', () => {
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
         '(due this week) AND (description includes Hello World)',
-        // '(DUE THIS WEEK) AND (DESCRIPTION INCLUDES Hello World)',
+        '(DUE THIS WEEK) AND (DESCRIPTION INCLUDES Hello World)',
         'created after 2021-12-27',
         'CREATED AFTER 2021-12-27',
         'created before 2021-12-27',
@@ -56,11 +56,11 @@ describe('Query parsing', () => {
         'created this week',
         'CREATED THIS WEEK',
         'description does not include wibble',
-        // 'DESCRIPTION DOES NOT INCLUDE wibble',
+        'DESCRIPTION DOES NOT INCLUDE wibble',
         'description includes AND', // Verify Query doesn't confuse this with a boolean query
-        // 'DESCRIPTION INCLUDES AND', // Verify Query doesn't confuse this with a boolean query
+        'DESCRIPTION INCLUDES AND', // Verify Query doesn't confuse this with a boolean query
         'description includes wibble',
-        // 'DESCRIPTION INCLUDES wibble',
+        'DESCRIPTION INCLUDES wibble',
         'done',
         'DONE',
         'done after 2021-12-27',
@@ -88,11 +88,11 @@ describe('Query parsing', () => {
         'due this week',
         'DUE THIS WEEK',
         'exclude sub-items',
-        // 'EXCLUDE SUB-ITEMS',
+        'EXCLUDE SUB-ITEMS',
         'filename includes wibble',
         'FILENAME INCLUDES wibble',
         'filter by function task.isDone', // This cannot contain any () because of issue #1500
-        // 'FILTER BY FUNCTION task.isDone', // This cannot contain any () because of issue #1500
+        'FILTER BY FUNCTION task.isDone', // This cannot contain any () because of issue #1500
         'folder does not include some/path',
         'FOLDER DOES NOT INCLUDE some/path',
         'folder includes AND', // Verify Query doesn't confuse this with a boolean query
@@ -204,7 +204,9 @@ describe('Query parsing', () => {
         'starts this week',
         'STARTS THIS WEEK',
         'status.name includes cancelled',
+        'STATUS.NAME INCLUDES cancelled',
         'status.type is IN_PROGRESS',
+        'STATUS.TYPE IS IN_PROGRESS',
         'tag does not include #sometag',
         'TAG DOES NOT INCLUDE #sometag',
         'tag does not include sometag',
