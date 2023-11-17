@@ -59,7 +59,7 @@ export class FunctionField extends Field {
     }
 
     protected grouperRegExp(): RegExp {
-        return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)? (.*)`);
+        return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)? (.*)`, 'i');
     }
 
     /**

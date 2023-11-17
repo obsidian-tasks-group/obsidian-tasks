@@ -95,7 +95,7 @@ export function parseGrouper(line: string): Grouper | null {
     // New style parsing, using grouping which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'group by'
-    const groupByRegexp = /^group by /;
+    const groupByRegexp = /^group by /i;
     if (line.match(groupByRegexp) === null) {
         return null;
     }
