@@ -22,6 +22,7 @@ In Live Preview and Reading modes, this will list *all* tasks from your vault, r
 
 This is probably not what you want.
 Therefore, Tasks allows you to set query options to filter the tasks that you want to show.
+*All the queries are case insensitive.*
 
 ## Tasks Query options
 
