@@ -172,7 +172,7 @@ export abstract class Field {
             throw Error(`sorterRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
-        return new RegExp(`^sort by ${this.fieldNameSingularEscaped()}( reverse)?`);
+        return new RegExp(`^sort by ${this.fieldNameSingularEscaped()}( reverse)?`, 'i');
     }
 
     /**

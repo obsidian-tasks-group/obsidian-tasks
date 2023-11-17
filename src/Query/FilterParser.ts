@@ -75,7 +75,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     // New style parsing, using sorting which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'sort by'
-    const sortByRegexp = /^sort by /;
+    const sortByRegexp = /^sort by /i;
     if (sorterString.match(sortByRegexp) === null) {
         return null;
     }
