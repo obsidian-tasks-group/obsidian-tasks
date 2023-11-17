@@ -34,7 +34,7 @@
     "@testing-library/svelte": "^3.2.2",
     "@tsconfig/svelte": "^3.0.0",
     "@types/jest": "^29.5.8",
-    "@types/mustache": "^4.2.2",
+    "@types/mustache": "^4.2.5",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
     "approvals": "^6.2.4",
