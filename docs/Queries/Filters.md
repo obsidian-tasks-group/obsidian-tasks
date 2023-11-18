@@ -1122,7 +1122,7 @@ Note that the path includes the `.md` extension.
 - `path (includes|does not include) <path>`
   - Matches case-insensitive (disregards capitalization).
   - Use `{{query.file.path}}` or `{{query.file.pathWithoutExtension}}` as a placeholder for the path of the file containing the current query.
-    - For example, `path equals {{query.file.path}}`
+    - For example, `path includes {{query.file.path}}`
     - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
