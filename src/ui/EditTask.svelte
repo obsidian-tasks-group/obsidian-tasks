@@ -816,100 +816,104 @@
                 />
             </div>
 
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Waiting on Tasks  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <label for="start" class="accesskey-first">Waiting On</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <span bind:clientWidth={waitingInputWidth}>
+            {#if allTasks.length > 0}
+                <!-- --------------------------------------------------------------------------- -->
+                <!--  Waiting on Tasks  -->
+                <!-- --------------------------------------------------------------------------- -->
+                <label for="start" class="accesskey-first">Waiting On</label>
+                <!-- svelte-ignore a11y-accesskey -->
+                <span bind:clientWidth={waitingInputWidth}>
+                    <input
+                        bind:this={waitingOnRef}
+                        bind:value={waitingOnSearch}
+                        on:keydown={(e) => taskKeydown(e, "waitingOn")}
+                        on:focus={onWaitingFocused}
+                        on:blur={onWaitingBlur}
+                        accesskey={accesskey("w")}
+                        id="waitingOn"
+                        type="text"
+                        placeholder="Type to search..."
+                    />
+                </span>
+                {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
+                    <ul class="suggested-tasks"
+                        bind:this={waitingOnContent}
+                        on:mouseenter={() => cursorInsideWaitingOn = true}
+                        on:mouseleave={onCursorLeftWaiting}>
+                        {#each waitingOnSearchResults as searchTask, index}
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <li on:click={() => addWaitingOnTask(searchTask)}
+                                class:selected={waitingOnSearchIndex !== null && index === waitingOnSearchIndex}
+                                on:mouseenter={() => waitingOnSearchIndex = index}
+                            >
+                                <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
+                                <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
+                            </li>
+                        {/each}
+                    </ul>
+                {/if}
+                <div class="chip-container" >
+                    {#each editableTask.waitingOn as task, idx}
+                        <div class="chip"
+                             bind:this={waitingOnChips[idx]}
+                             on:mouseenter={() => showDescriptionTooltip(waitingOnChips[idx], task)}>
+                            <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
+
+                            <button on:click={() => removeWaitingOnTask(task)} type="button" class="chip-close">
+                                <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                            </button>
+                        </div>
+                    {/each}
+                </div>
+
+                <!-- --------------------------------------------------------------------------- -->
+                <!--  Blocking Tasks  -->
+                <!-- --------------------------------------------------------------------------- -->
+                <label for="start" class="accesskey-first">Blocking</label>
+                <!-- svelte-ignore a11y-accesskey -->
                 <input
-                    bind:this={waitingOnRef}
-                    bind:value={waitingOnSearch}
-                    on:keydown={(e) => taskKeydown(e, "waitingOn")}
-                    on:focus={onWaitingFocused}
-                    on:blur={onWaitingBlur}
-                    accesskey={accesskey("w")}
-                    id="waitingOn"
+                    bind:this={blockingRef}
+                    bind:value={blockingSearch}
+                    on:keydown={(e) => taskKeydown(e, "blocking")}
+                    on:focus={onBlockingFocused}
+                    on:blur={onBlockingBlur}
+                    accesskey={accesskey("b")}
+                    id="blocking"
                     type="text"
                     placeholder="Type to search..."
                 />
-            </span>
-            {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
-                <ul class="suggested-tasks"
-                    bind:this={waitingOnContent}
-                    on:mouseenter={() => cursorInsideWaitingOn = true}
-                    on:mouseleave={onCursorLeftWaiting}>
-                    {#each waitingOnSearchResults as searchTask, index}
-                        <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <li on:click={() => addWaitingOnTask(searchTask)}
-                            class:selected={waitingOnSearchIndex !== null && index === waitingOnSearchIndex}
-                            on:mouseenter={() => waitingOnSearchIndex = index}
-                        >
-                            <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
-                            <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
-                        </li>
+                {#if blockingSearchResults && blockingSearchResults.length !== 0}
+                    <ul class="suggested-tasks"
+                        bind:this={blockingContent}
+                        on:mouseenter={() => cursorInsideBlocking = true}
+                        on:mouseleave={onCursorLeftBlocking}>
+                        {#each blockingSearchResults as searchTask, index}
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <li on:click={() => addBlockingTask(searchTask)}
+                                class:selected={blockingSearch !== null && index === blockingSearchIndex}
+                                on:mouseenter={() => blockingSearchIndex = index}>
+                                <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
+                                <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
+                            </li>
+                        {/each}
+                    </ul>
+                {/if}
+                <div class="chip-container">
+                    {#each editableTask.blocking as task, idx}
+                        <div class="chip"
+                             bind:this={blockingChips[idx]}
+                             on:mouseenter={() => showDescriptionTooltip(blockingChips[idx], task)}>
+                            <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
+
+                            <button on:click={() => removeBlockingTask(task)} type="button" class="chip-close">
+                                <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                            </button>
+                        </div>
                     {/each}
-                </ul>
+                </div>
+            {:else}
+                <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
             {/if}
-            <div class="chip-container" >
-                {#each editableTask.waitingOn as task, idx}
-                    <div class="chip"
-                         bind:this={waitingOnChips[idx]}
-                         on:mouseenter={() => showDescriptionTooltip(waitingOnChips[idx], task)}>
-                        <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
-
-                        <button on:click={() => removeWaitingOnTask(task)} type="button" class="chip-close">
-                            <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                        </button>
-                    </div>
-                {/each}
-            </div>
-
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Blocking Tasks  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <label for="start" class="accesskey-first">Blocking</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:this={blockingRef}
-                bind:value={blockingSearch}
-                on:keydown={(e) => taskKeydown(e, "blocking")}
-                on:focus={onBlockingFocused}
-                on:blur={onBlockingBlur}
-                accesskey={accesskey("b")}
-                id="blocking"
-                type="text"
-                placeholder="Type to search..."
-            />
-            {#if blockingSearchResults && blockingSearchResults.length !== 0}
-                <ul class="suggested-tasks"
-                    bind:this={blockingContent}
-                    on:mouseenter={() => cursorInsideBlocking = true}
-                    on:mouseleave={onCursorLeftBlocking}>
-                    {#each blockingSearchResults as searchTask, index}
-                        <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <li on:click={() => addBlockingTask(searchTask)}
-                            class:selected={blockingSearch !== null && index === blockingSearchIndex}
-                            on:mouseenter={() => blockingSearchIndex = index}>
-                            <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
-                            <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
-                        </li>
-                    {/each}
-                </ul>
-            {/if}
-            <div class="chip-container">
-                {#each editableTask.blocking as task, idx}
-                    <div class="chip"
-                         bind:this={blockingChips[idx]}
-                         on:mouseenter={() => showDescriptionTooltip(blockingChips[idx], task)}>
-                        <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
-
-                        <button on:click={() => removeBlockingTask(task)} type="button" class="chip-close">
-                            <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                        </button>
-                    </div>
-                {/each}
-            </div>
         </div>
 
         <!-- --------------------------------------------------------------------------- -->
