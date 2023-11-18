@@ -8,7 +8,7 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
-    import {computePosition, flip, offset, shift, size} from "@floating-ui/dom";
+    import { computePosition, flip, offset, shift, size } from "@floating-ui/dom";
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../TaskDependency";
     import { replaceTaskWithTasks } from "../File";
 
@@ -725,10 +725,11 @@
                 id="recurrence"
                 type="text"
                 class:tasks-modal-error={!isRecurrenceValid}
+                class="input"
                 placeholder="Try 'every 2 weeks on Thursday'."
                 accesskey={accesskey("r")}
             />
-            <code>{recurrenceSymbol} {@html parsedRecurrence}</code>
+            <code class="results">{recurrenceSymbol} {@html parsedRecurrence}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Due Date  -->
@@ -739,11 +740,12 @@
                 bind:value={editableTask.dueDate}
                 id="due"
                 type="text"
+                class="input"
                 class:tasks-modal-error={!isDueDateValid}
                 placeholder={datePlaceholder}
                 accesskey={accesskey("d")}
             />
-            <code>{dueDateSymbol} {@html parsedDueDate}</code>
+            <code class="results">{dueDateSymbol} {@html parsedDueDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Scheduled Date  -->
@@ -755,10 +757,11 @@
                 id="scheduled"
                 type="text"
                 class:tasks-modal-error={!isScheduledDateValid}
+                class="input"
                 placeholder={datePlaceholder}
                 accesskey={accesskey("s")}
             />
-            <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
+            <code class="results">{scheduledDateSymbol} {@html parsedScheduledDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Start Date  -->
@@ -770,10 +773,11 @@
                 id="start"
                 type="text"
                 class:tasks-modal-error={!isStartDateValid}
+                class="input"
                 placeholder={datePlaceholder}
                 accesskey={accesskey("a")}
             />
-            <code>{startDateSymbol} {@html parsedStartDate}</code>
+            <code class="results">{startDateSymbol} {@html parsedStartDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Only future dates  -->
@@ -786,7 +790,7 @@
                     bind:checked={editableTask.forwardOnly}
                     id="forwardOnly"
                     type="checkbox"
-                    class="task-list-item-checkbox tasks-modal-checkbox"
+                    class="input task-list-item-checkbox tasks-modal-checkbox"
                     accesskey={accesskey("f")}
                 />
             </div>
@@ -797,7 +801,7 @@
                 <!-- --------------------------------------------------------------------------- -->
                 <label for="start" class="accesskey-first">Waiting On</label>
                 <!-- svelte-ignore a11y-accesskey -->
-                <span bind:clientWidth={waitingInputWidth}>
+                <span class="input" bind:clientWidth={waitingInputWidth}>
                     <input
                         bind:this={waitingOnRef}
                         bind:value={waitingOnSearch}
@@ -826,7 +830,7 @@
                         {/each}
                     </ul>
                 {/if}
-                <div class="chip-container" >
+                <div class="chip-container results">
                     {#each editableTask.waitingOn as task, idx}
                         <div class="chip"
                              bind:this={waitingOnChips[idx]}
@@ -853,6 +857,7 @@
                     on:blur={() => blockingFocused = false}
                     accesskey={accesskey("b")}
                     id="blocking"
+                    class="input"
                     type="text"
                     placeholder="Type to search..."
                 />

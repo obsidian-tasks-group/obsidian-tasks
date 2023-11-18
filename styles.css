@@ -185,12 +185,12 @@
     margin-top: 6px;
 }
 
-.tasks-modal-dates > input, .tasks-modal-dates > code {
+.tasks-modal-dates > .input, .tasks-modal-dates > .results {
     grid-column: 2;
     align-items: stretch;
 }
 
-.tasks-modal-dates > code {
+.tasks-modal-dates > .results {
     margin-bottom: 5px;
 }
 
@@ -227,8 +227,8 @@
     .tasks-modal-dates > label {
         margin: 0;
     }
-    .tasks-modal-dates > input, .tasks-modal-dates > code {
-        /*grid-column: 1;*/
+    .tasks-modal-dates > .input, .tasks-modal-dates > .results {
+        grid-column: 1;
     }
     .tasks-modal-dates > div {
         grid-column-end: 1;
@@ -260,9 +260,6 @@
 /* Dependency Styles */
 
 .chip-container {
-    /*margin: 4px;*/
-
-    grid-column: 2 !important;
     padding-bottom: 4px;
     padding-top: 4px;
     display: flex;
