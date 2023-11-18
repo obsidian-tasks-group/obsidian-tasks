@@ -326,31 +326,6 @@
         }
     }
 
-    let cursorInsideWaitingOn = false;
-    let cursorInsideBlocking = false;
-
-    function onCursorLeftWaiting() {
-        cursorInsideWaitingOn = false;
-        waitingOnSearchIndex = null;
-    }
-
-    function onCursorLeftBlocking() {
-        cursorInsideBlocking = false;
-        waitingOnSearchIndex = null;
-    }
-
-    function onWaitingBlur() {
-        if (cursorInsideWaitingOn) return;
-
-        waitingOnFocused = false;
-    }
-
-    function onBlockingBlur() {
-        if (cursorInsideBlocking) return;
-
-        blockingFocused = false;
-    }
-
     function onWaitingFocused() {
         waitingOnFocused = true;
         displayResultsIfSearchEmpty = true;
@@ -828,7 +803,7 @@
                         bind:value={waitingOnSearch}
                         on:keydown={(e) => taskKeydown(e, "waitingOn")}
                         on:focus={onWaitingFocused}
-                        on:blur={onWaitingBlur}
+                        on:blur={() => waitingOnFocused = false}
                         accesskey={accesskey("w")}
                         id="waitingOn"
                         type="text"
@@ -838,11 +813,10 @@
                 {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
                     <ul class="suggested-tasks"
                         bind:this={waitingOnContent}
-                        on:mouseenter={() => cursorInsideWaitingOn = true}
-                        on:mouseleave={onCursorLeftWaiting}>
+                        on:mouseleave={() => waitingOnSearchIndex = null}>
                         {#each waitingOnSearchResults as searchTask, index}
                             <!-- svelte-ignore a11y-click-events-have-key-events -->
-                            <li on:click={() => addWaitingOnTask(searchTask)}
+                            <li on:mousedown={() => addWaitingOnTask(searchTask)}
                                 class:selected={waitingOnSearchIndex !== null && index === waitingOnSearchIndex}
                                 on:mouseenter={() => waitingOnSearchIndex = index}
                             >
@@ -876,7 +850,7 @@
                     bind:value={blockingSearch}
                     on:keydown={(e) => taskKeydown(e, "blocking")}
                     on:focus={onBlockingFocused}
-                    on:blur={onBlockingBlur}
+                    on:blur={() => blockingFocused = false}
                     accesskey={accesskey("b")}
                     id="blocking"
                     type="text"
@@ -885,11 +859,10 @@
                 {#if blockingSearchResults && blockingSearchResults.length !== 0}
                     <ul class="suggested-tasks"
                         bind:this={blockingContent}
-                        on:mouseenter={() => cursorInsideBlocking = true}
-                        on:mouseleave={onCursorLeftBlocking}>
+                        on:mouseleave={() => blockingSearchIndex = null}>
                         {#each blockingSearchResults as searchTask, index}
                             <!-- svelte-ignore a11y-click-events-have-key-events -->
-                            <li on:click={() => addBlockingTask(searchTask)}
+                            <li on:mousedown={() => addBlockingTask(searchTask)}
                                 class:selected={blockingSearch !== null && index === blockingSearchIndex}
                                 on:mouseenter={() => blockingSearchIndex = index}>
                                 <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
