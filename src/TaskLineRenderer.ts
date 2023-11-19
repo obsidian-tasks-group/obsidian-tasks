@@ -32,8 +32,7 @@ export class FieldLayoutDetail {
     };
 
     /**
-     * @param className CSS class that describes what the component is, e.g. a due date or a priority,
-     * and is a value from FieldLayouts.
+     * @param className CSS class that describes what the component is, e.g. a due date or a priority.
      *
      * @param attributeName if the component needs data attribute (`data-key="value"`) this is the key.
      * Otherwise, set this to {@link FieldLayoutDetail.noAttributeName}.
