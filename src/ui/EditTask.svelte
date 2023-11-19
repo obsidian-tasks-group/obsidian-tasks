@@ -38,7 +38,7 @@
         dueDate: string;
         doneDate: string;
         forwardOnly: boolean;
-        waitingOn: Task[];
+        blockedBy: Task[];
         blocking: Task[];
     } = {
         description: '',
@@ -51,7 +51,7 @@
         dueDate: '',
         doneDate: '',
         forwardOnly: true,
-        waitingOn: [],
+        blockedBy: [],
         blocking: []
     };
 
@@ -70,9 +70,9 @@
     let withAccessKeys: boolean = true;
     let formIsValid: boolean = true;
 
-    let waitingOnSearch: string = '';
-    let waitingOnSearchResults: Task[] | null = null;
-    let waitingOnSearchIndex: number | null = 0;
+    let blockedBySearch: string = '';
+    let blockedBySearchResults: Task[] | null = null;
+    let blockedBySearchIndex: number | null = 0;
 
     let originalBlocking: Task[] = [];
 
@@ -82,7 +82,7 @@
 
     let displayResultsIfSearchEmpty = false;
 
-    let waitingOnFocused = false;
+    let blockedByFocused = false;
     let blockingFocused = false;
 
     // 'weekend' abbreviation omitted due to lack of space.
@@ -203,14 +203,14 @@
         return date;
     }
 
-    function addWaitingOnTask(task: Task) {
-        editableTask.waitingOn = [...editableTask.waitingOn, task];
-        waitingOnSearch = '';
-        waitingOnFocused = false;
+    function addBlockedByTask(task: Task) {
+        editableTask.blockedBy = [...editableTask.blockedBy, task];
+        blockedBySearch = '';
+        blockedByFocused = false;
     }
 
-    function removeWaitingOnTask(task: Task) {
-        editableTask.waitingOn = editableTask.waitingOn.filter(item => item !== task)
+    function removeBlockedByTask(task: Task) {
+        editableTask.blockedBy = editableTask.blockedBy.filter(item => item !== task)
     }
 
     function addBlockingTask(task: Task) {
@@ -250,7 +250,7 @@
                 item.taskLocation.path === task.taskLocation.path &&
                 item.originalMarkdown === task.originalMarkdown
 
-            return ![...editableTask.waitingOn, ...editableTask.blocking].includes(item) && !sameFile;
+            return ![...editableTask.blockedBy, ...editableTask.blocking].includes(item) && !sameFile;
         });
 
         // search results favour tasks from the same file as this task
@@ -274,9 +274,9 @@
         return results.slice(0,5);
     }
 
-    function taskKeydown(e: KeyboardEvent, field: "waitingOn" | "blocking") {
-        const resultsList = field === "waitingOn" ? waitingOnSearchResults : blockingSearchResults;
-        let searchIndex = field === "waitingOn" ? waitingOnSearchIndex : blockingSearchIndex;
+    function taskKeydown(e: KeyboardEvent, field: "blockedBy" | "blocking") {
+        const resultsList = field === "blockedBy" ? blockedBySearchResults : blockingSearchResults;
+        let searchIndex = field === "blockedBy" ? blockedBySearchIndex : blockingSearchIndex;
 
         if (resultsList === null) return;
 
@@ -300,10 +300,10 @@
             case "Enter":
                 if (searchIndex !== null) {
                     e.preventDefault();
-                    if (field === "waitingOn") {
-                        addWaitingOnTask(resultsList[searchIndex]);
+                    if (field === "blockedBy") {
+                        addBlockedByTask(resultsList[searchIndex]);
                         searchIndex = null;
-                        waitingOnFocused = false
+                        blockedByFocused = false
                     }
                     else {
                         addBlockingTask(resultsList[searchIndex]);
@@ -319,15 +319,15 @@
                 break;
         }
 
-        if (field === "waitingOn") {
-            waitingOnSearchIndex = searchIndex;
+        if (field === "blockedBy") {
+            blockedBySearchIndex = searchIndex;
         } else {
             blockingSearchIndex = searchIndex;
         }
     }
 
-    function onWaitingFocused() {
-        waitingOnFocused = true;
+    function onBlockedByFocused() {
+        blockedByFocused = true;
         displayResultsIfSearchEmpty = true;
     }
 
@@ -388,7 +388,7 @@
     }
 
     $: {
-        waitingOnSearchResults = waitingOnFocused ? generateSearchResults(waitingOnSearch) : null;
+        blockedBySearchResults = blockedByFocused ? generateSearchResults(blockedBySearch) : null;
     }
 
     $: {
@@ -396,28 +396,28 @@
     }
 
 
-    let waitingInputWidth: number;
-    let waitingOnRef: HTMLElement;
-    let waitingOnContent: HTMLElement;
+    let depInputWidth: number;
+    let blockedByRef: HTMLElement;
+    let blockedByContent: HTMLElement;
 
     $: {
-        if (waitingOnRef && waitingOnContent) {
-            computePosition(waitingOnRef, waitingOnContent, {
+        if (blockedByRef && blockedByContent) {
+            computePosition(blockedByRef, blockedByContent, {
                 middleware: [
                     offset(6),
                     shift(),
                     flip(),
                     size({
                         apply() {
-                            waitingOnContent && Object.assign(waitingOnContent.style, {
-                                width: `${waitingInputWidth}px`,
+                            blockedByContent && Object.assign(blockedByContent.style, {
+                                width: `${depInputWidth}px`,
                             });
                         },
                     })
 
                 ]
             }).then(({x, y}) => {
-                Object.assign(waitingOnContent.style, {
+                Object.assign(blockedByContent.style, {
                     left: `${x}px`,
                     top: `${y}px`,
                 });
@@ -438,7 +438,7 @@
                     size({
                         apply() {
                             blockingContent && Object.assign(blockingContent.style, {
-                                width: `${waitingInputWidth}px`,
+                                width: `${depInputWidth}px`,
                             });
                         },
                     })
@@ -453,7 +453,7 @@
         }
     }
 
-    let waitingOnChips: HTMLElement[] = [];
+    let blockedByChips: HTMLElement[] = [];
     let blockingChips: HTMLElement[] = [];
 
     function showDescriptionTooltip(element: HTMLElement, task: Task) {
@@ -502,14 +502,14 @@
             priority = 'highest';
         }
 
-        const waitingOn: Task[] = [];
+        const blockedBy: Task[] = [];
 
         for (const taskId of task.dependsOn) {
             const depTask = allTasks.find(cacheTask => cacheTask.id === taskId);
 
             if (!depTask) continue;
 
-            waitingOn.push(depTask);
+            blockedBy.push(depTask);
         }
 
         originalBlocking = allTasks.filter(cacheTask => cacheTask.dependsOn.includes(task.id));
@@ -525,7 +525,7 @@
             dueDate: new TasksDate(task.dueDate).formatAsDate(),
             doneDate: new TasksDate(task.doneDate).formatAsDate(),
             forwardOnly: true,
-            waitingOn,
+            blockedBy: blockedBy,
             blocking: originalBlocking
         };
         setTimeout(() => {
@@ -612,11 +612,11 @@
                 parsedPriority = Priority.None;
         }
 
-        let waitingOnWithIds = [];
+        let blockedByWithIds = [];
 
-        for (const depTask of editableTask.waitingOn) {
+        for (const depTask of editableTask.blockedBy) {
             const newDep = await serialiseTaskId(depTask);
-            waitingOnWithIds.push(newDep);
+            blockedByWithIds.push(newDep);
         }
 
         let id = task.id;
@@ -647,7 +647,7 @@
                 .isValid()
                 ? window.moment(editableTask.doneDate, 'YYYY-MM-DD')
                 : null,
-            dependsOn: waitingOnWithIds.map(task => task.id),
+            dependsOn: blockedByWithIds.map(task => task.id),
             id
         });
 
@@ -797,32 +797,32 @@
 
             {#if allTasks.length > 0}
                 <!-- --------------------------------------------------------------------------- -->
-                <!--  Waiting on Tasks  -->
+                <!--  Blocked By Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
-                <label for="start" class="accesskey-first">Waiting On</label>
+                <label for="start">Blocked B<span class="accesskey">y</span></label>
                 <!-- svelte-ignore a11y-accesskey -->
-                <span class="input" bind:clientWidth={waitingInputWidth}>
+                <span class="input" bind:clientWidth={depInputWidth}>
                     <input
-                        bind:this={waitingOnRef}
-                        bind:value={waitingOnSearch}
-                        on:keydown={(e) => taskKeydown(e, "waitingOn")}
-                        on:focus={onWaitingFocused}
-                        on:blur={() => waitingOnFocused = false}
-                        accesskey={accesskey("w")}
-                        id="waitingOn"
+                        bind:this={blockedByRef}
+                        bind:value={blockedBySearch}
+                        on:keydown={(e) => taskKeydown(e, "blockedBy")}
+                        on:focus={onBlockedByFocused}
+                        on:blur={() => blockedByFocused = false}
+                        accesskey={accesskey("y")}
+                        id="blockedBy"
                         type="text"
                         placeholder="Type to search..."
                     />
                 </span>
-                {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
+                {#if blockedBySearchResults && blockedBySearchResults.length !== 0}
                     <ul class="suggested-tasks"
-                        bind:this={waitingOnContent}
-                        on:mouseleave={() => waitingOnSearchIndex = null}>
-                        {#each waitingOnSearchResults as searchTask, index}
+                        bind:this={blockedByContent}
+                        on:mouseleave={() => blockedBySearchIndex = null}>
+                        {#each blockedBySearchResults as searchTask, index}
                             <!-- svelte-ignore a11y-click-events-have-key-events -->
-                            <li on:mousedown={() => addWaitingOnTask(searchTask)}
-                                class:selected={waitingOnSearchIndex !== null && index === waitingOnSearchIndex}
-                                on:mouseenter={() => waitingOnSearchIndex = index}
+                            <li on:mousedown={() => addBlockedByTask(searchTask)}
+                                class:selected={blockedBySearchIndex !== null && index === blockedBySearchIndex}
+                                on:mouseenter={() => blockedBySearchIndex = index}
                             >
                                 <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
                                 <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
@@ -831,13 +831,13 @@
                     </ul>
                 {/if}
                 <div class="chip-container results">
-                    {#each editableTask.waitingOn as task, idx}
+                    {#each editableTask.blockedBy as task, idx}
                         <div class="chip"
-                             bind:this={waitingOnChips[idx]}
-                             on:mouseenter={() => showDescriptionTooltip(waitingOnChips[idx], task)}>
+                             bind:this={blockedByChips[idx]}
+                             on:mouseenter={() => showDescriptionTooltip(blockedByChips[idx], task)}>
                             <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
 
-                            <button on:click={() => removeWaitingOnTask(task)} type="button" class="chip-close">
+                            <button on:click={() => removeBlockedByTask(task)} type="button" class="chip-close">
                                 <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                             </button>
                         </div>
