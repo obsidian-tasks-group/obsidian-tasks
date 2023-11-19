@@ -876,7 +876,7 @@
                         {/each}
                     </ul>
                 {/if}
-                <div class="chip-container">
+                <div class="chip-container results">
                     {#each editableTask.blocking as task, idx}
                         <div class="chip"
                              bind:this={blockingChips[idx]}

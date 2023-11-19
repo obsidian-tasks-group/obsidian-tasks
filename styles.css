@@ -102,7 +102,7 @@
  *------------------------------------------------------------------------**/
 
 .tasks-modal-section + .tasks-modal-section {
-    margin-top: 16px;
+    margin-top: 8px;
 }
 
 .tasks-modal-section label {
