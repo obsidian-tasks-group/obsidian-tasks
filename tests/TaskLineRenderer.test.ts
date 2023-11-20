@@ -10,7 +10,7 @@ import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
-import { FieldLayoutDetail, FieldLayouts, renderTaskLine } from '../src/TaskLineRenderer';
+import { FieldLayoutDetail, FieldLayouts, FieldLayoutsContainer, renderTaskLine } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
@@ -675,6 +675,46 @@ ${task.toFileLineString()}
 
     it('Minimal task - short mode', async () => {
         await renderAndVerifyHTML(minimalTask, layoutOptionsShortMode());
+    });
+});
+
+describe('Field Layouts Container tests', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-11-19'));
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
+    it('should get the data attribute of an existing component (date)', () => {
+        const container = new FieldLayoutsContainer();
+        const task = new TaskBuilder().dueDate('2023-11-20').build();
+
+        const dueDateDataAttribute = container.dataAttribute('dueDate', task);
+
+        expect(Object.keys(dueDateDataAttribute).length).toEqual(1);
+        expect(dueDateDataAttribute['taskDue']).toEqual('future-1d');
+    });
+
+    it('should get the data attribute of an existing component (not date)', () => {
+        const container = new FieldLayoutsContainer();
+        const task = TaskBuilder.createFullyPopulatedTask();
+
+        const dueDateDataAttribute = container.dataAttribute('priority', task);
+
+        expect(Object.keys(dueDateDataAttribute).length).toEqual(1);
+        expect(dueDateDataAttribute['taskPriority']).toEqual('medium');
+    });
+
+    it('should return empty data attributes dictionary for a missing component', () => {
+        const container = new FieldLayoutsContainer();
+        const task = new TaskBuilder().build();
+
+        const dueDateDataAttribute = container.dataAttribute('recurrenceRule', task);
+
+        expect(Object.keys(dueDateDataAttribute).length).toEqual(0);
     });
 });
 
