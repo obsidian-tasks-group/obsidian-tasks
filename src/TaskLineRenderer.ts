@@ -21,6 +21,29 @@ export type TaskLineRenderDetails = {
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
+export class FieldLayoutsContainer {
+    private details = FieldLayoutDetails;
+
+    constructor() {}
+
+    /**
+     * Searches for the component among the {@link FieldLayoutDetails} and gets its data attribute
+     * in a given task. The data attribute shall be added in the task's `<span>`.
+     * For example, a task with medium priority and done yesterday will have
+     * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes.
+     *
+     * If the data attribute is absent in the task, an empty {@link AttributesDictionary} is returned.
+     *
+     * For detailed calculation see {@link FieldLayoutDetail.dataAttribute}.
+     *
+     * @param component the component of the task for which the data attribute has to be generated.
+     * @param task the task from which the data shall be taken
+     */
+    public dataAttribute(component: TaskLayoutComponent, task: Task) {
+        return this.details[component].dataAttribute(component, task);
+    }
+}
+
 export class FieldLayoutDetail {
     readonly className: string;
     readonly attributeName: string;
@@ -56,6 +79,8 @@ export class FieldLayoutDetail {
     }
 
     /**
+     * Shall be called only by {@link FieldLayoutsContainer}. Use that class if you need the data attributes.
+     *
      * @returns the data attribute, associated to with a task's component, added in the task's `<span>`.
      * For example, a task with medium priority and done yesterday will have
      * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes.
@@ -65,7 +90,7 @@ export class FieldLayoutDetail {
      * @param component the component of the task for which the data attribute has to be generated.
      * @param task the task from which the data shall be taken
      */
-    public getDataAttribute(component: TaskLayoutComponent, task: Task) {
+    public dataAttribute(component: TaskLayoutComponent, task: Task) {
         const dataAttribute: AttributesDictionary = {};
 
         if (this.attributeName !== FieldLayoutDetail.noAttributeName) {
@@ -88,7 +113,7 @@ const dateDataAttributeCalculator: AttributeValueCalculator = (component: TaskLa
     return '';
 };
 
-export const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
+export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
     createdDate: new FieldLayoutDetail('task-created', 'taskCreated', dateDataAttributeCalculator),
     dueDate: new FieldLayoutDetail('task-due', 'taskDue', dateDataAttributeCalculator),
     startDate: new FieldLayoutDetail('task-start', 'taskStart', dateDataAttributeCalculator),
@@ -116,6 +141,8 @@ export const FieldLayouts: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
         FieldLayoutDetail.noAttributeValueCalculator,
     ),
 };
+
+const FieldLayouts = new FieldLayoutsContainer();
 
 const MAX_DAY_VALUE_RANGE = 7;
 const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
@@ -239,14 +266,14 @@ async function taskToHtml(
                 addInternalClasses(component, internalSpan);
 
                 // Add the component's CSS class describing what this component is (priority, due date etc.)
-                const fieldLayoutDetails = FieldLayouts[component];
+                const fieldLayoutDetails = FieldLayoutDetails[component];
                 if (fieldLayoutDetails) {
                     const componentClass = [fieldLayoutDetails.className];
                     span.classList.add(...componentClass);
                 }
 
                 // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
-                const componentDataAttribute = FieldLayouts[component].getDataAttribute(component, task);
+                const componentDataAttribute = FieldLayouts.dataAttribute(component, task);
                 for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
                 allAttributes = { ...allAttributes, ...componentDataAttribute };
             }
@@ -255,7 +282,7 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const hiddenComponentDataAttribute = FieldLayouts[component].getDataAttribute(component, task);
+        const hiddenComponentDataAttribute = FieldLayouts.dataAttribute(component, task);
         allAttributes = { ...allAttributes, ...hiddenComponentDataAttribute };
     }
 
@@ -265,7 +292,7 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const priorityDataAttribute = FieldLayouts['priority'].getDataAttribute('priority', task);
+        const priorityDataAttribute = FieldLayouts.dataAttribute('priority', task);
         allAttributes = { ...allAttributes, ...priorityDataAttribute };
     }
 
