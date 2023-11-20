@@ -9,8 +9,6 @@ import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 
-type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
-
 export type AttributesDictionary = { [key: string]: string };
 
 export class FieldLayoutsContainer {
@@ -35,6 +33,8 @@ export class FieldLayoutsContainer {
         return this.details[component].dataAttribute(component, task);
     }
 }
+
+type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
 export class FieldLayoutDetail {
     readonly className: string;
