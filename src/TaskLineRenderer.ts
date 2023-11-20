@@ -34,13 +34,13 @@ export class FieldLayoutsContainer {
      *
      * If the data attribute is absent in the task, an empty {@link AttributesDictionary} is returned.
      *
-     * For detailed calculation see {@link FieldLayoutDetail.getDataAttribute}.
+     * For detailed calculation see {@link FieldLayoutDetail.dataAttribute}.
      *
      * @param component the component of the task for which the data attribute has to be generated.
      * @param task the task from which the data shall be taken
      */
     public dataAttribute(component: TaskLayoutComponent, task: Task) {
-        return this.details[component].getDataAttribute(component, task);
+        return this.details[component].dataAttribute(component, task);
     }
 }
 
@@ -90,7 +90,7 @@ export class FieldLayoutDetail {
      * @param component the component of the task for which the data attribute has to be generated.
      * @param task the task from which the data shall be taken
      */
-    public getDataAttribute(component: TaskLayoutComponent, task: Task) {
+    public dataAttribute(component: TaskLayoutComponent, task: Task) {
         const dataAttribute: AttributesDictionary = {};
 
         if (this.attributeName !== FieldLayoutDetail.noAttributeName) {

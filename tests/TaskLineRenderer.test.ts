@@ -739,7 +739,7 @@ describe('Field Layout Detail tests', () => {
         const fieldLayoutDetail = new FieldLayoutDetail('dataAttributeTest', 'aKey', () => {
             return 'aValue';
         });
-        const dataAttribute = fieldLayoutDetail.getDataAttribute('description', new TaskBuilder().build());
+        const dataAttribute = fieldLayoutDetail.dataAttribute('description', new TaskBuilder().build());
 
         expect(Object.keys(dataAttribute).length).toEqual(1);
         expect(dataAttribute['aKey']).toEqual('aValue');
