@@ -22,7 +22,7 @@ export type TaskLineRenderDetails = {
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
 export class FieldLayoutsContainer {
-    private layouts = FieldLayoutDetails;
+    private details = FieldLayoutDetails;
 
     constructor() {}
 
@@ -40,7 +40,7 @@ export class FieldLayoutsContainer {
      * @param task the task from which the data shall be taken
      */
     public dataAttribute(component: TaskLayoutComponent, task: Task) {
-        return this.layouts[component].getDataAttribute(component, task);
+        return this.details[component].getDataAttribute(component, task);
     }
 }
 
