@@ -44,8 +44,7 @@ async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptio
 
 function getTextSpan(parentElement: HTMLElement) {
     const li = parentElement.children[0];
-    const textSpan = li.children[1] as HTMLSpanElement;
-    return textSpan;
+    return li.children[1] as HTMLSpanElement;
 }
 
 function getDescriptionText(parentElement: HTMLElement) {
@@ -694,5 +693,15 @@ describe('Field Layout Detail tests', () => {
         });
         const attributeValue = fieldLayoutDetail.attributeValueCalculator('createdDate', new TaskBuilder().build());
         expect(attributeValue).toEqual('someValue');
+    });
+
+    it('should return a data attribute', () => {
+        const fieldLayoutDetail = new FieldLayoutDetail('dataAttributeTest', 'aKey', () => {
+            return 'aValue';
+        });
+        const dataAttribute = fieldLayoutDetail.getDataAttribute('description', new TaskBuilder().build());
+
+        expect(Object.keys(dataAttribute).length).toEqual(1);
+        expect(dataAttribute['aKey']).toEqual('aValue');
     });
 });
