@@ -26,6 +26,19 @@ export class FieldLayoutsContainer {
 
     constructor() {}
 
+    /**
+     * Searches for the component among the {@link FieldLayouts} and gets its data attribute
+     * in a given task. The data attribute shall be added in the task's `<span>`.
+     * For example, a task with medium priority and done yesterday will have
+     * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes.
+     *
+     * If the data attribute is absent in the task, an empty {@link AttributesDictionary} is returned.
+     *
+     * For detailed calculation see {@link FieldLayoutDetail.getDataAttribute}.
+     *
+     * @param component the component of the task for which the data attribute has to be generated.
+     * @param task the task from which the data shall be taken
+     */
     public dataAttribute(component: TaskLayoutComponent, task: Task) {
         return this.layouts[component].getDataAttribute(component, task);
     }
