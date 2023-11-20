@@ -140,6 +140,8 @@ export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail
     ),
 };
 
+const FieldLayouts = new FieldLayoutsContainer();
+
 const MAX_DAY_VALUE_RANGE = 7;
 const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
 
@@ -269,7 +271,7 @@ async function taskToHtml(
                 }
 
                 // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
-                const componentDataAttribute = FieldLayoutDetails[component].getDataAttribute(component, task);
+                const componentDataAttribute = FieldLayouts.dataAttribute(component, task);
                 for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
                 allAttributes = { ...allAttributes, ...componentDataAttribute };
             }
@@ -278,7 +280,7 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const hiddenComponentDataAttribute = FieldLayoutDetails[component].getDataAttribute(component, task);
+        const hiddenComponentDataAttribute = FieldLayouts.dataAttribute(component, task);
         allAttributes = { ...allAttributes, ...hiddenComponentDataAttribute };
     }
 
@@ -288,7 +290,7 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const priorityDataAttribute = FieldLayoutDetails['priority'].getDataAttribute('priority', task);
+        const priorityDataAttribute = FieldLayouts.dataAttribute('priority', task);
         allAttributes = { ...allAttributes, ...priorityDataAttribute };
     }
 
