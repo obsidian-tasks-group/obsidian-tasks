@@ -21,6 +21,16 @@ export type TaskLineRenderDetails = {
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
+export class FieldLayoutsContainer {
+    private layouts = FieldLayouts;
+
+    constructor() {}
+
+    public dataAttribute(component: TaskLayoutComponent, task: Task) {
+        return this.layouts[component].getDataAttribute(component, task);
+    }
+}
+
 export class FieldLayoutDetail {
     readonly className: string;
     readonly attributeName: string;
