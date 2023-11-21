@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { FieldLayoutDetail, FieldLayoutsContainer } from '../src/TaskFieldRenderer';
+import { FieldLayoutDetail, FieldLayouts } from '../src/TaskFieldRenderer';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -18,7 +18,7 @@ describe('Field Layouts Container tests', () => {
     });
 
     it('should get the data attribute of an existing component (date)', () => {
-        const container = new FieldLayoutsContainer();
+        const container = new FieldLayouts();
         const task = new TaskBuilder().dueDate('2023-11-20').build();
 
         const dueDateDataAttribute = container.dataAttribute('dueDate', task);
@@ -28,7 +28,7 @@ describe('Field Layouts Container tests', () => {
     });
 
     it('should get the data attribute of an existing component (not date)', () => {
-        const container = new FieldLayoutsContainer();
+        const container = new FieldLayouts();
         const task = TaskBuilder.createFullyPopulatedTask();
 
         const dueDateDataAttribute = container.dataAttribute('priority', task);
@@ -38,7 +38,7 @@ describe('Field Layouts Container tests', () => {
     });
 
     it('should return empty data attributes dictionary for a missing component', () => {
-        const container = new FieldLayoutsContainer();
+        const container = new FieldLayouts();
         const task = new TaskBuilder().build();
 
         const dueDateDataAttribute = container.dataAttribute('recurrenceRule', task);
