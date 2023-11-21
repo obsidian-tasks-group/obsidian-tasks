@@ -5,7 +5,7 @@ import type { TaskLayoutComponent } from './TaskLayout';
 
 export type AttributesDictionary = { [key: string]: string };
 
-export class FieldLayoutsContainer {
+export class FieldLayouts {
     private details = FieldLayoutDetails;
 
     constructor() {}
@@ -101,7 +101,7 @@ export class FieldLayoutDetail {
     }
 
     /**
-     * Shall be called only by {@link FieldLayoutsContainer}. Use that class if you need the data attributes.
+     * Shall be called only by {@link FieldLayouts}. Use that class if you need the data attributes.
      *
      * @returns the data attribute, associated to with a task's component, added in the task's `<span>`.
      * For example, a task with medium priority and done yesterday will have
