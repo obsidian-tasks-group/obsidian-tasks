@@ -227,7 +227,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
             });
-            const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex);
+            const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
 
             // Remove all footnotes. They don't re-appear in another document.
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
