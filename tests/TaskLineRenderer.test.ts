@@ -10,7 +10,12 @@ import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
-import { FieldLayoutDetail, FieldLayoutDetails, FieldLayoutsContainer, renderTaskLine } from '../src/TaskLineRenderer';
+import {
+    FieldLayoutDetail,
+    FieldLayoutDetails,
+    FieldLayoutsContainer,
+    TaskLineRenderer,
+} from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
@@ -29,16 +34,13 @@ async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptio
         mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
             element.innerText = text;
         };
-    await renderTaskLine(
-        task,
-        {
-            parentUlElement: parentElement,
-            listIndex: 0,
-            layoutOptions: layoutOptions,
-            obsidianComponent: null,
-        },
-        mockTextRenderer,
-    );
+    const taskLineRenderer = new TaskLineRenderer({
+        textRenderer: mockTextRenderer,
+        obsidianComponent: null,
+        parentUlElement: parentElement,
+        layoutOptions: layoutOptions ?? new LayoutOptions(),
+    });
+    await taskLineRenderer.renderTaskLine(task, 0);
     return parentElement;
 }
 
