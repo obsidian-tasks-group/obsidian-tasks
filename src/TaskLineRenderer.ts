@@ -9,7 +9,7 @@ import { type AttributesDictionary, FieldLayoutDetails, FieldLayoutsContainer } 
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 
-const FieldLayouts = new FieldLayoutsContainer();
+const fieldLayouts = new FieldLayoutsContainer();
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
@@ -174,7 +174,7 @@ export class TaskLineRenderer {
                     }
 
                     // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
-                    const componentDataAttribute = FieldLayouts.dataAttribute(component, task);
+                    const componentDataAttribute = fieldLayouts.dataAttribute(component, task);
                     for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
                     allAttributes = { ...allAttributes, ...componentDataAttribute };
                 }
@@ -183,7 +183,7 @@ export class TaskLineRenderer {
 
         // Now build classes for the hidden task components without rendering them
         for (const component of taskLayout.hiddenTaskLayoutComponents) {
-            const hiddenComponentDataAttribute = FieldLayouts.dataAttribute(component, task);
+            const hiddenComponentDataAttribute = fieldLayouts.dataAttribute(component, task);
             allAttributes = { ...allAttributes, ...hiddenComponentDataAttribute };
         }
 
@@ -193,7 +193,7 @@ export class TaskLineRenderer {
         // So if the priority was not rendered, force it through the pipe of getting the component data for the
         // priority field.
         if (allAttributes.taskPriority === undefined) {
-            const priorityDataAttribute = FieldLayouts.dataAttribute('priority', task);
+            const priorityDataAttribute = fieldLayouts.dataAttribute('priority', task);
             allAttributes = { ...allAttributes, ...priorityDataAttribute };
         }
 
