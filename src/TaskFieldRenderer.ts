@@ -151,4 +151,3 @@ export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail
         FieldLayoutDetail.noAttributeValueCalculator,
     ),
 };
-export const FieldLayouts = new FieldLayoutsContainer();
