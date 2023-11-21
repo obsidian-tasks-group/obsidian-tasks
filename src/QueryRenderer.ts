@@ -217,15 +217,16 @@ class QueryRenderChild extends MarkdownRenderChild {
         taskList.addClasses(layout.taskListHiddenClasses);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
+
+        const taskLineRenderer = new TaskLineRenderer({
+            textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
+            obsidianComponent: this,
+            parentUlElement: taskList,
+            layoutOptions: this.query.layoutOptions,
+        });
+
         for (const [taskIndex, task] of tasks.entries()) {
             const isFilenameUnique = this.isFilenameUnique({ task });
-
-            const taskLineRenderer = new TaskLineRenderer({
-                textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
-                obsidianComponent: this,
-                parentUlElement: taskList,
-                layoutOptions: this.query.layoutOptions,
-            });
             const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
 
             // Remove all footnotes. They don't re-appear in another document.
