@@ -174,7 +174,6 @@ export class TaskLineRenderer {
     obsidianComponent: Component | null;
     parentUlElement: HTMLElement;
     layoutOptions: LayoutOptions;
-    isFilenameUnique?: boolean;
 
     static async obsidianMarkdownRenderer(
         text: string,
@@ -198,29 +197,22 @@ export class TaskLineRenderer {
      * @param parentUlElement HTML element where the task shall be rendered.
      *
      * @param layoutOptions See {@link LayoutOptions}.
-     *
-     * @param isFilenameUnique Whether the name of the file that contains the task is unique in the vault.
-     * If it is undefined, the outcome will be the same as with a unique file name: the file name only.
-     * If set to `true`, the full path will be returned.
      */
     constructor({
         textRenderer,
         obsidianComponent,
         parentUlElement,
         layoutOptions,
-        isFilenameUnique,
     }: {
         textRenderer: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         layoutOptions: LayoutOptions;
-        isFilenameUnique?: boolean;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
         this.layoutOptions = layoutOptions;
-        this.isFilenameUnique = isFilenameUnique;
     }
 
     /**
@@ -235,8 +227,11 @@ export class TaskLineRenderer {
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
      * @param task The task to be rendered.
      * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
+     * @param isFilenameUnique Whether the name of the file that contains the task is unique in the vault.
+     *                         If it is undefined, the outcome will be the same as with a unique file name:
+     *                         the file name only. If set to `true`, the full path will be returned.
      */
-    public async renderTaskLine(task: Task, taskIndex: number): Promise<HTMLLIElement> {
+    public async renderTaskLine(task: Task, taskIndex: number, isFilenameUnique?: boolean): Promise<HTMLLIElement> {
         const li: HTMLLIElement = document.createElement('li');
         this.parentUlElement.appendChild(li);
 
@@ -289,7 +284,7 @@ export class TaskLineRenderer {
         checkbox.setAttribute('data-line', taskIndex.toString());
 
         if (this.layoutOptions.shortMode) {
-            this.addTooltip(task, textSpan);
+            this.addTooltip(task, textSpan, isFilenameUnique);
         }
 
         return li;
@@ -435,7 +430,7 @@ export class TaskLineRenderer {
         }
     }
 
-    private addTooltip(task: Task, element: HTMLSpanElement) {
+    private addTooltip(task: Task, element: HTMLSpanElement, isFilenameUnique: boolean | undefined) {
         const {
             recurrenceSymbol,
             startDateSymbol,
@@ -478,7 +473,7 @@ export class TaskLineRenderer {
             addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
             addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
 
-            const linkText = task.getLinkText({ isFilenameUnique: this.isFilenameUnique });
+            const linkText = task.getLinkText({ isFilenameUnique });
             if (linkText) {
                 const backlinkDiv = tooltip.createDiv();
                 backlinkDiv.setText(`🔗 ${linkText}`);
