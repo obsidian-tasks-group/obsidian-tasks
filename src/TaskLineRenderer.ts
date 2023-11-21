@@ -174,7 +174,6 @@ export class TaskLineRenderer {
     obsidianComponent: Component | null;
     parentUlElement: HTMLElement;
     layoutOptions: LayoutOptions;
-    isFilenameUnique?: boolean;
 
     static async obsidianMarkdownRenderer(
         text: string,
@@ -198,29 +197,22 @@ export class TaskLineRenderer {
      * @param parentUlElement HTML element where the task shall be rendered.
      *
      * @param layoutOptions See {@link LayoutOptions}.
-     *
-     * @param isFilenameUnique Whether the name of the file that contains the task is unique in the vault.
-     * If it is undefined, the outcome will be the same as with a unique file name: the file name only.
-     * If set to `true`, the full path will be returned.
      */
     constructor({
         textRenderer,
         obsidianComponent,
         parentUlElement,
         layoutOptions,
-        isFilenameUnique,
     }: {
         textRenderer: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         layoutOptions: LayoutOptions;
-        isFilenameUnique?: boolean;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
         this.layoutOptions = layoutOptions;
-        this.isFilenameUnique = isFilenameUnique;
     }
 
     /**
@@ -235,7 +227,9 @@ export class TaskLineRenderer {
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
      * @param task The task to be rendered.
      * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
-     * @param isFilenameUnique
+     * @param isFilenameUnique Whether the name of the file that contains the task is unique in the vault.
+     *                         If it is undefined, the outcome will be the same as with a unique file name:
+     *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine(task: Task, taskIndex: number, isFilenameUnique?: boolean): Promise<HTMLLIElement> {
         const li: HTMLLIElement = document.createElement('li');

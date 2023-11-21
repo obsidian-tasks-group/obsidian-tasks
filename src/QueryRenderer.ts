@@ -225,7 +225,6 @@ class QueryRenderChild extends MarkdownRenderChild {
                 obsidianComponent: this,
                 parentUlElement: taskList,
                 layoutOptions: this.query.layoutOptions,
-                isFilenameUnique,
             });
             const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
 
