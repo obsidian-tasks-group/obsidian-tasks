@@ -478,7 +478,7 @@ export class TaskLineRenderer {
             addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
             addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
 
-            const linkText = task.getLinkText({ isFilenameUnique: isFilenameUnique });
+            const linkText = task.getLinkText({ isFilenameUnique });
             if (linkText) {
                 const backlinkDiv = tooltip.createDiv();
                 backlinkDiv.setText(`🔗 ${linkText}`);
