@@ -8,14 +8,15 @@ import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import { LayoutOptions } from '../src/TaskLayout';
-import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
 import {
+    type AttributesDictionary,
     FieldLayoutDetail,
     FieldLayoutDetails,
     FieldLayoutsContainer,
-    TaskLineRenderer,
-} from '../src/TaskLineRenderer';
+} from '../src/TaskFieldRenderer';
+import { LayoutOptions } from '../src/TaskLayout';
+import type { TextRenderer } from '../src/TaskLineRenderer';
+import { TaskLineRenderer } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
