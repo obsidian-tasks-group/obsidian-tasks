@@ -235,8 +235,9 @@ export class TaskLineRenderer {
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
      * @param task The task to be rendered.
      * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
+     * @param isFilenameUnique
      */
-    public async renderTaskLine(task: Task, taskIndex: number): Promise<HTMLLIElement> {
+    public async renderTaskLine(task: Task, taskIndex: number, isFilenameUnique?: boolean): Promise<HTMLLIElement> {
         const li: HTMLLIElement = document.createElement('li');
         this.parentUlElement.appendChild(li);
 
@@ -289,7 +290,7 @@ export class TaskLineRenderer {
         checkbox.setAttribute('data-line', taskIndex.toString());
 
         if (this.layoutOptions.shortMode) {
-            this.addTooltip(task, textSpan, this.isFilenameUnique);
+            this.addTooltip(task, textSpan, isFilenameUnique);
         }
 
         return li;
