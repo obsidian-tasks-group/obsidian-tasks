@@ -89,16 +89,7 @@ export class TaskLineRenderer {
 
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-        // Maintenance note:
-        //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
-        //  when running tests, and we want the tests to be able to create the full div and span structure,
-        //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
-        //  appendChild() calls.
-        const textSpan = document.createElement('span');
-        li.appendChild(textSpan);
-        textSpan.classList.add('tasks-list-text');
-        const attributes = await this.taskToHtml(task, textSpan);
-        for (const key in attributes) li.dataset[key] = attributes[key];
+        const textSpan = await this.renderTaskText(li, task);
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
         // moving the code, remember to update that reference too.
@@ -140,6 +131,20 @@ export class TaskLineRenderer {
         }
 
         return li;
+    }
+
+    private async renderTaskText(li: HTMLLIElement, task: Task) {
+        // Maintenance note:
+        //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
+        //  when running tests, and we want the tests to be able to create the full div and span structure,
+        //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
+        //  appendChild() calls.
+        const textSpan = document.createElement('span');
+        li.appendChild(textSpan);
+        textSpan.classList.add('tasks-list-text');
+        const attributes = await this.taskToHtml(task, textSpan);
+        for (const key in attributes) li.dataset[key] = attributes[key];
+        return textSpan;
     }
 
     private async taskToHtml(task: Task, parentElement: HTMLElement): Promise<AttributesDictionary> {
