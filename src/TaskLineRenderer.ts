@@ -289,7 +289,7 @@ export class TaskLineRenderer {
         checkbox.setAttribute('data-line', taskIndex.toString());
 
         if (this.layoutOptions.shortMode) {
-            this.addTooltip(task, textSpan);
+            this.addTooltip(task, textSpan, this.isFilenameUnique);
         }
 
         return li;
@@ -435,7 +435,7 @@ export class TaskLineRenderer {
         }
     }
 
-    private addTooltip(task: Task, element: HTMLSpanElement) {
+    private addTooltip(task: Task, element: HTMLSpanElement, isFilenameUnique: boolean | undefined) {
         const {
             recurrenceSymbol,
             startDateSymbol,
@@ -478,7 +478,7 @@ export class TaskLineRenderer {
             addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
             addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
 
-            const linkText = task.getLinkText({ isFilenameUnique: this.isFilenameUnique });
+            const linkText = task.getLinkText({ isFilenameUnique: isFilenameUnique });
             if (linkText) {
                 const backlinkDiv = tooltip.createDiv();
                 backlinkDiv.setText(`🔗 ${linkText}`);
