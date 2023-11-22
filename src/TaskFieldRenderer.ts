@@ -124,9 +124,7 @@ export class TaskFieldHTMLData {
         const dataAttribute: AttributesDictionary = {};
 
         if (this.attributeName !== TaskFieldHTMLData.noAttributeName) {
-            const key = this.attributeName;
-            const value = this.attributeValueCalculator(component, task);
-            element.dataset[key] = value;
+            element.dataset[this.attributeName] = this.attributeValueCalculator(component, task);
         }
 
         return dataAttribute;
