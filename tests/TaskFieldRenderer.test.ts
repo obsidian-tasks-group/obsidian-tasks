@@ -23,28 +23,28 @@ describe('Field Layouts Container tests', () => {
         const task = new TaskBuilder().dueDate('2023-11-20').build();
         const span = document.createElement('span');
 
-        const dueDateDataAttribute = fieldRenderer.dataAttribute('dueDate', task, span);
+        fieldRenderer.dataAttribute('dueDate', task, span);
 
-        expect(Object.keys(dueDateDataAttribute).length).toEqual(1);
-        expect(dueDateDataAttribute['taskDue']).toEqual('future-1d');
+        expect(Object.keys(span.dataset).length).toEqual(1);
+        expect(span.dataset['taskDue']).toEqual('future-1d');
     });
 
     it('should get the data attribute of an existing component (not date)', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const span = document.createElement('span');
 
-        const dueDateDataAttribute = fieldRenderer.dataAttribute('priority', task, span);
+        fieldRenderer.dataAttribute('priority', task, span);
 
-        expect(Object.keys(dueDateDataAttribute).length).toEqual(1);
-        expect(dueDateDataAttribute['taskPriority']).toEqual('medium');
+        expect(Object.keys(span.dataset).length).toEqual(1);
+        expect(span.dataset['taskPriority']).toEqual('medium');
     });
     it('should return empty data attributes dictionary for a missing component', () => {
         const task = new TaskBuilder().build();
         const span = document.createElement('span');
 
-        const dueDateDataAttribute = fieldRenderer.dataAttribute('recurrenceRule', task, span);
+        fieldRenderer.dataAttribute('recurrenceRule', task, span);
 
-        expect(Object.keys(dueDateDataAttribute).length).toEqual(0);
+        expect(Object.keys(span.dataset).length).toEqual(0);
     });
 });
 
