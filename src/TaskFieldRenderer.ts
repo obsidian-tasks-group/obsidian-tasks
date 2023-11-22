@@ -121,13 +121,9 @@ export class TaskFieldHTMLData {
      * @param element
      */
     public dataAttribute(component: TaskLayoutComponent, task: Task, element: HTMLElement) {
-        const dataAttribute: AttributesDictionary = {};
-
         if (this.attributeName !== TaskFieldHTMLData.noAttributeName) {
             element.dataset[this.attributeName] = this.attributeValueCalculator(component, task);
         }
-
-        return dataAttribute;
     }
 }
 
