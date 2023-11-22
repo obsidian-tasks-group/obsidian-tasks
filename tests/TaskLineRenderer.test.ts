@@ -8,7 +8,7 @@ import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import { type AttributesDictionary, FieldLayoutDetails, FieldLayouts } from '../src/TaskFieldRenderer';
+import { type AttributesDictionary, FieldLayouts } from '../src/TaskFieldRenderer';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { TextRenderer } from '../src/TaskLineRenderer';
 import { TaskLineRenderer } from '../src/TaskLineRenderer';
@@ -59,7 +59,7 @@ function getOtherLayoutComponents(parentElement: HTMLElement): string[] {
     const textSpan = getTextSpan(parentElement);
     const components: string[] = [];
     for (const childSpan of Array.from(textSpan.children)) {
-        if (childSpan.classList.contains(FieldLayoutDetails.description.className)) continue;
+        if (childSpan.classList.contains(fieldLayouts.className('description'))) continue;
         if (childSpan?.textContent) components.push(childSpan.textContent);
     }
     return components;
