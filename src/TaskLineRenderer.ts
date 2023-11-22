@@ -141,7 +141,7 @@ export class TaskLineRenderer {
         return li;
     }
 
-    private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<AttributesDictionary> {
+    private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
         let allAttributes: AttributesDictionary = {};
         const taskLayout = new TaskLayout(this.layoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
@@ -194,8 +194,6 @@ export class TaskLineRenderer {
         }
 
         for (const key in allAttributes) li.dataset[key] = allAttributes[key];
-
-        return allAttributes;
     }
 
     /*
