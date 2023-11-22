@@ -58,7 +58,7 @@ This task has an illegal due date:
 
 The following tasks block lists any tasks with invalid dates, meaning data that has potentially not been interpreted by Tasks.
 
-<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED if the new query is for a new date field -->
 
 ````text
 ```tasks

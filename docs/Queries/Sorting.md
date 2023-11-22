@@ -4,7 +4,7 @@ publish: true
 
 # Sorting
 
-<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
 
 ## Contents
 

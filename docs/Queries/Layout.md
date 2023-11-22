@@ -11,7 +11,7 @@ together with the name of the element.
 
 The following elements exist:
 
-<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
 
 - `edit button`
 - `backlink`
