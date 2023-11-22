@@ -20,8 +20,9 @@ export class TaskFieldRenderer {
      *
      * @param component the component of the task for which the data attribute has to be generated.
      * @param task the task from which the data shall be taken
+     * @param _element
      */
-    public dataAttribute(component: TaskLayoutComponent, task: Task) {
+    public dataAttribute(component: TaskLayoutComponent, task: Task, _element: HTMLElement) {
         return this.data[component].dataAttribute(component, task);
     }
 
