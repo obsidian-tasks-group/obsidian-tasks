@@ -5,7 +5,7 @@ import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
 import type { Task } from './Task';
 import * as taskModule from './Task';
-import { type AttributesDictionary, FieldLayoutDetails, FieldLayouts } from './TaskFieldRenderer';
+import { FieldLayoutDetails, FieldLayouts } from './TaskFieldRenderer';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 
@@ -143,7 +143,6 @@ export class TaskLineRenderer {
         li.appendChild(textSpan);
         textSpan.classList.add('tasks-list-text');
 
-        let taskAttributes: AttributesDictionary = {};
         const taskLayout = new TaskLayout(this.layoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
@@ -175,14 +174,14 @@ export class TaskLineRenderer {
                 // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
                 const componentDataAttribute = fieldLayouts.dataAttribute(component, task);
                 for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
-                taskAttributes = { ...taskAttributes, ...componentDataAttribute };
+                for (const key in componentDataAttribute) li.dataset[key] = componentDataAttribute[key];
             }
         }
 
         // Now build classes for the hidden task components without rendering them
         for (const component of taskLayout.hiddenTaskLayoutComponents) {
             const hiddenComponentDataAttribute = fieldLayouts.dataAttribute(component, task);
-            taskAttributes = { ...taskAttributes, ...hiddenComponentDataAttribute };
+            for (const key in hiddenComponentDataAttribute) li.dataset[key] = hiddenComponentDataAttribute[key];
         }
 
         // If a task has no priority field set, its priority will not be rendered as part of the loop above and
@@ -190,12 +189,11 @@ export class TaskLineRenderer {
         // In such a case we want the upper task LI element to mark the task has a 'normal' priority.
         // So if the priority was not rendered, force it through the pipe of getting the component data for the
         // priority field.
-        if (taskAttributes.taskPriority === undefined) {
+        if (li.dataset.taskPriority === undefined) {
             const priorityDataAttribute = fieldLayouts.dataAttribute('priority', task);
-            taskAttributes = { ...taskAttributes, ...priorityDataAttribute };
+            for (const key in priorityDataAttribute) li.dataset[key] = priorityDataAttribute[key];
         }
 
-        for (const key in taskAttributes) li.dataset[key] = taskAttributes[key];
         return textSpan;
     }
 
