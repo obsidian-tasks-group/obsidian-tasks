@@ -219,7 +219,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
         const taskLineRenderer = new TaskLineRenderer({
-            textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
             obsidianComponent: this,
             parentUlElement: taskList,
             layoutOptions: this.query.layoutOptions,

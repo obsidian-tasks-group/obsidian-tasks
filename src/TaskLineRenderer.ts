@@ -5,7 +5,7 @@ import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
 import type { Task } from './Task';
 import * as taskModule from './Task';
-import { type AttributesDictionary, FieldLayoutDetails, FieldLayouts } from './TaskFieldRenderer';
+import { type AttributesDictionary, FieldLayouts } from './TaskFieldRenderer';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 
@@ -22,12 +22,12 @@ export type TextRenderer = (
 ) => Promise<void>;
 
 export class TaskLineRenderer {
-    textRenderer: TextRenderer;
-    obsidianComponent: Component | null;
-    parentUlElement: HTMLElement;
-    layoutOptions: LayoutOptions;
+    private readonly textRenderer: TextRenderer;
+    private readonly obsidianComponent: Component | null;
+    private readonly parentUlElement: HTMLElement;
+    private readonly layoutOptions: LayoutOptions;
 
-    static async obsidianMarkdownRenderer(
+    private static async obsidianMarkdownRenderer(
         text: string,
         element: HTMLSpanElement,
         path: string,
@@ -40,23 +40,23 @@ export class TaskLineRenderer {
     /**
      * Builds a renderer for tasks with various options.
      *
-     * @param textRenderer The renderer to be used. For live/prod rendering use {@link TaskLineRenderer.obsidianMarkdownRenderer}.
+     * @param textRenderer The optional renderer to be used. Skip this parameter for Obsidian rendering.
      * For test purposes mock renderers shall be used.
      *
      * @param obsidianComponent One of the parameters needed by `MarkdownRenderer.renderMarkdown()` Obsidian API,
-     * that is called by {@link TaskLineRenderer.obsidianMarkdownRenderer}.
+     * that is called by the Obsidian renderer. Set this to null in test code.
      *
      * @param parentUlElement HTML element where the task shall be rendered.
      *
      * @param layoutOptions See {@link LayoutOptions}.
      */
     constructor({
-        textRenderer,
+        textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
         obsidianComponent,
         parentUlElement,
         layoutOptions,
     }: {
-        textRenderer: TextRenderer;
+        textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         layoutOptions: LayoutOptions;
@@ -167,11 +167,8 @@ export class TaskLineRenderer {
                     this.addInternalClasses(component, internalSpan);
 
                     // Add the component's CSS class describing what this component is (priority, due date etc.)
-                    const fieldLayoutDetails = FieldLayoutDetails[component];
-                    if (fieldLayoutDetails) {
-                        const componentClass = [fieldLayoutDetails.className];
-                        span.classList.add(...componentClass);
-                    }
+                    const componentClass = fieldLayouts.className(component);
+                    span.classList.add(...[componentClass]);
 
                     // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
                     const componentDataAttribute = fieldLayouts.dataAttribute(component, task);
