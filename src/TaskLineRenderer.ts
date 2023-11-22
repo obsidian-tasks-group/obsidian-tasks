@@ -168,10 +168,7 @@ export class TaskLineRenderer {
 
                     // Add the component's CSS class describing what this component is (priority, due date etc.)
                     const componentClass = fieldLayouts.className(component);
-                    if (componentClass !== '') {
-                        // DOMTokenList.add() fails if the input is an empty string
-                        span.classList.add(...[componentClass]);
-                    }
+                    span.classList.add(...[componentClass]);
 
                     // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
                     const componentDataAttribute = fieldLayouts.dataAttribute(component, task);
