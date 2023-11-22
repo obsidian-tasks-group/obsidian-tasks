@@ -22,10 +22,10 @@ export type TextRenderer = (
 ) => Promise<void>;
 
 export class TaskLineRenderer {
-    textRenderer: TextRenderer;
-    obsidianComponent: Component | null;
-    parentUlElement: HTMLElement;
-    layoutOptions: LayoutOptions;
+    private readonly textRenderer: TextRenderer;
+    private readonly obsidianComponent: Component | null;
+    private readonly parentUlElement: HTMLElement;
+    private readonly layoutOptions: LayoutOptions;
 
     private static async obsidianMarkdownRenderer(
         text: string,
