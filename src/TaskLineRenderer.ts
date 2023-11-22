@@ -147,7 +147,7 @@ export class TaskLineRenderer {
         return textSpan;
     }
 
-    private async taskToHtml(task: Task, parentElement: HTMLElement): Promise<AttributesDictionary> {
+    private async taskToHtml(task: Task, textSpan: HTMLElement): Promise<AttributesDictionary> {
         let taskAttributes: AttributesDictionary = {};
         const taskLayout = new TaskLayout(this.layoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
@@ -160,7 +160,7 @@ export class TaskLineRenderer {
                 }
                 // Create the text span that will hold the rendered component
                 const span = document.createElement('span');
-                parentElement.appendChild(span);
+                textSpan.appendChild(span);
                 if (span) {
                     // Inside that text span, we are creating another internal span, that will hold the text itself.
                     // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
