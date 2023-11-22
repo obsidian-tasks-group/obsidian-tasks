@@ -5,24 +5,24 @@ import type { TaskLayoutComponent } from './TaskLayout';
 
 export type AttributesDictionary = { [key: string]: string };
 
-export class FieldLayouts {
-    private readonly details = FieldLayoutDetails;
+export class TaskFieldRenderer {
+    private readonly data = taskFieldHTMLData;
 
     /**
-     * Searches for the component among the {@link FieldLayoutDetails} and gets its data attribute
+     * Searches for the component among the {@link taskFieldHTMLData} and gets its data attribute
      * in a given task. The data attribute shall be added in the task's `<span>`.
      * For example, a task with medium priority and done yesterday will have
      * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes.
      *
      * If the data attribute is absent in the task, an empty {@link AttributesDictionary} is returned.
      *
-     * For detailed calculation see {@link FieldLayoutDetail.dataAttribute}.
+     * For detailed calculation see {@link TaskFieldHTMLData.dataAttribute}.
      *
      * @param component the component of the task for which the data attribute has to be generated.
      * @param task the task from which the data shall be taken
      */
     public dataAttribute(component: TaskLayoutComponent, task: Task) {
-        return this.details[component].dataAttribute(component, task);
+        return this.data[component].dataAttribute(component, task);
     }
 
     /**
@@ -30,13 +30,13 @@ export class FieldLayouts {
      * @param component of the task.
      */
     public className(component: TaskLayoutComponent) {
-        return this.details[component].className;
+        return this.data[component].className;
     }
 }
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
-export class FieldLayoutDetail {
+export class TaskFieldHTMLData {
     public readonly className: string;
     private readonly attributeName: string;
     private readonly attributeValueCalculator: AttributeValueCalculator;
@@ -86,14 +86,14 @@ export class FieldLayoutDetail {
      * @param className CSS class that describes what the component is, e.g. a due date or a priority.
      *
      * @param attributeName if the component needs data attribute (`data-key="value"`) this is the key.
-     * Otherwise, set this to {@link FieldLayoutDetail.noAttributeName}.
+     * Otherwise, set this to {@link TaskFieldHTMLData.noAttributeName}.
      *
      * @param attributeValueCalculator And this is the value calculator.
-     * Set to {@link FieldLayoutDetail.noAttributeValueCalculator} if the component has no data attribute.
+     * Set to {@link TaskFieldHTMLData.noAttributeValueCalculator} if the component has no data attribute.
      *
      * There is a relation between {@link attributeName} and {@link attributeValueCalculator}.
      * For a component to have the data attribute, both need to be set to values other than
-     * {@link FieldLayoutDetail.noAttributeName} and {@link FieldLayoutDetail.noAttributeValueCalculator} respectively.
+     * {@link TaskFieldHTMLData.noAttributeName} and {@link TaskFieldHTMLData.noAttributeValueCalculator} respectively.
      * This means that having an empty data attribute (`data-key=""`) is not supported.
      */
     constructor(className: string, attributeName: string, attributeValueCalculator: AttributeValueCalculator) {
@@ -107,13 +107,13 @@ export class FieldLayoutDetail {
     }
 
     /**
-     * Shall be called only by {@link FieldLayouts}. Use that class if you need the data attributes.
+     * Shall be called only by {@link TaskFieldRenderer}. Use that class if you need the data attributes.
      *
      * @returns the data attribute, associated to with a task's component, added in the task's `<span>`.
      * For example, a task with medium priority and done yesterday will have
      * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes.
      *
-     * Calculation of the value is done with {@link FieldLayoutDetail.attributeValueCalculator}.
+     * Calculation of the value is done with {@link TaskFieldHTMLData.attributeValueCalculator}.
      *
      * @param component the component of the task for which the data attribute has to be generated.
      * @param task the task from which the data shall be taken
@@ -121,7 +121,7 @@ export class FieldLayoutDetail {
     public dataAttribute(component: TaskLayoutComponent, task: Task) {
         const dataAttribute: AttributesDictionary = {};
 
-        if (this.attributeName !== FieldLayoutDetail.noAttributeName) {
+        if (this.attributeName !== TaskFieldHTMLData.noAttributeName) {
             dataAttribute[this.attributeName] = this.attributeValueCalculator(component, task);
         }
 
@@ -129,32 +129,32 @@ export class FieldLayoutDetail {
     }
 }
 
-const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
+const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    createdDate: new FieldLayoutDetail('task-created', 'taskCreated', FieldLayoutDetail.dateAttributeCalculator),
-    dueDate: new FieldLayoutDetail('task-due', 'taskDue', FieldLayoutDetail.dateAttributeCalculator),
-    startDate: new FieldLayoutDetail('task-start', 'taskStart', FieldLayoutDetail.dateAttributeCalculator),
-    scheduledDate: new FieldLayoutDetail('task-scheduled', 'taskScheduled', FieldLayoutDetail.dateAttributeCalculator),
-    doneDate: new FieldLayoutDetail('task-done', 'taskDone', FieldLayoutDetail.dateAttributeCalculator),
+    createdDate: new TaskFieldHTMLData('task-created', 'taskCreated', TaskFieldHTMLData.dateAttributeCalculator),
+    dueDate: new TaskFieldHTMLData('task-due', 'taskDue', TaskFieldHTMLData.dateAttributeCalculator),
+    startDate: new TaskFieldHTMLData('task-start', 'taskStart', TaskFieldHTMLData.dateAttributeCalculator),
+    scheduledDate: new TaskFieldHTMLData('task-scheduled', 'taskScheduled', TaskFieldHTMLData.dateAttributeCalculator),
+    doneDate: new TaskFieldHTMLData('task-done', 'taskDone', TaskFieldHTMLData.dateAttributeCalculator),
 
-    description: new FieldLayoutDetail(
+    description: new TaskFieldHTMLData(
         'task-description',
-        FieldLayoutDetail.noAttributeName,
-        FieldLayoutDetail.noAttributeValueCalculator,
+        TaskFieldHTMLData.noAttributeName,
+        TaskFieldHTMLData.noAttributeValueCalculator,
     ),
-    recurrenceRule: new FieldLayoutDetail(
+    recurrenceRule: new TaskFieldHTMLData(
         'task-recurring',
-        FieldLayoutDetail.noAttributeName,
-        FieldLayoutDetail.noAttributeValueCalculator,
+        TaskFieldHTMLData.noAttributeName,
+        TaskFieldHTMLData.noAttributeValueCalculator,
     ),
 
-    priority: new FieldLayoutDetail('task-priority', 'taskPriority', (_component, task) => {
+    priority: new TaskFieldHTMLData('task-priority', 'taskPriority', (_component, task) => {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),
 
-    blockLink: new FieldLayoutDetail(
+    blockLink: new TaskFieldHTMLData(
         'task-block-link',
-        FieldLayoutDetail.noAttributeName,
-        FieldLayoutDetail.noAttributeValueCalculator,
+        TaskFieldHTMLData.noAttributeName,
+        TaskFieldHTMLData.noAttributeValueCalculator,
     ),
 };

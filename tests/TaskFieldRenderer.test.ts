@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { FieldLayoutDetail, FieldLayouts } from '../src/TaskFieldRenderer';
+import { TaskFieldHTMLData, TaskFieldRenderer } from '../src/TaskFieldRenderer';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -18,7 +18,7 @@ describe('Field Layouts Container tests', () => {
     });
 
     it('should get the data attribute of an existing component (date)', () => {
-        const container = new FieldLayouts();
+        const container = new TaskFieldRenderer();
         const task = new TaskBuilder().dueDate('2023-11-20').build();
 
         const dueDateDataAttribute = container.dataAttribute('dueDate', task);
@@ -28,7 +28,7 @@ describe('Field Layouts Container tests', () => {
     });
 
     it('should get the data attribute of an existing component (not date)', () => {
-        const container = new FieldLayouts();
+        const container = new TaskFieldRenderer();
         const task = TaskBuilder.createFullyPopulatedTask();
 
         const dueDateDataAttribute = container.dataAttribute('priority', task);
@@ -38,7 +38,7 @@ describe('Field Layouts Container tests', () => {
     });
 
     it('should return empty data attributes dictionary for a missing component', () => {
-        const container = new FieldLayouts();
+        const container = new TaskFieldRenderer();
         const task = new TaskBuilder().build();
 
         const dueDateDataAttribute = container.dataAttribute('recurrenceRule', task);
@@ -49,14 +49,14 @@ describe('Field Layouts Container tests', () => {
 
 describe('Field Layout Detail tests', () => {
     it('should supply a class name and a data attribute name', () => {
-        const fieldLayoutDetail = new FieldLayoutDetail('stuff', 'taskAttribute', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('stuff', 'taskAttribute', () => {
             return '';
         });
         expect(fieldLayoutDetail.className).toEqual('stuff');
     });
 
     it('should return a data attribute', () => {
-        const fieldLayoutDetail = new FieldLayoutDetail('dataAttributeTest', 'aKey', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('dataAttributeTest', 'aKey', () => {
             return 'aValue';
         });
         const dataAttribute = fieldLayoutDetail.dataAttribute('description', new TaskBuilder().build());
