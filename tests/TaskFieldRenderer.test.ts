@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { FieldLayoutDetail, TaskFieldRenderer } from '../src/TaskFieldRenderer';
+import { TaskFieldHTMLData, TaskFieldRenderer } from '../src/TaskFieldRenderer';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -49,14 +49,14 @@ describe('Field Layouts Container tests', () => {
 
 describe('Field Layout Detail tests', () => {
     it('should supply a class name and a data attribute name', () => {
-        const fieldLayoutDetail = new FieldLayoutDetail('stuff', 'taskAttribute', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('stuff', 'taskAttribute', () => {
             return '';
         });
         expect(fieldLayoutDetail.className).toEqual('stuff');
     });
 
     it('should return a data attribute', () => {
-        const fieldLayoutDetail = new FieldLayoutDetail('dataAttributeTest', 'aKey', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('dataAttributeTest', 'aKey', () => {
             return 'aValue';
         });
         const dataAttribute = fieldLayoutDetail.dataAttribute('description', new TaskBuilder().build());
