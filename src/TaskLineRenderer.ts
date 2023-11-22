@@ -142,12 +142,7 @@ export class TaskLineRenderer {
         const textSpan = document.createElement('span');
         li.appendChild(textSpan);
         textSpan.classList.add('tasks-list-text');
-        const taskAttributes = await this.taskToHtml(task, textSpan);
-        for (const key in taskAttributes) li.dataset[key] = taskAttributes[key];
-        return textSpan;
-    }
 
-    private async taskToHtml(task: Task, textSpan: HTMLElement): Promise<AttributesDictionary> {
         let taskAttributes: AttributesDictionary = {};
         const taskLayout = new TaskLayout(this.layoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
@@ -202,7 +197,8 @@ export class TaskLineRenderer {
             taskAttributes = { ...taskAttributes, ...priorityDataAttribute };
         }
 
-        return taskAttributes;
+        for (const key in taskAttributes) li.dataset[key] = taskAttributes[key];
+        return textSpan;
     }
 
     /*
