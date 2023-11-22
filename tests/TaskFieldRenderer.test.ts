@@ -61,9 +61,10 @@ describe('Field Layout Detail tests', () => {
             return 'aValue';
         });
         const span = document.createElement('span');
-        const dataAttribute = fieldLayoutDetail.dataAttribute('description', new TaskBuilder().build(), span);
 
-        expect(Object.keys(dataAttribute).length).toEqual(1);
-        expect(dataAttribute['aKey']).toEqual('aValue');
+        fieldLayoutDetail.dataAttribute('description', new TaskBuilder().build(), span);
+
+        expect(Object.keys(span.dataset).length).toEqual(1);
+        expect(span.dataset['aKey']).toEqual('aValue');
     });
 });
