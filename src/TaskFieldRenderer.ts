@@ -27,6 +27,10 @@ export class FieldLayouts {
         return this.details[component].dataAttribute(component, task);
     }
 
+    /**
+     * @returns the component's CSS class describing what this component is (priority, due date etc.).
+     * @param component of the task.
+     */
     public className(component: TaskLayoutComponent) {
         return this.details[component].className;
     }
