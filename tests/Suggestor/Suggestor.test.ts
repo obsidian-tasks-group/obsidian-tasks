@@ -48,6 +48,8 @@ function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: 
 
 const MAX_GENERIC_SUGGESTIONS_FOR_TESTS = 50;
 
+// NEW_TASK_FIELD_EDIT_REQUIRED
+
 describe.each([
     { name: 'emoji', symbols: DEFAULT_SYMBOLS },
     { name: 'dataview', symbols: DATAVIEW_SYMBOLS },

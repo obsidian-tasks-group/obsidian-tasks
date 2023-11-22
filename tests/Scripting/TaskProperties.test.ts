@@ -44,6 +44,8 @@ describe('task', () => {
         jest.useRealTimers();
     });
 
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+
     it('status', () => {
         verifyFieldDataForReferenceDocs([
             'task.isDone',

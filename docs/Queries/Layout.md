@@ -11,6 +11,8 @@ together with the name of the element.
 
 The following elements exist:
 
+<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
+
 - `edit button`
 - `backlink`
 - `urgency`

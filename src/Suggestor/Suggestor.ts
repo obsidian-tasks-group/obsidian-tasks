@@ -17,6 +17,7 @@ export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
     maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
 ): SuggestionBuilder {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
@@ -68,6 +69,7 @@ function addTaskPropertySuggestions(
 
     const genericSuggestions: SuggestInfo[] = [];
 
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     if (!line.includes(symbols.dueDateSymbol))
         genericSuggestions.push({
             displayText: `${symbols.dueDateSymbol} due date`,

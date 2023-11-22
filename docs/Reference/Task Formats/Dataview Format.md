@@ -83,6 +83,8 @@ These samples demonstrate all the fields supported by the Tasks plugin's parsing
 >
 > Tasks also reads dataview fields in parentheses: `(...)`.
 
+<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+
 ### Dataview Format for Dates
 
 These names agree with the same fields in [dataview's documentation](https://blacksmithgu.github.io/obsidian-dataview/annotation/metadata-tasks/#field-shorthands).

@@ -59,6 +59,7 @@ function toInlineFieldRegex(innerFieldRegex: RegExp): RegExp {
  *   [Dataview]{@link https://github.com/blacksmithgu/obsidian-dataview}
  */
 export const DATAVIEW_SYMBOLS = {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     prioritySymbols: {
         Highest: 'priority:: highest',
         High: 'priority:: high',

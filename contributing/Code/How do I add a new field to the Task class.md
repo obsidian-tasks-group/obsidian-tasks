@@ -4,6 +4,9 @@
 
 The many steps below can be split over several PRs, to make work - and code review - manageable.
 
+> [!Tip]
+> Search for `NEW_TASK_FIELD_EDIT_REQUIRED` through the code to find locations that are likely to need edits.
+
 ## Releasing a partial implementation
 
 For example, It's fine to have a first release of a feature without `sort by` and `group by`. In this case, add a feature request issue for the missing capabilities, and note in the documentation, for example:

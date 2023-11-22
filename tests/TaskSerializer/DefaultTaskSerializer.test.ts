@@ -19,6 +19,8 @@ type DefaultTaskSerializeSymbolMap = readonly {
 // A map that facilitates parameterizing the tests over symbols
 const symbolMap: DefaultTaskSerializeSymbolMap = [{ taskFormat: 'tasksPluginEmoji', symbols: DEFAULT_SYMBOLS }];
 
+// NEW_TASK_FIELD_EDIT_REQUIRED
+
 describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ symbols }) => {
     const taskSerializer = new DefaultTaskSerializer(symbols);
     const serialize = taskSerializer.serialize.bind(taskSerializer);

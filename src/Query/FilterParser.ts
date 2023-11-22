@@ -34,6 +34,7 @@ import { BacklinkField } from './Filter/BacklinkField';
 // When adding new fields keep this order in mind, putting fields that are more specific before fields that
 // may contain them, and keep BooleanField last.
 export const fieldCreators: EndsWith<BooleanField> = [
+    // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
     () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
     () => new StatusField(),

@@ -41,6 +41,7 @@ function sortInstructionLines(filters: ReadonlyArray<string>) {
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
+        // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
         '(due this week) AND (description includes Hello World)',
         'created after 2021-12-27',
         'created before 2021-12-27',
@@ -216,6 +217,7 @@ describe('Query parsing', () => {
     describe('should recognise every sort instruction', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
+            // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
             'sort by created',
             'sort by created reverse',
             'sort by description',
@@ -291,6 +293,7 @@ describe('Query parsing', () => {
     describe('should recognise every group instruction', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
+            // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
             'group by backlink',
             'group by backlink reverse',
             'group by created',

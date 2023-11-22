@@ -2,6 +2,9 @@
 
 All the following steps would be done in the same branch, for inclusion in the same pull request.
 
+> [!Tip]
+> Search for `NEW_QUERY_INSTRUCTION_EDIT_REQUIRED` through the code to find locations that are likely to need edits.
+
 ## Update src/
 
 - Implement the search filter:

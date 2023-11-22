@@ -1255,6 +1255,8 @@ describe('order of recurring tasks', () => {
 });
 
 describe('identicalTo', () => {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+
     it('should check status', () => {
         const lhs = new TaskBuilder().status(Status.makeTodo());
         expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.TODO));

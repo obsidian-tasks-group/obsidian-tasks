@@ -15,6 +15,7 @@
     export let statusOptions: Status[];
 
     const {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         prioritySymbols,
         recurrenceSymbol,
         startDateSymbol,
@@ -24,6 +25,7 @@
 
     let descriptionInput: HTMLTextAreaElement;
     let editableTask: {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         description: string;
         status: Status;
         priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
@@ -184,6 +186,7 @@
     $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
         parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate);
@@ -255,6 +258,7 @@
         }
 
         editableTask = {
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             description,
             status: task.status,
             priority,
@@ -300,6 +304,7 @@
     }
 
     const _onSubmit = () => {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
             description = GlobalFilter.getInstance().prependTo(description);
@@ -343,6 +348,7 @@
         }
 
         const updatedTask = new Task({
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             ...task,
             description,
             status: editableTask.status,
@@ -364,6 +370,8 @@
 
 <div class="tasks-modal">
     <form on:submit|preventDefault={_onSubmit} class:with-accesskeys="{withAccessKeys}">
+        <!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+
         <!-- --------------------------------------------------------------------------- -->
         <!--  Description  -->
         <!-- --------------------------------------------------------------------------- -->
