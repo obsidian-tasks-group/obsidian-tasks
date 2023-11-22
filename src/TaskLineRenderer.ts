@@ -9,7 +9,7 @@ import { type AttributesDictionary, TaskFieldRenderer } from './TaskFieldRendere
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 
-const fieldLayouts = new TaskFieldRenderer();
+const fieldRenderer = new TaskFieldRenderer();
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
@@ -166,11 +166,11 @@ export class TaskLineRenderer {
                     this.addInternalClasses(component, internalSpan);
 
                     // Add the component's CSS class describing what this component is (priority, due date etc.)
-                    const componentClass = fieldLayouts.className(component);
+                    const componentClass = fieldRenderer.className(component);
                     span.classList.add(...[componentClass]);
 
                     // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
-                    const componentDataAttribute = fieldLayouts.dataAttribute(component, task);
+                    const componentDataAttribute = fieldRenderer.dataAttribute(component, task);
                     for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
                     allAttributes = { ...allAttributes, ...componentDataAttribute };
                 }
@@ -179,7 +179,7 @@ export class TaskLineRenderer {
 
         // Now build classes for the hidden task components without rendering them
         for (const component of taskLayout.hiddenTaskLayoutComponents) {
-            const hiddenComponentDataAttribute = fieldLayouts.dataAttribute(component, task);
+            const hiddenComponentDataAttribute = fieldRenderer.dataAttribute(component, task);
             allAttributes = { ...allAttributes, ...hiddenComponentDataAttribute };
         }
 
@@ -189,7 +189,7 @@ export class TaskLineRenderer {
         // So if the priority was not rendered, force it through the pipe of getting the component data for the
         // priority field.
         if (allAttributes.taskPriority === undefined) {
-            const priorityDataAttribute = fieldLayouts.dataAttribute('priority', task);
+            const priorityDataAttribute = fieldRenderer.dataAttribute('priority', task);
             allAttributes = { ...allAttributes, ...priorityDataAttribute };
         }
 
