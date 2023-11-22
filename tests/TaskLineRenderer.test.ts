@@ -8,7 +8,7 @@ import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import { type AttributesDictionary, FieldLayoutDetails } from '../src/TaskFieldRenderer';
+import { type AttributesDictionary, FieldLayoutDetails, FieldLayouts } from '../src/TaskFieldRenderer';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { TextRenderer } from '../src/TaskLineRenderer';
 import { TaskLineRenderer } from '../src/TaskLineRenderer';
@@ -350,7 +350,7 @@ describe('task line rendering', () => {
         await testComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             {},
-            FieldLayoutDetails.priority.className,
+            new FieldLayouts().className('priority'),
             { taskPriority: 'high' },
         );
         await testComponentClasses(

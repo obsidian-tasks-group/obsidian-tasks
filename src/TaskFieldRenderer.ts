@@ -26,6 +26,10 @@ export class FieldLayouts {
     public dataAttribute(component: TaskLayoutComponent, task: Task) {
         return this.details[component].dataAttribute(component, task);
     }
+
+    public className(component: TaskLayoutComponent) {
+        return this.details[component].className;
+    }
 }
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
