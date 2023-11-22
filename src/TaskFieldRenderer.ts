@@ -88,8 +88,8 @@ export class FieldLayoutDetail {
      * @param attributeName if the component needs data attribute (`data-key="value"`) this is the key.
      * Otherwise, set this to {@link FieldLayoutDetail.noAttributeName}.
      *
-     * @param attributeValueCalculator And this is the value.
-     * Set to {@link FieldLayoutDetail.noAttributeValueCalculator} if shall be empty.
+     * @param attributeValueCalculator And this is the value calculator.
+     * Set to {@link FieldLayoutDetail.noAttributeValueCalculator} if the component has no data attribute.
      *
      * There is a relation between {@link attributeName} and {@link attributeValueCalculator}.
      * For a component to have the data attribute, both need to be set to values other than
