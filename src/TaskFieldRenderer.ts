@@ -124,6 +124,7 @@ export class FieldLayoutDetail {
 }
 
 export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     createdDate: new FieldLayoutDetail('task-created', 'taskCreated', FieldLayoutDetail.dateAttributeCalculator),
     dueDate: new FieldLayoutDetail('task-due', 'taskDue', FieldLayoutDetail.dateAttributeCalculator),
     startDate: new FieldLayoutDetail('task-start', 'taskStart', FieldLayoutDetail.dateAttributeCalculator),

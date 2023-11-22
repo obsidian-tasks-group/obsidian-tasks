@@ -18,6 +18,8 @@ In a growing number of locations, Tasks allows programmatic/scripting access to 
 
 This page documents all the available pieces of information in Tasks that you can access.
 
+<!-- NEW_TASK_FIELD_EDIT_REQUIRED - Add a note in the relevant bullet list, to record when the new field was added. (No need to add a new table row manually here.) -->
+
 ## Values for Task Statuses
 
 For more information, including adding your own customised statuses, see [[Statuses]].

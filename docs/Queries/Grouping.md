@@ -6,6 +6,8 @@ publish: true
 
 <span class="related-pages">#feature/grouping</span>
 
+<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
+
 ## Contents
 
 This page is long. Here are some links to the main sections:
