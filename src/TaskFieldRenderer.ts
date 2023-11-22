@@ -6,10 +6,10 @@ import type { TaskLayoutComponent } from './TaskLayout';
 export type AttributesDictionary = { [key: string]: string };
 
 export class TaskFieldRenderer {
-    private readonly details = FieldLayoutDetails;
+    private readonly details = taskFieldHTMLData;
 
     /**
-     * Searches for the component among the {@link FieldLayoutDetails} and gets its data attribute
+     * Searches for the component among the {@link taskFieldHTMLData} and gets its data attribute
      * in a given task. The data attribute shall be added in the task's `<span>`.
      * For example, a task with medium priority and done yesterday will have
      * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes.
@@ -129,7 +129,7 @@ export class TaskFieldHTMLData {
     }
 }
 
-const FieldLayoutDetails: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
+const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     createdDate: new TaskFieldHTMLData('task-created', 'taskCreated', TaskFieldHTMLData.dateAttributeCalculator),
     dueDate: new TaskFieldHTMLData('task-due', 'taskDue', TaskFieldHTMLData.dateAttributeCalculator),
