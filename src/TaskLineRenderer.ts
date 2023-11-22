@@ -169,15 +169,15 @@ export class TaskLineRenderer {
                     span.classList.add(...[componentClass]);
 
                     // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
-                    fieldRenderer.addDataAttribute(component, task, span);
-                    fieldRenderer.addDataAttribute(component, task, li);
+                    fieldRenderer.addDataAttribute(span, task, component);
+                    fieldRenderer.addDataAttribute(li, task, component);
                 }
             }
         }
 
         // Now build classes for the hidden task components without rendering them
         for (const component of taskLayout.hiddenTaskLayoutComponents) {
-            fieldRenderer.addDataAttribute(component, task, li);
+            fieldRenderer.addDataAttribute(li, task, component);
         }
 
         // If a task has no priority field set, its priority will not be rendered as part of the loop above and
@@ -186,7 +186,7 @@ export class TaskLineRenderer {
         // So if the priority was not rendered, force it through the pipe of getting the component data for the
         // priority field.
         if (li.dataset.taskPriority === undefined) {
-            fieldRenderer.addDataAttribute('priority', task, li);
+            fieldRenderer.addDataAttribute(li, task, 'priority');
         }
     }
 
