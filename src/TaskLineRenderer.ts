@@ -314,6 +314,7 @@ export class TaskLineRenderer {
             const tooltip = element.createDiv();
             tooltip.addClasses(['tooltip', 'pop-up']);
 
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             if (task.recurrence) {
                 const recurrenceDiv = tooltip.createDiv();
                 recurrenceDiv.setText(`${recurrenceSymbol} ${task.recurrence.toText()}`);
