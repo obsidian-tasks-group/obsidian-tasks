@@ -6,7 +6,7 @@ import type { TaskLayoutComponent } from './TaskLayout';
 export type AttributesDictionary = { [key: string]: string };
 
 export class TaskFieldRenderer {
-    private readonly details = taskFieldHTMLData;
+    private readonly data = taskFieldHTMLData;
 
     /**
      * Searches for the component among the {@link taskFieldHTMLData} and gets its data attribute
@@ -22,7 +22,7 @@ export class TaskFieldRenderer {
      * @param task the task from which the data shall be taken
      */
     public dataAttribute(component: TaskLayoutComponent, task: Task) {
-        return this.details[component].dataAttribute(component, task);
+        return this.data[component].dataAttribute(component, task);
     }
 
     /**
@@ -30,7 +30,7 @@ export class TaskFieldRenderer {
      * @param component of the task.
      */
     public className(component: TaskLayoutComponent) {
-        return this.details[component].className;
+        return this.data[component].className;
     }
 }
 
