@@ -118,13 +118,14 @@ export class TaskFieldHTMLData {
      *
      * @param component the component of the task for which the data attribute has to be generated.
      * @param task the task from which the data shall be taken
-     * @param _element
+     * @param element
      */
-    public dataAttribute(component: TaskLayoutComponent, task: Task, _element: HTMLElement) {
+    public dataAttribute(component: TaskLayoutComponent, task: Task, element: HTMLElement) {
         const dataAttribute: AttributesDictionary = {};
 
         if (this.attributeName !== TaskFieldHTMLData.noAttributeName) {
             dataAttribute[this.attributeName] = this.attributeValueCalculator(component, task);
+            for (const key in dataAttribute) element.dataset[key] = dataAttribute[key];
         }
 
         return dataAttribute;
