@@ -156,28 +156,26 @@ export class TaskLineRenderer {
                 // Create the text span that will hold the rendered component
                 const span = document.createElement('span');
                 textSpan.appendChild(span);
-                if (span) {
-                    // Inside that text span, we are creating another internal span, that will hold the text itself.
-                    // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
-                    // to differentiate between the container of the text and the text itself, so it will be possible
-                    // to do things like surrouding only the text (rather than its whole placeholder) with a highlight
-                    const internalSpan = document.createElement('span');
-                    span.appendChild(internalSpan);
-                    await this.renderComponentText(internalSpan, componentString, component, task);
-                    this.addInternalClasses(component, internalSpan);
+                // Inside that text span, we are creating another internal span, that will hold the text itself.
+                // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
+                // to differentiate between the container of the text and the text itself, so it will be possible
+                // to do things like surrouding only the text (rather than its whole placeholder) with a highlight
+                const internalSpan = document.createElement('span');
+                span.appendChild(internalSpan);
+                await this.renderComponentText(internalSpan, componentString, component, task);
+                this.addInternalClasses(component, internalSpan);
 
-                    // Add the component's CSS class describing what this component is (priority, due date etc.)
-                    const fieldLayoutDetails = FieldLayoutDetails[component];
-                    if (fieldLayoutDetails) {
-                        const componentClass = [fieldLayoutDetails.className];
-                        span.classList.add(...componentClass);
-                    }
-
-                    // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
-                    const componentDataAttribute = fieldLayouts.dataAttribute(component, task);
-                    for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
-                    taskAttributes = { ...taskAttributes, ...componentDataAttribute };
+                // Add the component's CSS class describing what this component is (priority, due date etc.)
+                const fieldLayoutDetails = FieldLayoutDetails[component];
+                if (fieldLayoutDetails) {
+                    const componentClass = [fieldLayoutDetails.className];
+                    span.classList.add(...componentClass);
                 }
+
+                // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
+                const componentDataAttribute = fieldLayouts.dataAttribute(component, task);
+                for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
+                taskAttributes = { ...taskAttributes, ...componentDataAttribute };
             }
         }
 
