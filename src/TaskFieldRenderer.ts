@@ -3,8 +3,6 @@ import { PriorityTools } from './lib/PriorityTools';
 import type { Task } from './Task';
 import type { TaskLayoutComponent } from './TaskLayout';
 
-export type AttributesDictionary = { [key: string]: string };
-
 export class TaskFieldRenderer {
     private readonly data = taskFieldHTMLData;
 
