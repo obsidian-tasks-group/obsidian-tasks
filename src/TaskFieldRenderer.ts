@@ -8,8 +8,6 @@ export type AttributesDictionary = { [key: string]: string };
 export class FieldLayouts {
     private readonly details = FieldLayoutDetails;
 
-    constructor() {}
-
     /**
      * Searches for the component among the {@link FieldLayoutDetails} and gets its data attribute
      * in a given task. The data attribute shall be added in the task's `<span>`.
