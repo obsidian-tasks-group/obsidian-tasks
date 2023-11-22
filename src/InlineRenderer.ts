@@ -88,7 +88,6 @@ export class InlineRenderer {
         }
 
         const taskLineRenderer = new TaskLineRenderer({
-            textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
             obsidianComponent: childComponent,
             parentUlElement: element,
             layoutOptions: new LayoutOptions(),

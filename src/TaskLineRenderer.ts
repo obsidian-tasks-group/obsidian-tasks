@@ -27,7 +27,7 @@ export class TaskLineRenderer {
     parentUlElement: HTMLElement;
     layoutOptions: LayoutOptions;
 
-    static async obsidianMarkdownRenderer(
+    private static async obsidianMarkdownRenderer(
         text: string,
         element: HTMLSpanElement,
         path: string,
@@ -40,23 +40,23 @@ export class TaskLineRenderer {
     /**
      * Builds a renderer for tasks with various options.
      *
-     * @param textRenderer The renderer to be used. For live/prod rendering use {@link TaskLineRenderer.obsidianMarkdownRenderer}.
+     * @param textRenderer The optional renderer to be used. Skip this parameter for Obsidian rendering.
      * For test purposes mock renderers shall be used.
      *
      * @param obsidianComponent One of the parameters needed by `MarkdownRenderer.renderMarkdown()` Obsidian API,
-     * that is called by {@link TaskLineRenderer.obsidianMarkdownRenderer}.
+     * that is called by the Obsidian renderer. Set this to null in test code.
      *
      * @param parentUlElement HTML element where the task shall be rendered.
      *
      * @param layoutOptions See {@link LayoutOptions}.
      */
     constructor({
-        textRenderer,
+        textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
         obsidianComponent,
         parentUlElement,
         layoutOptions,
     }: {
-        textRenderer: TextRenderer;
+        textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         layoutOptions: LayoutOptions;
