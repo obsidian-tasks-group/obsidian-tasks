@@ -7,6 +7,8 @@ import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 
+const fieldRenderer = new TaskFieldRenderer();
+
 describe('Field Layouts Container tests', () => {
     beforeEach(() => {
         jest.useFakeTimers();
@@ -18,33 +20,29 @@ describe('Field Layouts Container tests', () => {
     });
 
     it('should get the data attribute of an existing component (date)', () => {
-        const container = new TaskFieldRenderer();
         const task = new TaskBuilder().dueDate('2023-11-20').build();
         const span = document.createElement('span');
 
-        const dueDateDataAttribute = container.dataAttribute('dueDate', task, span);
+        const dueDateDataAttribute = fieldRenderer.dataAttribute('dueDate', task, span);
 
         expect(Object.keys(dueDateDataAttribute).length).toEqual(1);
         expect(dueDateDataAttribute['taskDue']).toEqual('future-1d');
     });
 
     it('should get the data attribute of an existing component (not date)', () => {
-        const container = new TaskFieldRenderer();
         const task = TaskBuilder.createFullyPopulatedTask();
         const span = document.createElement('span');
 
-        const dueDateDataAttribute = container.dataAttribute('priority', task, span);
+        const dueDateDataAttribute = fieldRenderer.dataAttribute('priority', task, span);
 
         expect(Object.keys(dueDateDataAttribute).length).toEqual(1);
         expect(dueDateDataAttribute['taskPriority']).toEqual('medium');
     });
-
     it('should return empty data attributes dictionary for a missing component', () => {
-        const container = new TaskFieldRenderer();
         const task = new TaskBuilder().build();
         const span = document.createElement('span');
 
-        const dueDateDataAttribute = container.dataAttribute('recurrenceRule', task, span);
+        const dueDateDataAttribute = fieldRenderer.dataAttribute('recurrenceRule', task, span);
 
         expect(Object.keys(dueDateDataAttribute).length).toEqual(0);
     });
