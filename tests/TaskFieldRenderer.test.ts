@@ -53,15 +53,6 @@ describe('Field Layout Detail tests', () => {
             return '';
         });
         expect(fieldLayoutDetail.className).toEqual('stuff');
-        expect(fieldLayoutDetail.attributeName).toEqual('taskAttribute');
-    });
-
-    it('should calculate data attribute value', () => {
-        const fieldLayoutDetail = new FieldLayoutDetail('foo', 'bar', () => {
-            return 'someValue';
-        });
-        const attributeValue = fieldLayoutDetail.attributeValueCalculator('createdDate', new TaskBuilder().build());
-        expect(attributeValue).toEqual('someValue');
     });
 
     it('should return a data attribute', () => {

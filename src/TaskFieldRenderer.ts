@@ -6,7 +6,7 @@ import type { TaskLayoutComponent } from './TaskLayout';
 export type AttributesDictionary = { [key: string]: string };
 
 export class FieldLayouts {
-    private details = FieldLayoutDetails;
+    private readonly details = FieldLayoutDetails;
 
     constructor() {}
 
@@ -39,9 +39,9 @@ export class FieldLayouts {
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
 export class FieldLayoutDetail {
-    readonly className: string;
-    readonly attributeName: string;
-    readonly attributeValueCalculator: AttributeValueCalculator;
+    public readonly className: string;
+    private readonly attributeName: string;
+    private readonly attributeValueCalculator: AttributeValueCalculator;
 
     public static noAttributeName = '';
     public static noAttributeValueCalculator: AttributeValueCalculator = () => {
