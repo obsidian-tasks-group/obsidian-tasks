@@ -16,12 +16,12 @@ export class TaskFieldRenderer {
      *
      * For detailed calculation see {@link TaskFieldHTMLData.addDataAttribute}.
      *
-     * @param component the component of the task for which the data attribute has to be added.
-     * @param task the task from which the for the data attributes shall be taken.
      * @param element the HTML element to add the data attributes to.
+     * @param task the task from which the for the data attributes shall be taken.
+     * @param component the component of the task for which the data attribute has to be added.
      */
-    public addDataAttribute(component: TaskLayoutComponent, task: Task, element: HTMLElement) {
-        this.data[component].addDataAttribute(component, task, element);
+    public addDataAttribute(element: HTMLElement, task: Task, component: TaskLayoutComponent) {
+        this.data[component].addDataAttribute(element, task, component);
     }
 
     /**
@@ -114,11 +114,11 @@ export class TaskFieldHTMLData {
      *
      * Calculation of the value is done with {@link TaskFieldHTMLData.attributeValueCalculator}.
      *
-     * @param component the component of the task for which the data attribute has to be added.
-     * @param task the task from which the data shall be taken.
      * @param element the HTML element to add the data attributes to.
+     * @param task the task from which the data shall be taken.
+     * @param component the component of the task for which the data attribute has to be added.
      */
-    public addDataAttribute(component: TaskLayoutComponent, task: Task, element: HTMLElement) {
+    public addDataAttribute(element: HTMLElement, task: Task, component: TaskLayoutComponent) {
         if (this.attributeName !== TaskFieldHTMLData.noAttributeName) {
             element.dataset[this.attributeName] = this.attributeValueCalculator(component, task);
         }
