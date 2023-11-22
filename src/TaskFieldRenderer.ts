@@ -5,7 +5,7 @@ import type { TaskLayoutComponent } from './TaskLayout';
 
 export type AttributesDictionary = { [key: string]: string };
 
-export class FieldLayouts {
+export class TaskFieldRenderer {
     private readonly details = FieldLayoutDetails;
 
     /**
@@ -107,7 +107,7 @@ export class FieldLayoutDetail {
     }
 
     /**
-     * Shall be called only by {@link FieldLayouts}. Use that class if you need the data attributes.
+     * Shall be called only by {@link TaskFieldRenderer}. Use that class if you need the data attributes.
      *
      * @returns the data attribute, associated to with a task's component, added in the task's `<span>`.
      * For example, a task with medium priority and done yesterday will have

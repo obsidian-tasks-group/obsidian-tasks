@@ -8,7 +8,7 @@ import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import { type AttributesDictionary, FieldLayouts } from '../src/TaskFieldRenderer';
+import { type AttributesDictionary, TaskFieldRenderer } from '../src/TaskFieldRenderer';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { TextRenderer } from '../src/TaskLineRenderer';
 import { TaskLineRenderer } from '../src/TaskLineRenderer';
@@ -19,7 +19,7 @@ import { TaskBuilder } from './TestingTools/TaskBuilder';
 jest.mock('obsidian');
 window.moment = moment;
 
-const fieldLayouts = new FieldLayouts();
+const fieldLayouts = new TaskFieldRenderer();
 
 /**
  * Creates a dummy 'parent element' to host a task render, renders a task inside it,
