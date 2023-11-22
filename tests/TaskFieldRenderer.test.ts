@@ -23,7 +23,7 @@ describe('Field Layouts Container tests', () => {
         const task = new TaskBuilder().dueDate('2023-11-20').build();
         const span = document.createElement('span');
 
-        fieldRenderer.dataAttribute('dueDate', task, span);
+        fieldRenderer.addDataAttribute('dueDate', task, span);
 
         expect(Object.keys(span.dataset).length).toEqual(1);
         expect(span.dataset['taskDue']).toEqual('future-1d');
@@ -33,7 +33,7 @@ describe('Field Layouts Container tests', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const span = document.createElement('span');
 
-        fieldRenderer.dataAttribute('priority', task, span);
+        fieldRenderer.addDataAttribute('priority', task, span);
 
         expect(Object.keys(span.dataset).length).toEqual(1);
         expect(span.dataset['taskPriority']).toEqual('medium');
@@ -42,7 +42,7 @@ describe('Field Layouts Container tests', () => {
         const task = new TaskBuilder().build();
         const span = document.createElement('span');
 
-        fieldRenderer.dataAttribute('recurrenceRule', task, span);
+        fieldRenderer.addDataAttribute('recurrenceRule', task, span);
 
         expect(Object.keys(span.dataset).length).toEqual(0);
     });
@@ -62,7 +62,7 @@ describe('Field Layout Detail tests', () => {
         });
         const span = document.createElement('span');
 
-        fieldLayoutDetail.dataAttribute('description', new TaskBuilder().build(), span);
+        fieldLayoutDetail.addDataAttribute('description', new TaskBuilder().build(), span);
 
         expect(Object.keys(span.dataset).length).toEqual(1);
         expect(span.dataset['aKey']).toEqual('aValue');

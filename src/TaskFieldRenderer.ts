@@ -14,14 +14,14 @@ export class TaskFieldRenderer {
      *
      * If no data was found for a component in a task, data attributes won't be added.
      *
-     * For detailed calculation see {@link TaskFieldHTMLData.dataAttribute}.
+     * For detailed calculation see {@link TaskFieldHTMLData.addDataAttribute}.
      *
      * @param component the component of the task for which the data attribute has to be added.
      * @param task the task from which the for the data attributes shall be taken.
      * @param element the HTML element to add the data attributes to.
      */
-    public dataAttribute(component: TaskLayoutComponent, task: Task, element: HTMLElement) {
-        this.data[component].dataAttribute(component, task, element);
+    public addDataAttribute(component: TaskLayoutComponent, task: Task, element: HTMLElement) {
+        this.data[component].addDataAttribute(component, task, element);
     }
 
     /**
@@ -118,7 +118,7 @@ export class TaskFieldHTMLData {
      * @param task the task from which the data shall be taken.
      * @param element the HTML element to add the data attributes to.
      */
-    public dataAttribute(component: TaskLayoutComponent, task: Task, element: HTMLElement) {
+    public addDataAttribute(component: TaskLayoutComponent, task: Task, element: HTMLElement) {
         if (this.attributeName !== TaskFieldHTMLData.noAttributeName) {
             element.dataset[this.attributeName] = this.attributeValueCalculator(component, task);
         }
