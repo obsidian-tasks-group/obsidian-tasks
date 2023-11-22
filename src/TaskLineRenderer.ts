@@ -5,11 +5,11 @@ import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
 import type { Task } from './Task';
 import * as taskModule from './Task';
-import { type AttributesDictionary, FieldLayouts } from './TaskFieldRenderer';
+import { type AttributesDictionary, TaskFieldRenderer } from './TaskFieldRenderer';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 
-const fieldLayouts = new FieldLayouts();
+const fieldLayouts = new TaskFieldRenderer();
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
