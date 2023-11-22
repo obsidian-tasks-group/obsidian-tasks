@@ -19,7 +19,7 @@ describe('Field Layouts Container tests', () => {
         jest.useRealTimers();
     });
 
-    it('should get the data attribute of an existing component (date)', () => {
+    it('should add a data attribute for an existing component (date)', () => {
         const task = new TaskBuilder().dueDate('2023-11-20').build();
         const span = document.createElement('span');
 
@@ -29,7 +29,7 @@ describe('Field Layouts Container tests', () => {
         expect(span.dataset['taskDue']).toEqual('future-1d');
     });
 
-    it('should get the data attribute of an existing component (not date)', () => {
+    it('should add a data attribute for an existing component (not date)', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const span = document.createElement('span');
 
@@ -38,7 +38,7 @@ describe('Field Layouts Container tests', () => {
         expect(Object.keys(span.dataset).length).toEqual(1);
         expect(span.dataset['taskPriority']).toEqual('medium');
     });
-    it('should return empty data attributes dictionary for a missing component', () => {
+    it('should not add any data attributes for a missing component', () => {
         const task = new TaskBuilder().build();
         const span = document.createElement('span');
 
@@ -49,14 +49,14 @@ describe('Field Layouts Container tests', () => {
 });
 
 describe('Field Layout Detail tests', () => {
-    it('should supply a class name and a data attribute name', () => {
+    it('should supply a class name', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('stuff', 'taskAttribute', () => {
             return '';
         });
         expect(fieldLayoutDetail.className).toEqual('stuff');
     });
 
-    it('should return a data attribute', () => {
+    it('should add a data attribute for an HTML element', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('dataAttributeTest', 'aKey', () => {
             return 'aValue';
         });
