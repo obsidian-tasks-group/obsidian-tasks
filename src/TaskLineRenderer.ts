@@ -5,7 +5,7 @@ import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
 import type { Task } from './Task';
 import * as taskModule from './Task';
-import { type AttributesDictionary, FieldLayoutDetails, FieldLayouts } from './TaskFieldRenderer';
+import { type AttributesDictionary, FieldLayouts } from './TaskFieldRenderer';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 
@@ -167,10 +167,10 @@ export class TaskLineRenderer {
                     this.addInternalClasses(component, internalSpan);
 
                     // Add the component's CSS class describing what this component is (priority, due date etc.)
-                    const fieldLayoutDetails = FieldLayoutDetails[component];
-                    if (fieldLayoutDetails) {
-                        const componentClass = [fieldLayoutDetails.className];
-                        span.classList.add(...componentClass);
+                    const componentClass = fieldLayouts.className(component);
+                    if (componentClass !== '') {
+                        // DOMTokenList.add() fails if the input is an empty string
+                        span.classList.add(...[componentClass]);
                     }
 
                     // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
