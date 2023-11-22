@@ -23,7 +23,7 @@ export class TaskFieldRenderer {
      * @param element
      */
     public dataAttribute(component: TaskLayoutComponent, task: Task, element: HTMLElement) {
-        return this.data[component].dataAttribute(component, task, element);
+        this.data[component].dataAttribute(component, task, element);
     }
 
     /**
