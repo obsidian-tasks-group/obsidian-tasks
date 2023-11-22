@@ -20,6 +20,8 @@ You can find out more in [[Create or edit Task|‘Create or edit Task’ Modal]]
 > [!info]
 > If you prefer to type, it is now very easy to add emojis and other information for you tasks using [[Auto-Suggest|Intelligent Auto-Suggest]].
 
+<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+
 ---
 
 ### Due date

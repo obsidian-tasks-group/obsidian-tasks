@@ -4,6 +4,8 @@ publish: true
 
 # Sorting
 
+<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+
 ## Contents
 
 This page is long. Here are some links to the main sections:

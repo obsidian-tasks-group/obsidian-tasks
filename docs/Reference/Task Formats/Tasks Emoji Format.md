@@ -8,6 +8,8 @@ publish: true
 
 These samples demonstrate all the fields supported by the Tasks plugin's parsing of its own emoji signifiers.
 
+<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+
 ## Tasks Emoji Format for Dates
 
 ```markdown
