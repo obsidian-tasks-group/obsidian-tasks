@@ -97,7 +97,7 @@ export class TaskLineRenderer {
         const textSpan = document.createElement('span');
         li.appendChild(textSpan);
         textSpan.classList.add('tasks-list-text');
-        const attributes = await this.taskToHtml(task, textSpan);
+        const attributes = await this.taskToHtml(task, textSpan, li);
         for (const key in attributes) li.dataset[key] = attributes[key];
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
@@ -142,7 +142,11 @@ export class TaskLineRenderer {
         return li;
     }
 
-    private async taskToHtml(task: Task, parentElement: HTMLElement): Promise<AttributesDictionary> {
+    private async taskToHtml(
+        task: Task,
+        parentElement: HTMLElement,
+        _li: HTMLLIElement,
+    ): Promise<AttributesDictionary> {
         let allAttributes: AttributesDictionary = {};
         const taskLayout = new TaskLayout(this.layoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
