@@ -6,9 +6,7 @@ import type { TaskLayoutComponent } from './TaskLayout';
 export type AttributesDictionary = { [key: string]: string };
 
 export class FieldLayouts {
-    private details = FieldLayoutDetails;
-
-    constructor() {}
+    private readonly details = FieldLayoutDetails;
 
     /**
      * Searches for the component among the {@link FieldLayoutDetails} and gets its data attribute
@@ -26,14 +24,22 @@ export class FieldLayouts {
     public dataAttribute(component: TaskLayoutComponent, task: Task) {
         return this.details[component].dataAttribute(component, task);
     }
+
+    /**
+     * @returns the component's CSS class describing what this component is (priority, due date etc.).
+     * @param component of the task.
+     */
+    public className(component: TaskLayoutComponent) {
+        return this.details[component].className;
+    }
 }
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
 
 export class FieldLayoutDetail {
-    readonly className: string;
-    readonly attributeName: string;
-    readonly attributeValueCalculator: AttributeValueCalculator;
+    public readonly className: string;
+    private readonly attributeName: string;
+    private readonly attributeValueCalculator: AttributeValueCalculator;
 
     public static noAttributeName = '';
     public static noAttributeValueCalculator: AttributeValueCalculator = () => {
@@ -82,8 +88,8 @@ export class FieldLayoutDetail {
      * @param attributeName if the component needs data attribute (`data-key="value"`) this is the key.
      * Otherwise, set this to {@link FieldLayoutDetail.noAttributeName}.
      *
-     * @param attributeValueCalculator And this is the value.
-     * Set to {@link FieldLayoutDetail.noAttributeValueCalculator} if shall be empty.
+     * @param attributeValueCalculator And this is the value calculator.
+     * Set to {@link FieldLayoutDetail.noAttributeValueCalculator} if the component has no data attribute.
      *
      * There is a relation between {@link attributeName} and {@link attributeValueCalculator}.
      * For a component to have the data attribute, both need to be set to values other than
@@ -123,7 +129,7 @@ export class FieldLayoutDetail {
     }
 }
 
-export const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
+const FieldLayoutDetails: { [c in TaskLayoutComponent]: FieldLayoutDetail } = {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     createdDate: new FieldLayoutDetail('task-created', 'taskCreated', FieldLayoutDetail.dateAttributeCalculator),
     dueDate: new FieldLayoutDetail('task-due', 'taskDue', FieldLayoutDetail.dateAttributeCalculator),
