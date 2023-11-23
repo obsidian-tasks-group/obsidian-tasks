@@ -3,26 +3,24 @@ import { PriorityTools } from './lib/PriorityTools';
 import type { Task } from './Task';
 import type { TaskLayoutComponent } from './TaskLayout';
 
-export type AttributesDictionary = { [key: string]: string };
-
 export class TaskFieldRenderer {
     private readonly data = taskFieldHTMLData;
 
     /**
-     * Searches for the component among the {@link taskFieldHTMLData} and gets its data attribute
-     * in a given task. The data attribute shall be added in the task's `<span>`.
-     * For example, a task with medium priority and done yesterday will have
-     * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes.
+     * Adds data attribute to an {@link element} for a component. For example,
+     * a `<span>` describing a task with medium priority and done yesterday will have
+     * `data-task-priority="medium" data-task-due="past-1d"` in its data attributes (One data attribute per component).
      *
-     * If the data attribute is absent in the task, an empty {@link AttributesDictionary} is returned.
+     * If no data was found for a component in a task, data attribute won't be added.
      *
-     * For detailed calculation see {@link TaskFieldHTMLData.dataAttribute}.
+     * For detailed calculation see {@link TaskFieldHTMLData.addDataAttribute}.
      *
-     * @param component the component of the task for which the data attribute has to be generated.
-     * @param task the task from which the data shall be taken
+     * @param element the HTML element to add the data attribute to.
+     * @param task the task from which the for the data attribute shall be taken.
+     * @param component the component of the task for which the data attribute has to be added.
      */
-    public dataAttribute(component: TaskLayoutComponent, task: Task) {
-        return this.data[component].dataAttribute(component, task);
+    public addDataAttribute(element: HTMLElement, task: Task, component: TaskLayoutComponent) {
+        this.data[component].addDataAttribute(element, task, component);
     }
 
     /**
@@ -107,25 +105,22 @@ export class TaskFieldHTMLData {
     }
 
     /**
-     * Shall be called only by {@link TaskFieldRenderer}. Use that class if you need the data attributes.
+     * Shall be called only by {@link TaskFieldRenderer}. Use that class if you need to add a data attribute.
      *
-     * @returns the data attribute, associated to with a task's component, added in the task's `<span>`.
+     * Adds the data attribute, associated to with a task's component to an HTML element.
      * For example, a task with medium priority and done yesterday will have
-     * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes.
+     * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes (One data attribute per component).
      *
      * Calculation of the value is done with {@link TaskFieldHTMLData.attributeValueCalculator}.
      *
-     * @param component the component of the task for which the data attribute has to be generated.
-     * @param task the task from which the data shall be taken
+     * @param element the HTML element to add the data attribute to.
+     * @param task the task from which the data shall be taken.
+     * @param component the component of the task for which the data attribute has to be added.
      */
-    public dataAttribute(component: TaskLayoutComponent, task: Task) {
-        const dataAttribute: AttributesDictionary = {};
-
+    public addDataAttribute(element: HTMLElement, task: Task, component: TaskLayoutComponent) {
         if (this.attributeName !== TaskFieldHTMLData.noAttributeName) {
-            dataAttribute[this.attributeName] = this.attributeValueCalculator(component, task);
+            element.dataset[this.attributeName] = this.attributeValueCalculator(component, task);
         }
-
-        return dataAttribute;
     }
 }
 

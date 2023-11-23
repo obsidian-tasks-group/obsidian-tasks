@@ -68,11 +68,9 @@ export class TaskLineRenderer {
     }
 
     /**
-     * Renders a given Task object into an HTML List Item (LI) element, using the given renderDetails
-     * configuration and a supplied TextRenderer (typically the Obsidian Markdown renderer, but for testing
-     * purposes it can be a simpler one).
+     * Renders a given Task object into an HTML List Item (LI) element.
      *
-     * The element includes the task and its various components (description, priority, block link etc), the
+     * The element includes the task and its various components (description, priority, block link etc.), the
      * checkbox on the left with its event handling of completing the task, and the button for editing the task.
      *
      * @returns an HTML rendered List Item element (LI) for a task.
@@ -158,7 +156,7 @@ export class TaskLineRenderer {
                     // Inside that text span, we are creating another internal span, that will hold the text itself.
                     // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
                     // to differentiate between the container of the text and the text itself, so it will be possible
-                    // to do things like surrouding only the text (rather than its whole placeholder) with a highlight
+                    // to do things like surrounding only the text (rather than its whole placeholder) with a highlight
                     const internalSpan = document.createElement('span');
                     span.appendChild(internalSpan);
                     await this.renderComponentText(internalSpan, componentString, component, task);
@@ -169,27 +167,24 @@ export class TaskLineRenderer {
                     span.classList.add(...[componentClass]);
 
                     // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
-                    const componentDataAttribute = fieldRenderer.dataAttribute(component, task);
-                    for (const key in componentDataAttribute) span.dataset[key] = componentDataAttribute[key];
-                    for (const key in componentDataAttribute) li.dataset[key] = componentDataAttribute[key];
+                    fieldRenderer.addDataAttribute(span, task, component);
+                    fieldRenderer.addDataAttribute(li, task, component);
                 }
             }
         }
 
         // Now build classes for the hidden task components without rendering them
         for (const component of taskLayout.hiddenTaskLayoutComponents) {
-            const hiddenComponentDataAttribute = fieldRenderer.dataAttribute(component, task);
-            for (const key in hiddenComponentDataAttribute) li.dataset[key] = hiddenComponentDataAttribute[key];
+            fieldRenderer.addDataAttribute(li, task, component);
         }
 
-        // If a task has no priority field set, its priority will not be rendered as part of the loop above and
+        // If a task has no priority field set, its priority will not be rendered as part of the loop above, and
         // it will not be set a priority data attribute.
         // In such a case we want the upper task LI element to mark the task has a 'normal' priority.
         // So if the priority was not rendered, force it through the pipe of getting the component data for the
         // priority field.
         if (li.dataset.taskPriority === undefined) {
-            const priorityDataAttribute = fieldRenderer.dataAttribute('priority', task);
-            for (const key in priorityDataAttribute) li.dataset[key] = priorityDataAttribute[key];
+            fieldRenderer.addDataAttribute(li, task, 'priority');
         }
     }
 
@@ -249,14 +244,14 @@ export class TaskLineRenderer {
      */
     private addInternalClasses(component: TaskLayoutComponent, internalSpan: HTMLSpanElement) {
         /*
-         * Sanitize tag names so they will be valid attribute values according to the HTML spec:
+         * Sanitize tag names, so they will be valid attribute values according to the HTML spec:
          * https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state
          */
         function tagToAttributeValue(tag: string) {
             // eslint-disable-next-line no-control-regex
             const illegalChars = /["&\x00\r\n]/g;
             let sanitizedTag = tag.replace(illegalChars, '-');
-            // And if after sanitazation the name starts with dashes or underscores, remove them.
+            // And if after sanitization the name starts with dashes or underscores, remove them.
             sanitizedTag = sanitizedTag.replace(/^[-_]+/, '');
             if (sanitizedTag.length > 0) return sanitizedTag;
             else return null;
