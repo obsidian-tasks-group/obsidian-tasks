@@ -31,7 +31,7 @@ For instance, you can show only the tasks (from anywhere in the vault) that are 
     not done
     ```
 
-You can create as many task queries as you like, and you can also wrap them into callouts to style them a bit differently:
+You can create as many task queries as you like, and you can also wrap them into [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) if you want to style them differently:
 
     > [!check] Due today
     > ```tasks
