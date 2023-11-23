@@ -23,6 +23,24 @@ In Live Preview and Reading modes, this will list *all* tasks from your vault, r
 This is probably not what you want.
 Therefore, Tasks allows you to set query options to filter the tasks that you want to show.
 
+For instance, you can show only the tasks (from anywhere in the vault) that are due today:
+
+    ## Due today
+    ```tasks
+    due today
+    not done
+    ```
+
+You can create as many task queries as you like, and you can also wrap them into [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) if you want to style them differently:
+
+    > [!check] Due today
+    > ```tasks
+    > due today
+    > not done
+    > ```
+
+In the following sections we will explain all the various options that are available for querying tasks.
+
 ## Tasks Query options
 
 ### Searching tasks - Basics
