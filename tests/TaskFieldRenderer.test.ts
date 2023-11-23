@@ -7,6 +7,8 @@ import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 
+const fieldRenderer = new TaskFieldRenderer();
+
 describe('Field Layouts Container tests', () => {
     beforeEach(() => {
         jest.useFakeTimers();
@@ -17,51 +19,52 @@ describe('Field Layouts Container tests', () => {
         jest.useRealTimers();
     });
 
-    it('should get the data attribute of an existing component (date)', () => {
-        const container = new TaskFieldRenderer();
+    it('should add a data attribute for an existing component (date)', () => {
         const task = new TaskBuilder().dueDate('2023-11-20').build();
+        const span = document.createElement('span');
 
-        const dueDateDataAttribute = container.dataAttribute('dueDate', task);
+        fieldRenderer.addDataAttribute(span, task, 'dueDate');
 
-        expect(Object.keys(dueDateDataAttribute).length).toEqual(1);
-        expect(dueDateDataAttribute['taskDue']).toEqual('future-1d');
+        expect(Object.keys(span.dataset).length).toEqual(1);
+        expect(span.dataset['taskDue']).toEqual('future-1d');
     });
 
-    it('should get the data attribute of an existing component (not date)', () => {
-        const container = new TaskFieldRenderer();
+    it('should add a data attribute for an existing component (not date)', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
+        const span = document.createElement('span');
 
-        const dueDateDataAttribute = container.dataAttribute('priority', task);
+        fieldRenderer.addDataAttribute(span, task, 'priority');
 
-        expect(Object.keys(dueDateDataAttribute).length).toEqual(1);
-        expect(dueDateDataAttribute['taskPriority']).toEqual('medium');
+        expect(Object.keys(span.dataset).length).toEqual(1);
+        expect(span.dataset['taskPriority']).toEqual('medium');
     });
-
-    it('should return empty data attributes dictionary for a missing component', () => {
-        const container = new TaskFieldRenderer();
+    it('should not add any data attributes for a missing component', () => {
         const task = new TaskBuilder().build();
+        const span = document.createElement('span');
 
-        const dueDateDataAttribute = container.dataAttribute('recurrenceRule', task);
+        fieldRenderer.addDataAttribute(span, task, 'recurrenceRule');
 
-        expect(Object.keys(dueDateDataAttribute).length).toEqual(0);
+        expect(Object.keys(span.dataset).length).toEqual(0);
     });
 });
 
 describe('Field Layout Detail tests', () => {
-    it('should supply a class name and a data attribute name', () => {
+    it('should supply a class name', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('stuff', 'taskAttribute', () => {
             return '';
         });
         expect(fieldLayoutDetail.className).toEqual('stuff');
     });
 
-    it('should return a data attribute', () => {
+    it('should add a data attribute for an HTML element', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('dataAttributeTest', 'aKey', () => {
             return 'aValue';
         });
-        const dataAttribute = fieldLayoutDetail.dataAttribute('description', new TaskBuilder().build());
+        const span = document.createElement('span');
 
-        expect(Object.keys(dataAttribute).length).toEqual(1);
-        expect(dataAttribute['aKey']).toEqual('aValue');
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'description');
+
+        expect(Object.keys(span.dataset).length).toEqual(1);
+        expect(span.dataset['aKey']).toEqual('aValue');
     });
 });
