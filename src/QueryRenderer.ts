@@ -352,15 +352,12 @@ class QueryRenderChild extends MarkdownRenderChild {
             if (result) {
                 const [line, file] = result;
                 const leaf = this.app.workspace.getLeaf(Keymap.isModEvent(ev));
-                // This opens the file with the required line highlighted.
-                // It works for Edit and Reading mode, however, for some reason (maybe an Obsidian bug),
-                // when used in Reading mode, switching the result to Edit does not sync the scroll.
-                // A patch suggested over Discord to use leaf.setEphemeralState({scroll: line}) does not seem
-                // to make a difference.
-                // The issue is tracked here: https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1879
-                await leaf.openFile(file, { eState: { line: line } });
-                // Suppress the default behavior of the event in this case.
+                // When the corresponding task has been found,
+                // suppress the default behavior of the mouse click event
+                // (which would interfere e.g. if the query is rendered inside a callout).
                 ev.preventDefault();
+                // Instead of the default behavior, open the file with the required line highlighted.
+                await leaf.openFile(file, { eState: { line: line } });
             }
         });
 
@@ -375,9 +372,8 @@ class QueryRenderChild extends MarkdownRenderChild {
                 if (result) {
                     const [line, file] = result;
                     const leaf = this.app.workspace.getLeaf('tab');
-                    await leaf.openFile(file, { eState: { line: line } });
-                    // Suppress the default behavior of the event in this case.
                     ev.preventDefault();
+                    await leaf.openFile(file, { eState: { line: line } });
                 }
             }
         });
