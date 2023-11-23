@@ -359,6 +359,8 @@ class QueryRenderChild extends MarkdownRenderChild {
                 // to make a difference.
                 // The issue is tracked here: https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1879
                 await leaf.openFile(file, { eState: { line: line } });
+                // Suppress the default behavior of the event in this case.
+                ev.preventDefault();
             }
         });
 
@@ -374,6 +376,8 @@ class QueryRenderChild extends MarkdownRenderChild {
                     const [line, file] = result;
                     const leaf = this.app.workspace.getLeaf('tab');
                     await leaf.openFile(file, { eState: { line: line } });
+                    // Suppress the default behavior of the event in this case.
+                    ev.preventDefault();
                 }
             }
         });
