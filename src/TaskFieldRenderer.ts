@@ -7,9 +7,8 @@ export class TaskFieldRenderer {
     private readonly data = taskFieldHTMLData;
 
     /**
-     * Adds data attributes to an {@link HTMLElement} for a component. The data for the data attribute
-     * comes from {@link taskFieldHTMLData}.
-     * For example, a `<span>` describing a task with medium priority and done yesterday will have
+     * Adds data attributes to an {@link element} for a component. For example,
+     * a `<span>` describing a task with medium priority and done yesterday will have
      * `data-task-priority="medium" data-task-due="past-1d"` in its data attributes.
      *
      * If no data was found for a component in a task, data attributes won't be added.
