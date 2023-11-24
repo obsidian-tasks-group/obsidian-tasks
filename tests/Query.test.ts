@@ -686,39 +686,9 @@ describe('Query', () => {
                 },
             ],
             [
-                'by due date presence uppercase',
-                {
-                    filters: ['HAS DUE DATE'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 📅 2022-04-20',
-                    ],
-                    expectedResult: [
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 📅 2022-04-20',
-                    ],
-                },
-            ],
-            [
                 'by start date presence',
                 {
                     filters: ['has start date'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 🛫 2022-04-20',
-                    ],
-                    expectedResult: [
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 🛫 2022-04-20',
-                    ],
-                },
-            ],
-            [
-                'by start date presence uppercase',
-                {
-                    filters: ['HAS START DATE'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -746,36 +716,9 @@ describe('Query', () => {
                 },
             ],
             [
-                'by scheduled date presence uppercase',
-                {
-                    filters: ['HAS SCHEDULED DATE'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 ⏳ 2022-04-20',
-                    ],
-                    expectedResult: [
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 ⏳ 2022-04-20',
-                    ],
-                },
-            ],
-            [
                 'by due date absence',
                 {
                     filters: ['no due date'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 📅 2022-04-20',
-                    ],
-                    expectedResult: ['- [ ] task 1'],
-                },
-            ],
-            [
-                'by due date absence uppercase',
-                {
-                    filters: ['NO DUE DATE'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -797,18 +740,6 @@ describe('Query', () => {
                 },
             ],
             [
-                'by start date absence uppercase',
-                {
-                    filters: ['NO START DATE'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 🛫 2022-04-20',
-                    ],
-                    expectedResult: ['- [ ] task 1'],
-                },
-            ],
-            [
                 'by scheduled date absence',
                 {
                     filters: ['no scheduled date'],
@@ -821,37 +752,9 @@ describe('Query', () => {
                 },
             ],
             [
-                'by scheduled date absence uppercase',
-                {
-                    filters: ['NO SCHEDULED DATE'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 ⏳ 2022-04-20',
-                    ],
-                    expectedResult: ['- [ ] task 1'],
-                },
-            ],
-            [
                 'by start date (before)',
                 {
                     filters: ['starts before 2022-04-20'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 🛫 2022-04-15',
-                        '- [ ] task 3 🛫 2022-04-20',
-                        '- [ ] task 4 🛫 2022-04-25',
-                    ],
-                    expectedResult: [
-                        '- [ ] task 1', // reference: https://publish.obsidian.md/tasks/Queries/Filters#Start+Date
-                        '- [ ] task 2 🛫 2022-04-15',
-                    ],
-                },
-            ],
-            [
-                'by start date (before) uppercase',
-                {
-                    filters: ['STARTS BEFORE 2022-04-20'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] task 2 🛫 2022-04-15',
@@ -878,19 +781,6 @@ describe('Query', () => {
                 },
             ],
             [
-                'by scheduled date (before) uppercase',
-                {
-                    filters: ['SCHEDULED BEFORE 2022-04-20'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 ⏳ 2022-04-15',
-                        '- [ ] task 3 ⏳ 2022-04-20',
-                        '- [ ] task 4 ⏳ 2022-04-25',
-                    ],
-                    expectedResult: ['- [ ] task 2 ⏳ 2022-04-15'],
-                },
-            ],
-            [
                 'by done date (before)',
                 {
                     filters: ['done before 2022-12-23'],
@@ -901,25 +791,15 @@ describe('Query', () => {
                     expectedResult: ['- [ ] I am done before filter, and should pass ✅ 2022-12-01'],
                 },
             ],
-            [
-                'by done date (before) uppercase',
-                {
-                    filters: ['DONE BEFORE 2022-12-23'],
-                    tasks: [
-                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
-                        '- [ ] I have no done date, so should fail',
-                    ],
-                    expectedResult: ['- [ ] I am done before filter, and should pass ✅ 2022-12-01'],
-                },
-            ],
         ])('should support filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
             shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            shouldSupportFiltering(
+                filters.map((filter) => filter.toUpperCase()),
+                allTaskLines,
+                expectedResult,
+            );
         });
     });
-
-    // ---------------------------------
-    // ---------------------------------
-    // ---------------------------------
 
     describe('filtering with "happens"', () => {
         type HappensCase = {
@@ -948,7 +828,7 @@ describe('Query', () => {
             },
             {
                 description: 'on: should match if scheduled matches',
-                happensFilter: 'HAPPENS on 2012-03-04',
+                happensFilter: 'happens on 2012-03-04',
                 scheduled: '2012-03-04',
                 taskShouldMatch: true,
             },
@@ -1049,6 +929,7 @@ describe('Query', () => {
 
                 // Act, Assert
                 shouldSupportFiltering([happensFilter], [line], expectedResult);
+                shouldSupportFiltering([happensFilter.toUpperCase()], [line], expectedResult);
             },
         );
     });
@@ -1624,6 +1505,7 @@ At most 8 tasks per group (if any "group by" options are supplied).
   (description includes line 1 continued\
 with \ backslash)`;
             const query = new Query(source);
+            const queryUpperCase = new Query(source);
 
             const expectedDisplayText = String.raw`(description includes line 1) OR (description includes line 1 continued with \ backslash) =>
   OR (At least one of):
@@ -1631,6 +1513,7 @@ with \ backslash)`;
     description includes line 1 continued with \ backslash
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
+            expect(queryUpperCase.explainQuery()).toEqual(expectedDisplayText);
         });
     });
 });
