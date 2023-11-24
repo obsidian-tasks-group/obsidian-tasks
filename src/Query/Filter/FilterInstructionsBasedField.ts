@@ -12,11 +12,11 @@ export abstract class FilterInstructionsBasedField extends Field {
     protected readonly _filters = new FilterInstructions();
 
     public canCreateFilterForLine(line: string): boolean {
-        return this._filters.canCreateFilterForLine(line);
+        return this._filters.canCreateFilterForLine(line.toLowerCase());
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        return this._filters.createFilterOrErrorMessage(line);
+        return this._filters.createFilterOrErrorMessage(line.toLowerCase());
     }
 
     protected filterRegExp(): RegExp | null {

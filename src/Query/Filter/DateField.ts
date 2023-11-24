@@ -38,6 +38,7 @@ export abstract class DateField extends Field {
     }
 
     public canCreateFilterForLine(line: string): boolean {
+        line = line?.toLowerCase();
         if (this.filterInstructions.canCreateFilterForLine(line)) {
             return true;
         }
@@ -54,7 +55,7 @@ export abstract class DateField extends Field {
             return FilterOrErrorMessage.fromError(line, errorText);
         }
 
-        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
+        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line.toLowerCase());
         if (filterResult.filter !== undefined) {
             return filterResult;
         }
@@ -68,7 +69,7 @@ export abstract class DateField extends Field {
         }
 
         const keywordAndDateString = fieldNameKeywordDate[1]; // The whole line except the field name
-        const fieldKeyword = fieldNameKeywordDate[2]; // 'on', 'in', 'before', 'after', 'on|in or before|after' or undefined
+        const fieldKeyword = fieldNameKeywordDate[2]?.toLowerCase(); // 'on', 'in', 'before', 'after', 'on|in or before|after' or undefined
         const fieldDateString = fieldNameKeywordDate[3]; // The remainder of the instruction
 
         // Try interpreting everything after the keyword as a date range:
@@ -148,6 +149,7 @@ export abstract class DateField extends Field {
     protected filterRegExp(): RegExp {
         return new RegExp(
             `^${this.fieldNameForFilterInstruction()} (((?:on|in) or before|before|(?:on|in) or after|after|on|in)? ?(.*))`,
+            'i',
         );
     }
 

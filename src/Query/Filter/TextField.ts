@@ -26,7 +26,9 @@ export abstract class TextField extends Field {
 
         // Construct an IStringMatcher for this filter, or return
         // if the inputs are invalid.
-        const [_, filterOperator, filterValue] = match;
+        const filterOperator = match[1].toLowerCase();
+        const filterValue = match[2];
+
         let matcher: IStringMatcher | null = null;
         if (filterOperator.includes('include')) {
             matcher = new SubstringMatcher(filterValue);
@@ -76,7 +78,7 @@ export abstract class TextField extends Field {
     }
 
     protected filterRegExp(): RegExp {
-        return new RegExp(`^(?:${this.fieldPattern()}) (${this.filterOperatorPattern()}) (.*)`);
+        return new RegExp(`^(?:${this.fieldPattern()}) (${this.filterOperatorPattern()}) (.*)`, 'i');
     }
 
     public abstract fieldName(): string;

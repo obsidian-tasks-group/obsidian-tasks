@@ -76,7 +76,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     // New style parsing, using sorting which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'sort by'
-    const sortByRegexp = /^sort by /;
+    const sortByRegexp = /^sort by /i;
     if (sorterString.match(sortByRegexp) === null) {
         return null;
     }
@@ -96,7 +96,7 @@ export function parseGrouper(line: string): Grouper | null {
     // New style parsing, using grouping which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'group by'
-    const groupByRegexp = /^group by /;
+    const groupByRegexp = /^group by /i;
     if (line.match(groupByRegexp) === null) {
         return null;
     }
