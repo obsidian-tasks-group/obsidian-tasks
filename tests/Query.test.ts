@@ -42,189 +42,97 @@ describe('Query parsing', () => {
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
         '(due this week) AND (description includes Hello World)',
-        '(DUE THIS WEEK) AND (DESCRIPTION INCLUDES Hello World)',
         'created after 2021-12-27',
-        'CREATED AFTER 2021-12-27',
         'created before 2021-12-27',
-        'CREATED BEFORE 2021-12-27',
         'created date is invalid',
-        'CREATED date is invalid',
         'created in 2021-12-27 2021-12-29',
-        'CREATED IN 2021-12-27 2021-12-29',
         'created on 2021-12-27',
-        'CREATED ON 2021-12-27',
         'created this week',
-        'CREATED THIS WEEK',
         'description does not include wibble',
-        'DESCRIPTION DOES NOT INCLUDE wibble',
         'description includes AND', // Verify Query doesn't confuse this with a boolean query
-        'DESCRIPTION INCLUDES AND', // Verify Query doesn't confuse this with a boolean query
         'description includes wibble',
-        'DESCRIPTION INCLUDES wibble',
         'done',
-        'DONE',
         'done after 2021-12-27',
-        'DONE AFTER 2021-12-27',
         'done before 2021-12-27',
-        'DONE BEFORE 2021-12-27',
         'done date is invalid',
-        'DONE DATE IS INVALID',
         'done in 2021-12-27 2021-12-29',
-        'DONE IN 2021-12-27 2021-12-29',
         'done on 2021-12-27',
-        'DONE ON 2021-12-27',
         'done this week',
-        'DONE THIS WEEK',
         'due after 2021-12-27',
-        'DUE AFTER 2021-12-27',
         'due before 2021-12-27',
-        'DUE BEFORE 2021-12-27',
         'due date is invalid',
-        'DUE DATE IS INVALID',
         'due in 2021-12-27 2021-12-29',
-        'DUE IN 2021-12-27 2021-12-29',
         'due on 2021-12-27',
-        'DUE ON 2021-12-27',
         'due this week',
-        'DUE THIS WEEK',
         'exclude sub-items',
-        'EXCLUDE SUB-ITEMS',
         'filename includes wibble',
-        'FILENAME INCLUDES wibble',
         'filter by function task.isDone', // This cannot contain any () because of issue #1500
-        'FILTER BY FUNCTION task.isDone', // This cannot contain any () because of issue #1500
         'folder does not include some/path',
-        'FOLDER DOES NOT INCLUDE some/path',
         'folder includes AND', // Verify Query doesn't confuse this with a boolean query
-        'FOLDER INCLUDES AND', // Verify Query doesn't confuse this with a boolean query
         'folder includes some/path',
-        'FOLDER INCLUDES some/path',
         'happens after 2021-12-27',
-        'HAPPENS AFTER 2021-12-27',
         'happens before 2021-12-27',
-        'HAPPENS BEFORE 2021-12-27',
         'happens in 2021-12-27 2021-12-29',
-        'HAPPENS IN 2021-12-27 2021-12-29',
         'happens on 2021-12-27',
-        'HAPPENS ON 2021-12-27',
         'happens this week',
-        'HAPPENS THIS WEEK',
         'has created date',
-        'HAS CREATED DATE',
         'has done date',
-        'HAS DONE DATE',
         'has due date',
-        'HAS DUE DATE',
         'has happens date',
-        'HAS HAPPENS DATE',
         'has scheduled date',
-        'HAS SCHEDULED DATE',
         'has start date',
-        'HAS START DATE',
         'has tag',
-        'HAS TAG',
         'has tags',
-        'HAS TAGS',
         'heading does not include wibble',
-        'HEADING DOES NOT INCLUDE wibble',
         'heading includes AND', // Verify Query doesn't confuse this with a boolean query
-        'HEADING INCLUDES AND', // Verify Query doesn't confuse this with a boolean query
         'heading includes wibble',
-        'HEADING INCLUDES wibble',
         'is not recurring',
-        'IS NOT RECURRING',
         'is recurring',
-        'IS RECURRING',
         'no created date',
-        'NO CREATED DATE',
         'no due date',
-        'NO DUE DATE',
         'no happens date',
-        'NO HAPPENS DATE',
         'no scheduled date',
-        'NO SCHEDULED DATE',
         'no start date',
-        'NO START DATE',
         'no tag',
-        'NO TAG',
         'no tags',
-        'NO TAGS',
         'not done',
-        'NOT DONE',
         'path does not include some/path',
-        'PATH DOES NOT INCLUDE some/path',
         'path includes AND', // Verify Query doesn't confuse this with a boolean query
-        'PATH INCLUDES AND', // Verify Query doesn't confuse this with a boolean query
         'path includes some/path',
-        'PATH INCLUDES some/path',
         'priority is above none',
-        'PRIORITY IS ABOVE NONE',
         'priority is below none',
-        'PRIORITY IS BELOW NONE',
         'priority is high',
-        'PRIORITY IS HIGH',
         'priority is low',
-        'PRIORITY IS LOW',
         'priority is medium',
-        'PRIORITY IS MEDIUM',
         'priority is none',
-        'PRIORITY IS NONE',
         'recurrence does not include wednesday',
-        'RECURRENCE DOES NOT INCLUDE wednesday',
         'recurrence includes wednesday',
-        'RECURRENCE INCLUDES wednesday',
         'root does not include some',
-        'ROOT DOES NOT INCLUDE some',
         'root includes AND', // Verify Query doesn't confuse this with a boolean query
-        'ROOT INCLUDES AND', // Verify Query doesn't confuse this with a boolean query
         'root includes some',
-        'ROOT INCLUDES some',
         'scheduled after 2021-12-27',
-        'SCHEDULED AFTER 2021-12-27',
         'scheduled before 2021-12-27',
-        'SCHEDULED BEFORE 2021-12-27',
         'scheduled date is invalid',
-        'SCHEDULED DATE IS INVALID',
         'scheduled in 2021-12-27 2021-12-29',
-        'SCHEDULED IN 2021-12-27 2021-12-29',
         'scheduled on 2021-12-27',
-        'SCHEDULED ON 2021-12-27',
         'scheduled this week',
-        'SCHEDULED THIS WEEK',
         'start date is invalid',
-        'START DATE IS INVALID',
         'starts after 2021-12-27',
-        'STARTS AFTER 2021-12-27',
         'starts before 2021-12-27',
-        'STARTS BEFORE 2021-12-27',
         'starts in 2021-12-27 2021-12-29',
-        'STARTS IN 2021-12-27 2021-12-29',
         'starts on 2021-12-27',
-        'STARTS ON 2021-12-27',
         'starts this week',
-        'STARTS THIS WEEK',
         'status.name includes cancelled',
-        'STATUS.NAME INCLUDES cancelled',
         'status.type is IN_PROGRESS',
-        'STATUS.TYPE IS IN_PROGRESS',
         'tag does not include #sometag',
-        'TAG DOES NOT INCLUDE #sometag',
         'tag does not include sometag',
-        'TAG DOES NOT INCLUDE sometag',
         'tag includes #sometag',
-        'TAG INCLUDES #sometag',
         'tag includes AND', // Verify Query doesn't confuse this with a boolean query
-        'TAG INCLUDES AND', // Verify Query doesn't confuse this with a boolean query
         'tag includes sometag',
-        'TAG INCLUDES sometag',
         'tags do not include #sometag',
-        'TAGS DO NOT INCLUDE #sometag',
         'tags do not include sometag',
-        'TAGS DO NOT INCLUDE sometag',
         'tags include #sometag',
-        'TAGS INCLUDE #sometag',
         'tags include sometag',
-        'TAGS INCLUDE sometag',
     ];
 
     /**
@@ -243,11 +151,17 @@ describe('Query parsing', () => {
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query(filter);
+            const queryUpperCase = new Query(filter.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
+
+            // Assert Uppercase
+            expect(queryUpperCase.error).toBeUndefined();
+            expect(queryUpperCase.filters.length).toEqual(1);
+            expect(queryUpperCase.filters[0]).toBeDefined();
         });
 
         it('sample lines really are in alphabetical order', () => {
@@ -308,86 +222,56 @@ describe('Query parsing', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
             'sort by created',
-            'SORT BY CREATED',
             'sort by created reverse',
-            'SORT BY CREATED REVERSE',
             'sort by description',
-            'SORT BY DESCRIPTION',
             'sort by description reverse',
-            'SORT BY DESCRIPTION REVERSE',
             'sort by done',
-            'SORT BY DONE',
             'sort by done reverse',
-            'SORT BY DONE REVERSE',
             'sort by due',
-            'SORT BY DUE',
             'sort by due reverse',
-            'SORT BY DUE REVERSE',
             'sort by filename',
-            'SORT BY FILENAME',
             'sort by filename reverse',
-            'SORT BY FILENAME REVERSE',
             'sort by happens',
-            'SORT BY HAPPENS',
             'sort by happens reverse',
-            'SORT BY HAPPENS REVERSE',
             'sort by heading',
-            'SORT BY HEADING',
             'sort by heading reverse',
-            'SORT BY HEADING REVERSE',
             'sort by path',
-            'SORT BY PATH',
             'sort by path reverse',
-            'SORT BY PATH REVERSE',
             'sort by priority',
-            'SORT BY PRIORITY',
             'sort by priority reverse',
-            'SORT BY PRIORITY REVERSE',
             'sort by recurring',
-            'SORT BY RECURRING',
             'sort by recurring reverse',
-            'SORT BY RECURRING REVERSE',
             'sort by scheduled',
-            'SORT BY SCHEDULED',
             'sort by scheduled reverse',
-            'SORT BY SCHEDULED REVERSE',
             'sort by start',
-            'SORT BY START',
             'sort by start reverse',
-            'SORT BY START REVERSE',
             'sort by status',
-            'SORT BY STATUS',
             'sort by status reverse',
-            'SORT BY STATUS REVERSE',
             'sort by status.name',
-            'SORT BY STATUS.NAME',
             'sort by status.name reverse',
-            'SORT BY STATUS.NAME REVERSE',
             'sort by status.type',
-            'SORT BY STATUS.TYPE',
             'sort by status.type reverse',
-            'SORT BY STATUS.TYPE REVERSE',
             'sort by tag',
-            'SORT BY TAG',
             'sort by tag 5',
-            'SORT BY TAG 5',
             'sort by tag reverse',
-            'SORT BY TAG REVERSE',
             'sort by tag reverse 3',
-            'SORT BY TAG REVERSE 3',
             'sort by urgency',
-            'SORT BY URGENCY',
             'sort by urgency reverse',
-            'SORT BY URGENCY REVERSE',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query(filter);
+            const queryUpperCase = new Query(filter.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
             expect(query.sorting.length).toEqual(1);
             expect(query.sorting[0]).toBeDefined();
+
+            // Assert Uppercase
+            expect(queryUpperCase.error).toBeUndefined();
+            expect(queryUpperCase.sorting.length).toEqual(1);
+            expect(queryUpperCase.sorting[0]).toBeDefined();
         });
 
         it('sample lines really are in alphabetical order', () => {
@@ -419,100 +303,63 @@ describe('Query parsing', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
             'group by backlink',
-            'GROUP BY BACKLINK',
             'group by backlink reverse',
-            'GROUP BY BACKLINK REVERSE',
             'group by created',
-            'GROUP BY CREATED',
             'group by created reverse',
-            'GROUP BY CREATED REVERSE',
             'group by done',
-            'GROUP BY DONE',
             'group by done reverse',
-            'GROUP BY DONE REVERSE',
             'group by due',
-            'GROUP BY DUE',
             'group by due reverse',
-            'GROUP BY DUE REVERSE',
             'group by filename',
-            'GROUP BY FILENAME',
             'group by filename reverse',
-            'GROUP BY FILENAME REVERSE',
             'group by folder',
-            'GROUP BY FOLDER',
             'group by folder reverse',
-            'GROUP BY FOLDER REVERSE',
             'group by function reverse task.status.symbol.replace(" ", "space")',
-            'GROUP BY FUNCTION REVERSE task.status.symbol.replace(" ", "space")',
             'group by function task.file.path.replace(query.file.folder, "")',
-            'GROUP BY FUNCTION task.file.path.replace(query.file.folder, "")',
             'group by function task.status.symbol.replace(" ", "space")',
-            'GROUP BY FUNCTION task.status.symbol.replace(" ", "space")',
             'group by happens',
-            'GROUP BY HAPPENS',
             'group by happens reverse',
-            'GROUP BY HAPPENS REVERSE',
             'group by heading',
-            'GROUP BY HEADING',
             'group by heading reverse',
-            'GROUP BY HEADING REVERSE',
             'group by path',
-            'GROUP BY PATH',
             'group by path reverse',
-            'GROUP BY PATH REVERSE',
             'group by priority',
-            'GROUP BY PRIORITY',
             'group by priority reverse',
-            'GROUP BY PRIORITY REVERSE',
             'group by recurrence',
-            'GROUP BY RECURRENCE',
             'group by recurrence reverse',
-            'GROUP BY RECURRENCE REVERSE',
             'group by recurring',
-            'GROUP BY RECURRING',
             'group by recurring reverse',
-            'GROUP BY RECURRING REVERSE',
             'group by root',
-            'GROUP BY ROOT',
             'group by root reverse',
-            'GROUP BY ROOT REVERSE',
             'group by scheduled',
-            'GROUP BY SCHEDULED',
             'group by scheduled reverse',
-            'GROUP BY SCHEDULED REVERSE',
             'group by start',
-            'GROUP BY START',
             'group by start reverse',
-            'GROUP BY START REVERSE',
             'group by status',
-            'GROUP BY STATUS',
             'group by status reverse',
-            'GROUP BY STATUS REVERSE',
             'group by status.name',
-            'GROUP BY STATUS.NAME',
             'group by status.name reverse',
-            'GROUP BY STATUS.NAME REVERSE',
             'group by status.type',
-            'GROUP BY STATUS.TYPE',
             'group by status.type reverse',
-            'GROUP BY STATUS.TYPE REVERSE',
             'group by tags',
-            'GROUP BY TAGS',
             'group by tags reverse',
-            'GROUP BY TAGS REVERSE',
             'group by urgency',
-            'GROUP BY URGENCY',
             'group by urgency reverse',
-            'GROUP BY URGENCY REVERSE',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query(filter);
+            const queryUpperCase = new Query(filter.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
             expect(query.grouping.length).toEqual(1);
             expect(query.grouping[0]).toBeDefined();
+
+            // Assert
+            expect(queryUpperCase.error).toBeUndefined();
+            expect(queryUpperCase.grouping.length).toEqual(1);
+            expect(queryUpperCase.grouping[0]).toBeDefined();
         });
 
         it('sample lines really are in alphabetical order', () => {
@@ -545,76 +392,46 @@ describe('Query parsing', () => {
         const filters: ReadonlyArray<string> = [
             '# Comment lines are ignored',
             'explain',
-            'EXPLAIN',
             'hide backlink',
-            'HIDE backlink',
             'hide created date',
-            'HIDE CREATED DATE',
             'hide done date',
-            'HIDE DONE DATE',
             'hide due date',
-            'HIDE DUE DATE',
             'hide edit button',
-            'HIDE EDIT BUTTON',
             'hide priority',
-            'HIDE PRIORITY',
             'hide recurrence rule',
-            'HIDE RECURRENCE RULE',
             'hide scheduled date',
-            'HIDE SCHEDULED DATE',
             'hide start date',
-            'HIDE START DATE',
             'hide tags',
-            'HIDE TAGS',
             'hide task count',
-            'HIDE TASK COUNT',
             'hide urgency',
-            'HIDE URGENCY',
             'ignore global query',
-            'IGNORE GLOBAL QUERY',
             'limit 42',
-            'LIMIT 42',
             'limit groups 31',
-            'LIMIT GROUPS 31',
             'limit groups to 31 tasks',
-            'LIMIT GROUPS TO 31 TASKS',
             'limit to 42 tasks',
-            'LIMIT TO 42 TASKS',
             'short',
-            'SHORT',
             'short mode',
-            'SHORT MODE',
             'show backlink',
-            'SHOW BACKLINK',
             'show created date',
-            'SHOW CREATED DATE',
             'show done date',
-            'SHOW DONE DATE',
             'show due date',
-            'SHOW DUE DATE',
             'show edit button',
-            'SHOW EDIT BUTTON',
             'show priority',
-            'SHOW PRIORITY',
             'show recurrence rule',
-            'SHOW RECURRENCE RULE',
             'show scheduled date',
-            'SHOW SCHEDULED DATE',
             'show start date',
-            'SHOW START DATE',
             'show tags',
-            'SHOW TAGS',
             'show task count',
-            'SHOW TASK COUNT',
             'show urgency',
-            'SHOW URGENCY',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query(filter);
+            const queryUpperCase = new Query(filter.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
+            expect(queryUpperCase.error).toBeUndefined();
         });
 
         it('sample lines really are in alphabetical order', () => {
@@ -1100,6 +917,10 @@ describe('Query', () => {
         });
     });
 
+    // ---------------------------------
+    // ---------------------------------
+    // ---------------------------------
+
     describe('filtering with "happens"', () => {
         type HappensCase = {
             description: string;
@@ -1127,7 +948,7 @@ describe('Query', () => {
             },
             {
                 description: 'on: should match if scheduled matches',
-                happensFilter: 'happens on 2012-03-04',
+                happensFilter: 'HAPPENS on 2012-03-04',
                 scheduled: '2012-03-04',
                 taskShouldMatch: true,
             },
@@ -1252,23 +1073,6 @@ describe('Query', () => {
                 },
             ],
             [
-                'simple OR UpperCase',
-                {
-                    filters: ['"HAS DUE DATE" OR (DESCRIPTION INCLUDES special)'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 📅 2022-04-20',
-                        '- [ ] special task 4',
-                    ],
-                    expectedResult: [
-                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] task 3 📅 2022-04-20',
-                        '- [ ] special task 4',
-                    ],
-                },
-            ],
-            [
                 'simple AND',
                 {
                     filters: ['(has start date) AND "description includes some"'],
@@ -1282,35 +1086,9 @@ describe('Query', () => {
                 },
             ],
             [
-                'simple AND UpperCase',
-                {
-                    filters: ['(HAS START DATE) AND "DESCRIPTION INCLUDES some"'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] special task 4',
-                    ],
-                    expectedResult: ['- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20'],
-                },
-            ],
-            [
                 'simple AND NOT',
                 {
                     filters: ['(has start date) AND NOT (description includes some)'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] special task 4',
-                    ],
-                    expectedResult: ['- [ ] any task 3 🛫 2022-04-20'],
-                },
-            ],
-            [
-                'simple AND NOT UpperCase',
-                {
-                    filters: ['(HAS START DATE) AND NOT (DESCRIPTION INCLUDES some)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -1338,39 +1116,9 @@ describe('Query', () => {
                 },
             ],
             [
-                'simple OR NOT UpperCase',
-                {
-                    filters: ['(HAS START DATE) OR NOT (DESCRIPTION INCLUDES special)'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] special task 4',
-                    ],
-                    expectedResult: [
-                        '- [ ] task 1',
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                    ],
-                },
-            ],
-            [
                 'simple XOR',
                 {
                     filters: ['(has start date) XOR (description includes special)'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] special task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] special task 4',
-                    ],
-                    expectedResult: ['- [ ] any task 3 🛫 2022-04-20', '- [ ] special task 4'],
-                },
-            ],
-            [
-                'simple XOR UpperCase',
-                {
-                    filters: ['(HAS START DATE) XOR (DESCRIPTION INCLUDES special)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] special task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -1394,39 +1142,9 @@ describe('Query', () => {
                 },
             ],
             [
-                'simple NOT UpperCase',
-                {
-                    filters: ['NOT (HAS START DATE)'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] special task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] special task 4',
-                    ],
-                    expectedResult: ['- [ ] task 1', '- [ ] special task 4'],
-                },
-            ],
-            [
                 'AND-first composition',
                 {
                     filters: ['(has start date) AND ((description includes some) OR (has due date))'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
-                        '- [ ] special task 4',
-                    ],
-                    expectedResult: [
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
-                    ],
-                },
-            ],
-            [
-                'AND-first composition UpperCase',
-                {
-                    filters: ['(HAS START DATE) AND ((DESCRIPTION INCLUDES some) OR (HAS DUE DATE))'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -1460,25 +1178,6 @@ describe('Query', () => {
                 },
             ],
             [
-                'OR-first composition UpperCase',
-                {
-                    filters: ['(HAS START DATE) OR ((DESCRIPTION INCLUDES special) AND (HAS DUE DATE))'],
-                    tasks: [
-                        '- [ ] special task 1',
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
-                        '- [ ] special task 4 📅 2022-04-20',
-                    ],
-                    expectedResult: [
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
-                        '- [ ] special task 4 📅 2022-04-20',
-                    ],
-                },
-            ],
-            [
                 'NOT-first composition',
                 {
                     filters: ['NOT ((has start date) OR (description includes special))'],
@@ -1492,22 +1191,13 @@ describe('Query', () => {
                     expectedResult: ['- [ ] regular task 1'],
                 },
             ],
-            [
-                'NOT-first composition UpperCase',
-                {
-                    filters: ['NOT ((HAS START DATE) OR (DESCRIPTION INCLUDES special))'],
-                    tasks: [
-                        '- [ ] regular task 1',
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
-                        '- [ ] special task 4 📅 2022-04-20',
-                    ],
-                    expectedResult: ['- [ ] regular task 1'],
-                },
-            ],
         ])('should support boolean filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
             shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            shouldSupportFiltering(
+                filters.map((filter) => filter.toUpperCase()),
+                allTaskLines,
+                expectedResult,
+            );
         });
     });
 
