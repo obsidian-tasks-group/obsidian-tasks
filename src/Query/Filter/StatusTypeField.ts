@@ -18,7 +18,7 @@ export class StatusTypeField extends Field {
     public canCreateFilterForLine(line: string): boolean {
         // Use a relaxed regexp, just checking field name and not the contents,
         // so that we can parse the line later and give meaningful errors if user uses invalid values.
-        const relaxedRegExp = new RegExp(`^(?:${this.fieldNameSingularEscaped()})`);
+        const relaxedRegExp = new RegExp(`^(?:${this.fieldNameSingularEscaped()})`, 'i');
         return Field.lineMatchesFilter(relaxedRegExp, line);
     }
 
@@ -29,7 +29,8 @@ export class StatusTypeField extends Field {
             return this.helpMessage(line);
         }
 
-        const [_, filterOperator, statusTypeAsString] = match;
+        const filterOperator = match[1].toLowerCase();
+        const statusTypeAsString = match[2];
 
         const statusTypeElement = StatusType[statusTypeAsString.toUpperCase() as keyof typeof StatusType];
         if (!statusTypeElement) {
@@ -57,7 +58,7 @@ export class StatusTypeField extends Field {
     }
 
     protected filterRegExp(): RegExp | null {
-        return new RegExp(`^(?:${this.fieldNameSingularEscaped()}) (is|is not) ([^ ]+)$`);
+        return new RegExp(`^(?:${this.fieldNameSingularEscaped()}) (is|is not) ([^ ]+)$`, 'i');
     }
 
     private helpMessage(line: string): FilterOrErrorMessage {

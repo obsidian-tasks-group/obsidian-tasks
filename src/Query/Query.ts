@@ -31,16 +31,16 @@ export class Query implements IQuery {
     private _ignoreGlobalQuery: boolean = false;
 
     private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency|tags)/;
-    private readonly shortModeRegexp = /^short/;
-    private readonly explainQueryRegexp = /^explain/;
-    private readonly ignoreGlobalQueryRegexp = /^ignore global query/;
+        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency|tags)/i;
+    private readonly shortModeRegexp = /^short/i;
+    private readonly explainQueryRegexp = /^explain/i;
+    private readonly ignoreGlobalQueryRegexp = /^ignore global query/i;
 
     logger = logging.getLogger('tasks.Query');
     // Used internally to uniquely log each query execution in the console.
     private _queryId: string = '';
 
-    private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/;
+    private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/i;
 
     private readonly commentRegexp = /^#.*/;
 
@@ -285,8 +285,8 @@ Problem line: "${line}"`;
     private parseHideOptions(line: string): void {
         const hideOptionsMatch = line.match(this.hideOptionsRegexp);
         if (hideOptionsMatch !== null) {
-            const hide = hideOptionsMatch[1] === 'hide';
-            const option = hideOptionsMatch[2];
+            const hide = hideOptionsMatch[1].toLowerCase() === 'hide';
+            const option = hideOptionsMatch[2].toLowerCase();
 
             switch (option) {
                 case 'task count':

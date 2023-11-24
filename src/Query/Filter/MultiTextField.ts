@@ -72,6 +72,6 @@ export abstract class MultiTextField extends TextField {
             throw Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
-        return new RegExp(`^group by ${this.fieldNamePlural()}( reverse)?$`);
+        return new RegExp(`^group by ${this.fieldNamePlural()}( reverse)?$`, 'i');
     }
 }
