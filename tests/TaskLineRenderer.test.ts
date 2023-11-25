@@ -293,8 +293,7 @@ describe('task line rendering - layout options', () => {
             path: 'a/b/c.d',
             precedingHeader: 'Previous Heading',
         });
-        const fullLayoutOptions = { ...new LayoutOptions(), ...{} };
-        const listItem = await renderListItem(task, fullLayoutOptions);
+        const listItem = await renderListItem(task);
         const renderedDescription = getDescriptionText(listItem);
         const renderedComponents = getOtherLayoutComponents(listItem);
         expect(renderedDescription).toEqual(
