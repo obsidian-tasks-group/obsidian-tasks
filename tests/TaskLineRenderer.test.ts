@@ -167,10 +167,6 @@ describe('task line rendering - global filter', () => {
 });
 
 describe('task line rendering - layout options', () => {
-    afterEach(() => {
-        resetSettings();
-    });
-
     const testLayoutOptions = async (
         taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
@@ -285,6 +281,21 @@ describe('task line rendering - layout options', () => {
         ]);
     });
 
+    it('standardise the recurrence rule, even if the rule is invalid', async () => {
+        await testLayoutOptions(
+            '- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd',
+            {},
+            'Task with invalid recurrence rule',
+            [' 🔁 every month on the 32th'],
+        );
+    });
+});
+
+describe('task line rendering - debug info rendering', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
     it('renders debug info if requested', async () => {
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(false, true) });
@@ -297,15 +308,6 @@ describe('task line rendering - layout options', () => {
         const renderedDescription = getDescriptionText(listItem);
         expect(renderedDescription).toEqual(
             "Task with debug info<br>🐛 <b>0</b> . 0 . 0 . '<code>- [ ] Task with debug info</code>'<br>'<code>a/b/c.d</code>' > '<code>Previous Heading</code>'<br>",
-        );
-    });
-
-    it('standardise the recurrence rule, even if the rule is invalid', async () => {
-        await testLayoutOptions(
-            '- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd',
-            {},
-            'Task with invalid recurrence rule',
-            [' 🔁 every month on the 32th'],
         );
     });
 });
