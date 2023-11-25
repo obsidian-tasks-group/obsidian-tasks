@@ -633,14 +633,12 @@ describe('Visualise HTML', () => {
             parentUlElement: parentElement,
             layoutOptions: layoutOptions ?? new LayoutOptions(),
         });
-        await taskLineRenderer.renderTaskLine(task, 0);
+        const li = await taskLineRenderer.renderTaskLine(task, 0);
 
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
 -->\n\n`;
-        const taskAsHTML = parentElement.innerHTML
-            .replace(/ data-/g, '\n    data-')
-            .replace(/<span/g, '\n        <span');
+        const taskAsHTML = li.outerHTML.replace(/ data-/g, '\n    data-').replace(/<span/g, '\n        <span');
 
         verifyWithFileExtension(taskAsMarkdown + taskAsHTML, 'html');
     }
