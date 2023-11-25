@@ -626,11 +626,10 @@ describe('Visualise HTML', () => {
             element.innerHTML = text;
         };
 
-        const parentElement = document.createElement('div');
         const taskLineRenderer = new TaskLineRenderer({
             textRenderer: mockHTMLRenderer,
             obsidianComponent: null,
-            parentUlElement: parentElement,
+            parentUlElement: document.createElement('div'),
             layoutOptions: layoutOptions ?? new LayoutOptions(),
         });
         const li = await taskLineRenderer.renderTaskLine(task, 0);
