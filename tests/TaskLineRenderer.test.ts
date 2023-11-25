@@ -37,39 +37,20 @@ const defaultTextRenderer = async (text: string, element: HTMLSpanElement, _path
     element.innerText = text;
 };
 
-/**
- * Creates a dummy 'parent element' to host a task render, renders a task inside it,
- * and returns it for inspection.
- */
-async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptions, mockTextRenderer?: TextRenderer) {
-    const parentElement = document.createElement('div');
-    // Our default text renderer for this method is a simplistic flat text
-    if (!mockTextRenderer) mockTextRenderer = defaultTextRenderer;
-    const taskLineRenderer = new TaskLineRenderer({
-        textRenderer: mockTextRenderer,
-        obsidianComponent: null,
-        parentUlElement: parentElement,
-        layoutOptions: layoutOptions ?? new LayoutOptions(),
-    });
-    await taskLineRenderer.renderTaskLine(task, 0);
-    return parentElement;
+function getTextSpan(listItem: HTMLElement) {
+    return listItem.children[1] as HTMLSpanElement;
 }
 
-function getTextSpan(parentElement: HTMLElement) {
-    const li = parentElement.children[0];
-    return li.children[1] as HTMLSpanElement;
-}
-
-function getDescriptionText(parentElement: HTMLElement) {
-    const textSpan = getTextSpan(parentElement);
+function getDescriptionText(listItem: HTMLElement) {
+    const textSpan = getTextSpan(listItem);
     return (textSpan.children[0].children[0] as HTMLElement).innerText;
 }
 
 /*
  * Returns a list of the task components that are not the description, as strings.
  */
-function getOtherLayoutComponents(parentElement: HTMLElement): string[] {
-    const textSpan = getTextSpan(parentElement);
+function getOtherLayoutComponents(listItem: HTMLElement): string[] {
+    const textSpan = getTextSpan(listItem);
     const components: string[] = [];
     for (const childSpan of Array.from(textSpan.children)) {
         if (childSpan.classList.contains(fieldRenderer.className('description'))) continue;
@@ -90,11 +71,7 @@ describe('task line rendering', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const parentRender = await createMockParentAndRender(task);
-
-        // Check what we have one child, which is the rendered child
-        expect(parentRender.children.length).toEqual(1);
-        const li = parentRender.children[0];
+        const li = await renderListItem(task);
 
         // Check that it's an element of type LI
         expect(li.nodeName).toEqual('LI');
@@ -129,8 +106,8 @@ describe('task line rendering', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const parentRender = await createMockParentAndRender(task);
-        return getDescriptionText(parentRender);
+        const listItem = await renderListItem(task);
+        return getDescriptionText(listItem);
     };
 
     it('should render Global Filter when the Remove Global Filter is off', async () => {
@@ -165,9 +142,9 @@ describe('task line rendering', () => {
             precedingHeader: 'Previous Heading',
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
-        const renderedDescription = getDescriptionText(parentRender);
-        const renderedComponents = getOtherLayoutComponents(parentRender);
+        const listItem = await renderListItem(task, fullLayoutOptions);
+        const renderedDescription = getDescriptionText(listItem);
+        const renderedComponents = getOtherLayoutComponents(listItem);
         expect(renderedDescription).toEqual(expectedDescription);
         expect(renderedComponents).toEqual(expectedComponents);
     };
@@ -305,9 +282,9 @@ describe('task line rendering', () => {
             line: taskLine,
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
+        const li = await renderListItem(task, fullLayoutOptions);
 
-        const textSpan = getTextSpan(parentRender);
+        const textSpan = getTextSpan(li);
         let found = false;
         for (const childSpan of Array.from(textSpan.children)) {
             if (childSpan.classList.contains(mainClass)) {
@@ -331,8 +308,7 @@ describe('task line rendering', () => {
             line: taskLine,
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
-        const li = parentRender.children[0] as HTMLElement;
+        const li = await renderListItem(task, fullLayoutOptions);
         for (const key in attributes) {
             expect(li.dataset[key]).toEqual(attributes[key]);
         }
@@ -348,13 +324,13 @@ describe('task line rendering', () => {
             line: taskLine,
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
+        const li = await renderListItem(task, fullLayoutOptions);
 
-        const textSpan = getTextSpan(parentRender);
+        const textSpan = getTextSpan(li);
         for (const childSpan of Array.from(textSpan.children)) {
             expect(childSpan.classList.contains(hiddenGenericClass)).toBeFalsy();
         }
-        const li = parentRender.children[0] as HTMLElement;
+
         // Now verify the attributes
         for (const key in attributes) {
             expect(li.dataset[key]).toEqual(attributes[key]);
@@ -576,9 +552,9 @@ describe('task line rendering', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const parentRender = await createMockParentAndRender(task, new LayoutOptions(), mockInnerHtmlRenderer);
+        const listItem = await renderListItem(task, new LayoutOptions(), mockInnerHtmlRenderer);
 
-        const textSpan = getTextSpan(parentRender);
+        const textSpan = getTextSpan(listItem);
         const descriptionSpan = textSpan.children[0].children[0] as HTMLElement;
         expect(descriptionSpan.textContent).toEqual('Class with #someTag');
         const tagSpan = descriptionSpan.children[0] as HTMLSpanElement;
@@ -592,9 +568,9 @@ describe('task line rendering', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const parentRender = await createMockParentAndRender(task, new LayoutOptions(), mockInnerHtmlRenderer);
+        const listItem = await renderListItem(task, new LayoutOptions(), mockInnerHtmlRenderer);
 
-        const textSpan = getTextSpan(parentRender);
+        const textSpan = getTextSpan(listItem);
         const descriptionSpan = textSpan.children[0].children[0] as HTMLElement;
         expect(descriptionSpan.textContent).toEqual('Class with #illegal"data&attribute');
         const tagSpan = descriptionSpan.children[0] as HTMLSpanElement;
