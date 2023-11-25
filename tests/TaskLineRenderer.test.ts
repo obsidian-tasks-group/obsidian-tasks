@@ -37,6 +37,14 @@ const defaultTextRenderer = async (text: string, element: HTMLSpanElement, _path
     element.innerText = text;
 };
 
+const mockHTMLRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
+    // Contrary to the default mockTextRenderer() in createMockParentAndRender(),
+    // instead of the rendered HTMLSpanElement.innerText,
+    // we need the plain HTML here like in TaskLineRenderer.renderComponentText(),
+    // in order to ensure that any description and tags are retained.
+    element.innerHTML = text;
+};
+
 function getTextSpan(listItem: HTMLElement) {
     return listItem.children[1] as HTMLSpanElement;
 }
@@ -605,14 +613,6 @@ describe('task line rendering', () => {
 
 describe('Visualise HTML', () => {
     async function renderAndVerifyHTML(task: Task, layoutOptions: LayoutOptions) {
-        const mockHTMLRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
-            // Contrary to the default mockTextRenderer() in createMockParentAndRender(),
-            // instead of the rendered HTMLSpanElement.innerText,
-            // we need the plain HTML here like in TaskLineRenderer.renderComponentText(),
-            // in order to ensure that any description and tags are retained.
-            element.innerHTML = text;
-        };
-
         const li = await renderListItem(task, layoutOptions, mockHTMLRenderer);
 
         const taskAsMarkdown = `<!--
