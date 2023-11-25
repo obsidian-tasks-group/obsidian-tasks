@@ -246,14 +246,6 @@ describe('task line rendering', () => {
         );
     });
 
-    it('marks nonexistent task priority as "normal" priority', async () => {
-        await testLiAttributes(
-            '- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            {},
-            { taskPriority: 'normal' },
-        );
-    });
-
     it('renders a done task correctly with the default layout', async () => {
         await testLayoutOptions(
             '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
@@ -627,6 +619,14 @@ describe('task line rendering', () => {
             '- [-] In-progress task',
             {},
             { task: '-', taskStatusName: 'Cancelled', taskStatusType: 'CANCELLED' },
+        );
+    });
+
+    it('marks nonexistent task priority as "normal" priority', async () => {
+        await testLiAttributes(
+            '- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            {},
+            { taskPriority: 'normal' },
         );
     });
 });
