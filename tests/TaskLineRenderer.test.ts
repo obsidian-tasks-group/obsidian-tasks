@@ -76,13 +76,7 @@ function getOtherLayoutComponents(listItem: HTMLElement): string[] {
     return components;
 }
 
-describe('task line rendering', () => {
-    afterEach(() => {
-        resetSettings();
-        GlobalFilter.getInstance().reset();
-        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
-    });
-
+describe('task line rendering - HTML', () => {
     it('should render only one List Item for the UL and return it with renderTaskLine()', async () => {
         const ulElement = document.createElement('ul');
         const taskLineRenderer = new TaskLineRenderer({
@@ -135,6 +129,13 @@ describe('task line rendering', () => {
         // Check that eventually the correct text was rendered
         expect((internalDescriptionSpan as HTMLSpanElement).innerText).toEqual('This is a simple task');
     });
+});
+
+describe('task line rendering - global filter', () => {
+    afterEach(() => {
+        GlobalFilter.getInstance().reset();
+        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
+    });
 
     const getDescriptionTest = async (taskLine: string) => {
         const task = fromLine({
@@ -162,6 +163,12 @@ describe('task line rendering', () => {
         const descriptionWithoutFilter = await getDescriptionTest(taskLine);
 
         expect(descriptionWithoutFilter).toEqual('#global/subtag-shall-stay This is a simple task with a filter');
+    });
+});
+
+describe('task line rendering - layout options', () => {
+    afterEach(() => {
+        resetSettings();
     });
 
     const testLayoutOptions = async (
@@ -297,7 +304,9 @@ describe('task line rendering', () => {
             [' 🔁 every month on the 32th'],
         );
     });
+});
 
+describe('task line rendering - classes and data attributes', () => {
     const testComponentClasses = async (
         taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
