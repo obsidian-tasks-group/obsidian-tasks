@@ -74,6 +74,20 @@ describe('task line rendering', () => {
         GlobalFilter.getInstance().setRemoveGlobalFilter(false);
     });
 
+    it('should render only one child for the UL and return it with renderTaskLine()', async () => {
+        const ulElement = document.createElement('ul');
+        const taskLineRenderer = new TaskLineRenderer({
+            textRenderer: mockTextRenderer,
+            obsidianComponent: null,
+            parentUlElement: ulElement,
+            layoutOptions: new LayoutOptions(),
+        });
+        const listItem = await taskLineRenderer.renderTaskLine(new TaskBuilder().build(), 0);
+
+        expect(ulElement.children.length).toEqual(1);
+        expect(ulElement.children[0]).toEqual(listItem);
+    });
+
     it('creates the correct span structure for a basic task', async () => {
         const taskLine = '- [ ] This is a simple task';
         const task = fromLine({
