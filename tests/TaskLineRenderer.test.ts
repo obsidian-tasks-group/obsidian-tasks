@@ -33,6 +33,10 @@ async function renderListItem(task: Task, layoutOptions: LayoutOptions, testRend
     return await taskLineRenderer.renderTaskLine(task, 0);
 }
 
+const defaultTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
+    element.innerText = text;
+};
+
 /**
  * Creates a dummy 'parent element' to host a task render, renders a task inside it,
  * and returns it for inspection.
@@ -40,10 +44,7 @@ async function renderListItem(task: Task, layoutOptions: LayoutOptions, testRend
 async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptions, mockTextRenderer?: TextRenderer) {
     const parentElement = document.createElement('div');
     // Our default text renderer for this method is a simplistic flat text
-    if (!mockTextRenderer)
-        mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
-            element.innerText = text;
-        };
+    if (!mockTextRenderer) mockTextRenderer = defaultTextRenderer;
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: mockTextRenderer,
         obsidianComponent: null,
