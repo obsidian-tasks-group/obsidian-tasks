@@ -289,17 +289,15 @@ describe('task line rendering - layout options', () => {
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(false, true) });
         const task = fromLine({
-            line: '- [ ] Task with invalid due date 📅 2023-11-02',
+            line: '- [ ] Task with debug info',
             path: 'a/b/c.d',
             precedingHeader: 'Previous Heading',
         });
         const listItem = await renderListItem(task);
         const renderedDescription = getDescriptionText(listItem);
-        const renderedComponents = getOtherLayoutComponents(listItem);
         expect(renderedDescription).toEqual(
-            "Task with invalid due date<br>🐛 <b>0</b> . 0 . 0 . '<code>- [ ] Task with invalid due date 📅 2023-11-02</code>'<br>'<code>a/b/c.d</code>' > '<code>Previous Heading</code>'<br>",
+            "Task with debug info<br>🐛 <b>0</b> . 0 . 0 . '<code>- [ ] Task with debug info</code>'<br>'<code>a/b/c.d</code>' > '<code>Previous Heading</code>'<br>",
         );
-        await expect(renderedComponents).toEqual([' 📅 2023-11-02']);
     });
 
     it('standardise the recurrence rule, even if the rule is invalid', async () => {
