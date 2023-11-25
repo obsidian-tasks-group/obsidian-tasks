@@ -25,7 +25,7 @@ const fieldRenderer = new TaskFieldRenderer();
 
 async function renderListItem(task: Task, layoutOptions?: LayoutOptions, testRenderer?: TextRenderer) {
     const taskLineRenderer = new TaskLineRenderer({
-        textRenderer: testRenderer ?? defaultTextRenderer,
+        textRenderer: testRenderer ?? mockTextRenderer,
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
         layoutOptions: layoutOptions ?? new LayoutOptions(),
@@ -33,7 +33,7 @@ async function renderListItem(task: Task, layoutOptions?: LayoutOptions, testRen
     return await taskLineRenderer.renderTaskLine(task, 0);
 }
 
-const defaultTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
+const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
     element.innerText = text;
 };
 
