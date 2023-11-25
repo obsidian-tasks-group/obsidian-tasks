@@ -542,12 +542,6 @@ describe('task line rendering', () => {
         );
     });
 
-    // Unlike the default renderer in createMockParentAndRender, this one accepts a raw HTML rather
-    // than a text, used for the following tests
-    const mockInnerHtmlRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
-        element.innerHTML = text;
-    };
-
     /*
      * In this test we try to imitate Obsidian's Markdown renderer more thoroughly than other tests,
      * so we can verify that the rendering code adds the correct tag classes inside the rendered
@@ -560,7 +554,7 @@ describe('task line rendering', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const listItem = await renderListItem(task, new LayoutOptions(), mockInnerHtmlRenderer);
+        const listItem = await renderListItem(task, new LayoutOptions(), mockHTMLRenderer);
 
         const textSpan = getTextSpan(listItem);
         const descriptionSpan = textSpan.children[0].children[0] as HTMLElement;
@@ -576,7 +570,7 @@ describe('task line rendering', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const listItem = await renderListItem(task, new LayoutOptions(), mockInnerHtmlRenderer);
+        const listItem = await renderListItem(task, new LayoutOptions(), mockHTMLRenderer);
 
         const textSpan = getTextSpan(listItem);
         const descriptionSpan = textSpan.children[0].children[0] as HTMLElement;
