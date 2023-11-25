@@ -79,19 +79,19 @@ describe('task line rendering', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const li = await renderListItem(task);
+        const listItem = await renderListItem(task);
 
-        // Check that it's an element of type LI
-        expect(li.nodeName).toEqual('LI');
+        // Check that it's an element of type listItem
+        expect(listItem.nodeName).toEqual('LI');
 
         // Check that it has two children: a checkbox and a text span
-        expect(li.children.length).toEqual(2);
+        expect(listItem.children.length).toEqual(2);
 
-        const checkbox = li.children[0];
+        const checkbox = listItem.children[0];
         expect(checkbox.nodeName).toEqual('INPUT');
         expect(checkbox.classList.contains('task-list-item-checkbox')).toBeTruthy();
 
-        const textSpan = li.children[1];
+        const textSpan = listItem.children[1];
         expect(textSpan.nodeName).toEqual('SPAN');
         expect(textSpan.classList.contains('tasks-list-text')).toBeTruthy();
 
@@ -290,9 +290,9 @@ describe('task line rendering', () => {
             line: taskLine,
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const li = await renderListItem(task, fullLayoutOptions);
+        const listItem = await renderListItem(task, fullLayoutOptions);
 
-        const textSpan = getTextSpan(li);
+        const textSpan = getTextSpan(listItem);
         let found = false;
         for (const childSpan of Array.from(textSpan.children)) {
             if (childSpan.classList.contains(mainClass)) {
@@ -316,9 +316,9 @@ describe('task line rendering', () => {
             line: taskLine,
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const li = await renderListItem(task, fullLayoutOptions);
+        const listItem = await renderListItem(task, fullLayoutOptions);
         for (const key in attributes) {
-            expect(li.dataset[key]).toEqual(attributes[key]);
+            expect(listItem.dataset[key]).toEqual(attributes[key]);
         }
     };
 
@@ -332,16 +332,16 @@ describe('task line rendering', () => {
             line: taskLine,
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const li = await renderListItem(task, fullLayoutOptions);
+        const listItem = await renderListItem(task, fullLayoutOptions);
 
-        const textSpan = getTextSpan(li);
+        const textSpan = getTextSpan(listItem);
         for (const childSpan of Array.from(textSpan.children)) {
             expect(childSpan.classList.contains(hiddenGenericClass)).toBeFalsy();
         }
 
         // Now verify the attributes
         for (const key in attributes) {
-            expect(li.dataset[key]).toEqual(attributes[key]);
+            expect(listItem.dataset[key]).toEqual(attributes[key]);
         }
     };
 
@@ -607,12 +607,12 @@ describe('task line rendering', () => {
 
 describe('Visualise HTML', () => {
     async function renderAndVerifyHTML(task: Task, layoutOptions: LayoutOptions) {
-        const li = await renderListItem(task, layoutOptions, mockHTMLRenderer);
+        const listItem = await renderListItem(task, layoutOptions, mockHTMLRenderer);
 
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
 -->\n\n`;
-        const taskAsHTML = li.outerHTML.replace(/ data-/g, '\n    data-').replace(/<span/g, '\n        <span');
+        const taskAsHTML = listItem.outerHTML.replace(/ data-/g, '\n    data-').replace(/<span/g, '\n        <span');
 
         verifyWithFileExtension(taskAsMarkdown + taskAsHTML, 'html');
     }
