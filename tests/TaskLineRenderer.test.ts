@@ -23,6 +23,16 @@ type AttributesDictionary = { [key: string]: string };
 
 const fieldRenderer = new TaskFieldRenderer();
 
+async function renderListItem(task: Task, layoutOptions: LayoutOptions, testRenderer: TextRenderer) {
+    const taskLineRenderer = new TaskLineRenderer({
+        textRenderer: testRenderer,
+        obsidianComponent: null,
+        parentUlElement: document.createElement('div'),
+        layoutOptions: layoutOptions ?? new LayoutOptions(),
+    });
+    return await taskLineRenderer.renderTaskLine(task, 0);
+}
+
 /**
  * Creates a dummy 'parent element' to host a task render, renders a task inside it,
  * and returns it for inspection.
@@ -626,13 +636,7 @@ describe('Visualise HTML', () => {
             element.innerHTML = text;
         };
 
-        const taskLineRenderer = new TaskLineRenderer({
-            textRenderer: mockHTMLRenderer,
-            obsidianComponent: null,
-            parentUlElement: document.createElement('div'),
-            layoutOptions: layoutOptions ?? new LayoutOptions(),
-        });
-        const li = await taskLineRenderer.renderTaskLine(task, 0);
+        const li = await renderListItem(task, layoutOptions, mockHTMLRenderer);
 
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
