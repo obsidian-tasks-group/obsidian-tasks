@@ -23,9 +23,9 @@ type AttributesDictionary = { [key: string]: string };
 
 const fieldRenderer = new TaskFieldRenderer();
 
-async function renderListItem(task: Task, layoutOptions: LayoutOptions, testRenderer: TextRenderer) {
+async function renderListItem(task: Task, layoutOptions: LayoutOptions, testRenderer?: TextRenderer) {
     const taskLineRenderer = new TaskLineRenderer({
-        textRenderer: testRenderer,
+        textRenderer: testRenderer ?? defaultTextRenderer,
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
         layoutOptions: layoutOptions ?? new LayoutOptions(),
