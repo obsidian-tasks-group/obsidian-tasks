@@ -626,11 +626,19 @@ describe('Visualise HTML', () => {
             element.innerHTML = text;
         };
 
-        const parentRender = await createMockParentAndRender(task, layoutOptions, mockHTMLRenderer);
+        const parentElement = document.createElement('div');
+        const taskLineRenderer = new TaskLineRenderer({
+            textRenderer: mockHTMLRenderer,
+            obsidianComponent: null,
+            parentUlElement: parentElement,
+            layoutOptions: layoutOptions ?? new LayoutOptions(),
+        });
+        await taskLineRenderer.renderTaskLine(task, 0);
+
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
 -->\n\n`;
-        const taskAsHTML = parentRender.innerHTML
+        const taskAsHTML = parentElement.innerHTML
             .replace(/ data-/g, '\n    data-')
             .replace(/<span/g, '\n        <span');
 
