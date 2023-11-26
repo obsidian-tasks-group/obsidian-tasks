@@ -175,8 +175,6 @@ describe('task line rendering - layout options', () => {
     ) => {
         const task = fromLine({
             line: taskLine,
-            path: 'a/b/c.d',
-            precedingHeader: 'Previous Heading',
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
