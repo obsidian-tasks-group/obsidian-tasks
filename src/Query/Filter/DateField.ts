@@ -38,7 +38,6 @@ export abstract class DateField extends Field {
     }
 
     public canCreateFilterForLine(line: string): boolean {
-        line = line?.toLowerCase();
         if (this.filterInstructions.canCreateFilterForLine(line)) {
             return true;
         }
@@ -55,7 +54,7 @@ export abstract class DateField extends Field {
             return FilterOrErrorMessage.fromError(line, errorText);
         }
 
-        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line.toLowerCase());
+        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
         if (filterResult.filter !== undefined) {
             return filterResult;
         }
