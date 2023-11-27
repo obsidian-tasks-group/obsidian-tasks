@@ -50,8 +50,7 @@ describe('explains regular sub-string searches', () => {
     });
 
     it('should explain simple string search, preserving instruction case', () => {
-        const instruction = 'description INCLUDES hello';
-        const field = new DescriptionField().createFilterOrErrorMessage(instruction);
+        const field = new DescriptionField().createFilterOrErrorMessage('description INCLUDES hello');
         expect(field).toHaveExplanation('description INCLUDES hello');
     });
 });
