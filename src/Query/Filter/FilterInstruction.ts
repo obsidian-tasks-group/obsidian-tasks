@@ -19,7 +19,7 @@ export class FilterInstruction {
 
     /**
      * Constructor:
-     * @param instruction - Full text of the instruction for the filter: must be matched exactly
+     * @param instruction - Full text of the instruction for the filter: must be matched exactly, ignoring capitalisation.
      * @param filter
      */
     constructor(instruction: string, filter: FilterFunction) {
@@ -28,11 +28,11 @@ export class FilterInstruction {
     }
 
     public canCreateFilterForLine(line: string): boolean {
-        return line == this._instruction;
+        return line.toLocaleLowerCase() === this._instruction.toLocaleLowerCase();
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        if (line === this._instruction) {
+        if (this.canCreateFilterForLine(line)) {
             return FilterOrErrorMessage.fromFilter(new Filter(line, this._filter, new Explanation(line)));
         }
 

@@ -71,6 +71,11 @@ describe('tag presence & absence', () => {
 
         GlobalFilter.getInstance().reset();
     });
+
+    it('should honour original case, when explaining simple filters', () => {
+        const filter = new TagsField().createFilterOrErrorMessage('HAS TAGS');
+        expect(filter).toHaveExplanation('HAS TAGS');
+    });
 });
 
 describe('tag/tags', () => {
