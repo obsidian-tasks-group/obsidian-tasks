@@ -48,6 +48,12 @@ describe('explains regular sub-string searches', () => {
         const field = new DescriptionField().createFilterOrErrorMessage(instruction);
         expect(field).toHaveExplanation('description includes hello');
     });
+
+    it('should explain simple string search, preserving instruction case', () => {
+        const instruction = 'description INCLUDES hello';
+        const field = new DescriptionField().createFilterOrErrorMessage(instruction);
+        expect(field).toHaveExplanation('description INCLUDES hello');
+    });
 });
 
 describe('explains regular expression searches', () => {

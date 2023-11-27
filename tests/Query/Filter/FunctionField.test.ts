@@ -70,6 +70,11 @@ describe('FunctionField - filtering', () => {
         expect(t).toThrow(Error);
         expect(t).toThrowError('filtering function must return true or false. This returned "undefined".');
     });
+
+    it('filter by function - explanation should honour original case', () => {
+        const filter = functionField.createFilterOrErrorMessage('filter by FUNCTION task.isRecurring');
+        expect(filter).toHaveExplanation('filter by FUNCTION task.isRecurring');
+    });
 });
 
 // -----------------------------------------------------------------------------------------------------------------
