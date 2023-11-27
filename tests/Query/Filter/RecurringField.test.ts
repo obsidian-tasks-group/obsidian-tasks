@@ -46,6 +46,11 @@ describe('recurring', () => {
         testRecurringFilter(filter, recurring, false);
         testRecurringFilter(filter, invalid, true);
     });
+
+    it('should honour original case, when explaining simple filters', () => {
+        const filter = new RecurringField().createFilterOrErrorMessage('is NOT recurring');
+        expect(filter).toHaveExplanation('is NOT recurring');
+    });
 });
 
 describe('sorting by recurring', () => {

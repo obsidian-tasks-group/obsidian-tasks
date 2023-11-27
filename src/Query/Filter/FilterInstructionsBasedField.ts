@@ -16,7 +16,7 @@ export abstract class FilterInstructionsBasedField extends Field {
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        return this._filters.createFilterOrErrorMessage(line.toLowerCase());
+        return this._filters.createFilterOrErrorMessage(line);
     }
 
     protected filterRegExp(): RegExp | null {
