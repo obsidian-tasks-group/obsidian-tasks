@@ -12,7 +12,7 @@ export abstract class FilterInstructionsBasedField extends Field {
     protected readonly _filters = new FilterInstructions();
 
     public canCreateFilterForLine(line: string): boolean {
-        return this._filters.canCreateFilterForLine(line.toLowerCase());
+        return this._filters.canCreateFilterForLine(line);
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {

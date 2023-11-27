@@ -36,7 +36,7 @@ export class TagsField extends MultiTextField {
     }
 
     public canCreateFilterForLine(line: string): boolean {
-        if (this.filterInstructions.canCreateFilterForLine(line.toLowerCase())) {
+        if (this.filterInstructions.canCreateFilterForLine(line)) {
             return true;
         }
 
