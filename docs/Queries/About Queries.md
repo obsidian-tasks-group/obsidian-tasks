@@ -73,7 +73,7 @@ In the following sections we will explain all the various options that are avail
 ### Capitals in Query Instructions - Case Insensitivity
 
 > [!released]
-> The ability to use capital letters in query instructions was introduced in Tasks X.Y.Z.
+> The ability to use capital letters in query instructions was introduced in Tasks 5.2.0.
 
 Almost all Tasks query instructions are now case-INsensitive: they can now be typed with capital letters. This is especially helpful when typing them on mobile phones, and for emphasising important words.
 
