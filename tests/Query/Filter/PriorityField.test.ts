@@ -147,7 +147,7 @@ describe('priority error cases', () => {
 describe('explain priority', () => {
     it('simple case just repeats the supplied line', () => {
         const field = new PriorityField();
-        const instruction = 'priority above none';
+        const instruction = 'priority above NONE';
         const filterOrMessage = field.createFilterOrErrorMessage(instruction);
         expect(filterOrMessage).toHaveExplanation(instruction);
     });

@@ -27,7 +27,7 @@ export class TagsField extends MultiTextField {
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line.toLowerCase());
+        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
         if (filterResult.filter !== undefined) {
             return filterResult;
         }
@@ -36,7 +36,7 @@ export class TagsField extends MultiTextField {
     }
 
     public canCreateFilterForLine(line: string): boolean {
-        if (this.filterInstructions.canCreateFilterForLine(line.toLowerCase())) {
+        if (this.filterInstructions.canCreateFilterForLine(line)) {
             return true;
         }
 

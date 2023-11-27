@@ -22,7 +22,6 @@ In Live Preview and Reading modes, this will list *all* tasks from your vault, r
 
 This is probably not what you want.
 Therefore, Tasks allows you to set query options to filter the tasks that you want to show.
-*All the queries are case insensitive.*
 
 For instance, you can show only the tasks (from anywhere in the vault) that are due today:
 
@@ -68,6 +67,30 @@ In the following sections we will explain all the various options that are avail
 - [[Sorting]]
 - [[Grouping]]
 - [[Layout]]
+
+## Query Tips
+
+### Capitals in Query Instructions - Case Insensitivity
+
+> [!released]
+> The ability to use capital letters in query instructions was introduced in Tasks X.Y.Z.
+
+Almost all Tasks query instructions are now case-INsensitive: they can now be typed with capital letters. This is especially helpful when typing them on mobile phones, and for emphasising important words.
+
+For example, the following instructions are identical:
+
+- `due before tomorrow`
+- `Due before tomorrow`
+- `due BEFORE Tomorrow`
+
+The only exceptions to this flexibility are:
+
+- When [[Combining Filters]], the boolean operators such as `AND`, `OR` and `NOT` must still be capitalised.
+- In [[Regular Expressions]], the search pattern and flags are still case-sensitive.
+
+### Why is my query not working?
+
+If a query gives unexpected results, see [[Explaining Queries]] and add the `explain` instruction.
 
 ## Limitations of Queries
 

@@ -31,4 +31,9 @@ describe('DateField', () => {
         expect(filter).not.toBeValid();
         expect(filter.error).toContain('Instruction contains unexpanded template text');
     });
+
+    it('should honour original case, when explaining simple filters', () => {
+        const filter = new ScheduledDateField().createFilterOrErrorMessage('HAS SCHEDULED DATE');
+        expect(filter).toHaveExplanation('HAS SCHEDULED DATE');
+    });
 });
