@@ -483,8 +483,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         timeUnit: unitOfTime.DurationConstructor = 'days',
         amount = 1,
     ) {
-        const errorMessage = '⚠️ Postponement requires a date: due or scheduled.';
-        if (!task.dueDate && !task.scheduledDate) return new Notice(errorMessage, 10000);
+        const errorMessage = '⚠️ Postponement requires a happens date: start, due or scheduled.';
+        if (task.happens.moment === null) {
+            return new Notice(errorMessage, 10000);
+        }
+
         const dateTypeToUpdate = getDateFieldToPostpone(task);
         if (dateTypeToUpdate === null) return;
 
