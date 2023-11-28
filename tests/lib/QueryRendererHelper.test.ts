@@ -3,9 +3,10 @@
  */
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
-import { explainResults, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
+import { explainResults, getDateFieldToPostpone, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -124,5 +125,12 @@ describe('query used for QueryRenderer', () => {
         // Assert
         expect(query.source).toEqual('description includes from_block_query\nignore global query');
         expect(query.filePath).toEqual(filePath);
+    });
+});
+
+describe('postpone - date field choice', () => {
+    it('should not postpone if no happens dates on task', () => {
+        const emptyTask = new TaskBuilder().build();
+        expect(getDateFieldToPostpone(emptyTask)).toBeNull();
     });
 });
