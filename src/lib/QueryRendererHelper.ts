@@ -72,7 +72,9 @@ export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuer
     return globalQuery.query(path).append(tasksBlockQuery);
 }
 
-export function getDateFieldToPostpone(task: Task) {
+export type HappensDate = keyof Pick<Task, 'scheduledDate' | 'dueDate'>;
+
+export function getDateFieldToPostpone(task: Task): HappensDate | null {
     const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
     const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
     return dateTypeToUpdate;
@@ -80,7 +82,7 @@ export function getDateFieldToPostpone(task: Task) {
 
 export function createPostponedTask(
     task: Task,
-    dateTypeToUpdate: keyof Task,
+    dateTypeToUpdate: HappensDate,
     timeUnit: unitOfTime.DurationConstructor,
     amount: number,
 ) {

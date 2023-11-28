@@ -9,6 +9,7 @@ import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 
 import type { IQuery } from './IQuery';
 import {
+    type HappensDate,
     createPostponedTask,
     explainResults,
     getDateFieldToPostpone,
@@ -500,7 +501,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private onPostponeSuccessCallback(
         button: HTMLButtonElement,
-        updatedDateType: 'dueDate' | 'scheduledDate',
+        updatedDateType: HappensDate,
         postponedDateString: string,
     ) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
