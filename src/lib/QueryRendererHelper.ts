@@ -1,6 +1,9 @@
+import type { Moment, unitOfTime } from 'moment';
 import type { GlobalFilter } from '../Config/GlobalFilter';
 import type { GlobalQuery } from '../Config/GlobalQuery';
 import { Query } from '../Query/Query';
+import { Task } from '../Task';
+import { TasksDate } from '../Scripting/TasksDate';
 
 /**
  * @summary
@@ -67,4 +70,22 @@ export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuer
     }
 
     return globalQuery.query(path).append(tasksBlockQuery);
+}
+
+export function getDateFieldToPostpone(task: Task) {
+    const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
+    const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
+    return dateTypeToUpdate;
+}
+
+export function createPostponedTask(
+    task: Task,
+    dateTypeToUpdate: keyof Task,
+    timeUnit: unitOfTime.DurationConstructor,
+    amount: number,
+) {
+    const dateToUpdate = task[dateTypeToUpdate] as Moment;
+    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+    const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
+    return { postponedDate, newTasks };
 }

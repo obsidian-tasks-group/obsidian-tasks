@@ -1,7 +1,6 @@
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, MenuItem, Notice, Plugin, TFile } from 'obsidian';
 import type { unitOfTime } from 'moment';
-import type { Moment } from 'moment';
 import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -9,16 +8,20 @@ import { DateFallback } from './DateFallback';
 import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 
 import type { IQuery } from './IQuery';
-import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
+import {
+    createPostponedTask,
+    explainResults,
+    getDateFieldToPostpone,
+    getQueryForQueryRenderer,
+} from './lib/QueryRendererHelper';
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
-import { Task } from './Task';
+import type { Task } from './Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
-import { TasksDate } from './Scripting/TasksDate';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -44,24 +47,6 @@ export class QueryRenderer {
             }),
         );
     }
-}
-
-function getDateFieldToPostpone(task: Task) {
-    const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
-    const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
-    return dateTypeToUpdate;
-}
-
-function createPostponedTask(
-    task: Task,
-    dateTypeToUpdate: keyof Task,
-    timeUnit: unitOfTime.DurationConstructor,
-    amount: number,
-) {
-    const dateToUpdate = task[dateTypeToUpdate] as Moment;
-    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-    const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
-    return { postponedDate, newTasks };
 }
 
 class QueryRenderChild extends MarkdownRenderChild {
