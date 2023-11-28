@@ -506,7 +506,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.disabled = true;
         button.setAttr('title', 'You can perform this action again after reloading the file.');
-        new Notice(`Task's ${updatedDateType} postponed untill ${postponedDateString}`, 5000);
+        new Notice(`Task's ${updatedDateType} postponed until ${postponedDateString}`, 5000);
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
     }
 }
