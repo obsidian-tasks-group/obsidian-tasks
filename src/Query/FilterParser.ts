@@ -34,6 +34,7 @@ import { BacklinkField } from './Filter/BacklinkField';
 // When adding new fields keep this order in mind, putting fields that are more specific before fields that
 // may contain them, and keep BooleanField last.
 export const fieldCreators: EndsWith<BooleanField> = [
+    // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
     () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
     () => new StatusField(),
@@ -75,7 +76,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     // New style parsing, using sorting which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'sort by'
-    const sortByRegexp = /^sort by /;
+    const sortByRegexp = /^sort by /i;
     if (sorterString.match(sortByRegexp) === null) {
         return null;
     }
@@ -95,7 +96,7 @@ export function parseGrouper(line: string): Grouper | null {
     // New style parsing, using grouping which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'group by'
-    const groupByRegexp = /^group by /;
+    const groupByRegexp = /^group by /i;
     if (line.match(groupByRegexp) === null) {
         return null;
     }

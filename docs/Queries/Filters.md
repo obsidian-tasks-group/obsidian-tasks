@@ -6,6 +6,8 @@ publish: true
 
 <span class="related-pages">#feature/filters</span>
 
+<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
+
 ## Contents
 
 This page is long. Here are some links to the main sections:
@@ -278,8 +280,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 ### Status
 
-- `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
-- `not done` - matches status types with type `TODO` and `IN_PROGRESS`
+- `done` - matches tasks with status types `DONE`, `CANCELLED` and `NON_TASK`
+- `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
 
 > [!info]
 > Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
@@ -1122,7 +1124,7 @@ Note that the path includes the `.md` extension.
 - `path (includes|does not include) <path>`
   - Matches case-insensitive (disregards capitalization).
   - Use `{{query.file.path}}` or `{{query.file.pathWithoutExtension}}` as a placeholder for the path of the file containing the current query.
-    - For example, `path equals {{query.file.path}}`
+    - For example, `path includes {{query.file.path}}`
     - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
@@ -1137,7 +1139,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now p
 
 In Tasks 4.8.0 `task.file.pathWithoutExtension` was added.
 
-Since Tasks X.Y.Z, the query's file path can be used conveniently in custom filters:
+Since Tasks 5.1.0, the query's file path can be used conveniently in custom filters:
 
 - `query.file.path` or
 - `query.file.pathWithoutExtension`
@@ -1187,7 +1189,7 @@ The `root` is the top-level folder of the file that contains the task, that is, 
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by root folder** is now possible, using `task.file.root`.
 
-Since Tasks X.Y.Z, the query's file root can be used conveniently in custom filters:
+Since Tasks 5.1.0, the query's file root can be used conveniently in custom filters:
 
 - `query.file.root`
 - Useful reading: [[Query Properties]].
@@ -1230,7 +1232,7 @@ This is the `folder` to the file that contains the task, which will be `/` for f
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now possible, using `task.file.folder`.
 
-Since Tasks X.Y.Z, the query's file root can be used conveniently in custom filters:
+Since Tasks 5.1.0, the query's file root can be used conveniently in custom filters:
 
 - `query.file.root`
 - Useful reading: [[Query Properties]].
@@ -1294,7 +1296,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file name** is now p
 
 In Tasks 4.8.0 `task.file.filenameWithoutExtension` was added.
 
-Since Tasks X.Y.Z, the query's file name can be used conveniently in custom filters:
+Since Tasks 5.1.0, the query's file name can be used conveniently in custom filters:
 
 - `query.file.filename` or
 - `query.file.filenameWithoutExtension`

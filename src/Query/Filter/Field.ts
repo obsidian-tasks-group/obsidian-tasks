@@ -172,7 +172,7 @@ export abstract class Field {
             throw Error(`sorterRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
-        return new RegExp(`^sort by ${this.fieldNameSingularEscaped()}( reverse)?`);
+        return new RegExp(`^sort by ${this.fieldNameSingularEscaped()}( reverse)?`, 'i');
     }
 
     /**
@@ -269,7 +269,7 @@ export abstract class Field {
         }
 
         // The $ at end is required to distinguish between group by status and status.name
-        return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)?$`);
+        return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)?$`, 'i');
     }
 
     /**

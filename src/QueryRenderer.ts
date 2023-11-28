@@ -1,22 +1,23 @@
-import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, Notice, Plugin, TFile } from 'obsidian';
-import type { EventRef, MarkdownPostProcessorContext, MenuItem } from 'obsidian';
-import { TasksDate } from 'Scripting/TasksDate';
+import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, MenuItem, Notice, Plugin, TFile } from 'obsidian';
 import type { unitOfTime } from 'moment';
-import { GlobalQuery } from './Config/GlobalQuery';
-import { GlobalFilter } from './Config/GlobalFilter';
-import type { IQuery } from './IQuery';
 import { State } from './Cache';
-import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
-import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
-import { taskToLi } from './TaskLineRenderer';
-import { TaskModal } from './TaskModal';
-import type { TasksEvents } from './TasksEvents';
-import { Task } from './Task';
+import { GlobalFilter } from './Config/GlobalFilter';
+import { GlobalQuery } from './Config/GlobalQuery';
 import { DateFallback } from './DateFallback';
-import { TaskLayout } from './TaskLayout';
+import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
+
+import type { IQuery } from './IQuery';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
+import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
+import { Task } from './Task';
+import { TaskLayout } from './TaskLayout';
+import { TaskLineRenderer } from './TaskLineRenderer';
+import { TaskModal } from './TaskModal';
+import type { TasksEvents } from './TasksEvents';
+import { TasksDate } from './Scripting/TasksDate';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -64,7 +65,8 @@ class QueryRenderChild extends MarkdownRenderChild {
     private readonly filePath: string;
 
     private query: IQuery;
-    private queryType: string;
+    // @ts-expect-error: TS6133: 'queryType' is declared but its value is never read
+    private queryType: string; // whilst there is only one query type, there is no point logging this value
 
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
@@ -166,12 +168,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private async renderQuerySearchResults(tasks: Task[], state: State.Warm, content: HTMLDivElement) {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
-        const debug = false;
-        if (debug) {
-            console.debug(
-                `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
-            );
-        }
+        this.query.debug(`Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
         if (this.query.layoutOptions.explainQuery) {
             this.createExplanation(content);
@@ -187,10 +184,9 @@ class QueryRenderChild extends MarkdownRenderChild {
         await this.addAllTaskGroups(queryResult.taskGroups, content);
 
         const totalTasksCount = queryResult.totalTasksCount;
-        if (debug) {
-            console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
-        }
         this.addTaskCount(content, queryResult);
+
+        this.query.debug(`${totalTasksCount} tasks displayed`);
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
@@ -223,17 +219,16 @@ class QueryRenderChild extends MarkdownRenderChild {
         taskList.addClasses(layout.taskListHiddenClasses);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
-        for (const [i, task] of tasks.entries()) {
-            const isFilenameUnique = this.isFilenameUnique({ task });
 
-            const listItem = await taskToLi(task, {
-                parentUlElement: taskList,
-                listIndex: i,
-                layoutOptions: this.query.layoutOptions,
-                isFilenameUnique,
-                taskLayout: layout,
-                obsidianComponent: this,
-            });
+        const taskLineRenderer = new TaskLineRenderer({
+            obsidianComponent: this,
+            parentUlElement: taskList,
+            layoutOptions: this.query.layoutOptions,
+        });
+
+        for (const [taskIndex, task] of tasks.entries()) {
+            const isFilenameUnique = this.isFilenameUnique({ task });
+            const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
 
             // Remove all footnotes. They don't re-appear in another document.
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
@@ -372,12 +367,11 @@ class QueryRenderChild extends MarkdownRenderChild {
             if (result) {
                 const [line, file] = result;
                 const leaf = this.app.workspace.getLeaf(Keymap.isModEvent(ev));
-                // This opens the file with the required line highlighted.
-                // It works for Edit and Reading mode, however, for some reason (maybe an Obsidian bug),
-                // when used in Reading mode, switching the result to Edit does not sync the scroll.
-                // A patch suggested over Discord to use leaf.setEphemeralState({scroll: line}) does not seem
-                // to make a difference.
-                // The issue is tracked here: https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1879
+                // When the corresponding task has been found,
+                // suppress the default behavior of the mouse click event
+                // (which would interfere e.g. if the query is rendered inside a callout).
+                ev.preventDefault();
+                // Instead of the default behavior, open the file with the required line highlighted.
                 await leaf.openFile(file, { eState: { line: line } });
             }
         });
@@ -393,6 +387,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 if (result) {
                     const [line, file] = result;
                     const leaf = this.app.workspace.getLeaf('tab');
+                    ev.preventDefault();
                     await leaf.openFile(file, { eState: { line: line } });
                 }
             }

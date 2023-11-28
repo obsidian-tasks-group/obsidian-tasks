@@ -17,9 +17,11 @@ All open tasks that are due within the next two weeks, but are not overdue (due 
 
     ```tasks
     not done
-    due after yesterday
-    due before in two weeks
+    due AFTER yesterday
+    due BEFORE in two weeks
     ```
+
+Most query instructions can include [[About Queries#Capitals in Query Instructions - Case Insensitivity|capital letters]], which are used here for emphasis.
 
 ---
 
@@ -30,6 +32,8 @@ All open tasks that are due within the next two weeks, and either have the `#inb
     (due after yesterday) AND (due before in two weeks)
     (tags include #inbox) OR (path includes Inbox)
     ```
+
+(The `AND` and `OR` must be in capitals.)
 
 ---
 

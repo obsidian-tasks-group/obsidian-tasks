@@ -31,16 +31,16 @@ export class Query implements IQuery {
     private _ignoreGlobalQuery: boolean = false;
 
     private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|postpone button|urgency|tags)/;
-    private readonly shortModeRegexp = /^short/;
-    private readonly explainQueryRegexp = /^explain/;
-    private readonly ignoreGlobalQueryRegexp = /^ignore global query/;
+        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|postpone button|urgency|tags)/i;
+    private readonly shortModeRegexp = /^short/i;
+    private readonly explainQueryRegexp = /^explain/i;
+    private readonly ignoreGlobalQueryRegexp = /^ignore global query/i;
 
     logger = logging.getLogger('tasks.Query');
     // Used internally to uniquely log each query execution in the console.
     private _queryId: string = '';
 
-    private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/;
+    private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/i;
 
     private readonly commentRegexp = /^#.*/;
 
@@ -50,8 +50,7 @@ export class Query implements IQuery {
         this.source = source;
         this.filePath = path;
 
-        this.logger.debugWithId(this._queryId, 'Source Path', this.filePath);
-        this.logger.infoWithId(this._queryId, 'Source Query', this.source);
+        this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
         scan(source).forEach((rawLine: string) => {
             const line = this.expandPlaceholders(rawLine, path);
@@ -89,6 +88,10 @@ export class Query implements IQuery {
                     this.setError('do not understand query', line);
             }
         });
+    }
+
+    private formatQueryForLogging() {
+        return `[${this.source.split('\n').join(' ; ')}]`;
     }
 
     private expandPlaceholders(source: string, path: string | undefined) {
@@ -254,7 +257,7 @@ Problem line: "${line}"`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
-        this.logger.infoWithId(this._queryId, `Executing query: [${this.source}]`);
+        this.debug(`Executing query: ${this.formatQueryForLogging()}`);
 
         const searchInfo = new SearchInfo(this.filePath, tasks);
         try {
@@ -282,8 +285,8 @@ Problem line: "${line}"`;
     private parseHideOptions(line: string): void {
         const hideOptionsMatch = line.match(this.hideOptionsRegexp);
         if (hideOptionsMatch !== null) {
-            const hide = hideOptionsMatch[1] === 'hide';
-            const option = hideOptionsMatch[2];
+            const hide = hideOptionsMatch[1].toLowerCase() === 'hide';
+            const option = hideOptionsMatch[2].toLowerCase();
 
             switch (option) {
                 case 'task count':
@@ -400,5 +403,9 @@ Problem line: "${line}"`;
 
         const randomString = randomArray.join('');
         return randomString;
+    }
+
+    public debug(message: string, objects?: any): void {
+        this.logger.debugWithId(this._queryId, `"${this.filePath}": ${message}`, objects);
     }
 }

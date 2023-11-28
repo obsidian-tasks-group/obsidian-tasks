@@ -12,6 +12,7 @@ import { TasksDate } from './Scripting/TasksDate';
 import { StatusType } from './StatusConfiguration';
 import { TasksFile } from './Scripting/TasksFile';
 import { PriorityTools } from './lib/PriorityTools';
+import { logging } from './lib/logging';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -118,6 +119,7 @@ interface TaskComponents {
  * @class Task
  */
 export class Task {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     public readonly status: Status;
     public readonly description: string;
     public readonly indentation: string;
@@ -151,6 +153,7 @@ export class Task {
     private _urgency: number | null = null;
 
     constructor({
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         status,
         description,
         taskLocation,
@@ -168,6 +171,7 @@ export class Task {
         originalMarkdown,
         scheduledDateIsInferred,
     }: {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         status: Status;
         description: string;
         taskLocation: TaskLocation;
@@ -185,6 +189,7 @@ export class Task {
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
     }) {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         this.status = status;
         this.description = description;
         this.indentation = indentation;
@@ -366,6 +371,11 @@ export class Task {
      *
      */
     public toggle(): Task[] {
+        const logger = logging.getLogger('tasks.Task');
+        logger.trace(
+            `toggling task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown}`,
+        );
+
         const newStatus = StatusRegistry.getInstance().getNextStatusOrCreate(this.status);
 
         let newDoneDate = null;
@@ -694,6 +704,8 @@ export class Task {
      * @param other
      */
     public identicalTo(other: Task) {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
+
         // Based on ideas from koala. AquaCat and javalent in Discord:
         // https://discord.com/channels/686053708261228577/840286264964022302/996735200388186182
         // and later.

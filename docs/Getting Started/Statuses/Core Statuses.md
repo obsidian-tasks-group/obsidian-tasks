@@ -4,6 +4,8 @@ publish: true
 
 # Core Statuses
 
+<span class="related-pages">#feature/statuses</span>
+
 ## Overview
 
 Core statuses represent conventional markdown tasks:
@@ -25,6 +27,9 @@ Note that `Todo` is followed by `Done`, in order to preserve compatibility with 
 
 > [!info]
 You can edit the 'Todo' core status to make its Next Status Symbol be `/` and enable `Todo` -> `In Progress` -> `Done`, if you prefer.
+
+> [!Tip]
+> Use the "Review and check your Statuses" button at any time to [[Check your Statuses]] and to visualise them.
 
 ## Editing core statuses
 

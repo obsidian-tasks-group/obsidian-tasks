@@ -12,6 +12,8 @@ import type { TaskDetails } from '../../src/TaskSerializer';
 jest.mock('obsidian');
 window.moment = moment;
 
+// NEW_TASK_FIELD_EDIT_REQUIRED
+
 describe('DataviewTaskSerializer', () => {
     const taskSerializer = new DataviewTaskSerializer();
     const serialize = taskSerializer.serialize.bind(taskSerializer);

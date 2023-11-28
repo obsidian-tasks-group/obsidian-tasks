@@ -41,6 +41,7 @@ function sortInstructionLines(filters: ReadonlyArray<string>) {
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
+        // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
         '(due this week) AND (description includes Hello World)',
         'created after 2021-12-27',
         'created before 2021-12-27',
@@ -89,7 +90,6 @@ describe('Query parsing', () => {
         'is not recurring',
         'is recurring',
         'no created date',
-        'no due date',
         'no due date',
         'no happens date',
         'no scheduled date',
@@ -152,11 +152,17 @@ describe('Query parsing', () => {
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query(filter);
+            const queryUpperCase = new Query(filter.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
+
+            // Assert Uppercase
+            expect(queryUpperCase.error).toBeUndefined();
+            expect(queryUpperCase.filters.length).toEqual(1);
+            expect(queryUpperCase.filters[0]).toBeDefined();
         });
 
         it('sample lines really are in alphabetical order', () => {
@@ -216,6 +222,7 @@ describe('Query parsing', () => {
     describe('should recognise every sort instruction', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
+            // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
             'sort by created',
             'sort by created reverse',
             'sort by description',
@@ -256,11 +263,17 @@ describe('Query parsing', () => {
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query(filter);
+            const queryUpperCase = new Query(filter.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
             expect(query.sorting.length).toEqual(1);
             expect(query.sorting[0]).toBeDefined();
+
+            // Assert Uppercase
+            expect(queryUpperCase.error).toBeUndefined();
+            expect(queryUpperCase.sorting.length).toEqual(1);
+            expect(queryUpperCase.sorting[0]).toBeDefined();
         });
 
         it('sample lines really are in alphabetical order', () => {
@@ -291,6 +304,7 @@ describe('Query parsing', () => {
     describe('should recognise every group instruction', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
+            // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
             'group by backlink',
             'group by backlink reverse',
             'group by created',
@@ -338,11 +352,17 @@ describe('Query parsing', () => {
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query(filter);
+            const queryUpperCase = new Query(filter.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
             expect(query.grouping.length).toEqual(1);
             expect(query.grouping[0]).toBeDefined();
+
+            // Assert
+            expect(queryUpperCase.error).toBeUndefined();
+            expect(queryUpperCase.grouping.length).toEqual(1);
+            expect(queryUpperCase.grouping[0]).toBeDefined();
         });
 
         it('sample lines really are in alphabetical order', () => {
@@ -410,9 +430,11 @@ describe('Query parsing', () => {
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query(filter);
+            const queryUpperCase = new Query(filter.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
+            expect(queryUpperCase.error).toBeUndefined();
         });
 
         it('sample lines really are in alphabetical order', () => {
@@ -423,8 +445,8 @@ describe('Query parsing', () => {
     describe('should recognize boolean queries', () => {
         const filters: ReadonlyArray<string> = [
             '# Comment lines are ignored',
-            '(description includes wibble) OR (has due date)',
-            '(has due date) OR ((has start date) AND (due after 2021-12-27))',
+            '(DESCRIPTION INCLUDES wibble) OR (has due date)',
+            '(has due date) OR ((HAS START DATE) AND (due after 2021-12-27))',
             '(is not recurring) XOR ((path includes ab/c) OR (happens before 2021-12-27))',
             String.raw`(description includes line 1) OR \
 (description includes line 1 continued\
@@ -441,13 +463,21 @@ describe('Query parsing', () => {
 
     it('should parse ambiguous sort by queries correctly', () => {
         expect(new Query('sort by status').sorting[0].property).toEqual('status');
+        expect(new Query('SORT BY STATUS').sorting[0].property).toEqual('status');
+
         expect(new Query('sort by status.name').sorting[0].property).toEqual('status.name');
+        expect(new Query('SORT BY STATUS.NAME').sorting[0].property).toEqual('status.name');
     });
 
     it('should parse ambiguous group by queries correctly', () => {
         expect(new Query('group by status').grouping[0].property).toEqual('status');
+        expect(new Query('GROUP BY STATUS').grouping[0].property).toEqual('status');
+
         expect(new Query('group by status.name').grouping[0].property).toEqual('status.name');
+        expect(new Query('GROUP BY STATUS.NAME').grouping[0].property).toEqual('status.name');
+
         expect(new Query('group by status.type').grouping[0].property).toEqual('status.type');
+        expect(new Query('GROUP BY STATUS.TYPE').grouping[0].property).toEqual('status.type');
     });
 
     describe('should include instruction in parsing error messages', () => {
@@ -493,26 +523,38 @@ Problem line: "${source}"`,
 
         it('for invalid sort by', () => {
             const source = 'sort by nonsense';
+            const sourceUpperCase = source.toUpperCase();
             expect(getQueryError(source)).toEqual(`do not understand query
 Problem line: "${source}"`);
+            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
+Problem line: "${sourceUpperCase}"`);
         });
 
         it('for invalid group by', () => {
             const source = 'group by nonsense';
+            const sourceUpperCase = source.toUpperCase();
             expect(getQueryError(source)).toEqual(`do not understand query
 Problem line: "${source}"`);
+            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
+Problem line: "${sourceUpperCase}"`);
         });
 
         it('for invalid hide', () => {
             const source = 'hide nonsense';
+            const sourceUpperCase = source.toUpperCase();
             expect(getQueryError(source)).toEqual(`do not understand query
 Problem line: "${source}"`);
+            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
+Problem line: "${sourceUpperCase}"`);
         });
 
         it('for unknown instruction', () => {
             const source = 'spaghetti';
+            const sourceUpperCase = source.toUpperCase();
             expect(getQueryError(source)).toEqual(`do not understand query
 Problem line: "${source}"`);
+            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
+Problem line: "${sourceUpperCase}"`);
         });
     });
 
@@ -754,6 +796,11 @@ describe('Query', () => {
             ],
         ])('should support filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
             shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            shouldSupportFiltering(
+                filters.map((filter) => filter.toUpperCase()),
+                allTaskLines,
+                expectedResult,
+            );
         });
     });
 
@@ -885,6 +932,7 @@ describe('Query', () => {
 
                 // Act, Assert
                 shouldSupportFiltering([happensFilter], [line], expectedResult);
+                shouldSupportFiltering([happensFilter.toUpperCase()], [line], expectedResult);
             },
         );
     });
@@ -1029,6 +1077,11 @@ describe('Query', () => {
             ],
         ])('should support boolean filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
             shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            shouldSupportFiltering(
+                filters.map((filter) => filter.toUpperCase()),
+                allTaskLines,
+                expectedResult,
+            );
         });
     });
 
@@ -1243,35 +1296,54 @@ At most 8 tasks per group (if any "group by" options are supplied).
             // Arrange
             const source = 'group by path';
             const query = new Query(source);
+            const queryUpper = new Query(source.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
+            expect(queryUpper.error).toBeUndefined();
+
             expect(query.grouping.length).toEqual(1);
+            expect(queryUpper.grouping.length).toEqual(1);
         });
 
         it('should work with a custom group that uses query information', () => {
             // Arrange
             const source = 'group by function query.file.path';
+            const sourceUpper = 'GROUP BY FUNCTION query.file.path';
+
             const query = new Query(source, 'hello.md');
+            const queryUpper = new Query(sourceUpper, 'hello.md');
 
             // Act
             const results = query.applyQueryToTasks([new TaskBuilder().build()]);
+            const resultsUpper = queryUpper.applyQueryToTasks([new TaskBuilder().build()]);
 
             // Assert
             const groups = results.taskGroups;
+            const groupsUpper = resultsUpper.taskGroups;
+
             expect(groups.groups.length).toEqual(1);
+            expect(groupsUpper.groups.length).toEqual(1);
+
             expect(groups.groups[0].groups).toEqual(['hello.md']);
+            expect(groupsUpper.groups[0].groups).toEqual(['hello.md']);
         });
 
         it('should log meaningful error for supported group type', () => {
             // Arrange
             const source = 'group by xxxx';
+            const sourceUpper = source.toUpperCase();
+
             const query = new Query(source);
+            const queryUpperr = new Query(sourceUpper);
 
             // Assert
             // Check that the error message contains the actual problem line
             expect(query.error).toContain(source);
+            expect(queryUpperr.error).toContain(sourceUpper);
+
             expect(query.grouping.length).toEqual(0);
+            expect(queryUpperr.grouping.length).toEqual(0);
         });
 
         it('should apply limit correctly, after sorting tasks', () => {
@@ -1286,7 +1358,9 @@ At most 8 tasks per group (if any "group by" options are supplied).
                 # Apply a limit, to test which tasks make it to
                 limit 2
                 `;
+            const sourceUpper = source.toUpperCase();
             const query = new Query(source);
+            const queryUpper = new Query(sourceUpper);
 
             const tasksAsMarkdown = `
 - [x] Task 1 - should not appear in output
@@ -1301,18 +1375,26 @@ At most 8 tasks per group (if any "group by" options are supplied).
 
             // Act
             const queryResult = query.applyQueryToTasks(tasks);
+            const queryUpperResult = queryUpper.applyQueryToTasks(tasks);
 
             // Assert
             expect(queryResult.groups.length).toEqual(1);
+            expect(queryUpperResult.groups.length).toEqual(1);
+
             const soleTaskGroup = queryResult.groups[0];
+            const soleTaskGroupUpper = queryUpperResult.groups[0];
             const expectedTasks = `
 - [ ] Task 3 - will be sorted to 1st place, so should pass limit
 - [ ] Task 4 - will be sorted to 2nd place, so should pass limit
 `;
             expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(expectedTasks);
+            expect('\n' + soleTaskGroupUpper.tasksAsStringOfLines()).toStrictEqual(expectedTasks);
 
             expect(queryResult.taskGroups.totalTasksCount()).toEqual(2);
+            expect(queryUpperResult.taskGroups.totalTasksCount()).toEqual(2);
+
             expect(queryResult.totalTasksCountBeforeLimit).toEqual(6);
+            expect(queryUpperResult.totalTasksCountBeforeLimit).toEqual(6);
         });
 
         it('should apply group limit correctly, after sorting tasks', () => {
@@ -1327,7 +1409,9 @@ At most 8 tasks per group (if any "group by" options are supplied).
                 # Apply a limit, to test which tasks make it to
                 limit groups 3
                 `;
+            const sourceUpper = source.toUpperCase();
             const query = new Query(source);
+            const queryUpper = new Query(sourceUpper);
 
             const tasksAsMarkdown = `
 - [x] Task 2 - will be in the first group and sorted after next one
@@ -1342,16 +1426,33 @@ At most 8 tasks per group (if any "group by" options are supplied).
 
             // Act
             const queryResult = query.applyQueryToTasks(tasks);
+            const queryUpperResult = queryUpper.applyQueryToTasks(tasks);
 
             // Assert
             expect(queryResult.groups.length).toEqual(2);
+            expect(queryUpperResult.groups.length).toEqual(2);
+
             expect(queryResult.totalTasksCount).toEqual(5);
+            expect(queryUpperResult.totalTasksCount).toEqual(5);
+
             expect(queryResult.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
                 "- [x] Task 1 - will be in the first group
                 - [x] Task 2 - will be in the first group and sorted after next one
                 "
             `);
+            expect(queryUpperResult.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+                "- [x] Task 1 - will be in the first group
+                - [x] Task 2 - will be in the first group and sorted after next one
+                "
+            `);
+
             expect(queryResult.groups[1].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+                "- [ ] Task 3 - will be sorted to 1st place in the second group and pass the limit
+                - [ ] Task 4 - will be sorted to 2nd place in the second group and pass the limit
+                - [ ] Task 5 - will be sorted to 3nd place in the second group and pass the limit
+                "
+            `);
+            expect(queryUpperResult.groups[1].tasksAsStringOfLines()).toMatchInlineSnapshot(`
                 "- [ ] Task 3 - will be sorted to 1st place in the second group and pass the limit
                 - [ ] Task 4 - will be sorted to 2nd place in the second group and pass the limit
                 - [ ] Task 5 - will be sorted to 3nd place in the second group and pass the limit
@@ -1359,7 +1460,10 @@ At most 8 tasks per group (if any "group by" options are supplied).
             `);
 
             expect(queryResult.taskGroups.totalTasksCount()).toEqual(5);
+            expect(queryUpperResult.taskGroups.totalTasksCount()).toEqual(5);
+
             expect(queryResult.totalTasksCountBeforeLimit).toEqual(6);
+            expect(queryUpperResult.totalTasksCountBeforeLimit).toEqual(6);
         });
     });
 
@@ -1368,14 +1472,19 @@ At most 8 tasks per group (if any "group by" options are supplied).
             // Arrange
             const source = 'filter by function wibble';
             const query = new Query(source);
+            const queryUpper = new Query(source.toUpperCase());
             const task = TaskBuilder.createFullyPopulatedTask();
 
             // Act
             const queryResult = query.applyQueryToTasks([task]);
+            const queryResultUpper = queryUpper.applyQueryToTasks([task]);
 
             // Assert
             expect(queryResult.searchErrorMessage).toEqual(
                 'Error: Search failed.\nThe error message was:\n    "ReferenceError: wibble is not defined"',
+            );
+            expect(queryResultUpper.searchErrorMessage).toEqual(
+                'Error: Search failed.\nThe error message was:\n    "ReferenceError: WIBBLE is not defined"',
             );
         });
     });
@@ -1399,6 +1508,7 @@ At most 8 tasks per group (if any "group by" options are supplied).
   (description includes line 1 continued\
 with \ backslash)`;
             const query = new Query(source);
+            const queryUpperCase = new Query(source);
 
             const expectedDisplayText = String.raw`(description includes line 1) OR (description includes line 1 continued with \ backslash) =>
   OR (At least one of):
@@ -1406,6 +1516,7 @@ with \ backslash)`;
     description includes line 1 continued with \ backslash
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
+            expect(queryUpperCase.explainQuery()).toEqual(expectedDisplayText);
         });
     });
 });

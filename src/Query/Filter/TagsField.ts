@@ -83,7 +83,7 @@ export class TagsField extends MultiTextField {
      * `match[2]` will be either the tag number or undefined.
      */
     protected sorterRegExp(): RegExp {
-        return /^sort by tag( reverse)?[\s]*(\d+)?/;
+        return /^sort by tag( reverse)?[\s]*(\d+)?/i;
     }
 
     /**

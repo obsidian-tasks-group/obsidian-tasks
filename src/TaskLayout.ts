@@ -21,6 +21,7 @@ export class LayoutOptions {
 }
 
 export type TaskLayoutComponent =
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     | 'description'
     | 'priority'
     | 'recurrenceRule'
@@ -38,6 +39,7 @@ export type TaskLayoutComponent =
  */
 export class TaskLayout {
     public defaultLayout: TaskLayoutComponent[] = [
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         'description',
         'priority',
         'recurrenceRule',
@@ -67,6 +69,7 @@ export class TaskLayout {
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
         const componentsToHideAndGenerateClasses: [boolean, TaskLayoutComponent][] = [
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             [this.options.hidePriority, 'priority'],
             [this.options.hideRecurrenceRule, 'recurrenceRule'],
             [this.options.hideCreatedDate, 'createdDate'],

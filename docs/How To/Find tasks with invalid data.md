@@ -28,6 +28,8 @@ Tasks sees as an un-dated task with the text description:
 
 The following tasks block lists any tasks that have emoji in the description, which usually means data that has not been interpreted by Tasks. This is typically because there is some text other than emoji signifiers and tags at the end of the line.
 
+<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+
 ````text
 ```tasks
 # These description instructions need to be all on one line:
@@ -55,6 +57,8 @@ This task has an illegal due date:
 ### Finding problem dates
 
 The following tasks block lists any tasks with invalid dates, meaning data that has potentially not been interpreted by Tasks.
+
+<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED if the new query is for a new date field -->
 
 ````text
 ```tasks
