@@ -7,6 +7,7 @@ import { explainResults, getDateFieldToPostpone, getQueryForQueryRenderer } from
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import type { Task } from '../../src/Task';
 
 window.moment = moment;
 
@@ -129,6 +130,11 @@ describe('query used for QueryRenderer', () => {
 });
 
 describe('postpone - date field choice', () => {
+    function checkPostponeField(taskBuilder: TaskBuilder, expected: keyof Task | null) {
+        const task = taskBuilder.build();
+        expect(getDateFieldToPostpone(task)).toEqual(expected);
+    }
+
     it('should not postpone if no happens dates on task', () => {
         const task = new TaskBuilder().build();
         expect(getDateFieldToPostpone(task)).toBeNull();
@@ -145,8 +151,8 @@ describe('postpone - date field choice', () => {
     });
 
     it('should postpone due date', () => {
-        const task = new TaskBuilder().dueDate('2023-11-26').build();
-        expect(getDateFieldToPostpone(task)).toEqual('dueDate');
+        const taskBuilder = new TaskBuilder().dueDate('2023-11-26');
+        checkPostponeField(taskBuilder, 'dueDate');
     });
 
     it('should postpone scheduled date', () => {
