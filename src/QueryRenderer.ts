@@ -243,7 +243,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const extrasSpan = listItem.createSpan('task-extras');
 
-            if (!this.query.layoutOptions.hidePostponeButton) {
+            if (!this.query.layoutOptions.hidePostponeButton && !task.isDone) {
                 this.addPostponeButton(extrasSpan, task, shortMode);
             }
 
