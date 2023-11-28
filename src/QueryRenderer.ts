@@ -1,4 +1,4 @@
-import type { unitOfTime } from 'moment';
+import type { Moment, unitOfTime } from 'moment';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, MenuItem, Notice, Plugin, TFile } from 'obsidian';
 import { State } from './Cache';
@@ -494,18 +494,15 @@ class QueryRenderChild extends MarkdownRenderChild {
             newTasks,
         });
 
-        const postponedDateString = postponedDate?.format('DD MMM YYYY');
-        this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDateString);
+        this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
     }
 
-    private onPostponeSuccessCallback(
-        button: HTMLButtonElement,
-        updatedDateType: HappensDate,
-        postponedDateString: string,
-    ) {
+    private onPostponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.disabled = true;
         button.setAttr('title', 'You can perform this action again after reloading the file.');
+
+        const postponedDateString = postponedDate?.format('DD MMM YYYY');
         new Notice(`Task's ${updatedDateType} postponed until ${postponedDateString}`, 5000);
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
     }
