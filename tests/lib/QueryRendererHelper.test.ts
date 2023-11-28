@@ -148,11 +148,6 @@ describe('postpone - date field choice', () => {
         checkDoesNotPostpone(taskBuilder);
     });
 
-    it('should not postpone, if start is only happens field', () => {
-        const taskBuilder = new TaskBuilder().startDate(date);
-        checkDoesNotPostpone(taskBuilder);
-    });
-
     it('should not postpone created or done dates', () => {
         const taskBuilder = new TaskBuilder().createdDate(date).doneDate(date);
         checkDoesNotPostpone(taskBuilder);
@@ -173,6 +168,11 @@ describe('postpone - date field choice', () => {
         checkPostponeField(taskBuilder, 'scheduledDate');
     });
 
+    it('should not postpone start date', () => {
+        const taskBuilder = new TaskBuilder().startDate(date);
+        checkDoesNotPostpone(taskBuilder);
+    });
+
     it('should postpone due date in preference to start and scheduled dates', () => {
         const taskBuilder = new TaskBuilder().dueDate(date).scheduledDate(date).startDate(date);
         checkPostponeField(taskBuilder, 'dueDate');
@@ -181,10 +181,5 @@ describe('postpone - date field choice', () => {
     it('should postpone scheduled date in preference to start date', () => {
         const taskBuilder = new TaskBuilder().scheduledDate(date).startDate(date);
         checkPostponeField(taskBuilder, 'scheduledDate');
-    });
-
-    it('should not postpone scheduled date', () => {
-        const taskBuilder = new TaskBuilder().startDate(date);
-        checkDoesNotPostpone(taskBuilder);
     });
 });
