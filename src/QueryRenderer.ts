@@ -1,6 +1,6 @@
+import type { unitOfTime } from 'moment';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, MenuItem, Notice, Plugin, TFile } from 'obsidian';
-import type { unitOfTime } from 'moment';
 import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -413,8 +413,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const classNames = shortMode ? ['internal-button', 'internal-button-short-mode'] : ['internal-button'];
         button.addClasses(classNames);
-        const buttonText = ' ⏩';
-        button.setText(buttonText);
+        button.setText(' ⏩');
 
         button.addEventListener('click', () => this.getOnClickCallback(task, button, 'days'));
 
