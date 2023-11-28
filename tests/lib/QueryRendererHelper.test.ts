@@ -135,9 +135,13 @@ describe('postpone - date field choice', () => {
         expect(getDateFieldToPostpone(task)).toEqual(expected);
     }
 
+    function checkDoesNotPostpone(taskBuilder: TaskBuilder) {
+        checkPostponeField(taskBuilder, null);
+    }
+
     it('should not postpone if no happens dates on task', () => {
-        const task = new TaskBuilder().build();
-        expect(getDateFieldToPostpone(task)).toBeNull();
+        const taskBuilder = new TaskBuilder();
+        checkDoesNotPostpone(taskBuilder);
     });
 
     it('should not postpone, if start is only happens field', () => {
