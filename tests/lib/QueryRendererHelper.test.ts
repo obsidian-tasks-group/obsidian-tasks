@@ -143,4 +143,24 @@ describe('postpone - date field choice', () => {
         const task = new TaskBuilder().createdDate('2023-11-26').doneDate('2023-11-27').build();
         expect(getDateFieldToPostpone(task)).toBeNull();
     });
+
+    it('should postpone due date', () => {
+        const task = new TaskBuilder().dueDate('2023-11-26').build();
+        expect(getDateFieldToPostpone(task)).toEqual('dueDate');
+    });
+
+    it('should postpone scheduled date', () => {
+        const task = new TaskBuilder().scheduledDate('2023-11-26').build();
+        expect(getDateFieldToPostpone(task)).toEqual('scheduledDate');
+    });
+
+    it('should postpone due date in preference to scheduled date', () => {
+        const task = new TaskBuilder().dueDate('2023-11-26').scheduledDate('2023-11-26').build();
+        expect(getDateFieldToPostpone(task)).toEqual('dueDate');
+    });
+
+    it('should not postpone scheduled date', () => {
+        const task = new TaskBuilder().startDate('2023-11-26').build();
+        expect(getDateFieldToPostpone(task)).toBeNull();
+    });
 });
