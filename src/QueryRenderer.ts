@@ -1,6 +1,7 @@
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, MenuItem, Notice, Plugin, TFile } from 'obsidian';
 import type { unitOfTime } from 'moment';
+import type { Moment } from 'moment';
 import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -49,6 +50,18 @@ function getDateFieldToPostpone(task: Task) {
     const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
     const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
     return dateTypeToUpdate;
+}
+
+function createPostponedTask(
+    task: Task,
+    dateTypeToUpdate: keyof Task,
+    timeUnit: unitOfTime.DurationConstructor,
+    amount: number,
+) {
+    const dateToUpdate = task[dateTypeToUpdate] as Moment;
+    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+    const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
+    return { postponedDate, newTasks };
 }
 
 class QueryRenderChild extends MarkdownRenderChild {
@@ -489,9 +502,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const dateTypeToUpdate = getDateFieldToPostpone(task);
         if (dateTypeToUpdate === null) return;
 
-        const dateToUpdate = task[dateTypeToUpdate];
-        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-        const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
+        const { postponedDate, newTasks } = createPostponedTask(task, dateTypeToUpdate, timeUnit, amount);
 
         await replaceTaskWithTasks({
             originalTask: task,
