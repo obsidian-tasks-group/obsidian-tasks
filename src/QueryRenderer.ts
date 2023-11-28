@@ -243,10 +243,6 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const extrasSpan = listItem.createSpan('task-extras');
 
-            if (!this.query.layoutOptions.hidePostponeButton && !task.isDone) {
-                this.addPostponeButton(extrasSpan, task, shortMode);
-            }
-
             if (!this.query.layoutOptions.hideUrgency) {
                 this.addUrgency(extrasSpan, task);
             }
@@ -257,6 +253,10 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             if (!this.query.layoutOptions.hideEditButton) {
                 this.addEditButton(extrasSpan, task);
+            }
+
+            if (!this.query.layoutOptions.hidePostponeButton && !task.isDone) {
+                this.addPostponeButton(extrasSpan, task, shortMode);
             }
 
             // NEW
