@@ -3,6 +3,7 @@
  * See applyOptions below when adding options here.
  */
 export class LayoutOptions {
+    hidePostponeButton: boolean = false;
     hideTaskCount: boolean = false;
     hideBacklinks: boolean = false;
     hidePriority: boolean = false;
@@ -94,6 +95,7 @@ export class TaskLayout {
             [this.options.hideUrgency, 'urgency'],
             [this.options.hideBacklinks, 'backlinks'],
             [this.options.hideEditButton, 'edit-button'],
+            [this.options.hidePostponeButton, 'postpone-button'],
         ];
         for (const [hide, component] of componentsToGenerateClassesOnly) {
             this.generateHiddenClassForTaskList(hide, component);

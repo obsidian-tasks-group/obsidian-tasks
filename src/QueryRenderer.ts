@@ -1,5 +1,6 @@
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
-import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, MenuItem, Notice, Plugin, TFile } from 'obsidian';
+import type { unitOfTime } from 'moment';
 import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -11,11 +12,12 @@ import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHel
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
-import type { Task } from './Task';
+import { Task } from './Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
+import { TasksDate } from './Scripting/TasksDate';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -232,7 +234,13 @@ class QueryRenderChild extends MarkdownRenderChild {
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
             footnotes.forEach((footnote) => footnote.remove());
 
+            const shortMode = this.query.layoutOptions.shortMode;
+
             const extrasSpan = listItem.createSpan('task-extras');
+
+            if (!this.query.layoutOptions.hidePostponeButton) {
+                this.addPostponeButton(extrasSpan, task, shortMode);
+            }
 
             if (!this.query.layoutOptions.hideUrgency) {
                 this.addUrgency(extrasSpan, task);
@@ -246,6 +254,13 @@ class QueryRenderChild extends MarkdownRenderChild {
             if (!this.query.layoutOptions.hideEditButton) {
                 this.addEditButton(extrasSpan, task);
             }
+
+            // NEW
+            // if (!this.query.layoutOptions.hideSnoozeButton) {
+            //     this.addUnSnoozeButton(extrasSpan, task, shortMode);
+            //     this.addSnoozeButton1Day(extrasSpan, task, shortMode);
+            //     this.addSnoozeButton3Days(extrasSpan, task, shortMode);
+            // }
 
             taskList.appendChild(listItem);
         }
@@ -383,6 +398,45 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
     }
 
+    private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
+        const button = listItem.createEl('button', {
+            attr: {
+                id: 'postpone-button',
+                title: 'ℹ️ Postpone the task (right-click for more options)',
+            },
+        });
+
+        const classNames = shortMode ? ['internal-button', 'internal-button-short-mode'] : ['internal-button'];
+        button.addClasses(classNames);
+        const buttonText = shortMode ? ' ⏩' : ' ⏩ Postpone';
+        button.setText(buttonText);
+
+        button.addEventListener('click', () => this.getOnClickCallback(task, button, 'days'));
+
+        /** Open a context menu on right-click.
+         * Give a choice of postponing for a week, month, or quarter.
+         */
+        button.addEventListener('contextmenu', async (ev: MouseEvent) => {
+            const menu = new Menu();
+            const commonTitle = 'Postpone for';
+
+            const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
+                const amountOrArticle = amount > 1 ? amount : 'a';
+                item.setTitle(`${commonTitle} ${amountOrArticle} ${timeUnit}`).onClick(() =>
+                    this.getOnClickCallback(task, button, timeUnit, amount),
+                );
+            };
+
+            menu.addItem((item) => getMenuItemCallback(item, 'days', 2));
+            menu.addItem((item) => getMenuItemCallback(item, 'days', 3));
+            menu.addItem((item) => getMenuItemCallback(item, 'week'));
+            menu.addItem((item) => getMenuItemCallback(item, 'weeks', 2));
+            menu.addItem((item) => getMenuItemCallback(item, 'month'));
+
+            menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+        });
+    }
+
     private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
         if (!this.query.layoutOptions.hideTaskCount) {
             content.createDiv({
@@ -416,5 +470,42 @@ class QueryRenderChild extends MarkdownRenderChild {
             groupingRules.push(group.property);
         }
         return groupingRules.join(',');
+    }
+
+    private async getOnClickCallback(
+        task: Task,
+        button: HTMLButtonElement,
+        timeUnit: unitOfTime.DurationConstructor = 'days',
+        amount = 1,
+    ) {
+        const errorMessage = '⚠️ Postponement requires a date: due or scheduled.';
+        if (!task.dueDate && !task.scheduledDate) return new Notice(errorMessage, 10000);
+        const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
+        const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
+        if (dateTypeToUpdate === null) return;
+
+        const dateToUpdate = task[dateTypeToUpdate];
+        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+        const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
+
+        await replaceTaskWithTasks({
+            originalTask: task,
+            newTasks,
+        });
+
+        const postponedDateString = postponedDate?.format('DD MMM YYYY');
+        this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDateString);
+    }
+
+    private onPostponeSuccessCallback(
+        button: HTMLButtonElement,
+        updatedDateType: 'dueDate' | 'scheduledDate',
+        postponedDateString: string,
+    ) {
+        // Disable the button to prevent update error due to the task not being reloaded yet.
+        button.disabled = true;
+        button.setAttr('title', 'You can perform this action again after reloading the file.');
+        new Notice(`Task's ${updatedDateType} postponed untill ${postponedDateString}`, 5000);
+        this.events.triggerRequestCacheUpdate(this.render.bind(this));
     }
 }
