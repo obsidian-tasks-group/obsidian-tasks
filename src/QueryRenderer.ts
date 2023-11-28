@@ -239,13 +239,13 @@ class QueryRenderChild extends MarkdownRenderChild {
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
             footnotes.forEach((footnote) => footnote.remove());
 
-            const shortMode = this.query.layoutOptions.shortMode;
-
             const extrasSpan = listItem.createSpan('task-extras');
 
             if (!this.query.layoutOptions.hideUrgency) {
                 this.addUrgency(extrasSpan, task);
             }
+
+            const shortMode = this.query.layoutOptions.shortMode;
 
             if (!this.query.layoutOptions.hideBacklinks) {
                 this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
