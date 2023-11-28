@@ -83,6 +83,10 @@ export function getDateFieldToPostpone(task: Task): HappensDate | null {
         return 'scheduledDate';
     }
 
+    if (task.startDate) {
+        return 'startDate';
+    }
+
     return null;
 }
 
