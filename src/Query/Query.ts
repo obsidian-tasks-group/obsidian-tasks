@@ -31,7 +31,7 @@ export class Query implements IQuery {
     private _ignoreGlobalQuery: boolean = false;
 
     private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency|tags)/i;
+        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|postpone button|urgency|tags)/i;
     private readonly shortModeRegexp = /^short/i;
     private readonly explainQueryRegexp = /^explain/i;
     private readonly ignoreGlobalQueryRegexp = /^ignore global query/i;
@@ -294,6 +294,9 @@ Problem line: "${line}"`;
                     break;
                 case 'backlink':
                     this._layoutOptions.hideBacklinks = hide;
+                    break;
+                case 'postpone button':
+                    this._layoutOptions.hidePostponeButton = hide;
                     break;
                 case 'priority':
                     this._layoutOptions.hidePriority = hide;
