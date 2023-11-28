@@ -484,7 +484,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         amount = 1,
     ) {
         const errorMessage = '⚠️ Postponement requires a happens date: due, scheduled or start.';
-        if (task.happens.moment === null) {
+        if (!task.startDate && !task.dueDate && !task.scheduledDate) {
             return new Notice(errorMessage, 10000);
         }
 
