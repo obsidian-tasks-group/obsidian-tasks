@@ -3,11 +3,15 @@
  */
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
-import { explainResults, getDateFieldToPostpone, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
+import {
+    type HappensDate,
+    explainResults,
+    getDateFieldToPostpone,
+    getQueryForQueryRenderer,
+} from '../../src/lib/QueryRendererHelper';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import type { Task } from '../../src/Task';
 
 window.moment = moment;
 
@@ -130,7 +134,7 @@ describe('query used for QueryRenderer', () => {
 });
 
 describe('postpone - date field choice', () => {
-    function checkPostponeField(taskBuilder: TaskBuilder, expected: keyof Task | null) {
+    function checkPostponeField(taskBuilder: TaskBuilder, expected: HappensDate | null) {
         const task = taskBuilder.build();
         expect(getDateFieldToPostpone(task)).toEqual(expected);
     }
@@ -168,9 +172,9 @@ describe('postpone - date field choice', () => {
         checkPostponeField(taskBuilder, 'scheduledDate');
     });
 
-    it('should not postpone start date', () => {
+    it('should postpone start date', () => {
         const taskBuilder = new TaskBuilder().startDate(date);
-        checkDoesNotPostpone(taskBuilder);
+        checkPostponeField(taskBuilder, 'startDate');
     });
 
     it('should postpone due date in preference to start and scheduled dates', () => {

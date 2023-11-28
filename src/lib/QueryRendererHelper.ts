@@ -72,15 +72,33 @@ export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuer
     return globalQuery.query(path).append(tasksBlockQuery);
 }
 
-export function getDateFieldToPostpone(task: Task) {
-    const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
-    const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
-    return dateTypeToUpdate;
+export type HappensDate = keyof Pick<Task, 'startDate' | 'scheduledDate' | 'dueDate'>;
+
+/**
+ * Gets a {@link HappensDate} field from a {@link Task} with the following priority: due > scheduled > start.
+ * If the task has no happens field {@link HappensDate}, null is returned.
+ *
+ * @param task
+ */
+export function getDateFieldToPostpone(task: Task): HappensDate | null {
+    if (task.dueDate) {
+        return 'dueDate';
+    }
+
+    if (task.scheduledDate) {
+        return 'scheduledDate';
+    }
+
+    if (task.startDate) {
+        return 'startDate';
+    }
+
+    return null;
 }
 
 export function createPostponedTask(
     task: Task,
-    dateTypeToUpdate: keyof Task,
+    dateTypeToUpdate: HappensDate,
     timeUnit: unitOfTime.DurationConstructor,
     amount: number,
 ) {

@@ -9,6 +9,7 @@ import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 
 import type { IQuery } from './IQuery';
 import {
+    type HappensDate,
     createPostponedTask,
     explainResults,
     getDateFieldToPostpone,
@@ -482,10 +483,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         timeUnit: unitOfTime.DurationConstructor = 'days',
         amount = 1,
     ) {
-        const errorMessage = '⚠️ Postponement requires a date: due or scheduled.';
-        if (!task.dueDate && !task.scheduledDate) return new Notice(errorMessage, 10000);
         const dateTypeToUpdate = getDateFieldToPostpone(task);
-        if (dateTypeToUpdate === null) return;
+        if (dateTypeToUpdate === null) {
+            const errorMessage = '⚠️ Postponement requires a date: due, scheduled or start.';
+            return new Notice(errorMessage, 10000);
+        }
 
         const { postponedDate, newTasks } = createPostponedTask(task, dateTypeToUpdate, timeUnit, amount);
 
@@ -500,7 +502,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private onPostponeSuccessCallback(
         button: HTMLButtonElement,
-        updatedDateType: 'dueDate' | 'scheduledDate',
+        updatedDateType: HappensDate,
         postponedDateString: string,
     ) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
