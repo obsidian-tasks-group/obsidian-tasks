@@ -8,16 +8,20 @@ import { DateFallback } from './DateFallback';
 import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 
 import type { IQuery } from './IQuery';
-import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
+import {
+    createPostponedTask,
+    explainResults,
+    getDateFieldToPostpone,
+    getQueryForQueryRenderer,
+} from './lib/QueryRendererHelper';
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
-import { Task } from './Task';
+import type { Task } from './Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
-import { TasksDate } from './Scripting/TasksDate';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -480,13 +484,10 @@ class QueryRenderChild extends MarkdownRenderChild {
     ) {
         const errorMessage = '⚠️ Postponement requires a date: due or scheduled.';
         if (!task.dueDate && !task.scheduledDate) return new Notice(errorMessage, 10000);
-        const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
-        const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
+        const dateTypeToUpdate = getDateFieldToPostpone(task);
         if (dateTypeToUpdate === null) return;
 
-        const dateToUpdate = task[dateTypeToUpdate];
-        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-        const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
+        const { postponedDate, newTasks } = createPostponedTask(task, dateTypeToUpdate, timeUnit, amount);
 
         await replaceTaskWithTasks({
             originalTask: task,
