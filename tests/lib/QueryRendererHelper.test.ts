@@ -133,4 +133,14 @@ describe('postpone - date field choice', () => {
         const emptyTask = new TaskBuilder().build();
         expect(getDateFieldToPostpone(emptyTask)).toBeNull();
     });
+
+    it('should not postpone, if start is only happens field', () => {
+        const emptyTask = new TaskBuilder().startDate('2023-11-28').build();
+        expect(getDateFieldToPostpone(emptyTask)).toBeNull();
+    });
+
+    it('should not postpone created or done dates', () => {
+        const emptyTask = new TaskBuilder().createdDate('2023-11-26').doneDate('2023-11-27').build();
+        expect(getDateFieldToPostpone(emptyTask)).toBeNull();
+    });
 });
