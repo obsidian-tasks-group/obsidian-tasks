@@ -45,6 +45,12 @@ export class QueryRenderer {
     }
 }
 
+function getDateFieldToPostpone(task: Task) {
+    const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
+    const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
+    return dateTypeToUpdate;
+}
+
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: TasksEvents;
@@ -480,8 +486,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     ) {
         const errorMessage = '⚠️ Postponement requires a date: due or scheduled.';
         if (!task.dueDate && !task.scheduledDate) return new Notice(errorMessage, 10000);
-        const scheduledDateOrNull = task.scheduledDate ? 'scheduledDate' : null;
-        const dateTypeToUpdate = task.dueDate ? 'dueDate' : scheduledDateOrNull;
+        const dateTypeToUpdate = getDateFieldToPostpone(task);
         if (dateTypeToUpdate === null) return;
 
         const dateToUpdate = task[dateTypeToUpdate];
