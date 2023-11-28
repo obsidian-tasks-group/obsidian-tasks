@@ -130,17 +130,17 @@ describe('query used for QueryRenderer', () => {
 
 describe('postpone - date field choice', () => {
     it('should not postpone if no happens dates on task', () => {
-        const emptyTask = new TaskBuilder().build();
-        expect(getDateFieldToPostpone(emptyTask)).toBeNull();
+        const task = new TaskBuilder().build();
+        expect(getDateFieldToPostpone(task)).toBeNull();
     });
 
     it('should not postpone, if start is only happens field', () => {
-        const emptyTask = new TaskBuilder().startDate('2023-11-28').build();
-        expect(getDateFieldToPostpone(emptyTask)).toBeNull();
+        const task = new TaskBuilder().startDate('2023-11-28').build();
+        expect(getDateFieldToPostpone(task)).toBeNull();
     });
 
     it('should not postpone created or done dates', () => {
-        const emptyTask = new TaskBuilder().createdDate('2023-11-26').doneDate('2023-11-27').build();
-        expect(getDateFieldToPostpone(emptyTask)).toBeNull();
+        const task = new TaskBuilder().createdDate('2023-11-26').doneDate('2023-11-27').build();
+        expect(getDateFieldToPostpone(task)).toBeNull();
     });
 });
