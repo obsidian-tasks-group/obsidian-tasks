@@ -156,18 +156,18 @@ describe('postpone - date field choice', () => {
     });
 
     it('should postpone scheduled date', () => {
-        const task = new TaskBuilder().scheduledDate('2023-11-26').build();
-        expect(getDateFieldToPostpone(task)).toEqual('scheduledDate');
+        const taskBuilder = new TaskBuilder().scheduledDate('2023-11-26');
+        checkPostponeField(taskBuilder, 'scheduledDate');
     });
 
     it('should postpone when scheduled date is inferred', () => {
-        const task = new TaskBuilder().scheduledDate('2023-11-26').scheduledDateIsInferred(true).build();
-        expect(getDateFieldToPostpone(task)).toEqual('scheduledDate');
+        const taskBuilder = new TaskBuilder().scheduledDate('2023-11-26').scheduledDateIsInferred(true);
+        checkPostponeField(taskBuilder, 'scheduledDate');
     });
 
     it('should postpone due date in preference to scheduled date', () => {
-        const task = new TaskBuilder().dueDate('2023-11-26').scheduledDate('2023-11-26').build();
-        expect(getDateFieldToPostpone(task)).toEqual('dueDate');
+        const taskBuilder = new TaskBuilder().dueDate('2023-11-26').scheduledDate('2023-11-26');
+        checkPostponeField(taskBuilder, 'dueDate');
     });
 
     it('should not postpone scheduled date', () => {
