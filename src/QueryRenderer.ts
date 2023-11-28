@@ -252,7 +252,6 @@ class QueryRenderChild extends MarkdownRenderChild {
             }
 
             if (!this.query.layoutOptions.hideBacklinks) {
-                const shortMode = this.query.layoutOptions.shortMode;
                 this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
             }
 
