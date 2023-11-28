@@ -74,6 +74,12 @@ export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuer
 
 export type HappensDate = keyof Pick<Task, 'startDate' | 'scheduledDate' | 'dueDate'>;
 
+/**
+ * Gets a {@link HappensDate} field from a {@link Task} with the following priority: due > scheduled > start.
+ * If the task has no happens field {@link HappensDate}, null is returned.
+ *
+ * @param task
+ */
 export function getDateFieldToPostpone(task: Task): HappensDate | null {
     if (task.dueDate) {
         return 'dueDate';
