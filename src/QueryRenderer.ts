@@ -50,6 +50,10 @@ export class QueryRenderer {
     }
 }
 
+function shouldShowPostponeButton(task: Task) {
+    return !task.isDone;
+}
+
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: TasksEvents;
@@ -255,7 +259,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 this.addEditButton(extrasSpan, task);
             }
 
-            if (!this.query.layoutOptions.hidePostponeButton && !task.isDone) {
+            if (!this.query.layoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
                 this.addPostponeButton(extrasSpan, task, shortMode);
             }
 
