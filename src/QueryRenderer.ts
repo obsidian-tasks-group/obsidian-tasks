@@ -18,6 +18,7 @@ import {
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
+import { shouldShowPostponeButton } from './Scripting/Postponer';
 import type { Task } from './Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
@@ -48,10 +49,6 @@ export class QueryRenderer {
             }),
         );
     }
-}
-
-function shouldShowPostponeButton(task: Task) {
-    return !task.isDone;
 }
 
 class QueryRenderChild extends MarkdownRenderChild {
