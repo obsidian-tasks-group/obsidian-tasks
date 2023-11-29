@@ -280,8 +280,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         editTaskPencil.onClickEvent((event: MouseEvent) => {
             event.preventDefault();
 
-            const onSubmit = (updatedTasks: Task[]): void => {
-                replaceTaskWithTasks({
+            const onSubmit = async (updatedTasks: Task[]): Promise<void> => {
+                await replaceTaskWithTasks({
                     originalTask: task,
                     newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
                 });
@@ -306,7 +306,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         for (const group of tasksSortedLimitedGrouped.groups) {
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
-            this.addGroupHeadings(content, group.groupHeadings);
+            await this.addGroupHeadings(content, group.groupHeadings);
 
             await this.createTaskList(group.tasks, content);
         }
@@ -319,9 +319,9 @@ class QueryRenderChild extends MarkdownRenderChild {
      *                        in which case no headings will be added.
      * @private
      */
-    private addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupDisplayHeading[]) {
+    private async addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupDisplayHeading[]) {
         for (const heading of groupHeadings) {
-            this.addGroupHeading(content, heading);
+            await this.addGroupHeading(content, heading);
         }
     }
 
