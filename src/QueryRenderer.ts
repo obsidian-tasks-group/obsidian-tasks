@@ -97,7 +97,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.source = source;
         this.filePath = filePath;
 
-        // The engine is chosen on the basis of the code block language. Currently
+        // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
         // added later.
         switch (this.containerEl.className) {
