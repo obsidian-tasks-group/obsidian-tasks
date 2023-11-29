@@ -2,8 +2,10 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { type HappensDate, getDateFieldToPostpone } from '../../src/Scripting/Postponer';
+import { type HappensDate, getDateFieldToPostpone, shouldShowPostponeButton } from '../../src/Scripting/Postponer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
+import { Status } from '../../src/Status';
 
 window.moment = moment;
 
@@ -59,5 +61,24 @@ describe('postpone - date field choice', () => {
     it('should postpone scheduled date in preference to start date', () => {
         const taskBuilder = new TaskBuilder().scheduledDate(date).startDate(date);
         checkPostponeField(taskBuilder, 'scheduledDate');
+    });
+});
+
+describe('postpone - whether to show button', () => {
+    it('should account for status type', () => {
+        function checkPostponeButtonVisibility(statusType: StatusType, expected: boolean) {
+            const status = new Status(new StatusConfiguration('p', 'Test', 'q', true, statusType));
+            const task = new TaskBuilder().status(status).build();
+            expect(shouldShowPostponeButton(task)).toEqual(expected);
+        }
+
+        // Statuses considered as done:
+        checkPostponeButtonVisibility(StatusType.TODO, true);
+        checkPostponeButtonVisibility(StatusType.IN_PROGRESS, true);
+
+        // Statuses considered as not done:
+        checkPostponeButtonVisibility(StatusType.NON_TASK, false);
+        checkPostponeButtonVisibility(StatusType.CANCELLED, false);
+        checkPostponeButtonVisibility(StatusType.DONE, false);
     });
 });
