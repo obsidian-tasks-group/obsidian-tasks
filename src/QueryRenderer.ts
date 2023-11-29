@@ -8,17 +8,16 @@ import { DateFallback } from './DateFallback';
 import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 
 import type { IQuery } from './IQuery';
-import {
-    type HappensDate,
-    createPostponedTask,
-    explainResults,
-    getDateFieldToPostpone,
-    getQueryForQueryRenderer,
-} from './lib/QueryRendererHelper';
+import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
-import { shouldShowPostponeButton } from './Scripting/Postponer';
+import {
+    type HappensDate,
+    createPostponedTask,
+    getDateFieldToPostpone,
+    shouldShowPostponeButton,
+} from './Scripting/Postponer';
 import type { Task } from './Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';

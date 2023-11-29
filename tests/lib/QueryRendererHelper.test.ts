@@ -3,14 +3,10 @@
  */
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
-import {
-    type HappensDate,
-    explainResults,
-    getDateFieldToPostpone,
-    getQueryForQueryRenderer,
-} from '../../src/lib/QueryRendererHelper';
+import { explainResults, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
+import { type HappensDate, getDateFieldToPostpone } from '../../src/Scripting/Postponer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
