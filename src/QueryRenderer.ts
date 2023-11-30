@@ -50,6 +50,12 @@ export class QueryRenderer {
     }
 }
 
+function postponementSuccessMessage(postponedDate: Moment, updatedDateType: HappensDate) {
+    const postponedDateString = postponedDate?.format('DD MMM YYYY');
+    const successMessage = `Task's ${updatedDateType} postponed until ${postponedDateString}`;
+    return successMessage;
+}
+
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: TasksEvents;
@@ -502,8 +508,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.disabled = true;
         button.setAttr('title', 'You can perform this action again after reloading the file.');
 
-        const postponedDateString = postponedDate?.format('DD MMM YYYY');
-        const successMessage = `Task's ${updatedDateType} postponed until ${postponedDateString}`;
+        const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
         new Notice(successMessage, 5000);
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
     }
