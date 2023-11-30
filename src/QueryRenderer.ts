@@ -1,6 +1,6 @@
+import type { Moment, unitOfTime } from 'moment';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, MenuItem, Notice, Plugin, TFile } from 'obsidian';
-import type { unitOfTime } from 'moment';
 import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -8,16 +8,17 @@ import { DateFallback } from './DateFallback';
 import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 
 import type { IQuery } from './IQuery';
-import {
-    type HappensDate,
-    createPostponedTask,
-    explainResults,
-    getDateFieldToPostpone,
-    getQueryForQueryRenderer,
-} from './lib/QueryRendererHelper';
+import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
+import {
+    type HappensDate,
+    createPostponedTask,
+    getDateFieldToPostpone,
+    postponementSuccessMessage,
+    shouldShowPostponeButton,
+} from './Scripting/Postponer';
 import type { Task } from './Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
@@ -239,25 +240,24 @@ class QueryRenderChild extends MarkdownRenderChild {
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
             footnotes.forEach((footnote) => footnote.remove());
 
-            const shortMode = this.query.layoutOptions.shortMode;
-
             const extrasSpan = listItem.createSpan('task-extras');
-
-            if (!this.query.layoutOptions.hidePostponeButton) {
-                this.addPostponeButton(extrasSpan, task, shortMode);
-            }
 
             if (!this.query.layoutOptions.hideUrgency) {
                 this.addUrgency(extrasSpan, task);
             }
 
+            const shortMode = this.query.layoutOptions.shortMode;
+
             if (!this.query.layoutOptions.hideBacklinks) {
-                const shortMode = this.query.layoutOptions.shortMode;
                 this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
                 this.addEditButton(extrasSpan, task);
+            }
+
+            if (!this.query.layoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+                this.addPostponeButton(extrasSpan, task, shortMode);
             }
 
             // NEW
@@ -413,8 +413,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const classNames = shortMode ? ['internal-button', 'internal-button-short-mode'] : ['internal-button'];
         button.addClasses(classNames);
-        const buttonText = shortMode ? ' ⏩' : ' ⏩ Postpone';
-        button.setText(buttonText);
+        button.setText(' ⏩');
 
         button.addEventListener('click', () => this.getOnClickCallback(task, button, 'days'));
 
@@ -496,19 +495,16 @@ class QueryRenderChild extends MarkdownRenderChild {
             newTasks,
         });
 
-        const postponedDateString = postponedDate?.format('DD MMM YYYY');
-        this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDateString);
+        this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
     }
 
-    private onPostponeSuccessCallback(
-        button: HTMLButtonElement,
-        updatedDateType: HappensDate,
-        postponedDateString: string,
-    ) {
+    private onPostponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.disabled = true;
         button.setAttr('title', 'You can perform this action again after reloading the file.');
-        new Notice(`Task's ${updatedDateType} postponed untill ${postponedDateString}`, 5000);
+
+        const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
+        new Notice(successMessage, 5000);
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
     }
 }
