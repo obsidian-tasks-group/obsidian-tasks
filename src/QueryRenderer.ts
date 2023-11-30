@@ -52,8 +52,7 @@ export class QueryRenderer {
 
 function postponementSuccessMessage(postponedDate: Moment, updatedDateType: HappensDate) {
     const postponedDateString = postponedDate?.format('DD MMM YYYY');
-    const successMessage = `Task's ${updatedDateType} postponed until ${postponedDateString}`;
-    return successMessage;
+    return `Task's ${updatedDateType} postponed until ${postponedDateString}`;
 }
 
 class QueryRenderChild extends MarkdownRenderChild {
