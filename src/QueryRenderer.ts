@@ -16,6 +16,7 @@ import {
     type HappensDate,
     createPostponedTask,
     getDateFieldToPostpone,
+    postponementSuccessMessage,
     shouldShowPostponeButton,
 } from './Scripting/Postponer';
 import type { Task } from './Task';
@@ -48,11 +49,6 @@ export class QueryRenderer {
             }),
         );
     }
-}
-
-function postponementSuccessMessage(postponedDate: Moment, updatedDateType: HappensDate) {
-    const postponedDateString = postponedDate?.format('DD MMM YYYY');
-    return `Task's ${updatedDateType} postponed until ${postponedDateString}`;
 }
 
 class QueryRenderChild extends MarkdownRenderChild {
