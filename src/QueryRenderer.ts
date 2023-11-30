@@ -503,7 +503,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.setAttr('title', 'You can perform this action again after reloading the file.');
 
         const postponedDateString = postponedDate?.format('DD MMM YYYY');
-        new Notice(`Task's ${updatedDateType} postponed until ${postponedDateString}`, 5000);
+        const successMessage = `Task's ${updatedDateType} postponed until ${postponedDateString}`;
+        new Notice(successMessage, 5000);
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
     }
 }
