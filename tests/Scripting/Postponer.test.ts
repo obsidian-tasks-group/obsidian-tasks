@@ -2,7 +2,12 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { type HappensDate, getDateFieldToPostpone, shouldShowPostponeButton } from '../../src/Scripting/Postponer';
+import {
+    type HappensDate,
+    getDateFieldToPostpone,
+    postponementSuccessMessage,
+    shouldShowPostponeButton,
+} from '../../src/Scripting/Postponer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { Status } from '../../src/Status';
@@ -80,5 +85,17 @@ describe('postpone - whether to show button', () => {
         checkPostponeButtonVisibility(StatusType.NON_TASK, false);
         checkPostponeButtonVisibility(StatusType.CANCELLED, false);
         checkPostponeButtonVisibility(StatusType.DONE, false);
+    });
+});
+
+describe('postpone - postponement success message', () => {
+    it('should generate a message for a valid date', () => {
+        const message = postponementSuccessMessage(moment('2023-11-30'), 'scheduledDate');
+        expect(message).toEqual("Task's scheduledDate postponed until 30 Nov 2023");
+    });
+
+    it('should generate a message for an invalid date', () => {
+        const message = postponementSuccessMessage(moment('2023-13-30'), 'dueDate');
+        expect(message).toEqual("Task's dueDate postponed until Invalid date");
     });
 });
