@@ -217,7 +217,8 @@ export class Cache {
         }
 
         if (!file.path.endsWith('.md')) {
-            this.logger.warn('indexFile: WARNING: indexing non-markdown file: ' + file.path);
+            this.logger.debug('indexFile: skipping non-markdown file: ' + file.path);
+            return;
         }
 
         this.logger.debug('Cache.indexFile: ' + file.path);
