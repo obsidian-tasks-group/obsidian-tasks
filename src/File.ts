@@ -2,7 +2,8 @@ import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } fr
 import { GlobalFilter } from './Config/GlobalFilter';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
 import type { Task } from './Task';
-import { Logger, logging } from './lib/logging';
+import { logging } from './lib/logging';
+import { logEndOfTaskEdit, logStartOfTaskEdit } from './lib/LogTasksHelper';
 
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
@@ -31,17 +32,6 @@ export const initializeFile = ({
     vault = newVault;
     workspace = newWorkspace;
 };
-
-function logStartOfTaskEdit(logger: Logger, codeLocation: string, originalTask: Task) {
-    logger.debug(`${codeLocation} entered. ${originalTask.path}`);
-    logger.debug(`replaceTaskWithTasks() original: ${originalTask.originalMarkdown}`);
-}
-
-function logEndOfTaskEdit(logger: Logger, codeLocation: string, newTasks: Task[]) {
-    newTasks.map((task: Task, index: number) =>
-        logger.debug(`${codeLocation} ==> ${index + 1}   : ${task.toFileLineString()}`),
-    );
-}
 
 /**
  * Replaces the original task with one or more new tasks.
