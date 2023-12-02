@@ -21,7 +21,8 @@ export function logStartOfTaskEdit(logger: Logger, codeLocation: string, origina
  * @param newTasks
  */
 export function logEndOfTaskEdit(logger: Logger, codeLocation: string, newTasks: Task[]) {
-    newTasks.map((task: Task, index: number) =>
-        logger.debug(`${codeLocation} ==> ${index + 1}   : ${task.toFileLineString()}`),
-    );
+    newTasks.map((task: Task, index: number) => {
+        // Alignment of task lines is intentionally consistent between logStartOfTaskEdit() and this:
+        logger.debug(`${codeLocation} ==> ${index + 1}   : ${task.toFileLineString()}`);
+    });
 }
