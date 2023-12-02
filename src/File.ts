@@ -37,6 +37,12 @@ function logStartOfTaskEdit(logger: Logger, codeLocation: string, originalTask: 
     logger.debug(`replaceTaskWithTasks() original: ${originalTask.originalMarkdown}`);
 }
 
+function logEndOfTaskEdit(logger: Logger, codeLocation: string, newTasks: Task[]) {
+    newTasks.map((task: Task, index: number) =>
+        logger.debug(`${codeLocation} ==> ${index + 1}   : ${task.toFileLineString()}`),
+    );
+}
+
 /**
  * Replaces the original task with one or more new tasks.
  *
@@ -67,9 +73,7 @@ export const replaceTaskWithTasks = async ({
     const logger = getFileLogger();
     const codeLocation = 'replaceTaskWithTasks()';
     logStartOfTaskEdit(logger, codeLocation, originalTask);
-    newTasks.map((task: Task, index: number) =>
-        logger.debug(`replaceTaskWithTasks() ==> ${index + 1}   : ${task.toFileLineString()}`),
-    );
+    logEndOfTaskEdit(logger, codeLocation, newTasks);
 
     tryRepetitive({
         originalTask,
