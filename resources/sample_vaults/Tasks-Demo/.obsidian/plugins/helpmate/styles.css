@@ -1,0 +1,81 @@
+.hm-view-browser,
+.hm-view-browser-iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.hm-view-browser-toolbar {
+  display: flex;
+}
+
+.hm-view-browser-toolbar-input {
+  flex: 1;
+}
+
+.hm-view-browser-toolbar-button {
+  border: none !important;
+  box-shadow: none !important;
+  width: 25px;
+  padding: 0px !important;
+  align-items: center;
+
+  >svg {
+    width: 20px;
+    color: var(--tab-text-color-focused) !important;
+  }
+}
+
+.hm-view-browser-webframe {
+  display: inline-flex;
+  padding-top: 5px;
+  width: 100%;
+  height: 99%;
+}
+
+#helpmate-url-selector {
+  appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>') no-repeat right center;
+  padding-right: 35px;
+}
+
+.hm-source-button {
+  position: relative;
+}
+
+.hm-button-dropdown-menu {
+  position: absolute;
+  z-index: 1;
+  border: 3px solid var(--divider-color);
+  border-radius: 2px;
+  background-color: var(--background-primary);
+  top: 15px;
+  max-height: 600px;
+  min-width: 150px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 5px;
+  color: var(--nav-item-color);
+  font-size: var(--nav-item-size);
+  font-weight: var(--nav-item-weight);
+  line-height: var(--line-height-normal);
+}
+
+.hm-source-button-dropdown-menu {
+  left: 0;
+  max-height: 600px;
+  min-width: 300px;
+}
+
+.hm-more-button-dropdown-menu {
+  top: 30px;
+  right: 0px;
+  float: right;
+}
+
+.hm-source-button-list-item {
+  padding-left: 5px;
+}
+
+.hm-source-button-list-item:hover {
+  background-color: var(--background-modifier-hover);
+}
