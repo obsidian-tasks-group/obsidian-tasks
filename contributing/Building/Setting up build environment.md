@@ -1,7 +1,7 @@
 # Setting up build environment
 
-This project uses Node 14.x, if you also use a different version, look at using `nvm` to manage your Node versions.
-If you are using `nvm`, you can install the 14.x version of Node with `nvm install 14; nvm use <full version number you installed such as 14.19.3>`.
+This project uses Node 16.x, if you also use a different version, look at using `nvm` to manage your Node versions.
+If you are using `nvm`, you can install the 16.x version of Node with `nvm install 16; nvm use <full version number you installed such as 16.10.0>`.
 
 To setup the local environment after cloning the repository, run the following commands:
 
