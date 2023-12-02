@@ -2,7 +2,7 @@ import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } fr
 import { GlobalFilter } from './Config/GlobalFilter';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
 import type { Task } from './Task';
-import { logging } from './lib/logging';
+import { Logger, logging } from './lib/logging';
 
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
@@ -32,6 +32,11 @@ export const initializeFile = ({
     workspace = newWorkspace;
 };
 
+function logStartOfTaskEdit(logger: Logger, codeLocation: string, originalTask: Task) {
+    logger.debug(`${codeLocation} entered. ${originalTask.path}`);
+    logger.debug(`replaceTaskWithTasks() original: ${originalTask.originalMarkdown}`);
+}
+
 /**
  * Replaces the original task with one or more new tasks.
  *
@@ -60,8 +65,8 @@ export const replaceTaskWithTasks = async ({
     }
 
     const logger = getFileLogger();
-    logger.debug(`replaceTaskWithTasks() entered. ${originalTask.path}`);
-    logger.debug(`replaceTaskWithTasks() original: ${originalTask.originalMarkdown}`);
+    const codeLocation = 'replaceTaskWithTasks()';
+    logStartOfTaskEdit(logger, codeLocation, originalTask);
     newTasks.map((task: Task, index: number) =>
         logger.debug(`replaceTaskWithTasks() ==> ${index + 1}   : ${task.toFileLineString()}`),
     );
