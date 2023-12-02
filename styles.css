@@ -265,14 +265,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-
-    .incomplete {
-        background-color: var(--color-yellow);
-    }
-
-    .complete {
-        background-color: var(--color-green);
-    }
 }
 .chip {
     display: inline-flex;
@@ -313,6 +305,8 @@
     border-color: var(--background-modifier-border);
     border-style: solid;
     z-index: 99;
+    max-height: 170px;
+    overflow-y: auto;
 }
 
 .suggested-tasks li {

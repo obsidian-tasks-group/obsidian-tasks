@@ -271,7 +271,7 @@
             }
         });
 
-        return results.slice(0,5);
+        return results.slice(0,20);
     }
 
     function taskKeydown(e: KeyboardEvent, field: "blockedBy" | "blocking") {
@@ -321,8 +321,14 @@
 
         if (field === "blockedBy") {
             blockedBySearchIndex = searchIndex;
+            if (blockedBySearchIndex !== null) {
+                blockedByContent?.getElementsByTagName('li')[blockedBySearchIndex]?.scrollIntoView(false)
+            }
         } else {
             blockingSearchIndex = searchIndex;
+            if (blockingSearchIndex !== null) {
+                blockingContent?.getElementsByTagName('li')[blockingSearchIndex]?.scrollIntoView(false)
+            }
         }
     }
 
