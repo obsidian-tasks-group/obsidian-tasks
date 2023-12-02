@@ -10,8 +10,6 @@ let workspace: Workspace | undefined;
 
 const supportedFileExtensions = ['md'];
 
-const logger = logging.getLogger('tasks.File');
-
 export type ErrorLoggingFunction = (message: string) => void;
 
 export const initializeFile = ({
@@ -55,6 +53,7 @@ export const replaceTaskWithTasks = async ({
         newTasks = [newTasks];
     }
 
+    const logger = logging.getLogger('tasks.File');
     logger.debug(`replaceTaskWithTasks entered. ${originalTask.path}`);
 
     tryRepetitive({
@@ -78,6 +77,7 @@ function warnAndNotice(message: string) {
 }
 
 function debugLog(message: string) {
+    const logger = logging.getLogger('tasks.File');
     logger.debug(message);
 }
 
@@ -107,6 +107,7 @@ const tryRepetitive = async ({
     workspace: Workspace;
     previousTries: number;
 }): Promise<void> => {
+    const logger = logging.getLogger('tasks.File');
     logger.debug(`tryRepetitive after ${previousTries} previous tries`);
     const retry = () => {
         if (previousTries > 10) {
@@ -281,6 +282,7 @@ function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask,
     const originalTaskLineNumber = originalTask.taskLocation.lineNumber;
     if (isValidLineNumber(originalTaskLineNumber, fileLines)) {
         if (fileLines[originalTaskLineNumber] === originalTask.originalMarkdown) {
+            const logger = logging.getLogger('tasks.File');
             logger.debug(`Found original markdown at original line number ${originalTaskLineNumber}`);
             return originalTaskLineNumber;
         }
