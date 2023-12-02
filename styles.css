@@ -324,6 +324,12 @@
     justify-content: space-between
 }
 .suggested-tasks li .dependency-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.suggested-tasks li .dependency-name-shared {
     width: calc(60%);
     overflow: hidden;
     white-space: nowrap;

@@ -819,13 +819,18 @@
                         bind:this={blockedByContent}
                         on:mouseleave={() => blockedBySearchIndex = null}>
                         {#each blockedBySearchResults as searchTask, index}
+                            {@const filepath = _displayableFilePath(searchTask.taskLocation.path)}
                             <!-- svelte-ignore a11y-click-events-have-key-events -->
                             <li on:mousedown={() => addBlockedByTask(searchTask)}
                                 class:selected={blockedBySearchIndex !== null && index === blockedBySearchIndex}
                                 on:mouseenter={() => blockedBySearchIndex = index}
                             >
-                                <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
-                                <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
+                                {#if filepath}
+                                    <div class="dependency-name-shared">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
+                                    <div class="dependency-location">{filepath}</div>
+                                {:else }
+                                    <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
+                                {/if}
                             </li>
                         {/each}
                     </ul>
@@ -866,12 +871,17 @@
                         bind:this={blockingContent}
                         on:mouseleave={() => blockingSearchIndex = null}>
                         {#each blockingSearchResults as searchTask, index}
+                            {@const filepath = _displayableFilePath(searchTask.taskLocation.path)}
                             <!-- svelte-ignore a11y-click-events-have-key-events -->
                             <li on:mousedown={() => addBlockingTask(searchTask)}
                                 class:selected={blockingSearch !== null && index === blockingSearchIndex}
                                 on:mouseenter={() => blockingSearchIndex = index}>
-                                <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
-                                <div class="dependency-location">{_displayableFilePath(searchTask.taskLocation.path)}</div>
+                                {#if filepath}
+                                    <div class="dependency-name-shared">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
+                                    <div class="dependency-location">{filepath}</div>
+                                {:else }
+                                    <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
+                                {/if}
                             </li>
                         {/each}
                     </ul>
