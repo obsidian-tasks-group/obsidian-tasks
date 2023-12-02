@@ -372,7 +372,7 @@ export class Task {
      */
     public toggle(): Task[] {
         const logger = logging.getLogger('tasks.Task');
-        logger.trace(
+        logger.debug(
             `toggling task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown}`,
         );
 
