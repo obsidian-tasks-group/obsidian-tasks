@@ -1,0 +1,10 @@
+{
+  "acknowledgedWebUse": true,
+  "includeObsidianHelp": true,
+  "obsidianHelpUrl": "https://help.obsidian.md",
+  "includeObsidianDevHelp": true,
+  "obsidianDevHelpUrl": "https://docs.obsidian.md/Home",
+  "includeHelpMateHelp": true,
+  "userResources": "",
+  "forceIframe": false
+}
