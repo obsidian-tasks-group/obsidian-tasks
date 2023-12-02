@@ -60,7 +60,11 @@ export const replaceTaskWithTasks = async ({
     }
 
     const logger = getFileLogger();
-    logger.debug(`replaceTaskWithTasks entered. ${originalTask.path}`);
+    logger.debug(`replaceTaskWithTasks() entered. ${originalTask.path}`);
+    logger.debug(`replaceTaskWithTasks() original: ${originalTask.originalMarkdown}`);
+    newTasks.map((task: Task, index: number) =>
+        logger.debug(`replaceTaskWithTasks() ==> ${index + 1}   : ${task.toFileLineString()}`),
+    );
 
     tryRepetitive({
         originalTask,
