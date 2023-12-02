@@ -13,6 +13,7 @@ import { StatusType } from './StatusConfiguration';
 import { TasksFile } from './Scripting/TasksFile';
 import { PriorityTools } from './lib/PriorityTools';
 import { logging } from './lib/logging';
+import { logEndOfTaskEdit, logStartOfTaskEdit } from './lib/LogTasksHelper';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -375,6 +376,8 @@ export class Task {
         logger.debug(
             `toggling task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown}`,
         );
+        const codeLocation = 'toggle()';
+        logStartOfTaskEdit(logger, codeLocation, this);
 
         const newStatus = StatusRegistry.getInstance().getNextStatusOrCreate(this.status);
 
@@ -430,6 +433,7 @@ export class Task {
         // Write next occurrence before previous occurrence.
         newTasks.push(toggledTask);
 
+        logEndOfTaskEdit(logger, codeLocation, newTasks);
         return newTasks;
     }
 
