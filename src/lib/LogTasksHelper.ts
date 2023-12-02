@@ -2,7 +2,9 @@ import type { Task } from '../Task';
 import type { Logger } from './logging';
 
 export function logStartOfTaskEdit(logger: Logger, codeLocation: string, originalTask: Task) {
-    logger.debug(`${codeLocation} entered. ${originalTask.path}`);
+    logger.debug(
+        `${codeLocation}: task line number: ${originalTask.taskLocation.lineNumber}. file path: "${originalTask.path}"`,
+    );
     logger.debug(`${codeLocation} original: ${originalTask.originalMarkdown}`);
 }
 

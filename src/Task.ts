@@ -373,9 +373,6 @@ export class Task {
      */
     public toggle(): Task[] {
         const logger = logging.getLogger('tasks.Task');
-        logger.debug(
-            `toggling task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown}`,
-        );
         const codeLocation = 'toggle()';
         logStartOfTaskEdit(logger, codeLocation, this);
 
