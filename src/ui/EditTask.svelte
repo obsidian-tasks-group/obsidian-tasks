@@ -453,13 +453,10 @@
         }
     }
 
-    let blockedByChips: HTMLElement[] = [];
-    let blockingChips: HTMLElement[] = [];
-
-    function showDescriptionTooltip(element: HTMLElement, task: Task) {
+    function showDescriptionTooltip(element: HTMLElement, text: string) {
         const tooltip = element.createDiv();
         tooltip.addClasses(['tooltip', 'pop-up']);
-        tooltip.innerText = task.descriptionWithoutTags;
+        tooltip.innerText = text;
 
         computePosition(element, tooltip, {
             placement: "top",
@@ -564,9 +561,7 @@
     const _displayableFilePath = (path: string) => {
         if (path === task.taskLocation.path) return "";
 
-        path = path.slice(0,-3);
-
-        return path.length > 20 ? path.substring(0, 17) + "..." : path;
+        return path.slice(0,-3);
     }
 
     const _onSubmit = async () => {
@@ -825,21 +820,24 @@
                                 class:selected={blockedBySearchIndex !== null && index === blockedBySearchIndex}
                                 on:mouseenter={() => blockedBySearchIndex = index}
                             >
+                                <div class="{filepath ? 'dependency-name-shared' : 'dependency-name'}"
+                                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, searchTask.descriptionWithoutTags)}>
+                                    [{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}
+                                </div>
                                 {#if filepath}
-                                    <div class="dependency-name-shared">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
-                                    <div class="dependency-location">{filepath}</div>
-                                {:else }
-                                    <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
+                                    <div class="dependency-location"
+                                         on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}>
+                                        {filepath}
+                                    </div>
                                 {/if}
                             </li>
                         {/each}
                     </ul>
                 {/if}
                 <div class="chip-container results">
-                    {#each editableTask.blockedBy as task, idx}
+                    {#each editableTask.blockedBy as task}
                         <div class="chip"
-                             bind:this={blockedByChips[idx]}
-                             on:mouseenter={() => showDescriptionTooltip(blockedByChips[idx], task)}>
+                             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, task.descriptionWithoutTags)}>
                             <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
 
                             <button on:click={() => removeBlockedByTask(task)} type="button" class="chip-close">
@@ -876,21 +874,24 @@
                             <li on:mousedown={() => addBlockingTask(searchTask)}
                                 class:selected={blockingSearch !== null && index === blockingSearchIndex}
                                 on:mouseenter={() => blockingSearchIndex = index}>
+                                <div class="{filepath ? 'dependency-name-shared' : 'dependency-name'}"
+                                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, searchTask.descriptionWithoutTags)}>
+                                    [{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}
+                                </div>
                                 {#if filepath}
-                                    <div class="dependency-name-shared">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
-                                    <div class="dependency-location">{filepath}</div>
-                                {:else }
-                                    <div class="dependency-name">[{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}</div>
+                                    <div class="dependency-location"
+                                         on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}>
+                                        {filepath}
+                                    </div>
                                 {/if}
                             </li>
                         {/each}
                     </ul>
                 {/if}
                 <div class="chip-container results">
-                    {#each editableTask.blocking as task, idx}
+                    {#each editableTask.blocking as task}
                         <div class="chip"
-                             bind:this={blockingChips[idx]}
-                             on:mouseenter={() => showDescriptionTooltip(blockingChips[idx], task)}>
+                             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, task.descriptionWithoutTags)}>
                             <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
 
                             <button on:click={() => removeBlockingTask(task)} type="button" class="chip-close">

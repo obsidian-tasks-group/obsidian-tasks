@@ -337,13 +337,13 @@
 }
 
 .suggested-tasks li .dependency-location {
-    width: calc(33%);
+    width: calc(40%);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     font-style: italic;
     text-align: right;
-    color: var(--text-faint)
+    color: var(--italic-color)
 }
 
 .suggested-tasks li.selected {
