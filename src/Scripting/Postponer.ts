@@ -3,11 +3,11 @@ import { Task } from '../Task';
 import { TasksDate } from './TasksDate';
 
 export function shouldShowPostponeButton(task: Task) {
-    const hasHappensDate = task.happensDates.some((date) => {
-        return date !== null;
+    const hasAValidHappensDate = task.happensDates.some((date) => {
+        return !!date?.isValid();
     });
 
-    return !task.isDone && hasHappensDate;
+    return !task.isDone && hasAValidHappensDate;
 }
 
 export type HappensDate = keyof Pick<Task, 'startDate' | 'scheduledDate' | 'dueDate'>;
