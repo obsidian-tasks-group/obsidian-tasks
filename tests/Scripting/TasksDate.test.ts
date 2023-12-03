@@ -149,10 +149,10 @@ describe('TasksDate - postpone', () => {
     });
 
     it('should postpone a future date (after tomorrow)', () => {
-        const tasksDate = new TasksDate(moment('2023-11-29'));
+        const tasksDate = new TasksDate(moment('2024-03-20'));
 
         const postponedDate = new TasksDate(tasksDate.postpone());
 
-        expect(postponedDate.formatAsDate()).toEqual('2023-11-30');
+        expect(postponedDate.formatAsDate()).toEqual('2024-03-21');
     });
 });
