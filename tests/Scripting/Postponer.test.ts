@@ -154,7 +154,7 @@ describe('postpone - new task creation', () => {
         jest.useRealTimers();
     });
 
-    function testPostponedTaskAndDate(task: Task, expectedPostponedDate: string, expectedDateField: HappensDate) {
+    function testPostponedTaskAndDate(task: Task, expectedDateField: HappensDate, expectedPostponedDate: string) {
         const { postponedDate, newTasks } = createPostponedTask(task, 'dueDate', 'day', 1);
         expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
         expect(newTasks[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
@@ -163,7 +163,7 @@ describe('postpone - new task creation', () => {
     it('should postpone an overdue task to today', () => {
         const task = new TaskBuilder().dueDate('2023-11-01').build();
         const expectedPostponedDate = '2023-12-04';
-        testPostponedTaskAndDate(task, expectedPostponedDate, 'dueDate');
+        testPostponedTaskAndDate(task, 'dueDate', expectedPostponedDate);
     });
 
     it('should postpone a task scheduled today to tomorrow', () => {
