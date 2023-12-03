@@ -105,3 +105,39 @@ describe('TasksDate', () => {
         expect(new TasksDate(moment('2023-02-31')).fromNow.groupText).toEqual('%%320230611%% Invalid date');
     });
 });
+
+describe('TasksDate - postpone', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-11-28'));
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
+    it('should postpone an older date (before yesterday) to tomorrow', () => {
+        const tasksDate = new TasksDate(moment('2023-11-20'));
+        expect(tasksDate.postpone().format('YYYY-MM-DD')).toEqual('2023-11-29');
+    });
+
+    it('should postpone yesterday date to tomorrow', () => {
+        const tasksDate = new TasksDate(moment('2023-11-27'));
+        expect(tasksDate.postpone().isSame(moment('2023-11-29'))).toEqual(true);
+    });
+
+    it('should postpone today date to tomorrow', () => {
+        const tasksDate = new TasksDate(moment('2023-11-28'));
+        expect(tasksDate.postpone().isSame(moment('2023-11-29'))).toEqual(true);
+    });
+
+    it('should postpone tomorrow date to after tomorrow', () => {
+        const tasksDate = new TasksDate(moment('2023-11-29'));
+        expect(tasksDate.postpone().isSame(moment('2023-11-30'))).toEqual(true);
+    });
+
+    it('should postpone a future date (after tomorrow)', () => {
+        const tasksDate = new TasksDate(moment('2023-11-29'));
+        expect(tasksDate.postpone().isSame(moment('2023-11-30'))).toEqual(true);
+    });
+});
