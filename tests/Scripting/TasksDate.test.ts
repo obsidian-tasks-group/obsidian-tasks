@@ -119,40 +119,40 @@ describe('TasksDate - postpone', () => {
     it('should postpone an older date (before yesterday) to tomorrow', () => {
         const tasksDate = new TasksDate(moment('2023-11-20'));
 
-        const postponedDate = tasksDate.postpone();
+        const postponedDate = new TasksDate(tasksDate.postpone());
 
-        expect(postponedDate.format('YYYY-MM-DD')).toEqual('2023-11-29');
+        expect(postponedDate.formatAsDate()).toEqual('2023-11-29');
     });
 
     it('should postpone yesterday date to tomorrow', () => {
         const tasksDate = new TasksDate(moment('2023-11-27'));
 
-        const postponedDate = tasksDate.postpone();
+        const postponedDate = new TasksDate(tasksDate.postpone());
 
-        expect(postponedDate.isSame(moment('2023-11-29'))).toEqual(true);
+        expect(postponedDate.formatAsDate()).toEqual('2023-11-29');
     });
 
     it('should postpone today date to tomorrow', () => {
         const tasksDate = new TasksDate(moment('2023-11-28'));
 
-        const postponedDate = tasksDate.postpone();
+        const postponedDate = new TasksDate(tasksDate.postpone());
 
-        expect(postponedDate.isSame(moment('2023-11-29'))).toEqual(true);
+        expect(postponedDate.formatAsDate()).toEqual('2023-11-29');
     });
 
     it('should postpone tomorrow date to after tomorrow', () => {
         const tasksDate = new TasksDate(moment('2023-11-29'));
 
-        const postponedDate = tasksDate.postpone();
+        const postponedDate = new TasksDate(tasksDate.postpone());
 
-        expect(postponedDate.isSame(moment('2023-11-30'))).toEqual(true);
+        expect(postponedDate.formatAsDate()).toEqual('2023-11-30');
     });
 
     it('should postpone a future date (after tomorrow)', () => {
         const tasksDate = new TasksDate(moment('2023-11-29'));
 
-        const postponedDate = tasksDate.postpone();
+        const postponedDate = new TasksDate(tasksDate.postpone());
 
-        expect(postponedDate.isSame(moment('2023-11-30'))).toEqual(true);
+        expect(postponedDate.formatAsDate()).toEqual('2023-11-30');
     });
 });
