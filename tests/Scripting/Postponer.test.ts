@@ -4,6 +4,7 @@
 import moment from 'moment';
 import {
     type HappensDate,
+    createPostponedTask,
     getDateFieldToPostpone,
     postponementSuccessMessage,
     shouldShowPostponeButton,
@@ -139,6 +140,38 @@ describe('postpone - whether to show button', () => {
         const task = new TaskBuilder().dueDate('20233-12-03').build();
 
         expect(shouldShowPostponeButton(task)).toEqual(true);
+    });
+});
+
+describe('postpone - new task creation', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-12-03'));
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
+    it('should postpone an overdue task to tomorrow', () => {
+        const task = new TaskBuilder().dueDate('2023-11-01').build();
+        const { postponedDate, newTasks } = createPostponedTask(task, 'dueDate', 'day', 1);
+        expect(postponedDate.format('YYYY-MM-DD')).toEqual('2023-12-04');
+        expect(newTasks.due.formatAsDate()).toEqual('2023-12-04');
+    });
+
+    it('should postpone a task scheduled today to tomorrow', () => {
+        const task = new TaskBuilder().scheduledDate('2023-12-03').build();
+        const { postponedDate, newTasks } = createPostponedTask(task, 'scheduledDate', 'day', 1);
+        expect(postponedDate.format('YYYY-MM-DD')).toEqual('2023-12-04');
+        expect(newTasks.scheduled.formatAsDate()).toEqual('2023-12-04');
+    });
+
+    it('should postpone a task that starts in the future to the next day', () => {
+        const task = new TaskBuilder().startDate('2024-03-05').build();
+        const { postponedDate, newTasks } = createPostponedTask(task, 'startDate', 'day', 1);
+        expect(postponedDate.format('YYYY-MM-DD')).toEqual('2024-03-06');
+        expect(newTasks.start.formatAsDate()).toEqual('2024-03-06');
     });
 });
 
