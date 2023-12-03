@@ -73,7 +73,7 @@ describe('postpone - whether to show button', () => {
     it('should account for status type', () => {
         function checkPostponeButtonVisibility(statusType: StatusType, expected: boolean) {
             const status = new Status(new StatusConfiguration('p', 'Test', 'q', true, statusType));
-            const task = new TaskBuilder().status(status).build();
+            const task = new TaskBuilder().dueDate('2023-10-30').status(status).build();
             expect(shouldShowPostponeButton(task)).toEqual(expected);
         }
 
@@ -87,22 +87,22 @@ describe('postpone - whether to show button', () => {
         checkPostponeButtonVisibility(StatusType.DONE, false);
     });
 
-    it('should show button for a task with no dates', () => {
+    it('should not show button for a task with no dates', () => {
         const task = new TaskBuilder().build();
 
-        expect(shouldShowPostponeButton(task)).toEqual(true);
+        expect(shouldShowPostponeButton(task)).toEqual(false);
     });
 
-    it('should show button for a task with a created date only', () => {
+    it('should not show button for a task with a created date only', () => {
         const task = new TaskBuilder().createdDate('2023-11-29').build();
 
-        expect(shouldShowPostponeButton(task)).toEqual(true);
+        expect(shouldShowPostponeButton(task)).toEqual(false);
     });
 
-    it('should show button for a task with a done date only', () => {
+    it('should not show button for a task with a done date only', () => {
         const task = new TaskBuilder().doneDate('2023-11-30').build();
 
-        expect(shouldShowPostponeButton(task)).toEqual(true);
+        expect(shouldShowPostponeButton(task)).toEqual(false);
     });
 
     it('should show button for a task with a start date only', () => {
