@@ -403,60 +403,41 @@
 
 
     let depInputWidth: number;
+
+    function positionDropdown(ref: HTMLElement, content: HTMLElement) {
+        if (!ref || !content) return;
+
+        computePosition(ref, content, {
+            middleware: [
+                offset(6),
+                shift(),
+                flip(),
+                size({
+                    apply() {
+                        content && Object.assign(content.style, { width: `${depInputWidth}px` });
+                    },
+                }),
+            ],
+        }).then(({ x, y }) => {
+            Object.assign(content.style, {
+                left: `${x}px`,
+                top: `${y}px`,
+            });
+        });
+    }
+
     let blockedByRef: HTMLElement;
     let blockedByContent: HTMLElement;
 
     $: {
-        if (blockedByRef && blockedByContent) {
-            computePosition(blockedByRef, blockedByContent, {
-                middleware: [
-                    offset(6),
-                    shift(),
-                    flip(),
-                    size({
-                        apply() {
-                            blockedByContent && Object.assign(blockedByContent.style, {
-                                width: `${depInputWidth}px`,
-                            });
-                        },
-                    })
-
-                ]
-            }).then(({x, y}) => {
-                Object.assign(blockedByContent.style, {
-                    left: `${x}px`,
-                    top: `${y}px`,
-                });
-            });
-        }
+        positionDropdown(blockedByRef, blockedByContent);
     }
 
     let blockingRef: HTMLElement;
     let blockingContent: HTMLElement;
 
     $: {
-        if (blockingRef && blockingContent) {
-            computePosition(blockingRef, blockingContent, {
-                middleware: [
-                    offset(6),
-                    shift(),
-                    flip(),
-                    size({
-                        apply() {
-                            blockingContent && Object.assign(blockingContent.style, {
-                                width: `${depInputWidth}px`,
-                            });
-                        },
-                    })
-
-                ]
-            }).then(({x, y}) => {
-                Object.assign(blockingContent.style, {
-                    left: `${x}px`,
-                    top: `${y}px`,
-                });
-            });
-        }
+        positionDropdown(blockingRef, blockingContent);
     }
 
     function showDescriptionTooltip(element: HTMLElement, text: string) {
