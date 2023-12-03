@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import type { Task } from 'Task';
 import {
     type HappensDate,
     createPostponedTask,
@@ -153,11 +154,16 @@ describe('postpone - new task creation', () => {
         jest.useRealTimers();
     });
 
-    it('should postpone an overdue task to tomorrow', () => {
-        const task = new TaskBuilder().dueDate('2023-11-01').build();
+    function testPostponedTaskAndDate(task: Task, expectedPostponedDate: string) {
         const { postponedDate, newTasks } = createPostponedTask(task, 'dueDate', 'day', 1);
-        expect(postponedDate.format('YYYY-MM-DD')).toEqual('2023-12-04');
-        expect(newTasks.due.formatAsDate()).toEqual('2023-12-04');
+        expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+        expect(newTasks.due.formatAsDate()).toEqual(expectedPostponedDate);
+    }
+
+    it('should postpone an overdue task to today', () => {
+        const task = new TaskBuilder().dueDate('2023-11-01').build();
+        const expectedPostponedDate = '2023-12-04';
+        testPostponedTaskAndDate(task, expectedPostponedDate);
     });
 
     it('should postpone a task scheduled today to tomorrow', () => {
