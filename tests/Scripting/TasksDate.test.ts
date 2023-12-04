@@ -4,6 +4,7 @@
 
 import moment from 'moment';
 
+import type { unitOfTime } from 'moment/moment';
 import { TasksDate } from '../../src/Scripting/TasksDate';
 
 window.moment = moment;
@@ -116,15 +117,23 @@ describe('TasksDate - postpone', () => {
         jest.useRealTimers();
     });
 
+    function checkDatePostponesTo(
+        initialDate: string,
+        amount: number,
+        unitOfTime: unitOfTime.DurationConstructor,
+        expectedDate: string,
+    ) {
+        const tasksDate = new TasksDate(moment(initialDate));
+        const postponedDate = new TasksDate(tasksDate.postpone(unitOfTime, amount));
+        expect(postponedDate.formatAsDate()).toEqual(expectedDate);
+    }
+
     it('should postpone an older date (before yesterday) to tomorrow', () => {
         const initialDate = '2023-11-20';
         const amount = 1;
         const unitOfTime = 'day';
         const expectedDate = '2023-11-29';
-
-        const tasksDate = new TasksDate(moment(initialDate));
-        const postponedDate = new TasksDate(tasksDate.postpone(unitOfTime, amount));
-        expect(postponedDate.formatAsDate()).toEqual(expectedDate);
+        checkDatePostponesTo(initialDate, amount, unitOfTime, expectedDate);
     });
 
     it('should postpone yesterday date to tomorrow', () => {
