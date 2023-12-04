@@ -158,6 +158,13 @@ describe('postpone - new task creation', () => {
         const { postponedDate, newTasks } = createPostponedTask(task, expectedDateField, 'day', 1);
         expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
         expect(newTasks[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+
+        // If the scheduled date was inferred from the filename, and it is the scheduledDate that was postponed,
+        // we must ensure that the 'inferred' flag has been reset to false.
+        // Otherwise, the new scheduled date will be ignored in some locations, like rendering of dates.
+        if (task.scheduledDateIsInferred && expectedDateField === 'scheduledDate') {
+            expect(newTasks.scheduledDateIsInferred).toEqual(false);
+        }
     }
 
     it('should postpone an overdue task to today', () => {
@@ -168,6 +175,11 @@ describe('postpone - new task creation', () => {
 
     it('should postpone a task scheduled today to tomorrow', () => {
         const task = new TaskBuilder().scheduledDate('2023-12-03').build();
+        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
+    });
+
+    it.failing('should postpone a task scheduled today to tomorrow, when the scheduled date is inferred', () => {
+        const task = new TaskBuilder().scheduledDate('2023-12-03').scheduledDateIsInferred(true).build();
         testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
     });
 
