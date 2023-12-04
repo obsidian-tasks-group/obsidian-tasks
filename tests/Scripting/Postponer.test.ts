@@ -69,6 +69,8 @@ describe('postpone - date field choice', () => {
         const taskBuilder = new TaskBuilder().scheduledDate(date).startDate(date);
         checkPostponeField(taskBuilder, 'scheduledDate');
     });
+
+    // TODO Check it refuses to postpone an invalid date (failing test)
 });
 
 describe('postpone - whether to show button', () => {
