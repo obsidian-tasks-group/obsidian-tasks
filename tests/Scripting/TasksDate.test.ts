@@ -129,11 +129,7 @@ describe('TasksDate - postpone', () => {
     }
 
     it('should postpone an older date (before yesterday) to tomorrow', () => {
-        const initialDate = '2023-11-20';
-        const amount = 1;
-        const unitOfTime = 'day';
-        const expectedDate = '2023-11-29';
-        checkDatePostponesTo(initialDate, amount, unitOfTime, expectedDate);
+        checkDatePostponesTo('2023-11-20', 1, 'day', '2023-11-29');
     });
 
     it('should postpone yesterday date to tomorrow', () => {
