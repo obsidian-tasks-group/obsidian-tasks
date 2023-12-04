@@ -185,7 +185,7 @@ Obsidian supports two styles of **comments**:
 - `%% I am text in a comment %%`
 
 > [!warning]
-> By design, Tasks does read any tasks that are inside these comments, because Obsidian does not read them.
+> By design, Tasks does **not** read any tasks that are inside these comments, because Obsidian does not read them.
 
 ### Tasks with Footnotes
 
