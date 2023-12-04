@@ -147,4 +147,8 @@ describe('TasksDate - postpone', () => {
     it('should postpone a future date (after tomorrow)', () => {
         checkDatePostponesTo('2024-03-20', 1, 'day', '2024-03-21');
     });
+
+    it('should postpone by a month, to a shorter month (in a leap year)', () => {
+        checkDatePostponesTo('2024-01-31', 1, 'month', '2024-02-29');
+    });
 });
