@@ -117,11 +117,14 @@ describe('TasksDate - postpone', () => {
     });
 
     it('should postpone an older date (before yesterday) to tomorrow', () => {
-        const tasksDate = new TasksDate(moment('2023-11-20'));
+        const initialDate = '2023-11-20';
+        const amount = 1;
+        const unitOfTime = 'day';
+        const expectedDate = '2023-11-29';
 
-        const postponedDate = new TasksDate(tasksDate.postpone());
-
-        expect(postponedDate.formatAsDate()).toEqual('2023-11-29');
+        const tasksDate = new TasksDate(moment(initialDate));
+        const postponedDate = new TasksDate(tasksDate.postpone(unitOfTime, amount));
+        expect(postponedDate.formatAsDate()).toEqual(expectedDate);
     });
 
     it('should postpone yesterday date to tomorrow', () => {
