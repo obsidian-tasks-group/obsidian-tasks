@@ -133,34 +133,18 @@ describe('TasksDate - postpone', () => {
     });
 
     it('should postpone yesterday date to tomorrow', () => {
-        const tasksDate = new TasksDate(moment('2023-11-27'));
-
-        const postponedDate = new TasksDate(tasksDate.postpone());
-
-        expect(postponedDate.formatAsDate()).toEqual('2023-11-29');
+        checkDatePostponesTo('2023-11-27', 1, 'day', '2023-11-29');
     });
 
     it('should postpone today date to tomorrow', () => {
-        const tasksDate = new TasksDate(moment('2023-11-28'));
-
-        const postponedDate = new TasksDate(tasksDate.postpone());
-
-        expect(postponedDate.formatAsDate()).toEqual('2023-11-29');
+        checkDatePostponesTo('2023-11-28', 1, 'day', '2023-11-29');
     });
 
     it('should postpone tomorrow date to after tomorrow', () => {
-        const tasksDate = new TasksDate(moment('2023-11-29'));
-
-        const postponedDate = new TasksDate(tasksDate.postpone());
-
-        expect(postponedDate.formatAsDate()).toEqual('2023-11-30');
+        checkDatePostponesTo('2023-11-29', 1, 'day', '2023-11-30');
     });
 
     it('should postpone a future date (after tomorrow)', () => {
-        const tasksDate = new TasksDate(moment('2024-03-20'));
-
-        const postponedDate = new TasksDate(tasksDate.postpone());
-
-        expect(postponedDate.formatAsDate()).toEqual('2024-03-21');
+        checkDatePostponesTo('2024-03-20', 1, 'day', '2024-03-21');
     });
 });
