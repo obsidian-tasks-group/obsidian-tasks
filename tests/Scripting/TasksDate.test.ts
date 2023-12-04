@@ -134,6 +134,11 @@ describe('TasksDate - postpone', () => {
 
     it('should postpone yesterday date to tomorrow', () => {
         checkDatePostponesTo('2023-11-27', 1, 'day', '2023-11-29');
+
+        // TODO: Review this behaviour.
+        //       It is not clear that this is the best result - it is just the current result, since #2473.
+        checkDatePostponesTo('2023-11-27', 1, 'week', '2023-12-05');
+        checkDatePostponesTo('2023-11-27', 1, 'month', '2023-12-28');
     });
 
     it('should postpone today date to tomorrow', () => {
