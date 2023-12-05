@@ -496,11 +496,11 @@ class QueryRenderChild extends MarkdownRenderChild {
             newTasks,
         });
         this.query.debug('[postpone]: postponeOnClickCallback() - after  call to replaceTaskWithTasks()');
-        this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
+        this.postponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
     }
 
-    private onPostponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
-        this.query.debug('[postpone]: onPostponeSuccessCallback() entered');
+    private postponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
+        this.query.debug('[postpone]: postponeSuccessCallback() entered');
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.disabled = true;
         button.setAttr('title', 'You can perform this action again after reloading the file.');
@@ -508,6 +508,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
         new Notice(successMessage, 5000);
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
-        this.query.debug('[postpone]: onPostponeSuccessCallback() exiting');
+        this.query.debug('[postpone]: postponeSuccessCallback() exiting');
     }
 }
