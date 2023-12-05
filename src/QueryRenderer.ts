@@ -415,7 +415,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.addClasses(classNames);
         button.setText(' ⏩');
 
-        button.addEventListener('click', () => this.postponeOnClickCallback(task, button, 'days', 1));
+        button.addEventListener('click', () => this.postponeOnClickCallback(button, task, 1, 'days'));
 
         /** Open a context menu on right-click.
          * Give a choice of postponing for a week, month, or quarter.
@@ -427,7 +427,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             const postponeMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
                 const amountOrArticle = amount > 1 ? amount : 'a';
                 item.setTitle(`${commonTitle} ${amountOrArticle} ${timeUnit}`).onClick(() =>
-                    this.postponeOnClickCallback(task, button, timeUnit, amount),
+                    this.postponeOnClickCallback(button, task, amount, timeUnit),
                 );
             };
 
@@ -477,10 +477,10 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async postponeOnClickCallback(
-        task: Task,
         button: HTMLButtonElement,
-        timeUnit: unitOfTime.DurationConstructor,
+        task: Task,
         amount: number,
+        timeUnit: moment.unitOfTime.DurationConstructor,
     ) {
         const dateTypeToUpdate = getDateFieldToPostpone(task);
         if (dateTypeToUpdate === null) {
