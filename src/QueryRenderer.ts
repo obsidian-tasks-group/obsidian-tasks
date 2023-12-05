@@ -415,7 +415,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.addClasses(classNames);
         button.setText(' ⏩');
 
-        button.addEventListener('click', () => this.getOnClickCallback(task, button, 'days'));
+        button.addEventListener('click', () => this.postponeOnClickCallback(task, button, 'days'));
 
         /** Open a context menu on right-click.
          * Give a choice of postponing for a week, month, or quarter.
@@ -427,7 +427,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
                 const amountOrArticle = amount > 1 ? amount : 'a';
                 item.setTitle(`${commonTitle} ${amountOrArticle} ${timeUnit}`).onClick(() =>
-                    this.getOnClickCallback(task, button, timeUnit, amount),
+                    this.postponeOnClickCallback(task, button, timeUnit, amount),
                 );
             };
 
@@ -476,7 +476,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         return groupingRules.join(',');
     }
 
-    private async getOnClickCallback(
+    private async postponeOnClickCallback(
         task: Task,
         button: HTMLButtonElement,
         timeUnit: unitOfTime.DurationConstructor = 'days',
@@ -490,12 +490,12 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const { postponedDate, newTasks } = createPostponedTask(task, dateTypeToUpdate, timeUnit, amount);
 
-        this.query.debug('[postpone]: getOnClickCallback() - before call to replaceTaskWithTasks()');
+        this.query.debug('[postpone]: postponeOnClickCallback() - before call to replaceTaskWithTasks()');
         await replaceTaskWithTasks({
             originalTask: task,
             newTasks,
         });
-        this.query.debug('[postpone]: getOnClickCallback() - after  call to replaceTaskWithTasks()');
+        this.query.debug('[postpone]: postponeOnClickCallback() - after  call to replaceTaskWithTasks()');
         this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
     }
 
