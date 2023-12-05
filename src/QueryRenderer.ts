@@ -424,18 +424,18 @@ class QueryRenderChild extends MarkdownRenderChild {
             const menu = new Menu();
             const commonTitle = 'Postpone for';
 
-            const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
+            const postponeMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
                 const amountOrArticle = amount > 1 ? amount : 'a';
                 item.setTitle(`${commonTitle} ${amountOrArticle} ${timeUnit}`).onClick(() =>
                     this.postponeOnClickCallback(task, button, timeUnit, amount),
                 );
             };
 
-            menu.addItem((item) => getMenuItemCallback(item, 'days', 2));
-            menu.addItem((item) => getMenuItemCallback(item, 'days', 3));
-            menu.addItem((item) => getMenuItemCallback(item, 'week'));
-            menu.addItem((item) => getMenuItemCallback(item, 'weeks', 2));
-            menu.addItem((item) => getMenuItemCallback(item, 'month'));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 2));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 3));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'week'));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'weeks', 2));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'month'));
 
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
