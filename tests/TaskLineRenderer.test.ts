@@ -390,8 +390,8 @@ describe('task line rendering', () => {
     });
 
     it('renders dependency fields with their correct classes', async () => {
-        await testComponentClasses('- [ ] Minimal task 🆔 g7317o', {}, LayoutClasses.id, {});
-        await testComponentClasses('- [ ] Minimal task ⤵️ ya44g5,hry475', {}, LayoutClasses.dependsOn, {});
+        await testComponentClasses('- [ ] Minimal task 🆔 g7317o', {}, fieldRenderer.className('id'), {});
+        await testComponentClasses('- [ ] Minimal task ⤵️ ya44g5,hry475', {}, fieldRenderer.className('dependsOn'), {});
     });
 
     it('renders recurrence with its correct classes', async () => {
