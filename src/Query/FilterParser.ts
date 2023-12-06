@@ -34,43 +34,39 @@ import { BlockingField } from './Filter/BlockingField';
 // be kept last.
 // When adding new fields keep this order in mind, putting fields that are more specific before fields that
 // may contain them, and keep BooleanField last.
-export function getFieldCreators() {
-    const fieldCreators: EndsWith<BooleanField> = [
-        () => new StatusNameField(), // status.name is before status, to avoid ambiguity
-        () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
-        () => new StatusField(),
-        () => new RecurringField(),
-        () => new PriorityField(),
-        () => new HappensDateField(),
-        () => new CreatedDateField(),
-        () => new StartDateField(),
-        () => new ScheduledDateField(),
-        () => new DueDateField(),
-        () => new DoneDateField(),
-        () => new PathField(),
-        () => new FolderField(),
-        () => new RootField(),
-        () => new BacklinkField(),
-        () => new DescriptionField(),
-        () => new TagsField(),
-        () => new HeadingField(),
-        () => new ExcludeSubItemsField(),
-        () => new FilenameField(),
-        () => new UrgencyField(),
-        () => new RecurrenceField(),
-        () => new FunctionField(),
-        () => new BlockingField(),
-        () => new BooleanField(), // --- Please make sure to keep BooleanField last (see comment above) ---
-    ];
+export const fieldCreators: EndsWith<BooleanField> = [
+    () => new StatusNameField(), // status.name is before status, to avoid ambiguity
+    () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
+    () => new StatusField(),
+    () => new RecurringField(),
+    () => new PriorityField(),
+    () => new HappensDateField(),
+    () => new CreatedDateField(),
+    () => new StartDateField(),
+    () => new ScheduledDateField(),
+    () => new DueDateField(),
+    () => new DoneDateField(),
+    () => new PathField(),
+    () => new FolderField(),
+    () => new RootField(),
+    () => new BacklinkField(),
+    () => new DescriptionField(),
+    () => new TagsField(),
+    () => new HeadingField(),
+    () => new ExcludeSubItemsField(),
+    () => new FilenameField(),
+    () => new UrgencyField(),
+    () => new RecurrenceField(),
+    () => new FunctionField(),
+    () => new BlockingField(),
+    () => new BooleanField(), // --- Please make sure to keep BooleanField last (see comment above) ---
+];
 
-    // This type helps verify that BooleanField is kept last
-    type EndsWith<End, T extends Field = Field> = [...Array<() => T>, () => End];
-
-    return fieldCreators;
-}
+// This type helps verify that BooleanField is kept last
+type EndsWith<End, T extends Field = Field> = [...Array<() => T>, () => End];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {
-    for (const creator of getFieldCreators()) {
+    for (const creator of fieldCreators) {
         const field = creator();
         if (field.canCreateFilterForLine(filterString)) return field.createFilterOrErrorMessage(filterString);
     }
@@ -87,7 +83,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of getFieldCreators()) {
+    for (const creator of fieldCreators) {
         const field = creator();
         const sorter = field.createSorterFromLine(sorterString);
         if (sorter) {
@@ -107,7 +103,7 @@ export function parseGrouper(line: string): Grouper | null {
     }
 
     // See if any of the fields can parse the line.
-    for (const creator of getFieldCreators()) {
+    for (const creator of fieldCreators) {
         const field = creator();
         const grouper = field.createGrouperFromLine(line);
         if (grouper) {

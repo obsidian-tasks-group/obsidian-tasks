@@ -1,5 +1,5 @@
 import * as FilterParser from '../../src/Query/FilterParser';
-import { getFieldCreators } from '../../src/Query/FilterParser';
+import { fieldCreators } from '../../src/Query/FilterParser';
 
 describe('FilterParser', () => {
     it('should parse new-style group line correctly', () => {
@@ -7,7 +7,7 @@ describe('FilterParser', () => {
         expect(FilterParser.parseGrouper('group by status-name')).toBeNull();
     });
 
-    it('should provide a function to get the parsers', () => {
-        expect(getFieldCreators().length).not.toEqual(0);
+    it('should provide an array to get the parsers', () => {
+        expect(fieldCreators.length).not.toEqual(0);
     });
 });

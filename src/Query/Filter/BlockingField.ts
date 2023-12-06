@@ -1,21 +1,21 @@
-import type { Task } from '../../Task';
+import type { SearchInfo } from '../SearchInfo';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
 export class BlockingField extends FilterInstructionsBasedField {
     constructor() {
         super();
-        this._filters.add('is blocking', (task, allTasks: Task[]) => {
+        this._filters.add('is blocking', (task, searchInfo: SearchInfo) => {
             if (task.id === '') return false;
 
-            return allTasks.some((cacheTask) => {
+            return searchInfo.allTasks.some((cacheTask) => {
                 return cacheTask.dependsOn.includes(task.id);
             });
         });
-        this._filters.add('is not blocked', (task, allTasks) => {
+        this._filters.add('is not blocked', (task, searchInfo: SearchInfo) => {
             if (task.dependsOn.length === 0) return true;
 
             for (const depId of task.dependsOn) {
-                const depTask = allTasks.find((task) => task.id === depId);
+                const depTask = searchInfo.allTasks.find((task) => task.id === depId);
 
                 if (!depTask) continue;
 
