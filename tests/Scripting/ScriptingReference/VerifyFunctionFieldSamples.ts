@@ -2,7 +2,7 @@ import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import type { Task } from '../../../src/Task';
 import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrouping';
-import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { expandPlaceholders } from '../../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../../src/Scripting/QueryContext';
 import { scan } from '../../../src/Query/Scanner';
@@ -85,13 +85,14 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
         const instruction = filter[0];
         const comment = filter.slice(1);
 
-        const expandedInstruction = preprocessSingleInstruction(instruction, 'a/b.md');
+        const path = 'a/b.md';
+        const expandedInstruction = preprocessSingleInstruction(instruction, path);
         const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(expandedInstruction);
         expect(filterOrErrorMessage).toBeValid();
 
         const filterFunction = filterOrErrorMessage.filterFunction!;
         const matchingTasks: string[] = [];
-        const searchInfo = SearchInfo.fromAllTasks(tasks);
+        const searchInfo = new SearchInfo(path, tasks);
         for (const task of tasks) {
             const matches = filterFunction(task, searchInfo);
             if (matches) {

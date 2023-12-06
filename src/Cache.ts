@@ -10,6 +10,7 @@ import { getSettings } from './Config/Settings';
 import { Lazy } from './lib/Lazy';
 import { TaskLocation } from './TaskLocation';
 // import { logging } from './lib/logging';
+import { logging } from './lib/logging';
 
 export enum State {
     Cold = 'Cold',
@@ -17,9 +18,9 @@ export enum State {
     Warm = 'Warm',
 }
 
-// const logger = logging.getLogger('tasks');
-
 export class Cache {
+    logger = logging.getLogger('tasks.Cache');
+
     private readonly metadataCache: MetadataCache;
     private readonly metadataCacheEventReferences: EventRef[];
     private readonly vault: Vault;
@@ -42,6 +43,8 @@ export class Cache {
     private loadedAfterFirstResolve: boolean;
 
     constructor({ metadataCache, vault, events }: { metadataCache: MetadataCache; vault: Vault; events: TasksEvents }) {
+        this.logger.debug('Creating Cache object');
+
         this.metadataCache = metadataCache;
         this.metadataCacheEventReferences = [];
         this.vault = vault;
@@ -51,6 +54,8 @@ export class Cache {
 
         this.tasksMutex = new Mutex();
         this.state = State.Cold;
+        this.logger.debug('Cache.constructor(): state = Cold');
+
         this.tasks = [];
 
         this.loadedAfterFirstResolve = false;
@@ -63,6 +68,8 @@ export class Cache {
     }
 
     public unload(): void {
+        this.logger.info('Unloading Cache');
+
         for (const eventReference of this.metadataCacheEventReferences) {
             this.metadataCache.offref(eventReference);
         }
@@ -85,6 +92,7 @@ export class Cache {
     }
 
     private notifySubscribers(): void {
+        this.logger.debug('Cache.notifySubscribers()');
         this.events.triggerCacheUpdate({
             tasks: this.tasks,
             state: this.state,
@@ -92,6 +100,7 @@ export class Cache {
     }
 
     private subscribeToCache(): void {
+        this.logger.debug('Cache.subscribeToCache()');
         const resolvedEventeReference = this.metadataCache.on('resolved', async () => {
             // Resolved fires on every change.
             // We only want to initialize if we haven't already.
@@ -112,12 +121,14 @@ export class Cache {
     }
 
     private subscribeToVault(): void {
+        this.logger.debug('Cache.subscribeToVault()');
         const { useFilenameAsScheduledDate } = getSettings();
 
         const createdEventReference = this.vault.on('create', (file: TAbstractFile) => {
             if (!(file instanceof TFile)) {
                 return;
             }
+            this.logger.debug(`Cache.subscribeToVault.createdEventReference() ${file.path}`);
 
             this.tasksMutex.runExclusive(() => {
                 this.indexFile(file);
@@ -129,6 +140,7 @@ export class Cache {
             if (!(file instanceof TFile)) {
                 return;
             }
+            this.logger.debug(`Cache.subscribeToVault.deletedEventReference() ${file.path}`);
 
             this.tasksMutex.runExclusive(() => {
                 this.tasks = this.tasks.filter((task: Task) => {
@@ -144,6 +156,7 @@ export class Cache {
             if (!(file instanceof TFile)) {
                 return;
             }
+            this.logger.debug(`Cache.subscribeToVault.renamedEventReference() ${file.path}`);
 
             this.tasksMutex.runExclusive(() => {
                 const fallbackDate = new Lazy(() => DateFallback.fromPath(file.path));
@@ -170,6 +183,7 @@ export class Cache {
     }
 
     private subscribeToEvents(): void {
+        this.logger.debug('Cache.subscribeToEvents()');
         const requestReference = this.events.onRequestCacheUpdate((handler) => {
             handler({ tasks: this.tasks, state: this.state });
         });
@@ -177,14 +191,20 @@ export class Cache {
     }
 
     private loadVault(): Promise<void> {
+        this.logger.debug('Cache.loadVault()');
         return this.tasksMutex.runExclusive(async () => {
             this.state = State.Initializing;
+            this.logger.debug('Cache.loadVault(): state = Initializing');
+
             await Promise.all(
                 this.vault.getMarkdownFiles().map((file: TFile) => {
                     return this.indexFile(file);
                 }),
             );
             this.state = State.Warm;
+            // TODO Why is this displayed twice:
+            this.logger.debug('Cache.loadVault(): state = Warm');
+
             // Notify that the cache is now warm:
             this.notifySubscribers();
         });
@@ -195,6 +215,13 @@ export class Cache {
         if (fileCache === null || fileCache === undefined) {
             return;
         }
+
+        if (!file.path.endsWith('.md')) {
+            this.logger.debug('indexFile: skipping non-markdown file: ' + file.path);
+            return;
+        }
+
+        this.logger.debug('Cache.indexFile: ' + file.path);
 
         const oldTasks = this.tasks.filter((task: Task) => {
             return task.path === file.path;
@@ -217,7 +244,7 @@ export class Cache {
             // This code kept for now, to allow for debugging during development.
             // It is too verbose to release to users.
             // if (this.getState() == State.Warm) {
-            //     console.debug(`Tasks unchanged in ${file.path}`);
+            //     this.logger.debug(`Tasks unchanged in ${file.path}`);
             // }
             return;
         }
@@ -225,8 +252,8 @@ export class Cache {
         // Temporary edit - See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
         /*
         if (this.getState() == State.Warm) {
-            // logger.debug(`Cache read: ${file.path}`);
-            console.debug(
+            // this.logger.debug(`Cache read: ${file.path}`);
+            this.logger.debug(
                 `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
             );
         }
@@ -239,6 +266,7 @@ export class Cache {
         });
 
         this.tasks.push(...newTasks);
+        this.logger.debug('Cache.indexFile: ' + file.path + `: read ${newTasks.length} task(s)`);
 
         // All updated, inform our subscribers.
         this.notifySubscribers();
@@ -255,7 +283,7 @@ export class Cache {
         const linesInFile = fileLines.length;
 
         // Lazily store date extracted from filename to avoid parsing more than needed
-        // console.debug(`getTasksFromFileContent() reading ${file.path}`);
+        // this.logger.debug(`getTasksFromFileContent() reading ${file.path}`);
         const dateFromFileName = new Lazy(() => DateFallback.fromPath(file.path));
 
         // We want to store section information with every task so
@@ -278,7 +306,7 @@ export class Cache {
                         when Obsidian started up, it got the new file content, but still had the old cached
                         data about locations of list items in the file.
                      */
-                    console.log(
+                    this.logger.debug(
                         `${file.path} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
                     );
                     return tasks;
@@ -297,7 +325,7 @@ export class Cache {
 
                 const line = fileLines[lineNumber];
                 if (line === undefined) {
-                    console.log(`${file.path}: line ${lineNumber} - ignoring 'undefined' line.`);
+                    this.logger.debug(`${file.path}: line ${lineNumber} - ignoring 'undefined' line.`);
                     continue;
                 }
 
@@ -349,9 +377,9 @@ The error popup will only be shown when Tasks is starting up, but if the error p
 it will be shown in the console every time this file is edited during the Obsidian
 session.
 `;
-        console.error(msg);
+        this.logger.error(msg);
         if (e instanceof Error) {
-            console.error(e.stack);
+            this.logger.error(e.stack ? e.stack : 'Cannot determine stack');
         }
         if (this.state === State.Initializing) {
             new Notice(msg, 10000);

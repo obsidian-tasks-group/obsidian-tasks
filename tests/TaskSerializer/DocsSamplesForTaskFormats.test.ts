@@ -1,5 +1,5 @@
 import { TASK_FORMATS, updateSettings } from '../../src/Config/Settings';
-import { verifyMarkdown, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdown, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { SampleTasks } from '../TestHelpers';
 
 describe('Serializer', () => {

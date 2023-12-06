@@ -11,6 +11,7 @@ type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 export type TaskDetails = Writeable<
     Pick<
         Task,
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         | 'description'
         | 'priority'
         | 'startDate'

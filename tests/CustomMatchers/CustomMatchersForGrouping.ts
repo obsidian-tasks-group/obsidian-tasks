@@ -100,6 +100,9 @@ export function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNa
 
 /**
  * Test that applying the grouper to the task, with the given SearchInfo, generates the expected group names.
+ *
+ * Unless the grouper needs access to the path to the query, use {@link toGroupTask} instead.
+ *
  * @param grouper
  * @param task
  * @param searchInfo

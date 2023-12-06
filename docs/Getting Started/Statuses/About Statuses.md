@@ -4,7 +4,7 @@ publish: true
 
 # About Statuses
 
-<span class="related-pages">#index-pages</span>
+<span class="related-pages">#index-pages #feature/statuses</span>
 
 This section provides more detail to flesh out the introductory material in [[Statuses]].
 
@@ -18,6 +18,7 @@ This section provides more detail to flesh out the introductory material in [[St
 
 - [[Status Settings]]
 - [[Editing a Status]]
+- [[Check your Statuses]]
 
 ## Statuses in Use
 

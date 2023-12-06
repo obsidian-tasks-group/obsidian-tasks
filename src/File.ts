@@ -3,6 +3,7 @@ import { GlobalFilter } from './Config/GlobalFilter';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
 import type { Task } from './Task';
 import { logging } from './lib/logging';
+import { logEndOfTaskEdit, logStartOfTaskEdit } from './lib/LogTasksHelper';
 
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
@@ -10,7 +11,11 @@ let workspace: Workspace | undefined;
 
 const supportedFileExtensions = ['md'];
 
-const logger = logging.getLogger('tasks');
+function getFileLogger() {
+    // For logging to actually produce debug output when enabled in settings,
+    // it appears that the logger cannot be created until execution time.
+    return logging.getLogger('tasks.File');
+}
 
 export type ErrorLoggingFunction = (message: string) => void;
 
@@ -55,7 +60,10 @@ export const replaceTaskWithTasks = async ({
         newTasks = [newTasks];
     }
 
-    logger.debug(`replaceTaskWithTasks entered. ${originalTask.path}`);
+    const logger = getFileLogger();
+    const codeLocation = 'replaceTaskWithTasks()';
+    logStartOfTaskEdit(logger, codeLocation, originalTask);
+    logEndOfTaskEdit(logger, codeLocation, newTasks);
 
     tryRepetitive({
         originalTask,
@@ -78,6 +86,7 @@ function warnAndNotice(message: string) {
 }
 
 function debugLog(message: string) {
+    const logger = getFileLogger();
     logger.debug(message);
 }
 
@@ -107,6 +116,7 @@ const tryRepetitive = async ({
     workspace: Workspace;
     previousTries: number;
 }): Promise<void> => {
+    const logger = getFileLogger();
     logger.debug(`tryRepetitive after ${previousTries} previous tries`);
     const retry = () => {
         if (previousTries > 10) {
@@ -281,6 +291,7 @@ function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask,
     const originalTaskLineNumber = originalTask.taskLocation.lineNumber;
     if (isValidLineNumber(originalTaskLineNumber, fileLines)) {
         if (fileLines[originalTaskLineNumber] === originalTask.originalMarkdown) {
+            const logger = getFileLogger();
             logger.debug(`Found original markdown at original line number ${originalTaskLineNumber}`);
             return originalTaskLineNumber;
         }

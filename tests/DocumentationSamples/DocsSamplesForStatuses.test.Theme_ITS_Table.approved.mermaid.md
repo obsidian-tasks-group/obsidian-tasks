@@ -1,43 +1,50 @@
 
 ```mermaid
 flowchart LR
-1[Unchecked]
-2[Regular]
-3[Checked]
-4[Dropped]
-5[Forward]
-6[Date]
-7[Question]
-8[Half Done]
-9[Add]
-10[Research]
-11[Important]
-12[Idea]
-13[Brainstorm]
-14[Pro]
-15[Con]
-16[Quote]
-17[Note]
-18[Bookmark]
-19[Information]
-20[Paraphrase]
-21[Location]
-22[Example]
-23[Answer]
-24[Reward]
-25[Choice]
-26[Doing]
-27[Time]
-28[Character / Person]
-29[Talk]
-30[Outline / Plot]
-31[Conflict]
-32[World]
-33[Clue / Find]
-34[Foreshadow]
-35[Favorite / Health]
-36[Symbolism]
-37[Secret]
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+1["Unchecked"]:::TODO
+2["Regular"]:::DONE
+3["Checked"]:::DONE
+4["Dropped"]:::CANCELLED
+5["Forward"]:::TODO
+6["Date"]:::TODO
+7["Question"]:::TODO
+8["Half Done"]:::IN_PROGRESS
+9["Add"]:::TODO
+10["Research"]:::TODO
+11["Important"]:::TODO
+12["Idea"]:::TODO
+13["Brainstorm"]:::TODO
+14["Pro"]:::TODO
+15["Con"]:::TODO
+16["Quote"]:::TODO
+17["Note"]:::TODO
+18["Bookmark"]:::TODO
+19["Information"]:::TODO
+20["Paraphrase"]:::TODO
+21["Location"]:::TODO
+22["Example"]:::TODO
+23["Answer"]:::TODO
+24["Reward"]:::TODO
+25["Choice"]:::TODO
+26["Doing"]:::IN_PROGRESS
+27["Time"]:::TODO
+28["Character / Person"]:::TODO
+29["Talk"]:::TODO
+30["Outline / Plot"]:::TODO
+31["Conflict"]:::TODO
+32["World"]:::TODO
+33["Clue / Find"]:::TODO
+34["Foreshadow"]:::TODO
+35["Favorite / Health"]:::TODO
+36["Symbolism"]:::TODO
+37["Secret"]:::TODO
 1 --> 2
 2 --> 1
 3 --> 1
@@ -75,4 +82,6 @@ flowchart LR
 35 --> 2
 36 --> 2
 37 --> 2
+
+linkStyle default stroke:gray
 ```

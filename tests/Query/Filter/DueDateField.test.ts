@@ -12,8 +12,9 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { Query } from '../../../src/Query/Query';
-import { MarkdownTable } from '../../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdown } from '../../TestingTools/VerifyMarkdown';
 import { SampleTasks } from '../../TestHelpers';
+import { MarkdownTable } from '../../../src/lib/MarkdownTable';
 
 window.moment = moment;
 
@@ -579,7 +580,7 @@ describe('due date', () => {
             table.addRow(newRow);
         });
 
-        table.verify();
+        verifyMarkdown(table.markdown);
     });
 });
 

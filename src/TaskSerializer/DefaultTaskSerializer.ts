@@ -12,6 +12,7 @@ import type { TaskDetails, TaskSerializer } from '.';
  * @interface DefaultTaskSerializerSymbols
  */
 export interface DefaultTaskSerializerSymbols {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     readonly prioritySymbols: {
         Highest: string;
         High: string;
@@ -46,6 +47,7 @@ export interface DefaultTaskSerializerSymbols {
  * Uses emojis to concisely convey meaning
  */
 export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     prioritySymbols: {
         Highest: '🔺',
         High: '⏫',
@@ -100,6 +102,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
      */
     public componentToString(task: Task, layout: TaskLayout, component: TaskLayoutComponent) {
         const {
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             prioritySymbols,
             startDateSymbol,
             createdDateSymbol,
@@ -112,6 +115,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         } = this.symbols;
 
         switch (component) {
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             case 'description':
                 return task.description;
             case 'priority': {
@@ -216,6 +220,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // Keep matching and removing special strings from the end of the
         // description in any order. The loop should only run once if the
         // strings are in the expected order after the description.
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         let matched: boolean;
         let priority: Priority = Priority.None;
         let startDate: Moment | null = null;
@@ -236,6 +241,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         const maxRuns = 20;
         let runs = 0;
         do {
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             matched = false;
             const priorityMatch = line.match(TaskFormatRegularExpressions.priorityRegex);
             if (priorityMatch !== null) {
@@ -337,6 +343,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // to actually have the description 'Do something #tag1 #tag2'
         if (trailingTags.length > 0) line += ' ' + trailingTags;
 
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         return {
             description: line,
             priority,

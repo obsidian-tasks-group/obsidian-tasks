@@ -173,14 +173,23 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1[Todo]
-            2[In Progress]
-            3[Done]
-            4[Cancelled]
+
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["Todo"]:::TODO
+            2["In Progress"]:::IN_PROGRESS
+            3["Done"]:::DONE
+            4["Cancelled"]:::CANCELLED
             1 --> 3
             2 --> 3
             3 --> 1
             4 --> 1
+
+            linkStyle default stroke:gray
             \`\`\`
             "
         `);
@@ -190,14 +199,90 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1["'Todo'<br>[ ] -> [x]<br>(TODO)"]
-            2["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]
-            3["'Done'<br>[x] -> [ ]<br>(DONE)"]
-            4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]
+
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["'Todo'<br>[ ] -> [x]<br>(TODO)"]:::TODO
+            2["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]:::IN_PROGRESS
+            3["'Done'<br>[x] -> [ ]<br>(DONE)"]:::DONE
+            4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]:::CANCELLED
             1 --> 3
             2 --> 3
             3 --> 1
             4 --> 1
+
+            linkStyle default stroke:gray
+            \`\`\`
+            "
+        `);
+    });
+
+    it('should encode symbols in mermaid diagrams when necessary', () => {
+        // This tests the fix for:
+        //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2355
+        //      Fix the handling of special characters in Mermaid status diagrams
+
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        statusRegistry.clearStatuses();
+        statusRegistry.add(new StatusConfiguration('<', 'Todo <', '<', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('>', 'Todo >', '>', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('"', 'Todo "', '"', false, StatusType.TODO));
+        statusRegistry.add(new StatusConfiguration('&', 'Todo &', '&', false, StatusType.TODO));
+
+        // Assert
+        // Without detail:
+        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["Todo &lt;"]:::TODO
+            2["Todo &gt;"]:::TODO
+            3["Todo &quot;"]:::TODO
+            4["Todo &amp;"]:::TODO
+            1 --> 1
+            2 --> 2
+            3 --> 3
+            4 --> 4
+
+            linkStyle default stroke:gray
+            \`\`\`
+            "
+        `);
+
+        // With detail:
+        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["'Todo &lt;'<br>[&lt;] -> [&lt;]<br>(TODO)"]:::TODO
+            2["'Todo &gt;'<br>[&gt;] -> [&gt;]<br>(TODO)"]:::TODO
+            3["'Todo &quot;'<br>[&quot;] -> [&quot;]<br>(TODO)"]:::TODO
+            4["'Todo &amp;'<br>[&amp;] -> [&amp;]<br>(TODO)"]:::TODO
+            1 --> 1
+            2 --> 2
+            3 --> 3
+            4 --> 4
+
+            linkStyle default stroke:gray
             \`\`\`
             "
         `);
@@ -220,8 +305,17 @@ describe('StatusRegistry', () => {
             "
             \`\`\`mermaid
             flowchart LR
-            1[Todo]
 
+            classDef TODO        stroke:#f33,stroke-width:3px;
+            classDef DONE        stroke:#0c0,stroke-width:3px;
+            classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+            classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+            classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+            1["Todo"]:::TODO
+
+
+            linkStyle default stroke:gray
             \`\`\`
             "
         `);
@@ -347,7 +441,7 @@ describe('StatusRegistry', () => {
             expect(toggled?.status.symbol).toEqual('D');
         });
 
-        it('should bulk-add unknown statuses', () => {
+        it('should find unknown statuses from tasks in the vault, sorted by symbol', () => {
             // Arrange
             const registry = new StatusRegistry();
             expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
@@ -377,12 +471,12 @@ describe('StatusRegistry', () => {
             expect(s1.name).toEqual('Unknown (!)');
 
             s1 = unknownStatuses[1];
-            expect(s1.type).toEqual(StatusType.DONE);
-            expect(s1.name).toEqual('Unknown (X)');
-
-            s1 = unknownStatuses[2];
             expect(s1.type).toEqual(StatusType.IN_PROGRESS);
             expect(s1.name).toEqual('Unknown (d)');
+
+            s1 = unknownStatuses[2];
+            expect(s1.type).toEqual(StatusType.DONE);
+            expect(s1.name).toEqual('Unknown (X)');
         });
     });
 });

@@ -57,5 +57,16 @@
   "debugSettings": {
     "ignoreSortInstructions": false,
     "showTaskHiddenData": false
+  },
+  "loggingOptions": {
+    "minLevels": {
+      "": "info",
+      "tasks": "info",
+      "tasks.Query": "info",
+      "tasks.Cache": "info",
+      "tasks.Events": "info",
+      "tasks.File": "info",
+      "tasks.Task": "info"
+    }
   }
 }

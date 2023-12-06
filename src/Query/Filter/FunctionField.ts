@@ -22,7 +22,6 @@ export class FunctionField extends Field {
         }
 
         const expression = match[1];
-        // TODO When filters are allowed to start using the QueryContext, will need to pass in actual QueryContext
         const taskExpression = new TaskExpression(expression);
         if (!taskExpression.isValid()) {
             return FilterOrErrorMessage.fromError(line, taskExpression.parseError!);
@@ -38,7 +37,7 @@ export class FunctionField extends Field {
     }
 
     protected filterRegExp(): RegExp | null {
-        return new RegExp(`^filter by ${this.fieldNameSingularEscaped()} (.*)`);
+        return new RegExp(`^filter by ${this.fieldNameSingularEscaped()} (.*)`, 'i');
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -60,7 +59,7 @@ export class FunctionField extends Field {
     }
 
     protected grouperRegExp(): RegExp {
-        return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)? (.*)`);
+        return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)? (.*)`, 'i');
     }
 
     /**
@@ -80,15 +79,16 @@ export class FunctionField extends Field {
 // -----------------------------------------------------------------------------------------------------------------
 
 function createFilterFunctionFromLine(expression: TaskExpression): FilterFunction {
-    return (task: Task) => {
-        return filterByFunction(expression, task);
+    return (task: Task, searchInfo: SearchInfo) => {
+        const queryContext = searchInfo.queryContext();
+        return filterByFunction(expression, task, queryContext);
     };
 }
 
-export function filterByFunction(expression: TaskExpression, task: Task): boolean {
+export function filterByFunction(expression: TaskExpression, task: Task, queryContext?: QueryContext): boolean {
     // Allow exceptions to propagate to caller, since this will be called in a tight loop.
     // In searches, it will be caught by Query.applyQueryToTasks().
-    const result = expression.evaluate(task, undefined); // TODO when supporting query.file in filtering, add a QueryContext parameter
+    const result = expression.evaluate(task, queryContext);
 
     // We insist that 'filter by function' returns booleans,
     // to avoid users having to understand truthy and falsey values.

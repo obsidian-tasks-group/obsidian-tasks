@@ -7,7 +7,7 @@ import type { QueryContext } from './QueryContext';
  *      A parameter is a variable in a function definition. It is a placeholder and hence does not have a concrete value.
  *      An argument is a value passed during function invocation.
  * @param task - during parsing, this can be null. During evaluation, it must be a Task
- * @param queryContext - during parsing, this can be null. During evaluation, it must be a QueryContext
+ * @param queryContext - during parsing, this can be null. During evaluation, it must be a QueryContext or undefined.
  */
 export function constructArguments(task: Task | null, queryContext: QueryContext | null) {
     const paramsArgs: [string, any][] = [
@@ -21,7 +21,7 @@ export function constructArguments(task: Task | null, queryContext: QueryContext
  * Evaluate an arbitrary JavaScript expression on a Task object
  * @param task - a {@link Task} object
  * @param arg - a string, such as `task.path.startsWith("journal/") ? "journal/" : task.path`
- * @param queryContext - a {@link QueryContext} object
+ * @param queryContext - an optional {@link QueryContext} object
  *
  * Currently any errors are returned as string error messages, starting with the word 'Error'.
  *
@@ -63,7 +63,7 @@ export class TaskExpression {
     /**
      * Evaluate the expression on this task, or throw an exception if the calculation failed
      * @param task
-     * @param queryContext
+     * @param queryContext - optional. If not supplied, query properties will be unavailable.
      *
      * @see evaluateOrCatch
      */
@@ -92,7 +92,7 @@ export class TaskExpression {
         }
         return evaluateExpressionOrCatch(
             this.functionOrError.queryComponent!,
-            constructArguments(task, queryContext ? queryContext : null),
+            constructArguments(task, queryContext),
             this.line,
         );
     }

@@ -59,6 +59,7 @@ describe('TaskSerializer Example', () => {
             }
             const description = descriptionParts.join(' ');
             return {
+                // NEW_TASK_FIELD_EDIT_REQUIRED
                 description,
                 tags: Task.extractHashtags(description),
                 dueDate,

@@ -6,6 +6,8 @@ publish: true
 
 <span class="related-pages">#feature/filters</span>
 
+<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
+
 ## Contents
 
 This page is long. Here are some links to the main sections:
@@ -278,8 +280,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 ### Status
 
-- `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
-- `not done` - matches status types with type `TODO` and `IN_PROGRESS`
+- `done` - matches tasks with status types `DONE`, `CANCELLED` and `NON_TASK`
+- `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
 
 > [!info]
 > Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
@@ -1122,7 +1124,7 @@ Note that the path includes the `.md` extension.
 - `path (includes|does not include) <path>`
   - Matches case-insensitive (disregards capitalization).
   - Use `{{query.file.path}}` or `{{query.file.pathWithoutExtension}}` as a placeholder for the path of the file containing the current query.
-    - For example, `path equals {{query.file.path}}`
+    - For example, `path includes {{query.file.path}}`
     - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
@@ -1136,6 +1138,12 @@ Note that the path includes the `.md` extension.
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now possible, using `task.file.path`.
 
 In Tasks 4.8.0 `task.file.pathWithoutExtension` was added.
+
+Since Tasks 5.1.0, the query's file path can be used conveniently in custom filters:
+
+- `query.file.path` or
+- `query.file.pathWithoutExtension`
+- Useful reading: [[Query Properties]].
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
 
@@ -1181,6 +1189,11 @@ The `root` is the top-level folder of the file that contains the task, that is, 
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by root folder** is now possible, using `task.file.root`.
 
+Since Tasks 5.1.0, the query's file root can be used conveniently in custom filters:
+
+- `query.file.root`
+- Useful reading: [[Query Properties]].
+
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.root_docs.approved.md -->
 
 ```javascript
@@ -1219,6 +1232,11 @@ This is the `folder` to the file that contains the task, which will be `/` for f
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now possible, using `task.file.folder`.
 
+Since Tasks 5.1.0, the query's file root can be used conveniently in custom filters:
+
+- `query.file.root`
+- Useful reading: [[Query Properties]].
+
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
 ```javascript
@@ -1235,14 +1253,13 @@ filter by function task.file.folder.includes("Work/Projects/")
 - Find tasks in files in a specific folder **and any sub-folders**.
 
 ```javascript
-filter by function task.file.folder.includes( '{{query.file.folder}}' )
+filter by function task.file.folder.includes( query.file.folder )
 ```
 
 - Find tasks in files in the folder that contains the query **and any sub-folders**.
-- Note that the placeholder text is expanded to a raw string, so needs to be inside quotes.
 
 ```javascript
-filter by function task.file.folder === '{{query.file.folder}}'
+filter by function task.file.folder === query.file.folder
 ```
 
 - Find tasks in files in the folder that contains the query only (**not tasks in any sub-folders**).
@@ -1278,6 +1295,12 @@ Note that the file name includes the `.md` extension.
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file name** is now possible, using `task.file.filename`.
 
 In Tasks 4.8.0 `task.file.filenameWithoutExtension` was added.
+
+Since Tasks 5.1.0, the query's file name can be used conveniently in custom filters:
+
+- `query.file.filename` or
+- `query.file.filenameWithoutExtension`
+- Useful reading: [[Query Properties]].
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
 

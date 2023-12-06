@@ -3,6 +3,7 @@
  * See applyOptions below when adding options here.
  */
 export class LayoutOptions {
+    hidePostponeButton: boolean = false;
     hideTaskCount: boolean = false;
     hideBacklinks: boolean = false;
     hidePriority: boolean = false;
@@ -22,6 +23,7 @@ export class LayoutOptions {
 }
 
 export type TaskLayoutComponent =
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     | 'description'
     | 'priority'
     | 'recurrenceRule'
@@ -41,6 +43,7 @@ export type TaskLayoutComponent =
  */
 export class TaskLayout {
     public defaultLayout: TaskLayoutComponent[] = [
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         'description',
         'priority',
         'recurrenceRule',
@@ -72,6 +75,7 @@ export class TaskLayout {
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
         const componentsToHideAndGenerateClasses: [boolean, TaskLayoutComponent][] = [
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             [this.options.hidePriority, 'priority'],
             [this.options.hideRecurrenceRule, 'recurrenceRule'],
             [this.options.hideCreatedDate, 'createdDate'],
@@ -99,6 +103,7 @@ export class TaskLayout {
             [this.options.hideUrgency, 'urgency'],
             [this.options.hideBacklinks, 'backlinks'],
             [this.options.hideEditButton, 'edit-button'],
+            [this.options.hidePostponeButton, 'postpone-button'],
         ];
         for (const [hide, component] of componentsToGenerateClassesOnly) {
             this.generateHiddenClassForTaskList(hide, component);

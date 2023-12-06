@@ -6,8 +6,9 @@ import moment from 'moment';
 import { Status } from '../../src/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -31,7 +32,7 @@ describe('task', () => {
             ];
             markdownTable.addRow(cells);
         }
-        markdownTable.verifyForDocs();
+        verifyMarkdownForDocs(markdownTable.markdown);
     }
 
     beforeAll(() => {
@@ -42,6 +43,8 @@ describe('task', () => {
     afterAll(() => {
         jest.useRealTimers();
     });
+
+    // NEW_TASK_FIELD_EDIT_REQUIRED
 
     it('status', () => {
         verifyFieldDataForReferenceDocs([

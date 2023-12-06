@@ -63,6 +63,7 @@ describe('TaskLayout tests', () => {
             tasks-layout-hide-tags
             tasks-layout-hide-backlinks
             tasks-layout-hide-edit-button
+            tasks-layout-hide-postpone-button
             tasks-layout-short-mode"
         `);
     });

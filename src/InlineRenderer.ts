@@ -2,7 +2,8 @@ import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { Task } from './Task';
-import { taskToLi } from './TaskLineRenderer';
+import { LayoutOptions } from './TaskLayout';
+import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskLocation } from './TaskLocation';
 
 export class InlineRenderer {
@@ -86,25 +87,26 @@ export class InlineRenderer {
             }
         }
 
+        const taskLineRenderer = new TaskLineRenderer({
+            obsidianComponent: childComponent,
+            parentUlElement: element,
+            layoutOptions: new LayoutOptions(),
+        });
+
         // The section index is the nth task within this section.
         for (let sectionIndex = 0; sectionIndex < renderedElements.length; sectionIndex++) {
             const task = fileTasks[sectionIndex];
-            const renderedElement = renderedElements[sectionIndex];
 
+            const renderedElement = renderedElements[sectionIndex];
             if (task === undefined || renderedElement === undefined) {
                 // Assuming match of tasks in file and render preview.
                 // If there is a mis-match in the numbers, we still process
                 // what we can.
                 continue;
             }
-
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
-            const listIndex: number = Number.parseInt(dataLine, 10);
-            const taskElement = await taskToLi(task, {
-                parentUlElement: element,
-                listIndex,
-                obsidianComponent: childComponent,
-            });
+            const taskIndex: number = Number.parseInt(dataLine, 10);
+            const taskElement = await taskLineRenderer.renderTaskLine(task, taskIndex);
 
             // If the rendered element contains a sub-list or sub-div (e.g. the
             // folding arrow), we need to keep it.

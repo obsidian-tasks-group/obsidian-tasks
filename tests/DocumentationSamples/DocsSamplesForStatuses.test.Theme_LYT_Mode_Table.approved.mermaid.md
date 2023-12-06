@@ -1,28 +1,35 @@
 
 ```mermaid
 flowchart LR
-1[Unchecked]
-2[Checked]
-3[Rescheduled]
-4[Scheduled]
-5[Important]
-6[Cancelled]
-7[In Progress]
-8[Question]
-9[Star]
-10[Note]
-11[Location]
-12[Information]
-13[Idea]
-14[Amount]
-15[Pro]
-16[Con]
-17[Bookmark]
-18[Fire]
-19[Key]
-20[Win]
-21[Up]
-22[Down]
+
+classDef TODO        stroke:#f33,stroke-width:3px;
+classDef DONE        stroke:#0c0,stroke-width:3px;
+classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
+classDef CANCELLED   stroke:#ddd,stroke-width:3px;
+classDef NON_TASK    stroke:#99e,stroke-width:3px;
+
+1["Unchecked"]:::TODO
+2["Checked"]:::DONE
+3["Rescheduled"]:::TODO
+4["Scheduled"]:::TODO
+5["Important"]:::TODO
+6["Cancelled"]:::CANCELLED
+7["In Progress"]:::IN_PROGRESS
+8["Question"]:::TODO
+9["Star"]:::TODO
+10["Note"]:::TODO
+11["Location"]:::TODO
+12["Information"]:::TODO
+13["Idea"]:::TODO
+14["Amount"]:::TODO
+15["Pro"]:::TODO
+16["Con"]:::TODO
+17["Bookmark"]:::TODO
+18["Fire"]:::TODO
+19["Key"]:::TODO
+20["Win"]:::TODO
+21["Up"]:::TODO
+22["Down"]:::TODO
 1 --> 2
 2 --> 1
 3 --> 2
@@ -45,4 +52,6 @@ flowchart LR
 20 --> 2
 21 --> 2
 22 --> 2
+
+linkStyle default stroke:gray
 ```

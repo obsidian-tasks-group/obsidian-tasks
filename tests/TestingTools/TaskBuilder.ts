@@ -20,6 +20,7 @@ import { TaskLocation } from '../../src/TaskLocation';
  *            Create a new TaskBuilder object to start from a clean state,
  */
 export class TaskBuilder {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     private _status: Status = Status.makeTodo();
     private _description: string = 'my description';
     private _path: string = '';
@@ -65,6 +66,7 @@ export class TaskBuilder {
             description += ' ' + this._tags.join(' ');
         }
         const task = new Task({
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
@@ -102,6 +104,7 @@ export class TaskBuilder {
      */
     public static createFullyPopulatedTask(): Task {
         const taskBuilder = new TaskBuilder()
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             .indentation('  ')
             .description('Do exercises')
             .tags(['#todo', '#health'])

@@ -35,6 +35,7 @@ function isTaskDetails(val: any): val is TaskDetails {
     }
 
     const dates: ReadonlyArray<keyof TaskDetails> = [
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         'startDate',
         'createdDate',
         'scheduledDate',
@@ -73,6 +74,7 @@ type SummarizedTaskDetails = { [K in keyof TaskDetails]: AsString<TaskDetails[K]
 function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | null {
     if (t === null) return null;
     return {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         ...t,
         startDate: t.startDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         createdDate: t.createdDate?.format(TaskRegularExpressions.dateFormat) ?? null,
@@ -95,6 +97,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
  */
 function tryBuildTaskDetails(t: object): TaskDetails | null {
     const toReturn = {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
         priority: Priority.None,
         startDate: null,

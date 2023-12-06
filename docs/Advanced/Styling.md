@@ -33,6 +33,8 @@ The following description relates to a restructuring of the rendered tasks that 
 
 The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same except the top-most containers):
 
+<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
   - Results list (ul class="plugin-tasks-query-result") OR Reading View list (ul class="contains-task-list")
@@ -69,6 +71,8 @@ Data attributes were introduced in Tasks 3.0.0.
 Each rendered task component (description, priority, recurrence rule etc) includes a **generic class** that denotes this type of component.
 The generic classes are:
 
+<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+
 - `task-description`
 - `task-priority`
 - `task-due`
@@ -85,6 +89,7 @@ In addition to the generic classes, there are [**data attributes**](https://deve
 A **priority data attributes** named `data-task-priority` represents the specific priority of a class. It can be `highest`, `high`, `medium`, `low`, `lowest` or `normal`.
 The `normal` value is special: it is added as a default to a task's upper `task-list-item` even if there is no priority field set for that task.
 
+<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
 A **date attribute** represents a due, created, start, scheduled or done date in a format relative to the current date.
 The date attributes are `data-task-due`, `data-task-created`, `data-task-start`, `data-task-scheduled` and `data-task-done` and are populated with a relative expression that denotes the number of days this field represents compared to today:
 

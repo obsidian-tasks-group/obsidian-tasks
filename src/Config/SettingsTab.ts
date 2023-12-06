@@ -4,6 +4,7 @@ import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 import type { StatusCollection } from '../StatusCollection';
+import { createStatusRegistryReport } from '../StatusRegistryReport';
 import * as Themes from './Themes';
 import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
@@ -482,6 +483,36 @@ export class SettingsTab extends PluginSettingTab {
                 true, // isCoreStatus
             );
         });
+
+        /* -------------------- 'Review and check your Statuses' button -------------------- */
+        const createMermaidDiagram = new Setting(containerEl).addButton((button) => {
+            const buttonName = 'Review and check your Statuses';
+            button
+                .setButtonText(buttonName)
+                .setCta()
+                .onClick(async () => {
+                    // Generate a new file unique file name, in the root of the vault
+                    const now = window.moment();
+                    const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
+                    const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
+
+                    // Create the report
+                    const version = this.plugin.manifest.version;
+                    const statusRegistry = StatusRegistry.getInstance();
+                    const fileContent = createStatusRegistryReport(statusSettings, statusRegistry, buttonName, version);
+
+                    // Save the file
+                    const file = await app.vault.create(filename, fileContent);
+
+                    // And open the new file
+                    const leaf = this.app.workspace.getLeaf(true);
+                    await leaf.openFile(file);
+                });
+            button.setTooltip(
+                'Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings.',
+            );
+        });
+        createMermaidDiagram.infoEl.remove();
     }
 
     /**

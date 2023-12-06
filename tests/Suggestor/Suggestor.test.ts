@@ -12,8 +12,9 @@ import {
 } from '../../src/Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
-import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
 
 window.moment = moment;
 
@@ -46,6 +47,8 @@ function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: 
 }
 
 const MAX_GENERIC_SUGGESTIONS_FOR_TESTS = 50;
+
+// NEW_TASK_FIELD_EDIT_REQUIRED
 
 describe.each([
     { name: 'emoji', symbols: DEFAULT_SYMBOLS },
@@ -169,7 +172,7 @@ describe.each([
 
         // For help if this test fails and you are new to Approval Tests, see:
         //    https://publish.obsidian.md/tasks-contributing/Testing/Approval+Tests
-        markdownTable.verify();
+        verifyMarkdown(markdownTable.markdown);
     });
 });
 

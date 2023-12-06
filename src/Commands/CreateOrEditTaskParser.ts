@@ -74,6 +74,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         console.error('Tasks: Cannot create task on line:', line);
 
         return new Task({
+            // NEW_TASK_FIELD_EDIT_REQUIRED
             status: Status.TODO,
             description: '',
             // We don't need the location fields except file to edit here in the editor.
@@ -111,6 +112,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     }
 
     return new Task({
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         status,
         description,
         // We don't need the location fields except file to edit here in the editor.

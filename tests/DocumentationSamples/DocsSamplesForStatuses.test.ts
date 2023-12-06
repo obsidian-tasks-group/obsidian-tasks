@@ -12,18 +12,17 @@ import type { StatusCollection, StatusCollectionEntry } from '../../src/StatusCo
 import * as Themes from '../../src/Config/Themes';
 import { StatusValidator } from '../../src/StatusValidator';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { GrouperFunction } from '../../src/Query/Grouper';
-
-function getPrintableSymbol(symbol: string) {
-    const result = symbol !== ' ' ? symbol : 'space';
-    return '`' + result + '`';
-}
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
+import { getPrintableSymbol } from '../../src/StatusRegistryReport';
 
 function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions: boolean) {
+    // Note: There is very similar code in tabulateStatusSettings() in StatusRegistryReport.ts.
+    //       Maybe try unifying the common code one day?
     let statusName = 'Status Name';
     let statusType = 'Status Type';
     if (showQueryInstructions) {
@@ -45,7 +44,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions
         const needsCustomStyling = status.symbol !== ' ' && status.symbol !== 'x' ? 'Yes' : 'No';
         table.addRow([statusCharacter, nextStatusCharacter, status.name, type, needsCustomStyling]);
     }
-    table.verifyForDocs();
+    verifyMarkdownForDocs(table.markdown);
 }
 
 function verifyStatusesAsTasksList(statuses: Status[]) {
@@ -262,7 +261,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     showGroupNamesForAllTasks('status.type', new StatusTypeField().createNormalGrouper().grouper);
     showGroupNamesForAllTasks('status.name', new StatusNameField().createNormalGrouper().grouper);
 
-    table.verifyForDocs();
+    verifyMarkdownForDocs(table.markdown);
 }
 
 describe('Status Transitions', () => {
