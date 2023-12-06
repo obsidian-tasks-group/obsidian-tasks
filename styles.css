@@ -132,6 +132,11 @@
 }
 
 .tasks-modal-buttons {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--modal-background);
+    padding-bottom: 16px;
+    padding-top: 16px;
     display: grid;
     grid-template-columns: 3fr 1fr;
     column-gap: .5em;
@@ -211,6 +216,8 @@
 }
 
 .tasks-modal-status {
+    padding-bottom: 6px;
+    margin-bottom: -16px;
     display: flex;
     justify-content: space-between;
 }
