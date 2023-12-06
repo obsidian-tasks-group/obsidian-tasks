@@ -71,7 +71,7 @@ export class TaskFieldHTMLData {
 
         const date = task[component];
 
-        // <html>TS2345: Argument of type 'string[] | Moment' is not assignable to parameter of type 'Moment'.
+        // TS2345: Argument of type 'string[] | Moment' is not assignable to parameter of type 'Moment'.
         // Type 'string[]' is missing the following properties from type 'Moment': format, startOf, endOf, add, and 78 more.
         if (!Array.isArray(date) && date instanceof window.moment) {
             const attributeValue = dateToAttribute(date);
