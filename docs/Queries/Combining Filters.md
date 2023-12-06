@@ -36,6 +36,7 @@ The following rules apply:
 - The operators are case-sensitive: they must be capitalised.
 - The operators must be surrounded by spaces.
 - Use more `(` and `)` to nest further filters together.
+- A trailing backslash (`\`) may be used to break a long filter over several lines, as described in [[Line Continuations]].
 - There is no practical limit to the number of filters combined on each line, nor the level of nesting of parentheses.
 
 Recommendations:
@@ -226,7 +227,9 @@ I want to find tasks that are waiting for something else. But 'waiting' can be s
 ````text
 ```tasks
 not done
-(description includes waiting) OR (description includes waits) OR (description includes wartet)
+(description includes waiting) OR \
+  (description includes waits) OR \
+  (description includes wartet)
 ```
 ````
 
@@ -237,7 +240,10 @@ I want to see tasks from anywhere in my vault with the tag `#DailyNote` or tasks
 ````text
 ```tasks
 not done
-(tags include #DailyNote) OR ((path includes daily/Notes/Folder/) AND (path does not include 2022-07-11))
+(tags include #DailyNote) OR \
+( (path includes daily/Notes/Folder/) AND \
+  (path does not include 2022-07-11) \
+)
 ```
 ````
 
@@ -257,7 +263,9 @@ You could select any of the nearby locations with:
 
 ````text
 # Show all tasks I CAN do in this area:
-(tags include #context/loc1) OR (tags include #context/loc2) OR (tags include #context/loc3)
+(tags include #context/loc1) OR \
+  (tags include #context/loc2) OR \
+  (tags include #context/loc3)
 ````
 
 #### In None of Several Locations
@@ -268,7 +276,11 @@ An easy way to review all the _other_ tasks not possible in this area would be t
 
 ````text
 # Show all tasks I CANNOT do in this area - EASY WAY:
-NOT ( (tags include #context/loc1) OR (tags include #context/loc2) OR (tags include #context/loc3) )
+NOT ( \
+  (tags include #context/loc1) OR \
+  (tags include #context/loc2) OR \
+  (tags include #context/loc3) \
+)
 ````
 
 The nice thing about the above `NOT` use is that if a new context gets added to the group in the future, it can be added to both task blocks via a simple find-and-replace.
@@ -280,5 +292,7 @@ The above is much easier to maintain than the other option of:
 
 ````text
 # Show all tasks I CANNOT do in this area - HARDER WAY
-(tags do not include #context/loc1) AND (tags do not include #context/loc2) AND (tags do not include #context/loc3)
+(tags do not include #context/loc1) AND \
+  (tags do not include #context/loc2) AND \
+  (tags do not include #context/loc3)
 ````

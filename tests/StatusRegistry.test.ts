@@ -58,6 +58,23 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.registeredStatuses.length).toEqual(0);
     });
 
+    it('should allow setting the entire set of statuses', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        const statuses = [
+            new StatusConfiguration('Q', 'Question', 'A', false, StatusType.NON_TASK),
+            new StatusConfiguration('A', 'Answer', 'Q', false, StatusType.NON_TASK),
+        ];
+
+        // Act
+        statusRegistry.set(statuses);
+
+        // Assert
+        expect(statusRegistry.registeredStatuses.length).toEqual(2);
+        expect(statusRegistry.registeredStatuses[0].symbol).toStrictEqual('Q');
+        expect(statusRegistry.registeredStatuses[1].symbol).toStrictEqual('A');
+    });
+
     it('should return empty status for lookup by unknown symbol with bySymbol()', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
@@ -144,6 +161,70 @@ describe('StatusRegistry', () => {
         // Assert
         const status2 = statusRegistry.bySymbol('a');
         expect(status2).toStrictEqual(status);
+    });
+
+    it('should create a mermaid diagram of default statuses', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+
+        // Assert
+        // Without detail:
+        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1[Todo]
+            2[In Progress]
+            3[Done]
+            4[Cancelled]
+            1 --> 3
+            2 --> 3
+            3 --> 1
+            4 --> 1
+            \`\`\`
+            "
+        `);
+
+        // With detail:
+        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1["'Todo'<br>[ ] -> [x]<br>(TODO)"]
+            2["'In Progress'<br>[/] -> [x]<br>(IN_PROGRESS)"]
+            3["'Done'<br>[x] -> [ ]<br>(DONE)"]
+            4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]
+            1 --> 3
+            2 --> 3
+            3 --> 1
+            4 --> 1
+            \`\`\`
+            "
+        `);
+    });
+
+    it('should not include unknown nextStatusSymbols in mermaid diagrams', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        statusRegistry.clearStatuses();
+        statusRegistry.add(new StatusConfiguration(' ', 'Todo', '/', false, StatusType.TODO));
+        // Leave '/' as not registered
+        const originalNumberOfStatuses = statusRegistry.registeredStatuses.length;
+
+        // Act
+        const mermaidText = statusRegistry.mermaidDiagram();
+
+        // Assert
+        expect(statusRegistry.registeredStatuses.length).toEqual(originalNumberOfStatuses);
+        expect(mermaidText).toMatchInlineSnapshot(`
+            "
+            \`\`\`mermaid
+            flowchart LR
+            1[Todo]
+
+            \`\`\`
+            "
+        `);
     });
 
     describe('toggling', () => {

@@ -26,6 +26,7 @@ import {
     toMatchTaskWithDescription,
     toMatchTaskWithHeading,
     toMatchTaskWithPath,
+    toMatchTaskWithSearchInfo,
     toMatchTaskWithStatus,
 } from './CustomMatchersForFilters';
 expect.extend({
@@ -37,6 +38,7 @@ expect.extend({
     toMatchTaskWithDescription,
     toMatchTaskWithHeading,
     toMatchTaskWithPath,
+    toMatchTaskWithSearchInfo,
     toMatchTaskWithStatus,
 });
 

@@ -15,8 +15,9 @@ publish: true
   - `group by function task.urgency.toFixed(3)`
 - There are loads of examples in [[Grouping]].
   - Search for `group by function` in that file.
-- Find all the supported tasks properties in [[Task Properties]] and [[Quick Reference]].
+- Find all the **supported tasks properties** in [[Task Properties]] and [[Quick Reference]].
   - A number of properties are only available for custom grouping and filters, and not for built-in grouping instructions.
+- Find all the **supported query properties** in [[Query Properties]].
 - Learn a bit about how expressions work in [[Expressions]].
 
 ## Custom grouping introduction
@@ -77,7 +78,7 @@ The `expression` must:
 > [!warning]
 > The strings returned are rendered as-is. This means, for example, that if the text you return has underscores in (`_`) that are not meant to indicate italics, you should escape them with backslashes ('\_') like this:
 >
-> ```text
+> ```javascript
 > group by function task.description.replaceAll('_', '\\_')
 >```
 
@@ -91,15 +92,30 @@ You can find many more examples by searching for `group by function` in the [[Gr
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.description_docs.approved.md -->
 
-- ```group by function task.description```
-  - group by description.
-  - This might be useful for finding completed recurrences of the same task.
-- ```group by function task.description.toUpperCase()```
-  - Convert the description to capitals.
-- ```group by function task.description.slice(0, 25)```
-  - Truncate descriptions to at most their first 25 characters, and group by that string.
-- ```group by function task.description.replace('short', '==short==')```
-  - Highlight the word "short" in any group descriptions.
+```javascript
+group by function task.description
+```
+
+- group by description.
+- This might be useful for finding completed recurrences of the same task.
+
+```javascript
+group by function task.description.toUpperCase()
+```
+
+- Convert the description to capitals.
+
+```javascript
+group by function task.description.slice(0, 25)
+```
+
+- Truncate descriptions to at most their first 25 characters, and group by that string.
+
+```javascript
+group by function task.description.replace('short', '==short==')
+```
+
+- Highlight the word "short" in any group descriptions.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -107,34 +123,61 @@ You can find many more examples by searching for `group by function` in the [[Gr
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.due_docs.approved.md -->
 
-- ```group by function task.due.category.groupText```
-  - Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
-  - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
-  - The values `task.due.category.name` and `task.due.category.sortOrder` are also available.
-- ```group by function task.due.fromNow.groupText```
-  - Group by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example `8 days ago`, `in 11 hours`.
-  - It users an empty string (so no heading) if there is no due date.
-  - The values `task.due.fromNow.name` and `task.due.fromNow.sortOrder` are also available.
-- ```group by function task.due.format("YYYY-MM-DD dddd")```
-  - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
-- ```group by function task.due.formatAsDate()```
-  - Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date.
-- ```group by function task.due.formatAsDateAndTime()```
-  - Format date as YYYY-MM-DD HH:mm or empty string if no due date.
-  - Note:
-    - This is shown for demonstration purposes.
-    - Currently the Tasks plugin does not support storing of times.
-    - Do not add times to your tasks, as it will break the reading of task data.
-- ```group by function task.due.format("YYYY[%%]-MM[%%] MMM", "no due date")```
-  - Group by month, for example `2023%%-05%% May` ...
-    - ... which gets rendered by Obsidian as `2023 May`.
-  - Or show a default heading "no due date" if no date.
-  - The hidden month number is added, commented-out between two `%%` strings, to control the sort order of headings.
-  - To escape characters in format strings, you can wrap the characters in square brackets (here, `[%%]`).
-- ```group by function task.due.format("YYYY[%%]-MM[%%] MMM [- Week] WW")```
-  - Group by month and week number, for example `2023%%-05%% May - Week 22` ...
-    - ... which gets rendered by Obsidian as `2023 May - Week 22`.
-  - If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order.
+```javascript
+group by function task.due.category.groupText
+```
+
+- Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
+- Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
+- The values `task.due.category.name` and `task.due.category.sortOrder` are also available.
+
+```javascript
+group by function task.due.fromNow.groupText
+```
+
+- Group by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example `8 days ago`, `in 11 hours`.
+- It users an empty string (so no heading) if there is no due date.
+- The values `task.due.fromNow.name` and `task.due.fromNow.sortOrder` are also available.
+
+```javascript
+group by function task.due.format("YYYY-MM-DD dddd")
+```
+
+- Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
+
+```javascript
+group by function task.due.formatAsDate()
+```
+
+- Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date.
+
+```javascript
+group by function task.due.formatAsDateAndTime()
+```
+
+- Format date as YYYY-MM-DD HH:mm or empty string if no due date.
+- Note:
+  - This is shown for demonstration purposes.
+  - Currently the Tasks plugin does not support storing of times.
+  - Do not add times to your tasks, as it will break the reading of task data.
+
+```javascript
+group by function task.due.format("YYYY[%%]-MM[%%] MMM", "no due date")
+```
+
+- Group by month, for example `2023%%-05%% May` ...
+  - ... which gets rendered by Obsidian as `2023 May`.
+- Or show a default heading "no due date" if no date.
+- The hidden month number is added, commented-out between two `%%` strings, to control the sort order of headings.
+- To escape characters in format strings, you can wrap the characters in square brackets (here, `[%%]`).
+
+```javascript
+group by function task.due.format("YYYY[%%]-MM[%%] MMM [- Week] WW")
+```
+
+- Group by month and week number, for example `2023%%-05%% May - Week 22` ...
+  - ... which gets rendered by Obsidian as `2023 May - Week 22`.
+- If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -144,8 +187,11 @@ There are many more date examples in [[Grouping#Due Date]].
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.urgency_docs.approved.md -->
 
-- ```group by function task.urgency.toFixed(3)```
-  - Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2.
+```javascript
+group by function task.urgency.toFixed(3)
+```
+
+- Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -153,15 +199,22 @@ There are many more date examples in [[Grouping#Due Date]].
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
-- ```group by function task.file.folder```
-  - Same as 'group by folder'.
-- ```group by function task.file.folder.slice(0, -1).split('/').pop() + '/'```
-  - Group by the immediate parent folder of the file containing task.
-  - Here's how it works:
-    - '.slice(0, -1)' removes the trailing slash ('/') from the original folder.
-    - '.split('/')' divides the remaining path up in to an array of folder names.
-    - '.pop()' returns the last folder name, that is, the parent of the file containing the task.
-    - Then the trailing slash is added back, to ensure we do not get an empty string for files in the top level of the vault.
+```javascript
+group by function task.file.folder
+```
+
+- Same as 'group by folder'.
+
+```javascript
+group by function task.file.folder.slice(0, -1).split('/').pop() + '/'
+```
+
+- Group by the immediate parent folder of the file containing task.
+- Here's how it works:
+  - '.slice(0, -1)' removes the trailing slash ('/') from the original folder.
+  - '.split('/')' divides the remaining path up in to an array of folder names.
+  - '.pop()' returns the last folder name, that is, the parent of the file containing the task.
+  - Then the trailing slash is added back, to ensure we do not get an empty string for files in the top level of the vault.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -228,7 +281,9 @@ Tasks with custom date groups, including formatting.
   - `group by function 6 * 7`
   - `group by function undefined`
 - See [[Expressions]] for more examples to try out.
-- A task, whose data you can access via all the [[Task Properties]].
+- You can use:
+  - A task, whose data you can access via all the [[Task Properties]].
+  - Some information about the file containing the query, which you can access via all the [[Query Properties]].
 - The generated text is rendered by Obsidian, so you can insert markdown characters to add formatting to your headings.
 
 ## Troubleshooting

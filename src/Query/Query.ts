@@ -12,6 +12,8 @@ import * as FilterParser from './FilterParser';
 import type { Grouper } from './Grouper';
 import type { Filter } from './Filter/Filter';
 import { QueryResult } from './QueryResult';
+import { scan } from './Scanner';
+import { SearchInfo } from './SearchInfo';
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
@@ -41,47 +43,42 @@ export class Query implements IQuery {
         this.source = source;
         this.filePath = path;
 
-        source
-            .split('\n')
-            .map((rawLine: string) => rawLine.trim())
-            .forEach((rawLine: string) => {
-                const line = this.expandPlaceholders(rawLine, path);
-                if (this.error !== undefined) {
-                    // There was an error expanding placeholders.
-                    return;
-                }
+        scan(source).forEach((rawLine: string) => {
+            const line = this.expandPlaceholders(rawLine, path);
+            if (this.error !== undefined) {
+                // There was an error expanding placeholders.
+                return;
+            }
 
-                switch (true) {
-                    case line === '':
-                        break;
-                    case this.shortModeRegexp.test(line):
-                        this._layoutOptions.shortMode = true;
-                        break;
-                    case this.explainQueryRegexp.test(line):
-                        this._layoutOptions.explainQuery = true;
-                        break;
-                    case this.ignoreGlobalQueryRegexp.test(line):
-                        this._ignoreGlobalQuery = true;
-                        break;
-                    case this.limitRegexp.test(line):
-                        this.parseLimit(line);
-                        break;
-                    case this.parseSortBy(line):
-                        break;
-                    case this.parseGroupBy(line):
-                        break;
-                    case this.hideOptionsRegexp.test(line):
-                        this.parseHideOptions(line);
-                        break;
-                    case this.commentRegexp.test(line):
-                        // Comment lines are ignored
-                        break;
-                    case this.parseFilter(line):
-                        break;
-                    default:
-                        this.setError('do not understand query', line);
-                }
-            });
+            switch (true) {
+                case this.shortModeRegexp.test(line):
+                    this._layoutOptions.shortMode = true;
+                    break;
+                case this.explainQueryRegexp.test(line):
+                    this._layoutOptions.explainQuery = true;
+                    break;
+                case this.ignoreGlobalQueryRegexp.test(line):
+                    this._ignoreGlobalQuery = true;
+                    break;
+                case this.limitRegexp.test(line):
+                    this.parseLimit(line);
+                    break;
+                case this.parseSortBy(line):
+                    break;
+                case this.parseGroupBy(line):
+                    break;
+                case this.hideOptionsRegexp.test(line):
+                    this.parseHideOptions(line);
+                    break;
+                case this.commentRegexp.test(line):
+                    // Comment lines are ignored
+                    break;
+                case this.parseFilter(line):
+                    break;
+                default:
+                    this.setError('do not understand query', line);
+            }
+        });
     }
 
     private expandPlaceholders(source: string, path: string | undefined) {
@@ -211,6 +208,17 @@ ${source}`;
         return this._filters;
     }
 
+    /**
+     * Add a new filter to this Query.
+     *
+     * At the time of writing, it is intended to allow tests to create filters
+     * programatically, for things that can not yet be done via 'filter by function'.
+     * @param filter
+     */
+    public addFilter(filter: Filter) {
+        this._filters.push(filter);
+    }
+
     public get sorting() {
         return this._sorting;
     }
@@ -236,17 +244,17 @@ Problem line: "${line}"`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
-        const allTasks = tasks;
+        const searchInfo = new SearchInfo(this.filePath, tasks);
         try {
             this.filters.forEach((filter) => {
-                tasks = tasks.filter((task) => filter.filterFunction(task, allTasks));
+                tasks = tasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
 
             const { debugSettings } = getSettings();
             const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks);
             const tasksSortedLimited = tasksSorted.slice(0, this.limit);
 
-            const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited);
+            const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited, searchInfo);
 
             if (this._taskGroupLimit !== undefined) {
                 taskGroups.applyTaskLimit(this._taskGroupLimit);

@@ -43,43 +43,19 @@ Alternatively, if you have enabled addition of [[Dates#Created date|created date
 - [x] take out the trash 🔁 every Sunday 📅 2021-04-25 ✅ 2023-03-10
 ```
 
-### Limitations of Recurring Tasks
-
-> [!important]
-> A recurring task should have a due date. The due date and the recurrence rule must appear after the task's description.
-
-> [!important]
-> There are edge cases for tasks that recur monthly or yearly.
-For example, a task may be due `2022-01-31` and recur `every 3 months`.
-The next recurrence date of `2022-04-31` does not exist.
-
-In that case, Tasks moves the next occurrence **backwards** to the next valid date.
-In this case, that would be `2022-04-30`.
-
-From then on, the due date will be based on the 30th day of the month, unless changed manually.
-So the next occurrence would happen on `2022-07-30`, even though July has 31 days.
-
-> [!important]
-> With edge cases for tasks that recur monthly or yearly, **if the rule states the actual date of the next recurrence, Tasks will honour that instruction, skipping recurrence dates that do not exist**.
-
-For example, a task may be due `2022-01-31` and recur `every month on the 31st`.
-The next recurrence date of `2022-02-31` does not exist.
-
-In that case, Tasks moves the next occurrence **forwards** to the next valid date,
-skipping over recurrences with invalid dates.
-In this case, that would be `2022-03-31`.
-
-In the editor there is no direct feedback to whether your recurrence rule is valid.
-You can validate that tasks understands your rule by using the `Tasks: Create or edit` command when creating or editing a task.
-
-## Order of the new task
+### Order of the new task
 
 Use this setting to control where the recurring task is inserted. The default is to put the new task before the original one.
 
-![Setting for next recurrence appearance](../../images/settings-recurrence-location.png)
+![Setting for next recurrence appearance](../images/settings-recurrence-location.png)
 
 > [!released]
 > Control of the location (or order) of the new task was introduced in Tasks 3.8.0
+
+### Recurring Tasks with Custom Statuses
+
+> [!Warning]
+> If you use [[Custom Statuses]], please see [[Recurring Tasks and Custom Statuses]] for important information about how these two facilities interact.
 
 ## Repeating a Task Based on the Original Due Date or the Completion Date
 
@@ -193,7 +169,7 @@ This is intentional. As well as matching what the user requested, it matches the
 
 > Recurrence rules may generate recurrence instances with an invalid
  date (e.g., February 30) or nonexistent local time (e.g., 1:30 AM
- on a day where the local time is moved forward by an hour at 1:00
+ on a day when the local time is moved forward by an hour at 1:00
  AM).  Such recurrence instances MUST be ignored and MUST NOT be
  counted as part of the recurrence set.
 
@@ -206,7 +182,7 @@ When a task has multiple dates, one of them is selected as reference date based 
 2. Scheduled date
 3. Start date
 
-If more dates than the reference date exist on the orginial recurring task, the next occurrence will have the same dates.
+If more dates than the reference date exist on the original recurring task, the next occurrence will have the same dates.
 All dates of the next occurring task will have the relative distance to the reference date that they had on the original task.
 
 For example: A task has a due date and a scheduled date.
@@ -222,12 +198,6 @@ The new task will have the due date advanced by two weeks and a scheduled date t
 ```markdown
 -   [ ] Mow the lawn 🔁 every 2 weeks ⏳ 2021-11-11 📅 2021-11-13
 ```
-
-## Known Issues
-
-1. You can _not_ use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and doesn't know how often it occurred.
-2. You can _not_ use rules where recurrence ends on a specific date (`until "date"`). There is a bug in [`rrule`](https://github.com/jakubroztocil/rrule) where `until "date"` rules are not converted to the correct text. As a consequence, every subsequent task's "until" date will be one day earlier than the one before. We are tracking this in [issue #1818](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1818).
-3. If the highest priority date in a task does not exist (for example, due date is February 30th), when the task is completed the recurrence rule will disappear, and no new task will be created. This is detectable prior to completing the task by viewing the task in Live Preview: the recurrence rule will be hidden, and the date will be displayed as 'Invalid date'.
 
 ## Examples
 
@@ -249,6 +219,99 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 - `🔁 every February on the last`
 - `🔁 every April and December on the 1st and 24th` (meaning every _April 1st_ and _December 24th_)
 - `🔁 every year`
+
+## Limitations of Recurring Tasks
+
+### Recurring tasks must have at least one date
+
+> [!important]
+> To be useful in date-based searches, a recurring task must have at least one of Due, Scheduled or Start dates. The so-called Reference date and the Recurrence rule must appear after the task's description.
+
+Since Tasks 5.0.0, this is enforced by the [[Create or edit Task]] modal:
+
+![The 'Create or edit Task', with error message saying a date must be set on a recurring task.](../images/modal-showing-date-needed-on-recurring-task.png)
+
+*Above: The 'Create or edit Task', with an error message saying a date must be set on a recurring task.*
+
+> [!info] Detail
+> Technically, you _can_ add a recurrence rule to a task without any dates, and there is nothing stopping anyone editing a task like to give it a recurrence rule but no date.
+>
+> However, it is not clear that the behaviour is useful, and based on Tasks support requests, it has been seen to confuse a number of users who misunderstand the expected search results.
+>
+> Here is a recurring task without any dates, that has been completed twice:
+>
+> ```text
+> - [x] Do stuff 🔁 every day ✅ 2023-02-11
+> - [x] Do stuff 🔁 every day ✅ 2023-02-13
+> - [ ] Do stuff 🔁 every day
+> ```
+>
+> These tasks are not searchable by the usual Due, Schedule, Starts or Happens date searches: we believe the majority of Tasks users find their tasks by searching for dates.
+
+### Next recurrence is on non-existent date
+
+> [!important]
+> There are edge cases for tasks that recur monthly or yearly.
+For example, a task may be due `2022-01-31` and recur `every 3 months`.
+The next recurrence date of `2022-04-31` does not exist.
+
+In that case, Tasks moves the next occurrence **backwards** to the next valid date.
+In this case, that would be `2022-04-30`.
+
+From then on, the due date will be based on the 30th day of the month, unless changed manually.
+So the next occurrence would happen on `2022-07-30`, even though July has 31 days.
+
+> [!important]
+> With edge cases for tasks that recur monthly or yearly, **if the rule states the actual date of the next recurrence, Tasks will honour that instruction, skipping recurrence dates that do not exist**.
+
+For example, a task may be due `2022-01-31` and recur `every month on the 31st`.
+The next recurrence date of `2022-02-31` does not exist.
+
+In that case, Tasks moves the next occurrence **forwards** to the next valid date,
+skipping over recurrences with invalid dates.
+In this case, that would be `2022-03-31`.
+
+### In Reading mode, no feedback if rule is invalid
+
+In the editor there is no direct feedback to whether your recurrence rule is valid.
+You can validate that tasks understands your rule by using the `Tasks: Create or edit` command when creating or editing a task.
+
+### No way to recur for x times
+
+You can _not_ use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and does not know how often it occurred.
+
+### No way to recur until a specific date
+
+You can _not_ use rules where recurrence ends on a specific date (`until "date"`). There is a bug in [`rrule`](https://github.com/jakubroztocil/rrule) where `until "date"` rules are not converted to the correct text. As a consequence, every subsequent task's "until" date will be one day earlier than the one before. We are tracking this in [issue #1818](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1818).
+
+### Recurrence rule lost if highest priority date is invalid
+
+> [!important]
+> If the highest priority date in a task does not exist (for example, due date is February 30th), when the task is completed the recurrence rule will disappear, and no new task will be created.
+
+For example, consider the following task:
+
+```text
+- [ ] Do stuff 🔁 every year 🛫 2024-02-27 ⏳ 2024-02-28 📅 2024-02-30
+```
+
+Its highest priority date is the Due date - see [[Recurring Tasks#Priority of Dates|Priority of Dates]] -  which is invalid:  `2024-02-30`.
+
+When this task is completed, the result will be:
+
+```text
+- [x] #task Do stuff 🛫 2024-02-27 ⏳ 2024-02-28 📅 Invalid date ✅ 2023-10-21
+```
+
+Note that:
+
+- The recurrence rule has disappeared.
+- No new task has been created.
+
+This is detectable prior to completing the task by viewing the task in Reading Mode:
+
+- the recurrence rule will be hidden,
+- and the date will be displayed as 'Invalid date'.
 
 ## Technical Details
 

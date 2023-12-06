@@ -104,10 +104,11 @@ describe('grouping by heading', () => {
         'task "%s" with header "%s" should have groups: %s',
         (taskLine: string, header: string | null, groups: string[]) => {
             // Arrange
-            const grouper = new HeadingField().createNormalGrouper().grouper;
+            const grouper = new HeadingField().createNormalGrouper();
 
             // Assert
-            expect(grouper(fromLine({ line: taskLine, precedingHeader: header }))).toEqual(groups);
+            const tasks = [fromLine({ line: taskLine, precedingHeader: header })];
+            expect({ grouper, tasks }).groupHeadingsToBe(groups);
         },
     );
 

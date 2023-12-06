@@ -3,11 +3,11 @@
  */
 
 import moment from 'moment';
-import { parseAndEvaluateExpression } from '../../src/Scripting/Expression';
 import { Status } from '../../src/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -20,8 +20,8 @@ describe('task', () => {
         const task1 = TaskBuilder.createFullyPopulatedTask();
         const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
         for (const field of fields) {
-            const value1 = parseAndEvaluateExpression(task1, field);
-            const value2 = parseAndEvaluateExpression(task2, field);
+            const value1 = parseAndEvaluateExpression(task1, field, undefined);
+            const value2 = parseAndEvaluateExpression(task2, field, undefined);
             const cells = [
                 addBackticks(field),
                 addBackticks(determineExpressionType(value1)),

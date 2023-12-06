@@ -36,6 +36,19 @@ export class StatusRegistry {
     }
 
     /**
+     * Reset this instance to contain only the given status list, in the supplied order.
+     *
+     * Duplicate status symbols are ignored.
+     * @param statuses
+     */
+    public set(statuses: StatusConfiguration[] | Status[]) {
+        this.clearStatuses();
+        statuses.forEach((status) => {
+            this.add(status);
+        });
+    }
+
+    /**
      * Returns all the registered statuses minus the empty status.
      *
      * @readonly
@@ -272,5 +285,53 @@ export class StatusRegistry {
         defaultStatuses.forEach((status) => {
             this.add(status);
         });
+    }
+
+    /**
+     * Create a Mermaid diagram from the statuses in this registry.
+     *
+     * The text can be pasted in to an Obsidian note to visualise the transitions between
+     * statuses.
+     *
+     * Note: Any of the 'next status symbols' that are not in the registry are ignored, and invisible.
+     *
+     * @param {boolean} includeDetails - whether to include the status symbols and types in the diagram. Defaults to false.
+     */
+    public mermaidDiagram(includeDetails = false) {
+        const uniqueStatuses = this.registeredStatuses;
+
+        const language = 'mermaid';
+
+        const nodes: string[] = [];
+        const edges: string[] = [];
+        uniqueStatuses.forEach((status, index) => {
+            if (includeDetails) {
+                const transition = `[${status.symbol}] -> [${status.nextStatusSymbol}]`;
+                const statusName = `'${status.name}'`;
+                const statusType = `(${status.type})`;
+                const text = `${index + 1}["${statusName}<br>${transition}<br>${statusType}"]`;
+                nodes.push(text);
+            } else {
+                nodes.push(`${index + 1}[${status.name}]`);
+            }
+
+            // Check the next status:
+            const nextStatus = this.getNextStatus(status);
+            const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
+            const nextStatusIsKnown = nextStatusIndex !== -1;
+            const nextStatusIsNotInternal = nextStatus.type !== StatusType.EMPTY;
+
+            if (nextStatusIsKnown && nextStatusIsNotInternal) {
+                edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
+            }
+        });
+
+        return `
+\`\`\`${language}
+flowchart LR
+${nodes.join('\n')}
+${edges.join('\n')}
+\`\`\`
+`;
     }
 }

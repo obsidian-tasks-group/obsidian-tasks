@@ -6,6 +6,7 @@ import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
 import type { GrouperFunction } from '../Grouper';
+import { TemplatingPluginTools } from '../../lib/TemplatingPluginTools';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
@@ -45,6 +46,14 @@ export abstract class DateField extends Field {
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        // There have been multiple "bug reports", where the query had un-expanded
+        // template text to signify the search date.
+        // Enough to explicitly trap any such text for date searches:
+        const errorText = this.checkForUnexpandedTemplateText(line);
+        if (errorText) {
+            return FilterOrErrorMessage.fromError(line, errorText);
+        }
+
         const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
         if (filterResult.filter !== undefined) {
             return filterResult;
@@ -263,5 +272,9 @@ export abstract class DateField extends Field {
             }
             return [date.format('YYYY-MM-DD dddd')];
         };
+    }
+
+    private checkForUnexpandedTemplateText(line: string): null | string {
+        return new TemplatingPluginTools().findUnexpandedDateText(line);
     }
 }

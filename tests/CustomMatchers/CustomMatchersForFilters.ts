@@ -5,6 +5,7 @@ import { fromLine } from '../TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import type { StatusConfiguration } from '../../src/StatusConfiguration';
 import { Status } from '../../src/Status';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 
 /**
  @summary
@@ -65,6 +66,7 @@ declare global {
         interface Matchers<R> {
             toBeValid(): R;
             toHaveExplanation(expectedExplanation: string): R;
+            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): R;
             toMatchTaskInTaskList(task: Task, allTasks: Task[]): R;
             toMatchTask(task: Task): R;
             toMatchTaskFromLine(line: string): R;
@@ -77,6 +79,7 @@ declare global {
         interface Expect {
             toBeValid(): any;
             toHaveExplanation(expectedExplanation: string): any;
+            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
             toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
@@ -89,6 +92,7 @@ declare global {
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
             toHaveExplanation(expectedExplanation: string): any;
+            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
             toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
@@ -145,13 +149,13 @@ export function toHaveExplanation(filter: FilterOrErrorMessage, expectedExplanat
 }
 
 /**
- * Use this test matcher for any filters that need access to all the tasks in the vault.
+ * Use this test matcher for any filters that need access to any data from the search.
  * @param filter
  * @param task
- * @param allTasks
+ * @param searchInfo
  */
-export function toMatchTaskInTaskList(filter: FilterOrErrorMessage, task: Task, allTasks: Task[]) {
-    const matches = filter.filterFunction!(task, allTasks);
+export function toMatchTaskWithSearchInfo(filter: FilterOrErrorMessage, task: Task, searchInfo: SearchInfo) {
+    const matches = filter.filterFunction!(task, searchInfo);
     if (!matches) {
         return {
             message: () => `unexpected failure to match
@@ -169,8 +173,12 @@ with filter: "${filter.instruction}"`,
     };
 }
 
+export function toMatchTaskInTaskList(filter: FilterOrErrorMessage, task: Task, allTasks: Task[]) {
+    return toMatchTaskWithSearchInfo(filter, task, SearchInfo.fromAllTasks(allTasks));
+}
+
 export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
-    return toMatchTaskInTaskList(filter, task, [task]);
+    return toMatchTaskWithSearchInfo(filter, task, SearchInfo.fromAllTasks([task]));
 }
 
 export function toMatchTaskFromLine(filter: FilterOrErrorMessage, line: string) {

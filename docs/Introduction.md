@@ -6,7 +6,21 @@ publish: true
 
 ## What's New?
 
-- X.Y.Z: 🔥 Add new Help page [[Known Limitations]].
+_In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)..._
+
+<!--
+    Keep to around 2 to 4 lines, so that 'Navigation around this site' is visible.
+    Move the older ones down to the top of the comment block below...
+-->
+
+- X.Y.Z: 🔥 Enable [[Custom Grouping|custom grouping]] to use [[Query Properties|query properties]] directly - no placeholders required.
+
+<!--
+- 5.0.0: 🔥 Add [[Line Continuations|line continuations]].
+  - **Warning**: This is a [[Line Continuations#Appendix Updating pre-5.0.0 searches with trailing backslashes|potentially breaking change]] if you search for backslash (`\`) characters.
+- 5.0.0: 🔥 Document [[Comments#Inline comments|inline comments]]
+- 5.0.0: 🔥 Document [[Recurring Tasks and Custom Statuses|recurring tasks and custom statuses]]
+- 5.0.0: 🔥 Add new Help pages [[Known Limitations]] and [[Breaking Changes]].
 - 4.9.0: 🔥 Add [[Task Properties|task properties]] `task.priorityNameGroupText` and `task.status.typeGroupText`, for example:
   - `group by function task.priorityNameGroupText + ': ' + task.status.typeGroupText`
 - 4.9.0: 🔥 Add [[Task Properties#Values in TasksDate Properties|task date properties]] for categorising dates, for example:
@@ -17,7 +31,7 @@ publish: true
 - 4.8.0: 🔥 Add [[Task Properties#Values for File Properties|task file properties]] `task.file.pathWithoutExtension` and `task.file.filenameWithoutExtension`
 - 4.7.0: 🔥 Use [[Query Properties]] and [[Placeholders]] to filter and group with the query's file path, root, folder and name.
 - 4.6.0: 🔥 Add `on or before` and `on or after` to [[Filters#Date search options|date search options]]
-- 4.6.0: 🔥 Add `in or before` and `in or after` to [[Filters#Date range options|date range search search options]]
+- 4.6.0: 🔥 Add `in or before` and `in or after` to [[Filters#Date range options|date range search options]]
 - 4.5.0: 🔥 Support task in list items starting with [[Getting Started#Finding tasks in your vault|`+` signs]]
 - 4.4.0: 🔥 Support [[Expressions#More complex expressions|variables, if statements, and functions]] in custom filters and groups
 - 4.3.0: 🔥 Bug fixes, usability improvements and `explain` support for [[Regular Expressions|regular expression]] searches
@@ -34,6 +48,7 @@ publish: true
 - 3.4.0: 🔥 Clicking on a [[Backlinks|Backlink]] jumps to the exact task line.
 - 3.4.0: Tasks now requires at least Obsidian 1.1.1.
 - 3.3.0: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]].
+-->
 
 ## Navigation around this site
 

@@ -7,12 +7,17 @@ import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { TaskLocation } from '../src/TaskLocation';
-import { getFieldCreators } from '../src/Query/FilterParser';
+import { fieldCreators } from '../src/Query/FilterParser';
 import type { Field } from '../src/Query/Filter/Field';
 import type { BooleanField } from '../src/Query/Filter/BooleanField';
+import { SearchInfo } from '../src/Query/SearchInfo';
+import { FilterOrErrorMessage } from '../src/Query/Filter/FilterOrErrorMessage';
+import { Explanation } from '../src/Query/Explain/Explanation';
+import { Filter } from '../src/Query/Filter/Filter';
+import { DescriptionField } from '../src/Query/Filter/DescriptionField';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
-import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
+import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -21,7 +26,7 @@ interface NamedField {
     name: string;
     field: Field;
 }
-const namedFields: ReadonlyArray<NamedField> = getFieldCreators()
+const namedFields: ReadonlyArray<NamedField> = fieldCreators
     .map((creator) => {
         const field = creator();
         return { name: field.fieldName(), field };
@@ -206,7 +211,7 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-            expect(query.filters[0].filterFunction(task, [task])).toBeTruthy();
+            expect(query.filters[0].filterFunction(task, SearchInfo.fromAllTasks([task]))).toBeTruthy();
         });
     });
 
@@ -301,6 +306,7 @@ describe('Query parsing', () => {
             'group by folder',
             'group by folder reverse',
             'group by function reverse task.status.symbol.replace(" ", "space")',
+            'group by function task.file.path.replace(query.file.folder, "")',
             'group by function task.status.symbol.replace(" ", "space")',
             'group by happens',
             'group by happens reverse',
@@ -426,6 +432,9 @@ describe('Query parsing', () => {
             '(description includes wibble) OR (has due date)',
             '(has due date) OR ((has start date) AND (due after 2021-12-27))',
             '(is not recurring) XOR ((path includes ab/c) OR (happens before 2021-12-27))',
+            String.raw`(description includes line 1) OR \
+(description includes line 1 continued\
+ with \ backslash)`,
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
@@ -621,8 +630,9 @@ describe('Query', () => {
 
             // Act
             let filteredTasks = [...tasks];
+            const searchInfo = SearchInfo.fromAllTasks(tasks);
             query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, tasks));
+                filteredTasks = filteredTasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
 
             // Assert
@@ -1032,6 +1042,66 @@ describe('Query', () => {
         });
     });
 
+    describe('filtering with code-based custom filters', () => {
+        it('should allow a Filter to be added', () => {
+            // Arrange
+            const filterOrErrorMessage = new DescriptionField().createFilterOrErrorMessage('description includes xxx');
+            expect(filterOrErrorMessage).toBeValid();
+            const query = new Query('');
+            expect(query.filters.length).toEqual(0);
+
+            // Act
+            query.addFilter(filterOrErrorMessage.filter!);
+
+            // Assert
+            expect(query.filters.length).toEqual(1);
+        });
+    });
+
+    describe('SearchInfo', () => {
+        it('should pass SearchInfo through to filter functions', () => {
+            // Arrange
+            const same1 = new TaskBuilder().description('duplicate').build();
+            const same2 = new TaskBuilder().description('duplicate').build();
+            const different = new TaskBuilder().description('different').build();
+            const allTasks = [same1, same2, different];
+
+            const moreThanOneTaskHasThisDescription = (task: Task, searchInfo: SearchInfo) => {
+                return searchInfo.allTasks.filter((t) => t.description === task.description).length > 1;
+            };
+            const filter = FilterOrErrorMessage.fromFilter(
+                new Filter('stuff', moreThanOneTaskHasThisDescription, new Explanation('explanation of stuff')),
+            );
+
+            // Act, Assert
+            const searchInfo = SearchInfo.fromAllTasks(allTasks);
+            expect(filter).toMatchTaskWithSearchInfo(same1, searchInfo);
+            expect(filter).toMatchTaskWithSearchInfo(same2, searchInfo);
+            expect(filter).not.toMatchTaskWithSearchInfo(different, searchInfo);
+        });
+
+        it('should pass the query path through to filter functions', () => {
+            // Arrange
+            const queryPath = 'this/was/passed/in/correctly.md';
+            const query = new Query('', queryPath);
+
+            const matchesIfSearchInfoHasCorrectPath = (_task: Task, searchInfo: SearchInfo) => {
+                return searchInfo.queryPath === queryPath;
+            };
+            query.addFilter(
+                new Filter('instruction', matchesIfSearchInfoHasCorrectPath, new Explanation('explanation')),
+            );
+
+            // Act
+            const task = new TaskBuilder().build();
+            const results = query.applyQueryToTasks([task]);
+
+            // Assert
+            // The task will match if the correct path.
+            expect(results.totalTasksCount).toEqual(1);
+        });
+    });
+
     describe('sorting', () => {
         const doneTask = new TaskBuilder().status(Status.DONE).build();
         const todoTask = new TaskBuilder().status(Status.TODO).build();
@@ -1189,6 +1259,20 @@ At most 8 tasks per group (if any "group by" options are supplied).
             expect(query.grouping.length).toEqual(1);
         });
 
+        it('should work with a custom group that uses query information', () => {
+            // Arrange
+            const source = 'group by function query.file.path';
+            const query = new Query(source, 'hello.md');
+
+            // Act
+            const results = query.applyQueryToTasks([new TaskBuilder().build()]);
+
+            // Assert
+            const groups = results.taskGroups;
+            expect(groups.groups.length).toEqual(1);
+            expect(groups.groups[0].groups).toEqual(['hello.md']);
+        });
+
         it('should log meaningful error for supported group type', () => {
             // Arrange
             const source = 'group by xxxx';
@@ -1303,6 +1387,35 @@ At most 8 tasks per group (if any "group by" options are supplied).
             expect(queryResult.searchErrorMessage).toEqual(
                 'Error: Search failed.\nThe error message was:\n    "ReferenceError: wibble is not defined"',
             );
+        });
+    });
+
+    describe('line continuations', () => {
+        it('should work in group by functions', () => {
+            const source = String.raw`group by function \
+                const date = task.due.moment; \
+                const now = moment(); \
+                const label = (order, name) => '%%'+order+'%% =='+name+'=='; \
+                if (!date) return label(4, 'Undated'); \
+                if (date.isBefore(now, 'day')) return label(1, 'Overdue'); \
+                if (date.isSame(now, 'day')) return label(2, 'Today'); \
+                return label(3, 'Future');`;
+            const query = new Query(source);
+            expect(query.error).toBeUndefined();
+        });
+        it('should be explained correctly in boolean queries', () => {
+            const source = String.raw`explain
+(description includes line 1) OR        \
+  (description includes line 1 continued\
+with \ backslash)`;
+            const query = new Query(source);
+
+            const expectedDisplayText = String.raw`(description includes line 1) OR (description includes line 1 continued with \ backslash) =>
+  OR (At least one of):
+    description includes line 1
+    description includes line 1 continued with \ backslash
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
     });
 });
