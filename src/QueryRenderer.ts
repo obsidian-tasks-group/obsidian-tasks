@@ -415,7 +415,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.addClasses(classNames);
         button.setText(' ⏩');
 
-        button.addEventListener('click', () => this.getOnClickCallback(task, button, 'days'));
+        button.addEventListener('click', () => this.postponeOnClickCallback(button, task, 1, 'days'));
 
         /** Open a context menu on right-click.
          * Give a choice of postponing for a week, month, or quarter.
@@ -424,18 +424,18 @@ class QueryRenderChild extends MarkdownRenderChild {
             const menu = new Menu();
             const commonTitle = 'Postpone for';
 
-            const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
+            const postponeMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
                 const amountOrArticle = amount > 1 ? amount : 'a';
                 item.setTitle(`${commonTitle} ${amountOrArticle} ${timeUnit}`).onClick(() =>
-                    this.getOnClickCallback(task, button, timeUnit, amount),
+                    this.postponeOnClickCallback(button, task, amount, timeUnit),
                 );
             };
 
-            menu.addItem((item) => getMenuItemCallback(item, 'days', 2));
-            menu.addItem((item) => getMenuItemCallback(item, 'days', 3));
-            menu.addItem((item) => getMenuItemCallback(item, 'week'));
-            menu.addItem((item) => getMenuItemCallback(item, 'weeks', 2));
-            menu.addItem((item) => getMenuItemCallback(item, 'month'));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 2));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 3));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'week'));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'weeks', 2));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'month'));
 
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
@@ -476,11 +476,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         return groupingRules.join(',');
     }
 
-    private async getOnClickCallback(
-        task: Task,
+    private async postponeOnClickCallback(
         button: HTMLButtonElement,
-        timeUnit: unitOfTime.DurationConstructor = 'days',
-        amount = 1,
+        task: Task,
+        amount: number,
+        timeUnit: moment.unitOfTime.DurationConstructor,
     ) {
         const dateTypeToUpdate = getDateFieldToPostpone(task);
         if (dateTypeToUpdate === null) {
@@ -490,17 +490,17 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const { postponedDate, newTasks } = createPostponedTask(task, dateTypeToUpdate, timeUnit, amount);
 
-        this.query.debug('[postpone]: getOnClickCallback() - before call to replaceTaskWithTasks()');
+        this.query.debug('[postpone]: postponeOnClickCallback() - before call to replaceTaskWithTasks()');
         await replaceTaskWithTasks({
             originalTask: task,
             newTasks,
         });
-        this.query.debug('[postpone]: getOnClickCallback() - after  call to replaceTaskWithTasks()');
-        this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
+        this.query.debug('[postpone]: postponeOnClickCallback() - after  call to replaceTaskWithTasks()');
+        this.postponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
     }
 
-    private onPostponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
-        this.query.debug('[postpone]: onPostponeSuccessCallback() entered');
+    private postponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
+        this.query.debug('[postpone]: postponeSuccessCallback() entered');
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.disabled = true;
         button.setAttr('title', 'You can perform this action again after reloading the file.');
@@ -508,6 +508,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
         new Notice(successMessage, 5000);
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
-        this.query.debug('[postpone]: onPostponeSuccessCallback() exiting');
+        this.query.debug('[postpone]: postponeSuccessCallback() exiting');
     }
 }
