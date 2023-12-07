@@ -52,6 +52,11 @@ export class QueryRenderer {
     }
 }
 
+function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
+    const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
+    return `ℹ️ ${buttonText} (right-click for more options)`;
+}
+
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: TasksEvents;
@@ -407,8 +412,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
         const amount = 1;
         const timeUnit = 'day';
-        const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
-        const buttonTooltipText = `ℹ️ ${buttonText} (right-click for more options)`;
+        const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
         const button = listItem.createEl('button', {
             attr: {
                 id: 'postpone-button',
