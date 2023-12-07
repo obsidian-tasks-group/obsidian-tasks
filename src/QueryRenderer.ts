@@ -502,6 +502,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.disabled = true;
 
         const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
-        new Notice(successMessage, 5000);
+        new Notice(successMessage, 1000);
     }
 }
