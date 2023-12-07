@@ -194,6 +194,27 @@ describe('TasksDate - postpone', () => {
             return output;
         }
 
+        it('by 1 day', () => {
+            const postponedDatesDescription = postponeMultipleDatesBy(1, 'day');
+            expect(postponedDatesDescription).toMatchInlineSnapshot(`
+                "[initial]     => [postponed on '2023-11-10' by '1 day']
+                2023-11-01 Wed => 2023-11-11 Sat
+                2023-11-02 Thu => 2023-11-11 Sat
+                2023-11-03 Fri => 2023-11-11 Sat
+                2023-11-04 Sat => 2023-11-11 Sat
+                2023-11-05 Sun => 2023-11-11 Sat
+                2023-11-06 Mon => 2023-11-11 Sat
+                2023-11-07 Tue => 2023-11-11 Sat
+                2023-11-08 Wed => 2023-11-11 Sat
+                2023-11-09 Thu => 2023-11-11 Sat
+                2023-11-10 Fri => 2023-11-11 Sat
+                2023-11-11 Sat => 2023-11-12 Sun
+                2023-11-12 Sun => 2023-11-13 Mon
+                2023-11-13 Mon => 2023-11-14 Tue
+                "
+            `);
+        });
+
         it('by 1 week', () => {
             const postponedDatesDescription = postponeMultipleDatesBy(1, 'week');
             expect(postponedDatesDescription).toMatchInlineSnapshot(`
