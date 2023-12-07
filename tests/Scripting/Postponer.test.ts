@@ -158,12 +158,14 @@ describe('postpone - whether to show button', () => {
 });
 
 describe('postpone - name context menu option', () => {
-    it('rename me', () => {
-        // Create a task with a due date
+    it('should include date type and new date in context menu labels', () => {
         const task = new TaskBuilder().dueDate(today).build();
-        // Create the text used to label its menu item to postpone it by the given units
-        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Postpone dueDate for a day');
-        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Postpone dueDate for 2 days');
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual(
+            'Postpone dueDate for a day - to Monday 4th December 2023',
+        );
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual(
+            'Postpone dueDate for 2 days - to Tuesday 5th December 2023',
+        );
     });
 });
 
