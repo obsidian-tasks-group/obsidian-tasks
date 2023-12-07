@@ -435,8 +435,13 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             menu.addItem((item) => postponeMenuItemCallback(item, 'days', 2));
             menu.addItem((item) => postponeMenuItemCallback(item, 'days', 3));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 4));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 5));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 6));
+            menu.addSeparator();
             menu.addItem((item) => postponeMenuItemCallback(item, 'week'));
             menu.addItem((item) => postponeMenuItemCallback(item, 'weeks', 2));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'weeks', 3));
             menu.addItem((item) => postponeMenuItemCallback(item, 'month'));
 
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
