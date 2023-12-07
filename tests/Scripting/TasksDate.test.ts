@@ -194,7 +194,7 @@ describe('TasksDate - postpone', () => {
             return output;
         }
 
-        it('should postpone to at least today, and honours increments longer than a day (today is 2023-11-10)', () => {
+        it('by 1 week', () => {
             const postponedDatesDescription = postponeMultipleDatesBy(1, 'week');
             expect(postponedDatesDescription).toMatchInlineSnapshot(`
                 "[initial]     => [postponed on '2023-11-10' by '1 week']
