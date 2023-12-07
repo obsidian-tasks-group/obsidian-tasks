@@ -52,8 +52,9 @@ export function postponementSuccessMessage(postponedDate: Moment, dateFieldToPos
     return `Task's ${dateFieldToPostpone} postponed until ${postponedDateString}`;
 }
 
-export function postponeMenuItemTitle(amount: number, timeUnit: unitOfTime.DurationConstructor) {
-    const commonTitle = 'Postpone for';
+export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
+    const updatedDateType = getDateFieldToPostpone(task)!;
+    const commonTitle = `Postpone ${updatedDateType} for`;
     const amountOrArticle = amount > 1 ? amount : 'a';
     return `${commonTitle} ${amountOrArticle} ${timeUnit}`;
 }
