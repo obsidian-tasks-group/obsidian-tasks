@@ -148,6 +148,8 @@ describe('TasksDate - postpone', () => {
             expect(initialTasksDate.formatAsDate()).toEqual(initialDate);
         }
 
+        checkPostponingDoesNotModifyOriginalDate('2023-11-27', 1, 'day'); // before today
+        checkPostponingDoesNotModifyOriginalDate('2023-11-28', 1, 'day'); // today
         checkPostponingDoesNotModifyOriginalDate('2023-11-30', 1, 'day'); // a future date
     });
 
