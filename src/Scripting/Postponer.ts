@@ -54,7 +54,12 @@ export function postponementSuccessMessage(postponedDate: Moment, dateFieldToPos
 
 export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
+
+    const dateToUpdate = task[updatedDateType] as Moment;
+    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+    const formattedNewDate = postponedDate.format('dddd Do MMMM YYYY');
+
     const commonTitle = `Postpone ${updatedDateType} for`;
     const amountOrArticle = amount > 1 ? amount : 'a';
-    return `${commonTitle} ${amountOrArticle} ${timeUnit}`;
+    return `${commonTitle} ${amountOrArticle} ${timeUnit} - to ${formattedNewDate}`;
 }
