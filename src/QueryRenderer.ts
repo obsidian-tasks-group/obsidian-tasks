@@ -408,10 +408,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         const amount = 1;
         const timeUnit = 'day';
         const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
+        const buttonTooltipText = `ℹ️ ${buttonText} (right-click for more options)`;
         const button = listItem.createEl('button', {
             attr: {
                 id: 'postpone-button',
-                title: `ℹ️ ${buttonText} (right-click for more options)`,
+                title: buttonTooltipText,
             },
         });
 
