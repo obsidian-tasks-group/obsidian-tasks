@@ -157,5 +157,62 @@ describe('TasksDate - postpone', () => {
         checkDatePostponesTo('2024-01-31', 1, 'month', '2024-02-29');
     });
 
+    describe('visualise postpone behaviour', () => {
+        it('should postpone to at least today, and honours increments longer than a day (today is 2023-11-10)', () => {
+            const amount = 1;
+            const unitOfTime = 'week';
+
+            // Set a date that is easy to decrement and increment
+            const today = '2023-11-10';
+            jest.setSystemTime(new Date(today));
+
+            const dates = [
+                '2023-11-01',
+                '2023-11-02',
+                '2023-11-03',
+                '2023-11-04',
+                '2023-11-05',
+                '2023-11-06',
+                '2023-11-07',
+                '2023-11-08',
+                '2023-11-09',
+                '2023-11-10',
+                '2023-11-11',
+                '2023-11-12',
+                '2023-11-13',
+            ];
+            let output = `[initial]     => [postponed on '${today}' by '${amount} ${unitOfTime}']
+`;
+            dates.forEach((date) => {
+                const tasksDate = new TasksDate(moment(date));
+                const format = 'YYYY-MM-DD ddd';
+                // We have to save the date before doing the incrementing,
+                // as this test revealed that currently TasksDate.postpone() mutates the original date,
+                // as well as returning the postponed date!!!
+                const dateFormatted = tasksDate.format(format);
+
+                const postponedDate = new TasksDate(tasksDate.postpone(unitOfTime, amount));
+                output += `${dateFormatted} => ${postponedDate.format(format)}\n`;
+            });
+            expect(output).toMatchInlineSnapshot(`
+                "[initial]     => [postponed on '2023-11-10' by '1 week']
+                2023-11-01 Wed => 2023-11-17 Fri
+                2023-11-02 Thu => 2023-11-17 Fri
+                2023-11-03 Fri => 2023-11-17 Fri
+                2023-11-04 Sat => 2023-11-17 Fri
+                2023-11-05 Sun => 2023-11-17 Fri
+                2023-11-06 Mon => 2023-11-17 Fri
+                2023-11-07 Tue => 2023-11-17 Fri
+                2023-11-08 Wed => 2023-11-17 Fri
+                2023-11-09 Thu => 2023-11-17 Fri
+                2023-11-10 Fri => 2023-11-17 Fri
+                2023-11-11 Sat => 2023-11-18 Sat
+                2023-11-12 Sun => 2023-11-19 Sun
+                2023-11-13 Mon => 2023-11-20 Mon
+                "
+            `);
+        });
+    });
+
     // TODO Add more tests for increments other than 1 day
 });
