@@ -490,23 +490,19 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const { postponedDate, newTasks } = createPostponedTask(task, dateTypeToUpdate, timeUnit, amount);
 
-        this.query.debug('[postpone]: postponeOnClickCallback() - before call to replaceTaskWithTasks()');
         await replaceTaskWithTasks({
             originalTask: task,
             newTasks,
         });
-        this.query.debug('[postpone]: postponeOnClickCallback() - after  call to replaceTaskWithTasks()');
         this.postponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
     }
 
     private postponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
-        this.query.debug('[postpone]: postponeSuccessCallback() entered');
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.disabled = true;
         button.setAttr('title', 'You can perform this action again after reloading the file.');
 
         const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
         new Notice(successMessage, 5000);
-        this.query.debug('[postpone]: postponeSuccessCallback() exiting');
     }
 }
