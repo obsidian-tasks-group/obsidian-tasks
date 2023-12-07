@@ -128,7 +128,7 @@ describe('TasksDate - postpone', () => {
         expect(postponedDate.formatAsDate()).toEqual(expectedDate);
     }
 
-    it.failing('should not modify the original date when postponing', () => {
+    it('should not modify the original date when postponing', () => {
         function checkPostponingDoesNotModifyOriginalDate(
             initialDate: string,
             amount: number,
@@ -210,13 +210,8 @@ describe('TasksDate - postpone', () => {
             dates.forEach((date) => {
                 const tasksDate = new TasksDate(moment(date));
                 const format = 'YYYY-MM-DD ddd';
-                // We have to save the date before doing the incrementing,
-                // as this test revealed that currently TasksDate.postpone() mutates the original date,
-                // as well as returning the postponed date!!!
-                const dateFormatted = tasksDate.format(format);
-
                 const postponedDate = new TasksDate(tasksDate.postpone(unitOfTime, amount));
-                output += `${dateFormatted} => ${postponedDate.format(format)}\n`;
+                output += `${tasksDate.format(format)} => ${postponedDate.format(format)}\n`;
             });
             return output;
         }
