@@ -16,6 +16,7 @@ import {
     type HappensDate,
     createPostponedTask,
     getDateFieldToPostpone,
+    postponeMenuItemTitle,
     postponementSuccessMessage,
     shouldShowPostponeButton,
 } from './Scripting/Postponer';
@@ -49,12 +50,6 @@ export class QueryRenderer {
             }),
         );
     }
-}
-
-function postponeMenuItemTitle(amount: number, timeUnit: unitOfTime.DurationConstructor) {
-    const commonTitle = 'Postpone for';
-    const amountOrArticle = amount > 1 ? amount : 'a';
-    return `${commonTitle} ${amountOrArticle} ${timeUnit}`;
 }
 
 class QueryRenderChild extends MarkdownRenderChild {
