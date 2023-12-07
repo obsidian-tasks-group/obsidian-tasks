@@ -405,10 +405,13 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
+        const amount = 1;
+        const timeUnit = 'day';
+        const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
         const button = listItem.createEl('button', {
             attr: {
                 id: 'postpone-button',
-                title: 'ℹ️ Postpone the task (right-click for more options)',
+                title: `ℹ️ ${buttonText} (right-click for more options)`,
             },
         });
 
@@ -416,7 +419,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.addClasses(classNames);
         button.setText(' ⏩');
 
-        button.addEventListener('click', () => this.postponeOnClickCallback(button, task, 1, 'days'));
+        button.addEventListener('click', () => this.postponeOnClickCallback(button, task, amount, timeUnit));
 
         /** Open a context menu on right-click.
          * Give a choice of postponing for a week, month, or quarter.
