@@ -36,13 +36,13 @@ export function getDateFieldToPostpone(task: Task): HappensDate | null {
 
 export function createPostponedTask(
     task: Task,
-    dateTypeToUpdate: HappensDate,
+    dateFieldToPostpone: HappensDate,
     timeUnit: unitOfTime.DurationConstructor,
     amount: number,
 ) {
-    const dateToPostpone = task[dateTypeToUpdate];
+    const dateToPostpone = task[dateFieldToPostpone];
     const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
-    const postponedTask = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
+    const postponedTask = new Task({ ...task, [dateFieldToPostpone]: postponedDate });
     return { postponedDate, postponedTask };
 }
 
