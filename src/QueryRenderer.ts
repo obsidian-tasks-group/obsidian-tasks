@@ -488,11 +488,11 @@ class QueryRenderChild extends MarkdownRenderChild {
             return new Notice(errorMessage, 10000);
         }
 
-        const { postponedDate, newTasks } = createPostponedTask(task, dateFieldToPostpone, timeUnit, amount);
+        const { postponedDate, postponedTask } = createPostponedTask(task, dateFieldToPostpone, timeUnit, amount);
 
         await replaceTaskWithTasks({
             originalTask: task,
-            newTasks,
+            newTasks: postponedTask,
         });
         this.postponeSuccessCallback(button, dateFieldToPostpone, postponedDate);
     }

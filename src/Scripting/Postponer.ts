@@ -42,8 +42,8 @@ export function createPostponedTask(
 ) {
     const dateToUpdate = task[dateTypeToUpdate] as Moment;
     const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-    const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
-    return { postponedDate, newTasks };
+    const postponedTask = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
+    return { postponedDate, postponedTask };
 }
 
 export function postponementSuccessMessage(postponedDate: Moment, updatedDateType: HappensDate) {
