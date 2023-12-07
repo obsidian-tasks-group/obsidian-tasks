@@ -158,10 +158,7 @@ describe('TasksDate - postpone', () => {
     });
 
     describe('visualise postpone behaviour', () => {
-        it('should postpone to at least today, and honours increments longer than a day (today is 2023-11-10)', () => {
-            const amount = 1;
-            const unitOfTime = 'week';
-
+        function postponeMultipleDatesBy(amount: number, unitOfTime: unitOfTime.DurationConstructor) {
             // Set a date that is easy to decrement and increment
             const today = '2023-11-10';
             jest.setSystemTime(new Date(today));
@@ -194,6 +191,13 @@ describe('TasksDate - postpone', () => {
                 const postponedDate = new TasksDate(tasksDate.postpone(unitOfTime, amount));
                 output += `${dateFormatted} => ${postponedDate.format(format)}\n`;
             });
+            return output;
+        }
+
+        it('should postpone to at least today, and honours increments longer than a day (today is 2023-11-10)', () => {
+            const amount = 1;
+            const unitOfTime = 'week';
+            const output = postponeMultipleDatesBy(amount, unitOfTime);
             expect(output).toMatchInlineSnapshot(`
                 "[initial]     => [postponed on '2023-11-10' by '1 week']
                 2023-11-01 Wed => 2023-11-17 Fri
