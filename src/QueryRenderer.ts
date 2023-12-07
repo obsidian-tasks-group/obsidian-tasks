@@ -425,7 +425,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             const menu = new Menu();
 
             const postponeMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
-                const title = postponeMenuItemTitle(amount, timeUnit);
+                const title = postponeMenuItemTitle(task, amount, timeUnit);
                 item.setTitle(title).onClick(() => this.postponeOnClickCallback(button, task, amount, timeUnit));
             };
 
