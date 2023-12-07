@@ -16,6 +16,7 @@ import {
     type HappensDate,
     createPostponedTask,
     getDateFieldToPostpone,
+    postponeButtonTitle,
     postponeMenuItemTitle,
     postponementSuccessMessage,
     shouldShowPostponeButton,
@@ -50,11 +51,6 @@ export class QueryRenderer {
             }),
         );
     }
-}
-
-function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
-    const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
-    return `ℹ️ ${buttonText} (right-click for more options)`;
 }
 
 class QueryRenderChild extends MarkdownRenderChild {
