@@ -51,6 +51,12 @@ export class QueryRenderer {
     }
 }
 
+function postponeMenuItemTitle(amount: number, timeUnit: unitOfTime.DurationConstructor) {
+    const commonTitle = 'Postpone for';
+    const amountOrArticle = amount > 1 ? amount : 'a';
+    return `${commonTitle} ${amountOrArticle} ${timeUnit}`;
+}
+
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: TasksEvents;
@@ -422,13 +428,10 @@ class QueryRenderChild extends MarkdownRenderChild {
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
             const menu = new Menu();
-            const commonTitle = 'Postpone for';
 
             const postponeMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
-                const amountOrArticle = amount > 1 ? amount : 'a';
-                item.setTitle(`${commonTitle} ${amountOrArticle} ${timeUnit}`).onClick(() =>
-                    this.postponeOnClickCallback(button, task, amount, timeUnit),
-                );
+                const title = postponeMenuItemTitle(amount, timeUnit);
+                item.setTitle(title).onClick(() => this.postponeOnClickCallback(button, task, amount, timeUnit));
             };
 
             menu.addItem((item) => postponeMenuItemCallback(item, 'days', 2));
