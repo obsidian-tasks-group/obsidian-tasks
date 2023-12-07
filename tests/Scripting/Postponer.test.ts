@@ -7,6 +7,7 @@ import {
     type HappensDate,
     createPostponedTask,
     getDateFieldToPostpone,
+    postponeMenuItemTitle,
     postponementSuccessMessage,
     shouldShowPostponeButton,
 } from '../../src/Scripting/Postponer';
@@ -15,6 +16,16 @@ import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
+
+const today = '2023-12-03';
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(today));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
 
 describe('postpone - date field choice', () => {
     function checkPostponeField(taskBuilder: TaskBuilder, expected: HappensDate | null) {
@@ -146,16 +157,17 @@ describe('postpone - whether to show button', () => {
     });
 });
 
+describe('postpone - name context menu option', () => {
+    it('rename me', () => {
+        // Create a task with a due date
+        // Set amount and timeUnit
+        // Create the text used to label its menu item to postpone it by the given units
+        expect(postponeMenuItemTitle(1, 'day')).toEqual('Postpone for a day');
+        expect(postponeMenuItemTitle(2, 'days')).toEqual('Postpone for 2 days');
+    });
+});
+
 describe('postpone - new task creation', () => {
-    beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-12-03'));
-    });
-
-    afterEach(() => {
-        jest.useRealTimers();
-    });
-
     function testPostponedTaskAndDate(task: Task, expectedDateField: HappensDate, expectedPostponedDate: string) {
         const { postponedDate, postponedTask } = createPostponedTask(task, expectedDateField, 'day', 1);
         expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
