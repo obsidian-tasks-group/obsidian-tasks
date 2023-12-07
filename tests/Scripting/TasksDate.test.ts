@@ -157,6 +157,8 @@ describe('TasksDate - postpone', () => {
         checkDatePostponesTo('2024-01-31', 1, 'month', '2024-02-29');
     });
 
+    // TODO Add more tests for increments other than 1 day
+
     describe('visualise postpone behaviour', () => {
         function postponeMultipleDatesBy(amount: number, unitOfTime: unitOfTime.DurationConstructor) {
             // Set a date that is easy to decrement and increment
@@ -236,6 +238,4 @@ describe('TasksDate - postpone', () => {
             `);
         });
     });
-
-    // TODO Add more tests for increments other than 1 day
 });
