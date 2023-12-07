@@ -128,6 +128,22 @@ describe('TasksDate - postpone', () => {
         expect(postponedDate.formatAsDate()).toEqual(expectedDate);
     }
 
+    it.failing('should not modify the original date when postponing', () => {
+        // Arrange
+        const initialDate = '2023-11-30'; // future date
+        const initialTasksDate = new TasksDate(moment(initialDate));
+
+        // Act
+        const postponed = new TasksDate(initialTasksDate.postpone('day', 1));
+
+        // Assert
+        // We don't care what the new date is; we just need to know that the date has been modified
+        // or the Assert below would pass spuriously.
+        expect(postponed.formatAsDate()).not.toEqual(initialDate);
+
+        expect(initialTasksDate.formatAsDate()).toEqual(initialDate);
+    });
+
     it('should postpone an older date (before yesterday) to tomorrow', () => {
         checkDatePostponesTo('2023-11-20', 1, 'day', '2023-11-29');
     });
