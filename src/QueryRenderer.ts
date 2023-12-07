@@ -500,7 +500,6 @@ class QueryRenderChild extends MarkdownRenderChild {
     private postponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.disabled = true;
-        button.setAttr('title', 'You can perform this action again after reloading the file.');
 
         const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
         new Notice(successMessage, 5000);
