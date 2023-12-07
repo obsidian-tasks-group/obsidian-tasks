@@ -122,6 +122,6 @@ export class TasksDate {
             return today.add(amount, unitOfTime);
         }
 
-        return this._date.add(amount, unitOfTime);
+        return this._date.clone().add(amount, unitOfTime);
     }
 }
