@@ -507,7 +507,6 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
         new Notice(successMessage, 5000);
-        this.events.triggerRequestCacheUpdate(this.render.bind(this));
         this.query.debug('[postpone]: postponeSuccessCallback() exiting');
     }
 }
