@@ -480,7 +480,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         button: HTMLButtonElement,
         task: Task,
         amount: number,
-        timeUnit: moment.unitOfTime.DurationConstructor,
+        timeUnit: unitOfTime.DurationConstructor,
     ) {
         const dateTypeToUpdate = getDateFieldToPostpone(task);
         if (dateTypeToUpdate === null) {
