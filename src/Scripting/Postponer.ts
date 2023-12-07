@@ -40,8 +40,8 @@ export function createPostponedTask(
     timeUnit: unitOfTime.DurationConstructor,
     amount: number,
 ) {
-    const dateToUpdate = task[dateTypeToUpdate] as Moment;
-    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+    const dateToPostpone = task[dateTypeToUpdate] as Moment;
+    const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
     const postponedTask = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
     return { postponedDate, postponedTask };
 }
