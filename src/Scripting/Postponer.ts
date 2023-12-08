@@ -66,7 +66,7 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unit
     const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
 
     const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-    const formattedNewDate = postponedDate.format('ddd Do MMM, YYYY');
+    const formattedNewDate = postponedDate.format('ddd Do MMM');
 
     const amountOrArticle = amount > 1 ? amount : 'a';
     return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
