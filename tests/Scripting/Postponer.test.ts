@@ -162,17 +162,17 @@ describe('postpone - UI text', () => {
     it('should include date type and new date in button tooltip', () => {
         const task = new TaskBuilder().dueDate(today).build();
         expect(postponeButtonTitle(task, 1, 'day')).toEqual(
-            'ℹ️ Postpone dueDate for a day - to Mon 4th Dec, 2023 (right-click for more options)',
+            'ℹ️ Postpone due for a day - to Mon 4th Dec, 2023 (right-click for more options)',
         );
         expect(postponeButtonTitle(task, 2, 'days')).toEqual(
-            'ℹ️ Postpone dueDate for 2 days - to Tue 5th Dec, 2023 (right-click for more options)',
+            'ℹ️ Postpone due for 2 days - to Tue 5th Dec, 2023 (right-click for more options)',
         );
     });
 
     it('should include date type and new date in context menu labels', () => {
         const task = new TaskBuilder().dueDate(today).build();
-        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Postpone dueDate for a day - to Mon 4th Dec, 2023');
-        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Postpone dueDate for 2 days - to Tue 5th Dec, 2023');
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Postpone due for a day - to Mon 4th Dec, 2023');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Postpone due for 2 days - to Tue 5th Dec, 2023');
     });
 });
 

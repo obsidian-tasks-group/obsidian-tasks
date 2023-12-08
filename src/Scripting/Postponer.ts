@@ -59,11 +59,12 @@ export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOf
 
 export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
-
     const dateToUpdate = task[updatedDateType] as Moment;
+    const updatedDateDisplayText = updatedDateType.replace('Date', '');
+
     const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
     const formattedNewDate = postponedDate.format('ddd Do MMM, YYYY');
 
     const amountOrArticle = amount > 1 ? amount : 'a';
-    return `Postpone ${updatedDateType} for ${amountOrArticle} ${timeUnit} - to ${formattedNewDate}`;
+    return `Postpone ${updatedDateDisplayText} for ${amountOrArticle} ${timeUnit} - to ${formattedNewDate}`;
 }
