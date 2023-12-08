@@ -171,11 +171,8 @@ export class TaskLineRenderer {
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
         for (const component of taskLayout.shownTaskLayoutComponents) {
-            let componentString = emojiSerializer.componentToString(task, taskLayout, component);
+            const componentString = emojiSerializer.componentToString(task, taskLayout, component);
             if (componentString) {
-                if (component === 'description') {
-                    componentString = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(componentString);
-                }
                 // Create the text span that will hold the rendered component
                 const span = document.createElement('span');
                 parentElement.appendChild(span);
@@ -224,6 +221,8 @@ export class TaskLineRenderer {
         task: Task,
     ) {
         if (component === 'description') {
+            componentString = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(componentString);
+
             const { debugSettings } = getSettings();
             if (debugSettings.showTaskHiddenData) {
                 // Add some debug output to enable hidden information in the task to be inspected.
