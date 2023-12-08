@@ -3,6 +3,11 @@
 
 }
 
+/* Fix indentation of wrapped task lines in Tasks search results, when in Live Preview. */
+ul.contains-task-list .task-list-item-checkbox {
+    margin-inline-start: calc(var(--checkbox-size) * -1.5) !important;
+}
+
 .plugin-tasks-query-explanation{
     /* Prevent long explanation lines wrapping, so they are more readable,
        especially on small screens.
