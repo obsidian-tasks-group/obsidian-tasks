@@ -378,6 +378,12 @@ export class Task {
 
         const newStatus = StatusRegistry.getInstance().getNextStatusOrCreate(this.status);
 
+        const newTasks = this.handleNewStatus(newStatus);
+        logEndOfTaskEdit(logger, codeLocation, newTasks);
+        return newTasks;
+    }
+
+    private handleNewStatus(newStatus: Status): Task[] {
         let newDoneDate = null;
 
         let nextOccurrence: {
@@ -430,7 +436,6 @@ export class Task {
         // Write next occurrence before previous occurrence.
         newTasks.push(toggledTask);
 
-        logEndOfTaskEdit(logger, codeLocation, newTasks);
         return newTasks;
     }
 
@@ -454,6 +459,17 @@ export class Task {
     public toggleWithRecurrenceInUsersOrder(): Task[] {
         const newTasks = this.toggle();
 
+        const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
+        return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
+    }
+
+    public handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
+        const logger = logging.getLogger('tasks.Task');
+        logger.trace(
+            `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to ${newStatus}`,
+        );
+
+        const newTasks = this.handleNewStatus(newStatus);
         const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
