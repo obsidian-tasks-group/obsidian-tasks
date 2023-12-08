@@ -171,6 +171,8 @@ describe('postpone - UI text', () => {
 
     it('should include date type and new date in context menu labels', () => {
         const task = new TaskBuilder().dueDate(today).build();
+        // TODO This text is misleading if the date is already in the future.
+        //      In that case, it should still be 'Postpone'???
         expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Mon 4th Dec');
         expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
     });
