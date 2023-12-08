@@ -1,8 +1,9 @@
 import type { Moment } from 'moment';
-import { Component, MarkdownRenderer } from 'obsidian';
+import { Component, MarkdownRenderer, Menu, MenuItem } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
+import { StatusRegistry } from './StatusRegistry';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
@@ -121,6 +122,32 @@ export class TaskLineRenderer {
                 originalTask: task,
                 newTasks: toggledTasks,
             });
+        });
+
+        checkbox.addEventListener('contextmenu', async (ev: MouseEvent) => {
+            const menu = new Menu();
+            const commonTitle = 'Change status to: ';
+
+            const getMenuItemCallback = (item: MenuItem, statusName: string, newStatusSymbol: string) => {
+                item.setTitle(`${commonTitle}  ${statusName}`).onClick(() => {
+                    const status = StatusRegistry.getInstance().bySymbol(newStatusSymbol);
+                    const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
+                    replaceTaskWithTasks({
+                        originalTask: task,
+                        newTasks: newTask,
+                    });
+                });
+            };
+
+            const { statusSettings } = getSettings();
+            for (const status of statusSettings.coreStatuses) {
+                menu.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
+            }
+            for (const status of statusSettings.customStatuses) {
+                menu.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
+            }
+
+            menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
 
         li.prepend(checkbox);
