@@ -9,10 +9,10 @@ export class StatusMenu extends Menu {
         super();
 
         // TODO Add a tooltip, so it's more obvious that right-click is available
-        const commonTitle = 'Change status to: ';
+        const commonTitle = 'Change status to:';
 
         const getMenuItemCallback = (item: MenuItem, statusName: string, newStatusSymbol: string) => {
-            item.setTitle(`${commonTitle}  ${statusName}`).onClick(() => {
+            item.setTitle(`${commonTitle} ${statusName}`).onClick(() => {
                 // TODO Don't make a change if the status is already set to this value.
                 const status = StatusRegistry.getInstance().bySymbol(newStatusSymbol);
                 const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
