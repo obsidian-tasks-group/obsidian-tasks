@@ -21,6 +21,19 @@ function menuToString(menu: StatusMenu) {
 }
 
 describe('StatusMenu', () => {
+    let taskBeingOverwritten: Task | undefined;
+    let tasksBeingSaved: Task[] | undefined;
+
+    async function testableTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
+        taskBeingOverwritten = originalTask;
+        tasksBeingSaved = Array.isArray(newTasks) ? newTasks : [newTasks];
+    }
+
+    beforeEach(() => {
+        taskBeingOverwritten = undefined;
+        tasksBeingSaved = undefined;
+    });
+
     it('should show checkmark against the current task status', () => {
         // Arrange
         const task = new TaskBuilder().status(Status.makeInProgress()).build();
@@ -74,13 +87,6 @@ describe('StatusMenu', () => {
         const onlyShowCancelled = new StatusRegistry();
         onlyShowCancelled.clearStatuses();
         onlyShowCancelled.add(Status.makeCancelled());
-
-        let taskBeingOverwritten: Task | undefined = undefined;
-        let tasksBeingSaved: Task[] | undefined = undefined;
-        async function testableTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
-            taskBeingOverwritten = originalTask;
-            tasksBeingSaved = Array.isArray(newTasks) ? newTasks : [newTasks];
-        }
 
         const task = new TaskBuilder().status(Status.makeTodo()).build();
         const menu = new StatusMenu(onlyShowCancelled, task, testableTaskSaver);
