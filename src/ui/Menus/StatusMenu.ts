@@ -12,7 +12,8 @@ export class StatusMenu extends Menu {
         const commonTitle = 'Change status to:';
 
         const getMenuItemCallback = (item: MenuItem, statusName: string, newStatusSymbol: string) => {
-            item.setTitle(`${commonTitle} ${statusName}`).onClick(() => {
+            const title = `${commonTitle} [${newStatusSymbol}] ${statusName}`;
+            item.setTitle(title).onClick(() => {
                 // TODO Don't make a change if the status is already set to this value.
                 const status = StatusRegistry.getInstance().bySymbol(newStatusSymbol);
                 const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
@@ -26,7 +27,6 @@ export class StatusMenu extends Menu {
         // TODO Don't use StatusSettings: they are unchecked and can have duplicates and errors.
         //      Use StatusRegistry.getInstance() instead.
         // TODO Put a checkmark against the current status symbol.
-        // TODO Show the status symbol
         // TODO Maybe group by status type?
         const { statusSettings } = getSettings();
         for (const status of statusSettings.coreStatuses) {
