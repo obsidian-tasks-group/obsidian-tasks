@@ -1,25 +1,20 @@
 import { StatusMenu } from '../../../src/ui/Menus/StatusMenu';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { MenuItem } from '../../__mocks__/obsidian';
+import type { MenuItem } from '../../__mocks__/obsidian';
 
 export {};
 
 describe('StatusMenu', () => {
-    it('MenuItem', () => {
-        const item = new MenuItem();
-        expect(item.title).toEqual('');
-
-        item.setTitle('hello');
-        expect(item.title).toEqual('hello');
-    });
-
     it('creation', () => {
+        // Arrange
         const task = new TaskBuilder().build();
+
+        // Act
         const menu = new StatusMenu(task);
+
+        // Assert
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
         const items: MenuItem[] = menu.items;
-        expect(items.length).toEqual(4);
-
         const itemsAsText = items.map((item) => item.title).join('\n');
         expect(itemsAsText).toMatchInlineSnapshot(`
             "Change status to:   Todo
