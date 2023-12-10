@@ -15,7 +15,7 @@ afterEach(() => {
 function menuToString(menu: StatusMenu) {
     // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
     const items: MenuItem[] = menu.items;
-    return items.map((item) => item.title).join('\n');
+    return '\n' + items.map((item) => item.title).join('\n');
 }
 
 describe('StatusMenu', () => {
@@ -30,7 +30,8 @@ describe('StatusMenu', () => {
         // Assert
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
-            "Change status to: [ ] Todo
+            "
+            Change status to: [ ] Todo
             Change status to: [x] Done
             Change status to: [/] In Progress
             Change status to: [-] Cancelled"
@@ -57,7 +58,8 @@ describe('StatusMenu', () => {
         // Assert
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
-            "Change status to: [ ] Todo
+            "
+            Change status to: [ ] Todo
             Change status to: [x] Done
             Change status to: [/] In Progress
             Change status to: [-] Cancelled
