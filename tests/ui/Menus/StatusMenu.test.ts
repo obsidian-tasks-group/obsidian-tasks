@@ -6,6 +6,7 @@ import { StatusSettings } from '../../../src/Config/StatusSettings';
 import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
 import { Status } from '../../../src/Status';
+import type { Task } from '../../../src/Task';
 
 export {};
 
@@ -66,6 +67,37 @@ describe('StatusMenu', () => {
               Change status to: [-] Cancelled
               Change status to: [%] % 1"
         `);
+    });
+
+    it('should modify task, if different status selected', () => {
+        // Arrange
+        const onlyShowCancelled = new StatusRegistry();
+        onlyShowCancelled.clearStatuses();
+        onlyShowCancelled.add(Status.makeCancelled());
+
+        let taskBeingOverwritten: Task | undefined = undefined;
+        let tasksBeingSaved: Task[] | undefined = undefined;
+        async function testableTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
+            taskBeingOverwritten = originalTask;
+            tasksBeingSaved = Array.isArray(newTasks) ? newTasks : [newTasks];
+        }
+
+        const task = new TaskBuilder().status(Status.makeTodo()).build();
+        const menu = new StatusMenu(onlyShowCancelled, task, testableTaskSaver);
+
+        // Act
+        // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
+        const todoItem = menu.items[0];
+        todoItem.callback();
+
+        // Assert
+        expect(taskBeingOverwritten).not.toBeUndefined();
+        expect(Object.is(task, taskBeingOverwritten)).toEqual(true);
+        expect(taskBeingOverwritten!.status.symbol).toEqual(' ');
+
+        expect(tasksBeingSaved).not.toBeUndefined();
+        expect(tasksBeingSaved!.length).toEqual(1);
+        expect(tasksBeingSaved![0].status.symbol).toEqual('-');
     });
 
     it('should not modify task, if current status selected', () => {

@@ -4,13 +4,24 @@ import { replaceTaskWithTasks } from '../../File';
 import type { Task } from '../../Task';
 import { StatusSettings } from '../../Config/StatusSettings';
 
+type TaskSaver = (originalTask: Task, newTasks: Task | Task[]) => Promise<void>;
+
+async function defaultTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
+    await replaceTaskWithTasks({
+        originalTask,
+        newTasks,
+    });
+}
+
 export class StatusMenu extends Menu {
     private statusRegistry: StatusRegistry;
+    private readonly taskSaver: TaskSaver;
 
-    constructor(statusRegistry: StatusRegistry, task: Task) {
+    constructor(statusRegistry: StatusRegistry, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super();
 
         this.statusRegistry = statusRegistry;
+        this.taskSaver = taskSaver;
 
         const commonTitle = 'Change status to:';
 
@@ -22,10 +33,7 @@ export class StatusMenu extends Menu {
                     if (newStatusSymbol !== task.status.symbol) {
                         const status = this.statusRegistry.bySymbol(newStatusSymbol);
                         const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
-                        await replaceTaskWithTasks({
-                            originalTask: task,
-                            newTasks: newTask,
-                        });
+                        await this.taskSaver(task, newTask);
                     }
                 });
         };
