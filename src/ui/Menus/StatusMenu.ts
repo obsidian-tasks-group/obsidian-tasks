@@ -5,6 +5,8 @@ import { getSettings } from '../../Config/Settings';
 import type { Task } from '../../Task';
 
 export class StatusMenu extends Menu {
+    private statusRegistry = StatusRegistry.getInstance();
+
     constructor(task: Task) {
         super();
 
@@ -15,7 +17,7 @@ export class StatusMenu extends Menu {
             const title = `${commonTitle} [${newStatusSymbol}] ${statusName}`;
             item.setTitle(title).onClick(() => {
                 // TODO Don't make a change if the status is already set to this value.
-                const status = StatusRegistry.getInstance().bySymbol(newStatusSymbol);
+                const status = this.statusRegistry.bySymbol(newStatusSymbol);
                 const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
                 replaceTaskWithTasks({
                     originalTask: task,
