@@ -20,13 +20,14 @@ export class StatusMenu extends Menu {
             item.setTitle(title)
                 .setChecked(newStatusSymbol === task.status.symbol)
                 .onClick(() => {
-                    // TODO Don't make a change if the status is already set to this value.
-                    const status = this.statusRegistry.bySymbol(newStatusSymbol);
-                    const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
-                    replaceTaskWithTasks({
-                        originalTask: task,
-                        newTasks: newTask,
-                    });
+                    if (newStatusSymbol !== task.status.symbol) {
+                        const status = this.statusRegistry.bySymbol(newStatusSymbol);
+                        const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
+                        replaceTaskWithTasks({
+                            originalTask: task,
+                            newTasks: newTask,
+                        });
+                    }
                 });
         };
 
