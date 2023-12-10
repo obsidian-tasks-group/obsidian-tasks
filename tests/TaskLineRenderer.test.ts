@@ -74,7 +74,7 @@ describe('task line rendering', () => {
         GlobalFilter.getInstance().setRemoveGlobalFilter(false);
     });
 
-    it('should render only one child for the UL and return it with renderTaskLine()', async () => {
+    it('should render only one List Item for the UL and return it with renderTaskLine()', async () => {
         const ulElement = document.createElement('ul');
         const taskLineRenderer = new TaskLineRenderer({
             textRenderer: mockTextRenderer,
@@ -84,11 +84,14 @@ describe('task line rendering', () => {
         });
         const listItem = await taskLineRenderer.renderTaskLine(new TaskBuilder().build(), 0);
 
+        // Just one element
         expect(ulElement.children.length).toEqual(1);
+
+        // It is the rendered one
         expect(ulElement.children[0]).toEqual(listItem);
     });
 
-    it('creates the correct span structure for a basic task', async () => {
+    it('creates the correct span structure for a basic task inside a List Item', async () => {
         const taskLine = '- [ ] This is a simple task';
         const task = fromLine({
             line: taskLine,
