@@ -32,16 +32,11 @@ export class StatusMenu extends Menu {
 
         const coreStatuses = new StatusSettings().coreStatuses.map((setting) => setting.symbol);
         // Put the core statuses at the top of the menu:
-        for (const status of statusRegistry.registeredStatuses) {
-            if (coreStatuses.includes(status.symbol)) {
-                this.addItem((item) => getMenuItemCallback(task, item, status.name, status.symbol));
-            }
-        }
-
-        // Then add the custom statuses:
-        for (const status of statusRegistry.registeredStatuses) {
-            if (!coreStatuses.includes(status.symbol)) {
-                this.addItem((item) => getMenuItemCallback(task, item, status.name, status.symbol));
+        for (const matchCoreTask of [true, false]) {
+            for (const status of statusRegistry.registeredStatuses) {
+                if (coreStatuses.includes(status.symbol) === matchCoreTask) {
+                    this.addItem((item) => getMenuItemCallback(task, item, status.name, status.symbol));
+                }
             }
         }
     }
