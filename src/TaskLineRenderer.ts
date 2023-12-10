@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import { Component, MarkdownRenderer, Menu, MenuItem } from 'obsidian';
+import { Component, MarkdownRenderer, MenuItem } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
@@ -9,6 +9,7 @@ import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
+import { StatusMenu } from './ui/Menus/StatusMenu';
 
 const fieldRenderer = new TaskFieldRenderer();
 
@@ -125,7 +126,7 @@ export class TaskLineRenderer {
         });
 
         checkbox.addEventListener('contextmenu', async (ev: MouseEvent) => {
-            const menu = new Menu();
+            const menu = new StatusMenu();
             // TODO Add a tooltip, so it's more obvious that right-click is available
             const commonTitle = 'Change status to: ';
 
