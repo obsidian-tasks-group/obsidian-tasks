@@ -30,7 +30,6 @@ export class StatusMenu extends Menu {
                 });
         };
 
-        // TODO Maybe group by status type?
         const coreStatuses = new StatusSettings().coreStatuses.map((setting) => setting.symbol);
         for (const status of statusRegistry.registeredStatuses) {
             if (coreStatuses.includes(status.symbol)) {
