@@ -89,6 +89,9 @@ describe('task line rendering', () => {
 
         // It is the rendered one
         expect(ulElement.children[0]).toEqual(listItem);
+
+        // And it is a ListItem
+        expect(listItem.nodeName).toEqual('LI');
     });
 
     it('creates the correct span structure for a basic task inside a List Item', async () => {
@@ -97,9 +100,6 @@ describe('task line rendering', () => {
             line: taskLine,
         });
         const listItem = await renderListItem(task);
-
-        // Check that it's an element of type listItem
-        expect(listItem.nodeName).toEqual('LI');
 
         // Check that it has two children: a checkbox and a text span
         expect(listItem.children.length).toEqual(2);
