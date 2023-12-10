@@ -12,7 +12,6 @@ export class StatusMenu extends Menu {
 
         this.statusRegistry = statusRegistry;
 
-        // TODO Add a tooltip, so it's more obvious that right-click is available
         const commonTitle = 'Change status to:';
 
         const getMenuItemCallback = (task: Task, item: MenuItem, statusName: string, newStatusSymbol: string) => {
