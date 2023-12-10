@@ -67,4 +67,23 @@ describe('StatusMenu', () => {
               Change status to: [%] % 1"
         `);
     });
+
+    it('should not modify task, if current status selected', () => {
+        // Arrange
+        const task = new TaskBuilder().build();
+        const statusRegistry = new StatusRegistry();
+
+        // Act
+        const menu = new StatusMenu(statusRegistry, task);
+
+        // Assert
+        // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
+        const todoItem = menu.items[0];
+        expect(todoItem.title).toEqual('Change status to: [ ] Todo');
+        todoItem.callback();
+        // If we get to here, the callback did not trigger rewriting calling replaceTaskWithTasks(),
+        // which fails to run in tests, giving:
+        //   console.error
+        //     Tasks: cannot use File before initializing it.
+    });
 });
