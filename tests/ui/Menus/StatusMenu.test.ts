@@ -34,7 +34,7 @@ describe('StatusMenu', () => {
             "
               Change status to: [ ] Todo
               Change status to: [x] Done
-              Change status to: [/] In Progress
+            x Change status to: [/] In Progress
               Change status to: [-] Cancelled"
         `);
     });
@@ -60,7 +60,7 @@ describe('StatusMenu', () => {
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-              Change status to: [ ] Todo
+            x Change status to: [ ] Todo
               Change status to: [x] Done
               Change status to: [/] In Progress
               Change status to: [-] Cancelled

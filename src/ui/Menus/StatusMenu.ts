@@ -15,31 +15,32 @@ export class StatusMenu extends Menu {
         // TODO Add a tooltip, so it's more obvious that right-click is available
         const commonTitle = 'Change status to:';
 
-        const getMenuItemCallback = (item: MenuItem, statusName: string, newStatusSymbol: string) => {
+        const getMenuItemCallback = (task: Task, item: MenuItem, statusName: string, newStatusSymbol: string) => {
             const title = `${commonTitle} [${newStatusSymbol}] ${statusName}`;
-            item.setTitle(title).onClick(() => {
-                // TODO Don't make a change if the status is already set to this value.
-                const status = this.statusRegistry.bySymbol(newStatusSymbol);
-                const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
-                replaceTaskWithTasks({
-                    originalTask: task,
-                    newTasks: newTask,
+            item.setTitle(title)
+                .setChecked(newStatusSymbol === task.status.symbol)
+                .onClick(() => {
+                    // TODO Don't make a change if the status is already set to this value.
+                    const status = this.statusRegistry.bySymbol(newStatusSymbol);
+                    const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
+                    replaceTaskWithTasks({
+                        originalTask: task,
+                        newTasks: newTask,
+                    });
                 });
-            });
         };
 
-        // TODO Put a checkmark against the current status symbol.
         // TODO Maybe group by status type?
         const coreStatuses = new StatusSettings().coreStatuses.map((setting) => setting.symbol);
         for (const status of statusRegistry.registeredStatuses) {
             if (coreStatuses.includes(status.symbol)) {
-                this.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
+                this.addItem((item) => getMenuItemCallback(task, item, status.name, status.symbol));
             }
         }
 
         for (const status of statusRegistry.registeredStatuses) {
             if (!coreStatuses.includes(status.symbol)) {
-                this.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
+                this.addItem((item) => getMenuItemCallback(task, item, status.name, status.symbol));
             }
         }
     }
