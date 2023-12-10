@@ -1,14 +1,15 @@
 import type { Moment } from 'moment';
-import { Component, MarkdownRenderer, Menu, MenuItem } from 'obsidian';
+import { Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
-import { StatusRegistry } from './StatusRegistry';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
+import { StatusMenu } from './ui/Menus/StatusMenu';
+import { StatusRegistry } from './StatusRegistry';
 
 const fieldRenderer = new TaskFieldRenderer();
 
@@ -124,31 +125,11 @@ export class TaskLineRenderer {
             });
         });
 
-        checkbox.addEventListener('contextmenu', async (ev: MouseEvent) => {
-            const menu = new Menu();
-            const commonTitle = 'Change status to: ';
-
-            const getMenuItemCallback = (item: MenuItem, statusName: string, newStatusSymbol: string) => {
-                item.setTitle(`${commonTitle}  ${statusName}`).onClick(() => {
-                    const status = StatusRegistry.getInstance().bySymbol(newStatusSymbol);
-                    const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
-                    replaceTaskWithTasks({
-                        originalTask: task,
-                        newTasks: newTask,
-                    });
-                });
-            };
-
-            const { statusSettings } = getSettings();
-            for (const status of statusSettings.coreStatuses) {
-                menu.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
-            }
-            for (const status of statusSettings.customStatuses) {
-                menu.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
-            }
-
+        checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
+            const menu = new StatusMenu(StatusRegistry.getInstance(), task);
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
+        checkbox.setAttribute('title', 'Right-click for options');
 
         li.prepend(checkbox);
 
