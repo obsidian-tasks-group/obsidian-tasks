@@ -18,11 +18,11 @@ export class StatusMenu extends Menu {
             const title = `${commonTitle} [${newStatusSymbol}] ${statusName}`;
             item.setTitle(title)
                 .setChecked(newStatusSymbol === task.status.symbol)
-                .onClick(() => {
+                .onClick(async () => {
                     if (newStatusSymbol !== task.status.symbol) {
                         const status = this.statusRegistry.bySymbol(newStatusSymbol);
                         const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
-                        replaceTaskWithTasks({
+                        await replaceTaskWithTasks({
                             originalTask: task,
                             newTasks: newTask,
                         });
