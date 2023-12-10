@@ -17,10 +17,10 @@ describe('StatusMenu', () => {
         const items: MenuItem[] = menu.items;
         const itemsAsText = items.map((item) => item.title).join('\n');
         expect(itemsAsText).toMatchInlineSnapshot(`
-            "Change status to:   Todo
-            Change status to:   Done
-            Change status to:   In Progress
-            Change status to:   Cancelled"
+            "Change status to: Todo
+            Change status to: Done
+            Change status to: In Progress
+            Change status to: Cancelled"
         `);
     });
 });
