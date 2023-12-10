@@ -1,14 +1,16 @@
 import { Menu, MenuItem } from 'obsidian';
-import { StatusRegistry } from '../../StatusRegistry';
+import type { StatusRegistry } from '../../StatusRegistry';
 import { replaceTaskWithTasks } from '../../File';
 import { getSettings } from '../../Config/Settings';
 import type { Task } from '../../Task';
 
 export class StatusMenu extends Menu {
-    private statusRegistry = StatusRegistry.getInstance();
+    private statusRegistry: StatusRegistry;
 
-    constructor(task: Task) {
+    constructor(statusRegistry: StatusRegistry, task: Task) {
         super();
+
+        this.statusRegistry = statusRegistry;
 
         // TODO Add a tooltip, so it's more obvious that right-click is available
         const commonTitle = 'Change status to:';
