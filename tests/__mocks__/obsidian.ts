@@ -3,6 +3,7 @@ export {};
 export class MenuItem {
     public title: string | DocumentFragment = '';
     public callback: (evt: MouseEvent | KeyboardEvent) => any;
+    public checked = false;
 
     constructor() {
         this.callback = (_evt: MouseEvent | KeyboardEvent) => console.log('callback not defined');
@@ -15,6 +16,10 @@ export class MenuItem {
 
     public onClick(callback: (evt: MouseEvent | KeyboardEvent) => any): this {
         this.callback = callback;
+        return this;
+    }
+    public setChecked(checked: boolean | null): this {
+        this.checked = checked ? checked : false;
         return this;
     }
 }

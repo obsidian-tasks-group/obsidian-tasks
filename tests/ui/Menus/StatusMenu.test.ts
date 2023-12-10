@@ -5,6 +5,7 @@ import { StatusRegistry } from '../../../src/StatusRegistry';
 import { StatusSettings } from '../../../src/Config/StatusSettings';
 import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
+import { Status } from '../../../src/Status';
 
 export {};
 
@@ -15,13 +16,13 @@ afterEach(() => {
 function menuToString(menu: StatusMenu) {
     // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
     const items: MenuItem[] = menu.items;
-    return '\n' + items.map((item) => item.title).join('\n');
+    return '\n' + items.map((item) => `${item.checked ? 'x' : ' '} ${item.title}`).join('\n');
 }
 
 describe('StatusMenu', () => {
     it('creation', () => {
         // Arrange
-        const task = new TaskBuilder().build();
+        const task = new TaskBuilder().status(Status.makeInProgress()).build();
         const statusRegistry = new StatusRegistry();
 
         // Act
@@ -31,10 +32,10 @@ describe('StatusMenu', () => {
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-            Change status to: [ ] Todo
-            Change status to: [x] Done
-            Change status to: [/] In Progress
-            Change status to: [-] Cancelled"
+              Change status to: [ ] Todo
+              Change status to: [x] Done
+              Change status to: [/] In Progress
+              Change status to: [-] Cancelled"
         `);
     });
 
@@ -59,11 +60,11 @@ describe('StatusMenu', () => {
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-            Change status to: [ ] Todo
-            Change status to: [x] Done
-            Change status to: [/] In Progress
-            Change status to: [-] Cancelled
-            Change status to: [%] % 1"
+              Change status to: [ ] Todo
+              Change status to: [x] Done
+              Change status to: [/] In Progress
+              Change status to: [-] Cancelled
+              Change status to: [%] % 1"
         `);
     });
 });
