@@ -23,6 +23,15 @@ type AttributesDictionary = { [key: string]: string };
 
 const fieldRenderer = new TaskFieldRenderer();
 
+/**
+ * Renders a task for test purposes and returns the rendered ListItem.
+ *
+ * @param task to be rendered
+ *
+ * @param layoutOptions for the task rendering. Skip for default options. See {@link LayoutOptions}.
+ *
+ * @param testRenderer imitates Obsidian rendering. Skip for the default {@link mockTextRenderer}.
+ */
 async function renderListItem(task: Task, layoutOptions?: LayoutOptions, testRenderer?: TextRenderer) {
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: testRenderer ?? mockTextRenderer,
@@ -38,10 +47,10 @@ const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: s
 };
 
 const mockHTMLRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
-    // Contrary to the default mockTextRenderer() in createMockParentAndRender(),
+    // Contrary to the default mockTextRenderer(),
     // instead of the rendered HTMLSpanElement.innerText,
     // we need the plain HTML here like in TaskLineRenderer.renderComponentText(),
-    // in order to ensure that any description and tags are retained.
+    // to ensure that description and tags are retained.
     element.innerHTML = text;
 };
 
