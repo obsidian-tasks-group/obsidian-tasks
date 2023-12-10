@@ -4,8 +4,17 @@ import { replaceTaskWithTasks } from '../../File';
 import type { Task } from '../../Task';
 import { StatusSettings } from '../../Config/StatusSettings';
 
+/**
+ * A function for replacing one task with zero or more new tasks.
+ * @see {@link defaultTaskSaver}
+ */
 type TaskSaver = (originalTask: Task, newTasks: Task | Task[]) => Promise<void>;
 
+/**
+ * A default implementation of {@link TaskSaver} that calls {@link replaceTaskWithTasks}
+ * @param originalTask
+ * @param newTasks
+ */
 async function defaultTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
     await replaceTaskWithTasks({
         originalTask,
@@ -13,10 +22,28 @@ async function defaultTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
     });
 }
 
+/**
+ * A Menu of options for editing the status of a Task object.
+ *
+ * @example
+ *     checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
+ *         const menu = new StatusMenu(StatusRegistry.getInstance(), task);
+ *         menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+ *     });
+ *     checkbox.setAttribute('title', 'Right-click for options');
+ */
 export class StatusMenu extends Menu {
     private statusRegistry: StatusRegistry;
     private readonly taskSaver: TaskSaver;
 
+    /**
+     * Constructor, which sets up the menu items.
+     * @param statusRegistry - the statuses to be shown in the menu.
+     * @param task - the Task to be edited.
+     * @param taskSaver - an optional {@link TaskSaver} function. If not supplied, {@link replaceTaskWithTasks}
+     *                    will be used to update the file containing the Task.
+     *                    An alternative implementation can be used in tests.
+     */
     constructor(statusRegistry: StatusRegistry, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super();
 
