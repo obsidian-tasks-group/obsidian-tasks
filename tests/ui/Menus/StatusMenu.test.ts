@@ -59,8 +59,7 @@ describe('StatusMenu', () => {
             Change status to: [x] Done
             Change status to: [/] In Progress
             Change status to: [-] Cancelled
-            Change status to: [%] % 1
-            Change status to: [%] % 2"
+            Change status to: [%] % 1"
         `);
     });
 });
