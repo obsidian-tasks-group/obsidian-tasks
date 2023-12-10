@@ -9,6 +9,7 @@ import { TaskFieldRenderer } from './TaskFieldRenderer';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { StatusMenu } from './ui/Menus/StatusMenu';
+import { StatusRegistry } from './StatusRegistry';
 
 const fieldRenderer = new TaskFieldRenderer();
 
@@ -125,7 +126,7 @@ export class TaskLineRenderer {
         });
 
         checkbox.addEventListener('contextmenu', async (ev: MouseEvent) => {
-            const menu = new StatusMenu(task);
+            const menu = new StatusMenu(StatusRegistry.getInstance(), task);
 
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
