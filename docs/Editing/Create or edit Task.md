@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Getting Started/Create or edit Task
 ---
 
 # 'Create or edit Task' Modal
