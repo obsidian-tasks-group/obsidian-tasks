@@ -1,7 +1,6 @@
 import { Menu, MenuItem } from 'obsidian';
 import type { StatusRegistry } from '../../StatusRegistry';
 import { replaceTaskWithTasks } from '../../File';
-import { getSettings } from '../../Config/Settings';
 import type { Task } from '../../Task';
 
 export class StatusMenu extends Menu {
@@ -28,16 +27,19 @@ export class StatusMenu extends Menu {
             });
         };
 
-        // TODO Don't use StatusSettings: they are unchecked and can have duplicates and errors.
-        //      Use StatusRegistry.getInstance() instead.
         // TODO Put a checkmark against the current status symbol.
         // TODO Maybe group by status type?
-        const { statusSettings } = getSettings();
-        for (const status of statusSettings.coreStatuses) {
-            this.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
+        const coreStatuses = [' ', 'x'];
+        for (const status of statusRegistry.registeredStatuses) {
+            if (coreStatuses.includes(status.symbol)) {
+                this.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
+            }
         }
-        for (const status of statusSettings.customStatuses) {
-            this.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
+
+        for (const status of statusRegistry.registeredStatuses) {
+            if (!coreStatuses.includes(status.symbol)) {
+                this.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
+            }
         }
     }
 }
