@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Getting Started/Auto-Suggest
 ---
 
 # Intelligent Auto-Suggest

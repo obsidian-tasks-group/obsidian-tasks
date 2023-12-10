@@ -13,6 +13,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- X.Y.Z: 🔥 Add documentation section about [[About Editing|editing tasks]]
 - 5.2.0: 🔥 Most query instructions can now include [[About Queries#Capitals in Query Instructions - Case Insensitivity|capital letters]].
 - 5.1.0: 🔥 Add 'Review and check your Statuses' facility: see [[Check your Statuses|check your statuses]].
 - 5.1.0: 🔥 Enable [[Custom Filters|custom filters]] and [[Custom Grouping|custom grouping]] to use [[Query Properties|query properties]] directly - no placeholders required.
@@ -62,6 +63,7 @@ These are the main pages and sections, that connect to all the pages here:
 > - [[Installation]]
 > - [[About Getting Started|Getting Started ...]]
 >   - [[About Statuses|Statuses ...]]
+> - [[About Editing|Editing...]]
 > - [[About Queries|Queries ...]]
 > - [[Quick Reference]]
 >

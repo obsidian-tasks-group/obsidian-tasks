@@ -36,7 +36,4 @@ publish: true
 
 ## Easy editing of tasks
 
-- [[Auto-Suggest]]
-  - Intelligent auto-suggest facility does a lot of your typing of task data for you.
-- [[Create or edit Task]]
-  - Helpful dialog/modal for easy adding and editing of task data
+See [[About Editing]].
