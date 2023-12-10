@@ -127,9 +127,9 @@ export class TaskLineRenderer {
 
         checkbox.addEventListener('contextmenu', async (ev: MouseEvent) => {
             const menu = new StatusMenu(StatusRegistry.getInstance(), task);
-
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
+        checkbox.setAttribute('title', 'Right-click for options');
 
         li.prepend(checkbox);
 
