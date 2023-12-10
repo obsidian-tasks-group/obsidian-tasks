@@ -12,6 +12,12 @@ afterEach(() => {
     resetSettings();
 });
 
+function menuToString(menu: StatusMenu) {
+    // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
+    const items: MenuItem[] = menu.items;
+    return items.map((item) => item.title).join('\n');
+}
+
 describe('StatusMenu', () => {
     it('creation', () => {
         // Arrange
@@ -22,9 +28,7 @@ describe('StatusMenu', () => {
         const menu = new StatusMenu(statusRegistry, task);
 
         // Assert
-        // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
-        const items: MenuItem[] = menu.items;
-        const itemsAsText = items.map((item) => item.title).join('\n');
+        const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "Change status to: [ ] Todo
             Change status to: [x] Done
@@ -51,9 +55,7 @@ describe('StatusMenu', () => {
         const menu = new StatusMenu(statusRegistry, task);
 
         // Assert
-        // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
-        const items: MenuItem[] = menu.items;
-        const itemsAsText = items.map((item) => item.title).join('\n');
+        const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "Change status to: [ ] Todo
             Change status to: [x] Done
