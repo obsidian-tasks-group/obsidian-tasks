@@ -2,6 +2,7 @@ import { Menu, MenuItem } from 'obsidian';
 import type { StatusRegistry } from '../../StatusRegistry';
 import { replaceTaskWithTasks } from '../../File';
 import type { Task } from '../../Task';
+import { StatusSettings } from '../../Config/StatusSettings';
 
 export class StatusMenu extends Menu {
     private statusRegistry: StatusRegistry;
@@ -29,7 +30,7 @@ export class StatusMenu extends Menu {
 
         // TODO Put a checkmark against the current status symbol.
         // TODO Maybe group by status type?
-        const coreStatuses = [' ', 'x'];
+        const coreStatuses = new StatusSettings().coreStatuses.map((setting) => setting.symbol);
         for (const status of statusRegistry.registeredStatuses) {
             if (coreStatuses.includes(status.symbol)) {
                 this.addItem((item) => getMenuItemCallback(item, status.name, status.symbol));
