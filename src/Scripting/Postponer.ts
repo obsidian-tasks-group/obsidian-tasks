@@ -36,18 +36,18 @@ export function getDateFieldToPostpone(task: Task): HappensDate | null {
 
 export function createPostponedTask(
     task: Task,
-    dateTypeToUpdate: HappensDate,
+    dateFieldToPostpone: HappensDate,
     timeUnit: unitOfTime.DurationConstructor,
     amount: number,
 ) {
-    const dateToUpdate = task[dateTypeToUpdate] as Moment;
-    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-    const newTasks = new Task({ ...task, [dateTypeToUpdate]: postponedDate });
-    return { postponedDate, newTasks };
+    const dateToPostpone = task[dateFieldToPostpone];
+    const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
+    const postponedTask = new Task({ ...task, [dateFieldToPostpone]: postponedDate });
+    return { postponedDate, postponedTask };
 }
 
-export function postponementSuccessMessage(postponedDate: Moment, updatedDateType: HappensDate) {
+export function postponementSuccessMessage(postponedDate: Moment, dateFieldToPostpone: HappensDate) {
     // TODO all logic for invalid dates
     const postponedDateString = postponedDate?.format('DD MMM YYYY');
-    return `Task's ${updatedDateType} postponed until ${postponedDateString}`;
+    return `Task's ${dateFieldToPostpone} postponed until ${postponedDateString}`;
 }

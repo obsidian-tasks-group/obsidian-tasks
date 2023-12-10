@@ -480,21 +480,21 @@ class QueryRenderChild extends MarkdownRenderChild {
         button: HTMLButtonElement,
         task: Task,
         amount: number,
-        timeUnit: moment.unitOfTime.DurationConstructor,
+        timeUnit: unitOfTime.DurationConstructor,
     ) {
-        const dateTypeToUpdate = getDateFieldToPostpone(task);
-        if (dateTypeToUpdate === null) {
+        const dateFieldToPostpone = getDateFieldToPostpone(task);
+        if (dateFieldToPostpone === null) {
             const errorMessage = '⚠️ Postponement requires a date: due, scheduled or start.';
             return new Notice(errorMessage, 10000);
         }
 
-        const { postponedDate, newTasks } = createPostponedTask(task, dateTypeToUpdate, timeUnit, amount);
+        const { postponedDate, postponedTask } = createPostponedTask(task, dateFieldToPostpone, timeUnit, amount);
 
         await replaceTaskWithTasks({
             originalTask: task,
-            newTasks,
+            newTasks: postponedTask,
         });
-        this.postponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
+        this.postponeSuccessCallback(button, dateFieldToPostpone, postponedDate);
     }
 
     private postponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
