@@ -16,12 +16,17 @@ export class SetPriority {
      * @param task
      */
     public apply(task: Task): Task[] {
-        return [
-            new Task({
-                ...task,
-                priority: this.newPriority,
-            }),
-        ];
+        if (this.isCheckedForTask(task)) {
+            // Unchanged: return the input task:
+            return [task];
+        } else {
+            return [
+                new Task({
+                    ...task,
+                    priority: this.newPriority,
+                }),
+            ];
+        }
     }
 
     /**
