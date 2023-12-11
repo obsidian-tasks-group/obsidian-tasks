@@ -1,10 +1,11 @@
 import { Priority, Task } from '../../Task';
 import { PriorityTools } from '../../lib/PriorityTools';
+import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
 /**
  * An instruction class, for editing a {@link Task} object's {@link Priority}.
  */
-export class SetPriority {
+export class SetPriority implements TaskEditingInstruction {
     readonly newPriority: Priority;
 
     constructor(priority: Priority) {
