@@ -1,4 +1,5 @@
 import { Priority, Task } from '../../Task';
+import { PriorityTools } from '../../lib/PriorityTools';
 
 /**
  * An instruction class, for editing a {@link Task} object's {@link Priority}.
@@ -21,5 +22,12 @@ export class SetPriority {
                 priority: this.newPriority,
             }),
         ];
+    }
+
+    /**
+     * Return the text to use for this instruction, in menus (and eventually, Obsidian commands)
+     */
+    public instructionDisplayName(): string {
+        return `Priority: ${PriorityTools.priorityNameUsingNormal(this.newPriority)}`;
     }
 }
