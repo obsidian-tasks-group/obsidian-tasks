@@ -338,44 +338,6 @@ describe('task line rendering - classes and data attributes', () => {
         expect(found).toBeTruthy();
     };
 
-    const testLiAttributes = async (
-        taskLine: string,
-        layoutOptions: Partial<LayoutOptions>,
-        attributes: AttributesDictionary,
-    ) => {
-        const task = fromLine({
-            line: taskLine,
-        });
-        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
-        for (const key in attributes) {
-            expect(listItem.dataset[key]).toEqual(attributes[key]);
-        }
-    };
-
-    const testHiddenComponentClasses = async (
-        taskLine: string,
-        layoutOptions: Partial<LayoutOptions>,
-        hiddenGenericClass: string,
-        attributes: AttributesDictionary,
-    ) => {
-        const task = fromLine({
-            line: taskLine,
-        });
-        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
-
-        const textSpan = getTextSpan(listItem);
-        for (const childSpan of Array.from(textSpan.children)) {
-            expect(childSpan.classList.contains(hiddenGenericClass)).toBeFalsy();
-        }
-
-        // Now verify the attributes
-        for (const key in attributes) {
-            expect(listItem.dataset[key]).toEqual(attributes[key]);
-        }
-    };
-
     it('renders priority with its correct classes', async () => {
         await testComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
@@ -540,6 +502,29 @@ describe('task line rendering - classes and data attributes', () => {
         await testComponentClasses('- [ ] Full task ⏫ 📅 2023-02-29', {}, fieldRenderer.className('dueDate'), {});
     });
 
+    const testHiddenComponentClasses = async (
+        taskLine: string,
+        layoutOptions: Partial<LayoutOptions>,
+        hiddenGenericClass: string,
+        attributes: AttributesDictionary,
+    ) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+        const listItem = await renderListItem(task, fullLayoutOptions);
+
+        const textSpan = getTextSpan(listItem);
+        for (const childSpan of Array.from(textSpan.children)) {
+            expect(childSpan.classList.contains(hiddenGenericClass)).toBeFalsy();
+        }
+
+        // Now verify the attributes
+        for (const key in attributes) {
+            expect(listItem.dataset[key]).toEqual(attributes[key]);
+        }
+    };
+
     it('does not render hidden components but sets their specific classes to the upper li element', async () => {
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
@@ -611,6 +596,21 @@ describe('task line rendering - classes and data attributes', () => {
         expect(tagSpan.classList[0]).toEqual('tag');
         expect(tagSpan.dataset.tagName).toEqual('#illegal-data-attribute');
     });
+
+    const testLiAttributes = async (
+        taskLine: string,
+        layoutOptions: Partial<LayoutOptions>,
+        attributes: AttributesDictionary,
+    ) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+        const listItem = await renderListItem(task, fullLayoutOptions);
+        for (const key in attributes) {
+            expect(listItem.dataset[key]).toEqual(attributes[key]);
+        }
+    };
 
     it('creates data attributes for custom statuses', async () => {
         await testLiAttributes(
