@@ -35,6 +35,10 @@ export class SetPriority implements TaskEditingInstruction {
     }
 }
 
+/**
+ * Return all the available instructions for editing task priorities.
+ * @todo Add instructions for increasing and decreasing the priority.
+ */
 export function allPriorityInstructions() {
     const allPriorities = [
         Priority.Highest,
