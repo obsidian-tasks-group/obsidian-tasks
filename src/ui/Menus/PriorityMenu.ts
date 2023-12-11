@@ -1,6 +1,6 @@
 import type { MenuItem } from 'obsidian';
 import { Priority, Task } from '../../Task';
-import { PriorityTools } from '../../lib/PriorityTools';
+import { SetPriority } from '../EditInstructions/PriorityInstructions';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 /**
@@ -22,11 +22,8 @@ export class PriorityMenu extends TaskEditingMenu {
     constructor(task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
-        const commonTitle = 'Priority:';
-
-        const getMenuItemCallback = (task: Task, item: MenuItem, newPriority: Priority) => {
-            const title = `${commonTitle} ${PriorityTools.priorityNameUsingNormal(newPriority)}`;
-            item.setTitle(title)
+        const getMenuItemCallback = (task: Task, item: MenuItem, newPriority: Priority, instruction: SetPriority) => {
+            item.setTitle(instruction.instructionDisplayName())
                 .setChecked(newPriority === task.priority)
                 .onClick(async () => {
                     if (newPriority !== task.priority) {
@@ -48,7 +45,8 @@ export class PriorityMenu extends TaskEditingMenu {
             Priority.Lowest,
         ];
         for (const priority of allPriorities) {
-            this.addItem((item) => getMenuItemCallback(task, item, priority));
+            const instruction = new SetPriority(priority);
+            this.addItem((item) => getMenuItemCallback(task, item, priority, instruction));
         }
     }
 }
