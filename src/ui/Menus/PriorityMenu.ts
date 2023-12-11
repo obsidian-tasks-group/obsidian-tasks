@@ -1,6 +1,6 @@
 import type { MenuItem } from 'obsidian';
-import { Priority, Task } from '../../Task';
-import { SetPriority } from '../EditInstructions/PriorityInstructions';
+import type { Task } from '../../Task';
+import { SetPriority, allPriorityInstructions } from '../EditInstructions/PriorityInstructions';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 /**
@@ -34,16 +34,7 @@ export class PriorityMenu extends TaskEditingMenu {
                 });
         };
 
-        const allPriorities = [
-            Priority.Highest,
-            Priority.High,
-            Priority.Medium,
-            Priority.None,
-            Priority.Low,
-            Priority.Lowest,
-        ];
-        for (const priority of allPriorities) {
-            const instruction = new SetPriority(priority);
+        for (const instruction of allPriorityInstructions()) {
             this.addItem((item) => getMenuItemCallback(task, item, instruction));
         }
     }
