@@ -22,7 +22,7 @@ export class PriorityMenu extends TaskEditingMenu {
     constructor(task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
-        const getMenuItemCallback = (task: Task, item: MenuItem, _newPriority: Priority, instruction: SetPriority) => {
+        const getMenuItemCallback = (task: Task, item: MenuItem, instruction: SetPriority) => {
             item.setTitle(instruction.instructionDisplayName())
                 .setChecked(instruction.isCheckedForTask(task))
                 .onClick(async () => {
@@ -44,7 +44,7 @@ export class PriorityMenu extends TaskEditingMenu {
         ];
         for (const priority of allPriorities) {
             const instruction = new SetPriority(priority);
-            this.addItem((item) => getMenuItemCallback(task, item, priority, instruction));
+            this.addItem((item) => getMenuItemCallback(task, item, instruction));
         }
     }
 }
