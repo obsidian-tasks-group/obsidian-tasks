@@ -51,3 +51,23 @@ export function postponementSuccessMessage(postponedDate: Moment, dateFieldToPos
     const postponedDateString = postponedDate?.format('DD MMM YYYY');
     return `Task's ${dateFieldToPostpone} postponed until ${postponedDateString}`;
 }
+
+export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
+    const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
+    return `ℹ️ ${buttonText} (right-click for more options)`;
+}
+
+export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
+    function capitalizeFirstLetter(word: string) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+    const updatedDateType = getDateFieldToPostpone(task)!;
+    const dateToUpdate = task[updatedDateType] as Moment;
+    const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
+
+    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+    const formattedNewDate = postponedDate.format('ddd Do MMM');
+
+    const amountOrArticle = amount > 1 ? amount : 'a';
+    return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
+}

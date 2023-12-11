@@ -16,6 +16,8 @@ import {
     type HappensDate,
     createPostponedTask,
     getDateFieldToPostpone,
+    postponeButtonTitle,
+    postponeMenuItemTitle,
     postponementSuccessMessage,
     shouldShowPostponeButton,
 } from './Scripting/Postponer';
@@ -404,10 +406,13 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
+        const amount = 1;
+        const timeUnit = 'day';
+        const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
         const button = listItem.createEl('button', {
             attr: {
                 id: 'postpone-button',
-                title: 'ℹ️ Postpone the task (right-click for more options)',
+                title: buttonTooltipText,
             },
         });
 
@@ -415,26 +420,28 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.addClasses(classNames);
         button.setText(' ⏩');
 
-        button.addEventListener('click', () => this.postponeOnClickCallback(button, task, 1, 'days'));
+        button.addEventListener('click', () => this.postponeOnClickCallback(button, task, amount, timeUnit));
 
         /** Open a context menu on right-click.
          * Give a choice of postponing for a week, month, or quarter.
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
             const menu = new Menu();
-            const commonTitle = 'Postpone for';
 
             const postponeMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
-                const amountOrArticle = amount > 1 ? amount : 'a';
-                item.setTitle(`${commonTitle} ${amountOrArticle} ${timeUnit}`).onClick(() =>
-                    this.postponeOnClickCallback(button, task, amount, timeUnit),
-                );
+                const title = postponeMenuItemTitle(task, amount, timeUnit);
+                item.setTitle(title).onClick(() => this.postponeOnClickCallback(button, task, amount, timeUnit));
             };
 
             menu.addItem((item) => postponeMenuItemCallback(item, 'days', 2));
             menu.addItem((item) => postponeMenuItemCallback(item, 'days', 3));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 4));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 5));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 6));
+            menu.addSeparator();
             menu.addItem((item) => postponeMenuItemCallback(item, 'week'));
             menu.addItem((item) => postponeMenuItemCallback(item, 'weeks', 2));
+            menu.addItem((item) => postponeMenuItemCallback(item, 'weeks', 3));
             menu.addItem((item) => postponeMenuItemCallback(item, 'month'));
 
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });

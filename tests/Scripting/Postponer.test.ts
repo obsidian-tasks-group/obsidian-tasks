@@ -7,6 +7,8 @@ import {
     type HappensDate,
     createPostponedTask,
     getDateFieldToPostpone,
+    postponeButtonTitle,
+    postponeMenuItemTitle,
     postponementSuccessMessage,
     shouldShowPostponeButton,
 } from '../../src/Scripting/Postponer';
@@ -15,6 +17,16 @@ import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
+
+const today = '2023-12-03';
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(today));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
 
 describe('postpone - date field choice', () => {
     function checkPostponeField(taskBuilder: TaskBuilder, expected: HappensDate | null) {
@@ -146,16 +158,27 @@ describe('postpone - whether to show button', () => {
     });
 });
 
+describe('postpone - UI text', () => {
+    it('should include date type and new date in button tooltip', () => {
+        const task = new TaskBuilder().dueDate(today).build();
+        expect(postponeButtonTitle(task, 1, 'day')).toEqual(
+            'ℹ️ Due in a day, on Mon 4th Dec (right-click for more options)',
+        );
+        expect(postponeButtonTitle(task, 2, 'days')).toEqual(
+            'ℹ️ Due in 2 days, on Tue 5th Dec (right-click for more options)',
+        );
+    });
+
+    it('should include date type and new date in context menu labels', () => {
+        const task = new TaskBuilder().dueDate(today).build();
+        // TODO This text is misleading if the date is already in the future.
+        //      In that case, it should still be 'Postpone'???
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Mon 4th Dec');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
+    });
+});
+
 describe('postpone - new task creation', () => {
-    beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-12-03'));
-    });
-
-    afterEach(() => {
-        jest.useRealTimers();
-    });
-
     function testPostponedTaskAndDate(task: Task, expectedDateField: HappensDate, expectedPostponedDate: string) {
         const { postponedDate, postponedTask } = createPostponedTask(task, expectedDateField, 'day', 1);
         expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
