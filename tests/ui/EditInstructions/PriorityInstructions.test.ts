@@ -1,6 +1,6 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { Priority } from '../../../src/Task';
-import { SetPriority } from '../../../src/ui/EditInstructions/PriorityInstructions';
+import { SetPriority, allPriorityInstructions } from '../../../src/ui/EditInstructions/PriorityInstructions';
 
 describe('SetPriority', () => {
     const lowPriorityTask = new TaskBuilder().priority(Priority.Low).build();
@@ -40,5 +40,17 @@ describe('SetPriority', () => {
         expect(newTasks.length).toEqual(1);
         // Expect it is the same object
         expect(Object.is(newTasks[0], highPriorityTask)).toBe(true);
+    });
+});
+
+describe('All Priority Instructions', () => {
+    it('should supply all priority instructions', () => {
+        // Arrange
+        const allInstructions = allPriorityInstructions();
+
+        // Assert
+        expect(allInstructions.length).toBe(6);
+        expect(allInstructions[0].newPriority).toBe(Priority.Highest);
+        expect(allInstructions[5].newPriority).toBe(Priority.Lowest);
     });
 });

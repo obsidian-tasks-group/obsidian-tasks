@@ -5,7 +5,7 @@ import { PriorityTools } from '../../lib/PriorityTools';
  * An instruction class, for editing a {@link Task} object's {@link Priority}.
  */
 export class SetPriority {
-    private readonly newPriority: Priority;
+    readonly newPriority: Priority;
 
     constructor(priority: Priority) {
         this.newPriority = priority;
@@ -43,4 +43,20 @@ export class SetPriority {
     public isCheckedForTask(task: Task) {
         return task.priority === this.newPriority;
     }
+}
+
+export function allPriorityInstructions() {
+    const allPriorities = [
+        Priority.Highest,
+        Priority.High,
+        Priority.Medium,
+        Priority.None,
+        Priority.Low,
+        Priority.Lowest,
+    ];
+    const instructions = [];
+    for (const priority of allPriorities) {
+        instructions.push(new SetPriority(priority));
+    }
+    return instructions;
 }
