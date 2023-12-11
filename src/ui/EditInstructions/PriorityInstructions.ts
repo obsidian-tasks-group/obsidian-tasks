@@ -30,4 +30,12 @@ export class SetPriority {
     public instructionDisplayName(): string {
         return `Priority: ${PriorityTools.priorityNameUsingNormal(this.newPriority)}`;
     }
+
+    /**
+     * Should a checkmark be shown on this instruction, for the given task.
+     * @param task
+     */
+    public isCheckedForTask(task: Task) {
+        return task.priority === this.newPriority;
+    }
 }

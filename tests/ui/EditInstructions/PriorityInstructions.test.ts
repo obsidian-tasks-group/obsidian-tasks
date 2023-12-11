@@ -5,10 +5,14 @@ import { SetPriority } from '../../../src/ui/EditInstructions/PriorityInstructio
 describe('SetPriority', () => {
     it('should provide information to set up a menu item for setting priority', () => {
         // Arrange
+        const highPriorityTask = new TaskBuilder().priority(Priority.High).build();
+        const normalPriorityTask = new TaskBuilder().priority(Priority.None).build();
         const instruction = new SetPriority(Priority.None);
 
         // Assert
         expect(instruction.instructionDisplayName()).toEqual('Priority: Normal');
+        expect(instruction.isCheckedForTask(highPriorityTask)).toEqual(false);
+        expect(instruction.isCheckedForTask(normalPriorityTask)).toEqual(true);
     });
 
     it('should edit priority', () => {
