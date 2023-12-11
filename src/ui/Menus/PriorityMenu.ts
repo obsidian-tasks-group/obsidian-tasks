@@ -24,7 +24,7 @@ export class PriorityMenu extends TaskEditingMenu {
 
         const getMenuItemCallback = (task: Task, item: MenuItem, newPriority: Priority, instruction: SetPriority) => {
             item.setTitle(instruction.instructionDisplayName())
-                .setChecked(newPriority === task.priority)
+                .setChecked(instruction.isCheckedForTask(task))
                 .onClick(async () => {
                     if (newPriority !== task.priority) {
                         const newTask = new Task({
