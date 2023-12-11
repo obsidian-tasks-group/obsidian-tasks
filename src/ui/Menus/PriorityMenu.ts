@@ -1,6 +1,7 @@
 import type { MenuItem } from 'obsidian';
 import type { Task } from '../../Task';
-import { SetPriority, allPriorityInstructions } from '../EditInstructions/PriorityInstructions';
+import { allPriorityInstructions } from '../EditInstructions/PriorityInstructions';
+import type { TaskEditingInstruction } from '../EditInstructions/TaskEditingInstruction';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 /**
@@ -22,7 +23,7 @@ export class PriorityMenu extends TaskEditingMenu {
     constructor(task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
-        const getMenuItemCallback = (task: Task, item: MenuItem, instruction: SetPriority) => {
+        const getMenuItemCallback = (task: Task, item: MenuItem, instruction: TaskEditingInstruction) => {
             item.setTitle(instruction.instructionDisplayName())
                 .setChecked(instruction.isCheckedForTask(task))
                 .onClick(async () => {
