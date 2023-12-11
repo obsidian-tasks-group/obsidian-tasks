@@ -3,10 +3,12 @@ import { Priority } from '../../../src/Task';
 import { SetPriority } from '../../../src/ui/EditInstructions/PriorityInstructions';
 
 describe('SetPriority', () => {
+    const lowPriorityTask = new TaskBuilder().priority(Priority.Low).build();
+    const normalPriorityTask = new TaskBuilder().priority(Priority.None).build();
+    const highPriorityTask = new TaskBuilder().priority(Priority.High).build();
+
     it('should provide information to set up a menu item for setting priority', () => {
         // Arrange
-        const highPriorityTask = new TaskBuilder().priority(Priority.High).build();
-        const normalPriorityTask = new TaskBuilder().priority(Priority.None).build();
         const instruction = new SetPriority(Priority.None);
 
         // Assert
@@ -17,7 +19,6 @@ describe('SetPriority', () => {
 
     it('should edit priority', () => {
         // Arrange
-        const lowPriorityTask = new TaskBuilder().priority(Priority.Low).build();
         const instruction = new SetPriority(Priority.High);
 
         // Act
