@@ -765,7 +765,7 @@ export class Task {
         }
 
         // Compare Date fields
-        args = ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate'];
+        args = Task.allDateFields();
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
@@ -785,6 +785,16 @@ export class Task {
         }
 
         return true;
+    }
+
+    public static allDateFields(): (keyof Task)[] {
+        return [
+            'createdDate' as keyof Task,
+            'startDate' as keyof Task,
+            'scheduledDate' as keyof Task,
+            'dueDate' as keyof Task,
+            'doneDate' as keyof Task,
+        ];
     }
 
     /**
