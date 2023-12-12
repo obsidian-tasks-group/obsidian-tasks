@@ -81,11 +81,9 @@ describe('StatusMenu', () => {
         todoItem.callback();
 
         // Assert
-        expect(TestableTaskSaver.taskBeingOverwritten).not.toBeUndefined();
         expect(Object.is(task, TestableTaskSaver.taskBeingOverwritten)).toEqual(true);
         expect(TestableTaskSaver.taskBeingOverwritten!.status.symbol).toEqual(' ');
 
-        expect(TestableTaskSaver.tasksBeingSaved).not.toBeUndefined();
         expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);
         expect(TestableTaskSaver.tasksBeingSaved![0].status.symbol).toEqual('-');
     });
