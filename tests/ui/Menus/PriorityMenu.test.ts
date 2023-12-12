@@ -14,12 +14,16 @@ class TestableTaskSaver {
         TestableTaskSaver.taskBeingOverwritten = originalTask;
         TestableTaskSaver.tasksBeingSaved = Array.isArray(newTasks) ? newTasks : [newTasks];
     }
+
+    public static reset() {
+        TestableTaskSaver.taskBeingOverwritten = undefined;
+        TestableTaskSaver.tasksBeingSaved = undefined;
+    }
 }
 
 describe('PriorityMenu', () => {
     beforeEach(() => {
-        TestableTaskSaver.taskBeingOverwritten = undefined;
-        TestableTaskSaver.tasksBeingSaved = undefined;
+        TestableTaskSaver.reset();
     });
 
     it('should show checkmark against the current task priority', () => {
