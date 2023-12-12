@@ -133,7 +133,7 @@ describe('postpone - whether to show button', () => {
     });
 
     it('should not show button for a task with an invalid start date', () => {
-        const task = new TaskBuilder().startDate('2023-13-01').build();
+        const task = new TaskBuilder().startDate(invalidDate).build();
 
         expect(shouldShowPostponeButton(task)).toEqual(false);
     });
@@ -157,7 +157,7 @@ describe('postpone - whether to show button', () => {
     });
 
     it('should not show button for a task with an invalid due date', () => {
-        const task = new TaskBuilder().dueDate('20233-12-03').build();
+        const task = new TaskBuilder().dueDate(invalidDate).build();
 
         expect(shouldShowPostponeButton(task)).toEqual(false);
     });
@@ -239,7 +239,7 @@ describe('postpone - postponement success message', () => {
     });
 
     it('should generate a message for an invalid date', () => {
-        const message = postponementSuccessMessage(moment('2023-13-30'), 'dueDate');
+        const message = postponementSuccessMessage(moment(invalidDate), 'dueDate');
         expect(message).toEqual("Task's dueDate postponed until Invalid date");
     });
 });
