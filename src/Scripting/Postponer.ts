@@ -1,4 +1,4 @@
-import type { Moment, unitOfTime } from 'moment';
+import moment, { type Moment, type unitOfTime } from 'moment';
 import { Task } from '../Task';
 import { TasksDate } from './TasksDate';
 
@@ -63,11 +63,21 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unit
     }
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = task[updatedDateType] as Moment;
-    const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
+    if (dateToUpdate.isSameOrBefore(moment(), 'day')) {
+        const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
 
-    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-    const formattedNewDate = postponedDate.format('ddd Do MMM');
+        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+        const formattedNewDate = postponedDate.format('ddd Do MMM');
 
-    const amountOrArticle = amount > 1 ? amount : 'a';
-    return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
+        const amountOrArticle = amount > 1 ? amount : 'a';
+        return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
+    } else {
+        const updatedDateDisplayText = updatedDateType.replace('Date', ' date');
+        const amountOrArticle = amount > 1 ? amount : 'a';
+
+        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+        const formattedNewDate = postponedDate.format('ddd Do MMM');
+        // 'Postpone due date by a day, to Tue 5th Dec')
+        return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
+    }
 }
