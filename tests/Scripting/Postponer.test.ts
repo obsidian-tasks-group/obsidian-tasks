@@ -174,24 +174,23 @@ describe('postpone - UI text', () => {
 
     it('should include date type and new date in context menu labels when due today', () => {
         const task = new TaskBuilder().dueDate(today).build();
-        // TODO This text is misleading if the date is already in the future.
-        //      In that case, it should still be 'Postpone'???
+
         expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Mon 4th Dec');
         expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
     });
 
     it('should include date type and new date in context menu labels when overdue', () => {
-        const task = new TaskBuilder().dueDate(yesterday).build();
+        const task = new TaskBuilder().scheduledDate(yesterday).build();
 
-        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Mon 4th Dec');
-        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Scheduled in a day, on Mon 4th Dec');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Scheduled in 2 days, on Tue 5th Dec');
     });
 
     it('should include date type and new date in context menu labels when due in future', () => {
-        const task = new TaskBuilder().dueDate(tomorrow).build();
+        const task = new TaskBuilder().startDate(tomorrow).build();
 
-        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Tue 5th Dec');
-        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Wed 6th Dec');
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Postpone start date by a day, to Tue 5th Dec');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Postpone start date by 2 days, to Wed 6th Dec');
     });
 });
 
