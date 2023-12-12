@@ -1,25 +1,9 @@
 import { PriorityMenu } from '../../../src/ui/Menus/PriorityMenu';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import type { Task } from '../../../src/Task';
 import { Priority } from '../../../src/Task';
-import { menuToString } from './MenuTestingHelpers';
+import { TestableTaskSaver, menuToString } from './MenuTestingHelpers';
 
 export {};
-
-class TestableTaskSaver {
-    public static taskBeingOverwritten: Task | undefined;
-    public static tasksBeingSaved: Task[] | undefined;
-
-    static async testableTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
-        TestableTaskSaver.taskBeingOverwritten = originalTask;
-        TestableTaskSaver.tasksBeingSaved = Array.isArray(newTasks) ? newTasks : [newTasks];
-    }
-
-    public static reset() {
-        TestableTaskSaver.taskBeingOverwritten = undefined;
-        TestableTaskSaver.tasksBeingSaved = undefined;
-    }
-}
 
 describe('PriorityMenu', () => {
     beforeEach(() => {
@@ -81,7 +65,7 @@ describe('PriorityMenu', () => {
         todoItem.callback();
 
         // Assert
-        // testableTaskSaver() should never have been called, so the values
+        // TestableTaskSaver.testableTaskSaver() should never have been called, so the values
         // it saves should still be undefined:
         expect(TestableTaskSaver.taskBeingOverwritten).toBeUndefined();
         expect(TestableTaskSaver.tasksBeingSaved).toBeUndefined();
