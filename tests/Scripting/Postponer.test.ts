@@ -219,7 +219,7 @@ describe('postpone - new task creation', () => {
         testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
     });
 
-    it.failing('should postpone a task scheduled today to tomorrow, when the scheduled date is inferred', () => {
+    it('should postpone a task scheduled today to tomorrow, when the scheduled date is inferred', () => {
         const task = new TaskBuilder().scheduledDate('2023-12-03').scheduledDateIsInferred(true).build();
         testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
     });
