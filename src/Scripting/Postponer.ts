@@ -1,4 +1,5 @@
 import type { Moment, unitOfTime } from 'moment';
+import { DateFallback } from '../DateFallback';
 import { Task } from '../Task';
 import { TasksDate } from './TasksDate';
 
@@ -42,7 +43,12 @@ export function createPostponedTask(
 ) {
     const dateToPostpone = task[dateFieldToPostpone];
     const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
-    const postponedTask = new Task({ ...task, [dateFieldToPostpone]: postponedDate });
+    const postponedTask = DateFallback.removeInferredStatusIfNeeded(task, [
+        new Task({
+            ...task,
+            [dateFieldToPostpone]: postponedDate,
+        }),
+    ])[0];
     return { postponedDate, postponedTask };
 }
 
