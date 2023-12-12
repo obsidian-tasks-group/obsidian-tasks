@@ -7,21 +7,19 @@ import { menuToString } from './MenuTestingHelpers';
 export {};
 
 class TestableTaskSaver {
-    public taskBeingOverwritten: Task | undefined;
-    public tasksBeingSaved: Task[] | undefined;
+    public static taskBeingOverwritten: Task | undefined;
+    public static tasksBeingSaved: Task[] | undefined;
+
+    static async testableTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
+        TestableTaskSaver.taskBeingOverwritten = originalTask;
+        TestableTaskSaver.tasksBeingSaved = Array.isArray(newTasks) ? newTasks : [newTasks];
+    }
 }
 
 describe('PriorityMenu', () => {
-    const taskSaver = new TestableTaskSaver();
-
-    async function testableTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
-        taskSaver.taskBeingOverwritten = originalTask;
-        taskSaver.tasksBeingSaved = Array.isArray(newTasks) ? newTasks : [newTasks];
-    }
-
     beforeEach(() => {
-        taskSaver.taskBeingOverwritten = undefined;
-        taskSaver.tasksBeingSaved = undefined;
+        TestableTaskSaver.taskBeingOverwritten = undefined;
+        TestableTaskSaver.tasksBeingSaved = undefined;
     });
 
     it('should show checkmark against the current task priority', () => {
@@ -47,7 +45,7 @@ describe('PriorityMenu', () => {
     it('should modify task, if different priority selected', () => {
         // Arrange
         const task = new TaskBuilder().build();
-        const menu = new PriorityMenu(task, testableTaskSaver);
+        const menu = new PriorityMenu(task, TestableTaskSaver.testableTaskSaver);
 
         // Act
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'PriorityMenu'.
@@ -56,13 +54,13 @@ describe('PriorityMenu', () => {
         todoItem.callback();
 
         // Assert
-        expect(taskSaver.taskBeingOverwritten).not.toBeUndefined();
-        expect(Object.is(task, taskSaver.taskBeingOverwritten)).toEqual(true);
-        expect(taskSaver.taskBeingOverwritten!.priority).toEqual(Priority.None);
+        expect(TestableTaskSaver.taskBeingOverwritten).not.toBeUndefined();
+        expect(Object.is(task, TestableTaskSaver.taskBeingOverwritten)).toEqual(true);
+        expect(TestableTaskSaver.taskBeingOverwritten!.priority).toEqual(Priority.None);
 
-        expect(taskSaver.tasksBeingSaved).not.toBeUndefined();
-        expect(taskSaver.tasksBeingSaved!.length).toEqual(1);
-        expect(taskSaver.tasksBeingSaved![0].priority).toEqual(Priority.Highest);
+        expect(TestableTaskSaver.tasksBeingSaved).not.toBeUndefined();
+        expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);
+        expect(TestableTaskSaver.tasksBeingSaved![0].priority).toEqual(Priority.Highest);
     });
 
     it('should not modify task, if current priority selected', () => {
@@ -70,7 +68,7 @@ describe('PriorityMenu', () => {
         const task = new TaskBuilder().priority(Priority.Highest).build();
 
         // Act
-        const menu = new PriorityMenu(task, testableTaskSaver);
+        const menu = new PriorityMenu(task, TestableTaskSaver.testableTaskSaver);
 
         // Act
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'PriorityMenu'.
@@ -81,7 +79,7 @@ describe('PriorityMenu', () => {
         // Assert
         // testableTaskSaver() should never have been called, so the values
         // it saves should still be undefined:
-        expect(taskSaver.taskBeingOverwritten).toBeUndefined();
-        expect(taskSaver.tasksBeingSaved).toBeUndefined();
+        expect(TestableTaskSaver.taskBeingOverwritten).toBeUndefined();
+        expect(TestableTaskSaver.tasksBeingSaved).toBeUndefined();
     });
 });
