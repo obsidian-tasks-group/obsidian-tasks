@@ -1,4 +1,4 @@
-import moment, { type Moment, type unitOfTime } from 'moment';
+import type { Moment, unitOfTime } from 'moment';
 import { Task } from '../Task';
 import { TasksDate } from './TasksDate';
 
@@ -69,7 +69,7 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unit
     const formattedNewDate = postponedDate.format('ddd Do MMM');
 
     const amountOrArticle = amount > 1 ? amount : 'a';
-    if (dateToUpdate.isSameOrBefore(moment(), 'day')) {
+    if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
         const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
         return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
     } else {
