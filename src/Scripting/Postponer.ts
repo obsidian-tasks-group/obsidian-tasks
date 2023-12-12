@@ -61,23 +61,19 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unit
     function capitalizeFirstLetter(word: string) {
         return word.charAt(0).toUpperCase() + word.slice(1);
     }
+
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = task[updatedDateType] as Moment;
+
+    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+    const formattedNewDate = postponedDate.format('ddd Do MMM');
+
+    const amountOrArticle = amount > 1 ? amount : 'a';
     if (dateToUpdate.isSameOrBefore(moment(), 'day')) {
         const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
-
-        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-        const formattedNewDate = postponedDate.format('ddd Do MMM');
-
-        const amountOrArticle = amount > 1 ? amount : 'a';
         return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
     } else {
         const updatedDateDisplayText = updatedDateType.replace('Date', ' date');
-        const amountOrArticle = amount > 1 ? amount : 'a';
-
-        const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-        const formattedNewDate = postponedDate.format('ddd Do MMM');
-        // 'Postpone due date by a day, to Tue 5th Dec')
         return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
     }
 }
