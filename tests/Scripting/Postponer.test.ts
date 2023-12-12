@@ -161,6 +161,12 @@ describe('postpone - whether to show button', () => {
 
         expect(shouldShowPostponeButton(task)).toEqual(false);
     });
+
+    it('should not show button for a task with an invalid created date', () => {
+        const task = new TaskBuilder().createdDate(invalidDate).scheduledDate(today).build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(false);
+    });
 });
 
 describe('postpone - UI text', () => {
