@@ -22,6 +22,8 @@ const yesterday = '2023-12-02';
 const today = '2023-12-03';
 const tomorrow = '2023-12-04';
 
+const invalidDate = '2023-12-36';
+
 beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date(today));
@@ -143,7 +145,7 @@ describe('postpone - whether to show button', () => {
     });
 
     it('should not show button for a task with an invalid scheduled date', () => {
-        const task = new TaskBuilder().scheduledDate('2023-12-36').build();
+        const task = new TaskBuilder().scheduledDate(invalidDate).build();
 
         expect(shouldShowPostponeButton(task)).toEqual(false);
     });
