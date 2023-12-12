@@ -42,11 +42,9 @@ describe('PriorityMenu', () => {
         todoItem.callback();
 
         // Assert
-        expect(TestableTaskSaver.taskBeingOverwritten).not.toBeUndefined();
         expect(Object.is(task, TestableTaskSaver.taskBeingOverwritten)).toEqual(true);
         expect(TestableTaskSaver.taskBeingOverwritten!.priority).toEqual(Priority.None);
 
-        expect(TestableTaskSaver.tasksBeingSaved).not.toBeUndefined();
         expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);
         expect(TestableTaskSaver.tasksBeingSaved![0].priority).toEqual(Priority.Highest);
     });
