@@ -1,24 +1,18 @@
 import { StatusMenu } from '../../../src/ui/Menus/StatusMenu';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import type { MenuItem } from '../../__mocks__/obsidian';
 import { StatusRegistry } from '../../../src/StatusRegistry';
 import { StatusSettings } from '../../../src/Config/StatusSettings';
 import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
 import { Status } from '../../../src/Status';
 import type { Task } from '../../../src/Task';
+import { menuToString } from './MenuTestingHelpers';
 
 export {};
 
 afterEach(() => {
     resetSettings();
 });
-
-function menuToString(menu: StatusMenu) {
-    // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
-    const items: MenuItem[] = menu.items;
-    return '\n' + items.map((item) => `${item.checked ? 'x' : ' '} ${item.title}`).join('\n');
-}
 
 describe('StatusMenu', () => {
     let taskBeingOverwritten: Task | undefined;
