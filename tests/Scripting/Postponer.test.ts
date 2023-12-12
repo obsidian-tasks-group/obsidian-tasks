@@ -18,7 +18,10 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
+const yesterday = '2023-12-02';
 const today = '2023-12-03';
+const tomorrow = '2023-12-04';
+
 beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date(today));
@@ -169,12 +172,26 @@ describe('postpone - UI text', () => {
         );
     });
 
-    it('should include date type and new date in context menu labels', () => {
+    it('should include date type and new date in context menu labels when due today', () => {
         const task = new TaskBuilder().dueDate(today).build();
         // TODO This text is misleading if the date is already in the future.
         //      In that case, it should still be 'Postpone'???
         expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Mon 4th Dec');
         expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
+    });
+
+    it('should include date type and new date in context menu labels when overdue', () => {
+        const task = new TaskBuilder().dueDate(yesterday).build();
+
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Mon 4th Dec');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
+    });
+
+    it('should include date type and new date in context menu labels when due in future', () => {
+        const task = new TaskBuilder().dueDate(tomorrow).build();
+
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Tue 5th Dec');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Wed 6th Dec');
     });
 });
 
