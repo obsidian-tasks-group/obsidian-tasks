@@ -6,18 +6,22 @@ import { menuToString } from './MenuTestingHelpers';
 
 export {};
 
+class TestableTaskSaver {
+    public taskBeingOverwritten: Task | undefined;
+    public tasksBeingSaved: Task[] | undefined;
+}
+
 describe('PriorityMenu', () => {
-    let taskBeingOverwritten: Task | undefined;
-    let tasksBeingSaved: Task[] | undefined;
+    const taskSaver = new TestableTaskSaver();
 
     async function testableTaskSaver(originalTask: Task, newTasks: Task | Task[]) {
-        taskBeingOverwritten = originalTask;
-        tasksBeingSaved = Array.isArray(newTasks) ? newTasks : [newTasks];
+        taskSaver.taskBeingOverwritten = originalTask;
+        taskSaver.tasksBeingSaved = Array.isArray(newTasks) ? newTasks : [newTasks];
     }
 
     beforeEach(() => {
-        taskBeingOverwritten = undefined;
-        tasksBeingSaved = undefined;
+        taskSaver.taskBeingOverwritten = undefined;
+        taskSaver.tasksBeingSaved = undefined;
     });
 
     it('should show checkmark against the current task priority', () => {
@@ -52,13 +56,13 @@ describe('PriorityMenu', () => {
         todoItem.callback();
 
         // Assert
-        expect(taskBeingOverwritten).not.toBeUndefined();
-        expect(Object.is(task, taskBeingOverwritten)).toEqual(true);
-        expect(taskBeingOverwritten!.priority).toEqual(Priority.None);
+        expect(taskSaver.taskBeingOverwritten).not.toBeUndefined();
+        expect(Object.is(task, taskSaver.taskBeingOverwritten)).toEqual(true);
+        expect(taskSaver.taskBeingOverwritten!.priority).toEqual(Priority.None);
 
-        expect(tasksBeingSaved).not.toBeUndefined();
-        expect(tasksBeingSaved!.length).toEqual(1);
-        expect(tasksBeingSaved![0].priority).toEqual(Priority.Highest);
+        expect(taskSaver.tasksBeingSaved).not.toBeUndefined();
+        expect(taskSaver.tasksBeingSaved!.length).toEqual(1);
+        expect(taskSaver.tasksBeingSaved![0].priority).toEqual(Priority.Highest);
     });
 
     it('should not modify task, if current priority selected', () => {
@@ -77,7 +81,7 @@ describe('PriorityMenu', () => {
         // Assert
         // testableTaskSaver() should never have been called, so the values
         // it saves should still be undefined:
-        expect(taskBeingOverwritten).toBeUndefined();
-        expect(tasksBeingSaved).toBeUndefined();
+        expect(taskSaver.taskBeingOverwritten).toBeUndefined();
+        expect(taskSaver.tasksBeingSaved).toBeUndefined();
     });
 });
