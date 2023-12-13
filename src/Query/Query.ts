@@ -332,7 +332,7 @@ Problem line: "${line}"`;
                     this._layoutOptions.hideId = hide;
                     break;
                 case 'depends on':
-                    this._layoutOptions.hideDependsOn = hide;
+                    this._layoutOptions.hideBlockedBy = hide;
                     break;
                 default:
                     this.setError('do not understand hide/show option', line);

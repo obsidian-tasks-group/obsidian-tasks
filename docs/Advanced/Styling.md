@@ -82,7 +82,7 @@ The generic classes are:
 - `task-done`
 - `task-recurring`
 - `task-id`
-- `task-dependsOn`
+- `task-blockedBy`
 
 In addition to the generic classes, there are [**data attributes**](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) that represent the content of the various task components.
 

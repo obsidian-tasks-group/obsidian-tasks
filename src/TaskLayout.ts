@@ -17,7 +17,7 @@ export class LayoutOptions {
     hideUrgency: boolean = true;
     hideTags: boolean = false;
     hideId: boolean = false;
-    hideDependsOn: boolean = false;
+    hideBlockedBy: boolean = false;
     shortMode: boolean = false;
     explainQuery: boolean = false;
 }
@@ -32,7 +32,7 @@ export type TaskLayoutComponent =
     | 'scheduledDate'
     | 'dueDate'
     | 'doneDate'
-    | 'dependsOn'
+    | 'blockedBy'
     | 'id'
     | 'blockLink';
 
@@ -52,7 +52,7 @@ export class TaskLayout {
         'scheduledDate',
         'dueDate',
         'doneDate',
-        'dependsOn',
+        'blockedBy',
         'id',
         'blockLink',
     ];
@@ -83,7 +83,7 @@ export class TaskLayout {
             [this.options.hideScheduledDate, 'scheduledDate'],
             [this.options.hideDueDate, 'dueDate'],
             [this.options.hideDoneDate, 'doneDate'],
-            [this.options.hideDependsOn, 'dependsOn'],
+            [this.options.hideBlockedBy, 'blockedBy'],
             [this.options.hideId, 'id'],
         ];
         for (const [hide, component] of componentsToHideAndGenerateClasses) {

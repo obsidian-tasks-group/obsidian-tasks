@@ -20,7 +20,7 @@ export type TaskDetails = Writeable<
         | 'dueDate'
         | 'doneDate'
         | 'recurrence'
-        | 'dependsOn'
+        | 'blockedBy'
         | 'id'
         | 'tags'
     >

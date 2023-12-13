@@ -16,7 +16,7 @@ describe('TaskLayout tests', () => {
             scheduledDate
             dueDate
             doneDate
-            dependsOn
+            blockedBy
             id
             blockLink"
         `);
@@ -47,7 +47,7 @@ describe('TaskLayout tests', () => {
             scheduledDate
             dueDate
             doneDate
-            dependsOn
+            blockedBy
             id"
         `);
         expect(taskLayout.taskListHiddenClasses.join('\n')).toMatchInlineSnapshot(`
@@ -58,7 +58,7 @@ describe('TaskLayout tests', () => {
             tasks-layout-hide-scheduledDate
             tasks-layout-hide-dueDate
             tasks-layout-hide-doneDate
-            tasks-layout-hide-dependsOn
+            tasks-layout-hide-blockedBy
             tasks-layout-hide-id
             tasks-layout-hide-tags
             tasks-layout-hide-backlinks

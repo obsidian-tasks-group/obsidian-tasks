@@ -78,7 +78,7 @@ path includes {{query.file.path}}
 explain
 ```
 
-### Hide dependsOn
+### Hide blockedBy
 
 ```tasks
 hide depends on

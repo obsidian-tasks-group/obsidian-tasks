@@ -28,7 +28,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly doneDateSymbol: string;
     readonly recurrenceSymbol: string;
     readonly idSymbol: string;
-    readonly dependsOnSymbol: string;
+    readonly blockedBySymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
@@ -38,7 +38,7 @@ export interface DefaultTaskSerializerSymbols {
         doneDateRegex: RegExp;
         recurrenceRegex: RegExp;
         idRegex: RegExp;
-        dependsOnRegex: RegExp;
+        blockedByRegex: RegExp;
     };
 }
 
@@ -62,7 +62,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
     recurrenceSymbol: '🔁',
-    dependsOnSymbol: '⤵️',
+    blockedBySymbol: '⤵️',
     idSymbol: '🆔',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
@@ -74,7 +74,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        dependsOnRegex: /⤵️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
+        blockedByRegex: /⤵️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
         idRegex: /🆔 *([a-z0-9]+)$/iu,
     },
 } as const;
@@ -110,7 +110,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDateSymbol,
             recurrenceSymbol,
             dueDateSymbol,
-            dependsOnSymbol,
+            blockedBySymbol,
             idSymbol,
         } = this.symbols;
 
@@ -164,10 +164,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return layout.options.shortMode
                     ? ' ' + recurrenceSymbol
                     : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
-            case 'dependsOn': {
-                if (task.dependsOn.length === 0) return '';
-                let dependsString = ' ' + dependsOnSymbol + ' ';
-                task.dependsOn.forEach((depends) => {
+            case 'blockedBy': {
+                if (task.blockedBy.length === 0) return '';
+                let dependsString = ' ' + blockedBySymbol + ' ';
+                task.blockedBy.forEach((depends) => {
                     dependsString += depends + ',';
                 });
                 return dependsString.slice(0, -1);
@@ -231,7 +231,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
         let id: string = '';
-        let dependsOn: string[] | [] = [];
+        let blockedBy: string[] | [] = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
@@ -314,11 +314,11 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 matched = true;
             }
 
-            const dependsOnMatch = line.match(TaskFormatRegularExpressions.dependsOnRegex);
+            const blockedByMatch = line.match(TaskFormatRegularExpressions.blockedByRegex);
 
-            if (dependsOnMatch != null) {
-                line = line.replace(TaskFormatRegularExpressions.dependsOnRegex, '').trim();
-                dependsOn = dependsOnMatch[1]
+            if (blockedByMatch != null) {
+                line = line.replace(TaskFormatRegularExpressions.blockedByRegex, '').trim();
+                blockedBy = blockedByMatch[1]
                     .replace(' ', '')
                     .split(',')
                     .filter((item) => item !== '');
@@ -354,7 +354,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDate,
             recurrence,
             id,
-            dependsOn,
+            blockedBy,
             tags: Task.extractHashtags(line),
         };
     }

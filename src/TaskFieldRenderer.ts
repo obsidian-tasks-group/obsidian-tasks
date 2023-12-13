@@ -149,8 +149,8 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),
 
-    dependsOn: new TaskFieldHTMLData(
-        'task-dependsOn',
+    blockedBy: new TaskFieldHTMLData(
+        'task-blockedBy',
         TaskFieldHTMLData.noAttributeName,
         TaskFieldHTMLData.noAttributeValueCalculator,
     ),

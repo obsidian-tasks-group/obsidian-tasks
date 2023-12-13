@@ -7,7 +7,7 @@ describe('blocking', () => {
     const notBlocking = new TaskBuilder().build();
     const child = new TaskBuilder().id('12345').build();
     const childWithoutParent = new TaskBuilder().id('23456').build();
-    const parent = new TaskBuilder().dependsOn(['12345']).build();
+    const parent = new TaskBuilder().blockedBy(['12345']).build();
     const allTasks = [notBlocking, child, childWithoutParent, parent];
 
     const isBlocking = new BlockingField().createFilterOrErrorMessage('is blocking');
@@ -24,9 +24,9 @@ describe('blocking', () => {
         const id1 = '1';
         const id2 = '2';
         const id3 = '3';
-        const task1 = new TaskBuilder().id(id1).dependsOn([id2]).build();
-        const task2 = new TaskBuilder().id(id2).dependsOn([id3]).build();
-        const task3 = new TaskBuilder().id(id3).dependsOn([id1]).build();
+        const task1 = new TaskBuilder().id(id1).blockedBy([id2]).build();
+        const task2 = new TaskBuilder().id(id2).blockedBy([id3]).build();
+        const task3 = new TaskBuilder().id(id3).blockedBy([id1]).build();
         const allTasks = [task1, task2, task3];
 
         expect(isBlocking).toMatchTaskInTaskList(task1, allTasks);
@@ -37,7 +37,7 @@ describe('blocking', () => {
     it('should work with Boolean filters', function () {
         const id = 'abc';
         const task1 = new TaskBuilder().id(id).build();
-        const task2 = new TaskBuilder().dependsOn([id]).build();
+        const task2 = new TaskBuilder().blockedBy([id]).build();
         const allTasks = [task1, task2];
 
         const booleanFilter = new BooleanField().createFilterOrErrorMessage('NOT ( NOT ( is blocking ) )');
@@ -54,7 +54,7 @@ describe('is not blocked', () => {
     const blocking = new TaskBuilder().id(blockingId).build();
 
     it('should hide blocked tasks', () => {
-        const blocked = new TaskBuilder().dependsOn([blockingId]).build();
+        const blocked = new TaskBuilder().blockedBy([blockingId]).build();
         const allTasks = [blocking, blocked];
 
         expect(isNotBlocked).toBeValid();
@@ -66,9 +66,9 @@ describe('is not blocked', () => {
         const blockingCompletedId = 'def';
         const blockingCompleted = new TaskBuilder().id(blockingCompletedId).status(Status.DONE).build();
 
-        const blockedByIncomplete = new TaskBuilder().dependsOn([blockingId]).build();
-        const blockedByComplete = new TaskBuilder().dependsOn([blockingCompletedId]).build();
-        const blockedByAll = new TaskBuilder().dependsOn([blockingId, blockingCompletedId]).build();
+        const blockedByIncomplete = new TaskBuilder().blockedBy([blockingId]).build();
+        const blockedByComplete = new TaskBuilder().blockedBy([blockingCompletedId]).build();
+        const blockedByAll = new TaskBuilder().blockedBy([blockingId, blockingCompletedId]).build();
 
         const allTasks = [blocking, blockedByIncomplete, blockedByComplete, blockedByAll];
 
