@@ -235,7 +235,7 @@ describe('task line rendering', () => {
 
     it('renders without depends on', async () => {
         await testLayoutOptions(
-            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ⤵️ 12345',
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ⛔️ 12345',
             { hideBlockedBy: true },
             'Full task',
             [' ⏫', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
@@ -391,7 +391,12 @@ describe('task line rendering', () => {
 
     it('renders dependency fields with their correct classes', async () => {
         await testComponentClasses('- [ ] Minimal task 🆔 g7317o', {}, fieldRenderer.className('id'), {});
-        await testComponentClasses('- [ ] Minimal task ⤵️ ya44g5,hry475', {}, fieldRenderer.className('blockedBy'), {});
+        await testComponentClasses(
+            '- [ ] Minimal task ⛔️ ya44g5,hry475',
+            {},
+            fieldRenderer.className('blockedBy'),
+            {},
+        );
     });
 
     it('renders recurrence with its correct classes', async () => {

@@ -34,7 +34,7 @@ By implementing either of these methods, the task list is updated to reflect the
 
 ```text
 - [ ] Build a first draft 🆔 4ijuhy
-- [ ] Test with users ⤵️ 4ijuhy
+- [ ] Test with users ⛔️ 4ijuhy
 ```
 
 Then, if the query `is not blocked` is used
@@ -53,7 +53,7 @@ Until this task is marked as complete, at which time Obsidian Tasks sees that 'T
 
 ```text
 - [x] Build a first draft 🆔 4ijuhy
-- [ ] Test with users ⤵️ 4ijuhyz
+- [ ] Test with users ⛔️ 4ijuhyz
 ```
 
 ## Nomenclature

@@ -62,7 +62,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
     recurrenceSymbol: '🔁',
-    blockedBySymbol: '⤵️',
+    blockedBySymbol: '⛔️',
     idSymbol: '🆔',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
@@ -74,7 +74,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        blockedByRegex: /⤵️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
+        blockedByRegex: /⛔️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
         idRegex: /🆔 *([a-z0-9]+)$/iu,
     },
 } as const;
