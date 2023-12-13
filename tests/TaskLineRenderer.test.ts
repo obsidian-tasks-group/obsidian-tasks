@@ -76,6 +76,12 @@ function getOtherLayoutComponents(listItem: HTMLElement): string[] {
     return components;
 }
 
+afterEach(() => {
+    GlobalFilter.getInstance().reset();
+    GlobalFilter.getInstance().setRemoveGlobalFilter(false);
+    resetSettings();
+});
+
 describe('task line rendering - HTML', () => {
     it('should render only one List Item for the UL and return it with renderTaskLine()', async () => {
         const ulElement = document.createElement('ul');
@@ -132,11 +138,6 @@ describe('task line rendering - HTML', () => {
 });
 
 describe('task line rendering - global filter', () => {
-    afterEach(() => {
-        GlobalFilter.getInstance().reset();
-        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
-    });
-
     const getDescriptionTest = async (taskLine: string) => {
         const task = fromLine({
             line: taskLine,
@@ -290,10 +291,6 @@ describe('task line rendering - layout options', () => {
 });
 
 describe('task line rendering - debug info rendering', () => {
-    afterEach(() => {
-        resetSettings();
-    });
-
     it('renders debug info if requested', async () => {
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(false, true) });
