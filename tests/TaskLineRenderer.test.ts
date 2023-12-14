@@ -68,7 +68,8 @@ function getDescriptionText(listItem: HTMLElement) {
  */
 function getOtherLayoutComponents(listItem: HTMLElement): string[] {
     const textSpan = getTextSpan(listItem);
-    const components: string[] = [];
+    const components: string[] = [getDescriptionText(listItem)];
+
     for (const childSpan of Array.from(textSpan.children)) {
         if (childSpan.classList.contains(fieldRenderer.className('description'))) continue;
         if (childSpan?.textContent) components.push(childSpan.textContent);
@@ -179,9 +180,8 @@ describe('task line rendering - layout options', () => {
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
-        const renderedDescription = getDescriptionText(listItem);
         const renderedComponents = getOtherLayoutComponents(listItem);
-        expect([renderedDescription, ...renderedComponents]).toEqual([_expectedDescription, ...expectedComponents]);
+        expect(renderedComponents).toEqual([_expectedDescription, ...expectedComponents]);
     };
 
     it('renders correctly with the default layout options', async () => {
