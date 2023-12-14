@@ -34,7 +34,7 @@ jobs:
         run: yarn run test
 
       - name: Archive verified build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-verified-windows
           path: |
