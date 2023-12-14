@@ -172,7 +172,6 @@ describe('task line rendering - layout options', () => {
     const testLayoutOptions = async (
         taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
-        _expectedDescription: string,
         expectedComponents: string[],
     ) => {
         const task = fromLine({
@@ -185,19 +184,20 @@ describe('task line rendering - layout options', () => {
     };
 
     it('renders correctly with the default layout options', async () => {
-        await testLayoutOptions(
-            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            {},
+        await testLayoutOptions('- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day', {}, [
             'Full task',
-            ['Full task', ' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
-        );
+            ' ⏫',
+            ' 🔁 every day',
+            ' 🛫 2022-07-04',
+            ' ⏳ 2022-07-03',
+            ' 📅 2022-07-02',
+        ]);
     });
 
     it('renders without priority', async () => {
         await testLayoutOptions(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hidePriority: true },
-            'Full task',
             ['Full task', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
         );
     });
@@ -206,7 +206,6 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
             { hideCreatedDate: true },
-            'Full task',
             ['Full task', ' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
         );
     });
@@ -215,7 +214,6 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideStartDate: true },
-            'Full task',
             ['Full task', ' ⏫', ' 🔁 every day', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
         );
     });
@@ -224,7 +222,6 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideScheduledDate: true },
-            'Full task',
             ['Full task', ' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' 📅 2022-07-02'],
         );
     });
@@ -233,7 +230,6 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideDueDate: true },
-            'Full task',
             ['Full task', ' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03'],
         );
     });
@@ -242,7 +238,6 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideRecurrenceRule: true },
-            'Full task',
             ['Full task', ' ⏫', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
         );
     });
@@ -251,7 +246,6 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(
             '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
             {},
-            'Full task',
             [
                 'Full task',
                 ' ⏫',
@@ -269,7 +263,6 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(
             '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
             { hideDoneDate: true },
-            'Full task',
             [
                 'Full task',
                 ' ⏫',
@@ -283,19 +276,17 @@ describe('task line rendering - layout options', () => {
     });
 
     it('writes a placeholder message if a date is invalid', async () => {
-        await testLayoutOptions('- [ ] Task with invalid due date 📅 2023-13-02', {}, 'Task with invalid due date', [
+        await testLayoutOptions('- [ ] Task with invalid due date 📅 2023-13-02', {}, [
             'Task with invalid due date',
             ' 📅 Invalid date',
         ]);
     });
 
     it('standardise the recurrence rule, even if the rule is invalid', async () => {
-        await testLayoutOptions(
-            '- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd',
-            {},
+        await testLayoutOptions('- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd', {}, [
             'Task with invalid recurrence rule',
-            ['Task with invalid recurrence rule', ' 🔁 every month on the 32th'],
-        );
+            ' 🔁 every month on the 32th',
+        ]);
     });
 });
 
