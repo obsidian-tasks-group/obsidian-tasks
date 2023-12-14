@@ -67,9 +67,9 @@ function getDescriptionText(listItem: HTMLElement) {
  * Returns an array with the components of a List Item as strings.
  */
 function getListItemComponents(listItem: HTMLElement): string[] {
-    const textSpan = getTextSpan(listItem);
     const components: string[] = [getDescriptionText(listItem)];
 
+    const textSpan = getTextSpan(listItem);
     for (const childSpan of Array.from(textSpan.children)) {
         if (childSpan.classList.contains(fieldRenderer.className('description'))) continue;
         if (childSpan?.textContent) components.push(childSpan.textContent);
