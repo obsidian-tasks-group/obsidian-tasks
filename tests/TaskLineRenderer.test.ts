@@ -181,8 +181,7 @@ describe('task line rendering - layout options', () => {
         const listItem = await renderListItem(task, fullLayoutOptions);
         const renderedDescription = getDescriptionText(listItem);
         const renderedComponents = getOtherLayoutComponents(listItem);
-        expect(renderedDescription).toEqual(expectedDescription);
-        expect(renderedComponents).toEqual(expectedComponents);
+        expect([renderedDescription, ...renderedComponents]).toEqual([expectedDescription, ...expectedComponents]);
     };
 
     it('renders correctly with the default layout options', async () => {
