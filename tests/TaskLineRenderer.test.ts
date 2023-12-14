@@ -72,7 +72,9 @@ function getListItemComponents(listItem: HTMLElement): string[] {
     const textSpan = getTextSpan(listItem);
     for (const childSpan of Array.from(textSpan.children)) {
         if (childSpan.classList.contains(fieldRenderer.className('description'))) continue;
-        if (childSpan.textContent) components.push(childSpan.textContent);
+        if (childSpan.textContent) {
+            components.push(childSpan.textContent);
+        }
     }
     return components;
 }
