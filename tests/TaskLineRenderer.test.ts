@@ -63,10 +63,10 @@ function getDescriptionText(listItem: HTMLElement) {
     return (textSpan.children[0].children[0] as HTMLElement).innerText;
 }
 
-/*
- * Returns a list of the task components that are not the description, as strings.
+/**
+ * Returns an array with the components of a List Item as strings.
  */
-function getOtherLayoutComponents(listItem: HTMLElement): string[] {
+function getListItemComponents(listItem: HTMLElement): string[] {
     const textSpan = getTextSpan(listItem);
     const components: string[] = [getDescriptionText(listItem)];
 
@@ -179,7 +179,7 @@ describe('task line rendering - layout options', () => {
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
-        const renderedComponents = getOtherLayoutComponents(listItem);
+        const renderedComponents = getListItemComponents(listItem);
         expect(renderedComponents).toEqual(expectedComponents);
     };
 
