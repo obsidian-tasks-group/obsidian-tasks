@@ -1151,6 +1151,34 @@ describe('toggle done', () => {
     });
 });
 
+describe('handle new status', () => {
+    beforeAll(() => {
+        sampleStatusesForToggling.forEach((s) => {
+            StatusRegistry.getInstance().add(Status.createFromImportedValue(s));
+        });
+    });
+
+    afterAll(() => {
+        StatusRegistry.getInstance().resetToDefaultStatuses();
+    });
+
+    // Note: We only need to transitions which are not covered by the standard 'toggle done' tests above.
+
+    it('should not create a new task, if the status is unchanged', () => {
+        const task = fromLine({ line: '- [!] An important task' });
+        const newTasks = task.handleNewStatus(StatusRegistry.getInstance().bySymbol('!'));
+
+        expect(newTasks.length).toEqual(1);
+        expect(Object.is(task, newTasks[0])).toEqual(true);
+    });
+
+    // TODO should remove the done date, if going from DONE to CANCELLED
+
+    // TODO should not change the done date, if changing from one DONE status to another
+
+    // TODO should not create new recurrence if converting from one DONE status to another
+});
+
 describe('created dates on recurring task', () => {
     beforeEach(() => {
         jest.useFakeTimers();
