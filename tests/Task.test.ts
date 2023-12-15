@@ -1164,12 +1164,21 @@ describe('handle new status', () => {
 
     // Note: We only need to transitions which are not covered by the standard 'toggle done' tests above.
 
-    it('should not create a new task, if the status is unchanged', () => {
+    it('should not create a new task, if the new status is the same object', () => {
         const task = fromLine({ line: '- [!] An important task' });
         const newTasks = task.handleNewStatus(StatusRegistry.getInstance().bySymbol('!'));
 
         expect(newTasks.length).toEqual(1);
         expect(Object.is(task, newTasks[0])).toEqual(true);
+    });
+
+    it('should create a new task, if the status symbol is unchanged but represents a different behaviour', () => {
+        const task = fromLine({ line: '- [!] An important task' });
+        const newStatus = Status.createFromImportedValue(['!', 'a different status', 'D', 'TODO']);
+        const newTasks = task.handleNewStatus(newStatus);
+
+        expect(newTasks.length).toEqual(1);
+        expect(Object.is(task, newTasks[0])).toEqual(false);
     });
 
     // TODO should remove the done date, if going from DONE to CANCELLED

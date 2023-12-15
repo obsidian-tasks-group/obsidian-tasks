@@ -384,7 +384,7 @@ export class Task {
     }
 
     public handleNewStatus(newStatus: Status): Task[] {
-        if (newStatus.symbol === this.status.symbol) {
+        if (newStatus === this.status) {
             // There is no need to create a new Task object with the same symbol.
             return [this];
         }
