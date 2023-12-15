@@ -383,7 +383,12 @@ export class Task {
         return newTasks;
     }
 
-    private handleNewStatus(newStatus: Status): Task[] {
+    public handleNewStatus(newStatus: Status): Task[] {
+        if (newStatus.symbol === this.status.symbol) {
+            // There is no need to create a new Task object with the same symbol.
+            return [this];
+        }
+
         let newDoneDate = null;
 
         let nextOccurrence: {
