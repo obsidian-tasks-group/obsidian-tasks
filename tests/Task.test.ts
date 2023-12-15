@@ -19,6 +19,7 @@ window.moment = moment;
 afterEach(() => {
     jest.useRealTimers();
     resetSettings();
+    GlobalFilter.getInstance().reset();
 });
 
 describe('parsing', () => {
@@ -435,10 +436,6 @@ describe('parsing tags', () => {
 });
 
 describe('task parsing VS global filter', () => {
-    afterEach(() => {
-        GlobalFilter.getInstance().reset();
-    });
-
     it('returns null when task does not have global filter', () => {
         // Arrange
         GlobalFilter.getInstance().set('#task');
@@ -1258,10 +1255,6 @@ describe('created dates on recurring task', () => {
         jest.setSystemTime(new Date('2023-03-08'));
     });
 
-    afterEach(() => {
-        GlobalFilter.getInstance().reset();
-    });
-
     it('should not set created date with disabled setting', () => {
         // Arrange
         const line = '- [ ] this is a task 🔁 every day 📅 2021-09-12';
@@ -1316,10 +1309,6 @@ describe('order of recurring tasks', () => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 5 - 1, 16));
         resetSettings();
-        GlobalFilter.getInstance().reset();
-    });
-
-    afterAll(() => {
         GlobalFilter.getInstance().reset();
     });
 
