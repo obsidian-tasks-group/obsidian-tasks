@@ -16,6 +16,10 @@ import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
 window.moment = moment;
 
+afterEach(() => {
+    jest.useRealTimers();
+});
+
 describe('parsing', () => {
     it('parses a task from a line starting with hyphen', () => {
         // Arrange
@@ -719,7 +723,6 @@ describe('toggle done', () => {
     });
 
     afterEach(() => {
-        jest.useRealTimers();
         resetSettings();
     });
 
@@ -1259,7 +1262,6 @@ describe('created dates on recurring task', () => {
     });
 
     afterEach(() => {
-        jest.useRealTimers();
         resetSettings();
         GlobalFilter.getInstance().reset();
     });
@@ -1314,7 +1316,7 @@ describe('created dates on recurring task', () => {
 });
 
 describe('order of recurring tasks', () => {
-    beforeAll(() => {
+    beforeEach(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 5 - 1, 16));
         resetSettings();
@@ -1322,7 +1324,6 @@ describe('order of recurring tasks', () => {
     });
 
     afterAll(() => {
-        jest.useRealTimers();
         resetSettings();
         GlobalFilter.getInstance().reset();
     });
