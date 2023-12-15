@@ -403,7 +403,9 @@ export class Task {
             if (setDoneDate) {
                 newDoneDate = window.moment();
             }
+        }
 
+        if (newStatus.isCompleted()) {
             // If this task is no longer todo, we need to check if it is recurring:
             if (this.recurrence !== null) {
                 nextOccurrence = this.recurrence.next();
