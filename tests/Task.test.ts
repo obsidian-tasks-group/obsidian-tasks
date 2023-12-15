@@ -1162,7 +1162,7 @@ describe('handle new status', () => {
         StatusRegistry.getInstance().resetToDefaultStatuses();
     });
 
-    // Note: We only need to transitions which are not covered by the standard 'toggle done' tests above.
+    // Note: We only need to test transitions which are not covered by the standard 'toggle done' tests above.
 
     it('should not create a new task, if the new status is the same object', () => {
         const task = fromLine({ line: '- [!] An important task' });
@@ -1194,7 +1194,22 @@ describe('handle new status', () => {
 
     // TODO should not change the done date, if changing from one DONE status to another
 
-    // TODO should not create new recurrence if converting from one DONE status to another
+    it.failing('should not create new recurrence if converting from one DONE status to another', () => {
+        // Arrange
+        const originalTask = fromLine({
+            line: '- [x] A recurring, done task 🔁 every day 📅 2023-12-15 ✅ 2023-12-15',
+        });
+        const newStatus = StatusRegistry.getInstance().bySymbol('X');
+
+        // Act
+        const newTasks = originalTask.handleNewStatus(newStatus);
+
+        // Assert
+        // Because the old task was already DONE, we should not have created a new recurrence:
+        expect(newTasks.length).toEqual(1);
+        // But check that the new symbol has been applied:
+        expect(newTasks[0].status.symbol).toEqual('X');
+    });
 });
 
 describe('created dates on recurring task', () => {
