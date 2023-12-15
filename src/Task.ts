@@ -409,8 +409,7 @@ export class Task {
             dueDate: Moment | null;
         } | null = null;
         if (newStatus.isCompleted()) {
-            // If this task is no longer todo, we need to check if it is recurring:
-            if (this.recurrence !== null) {
+            if (!this.status.isCompleted() && this.recurrence !== null) {
                 nextOccurrence = this.recurrence.next();
             }
         }
