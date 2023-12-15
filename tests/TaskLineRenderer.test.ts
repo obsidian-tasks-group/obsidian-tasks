@@ -76,13 +76,13 @@ function getOtherLayoutComponents(listItem: HTMLElement): string[] {
     return components;
 }
 
-describe('task line rendering', () => {
-    afterEach(() => {
-        resetSettings();
-        GlobalFilter.getInstance().reset();
-        GlobalFilter.getInstance().setRemoveGlobalFilter(false);
-    });
+afterEach(() => {
+    GlobalFilter.getInstance().reset();
+    GlobalFilter.getInstance().setRemoveGlobalFilter(false);
+    resetSettings();
+});
 
+describe('task line rendering - HTML', () => {
     it('should render only one List Item for the UL and return it with renderTaskLine()', async () => {
         const ulElement = document.createElement('ul');
         const taskLineRenderer = new TaskLineRenderer({
@@ -135,7 +135,9 @@ describe('task line rendering', () => {
         // Check that eventually the correct text was rendered
         expect((internalDescriptionSpan as HTMLSpanElement).innerText).toEqual('This is a simple task');
     });
+});
 
+describe('task line rendering - global filter', () => {
     const getDescriptionTest = async (taskLine: string) => {
         const task = fromLine({
             line: taskLine,
@@ -163,7 +165,9 @@ describe('task line rendering', () => {
 
         expect(descriptionWithoutFilter).toEqual('#global/subtag-shall-stay This is a simple task with a filter');
     });
+});
 
+describe('task line rendering - layout options', () => {
     const testLayoutOptions = async (
         taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
@@ -172,8 +176,6 @@ describe('task line rendering', () => {
     ) => {
         const task = fromLine({
             line: taskLine,
-            path: 'a/b/c.d',
-            precedingHeader: 'Previous Heading',
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
@@ -246,14 +248,6 @@ describe('task line rendering', () => {
         );
     });
 
-    it('marks nonexistent task priority as "normal" priority', async () => {
-        await testLiAttributes(
-            '- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            {},
-            { taskPriority: 'normal' },
-        );
-    });
-
     it('renders a done task correctly with the default layout', async () => {
         await testLayoutOptions(
             '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
@@ -286,17 +280,6 @@ describe('task line rendering', () => {
         ]);
     });
 
-    it('renders debug info if requested', async () => {
-        // Disable sort instructions
-        updateSettings({ debugSettings: new DebugSettings(false, true) });
-        await testLayoutOptions(
-            '- [ ] Task with invalid due date 📅 2023-11-02',
-            {},
-            "Task with invalid due date<br>🐛 <b>0</b> . 0 . 0 . '<code>- [ ] Task with invalid due date 📅 2023-11-02</code>'<br>'<code>a/b/c.d</code>' > '<code>Previous Heading</code>'<br>",
-            [' 📅 2023-11-02'],
-        );
-    });
-
     it('standardise the recurrence rule, even if the rule is invalid', async () => {
         await testLayoutOptions(
             '- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd',
@@ -305,7 +288,26 @@ describe('task line rendering', () => {
             [' 🔁 every month on the 32th'],
         );
     });
+});
 
+describe('task line rendering - debug info rendering', () => {
+    it('renders debug info if requested', async () => {
+        // Disable sort instructions
+        updateSettings({ debugSettings: new DebugSettings(false, true) });
+        const task = fromLine({
+            line: '- [ ] Task with debug info',
+            path: 'a/b/c.d',
+            precedingHeader: 'Previous Heading',
+        });
+        const listItem = await renderListItem(task);
+        const renderedDescription = getDescriptionText(listItem);
+        expect(renderedDescription).toEqual(
+            "Task with debug info<br>🐛 <b>0</b> . 0 . 0 . '<code>- [ ] Task with debug info</code>'<br>'<code>a/b/c.d</code>' > '<code>Previous Heading</code>'<br>",
+        );
+    });
+});
+
+describe('task line rendering - classes and data attributes', () => {
     const testComponentClasses = async (
         taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
@@ -331,44 +333,6 @@ describe('task line rendering', () => {
             }
         }
         expect(found).toBeTruthy();
-    };
-
-    const testLiAttributes = async (
-        taskLine: string,
-        layoutOptions: Partial<LayoutOptions>,
-        attributes: AttributesDictionary,
-    ) => {
-        const task = fromLine({
-            line: taskLine,
-        });
-        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
-        for (const key in attributes) {
-            expect(listItem.dataset[key]).toEqual(attributes[key]);
-        }
-    };
-
-    const testHiddenComponentClasses = async (
-        taskLine: string,
-        layoutOptions: Partial<LayoutOptions>,
-        hiddenGenericClass: string,
-        attributes: AttributesDictionary,
-    ) => {
-        const task = fromLine({
-            line: taskLine,
-        });
-        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
-
-        const textSpan = getTextSpan(listItem);
-        for (const childSpan of Array.from(textSpan.children)) {
-            expect(childSpan.classList.contains(hiddenGenericClass)).toBeFalsy();
-        }
-
-        // Now verify the attributes
-        for (const key in attributes) {
-            expect(listItem.dataset[key]).toEqual(attributes[key]);
-        }
     };
 
     it('renders priority with its correct classes', async () => {
@@ -535,6 +499,29 @@ describe('task line rendering', () => {
         await testComponentClasses('- [ ] Full task ⏫ 📅 2023-02-29', {}, fieldRenderer.className('dueDate'), {});
     });
 
+    const testHiddenComponentClasses = async (
+        taskLine: string,
+        layoutOptions: Partial<LayoutOptions>,
+        hiddenGenericClass: string,
+        attributes: AttributesDictionary,
+    ) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+        const listItem = await renderListItem(task, fullLayoutOptions);
+
+        const textSpan = getTextSpan(listItem);
+        for (const childSpan of Array.from(textSpan.children)) {
+            expect(childSpan.classList.contains(hiddenGenericClass)).toBeFalsy();
+        }
+
+        // Now verify the attributes
+        for (const key in attributes) {
+            expect(listItem.dataset[key]).toEqual(attributes[key]);
+        }
+    };
+
     it('does not render hidden components but sets their specific classes to the upper li element', async () => {
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
@@ -607,6 +594,21 @@ describe('task line rendering', () => {
         expect(tagSpan.dataset.tagName).toEqual('#illegal-data-attribute');
     });
 
+    const testLiAttributes = async (
+        taskLine: string,
+        layoutOptions: Partial<LayoutOptions>,
+        attributes: AttributesDictionary,
+    ) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+        const listItem = await renderListItem(task, fullLayoutOptions);
+        for (const key in attributes) {
+            expect(listItem.dataset[key]).toEqual(attributes[key]);
+        }
+    };
+
     it('creates data attributes for custom statuses', async () => {
         await testLiAttributes(
             '- [ ] An incomplete task',
@@ -627,6 +629,14 @@ describe('task line rendering', () => {
             '- [-] In-progress task',
             {},
             { task: '-', taskStatusName: 'Cancelled', taskStatusType: 'CANCELLED' },
+        );
+    });
+
+    it('marks nonexistent task priority as "normal" priority', async () => {
+        await testLiAttributes(
+            '- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            {},
+            { taskPriority: 'normal' },
         );
     });
 });
