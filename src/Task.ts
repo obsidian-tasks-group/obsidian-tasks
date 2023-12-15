@@ -391,10 +391,15 @@ export class Task {
 
         let newDoneDate = null;
         if (newStatus.isCompleted()) {
-            // Set done date only if setting value is true
-            const { setDoneDate } = getSettings();
-            if (setDoneDate) {
-                newDoneDate = window.moment();
+            if (!this.status.isCompleted()) {
+                // Set done date only if setting value is true
+                const { setDoneDate } = getSettings();
+                if (setDoneDate) {
+                    newDoneDate = window.moment();
+                }
+            } else {
+                // This task was already completed, so preserve its done date.
+                newDoneDate = this.doneDate;
             }
         }
 
