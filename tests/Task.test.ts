@@ -688,29 +688,39 @@ describe('to string', () => {
     });
 });
 
+const sampleStatusesForToggling: StatusCollection = [
+    // A custom set of 3 statuses that form a cycle.
+    // The last one has a conventional symbol, 'X' that is recognised as DONE.fix
+    ['!', 'Important', 'D', 'TODO'],
+    ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
+    ['X', 'Done - Important', '!', 'DONE'],
+    // A set that uses an unconventional symbol for DONE
+    ['1', 'Status 1', '2', 'TODO'],
+    ['2', 'Status 2', '3', 'IN_PROGRESS'],
+    ['3', 'Status 3', '1', 'DONE'],
+    // A set where the DONE task goes to an unknown symbol
+    ['a', 'Status a', 'b', 'TODO'],
+    ['b', 'Status b', 'c', 'DONE'], // c is not known
+];
+
 describe('toggle done', () => {
     beforeAll(() => {
-        const statuses: StatusCollection = [
-            // A custom set of 3 statuses that form a cycle.
-            // The last one has a conventional symbol, 'X' that is recognised as DONE.fix
-            ['!', 'Important', 'D', 'TODO'],
-            ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
-            ['X', 'Done - Important', '!', 'DONE'],
-            // A set that uses an unconventional symbol for DONE
-            ['1', 'Status 1', '2', 'TODO'],
-            ['2', 'Status 2', '3', 'IN_PROGRESS'],
-            ['3', 'Status 3', '1', 'DONE'],
-            // A set where the DONE task goes to an unknown symbol
-            ['a', 'Status a', 'b', 'TODO'],
-            ['b', 'Status b', 'c', 'DONE'], // c is not known
-        ];
-        statuses.forEach((s) => {
+        sampleStatusesForToggling.forEach((s) => {
             StatusRegistry.getInstance().add(Status.createFromImportedValue(s));
         });
     });
 
     afterAll(() => {
         StatusRegistry.getInstance().resetToDefaultStatuses();
+    });
+
+    beforeEach(() => {
+        jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+        resetSettings();
     });
 
     it('retains the block link', () => {
@@ -749,6 +759,20 @@ describe('toggle done', () => {
         expect(toggled!.status).toStrictEqual(Status.TODO);
         expect(toggled!.status.symbol).toStrictEqual(' ');
         expect(toggled!.doneDate).toBeNull();
+    });
+
+    it('should not add done date to completed task, if disabled in settings', () => {
+        // Arrange
+        const task = new TaskBuilder().build();
+        updateSettings({ setDoneDate: false });
+
+        // Act
+        const tasks = task.toggle();
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+        const toggled: Task = tasks[0];
+        expect(toggled.doneDate).toBeNull();
     });
 
     type RecurrenceCase = {
@@ -1070,7 +1094,9 @@ describe('toggle done', () => {
             nextStart,
             nextInterval,
         }) => {
-            const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
+            if (today) {
+                jest.setSystemTime(new Date(today));
+            }
 
             // If this test fails, the RecurrenceCase had no expected new dates set, and so
             // is accidentally not doing any testing.
@@ -1118,7 +1144,6 @@ describe('toggle done', () => {
             } else {
                 expect(nextTask.recurrence?.toText()).toBe(interval);
             }
-            todaySpy.mockClear();
         },
     );
 
@@ -1147,6 +1172,83 @@ describe('toggle done', () => {
             nextScheduled: undefined,
             nextStart: undefined,
         });
+    });
+});
+
+describe('handle new status', () => {
+    beforeAll(() => {
+        sampleStatusesForToggling.forEach((s) => {
+            StatusRegistry.getInstance().add(Status.createFromImportedValue(s));
+        });
+    });
+
+    afterAll(() => {
+        StatusRegistry.getInstance().resetToDefaultStatuses();
+    });
+
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-06-26'));
+    });
+
+    // Note: We only need to test transitions which are not covered by the standard 'toggle done' tests above.
+
+    it('should not create a new task, if the new status is the same object', () => {
+        const task = fromLine({ line: '- [!] An important task' });
+        const newTasks = task.handleNewStatus(StatusRegistry.getInstance().bySymbol('!'));
+
+        expect(newTasks.length).toEqual(1);
+        expect(Object.is(task, newTasks[0])).toEqual(true);
+    });
+
+    it('should not create a new task, if the new status is different object but same behaviour', () => {
+        const task = fromLine({ line: '- [!] An important task' });
+        const newStatus = Status.createFromImportedValue(['!', 'Important', 'D', 'TODO']);
+        const newTasks = task.handleNewStatus(newStatus);
+
+        expect(newTasks.length).toEqual(1);
+        expect(Object.is(task, newTasks[0])).toEqual(true);
+    });
+
+    it('should create a new task, if the status symbol is unchanged but represents a different behaviour', () => {
+        const task = fromLine({ line: '- [!] An important task' });
+        const newStatus = Status.createFromImportedValue(['!', 'a different status', 'D', 'TODO']);
+        const newTasks = task.handleNewStatus(newStatus);
+
+        expect(newTasks.length).toEqual(1);
+        expect(Object.is(task, newTasks[0])).toEqual(false);
+    });
+
+    it('should not change the done date, if changing from one DONE status to another', () => {
+        // Arrange
+        const doneTask = fromLine({
+            line: '- [X] Stuff 📅 2023-12-15 ✅ 2019-01-17',
+        });
+
+        // Act
+        const newTasks = doneTask.handleNewStatus(Status.makeDone());
+
+        // Assert
+        expect(newTasks.length).toEqual(1);
+        // Check that the done date was not modified:
+        expect(newTasks[0].doneDate).toEqualMoment(moment('2019-01-17'));
+    });
+
+    it('should not create new recurrence if converting from one DONE status to another', () => {
+        // Arrange
+        const originalTask = fromLine({
+            line: '- [x] A recurring, done task 🔁 every day 📅 2023-12-15 ✅ 2023-12-15',
+        });
+        const newStatus = StatusRegistry.getInstance().bySymbol('X');
+
+        // Act
+        const newTasks = originalTask.handleNewStatus(newStatus);
+
+        // Assert
+        // Because the old task was already DONE, we should not have created a new recurrence:
+        expect(newTasks.length).toEqual(1);
+        // But check that the new symbol has been applied:
+        expect(newTasks[0].status.symbol).toEqual('X');
     });
 });
 

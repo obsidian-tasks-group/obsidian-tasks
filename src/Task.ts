@@ -383,24 +383,33 @@ export class Task {
         return newTasks;
     }
 
-    private handleNewStatus(newStatus: Status): Task[] {
+    public handleNewStatus(newStatus: Status): Task[] {
+        if (newStatus.identicalTo(this.status)) {
+            // There is no need to create a new Task object if the new status behaviour is identical to the current one.
+            return [this];
+        }
+
         let newDoneDate = null;
+        if (newStatus.isCompleted()) {
+            if (!this.status.isCompleted()) {
+                // Set done date only if setting value is true
+                const { setDoneDate } = getSettings();
+                if (setDoneDate) {
+                    newDoneDate = window.moment();
+                }
+            } else {
+                // This task was already completed, so preserve its done date.
+                newDoneDate = this.doneDate;
+            }
+        }
 
         let nextOccurrence: {
             startDate: Moment | null;
             scheduledDate: Moment | null;
             dueDate: Moment | null;
         } | null = null;
-
         if (newStatus.isCompleted()) {
-            // Set done date only if setting value is true
-            const { setDoneDate } = getSettings();
-            if (setDoneDate) {
-                newDoneDate = window.moment();
-            }
-
-            // If this task is no longer todo, we need to check if it is recurring:
-            if (this.recurrence !== null) {
+            if (!this.status.isCompleted() && this.recurrence !== null) {
                 nextOccurrence = this.recurrence.next();
             }
         }
@@ -463,9 +472,9 @@ export class Task {
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
 
-    public handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
+    public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
         const logger = logging.getLogger('tasks.Task');
-        logger.trace(
+        logger.debug(
             `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to ${newStatus}`,
         );
 

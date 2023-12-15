@@ -29,6 +29,7 @@ describe('Status', () => {
         expect(Status.makeInProgress().previewText()).toEqual(
             "- [/] => [x], name: 'In Progress', type: 'IN_PROGRESS'.",
         );
+        expect(Status.makeNonTask().previewText()).toEqual("- [Q] => [A], name: 'Non-Task', type: 'NON_TASK'.");
     });
 
     it('should initialize with valid properties', () => {
