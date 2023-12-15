@@ -426,11 +426,6 @@ describe('parsing tags', () => {
             expect(task).not.toBeNull();
             expect(task!.description).toEqual(expectedDescription);
             expect(task!.tags).toStrictEqual(extractedTags);
-
-            // Cleanup
-            if (globalFilter != '') {
-                GlobalFilter.getInstance().reset();
-            }
         },
     );
 });
@@ -685,8 +680,6 @@ describe('to string', () => {
         // Assert
         const expectedLine = 'This is a task with #t as a global filter and also #t/some tags';
         expect(task.toString()).toStrictEqual(expectedLine);
-        resetSettings();
-        GlobalFilter.getInstance().reset();
     });
 });
 
@@ -1308,8 +1301,6 @@ describe('order of recurring tasks', () => {
     beforeEach(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 5 - 1, 16));
-        resetSettings();
-        GlobalFilter.getInstance().reset();
     });
 
     it('should put new task before old, by default', () => {
