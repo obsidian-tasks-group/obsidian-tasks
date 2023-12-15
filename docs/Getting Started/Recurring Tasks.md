@@ -207,6 +207,7 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 - `🔁 every 10 days when done`
 - `🔁 every weekday` (meaning every Mon - Fri)
 - `🔁 every week on Sunday`
+- `🔁 every week on Tuesday, Friday` (meaning every Tuesday and Friday)
 - `🔁 every 2 weeks`
 - `🔁 every 3 weeks on Friday`
 - `🔁 every 2 months`
