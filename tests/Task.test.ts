@@ -1219,8 +1219,6 @@ describe('handle new status', () => {
         expect(Object.is(task, newTasks[0])).toEqual(false);
     });
 
-    // TODO should remove the done date, if going from DONE to CANCELLED
-
     it('should not change the done date, if changing from one DONE status to another', () => {
         // Arrange
         const doneTask = fromLine({
