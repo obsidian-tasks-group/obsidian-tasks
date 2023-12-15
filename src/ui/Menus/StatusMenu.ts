@@ -37,7 +37,7 @@ export class StatusMenu extends TaskEditingMenu {
                 .onClick(async () => {
                     if (newStatusSymbol !== task.status.symbol) {
                         const status = this.statusRegistry.bySymbol(newStatusSymbol);
-                        const newTask = task.handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(status);
+                        const newTask = task.handleNewStatusWithRecurrenceInUsersOrder(status);
                         await this.taskSaver(task, newTask);
                     }
                 });
