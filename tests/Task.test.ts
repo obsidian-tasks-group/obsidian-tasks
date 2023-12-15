@@ -720,6 +720,7 @@ describe('toggle done', () => {
 
     afterEach(() => {
         jest.useRealTimers();
+        resetSettings();
     });
 
     it('retains the block link', () => {
@@ -758,6 +759,20 @@ describe('toggle done', () => {
         expect(toggled!.status).toStrictEqual(Status.TODO);
         expect(toggled!.status.symbol).toStrictEqual(' ');
         expect(toggled!.doneDate).toBeNull();
+    });
+
+    it('should not add done date to completed task, if disabled in settings', () => {
+        // Arrange
+        const task = new TaskBuilder().build();
+        updateSettings({ setDoneDate: false });
+
+        // Act
+        const tasks = task.toggle();
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+        const toggled: Task = tasks[0];
+        expect(toggled.doneDate).toBeNull();
     });
 
     type RecurrenceCase = {
