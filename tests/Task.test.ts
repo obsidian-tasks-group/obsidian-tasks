@@ -18,6 +18,7 @@ window.moment = moment;
 
 afterEach(() => {
     jest.useRealTimers();
+    resetSettings();
 });
 
 describe('parsing', () => {
@@ -722,10 +723,6 @@ describe('toggle done', () => {
         jest.useFakeTimers();
     });
 
-    afterEach(() => {
-        resetSettings();
-    });
-
     it('retains the block link', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
@@ -1262,7 +1259,6 @@ describe('created dates on recurring task', () => {
     });
 
     afterEach(() => {
-        resetSettings();
         GlobalFilter.getInstance().reset();
     });
 
@@ -1324,7 +1320,6 @@ describe('order of recurring tasks', () => {
     });
 
     afterAll(() => {
-        resetSettings();
         GlobalFilter.getInstance().reset();
     });
 
