@@ -709,10 +709,6 @@ describe('toggle done', () => {
         StatusRegistry.getInstance().resetToDefaultStatuses();
     });
 
-    beforeEach(() => {
-        jest.useFakeTimers();
-    });
-
     it('retains the block link', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
@@ -1085,6 +1081,7 @@ describe('toggle done', () => {
             nextInterval,
         }) => {
             if (today) {
+                jest.useFakeTimers();
                 jest.setSystemTime(new Date(today));
             }
 
