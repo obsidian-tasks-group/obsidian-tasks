@@ -688,22 +688,23 @@ describe('to string', () => {
     });
 });
 
+const sampleStatusesForToggling: StatusCollection = [
+    // A custom set of 3 statuses that form a cycle.
+    // The last one has a conventional symbol, 'X' that is recognised as DONE.fix
+    ['!', 'Important', 'D', 'TODO'],
+    ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
+    ['X', 'Done - Important', '!', 'DONE'],
+    // A set that uses an unconventional symbol for DONE
+    ['1', 'Status 1', '2', 'TODO'],
+    ['2', 'Status 2', '3', 'IN_PROGRESS'],
+    ['3', 'Status 3', '1', 'DONE'],
+    // A set where the DONE task goes to an unknown symbol
+    ['a', 'Status a', 'b', 'TODO'],
+    ['b', 'Status b', 'c', 'DONE'], // c is not known
+];
+
 describe('toggle done', () => {
     beforeAll(() => {
-        const sampleStatusesForToggling: StatusCollection = [
-            // A custom set of 3 statuses that form a cycle.
-            // The last one has a conventional symbol, 'X' that is recognised as DONE.fix
-            ['!', 'Important', 'D', 'TODO'],
-            ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
-            ['X', 'Done - Important', '!', 'DONE'],
-            // A set that uses an unconventional symbol for DONE
-            ['1', 'Status 1', '2', 'TODO'],
-            ['2', 'Status 2', '3', 'IN_PROGRESS'],
-            ['3', 'Status 3', '1', 'DONE'],
-            // A set where the DONE task goes to an unknown symbol
-            ['a', 'Status a', 'b', 'TODO'],
-            ['b', 'Status b', 'c', 'DONE'], // c is not known
-        ];
         sampleStatusesForToggling.forEach((s) => {
             StatusRegistry.getInstance().add(Status.createFromImportedValue(s));
         });
