@@ -384,8 +384,8 @@ export class Task {
     }
 
     public handleNewStatus(newStatus: Status): Task[] {
-        if (newStatus === this.status) {
-            // There is no need to create a new Task object with the same symbol.
+        if (newStatus.identicalTo(this.status)) {
+            // There is no need to create a new Task object if the new status behaviour is identical to the current one.
             return [this];
         }
 
