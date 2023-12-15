@@ -1297,7 +1297,7 @@ describe('created dates on recurring task', () => {
 describe('order of recurring tasks', () => {
     beforeEach(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2023, 5 - 1, 16));
+        jest.setSystemTime(new Date('2023-05-16'));
     });
 
     it('should put new task before old, by default', () => {
