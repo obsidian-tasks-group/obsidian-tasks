@@ -1236,7 +1236,7 @@ describe('handle new status', () => {
         expect(newTasks[0].doneDate).toEqualMoment(moment('2019-01-17'));
     });
 
-    it.failing('should not create new recurrence if converting from one DONE status to another', () => {
+    it('should not create new recurrence if converting from one DONE status to another', () => {
         // Arrange
         const originalTask = fromLine({
             line: '- [x] A recurring, done task 🔁 every day 📅 2023-12-15 ✅ 2023-12-15',
