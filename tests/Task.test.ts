@@ -714,6 +714,14 @@ describe('toggle done', () => {
         StatusRegistry.getInstance().resetToDefaultStatuses();
     });
 
+    beforeEach(() => {
+        jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
     it('retains the block link', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
@@ -1071,7 +1079,9 @@ describe('toggle done', () => {
             nextStart,
             nextInterval,
         }) => {
-            const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
+            if (today) {
+                jest.setSystemTime(new Date(today));
+            }
 
             // If this test fails, the RecurrenceCase had no expected new dates set, and so
             // is accidentally not doing any testing.
@@ -1119,7 +1129,6 @@ describe('toggle done', () => {
             } else {
                 expect(nextTask.recurrence?.toText()).toBe(interval);
             }
-            todaySpy.mockClear();
         },
     );
 
