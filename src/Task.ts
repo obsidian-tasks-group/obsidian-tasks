@@ -465,7 +465,7 @@ export class Task {
 
     public handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
         const logger = logging.getLogger('tasks.Task');
-        logger.trace(
+        logger.debug(
             `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to ${newStatus}`,
         );
 
