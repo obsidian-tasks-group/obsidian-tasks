@@ -390,13 +390,6 @@ export class Task {
         }
 
         let newDoneDate = null;
-
-        let nextOccurrence: {
-            startDate: Moment | null;
-            scheduledDate: Moment | null;
-            dueDate: Moment | null;
-        } | null = null;
-
         if (newStatus.isCompleted()) {
             // Set done date only if setting value is true
             const { setDoneDate } = getSettings();
@@ -405,6 +398,11 @@ export class Task {
             }
         }
 
+        let nextOccurrence: {
+            startDate: Moment | null;
+            scheduledDate: Moment | null;
+            dueDate: Moment | null;
+        } | null = null;
         if (newStatus.isCompleted()) {
             // If this task is no longer todo, we need to check if it is recurring:
             if (this.recurrence !== null) {
