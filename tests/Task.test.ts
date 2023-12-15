@@ -1172,6 +1172,15 @@ describe('handle new status', () => {
         expect(Object.is(task, newTasks[0])).toEqual(true);
     });
 
+    it('should not create a new task, if the new status is different object but same behaviour', () => {
+        const task = fromLine({ line: '- [!] An important task' });
+        const newStatus = Status.createFromImportedValue(['!', 'Important', 'D', 'TODO']);
+        const newTasks = task.handleNewStatus(newStatus);
+
+        expect(newTasks.length).toEqual(1);
+        expect(Object.is(task, newTasks[0])).toEqual(true);
+    });
+
     it('should create a new task, if the status symbol is unchanged but represents a different behaviour', () => {
         const task = fromLine({ line: '- [!] An important task' });
         const newStatus = Status.createFromImportedValue(['!', 'a different status', 'D', 'TODO']);
