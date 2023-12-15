@@ -690,7 +690,7 @@ describe('to string', () => {
 
 describe('toggle done', () => {
     beforeAll(() => {
-        const statuses: StatusCollection = [
+        const sampleStatusesForToggling: StatusCollection = [
             // A custom set of 3 statuses that form a cycle.
             // The last one has a conventional symbol, 'X' that is recognised as DONE.fix
             ['!', 'Important', 'D', 'TODO'],
@@ -704,7 +704,7 @@ describe('toggle done', () => {
             ['a', 'Status a', 'b', 'TODO'],
             ['b', 'Status b', 'c', 'DONE'], // c is not known
         ];
-        statuses.forEach((s) => {
+        sampleStatusesForToggling.forEach((s) => {
             StatusRegistry.getInstance().add(Status.createFromImportedValue(s));
         });
     });
