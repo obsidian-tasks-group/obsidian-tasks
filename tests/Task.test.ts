@@ -1221,7 +1221,7 @@ describe('handle new status', () => {
 
     // TODO should remove the done date, if going from DONE to CANCELLED
 
-    it.failing('should not change the done date, if changing from one DONE status to another', () => {
+    it('should not change the done date, if changing from one DONE status to another', () => {
         // Arrange
         const doneTask = fromLine({
             line: '- [X] Stuff 📅 2023-12-15 ✅ 2019-01-17',
