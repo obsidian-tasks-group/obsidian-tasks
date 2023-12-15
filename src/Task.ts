@@ -463,7 +463,7 @@ export class Task {
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
 
-    public handleStatusChangeFromContextMenuWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
+    public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
         const logger = logging.getLogger('tasks.Task');
         logger.debug(
             `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to ${newStatus}`,
