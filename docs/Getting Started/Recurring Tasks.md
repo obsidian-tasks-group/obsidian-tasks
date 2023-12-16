@@ -218,7 +218,7 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 - `🔁 every 6 months on the 2nd Wednesday`
 - `🔁 every January on the 15th`
 - `🔁 every February on the last`
-- `🔁 every April and December on the 1st and 24th` (meaning every _April 1st_ and _December 24th_)
+- `🔁 every April and December on the 1st and 24th` (meaning every April 1st, April 24th, December 1st and December 24th)
 - `🔁 every year`
 
 ## Limitations of Recurring Tasks
