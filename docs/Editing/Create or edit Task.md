@@ -125,7 +125,7 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
 >
-> For now, you should still complete tasks via command or by clicking on task checkboxes.
+> For now, you should still complete tasks via [[Toggling and Editing Statuses#'Tasks Toggle task done' command|command]], by [[Toggling and Editing Statuses#Toggling Tasks with mouse|clicking on task checkboxes]] or by [[Toggling and Editing Statuses#'Change task status' context menu|right-clicking on task checkboxes]].
 
 ## Display values
 
@@ -173,7 +173,7 @@ To close the modal and cancel your edits, do one of:
 >
 > We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
 >
-> For now, you should still complete tasks via command or by clicking on task checkboxes.
+> For now, you should still complete tasks via [[Toggling and Editing Statuses#'Tasks Toggle task done' command|command]], by [[Toggling and Editing Statuses#Toggling Tasks with mouse|clicking on task checkboxes]] or by [[Toggling and Editing Statuses#'Change task status' context menu|right-clicking on task checkboxes]].
 
 ### Need to scroll on phone screens
 
