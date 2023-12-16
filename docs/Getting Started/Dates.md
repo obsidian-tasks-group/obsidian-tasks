@@ -4,6 +4,8 @@ publish: true
 
 # Dates
 
+<span class="related-pages">#feature/dates</span>
+
 ## When to work on a task
 
 This section explains the different types of date that you can add to task lines, in order to tell Tasks when you wish/need to do the work.

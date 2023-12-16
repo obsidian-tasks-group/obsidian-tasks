@@ -51,7 +51,7 @@ The Tasks plugin renders a task in the following structure (this refers to query
         - Task created date (span class="task-created" + data-task-created attribute)
           - Internal span
         - ... start date, scheduled date, due date and done date in this order
-      - Task extras (link, edit button) (span class="task-extras")
+      - Task extras (link, edit button, postpone button) (span class="task-extras")
   - Tasks count (div class="tasks-count")
 ```
 

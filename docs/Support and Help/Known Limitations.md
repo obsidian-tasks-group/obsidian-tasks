@@ -51,6 +51,10 @@ This page gathers together all the documentation on known limitations of the plu
 
 ![[Create or edit Task#Known limitations]]
 
+## Editing Tasks: Postponing
+
+![[Postponing#Current Limitations]]
+
 ## Concepts: Recurring Tasks
 
 ![[Recurring Tasks#Limitations of Recurring Tasks]]
