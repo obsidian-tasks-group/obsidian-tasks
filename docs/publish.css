@@ -39,7 +39,8 @@ span.related-pages a.tag {
 
 span.caption {
     font-style: italic;
-    text-align: center;
+    /* centering is disabled as images are not currently centered: */
+    /*text-align: center;*/
     margin-bottom: 1.5rem;
     display:block; /* force some whitespace after the caption */
 }
