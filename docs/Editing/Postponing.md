@@ -18,7 +18,7 @@ publish: true
 The ⏩ button in Tasks Search results allows you to quickly postpone (or "snooze") a task until tomorrow or later.
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 5.3.0.
 
 ### Click and Context Menu
 

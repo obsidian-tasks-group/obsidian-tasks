@@ -13,10 +13,10 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
-- X.Y.Z: 🔥 Add [[Postponing|postpone button]] to Tasks query results.
-- X.Y.Z: 🔥 Add [[Toggling and Editing Statuses#'Change task status' context menu|'change task status' menu]] to Reading mode and Tasks query results.
-- X.Y.Z: 🔥 Add documentation section about [[About Editing|editing tasks]].
-- X.Y.Z: 🔥 Add documentation page about [[toggling and editing statuses]].
+- 5.3.0: 🔥 Add [[Postponing|postpone button]] to Tasks query results.
+- 5.3.0: 🔥 Add [[Toggling and Editing Statuses#'Change task status' context menu|'change task status' menu]] to Reading mode and Tasks query results.
+- 5.3.0: 🔥 Add documentation section about [[About Editing|editing tasks]].
+- 5.3.0: 🔥 Add documentation page about [[toggling and editing statuses]].
 - 5.2.0: 🔥 Most query instructions can now include [[About Queries#Capitals in Query Instructions - Case Insensitivity|capital letters]].
 - 5.1.0: 🔥 Add 'Review and check your Statuses' facility: see [[Check your Statuses|check your statuses]].
 - 5.1.0: 🔥 Enable [[Custom Filters|custom filters]] and [[Custom Grouping|custom grouping]] to use [[Query Properties|query properties]] directly - no placeholders required.
