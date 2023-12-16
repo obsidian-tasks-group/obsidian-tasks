@@ -34,15 +34,20 @@ The most common way to change a task status is to **single-click on its checkbox
 
 ## 'Change task status' context menu
 
-**Right-clicking on a task's checkbox** brings up a menu to allow any different status to be applied to the task.
+**Right-click** or **press-and-hold** on **a task's checkbox** to bring up a menu to allow any known status to be applied to the task.
 
 This works in both **Reading mode** and in **Tasks Query results**.
 
-![Sample 'Change task status' context menu, in a vault with custom statuses enabled.](change-status-context-menu-with-custom-statuses.png)
-<span class="caption">Sample 'Change task status' context menu, in a vault with [[Custom Statuses]] enabled.</span>
+![Sample 'Change task status' context menu, in a vault with various custom statuses added.](change-status-context-menu-with-custom-statuses.png)
+<span class="caption">Sample 'Change task status' context menu, in a vault with various [[Custom Statuses]] added.</span>
 
 > [!tip]
 > The 'Change task status' context menu does correctly add Done dates, and create new instances of recurring tasks, when appropriate.
+
+The statuses are obtained from the vault's [[Status Settings]].
+
+- [[Core Statuses]] are shown first,
+- then any [[Custom Statuses]].
 
 Changing from one `DONE` status to another:
 
