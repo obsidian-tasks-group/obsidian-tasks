@@ -156,7 +156,7 @@ The following additional components have the following classes:
 >
 > - `tasks-group-heading` was introduced in Tasks 1.6.0.
 > - `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
-> - `tasks-postpone` was added in Tasks X.Y.Z.
+> - `tasks-postpone` was added in Tasks 5.3.0.
 
 ## CSS Examples
 

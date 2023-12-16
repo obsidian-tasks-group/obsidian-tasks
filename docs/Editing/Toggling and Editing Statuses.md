@@ -63,7 +63,7 @@ Changing from one `DONE` status to another:
 | In Tasks query search results | Reading mode | ✅     |
 
 > [!released]
-> The 'Change task status' context menu was introduced in Tasks X.Y.Z.
+> The 'Change task status' context menu was introduced in Tasks 5.3.0.
 
 ## 'Tasks: Toggle task done' command
 
