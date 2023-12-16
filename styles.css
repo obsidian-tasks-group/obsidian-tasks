@@ -77,7 +77,8 @@ ul.contains-task-list .task-list-item-checkbox {
     text-decoration: none;
 }
 
-.internal-button {
+/* Postpone icon. */
+.tasks-postpone {
     background-color: transparent;
     padding: 0;
     font-size: var(--font-text-size);

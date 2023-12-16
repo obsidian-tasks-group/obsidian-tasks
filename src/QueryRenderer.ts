@@ -416,7 +416,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             },
         });
 
-        const classNames = shortMode ? ['internal-button', 'internal-button-short-mode'] : ['internal-button'];
+        const classNames = shortMode ? ['tasks-postpone', 'tasks-postpone-short-mode'] : ['tasks-postpone'];
         button.addClasses(classNames);
         button.setText(' ⏩');
 
