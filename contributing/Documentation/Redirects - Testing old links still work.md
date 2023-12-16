@@ -26,9 +26,11 @@ All these links should still work:
 
 All these links should still work:
 
+<!-- Alphabetical order, please -->
+
+- <https://publish.obsidian.md/tasks-contributing/Documentation/Dependency+Management+and+Updates+for+the+Docs>
 - <https://publish.obsidian.md/tasks-contributing/Documentation/Overview+of+Jekyll-based+docs>
 - <https://publish.obsidian.md/tasks-contributing/Documentation/Test+documentation+locally+with+Jekyll>
-- <https://publish.obsidian.md/tasks-contributing/Documentation/Dependency+Management+and+Updates+for+the+Docs>
 
 ## Archive - selection of links from the old GitHub pages site
 
