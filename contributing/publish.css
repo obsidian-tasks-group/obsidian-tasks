@@ -34,6 +34,16 @@ span.related-pages a.tag {
     border-radius: 12px;
 }
 
+/* Style <span class="caption">....</span> */
+/* TODO Experiment with https://www.w3.org/Style/Examples/007/figures.en.html */
+
+span.caption {
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    display:block; /* force some whitespace after the caption */
+}
+
 /* Simulate a horizontal rule before each level-2 heading.
    This is useful in dividing up long pages, so their structure is visible, by saving contributors
    from having to remember to add actual horizontal rules manually.
