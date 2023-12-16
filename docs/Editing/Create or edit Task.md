@@ -28,6 +28,8 @@ All the fields of the form have "access keys", that is, keyboard shortcuts. The 
 - On Windows, press the `Alt`-key and the underlined letter at the same time.
 - On Mac, press `Ctrl`-key and the `Option`-key and the underlined letter at the same time.
 
+See [[#Hotkey and keyboard shortcut conflict]] below for important information relating to keyboard shortcuts and the hotkey used to open this modal.
+
 ### Turning off keyboard shortcuts
 
 > [!released]
@@ -183,6 +185,14 @@ Tap on the screen and drag down, and you will see a scrollbar appear temporarily
 More importantly, the scrolling does then work fine.
 
 We are tracking the iPhone scrollbar issue in [issue #1238](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1238).
+
+### Hotkey and keyboard shortcut conflict
+
+If the [custom hotkey](https://help.obsidian.md/Customization/Custom+hotkeys) for the 'Create or edit Task' Modal is the same as one of the keyboard shortcuts  [[#Keyboard shortcuts]] used in this modal, then when the modal opens, **the keyboard shortcut is unexpectedly also triggered**.
+
+For example, making `Alt + O` (Linux and Windows) or `Ctrl + Opt + O` (Mac) will mean that when the modal opens, the `Lowest` priority is selected, instead of `Normal`.
+
+We are tracking this in [issue #2503](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2503).
 
 ## Use this modal in scripts and other plugins
 
