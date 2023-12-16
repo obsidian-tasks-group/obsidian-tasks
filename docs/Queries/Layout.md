@@ -14,6 +14,7 @@ The following elements exist:
 <!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
 
 - `edit button`
+- `postpone button`
 - `backlink`
 - `urgency`
 - `priority`
