@@ -56,7 +56,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. Each of these values is a `TasksDate` object. The [[#Values in TasksDate Properties]] section below shows what can be done with them.
 1. Note that currently all stored dates have no time, or rather, their time is midnight at the start of the day, local time.
-1. For example uses of date properties, see [[Grouping#Due Date]].
+1. For example uses of date properties, see [[Filters#Due Date]] and [[Grouping#Due Date]].
 1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
 
 ## Values in TasksDate Properties
@@ -70,8 +70,9 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.due.formatAsDate()` | `string` | `'2023-07-04'` | `string` | `''` |
 | `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
 | `task.due.formatAsDateAndTime()` | `string` | `'2023-07-04 00:00'` | `string` | `''` |
-| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.formatAsDateAndTime('undated')` | `string` | `'2023-07-04 00:00'` | `string` | `'undated'` |
 | `task.due.format('dddd')` | `string` | `'Tuesday'` | `string` | `''` |
+| `task.due.format('dddd', 'undated')` | `string` | `'Tuesday'` | `string` | `'undated'` |
 | `task.due.toISOString()` | `string` | `'2023-07-04T00:00:00.000Z'` | `string` | `''` |
 | `task.due.toISOString(true)` | `string` | `'2023-07-04T00:00:00.000+00:00'` | `string` | `''` |
 | `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |
