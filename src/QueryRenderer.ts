@@ -421,7 +421,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.setText(' ⏩');
 
         button.addEventListener('click', (ev: MouseEvent) => {
-            ev.preventDefault();
+            ev.preventDefault(); // suppress the default click behavior
             this.postponeOnClickCallback(button, task, amount, timeUnit);
         });
 
@@ -429,6 +429,8 @@ class QueryRenderChild extends MarkdownRenderChild {
          * Give a choice of postponing for a week, month, or quarter.
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
+            ev.stopPropagation(); // suppress the default context menu
+
             const menu = new Menu();
 
             const postponeMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
