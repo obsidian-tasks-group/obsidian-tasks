@@ -68,11 +68,11 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
 | `task.due.moment` | `Moment` | `moment('2023-07-04 00:00')` | `null` | `null` |
 | `task.due.formatAsDate()` | `string` | `'2023-07-04'` | `string` | `''` |
-| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.formatAsDate('no date')` | `string` | `'2023-07-04'` | `string` | `'no date'` |
 | `task.due.formatAsDateAndTime()` | `string` | `'2023-07-04 00:00'` | `string` | `''` |
-| `task.due.formatAsDateAndTime('undated')` | `string` | `'2023-07-04 00:00'` | `string` | `'undated'` |
+| `task.due.formatAsDateAndTime('no date')` | `string` | `'2023-07-04 00:00'` | `string` | `'no date'` |
 | `task.due.format('dddd')` | `string` | `'Tuesday'` | `string` | `''` |
-| `task.due.format('dddd', 'undated')` | `string` | `'Tuesday'` | `string` | `'undated'` |
+| `task.due.format('dddd', 'no date')` | `string` | `'Tuesday'` | `string` | `'no date'` |
 | `task.due.toISOString()` | `string` | `'2023-07-04T00:00:00.000Z'` | `string` | `''` |
 | `task.due.toISOString(true)` | `string` | `'2023-07-04T00:00:00.000+00:00'` | `string` | `''` |
 | `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |
@@ -86,6 +86,10 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. These examples refer to `task.due`, but they can be used on any of the date properties show in the section [[#Values for Dates in Tasks]] above.
 1. The `TasksDate` formatting methods use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+1. The `TasksDate` formatting methods all take an optional `fallBackText` string value, which is the value to use when there is no date. <br>The `fallBackText` value can be any of:
+    - a fixed string, such as `'no date'`,
+    - an [[Expressions|expression]], such as `task.priorityName` or `task.priorityNameGroupText`,
+    - an empty string `''` or `""`, meaning 'do not add a heading for tasks missing this date property'.
 1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its implementation.
 1. `task.due.toISOString(true)` prevents UTC conversion - see the [moment documentation](https://momentjs.com/docs/#/displaying/as-iso-string/)
 1. `category` divides dates in to 4 named groups:

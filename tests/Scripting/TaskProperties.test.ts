@@ -69,7 +69,7 @@ describe('task', () => {
     });
 
     it('date fields', () => {
-        const textToUseIfUndated = "'undated'";
+        const textToUseIfUndated = "'no date'";
         verifyFieldDataForReferenceDocs([
             'task.due',
             'task.due.moment',
