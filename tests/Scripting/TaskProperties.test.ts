@@ -69,15 +69,16 @@ describe('task', () => {
     });
 
     it('date fields', () => {
+        const textToUseIfUndated = "'undated'";
         verifyFieldDataForReferenceDocs([
             'task.due',
             'task.due.moment',
             'task.due.formatAsDate()',
-            "task.due.formatAsDate('undated')",
+            `task.due.formatAsDate(${textToUseIfUndated})`,
             'task.due.formatAsDateAndTime()',
-            "task.due.formatAsDateAndTime('undated')",
+            `task.due.formatAsDateAndTime(${textToUseIfUndated})`,
             "task.due.format('dddd')",
-            "task.due.format('dddd', 'undated')",
+            `task.due.format('dddd', ${textToUseIfUndated})`,
             'task.due.toISOString()',
             'task.due.toISOString(true)', // https://momentjs.com/docs/#/displaying/as-iso-string/ - true prevents UTC conversion
             'task.due.category.name',
