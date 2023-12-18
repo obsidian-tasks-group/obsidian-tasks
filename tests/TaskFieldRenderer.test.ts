@@ -56,7 +56,7 @@ describe('Field Layout Detail tests', () => {
         expect(fieldLayoutDetail.className).toEqual('stuff');
     });
 
-    it('should add a data attribute with a value for an HTML element', () => {
+    it('should add a data attribute with a value and a name', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('nameAndValue', 'aKey', () => {
             return 'aValue';
         });
@@ -68,7 +68,7 @@ describe('Field Layout Detail tests', () => {
         expect(span.dataset['aKey']).toEqual('aValue');
     });
 
-    it('should not add a data attribute without a name for an HTML element', () => {
+    it('should not add a data attribute without a name', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('valueOnly', '', () => {
             return 'aValue';
         });
@@ -80,7 +80,7 @@ describe('Field Layout Detail tests', () => {
         expect(span.dataset['aKey']).toEqual(undefined);
     });
 
-    it('should add a data attribute with a name but without value for an HTML element', () => {
+    it('should add a data attribute with a name but without value', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('nameOnly', 'aKey', () => {
             return '';
         });
