@@ -4,7 +4,7 @@ import { QueryLayoutOptions } from './QueryLayoutOptions';
  * Various rendering options for a query.
  * See applyOptions below when adding options here.
  */
-export class LayoutOptions extends QueryLayoutOptions {
+export class LayoutOptions {
     hidePriority: boolean = false;
     hideCreatedDate: boolean = false;
     hideStartDate: boolean = false;

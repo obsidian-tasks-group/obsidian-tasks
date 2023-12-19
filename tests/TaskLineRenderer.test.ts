@@ -687,13 +687,9 @@ ${task.toFileLineString()}
 
     function layoutOptionsShortMode() {
         const queryLayoutOptions = new QueryLayoutOptions();
-
         queryLayoutOptions.shortMode = true;
 
-        const layoutOptions = new LayoutOptions();
-        layoutOptions.shortMode = true;
-
-        return { layoutOptions: layoutOptions, queryLayoutOptions };
+        return { layoutOptions: new LayoutOptions(), queryLayoutOptions };
     }
 
     it('Full task - full mode', async () => {
