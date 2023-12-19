@@ -178,7 +178,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
         this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
-        if (this.query.layoutOptions.explainQuery) {
+        if (this.query.queryLayoutOptions.explainQuery) {
             this.createExplanation(content);
         }
 
@@ -244,21 +244,21 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const extrasSpan = listItem.createSpan('task-extras');
 
-            if (!this.query.layoutOptions.hideUrgency) {
+            if (!this.query.queryLayoutOptions.hideUrgency) {
                 this.addUrgency(extrasSpan, task);
             }
 
-            const shortMode = this.query.layoutOptions.shortMode;
+            const shortMode = this.query.queryLayoutOptions.shortMode;
 
-            if (!this.query.layoutOptions.hideBacklinks) {
+            if (!this.query.queryLayoutOptions.hideBacklinks) {
                 this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
             }
 
-            if (!this.query.layoutOptions.hideEditButton) {
+            if (!this.query.queryLayoutOptions.hideEditButton) {
                 this.addEditButton(extrasSpan, task);
             }
 
-            if (!this.query.layoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+            if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
                 this.addPostponeButton(extrasSpan, task, shortMode);
             }
 
@@ -454,7 +454,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
-        if (!this.query.layoutOptions.hideTaskCount) {
+        if (!this.query.queryLayoutOptions.hideTaskCount) {
             content.createDiv({
                 text: queryResult.totalTasksCountDisplayText(),
                 cls: 'tasks-count',
