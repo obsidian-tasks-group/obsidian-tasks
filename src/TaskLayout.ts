@@ -1,8 +1,10 @@
 import { QueryLayoutOptions } from './QueryLayoutOptions';
 
 /**
- * Various rendering options for a query.
+ * Various rendering options of tasks in a query.
  * See applyOptions below when adding options here.
+ *
+ * @see QueryLayoutOptions
  */
 export class LayoutOptions {
     hidePriority: boolean = false;
