@@ -48,6 +48,7 @@ export class TaskLayout {
     public shownTaskLayoutComponents: TaskLayoutComponent[];
     public hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     public options: LayoutOptions;
+    public queryLayoutOptions: QueryLayoutOptions;
     public taskListHiddenClasses: string[] = [];
 
     constructor(options?: LayoutOptions) {
@@ -56,6 +57,7 @@ export class TaskLayout {
         } else {
             this.options = new LayoutOptions();
         }
+        this.queryLayoutOptions = this.options;
         this.shownTaskLayoutComponents = this.defaultLayout;
         this.applyOptions();
     }
