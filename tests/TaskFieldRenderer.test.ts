@@ -57,41 +57,41 @@ describe('Field Layout Detail tests', () => {
     }
 
     it('should supply a class name', () => {
-        const fieldLayoutDetail = new TaskFieldHTMLData('stuff', 'taskAttribute', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('task-description', '', () => {
             return '';
         });
-        expect(fieldLayoutDetail.className).toEqual('stuff');
+        expect(fieldLayoutDetail.className).toEqual('task-description');
     });
 
     it('should add a data attribute with a value and a name', () => {
-        const fieldLayoutDetail = new TaskFieldHTMLData('nameAndValue', 'aKey', () => {
-            return 'aValue';
+        const fieldLayoutDetail = new TaskFieldHTMLData('task-priority', 'taskPriority', () => {
+            return 'highest';
         });
         const span = document.createElement('span');
 
-        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'description');
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'priority');
 
-        expect(getDataAttributesAsString(span)).toEqual('aKey: aValue');
+        expect(getDataAttributesAsString(span)).toEqual('taskPriority: highest');
     });
 
     it('should not add a data attribute without a name', () => {
-        const fieldLayoutDetail = new TaskFieldHTMLData('valueOnly', '', () => {
-            return 'aValue';
+        const fieldLayoutDetail = new TaskFieldHTMLData('task-due', '', () => {
+            return 'past-far';
         });
         const span = document.createElement('span');
 
-        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'description');
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'dueDate');
 
         expect(getDataAttributesAsString(span)).toEqual('');
     });
 
     it.failing('should not add a data attribute with a name but without value', () => {
-        const fieldLayoutDetail = new TaskFieldHTMLData('nameOnly', 'aKey', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('task-start', 'taskStart', () => {
             return '';
         });
         const span = document.createElement('span');
 
-        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'description');
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'startDate');
 
         expect(getDataAttributesAsString(span)).toEqual('');
     });
