@@ -29,7 +29,6 @@ export class TaskLineRenderer {
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
     private readonly layoutOptions: LayoutOptions;
-    // @ts-expect-error
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
     private static async obsidianMarkdownRenderer(
@@ -144,7 +143,7 @@ export class TaskLineRenderer {
         li.setAttribute('data-task-status-type', task.status.type);
         checkbox.setAttribute('data-line', taskIndex.toString());
 
-        if (this.layoutOptions.shortMode) {
+        if (this.queryLayoutOptions.shortMode) {
             this.addTooltip(task, textSpan, isFilenameUnique);
         }
 
