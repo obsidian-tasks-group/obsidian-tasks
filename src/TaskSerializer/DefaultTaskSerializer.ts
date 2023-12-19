@@ -84,7 +84,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         const taskLayout = new TaskLayout();
         let taskString = '';
         for (const component of taskLayout.shownTaskLayoutComponents) {
-            taskString += this.componentToString(task, taskLayout, component, taskLayout.options.shortMode);
+            taskString += this.componentToString(task, taskLayout.options.shortMode, component);
         }
         return taskString;
     }
@@ -92,7 +92,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
     /**
      * Renders a specific TaskLayoutComponent of the task (its description, priority, etc) as a string.
      */
-    public componentToString(task: Task, _layout: TaskLayout, component: TaskLayoutComponent, shortMode1: boolean) {
+    public componentToString(task: Task, shortMode: boolean, component: TaskLayoutComponent) {
         const {
             // NEW_TASK_FIELD_EDIT_REQUIRED
             prioritySymbols,
@@ -104,7 +104,6 @@ export class DefaultTaskSerializer implements TaskSerializer {
             dueDateSymbol,
         } = this.symbols;
 
-        const shortMode = shortMode1;
         switch (component) {
             // NEW_TASK_FIELD_EDIT_REQUIRED
             case 'description':
