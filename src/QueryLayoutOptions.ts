@@ -1,3 +1,8 @@
+/**
+ * Options to control {@link QueryRenderer} behaviour.
+ *
+ * @see LayoutOptions
+ */
 export class QueryLayoutOptions {
     hidePostponeButton: boolean = false;
     hideTaskCount: boolean = false;
