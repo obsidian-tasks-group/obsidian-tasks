@@ -1,4 +1,4 @@
-import { QueryLayoutOptions } from '../QueryLayoutOptions';
+import type { QueryLayoutOptions } from '../QueryLayoutOptions';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
 import { LayoutOptions } from '../TaskLayout';
@@ -25,7 +25,7 @@ export class Query implements IQuery {
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
-    private _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
+    private _queryLayoutOptions: QueryLayoutOptions = this._layoutOptions;
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorter[] = [];
@@ -63,10 +63,10 @@ export class Query implements IQuery {
 
             switch (true) {
                 case this.shortModeRegexp.test(line):
-                    this._layoutOptions.shortMode = true;
+                    this._queryLayoutOptions.shortMode = true;
                     break;
                 case this.explainQueryRegexp.test(line):
-                    this._layoutOptions.explainQuery = true;
+                    this._queryLayoutOptions.explainQuery = true;
                     break;
                 case this.ignoreGlobalQueryRegexp.test(line):
                     this._ignoreGlobalQuery = true;
@@ -296,13 +296,13 @@ Problem line: "${line}"`;
 
             switch (option) {
                 case 'task count':
-                    this._layoutOptions.hideTaskCount = hide;
+                    this._queryLayoutOptions.hideTaskCount = hide;
                     break;
                 case 'backlink':
-                    this._layoutOptions.hideBacklinks = hide;
+                    this._queryLayoutOptions.hideBacklinks = hide;
                     break;
                 case 'postpone button':
-                    this._layoutOptions.hidePostponeButton = hide;
+                    this._queryLayoutOptions.hidePostponeButton = hide;
                     break;
                 case 'priority':
                     this._layoutOptions.hidePriority = hide;
@@ -326,10 +326,10 @@ Problem line: "${line}"`;
                     this._layoutOptions.hideRecurrenceRule = hide;
                     break;
                 case 'edit button':
-                    this._layoutOptions.hideEditButton = hide;
+                    this._queryLayoutOptions.hideEditButton = hide;
                     break;
                 case 'urgency':
-                    this._layoutOptions.hideUrgency = hide;
+                    this._queryLayoutOptions.hideUrgency = hide;
                     break;
                 case 'tags':
                     this._layoutOptions.hideTags = hide;
