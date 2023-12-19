@@ -53,23 +53,27 @@ export class TaskLineRenderer {
      * @param parentUlElement HTML element where the task shall be rendered.
      *
      * @param layoutOptions See {@link LayoutOptions}.
+     *
+     * @param queryLayoutOptions See {@link QueryLayoutOptions}.
      */
     constructor({
         textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
         obsidianComponent,
         parentUlElement,
         layoutOptions,
+        queryLayoutOptions,
     }: {
         textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         layoutOptions: LayoutOptions;
+        queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
         this.layoutOptions = layoutOptions;
-        this.queryLayoutOptions = layoutOptions;
+        this.queryLayoutOptions = queryLayoutOptions;
     }
 
     /**
