@@ -1,3 +1,4 @@
+import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { LayoutOptions } from './TaskLayout';
 import type { Task } from './Task';
 import type { Grouper } from './Query/Grouper';
@@ -47,6 +48,15 @@ export interface IQuery {
      * @memberof IQuery
      */
     layoutOptions: LayoutOptions;
+
+    /**
+     * Any layout options the query engine should be aware of or
+     * used in the query.
+     *
+     * @type {QueryLayoutOptions}
+     * @memberof IQuery
+     */
+    queryLayoutOptions: QueryLayoutOptions;
 
     /**
      * Main method for executing the query. This will be called by the
