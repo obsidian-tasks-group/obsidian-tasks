@@ -1,3 +1,4 @@
+import { QueryLayoutOptions } from '../QueryLayoutOptions';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
 import { LayoutOptions } from '../TaskLayout';
@@ -24,6 +25,8 @@ export class Query implements IQuery {
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
+    // @ts-expect-error unused variable
+    private _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorter[] = [];
