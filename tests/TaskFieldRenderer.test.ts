@@ -49,13 +49,6 @@ describe('Field Layouts Container tests', () => {
 });
 
 describe('Field Layout Detail tests', () => {
-    function getDataAttributesAsString(element: HTMLElement): string {
-        const dataAttributes = element.dataset;
-        const keys = Object.keys(dataAttributes);
-
-        return keys.map((key) => `${key}: ${dataAttributes[key]}`).join('\n');
-    }
-
     it('should supply a class name', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('task-description', '', () => {
             return '';
@@ -71,7 +64,7 @@ describe('Field Layout Detail tests', () => {
 
         fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'priority');
 
-        expect(getDataAttributesAsString(span)).toEqual('taskPriority: highest');
+        expect(span).toHaveDataAttributes('taskPriority: highest');
     });
 
     it('should not add a data attribute without a name', () => {
@@ -82,7 +75,7 @@ describe('Field Layout Detail tests', () => {
 
         fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'dueDate');
 
-        expect(getDataAttributesAsString(span)).toEqual('');
+        expect(span).toHaveDataAttributes('');
     });
 
     it.failing('should not add a data attribute with a name but without value', () => {
@@ -93,6 +86,6 @@ describe('Field Layout Detail tests', () => {
 
         fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'startDate');
 
-        expect(getDataAttributesAsString(span)).toEqual('');
+        expect(span).toHaveDataAttributes('');
     });
 });
