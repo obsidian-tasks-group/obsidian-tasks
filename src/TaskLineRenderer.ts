@@ -155,7 +155,7 @@ export class TaskLineRenderer {
     }
 
     private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
-        const taskLayout = new TaskLayout(this.layoutOptions);
+        const taskLayout = new TaskLayout(this.layoutOptions, this.queryLayoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
         for (const component of taskLayout.shownTaskLayoutComponents) {

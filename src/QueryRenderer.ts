@@ -221,7 +221,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
-        const layout = new TaskLayout(this.query.layoutOptions);
+        const layout = new TaskLayout(this.query.layoutOptions, this.query.queryLayoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
         taskList.addClasses(layout.taskListHiddenClasses);

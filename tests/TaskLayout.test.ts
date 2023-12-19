@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 
+import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import { LayoutOptions, TaskLayout } from '../src/TaskLayout';
 
 describe('TaskLayout tests', () => {
@@ -24,14 +25,20 @@ describe('TaskLayout tests', () => {
 
     it('should generate expected CSS components with all default option reversed', () => {
         const layoutOptions = new LayoutOptions();
-
-        // Negate all the boolean values:
+        // Negate all the task layout boolean values:
         Object.keys(layoutOptions).forEach((key) => {
             const key2 = key as keyof LayoutOptions;
             layoutOptions[key2] = !layoutOptions[key2];
         });
 
-        const taskLayout = new TaskLayout(layoutOptions);
+        const queryLayoutOptions = new QueryLayoutOptions();
+        // Negate all the query layout boolean values:
+        Object.keys(queryLayoutOptions).forEach((key) => {
+            const key2 = key as keyof QueryLayoutOptions;
+            queryLayoutOptions[key2] = !queryLayoutOptions[key2];
+        });
+
+        const taskLayout = new TaskLayout(layoutOptions, queryLayoutOptions);
 
         expect(taskLayout.shownTaskLayoutComponents.join('\n')).toMatchInlineSnapshot(`
             "description
