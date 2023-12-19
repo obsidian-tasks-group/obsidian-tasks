@@ -49,6 +49,13 @@ describe('Field Layouts Container tests', () => {
 });
 
 describe('Field Layout Detail tests', () => {
+    function getDataAttributesAsString(element: HTMLElement): string {
+        const dataAttributes = element.dataset;
+        const keys = Object.keys(dataAttributes);
+
+        return keys.map((key) => `${key}: ${dataAttributes[key]}`).join('\n');
+    }
+
     it('should supply a class name', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('stuff', 'taskAttribute', () => {
             return '';
@@ -64,8 +71,7 @@ describe('Field Layout Detail tests', () => {
 
         fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'description');
 
-        expect(Object.keys(span.dataset).length).toEqual(1);
-        expect(span.dataset['aKey']).toEqual('aValue');
+        expect(getDataAttributesAsString(span)).toEqual('aKey: aValue');
     });
 
     it('should not add a data attribute without a name', () => {
@@ -76,8 +82,7 @@ describe('Field Layout Detail tests', () => {
 
         fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'description');
 
-        expect(Object.keys(span.dataset).length).toEqual(0);
-        expect(span.dataset['aKey']).toEqual(undefined);
+        expect(getDataAttributesAsString(span)).toEqual('');
     });
 
     it.failing('should not add a data attribute with a name but without value', () => {
@@ -88,7 +93,6 @@ describe('Field Layout Detail tests', () => {
 
         fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'description');
 
-        expect(Object.keys(span.dataset).length).toEqual(0);
-        expect(span.dataset['aKey']).toEqual(undefined);
+        expect(getDataAttributesAsString(span)).toEqual('');
     });
 });
