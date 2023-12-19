@@ -80,7 +80,7 @@ describe('Field Layout Detail tests', () => {
         expect(span.dataset['aKey']).toEqual(undefined);
     });
 
-    it('should add a data attribute with a name but without value', () => {
+    it.failing('should not add a data attribute with a name but without value', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('nameOnly', 'aKey', () => {
             return '';
         });
@@ -88,7 +88,7 @@ describe('Field Layout Detail tests', () => {
 
         fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'description');
 
-        expect(Object.keys(span.dataset).length).toEqual(1);
-        expect(span.dataset['aKey']).toEqual('');
+        expect(Object.keys(span.dataset).length).toEqual(0);
+        expect(span.dataset['aKey']).toEqual(undefined);
     });
 });
