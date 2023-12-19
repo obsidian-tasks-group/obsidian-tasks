@@ -1,6 +1,7 @@
 import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
+import { QueryLayoutOptions } from './QueryLayoutOptions';
 import { Task } from './Task';
 import { LayoutOptions } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
@@ -91,6 +92,7 @@ export class InlineRenderer {
             obsidianComponent: childComponent,
             parentUlElement: element,
             layoutOptions: new LayoutOptions(),
+            queryLayoutOptions: new QueryLayoutOptions(),
         });
 
         // The section index is the nth task within this section.

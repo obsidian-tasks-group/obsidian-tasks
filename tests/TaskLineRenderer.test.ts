@@ -39,13 +39,14 @@ async function renderListItem(
     task: Task,
     layoutOptions?: LayoutOptions,
     testRenderer?: TextRenderer,
-    _queryLayoutOptions?: QueryLayoutOptions,
+    queryLayoutOptions?: QueryLayoutOptions,
 ) {
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: testRenderer ?? mockTextRenderer,
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
         layoutOptions: layoutOptions ?? new LayoutOptions(),
+        queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     return await taskLineRenderer.renderTaskLine(task, 0);
 }
@@ -100,6 +101,7 @@ describe('task line rendering - HTML', () => {
             obsidianComponent: null,
             parentUlElement: ulElement,
             layoutOptions: new LayoutOptions(),
+            queryLayoutOptions: new QueryLayoutOptions(),
         });
         const listItem = await taskLineRenderer.renderTaskLine(new TaskBuilder().build(), 0);
 

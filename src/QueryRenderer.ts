@@ -232,6 +232,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             obsidianComponent: this,
             parentUlElement: taskList,
             layoutOptions: this.query.layoutOptions,
+            queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
