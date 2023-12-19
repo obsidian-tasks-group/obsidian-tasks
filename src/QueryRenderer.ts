@@ -420,12 +420,17 @@ class QueryRenderChild extends MarkdownRenderChild {
         button.addClasses(classNames);
         button.setText(' ⏩');
 
-        button.addEventListener('click', () => this.postponeOnClickCallback(button, task, amount, timeUnit));
+        button.addEventListener('click', (ev: MouseEvent) => {
+            ev.preventDefault(); // suppress the default click behavior
+            this.postponeOnClickCallback(button, task, amount, timeUnit);
+        });
 
         /** Open a context menu on right-click.
          * Give a choice of postponing for a week, month, or quarter.
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
+            ev.stopPropagation(); // suppress the default context menu
+
             const menu = new Menu();
 
             const postponeMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
