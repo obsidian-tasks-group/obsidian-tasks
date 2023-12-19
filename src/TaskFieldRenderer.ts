@@ -30,6 +30,11 @@ export class TaskFieldRenderer {
     public className(component: TaskLayoutComponent) {
         return this.data[component].className;
     }
+
+    public addClassName(element: HTMLElement, component: TaskLayoutComponent) {
+        const componentClass = this.className(component);
+        element.classList.add(...[componentClass]);
+    }
 }
 
 type AttributeValueCalculator = (component: TaskLayoutComponent, task: Task) => string;
