@@ -112,7 +112,7 @@ export class DataviewTaskSerializer extends DefaultTaskSerializer {
     }
 
     public componentToString(task: Task, layout: TaskLayout, component: TaskLayoutComponent) {
-        const stringComponent = super.componentToString(task, layout, component);
+        const stringComponent = super.componentToString(task, layout, component, layout.options.shortMode);
         const notInlineFieldComponents: TaskLayoutComponent[] = ['blockLink', 'description'];
         const shouldMakeInlineField = stringComponent !== '' && !notInlineFieldComponents.includes(component);
         return shouldMakeInlineField
