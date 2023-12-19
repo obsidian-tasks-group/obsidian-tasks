@@ -38,8 +38,8 @@ const fieldRenderer = new TaskFieldRenderer();
 async function renderListItem(
     task: Task,
     layoutOptions?: LayoutOptions,
-    testRenderer?: TextRenderer,
     queryLayoutOptions?: QueryLayoutOptions,
+    testRenderer?: TextRenderer,
 ) {
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: testRenderer ?? mockTextRenderer,
@@ -578,7 +578,7 @@ describe('task line rendering - classes and data attributes', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const listItem = await renderListItem(task, new LayoutOptions(), mockHTMLRenderer);
+        const listItem = await renderListItem(task, new LayoutOptions(), new QueryLayoutOptions(), mockHTMLRenderer);
 
         const textSpan = getTextSpan(listItem);
         const descriptionSpan = textSpan.children[0].children[0] as HTMLElement;
@@ -594,7 +594,7 @@ describe('task line rendering - classes and data attributes', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const listItem = await renderListItem(task, new LayoutOptions(), mockHTMLRenderer);
+        const listItem = await renderListItem(task, new LayoutOptions(), new QueryLayoutOptions(), mockHTMLRenderer);
 
         const textSpan = getTextSpan(listItem);
         const descriptionSpan = textSpan.children[0].children[0] as HTMLElement;
@@ -657,7 +657,7 @@ describe('Visualise HTML', () => {
         task: Task,
         { layoutOptions, queryLayoutOptions }: { layoutOptions: LayoutOptions; queryLayoutOptions: QueryLayoutOptions },
     ) {
-        const listItem = await renderListItem(task, layoutOptions, mockHTMLRenderer, queryLayoutOptions);
+        const listItem = await renderListItem(task, layoutOptions, queryLayoutOptions, mockHTMLRenderer);
 
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
