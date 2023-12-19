@@ -3,6 +3,7 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
+import { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
@@ -28,6 +29,8 @@ export class TaskLineRenderer {
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
     private readonly layoutOptions: LayoutOptions;
+    // @ts-expect-error
+    private readonly queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
 
     private static async obsidianMarkdownRenderer(
         text: string,
