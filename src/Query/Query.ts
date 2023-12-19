@@ -25,7 +25,6 @@ export class Query implements IQuery {
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
-    // @ts-expect-error unused variable
     private _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
@@ -218,6 +217,10 @@ ${source}`;
 
     public get layoutOptions(): LayoutOptions {
         return this._layoutOptions;
+    }
+
+    public get queryLayoutOptions(): QueryLayoutOptions {
+        return this._queryLayoutOptions;
     }
 
     public get filters(): Filter[] {
