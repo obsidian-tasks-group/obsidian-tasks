@@ -155,7 +155,11 @@ export class TaskLineRenderer {
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
         for (const component of taskLayout.shownTaskLayoutComponents) {
-            const componentString = emojiSerializer.componentToString(task, taskLayout.options.shortMode, component);
+            const componentString = emojiSerializer.componentToString(
+                task,
+                taskLayout.queryLayoutOptions.shortMode,
+                component,
+            );
             if (componentString) {
                 // Create the text span that will hold the rendered component
                 const span = document.createElement('span');
