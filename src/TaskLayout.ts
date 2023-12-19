@@ -1,11 +1,10 @@
+import { QueryLayoutOptions } from './QueryLayoutOptions';
+
 /**
  * Various rendering options for a query.
  * See applyOptions below when adding options here.
  */
-export class LayoutOptions {
-    hidePostponeButton: boolean = false;
-    hideTaskCount: boolean = false;
-    hideBacklinks: boolean = false;
+export class LayoutOptions extends QueryLayoutOptions {
     hidePriority: boolean = false;
     hideCreatedDate: boolean = false;
     hideStartDate: boolean = false;
@@ -13,11 +12,7 @@ export class LayoutOptions {
     hideDoneDate: boolean = false;
     hideDueDate: boolean = false;
     hideRecurrenceRule: boolean = false;
-    hideEditButton: boolean = false;
-    hideUrgency: boolean = true;
     hideTags: boolean = false;
-    shortMode: boolean = false;
-    explainQuery: boolean = false;
 }
 
 export type TaskLayoutComponent =
