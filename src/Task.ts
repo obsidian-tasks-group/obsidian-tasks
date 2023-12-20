@@ -430,8 +430,14 @@ export class Task {
             }
             const statusRegistry = StatusRegistry.getInstance();
             let nextStatus = statusRegistry.getNextStatusOrCreate(newStatus);
-            while (nextStatus.type !== StatusType.TODO) {
-                nextStatus = statusRegistry.getNextStatusOrCreate(nextStatus);
+            if (nextStatus.type !== StatusType.TODO) {
+                for (let i = 0; i < statusRegistry.registeredStatuses.length - 1; i++) {
+                    const searchStatus = statusRegistry.getNextStatusOrCreate(nextStatus);
+                    if (searchStatus.type === StatusType.TODO) {
+                        nextStatus = searchStatus;
+                        break;
+                    }
+                }
             }
             const nextTask = new Task({
                 ...this,
