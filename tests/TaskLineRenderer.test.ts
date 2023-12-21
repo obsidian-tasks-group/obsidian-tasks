@@ -181,12 +181,12 @@ describe('task line rendering - global filter', () => {
 
 describe('task line rendering - layout options', () => {
     const testLayoutOptions = async (
-        taskLine: string,
+        _taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
         expectedComponents: string[],
     ) => {
         const task = fromLine({
-            line: taskLine,
+            line: _taskLine,
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
