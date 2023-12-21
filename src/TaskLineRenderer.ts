@@ -3,6 +3,7 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
+import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
@@ -28,6 +29,7 @@ export class TaskLineRenderer {
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
     private readonly layoutOptions: LayoutOptions;
+    private readonly queryLayoutOptions: QueryLayoutOptions;
 
     private static async obsidianMarkdownRenderer(
         text: string,
@@ -51,22 +53,27 @@ export class TaskLineRenderer {
      * @param parentUlElement HTML element where the task shall be rendered.
      *
      * @param layoutOptions See {@link LayoutOptions}.
+     *
+     * @param queryLayoutOptions See {@link QueryLayoutOptions}.
      */
     constructor({
         textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
         obsidianComponent,
         parentUlElement,
         layoutOptions,
+        queryLayoutOptions,
     }: {
         textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         layoutOptions: LayoutOptions;
+        queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
         this.layoutOptions = layoutOptions;
+        this.queryLayoutOptions = queryLayoutOptions;
     }
 
     /**
@@ -140,7 +147,7 @@ export class TaskLineRenderer {
         li.setAttribute('data-task-status-type', task.status.type);
         checkbox.setAttribute('data-line', taskIndex.toString());
 
-        if (this.layoutOptions.shortMode) {
+        if (this.queryLayoutOptions.shortMode) {
             this.addTooltip(task, textSpan, isFilenameUnique);
         }
 
@@ -148,11 +155,15 @@ export class TaskLineRenderer {
     }
 
     private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
-        const taskLayout = new TaskLayout(this.layoutOptions);
+        const taskLayout = new TaskLayout(this.layoutOptions, this.queryLayoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
         for (const component of taskLayout.shownTaskLayoutComponents) {
-            const componentString = emojiSerializer.componentToString(task, taskLayout, component);
+            const componentString = emojiSerializer.componentToString(
+                task,
+                taskLayout.queryLayoutOptions.shortMode,
+                component,
+            );
             if (componentString) {
                 // Create the text span that will hold the rendered component
                 const span = document.createElement('span');

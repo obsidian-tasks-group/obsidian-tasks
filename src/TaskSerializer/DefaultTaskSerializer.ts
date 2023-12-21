@@ -84,7 +84,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         const taskLayout = new TaskLayout();
         let taskString = '';
         for (const component of taskLayout.shownTaskLayoutComponents) {
-            taskString += this.componentToString(task, taskLayout, component);
+            taskString += this.componentToString(task, taskLayout.queryLayoutOptions.shortMode, component);
         }
         return taskString;
     }
@@ -92,7 +92,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
     /**
      * Renders a specific TaskLayoutComponent of the task (its description, priority, etc) as a string.
      */
-    public componentToString(task: Task, layout: TaskLayout, component: TaskLayoutComponent) {
+    public componentToString(task: Task, shortMode: boolean, component: TaskLayoutComponent) {
         const {
             // NEW_TASK_FIELD_EDIT_REQUIRED
             prioritySymbols,
@@ -126,34 +126,32 @@ export class DefaultTaskSerializer implements TaskSerializer {
             }
             case 'startDate':
                 if (!task.startDate) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + startDateSymbol
                     : ` ${startDateSymbol} ${task.startDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'createdDate':
                 if (!task.createdDate) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + createdDateSymbol
                     : ` ${createdDateSymbol} ${task.createdDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'scheduledDate':
                 if (!task.scheduledDate || task.scheduledDateIsInferred) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + scheduledDateSymbol
                     : ` ${scheduledDateSymbol} ${task.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'doneDate':
                 if (!task.doneDate) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + doneDateSymbol
                     : ` ${doneDateSymbol} ${task.doneDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'dueDate':
                 if (!task.dueDate) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + dueDateSymbol
                     : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
-                return layout.options.shortMode
-                    ? ' ' + recurrenceSymbol
-                    : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
+                return shortMode ? ' ' + recurrenceSymbol : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
             case 'blockLink':
                 return task.blockLink ?? '';
             default:

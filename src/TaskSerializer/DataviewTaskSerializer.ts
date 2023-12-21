@@ -1,4 +1,4 @@
-import type { TaskLayout, TaskLayoutComponent } from '../TaskLayout';
+import type { TaskLayoutComponent } from '../TaskLayout';
 import type { Task } from '../Task';
 import { Priority } from '../Task';
 import { DefaultTaskSerializer } from './DefaultTaskSerializer';
@@ -111,8 +111,8 @@ export class DataviewTaskSerializer extends DefaultTaskSerializer {
         }
     }
 
-    public componentToString(task: Task, layout: TaskLayout, component: TaskLayoutComponent) {
-        const stringComponent = super.componentToString(task, layout, component);
+    public componentToString(task: Task, shortMode: boolean, component: TaskLayoutComponent) {
+        const stringComponent = super.componentToString(task, shortMode, component);
         const notInlineFieldComponents: TaskLayoutComponent[] = ['blockLink', 'description'];
         const shouldMakeInlineField = stringComponent !== '' && !notInlineFieldComponents.includes(component);
         return shouldMakeInlineField
