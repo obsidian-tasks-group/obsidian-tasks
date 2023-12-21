@@ -185,9 +185,7 @@ describe('task line rendering - layout options', () => {
         layoutOptions: Partial<LayoutOptions>,
         expectedComponents: string[],
     ) => {
-        const task = fromLine({
-            line: _taskLine,
-        });
+        const task = TaskBuilder.createFullyPopulatedTask();
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
         const renderedComponents = getListItemComponents(listItem);
