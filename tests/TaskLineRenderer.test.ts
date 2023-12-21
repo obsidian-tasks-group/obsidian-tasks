@@ -221,6 +221,22 @@ describe('task line rendering - layout options', () => {
         );
     });
 
+    it('renders without recurrence rule', async () => {
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
+            { hideRecurrenceRule: true },
+        );
+    });
+
     it('renders without created date', async () => {
         await testLayoutOptions(
             [
@@ -282,22 +298,6 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             { hideDueDate: true },
-        );
-    });
-
-    it('renders without recurrence rule', async () => {
-        await testLayoutOptions(
-            [
-                'Do exercises #todo #health',
-                ' 🔼',
-                ' ➕ 2023-07-01',
-                ' 🛫 2023-07-02',
-                ' ⏳ 2023-07-03',
-                ' 📅 2023-07-04',
-                ' ✅ 2023-07-05',
-                ' ^dcf64c',
-            ],
-            { hideRecurrenceRule: true },
         );
     });
 
