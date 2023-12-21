@@ -50,6 +50,14 @@ expect.extend({
 });
 
 // ---------------------------------------------------------------------
+// CustomMatchersForRendering
+// ---------------------------------------------------------------------
+import { toHaveDataAttributes } from './CustomMatchersForRendering';
+expect.extend({
+    toHaveDataAttributes,
+});
+
+// ---------------------------------------------------------------------
 // CustomMatchersForTaskBuilder
 // ---------------------------------------------------------------------
 import { toBeIdenticalTo } from './CustomMatchersForTaskBuilder';
