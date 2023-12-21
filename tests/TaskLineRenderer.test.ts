@@ -196,7 +196,7 @@ describe('task line rendering - layout options', () => {
 
     it('renders correctly with the default layout options', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done ^dcf64c',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03  🛫 2023-07-02 ✅ 2023-07-05 🔁 every day when done ^dcf64c',
             {},
             [
                 'Do exercises #todo #health',
@@ -206,6 +206,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
         );
@@ -213,7 +214,7 @@ describe('task line rendering - layout options', () => {
 
     it('renders without priority', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done ^dcf64c',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03  🛫 2023-07-02 ✅ 2023-07-05 🔁 every day when done ^dcf64c',
             { hidePriority: true },
             [
                 'Do exercises #todo #health',
@@ -222,6 +223,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
         );
@@ -229,7 +231,7 @@ describe('task line rendering - layout options', () => {
 
     it('renders without created date', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done ^dcf64c',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 ✅ 2023-07-05 🔁 every day when done ^dcf64c',
             { hideCreatedDate: true },
             [
                 'Do exercises #todo #health',
@@ -238,6 +240,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
         );
@@ -245,7 +248,7 @@ describe('task line rendering - layout options', () => {
 
     it('renders without start date', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done ^dcf64c',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03  🛫 2023-07-02 ✅ 2023-07-05 🔁 every day when done ^dcf64c',
             { hideStartDate: true },
             [
                 'Do exercises #todo #health',
@@ -254,6 +257,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
         );
@@ -261,7 +265,7 @@ describe('task line rendering - layout options', () => {
 
     it('renders without scheduled date', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done ^dcf64c',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03  🛫 2023-07-02 ✅ 2023-07-05 🔁 every day when done ^dcf64c',
             { hideScheduledDate: true },
             [
                 'Do exercises #todo #health',
@@ -270,6 +274,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
         );
@@ -277,7 +282,7 @@ describe('task line rendering - layout options', () => {
 
     it('renders without due date', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done ^dcf64c',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03  🛫 2023-07-02 ✅ 2023-07-05 🔁 every day when done ^dcf64c',
             { hideDueDate: true },
             [
                 'Do exercises #todo #health',
@@ -286,6 +291,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
+                ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
         );
@@ -293,7 +299,7 @@ describe('task line rendering - layout options', () => {
 
     it('renders without recurrence rule', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done ^dcf64c',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03  🛫 2023-07-02 ✅ 2023-07-05 🔁 every day when done ^dcf64c',
             { hideRecurrenceRule: true },
             [
                 'Do exercises #todo #health',
@@ -302,6 +308,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
         );
