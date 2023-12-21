@@ -196,12 +196,13 @@ describe('task line rendering - layout options', () => {
 
     it('renders correctly with the default layout options', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
             {},
             [
                 'Do exercises #todo #health',
                 ' 🔼',
                 ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
@@ -211,11 +212,12 @@ describe('task line rendering - layout options', () => {
 
     it('renders without priority', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
             { hidePriority: true },
             [
                 'Do exercises #todo #health',
                 ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
@@ -225,7 +227,7 @@ describe('task line rendering - layout options', () => {
 
     it('renders without created date', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
             { hideCreatedDate: true },
             [
                 'Do exercises #todo #health',
@@ -240,45 +242,73 @@ describe('task line rendering - layout options', () => {
 
     it('renders without start date', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
             { hideStartDate: true },
-            ['Do exercises #todo #health', ' 🔼', ' 🔁 every day when done', ' ⏳ 2023-07-03', ' 📅 2023-07-04'],
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+            ],
         );
     });
 
     it('renders without scheduled date', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
             { hideScheduledDate: true },
-            ['Do exercises #todo #health', ' 🔼', ' 🔁 every day when done', ' 🛫 2023-07-02', ' 📅 2023-07-04'],
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' 📅 2023-07-04',
+            ],
         );
     });
 
     it('renders without due date', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
             { hideDueDate: true },
-            ['Do exercises #todo #health', ' 🔼', ' 🔁 every day when done', ' 🛫 2023-07-02', ' ⏳ 2023-07-03'],
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+            ],
         );
     });
 
     it('renders without recurrence rule', async () => {
         await testLayoutOptions(
-            '- [ ] Do exercises #todo #health 🔼 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
+            '- [ ] Do exercises #todo #health 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 🔁 every day when done',
             { hideRecurrenceRule: true },
-            ['Do exercises #todo #health', ' 🔼', ' 🛫 2023-07-02', ' ⏳ 2023-07-03', ' 📅 2023-07-04'],
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+            ],
         );
     });
 
     it('renders a done task correctly with the default layout', async () => {
         await testLayoutOptions(
-            '- [x] Do exercises #todo #health ✅ 2022-07-05 🔼 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
+            '- [x] Do exercises #todo #health ✅ 2022-07-05 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
             {},
             [
                 'Do exercises #todo #health',
                 ' 🔼',
                 ' 🔁 every day when done',
-                ' ➕ 2022-07-05',
+                ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
@@ -289,13 +319,13 @@ describe('task line rendering - layout options', () => {
 
     it('renders a done task without the done date', async () => {
         await testLayoutOptions(
-            '- [x] Do exercises #todo #health ✅ 2022-07-05 🔼 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
+            '- [x] Do exercises #todo #health ✅ 2022-07-05 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
             { hideDoneDate: true },
             [
                 'Do exercises #todo #health',
                 ' 🔼',
                 ' 🔁 every day when done',
-                ' ➕ 2022-07-05',
+                ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
