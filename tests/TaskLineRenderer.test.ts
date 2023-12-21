@@ -6,6 +6,7 @@ import { DebugSettings } from '../src/Config/DebugSettings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
+import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
 import { TaskFieldRenderer } from '../src/TaskFieldRenderer';
@@ -31,13 +32,21 @@ const fieldRenderer = new TaskFieldRenderer();
  * @param layoutOptions for the task rendering. Skip for default options. See {@link LayoutOptions}.
  *
  * @param testRenderer imitates Obsidian rendering. Skip for the default {@link mockTextRenderer}.
+ *
+ * @param queryLayoutOptions for the task rendering. Skip for default options. See {@link QueryLayoutOptions}.
  */
-async function renderListItem(task: Task, layoutOptions?: LayoutOptions, testRenderer?: TextRenderer) {
+async function renderListItem(
+    task: Task,
+    layoutOptions?: LayoutOptions,
+    queryLayoutOptions?: QueryLayoutOptions,
+    testRenderer?: TextRenderer,
+) {
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: testRenderer ?? mockTextRenderer,
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
         layoutOptions: layoutOptions ?? new LayoutOptions(),
+        queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     return await taskLineRenderer.renderTaskLine(task, 0);
 }
@@ -92,6 +101,7 @@ describe('task line rendering - HTML', () => {
             obsidianComponent: null,
             parentUlElement: ulElement,
             layoutOptions: new LayoutOptions(),
+            queryLayoutOptions: new QueryLayoutOptions(),
         });
         const listItem = await taskLineRenderer.renderTaskLine(new TaskBuilder().build(), 0);
 
@@ -568,7 +578,7 @@ describe('task line rendering - classes and data attributes', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const listItem = await renderListItem(task, new LayoutOptions(), mockHTMLRenderer);
+        const listItem = await renderListItem(task, new LayoutOptions(), new QueryLayoutOptions(), mockHTMLRenderer);
 
         const textSpan = getTextSpan(listItem);
         const descriptionSpan = textSpan.children[0].children[0] as HTMLElement;
@@ -584,7 +594,7 @@ describe('task line rendering - classes and data attributes', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const listItem = await renderListItem(task, new LayoutOptions(), mockHTMLRenderer);
+        const listItem = await renderListItem(task, new LayoutOptions(), new QueryLayoutOptions(), mockHTMLRenderer);
 
         const textSpan = getTextSpan(listItem);
         const descriptionSpan = textSpan.children[0].children[0] as HTMLElement;
@@ -643,8 +653,11 @@ describe('task line rendering - classes and data attributes', () => {
 });
 
 describe('Visualise HTML', () => {
-    async function renderAndVerifyHTML(task: Task, layoutOptions: LayoutOptions) {
-        const listItem = await renderListItem(task, layoutOptions, mockHTMLRenderer);
+    async function renderAndVerifyHTML(
+        task: Task,
+        { layoutOptions, queryLayoutOptions }: { layoutOptions: LayoutOptions; queryLayoutOptions: QueryLayoutOptions },
+    ) {
+        const listItem = await renderListItem(task, layoutOptions, queryLayoutOptions, mockHTMLRenderer);
 
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
@@ -657,7 +670,7 @@ ${task.toFileLineString()}
     const fullTask = TaskBuilder.createFullyPopulatedTask();
     const minimalTask = fromLine({ line: '- [-] empty' });
 
-    function layoutOptionsFullMode(): LayoutOptions {
+    function layoutOptionsFullMode() {
         const layoutOptions = new LayoutOptions();
 
         // Show every Task field, disable short mode, do not explain the query
@@ -669,15 +682,14 @@ ${task.toFileLineString()}
             layoutOptions[key2] = false;
         });
 
-        return layoutOptions;
+        return { layoutOptions, queryLayoutOptions: new QueryLayoutOptions() };
     }
 
-    function layoutOptionsShortMode(): LayoutOptions {
-        const layoutOptions = layoutOptionsFullMode();
+    function layoutOptionsShortMode() {
+        const queryLayoutOptions = new QueryLayoutOptions();
+        queryLayoutOptions.shortMode = true;
 
-        layoutOptions.shortMode = true;
-
-        return layoutOptions;
+        return { layoutOptions: new LayoutOptions(), queryLayoutOptions };
     }
 
     it('Full task - full mode', async () => {

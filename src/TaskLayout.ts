@@ -1,11 +1,12 @@
+import { QueryLayoutOptions } from './QueryLayoutOptions';
+
 /**
- * Various rendering options for a query.
+ * Various rendering options of tasks in a query.
  * See applyOptions below when adding options here.
+ *
+ * @see QueryLayoutOptions
  */
 export class LayoutOptions {
-    hidePostponeButton: boolean = false;
-    hideTaskCount: boolean = false;
-    hideBacklinks: boolean = false;
     hidePriority: boolean = false;
     hideCreatedDate: boolean = false;
     hideStartDate: boolean = false;
@@ -13,11 +14,7 @@ export class LayoutOptions {
     hideDoneDate: boolean = false;
     hideDueDate: boolean = false;
     hideRecurrenceRule: boolean = false;
-    hideEditButton: boolean = false;
-    hideUrgency: boolean = true;
     hideTags: boolean = false;
-    shortMode: boolean = false;
-    explainQuery: boolean = false;
 }
 
 export type TaskLayoutComponent =
@@ -53,14 +50,21 @@ export class TaskLayout {
     public shownTaskLayoutComponents: TaskLayoutComponent[];
     public hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     public options: LayoutOptions;
+    public queryLayoutOptions: QueryLayoutOptions;
     public taskListHiddenClasses: string[] = [];
 
-    constructor(options?: LayoutOptions) {
+    constructor(options?: LayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
         if (options) {
             this.options = options;
         } else {
             this.options = new LayoutOptions();
         }
+        if (queryLayoutOptions) {
+            this.queryLayoutOptions = queryLayoutOptions;
+        } else {
+            this.queryLayoutOptions = new QueryLayoutOptions();
+        }
+
         this.shownTaskLayoutComponents = this.defaultLayout;
         this.applyOptions();
     }
@@ -92,16 +96,16 @@ export class TaskLayout {
             // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).
             // This can benefit from some refactoring, i.e. render these components in a similar flow rather than
             // separately.
-            [this.options.hideUrgency, 'urgency'],
-            [this.options.hideBacklinks, 'backlinks'],
-            [this.options.hideEditButton, 'edit-button'],
-            [this.options.hidePostponeButton, 'postpone-button'],
+            [this.queryLayoutOptions.hideUrgency, 'urgency'],
+            [this.queryLayoutOptions.hideBacklinks, 'backlinks'],
+            [this.queryLayoutOptions.hideEditButton, 'edit-button'],
+            [this.queryLayoutOptions.hidePostponeButton, 'postpone-button'],
         ];
         for (const [hide, component] of componentsToGenerateClassesOnly) {
             this.generateHiddenClassForTaskList(hide, component);
         }
 
-        if (this.options.shortMode) this.taskListHiddenClasses.push('tasks-layout-short-mode');
+        if (this.queryLayoutOptions.shortMode) this.taskListHiddenClasses.push('tasks-layout-short-mode');
     }
 
     private generateHiddenClassForTaskList(hide: boolean, component: string) {
