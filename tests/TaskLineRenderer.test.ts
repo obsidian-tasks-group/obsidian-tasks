@@ -318,7 +318,7 @@ describe('task line rendering - layout options', () => {
         );
     });
 
-    it('renders a done task without the done date', async () => {
+    it('renders without done date', async () => {
         await testLayoutOptions(
             [
                 'Do exercises #todo #health',
