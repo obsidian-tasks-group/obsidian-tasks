@@ -302,7 +302,7 @@ describe('task line rendering - layout options', () => {
 
     it('renders a done task correctly with the default layout', async () => {
         await testLayoutOptions(
-            '- [x] Do exercises #todo #health ✅ 2022-07-05 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
+            '- [x] Do exercises #todo #health ✅ 2023-07-05 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
             {},
             [
                 'Do exercises #todo #health',
@@ -312,14 +312,14 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
-                ' ✅ 2022-07-05',
+                ' ✅ 2023-07-05',
             ],
         );
     });
 
     it('renders a done task without the done date', async () => {
         await testLayoutOptions(
-            '- [x] Do exercises #todo #health ✅ 2022-07-05 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
+            '- [x] Do exercises #todo #health ✅ 2023-07-05 🔼 ➕ 2023-07-01 📅 2023-07-04 ⏳ 2023-07-03 🛫 2023-07-02 ➕ 2022-07-05 🔁 every day when done',
             { hideDoneDate: true },
             [
                 'Do exercises #todo #health',
