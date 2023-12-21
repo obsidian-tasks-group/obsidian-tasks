@@ -349,15 +349,29 @@ describe('task line rendering - layout options', () => {
         );
     });
 
+    const testLayoutOptionsFromLine = async (
+        taskLine: string,
+        layoutOptions: Partial<LayoutOptions>,
+        expectedComponents: string[],
+    ) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+        const listItem = await renderListItem(task, fullLayoutOptions);
+        const renderedComponents = getListItemComponents(listItem);
+        expect(renderedComponents).toEqual(expectedComponents);
+    };
+
     it('writes a placeholder message if a date is invalid', async () => {
-        await testLayoutOptions('- [ ] Task with invalid due date 📅 2023-13-02', {}, [
+        await testLayoutOptionsFromLine('- [ ] Task with invalid due date 📅 2023-13-02', {}, [
             'Task with invalid due date',
             ' 📅 Invalid date',
         ]);
     });
 
     it('standardise the recurrence rule, even if the rule is invalid', async () => {
-        await testLayoutOptions('- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd', {}, [
+        await testLayoutOptionsFromLine('- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd', {}, [
             'Task with invalid recurrence rule',
             ' 🔁 every month on the 32th',
         ]);
