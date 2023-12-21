@@ -353,8 +353,7 @@ describe('task line rendering - layout options', () => {
         const task = fromLine({
             line: taskLine,
         });
-        const fullLayoutOptions = { ...new LayoutOptions() };
-        const listItem = await renderListItem(task, fullLayoutOptions);
+        const listItem = await renderListItem(task);
         const renderedComponents = getListItemComponents(listItem);
         expect(renderedComponents).toEqual(expectedComponents);
     };
