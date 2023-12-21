@@ -431,8 +431,9 @@ export class Task {
             const statusRegistry = StatusRegistry.getInstance();
             let nextStatus = statusRegistry.getNextStatusOrCreate(newStatus);
             if (nextStatus.type !== StatusType.TODO) {
+                let searchStatus = nextStatus;
                 for (let i = 0; i < statusRegistry.registeredStatuses.length - 1; i++) {
-                    const searchStatus = statusRegistry.getNextStatusOrCreate(nextStatus);
+                    searchStatus = statusRegistry.getNextStatusOrCreate(searchStatus);
                     if (searchStatus.type === StatusType.TODO) {
                         nextStatus = searchStatus;
                         break;
