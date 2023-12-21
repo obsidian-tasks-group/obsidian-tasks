@@ -163,13 +163,14 @@ describe('StatusRegistry', () => {
         expect(status2).toStrictEqual(status);
     });
 
-    it('should create a mermaid diagram of default statuses', () => {
-        // Arrange
-        const statusRegistry = new StatusRegistry();
+    describe('mermaid diagrams', () => {
+        it('should create a mermaid diagram of default statuses', () => {
+            // Arrange
+            const statusRegistry = new StatusRegistry();
 
-        // Assert
-        // Without detail:
-        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+            // Assert
+            // Without detail:
+            expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -194,8 +195,8 @@ describe('StatusRegistry', () => {
             "
         `);
 
-        // With detail:
-        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            // With detail:
+            expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -219,24 +220,24 @@ describe('StatusRegistry', () => {
             \`\`\`
             "
         `);
-    });
+        });
 
-    it('should encode symbols in mermaid diagrams when necessary', () => {
-        // This tests the fix for:
-        //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2355
-        //      Fix the handling of special characters in Mermaid status diagrams
+        it('should encode symbols in mermaid diagrams when necessary', () => {
+            // This tests the fix for:
+            //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2355
+            //      Fix the handling of special characters in Mermaid status diagrams
 
-        // Arrange
-        const statusRegistry = new StatusRegistry();
-        statusRegistry.clearStatuses();
-        statusRegistry.add(new StatusConfiguration('<', 'Todo <', '<', false, StatusType.TODO));
-        statusRegistry.add(new StatusConfiguration('>', 'Todo >', '>', false, StatusType.TODO));
-        statusRegistry.add(new StatusConfiguration('"', 'Todo "', '"', false, StatusType.TODO));
-        statusRegistry.add(new StatusConfiguration('&', 'Todo &', '&', false, StatusType.TODO));
+            // Arrange
+            const statusRegistry = new StatusRegistry();
+            statusRegistry.clearStatuses();
+            statusRegistry.add(new StatusConfiguration('<', 'Todo <', '<', false, StatusType.TODO));
+            statusRegistry.add(new StatusConfiguration('>', 'Todo >', '>', false, StatusType.TODO));
+            statusRegistry.add(new StatusConfiguration('"', 'Todo "', '"', false, StatusType.TODO));
+            statusRegistry.add(new StatusConfiguration('&', 'Todo &', '&', false, StatusType.TODO));
 
-        // Assert
-        // Without detail:
-        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+            // Assert
+            // Without detail:
+            expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -261,8 +262,8 @@ describe('StatusRegistry', () => {
             "
         `);
 
-        // With detail:
-        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            // With detail:
+            expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -286,22 +287,22 @@ describe('StatusRegistry', () => {
             \`\`\`
             "
         `);
-    });
+        });
 
-    it('should not include unknown nextStatusSymbols in mermaid diagrams', () => {
-        // Arrange
-        const statusRegistry = new StatusRegistry();
-        statusRegistry.clearStatuses();
-        statusRegistry.add(new StatusConfiguration(' ', 'Todo', '/', false, StatusType.TODO));
-        // Leave '/' as not registered
-        const originalNumberOfStatuses = statusRegistry.registeredStatuses.length;
+        it('should not include unknown nextStatusSymbols in mermaid diagrams', () => {
+            // Arrange
+            const statusRegistry = new StatusRegistry();
+            statusRegistry.clearStatuses();
+            statusRegistry.add(new StatusConfiguration(' ', 'Todo', '/', false, StatusType.TODO));
+            // Leave '/' as not registered
+            const originalNumberOfStatuses = statusRegistry.registeredStatuses.length;
 
-        // Act
-        const mermaidText = statusRegistry.mermaidDiagram();
+            // Act
+            const mermaidText = statusRegistry.mermaidDiagram();
 
-        // Assert
-        expect(statusRegistry.registeredStatuses.length).toEqual(originalNumberOfStatuses);
-        expect(mermaidText).toMatchInlineSnapshot(`
+            // Assert
+            expect(statusRegistry.registeredStatuses.length).toEqual(originalNumberOfStatuses);
+            expect(mermaidText).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -319,6 +320,7 @@ describe('StatusRegistry', () => {
             \`\`\`
             "
         `);
+        });
     });
 
     describe('toggling', () => {
