@@ -163,6 +163,44 @@ describe('StatusRegistry', () => {
         expect(status2).toStrictEqual(status);
     });
 
+    it('should find unknown statuses from tasks in the vault, sorted by symbol', () => {
+        // Arrange
+        const registry = new StatusRegistry();
+        expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
+        expect(registry.bySymbol('X').type).toEqual(StatusType.EMPTY);
+        expect(registry.bySymbol('d').type).toEqual(StatusType.EMPTY);
+        const allStatuses = [
+            new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
+            new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
+            new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+            // Include some tasks with duplicate statuses, to make sure duplicates are discarded
+            new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
+            new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
+            new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+            // Check that it does not add copies of any core statuses
+            new Status(new StatusConfiguration('-', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+        ];
+
+        // Act
+        const unknownStatuses = registry.findUnknownStatuses(allStatuses);
+
+        // Assert
+        expect(unknownStatuses.length).toEqual(3);
+
+        let s1;
+        s1 = unknownStatuses[0];
+        expect(s1.type).toEqual(StatusType.TODO);
+        expect(s1.name).toEqual('Unknown (!)');
+
+        s1 = unknownStatuses[1];
+        expect(s1.type).toEqual(StatusType.IN_PROGRESS);
+        expect(s1.name).toEqual('Unknown (d)');
+
+        s1 = unknownStatuses[2];
+        expect(s1.type).toEqual(StatusType.DONE);
+        expect(s1.name).toEqual('Unknown (X)');
+    });
+
     describe('mermaid diagrams', () => {
         it('should create a mermaid diagram of default statuses', () => {
             // Arrange
@@ -434,44 +472,6 @@ describe('StatusRegistry', () => {
             // Issue https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1499
             // Ensure that the next status was applied, even though it is an unrecognised status
             expect(toggled?.status.symbol).toEqual('D');
-        });
-
-        it('should find unknown statuses from tasks in the vault, sorted by symbol', () => {
-            // Arrange
-            const registry = new StatusRegistry();
-            expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
-            expect(registry.bySymbol('X').type).toEqual(StatusType.EMPTY);
-            expect(registry.bySymbol('d').type).toEqual(StatusType.EMPTY);
-            const allStatuses = [
-                new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
-                new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
-                new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
-                // Include some tasks with duplicate statuses, to make sure duplicates are discarded
-                new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
-                new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
-                new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
-                // Check that it does not add copies of any core statuses
-                new Status(new StatusConfiguration('-', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
-            ];
-
-            // Act
-            const unknownStatuses = registry.findUnknownStatuses(allStatuses);
-
-            // Assert
-            expect(unknownStatuses.length).toEqual(3);
-
-            let s1;
-            s1 = unknownStatuses[0];
-            expect(s1.type).toEqual(StatusType.TODO);
-            expect(s1.name).toEqual('Unknown (!)');
-
-            s1 = unknownStatuses[1];
-            expect(s1.type).toEqual(StatusType.IN_PROGRESS);
-            expect(s1.name).toEqual('Unknown (d)');
-
-            s1 = unknownStatuses[2];
-            expect(s1.type).toEqual(StatusType.DONE);
-            expect(s1.name).toEqual('Unknown (X)');
         });
     });
 });
