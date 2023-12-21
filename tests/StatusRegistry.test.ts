@@ -324,20 +324,23 @@ describe('StatusRegistry', () => {
     });
 
     describe('toggling', () => {
+        const path = 'file.md';
+        const lineNumber = 3456;
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+        const taskLocation = new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const fallbackDate = null;
+
         it('should allow task to toggle through standard transitions', () => {
             // Arrange
             // Global statusRegistry instance - which controls toggling - will have been reset
             // in beforeEach() above.
             const line = '- [ ] this is a task starting at A';
-            const path = 'file.md';
-            const lineNumber = 3456;
-            const sectionStart = 1337;
-            const sectionIndex = 1209;
-            const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                taskLocation: new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader),
-                fallbackDate: null,
+                taskLocation,
+                fallbackDate,
             });
 
             // Act
@@ -358,15 +361,10 @@ describe('StatusRegistry', () => {
             // Global statusRegistry instance - which controls toggling - will have been reset
             // in beforeEach() above.
             const line = '- [-] This is a cancelled task';
-            const path = 'file.md';
-            const lineNumber = 3456;
-            const sectionStart = 1337;
-            const sectionIndex = 1209;
-            const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                taskLocation: new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader),
-                fallbackDate: null,
+                taskLocation,
+                fallbackDate,
             });
 
             // Act
@@ -393,15 +391,10 @@ describe('StatusRegistry', () => {
             globalStatusRegistry.add(statusC);
             globalStatusRegistry.add(statusD);
             const line = '- [a] this is a task starting at A';
-            const path = 'file.md';
-            const lineNumber = 3456;
-            const sectionStart = 1337;
-            const sectionIndex = 1209;
-            const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                taskLocation: new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader),
-                fallbackDate: null,
+                taskLocation,
+                fallbackDate,
             });
 
             // Act
