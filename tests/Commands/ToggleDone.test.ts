@@ -8,7 +8,7 @@ import { getNewCursorPosition, toggleLine } from '../../src/Commands/ToggleDone'
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { Status } from '../../src/Status';
-import { StatusConfiguration } from '../../src/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 
 window.moment = moment;
 
@@ -224,6 +224,40 @@ describe('ToggleDone', () => {
 
             const line3 = toggleLine(line2, 'x.md').text;
             expect(line3).toStrictEqual('- [P] this is a task starting at Pro, not matching the global filter');
+        });
+    });
+
+    describe('should proceed through the statuses until a TODO status is reached', () => {
+        it('should proceed through the statuses until a TODO status is reached when a task is completed', () => {
+            // Arrange
+            const statusRegistry = StatusRegistry.getInstance();
+            statusRegistry.resetToDefaultStatuses();
+            statusRegistry.set([
+                new Status(new StatusConfiguration('x', 'Done', '-', false, StatusType.DONE)),
+                ...statusRegistry.registeredStatuses,
+            ]);
+
+            testToggleLine(
+                '- [ ] Recurring task should start with TODO| 🔁 every day 📅 2022-09-04 ',
+                `- [ ] Recurring task should start with TODO 🔁 every day 📅 2022-09-05
+- [x] Recurring task should start with TODO| 🔁 every day 📅 2022-09-04 ✅ 2022-09-04`,
+            );
+        });
+
+        it('should not get stuck in a loop when a task is completed', () => {
+            // Arrange
+            const statusRegistry = StatusRegistry.getInstance();
+            statusRegistry.resetToDefaultStatuses();
+            statusRegistry.set([
+                new Status(new StatusConfiguration('1', '1', '2', false, StatusType.IN_PROGRESS)),
+                new Status(new StatusConfiguration('2', '2', '1', false, StatusType.DONE)),
+            ]);
+
+            testToggleLine(
+                '- [1] Recurring task should start with TODO| 🔁 every day 📅 2022-09-04 ',
+                `- [1] Recurring task should start with TODO 🔁 every day 📅 2022-09-05
+- [2] Recurring task should start with TODO| 🔁 every day 📅 2022-09-04 ✅ 2022-09-04`,
+            );
         });
     });
 
