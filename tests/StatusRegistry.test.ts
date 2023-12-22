@@ -503,7 +503,7 @@ describe('StatusRegistry', () => {
             expect(toggledStatus).toEqual(statusRegistry.bySymbol(expectedToggledStatus));
 
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
-            expect(nextStatus).toEqual(statusRegistry.bySymbol(expectedNextTaskStatus));
+            expect(nextStatus).toEqual(statusRegistry.bySymbolOrCreate(expectedNextTaskStatus));
         }
 
         it('should make CANCELLED next task TODO', () => {
@@ -572,6 +572,15 @@ describe('StatusRegistry', () => {
             ];
             // Ensure that the IN_PROGRESS soonest after 2 is chosen:
             checkToggleAndRecurrenceStatuses(statuses, '1', '2', '4');
+        });
+
+        it('should select the correct next status, even when it is unknown', () => {
+            const statuses: StatusCollection = [
+                // A set where the DONE task goes to an unknown symbol
+                ['a', 'Status a', 'b', 'TODO'],
+                ['b', 'Status b', 'c', 'DONE'], // c is not known
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, 'a', 'b', 'c');
         });
     });
 });
