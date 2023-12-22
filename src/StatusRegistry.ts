@@ -208,7 +208,7 @@ export class StatusRegistry {
      *                    is expected to be of type {@link StatusType.DONE}, but this is not checked.
      */
     public getNextRecurrenceStatusOrCreate(newStatus: Status) {
-        let nextStatus = this.getNextStatusOrCreate(newStatus);
+        const nextStatus = this.getNextStatusOrCreate(newStatus);
         if (nextStatus.type !== StatusType.TODO) {
             let searchStatus = nextStatus;
             // The goal here is to avoid an infinite loop. By limiting the search to the number of
@@ -216,8 +216,7 @@ export class StatusRegistry {
             for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
                 searchStatus = this.getNextStatusOrCreate(searchStatus);
                 if (searchStatus.type === StatusType.TODO) {
-                    nextStatus = searchStatus;
-                    break;
+                    return searchStatus;
                 }
             }
             // If it fails to find any TODO status, it will use the next symbol after DONE.
