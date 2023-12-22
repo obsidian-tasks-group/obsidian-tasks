@@ -4,14 +4,7 @@ import type { StatusCollection, StatusCollectionEntry } from '../../src/StatusCo
 import * as Themes from '../../src/Config/Themes';
 import { StatusValidator } from '../../src/StatusValidator';
 import * as VerifyStatuses from '../TestingTools/VerifyStatuses';
-import {
-    doneTogglesToCancelled,
-    doneTogglesToCancelledWithUnconventionalSymbols,
-    importantCycle,
-    proCon,
-    todoToInProgressToDone,
-    variousNonTaskStatuses,
-} from '../TestingTools/StatusExamples';
+import * as StatusExamples from '../TestingTools/StatusExamples';
 
 function constructStatuses(importedStatuses: StatusCollection) {
     const statuses: Status[] = [];
@@ -33,24 +26,24 @@ describe('DefaultStatuses', () => {
     });
 
     it('important-cycle', () => {
-        const statuses = importantCycle();
+        const statuses = StatusExamples.importantCycle();
         VerifyStatuses.verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
     });
 
     it('todo-in_progress-done', () => {
-        const statuses = todoToInProgressToDone();
+        const statuses = StatusExamples.todoToInProgressToDone();
         VerifyStatuses.verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
         VerifyStatuses.verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 
     it('pro-con-cycle', () => {
-        const statuses = proCon();
+        const statuses = StatusExamples.proCon();
         VerifyStatuses.verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
         VerifyStatuses.verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 
     it('toggle-does-nothing', () => {
-        const statuses = variousNonTaskStatuses();
+        const statuses = StatusExamples.variousNonTaskStatuses();
         VerifyStatuses.verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
     });
 
@@ -58,7 +51,7 @@ describe('DefaultStatuses', () => {
         // See issue #2089.
         // DONE is followed by CANCELLED, which currently causes unexpected behaviour in recurrent tasks.
         // This uses the 4 default statuses, and just customises their order.
-        const statuses = doneTogglesToCancelled();
+        const statuses = StatusExamples.doneTogglesToCancelled();
         VerifyStatuses.verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 
@@ -66,7 +59,7 @@ describe('DefaultStatuses', () => {
         // See issue #2304.
         // DONE is followed by CANCELLED, which currently causes unexpected behaviour in recurrent tasks.
         // This doesn't follow the standard convention of 'x' means DONE. It has 'x' means CANCELLED.
-        const statuses = doneTogglesToCancelledWithUnconventionalSymbols();
+        const statuses = StatusExamples.doneTogglesToCancelledWithUnconventionalSymbols();
         VerifyStatuses.verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 });
