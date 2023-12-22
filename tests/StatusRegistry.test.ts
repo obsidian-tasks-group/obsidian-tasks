@@ -483,7 +483,7 @@ describe('StatusRegistry', () => {
             // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
 
             // Arrange
-            const statusRegistry = StatusRegistry.getInstance();
+            const statusRegistry = new StatusRegistry();
             const statuses = StatusExamples.doneTogglesToCancelled();
             statusRegistry.set(constructStatuses(statuses));
 
