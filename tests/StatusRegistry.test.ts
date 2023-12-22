@@ -8,6 +8,8 @@ import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import { TaskLocation } from '../src/TaskLocation';
 import * as TestHelpers from './TestHelpers';
+import * as StatusExamples from './TestingTools/StatusExamples';
+import { constructStatuses } from './TestingTools/StatusesTestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -472,6 +474,28 @@ describe('StatusRegistry', () => {
             // Issue https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1499
             // Ensure that the next status was applied, even though it is an unrecognised status
             expect(toggled?.status.symbol).toEqual('D');
+        });
+    });
+
+    describe('toggling recurring', () => {
+        it('should make CANCELLED next task TODO', () => {
+            // See #2304:
+            // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
+
+            // Arrange
+            const statusRegistry = new StatusRegistry();
+            const statuses = StatusExamples.doneTogglesToCancelled();
+            statusRegistry.set(constructStatuses(statuses));
+
+            const initialStatusForRecurringTask = statusRegistry.bySymbol('/');
+
+            // Act, Assert
+            const toggledStatus = statusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
+            expect(toggledStatus).toEqual(statusRegistry.bySymbol('x'));
+
+            // Ensure that the next status skips through to TODO for a recurring task
+            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
+            expect(nextStatus).toEqual(statusRegistry.bySymbol(' '));
         });
     });
 });
