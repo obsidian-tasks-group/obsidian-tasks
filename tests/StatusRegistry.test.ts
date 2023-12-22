@@ -543,5 +543,37 @@ describe('StatusRegistry', () => {
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
             expect(nextStatus).toEqual(statusRegistry.bySymbol('T'));
         });
+
+        it.failing('should select the correct next status, when there is ambiguity', () => {
+            // Arrange
+            const statusRegistry = new StatusRegistry();
+            const statuses: StatusCollection = [
+                // A set of 4 statuses, chosen to see whether the loop size in getNextRecurrenceStatusOrCreate()
+                // affects the calculation in any way.
+                ['A', 'A to B', 'B', 'NON_TASK'],
+                ['B', 'B to C', 'C', 'NON_TASK'],
+                ['C', 'C to D', 'D', 'NON_TASK'],
+                ['D', 'D to E', 'E', 'NON_TASK'],
+                // A cycle of 6 statuses, not including any TODOs,
+                // to ensure that the correct IN_PROGRESS is selected.
+                ['1', '1 to 2', '2', 'IN_PROGRESS'],
+                ['2', '2 to 3', '3', 'DONE'],
+                ['3', '3 to 4', '4', 'CANCELLED'],
+                ['4', '4 to 5', '5', 'IN_PROGRESS'],
+                ['5', '5 to 6', '6', 'DONE'],
+                ['6', '6 to 1', '1', 'CANCELLED'],
+            ];
+            statusRegistry.set(constructStatuses(statuses));
+
+            const initialStatusForRecurringTask = statusRegistry.bySymbol('1');
+
+            // Act, Assert
+            const toggledStatus = statusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
+            expect(toggledStatus).toEqual(statusRegistry.bySymbol('2'));
+
+            // Ensure that the IN_PROGRESS soonest after 2 is chosen:
+            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
+            expect(nextStatus).toEqual(statusRegistry.bySymbol('4'));
+        });
     });
 });
