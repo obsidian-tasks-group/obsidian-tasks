@@ -213,18 +213,14 @@ export class StatusRegistry {
     public getNextRecurrenceStatusOrCreate(newStatus: Status) {
         const nextStatus = this.getNextStatusOrCreate(newStatus);
 
-        {
-            const result = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, StatusType.TODO);
-            if (result) {
-                return result;
-            }
+        const result1 = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, StatusType.TODO);
+        if (result1) {
+            return result1;
         }
 
-        {
-            const result = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, StatusType.IN_PROGRESS);
-            if (result) {
-                return result;
-            }
+        const result2 = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, StatusType.IN_PROGRESS);
+        if (result2) {
+            return result2;
         }
 
         // There is no TODO or IN_PROGRESS status in the chain, so we will use a space.
