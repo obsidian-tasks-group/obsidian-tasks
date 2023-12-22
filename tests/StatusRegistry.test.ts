@@ -483,19 +483,19 @@ describe('StatusRegistry', () => {
             // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
 
             // Arrange
-            const globalStatusRegistry = StatusRegistry.getInstance();
+            const statusRegistry = StatusRegistry.getInstance();
             const statuses = StatusExamples.doneTogglesToCancelled();
-            globalStatusRegistry.set(constructStatuses(statuses));
+            statusRegistry.set(constructStatuses(statuses));
 
-            const initialStatusForRecurringTask = globalStatusRegistry.bySymbol('/');
+            const initialStatusForRecurringTask = statusRegistry.bySymbol('/');
 
             // Act, Assert
-            const toggledStatus = globalStatusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
-            expect(toggledStatus).toEqual(globalStatusRegistry.bySymbol('x'));
+            const toggledStatus = statusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
+            expect(toggledStatus).toEqual(statusRegistry.bySymbol('x'));
 
             // Ensure that the next status skips through to TODO for a recurring task
-            const nextStatus = globalStatusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
-            expect(nextStatus).toEqual(globalStatusRegistry.bySymbol(' '));
+            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
+            expect(nextStatus).toEqual(statusRegistry.bySymbol(' '));
         });
     });
 });
