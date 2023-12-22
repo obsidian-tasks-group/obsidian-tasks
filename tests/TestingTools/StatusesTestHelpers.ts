@@ -29,3 +29,11 @@ export function createStatuses(
     StatusSettings.applyToStatusRegistry(statusSettings, statusRegistry);
     return { statusSettings, statusRegistry };
 }
+
+export function constructStatuses(importedStatuses: StatusCollection) {
+    const statuses: Status[] = [];
+    importedStatuses.forEach((importedStatus) => {
+        statuses.push(Status.createFromImportedValue(importedStatus));
+    });
+    return statuses;
+}
