@@ -212,25 +212,24 @@ export class StatusRegistry {
      */
     public getNextRecurrenceStatusOrCreate(newStatus: Status) {
         const nextStatus = this.getNextStatusOrCreate(newStatus);
-        if (nextStatus.type !== StatusType.TODO) {
-            let searchStatus = nextStatus;
-            // The goal here is to avoid an infinite loop. By limiting the search to the number of
-            // configured statuses, we ensure it doesn't continue indefinitely.
-            for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
-                searchStatus = this.getNextStatusOrCreate(searchStatus);
-                if (searchStatus.type === StatusType.TODO) {
-                    return searchStatus;
-                }
-            }
 
-            searchStatus = nextStatus;
-            for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
-                searchStatus = this.getNextStatusOrCreate(searchStatus);
-                if (searchStatus.type === StatusType.IN_PROGRESS) {
-                    return searchStatus;
-                }
+        if (nextStatus.type === StatusType.TODO) {
+            return nextStatus;
+        }
+
+        let searchStatus = nextStatus;
+        for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
+            searchStatus = this.getNextStatusOrCreate(searchStatus);
+            if (searchStatus.type === StatusType.TODO) {
+                return searchStatus;
             }
-            // If it fails to find any TODO or IN_PROGRESS status, it will use the next symbol after DONE.
+        }
+        searchStatus = nextStatus;
+        for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
+            searchStatus = this.getNextStatusOrCreate(searchStatus);
+            if (searchStatus.type === StatusType.IN_PROGRESS) {
+                return searchStatus;
+            }
         }
         return nextStatus;
     }
