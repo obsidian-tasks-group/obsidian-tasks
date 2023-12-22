@@ -678,33 +678,18 @@ describe('task line rendering - classes and data attributes', () => {
         expect(listItem).toHaveAmongDataAttributes(attributes);
     };
 
-    it('should not render hidden components but should set their data attributes to the list item', async () => {
-        await testHiddenComponentClasses(
-            { hidePriority: true },
-            fieldRenderer.className('priority'),
-            'taskPriority: high',
-        );
-        await testHiddenComponentClasses(
-            { hideCreatedDate: true },
-            fieldRenderer.className('createdDate'),
-            'taskCreated: past-far',
-        );
-        await testHiddenComponentClasses(
-            { hideDueDate: true },
-            fieldRenderer.className('dueDate'),
-            'taskDue: past-far',
-        );
-        await testHiddenComponentClasses(
-            { hideScheduledDate: true },
-            fieldRenderer.className('scheduledDate'),
-            'taskScheduled: past-far',
-        );
-        await testHiddenComponentClasses(
-            { hideStartDate: true },
-            fieldRenderer.className('startDate'),
-            'taskStart: past-far',
-        );
-    });
+    it.each([
+        [{ hidePriority: true }, fieldRenderer.className('priority'), 'taskPriority: high'],
+        [{ hideCreatedDate: true }, fieldRenderer.className('createdDate'), 'taskCreated: past-far'],
+        [{ hideDueDate: true }, fieldRenderer.className('dueDate'), 'taskDue: past-far'],
+        [{ hideScheduledDate: true }, fieldRenderer.className('scheduledDate'), 'taskScheduled: past-far'],
+        [{ hideStartDate: true }, fieldRenderer.className('startDate'), 'taskStart: past-far'],
+    ])(
+        'should not render hidden components but should set their data attributes to the list item',
+        async (layoutOptions: Partial<LayoutOptions>, hiddenGenericClass: string, attributes: string) => {
+            await testHiddenComponentClasses(layoutOptions, hiddenGenericClass, attributes);
+        },
+    );
 
     /*
      * In this test we try to imitate Obsidian's Markdown renderer more thoroughly than other tests,
