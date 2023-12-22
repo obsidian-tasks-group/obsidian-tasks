@@ -168,20 +168,20 @@ describe('DefaultStatuses', () => {
     });
 
     it('todo-in_progress-done', () => {
-        const importantCycle = todoToInProgressToDone();
-        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
-        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(importantCycle));
+        const statuses = todoToInProgressToDone();
+        verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 
     it('pro-con-cycle', () => {
-        const importantCycle = proCon();
-        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
-        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(importantCycle));
+        const statuses = proCon();
+        verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
+        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 
     it('toggle-does-nothing', () => {
-        const importantCycle = variousNonTaskStatuses();
-        verifyStatusesInMultipleFormats(constructStatuses(importantCycle), false);
+        const statuses = variousNonTaskStatuses();
+        verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
     });
 
     it('done-toggles-to-cancelled', () => {
