@@ -214,8 +214,7 @@ export class StatusRegistry {
         const nextStatus = this.getNextStatusOrCreate(newStatus);
 
         {
-            const wanted = StatusType.TODO;
-            const result = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, wanted);
+            const result = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, StatusType.TODO);
             if (result) {
                 return result;
             }
