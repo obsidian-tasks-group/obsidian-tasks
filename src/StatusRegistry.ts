@@ -215,15 +215,9 @@ export class StatusRegistry {
 
         {
             const wanted = StatusType.TODO;
-            if (nextStatus.type === wanted) {
-                return nextStatus;
-            }
-            let searchStatus = nextStatus;
-            for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
-                searchStatus = this.getNextStatusOrCreate(searchStatus);
-                if (searchStatus.type === wanted) {
-                    return searchStatus;
-                }
+            const result = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, wanted);
+            if (result) {
+                return result;
             }
         }
 
@@ -247,6 +241,20 @@ export class StatusRegistry {
         // status type of space to anything other than TODO - but if they do, it's not
         // our problem.
         return this.bySymbolOrCreate(' ');
+    }
+
+    private findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus: Status, wanted: StatusType.TODO) {
+        if (nextStatus.type === wanted) {
+            return nextStatus;
+        }
+        let searchStatus = nextStatus;
+        for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
+            searchStatus = this.getNextStatusOrCreate(searchStatus);
+            if (searchStatus.type === wanted) {
+                return searchStatus;
+            }
+        }
+        return undefined;
     }
 
     /**
