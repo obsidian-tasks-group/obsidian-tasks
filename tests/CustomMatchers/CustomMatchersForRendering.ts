@@ -4,16 +4,19 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toHaveDataAttributes(expectedDataAttributes: string): R;
+            toHaveAChildSpanWithClass(expectedClass: string): R;
             toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): R;
         }
 
         interface Expect {
             toHaveDataAttributes(expectedDataAttributes: string): any;
+            toHaveAChildSpanWithClass(expectedClass: string): any;
             toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): any;
         }
 
         interface InverseAsymmetricMatchers {
             toHaveDataAttributes(expectedDataAttributes: string): any;
+            toHaveAChildSpanWithClass(expectedClass: string): any;
             toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): any;
         }
     }
@@ -38,6 +41,25 @@ export function toHaveDataAttributes(htmlElement: HTMLElement, expectedDataAttri
         pass
             ? `Data attributes should not be\n${renderedDataAttributes}`
             : `Data attributes are not the same as expected:\n${diff(expectedDataAttributes, renderedDataAttributes)}`;
+    return {
+        message,
+        pass,
+    };
+}
+
+export function toHaveAChildSpanWithClass(listItem: HTMLLIElement, expectedClass: string) {
+    const textSpan = getTextSpan(listItem);
+    const childSpans = Array.from(textSpan.children) as HTMLSpanElement[];
+
+    const pass = childSpans.some((childSpan) => {
+        return childSpan.className === expectedClass;
+    });
+
+    const foundChildSpans = childSpans.map((childSpan) => childSpan.className).join('\n');
+    const message: () => string = () =>
+        pass
+            ? `Span with class ${expectedClass} found.`
+            : `Span with class ${expectedClass} not found. Found spans with classes:\n${foundChildSpans}`;
     return {
         message,
         pass,
