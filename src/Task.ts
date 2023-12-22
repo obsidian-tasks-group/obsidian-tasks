@@ -432,6 +432,8 @@ export class Task {
             let nextStatus = statusRegistry.getNextStatusOrCreate(newStatus);
             if (nextStatus.type !== StatusType.TODO) {
                 let searchStatus = nextStatus;
+                // The goal here is to avoid an infinite loop. By limiting the search to the number of
+                // configured statuses, we ensure it doesn't continue indefinitely.
                 for (let i = 0; i < statusRegistry.registeredStatuses.length - 1; i++) {
                     searchStatus = statusRegistry.getNextStatusOrCreate(searchStatus);
                     if (searchStatus.type === StatusType.TODO) {
@@ -439,6 +441,7 @@ export class Task {
                         break;
                     }
                 }
+                // If it fails to find any TODO status, it will use the next symbol after DONE.
             }
             const nextTask = new Task({
                 ...this,
