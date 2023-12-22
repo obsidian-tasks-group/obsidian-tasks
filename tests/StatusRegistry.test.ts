@@ -519,5 +519,29 @@ describe('StatusRegistry', () => {
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
             expect(nextStatus).toEqual(statusRegistry.bySymbol('/'));
         });
+
+        it('should select TODO even if DONE is followed by IN_PROGRESS', () => {
+            // Arrange
+            const statusRegistry = new StatusRegistry();
+            // This is not intended to be realistic: its sole purpose is to have DONE followed by IN_PROGRESS,
+            // and ensure that this is chosen in preference to the TODO that is further ahead in the sequences
+            // of statuses.
+            const statuses: StatusCollection = [
+                ['T', 'T to D', 'D', 'TODO'],
+                ['D', 'D to I', 'I', 'DONE'],
+                ['I', 'I to T', 'T', 'IN_PROGRESS'],
+            ];
+            statusRegistry.set(constructStatuses(statuses));
+
+            const initialStatusForRecurringTask = statusRegistry.bySymbol('T');
+
+            // Act, Assert
+            const toggledStatus = statusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
+            expect(toggledStatus).toEqual(statusRegistry.bySymbol('D'));
+
+            // Ensure that TODO is chosen, ignoring the IN_PROGRESS task immediately after DONE:
+            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
+            expect(nextStatus).toEqual(statusRegistry.bySymbol('T'));
+        });
     });
 });
