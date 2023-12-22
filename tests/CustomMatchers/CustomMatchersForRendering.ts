@@ -3,18 +3,21 @@ import { diff } from 'jest-diff';
 declare global {
     namespace jest {
         interface Matchers<R> {
+            toHaveAmongDataAttributes(expectedDataAttributes: string): R;
             toHaveDataAttributes(expectedDataAttributes: string): R;
             toHaveAChildSpanWithClass(expectedClass: string): R;
             toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): R;
         }
 
         interface Expect {
+            toHaveAmongDataAttributes(expectedDataAttributes: string): any;
             toHaveDataAttributes(expectedDataAttributes: string): any;
             toHaveAChildSpanWithClass(expectedClass: string): any;
             toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): any;
         }
 
         interface InverseAsymmetricMatchers {
+            toHaveAmongDataAttributes(expectedDataAttributes: string): any;
             toHaveDataAttributes(expectedDataAttributes: string): any;
             toHaveAChildSpanWithClass(expectedClass: string): any;
             toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): any;
@@ -31,6 +34,20 @@ function getDataAttributesAsString(element: HTMLElement): string {
     const keys = Object.keys(dataAttributes);
 
     return keys.map((key) => `${key}: ${dataAttributes[key]}`).join('\n');
+}
+
+export function toHaveAmongDataAttributes(htmlElement: HTMLElement, expectedDataAttributes: string) {
+    const renderedDataAttributes = getDataAttributesAsString(htmlElement);
+
+    const pass: boolean = renderedDataAttributes.includes(expectedDataAttributes);
+    const message: () => string = () =>
+        pass
+            ? `Data attributes should not include '${expectedDataAttributes}'.\nRendered data attributes:\n${renderedDataAttributes}`
+            : `Data attributes should include '${expectedDataAttributes}'.\nRendered data attributes:\n${renderedDataAttributes}`;
+    return {
+        message,
+        pass,
+    };
 }
 
 export function toHaveDataAttributes(htmlElement: HTMLElement, expectedDataAttributes: string) {
