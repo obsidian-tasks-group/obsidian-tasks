@@ -608,14 +608,13 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    const taskLine = '- [ ] Full task ⏫ ➕ 2022-07-04 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day';
     const testHiddenComponentClasses = async (
         layoutOptions: Partial<LayoutOptions>,
         hiddenGenericClass: string,
         attributes: string,
     ) => {
         const task = fromLine({
-            line: taskLine,
+            line: '- [ ] Full task ⏫ ➕ 2022-07-04 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
