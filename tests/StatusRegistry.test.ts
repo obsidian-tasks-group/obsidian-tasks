@@ -7,7 +7,7 @@ import { Status } from '../src/Status';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import { TaskLocation } from '../src/TaskLocation';
-import type { StatusCollection } from '../src/StatusCollection';
+import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
 import * as TestHelpers from './TestHelpers';
 import * as StatusExamples from './TestingTools/StatusExamples';
 import { constructStatuses } from './TestingTools/StatusesTestHelpers';
@@ -479,15 +479,19 @@ describe('StatusRegistry', () => {
     });
 
     describe('toggling recurring', () => {
-        it('should make CANCELLED next task TODO', () => {
-            // See #2304:
-            // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
-
-            const statuses = StatusExamples.doneTogglesToCancelled();
-            const initialStatusSymbol = '/';
-            const expectedToggledStatus = 'x';
-            const expectedNextTaskStatus = ' ';
-
+        /**
+         * Test one scenario of toggling a recurring task: confirm the status of the done task, and the next recurrence.
+         * @param statuses
+         * @param initialStatusSymbol - typically an incomplete status
+         * @param expectedToggledStatus - the next status - is expected to be DONE, so that the next recurrence is created.
+         * @param expectedNextTaskStatus - the expected status of the new recurrence.
+         */
+        function checkToggleAndRecurrenceStatuses(
+            statuses: Array<StatusCollectionEntry>,
+            initialStatusSymbol: string,
+            expectedToggledStatus: string,
+            expectedNextTaskStatus: string,
+        ) {
             // Arrange
             const statusRegistry = new StatusRegistry();
             statusRegistry.set(constructStatuses(statuses));
@@ -498,9 +502,25 @@ describe('StatusRegistry', () => {
             const toggledStatus = statusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
             expect(toggledStatus).toEqual(statusRegistry.bySymbol(expectedToggledStatus));
 
-            // Ensure that the next status skips through to TODO for a recurring task
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
             expect(nextStatus).toEqual(statusRegistry.bySymbol(expectedNextTaskStatus));
+        }
+
+        it('should make CANCELLED next task TODO', () => {
+            // See #2304:
+            // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
+
+            const statuses = StatusExamples.doneTogglesToCancelled();
+            const initialStatusSymbol = '/';
+            const expectedToggledStatus = 'x';
+            // Ensure that the next status skips through to TODO for a recurring task
+            const expectedNextTaskStatus = ' ';
+            checkToggleAndRecurrenceStatuses(
+                statuses,
+                initialStatusSymbol,
+                expectedToggledStatus,
+                expectedNextTaskStatus,
+            );
         });
 
         it('should make CANCELLED next task IN_PROGRESS, if TODO not found', () => {
