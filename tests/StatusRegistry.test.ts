@@ -15,14 +15,14 @@ import { verifyMarkdown } from './TestingTools/VerifyMarkdown';
 jest.mock('obsidian');
 window.moment = moment;
 
+function verifyTaskList(reverse: Task[]) {
+    verifyMarkdown(reverse.map((task) => task.toFileLineString()).join('\n'));
+}
+
 // TODO MOVE THIS TO SEPARATE FILE
 function verifyTaskListInReverseOrder(newTasks: Task[]) {
-    verifyMarkdown(
-        newTasks
-            .reverse()
-            .map((task) => task.toFileLineString())
-            .join('\n'),
-    );
+    const reverse = newTasks.reverse();
+    verifyTaskList(reverse);
 }
 
 describe('StatusRegistry', () => {
