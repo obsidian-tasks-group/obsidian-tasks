@@ -205,7 +205,7 @@ export class StatusRegistry {
      * If the next status is not TODO:
      *   - it first advances through the next statuses until it finds a {@link StatusType.TODO} status - which it returns
      *   - or it then advances through the next statuses until it finds an {@link StatusType.IN_PROGRESS} status - which it returns
-     *   - otherwise, it goes ahead and returns the next status after {@link newStatus}.
+     *   - otherwise, it uses the status for the status `[ ]`, as the default 'TODO' status.
      *
      * @param newStatus - the new status of the task that has just been toggled, which
      *                    is expected to be of type {@link StatusType.DONE}, but this is not checked.
@@ -216,13 +216,16 @@ export class StatusRegistry {
         if (nextStatus.type === StatusType.TODO) {
             return nextStatus;
         }
-
         let searchStatus = nextStatus;
         for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
             searchStatus = this.getNextStatusOrCreate(searchStatus);
             if (searchStatus.type === StatusType.TODO) {
                 return searchStatus;
             }
+        }
+
+        if (nextStatus.type === StatusType.IN_PROGRESS) {
+            return nextStatus;
         }
         searchStatus = nextStatus;
         for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
@@ -231,7 +234,14 @@ export class StatusRegistry {
                 return searchStatus;
             }
         }
-        return nextStatus;
+
+        // There is no TODO or IN_PROGRESS status in the chain, so we will use a space.
+        // This ensures that the new recurrence is always found by 'not done' searches,
+        // for safety in vaults where users did not fully set up all statuses.
+        // This makes the simplifying assumption that no user is likely to change the
+        // status type of space to anything other than TODO - but if they do, it's not
+        // our problem.
+        return this.bySymbolOrCreate(' ');
     }
 
     /**
