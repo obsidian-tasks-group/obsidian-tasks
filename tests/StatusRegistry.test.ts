@@ -509,18 +509,9 @@ describe('StatusRegistry', () => {
         it('should make CANCELLED next task TODO', () => {
             // See #2304:
             // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
-
+            // Ensure that the next status skips through to TODO for a recurring task:
             const statuses = StatusExamples.doneTogglesToCancelled();
-            const initialStatusSymbol = '/';
-            const expectedToggledStatus = 'x';
-            // Ensure that the next status skips through to TODO for a recurring task
-            const expectedNextTaskStatus = ' ';
-            checkToggleAndRecurrenceStatuses(
-                statuses,
-                initialStatusSymbol,
-                expectedToggledStatus,
-                expectedNextTaskStatus,
-            );
+            checkToggleAndRecurrenceStatuses(statuses, '/', 'x', ' ');
         });
 
         it('should make CANCELLED next task IN_PROGRESS, if TODO not found', () => {
