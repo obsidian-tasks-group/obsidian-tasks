@@ -10,7 +10,6 @@ import { TaskLocation } from '../src/TaskLocation';
 import * as TestHelpers from './TestHelpers';
 import * as StatusExamples from './TestingTools/StatusExamples';
 import { constructStatuses } from './TestingTools/StatusesTestHelpers';
-import { verifyTaskListInReverseOrder } from './TestingTools/ApprovalTestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -483,35 +482,18 @@ describe('StatusRegistry', () => {
             // See #2304:
             // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
 
-            // TODO Convert this to using StatusRegistry directly, not tasks...
-
             // Arrange
             const globalStatusRegistry = StatusRegistry.getInstance();
             const statuses = StatusExamples.doneTogglesToCancelled();
             globalStatusRegistry.set(constructStatuses(statuses));
 
-            const line = '- [/] this should toggle to TODO 🔁 every Sunday';
-            const task = TestHelpers.fromLine({ line });
-            expect(task.isRecurring).toEqual(true);
-
             const initialStatusForRecurringTask = globalStatusRegistry.bySymbol('/');
 
-            // Act
-            const newTasks = task!.toggle();
-
-            // Assert
-            verifyTaskListInReverseOrder(newTasks);
-
-            const toggled = newTasks?.[1]!;
-            expect(toggled.status).toEqual(globalStatusRegistry.bySymbol('x'));
-
+            // Act, Assert
             const toggledStatus = globalStatusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
             expect(toggledStatus).toEqual(globalStatusRegistry.bySymbol('x'));
 
-            // Ensure that the next status skips through to TODO, if it's a recurring task
-            const next = newTasks?.[0]!;
-            expect(next.status).toEqual(globalStatusRegistry.bySymbol(' '));
-
+            // Ensure that the next status skips through to TODO for a recurring task
             const nextStatus = globalStatusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
             expect(nextStatus).toEqual(globalStatusRegistry.bySymbol(' '));
         });
