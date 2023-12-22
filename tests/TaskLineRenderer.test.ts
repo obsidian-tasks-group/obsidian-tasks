@@ -608,7 +608,7 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    const taskLine = '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day';
+    const taskLine = '- [ ] Full task ⏫ ➕ 2022-07-04 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day';
     const testHiddenComponentClasses = async (
         taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
@@ -633,7 +633,7 @@ describe('task line rendering - classes and data attributes', () => {
             'taskPriority: high',
         );
         await testHiddenComponentClasses(
-            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 ➕ 2022-07-04 🔁 every day',
+            taskLine,
             { hideCreatedDate: true },
             fieldRenderer.className('createdDate'),
             'taskCreated: past-far',
