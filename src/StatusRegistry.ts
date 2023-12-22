@@ -221,15 +221,9 @@ export class StatusRegistry {
         }
 
         {
-            if (nextStatus.type === StatusType.IN_PROGRESS) {
-                return nextStatus;
-            }
-            let searchStatus = nextStatus;
-            for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
-                searchStatus = this.getNextStatusOrCreate(searchStatus);
-                if (searchStatus.type === StatusType.IN_PROGRESS) {
-                    return searchStatus;
-                }
+            const result = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, StatusType.IN_PROGRESS);
+            if (result) {
+                return result;
             }
         }
 
@@ -242,7 +236,7 @@ export class StatusRegistry {
         return this.bySymbolOrCreate(' ');
     }
 
-    private findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus: Status, wanted: StatusType.TODO) {
+    private findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus: Status, wanted: StatusType) {
         if (nextStatus.type === wanted) {
             return nextStatus;
         }
