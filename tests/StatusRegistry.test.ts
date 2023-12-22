@@ -582,5 +582,23 @@ describe('StatusRegistry', () => {
             ];
             checkToggleAndRecurrenceStatuses(statuses, 'a', 'b', 'c');
         });
+
+        it('should return space for symbol if there are no TODO or IN_PROGRESS in sequence', () => {
+            const statuses: StatusCollection = [
+                [' ', 'Todo', 'x', 'TODO'],
+                ['x', 'Done', ' ', 'DONE'],
+                ['C', 'C to D', 'D', 'CANCELLED'],
+                ['D', 'D to C', 'C', 'DONE'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, 'C', 'D', ' ');
+        });
+
+        it('should return space for symbol if it is not a known status', () => {
+            const statuses: StatusCollection = [
+                ['C', 'C to D', 'D', 'CANCELLED'],
+                ['D', 'D to C', 'C', 'DONE'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, 'C', 'D', ' ');
+        });
     });
 });
