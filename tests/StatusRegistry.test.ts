@@ -499,7 +499,7 @@ describe('StatusRegistry', () => {
             expect(nextStatus).toEqual(statusRegistry.bySymbol(' '));
         });
 
-        it.failing('should make CANCELLED next task IN_PROGRESS, if TODO not found', () => {
+        it('should make CANCELLED next task IN_PROGRESS, if TODO not found', () => {
             // Arrange
             const statusRegistry = new StatusRegistry();
             const statuses: StatusCollection = [

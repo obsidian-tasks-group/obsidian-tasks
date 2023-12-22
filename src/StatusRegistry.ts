@@ -219,7 +219,13 @@ export class StatusRegistry {
                     return searchStatus;
                 }
             }
-            // If it fails to find any TODO status, it will use the next symbol after DONE.
+            for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
+                searchStatus = this.getNextStatusOrCreate(searchStatus);
+                if (searchStatus.type === StatusType.IN_PROGRESS) {
+                    return searchStatus;
+                }
+            }
+            // If it fails to find any TODO or IN_PROGRESS status, it will use the next symbol after DONE.
         }
         return nextStatus;
     }
