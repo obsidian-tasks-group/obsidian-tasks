@@ -599,12 +599,12 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    it('does not add specific classes to invalid dates', async () => {
+    it.failing('should not add data attributes for invalid dates', async () => {
         await testComponentClasses(
-            '- [ ] Full task ⏫ 📅 2023-02-29',
+            '- [ ] task with invalid due date 📅 2023-02-29',
             {},
             fieldRenderer.className('dueDate'),
-            'taskDue: ',
+            '',
         );
     });
 
