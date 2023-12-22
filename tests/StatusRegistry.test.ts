@@ -7,6 +7,7 @@ import { Status } from '../src/Status';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import { TaskLocation } from '../src/TaskLocation';
+import type { StatusCollection } from '../src/StatusCollection';
 import * as TestHelpers from './TestHelpers';
 import * as StatusExamples from './TestingTools/StatusExamples';
 import { constructStatuses } from './TestingTools/StatusesTestHelpers';
@@ -496,6 +497,27 @@ describe('StatusRegistry', () => {
             // Ensure that the next status skips through to TODO for a recurring task
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
             expect(nextStatus).toEqual(statusRegistry.bySymbol(' '));
+        });
+
+        it.failing('should make CANCELLED next task IN_PROGRESS, if TODO not found', () => {
+            // Arrange
+            const statusRegistry = new StatusRegistry();
+            const statuses: StatusCollection = [
+                ['/', '/ to x', 'x', 'IN_PROGRESS'],
+                ['x', 'x to -', '-', 'DONE'],
+                ['-', '- to /', '/', 'CANCELLED'],
+            ];
+            statusRegistry.set(constructStatuses(statuses));
+
+            const initialStatusForRecurringTask = statusRegistry.bySymbol('/');
+
+            // Act, Assert
+            const toggledStatus = statusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
+            expect(toggledStatus).toEqual(statusRegistry.bySymbol('x'));
+
+            // Ensure that the next status skips through to IN_PROGRESS for a recurring task, if TODO not found
+            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
+            expect(nextStatus).toEqual(statusRegistry.bySymbol('/'));
         });
     });
 });
