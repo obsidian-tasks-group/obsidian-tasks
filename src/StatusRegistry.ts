@@ -201,8 +201,11 @@ export class StatusRegistry {
 
     /**
      * Return the status to use for a recurring task that has just been completed.
-     * If the next status is not TODO, it advances through the next statuses until it either
-     * finds a {@link StatusType.TODO} status, or goes ahead and returns the next status after {@link newStatus}.
+     *
+     * If the next status is not TODO:
+     *   - it first advances through the next statuses until it finds a {@link StatusType.TODO} status - which it returns
+     *   - or it then advances through the next statuses until it finds an {@link StatusType.IN_PROGRESS} status - which it returns
+     *   - otherwise, it goes ahead and returns the next status after {@link newStatus}.
      *
      * @param newStatus - the new status of the task that has just been toggled, which
      *                    is expected to be of type {@link StatusType.DONE}, but this is not checked.
