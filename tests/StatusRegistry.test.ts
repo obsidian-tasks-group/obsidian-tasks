@@ -10,20 +10,10 @@ import { TaskLocation } from '../src/TaskLocation';
 import * as TestHelpers from './TestHelpers';
 import * as StatusExamples from './TestingTools/StatusExamples';
 import { constructStatuses } from './TestingTools/StatusesTestHelpers';
-import { verifyMarkdown } from './TestingTools/VerifyMarkdown';
+import { verifyTaskListInReverseOrder } from './TestingTools/ApprovalTestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
-
-function verifyTaskList(reverse: Task[]) {
-    verifyMarkdown(reverse.map((task) => task.toFileLineString()).join('\n'));
-}
-
-// TODO MOVE THIS TO SEPARATE FILE
-function verifyTaskListInReverseOrder(newTasks: Task[]) {
-    const reverse = newTasks.reverse();
-    verifyTaskList(reverse);
-}
 
 describe('StatusRegistry', () => {
     // Reset the global StatusRegistry before and after each test.

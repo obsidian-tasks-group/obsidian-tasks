@@ -4,6 +4,8 @@ import type { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { Query } from '../../src/Query/Query';
 import { explainResults } from '../../src/lib/QueryRendererHelper';
+import type { Task } from '../../src/Task';
+import { verifyMarkdown } from './VerifyMarkdown';
 
 export function printIteration<T1>(func: <T1>(t1: T1) => any, params1: T1[]): string {
     const EMPTY_ENTRY = {};
@@ -94,4 +96,13 @@ export function verifyTaskBlockExplanation(
     const explanation = explainResults(instructions, globalFilter, globalQuery, 'some/sample/file path.md');
 
     verifyWithFileExtension(explanation, 'explanation.text', options);
+}
+
+function verifyTaskList(reverse: Task[]) {
+    verifyMarkdown(reverse.map((task) => task.toFileLineString()).join('\n'));
+}
+
+export function verifyTaskListInReverseOrder(newTasks: Task[]) {
+    const reverse = newTasks.reverse();
+    verifyTaskList(reverse);
 }
