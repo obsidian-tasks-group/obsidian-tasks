@@ -483,20 +483,24 @@ describe('StatusRegistry', () => {
             // See #2304:
             // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
 
+            const statuses = StatusExamples.doneTogglesToCancelled();
+            const initialStatusSymbol = '/';
+            const expectedToggledStatus = 'x';
+            const expectedNextTaskStatus = ' ';
+
             // Arrange
             const statusRegistry = new StatusRegistry();
-            const statuses = StatusExamples.doneTogglesToCancelled();
             statusRegistry.set(constructStatuses(statuses));
 
-            const initialStatusForRecurringTask = statusRegistry.bySymbol('/');
+            const initialStatusForRecurringTask = statusRegistry.bySymbol(initialStatusSymbol);
 
             // Act, Assert
             const toggledStatus = statusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
-            expect(toggledStatus).toEqual(statusRegistry.bySymbol('x'));
+            expect(toggledStatus).toEqual(statusRegistry.bySymbol(expectedToggledStatus));
 
             // Ensure that the next status skips through to TODO for a recurring task
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
-            expect(nextStatus).toEqual(statusRegistry.bySymbol(' '));
+            expect(nextStatus).toEqual(statusRegistry.bySymbol(expectedNextTaskStatus));
         });
 
         it('should make CANCELLED next task IN_PROGRESS, if TODO not found', () => {
