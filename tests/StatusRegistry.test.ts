@@ -479,7 +479,7 @@ describe('StatusRegistry', () => {
     });
 
     describe('toggling recurring', () => {
-        it.failing('should make CANCELLED next task TODO', () => {
+        it('should make CANCELLED next task TODO', () => {
             // See #2304:
             // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
 
