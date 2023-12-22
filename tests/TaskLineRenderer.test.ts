@@ -663,21 +663,6 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    const testHiddenComponentClasses = async (
-        layoutOptions: Partial<LayoutOptions>,
-        hiddenGenericClass: string,
-        attributes: string,
-    ) => {
-        const task = fromLine({
-            line: '- [ ] Full task ⏫ ➕ 2022-07-04 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-        });
-        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
-
-        expect(listItem).not.toHaveAChildSpanWithClass(hiddenGenericClass);
-        expect(listItem).toHaveAmongDataAttributes(attributes);
-    };
-
     it.each([
         [{ hidePriority: true }, fieldRenderer.className('priority'), 'taskPriority: high'],
         [{ hideCreatedDate: true }, fieldRenderer.className('createdDate'), 'taskCreated: past-far'],
@@ -687,7 +672,14 @@ describe('task line rendering - classes and data attributes', () => {
     ])(
         'should not render hidden components but should set their data attributes to the list item',
         async (layoutOptions: Partial<LayoutOptions>, hiddenGenericClass: string, attributes: string) => {
-            await testHiddenComponentClasses(layoutOptions, hiddenGenericClass, attributes);
+            const task = fromLine({
+                line: '- [ ] Full task ⏫ ➕ 2022-07-04 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            });
+            const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+            const listItem = await renderListItem(task, fullLayoutOptions);
+
+            expect(listItem).not.toHaveAChildSpanWithClass(hiddenGenericClass);
+            expect(listItem).toHaveAmongDataAttributes(attributes);
         },
     );
 
