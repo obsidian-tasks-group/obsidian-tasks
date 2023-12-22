@@ -610,7 +610,6 @@ describe('task line rendering - classes and data attributes', () => {
 
     const taskLine = '- [ ] Full task ⏫ ➕ 2022-07-04 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day';
     const testHiddenComponentClasses = async (
-        taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
         hiddenGenericClass: string,
         attributes: string,
@@ -627,31 +626,26 @@ describe('task line rendering - classes and data attributes', () => {
 
     it('should not render hidden components but should set their data attributes to the list item', async () => {
         await testHiddenComponentClasses(
-            taskLine,
             { hidePriority: true },
             fieldRenderer.className('priority'),
             'taskPriority: high',
         );
         await testHiddenComponentClasses(
-            taskLine,
             { hideCreatedDate: true },
             fieldRenderer.className('createdDate'),
             'taskCreated: past-far',
         );
         await testHiddenComponentClasses(
-            taskLine,
             { hideDueDate: true },
             fieldRenderer.className('dueDate'),
             'taskDue: past-far',
         );
         await testHiddenComponentClasses(
-            taskLine,
             { hideScheduledDate: true },
             fieldRenderer.className('scheduledDate'),
             'taskScheduled: past-far',
         );
         await testHiddenComponentClasses(
-            taskLine,
             { hideStartDate: true },
             fieldRenderer.className('startDate'),
             'taskStart: past-far',
