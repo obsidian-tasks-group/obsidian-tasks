@@ -98,11 +98,26 @@ export function verifyTaskBlockExplanation(
     verifyWithFileExtension(explanation, 'explanation.text', options);
 }
 
-export function verifyTaskList(reverse: Task[]) {
-    verifyMarkdown(reverse.map((task) => task.toFileLineString()).join('\n'));
+/**
+ * Write tasks to a markdown file, to enable their contents to be visualised.
+ *
+ * They are written in the order they are given.
+ * @param tasks
+ * @see verifyTaskListInReverseOrder
+ */
+export function verifyTaskList(tasks: Task[]) {
+    verifyMarkdown(tasks.map((task) => task.toFileLineString()).join('\n'));
 }
 
-export function verifyTaskListInReverseOrder(newTasks: Task[]) {
-    const reverse = [...newTasks].reverse();
+/**
+ * Write tasks to a markdown file, to enable their contents to be visualised.
+ *
+ * They are written in reverse order, which may be useful for easier understand of toggled tasks.
+ *
+ * @param tasks
+ * @see verifyTaskList
+ */
+export function verifyTaskListInReverseOrder(tasks: Task[]) {
+    const reverse = [...tasks].reverse();
     verifyTaskList(reverse);
 }
