@@ -237,6 +237,8 @@ export class StatusRegistry {
             return nextStatus;
         }
         let searchStatus = nextStatus;
+        // The goal here is to avoid an infinite loop. By limiting the search to the number of
+        // configured statuses, we ensure it doesn't continue indefinitely.
         for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
             searchStatus = this.getNextStatusOrCreate(searchStatus);
             if (searchStatus.type === wanted) {
