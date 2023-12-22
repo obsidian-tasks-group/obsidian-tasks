@@ -222,6 +222,8 @@ export class StatusRegistry {
                     return searchStatus;
                 }
             }
+
+            searchStatus = nextStatus;
             for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
                 searchStatus = this.getNextStatusOrCreate(searchStatus);
                 if (searchStatus.type === StatusType.IN_PROGRESS) {

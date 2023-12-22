@@ -544,7 +544,7 @@ describe('StatusRegistry', () => {
             expect(nextStatus).toEqual(statusRegistry.bySymbol('T'));
         });
 
-        it.failing('should select the correct next status, when there is ambiguity', () => {
+        it('should select the correct next status, when there is ambiguity', () => {
             // Arrange
             const statusRegistry = new StatusRegistry();
             const statuses: StatusCollection = [
