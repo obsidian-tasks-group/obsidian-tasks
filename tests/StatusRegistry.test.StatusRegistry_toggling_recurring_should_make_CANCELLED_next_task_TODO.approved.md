@@ -1,2 +1,2 @@
 - [x] this should toggle to TODO 🔁 every week on Sunday ✅ 2023-12-22
-- [-] this should toggle to TODO 🔁 every week on Sunday
+- [ ] this should toggle to TODO 🔁 every week on Sunday
