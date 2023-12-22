@@ -8,9 +8,22 @@ import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import { TaskLocation } from '../src/TaskLocation';
 import * as TestHelpers from './TestHelpers';
+import * as StatusExamples from './TestingTools/StatusExamples';
+import { constructStatuses } from './TestingTools/StatusesTestHelpers';
+import { verifyMarkdown } from './TestingTools/VerifyMarkdown';
 
 jest.mock('obsidian');
 window.moment = moment;
+
+// TODO MOVE THIS TO SEPARATE FILE
+function verifyTaskListInReverseOrder(newTasks: Task[]) {
+    verifyMarkdown(
+        newTasks
+            .reverse()
+            .map((task) => task.toFileLineString())
+            .join('\n'),
+    );
+}
 
 describe('StatusRegistry', () => {
     // Reset the global StatusRegistry before and after each test.
@@ -472,6 +485,37 @@ describe('StatusRegistry', () => {
             // Issue https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1499
             // Ensure that the next status was applied, even though it is an unrecognised status
             expect(toggled?.status.symbol).toEqual('D');
+        });
+    });
+
+    describe('toggling recurring', () => {
+        it.failing('should make CANCELLED next task TODO', () => {
+            // See #2304:
+            // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
+
+            // TODO Convert this to using StatusRegistry directly, not tasks...
+
+            // Arrange
+            const globalStatusRegistry = StatusRegistry.getInstance();
+            const statuses = StatusExamples.doneTogglesToCancelled();
+            globalStatusRegistry.set(constructStatuses(statuses));
+
+            const line = '- [/] this should toggle to TODO 🔁 every Sunday';
+            const task = TestHelpers.fromLine({ line });
+            expect(task.isRecurring).toEqual(true);
+
+            // Act
+            const newTasks = task!.toggle();
+
+            // Assert
+            verifyTaskListInReverseOrder(newTasks);
+
+            const toggled = newTasks?.[1]!;
+            expect(toggled.status).toEqual(globalStatusRegistry.bySymbol('x'));
+
+            // Ensure that the next status skips through to TODO, if it's a recurring task
+            const next = newTasks?.[0]!;
+            expect(next.status).toEqual(globalStatusRegistry.bySymbol(' '));
         });
     });
 });
