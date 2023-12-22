@@ -514,6 +514,22 @@ describe('StatusRegistry', () => {
             checkToggleAndRecurrenceStatuses(statuses, '/', 'x', ' ');
         });
 
+        it('should find IN_PROGRESS for next recurrence, when statuses are IN_PROGRESS then DONE', () => {
+            const statuses: StatusCollection = [
+                ['1', '1 to 2', '2', 'IN_PROGRESS'],
+                ['2', '2 to 1', '1', 'DONE'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, '1', '2', '1');
+        });
+
+        it('should find IN_PROGRESS for next recurrence, when statuses are DONE then IN_PROGRESS', () => {
+            const statuses: StatusCollection = [
+                ['1', '1 to 2', '2', 'DONE'],
+                ['2', '2 to 1', '1', 'IN_PROGRESS'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, '2', '1', '2');
+        });
+
         it('should make CANCELLED next task IN_PROGRESS, if TODO not found', () => {
             const statuses: StatusCollection = [
                 ['/', '/ to x', 'x', 'IN_PROGRESS'],
