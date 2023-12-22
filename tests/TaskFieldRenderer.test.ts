@@ -25,8 +25,7 @@ describe('Field Layouts Container tests', () => {
 
         fieldRenderer.addDataAttribute(span, task, 'dueDate');
 
-        expect(Object.keys(span.dataset).length).toEqual(1);
-        expect(span.dataset['taskDue']).toEqual('future-1d');
+        expect(span).toHaveDataAttributes('taskDue: future-1d');
     });
 
     it('should add a data attribute for an existing component (not date)', () => {
@@ -35,8 +34,7 @@ describe('Field Layouts Container tests', () => {
 
         fieldRenderer.addDataAttribute(span, task, 'priority');
 
-        expect(Object.keys(span.dataset).length).toEqual(1);
-        expect(span.dataset['taskPriority']).toEqual('medium');
+        expect(span).toHaveDataAttributes('taskPriority: medium');
     });
     it('should not add any data attributes for a missing component', () => {
         const task = new TaskBuilder().build();
@@ -44,7 +42,7 @@ describe('Field Layouts Container tests', () => {
 
         fieldRenderer.addDataAttribute(span, task, 'recurrenceRule');
 
-        expect(Object.keys(span.dataset).length).toEqual(0);
+        expect(span).toHaveDataAttributes('');
     });
 });
 
