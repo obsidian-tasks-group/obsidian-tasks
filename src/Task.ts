@@ -428,7 +428,18 @@ export class Task {
             if (setCreatedDate) {
                 createdDate = window.moment();
             }
-            const nextStatus = StatusRegistry.getInstance().getNextStatusOrCreate(newStatus);
+            const statusRegistry = StatusRegistry.getInstance();
+            let nextStatus = statusRegistry.getNextStatusOrCreate(newStatus);
+            if (nextStatus.type !== StatusType.TODO) {
+                let searchStatus = nextStatus;
+                for (let i = 0; i < statusRegistry.registeredStatuses.length - 1; i++) {
+                    searchStatus = statusRegistry.getNextStatusOrCreate(searchStatus);
+                    if (searchStatus.type === StatusType.TODO) {
+                        nextStatus = searchStatus;
+                        break;
+                    }
+                }
+            }
             const nextTask = new Task({
                 ...this,
                 ...nextOccurrence,
@@ -467,7 +478,6 @@ export class Task {
      */
     public toggleWithRecurrenceInUsersOrder(): Task[] {
         const newTasks = this.toggle();
-
         const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
