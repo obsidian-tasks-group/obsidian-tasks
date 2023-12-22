@@ -620,10 +620,7 @@ describe('task line rendering - classes and data attributes', () => {
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
 
-        const textSpan = getTextSpan(listItem);
-        for (const childSpan of Array.from(textSpan.children)) {
-            expect(childSpan.classList.contains(hiddenGenericClass)).toBeFalsy();
-        }
+        expect(listItem).not.toHaveAChildSpanWithClass(hiddenGenericClass);
 
         // Now verify the attributes
         for (const key in attributes) {
