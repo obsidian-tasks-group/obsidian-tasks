@@ -98,7 +98,7 @@ export function verifyTaskBlockExplanation(
     verifyWithFileExtension(explanation, 'explanation.text', options);
 }
 
-function verifyTaskList(reverse: Task[]) {
+export function verifyTaskList(reverse: Task[]) {
     verifyMarkdown(reverse.map((task) => task.toFileLineString()).join('\n'));
 }
 
