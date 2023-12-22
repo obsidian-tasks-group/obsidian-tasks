@@ -214,13 +214,14 @@ export class StatusRegistry {
         const nextStatus = this.getNextStatusOrCreate(newStatus);
 
         {
-            if (nextStatus.type === StatusType.TODO) {
+            const wanted = StatusType.TODO;
+            if (nextStatus.type === wanted) {
                 return nextStatus;
             }
             let searchStatus = nextStatus;
             for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
                 searchStatus = this.getNextStatusOrCreate(searchStatus);
-                if (searchStatus.type === StatusType.TODO) {
+                if (searchStatus.type === wanted) {
                     return searchStatus;
                 }
             }
