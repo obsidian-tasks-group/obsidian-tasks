@@ -624,7 +624,7 @@ describe('task line rendering - classes and data attributes', () => {
         expect(listItem).toHaveAmongDataAttributes(attributes);
     };
 
-    it('does not render hidden components but sets their specific classes to the upper li element', async () => {
+    it('should not render hidden components but should set their data attributes to the list item', async () => {
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hidePriority: true },
