@@ -334,7 +334,7 @@ describe('task line rendering - classes and data attributes', () => {
         expect(listItem).toHaveAChildSpanWithClassAndDataAttributes(mainClass, attributes);
     };
 
-    it('renders priority with its correct classes', async () => {
+    it('should render priority component with its class and data attribute', async () => {
         await testComponentClasses(
             '- [ ] Full task ⏫ ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             {},
@@ -355,7 +355,7 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    it('renders recurrence with its correct classes', async () => {
+    it('should render recurrence component with its class and data attribute', async () => {
         await testComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             {},
@@ -364,7 +364,7 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    it('adds a correct "today" CSS class to dates', async () => {
+    it('should render date component with its class and data attribute with "today" value', async () => {
         const today = DateParser.parseDate('today').format(TaskRegularExpressions.dateFormat);
         await testComponentClasses(
             `- [ ] Full task ⏫ ➕ ${today}`,
@@ -398,7 +398,7 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    it('adds a correct "future-1d" CSS class to dates', async () => {
+    it('should render date component with its class and data attribute with "future-1d" value', async () => {
         const future = DateParser.parseDate('tomorrow').format(TaskRegularExpressions.dateFormat);
         await testComponentClasses(
             `- [ ] Full task ⏫ ➕ ${future}`,
@@ -432,7 +432,7 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    it('adds a correct "future-7d" CSS class to dates', async () => {
+    it('should render date component with its class and data attribute with "future-7d" value', async () => {
         const future = DateParser.parseDate('in 7 days').format(TaskRegularExpressions.dateFormat);
         await testComponentClasses(
             `- [ ] Full task ⏫ ➕ ${future}`,
@@ -466,7 +466,7 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    it('adds a correct "past-1d" CSS class to dates', async () => {
+    it('should render date component with its class and data attribute with "past-1d" value', async () => {
         const past = DateParser.parseDate('yesterday').format(TaskRegularExpressions.dateFormat);
         await testComponentClasses(
             `- [ ] Full task ⏫ ➕ ${past}`,
@@ -500,7 +500,7 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    it('adds a correct "past-7d" CSS class to dates', async () => {
+    it('should render date component with its class and data attribute with "past-7d" value', async () => {
         const past = DateParser.parseDate('7 days ago').format(TaskRegularExpressions.dateFormat);
         await testComponentClasses(
             `- [ ] Full task ⏫ ➕ ${past}`,
@@ -534,7 +534,7 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    it('adds the classes "...future-far" and "...past-far" to dates that are further than 7 days', async () => {
+    it('should render date component with its class and data attribute with "future-far" & "past-far" values', async () => {
         const future = DateParser.parseDate('in 8 days').format(TaskRegularExpressions.dateFormat);
         await testComponentClasses(
             `- [ ] Full task ⏫ ➕ ${future}`,
