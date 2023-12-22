@@ -111,24 +111,6 @@ interface TaskComponents {
     blockLink: string;
 }
 
-function getNextRecurrenceStatusOrCreate(statusRegistry: StatusRegistry, newStatus: Status) {
-    let nextStatus = statusRegistry.getNextStatusOrCreate(newStatus);
-    if (nextStatus.type !== StatusType.TODO) {
-        let searchStatus = nextStatus;
-        // The goal here is to avoid an infinite loop. By limiting the search to the number of
-        // configured statuses, we ensure it doesn't continue indefinitely.
-        for (let i = 0; i < statusRegistry.registeredStatuses.length - 1; i++) {
-            searchStatus = statusRegistry.getNextStatusOrCreate(searchStatus);
-            if (searchStatus.type === StatusType.TODO) {
-                nextStatus = searchStatus;
-                break;
-            }
-        }
-        // If it fails to find any TODO status, it will use the next symbol after DONE.
-    }
-    return nextStatus;
-}
-
 /**
  * Task encapsulates the properties of the MarkDown task along with
  * the extensions provided by this plugin. This is used to parse and
@@ -447,7 +429,7 @@ export class Task {
                 createdDate = window.moment();
             }
             const statusRegistry = StatusRegistry.getInstance();
-            const nextStatus = getNextRecurrenceStatusOrCreate(statusRegistry, newStatus);
+            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
             const nextTask = new Task({
                 ...this,
                 ...nextOccurrence,
