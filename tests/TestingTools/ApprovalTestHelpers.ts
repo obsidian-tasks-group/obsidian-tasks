@@ -103,6 +103,6 @@ function verifyTaskList(reverse: Task[]) {
 }
 
 export function verifyTaskListInReverseOrder(newTasks: Task[]) {
-    const reverse = newTasks.reverse();
+    const reverse = [...newTasks].reverse();
     verifyTaskList(reverse);
 }
