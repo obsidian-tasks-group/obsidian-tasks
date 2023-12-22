@@ -213,25 +213,29 @@ export class StatusRegistry {
     public getNextRecurrenceStatusOrCreate(newStatus: Status) {
         const nextStatus = this.getNextStatusOrCreate(newStatus);
 
-        if (nextStatus.type === StatusType.TODO) {
-            return nextStatus;
-        }
-        let searchStatus = nextStatus;
-        for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
-            searchStatus = this.getNextStatusOrCreate(searchStatus);
-            if (searchStatus.type === StatusType.TODO) {
-                return searchStatus;
+        {
+            if (nextStatus.type === StatusType.TODO) {
+                return nextStatus;
+            }
+            let searchStatus = nextStatus;
+            for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
+                searchStatus = this.getNextStatusOrCreate(searchStatus);
+                if (searchStatus.type === StatusType.TODO) {
+                    return searchStatus;
+                }
             }
         }
 
-        if (nextStatus.type === StatusType.IN_PROGRESS) {
-            return nextStatus;
-        }
-        searchStatus = nextStatus;
-        for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
-            searchStatus = this.getNextStatusOrCreate(searchStatus);
-            if (searchStatus.type === StatusType.IN_PROGRESS) {
-                return searchStatus;
+        {
+            if (nextStatus.type === StatusType.IN_PROGRESS) {
+                return nextStatus;
+            }
+            let searchStatus = nextStatus;
+            for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
+                searchStatus = this.getNextStatusOrCreate(searchStatus);
+                if (searchStatus.type === StatusType.IN_PROGRESS) {
+                    return searchStatus;
+                }
             }
         }
 
