@@ -494,6 +494,8 @@ describe('StatusRegistry', () => {
             const task = TestHelpers.fromLine({ line });
             expect(task.isRecurring).toEqual(true);
 
+            const initialStatusForRecurringTask = globalStatusRegistry.bySymbol('/');
+
             // Act
             const newTasks = task!.toggle();
 
@@ -503,9 +505,15 @@ describe('StatusRegistry', () => {
             const toggled = newTasks?.[1]!;
             expect(toggled.status).toEqual(globalStatusRegistry.bySymbol('x'));
 
+            const toggledStatus = globalStatusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
+            expect(toggledStatus).toEqual(globalStatusRegistry.bySymbol('x'));
+
             // Ensure that the next status skips through to TODO, if it's a recurring task
             const next = newTasks?.[0]!;
             expect(next.status).toEqual(globalStatusRegistry.bySymbol(' '));
+
+            const nextStatus = globalStatusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
+            expect(nextStatus).toEqual(globalStatusRegistry.bySymbol(' '));
         });
     });
 });
