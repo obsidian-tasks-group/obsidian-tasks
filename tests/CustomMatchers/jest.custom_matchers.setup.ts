@@ -52,8 +52,9 @@ expect.extend({
 // ---------------------------------------------------------------------
 // CustomMatchersForRendering
 // ---------------------------------------------------------------------
-import { toHaveDataAttributes } from './CustomMatchersForRendering';
+import { toHaveAChildSpanWithClassAndDataAttributes, toHaveDataAttributes } from './CustomMatchersForRendering';
 expect.extend({
+    toHaveAChildSpanWithClassAndDataAttributes,
     toHaveDataAttributes,
 });
 
