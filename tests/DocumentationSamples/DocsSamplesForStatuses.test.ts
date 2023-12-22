@@ -3,13 +3,7 @@ import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import type { StatusCollection, StatusCollectionEntry } from '../../src/StatusCollection';
 import * as Themes from '../../src/Config/Themes';
 import { StatusValidator } from '../../src/StatusValidator';
-import {
-    verifyStatusesAsDetailedMermaidDiagram,
-    verifyStatusesAsTasksList,
-    verifyStatusesAsTasksText,
-    verifyStatusesInMultipleFormats,
-    verifyTransitionsAsMarkdownTable,
-} from '../TestingTools/VerifyStatuses';
+import * as VerifyStatuses from '../TestingTools/VerifyStatuses';
 import {
     doneTogglesToCancelled,
     doneTogglesToCancelledWithUnconventionalSymbols,
@@ -31,33 +25,33 @@ describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
     it('core-statuses', () => {
-        verifyStatusesInMultipleFormats([Status.makeTodo(), Status.makeDone()], true);
+        VerifyStatuses.verifyStatusesInMultipleFormats([Status.makeTodo(), Status.makeDone()], true);
     });
 
     it('custom-statuses', () => {
-        verifyStatusesInMultipleFormats([Status.makeInProgress(), Status.makeCancelled()], true);
+        VerifyStatuses.verifyStatusesInMultipleFormats([Status.makeInProgress(), Status.makeCancelled()], true);
     });
 
     it('important-cycle', () => {
         const statuses = importantCycle();
-        verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
+        VerifyStatuses.verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
     });
 
     it('todo-in_progress-done', () => {
         const statuses = todoToInProgressToDone();
-        verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
-        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
+        VerifyStatuses.verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
+        VerifyStatuses.verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 
     it('pro-con-cycle', () => {
         const statuses = proCon();
-        verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
-        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
+        VerifyStatuses.verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
+        VerifyStatuses.verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 
     it('toggle-does-nothing', () => {
         const statuses = variousNonTaskStatuses();
-        verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
+        VerifyStatuses.verifyStatusesInMultipleFormats(constructStatuses(statuses), false);
     });
 
     it('done-toggles-to-cancelled', () => {
@@ -65,7 +59,7 @@ describe('DefaultStatuses', () => {
         // DONE is followed by CANCELLED, which currently causes unexpected behaviour in recurrent tasks.
         // This uses the 4 default statuses, and just customises their order.
         const statuses = doneTogglesToCancelled();
-        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
+        VerifyStatuses.verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 
     it('done-toggles-to-cancelled-with-unconventional-symbols', () => {
@@ -73,7 +67,7 @@ describe('DefaultStatuses', () => {
         // DONE is followed by CANCELLED, which currently causes unexpected behaviour in recurrent tasks.
         // This doesn't follow the standard convention of 'x' means DONE. It has 'x' means CANCELLED.
         const statuses = doneTogglesToCancelledWithUnconventionalSymbols();
-        verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
+        VerifyStatuses.verifyStatusesAsDetailedMermaidDiagram(constructStatuses(statuses));
     });
 });
 
@@ -98,15 +92,15 @@ describe('Theme', () => {
         });
 
         it('Table', () => {
-            verifyStatusesInMultipleFormats(constructStatuses(statuses), true);
+            VerifyStatuses.verifyStatusesInMultipleFormats(constructStatuses(statuses), true);
         });
 
         it('Tasks', () => {
-            verifyStatusesAsTasksList(constructStatuses(statuses));
+            VerifyStatuses.verifyStatusesAsTasksList(constructStatuses(statuses));
         });
 
         it('Text', () => {
-            verifyStatusesAsTasksText(constructStatuses(statuses));
+            VerifyStatuses.verifyStatusesAsTasksText(constructStatuses(statuses));
         });
     });
 });
@@ -120,6 +114,6 @@ describe('Status Transitions', () => {
             Status.makeCancelled(),
             new Status(new StatusConfiguration('~', 'My custom status', ' ', false, StatusType.NON_TASK)),
         ];
-        verifyTransitionsAsMarkdownTable(statuses);
+        VerifyStatuses.verifyTransitionsAsMarkdownTable(statuses);
     });
 });
