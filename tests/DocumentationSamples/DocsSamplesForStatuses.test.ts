@@ -5,14 +5,7 @@ import * as Themes from '../../src/Config/Themes';
 import { StatusValidator } from '../../src/StatusValidator';
 import * as VerifyStatuses from '../TestingTools/VerifyStatuses';
 import * as StatusExamples from '../TestingTools/StatusExamples';
-
-function constructStatuses(importedStatuses: StatusCollection) {
-    const statuses: Status[] = [];
-    importedStatuses.forEach((importedStatus) => {
-        statuses.push(Status.createFromImportedValue(importedStatus));
-    });
-    return statuses;
-}
+import { constructStatuses } from '../TestingTools/StatusesTestHelpers';
 
 describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
