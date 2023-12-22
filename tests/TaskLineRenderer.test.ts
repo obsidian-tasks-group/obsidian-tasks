@@ -612,7 +612,7 @@ describe('task line rendering - classes and data attributes', () => {
         taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
         hiddenGenericClass: string,
-        attributes: AttributesDictionary,
+        attributes: string,
     ) => {
         const task = fromLine({
             line: taskLine,
@@ -621,11 +621,7 @@ describe('task line rendering - classes and data attributes', () => {
         const listItem = await renderListItem(task, fullLayoutOptions);
 
         expect(listItem).not.toHaveAChildSpanWithClass(hiddenGenericClass);
-
-        // Now verify the attributes
-        for (const key in attributes) {
-            expect(listItem.dataset[key]).toEqual(attributes[key]);
-        }
+        expect(listItem).toHaveAmongDataAttributes(attributes);
     };
 
     it('does not render hidden components but sets their specific classes to the upper li element', async () => {
@@ -633,31 +629,31 @@ describe('task line rendering - classes and data attributes', () => {
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hidePriority: true },
             fieldRenderer.className('priority'),
-            { taskPriority: 'high' },
+            'taskPriority: high',
         );
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 ➕ 2022-07-04 🔁 every day',
             { hideCreatedDate: true },
             fieldRenderer.className('createdDate'),
-            { taskCreated: 'past-far' },
+            'taskCreated: past-far',
         );
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideDueDate: true },
             fieldRenderer.className('dueDate'),
-            { taskDue: 'past-far' },
+            'taskDue: past-far',
         );
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideScheduledDate: true },
             fieldRenderer.className('scheduledDate'),
-            { taskScheduled: 'past-far' },
+            'taskScheduled: past-far',
         );
         await testHiddenComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             { hideStartDate: true },
             fieldRenderer.className('startDate'),
-            { taskStart: 'past-far' },
+            'taskStart: past-far',
         );
     });
 
