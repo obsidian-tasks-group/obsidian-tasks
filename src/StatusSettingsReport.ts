@@ -51,9 +51,13 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
         if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
             const helpURL =
                 'https://publish.obsidian.md/tasks/Getting+Started/Statuses/Recurring+Tasks+and+Custom+Statuses';
-            const message = `This \`DONE\` status is followed by ${getPrintableSymbol(
-                nextStatus.type,
-            )}, not \`TODO\` or \`IN_PROGRESS\`.<br>If used to complete a recurring task, it will instead be followed by \`TODO\` or \`IN_PROGRESS\`, to ensure the next task matches the \`not done\` filter. <br>See [Recurring Tasks and Custom Statuses](${helpURL}).`;
+            const message = [
+                `This \`DONE\` status is followed by ${getPrintableSymbol(
+                    nextStatus.type,
+                )}, not \`TODO\` or \`IN_PROGRESS\`.`,
+                'If used to complete a recurring task, it will instead be followed by `TODO` or `IN_PROGRESS`, to ensure the next task matches the `not done` filter. ',
+                `See [Recurring Tasks and Custom Statuses](${helpURL}).`,
+            ].join('<br>');
             problems.push(message);
         }
     } else {
