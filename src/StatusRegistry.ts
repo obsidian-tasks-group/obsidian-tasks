@@ -205,7 +205,7 @@ export class StatusRegistry {
      * If the next status is not TODO:
      *   - it first advances through the next statuses until it finds a {@link StatusType.TODO} status - which it returns
      *   - or it then advances through the next statuses until it finds an {@link StatusType.IN_PROGRESS} status - which it returns
-     *   - otherwise, it uses the status for the status `[ ]`, as the default 'TODO' status.
+     *   - otherwise, it uses the status with symbol 'space', which is the default 'TODO' status.
      *
      * @param newStatus - the new status of the task that has just been toggled, which
      *                    is expected to be of type {@link StatusType.DONE}, but this is not checked.
