@@ -363,13 +363,7 @@ export class StatusRegistry {
 
             // Check the next status:
             const nextStatus = this.getNextStatus(status);
-            const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
-            const nextStatusIsKnown = nextStatusIndex !== -1;
-            const nextStatusIsNotInternal = nextStatus.type !== StatusType.EMPTY;
-
-            if (nextStatusIsKnown && nextStatusIsNotInternal) {
-                edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
-            }
+            this.addEdgeIfNotToInternal(uniqueStatuses, nextStatus, edges, index);
         });
 
         return `
@@ -388,6 +382,16 @@ ${edges.join('\n')}
 linkStyle default stroke:gray
 \`\`\`
 `;
+    }
+
+    private addEdgeIfNotToInternal(uniqueStatuses: Status[], nextStatus: Status, edges: string[], index: number) {
+        const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
+        const nextStatusIsKnown = nextStatusIndex !== -1;
+        const nextStatusIsNotInternal = nextStatus.type !== StatusType.EMPTY;
+
+        if (nextStatusIsKnown && nextStatusIsNotInternal) {
+            edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
+        }
     }
 
     private getMermaidNodeLabel(status: Status, includeDetails: boolean) {
