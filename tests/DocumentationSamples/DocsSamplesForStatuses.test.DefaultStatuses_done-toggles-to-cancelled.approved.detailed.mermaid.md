@@ -14,6 +14,7 @@ classDef NON_TASK    stroke:#99e,stroke-width:3px;
 4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]:::CANCELLED
 1 --> 3
 2 --> 4
+2-. "🔁" .-> 1
 3 --> 2
 4 --> 1
 

@@ -363,12 +363,16 @@ export class StatusRegistry {
 
             // Check the next status:
             const nextStatus = this.getNextStatus(status);
-            const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
-            const nextStatusIsKnown = nextStatusIndex !== -1;
-            const nextStatusIsNotInternal = nextStatus.type !== StatusType.EMPTY;
+            this.addEdgeIfNotToInternal(uniqueStatuses, nextStatus, edges, index, false);
 
-            if (nextStatusIsKnown && nextStatusIsNotInternal) {
-                edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
+            // For recurring tasks, if Tasks would override the next status after a DONE task,
+            // to force it to be TODO or IN_PROGRESS, then we want to show this visually.
+            if (status.type === StatusType.DONE) {
+                const nextRecurringStatus = this.getNextRecurrenceStatusOrCreate(status);
+                const nextRecurringTypeDiffers = nextRecurringStatus.symbol !== nextStatus.symbol;
+                if (nextRecurringTypeDiffers) {
+                    this.addEdgeIfNotToInternal(uniqueStatuses, nextRecurringStatus, edges, index, true);
+                }
             }
         });
 
@@ -388,6 +392,29 @@ ${edges.join('\n')}
 linkStyle default stroke:gray
 \`\`\`
 `;
+    }
+
+    private addEdgeIfNotToInternal(
+        uniqueStatuses: Status[],
+        nextStatus: Status,
+        edges: string[],
+        index: number,
+        isForReccurenceOverride: boolean,
+    ) {
+        const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
+        const nextStatusIsKnown = nextStatusIndex !== -1;
+        const nextStatusIsNotInternal = nextStatus.type !== StatusType.EMPTY;
+
+        if (nextStatusIsKnown && nextStatusIsNotInternal) {
+            let joiner;
+            if (isForReccurenceOverride) {
+                joiner = '-. "🔁" .-> ';
+            } else {
+                joiner = ' --> ';
+            }
+            const line = `${index + 1}${joiner}${nextStatusIndex + 1}`;
+            edges.push(line);
+        }
     }
 
     private getMermaidNodeLabel(status: Status, includeDetails: boolean) {
