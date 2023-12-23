@@ -213,12 +213,12 @@ export class StatusRegistry {
     public getNextRecurrenceStatusOrCreate(newStatus: Status) {
         const nextStatus = this.getNextStatusOrCreate(newStatus);
 
-        const result1 = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, StatusType.TODO);
+        const result1 = this.getNextRecurrenceStatusOfType(nextStatus, StatusType.TODO);
         if (result1) {
             return result1;
         }
 
-        const result2 = this.findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus, StatusType.IN_PROGRESS);
+        const result2 = this.getNextRecurrenceStatusOfType(nextStatus, StatusType.IN_PROGRESS);
         if (result2) {
             return result2;
         }
@@ -232,7 +232,7 @@ export class StatusRegistry {
         return this.bySymbolOrCreate(' ');
     }
 
-    private findStatusOfRequiredTypeByFollowingNextStatusChain(nextStatus: Status, wanted: StatusType) {
+    private getNextRecurrenceStatusOfType(nextStatus: Status, wanted: StatusType) {
         if (nextStatus.type === wanted) {
             return nextStatus;
         }
