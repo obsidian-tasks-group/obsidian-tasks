@@ -407,10 +407,10 @@ linkStyle default stroke:gray
 
         if (nextStatusIsKnown && nextStatusIsNotInternal) {
             let joiner;
-            if (!isForReccurenceOverride) {
-                joiner = ' --> ';
-            } else {
+            if (isForReccurenceOverride) {
                 joiner = '-. "🔁" .-> ';
+            } else {
+                joiner = ' --> ';
             }
             const line = `${index + 1}${joiner}${nextStatusIndex + 1}`;
             edges.push(line);
