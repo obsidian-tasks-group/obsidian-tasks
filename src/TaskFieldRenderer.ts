@@ -11,7 +11,7 @@ export class TaskFieldRenderer {
      * a `<span>` describing a task with medium priority and done yesterday will have
      * `data-task-priority="medium" data-task-due="past-1d"` in its data attributes (One data attribute per component).
      *
-     * If no data was found for a component in a task, data attribute won't be added.
+     * If no data attribute was found for a component or data attribute's value is empty, data attribute won't be added.
      *
      * For detailed calculation see {@link TaskFieldHTMLData.addDataAttribute}.
      *
@@ -112,6 +112,8 @@ export class TaskFieldHTMLData {
      * `data-task-priority="medium" data-task-due="past-1d" ` in its data attributes (One data attribute per component).
      *
      * Calculation of the value is done with {@link TaskFieldHTMLData.attributeValueCalculator}.
+     *
+     * If the data attribute's key or its value is an empty string, no data attribute will be added.
      *
      * @param element the HTML element to add the data attribute to.
      * @param task the task from which the data shall be taken.
