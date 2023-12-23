@@ -402,7 +402,8 @@ linkStyle default stroke:gray
         const nextStatusIsNotInternal = nextStatus.type !== StatusType.EMPTY;
 
         if (nextStatusIsKnown && nextStatusIsNotInternal) {
-            edges.push(`${index + 1} --> ${nextStatusIndex + 1}`);
+            const line = `${index + 1} --> ${nextStatusIndex + 1}`;
+            edges.push(line);
         }
     }
 
