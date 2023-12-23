@@ -654,7 +654,7 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    it.failing('should not add data attributes for invalid dates', async () => {
+    it('should not add data attributes for invalid dates', async () => {
         await testComponentClasses(
             '- [ ] task with invalid due date 📅 2023-02-29',
             {},

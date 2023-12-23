@@ -123,6 +123,10 @@ export class TaskFieldHTMLData {
         }
 
         const attributeValue = this.attributeValueCalculator(component, task);
+        if (attributeValue === '') {
+            return;
+        }
+
         element.dataset[this.attributeName] = attributeValue;
     }
 }
