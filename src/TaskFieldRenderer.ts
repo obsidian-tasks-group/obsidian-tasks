@@ -118,9 +118,11 @@ export class TaskFieldHTMLData {
      * @param component the component of the task for which the data attribute has to be added.
      */
     public addDataAttribute(element: HTMLElement, task: Task, component: TaskLayoutComponent) {
-        if (this.attributeName !== TaskFieldHTMLData.noAttributeName) {
-            element.dataset[this.attributeName] = this.attributeValueCalculator(component, task);
+        if (this.attributeName === TaskFieldHTMLData.noAttributeName) {
+            return;
         }
+
+        element.dataset[this.attributeName] = this.attributeValueCalculator(component, task);
     }
 }
 
