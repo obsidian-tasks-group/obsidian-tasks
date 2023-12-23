@@ -363,7 +363,7 @@ export class StatusRegistry {
 
             // Check the next status:
             const nextStatus = this.getNextStatus(status);
-            this.addEdgeIfNotToInternal(uniqueStatuses, nextStatus, edges, index);
+            this.addEdgeIfNotToInternal(uniqueStatuses, nextStatus, edges, index, false);
 
             // For recurring tasks, if Tasks would override the next status after a DONE task,
             // to force it to be TODO or IN_PROGRESS, then we want to show this visually.
@@ -371,9 +371,7 @@ export class StatusRegistry {
                 const nextRecurringStatus = this.getNextRecurrenceStatusOrCreate(status);
                 const nextRecurringTypeDiffers = nextRecurringStatus.symbol !== nextStatus.symbol;
                 if (nextRecurringTypeDiffers) {
-                    // TODO use dotted lines
-                    // TODO add label
-                    this.addEdgeIfNotToInternal(uniqueStatuses, nextRecurringStatus, edges, index);
+                    this.addEdgeIfNotToInternal(uniqueStatuses, nextRecurringStatus, edges, index, true);
                 }
             }
         });
@@ -396,13 +394,24 @@ linkStyle default stroke:gray
 `;
     }
 
-    private addEdgeIfNotToInternal(uniqueStatuses: Status[], nextStatus: Status, edges: string[], index: number) {
+    private addEdgeIfNotToInternal(
+        uniqueStatuses: Status[],
+        nextStatus: Status,
+        edges: string[],
+        index: number,
+        isForReccurenceOverride: boolean,
+    ) {
         const nextStatusIndex = uniqueStatuses.findIndex((status) => status.symbol === nextStatus.symbol);
         const nextStatusIsKnown = nextStatusIndex !== -1;
         const nextStatusIsNotInternal = nextStatus.type !== StatusType.EMPTY;
 
         if (nextStatusIsKnown && nextStatusIsNotInternal) {
-            const line = `${index + 1} --> ${nextStatusIndex + 1}`;
+            let line;
+            if (!isForReccurenceOverride) {
+                line = `${index + 1} --> ${nextStatusIndex + 1}`;
+            } else {
+                line = `${index + 1}-. "🔁" .-> ${nextStatusIndex + 1}`;
+            }
             edges.push(line);
         }
     }
