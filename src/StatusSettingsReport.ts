@@ -54,7 +54,7 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
             problems.push(
                 `This \`DONE\` status is followed by ${getPrintableSymbol(
                     nextStatus.type,
-                )}, not \`TODO\` or \`IN_PROGRESS\`: this will not work well for recurring tasks. See [Recurring Tasks and Custom Statuses](${helpURL}).`,
+                )}, not \`TODO\` or \`IN_PROGRESS\`.<br>If used to complete a recurring task, it will instead be followed by \`TODO\` or \`IN_PROGRESS\`, to ensure the next task matches the \`not done\` filter. <br>See [Recurring Tasks and Custom Statuses](${helpURL}).`,
             );
         }
     } else {
