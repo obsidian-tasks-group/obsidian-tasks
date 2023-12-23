@@ -20,8 +20,6 @@ import { TaskBuilder } from './TestingTools/TaskBuilder';
 jest.mock('obsidian');
 window.moment = moment;
 
-type AttributesDictionary = { [key: string]: string };
-
 const fieldRenderer = new TaskFieldRenderer();
 
 /**
@@ -690,50 +688,44 @@ describe('task line rendering - classes and data attributes', () => {
         expect(tagSpan.dataset.tagName).toEqual('#illegal-data-attribute');
     });
 
-    const testLiAttributes = async (
-        taskLine: string,
-        layoutOptions: Partial<LayoutOptions>,
-        attributes: AttributesDictionary,
-    ) => {
+    const testLiAttributes = async (taskLine: string, layoutOptions: Partial<LayoutOptions>, attributes: string[]) => {
         const task = fromLine({
             line: taskLine,
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
-        for (const key in attributes) {
-            expect(listItem.dataset[key]).toEqual(attributes[key]);
+        for (const attribute of attributes) {
+            expect(listItem).toHaveAmongDataAttributes(attribute);
         }
     };
 
     it('creates data attributes for custom statuses', async () => {
-        await testLiAttributes(
-            '- [ ] An incomplete task',
-            {},
-            { task: '', taskStatusName: 'Todo', taskStatusType: 'TODO' },
-        );
-        await testLiAttributes(
-            '- [x] A complete task',
-            {},
-            { task: 'x', taskStatusName: 'Done', taskStatusType: 'DONE' },
-        );
-        await testLiAttributes(
-            '- [/] In-progress task',
-            {},
-            { task: '/', taskStatusName: 'In Progress', taskStatusType: 'IN_PROGRESS' },
-        );
-        await testLiAttributes(
-            '- [-] In-progress task',
-            {},
-            { task: '-', taskStatusName: 'Cancelled', taskStatusType: 'CANCELLED' },
-        );
+        await testLiAttributes('- [ ] An incomplete task', {}, [
+            'task: ',
+            'taskStatusName: Todo',
+            'taskStatusType: TODO',
+        ]);
+        await testLiAttributes('- [x] A complete task', {}, [
+            'task: x',
+            'taskStatusName: Done',
+            'taskStatusType: DONE',
+        ]);
+        await testLiAttributes('- [/] In-progress task', {}, [
+            'task: /',
+            'taskStatusName: In Progress',
+            'taskStatusType: IN_PROGRESS',
+        ]);
+        await testLiAttributes('- [-] In-progress task', {}, [
+            'task: -',
+            'taskStatusName: Cancelled',
+            'taskStatusType: CANCELLED',
+        ]);
     });
 
     it('marks nonexistent task priority as "normal" priority', async () => {
-        await testLiAttributes(
-            '- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            {},
-            { taskPriority: 'normal' },
-        );
+        await testLiAttributes('- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day', {}, [
+            'taskPriority: normal',
+        ]);
     });
 });
 
