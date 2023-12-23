@@ -406,12 +406,13 @@ linkStyle default stroke:gray
         const nextStatusIsNotInternal = nextStatus.type !== StatusType.EMPTY;
 
         if (nextStatusIsKnown && nextStatusIsNotInternal) {
-            let line;
+            let joiner;
             if (!isForReccurenceOverride) {
-                line = `${index + 1} --> ${nextStatusIndex + 1}`;
+                joiner = ' --> ';
             } else {
-                line = `${index + 1}-. "🔁" .-> ${nextStatusIndex + 1}`;
+                joiner = '-. "🔁" .-> ';
             }
+            const line = `${index + 1}${joiner}${nextStatusIndex + 1}`;
             edges.push(line);
         }
     }
