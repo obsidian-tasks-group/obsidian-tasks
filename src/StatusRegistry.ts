@@ -201,28 +201,51 @@ export class StatusRegistry {
 
     /**
      * Return the status to use for a recurring task that has just been completed.
-     * If the next status is not TODO, it advances through the next statuses until it either
-     * finds a {@link StatusType.TODO} status, or goes ahead and returns the next status after {@link newStatus}.
+     *
+     * If the next status is not TODO:
+     *   - it first advances through the next statuses until it finds a {@link StatusType.TODO} status - which it returns
+     *   - or it then advances through the next statuses until it finds an {@link StatusType.IN_PROGRESS} status - which it returns
+     *   - otherwise, it uses the status with symbol 'space', which is the default 'TODO' status.
      *
      * @param newStatus - the new status of the task that has just been toggled, which
      *                    is expected to be of type {@link StatusType.DONE}, but this is not checked.
      */
     public getNextRecurrenceStatusOrCreate(newStatus: Status) {
-        let nextStatus = this.getNextStatusOrCreate(newStatus);
-        if (nextStatus.type !== StatusType.TODO) {
-            let searchStatus = nextStatus;
-            // The goal here is to avoid an infinite loop. By limiting the search to the number of
-            // configured statuses, we ensure it doesn't continue indefinitely.
-            for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
-                searchStatus = this.getNextStatusOrCreate(searchStatus);
-                if (searchStatus.type === StatusType.TODO) {
-                    nextStatus = searchStatus;
-                    break;
-                }
-            }
-            // If it fails to find any TODO status, it will use the next symbol after DONE.
+        const nextStatus = this.getNextStatusOrCreate(newStatus);
+
+        const result1 = this.getNextRecurrenceStatusOfType(nextStatus, StatusType.TODO);
+        if (result1) {
+            return result1;
         }
-        return nextStatus;
+
+        const result2 = this.getNextRecurrenceStatusOfType(nextStatus, StatusType.IN_PROGRESS);
+        if (result2) {
+            return result2;
+        }
+
+        // There is no TODO or IN_PROGRESS status in the chain, so we will use a space.
+        // This ensures that the new recurrence is always found by 'not done' searches,
+        // for safety in vaults where users did not fully set up all statuses.
+        // This makes the simplifying assumption that no user is likely to change the
+        // status type of space to anything other than TODO - but if they do, it's not
+        // our problem.
+        return this.bySymbolOrCreate(' ');
+    }
+
+    private getNextRecurrenceStatusOfType(nextStatus: Status, wanted: StatusType) {
+        if (nextStatus.type === wanted) {
+            return nextStatus;
+        }
+        let searchStatus = nextStatus;
+        // The goal here is to avoid an infinite loop. By limiting the search to the number of
+        // configured statuses, we ensure it doesn't continue indefinitely.
+        for (let i = 0; i < this.registeredStatuses.length - 1; i++) {
+            searchStatus = this.getNextStatusOrCreate(searchStatus);
+            if (searchStatus.type === wanted) {
+                return searchStatus;
+            }
+        }
+        return undefined;
     }
 
     /**

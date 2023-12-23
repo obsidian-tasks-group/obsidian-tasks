@@ -7,6 +7,7 @@ import { Status } from '../src/Status';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import { TaskLocation } from '../src/TaskLocation';
+import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
 import * as TestHelpers from './TestHelpers';
 import * as StatusExamples from './TestingTools/StatusExamples';
 import { constructStatuses } from './TestingTools/StatusesTestHelpers';
@@ -478,24 +479,126 @@ describe('StatusRegistry', () => {
     });
 
     describe('toggling recurring', () => {
-        it('should make CANCELLED next task TODO', () => {
-            // See #2304:
-            // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
-
+        /**
+         * Test one scenario of toggling a recurring task: confirm the status of the done task, and the next recurrence.
+         * @param statuses
+         * @param initialStatusSymbol - typically an incomplete status
+         * @param expectedToggledStatus - the next status - is expected to be DONE, so that the next recurrence is created.
+         * @param expectedNextTaskStatus - the expected status of the new recurrence.
+         */
+        function checkToggleAndRecurrenceStatuses(
+            statuses: Array<StatusCollectionEntry>,
+            initialStatusSymbol: string,
+            expectedToggledStatus: string,
+            expectedNextTaskStatus: string,
+        ) {
             // Arrange
             const statusRegistry = new StatusRegistry();
-            const statuses = StatusExamples.doneTogglesToCancelled();
             statusRegistry.set(constructStatuses(statuses));
 
-            const initialStatusForRecurringTask = statusRegistry.bySymbol('/');
+            const initialStatusForRecurringTask = statusRegistry.bySymbol(initialStatusSymbol);
 
             // Act, Assert
             const toggledStatus = statusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
-            expect(toggledStatus).toEqual(statusRegistry.bySymbol('x'));
+            expect(toggledStatus).toEqual(statusRegistry.bySymbol(expectedToggledStatus));
 
-            // Ensure that the next status skips through to TODO for a recurring task
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
-            expect(nextStatus).toEqual(statusRegistry.bySymbol(' '));
+            expect(nextStatus).toEqual(statusRegistry.bySymbolOrCreate(expectedNextTaskStatus));
+        }
+
+        it('should make CANCELLED next task TODO', () => {
+            // See #2304:
+            // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
+            // Ensure that the next status skips through to TODO for a recurring task:
+            const statuses = StatusExamples.doneTogglesToCancelled();
+            checkToggleAndRecurrenceStatuses(statuses, '/', 'x', ' ');
+        });
+
+        it('should find IN_PROGRESS for next recurrence, when statuses are IN_PROGRESS then DONE', () => {
+            const statuses: StatusCollection = [
+                ['1', '1 to 2', '2', 'IN_PROGRESS'],
+                ['2', '2 to 1', '1', 'DONE'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, '1', '2', '1');
+        });
+
+        it('should find IN_PROGRESS for next recurrence, when statuses are DONE then IN_PROGRESS', () => {
+            const statuses: StatusCollection = [
+                ['1', '1 to 2', '2', 'DONE'],
+                ['2', '2 to 1', '1', 'IN_PROGRESS'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, '2', '1', '2');
+        });
+
+        it('should make CANCELLED next task IN_PROGRESS, if TODO not found', () => {
+            const statuses: StatusCollection = [
+                ['/', '/ to x', 'x', 'IN_PROGRESS'],
+                ['x', 'x to -', '-', 'DONE'],
+                ['-', '- to /', '/', 'CANCELLED'],
+            ];
+            // Ensure that the next status skips through to IN_PROGRESS for a recurring task, if TODO not found
+            checkToggleAndRecurrenceStatuses(statuses, '/', 'x', '/');
+        });
+
+        it('should select TODO even if DONE is followed by IN_PROGRESS', () => {
+            // This is not intended to be realistic: its sole purpose is to have DONE followed by IN_PROGRESS,
+            // and ensure that this is chosen in preference to the TODO that is further ahead in the sequences
+            // of statuses.
+            const statuses: StatusCollection = [
+                ['T', 'T to D', 'D', 'TODO'],
+                ['D', 'D to I', 'I', 'DONE'],
+                ['I', 'I to T', 'T', 'IN_PROGRESS'],
+            ];
+            // Ensure that TODO is chosen, ignoring the IN_PROGRESS task immediately after DONE:
+            checkToggleAndRecurrenceStatuses(statuses, 'T', 'D', 'T');
+        });
+
+        it('should select the correct next status, when there is ambiguity', () => {
+            const statuses: StatusCollection = [
+                // A set of 4 statuses, chosen to see whether the loop size in getNextRecurrenceStatusOrCreate()
+                // affects the calculation in any way.
+                ['A', 'A to B', 'B', 'NON_TASK'],
+                ['B', 'B to C', 'C', 'NON_TASK'],
+                ['C', 'C to D', 'D', 'NON_TASK'],
+                ['D', 'D to E', 'E', 'NON_TASK'],
+                // A cycle of 6 statuses, not including any TODOs,
+                // to ensure that the correct IN_PROGRESS is selected.
+                ['1', '1 to 2', '2', 'IN_PROGRESS'],
+                ['2', '2 to 3', '3', 'DONE'],
+                ['3', '3 to 4', '4', 'CANCELLED'],
+                ['4', '4 to 5', '5', 'IN_PROGRESS'],
+                ['5', '5 to 6', '6', 'DONE'],
+                ['6', '6 to 1', '1', 'CANCELLED'],
+            ];
+            // Ensure that the IN_PROGRESS soonest after 2 is chosen:
+            checkToggleAndRecurrenceStatuses(statuses, '1', '2', '4');
+        });
+
+        it('should select the correct next status, even when it is unknown', () => {
+            const statuses: StatusCollection = [
+                // A set where the DONE task goes to an unknown symbol
+                ['a', 'Status a', 'b', 'TODO'],
+                ['b', 'Status b', 'c', 'DONE'], // c is not known
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, 'a', 'b', 'c');
+        });
+
+        it('should return space for symbol if there are no TODO or IN_PROGRESS in sequence', () => {
+            const statuses: StatusCollection = [
+                [' ', 'Todo', 'x', 'TODO'],
+                ['x', 'Done', ' ', 'DONE'],
+                ['C', 'C to D', 'D', 'CANCELLED'],
+                ['D', 'D to C', 'C', 'DONE'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, 'C', 'D', ' ');
+        });
+
+        it('should return space for symbol if it is not a known status', () => {
+            const statuses: StatusCollection = [
+                ['C', 'C to D', 'D', 'CANCELLED'],
+                ['D', 'D to C', 'C', 'DONE'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, 'C', 'D', ' ');
         });
     });
 });
