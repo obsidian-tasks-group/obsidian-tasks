@@ -364,6 +364,18 @@ export class StatusRegistry {
             // Check the next status:
             const nextStatus = this.getNextStatus(status);
             this.addEdgeIfNotToInternal(uniqueStatuses, nextStatus, edges, index);
+
+            // For recurring tasks, if Tasks would override the next status after a DONE task,
+            // to force it to be TODO or IN_PROGRESS, then we want to show this visually.
+            if (status.type === StatusType.DONE) {
+                const nextRecurringStatus = this.getNextRecurrenceStatusOrCreate(status);
+                const nextRecurringTypeDiffers = nextRecurringStatus.symbol !== nextStatus.symbol;
+                if (nextRecurringTypeDiffers) {
+                    // TODO use dotted lines
+                    // TODO add label
+                    this.addEdgeIfNotToInternal(uniqueStatuses, nextRecurringStatus, edges, index);
+                }
+            }
         });
 
         return `
