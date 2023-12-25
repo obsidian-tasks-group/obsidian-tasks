@@ -57,6 +57,23 @@ Example:
     show urgency
     ```
 
+## Full Mode
+
+In full mode, query results will show the emojis and the concrete recurrence rule or dates.
+
+This is the default mode.
+
+The command is `full mode`.
+
+Example:
+
+    ```tasks
+    not done
+    full mode
+    ```
+
+This can be reversed with [[#Short Mode]].
+
 ## Short Mode
 
 In short mode, query results will only show the emojis, but not the concrete recurrence rule or dates.
@@ -70,3 +87,5 @@ Example:
     not done
     short mode
     ```
+
+This can be reversed with [[#Full Mode]].
