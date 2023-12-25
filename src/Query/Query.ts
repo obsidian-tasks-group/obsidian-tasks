@@ -172,7 +172,7 @@ ${source}`;
             return result;
         }
 
-        result = this.explainFilters(result);
+        result += this.explainFilters();
         result += this.explainQueryLimits();
 
         const { debugSettings } = getSettings();
@@ -184,7 +184,8 @@ ${source}`;
         return result;
     }
 
-    private explainFilters(result: string) {
+    private explainFilters() {
+        let result = '';
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {
             result += 'No filters supplied. All tasks will match the query.';
