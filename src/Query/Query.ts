@@ -172,6 +172,19 @@ ${source}`;
             return result;
         }
 
+        result = this.explainFilters(result);
+        result += this.explainQueryLimits();
+
+        const { debugSettings } = getSettings();
+        if (debugSettings.ignoreSortInstructions) {
+            result +=
+                "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
+        }
+
+        return result;
+    }
+
+    private explainFilters(result: string) {
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {
             result += 'No filters supplied. All tasks will match the query.';
@@ -181,14 +194,6 @@ ${source}`;
                 result += this.filters[i].explainFilterIndented('');
             }
         }
-        result += this.explainQueryLimits();
-
-        const { debugSettings } = getSettings();
-        if (debugSettings.ignoreSortInstructions) {
-            result +=
-                "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
-        }
-
         return result;
     }
 
