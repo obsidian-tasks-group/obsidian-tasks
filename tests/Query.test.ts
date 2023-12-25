@@ -395,6 +395,8 @@ describe('Query parsing', () => {
         const filters: ReadonlyArray<string> = [
             '# Comment lines are ignored',
             'explain',
+            'full',
+            'full mode',
             'hide backlink',
             'hide created date',
             'hide done date',
@@ -478,6 +480,16 @@ describe('Query parsing', () => {
 
         expect(new Query('group by status.type').grouping[0].property).toEqual('status.type');
         expect(new Query('GROUP BY STATUS.TYPE').grouping[0].property).toEqual('status.type');
+    });
+
+    it('should parse "short mode" and "full mode" correctly', () => {
+        // Check 'short' mode is enabled:
+        expect(new Query('short').queryLayoutOptions.shortMode).toEqual(true);
+        expect(new Query('short mode').queryLayoutOptions.shortMode).toEqual(true);
+
+        // Check that 'full' reverses short mode:
+        expect(new Query('short\nfull mode').queryLayoutOptions.shortMode).toEqual(false);
+        expect(new Query('short mode\nfull').queryLayoutOptions.shortMode).toEqual(false);
     });
 
     describe('should include instruction in parsing error messages', () => {
