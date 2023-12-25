@@ -358,6 +358,7 @@ describe('Query parsing', () => {
             expect(query.error).toBeUndefined();
             expect(query.grouping.length).toEqual(1);
             expect(query.grouping[0]).toBeDefined();
+            expect(query.grouping[0].instruction).toEqual(filter);
 
             // Assert
             expect(queryUpperCase.error).toBeUndefined();
