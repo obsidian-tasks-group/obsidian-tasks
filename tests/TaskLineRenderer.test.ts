@@ -77,9 +77,9 @@ function getListItemComponents(listItem: HTMLElement): string[] {
     const components: string[] = [getDescriptionText(listItem)];
 
     const textSpan = getTextSpan(listItem);
-    for (const childSpan of Array.from(textSpan.children)) {
-        if (childSpan.textContent) {
-            components.push(childSpan.textContent);
+    for (const innerSpan of Array.from(textSpan.children)) {
+        if (innerSpan.textContent) {
+            components.push(innerSpan.textContent);
         }
     }
     return components;
