@@ -35,6 +35,8 @@ Explanation of this Tasks code block query:
   OR (At least one of):
     priority is highest
     priority is lowest
+
+No grouping instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -73,6 +75,8 @@ explain
 Explanation of this Tasks code block query:
 
 description includes \
+
+No grouping instructions supplied.
 ```
 <!-- endSnippet -->
 
