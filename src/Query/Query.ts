@@ -184,7 +184,7 @@ ${source}`;
         return result;
     }
 
-    private explainFilters() {
+    public explainFilters() {
         let result = '';
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {
