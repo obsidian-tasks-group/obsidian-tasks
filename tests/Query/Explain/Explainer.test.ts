@@ -65,8 +65,7 @@ describe('explain groupers', () => {
         const source = 'group by due\ngroup by status.name reverse\ngroup by function task.description.toUpperCase()';
         const query = new Query(source);
         expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
-            "
-            group by due
+            "group by due
             group by status.name reverse
             group by function task.description.toUpperCase()"
         `);
