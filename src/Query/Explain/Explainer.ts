@@ -19,7 +19,7 @@ export class Explainer {
         results.push(this.explainQueryLimits(query));
         results.push(this.explainDebugSettings());
 
-        return results.join('');
+        return results.filter((explanation) => explanation !== '').join('\n');
     }
 
     private explainError(query: Query) {
@@ -44,7 +44,7 @@ export class Explainer {
     }
 
     public explainGroups(query: Query) {
-        let result = '\n';
+        let result = '';
         const numberOfGroups = query.grouping.length;
         if (numberOfGroups === 0) {
             result += 'No grouping instructions supplied.\n';
@@ -86,7 +86,7 @@ export class Explainer {
         const { debugSettings } = getSettings();
         if (debugSettings.ignoreSortInstructions) {
             result +=
-                "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
+                "\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
         }
         return result;
     }
