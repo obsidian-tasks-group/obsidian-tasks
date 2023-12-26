@@ -169,8 +169,7 @@ ${source}`;
         let result = '';
 
         if (this.error !== undefined) {
-            result += 'Query has an error:\n';
-            result += this.error + '\n';
+            result += this.explainError();
             return result;
         }
 
@@ -184,6 +183,13 @@ ${source}`;
                 "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
         }
 
+        return result;
+    }
+
+    private explainError() {
+        let result = '';
+        result += 'Query has an error:\n';
+        result += this.error + '\n';
         return result;
     }
 
