@@ -63,6 +63,7 @@ limit groups 3
 
             group by priority reverse
             group by happens
+
             At most 50 tasks.
 
             At most 3 tasks per group (if any "group by" options are supplied).
@@ -111,7 +112,8 @@ describe('explain groupers', () => {
         expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
             "group by due
             group by status.name reverse
-            group by function task.description.toUpperCase()"
+            group by function task.description.toUpperCase()
+            "
         `);
     });
 });
