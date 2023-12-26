@@ -168,7 +168,7 @@ This means that even though the new recurrence of any completed recurring tasks 
 > Note that the new task has `TODO` status, so it will show up in standard Tasks searches.
 
 > [!released]
-> This improved selection of status for new recurrences was introduced in Tasks X.Y.Z.
+> This improved selection of status for new recurrences was introduced in Tasks 5.4.0.
 
 ## When the current status type is NON_TASK
 
