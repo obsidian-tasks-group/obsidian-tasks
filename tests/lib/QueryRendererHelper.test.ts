@@ -16,9 +16,9 @@ describe('explain', () => {
         expect(explainResults(query.source, new GlobalFilter(), new GlobalQuery())).toMatchInlineSnapshot(`
             "Explanation of this Tasks code block query:
 
-            No filters supplied. All tasks will match the query.
+              No filters supplied. All tasks will match the query.
 
-            No grouping instructions supplied.
+              No grouping instructions supplied.
             "
         `);
     });
@@ -34,9 +34,9 @@ describe('explain', () => {
 
             Explanation of this Tasks code block query:
 
-            No filters supplied. All tasks will match the query.
+              No filters supplied. All tasks will match the query.
 
-            No grouping instructions supplied.
+              No grouping instructions supplied.
             "
         `);
     });
@@ -49,15 +49,15 @@ describe('explain', () => {
         expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toMatchInlineSnapshot(`
             "Explanation of the global query:
 
-            description includes hello
+              description includes hello
 
-            No grouping instructions supplied.
+              No grouping instructions supplied.
 
             Explanation of this Tasks code block query:
 
-            No filters supplied. All tasks will match the query.
+              No filters supplied. All tasks will match the query.
 
-            No grouping instructions supplied.
+              No grouping instructions supplied.
             "
         `);
     });
@@ -74,15 +74,15 @@ describe('explain', () => {
 
             Explanation of the global query:
 
-            description includes hello
+              description includes hello
 
-            No grouping instructions supplied.
+              No grouping instructions supplied.
 
             Explanation of this Tasks code block query:
 
-            No filters supplied. All tasks will match the query.
+              No filters supplied. All tasks will match the query.
 
-            No grouping instructions supplied.
+              No grouping instructions supplied.
             "
         `);
     });
@@ -95,9 +95,9 @@ describe('explain', () => {
         expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toMatchInlineSnapshot(`
             "Explanation of this Tasks code block query:
 
-            No filters supplied. All tasks will match the query.
+              No filters supplied. All tasks will match the query.
 
-            No grouping instructions supplied.
+              No grouping instructions supplied.
             "
         `);
     });

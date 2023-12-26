@@ -16,6 +16,30 @@ describe('Filter', () => {
         expect(filter.explanation.asString()).toEqual(line);
         expect(filter.filterFunction).not.toBeUndefined();
     });
+
+    it('should create a Filter object with different explanation', () => {
+        const filter = new Filter(
+            // instruction differs from explanation
+            'some sample instruction',
+            (_task: Task) => {
+                return true;
+            },
+            new Explanation('some more detailed explanation of the filter'),
+        );
+
+        expect(filter.explainFilterIndented('')).toMatchInlineSnapshot(`
+            "some sample instruction =>
+              some more detailed explanation of the filter
+            "
+        `);
+
+        // Check that text is correctly indented:
+        expect(filter.explainFilterIndented('  ')).toMatchInlineSnapshot(`
+            "  some sample instruction =>
+                some more detailed explanation of the filter
+            "
+        `);
+    });
 });
 
 describe('FilterOrErrorMessage', () => {

@@ -2,6 +2,16 @@ import { getSettings } from '../../Config/Settings';
 import type { Query } from '../Query';
 
 export class Explainer {
+    private readonly indentation: string;
+
+    /**
+     * Constructor.
+     * @param indentation - the indentation to use for the output. Defaults to 'not indented'.
+     */
+    constructor(indentation: string = '') {
+        this.indentation = indentation;
+    }
+
     /**
      * Generate a text description of the contents of a query.
      *
@@ -40,12 +50,12 @@ export class Explainer {
     public explainFilters(query: Query) {
         const numberOfFilters = query.filters.length;
         if (numberOfFilters === 0) {
-            return 'No filters supplied. All tasks will match the query.\n';
+            return this.indent('No filters supplied. All tasks will match the query.\n');
         }
 
         return query.filters
             .map((filter) => {
-                return filter.explainFilterIndented('');
+                return filter.explainFilterIndented(this.indentation);
             })
             .join('\n');
     }
@@ -53,12 +63,12 @@ export class Explainer {
     public explainGroups(query: Query) {
         const numberOfGroups = query.grouping.length;
         if (numberOfGroups === 0) {
-            return 'No grouping instructions supplied.\n';
+            return this.indent('No grouping instructions supplied.\n');
         }
 
         let result = '';
         for (let i = 0; i < numberOfGroups; i++) {
-            result += query.grouping[i].instruction + '\n';
+            result += this.indentation + query.grouping[i].instruction + '\n';
         }
         return result;
     }
@@ -76,13 +86,13 @@ export class Explainer {
 
         if (query.limit !== undefined) {
             const result = getPluralisedText(query.limit) + '.\n';
-            results.push(result);
+            results.push(this.indent(result));
         }
 
         if (query.taskGroupLimit !== undefined) {
             const result =
                 getPluralisedText(query.taskGroupLimit) + ' per group (if any "group by" options are supplied).\n';
-            results.push(result);
+            results.push(this.indent(result));
         }
         return results.join('\n');
     }
@@ -91,9 +101,14 @@ export class Explainer {
         let result = '';
         const { debugSettings } = getSettings();
         if (debugSettings.ignoreSortInstructions) {
-            result +=
-                "NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.\n";
+            result += this.indent(
+                "NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.\n",
+            );
         }
         return result;
+    }
+
+    private indent(description: string) {
+        return this.indentation + description;
     }
 }

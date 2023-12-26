@@ -1,6 +1,7 @@
 import type { GlobalFilter } from '../Config/GlobalFilter';
 import type { GlobalQuery } from '../Config/GlobalQuery';
 import { Query } from '../Query/Query';
+import { Explainer } from '../Query/Explain/Explainer';
 
 /**
  * @summary
@@ -36,15 +37,17 @@ export function explainResults(
         result += `Only tasks containing the global filter '${globalFilter.get()}'.\n\n`;
     }
 
+    const explainer = new Explainer('  ');
     const tasksBlockQuery = new Query(source, path);
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         if (globalQuery.hasInstructions()) {
-            result += `Explanation of the global query:\n\n${globalQuery.query(path).explainQuery()}\n`;
+            const globalQueryQuery = globalQuery.query(path);
+            result += `Explanation of the global query:\n\n${explainer.explainQuery(globalQueryQuery)}\n`;
         }
     }
 
-    result += `Explanation of this Tasks code block query:\n\n${tasksBlockQuery.explainQuery()}`;
+    result += `Explanation of this Tasks code block query:\n\n${explainer.explainQuery(tasksBlockQuery)}`;
 
     return result;
 }
