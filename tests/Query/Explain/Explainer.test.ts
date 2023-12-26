@@ -70,8 +70,8 @@ limit groups 3
 
             At most 3 tasks per group (if any "group by" options are supplied).
 
-
-            NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting."
+            NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.
+            "
         `);
     });
 });

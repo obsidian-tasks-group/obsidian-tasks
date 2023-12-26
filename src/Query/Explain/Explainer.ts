@@ -86,7 +86,7 @@ export class Explainer {
         const { debugSettings } = getSettings();
         if (debugSettings.ignoreSortInstructions) {
             result +=
-                "\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
+                "NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.\n";
         }
         return result;
     }
