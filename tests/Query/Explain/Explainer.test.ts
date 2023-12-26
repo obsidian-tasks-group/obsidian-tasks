@@ -4,7 +4,6 @@
 
 import moment from 'moment';
 
-// import { Explainer } from '../../../src/Query/Explain/Explainer';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import { Query } from '../../../src/Query/Query';
 import { Explainer } from '../../../src/Query/Explain/Explainer';
