@@ -172,15 +172,15 @@ ${source}`;
 
     private explainQueryImpl(query: Query) {
         let result = '';
-        if (this.error !== undefined) {
-            result += this.explainError(query);
+        if (query.error !== undefined) {
+            result += query.explainError(query);
             return result;
         }
 
-        result += this.explainFilters(query);
-        result += this.explainGroups(query);
-        result += this.explainQueryLimits(query);
-        result += this.explainDebugSettings();
+        result += query.explainFilters(query);
+        result += query.explainGroups(query);
+        result += query.explainQueryLimits(query);
+        result += query.explainDebugSettings();
 
         return result;
     }
