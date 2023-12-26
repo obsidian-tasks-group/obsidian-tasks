@@ -176,7 +176,7 @@ ${source}`;
         }
 
         result += this.explainFilters(query);
-        result += this.explainGroups();
+        result += this.explainGroups(query);
         result += this.explainQueryLimits();
         result += this.explainDebugSettings();
 
@@ -204,15 +204,15 @@ ${source}`;
         return result;
     }
 
-    private explainGroups() {
+    private explainGroups(query: Query) {
         let result = '\n';
-        const numberOfGroups = this.grouping.length;
+        const numberOfGroups = query.grouping.length;
         if (numberOfGroups === 0) {
             result += 'No grouping instructions supplied.\n';
         } else {
             for (let i = 0; i < numberOfGroups; i++) {
                 if (i > 0) result += '\n';
-                result += this.grouping[i].instruction;
+                result += query.grouping[i].instruction;
             }
         }
         return result;
