@@ -2,17 +2,17 @@ import { getSettings } from '../../Config/Settings';
 import type { Query } from '../Query';
 
 export class Explainer {
-    protected explainQueryImpl(query: Query) {
+    public explainQueryImpl(query: Query) {
         let result = '';
         if (query.error !== undefined) {
-            result += query.explainError(query);
+            result += this.explainError(query);
             return result;
         }
 
-        result += query.explainFilters(query);
-        result += query.explainGroups(query);
-        result += query.explainQueryLimits(query);
-        result += query.explainDebugSettings();
+        result += this.explainFilters(query);
+        result += this.explainGroups(query);
+        result += this.explainQueryLimits(query);
+        result += this.explainDebugSettings();
 
         return result;
     }
