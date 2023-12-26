@@ -50,8 +50,7 @@ export class Explainer {
             result += 'No grouping instructions supplied.\n';
         } else {
             for (let i = 0; i < numberOfGroups; i++) {
-                if (i > 0) result += '\n';
-                result += query.grouping[i].instruction;
+                result += query.grouping[i].instruction + '\n';
             }
         }
         return result;
