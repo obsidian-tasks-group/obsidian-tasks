@@ -99,6 +99,8 @@ Explanation of this Tasks code block query:
     using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 

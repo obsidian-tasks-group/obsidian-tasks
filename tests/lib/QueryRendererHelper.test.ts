@@ -19,6 +19,8 @@ describe('explain', () => {
               No filters supplied. All tasks will match the query.
 
               No grouping instructions supplied.
+
+              No sorting instructions supplied.
             "
         `);
     });
@@ -37,6 +39,8 @@ describe('explain', () => {
               No filters supplied. All tasks will match the query.
 
               No grouping instructions supplied.
+
+              No sorting instructions supplied.
             "
         `);
     });
@@ -53,11 +57,15 @@ describe('explain', () => {
 
               No grouping instructions supplied.
 
+              No sorting instructions supplied.
+
             Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.
 
               No grouping instructions supplied.
+
+              No sorting instructions supplied.
             "
         `);
     });
@@ -78,11 +86,15 @@ describe('explain', () => {
 
               No grouping instructions supplied.
 
+              No sorting instructions supplied.
+
             Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.
 
               No grouping instructions supplied.
+
+              No sorting instructions supplied.
             "
         `);
     });
@@ -98,6 +110,8 @@ describe('explain', () => {
               No filters supplied. All tasks will match the query.
 
               No grouping instructions supplied.
+
+              No sorting instructions supplied.
             "
         `);
     });
