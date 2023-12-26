@@ -18,7 +18,7 @@ import { scan } from './Scanner';
 import { SearchInfo } from './SearchInfo';
 import { Explainer } from './Explain/Explainer';
 
-export class Query extends Explainer implements IQuery {
+export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
     public readonly filePath: string | undefined;
@@ -49,7 +49,6 @@ export class Query extends Explainer implements IQuery {
     private readonly commentRegexp = /^#.*/;
 
     constructor(source: string, path: string | undefined = undefined) {
-        super();
         this._queryId = this.generateQueryId(10);
 
         this.source = source;
@@ -167,7 +166,8 @@ ${source}`;
      */
     public explainQuery(): string {
         const query: Query = this;
-        return this.explainQueryImpl(query);
+        const explainer = new Explainer();
+        return explainer.explainQueryImpl(query);
     }
 
     public get limit(): number | undefined {
