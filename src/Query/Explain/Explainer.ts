@@ -3,6 +3,11 @@ import type { Query } from '../Query';
 
 export class Explainer {
     private readonly indentation: string;
+
+    /**
+     * Constructor.
+     * @param indentation - the indentation to use for the output. Defaults to 'not indented'.
+     */
     constructor(indentation: string = '') {
         this.indentation = indentation;
     }
