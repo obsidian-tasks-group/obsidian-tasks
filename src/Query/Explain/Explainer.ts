@@ -46,7 +46,7 @@ export class Explainer {
         let result = '';
         const numberOfGroups = query.grouping.length;
         if (numberOfGroups === 0) {
-            result += 'No grouping instructions supplied.\n';
+            return 'No grouping instructions supplied.\n';
         } else {
             for (let i = 0; i < numberOfGroups; i++) {
                 result += query.grouping[i].instruction + '\n';
