@@ -7,11 +7,14 @@ import moment from 'moment';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import { Query } from '../../../src/Query/Query';
 import { Explainer } from '../../../src/Query/Explain/Explainer';
+import { resetSettings, updateSettings } from '../../../src/Config/Settings';
+import { DebugSettings } from '../../../src/Config/DebugSettings';
 
 window.moment = moment;
 
 afterEach(() => {
     GlobalFilter.getInstance().reset();
+    resetSettings();
 });
 
 const explainer = new Explainer();
@@ -29,13 +32,56 @@ describe('explain errors', () => {
     });
 });
 
+describe('explain everything', () => {
+    it('all types of instruction', () => {
+        // Disable sort instructions
+        updateSettings({ debugSettings: new DebugSettings(true) });
+
+        const source = `
+not done
+(has start date) AND (description includes some)
+
+group by priority reverse
+group by happens
+
+sort by description reverse
+sort by path
+
+show urgency
+short mode
+limit 50
+limit groups 3
+`;
+        const query = new Query(source);
+        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
+            "not done
+
+            (has start date) AND (description includes some) =>
+              AND (All of):
+                has start date
+                description includes some
+
+            group by priority reverse
+            group by happens
+
+            At most 50 tasks.
+
+            At most 3 tasks per group (if any "group by" options are supplied).
+
+            NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.
+            "
+        `);
+    });
+});
+
 describe('explain filters', () => {
     it('should explain 0 filters', () => {
         const source = '';
         const query = new Query(source);
-        expect(explainer.explainFilters(query)).toMatchInlineSnapshot(
-            '"No filters supplied. All tasks will match the query."',
-        );
+        expect(explainer.explainFilters(query)).toMatchInlineSnapshot(`
+            "No filters supplied. All tasks will match the query.
+            "
+        `);
     });
 
     it('should explain 1 filter', () => {
@@ -65,10 +111,10 @@ describe('explain groupers', () => {
         const source = 'group by due\ngroup by status.name reverse\ngroup by function task.description.toUpperCase()';
         const query = new Query(source);
         expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
-            "
-            group by due
+            "group by due
             group by status.name reverse
-            group by function task.description.toUpperCase()"
+            group by function task.description.toUpperCase()
+            "
         `);
     });
 });
@@ -77,23 +123,17 @@ describe('explain limits', () => {
     it('should explain limit 5', () => {
         const source = 'limit 5';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "No filters supplied. All tasks will match the query.
-                No grouping instructions supplied.
-
-
-                At most 5 tasks.
-                "
-            `);
+        expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
+            "At most 5 tasks.
+            "
+        `);
     });
 
     it('should explain limit 1', () => {
         const source = 'limit 1';
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
-            "
-
-            At most 1 task.
+            "At most 1 task.
             "
         `);
     });
@@ -102,9 +142,7 @@ describe('explain limits', () => {
         const source = 'limit 0';
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
-            "
-
-            At most 0 tasks.
+            "At most 0 tasks.
             "
         `);
     });
@@ -113,9 +151,7 @@ describe('explain limits', () => {
         const source = 'limit groups 4';
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
-            "
-
-            At most 4 tasks per group (if any "group by" options are supplied).
+            "At most 4 tasks per group (if any "group by" options are supplied).
             "
         `);
     });
@@ -124,10 +160,7 @@ describe('explain limits', () => {
         const source = 'limit 127\nlimit groups to 8 tasks';
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
-            "
-
-            At most 127 tasks.
-
+            "At most 127 tasks.
 
             At most 8 tasks per group (if any "group by" options are supplied).
             "
