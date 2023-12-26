@@ -236,8 +236,8 @@ ${source}`;
             result += '.\n';
         }
 
-        if (this.taskGroupLimit !== undefined) {
-            result += getPluralisedText(this.taskGroupLimit);
+        if (query.taskGroupLimit !== undefined) {
+            result += getPluralisedText(query.taskGroupLimit);
             result += ' per group (if any "group by" options are supplied).\n';
         }
         return result;
