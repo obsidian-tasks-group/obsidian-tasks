@@ -2,6 +2,12 @@ import { getSettings } from '../../Config/Settings';
 import type { Query } from '../Query';
 
 export class Explainer {
+    /**
+     * Generate a text description of the contents of a query.
+     *
+     * This does not show any global filter and global query.
+     * Use {@link explainResults} if you want to see any global query and global filter as well.
+     */
     public explainQuery(query: Query) {
         let result = '';
         if (query.error !== undefined) {
