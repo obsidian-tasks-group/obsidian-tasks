@@ -63,7 +63,6 @@ limit groups 3
 
             group by priority reverse
             group by happens
-
             At most 50 tasks.
 
             At most 3 tasks per group (if any "group by" options are supplied).
@@ -122,8 +121,7 @@ describe('explain limits', () => {
         const source = 'limit 5';
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
-            "
-            At most 5 tasks.
+            "At most 5 tasks.
             "
         `);
     });
@@ -132,8 +130,7 @@ describe('explain limits', () => {
         const source = 'limit 1';
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
-            "
-            At most 1 task.
+            "At most 1 task.
             "
         `);
     });
@@ -142,8 +139,7 @@ describe('explain limits', () => {
         const source = 'limit 0';
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
-            "
-            At most 0 tasks.
+            "At most 0 tasks.
             "
         `);
     });
@@ -152,8 +148,7 @@ describe('explain limits', () => {
         const source = 'limit groups 4';
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
-            "
-            At most 4 tasks per group (if any "group by" options are supplied).
+            "At most 4 tasks per group (if any "group by" options are supplied).
             "
         `);
     });
@@ -162,8 +157,7 @@ describe('explain limits', () => {
         const source = 'limit 127\nlimit groups to 8 tasks';
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
-            "
-            At most 127 tasks.
+            "At most 127 tasks.
 
             At most 8 tasks per group (if any "group by" options are supplied).
             "
