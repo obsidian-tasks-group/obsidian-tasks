@@ -358,6 +358,7 @@ describe('Query parsing', () => {
             expect(query.error).toBeUndefined();
             expect(query.grouping.length).toEqual(1);
             expect(query.grouping[0]).toBeDefined();
+            expect(query.grouping[0].instruction).toEqual(filter);
 
             // Assert
             expect(queryUpperCase.error).toBeUndefined();
@@ -1196,9 +1197,11 @@ describe('Query', () => {
         it('should explain 0 filters', () => {
             const source = '';
             const query = new Query(source);
-            expect(query.explainQuery()).toMatchInlineSnapshot(
-                '"No filters supplied. All tasks will match the query."',
-            );
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "No filters supplied. All tasks will match the query.
+                No grouping instructions supplied.
+                "
+            `);
         });
 
         it('should explain 1 filter', () => {
@@ -1206,6 +1209,8 @@ describe('Query', () => {
             const query = new Query(source);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "description includes hello
+
+                No grouping instructions supplied.
                 "
             `);
         });
@@ -1218,6 +1223,8 @@ describe('Query', () => {
 
                 due 2012-01-23 =>
                   due date is on 2012-01-23 (Monday 23rd January 2012)
+
+                No grouping instructions supplied.
                 "
             `);
         });
@@ -1238,6 +1245,8 @@ describe('Query', () => {
             const query = new Query(source);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "No filters supplied. All tasks will match the query.
+                No grouping instructions supplied.
+
 
                 At most 5 tasks.
                 "
@@ -1249,6 +1258,8 @@ describe('Query', () => {
             const query = new Query(source);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "No filters supplied. All tasks will match the query.
+                No grouping instructions supplied.
+
 
                 At most 1 task.
                 "
@@ -1260,6 +1271,8 @@ describe('Query', () => {
             const query = new Query(source);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "No filters supplied. All tasks will match the query.
+                No grouping instructions supplied.
+
 
                 At most 0 tasks.
                 "
@@ -1271,6 +1284,8 @@ describe('Query', () => {
             const query = new Query(source);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "No filters supplied. All tasks will match the query.
+                No grouping instructions supplied.
+
 
                 At most 4 tasks per group (if any "group by" options are supplied).
                 "
@@ -1282,12 +1297,26 @@ describe('Query', () => {
             const query = new Query(source);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "No filters supplied. All tasks will match the query.
+                No grouping instructions supplied.
+
 
                 At most 127 tasks.
 
 
                 At most 8 tasks per group (if any "group by" options are supplied).
                 "
+            `);
+        });
+
+        it('should explain "group by" options', () => {
+            const source =
+                'group by due\ngroup by status.name reverse\ngroup by function task.description.toUpperCase()';
+            const query = new Query(source);
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "No filters supplied. All tasks will match the query.
+                group by due
+                group by status.name reverse
+                group by function task.description.toUpperCase()"
             `);
         });
     });
@@ -1526,6 +1555,8 @@ with \ backslash)`;
                   OR (At least one of):
                     description includes line 1
                     description includes line 1 continued with \\ backslash
+
+                No grouping instructions supplied.
                 "
             `);
             expect(queryUpperCase.explainQuery()).toMatchInlineSnapshot(`
@@ -1533,6 +1564,8 @@ with \ backslash)`;
                   OR (At least one of):
                     description includes line 1
                     description includes line 1 continued with \\ backslash
+
+                No grouping instructions supplied.
                 "
             `);
         });
