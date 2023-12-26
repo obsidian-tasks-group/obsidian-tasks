@@ -16,8 +16,9 @@ import type { Filter } from './Filter/Filter';
 import { QueryResult } from './QueryResult';
 import { scan } from './Scanner';
 import { SearchInfo } from './SearchInfo';
+import { Explainer } from './Explain/Explainer';
 
-export class Query implements IQuery {
+export class Query extends Explainer implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
     public readonly filePath: string | undefined;
@@ -48,6 +49,7 @@ export class Query implements IQuery {
     private readonly commentRegexp = /^#.*/;
 
     constructor(source: string, path: string | undefined = undefined) {
+        super();
         this._queryId = this.generateQueryId(10);
 
         this.source = source;
