@@ -44,7 +44,7 @@ export class Explainer {
         return result;
     }
 
-    private explainGroups(query: Query) {
+    public explainGroups(query: Query) {
         let result = '\n';
         const numberOfGroups = query.grouping.length;
         if (numberOfGroups === 0) {
@@ -58,7 +58,7 @@ export class Explainer {
         return result;
     }
 
-    private explainQueryLimits(query: Query) {
+    public explainQueryLimits(query: Query) {
         let result = '';
 
         function getPluralisedText(limit: number) {
