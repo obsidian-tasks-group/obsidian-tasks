@@ -173,6 +173,7 @@ ${source}`;
         }
 
         result += this.explainFilters();
+        result += this.explainGroups();
         result += this.explainQueryLimits();
 
         const { debugSettings } = getSettings();
@@ -193,6 +194,20 @@ ${source}`;
             for (let i = 0; i < numberOfFilters; i++) {
                 if (i > 0) result += '\n';
                 result += this.filters[i].explainFilterIndented('');
+            }
+        }
+        return result;
+    }
+
+    private explainGroups() {
+        let result = '\n';
+        const numberOfGroups = this.grouping.length;
+        if (numberOfGroups === 0) {
+            result += 'No grouping instructions supplied.\n';
+        } else {
+            for (let i = 0; i < numberOfGroups; i++) {
+                if (i > 0) result += '\n';
+                result += this.grouping[i].instruction;
             }
         }
         return result;
