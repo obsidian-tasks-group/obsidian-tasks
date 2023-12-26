@@ -175,7 +175,7 @@ ${source}`;
             return result;
         }
 
-        result += this.explainFilters();
+        result += this.explainFilters(query);
         result += this.explainGroups();
         result += this.explainQueryLimits();
         result += this.explainDebugSettings();
@@ -190,15 +190,15 @@ ${source}`;
         return result;
     }
 
-    public explainFilters() {
+    public explainFilters(query: Query) {
         let result = '';
-        const numberOfFilters = this.filters.length;
+        const numberOfFilters = query.filters.length;
         if (numberOfFilters === 0) {
             result += 'No filters supplied. All tasks will match the query.';
         } else {
             for (let i = 0; i < numberOfFilters; i++) {
                 if (i > 0) result += '\n';
-                result += this.filters[i].explainFilterIndented('');
+                result += query.filters[i].explainFilterIndented('');
             }
         }
         return result;

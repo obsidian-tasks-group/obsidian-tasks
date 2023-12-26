@@ -574,7 +574,7 @@ describe('due date', () => {
                 const query = new Query(`due ${keyword}${date}`);
                 expect(query.error).toBeUndefined();
 
-                newRow.push(query.explainFilters().replace(/(\n)/g, '<br>'));
+                newRow.push(query.explainFilters(query).replace(/(\n)/g, '<br>'));
             });
 
             table.addRow(newRow);
