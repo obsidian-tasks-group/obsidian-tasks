@@ -34,11 +34,12 @@ export class Explainer {
         if (numberOfFilters === 0) {
             return 'No filters supplied. All tasks will match the query.\n';
         }
-        const results: string[] = [];
-        for (let i = 0; i < numberOfFilters; i++) {
-            results.push(query.filters[i].explainFilterIndented(''));
-        }
-        return results.join('\n');
+
+        return query.filters
+            .map((filter) => {
+                return filter.explainFilterIndented('');
+            })
+            .join('\n');
     }
 
     public explainGroups(query: Query) {
