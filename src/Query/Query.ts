@@ -165,9 +165,8 @@ ${source}`;
      * Use {@link explainResults} if you want to see any global query and global filter as well.
      */
     public explainQuery(): string {
-        const query: Query = this;
         const explainer = new Explainer();
-        return explainer.explainQuery(query);
+        return explainer.explainQuery(this);
     }
 
     public get limit(): number | undefined {
