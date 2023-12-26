@@ -58,8 +58,6 @@ export class Explainer {
     }
 
     public explainQueryLimits(query: Query) {
-        let result = '';
-
         function getPluralisedText(limit: number) {
             let text = `\n\nAt most ${limit} task`;
             if (limit !== 1) {
@@ -68,16 +66,22 @@ export class Explainer {
             return text;
         }
 
+        const results: string[] = [];
+
         if (query.limit !== undefined) {
+            let result = '';
             result += getPluralisedText(query.limit);
             result += '.\n';
+            results.push(result);
         }
 
         if (query.taskGroupLimit !== undefined) {
+            let result = '';
             result += getPluralisedText(query.taskGroupLimit);
             result += ' per group (if any "group by" options are supplied).\n';
+            results.push(result);
         }
-        return result;
+        return results.join('');
     }
 
     private explainDebugSettings() {
