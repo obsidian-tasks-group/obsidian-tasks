@@ -7,11 +7,14 @@ import moment from 'moment';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import { Query } from '../../../src/Query/Query';
 import { Explainer } from '../../../src/Query/Explain/Explainer';
+import { resetSettings, updateSettings } from '../../../src/Config/Settings';
+import { DebugSettings } from '../../../src/Config/DebugSettings';
 
 window.moment = moment;
 
 afterEach(() => {
     GlobalFilter.getInstance().reset();
+    resetSettings();
 });
 
 const explainer = new Explainer();
@@ -26,6 +29,50 @@ describe('explain errors', () => {
                 Problem line: "i am a nonsense query"
                 "
             `);
+    });
+});
+
+describe('explain everything', () => {
+    it('all types of instruction', () => {
+        // Disable sort instructions
+        updateSettings({ debugSettings: new DebugSettings(true) });
+
+        const source = `
+not done
+(has start date) AND (description includes some)
+
+group by priority reverse
+group by happens
+
+sort by description reverse
+sort by path
+
+show urgency
+short mode
+limit 50
+limit groups 3
+`;
+        const query = new Query(source);
+        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
+            "not done
+
+            (has start date) AND (description includes some) =>
+              AND (All of):
+                has start date
+                description includes some
+
+            group by priority reverse
+            group by happens
+
+
+            At most 50 tasks.
+
+
+            At most 3 tasks per group (if any "group by" options are supplied).
+
+
+            NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting."
+        `);
     });
 });
 
