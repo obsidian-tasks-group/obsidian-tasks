@@ -33,13 +33,12 @@ export class Explainer {
         const numberOfFilters = query.filters.length;
         if (numberOfFilters === 0) {
             return 'No filters supplied. All tasks will match the query.\n';
-        } else {
-            const results: string[] = [];
-            for (let i = 0; i < numberOfFilters; i++) {
-                results.push(query.filters[i].explainFilterIndented(''));
-            }
-            return results.join('\n');
         }
+        const results: string[] = [];
+        for (let i = 0; i < numberOfFilters; i++) {
+            results.push(query.filters[i].explainFilterIndented(''));
+        }
+        return results.join('\n');
     }
 
     public explainGroups(query: Query) {
