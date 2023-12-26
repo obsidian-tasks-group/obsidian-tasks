@@ -14,6 +14,15 @@ export class Explainer {
         }
 
         const results: string[] = [];
+
+        /**
+         * Each function result should:
+         * - either:
+         *     - be empty, if there is no information,
+         * - or:
+         *     - begin with a non-newline,
+         *     - end with a single newline.
+         */
         results.push(this.explainFilters(query));
         results.push(this.explainGroups(query));
         results.push(this.explainQueryLimits(query));
