@@ -34,6 +34,7 @@ export class Explainer {
         const results: string[] = [];
         results.push(this.explainFilters(query));
         results.push(this.explainGroups(query));
+        results.push(this.explainSorters(query));
         results.push(this.explainQueryLimits(query));
         results.push(this.explainDebugSettings());
 
@@ -69,6 +70,19 @@ export class Explainer {
         let result = '';
         for (let i = 0; i < numberOfGroups; i++) {
             result += this.indentation + query.grouping[i].instruction + '\n';
+        }
+        return result;
+    }
+
+    public explainSorters(query: Query) {
+        const numberOfSorters = query.sorting.length;
+        if (numberOfSorters === 0) {
+            return this.indent('No sorting instructions supplied.\n');
+        }
+
+        let result = '';
+        for (let i = 0; i < numberOfSorters; i++) {
+            result += this.indentation + query.sorting[i].instruction + '\n';
         }
         return result;
     }

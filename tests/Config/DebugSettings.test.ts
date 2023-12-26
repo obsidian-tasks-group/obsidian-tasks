@@ -39,6 +39,8 @@ describe('DebugSettings', () => {
 
             No grouping instructions supplied.
 
+            sort by status
+
             NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.
             "
         `);
