@@ -13,8 +13,6 @@ export class Explainer {
             return this.explainError(query);
         }
 
-        const results: string[] = [];
-
         /**
          * Each function result should:
          * - either:
@@ -23,6 +21,7 @@ export class Explainer {
          *     - begin with a non-newline,
          *     - end with a single newline.
          */
+        const results: string[] = [];
         results.push(this.explainFilters(query));
         results.push(this.explainGroups(query));
         results.push(this.explainQueryLimits(query));
