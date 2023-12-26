@@ -13,9 +13,9 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
-- X.Y.Z: 🔥 Add [[Layout#Full Mode|'full mode']] to turn off `short mode`.
-- X.Y.Z: 🔥 Add any [[Grouping|'group by']] and [[Sorting|'sort by']] instructions to [[Explaining Queries|explain]] output.
-- X.Y.Z: 🔥 Recurrence now works well [[Recurring Tasks and Custom Statuses#When DONE is not followed by TODO or IN_PROGRESS|when DONE is not followed by TODO or IN_PROGRESS]].
+- 5.4.0: 🔥 Add [[Layout#Full Mode|'full mode']] to turn off `short mode`.
+- 5.4.0: 🔥 Add any [[Grouping|'group by']] and [[Sorting|'sort by']] instructions to [[Explaining Queries|explain]] output.
+- 5.4.0: 🔥 Recurrence now works well [[Recurring Tasks and Custom Statuses#When DONE is not followed by TODO or IN_PROGRESS|when DONE is not followed by TODO or IN_PROGRESS]].
 - 5.3.0: 🔥 Add [[Postponing|postpone button]] to Tasks query results.
 - 5.3.0: 🔥 Add [[Toggling and Editing Statuses#'Change task status' context menu|'change task status' menu]] to Reading mode and Tasks query results.
 - 5.3.0: 🔥 Add documentation section about [[About Editing|editing tasks]].
