@@ -13,13 +13,13 @@ export class Explainer {
             return this.explainError(query);
         }
 
-        let result = '';
-        result += this.explainFilters(query);
-        result += this.explainGroups(query);
-        result += this.explainQueryLimits(query);
-        result += this.explainDebugSettings();
+        const results: string[] = [];
+        results.push(this.explainFilters(query));
+        results.push(this.explainGroups(query));
+        results.push(this.explainQueryLimits(query));
+        results.push(this.explainDebugSettings());
 
-        return result;
+        return results.join('');
     }
 
     private explainError(query: Query) {
