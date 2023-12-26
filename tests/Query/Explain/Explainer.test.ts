@@ -33,11 +33,7 @@ describe('explain errors', () => {
 });
 
 describe('explain everything', () => {
-    it('all types of instruction', () => {
-        // Disable sort instructions
-        updateSettings({ debugSettings: new DebugSettings(true) });
-
-        const source = `
+    const sampleOfAllInstructionTypes = `
 not done
 (has start date) AND (description includes some)
 
@@ -52,7 +48,12 @@ short mode
 limit 50
 limit groups 3
 `;
-        const query = new Query(source);
+
+    it('all types of instruction', () => {
+        // Disable sort instructions
+        updateSettings({ debugSettings: new DebugSettings(true) });
+
+        const query = new Query(sampleOfAllInstructionTypes);
         expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
             "not done
 
