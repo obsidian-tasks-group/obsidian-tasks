@@ -30,10 +30,9 @@ export class Explainer {
     }
 
     public explainFilters(query: Query) {
-        let result = '';
         const numberOfFilters = query.filters.length;
         if (numberOfFilters === 0) {
-            result += 'No filters supplied. All tasks will match the query.\n';
+            return 'No filters supplied. All tasks will match the query.\n';
         } else {
             const results: string[] = [];
             for (let i = 0; i < numberOfFilters; i++) {
@@ -41,7 +40,6 @@ export class Explainer {
             }
             return results.join('\n');
         }
-        return result;
     }
 
     public explainGroups(query: Query) {
