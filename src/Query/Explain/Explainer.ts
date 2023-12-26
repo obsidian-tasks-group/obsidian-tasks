@@ -2,7 +2,7 @@ import { getSettings } from '../../Config/Settings';
 import type { Query } from '../Query';
 
 export class Explainer {
-    public explainQueryImpl(query: Query) {
+    public explainQuery(query: Query) {
         let result = '';
         if (query.error !== undefined) {
             result += this.explainError(query);
