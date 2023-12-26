@@ -21,6 +21,7 @@ This has a number of benefits:
   - This often explains why tasks are missing from results.
 - If there is a [[Global Query|global query]] enabled, it too is included in the explanation.
 - Any [[Grouping|'group by']] instructions are listed (since Tasks X.Y.Z)
+- Any [[Sorting|'sort by']] instructions are listed (since Tasks X.Y.Z)
 
 ## Examples
 
@@ -53,6 +54,8 @@ Explanation of this Tasks code block query:
     due date is before 2022-10-22 (Saturday 22nd October 2022)
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -84,6 +87,8 @@ Explanation of this Tasks code block query:
     using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -113,6 +118,8 @@ Explanation of this Tasks code block query:
       is recurring
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -157,6 +164,8 @@ Explanation of this Tasks code block query:
           description includes 7
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -194,6 +203,8 @@ Explanation of the global query:
 
   No grouping instructions supplied.
 
+  No sorting instructions supplied.
+
   At most 50 tasks.
 
 Explanation of this Tasks code block query:
@@ -206,6 +217,8 @@ Explanation of this Tasks code block query:
       2022-10-30 (Sunday 30th October 2022) inclusive
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -245,6 +258,8 @@ Explanation of this Tasks code block query:
   description includes Some Cryptic String 
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 

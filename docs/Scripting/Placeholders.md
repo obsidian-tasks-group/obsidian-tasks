@@ -54,6 +54,8 @@ Explanation of this Tasks code block query:
   description includes Some Cryptic String 
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
