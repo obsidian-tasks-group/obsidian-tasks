@@ -49,7 +49,7 @@ limit 50
 limit groups 3
 `;
 
-    it('all types of instruction', () => {
+    it('all types of instruction - not indented', () => {
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(true) });
 
@@ -70,6 +70,32 @@ limit groups 3
             At most 3 tasks per group (if any "group by" options are supplied).
 
             NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.
+            "
+        `);
+    });
+
+    it('all types of instruction - indented', () => {
+        // Disable sort instructions
+        updateSettings({ debugSettings: new DebugSettings(true) });
+
+        const query = new Query(sampleOfAllInstructionTypes);
+        const indentedExplainer = new Explainer('  ');
+        expect(indentedExplainer.explainQuery(query)).toMatchInlineSnapshot(`
+            "  not done
+
+              (has start date) AND (description includes some) =>
+                AND (All of):
+                  has start date
+                  description includes some
+
+              group by priority reverse
+              group by happens
+
+              At most 50 tasks.
+
+              At most 3 tasks per group (if any "group by" options are supplied).
+
+              NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.
             "
         `);
     });
