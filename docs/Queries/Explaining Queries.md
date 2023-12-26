@@ -194,7 +194,6 @@ heading includes tasks
 
 No grouping instructions supplied.
 
-
 At most 50 tasks.
 
 Explanation of this Tasks code block query:
