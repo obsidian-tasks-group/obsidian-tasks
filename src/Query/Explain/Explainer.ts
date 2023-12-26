@@ -9,12 +9,11 @@ export class Explainer {
      * Use {@link explainResults} if you want to see any global query and global filter as well.
      */
     public explainQuery(query: Query) {
-        let result = '';
         if (query.error !== undefined) {
-            result += this.explainError(query);
-            return result;
+            return this.explainError(query);
         }
 
+        let result = '';
         result += this.explainFilters(query);
         result += this.explainGroups(query);
         result += this.explainQueryLimits(query);
