@@ -69,16 +69,13 @@ export class Explainer {
         const results: string[] = [];
 
         if (query.limit !== undefined) {
-            let result = '';
-            result += getPluralisedText(query.limit);
-            result += '.\n';
+            const result = getPluralisedText(query.limit) + '.\n';
             results.push(result);
         }
 
         if (query.taskGroupLimit !== undefined) {
-            let result = '';
-            result += getPluralisedText(query.taskGroupLimit);
-            result += ' per group (if any "group by" options are supplied).\n';
+            const result =
+                getPluralisedText(query.taskGroupLimit) + ' per group (if any "group by" options are supplied).\n';
             results.push(result);
         }
         return results.join('');
