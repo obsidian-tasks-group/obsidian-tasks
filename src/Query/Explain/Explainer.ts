@@ -59,7 +59,7 @@ export class Explainer {
 
     public explainQueryLimits(query: Query) {
         function getPluralisedText(limit: number) {
-            let text = `\n\nAt most ${limit} task`;
+            let text = `\nAt most ${limit} task`;
             if (limit !== 1) {
                 text += 's';
             }
