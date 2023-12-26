@@ -59,7 +59,7 @@ export class Explainer {
 
     public explainQueryLimits(query: Query) {
         function getPluralisedText(limit: number) {
-            let text = `\nAt most ${limit} task`;
+            let text = `At most ${limit} task`;
             if (limit !== 1) {
                 text += 's';
             }
@@ -78,7 +78,7 @@ export class Explainer {
                 getPluralisedText(query.taskGroupLimit) + ' per group (if any "group by" options are supplied).\n';
             results.push(result);
         }
-        return results.join('');
+        return results.join('\n');
     }
 
     private explainDebugSettings() {
