@@ -77,14 +77,12 @@ describe('explain limits', () => {
     it('should explain limit 5', () => {
         const source = 'limit 5';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "No filters supplied. All tasks will match the query.
-                No grouping instructions supplied.
+        expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
+            "
 
-
-                At most 5 tasks.
-                "
-            `);
+            At most 5 tasks.
+            "
+        `);
     });
 
     it('should explain limit 1', () => {
