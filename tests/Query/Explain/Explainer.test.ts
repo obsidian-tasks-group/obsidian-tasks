@@ -64,9 +64,7 @@ limit groups 3
             group by priority reverse
             group by happens
 
-
             At most 50 tasks.
-
 
             At most 3 tasks per group (if any "group by" options are supplied).
 
@@ -125,7 +123,6 @@ describe('explain limits', () => {
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
             "
-
             At most 5 tasks.
             "
         `);
@@ -136,7 +133,6 @@ describe('explain limits', () => {
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
             "
-
             At most 1 task.
             "
         `);
@@ -147,7 +143,6 @@ describe('explain limits', () => {
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
             "
-
             At most 0 tasks.
             "
         `);
@@ -158,7 +153,6 @@ describe('explain limits', () => {
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
             "
-
             At most 4 tasks per group (if any "group by" options are supplied).
             "
         `);
@@ -169,9 +163,7 @@ describe('explain limits', () => {
         const query = new Query(source);
         expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
             "
-
             At most 127 tasks.
-
 
             At most 8 tasks per group (if any "group by" options are supplied).
             "
