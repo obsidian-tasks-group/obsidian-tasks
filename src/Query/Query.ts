@@ -168,8 +168,10 @@ ${source}`;
     public explainQuery(): string {
         let result = '';
 
+        const query: Query = this;
+
         if (this.error !== undefined) {
-            result += this.explainError();
+            result += this.explainError(query);
             return result;
         }
 
@@ -181,10 +183,10 @@ ${source}`;
         return result;
     }
 
-    private explainError() {
+    private explainError(query: Query) {
         let result = '';
         result += 'Query has an error:\n';
-        result += this.error + '\n';
+        result += query.error + '\n';
         return result;
     }
 
