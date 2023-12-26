@@ -35,10 +35,11 @@ export class Explainer {
         if (numberOfFilters === 0) {
             result += 'No filters supplied. All tasks will match the query.\n';
         } else {
+            const results: string[] = [];
             for (let i = 0; i < numberOfFilters; i++) {
-                if (i > 0) result += '\n';
-                result += query.filters[i].explainFilterIndented('');
+                results.push(query.filters[i].explainFilterIndented(''));
             }
+            return results.join('\n');
         }
         return result;
     }
