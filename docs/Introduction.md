@@ -14,6 +14,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
 -->
 
 - X.Y.Z: 🔥 Add [[Layout#Full Mode|'full mode']] to turn off `short mode`.
+- X.Y.Z: 🔥 Add any [[Grouping|'group by']] instructions to [[Explaining Queries|explain]] output.
 - 5.3.0: 🔥 Add [[Postponing|postpone button]] to Tasks query results.
 - 5.3.0: 🔥 Add [[Toggling and Editing Statuses#'Change task status' context menu|'change task status' menu]] to Reading mode and Tasks query results.
 - 5.3.0: 🔥 Add documentation section about [[About Editing|editing tasks]].

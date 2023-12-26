@@ -55,7 +55,7 @@ export class FunctionField extends Field {
         }
         const reverse = !!match[1];
         const args = match[2];
-        return new Grouper('function', createGrouperFunctionFromLine(args), reverse);
+        return new Grouper(line, 'function', createGrouperFunctionFromLine(args), reverse);
     }
 
     protected grouperRegExp(): RegExp {

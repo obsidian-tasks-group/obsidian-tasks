@@ -273,6 +273,21 @@ export abstract class Field {
     }
 
     /**
+     * Reconstruct a 'group by' instruction to use for grouping of this field.
+     *
+     * This is used to simplify the construction of Grouper objects.
+     * @param reverse
+     * @protected
+     */
+    protected grouperInstruction(reverse: boolean) {
+        let instruction = `group by ${this.fieldNameSingular()}`;
+        if (reverse) {
+            instruction += ' reverse';
+        }
+        return instruction;
+    }
+
+    /**
      * Return a function to get a list of a task's group names, for use in grouping by this field's value.
      *
      * See {@link supportsGrouping} for what to do, to enable support of grouping in a
@@ -287,7 +302,7 @@ export abstract class Field {
      * @param reverse - false for normal group order, true for reverse group order.
      */
     public createGrouper(reverse: boolean): Grouper {
-        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse);
+        return new Grouper(this.grouperInstruction(reverse), this.fieldNameSingular(), this.grouper(), reverse);
     }
 
     /**

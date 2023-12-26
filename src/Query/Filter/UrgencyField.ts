@@ -70,4 +70,8 @@ export class UrgencyField extends Field {
     public createGrouper(reverse: boolean): Grouper {
         return super.createGrouper(!reverse);
     }
+
+    protected grouperInstruction(reverse: boolean) {
+        return super.grouperInstruction(!reverse);
+    }
 }
