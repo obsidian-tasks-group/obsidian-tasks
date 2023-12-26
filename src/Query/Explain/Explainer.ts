@@ -43,14 +43,14 @@ export class Explainer {
     }
 
     public explainGroups(query: Query) {
-        let result = '';
         const numberOfGroups = query.grouping.length;
         if (numberOfGroups === 0) {
             return 'No grouping instructions supplied.\n';
-        } else {
-            for (let i = 0; i < numberOfGroups; i++) {
-                result += query.grouping[i].instruction + '\n';
-            }
+        }
+
+        let result = '';
+        for (let i = 0; i < numberOfGroups; i++) {
+            result += query.grouping[i].instruction + '\n';
         }
         return result;
     }
