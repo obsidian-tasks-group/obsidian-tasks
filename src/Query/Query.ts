@@ -176,12 +176,7 @@ ${source}`;
         result += this.explainFilters();
         result += this.explainGroups();
         result += this.explainQueryLimits();
-
-        const { debugSettings } = getSettings();
-        if (debugSettings.ignoreSortInstructions) {
-            result +=
-                "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
-        }
+        result += this.explainDebugSettings();
 
         return result;
     }
@@ -240,6 +235,16 @@ ${source}`;
         if (this._taskGroupLimit !== undefined) {
             result += getPluralisedText(this._taskGroupLimit);
             result += ' per group (if any "group by" options are supplied).\n';
+        }
+        return result;
+    }
+
+    private explainDebugSettings() {
+        let result = '';
+        const { debugSettings } = getSettings();
+        if (debugSettings.ignoreSortInstructions) {
+            result +=
+                "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
         }
         return result;
     }
