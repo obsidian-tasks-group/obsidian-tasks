@@ -37,7 +37,7 @@ export function explainResults(
         result += `Only tasks containing the global filter '${globalFilter.get()}'.\n\n`;
     }
 
-    const explainer = new Explainer('');
+    const explainer = new Explainer('  ');
     const tasksBlockQuery = new Query(source, path);
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
