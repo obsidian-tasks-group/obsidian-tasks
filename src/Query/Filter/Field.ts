@@ -176,6 +176,21 @@ export abstract class Field {
     }
 
     /**
+     * Reconstruct a 'sorter by' instruction to use for sorting of this field.
+     *
+     * This is used to simplify the construction of {@link Sorter} objects.
+     * @param reverse
+     * @protected
+     */
+    protected sorterInstruction(reverse: boolean) {
+        let instruction = `sort by ${this.fieldNameSingular()}`;
+        if (reverse) {
+            instruction += ' reverse';
+        }
+        return instruction;
+    }
+
+    /**
      * Return a function to compare two Task objects, for use in sorting by this field's value.
      *
      * See {@link supportsSorting} for what to do, to enable support of sorting in a
@@ -190,7 +205,7 @@ export abstract class Field {
      * @param reverse - false for normal sort order, true for reverse sort order.
      */
     public createSorter(reverse: boolean): Sorter {
-        return new Sorter(this.fieldNameSingular(), this.comparator(), reverse);
+        return new Sorter(this.sorterInstruction(reverse), this.fieldNameSingular(), this.comparator(), reverse);
     }
 
     /**

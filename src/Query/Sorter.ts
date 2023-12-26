@@ -16,18 +16,21 @@ export type Comparator = (a: Task, b: Task) => number;
  * It stores the comparison function as a {@link Comparator}.
  */
 export class Sorter {
+    public readonly instruction: string;
     public readonly property: string;
     public readonly comparator: Comparator;
 
     /**
      * Constructor.
      *
+     * @param instruction - the query instruction that created this object
      * @param property - the name of the property.
      * @param comparator - {@link Comparator} function, for sorting in the standard direction.
      *                     If `reverse` is true, it will automatically be converted to reverse the sort direction.
      * @param reverse - whether the sort order should be reversed.
      */
-    constructor(property: string, comparator: Comparator, reverse: boolean) {
+    constructor(instruction: string, property: string, comparator: Comparator, reverse: boolean) {
+        this.instruction = instruction;
         this.property = property;
         this.comparator = Sorter.maybeReverse(reverse, comparator);
     }

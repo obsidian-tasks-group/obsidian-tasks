@@ -108,4 +108,6 @@ tags regex matches /(home|pc_mac|town)/ =>
 
 No grouping instructions supplied.
 
+No sorting instructions supplied.
+
 Error: None

@@ -37,6 +37,8 @@ Explanation of this Tasks code block query:
       priority is lowest
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -77,6 +79,8 @@ Explanation of this Tasks code block query:
   description includes \
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
