@@ -33,36 +33,30 @@ describe('explain filters', () => {
     it('should explain 0 filters', () => {
         const source = '';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "No filters supplied. All tasks will match the query.
-                No grouping instructions supplied.
-                "
-            `);
+        expect(explainer.explainFilters(query)).toMatchInlineSnapshot(
+            '"No filters supplied. All tasks will match the query."',
+        );
     });
 
     it('should explain 1 filter', () => {
         const source = 'description includes hello';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "description includes hello
-
-                No grouping instructions supplied.
-                "
-            `);
+        expect(explainer.explainFilters(query)).toMatchInlineSnapshot(`
+            "description includes hello
+            "
+        `);
     });
 
     it('should explain 2 filters', () => {
         const source = 'description includes hello\ndue 2012-01-23';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "description includes hello
+        expect(explainer.explainFilters(query)).toMatchInlineSnapshot(`
+            "description includes hello
 
-                due 2012-01-23 =>
-                  due date is on 2012-01-23 (Monday 23rd January 2012)
-
-                No grouping instructions supplied.
-                "
-            `);
+            due 2012-01-23 =>
+              due date is on 2012-01-23 (Monday 23rd January 2012)
+            "
+        `);
     });
 });
 
@@ -70,12 +64,12 @@ describe('explain groupers', () => {
     it('should explain "group by" options', () => {
         const source = 'group by due\ngroup by status.name reverse\ngroup by function task.description.toUpperCase()';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "No filters supplied. All tasks will match the query.
-                group by due
-                group by status.name reverse
-                group by function task.description.toUpperCase()"
-            `);
+        expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
+            "
+            group by due
+            group by status.name reverse
+            group by function task.description.toUpperCase()"
+        `);
     });
 });
 
@@ -96,55 +90,47 @@ describe('explain limits', () => {
     it('should explain limit 1', () => {
         const source = 'limit 1';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "No filters supplied. All tasks will match the query.
-                No grouping instructions supplied.
+        expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
+            "
 
-
-                At most 1 task.
-                "
-            `);
+            At most 1 task.
+            "
+        `);
     });
 
     it('should explain limit 0', () => {
         const source = 'limit 0';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "No filters supplied. All tasks will match the query.
-                No grouping instructions supplied.
+        expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
+            "
 
-
-                At most 0 tasks.
-                "
-            `);
+            At most 0 tasks.
+            "
+        `);
     });
 
     it('should explain group limit 4', () => {
         const source = 'limit groups 4';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "No filters supplied. All tasks will match the query.
-                No grouping instructions supplied.
+        expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
+            "
 
-
-                At most 4 tasks per group (if any "group by" options are supplied).
-                "
-            `);
+            At most 4 tasks per group (if any "group by" options are supplied).
+            "
+        `);
     });
 
     it('should explain all limit options', () => {
         const source = 'limit 127\nlimit groups to 8 tasks';
         const query = new Query(source);
-        expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-                "No filters supplied. All tasks will match the query.
-                No grouping instructions supplied.
+        expect(explainer.explainQueryLimits(query)).toMatchInlineSnapshot(`
+            "
+
+            At most 127 tasks.
 
 
-                At most 127 tasks.
-
-
-                At most 8 tasks per group (if any "group by" options are supplied).
-                "
-            `);
+            At most 8 tasks per group (if any "group by" options are supplied).
+            "
+        `);
     });
 });
