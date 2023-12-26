@@ -177,7 +177,7 @@ ${source}`;
 
         result += this.explainFilters(query);
         result += this.explainGroups(query);
-        result += this.explainQueryLimits();
+        result += this.explainQueryLimits(query);
         result += this.explainDebugSettings();
 
         return result;
@@ -218,7 +218,7 @@ ${source}`;
         return result;
     }
 
-    private explainQueryLimits() {
+    private explainQueryLimits(query: Query) {
         let result = '';
 
         function getPluralisedText(limit: number) {
@@ -229,13 +229,13 @@ ${source}`;
             return text;
         }
 
-        if (this._limit !== undefined) {
-            result += getPluralisedText(this._limit);
+        if (query.limit !== undefined) {
+            result += getPluralisedText(query.limit);
             result += '.\n';
         }
 
-        if (this._taskGroupLimit !== undefined) {
-            result += getPluralisedText(this._taskGroupLimit);
+        if (this.taskGroupLimit !== undefined) {
+            result += getPluralisedText(this.taskGroupLimit);
             result += ' per group (if any "group by" options are supplied).\n';
         }
         return result;
@@ -253,6 +253,10 @@ ${source}`;
 
     public get limit(): number | undefined {
         return this._limit;
+    }
+
+    public get taskGroupLimit(): number | undefined {
+        return this._taskGroupLimit;
     }
 
     public get layoutOptions(): LayoutOptions {
