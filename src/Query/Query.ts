@@ -166,10 +166,12 @@ ${source}`;
      * Use {@link explainResults} if you want to see any global query and global filter as well.
      */
     public explainQuery(): string {
-        let result = '';
-
         const query: Query = this;
+        return this.explainQueryImpl(query);
+    }
 
+    private explainQueryImpl(query: Query) {
+        let result = '';
         if (this.error !== undefined) {
             result += this.explainError(query);
             return result;
