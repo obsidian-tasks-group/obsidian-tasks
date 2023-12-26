@@ -78,9 +78,10 @@ describe('explain filters', () => {
     it('should explain 0 filters', () => {
         const source = '';
         const query = new Query(source);
-        expect(explainer.explainFilters(query)).toMatchInlineSnapshot(
-            '"No filters supplied. All tasks will match the query."',
-        );
+        expect(explainer.explainFilters(query)).toMatchInlineSnapshot(`
+            "No filters supplied. All tasks will match the query.
+            "
+        `);
     });
 
     it('should explain 1 filter', () => {

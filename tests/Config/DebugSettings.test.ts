@@ -36,6 +36,7 @@ describe('DebugSettings', () => {
 
         expect(query.explainQuery()).toMatchInlineSnapshot(`
             "No filters supplied. All tasks will match the query.
+
             No grouping instructions supplied.
 
             NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.

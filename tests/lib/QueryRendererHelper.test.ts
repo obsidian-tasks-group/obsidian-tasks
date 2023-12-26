@@ -17,6 +17,7 @@ describe('explain', () => {
             "Explanation of this Tasks code block query:
 
             No filters supplied. All tasks will match the query.
+
             No grouping instructions supplied.
             "
         `);
@@ -34,6 +35,7 @@ describe('explain', () => {
             Explanation of this Tasks code block query:
 
             No filters supplied. All tasks will match the query.
+
             No grouping instructions supplied.
             "
         `);
@@ -54,6 +56,7 @@ describe('explain', () => {
             Explanation of this Tasks code block query:
 
             No filters supplied. All tasks will match the query.
+
             No grouping instructions supplied.
             "
         `);
@@ -78,6 +81,7 @@ describe('explain', () => {
             Explanation of this Tasks code block query:
 
             No filters supplied. All tasks will match the query.
+
             No grouping instructions supplied.
             "
         `);
@@ -92,6 +96,7 @@ describe('explain', () => {
             "Explanation of this Tasks code block query:
 
             No filters supplied. All tasks will match the query.
+
             No grouping instructions supplied.
             "
         `);

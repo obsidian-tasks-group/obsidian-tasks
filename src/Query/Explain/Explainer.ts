@@ -33,7 +33,7 @@ export class Explainer {
         let result = '';
         const numberOfFilters = query.filters.length;
         if (numberOfFilters === 0) {
-            result += 'No filters supplied. All tasks will match the query.';
+            result += 'No filters supplied. All tasks will match the query.\n';
         } else {
             for (let i = 0; i < numberOfFilters; i++) {
                 if (i > 0) result += '\n';
