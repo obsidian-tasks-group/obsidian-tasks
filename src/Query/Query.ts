@@ -167,7 +167,7 @@ ${source}`;
     public explainQuery(): string {
         const query: Query = this;
         const explainer = new Explainer();
-        return explainer.explainQueryImpl(query);
+        return explainer.explainQuery(query);
     }
 
     public get limit(): number | undefined {
