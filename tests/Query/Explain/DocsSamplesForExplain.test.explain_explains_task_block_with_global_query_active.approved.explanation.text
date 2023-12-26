@@ -4,6 +4,8 @@ Explanation of the global query:
 
   No grouping instructions supplied.
 
+  No sorting instructions supplied.
+
   At most 50 tasks.
 
 Explanation of this Tasks code block query:
@@ -16,3 +18,5 @@ Explanation of this Tasks code block query:
       2022-10-30 (Sunday 30th October 2022) inclusive
 
   No grouping instructions supplied.
+
+  No sorting instructions supplied.

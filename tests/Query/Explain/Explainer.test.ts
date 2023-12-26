@@ -65,6 +65,9 @@ limit groups 3
             group by priority reverse
             group by happens
 
+            sort by description reverse
+            sort by path
+
             At most 50 tasks.
 
             At most 3 tasks per group (if any "group by" options are supplied).
@@ -90,6 +93,9 @@ limit groups 3
 
               group by priority reverse
               group by happens
+
+              sort by description reverse
+              sort by path
 
               At most 50 tasks.
 
@@ -141,6 +147,18 @@ describe('explain groupers', () => {
             "group by due
             group by status.name reverse
             group by function task.description.toUpperCase()
+            "
+        `);
+    });
+});
+
+describe('explain sorters', () => {
+    it('should explain "sort by" options', () => {
+        const source = 'sort by due\nsort by priority()';
+        const query = new Query(source);
+        expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
+            "sort by due
+            sort by priority
             "
         `);
     });

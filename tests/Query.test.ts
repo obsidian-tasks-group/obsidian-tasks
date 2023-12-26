@@ -1198,6 +1198,8 @@ describe('Query', () => {
                 "description includes hello
 
                 No grouping instructions supplied.
+
+                No sorting instructions supplied.
                 "
             `);
         });
@@ -1439,6 +1441,8 @@ with \ backslash)`;
                     description includes line 1 continued with \\ backslash
 
                 No grouping instructions supplied.
+
+                No sorting instructions supplied.
                 "
             `);
             expect(queryUpperCase.explainQuery()).toMatchInlineSnapshot(`
@@ -1448,6 +1452,8 @@ with \ backslash)`;
                     description includes line 1 continued with \\ backslash
 
                 No grouping instructions supplied.
+
+                No sorting instructions supplied.
                 "
             `);
         });
