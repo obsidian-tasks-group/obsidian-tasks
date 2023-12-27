@@ -27,7 +27,7 @@ jobs:
         run: yarn run test
 
       - name: Archive verified build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-verified
           path: |
@@ -39,7 +39,7 @@ jobs:
         run: ./scripts/Test-TasksInLocalObsidian.sh
 
       - name: Archive Tasks-Demo vault
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Tasks-Demo-VerifyCommit-Build${{ github.run_number }}-Run${{ github.run_attempt }}
           path: |
@@ -54,7 +54,7 @@ jobs:
           yarn run circular-deps-image
 
       - name: Archive circular dependencies results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: circular-dependencies
           path: |
