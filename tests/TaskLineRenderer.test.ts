@@ -180,14 +180,8 @@ describe('task line rendering - global filter', () => {
 });
 
 describe('task line rendering - layout options', () => {
-    const testLayoutOptions = async (
-        taskLine: string,
-        layoutOptions: Partial<LayoutOptions>,
-        expectedComponents: string[],
-    ) => {
-        const task = fromLine({
-            line: taskLine,
-        });
+    const testLayoutOptions = async (expectedComponents: string[], layoutOptions: Partial<LayoutOptions>) => {
+        const task = TaskBuilder.createFullyPopulatedTask();
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const listItem = await renderListItem(task, fullLayoutOptions);
         const renderedComponents = getListItemComponents(listItem);
@@ -195,106 +189,169 @@ describe('task line rendering - layout options', () => {
     };
 
     it('renders correctly with the default layout options', async () => {
-        await testLayoutOptions('- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day', {}, [
-            'Full task',
-            ' ⏫',
-            ' 🔁 every day',
-            ' 🛫 2022-07-04',
-            ' ⏳ 2022-07-03',
-            ' 📅 2022-07-02',
-        ]);
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
+            {},
+        );
     });
 
     it('renders without priority', async () => {
         await testLayoutOptions(
-            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            [
+                'Do exercises #todo #health',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
             { hidePriority: true },
-            ['Full task', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
-        );
-    });
-
-    it('renders without created date', async () => {
-        await testLayoutOptions(
-            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
-            { hideCreatedDate: true },
-            ['Full task', ' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
-        );
-    });
-
-    it('renders without start date', async () => {
-        await testLayoutOptions(
-            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            { hideStartDate: true },
-            ['Full task', ' ⏫', ' 🔁 every day', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
-        );
-    });
-
-    it('renders without scheduled date', async () => {
-        await testLayoutOptions(
-            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            { hideScheduledDate: true },
-            ['Full task', ' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' 📅 2022-07-02'],
-        );
-    });
-
-    it('renders without due date', async () => {
-        await testLayoutOptions(
-            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            { hideDueDate: true },
-            ['Full task', ' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03'],
         );
     });
 
     it('renders without recurrence rule', async () => {
         await testLayoutOptions(
-            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
             { hideRecurrenceRule: true },
-            ['Full task', ' ⏫', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+        );
+    });
+
+    it('renders without created date', async () => {
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
+            { hideCreatedDate: true },
+        );
+    });
+
+    it('renders without start date', async () => {
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
+            { hideStartDate: true },
+        );
+    });
+
+    it('renders without scheduled date', async () => {
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
+            { hideScheduledDate: true },
+        );
+    });
+
+    it('renders without due date', async () => {
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
+            { hideDueDate: true },
         );
     });
 
     it('renders a done task correctly with the default layout', async () => {
         await testLayoutOptions(
-            '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
-            {},
             [
-                'Full task',
-                ' ⏫',
-                ' 🔁 every day',
-                ' ➕ 2022-07-05',
-                ' 🛫 2022-07-04',
-                ' ⏳ 2022-07-03',
-                ' 📅 2022-07-02',
-                ' ✅ 2022-07-05',
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
             ],
+            {},
         );
     });
 
-    it('renders a done task without the done date', async () => {
+    it('renders without done date', async () => {
         await testLayoutOptions(
-            '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
-            { hideDoneDate: true },
             [
-                'Full task',
-                ' ⏫',
-                ' 🔁 every day',
-                ' ➕ 2022-07-05',
-                ' 🛫 2022-07-04',
-                ' ⏳ 2022-07-03',
-                ' 📅 2022-07-02',
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ^dcf64c',
             ],
+            { hideDoneDate: true },
         );
     });
+
+    const testLayoutOptionsFromLine = async (taskLine: string, expectedComponents: string[]) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const listItem = await renderListItem(task);
+        const renderedComponents = getListItemComponents(listItem);
+        expect(renderedComponents).toEqual(expectedComponents);
+    };
 
     it('writes a placeholder message if a date is invalid', async () => {
-        await testLayoutOptions('- [ ] Task with invalid due date 📅 2023-13-02', {}, [
+        await testLayoutOptionsFromLine('- [ ] Task with invalid due date 📅 2023-13-02', [
             'Task with invalid due date',
             ' 📅 Invalid date',
         ]);
     });
 
     it('standardise the recurrence rule, even if the rule is invalid', async () => {
-        await testLayoutOptions('- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd', {}, [
+        await testLayoutOptionsFromLine('- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd', [
             'Task with invalid recurrence rule',
             ' 🔁 every month on the 32th',
         ]);
