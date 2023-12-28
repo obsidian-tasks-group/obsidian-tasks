@@ -55,7 +55,7 @@ describe('PostponeMenu', () => {
 
     it('should populate the menu for future task', () => {
         // Arrange
-        const task = new TaskBuilder().dueDate(tomorrow).build();
+        const task = new TaskBuilder().scheduledDate(tomorrow).build();
         const button = document.createElement('button');
 
         // Act
@@ -65,16 +65,16 @@ describe('PostponeMenu', () => {
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-              Postpone due date by 2 days, to Wed 6th Dec
-              Postpone due date by 3 days, to Thu 7th Dec
-              Postpone due date by 4 days, to Fri 8th Dec
-              Postpone due date by 5 days, to Sat 9th Dec
-              Postpone due date by 6 days, to Sun 10th Dec
+              Postpone scheduled date by 2 days, to Wed 6th Dec
+              Postpone scheduled date by 3 days, to Thu 7th Dec
+              Postpone scheduled date by 4 days, to Fri 8th Dec
+              Postpone scheduled date by 5 days, to Sat 9th Dec
+              Postpone scheduled date by 6 days, to Sun 10th Dec
               ---
-              Postpone due date by a week, to Mon 11th Dec
-              Postpone due date by 2 weeks, to Mon 18th Dec
-              Postpone due date by 3 weeks, to Mon 25th Dec
-              Postpone due date by a month, to Thu 4th Jan"
+              Postpone scheduled date by a week, to Mon 11th Dec
+              Postpone scheduled date by 2 weeks, to Mon 18th Dec
+              Postpone scheduled date by 3 weeks, to Mon 25th Dec
+              Postpone scheduled date by a month, to Thu 4th Jan"
         `);
     });
 });
