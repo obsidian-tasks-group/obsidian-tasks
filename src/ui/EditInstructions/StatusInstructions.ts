@@ -6,10 +6,10 @@ import { StatusSettings } from '../../Config/StatusSettings';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
 /**
- * An instruction class, for editing a {@link Task} object's {@link Priority}.
+ * An instruction class, for editing a {@link Task} object's {@link Status}.
  */
 export class SetStatus implements TaskEditingInstruction {
-    private readonly newStatus: Status;
+    public readonly newStatus: Status;
 
     constructor(status: Status) {
         this.newStatus = status;
@@ -38,7 +38,7 @@ export class SetStatus implements TaskEditingInstruction {
  * Return all the available instructions for editing task statuses.
  */
 export function allStatusInstructions(statusRegistry: StatusRegistry) {
-    const instructions: TaskEditingInstruction[] = [];
+    const instructions: SetStatus[] = [];
     const coreStatuses = new StatusSettings().coreStatuses.map((setting) => setting.symbol);
     // Put the core statuses at the top of the menu:
     for (const matchCoreTask of [true, false]) {
