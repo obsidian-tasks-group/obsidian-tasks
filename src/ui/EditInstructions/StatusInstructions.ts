@@ -1,6 +1,8 @@
 // @ts-ignore
 import { Status } from '../../Status';
 import type { Task } from '../../Task';
+import type { StatusRegistry } from '../../StatusRegistry';
+import { StatusSettings } from '../../Config/StatusSettings';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
 /**
@@ -30,4 +32,21 @@ export class SetStatus implements TaskEditingInstruction {
     public isCheckedForTask(task: Task): boolean {
         return this.newStatus.symbol === task.status.symbol;
     }
+}
+
+/**
+ * Return all the available instructions for editing task statuses.
+ */
+export function allStatusInstructions(statusRegistry: StatusRegistry) {
+    const instructions: TaskEditingInstruction[] = [];
+    const coreStatuses = new StatusSettings().coreStatuses.map((setting) => setting.symbol);
+    // Put the core statuses at the top of the menu:
+    for (const matchCoreTask of [true, false]) {
+        for (const status of statusRegistry.registeredStatuses) {
+            if (coreStatuses.includes(status.symbol) === matchCoreTask) {
+                instructions.push(new SetStatus(status));
+            }
+        }
+    }
+    return instructions;
 }
