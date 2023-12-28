@@ -1,6 +1,5 @@
-import type { Moment, unitOfTime } from 'moment';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
-import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, MenuItem, Notice, Plugin, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
 import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -12,15 +11,7 @@ import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHel
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
-import {
-    type HappensDate,
-    createPostponedTask,
-    getDateFieldToPostpone,
-    postponeButtonTitle,
-    postponeMenuItemTitle,
-    postponementSuccessMessage,
-    shouldShowPostponeButton,
-} from './Scripting/Postponer';
+import { postponeButtonTitle, shouldShowPostponeButton } from './Scripting/Postponer';
 import type { Task } from './Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
@@ -432,25 +423,7 @@ class QueryRenderChild extends MarkdownRenderChild {
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
             ev.stopPropagation(); // suppress the default context menu
-
-            const menu = new Menu();
-
-            const postponeMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
-                const title = postponeMenuItemTitle(task, amount, timeUnit);
-                item.setTitle(title).onClick(() => this.postponeOnClickCallback(button, task, amount, timeUnit));
-            };
-
-            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 2));
-            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 3));
-            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 4));
-            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 5));
-            menu.addItem((item) => postponeMenuItemCallback(item, 'days', 6));
-            menu.addSeparator();
-            menu.addItem((item) => postponeMenuItemCallback(item, 'week'));
-            menu.addItem((item) => postponeMenuItemCallback(item, 'weeks', 2));
-            menu.addItem((item) => postponeMenuItemCallback(item, 'weeks', 3));
-            menu.addItem((item) => postponeMenuItemCallback(item, 'month'));
-
+            const menu = new PostponeMenu(button, task);
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
     }
@@ -488,34 +461,5 @@ class QueryRenderChild extends MarkdownRenderChild {
             groupingRules.push(group.property);
         }
         return groupingRules.join(',');
-    }
-
-    private async postponeOnClickCallback(
-        button: HTMLButtonElement,
-        task: Task,
-        amount: number,
-        timeUnit: unitOfTime.DurationConstructor,
-    ) {
-        const dateFieldToPostpone = getDateFieldToPostpone(task);
-        if (dateFieldToPostpone === null) {
-            const errorMessage = '⚠️ Postponement requires a date: due, scheduled or start.';
-            return new Notice(errorMessage, 10000);
-        }
-
-        const { postponedDate, postponedTask } = createPostponedTask(task, dateFieldToPostpone, timeUnit, amount);
-
-        await replaceTaskWithTasks({
-            originalTask: task,
-            newTasks: postponedTask,
-        });
-        this.postponeSuccessCallback(button, dateFieldToPostpone, postponedDate);
-    }
-
-    private postponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
-        // Disable the button to prevent update error due to the task not being reloaded yet.
-        button.disabled = true;
-
-        const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
-        new Notice(successMessage, 2000);
     }
 }
