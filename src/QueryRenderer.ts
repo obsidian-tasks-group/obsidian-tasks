@@ -26,6 +26,7 @@ import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
+import { PostponeMenu } from './ui/Menus/PostponeMenu';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -423,7 +424,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         button.addEventListener('click', (ev: MouseEvent) => {
             ev.preventDefault(); // suppress the default click behavior
-            this.postponeOnClickCallback(button, task, amount, timeUnit);
+            PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit);
         });
 
         /** Open a context menu on right-click.

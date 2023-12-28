@@ -37,7 +37,7 @@ export class PostponeMenu extends TaskEditingMenu {
         this.addItem((item) => postponeMenuItemCallback(button, item, 'month'));
     }
 
-    private static async postponeOnClickCallback(
+    public static async postponeOnClickCallback(
         button: HTMLButtonElement,
         task: Task,
         amount: number,
