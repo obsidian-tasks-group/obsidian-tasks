@@ -6,7 +6,10 @@ import moment from 'moment/moment';
 
 import { Status } from '../../../src/Status';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { SetStatus } from '../../../src/ui/EditInstructions/StatusInstructions';
+import { SetStatus, allStatusInstructions } from '../../../src/ui/EditInstructions/StatusInstructions';
+import * as StatusExamples from '../../TestingTools/StatusExamples';
+import { constructStatuses } from '../../TestingTools/StatusesTestHelpers';
+import { StatusRegistry } from '../../../src/StatusRegistry';
 
 window.moment = moment;
 
@@ -59,5 +62,29 @@ describe('SetStatus', () => {
         expect(newTasks.length).toEqual(1);
         // Expect it is the same object
         expect(Object.is(newTasks[0], todoTask)).toBe(true);
+    });
+});
+
+describe('All Status Instructions', () => {
+    it('should supply all status instructions', () => {
+        // Arrange
+        // We reverse the order, to put core statuses at the end - so we can test the instructions
+        // correctly put core statuses first.
+        const reversedStatuses = constructStatuses(StatusExamples.doneTogglesToCancelled()).reverse();
+        const statusRegistry = new StatusRegistry();
+        statusRegistry.set(reversedStatuses);
+
+        // Confirm the order of statuses:
+        const statusSymbolsAsRegistered = statusRegistry.registeredStatuses.map((status) => status.symbol);
+        expect(statusSymbolsAsRegistered).toStrictEqual(['-', '/', 'x', ' ']);
+
+        // Act
+        const allInstructions = allStatusInstructions(statusRegistry);
+
+        // Assert
+        expect(allInstructions.length).toBe(4);
+        const statusSymbolsInInstructions = allInstructions.map((instruction) => instruction.newStatus.symbol);
+        // Check core statuses are before others:
+        expect(statusSymbolsInInstructions).toStrictEqual(['x', ' ', '-', '/']);
     });
 });
