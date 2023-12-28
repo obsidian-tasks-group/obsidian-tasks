@@ -23,8 +23,7 @@ export class PriorityMenu extends TaskEditingMenu {
     constructor(task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
-        const instructions = allPriorityInstructions();
-        this.addItemsForInstructions(instructions, task);
+        this.addItemsForInstructions(allPriorityInstructions(), task);
     }
 
     private addItemsForInstructions(instructions: TaskEditingInstruction[], task: Task) {
