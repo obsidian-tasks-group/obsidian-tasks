@@ -1,8 +1,6 @@
 import type { StatusRegistry } from '../../StatusRegistry';
 import type { Task } from '../../Task';
-import { StatusSettings } from '../../Config/StatusSettings';
-import type { TaskEditingInstruction } from '../EditInstructions/TaskEditingInstruction';
-import { SetStatus } from '../EditInstructions/StatusInstructions';
+import { allStatusInstructions } from '../EditInstructions/StatusInstructions';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 /**
@@ -25,17 +23,7 @@ export class StatusMenu extends TaskEditingMenu {
     constructor(statusRegistry: StatusRegistry, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
-        const instructions: TaskEditingInstruction[] = [];
-        const coreStatuses = new StatusSettings().coreStatuses.map((setting) => setting.symbol);
-        // Put the core statuses at the top of the menu:
-        for (const matchCoreTask of [true, false]) {
-            for (const status of statusRegistry.registeredStatuses) {
-                if (coreStatuses.includes(status.symbol) === matchCoreTask) {
-                    instructions.push(new SetStatus(status));
-                }
-            }
-        }
-
+        const instructions = allStatusInstructions(statusRegistry);
         this.addItemsForInstructions(instructions, task);
     }
 }
