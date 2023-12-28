@@ -23,20 +23,20 @@ export class PriorityMenu extends TaskEditingMenu {
     constructor(task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
-        const getMenuItemCallback = (task: Task, item: MenuItem, instruction: TaskEditingInstruction) => {
-            item.setTitle(instruction.instructionDisplayName())
-                .setChecked(instruction.isCheckedForTask(task))
-                .onClick(async () => {
-                    const newTask = instruction.apply(task);
-                    const hasEdits = newTask.length !== 1 || !Object.is(newTask[0], task);
-                    if (hasEdits) {
-                        await this.taskSaver(task, newTask);
-                    }
-                });
-        };
-
         for (const instruction of allPriorityInstructions()) {
-            this.addItem((item) => getMenuItemCallback(task, item, instruction));
+            this.addItem((item) => this.getMenuItemCallback(task, item, instruction));
         }
+    }
+
+    private getMenuItemCallback(task: Task, item: MenuItem, instruction: TaskEditingInstruction) {
+        item.setTitle(instruction.instructionDisplayName())
+            .setChecked(instruction.isCheckedForTask(task))
+            .onClick(async () => {
+                const newTask = instruction.apply(task);
+                const hasEdits = newTask.length !== 1 || !Object.is(newTask[0], task);
+                if (hasEdits) {
+                    await this.taskSaver(task, newTask);
+                }
+            });
     }
 }
