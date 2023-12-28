@@ -22,7 +22,7 @@ export class PostponeMenu extends TaskEditingMenu {
             amount = 1,
         ) => {
             const title = postponeMenuItemTitle(task, amount, timeUnit);
-            item.setTitle(title).onClick(() => this.postponeOnClickCallback(button, task, amount, timeUnit));
+            item.setTitle(title).onClick(() => PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit));
         };
 
         this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 2));
@@ -37,7 +37,7 @@ export class PostponeMenu extends TaskEditingMenu {
         this.addItem((item) => postponeMenuItemCallback(button, item, 'month'));
     }
 
-    private async postponeOnClickCallback(
+    private static async postponeOnClickCallback(
         button: HTMLButtonElement,
         task: Task,
         amount: number,
@@ -55,10 +55,14 @@ export class PostponeMenu extends TaskEditingMenu {
             originalTask: task,
             newTasks: postponedTask,
         });
-        this.postponeSuccessCallback(button, dateFieldToPostpone, postponedDate);
+        PostponeMenu.postponeSuccessCallback(button, dateFieldToPostpone, postponedDate);
     }
 
-    private postponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
+    private static postponeSuccessCallback(
+        button: HTMLButtonElement,
+        updatedDateType: HappensDate,
+        postponedDate: Moment,
+    ) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.disabled = true;
 
