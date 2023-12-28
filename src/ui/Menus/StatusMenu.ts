@@ -1,7 +1,8 @@
-import type { MenuItem } from 'obsidian';
 import type { StatusRegistry } from '../../StatusRegistry';
 import type { Task } from '../../Task';
 import { StatusSettings } from '../../Config/StatusSettings';
+import type { TaskEditingInstruction } from '../EditInstructions/TaskEditingInstruction';
+import { SetStatus } from '../EditInstructions/StatusInstructions';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 /**
@@ -15,8 +16,6 @@ import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditing
  *     checkbox.setAttribute('title', 'Right-click for options');
  */
 export class StatusMenu extends TaskEditingMenu {
-    private statusRegistry: StatusRegistry;
-
     /**
      * Constructor, which sets up the menu items.
      * @param statusRegistry - the statuses to be shown in the menu.
@@ -26,31 +25,17 @@ export class StatusMenu extends TaskEditingMenu {
     constructor(statusRegistry: StatusRegistry, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
-        this.statusRegistry = statusRegistry;
-
-        const commonTitle = 'Change status to:';
-
-        const getMenuItemCallback = (task: Task, item: MenuItem, statusName: string, newStatusSymbol: string) => {
-            const title = `${commonTitle} [${newStatusSymbol}] ${statusName}`;
-            item.setTitle(title)
-                .setChecked(newStatusSymbol === task.status.symbol)
-                .onClick(async () => {
-                    if (newStatusSymbol !== task.status.symbol) {
-                        const status = this.statusRegistry.bySymbol(newStatusSymbol);
-                        const newTask = task.handleNewStatusWithRecurrenceInUsersOrder(status);
-                        await this.taskSaver(task, newTask);
-                    }
-                });
-        };
-
+        const instructions: TaskEditingInstruction[] = [];
         const coreStatuses = new StatusSettings().coreStatuses.map((setting) => setting.symbol);
         // Put the core statuses at the top of the menu:
         for (const matchCoreTask of [true, false]) {
             for (const status of statusRegistry.registeredStatuses) {
                 if (coreStatuses.includes(status.symbol) === matchCoreTask) {
-                    this.addItem((item) => getMenuItemCallback(task, item, status.name, status.symbol));
+                    instructions.push(new SetStatus(status));
                 }
             }
         }
+
+        this.addItemsForInstructions(instructions, task);
     }
 }
