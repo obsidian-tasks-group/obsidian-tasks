@@ -419,7 +419,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
 
         /** Open a context menu on right-click.
-         * Give a choice of postponing for a week, month, or quarter.
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
             ev.stopPropagation(); // suppress the default context menu
