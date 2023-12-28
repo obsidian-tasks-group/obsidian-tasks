@@ -21,17 +21,14 @@ const tomorrow = '2023-12-04';
 beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date(today));
-});
-
-beforeEach(() => {
     TestableTaskSaver.reset();
 });
 
-describe('PostponeMenu', () => {
-    beforeEach(() => {
-        TestableTaskSaver.reset();
-    });
+afterEach(() => {
+    jest.useRealTimers();
+});
 
+describe('PostponeMenu', () => {
     it('should populate the menu for overdue task', () => {
         // Arrange
         const task = new TaskBuilder().dueDate(yesterday).build();
