@@ -23,6 +23,10 @@ beforeEach(() => {
     jest.setSystemTime(new Date(today));
 });
 
+beforeEach(() => {
+    TestableTaskSaver.reset();
+});
+
 describe('PostponeMenu', () => {
     beforeEach(() => {
         TestableTaskSaver.reset();
@@ -76,5 +80,25 @@ describe('PostponeMenu', () => {
               Postpone scheduled date by 3 weeks, to Mon 25th Dec
               Postpone scheduled date by a month, to Thu 4th Jan"
         `);
+    });
+
+    it('should modify task, if different date selected', () => {
+        // Arrange
+        const task = new TaskBuilder().startDate(today).build();
+        const button = document.createElement('button');
+        const menu = new PostponeMenu(button, task, TestableTaskSaver.testableTaskSaver);
+
+        // Act
+        // @ts-expect-error TS2339: Property 'items' does not exist on type 'PostponeMenu'.
+        const todoItem = menu.items[0];
+        expect(todoItem.title).toEqual('Start in 2 days, on Tue 5th Dec');
+        todoItem.callback();
+
+        // Assert
+        expect(Object.is(task, TestableTaskSaver.taskBeingOverwritten)).toEqual(true);
+        expect(TestableTaskSaver.taskBeingOverwritten!.start.formatAsDate()).toEqual(today);
+
+        expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);
+        expect(TestableTaskSaver.tasksBeingSaved![0].start.formatAsDate()).toEqual('2023-12-05');
     });
 });

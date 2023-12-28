@@ -8,7 +8,6 @@ import {
     postponeMenuItemTitle,
     postponementSuccessMessage,
 } from '../../Scripting/Postponer';
-import { replaceTaskWithTasks } from '../../File';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 export class PostponeMenu extends TaskEditingMenu {
@@ -22,7 +21,9 @@ export class PostponeMenu extends TaskEditingMenu {
             amount = 1,
         ) => {
             const title = postponeMenuItemTitle(task, amount, timeUnit);
-            item.setTitle(title).onClick(() => PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit));
+            item.setTitle(title).onClick(() =>
+                PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit, taskSaver),
+            );
         };
 
         this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 2));
@@ -42,6 +43,7 @@ export class PostponeMenu extends TaskEditingMenu {
         task: Task,
         amount: number,
         timeUnit: unitOfTime.DurationConstructor,
+        taskSaver: TaskSaver = defaultTaskSaver,
     ) {
         const dateFieldToPostpone = getDateFieldToPostpone(task);
         if (dateFieldToPostpone === null) {
@@ -51,10 +53,7 @@ export class PostponeMenu extends TaskEditingMenu {
 
         const { postponedDate, postponedTask } = createPostponedTask(task, dateFieldToPostpone, timeUnit, amount);
 
-        await replaceTaskWithTasks({
-            originalTask: task,
-            newTasks: postponedTask,
-        });
+        await taskSaver(task, postponedTask);
         PostponeMenu.postponeSuccessCallback(button, dateFieldToPostpone, postponedDate);
     }
 
