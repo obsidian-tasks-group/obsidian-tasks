@@ -42,8 +42,10 @@ export class Menu {
      * Adds a separator. Only works when menu is not shown yet.
      */
     addSeparator(): this {
-        // TODO
-        return this;
+        const getMenuItemCallback = (item: MenuItem) => {
+            item.setTitle('---');
+        };
+        return this.addItem(getMenuItemCallback);
     }
 }
 

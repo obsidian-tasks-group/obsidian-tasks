@@ -45,6 +45,7 @@ describe('PostponeMenu', () => {
               Due in 4 days, on Thu 7th Dec
               Due in 5 days, on Fri 8th Dec
               Due in 6 days, on Sat 9th Dec
+              ---
               Due in a week, on Sun 10th Dec
               Due in 2 weeks, on Sun 17th Dec
               Due in 3 weeks, on Sun 24th Dec
@@ -69,6 +70,7 @@ describe('PostponeMenu', () => {
               Postpone due date by 4 days, to Fri 8th Dec
               Postpone due date by 5 days, to Sat 9th Dec
               Postpone due date by 6 days, to Sun 10th Dec
+              ---
               Postpone due date by a week, to Mon 11th Dec
               Postpone due date by 2 weeks, to Mon 18th Dec
               Postpone due date by 3 weeks, to Mon 25th Dec
