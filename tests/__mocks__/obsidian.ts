@@ -37,4 +37,32 @@ export class Menu {
         this.items.push(item);
         return this;
     }
+
+    /**
+     * Adds a separator. Only works when menu is not shown yet.
+     */
+    addSeparator(): this {
+        // TODO
+        return this;
+    }
+}
+
+export class Notice {
+    /**
+     * @public
+     */
+    constructor(_message: string | DocumentFragment, _timeout?: number) {}
+
+    /**
+     * Change the message of this notice.
+     * @public
+     */
+    setMessage(_message: string | DocumentFragment): this {
+        return this;
+    }
+
+    /**
+     * @public
+     */
+    hide(): void {}
 }
