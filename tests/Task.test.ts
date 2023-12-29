@@ -1267,6 +1267,21 @@ describe('handle new status', () => {
         // Check that the cancelled date was not modified:
         expect(newTasks[0].toFileLineString()).toEqual('- [-] Stuff 📅 2023-12-15 ❌ 2019-01-17');
     });
+
+    it('should remove cancelled date when toggling CANCELLED recurring task to DONE', () => {
+        // Arrange
+        const cancelledTask = fromLine({
+            line: '- [-] Stuff 🔁 every day 📅 2023-05-15 ❌ 2023-05-16',
+        });
+
+        // Act
+        const newTasks = cancelledTask.handleNewStatus(Status.makeDone());
+
+        // Assert
+        expect(newTasks.length).toEqual(2);
+        expect(newTasks[0].toFileLineString()).toEqual('- [ ] Stuff 🔁 every day 📅 2023-05-16');
+        expect(newTasks[1].toFileLineString()).toEqual('- [x] Stuff 🔁 every day 📅 2023-05-15 ✅ 2023-06-26');
+    });
 });
 
 describe('created dates on recurring task', () => {
