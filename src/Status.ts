@@ -267,6 +267,13 @@ export class Status {
     }
 
     /**
+     * Whether the task status type is {@link CANCELLED}.
+     */
+    public isCancelled(): boolean {
+        return this.type === StatusType.CANCELLED;
+    }
+
+    /**
      * Compare all the fields in another Status, to detect any differences from this one.
      *
      * If any field is different in any way, it will return false.

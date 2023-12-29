@@ -1,3 +1,9 @@
+/**
+ * @jest-environment jsdom
+ */
+
+import moment from 'moment';
+
 import { StatusMenu } from '../../../src/ui/Menus/StatusMenu';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { StatusRegistry } from '../../../src/StatusRegistry';
@@ -6,6 +12,8 @@ import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
 import { Status } from '../../../src/Status';
 import { TestableTaskSaver, menuToString } from './MenuTestingHelpers';
+
+window.moment = moment;
 
 export {};
 
