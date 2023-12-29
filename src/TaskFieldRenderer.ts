@@ -24,14 +24,6 @@ export class TaskFieldRenderer {
     }
 
     /**
-     * @returns the component's CSS class describing what this component is (priority, due date etc.).
-     * @param component of the task.
-     */
-    public className(component: TaskLayoutComponent) {
-        return this.data[component].className;
-    }
-
-    /**
      * Adds the component's CSS class describing what this component is (priority, due date etc.) to an HTML element.
      *
      * @param element where the class shall be added.
@@ -39,7 +31,7 @@ export class TaskFieldRenderer {
      * @param component of the task.
      */
     public addClassName(element: HTMLElement, component: TaskLayoutComponent) {
-        const componentClass = this.className(component);
+        const componentClass = this.data[component].className;
         element.classList.add(...[componentClass]);
     }
 }
