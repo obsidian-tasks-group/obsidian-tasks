@@ -19,7 +19,7 @@ describe('DataviewTaskSerializer', () => {
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
 
-    const dateFields = ['startDate', 'dueDate', 'doneDate', 'createdDate', 'scheduledDate'] as const;
+    const dateFields = ['startDate', 'dueDate', 'doneDate', 'createdDate', 'scheduledDate', 'cancelledDate'] as const;
 
     describe('deserialize', () => {
         it('should parse an empty string', () => {

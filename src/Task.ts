@@ -137,6 +137,7 @@ export class Task {
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
+    public readonly cancelledDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules.
@@ -166,6 +167,7 @@ export class Task {
         scheduledDate,
         dueDate,
         doneDate,
+        cancelledDate,
         recurrence,
         blockLink,
         tags,
@@ -184,6 +186,7 @@ export class Task {
         scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
+        cancelledDate: moment.Moment | null;
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
@@ -206,6 +209,7 @@ export class Task {
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
+        this.cancelledDate = cancelledDate;
 
         this.recurrence = recurrence;
         this.blockLink = blockLink;
@@ -803,6 +807,7 @@ export class Task {
             'scheduledDate' as keyof Task,
             'dueDate' as keyof Task,
             'doneDate' as keyof Task,
+            'cancelledDate' as keyof Task,
         ];
     }
 
