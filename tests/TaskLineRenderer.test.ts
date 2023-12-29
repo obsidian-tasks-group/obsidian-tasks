@@ -671,15 +671,15 @@ describe('task line rendering - classes and data attributes', () => {
         [{ hideStartDate: true }, fieldRenderer.className('startDate'), 'taskStart: past-far'],
     ])(
         'should not render hidden components but should set their data attributes to the list item',
-        async (layoutOptions: Partial<LayoutOptions>, hiddenGenericClass: string, attributes: string) => {
+        async (layoutOptions: Partial<LayoutOptions>, expectedAbsentClass: string, expectedDateAttributes: string) => {
             const task = fromLine({
                 line: '- [ ] Full task ⏫ ➕ 2022-07-04 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             });
             const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
             const listItem = await renderListItem(task, fullLayoutOptions);
 
-            expect(listItem).not.toHaveAChildSpanWithClass(hiddenGenericClass);
-            expect(listItem).toHaveAmongDataAttributes(attributes);
+            expect(listItem).not.toHaveAChildSpanWithClass(expectedAbsentClass);
+            expect(listItem).toHaveAmongDataAttributes(expectedDateAttributes);
         },
     );
 
