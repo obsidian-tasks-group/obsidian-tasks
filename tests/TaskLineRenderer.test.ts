@@ -664,14 +664,14 @@ describe('task line rendering - classes and data attributes', () => {
     });
 
     it.each([
-        [{ hidePriority: true }, fieldRenderer.className('priority'), 'taskPriority: medium'],
-        [{ hideCreatedDate: true }, fieldRenderer.className('createdDate'), 'taskCreated: past-far'],
-        [{ hideDueDate: true }, fieldRenderer.className('dueDate'), 'taskDue: past-far'],
-        [{ hideScheduledDate: true }, fieldRenderer.className('scheduledDate'), 'taskScheduled: past-far'],
-        [{ hideStartDate: true }, fieldRenderer.className('startDate'), 'taskStart: past-far'],
+        [fieldRenderer.className('priority'), 'taskPriority: medium', { hidePriority: true }],
+        [fieldRenderer.className('createdDate'), 'taskCreated: past-far', { hideCreatedDate: true }],
+        [fieldRenderer.className('dueDate'), 'taskDue: past-far', { hideDueDate: true }],
+        [fieldRenderer.className('scheduledDate'), 'taskScheduled: past-far', { hideScheduledDate: true }],
+        [fieldRenderer.className('startDate'), 'taskStart: past-far', { hideStartDate: true }],
     ])(
-        'should not render hidden components but should set their data attributes to the list item',
-        async (layoutOptions: Partial<LayoutOptions>, expectedAbsentClass: string, expectedDateAttributes: string) => {
+        'should not render "%s" class but should set "%s" data attributes to the list item',
+        async (expectedAbsentClass: string, expectedDateAttributes: string, layoutOptions: Partial<LayoutOptions>) => {
             const task = TaskBuilder.createFullyPopulatedTask();
             const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
             const listItem = await renderListItem(task, fullLayoutOptions);
