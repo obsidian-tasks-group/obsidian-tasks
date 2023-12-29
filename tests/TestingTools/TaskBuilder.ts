@@ -40,6 +40,7 @@ export class TaskBuilder {
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
+    private _cancelledDate: Moment | null = null;
 
     private _recurrence: Recurrence | null = null;
     private _blockLink: string = '';
@@ -82,6 +83,7 @@ export class TaskBuilder {
             scheduledDate: this._scheduledDate,
             dueDate: this._dueDate,
             doneDate: this._doneDate,
+            cancelledDate: this._cancelledDate,
             recurrence: this._recurrence,
             blockLink: this._blockLink,
             tags: this._tags,
@@ -110,6 +112,7 @@ export class TaskBuilder {
             .scheduledDate('2023-07-03')
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
+            .cancelledDate('2023-07-06')
             .blockLink(' ^dcf64c')
             // Values in TaskLocation:
             .path('some/folder/fileName.md')
@@ -239,6 +242,11 @@ export class TaskBuilder {
 
     public doneDate(doneDate: string | null): TaskBuilder {
         this._doneDate = TaskBuilder.parseDate(doneDate);
+        return this;
+    }
+
+    public cancelledDate(cancelledDate: string | null): TaskBuilder {
+        this._cancelledDate = TaskBuilder.parseDate(cancelledDate);
         return this;
     }
 

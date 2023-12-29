@@ -1436,6 +1436,13 @@ describe('identicalTo', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().doneDate('2012-12-26'));
     });
 
+    it('should check cancelledDate', () => {
+        const lhs = new TaskBuilder().cancelledDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().cancelledDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().cancelledDate(null));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().cancelledDate('2012-12-26'));
+    });
+
     describe('should check recurrence', () => {
         const lhs = new TaskBuilder().recurrence(null);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().recurrence(null));
