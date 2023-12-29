@@ -664,7 +664,7 @@ describe('task line rendering - classes and data attributes', () => {
     });
 
     it.each([
-        [{ hidePriority: true }, fieldRenderer.className('priority'), 'taskPriority: high'],
+        [{ hidePriority: true }, fieldRenderer.className('priority'), 'taskPriority: medium'],
         [{ hideCreatedDate: true }, fieldRenderer.className('createdDate'), 'taskCreated: past-far'],
         [{ hideDueDate: true }, fieldRenderer.className('dueDate'), 'taskDue: past-far'],
         [{ hideScheduledDate: true }, fieldRenderer.className('scheduledDate'), 'taskScheduled: past-far'],
@@ -672,9 +672,7 @@ describe('task line rendering - classes and data attributes', () => {
     ])(
         'should not render hidden components but should set their data attributes to the list item',
         async (layoutOptions: Partial<LayoutOptions>, expectedAbsentClass: string, expectedDateAttributes: string) => {
-            const task = fromLine({
-                line: '- [ ] Full task ⏫ ➕ 2022-07-04 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            });
+            const task = TaskBuilder.createFullyPopulatedTask();
             const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
             const listItem = await renderListItem(task, fullLayoutOptions);
 
