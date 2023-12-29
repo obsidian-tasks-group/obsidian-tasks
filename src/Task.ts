@@ -407,6 +407,21 @@ export class Task {
             }
         }
 
+        let newCancelledDate = null;
+        if (newStatus.isCancelled()) {
+            if (!this.status.isCancelled()) {
+                // Set done cancelled only if setting value is true
+                // const { setCancelledDate } = getSettings();
+                const setCancelledDate = true; // TODO Replace by a setting
+                if (setCancelledDate) {
+                    newCancelledDate = window.moment();
+                }
+            } else {
+                // This task was already cancelled, so preserve its cancelled date.
+                newCancelledDate = this.cancelledDate;
+            }
+        }
+
         let nextOccurrence: {
             startDate: Moment | null;
             scheduledDate: Moment | null;
@@ -422,6 +437,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
+            cancelledDate: newCancelledDate,
         });
 
         const newTasks: Task[] = [];
