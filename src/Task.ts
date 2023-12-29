@@ -448,6 +448,8 @@ export class Task {
             if (setCreatedDate) {
                 createdDate = window.moment();
             }
+            // In case the task being toggled was previously cancelled, ensure the new task is not cancelled:
+            const cancelledDate = null;
             const statusRegistry = StatusRegistry.getInstance();
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
             const nextTask = new Task({
@@ -459,6 +461,7 @@ export class Task {
                 blockLink: '',
                 // add new createdDate on recurring tasks
                 createdDate,
+                cancelledDate,
             });
             newTasks.push(nextTask);
         }
