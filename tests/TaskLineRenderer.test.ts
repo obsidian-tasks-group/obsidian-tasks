@@ -663,48 +663,23 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    const testHiddenComponentClasses = async (
-        layoutOptions: Partial<LayoutOptions>,
-        hiddenGenericClass: string,
-        attributes: string,
-    ) => {
-        const task = fromLine({
-            line: '- [ ] Full task ⏫ ➕ 2022-07-04 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-        });
-        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
+    it.each([
+        [fieldRenderer.className('priority'), 'taskPriority: medium', { hidePriority: true }],
+        [fieldRenderer.className('createdDate'), 'taskCreated: past-far', { hideCreatedDate: true }],
+        [fieldRenderer.className('dueDate'), 'taskDue: past-far', { hideDueDate: true }],
+        [fieldRenderer.className('scheduledDate'), 'taskScheduled: past-far', { hideScheduledDate: true }],
+        [fieldRenderer.className('startDate'), 'taskStart: past-far', { hideStartDate: true }],
+    ])(
+        'should not render "%s" class but should set "%s" data attributes to the list item',
+        async (expectedAbsentClass: string, expectedDateAttributes: string, layoutOptions: Partial<LayoutOptions>) => {
+            const task = TaskBuilder.createFullyPopulatedTask();
+            const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+            const listItem = await renderListItem(task, fullLayoutOptions);
 
-        expect(listItem).not.toHaveAChildSpanWithClass(hiddenGenericClass);
-        expect(listItem).toHaveAmongDataAttributes(attributes);
-    };
-
-    it('should not render hidden components but should set their data attributes to the list item', async () => {
-        await testHiddenComponentClasses(
-            { hidePriority: true },
-            fieldRenderer.className('priority'),
-            'taskPriority: high',
-        );
-        await testHiddenComponentClasses(
-            { hideCreatedDate: true },
-            fieldRenderer.className('createdDate'),
-            'taskCreated: past-far',
-        );
-        await testHiddenComponentClasses(
-            { hideDueDate: true },
-            fieldRenderer.className('dueDate'),
-            'taskDue: past-far',
-        );
-        await testHiddenComponentClasses(
-            { hideScheduledDate: true },
-            fieldRenderer.className('scheduledDate'),
-            'taskScheduled: past-far',
-        );
-        await testHiddenComponentClasses(
-            { hideStartDate: true },
-            fieldRenderer.className('startDate'),
-            'taskStart: past-far',
-        );
-    });
+            expect(listItem).not.toHaveAChildSpanWithClass(expectedAbsentClass);
+            expect(listItem).toHaveAmongDataAttributes(expectedDateAttributes);
+        },
+    );
 
     /*
      * In this test we try to imitate Obsidian's Markdown renderer more thoroughly than other tests,
