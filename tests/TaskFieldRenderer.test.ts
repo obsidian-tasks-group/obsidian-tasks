@@ -76,7 +76,7 @@ describe('Field Layout Detail tests', () => {
         expect(span).toHaveDataAttributes('');
     });
 
-    it.failing('should not add a data attribute with a name but without value', () => {
+    it('should not add a data attribute with a name but without value', () => {
         const fieldLayoutDetail = new TaskFieldHTMLData('task-start', 'taskStart', () => {
             return '';
         });
