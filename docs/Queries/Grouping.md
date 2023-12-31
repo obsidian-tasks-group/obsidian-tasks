@@ -415,6 +415,28 @@ group by function task.created.format("YYYY-MM-DD dddd")
 
 For more examples, see [[#Due Date]].
 
+### Cancelled Date
+
+- `group by cancelled`
+  - The cancelled date of the task, including the week-day, or `No cancelled date`.
+
+> [!released]
+`cancelled` grouping option was introduced in Tasks X.Y.Z.
+
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by cancelled date** is now possible, using `task.cancelled`.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.cancelled_docs.approved.md -->
+
+```javascript
+group by function task.cancelled.format("YYYY-MM-DD dddd")
+```
+
+- Like "group by cancelled", except it uses an empty string instead of "No cancelled date" if there is no cancelled date.
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
 ### Happens
 
 - `group by happens`

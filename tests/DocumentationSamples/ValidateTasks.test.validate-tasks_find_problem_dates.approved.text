@@ -1,0 +1,11 @@
+
+````text
+```tasks
+(cancelled date is invalid) OR (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
+
+# Optionally, uncomment this line and exclude your templates location
+# path does not include _templates
+
+group by path
+```
+````

@@ -168,6 +168,12 @@ export class SampleTasks {
         });
     }
 
+    public static withAllRepresentativeCancelledDates(): Task[] {
+        return representativeDates.map((date) => {
+            return new TaskBuilder().cancelledDate(date).build();
+        });
+    }
+
     public static withEachDateTypeAndCorrespondingStatus(): Task[] {
         function desc(fieldName: string) {
             return `#task Has a ${fieldName} date`;

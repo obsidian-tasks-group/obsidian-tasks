@@ -49,6 +49,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.start` | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | `` |
 | `task.scheduled` | `TasksDate` | `2023-07-03 00:00` | `TasksDate` | `` |
 | `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
+| `task.cancelled` | `TasksDate` | `2023-07-06 00:00` | `TasksDate` | `` |
 | `task.done` | `TasksDate` | `2023-07-05 00:00` | `TasksDate` | `` |
 | `task.happens` | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | `` |
 
@@ -58,6 +59,7 @@ For more information, including adding your own customised statuses, see [[Statu
 1. Note that currently all stored dates have no time, or rather, their time is midnight at the start of the day, local time.
 1. For example uses of date properties, see [[Filters#Due Date]] and [[Grouping#Due Date]].
 1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
+1. `task.cancelled` was added in Tasks X.Y.Z.
 
 ## Values in TasksDate Properties
 
