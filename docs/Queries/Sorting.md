@@ -73,6 +73,13 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 `sort by created` was introduced in Tasks 2.0.0.
 
+### Cancelled Date
+
+- `sort by cancelled` (the date when the task was cancelled)
+
+> [!released]
+`sort by cancelled` was introduced in Tasks X.Y.Z.
+
 ### Happens
 
 - `sort by happens` (the earliest of start date, scheduled date, and due date)

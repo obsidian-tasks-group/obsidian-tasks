@@ -697,6 +697,44 @@ filter by function task.created.format('dddd') === 'Monday'
 
 For more examples, see [[#Due Date]].
 
+### Cancelled Date
+
+- `no cancelled date`
+- `has cancelled date`
+- `cancelled (on|before|after|on or before|on or after) <date>`
+- `cancelled (in|before|after|in or before|in or after) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
+- `cancelled date is invalid`
+
+For more information, see [[Dates#Cancelled date|Cancelled date]].
+
+Such a filter could be:
+
+    ```tasks
+    cancelled yesterday
+    ```
+
+> [!released]
+>
+> - Cancelled date was introduced in Tasks X.Y.Z.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by cancelled date** is now possible, using `task.cancelled`.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.cancelled_docs.approved.md -->
+
+```javascript
+filter by function task.cancelled.format('dddd') === 'Wednesday'
+```
+
+- Find tasks cancelled on Wednesdays, that is, any Wednesday.
+- On non-English systems, you may need to supply the day of the week in the local language.
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
 ### Happens
 
 - `happens (on|before|after|on or before|on or after) <date>`

@@ -577,6 +577,13 @@ export class Task {
     }
 
     /**
+     * Return {@link cancelledDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
+     */
+    public get cancelled(): TasksDate {
+        return new TasksDate(this.cancelledDate);
+    }
+
+    /**
      * Return {@link createdDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
     public get created(): TasksDate {

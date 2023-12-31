@@ -42,6 +42,12 @@ describe('Query parsing', () => {
     const filters: ReadonlyArray<string> = [
         // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
         '(due this week) AND (description includes Hello World)',
+        'cancelled after 2021-12-27',
+        'cancelled before 2021-12-27',
+        'cancelled date is invalid',
+        'cancelled in 2021-12-27 2021-12-29',
+        'cancelled on 2021-12-27',
+        'cancelled this week',
         'created after 2021-12-27',
         'created before 2021-12-27',
         'created date is invalid',
@@ -75,6 +81,7 @@ describe('Query parsing', () => {
         'happens in 2021-12-27 2021-12-29',
         'happens on 2021-12-27',
         'happens this week',
+        'has cancelled date',
         'has created date',
         'has done date',
         'has due date',
@@ -88,6 +95,7 @@ describe('Query parsing', () => {
         'heading includes wibble',
         'is not recurring',
         'is recurring',
+        'no cancelled date',
         'no created date',
         'no due date',
         'no happens date',
@@ -222,6 +230,8 @@ describe('Query parsing', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
             // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
+            'sort by cancelled',
+            'sort by cancelled reverse',
             'sort by created',
             'sort by created reverse',
             'sort by description',
@@ -307,6 +317,8 @@ describe('Query parsing', () => {
             // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
             'group by backlink',
             'group by backlink reverse',
+            'group by cancelled',
+            'group by cancelled reverse',
             'group by created',
             'group by created reverse',
             'group by done',
@@ -399,6 +411,7 @@ describe('Query parsing', () => {
             'full',
             'full mode',
             'hide backlink',
+            'hide cancelled date',
             'hide created date',
             'hide done date',
             'hide due date',
@@ -418,6 +431,7 @@ describe('Query parsing', () => {
             'short',
             'short mode',
             'show backlink',
+            'show cancelled date',
             'show created date',
             'show done date',
             'show due date',
