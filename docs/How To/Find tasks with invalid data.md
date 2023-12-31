@@ -8,7 +8,7 @@ publish: true
 
 For performance reasons, Tasks is stricter in reading data from markdown lines that some users expect.
 
-As a precaution, it can be useful to check the data in your vault periodically, to see if there any tasks with seemingly valid data that is not found by Tasks.
+As a precaution, it can be useful to check the data in your vault periodically, to see if there are any tasks with seemingly valid data that is not found by Tasks.
 
 ## Find tasks with potentially missed emoji signifiers
 
