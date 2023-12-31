@@ -50,13 +50,13 @@ The Tasks plugin renders a task in the following structure (this refers to query
           - Internal span
         - Task created date (span class="task-created" + data-task-created attribute)
           - Internal span
-        - ... start date, scheduled date, due date and done date in this order
+        - ... start date, scheduled date, due date, cancelled date and done date in this order
       - Task extras (link, edit button, postpone button) (span class="task-extras")
   - Tasks count (div class="tasks-count")
 ```
 
 As can be seen above, the basic task `li` contains a checkbox and a content span.
-The content span contains a list of **component** spans: description, priority, recurrence, created date, start date, scheduled date, due date and done date in this order.
+The content span contains a list of **component** spans: description, priority, recurrence, created date, start date, scheduled date, due date, cancelled date and done date in this order.
 
 Each component span is marked with a **generic class**, which denotes the type of the component, and in some cases a **data attribute** that represents the component's content itself.
 
