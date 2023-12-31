@@ -6,7 +6,7 @@ import { Priority } from '../../src/Task';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from '../../src/TaskSerializer/DataviewTaskSerializer';
-import type { Task } from '../../src/Task';
+import { Task } from '../../src/Task';
 import type { TaskDetails } from '../../src/TaskSerializer';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
@@ -300,6 +300,24 @@ describe('DataviewTaskSerializer', () => {
 \`\`\`tasks
 # These description instructions need to be all on one line:
 ${descriptionInstructions.join(' OR ')}
+
+# Optionally, uncomment this line and exclude your templates location
+# path does not include _templates
+
+group by path
+\`\`\`
+\`\`\`\`
+`;
+            verifyWithFileExtension(output, 'text');
+        });
+
+        it('find problem dates', () => {
+            const dateFields = Task.allDateFields();
+            const instructions = dateFields.sort().map((field) => `(${field.replace('Date', ' date')} is invalid)`);
+            const output = `
+\`\`\`\`text
+\`\`\`tasks
+${instructions.join(' OR ')}
 
 # Optionally, uncomment this line and exclude your templates location
 # path does not include _templates
