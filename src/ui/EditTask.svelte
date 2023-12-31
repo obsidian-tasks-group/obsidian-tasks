@@ -21,6 +21,9 @@
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
+        cancelledDateSymbol,
+        createdDateSymbol,
+        doneDateSymbol,
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
@@ -543,32 +546,28 @@
                     disabled
                 />
             </div>
-
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Created on  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <div>
-                <span>Created on:<br></span>
-                <code>{@html parsedCreated}</code>
-            </div>
-
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Done on  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <div>
-                <span>Done on:<br></span>
-                <code>{@html parsedDone}</code>
-            </div>
-
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Cancelled on  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <div>
-                <span>Cancelled on:<br></span>
-                <code>{@html parsedCancelled}</code>
-            </div>
-
         </div>
+
+        <div class="tasks-modal-section tasks-modal-readonly-dates">
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Created Date  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="created">Created</label>
+            <code>{createdDateSymbol} {@html parsedCreated}</code>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Done Date  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="done">Done</label>
+            <code>{doneDateSymbol} {@html parsedDone}</code>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Cancelled Date  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="cancelled">Cancelled</label>
+            <code>{cancelledDateSymbol} {@html parsedCancelled}</code>
+        </div>
+
         <div class="tasks-modal-section tasks-modal-buttons">
             <button disabled={!formIsValid} type="submit" class="mod-cta">Apply
             </button>
