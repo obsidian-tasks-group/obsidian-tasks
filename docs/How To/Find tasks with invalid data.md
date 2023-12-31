@@ -58,11 +58,10 @@ This task has an illegal due date:
 
 The following tasks block lists any tasks with invalid dates, meaning data that has potentially not been interpreted by Tasks.
 
-<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED if the new query is for a new date field -->
-
+<!-- include: DataviewTaskSerializer.test.DataviewTaskSerializer_document_find_problem_dates.approved.text -->
 ````text
 ```tasks
-(done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
+(cancelled date is invalid) OR (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
 
 # Optionally, uncomment this line and exclude your templates location
 # path does not include _templates
@@ -70,6 +69,7 @@ The following tasks block lists any tasks with invalid dates, meaning data that 
 group by path
 ```
 ````
+<!-- endInclude -->
 
 Errors with invalid dates are not easily fixed using the [[Create or edit Task|‘Create or edit Task’ Modal]], as it shows any invalid dates with placeholder text, instead of showing the original values.
 
