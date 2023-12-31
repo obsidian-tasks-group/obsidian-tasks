@@ -66,6 +66,7 @@ export interface Settings {
     taskFormat: keyof TASK_FORMATS;
     setCreatedDate: boolean;
     setDoneDate: boolean;
+    setCancelledDate: boolean;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
@@ -98,6 +99,7 @@ const defaultSettings: Settings = {
     taskFormat: 'tasksPluginEmoji',
     setCreatedDate: false,
     setDoneDate: true,
+    setCancelledDate: true,
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 6,

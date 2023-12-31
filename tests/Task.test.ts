@@ -1253,6 +1253,21 @@ describe('handle new status', () => {
         expect(newTasks[0].toFileLineString()).toEqual('- [-] Stuff 📅 2023-12-15 ❌ 2023-06-26');
     });
 
+    it('should not add cancelled date when changing to CANCELLED, if setting disabled', () => {
+        // Arrange
+        updateSettings({ setCancelledDate: false });
+        const task = fromLine({
+            line: '- [ ] Stuff',
+        });
+
+        // Act
+        const newTasks = task.handleNewStatus(Status.makeCancelled());
+
+        // Assert
+        expect(newTasks.length).toEqual(1);
+        expect(newTasks[0].toFileLineString()).toEqual('- [-] Stuff');
+    });
+
     it('should not change the cancelled date, if changing from one CANCELLED status to another', () => {
         // Arrange
         const cancelledTask = fromLine({
