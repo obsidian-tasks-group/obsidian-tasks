@@ -84,8 +84,8 @@ export class TaskLayout {
             [this.options.hideStartDate, 'startDate'],
             [this.options.hideScheduledDate, 'scheduledDate'],
             [this.options.hideDueDate, 'dueDate'],
-            [this.options.hideDoneDate, 'doneDate'],
             [this.options.hideCancelledDate, 'cancelledDate'],
+            [this.options.hideDoneDate, 'doneDate'],
         ];
         for (const [hide, component] of componentsToHideAndGenerateClasses) {
             this.hideComponent(hide, component);
