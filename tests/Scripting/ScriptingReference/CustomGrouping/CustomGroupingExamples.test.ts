@@ -51,7 +51,7 @@ describe('dates', () => {
                     'Like "group by created", except it uses an empty string instead of "No created date" if there is no created date',
                 ],
             ],
-            SampleTasks.withAllRepresentativeCancelledDates(),
+            SampleTasks.withAllRepresentativeCreatedDates(),
         ],
 
         [
