@@ -136,6 +136,21 @@ Done dates use a white check-mark emoji: ✅.
 - [x] take out the trash ✅ 2021-04-09
 ```
 
+### Cancelled date
+
+> [!released]
+> Cancelled date was introduced in Tasks X.Y.Z.
+
+Unless you disable 'Set cancelled date on every cancelled task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were cancelled.
+
+See the [[#Date-tracking settings|screenshot]] above.
+
+Cancelled dates use a red cross-mark emoji: ❌.
+
+```markdown
+- [-] take out the trash ❌ 2021-04-09
+```
+
 ## Finding mistakes in dates on task lines
 
 Tasks does not automatically report any problem tasks that have invalid dates, such as on the 32nd day of a month. These task will silently not be found by date-based searches.

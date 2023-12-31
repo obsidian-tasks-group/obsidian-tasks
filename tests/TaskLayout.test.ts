@@ -16,6 +16,7 @@ describe('TaskLayout tests', () => {
             startDate
             scheduledDate
             dueDate
+            cancelledDate
             doneDate
             blockLink"
         `);
@@ -51,6 +52,7 @@ describe('TaskLayout tests', () => {
             startDate
             scheduledDate
             dueDate
+            cancelledDate
             doneDate"
         `);
         expect(taskLayout.taskListHiddenClasses.join('\n')).toMatchInlineSnapshot(`
@@ -60,6 +62,7 @@ describe('TaskLayout tests', () => {
             tasks-layout-hide-startDate
             tasks-layout-hide-scheduledDate
             tasks-layout-hide-dueDate
+            tasks-layout-hide-cancelledDate
             tasks-layout-hide-doneDate
             tasks-layout-hide-tags
             tasks-layout-hide-backlinks

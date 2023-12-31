@@ -89,13 +89,16 @@ These samples demonstrate all the fields supported by the Tasks plugin's parsing
 
 These names agree with the same fields in [dataview's documentation](https://blacksmithgu.github.io/obsidian-dataview/annotation/metadata-tasks/#field-shorthands).
 
-```markdown
-- [ ] #task Has a created date [created:: 2023-04-17]
-- [ ] #task Has a scheduled date [scheduled:: 2023-04-14]
-- [ ] #task Has a start date [start:: 2023-04-15]
-- [ ] #task Has a due date [due:: 2023-04-16]
-- [x] #task Has a done date [completion:: 2023-04-17]
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dates_dataview-snippet.approved.md -->
+```md
+- [ ] #task Has a created date  [created:: 2023-04-13]
+- [ ] #task Has a scheduled date  [scheduled:: 2023-04-14]
+- [ ] #task Has a start date  [start:: 2023-04-15]
+- [ ] #task Has a due date  [due:: 2023-04-16]
+- [x] #task Has a done date  [completion:: 2023-04-17]
+- [-] #task Has a cancelled date  [cancelled:: 2023-04-18]
 ```
+<!-- endSnippet -->
 
 For more information, see [[Dates]].
 

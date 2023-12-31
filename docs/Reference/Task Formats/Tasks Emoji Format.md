@@ -12,13 +12,16 @@ These samples demonstrate all the fields supported by the Tasks plugin's parsing
 
 ## Tasks Emoji Format for Dates
 
-```markdown
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dates_tasksPluginEmoji-snippet.approved.md -->
+```md
 - [ ] #task Has a created date ➕ 2023-04-13
 - [ ] #task Has a scheduled date ⏳ 2023-04-14
 - [ ] #task Has a start date 🛫 2023-04-15
 - [ ] #task Has a due date 📅 2023-04-16
 - [x] #task Has a done date ✅ 2023-04-17
+- [-] #task Has a cancelled date ❌ 2023-04-18
 ```
+<!-- endSnippet -->
 
 For more information, see [[Dates]].
 

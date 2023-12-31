@@ -193,6 +193,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
@@ -209,6 +210,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
@@ -225,6 +227,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
@@ -241,6 +244,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
@@ -257,6 +261,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
@@ -273,6 +278,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
@@ -289,6 +295,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
+                ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
@@ -306,6 +313,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
@@ -323,9 +331,27 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
                 ' ^dcf64c',
             ],
             { hideDoneDate: true },
+        );
+    });
+
+    it('renders without cancelled date', async () => {
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
+            { hideCancelledDate: true },
         );
     });
 
@@ -423,6 +449,7 @@ describe('task line rendering - classes and data attributes', () => {
         await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${today}`, {}, 'task-scheduled', 'taskScheduled: today');
         await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${today}`, {}, 'task-start', 'taskStart: today');
         await testComponentClasses(`- [x] Done task ✅ ${today}`, {}, 'task-done', 'taskDone: today');
+        await testComponentClasses(`- [-] Canc task ❌ ${today}`, {}, 'task-cancelled', 'taskCancelled: today');
     });
 
     it('should render date component with its class and data attribute with "future-1d" value', async () => {
@@ -432,6 +459,7 @@ describe('task line rendering - classes and data attributes', () => {
         await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, 'task-scheduled', 'taskScheduled: future-1d');
         await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, 'task-start', 'taskStart: future-1d');
         await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, 'task-done', 'taskDone: future-1d');
+        await testComponentClasses(`- [-] Canc task ❌ ${future}`, {}, 'task-cancelled', 'taskCancelled: future-1d');
     });
 
     it('should render date component with its class and data attribute with "future-7d" value', async () => {
@@ -441,6 +469,7 @@ describe('task line rendering - classes and data attributes', () => {
         await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, 'task-scheduled', 'taskScheduled: future-7d');
         await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, 'task-start', 'taskStart: future-7d');
         await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, 'task-done', 'taskDone: future-7d');
+        await testComponentClasses(`- [-] Canc task ❌ ${future}`, {}, 'task-cancelled', 'taskCancelled: future-7d');
     });
 
     it('should render date component with its class and data attribute with "past-1d" value', async () => {
@@ -450,6 +479,7 @@ describe('task line rendering - classes and data attributes', () => {
         await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, 'task-scheduled', 'taskScheduled: past-1d');
         await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, 'task-start', 'taskStart: past-1d');
         await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, 'task-done', 'taskDone: past-1d');
+        await testComponentClasses(`- [-] Canc task ❌ ${past}`, {}, 'task-cancelled', 'taskCancelled: past-1d');
     });
 
     it('should render date component with its class and data attribute with "past-7d" value', async () => {
@@ -459,6 +489,7 @@ describe('task line rendering - classes and data attributes', () => {
         await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, 'task-scheduled', 'taskScheduled: past-7d');
         await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, 'task-start', 'taskStart: past-7d');
         await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, 'task-done', 'taskDone: past-7d');
+        await testComponentClasses(`- [-] Canc task ❌ ${past}`, {}, 'task-cancelled', 'taskCancelled: past-7d');
     });
 
     it('should render date component with its class and data attribute with "future-far" & "past-far" values', async () => {
@@ -473,12 +504,15 @@ describe('task line rendering - classes and data attributes', () => {
         );
         await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, 'task-start', 'taskStart: future-far');
         await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, 'task-done', 'taskDone: future-far');
+        await testComponentClasses(`- [-] Canc task ❌ ${future}`, {}, 'task-cancelled', 'taskCancelled: future-far');
+
         const past = DateParser.parseDate('8 days ago').format(TaskRegularExpressions.dateFormat);
         await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, 'task-created', 'taskCreated: past-far');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, 'task-due', 'taskDue: past-far');
         await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, 'task-scheduled', 'taskScheduled: past-far');
         await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, 'task-start', 'taskStart: past-far');
         await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, 'task-done', 'taskDone: past-far');
+        await testComponentClasses(`- [-] Canc task ❌ ${past}`, {}, 'task-cancelled', 'taskCancelled: past-far');
     });
 
     it('should not add data attributes for invalid dates', async () => {
@@ -491,6 +525,8 @@ describe('task line rendering - classes and data attributes', () => {
         ['task-dueDate', 'taskDue: past-far', { hideDueDate: true }],
         ['task-scheduledDate', 'taskScheduled: past-far', { hideScheduledDate: true }],
         ['task-startDate', 'taskStart: past-far', { hideStartDate: true }],
+        ['task-doneDate', 'taskDone: past-far', { hideDoneDate: true }],
+        ['task-cancelledDate', 'taskCancelled: past-far', { hideCancelledDate: true }],
     ])(
         'should not render "%s" class but should set "%s" data attributes to the list item',
         async (expectedAbsentClass: string, expectedDateAttributes: string, layoutOptions: Partial<LayoutOptions>) => {

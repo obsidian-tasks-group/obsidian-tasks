@@ -41,6 +41,7 @@ function isTaskDetails(val: any): val is TaskDetails {
         'scheduledDate',
         'dueDate',
         'doneDate',
+        'cancelledDate',
     ] as const;
 
     for (const d of dates) {
@@ -81,6 +82,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         scheduledDate: t.scheduledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
+        cancelledDate: t.cancelledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
     };
 }
@@ -104,6 +106,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         scheduledDate: null,
         dueDate: null,
         doneDate: null,
+        cancelledDate: null,
         recurrence: null,
         tags: [],
         ...t,

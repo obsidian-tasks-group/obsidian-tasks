@@ -199,6 +199,22 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
+            .setName('Set cancelled date on every cancelled task')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    'Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.</br>' +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date">documentation</a>.</p>',
+                ),
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle.setValue(settings.setCancelledDate).onChange(async (value) => {
+                    updateSettings({ setCancelledDate: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
             .setName('Use filename as Scheduled date for undated tasks')
             .setDesc(
                 SettingsTab.createFragmentWithHTML(

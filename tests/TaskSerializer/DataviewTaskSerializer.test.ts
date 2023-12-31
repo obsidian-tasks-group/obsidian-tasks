@@ -19,7 +19,7 @@ describe('DataviewTaskSerializer', () => {
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
 
-    const dateFields = ['startDate', 'dueDate', 'doneDate', 'createdDate', 'scheduledDate'] as const;
+    const dateFields = ['startDate', 'dueDate', 'doneDate', 'createdDate', 'scheduledDate', 'cancelledDate'] as const;
 
     describe('deserialize', () => {
         it('should parse an empty string', () => {
@@ -265,29 +265,11 @@ describe('DataviewTaskSerializer', () => {
             expect(serialized).toEqual(' #hello #world #task');
         });
 
-        it('should serialize a task with multiple fields and tags', () => {
-            const task = new TaskBuilder()
-                .description('Wobble')
-                .dueDate('2025-10-05')
-                .doneDate('2024-09-04')
-                .startDate('2023-08-03')
-                .scheduledDate('2022-07-02')
-                .priority(Priority.High)
-                .recurrence(
-                    new RecurrenceBuilder()
-                        .rule('every day')
-                        .dueDate('2025-10-05')
-                        .startDate('2023-08-03')
-                        .scheduledDate('2022-07-02')
-                        .build(),
-                )
-                // TaskBuilder appends tasks to the description automatically
-                .tags(['#tag1', '#tag2', '#tag3', '#tag4', '#tag5', '#tag6', '#tag7', '#tag8', '#tag9', '#tag10'])
-                .build();
-
+        it('should serialize a fully populated task', () => {
+            const task = TaskBuilder.createFullyPopulatedTask();
             const serialized = serialize(task);
-            expect(serialized).toEqual(
-                'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10  [priority:: high]  [repeat:: every day]  [start:: 2023-08-03]  [scheduled:: 2022-07-02]  [due:: 2025-10-05]  [completion:: 2024-09-04]',
+            expect(serialized).toMatchInlineSnapshot(
+                '"Do exercises #todo #health  [priority:: medium]  [repeat:: every day when done]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [due:: 2023-07-04]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
             );
         });
     });
