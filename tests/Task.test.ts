@@ -693,6 +693,7 @@ const sampleStatusesForToggling: StatusCollection = [
     ['1', 'Status 1', '2', 'TODO'],
     ['2', 'Status 2', '3', 'IN_PROGRESS'],
     ['3', 'Status 3', '1', 'DONE'],
+    ['4', 'Status 4', '1', 'CANCELLED'],
     // A set where the DONE task goes to an unknown symbol
     ['a', 'Status a', 'b', 'TODO'],
     ['b', 'Status b', 'c', 'DONE'], // c is not known
@@ -1237,6 +1238,67 @@ describe('handle new status', () => {
         // But check that the new symbol has been applied:
         expect(newTasks[0].status.symbol).toEqual('X');
     });
+
+    describe('cancelled dates and new status', () => {
+        it('should add cancelled date and remove done date, if changing from DONE to CANCELLED', () => {
+            // Arrange
+            const doneTask = fromLine({
+                line: '- [X] Stuff 📅 2023-12-15 ✅ 2019-01-17',
+            });
+
+            // Act
+            const newTasks = doneTask.handleNewStatus(Status.makeCancelled());
+
+            // Assert
+            expect(newTasks.length).toEqual(1);
+            expect(newTasks[0].toFileLineString()).toEqual('- [-] Stuff 📅 2023-12-15 ❌ 2023-06-26');
+        });
+
+        it('should not add cancelled date when changing to CANCELLED, if setting disabled', () => {
+            // Arrange
+            updateSettings({ setCancelledDate: false });
+            const task = fromLine({
+                line: '- [ ] Stuff',
+            });
+
+            // Act
+            const newTasks = task.handleNewStatus(Status.makeCancelled());
+
+            // Assert
+            expect(newTasks.length).toEqual(1);
+            expect(newTasks[0].toFileLineString()).toEqual('- [-] Stuff');
+        });
+
+        it('should not change the cancelled date, if changing from one CANCELLED status to another', () => {
+            // Arrange
+            const cancelledTask = fromLine({
+                line: '- [4] Stuff 📅 2023-12-15 ❌ 2019-01-17',
+            });
+
+            // Act
+            const newTasks = cancelledTask.handleNewStatus(Status.makeCancelled());
+
+            // Assert
+            expect(newTasks.length).toEqual(1);
+            // Check that the cancelled date was not modified:
+            expect(newTasks[0].toFileLineString()).toEqual('- [-] Stuff 📅 2023-12-15 ❌ 2019-01-17');
+        });
+
+        it('should remove cancelled date when toggling CANCELLED recurring task to DONE', () => {
+            // Arrange
+            const cancelledTask = fromLine({
+                line: '- [-] Stuff 🔁 every day 📅 2023-05-15 ❌ 2023-05-16',
+            });
+
+            // Act
+            const newTasks = cancelledTask.handleNewStatus(Status.makeDone());
+
+            // Assert
+            expect(newTasks.length).toEqual(2);
+            expect(newTasks[0].toFileLineString()).toEqual('- [ ] Stuff 🔁 every day 📅 2023-05-16');
+            expect(newTasks[1].toFileLineString()).toEqual('- [x] Stuff 🔁 every day 📅 2023-05-15 ✅ 2023-06-26');
+        });
+    });
 });
 
 describe('created dates on recurring task', () => {
@@ -1434,6 +1496,13 @@ describe('identicalTo', () => {
         expect(lhs).toBeIdenticalTo(new TaskBuilder().doneDate('2012-12-27'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().doneDate(null));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().doneDate('2012-12-26'));
+    });
+
+    it('should check cancelledDate', () => {
+        const lhs = new TaskBuilder().cancelledDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().cancelledDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().cancelledDate(null));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().cancelledDate('2012-12-26'));
     });
 
     describe('should check recurrence', () => {

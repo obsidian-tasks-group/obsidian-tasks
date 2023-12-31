@@ -7,11 +7,13 @@ import { QueryLayoutOptions } from './QueryLayoutOptions';
  * @see QueryLayoutOptions
  */
 export class LayoutOptions {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     hidePriority: boolean = false;
     hideCreatedDate: boolean = false;
     hideStartDate: boolean = false;
     hideScheduledDate: boolean = false;
     hideDoneDate: boolean = false;
+    hideCancelledDate: boolean = false;
     hideDueDate: boolean = false;
     hideRecurrenceRule: boolean = false;
     hideTags: boolean = false;
@@ -27,6 +29,7 @@ export type TaskLayoutComponent =
     | 'scheduledDate'
     | 'dueDate'
     | 'doneDate'
+    | 'cancelledDate'
     | 'blockLink';
 
 /**
@@ -44,6 +47,7 @@ export class TaskLayout {
         'startDate',
         'scheduledDate',
         'dueDate',
+        'cancelledDate',
         'doneDate',
         'blockLink',
     ];
@@ -80,6 +84,7 @@ export class TaskLayout {
             [this.options.hideStartDate, 'startDate'],
             [this.options.hideScheduledDate, 'scheduledDate'],
             [this.options.hideDueDate, 'dueDate'],
+            [this.options.hideCancelledDate, 'cancelledDate'],
             [this.options.hideDoneDate, 'doneDate'],
         ];
         for (const [hide, component] of componentsToHideAndGenerateClasses) {

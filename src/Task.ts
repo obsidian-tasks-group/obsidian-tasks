@@ -137,6 +137,7 @@ export class Task {
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
+    public readonly cancelledDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules.
@@ -166,6 +167,7 @@ export class Task {
         scheduledDate,
         dueDate,
         doneDate,
+        cancelledDate,
         recurrence,
         blockLink,
         tags,
@@ -184,6 +186,7 @@ export class Task {
         scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
+        cancelledDate: moment.Moment | null;
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
@@ -206,6 +209,7 @@ export class Task {
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
+        this.cancelledDate = cancelledDate;
 
         this.recurrence = recurrence;
         this.blockLink = blockLink;
@@ -403,6 +407,20 @@ export class Task {
             }
         }
 
+        let newCancelledDate = null;
+        if (newStatus.isCancelled()) {
+            if (!this.status.isCancelled()) {
+                // Set done cancelled only if setting value is true
+                const { setCancelledDate } = getSettings();
+                if (setCancelledDate) {
+                    newCancelledDate = window.moment();
+                }
+            } else {
+                // This task was already cancelled, so preserve its cancelled date.
+                newCancelledDate = this.cancelledDate;
+            }
+        }
+
         let nextOccurrence: {
             startDate: Moment | null;
             scheduledDate: Moment | null;
@@ -418,6 +436,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
+            cancelledDate: newCancelledDate,
         });
 
         const newTasks: Task[] = [];
@@ -428,6 +447,8 @@ export class Task {
             if (setCreatedDate) {
                 createdDate = window.moment();
             }
+            // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
+            const cancelledDate = null;
             const statusRegistry = StatusRegistry.getInstance();
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
             const nextTask = new Task({
@@ -439,6 +460,7 @@ export class Task {
                 blockLink: '',
                 // add new createdDate on recurring tasks
                 createdDate,
+                cancelledDate,
             });
             newTasks.push(nextTask);
         }
@@ -803,6 +825,7 @@ export class Task {
             'scheduledDate' as keyof Task,
             'dueDate' as keyof Task,
             'doneDate' as keyof Task,
+            'cancelledDate' as keyof Task,
         ];
     }
 
