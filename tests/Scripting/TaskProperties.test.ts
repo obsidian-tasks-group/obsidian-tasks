@@ -63,6 +63,7 @@ describe('task', () => {
             'task.start',
             'task.scheduled',
             'task.due',
+            'task.cancelled',
             'task.done',
             'task.happens',
         ]);
