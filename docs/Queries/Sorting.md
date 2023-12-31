@@ -75,7 +75,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ### Cancelled Date
 
-- `sort by cancelled` (the date when the task was created)
+- `sort by cancelled` (the date when the task was cancelled)
 
 > [!released]
 `sort by cancelled` was introduced in Tasks X.Y.Z.
