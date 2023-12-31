@@ -28,12 +28,11 @@ Tasks sees as an un-dated task with the text description:
 
 The following tasks block lists any tasks that have emoji in the description, which usually means data that has not been interpreted by Tasks. This is typically because there is some text other than emoji signifiers and tags at the end of the line.
 
-<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
-
+<!-- include: DataviewTaskSerializer.test.DataviewTaskSerializer_document_find-unread-emojis.approved.text -->
 ````text
 ```tasks
 # These description instructions need to be all on one line:
-(description includes ⏫ ) OR (description includes 🔼 ) OR (description includes 🔽 ) OR (description includes 📅 ) OR (description includes ⏳ ) OR (description includes 🛫 ) OR (description includes ✅ ) OR (description includes 🔁 )
+(description includes 🔺) OR (description includes ⏫) OR (description includes 🔼) OR (description includes 🔽) OR (description includes ⏬) OR (description includes 🛫) OR (description includes ➕) OR (description includes ⏳) OR (description includes 📅) OR (description includes ✅) OR (description includes ❌) OR (description includes 🔁)
 
 # Optionally, uncomment this line and exclude your templates location
 # path does not include _templates
@@ -41,6 +40,7 @@ The following tasks block lists any tasks that have emoji in the description, wh
 group by path
 ```
 ````
+<!-- endInclude -->
 
 The errors can be fixed by editing the Task and moving any text that appears after the unparsed values to earlier in the line.
 
