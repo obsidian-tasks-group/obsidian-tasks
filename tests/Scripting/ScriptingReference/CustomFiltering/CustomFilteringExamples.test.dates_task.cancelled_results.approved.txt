@@ -1,0 +1,11 @@
+Results of custom filters
+
+
+
+filter by function task.cancelled.format('dddd') === 'Wednesday'
+Find tasks cancelled on Wednesdays, that is, any Wednesday.
+On non-English systems, you may need to supply the day of the week in the local language.
+=>
+- [ ] my description ❌ 2023-05-31
+====================================================================================
+
