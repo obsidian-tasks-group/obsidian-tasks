@@ -6,10 +6,8 @@ import { Priority } from '../../src/Task';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from '../../src/TaskSerializer/DataviewTaskSerializer';
-import { Task } from '../../src/Task';
+import type { Task } from '../../src/Task';
 import type { TaskDetails } from '../../src/TaskSerializer';
-import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
-import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -273,60 +271,6 @@ describe('DataviewTaskSerializer', () => {
             expect(serialized).toMatchInlineSnapshot(
                 '"Do exercises #todo #health  [priority:: medium]  [repeat:: every day when done]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [due:: 2023-07-04]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
             );
-        });
-    });
-
-    describe('document', () => {
-        it('find-unread-emojis', () => {
-            const allEmojis: string[] = [];
-
-            // All the priority emojis:
-            Object.values(DEFAULT_SYMBOLS.prioritySymbols).forEach((value) => {
-                if (value.length > 0) {
-                    allEmojis.push(value);
-                }
-            });
-
-            // All the other field emojis:
-            Object.values(DEFAULT_SYMBOLS).forEach((value) => {
-                if (typeof value === 'string') {
-                    allEmojis.push(value);
-                }
-            });
-
-            const descriptionInstructions = allEmojis.map((emoji) => `(description includes ${emoji})`);
-            const output = `
-\`\`\`\`text
-\`\`\`tasks
-# These description instructions need to be all on one line:
-${descriptionInstructions.join(' OR ')}
-
-# Optionally, uncomment this line and exclude your templates location
-# path does not include _templates
-
-group by path
-\`\`\`
-\`\`\`\`
-`;
-            verifyWithFileExtension(output, 'text');
-        });
-
-        it('find problem dates', () => {
-            const dateFields = Task.allDateFields();
-            const instructions = dateFields.sort().map((field) => `(${field.replace('Date', ' date')} is invalid)`);
-            const output = `
-\`\`\`\`text
-\`\`\`tasks
-${instructions.join(' OR ')}
-
-# Optionally, uncomment this line and exclude your templates location
-# path does not include _templates
-
-group by path
-\`\`\`
-\`\`\`\`
-`;
-            verifyWithFileExtension(output, 'text');
         });
     });
 });

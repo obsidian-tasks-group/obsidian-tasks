@@ -28,7 +28,7 @@ Tasks sees as an un-dated task with the text description:
 
 The following tasks block lists any tasks that have emoji in the description, which usually means data that has not been interpreted by Tasks. This is typically because there is some text other than emoji signifiers and tags at the end of the line.
 
-<!-- include: DataviewTaskSerializer.test.DataviewTaskSerializer_document_find-unread-emojis.approved.text -->
+<!-- include: ValidateTasks.test.validate-tasks_find-unread-emojis.approved.text -->
 ````text
 ```tasks
 # These description instructions need to be all on one line:
@@ -58,7 +58,7 @@ This task has an illegal due date:
 
 The following tasks block lists any tasks with invalid dates, meaning data that has potentially not been interpreted by Tasks.
 
-<!-- include: DataviewTaskSerializer.test.DataviewTaskSerializer_document_find_problem_dates.approved.text -->
+<!-- include: ValidateTasks.test.validate-tasks_find_problem_dates.approved.text -->
 ````text
 ```tasks
 (cancelled date is invalid) OR (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
