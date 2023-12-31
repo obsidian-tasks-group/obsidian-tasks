@@ -411,8 +411,7 @@ export class Task {
         if (newStatus.isCancelled()) {
             if (!this.status.isCancelled()) {
                 // Set done cancelled only if setting value is true
-                // const { setCancelledDate } = getSettings();
-                const setCancelledDate = true; // TODO Replace by a setting
+                const { setCancelledDate } = getSettings();
                 if (setCancelledDate) {
                     newCancelledDate = window.moment();
                 }
