@@ -27,6 +27,7 @@ import type { Grouper } from './Grouper';
 import { FolderField } from './Filter/FolderField';
 import { RootField } from './Filter/RootField';
 import { BacklinkField } from './Filter/BacklinkField';
+import { CancelledDateField } from './Filter/CancelledDateField';
 
 // When parsing a query the fields are tested one by one according to this order.
 // Since BooleanField is a meta-field, which needs to aggregate a few fields together, it is intended to
@@ -41,6 +42,7 @@ export const fieldCreators: EndsWith<BooleanField> = [
     () => new RecurringField(),
     () => new PriorityField(),
     () => new HappensDateField(),
+    () => new CancelledDateField(),
     () => new CreatedDateField(),
     () => new StartDateField(),
     () => new ScheduledDateField(),
