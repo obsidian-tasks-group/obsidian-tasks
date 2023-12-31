@@ -55,7 +55,9 @@
     };
 
     let isDescriptionValid: boolean = true;
-    let parsedCreated: string = '';
+
+    let parsedCreatedDate: string = '';
+    let isCreatedDateValid: boolean = true;
 
     let parsedStartDate: string = '';
     let isStartDateValid: boolean = true;
@@ -69,8 +71,11 @@
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
 
-    let parsedDone: string = '';
-    let parsedCancelled: string = '';
+    let parsedDoneDate: string = '';
+    let isDoneDateValid: boolean = true;
+
+    let parsedCancelledDate: string = '';
+    let isCancelledDateValid: boolean = true;
 
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
@@ -169,7 +174,7 @@
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
-    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done', typedDate: string): string {
+    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled', typedDate: string): string {
         return parseTypedDateForDisplay(
             fieldName,
             typedDate,
@@ -195,7 +200,7 @@
     }
 
     $: accesskey = (key: string) => withAccessKeys ? key : null;
-    $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid;
+    $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid && isCancelledDateValid && isCreatedDateValid && isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -215,6 +220,24 @@
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
         parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate);
         isDueDateValid = !parsedDueDate.includes('invalid');
+    }
+
+    $: {
+        editableTask.doneDate = doAutocomplete(editableTask.doneDate);
+        parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate);
+        isDoneDateValid = !parsedDueDate.includes('invalid');
+    }
+
+    $: {
+        editableTask.createdDate = doAutocomplete(editableTask.createdDate);
+        parsedCreatedDate = parseTypedDateForDisplayUsingFutureDate('created', editableTask.createdDate);
+        isCreatedDateValid = !parsedDueDate.includes('invalid');
+    }
+
+    $: {
+        editableTask.cancelledDate = doAutocomplete(editableTask.cancelledDate);
+        parsedCancelledDate = parseTypedDateForDisplayUsingFutureDate('cancelled', editableTask.cancelledDate);
+        isCancelledDateValid = !parsedDueDate.includes('invalid');
     }
 
     $: {
@@ -239,12 +262,6 @@
                 parsedRecurrence = recurrenceFromText;
             }
         }
-    }
-
-    $: {
-        parsedCreated = parseTypedDateForDisplay('created', editableTask.createdDate);
-        parsedDone = parseTypedDateForDisplay('done', editableTask.doneDate);
-        parsedCancelled = parseTypedDateForDisplay('cancelled', editableTask.cancelledDate);
     }
 
     onMount(() => {
@@ -325,10 +342,12 @@
         }
 
         const startDate = parseTypedDateForSaving(editableTask.startDate);
-
         const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate);
-
         const dueDate = parseTypedDateForSaving(editableTask.dueDate);
+
+        const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate);
+        const createdDate = parseTypedDateForSaving(editableTask.createdDate);
+        const doneDate = parseTypedDateForSaving(editableTask.doneDate);
 
         let recurrence: Recurrence | null = null;
         if (editableTask.recurrenceRule) {
@@ -371,16 +390,9 @@
             startDate,
             scheduledDate,
             dueDate,
-            doneDate: window
-                .moment(editableTask.doneDate, 'YYYY-MM-DD')
-                .isValid()
-                ? window.moment(editableTask.doneDate, 'YYYY-MM-DD')
-                : null,
-            cancelledDate: window
-                .moment(editableTask.cancelledDate, 'YYYY-MM-DD')
-                .isValid()
-                ? window.moment(editableTask.cancelledDate, 'YYYY-MM-DD')
-                : null,
+            doneDate,
+            createdDate,
+            cancelledDate,
         });
 
         onSubmit([updatedTask]);
@@ -548,24 +560,45 @@
             </div>
         </div>
 
-        <div class="tasks-modal-section tasks-modal-readonly-dates">
+        <div class="tasks-modal-section tasks-modal-dates">
             <!-- --------------------------------------------------------------------------- -->
             <!--  Created Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="created">Created</label>
-            <code>{createdDateSymbol} {@html parsedCreated}</code>
+            <input
+                bind:value={editableTask.createdDate}
+                id="created"
+                type="text"
+                class:tasks-modal-error={!isCreatedDateValid}
+                placeholder={datePlaceholder}
+            />
+            <code>{createdDateSymbol} {@html parsedCreatedDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="done">Done</label>
-            <code>{doneDateSymbol} {@html parsedDone}</code>
+            <input
+                bind:value={editableTask.doneDate}
+                id="done"
+                type="text"
+                class:tasks-modal-error={!isDoneDateValid}
+                placeholder={datePlaceholder}
+            />
+            <code>{doneDateSymbol} {@html parsedDoneDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Cancelled Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="cancelled">Cancelled</label>
-            <code>{cancelledDateSymbol} {@html parsedCancelled}</code>
+            <input
+                bind:value={editableTask.cancelledDate}
+                id="cancelled"
+                type="text"
+                class:tasks-modal-error={!isCancelledDateValid}
+                placeholder={datePlaceholder}
+            />
+            <code>{cancelledDateSymbol} {@html parsedCancelledDate}</code>
         </div>
 
         <div class="tasks-modal-section tasks-modal-buttons">

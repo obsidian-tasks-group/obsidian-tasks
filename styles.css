@@ -217,33 +217,6 @@ ul.contains-task-list .task-list-item-checkbox {
     grid-column-end: 3;
 }
 
-/* Readonly date fields */
-.tasks-modal-readonly-dates {
-    display: grid;
-    grid-template-columns: 5.5em auto;
-    column-gap: .5em;
-    row-gap: 5px;
-}
-
-.tasks-modal-readonly-dates > label {
-    grid-column: 1;
-    /*margin-top: 6px;*/
-}
-
-.tasks-modal-readonly-dates > input, .tasks-modal-readonly-dates > code {
-    grid-column: 2;
-    align-items: stretch;
-}
-
-.tasks-modal-readonly-dates > code {
-    /*margin-bottom: 5px;*/
-}
-
-.tasks-modal-readonly-dates > div {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
 .tasks-modal-status {
     display: flex;
     justify-content: space-between;
