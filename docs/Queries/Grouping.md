@@ -423,6 +423,8 @@ For more examples, see [[#Due Date]].
 > [!released]
 `cancelled` grouping option was introduced in Tasks X.Y.Z.
 
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by cancelled date** is now possible, using `task.cancelled`.
+
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.cancelled_docs.approved.md -->
 
 ```javascript
