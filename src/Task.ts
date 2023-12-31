@@ -447,7 +447,7 @@ export class Task {
             if (setCreatedDate) {
                 createdDate = window.moment();
             }
-            // In case the task being toggled was previously cancelled, ensure the new task is not cancelled:
+            // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
             const cancelledDate = null;
             const statusRegistry = StatusRegistry.getInstance();
             const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
