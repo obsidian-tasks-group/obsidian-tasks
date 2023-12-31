@@ -265,7 +265,7 @@ describe('DataviewTaskSerializer', () => {
             expect(serialized).toEqual(' #hello #world #task');
         });
 
-        it('should serialize a task fully populated task', () => {
+        it('should serialize a fully populated task', () => {
             const task = TaskBuilder.createFullyPopulatedTask();
             const serialized = serialize(task);
             expect(serialized).toMatchInlineSnapshot(
