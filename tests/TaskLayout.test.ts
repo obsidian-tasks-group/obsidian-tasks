@@ -16,8 +16,8 @@ describe('TaskLayout tests', () => {
             startDate
             scheduledDate
             dueDate
-            doneDate
             cancelledDate
+            doneDate
             blockLink"
         `);
         expect(taskLayout.hiddenTaskLayoutComponents.join('\n')).toMatchInlineSnapshot('""');
