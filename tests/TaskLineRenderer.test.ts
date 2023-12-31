@@ -246,7 +246,6 @@ describe('task line rendering - layout options', () => {
                 ' 📅 2023-07-04',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
-
                 ' ^dcf64c',
             ],
             { hideCreatedDate: true },
