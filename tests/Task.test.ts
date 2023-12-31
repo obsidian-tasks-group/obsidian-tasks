@@ -1239,7 +1239,7 @@ describe('handle new status', () => {
         expect(newTasks[0].status.symbol).toEqual('X');
     });
 
-    it('should add cancelled date, and remove done date, if changing from DONE to CANCELLED', () => {
+    it('should add cancelled date and remove done date, if changing from DONE to CANCELLED', () => {
         // Arrange
         const doneTask = fromLine({
             line: '- [X] Stuff 📅 2023-12-15 ✅ 2019-01-17',
