@@ -35,6 +35,7 @@
         scheduledDate: string;
         dueDate: string;
         doneDate: string;
+        cancelledDate: string,
         forwardOnly: boolean;
     } = {
         description: '',
@@ -46,20 +47,28 @@
         scheduledDate: '',
         dueDate: '',
         doneDate: '',
+        cancelledDate: '',
         forwardOnly: true
     };
 
     let isDescriptionValid: boolean = true;
     let parsedCreated: string = '';
+
     let parsedStartDate: string = '';
     let isStartDateValid: boolean = true;
+
     let parsedScheduledDate: string = '';
     let isScheduledDateValid: boolean = true;
+
     let parsedDueDate: string = '';
     let isDueDateValid: boolean = true;
+
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
+
     let parsedDone: string = '';
+    let parsedCancelled: string = '';
+
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
     let formIsValid: boolean = true;
@@ -135,7 +144,7 @@
      * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
     function parseTypedDateForDisplay(
-        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done',
+        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done' | 'cancelled',
         typedDate: string,
         forwardDate: Date | undefined = undefined,
     ): string {
@@ -232,6 +241,7 @@
     $: {
         parsedCreated = parseTypedDateForDisplay('created', editableTask.createdDate);
         parsedDone = parseTypedDateForDisplay('done', editableTask.doneDate);
+        parsedCancelled = parseTypedDateForDisplay('cancelled', editableTask.cancelledDate);
     }
 
     onMount(() => {
@@ -268,6 +278,7 @@
             scheduledDate: new TasksDate(task.scheduledDate).formatAsDate(),
             dueDate: new TasksDate(task.dueDate).formatAsDate(),
             doneDate: new TasksDate(task.doneDate).formatAsDate(),
+            cancelledDate: new TasksDate(task.cancelledDate).formatAsDate(),
             forwardOnly: true,
         };
         setTimeout(() => {
@@ -361,6 +372,11 @@
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
                 .isValid()
                 ? window.moment(editableTask.doneDate, 'YYYY-MM-DD')
+                : null,
+            cancelledDate: window
+                .moment(editableTask.cancelledDate, 'YYYY-MM-DD')
+                .isValid()
+                ? window.moment(editableTask.cancelledDate, 'YYYY-MM-DD')
                 : null,
         });
 
@@ -532,16 +548,26 @@
             <!--  Created on  -->
             <!-- --------------------------------------------------------------------------- -->
             <div>
-                <span>Created on:</span>
+                <span>Created on:<br></span>
                 <code>{@html parsedCreated}</code>
             </div>
+
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done on  -->
             <!-- --------------------------------------------------------------------------- -->
             <div>
-                <span>Done on:</span>
+                <span>Done on:<br></span>
                 <code>{@html parsedDone}</code>
             </div>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Cancelled on  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <div>
+                <span>Cancelled on:<br></span>
+                <code>{@html parsedCancelled}</code>
+            </div>
+
         </div>
         <div class="tasks-modal-section tasks-modal-buttons">
             <button disabled={!formIsValid} type="submit" class="mod-cta">Apply
