@@ -47,8 +47,8 @@ export class TaskLayout {
         'startDate',
         'scheduledDate',
         'dueDate',
-        'doneDate',
         'cancelledDate',
+        'doneDate',
         'blockLink',
     ];
     public shownTaskLayoutComponents: TaskLayoutComponent[];
