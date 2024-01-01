@@ -225,19 +225,19 @@
     $: {
         editableTask.doneDate = doAutocomplete(editableTask.doneDate);
         parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate);
-        isDoneDateValid = !parsedDueDate.includes('invalid');
+        isDoneDateValid = !parsedDoneDate.includes('invalid');
     }
 
     $: {
         editableTask.createdDate = doAutocomplete(editableTask.createdDate);
         parsedCreatedDate = parseTypedDateForDisplayUsingFutureDate('created', editableTask.createdDate);
-        isCreatedDateValid = !parsedDueDate.includes('invalid');
+        isCreatedDateValid = !parsedCreatedDate.includes('invalid');
     }
 
     $: {
         editableTask.cancelledDate = doAutocomplete(editableTask.cancelledDate);
         parsedCancelledDate = parseTypedDateForDisplayUsingFutureDate('cancelled', editableTask.cancelledDate);
-        isCancelledDateValid = !parsedDueDate.includes('invalid');
+        isCancelledDateValid = !parsedCancelledDate.includes('invalid');
     }
 
     $: {
