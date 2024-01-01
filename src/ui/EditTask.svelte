@@ -542,6 +542,9 @@
                     <option value={status}>{status.name} [{status.symbol}]</option>
                 {/each}
             </select>
+            <!-- svelte-ignore a11y-label-has-associated-control -->
+            <label class="tasks-modal-warning">⚠️ Changing the status does not yet auto-update Done or Cancelled Dates, nor create a new recurrence.
+                Complete tasks via command, by clicking on task checkboxes or by right-clicking on task checkboxes.</label>
         </div>
 
         <div class="tasks-modal-section tasks-modal-status">
