@@ -167,10 +167,7 @@ describe('Task rendering', () => {
     });
 
     it('should display a valid due date', () => {
-        const line = '- [ ] 📅 2021-12-27';
-        const expectedElementValue = '2021-12-27';
-        const elementId = 'due';
-        testElementRender(line, elementId, expectedElementValue);
+        testElementRender('- [ ] 📅 2021-12-27', 'due', '2021-12-27');
     });
 });
 
