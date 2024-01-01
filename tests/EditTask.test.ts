@@ -171,8 +171,8 @@ describe('Task rendering', () => {
         const onSubmit = (_: Task[]): void => {};
         const { container } = renderAndCheckModal(task, onSubmit);
 
-        const renderedDueDate = getAndCheckRenderedElement(container, elementId);
-        expect(renderedDueDate!.value).toEqual(expectedElementValue);
+        const inputElement = getAndCheckRenderedElement(container, elementId);
+        expect(inputElement!.value).toEqual(expectedElementValue);
     });
 });
 
