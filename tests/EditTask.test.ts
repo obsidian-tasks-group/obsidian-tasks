@@ -61,7 +61,7 @@ function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonEleme
     return submit;
 }
 
-async function editDescriptionAndSubmit(
+async function editInputElementAndSubmit(
     inputElement: HTMLInputElement,
     newValue: string,
     submit: HTMLButtonElement,
@@ -100,7 +100,7 @@ async function editTaskLine(line: string, newDescription: string | undefined) {
         adjustedNewDescription = 'simulate user typing text in to empty description field';
     }
 
-    return await editDescriptionAndSubmit(description, adjustedNewDescription, submit, waitForClose);
+    return await editInputElementAndSubmit(description, adjustedNewDescription, submit, waitForClose);
 }
 
 describe('Task rendering', () => {
