@@ -113,13 +113,14 @@ async function editTaskLine(line: string, newDescription: string | undefined) {
  * @param newDescription - the new value for the description field.
  *                         If `undefined`, the description won't be edited, unless text is needed to enable the Apply button.
  * @returns The edited task line.
+ * @param elementId
  */
-async function editTaskLine2(line: string, newDescription: string | undefined) {
+async function editTaskLine2(line: string, newDescription: string | undefined, elementId: string) {
     const task = taskFromLine({ line: line, path: '' });
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
 
-    const description = getAndCheckRenderedElement(container, 'description');
+    const description = getAndCheckRenderedElement(container, elementId);
     const submit = getAndCheckApplyButton(result);
 
     let adjustedNewDescription = newDescription ? newDescription : description!.value;
@@ -272,7 +273,7 @@ describe('Task editing', () => {
 
     it('should allow testing of edits of other fields', async () => {
         const line = convertDescriptionToTaskLine('simple task #remember');
-        const editedTask = await editTaskLine2(line, 'another');
+        const editedTask = await editTaskLine2(line, 'another', 'description');
         expect(editedTask).toEqual(`- [ ] ${'another'}`);
     });
 });
