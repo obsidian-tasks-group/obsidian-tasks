@@ -107,15 +107,14 @@ async function editTaskLine(line: string, newDescription: string | undefined) {
  * Simulate the behaviour of:
  *   - clicking on a line in Obsidian,
  *   - opening the Edit task modal,
- *   - optionally editing the description,
+ *   - editing a field,
  *   - and clicking Apply.
  * @param line
  * @param newValue - the new value for the field.
- *                         If `undefined`, the description won't be edited, unless text is needed to enable the Apply button.
  * @returns The edited task line.
- * @param elementId
+ * @param elementId - specifying the field to edit
  */
-async function editTaskLine2(line: string, newValue: string | undefined, elementId: string) {
+async function editTaskLine2(line: string, newValue: string, elementId: string) {
     const task = taskFromLine({ line: line, path: '' });
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
@@ -123,12 +122,7 @@ async function editTaskLine2(line: string, newValue: string | undefined, element
     const description = getAndCheckRenderedElement(container, elementId);
     const submit = getAndCheckApplyButton(result);
 
-    let adjustedNewDescription = newValue ? newValue : description!.value;
-    if (!adjustedNewDescription) {
-        adjustedNewDescription = 'simulate user typing text in to empty description field';
-    }
-
-    return await editInputElementAndSubmit(description, adjustedNewDescription, submit, waitForClose);
+    return await editInputElementAndSubmit(description, newValue, submit, waitForClose);
 }
 
 describe('Task rendering', () => {
