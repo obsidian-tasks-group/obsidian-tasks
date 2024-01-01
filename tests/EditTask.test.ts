@@ -265,10 +265,10 @@ describe('Task editing', () => {
         );
     });
 
-    it('should allow testing of edits of other fields', async () => {
-        const line = '- [ ] simple task #remember';
-        const editedTask = await editTaskLine2(line, 'description', 'another');
-        expect(editedTask).toEqual('- [ ] another');
+    it('should edit and save due date', async () => {
+        const line = '- [ ] simple';
+        const editedTask = await editTaskLine2(line, 'due', '2024-01-01');
+        expect(editedTask).toEqual('- [ ] simple 📅 2024-01-01');
     });
 });
 
