@@ -119,13 +119,7 @@ describe('Task rendering', () => {
 
     function testDescriptionRender(taskDescription: string, expectedDescription: string) {
         const line = convertDescriptionToTaskLine(taskDescription);
-        const task = taskFromLine({ line: line, path: '' });
-
-        const onSubmit = (_: Task[]): void => {};
-        const { container } = renderAndCheckModal(task, onSubmit);
-
-        const renderedDescription = getAndCheckRenderedElement(container, 'description');
-        expect(renderedDescription!.value).toEqual(expectedDescription);
+        testElementRender(line, 'description', expectedDescription);
     }
 
     it('should display task description (empty Global Filter)', () => {
