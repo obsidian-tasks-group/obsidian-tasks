@@ -119,7 +119,7 @@ async function editTaskLine2(line: string, newDescription: string | undefined) {
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
 
-    const description = getAndCheckRenderedDescriptionElement(container);
+    const description = getAndCheckRenderedElement(container, 'description');
     const submit = getAndCheckApplyButton(result);
 
     let adjustedNewDescription = newDescription ? newDescription : description!.value;
