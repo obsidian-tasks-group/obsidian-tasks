@@ -12,6 +12,7 @@ import { DateFallback } from '../src/DateFallback';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { verifyAllCombinations3Async } from './TestingTools/CombinationApprovalsAsync';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
@@ -44,10 +45,14 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
     return { result, container };
 }
 
-function getAndCheckRenderedDescriptionElement(container: HTMLElement): HTMLInputElement {
-    const renderedDescription = container.ownerDocument.getElementById('description') as HTMLInputElement;
+function getAndCheckRenderedElement(container: HTMLElement, elementId: string) {
+    const renderedDescription = container.ownerDocument.getElementById(elementId) as HTMLInputElement;
     expect(() => renderedDescription).toBeTruthy();
     return renderedDescription;
+}
+
+function getAndCheckRenderedDescriptionElement(container: HTMLElement): HTMLInputElement {
+    return getAndCheckRenderedElement(container, 'description');
 }
 
 function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonElement {
@@ -56,13 +61,13 @@ function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonEleme
     return submit;
 }
 
-async function editDescriptionAndSubmit(
-    description: HTMLInputElement,
-    newDescription: string,
+async function editInputElementAndSubmit(
+    inputElement: HTMLInputElement,
+    newValue: string,
     submit: HTMLButtonElement,
     waitForClose: Promise<string>,
 ): Promise<string> {
-    await fireEvent.input(description, { target: { value: newDescription } });
+    await fireEvent.input(inputElement, { target: { value: newValue } });
     submit.click();
     return await waitForClose;
 }
@@ -81,6 +86,8 @@ function convertDescriptionToTaskLine(taskDescription: string): string {
  * @param newDescription - the new value for the description field.
  *                         If `undefined`, the description won't be edited, unless text is needed to enable the Apply button.
  * @returns The edited task line.
+ *
+ * See also {@link editFieldAndSave} which is simpler, and works for more fields
  */
 async function editTaskLine(line: string, newDescription: string | undefined) {
     const task = taskFromLine({ line: line, path: '' });
@@ -95,7 +102,31 @@ async function editTaskLine(line: string, newDescription: string | undefined) {
         adjustedNewDescription = 'simulate user typing text in to empty description field';
     }
 
-    return await editDescriptionAndSubmit(description, adjustedNewDescription, submit, waitForClose);
+    return await editInputElementAndSubmit(description, adjustedNewDescription, submit, waitForClose);
+}
+
+/**
+ * Simulate the behaviour of:
+ *   - clicking on a line in Obsidian,
+ *   - opening the Edit task modal,
+ *   - editing a field,
+ *   - and clicking Apply.
+ * @param line
+ * @param elementId - specifying the field to edit
+ * @param newValue - the new value for the field.
+ * @returns The edited task line.
+ *
+ * See also {@link editTaskLine} which has extra logic for testing the description
+ */
+async function editFieldAndSave(line: string, elementId: string, newValue: string) {
+    const task = taskFromLine({ line: line, path: '' });
+    const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
+    const { result, container } = renderAndCheckModal(task, onSubmit);
+
+    const description = getAndCheckRenderedElement(container, elementId);
+    const submit = getAndCheckApplyButton(result);
+
+    return await editInputElementAndSubmit(description, newValue, submit, waitForClose);
 }
 
 describe('Task rendering', () => {
@@ -103,14 +134,19 @@ describe('Task rendering', () => {
         GlobalFilter.getInstance().reset();
     });
 
-    function testDescriptionRender(taskDescription: string, expectedDescription: string) {
-        const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
+    function testElementRender(line: string, elementId: string, expectedElementValue: string) {
+        const task = taskFromLine({ line, path: '' });
 
         const onSubmit = (_: Task[]): void => {};
         const { container } = renderAndCheckModal(task, onSubmit);
 
-        const renderedDescription = getAndCheckRenderedDescriptionElement(container);
-        expect(renderedDescription!.value).toEqual(expectedDescription);
+        const inputElement = getAndCheckRenderedElement(container, elementId);
+        expect(inputElement!.value).toEqual(expectedElementValue);
+    }
+
+    function testDescriptionRender(taskDescription: string, expectedDescription: string) {
+        const line = convertDescriptionToTaskLine(taskDescription);
+        testElementRender(line, 'description', expectedDescription);
     }
 
     it('should display task description (empty Global Filter)', () => {
@@ -156,6 +192,58 @@ describe('Task rendering', () => {
             'without global filter but with scheduled date', // fails, as the absence of the global filter means the line is not parsed, and the emoji stays in the description.
         );
     });
+
+    const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+
+    it('should display valid created date', () => {
+        testElementRender(fullyPopulatedLine, 'created', '2023-07-01');
+    });
+
+    it('should display valid start date', () => {
+        testElementRender(fullyPopulatedLine, 'start', '2023-07-02');
+    });
+
+    it('should display valid scheduled date', () => {
+        testElementRender(fullyPopulatedLine, 'scheduled', '2023-07-03');
+    });
+
+    it('should display valid due date', () => {
+        testElementRender(fullyPopulatedLine, 'due', '2023-07-04');
+    });
+
+    it('should display valid done date', () => {
+        testElementRender(fullyPopulatedLine, 'done', '2023-07-05');
+    });
+
+    it('should display valid cancelled date', () => {
+        testElementRender(fullyPopulatedLine, 'cancelled', '2023-07-06');
+    });
+
+    const invalidDateText = 'Invalid date';
+
+    it('should display invalid cancelled date', () => {
+        testElementRender('- [ ] ❌ 2024-02-31', 'cancelled', invalidDateText);
+    });
+
+    it('should display invalid created date', () => {
+        testElementRender('- [ ] ➕ 2024-02-31', 'created', invalidDateText);
+    });
+
+    it('should display invalid done date', () => {
+        testElementRender('- [ ] ✅ 2024-02-31', 'done', invalidDateText);
+    });
+
+    it('should display invalid due date', () => {
+        testElementRender('- [ ] 📅 2024-02-31', 'due', invalidDateText);
+    });
+
+    it('should display invalid scheduled date', () => {
+        testElementRender('- [ ] ⏳ 2024-02-31', 'scheduled', invalidDateText);
+    });
+
+    it('should display invalid start date', () => {
+        testElementRender('- [ ] 🛫 2024-02-31', 'start', invalidDateText);
+    });
 });
 
 describe('Task editing', () => {
@@ -195,6 +283,34 @@ describe('Task editing', () => {
             newDescription,
             `${globalFilter} ${newDescription}`,
         );
+    });
+
+    describe('Date editing', () => {
+        const line = '- [ ] simple';
+
+        it('should edit and save cancelled date', async () => {
+            expect(await editFieldAndSave(line, 'cancelled', '2024-01-01')).toEqual('- [ ] simple ❌ 2024-01-01');
+        });
+
+        it('should edit and save created date', async () => {
+            expect(await editFieldAndSave(line, 'created', '2024-01-01')).toEqual('- [ ] simple ➕ 2024-01-01');
+        });
+
+        it('should edit and save done date', async () => {
+            expect(await editFieldAndSave(line, 'done', '2024-01-01')).toEqual('- [ ] simple ✅ 2024-01-01');
+        });
+
+        it('should edit and save due date', async () => {
+            expect(await editFieldAndSave(line, 'due', '2024-01-01')).toEqual('- [ ] simple 📅 2024-01-01');
+        });
+
+        it('should edit and save scheduled date', async () => {
+            expect(await editFieldAndSave(line, 'scheduled', '2024-01-01')).toEqual('- [ ] simple ⏳ 2024-01-01');
+        });
+
+        it('should edit and save start date', async () => {
+            expect(await editFieldAndSave(line, 'start', '2024-01-01')).toEqual('- [ ] simple 🛫 2024-01-01');
+        });
     });
 });
 

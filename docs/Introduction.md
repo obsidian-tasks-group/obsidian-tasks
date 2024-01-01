@@ -13,6 +13,8 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- X.Y.Z: 🔥 The [[Create or edit Task]] modal can now edit Created, Done and Cancelled dates
+- X.Y.Z: 🔥 Add support for [[Dates#Cancelled date|cancelled dates]].
 - 5.4.0: 🔥 Add [[Layout#Full Mode|'full mode']] to turn off `short mode`.
 - 5.4.0: 🔥 Add any [[Grouping|'group by']] and [[Sorting|'sort by']] instructions to [[Explaining Queries|explain]] output.
 - 5.4.0: 🔥 Recurrence now works well [[Recurring Tasks and Custom Statuses#When DONE is not followed by TODO or IN_PROGRESS|when DONE is not followed by TODO or IN_PROGRESS]].
