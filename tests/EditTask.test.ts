@@ -44,10 +44,14 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
     return { result, container };
 }
 
-function getAndCheckRenderedDescriptionElement(container: HTMLElement): HTMLInputElement {
-    const renderedDescription = container.ownerDocument.getElementById('description') as HTMLInputElement;
+function getAndCheckRenderedElement(container: HTMLElement, elementId: string) {
+    const renderedDescription = container.ownerDocument.getElementById(elementId) as HTMLInputElement;
     expect(() => renderedDescription).toBeTruthy();
     return renderedDescription;
+}
+
+function getAndCheckRenderedDescriptionElement(container: HTMLElement): HTMLInputElement {
+    return getAndCheckRenderedElement(container, 'description');
 }
 
 function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonElement {
