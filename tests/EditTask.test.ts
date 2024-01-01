@@ -124,7 +124,7 @@ describe('Task rendering', () => {
         const onSubmit = (_: Task[]): void => {};
         const { container } = renderAndCheckModal(task, onSubmit);
 
-        const renderedDescription = getAndCheckRenderedDescriptionElement(container);
+        const renderedDescription = getAndCheckRenderedElement(container, 'description');
         expect(renderedDescription!.value).toEqual(expectedDescription);
     }
 
