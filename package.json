@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "boon-js": "^2.0.4",
-    "chrono-node": "2.3.9",
+    "chrono-node": "2.7.4",
     "eventemitter2": "^6.4.5",
     "mustache": "^4.2.0",
     "mustache-validator": "^0.2.0",
