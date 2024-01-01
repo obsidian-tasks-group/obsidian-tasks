@@ -107,6 +107,16 @@ describe('Task rendering', () => {
         GlobalFilter.getInstance().reset();
     });
 
+    function testElementRender(line: string, elementId: string, expectedElementValue: string) {
+        const task = taskFromLine({ line, path: '' });
+
+        const onSubmit = (_: Task[]): void => {};
+        const { container } = renderAndCheckModal(task, onSubmit);
+
+        const inputElement = getAndCheckRenderedElement(container, elementId);
+        expect(inputElement!.value).toEqual(expectedElementValue);
+    }
+
     function testDescriptionRender(taskDescription: string, expectedDescription: string) {
         const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
 
@@ -165,14 +175,7 @@ describe('Task rendering', () => {
         const line = '- [ ] 📅 2021-12-27';
         const expectedElementValue = '2021-12-27';
         const elementId = 'due';
-
-        const task = taskFromLine({ line, path: '' });
-
-        const onSubmit = (_: Task[]): void => {};
-        const { container } = renderAndCheckModal(task, onSubmit);
-
-        const inputElement = getAndCheckRenderedElement(container, elementId);
-        expect(inputElement!.value).toEqual(expectedElementValue);
+        testElementRender(line, elementId, expectedElementValue);
     });
 });
 
