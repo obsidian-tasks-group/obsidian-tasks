@@ -193,14 +193,30 @@ describe('Task rendering', () => {
         );
     });
 
-    it('should display valid dates', () => {
-        const line = TaskBuilder.createFullyPopulatedTask().toFileLineString();
-        testElementRender(line, 'created', '2023-07-01');
-        testElementRender(line, 'start', '2023-07-02');
-        testElementRender(line, 'scheduled', '2023-07-03');
-        testElementRender(line, 'due', '2023-07-04');
-        testElementRender(line, 'done', '2023-07-05');
-        testElementRender(line, 'cancelled', '2023-07-06');
+    const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+
+    it('should display valid created date', () => {
+        testElementRender(fullyPopulatedLine, 'created', '2023-07-01');
+    });
+
+    it('should display valid start date', () => {
+        testElementRender(fullyPopulatedLine, 'start', '2023-07-02');
+    });
+
+    it('should display valid scheduled date', () => {
+        testElementRender(fullyPopulatedLine, 'scheduled', '2023-07-03');
+    });
+
+    it('should display valid due date', () => {
+        testElementRender(fullyPopulatedLine, 'due', '2023-07-04');
+    });
+
+    it('should display valid done date', () => {
+        testElementRender(fullyPopulatedLine, 'done', '2023-07-05');
+    });
+
+    it('should display valid cancelled date', () => {
+        testElementRender(fullyPopulatedLine, 'cancelled', '2023-07-06');
     });
 
     const invalidDateText = 'Invalid date';
