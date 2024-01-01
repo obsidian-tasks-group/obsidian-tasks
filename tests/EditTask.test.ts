@@ -118,7 +118,8 @@ describe('Task rendering', () => {
     }
 
     function testDescriptionRender(taskDescription: string, expectedDescription: string) {
-        const task = taskFromLine({ line: convertDescriptionToTaskLine(taskDescription), path: '' });
+        const line = convertDescriptionToTaskLine(taskDescription);
+        const task = taskFromLine({ line: line, path: '' });
 
         const onSubmit = (_: Task[]): void => {};
         const { container } = renderAndCheckModal(task, onSubmit);
