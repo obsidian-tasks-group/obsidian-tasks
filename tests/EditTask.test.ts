@@ -86,6 +86,8 @@ function convertDescriptionToTaskLine(taskDescription: string): string {
  * @param newDescription - the new value for the description field.
  *                         If `undefined`, the description won't be edited, unless text is needed to enable the Apply button.
  * @returns The edited task line.
+ *
+ * See also {@link editFieldAndSave} which is simpler, and works for more fields
  */
 async function editTaskLine(line: string, newDescription: string | undefined) {
     const task = taskFromLine({ line: line, path: '' });
@@ -113,8 +115,10 @@ async function editTaskLine(line: string, newDescription: string | undefined) {
  * @param elementId - specifying the field to edit
  * @param newValue - the new value for the field.
  * @returns The edited task line.
+ *
+ * See also {@link editTaskLine} which has extra logic for testing the description
  */
-async function editTaskLine2(line: string, elementId: string, newValue: string) {
+async function editFieldAndSave(line: string, elementId: string, newValue: string) {
     const task = taskFromLine({ line: line, path: '' });
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
@@ -269,27 +273,27 @@ describe('Task editing', () => {
         const line = '- [ ] simple';
 
         it('should edit and save cancelled date', async () => {
-            expect(await editTaskLine2(line, 'cancelled', '2024-01-01')).toEqual('- [ ] simple ❌ 2024-01-01');
+            expect(await editFieldAndSave(line, 'cancelled', '2024-01-01')).toEqual('- [ ] simple ❌ 2024-01-01');
         });
 
         it('should edit and save created date', async () => {
-            expect(await editTaskLine2(line, 'created', '2024-01-01')).toEqual('- [ ] simple ➕ 2024-01-01');
+            expect(await editFieldAndSave(line, 'created', '2024-01-01')).toEqual('- [ ] simple ➕ 2024-01-01');
         });
 
         it('should edit and save done date', async () => {
-            expect(await editTaskLine2(line, 'done', '2024-01-01')).toEqual('- [ ] simple ✅ 2024-01-01');
+            expect(await editFieldAndSave(line, 'done', '2024-01-01')).toEqual('- [ ] simple ✅ 2024-01-01');
         });
 
         it('should edit and save due date', async () => {
-            expect(await editTaskLine2(line, 'due', '2024-01-01')).toEqual('- [ ] simple 📅 2024-01-01');
+            expect(await editFieldAndSave(line, 'due', '2024-01-01')).toEqual('- [ ] simple 📅 2024-01-01');
         });
 
         it('should edit and save scheduled date', async () => {
-            expect(await editTaskLine2(line, 'scheduled', '2024-01-01')).toEqual('- [ ] simple ⏳ 2024-01-01');
+            expect(await editFieldAndSave(line, 'scheduled', '2024-01-01')).toEqual('- [ ] simple ⏳ 2024-01-01');
         });
 
         it('should edit and save start date', async () => {
-            expect(await editTaskLine2(line, 'start', '2024-01-01')).toEqual('- [ ] simple 🛫 2024-01-01');
+            expect(await editFieldAndSave(line, 'start', '2024-01-01')).toEqual('- [ ] simple 🛫 2024-01-01');
         });
     });
 });
