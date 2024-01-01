@@ -75,6 +75,11 @@ Here you can optionally give the task
 [[Dates#Scheduled date|scheduled]] and
 [[Dates#Start date|start]] dates.
 
+You can also add or edit
+[[Dates#Created date|created]],
+[[Dates#Done date|done]] and
+[[Dates#Cancelled date|cancelled]] dates.
+
 There is a lot of flexibility here. For example:
 
 - You can type in exact dates, such as `2022-11-28`.
@@ -83,8 +88,13 @@ There is a lot of flexibility here. For example:
 
 Note that relative dates will be always interpreted as being in the future, because that is usually what you want. You can change this behavior by unchecking "Only future dates" if you want to enter an overdue task or experiment with the way how relative dates in the past would be interpreted in queries.
 
+> [!Info]
+> If you have enabled ‘Set created date on every added task’ in Tasks settings (and restarted Obsidian), when you create a new Task via this modal, today's date will be added automatically.
+
 > [!released]
-`Only future dates` was introduced in Tasks 1.15.0.
+>
+> - `Only future dates` was introduced in Tasks 1.15.0.
+> - Editing of [[Dates#Created date|created]], [[Dates#Done date|done]] and [[Dates#Cancelled date|cancelled]] dates was introduced in Tasks X.Y.Z.
 
 ### Date abbreviations
 
@@ -134,19 +144,6 @@ These values cannot currently be edited in this modal.
 ### Completed
 
 A read-only checkbox, showing whether the task is completed.
-
-### Created on
-
-> [!released]
-Created date was introduced in Tasks 2.0.0.
-
-A read-only display of the task's [[Dates#Created date|created date]], if any.
-
-If you have enabled ‘Set created date on every added task’ in Tasks settings (and restarted Obsidian), when you create a new Task via this modal, today's date will be added automatically.
-
-### Done on
-
-A read-only display of the task's [[Dates#Done date|done date]], if any.
 
 ## Finishing off
 
