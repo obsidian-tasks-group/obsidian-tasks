@@ -163,7 +163,7 @@ describe('Task rendering', () => {
 
     it('should display a valid due date', () => {
         const line = '- [ ] 📅 2021-12-27';
-        const expectedDueDate = '2021-12-27';
+        const expectedElementValue = '2021-12-27';
         const elementId = 'due';
 
         const task = taskFromLine({ line, path: '' });
@@ -172,7 +172,7 @@ describe('Task rendering', () => {
         const { container } = renderAndCheckModal(task, onSubmit);
 
         const renderedDueDate = getAndCheckRenderedElement(container, elementId);
-        expect(renderedDueDate!.value).toEqual(expectedDueDate);
+        expect(renderedDueDate!.value).toEqual(expectedElementValue);
     });
 });
 
