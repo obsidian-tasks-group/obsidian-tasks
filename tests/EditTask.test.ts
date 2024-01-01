@@ -12,6 +12,7 @@ import { DateFallback } from '../src/DateFallback';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { verifyAllCombinations3Async } from './TestingTools/CombinationApprovalsAsync';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
@@ -166,8 +167,14 @@ describe('Task rendering', () => {
         );
     });
 
-    it('should display a valid due date', () => {
-        testElementRender('- [ ] 📅 2021-12-27', 'due', '2021-12-27');
+    it('should display valid dates', () => {
+        const line = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+        testElementRender(line, 'created', '2023-07-01');
+        testElementRender(line, 'start', '2023-07-02');
+        testElementRender(line, 'scheduled', '2023-07-03');
+        testElementRender(line, 'due', '2023-07-04');
+        testElementRender(line, 'done', '2023-07-05');
+        testElementRender(line, 'cancelled', '2023-07-06');
     });
 });
 
