@@ -242,6 +242,10 @@ describe('Task editing', () => {
             `${globalFilter} ${newDescription}`,
         );
     });
+
+    it('should allow testing of edits of other fields', async () => {
+        await testDescriptionEdit('simple task #remember', 'another', 'another');
+    });
 });
 
 /**
