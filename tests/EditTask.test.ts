@@ -272,9 +272,9 @@ describe('Task editing', () => {
     });
 
     it('should allow testing of edits of other fields', async () => {
-        const line = convertDescriptionToTaskLine('simple task #remember');
+        const line = '- [ ] simple task #remember';
         const editedTask = await editTaskLine2(line, 'another', 'description');
-        expect(editedTask).toEqual(`- [ ] ${'another'}`);
+        expect(editedTask).toEqual('- [ ] another');
     });
 });
 
