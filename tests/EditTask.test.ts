@@ -62,12 +62,12 @@ function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonEleme
 }
 
 async function editDescriptionAndSubmit(
-    description: HTMLInputElement,
-    newDescription: string,
+    inputElement: HTMLInputElement,
+    newValue: string,
     submit: HTMLButtonElement,
     waitForClose: Promise<string>,
 ): Promise<string> {
-    await fireEvent.input(description, { target: { value: newDescription } });
+    await fireEvent.input(inputElement, { target: { value: newValue } });
     submit.click();
     return await waitForClose;
 }
