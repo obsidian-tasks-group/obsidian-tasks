@@ -268,9 +268,28 @@ describe('Task editing', () => {
     describe('Date editing', () => {
         const line = '- [ ] simple';
 
+        it('should edit and save cancelled date', async () => {
+            expect(await editTaskLine2(line, 'cancelled', '2024-01-01')).toEqual('- [ ] simple ❌ 2024-01-01');
+        });
+
+        it('should edit and save created date', async () => {
+            expect(await editTaskLine2(line, 'created', '2024-01-01')).toEqual('- [ ] simple ➕ 2024-01-01');
+        });
+
+        it('should edit and save done date', async () => {
+            expect(await editTaskLine2(line, 'done', '2024-01-01')).toEqual('- [ ] simple ✅ 2024-01-01');
+        });
+
         it('should edit and save due date', async () => {
-            const editedTask = await editTaskLine2(line, 'due', '2024-01-01');
-            expect(editedTask).toEqual('- [ ] simple 📅 2024-01-01');
+            expect(await editTaskLine2(line, 'due', '2024-01-01')).toEqual('- [ ] simple 📅 2024-01-01');
+        });
+
+        it('should edit and save scheduled date', async () => {
+            expect(await editTaskLine2(line, 'scheduled', '2024-01-01')).toEqual('- [ ] simple ⏳ 2024-01-01');
+        });
+
+        it('should edit and save start date', async () => {
+            expect(await editTaskLine2(line, 'start', '2024-01-01')).toEqual('- [ ] simple 🛫 2024-01-01');
         });
     });
 });
