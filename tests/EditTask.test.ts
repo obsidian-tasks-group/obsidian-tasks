@@ -110,11 +110,11 @@ async function editTaskLine(line: string, newDescription: string | undefined) {
  *   - editing a field,
  *   - and clicking Apply.
  * @param line
+ * @param elementId - specifying the field to edit
  * @param newValue - the new value for the field.
  * @returns The edited task line.
- * @param elementId - specifying the field to edit
  */
-async function editTaskLine2(line: string, newValue: string, elementId: string) {
+async function editTaskLine2(line: string, elementId: string, newValue: string) {
     const task = taskFromLine({ line: line, path: '' });
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
@@ -267,7 +267,7 @@ describe('Task editing', () => {
 
     it('should allow testing of edits of other fields', async () => {
         const line = '- [ ] simple task #remember';
-        const editedTask = await editTaskLine2(line, 'another', 'description');
+        const editedTask = await editTaskLine2(line, 'description', 'another');
         expect(editedTask).toEqual('- [ ] another');
     });
 });
