@@ -156,6 +156,20 @@ describe('Task rendering', () => {
             'without global filter but with scheduled date', // fails, as the absence of the global filter means the line is not parsed, and the emoji stays in the description.
         );
     });
+
+    it('should display a valid due date', () => {
+        const line = '- [ ] 📅 2021-12-27';
+        const expectedDueDate = '2021-12-27';
+        const elementId = 'due';
+
+        const task = taskFromLine({ line, path: '' });
+
+        const onSubmit = (_: Task[]): void => {};
+        const { container } = renderAndCheckModal(task, onSubmit);
+
+        const renderedDueDate = container.ownerDocument.getElementById(elementId) as HTMLInputElement;
+        expect(renderedDueDate!.value).toEqual(expectedDueDate);
+    });
 });
 
 describe('Task editing', () => {
