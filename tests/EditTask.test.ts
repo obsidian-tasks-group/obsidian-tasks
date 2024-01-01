@@ -176,6 +176,32 @@ describe('Task rendering', () => {
         testElementRender(line, 'done', '2023-07-05');
         testElementRender(line, 'cancelled', '2023-07-06');
     });
+
+    const invalidDateText = 'Invalid date';
+
+    it('should display invalid cancelled date', () => {
+        testElementRender('- [ ] ❌ 2024-02-31', 'cancelled', invalidDateText);
+    });
+
+    it('should display invalid created date', () => {
+        testElementRender('- [ ] ➕ 2024-02-31', 'created', invalidDateText);
+    });
+
+    it('should display invalid done date', () => {
+        testElementRender('- [ ] ✅ 2024-02-31', 'done', invalidDateText);
+    });
+
+    it('should display invalid due date', () => {
+        testElementRender('- [ ] 📅 2024-02-31', 'due', invalidDateText);
+    });
+
+    it('should display invalid scheduled date', () => {
+        testElementRender('- [ ] ⏳ 2024-02-31', 'scheduled', invalidDateText);
+    });
+
+    it('should display invalid start date', () => {
+        testElementRender('- [ ] 🛫 2024-02-31', 'start', invalidDateText);
+    });
 });
 
 describe('Task editing', () => {
