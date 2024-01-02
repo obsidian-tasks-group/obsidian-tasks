@@ -500,8 +500,7 @@ export class Task {
         );
 
         const newTasks = this.handleNewStatus(newStatus);
-        const { recurrenceOnNextLine } = getSettings();
-        return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
+        return this.putRecurrenceInUsersOrder(newTasks);
     }
 
     private putRecurrenceInUsersOrder(newTasks: Task[]) {
