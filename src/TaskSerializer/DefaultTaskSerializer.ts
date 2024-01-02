@@ -59,7 +59,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     scheduledDateSymbol: '⏳',
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
-    cancelledDateSymbol: '❌', // Options considered: ❌ ❎ ✖️
+    cancelledDateSymbol: '❌',
     recurrenceSymbol: '🔁',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
