@@ -44,6 +44,12 @@ export class QueryLayout {
     }
 }
 
+function generateHiddenClassForTaskList(taskListHiddenClasses: string[], hide: boolean, component: string) {
+    if (hide) {
+        taskListHiddenClasses.push(hiddenComponentClassName(component));
+    }
+}
+
 function hiddenComponentClassName(component: string) {
     return `tasks-layout-hide-${component}`;
 }
@@ -115,11 +121,11 @@ export class TaskLayout extends QueryLayout {
         ];
         for (const [hide, component] of componentsToHideAndGenerateClasses) {
             this.hideComponent(hide, component);
-            this.generateHiddenClassForTaskList(this._taskListHiddenClasses, hide, component);
+            generateHiddenClassForTaskList(this._taskListHiddenClasses, hide, component);
         }
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-        this.generateHiddenClassForTaskList(this._taskListHiddenClasses, this.taskLayoutOptions.hideTags, 'tags');
+        generateHiddenClassForTaskList(this._taskListHiddenClasses, this.taskLayoutOptions.hideTags, 'tags');
     }
 
     private applyQueryLayoutOptions(taskListHiddenClasses: string[]) {
@@ -135,16 +141,10 @@ export class TaskLayout extends QueryLayout {
             [this.queryLayoutOptions.hidePostponeButton, 'postpone-button'],
         ];
         for (const [hide, component] of componentsToGenerateClassesOnly) {
-            this.generateHiddenClassForTaskList(taskListHiddenClasses, hide, component);
+            generateHiddenClassForTaskList(taskListHiddenClasses, hide, component);
         }
 
         if (this.queryLayoutOptions.shortMode) taskListHiddenClasses.push('tasks-layout-short-mode');
-    }
-
-    private generateHiddenClassForTaskList(taskListHiddenClasses: string[], hide: boolean, component: string) {
-        if (hide) {
-            taskListHiddenClasses.push(hiddenComponentClassName(component));
-        }
     }
 
     /**
