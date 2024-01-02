@@ -1387,6 +1387,7 @@ describe('order of recurring tasks', () => {
         ];
 
         expect(line).toToggleWithRecurrenceInUsersOrderTo(expectedLines);
+        expectLineToApplyDoneStatusInUsersOrder(line, expectedLines);
     });
 
     it('should honour old-task-before-new setting', () => {
@@ -1399,6 +1400,7 @@ describe('order of recurring tasks', () => {
         ];
 
         expect(line).toToggleWithRecurrenceInUsersOrderTo(expectedLines);
+        expectLineToApplyDoneStatusInUsersOrder(line, expectedLines);
     });
 });
 
