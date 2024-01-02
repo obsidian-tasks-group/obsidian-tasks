@@ -179,8 +179,7 @@ export class TaskLineRenderer {
                 this.addInternalClasses(component, internalSpan);
 
                 // Add the component's CSS class describing what this component is (priority, due date etc.)
-                const componentClass = fieldRenderer.className(component);
-                span.classList.add(...[componentClass]);
+                fieldRenderer.addClassName(span, component);
 
                 // Add the component's attribute ('priority-medium', 'due-past-1d' etc.)
                 fieldRenderer.addDataAttribute(span, task, component);
