@@ -41,6 +41,9 @@ export class TaskLayout {
     public get shownTaskLayoutComponents(): TaskLayoutComponent[] {
         return this._shownTaskLayoutComponents;
     }
+    public get hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
+        return this._hiddenTaskLayoutComponents;
+    }
     public defaultLayout: TaskLayoutComponent[] = [
         // NEW_TASK_FIELD_EDIT_REQUIRED
         'description',
@@ -55,7 +58,7 @@ export class TaskLayout {
         'blockLink',
     ];
     private _shownTaskLayoutComponents: TaskLayoutComponent[];
-    public hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
+    private _hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     public taskLayoutOptions: TaskLayoutOptions;
     public queryLayoutOptions: QueryLayoutOptions;
     public taskListHiddenClasses: string[] = [];
@@ -127,7 +130,7 @@ export class TaskLayout {
      */
     private hideComponent(hide: boolean, component: TaskLayoutComponent) {
         if (hide) {
-            this.hiddenTaskLayoutComponents.push(component);
+            this._hiddenTaskLayoutComponents.push(component);
             this._shownTaskLayoutComponents = this._shownTaskLayoutComponents.filter((element) => element != component);
         }
     }
