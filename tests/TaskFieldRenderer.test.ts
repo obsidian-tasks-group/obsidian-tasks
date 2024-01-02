@@ -36,6 +36,7 @@ describe('Field Layouts Container tests', () => {
 
         expect(span).toHaveDataAttributes('taskPriority: medium');
     });
+
     it('should not add any data attributes for a missing component', () => {
         const task = new TaskBuilder().build();
         const span = document.createElement('span');
@@ -43,6 +44,14 @@ describe('Field Layouts Container tests', () => {
         fieldRenderer.addDataAttribute(span, task, 'recurrenceRule');
 
         expect(span).toHaveDataAttributes('');
+    });
+
+    it('should add a class name for a component', () => {
+        const span = document.createElement('span');
+
+        fieldRenderer.addClassName(span, 'startDate');
+
+        expect(span.classList.toString()).toEqual('task-start');
     });
 });
 
