@@ -490,18 +490,18 @@ export class Task {
      */
     public toggleWithRecurrenceInUsersOrder(): Task[] {
         const newTasks = this.toggle();
-        const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
+        const { recurrenceOnNextLine } = getSettings();
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
 
     public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
         const logger = logging.getLogger('tasks.Task');
         logger.debug(
-            `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to ${newStatus}`,
+            `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to '${newStatus.symbol}'`,
         );
 
         const newTasks = this.handleNewStatus(newStatus);
-        const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
+        const { recurrenceOnNextLine } = getSettings();
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
 
