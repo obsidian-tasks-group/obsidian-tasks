@@ -177,7 +177,7 @@ ${source}`;
         return this._taskGroupLimit;
     }
 
-    public get layoutOptions(): TaskLayoutOptions {
+    public get taskLayoutOptions(): TaskLayoutOptions {
         return this._layoutOptions;
     }
 

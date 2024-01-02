@@ -47,7 +47,7 @@ export interface IQuery {
      * @type {TaskLayoutOptions}
      * @memberof IQuery
      */
-    layoutOptions: TaskLayoutOptions;
+    taskLayoutOptions: TaskLayoutOptions;
 
     /**
      * Any layout options the query engine should be aware of or

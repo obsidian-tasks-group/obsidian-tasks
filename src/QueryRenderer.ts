@@ -213,7 +213,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
-        const layout = new TaskLayout(this.query.layoutOptions, this.query.queryLayoutOptions);
+        const layout = new TaskLayout(this.query.taskLayoutOptions, this.query.queryLayoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
         taskList.addClasses(layout.taskListHiddenClasses);
@@ -223,7 +223,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const taskLineRenderer = new TaskLineRenderer({
             obsidianComponent: this,
             parentUlElement: taskList,
-            layoutOptions: this.query.layoutOptions,
+            layoutOptions: this.query.taskLayoutOptions,
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
