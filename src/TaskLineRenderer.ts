@@ -12,8 +12,6 @@ import { TaskLayout } from './TaskLayout';
 import { StatusMenu } from './ui/Menus/StatusMenu';
 import { StatusRegistry } from './StatusRegistry';
 
-const fieldRenderer = new TaskFieldRenderer();
-
 /**
  * The function used to render a Markdown task line into an existing HTML element.
  */
@@ -155,6 +153,7 @@ export class TaskLineRenderer {
     }
 
     private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
+        const fieldRenderer = new TaskFieldRenderer();
         const taskLayout = new TaskLayout(this.taskLayoutOptions, this.queryLayoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
