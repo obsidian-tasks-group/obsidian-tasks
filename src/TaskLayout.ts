@@ -44,6 +44,9 @@ export class TaskLayout {
     public hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
         return this._hiddenTaskLayoutComponents;
     }
+    public get taskListHiddenClasses(): string[] {
+        return this._taskListHiddenClasses;
+    }
     public defaultLayout: TaskLayoutComponent[] = [
         // NEW_TASK_FIELD_EDIT_REQUIRED
         'description',
@@ -61,7 +64,7 @@ export class TaskLayout {
     private _hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     private taskLayoutOptions: TaskLayoutOptions;
     private queryLayoutOptions: QueryLayoutOptions;
-    public taskListHiddenClasses: string[] = [];
+    private _taskListHiddenClasses: string[] = [];
 
     constructor(taskLayoutOptions?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
         if (taskLayoutOptions) {
@@ -116,12 +119,12 @@ export class TaskLayout {
             this.generateHiddenClassForTaskList(hide, component);
         }
 
-        if (this.queryLayoutOptions.shortMode) this.taskListHiddenClasses.push('tasks-layout-short-mode');
+        if (this.queryLayoutOptions.shortMode) this._taskListHiddenClasses.push('tasks-layout-short-mode');
     }
 
     private generateHiddenClassForTaskList(hide: boolean, component: string) {
         if (hide) {
-            this.taskListHiddenClasses.push(`tasks-layout-hide-${component}`);
+            this._taskListHiddenClasses.push(`tasks-layout-hide-${component}`);
         }
     }
 
