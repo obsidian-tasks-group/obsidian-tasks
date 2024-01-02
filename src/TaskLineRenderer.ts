@@ -28,7 +28,7 @@ export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
-    private readonly layoutOptions: TaskLayoutOptions;
+    private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
     private static async obsidianMarkdownRenderer(
@@ -72,7 +72,7 @@ export class TaskLineRenderer {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
-        this.layoutOptions = layoutOptions;
+        this.taskLayoutOptions = layoutOptions;
         this.queryLayoutOptions = queryLayoutOptions;
     }
 
@@ -155,7 +155,7 @@ export class TaskLineRenderer {
     }
 
     private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
-        const taskLayout = new TaskLayout(this.layoutOptions, this.queryLayoutOptions);
+        const taskLayout = new TaskLayout(this.taskLayoutOptions, this.queryLayoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
         for (const component of taskLayout.shownTaskLayoutComponents) {
