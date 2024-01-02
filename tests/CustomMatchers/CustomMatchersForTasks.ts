@@ -29,8 +29,8 @@ export function toToggleTo(line: string, expectedLines: string[]) {
 
 export function toToggleWithRecurrenceInUsersOrderTo(line: string, expectedLines: string[]) {
     const task = fromLine({ line: line });
-    const receivedLines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
-    return toMatchLines(receivedLines, expectedLines);
+    const tasks = task.toggleWithRecurrenceInUsersOrder();
+    return tasksToMatchLines(tasks, expectedLines);
 }
 
 function tasksToMatchLines(tasks: Task[], expectedLines: string[]) {
