@@ -1362,10 +1362,15 @@ describe('order of recurring tasks', () => {
 
     it('should put new task before old, by default', () => {
         const line = '- [ ] this is a recurring task 🔁 every day';
-        expect(line).toToggleWithRecurrenceInUsersOrderTo([
+        const expectedLines = [
             '- [ ] this is a recurring task 🔁 every day',
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
-        ]);
+        ];
+        expect(line).toToggleWithRecurrenceInUsersOrderTo(expectedLines);
+
+        const task = fromLine({ line: line });
+        const tasks = task.handleNewStatusWithRecurrenceInUsersOrder(Status.makeDone());
+        expect(tasks).toMatchMarkdownLines(expectedLines);
     });
 
     it('should honour new-task-before-old setting', () => {
