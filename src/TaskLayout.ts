@@ -38,6 +38,9 @@ export type TaskLayoutComponent =
  * modified by applying {@link TaskLayoutOptions} objects.
  */
 export class TaskLayout {
+    public get shownTaskLayoutComponents(): TaskLayoutComponent[] {
+        return this._shownTaskLayoutComponents;
+    }
     public defaultLayout: TaskLayoutComponent[] = [
         // NEW_TASK_FIELD_EDIT_REQUIRED
         'description',
@@ -51,7 +54,7 @@ export class TaskLayout {
         'doneDate',
         'blockLink',
     ];
-    public shownTaskLayoutComponents: TaskLayoutComponent[];
+    private _shownTaskLayoutComponents: TaskLayoutComponent[];
     public hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     public taskLayoutOptions: TaskLayoutOptions;
     public queryLayoutOptions: QueryLayoutOptions;
@@ -69,7 +72,7 @@ export class TaskLayout {
             this.queryLayoutOptions = new QueryLayoutOptions();
         }
 
-        this.shownTaskLayoutComponents = this.defaultLayout;
+        this._shownTaskLayoutComponents = this.defaultLayout;
         this.applyOptions();
     }
 
@@ -125,7 +128,7 @@ export class TaskLayout {
     private hideComponent(hide: boolean, component: TaskLayoutComponent) {
         if (hide) {
             this.hiddenTaskLayoutComponents.push(component);
-            this.shownTaskLayoutComponents = this.shownTaskLayoutComponents.filter((element) => element != component);
+            this._shownTaskLayoutComponents = this._shownTaskLayoutComponents.filter((element) => element != component);
         }
     }
 }
