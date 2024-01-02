@@ -91,7 +91,7 @@ export class InlineRenderer {
         const taskLineRenderer = new TaskLineRenderer({
             obsidianComponent: childComponent,
             parentUlElement: element,
-            layoutOptions: new TaskLayoutOptions(),
+            taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
 

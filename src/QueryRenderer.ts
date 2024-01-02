@@ -223,7 +223,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const taskLineRenderer = new TaskLineRenderer({
             obsidianComponent: this,
             parentUlElement: taskList,
-            layoutOptions: this.query.taskLayoutOptions,
+            taskLayoutOptions: this.query.taskLayoutOptions,
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
