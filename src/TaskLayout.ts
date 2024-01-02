@@ -44,7 +44,7 @@ export class TaskLayout {
     public hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
         return this._hiddenTaskLayoutComponents;
     }
-    public get taskListHiddenClasses(): string[] {
+    public taskListHiddenClasses(): string[] {
         return this._taskListHiddenClasses;
     }
     public defaultLayout: TaskLayoutComponent[] = [

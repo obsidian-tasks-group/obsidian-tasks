@@ -21,7 +21,7 @@ describe('TaskLayout tests', () => {
             blockLink"
         `);
         expect(taskLayout.hiddenTaskLayoutComponents().join('\n')).toMatchInlineSnapshot('""');
-        expect(taskLayout.taskListHiddenClasses.join('\n')).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
+        expect(taskLayout.taskListHiddenClasses().join('\n')).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
     });
 
     it('should generate expected CSS components with all default option reversed', () => {
@@ -55,7 +55,7 @@ describe('TaskLayout tests', () => {
             cancelledDate
             doneDate"
         `);
-        expect(taskLayout.taskListHiddenClasses.join('\n')).toMatchInlineSnapshot(`
+        expect(taskLayout.taskListHiddenClasses().join('\n')).toMatchInlineSnapshot(`
             "tasks-layout-hide-priority
             tasks-layout-hide-recurrenceRule
             tasks-layout-hide-createdDate
