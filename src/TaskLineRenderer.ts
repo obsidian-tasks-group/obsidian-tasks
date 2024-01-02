@@ -158,7 +158,7 @@ export class TaskLineRenderer {
         const taskLayout = new TaskLayout(this.taskLayoutOptions, this.queryLayoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
-        for (const component of taskLayout.shownTaskLayoutComponents) {
+        for (const component of taskLayout.shownTaskLayoutComponents()) {
             const componentString = emojiSerializer.componentToString(
                 task,
                 this.queryLayoutOptions.shortMode,
@@ -188,7 +188,7 @@ export class TaskLineRenderer {
         }
 
         // Now build classes for the hidden task components without rendering them
-        for (const component of taskLayout.hiddenTaskLayoutComponents) {
+        for (const component of taskLayout.hiddenTaskLayoutComponents()) {
             fieldRenderer.addDataAttribute(li, task, component);
         }
 

@@ -8,7 +8,7 @@ import { TaskLayout, TaskLayoutOptions } from '../src/TaskLayout';
 describe('TaskLayout tests', () => {
     it('should generate expected CSS components for default layout', () => {
         const taskLayout = new TaskLayout();
-        expect(taskLayout.shownTaskLayoutComponents.join('\n')).toMatchInlineSnapshot(`
+        expect(taskLayout.shownTaskLayoutComponents().join('\n')).toMatchInlineSnapshot(`
             "description
             priority
             recurrenceRule
@@ -20,7 +20,7 @@ describe('TaskLayout tests', () => {
             doneDate
             blockLink"
         `);
-        expect(taskLayout.hiddenTaskLayoutComponents.join('\n')).toMatchInlineSnapshot('""');
+        expect(taskLayout.hiddenTaskLayoutComponents().join('\n')).toMatchInlineSnapshot('""');
         expect(taskLayout.taskListHiddenClasses.join('\n')).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
     });
 
@@ -41,11 +41,11 @@ describe('TaskLayout tests', () => {
 
         const taskLayout = new TaskLayout(layoutOptions, queryLayoutOptions);
 
-        expect(taskLayout.shownTaskLayoutComponents.join('\n')).toMatchInlineSnapshot(`
+        expect(taskLayout.shownTaskLayoutComponents().join('\n')).toMatchInlineSnapshot(`
             "description
             blockLink"
         `);
-        expect(taskLayout.hiddenTaskLayoutComponents.join('\n')).toMatchInlineSnapshot(`
+        expect(taskLayout.hiddenTaskLayoutComponents().join('\n')).toMatchInlineSnapshot(`
             "priority
             recurrenceRule
             createdDate
