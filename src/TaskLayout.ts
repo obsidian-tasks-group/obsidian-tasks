@@ -32,7 +32,17 @@ export type TaskLayoutComponent =
     | 'cancelledDate'
     | 'blockLink';
 
-export class QueryLayout {}
+export class QueryLayout {
+    protected queryLayoutOptions: QueryLayoutOptions;
+
+    constructor(queryLayoutOptions?: QueryLayoutOptions) {
+        if (queryLayoutOptions) {
+            this.queryLayoutOptions = queryLayoutOptions;
+        } else {
+            this.queryLayoutOptions = new QueryLayoutOptions();
+        }
+    }
+}
 
 /**
  * This represents the desired layout of tasks when they are rendered in a given configuration.
@@ -65,21 +75,15 @@ export class TaskLayout extends QueryLayout {
     private _shownTaskLayoutComponents: TaskLayoutComponent[];
     private _hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     private taskLayoutOptions: TaskLayoutOptions;
-    private queryLayoutOptions: QueryLayoutOptions;
     private _taskListHiddenClasses: string[] = [];
 
     constructor(taskLayoutOptions?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
-        super();
+        super(queryLayoutOptions);
 
         if (taskLayoutOptions) {
             this.taskLayoutOptions = taskLayoutOptions;
         } else {
             this.taskLayoutOptions = new TaskLayoutOptions();
-        }
-        if (queryLayoutOptions) {
-            this.queryLayoutOptions = queryLayoutOptions;
-        } else {
-            this.queryLayoutOptions = new QueryLayoutOptions();
         }
 
         this._shownTaskLayoutComponents = this.defaultLayout;
