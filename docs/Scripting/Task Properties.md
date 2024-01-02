@@ -59,7 +59,7 @@ For more information, including adding your own customised statuses, see [[Statu
 1. Note that currently all stored dates have no time, or rather, their time is midnight at the start of the day, local time.
 1. For example uses of date properties, see [[Filters#Due Date]] and [[Grouping#Due Date]].
 1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
-1. `task.cancelled` was added in Tasks X.Y.Z.
+1. `task.cancelled` was added in Tasks 5.5.0.
 
 ## Values in TasksDate Properties
 

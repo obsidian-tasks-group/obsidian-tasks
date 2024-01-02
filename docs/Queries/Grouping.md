@@ -421,9 +421,9 @@ For more examples, see [[#Due Date]].
   - The cancelled date of the task, including the week-day, or `No cancelled date`.
 
 > [!released]
-`cancelled` grouping option was introduced in Tasks X.Y.Z.
+`cancelled` grouping option was introduced in Tasks 5.5.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by cancelled date** is now possible, using `task.cancelled`.
+Since Tasks 5.5.0, **[[Custom Grouping|custom grouping]] by cancelled date** is now possible, using `task.cancelled`.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.cancelled_docs.approved.md -->
 
