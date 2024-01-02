@@ -109,10 +109,10 @@ export class TaskLayout extends QueryLayout {
             this.generateHiddenClassForTaskList(hide, component);
         }
 
-        const componentsToGenerateClassesOnly: [boolean, string][] = [
-            // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-            [this.taskLayoutOptions.hideTags, 'tags'],
+        // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
+        this.generateHiddenClassForTaskList(this.taskLayoutOptions.hideTags, 'tags');
 
+        const componentsToGenerateClassesOnly: [boolean, string][] = [
             // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
             // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
             // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).
