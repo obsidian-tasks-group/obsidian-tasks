@@ -255,7 +255,7 @@ Explanation of this Tasks code block query:
 
   filename includes file path.md
 
-  description includes Some Cryptic String
+  description includes Some Cryptic String 
 
   No grouping instructions supplied.
 
