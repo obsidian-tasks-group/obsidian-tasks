@@ -38,10 +38,10 @@ export type TaskLayoutComponent =
  * modified by applying {@link TaskLayoutOptions} objects.
  */
 export class TaskLayout {
-    public get shownTaskLayoutComponents(): TaskLayoutComponent[] {
+    public shownTaskLayoutComponents(): TaskLayoutComponent[] {
         return this._shownTaskLayoutComponents;
     }
-    public get hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
+    public hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
         return this._hiddenTaskLayoutComponents;
     }
     public defaultLayout: TaskLayoutComponent[] = [
