@@ -44,6 +44,10 @@ export class QueryLayout {
     }
 }
 
+function hiddenComponentClassName(component: string) {
+    return `tasks-layout-hide-${component}`;
+}
+
 /**
  * This represents the desired layout of tasks when they are rendered in a given configuration.
  * The layout is used when flattening the task to a string and when rendering queries, and can be
@@ -139,7 +143,7 @@ export class TaskLayout extends QueryLayout {
 
     private generateHiddenClassForTaskList(taskListHiddenClasses: string[], hide: boolean, component: string) {
         if (hide) {
-            taskListHiddenClasses.push(`tasks-layout-hide-${component}`);
+            taskListHiddenClasses.push(hiddenComponentClassName(component));
         }
     }
 
