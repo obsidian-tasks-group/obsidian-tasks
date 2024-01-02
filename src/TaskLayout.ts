@@ -59,8 +59,8 @@ export class TaskLayout {
     ];
     private _shownTaskLayoutComponents: TaskLayoutComponent[];
     private _hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
-    public taskLayoutOptions: TaskLayoutOptions;
-    public queryLayoutOptions: QueryLayoutOptions;
+    private taskLayoutOptions: TaskLayoutOptions;
+    private queryLayoutOptions: QueryLayoutOptions;
     public taskListHiddenClasses: string[] = [];
 
     constructor(taskLayoutOptions?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
