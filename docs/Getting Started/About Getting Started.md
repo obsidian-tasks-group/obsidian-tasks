@@ -33,6 +33,8 @@ publish: true
   - Statuses allow you to track `IN_PROGRESS`, `CANCELLED` and `NON_TASK` actions too.
 - [[Use Filename as Default Date]]
   - Automatically set a scheduled date for tasks based on the name of their files.
+- [[Tags]]
+  - Why and how to use tags to manage your tasks.
 
 ## Easy editing of tasks
 
