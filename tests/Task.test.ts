@@ -1360,6 +1360,12 @@ describe('order of recurring tasks', () => {
         jest.setSystemTime(new Date('2023-05-16'));
     });
 
+    function expectLineToApplyDoneStatusInUsersOrder(line: string, expectedLines: string[]) {
+        const task = fromLine({ line: line });
+        const tasks = task.handleNewStatusWithRecurrenceInUsersOrder(Status.makeDone());
+        expect(tasks).toMatchMarkdownLines(expectedLines);
+    }
+
     it('should put new task before old, by default', () => {
         const line = '- [ ] this is a recurring task 🔁 every day';
         const expectedLines = [
@@ -1368,9 +1374,7 @@ describe('order of recurring tasks', () => {
         ];
         expect(line).toToggleWithRecurrenceInUsersOrderTo(expectedLines);
 
-        const task = fromLine({ line: line });
-        const tasks = task.handleNewStatusWithRecurrenceInUsersOrder(Status.makeDone());
-        expect(tasks).toMatchMarkdownLines(expectedLines);
+        expectLineToApplyDoneStatusInUsersOrder(line, expectedLines);
     });
 
     it('should honour new-task-before-old setting', () => {
