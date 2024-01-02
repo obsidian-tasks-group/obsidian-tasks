@@ -161,7 +161,7 @@ export class TaskLineRenderer {
         for (const component of taskLayout.shownTaskLayoutComponents) {
             const componentString = emojiSerializer.componentToString(
                 task,
-                taskLayout.queryLayoutOptions.shortMode,
+                this.queryLayoutOptions.shortMode,
                 component,
             );
             if (componentString) {
