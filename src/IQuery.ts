@@ -1,5 +1,5 @@
 import type { QueryLayoutOptions } from './QueryLayoutOptions';
-import type { LayoutOptions } from './TaskLayout';
+import type { TaskLayoutOptions } from './TaskLayout';
 import type { Task } from './Task';
 import type { Grouper } from './Query/Grouper';
 import type { QueryResult } from './Query/QueryResult';
@@ -44,10 +44,10 @@ export interface IQuery {
      * Any layout options the query engine should be aware of or
      * used in the query.
      *
-     * @type {LayoutOptions}
+     * @type {TaskLayoutOptions}
      * @memberof IQuery
      */
-    layoutOptions: LayoutOptions;
+    layoutOptions: TaskLayoutOptions;
 
     /**
      * Any layout options the query engine should be aware of or

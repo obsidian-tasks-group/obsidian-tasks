@@ -7,7 +7,7 @@ import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
-import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
+import type { TaskLayoutComponent, TaskLayoutOptions } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { StatusMenu } from './ui/Menus/StatusMenu';
 import { StatusRegistry } from './StatusRegistry';
@@ -28,7 +28,7 @@ export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
-    private readonly layoutOptions: LayoutOptions;
+    private readonly layoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
     private static async obsidianMarkdownRenderer(
@@ -52,7 +52,7 @@ export class TaskLineRenderer {
      *
      * @param parentUlElement HTML element where the task shall be rendered.
      *
-     * @param layoutOptions See {@link LayoutOptions}.
+     * @param layoutOptions See {@link TaskLayoutOptions}.
      *
      * @param queryLayoutOptions See {@link QueryLayoutOptions}.
      */
@@ -66,7 +66,7 @@ export class TaskLineRenderer {
         textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
-        layoutOptions: LayoutOptions;
+        layoutOptions: TaskLayoutOptions;
         queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;

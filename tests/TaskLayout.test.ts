@@ -3,7 +3,7 @@
  */
 
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
-import { LayoutOptions, TaskLayout } from '../src/TaskLayout';
+import { TaskLayout, TaskLayoutOptions } from '../src/TaskLayout';
 
 describe('TaskLayout tests', () => {
     it('should generate expected CSS components for default layout', () => {
@@ -25,10 +25,10 @@ describe('TaskLayout tests', () => {
     });
 
     it('should generate expected CSS components with all default option reversed', () => {
-        const layoutOptions = new LayoutOptions();
+        const layoutOptions = new TaskLayoutOptions();
         // Negate all the task layout boolean values:
         Object.keys(layoutOptions).forEach((key) => {
-            const key2 = key as keyof LayoutOptions;
+            const key2 = key as keyof TaskLayoutOptions;
             layoutOptions[key2] = !layoutOptions[key2];
         });
 
