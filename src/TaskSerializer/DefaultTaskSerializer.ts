@@ -87,8 +87,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
     public serialize(task: Task): string {
         const taskLayout = new TaskLayout();
         let taskString = '';
+        const shortMode = false;
         for (const component of taskLayout.shownTaskLayoutComponents()) {
-            taskString += this.componentToString(task, taskLayout.queryLayoutOptions.shortMode, component);
+            taskString += this.componentToString(task, shortMode, component);
         }
         return taskString;
     }
