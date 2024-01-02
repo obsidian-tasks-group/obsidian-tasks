@@ -1372,8 +1372,8 @@ describe('order of recurring tasks', () => {
             '- [ ] this is a recurring task 🔁 every day',
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
         ];
-        expect(line).toToggleWithRecurrenceInUsersOrderTo(expectedLines);
 
+        expect(line).toToggleWithRecurrenceInUsersOrderTo(expectedLines);
         expectLineToApplyDoneStatusInUsersOrder(line, expectedLines);
     });
 
