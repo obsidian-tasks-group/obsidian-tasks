@@ -3,7 +3,7 @@ import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
 import { Task } from './Task';
-import { LayoutOptions } from './TaskLayout';
+import { TaskLayoutOptions } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskLocation } from './TaskLocation';
 
@@ -91,7 +91,7 @@ export class InlineRenderer {
         const taskLineRenderer = new TaskLineRenderer({
             obsidianComponent: childComponent,
             parentUlElement: element,
-            layoutOptions: new LayoutOptions(),
+            layoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
 

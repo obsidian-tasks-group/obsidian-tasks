@@ -6,7 +6,7 @@ import { QueryLayoutOptions } from './QueryLayoutOptions';
  *
  * @see QueryLayoutOptions
  */
-export class LayoutOptions {
+export class TaskLayoutOptions {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     hidePriority: boolean = false;
     hideCreatedDate: boolean = false;
@@ -35,7 +35,7 @@ export type TaskLayoutComponent =
 /**
  * This represents the desired layout of tasks when they are rendered in a given configuration.
  * The layout is used when flattening the task to a string and when rendering queries, and can be
- * modified by applying {@link LayoutOptions} objects.
+ * modified by applying {@link TaskLayoutOptions} objects.
  */
 export class TaskLayout {
     public defaultLayout: TaskLayoutComponent[] = [
@@ -53,15 +53,15 @@ export class TaskLayout {
     ];
     public shownTaskLayoutComponents: TaskLayoutComponent[];
     public hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
-    public options: LayoutOptions;
+    public options: TaskLayoutOptions;
     public queryLayoutOptions: QueryLayoutOptions;
     public taskListHiddenClasses: string[] = [];
 
-    constructor(options?: LayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
+    constructor(options?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
         if (options) {
             this.options = options;
         } else {
-            this.options = new LayoutOptions();
+            this.options = new TaskLayoutOptions();
         }
         if (queryLayoutOptions) {
             this.queryLayoutOptions = queryLayoutOptions;

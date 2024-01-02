@@ -1,7 +1,7 @@
 import { QueryLayoutOptions } from '../QueryLayoutOptions';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
-import { LayoutOptions } from '../TaskLayout';
+import { TaskLayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
@@ -25,7 +25,7 @@ export class Query implements IQuery {
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
-    private _layoutOptions: LayoutOptions = new LayoutOptions();
+    private _layoutOptions: TaskLayoutOptions = new TaskLayoutOptions();
     private _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
@@ -177,7 +177,7 @@ ${source}`;
         return this._taskGroupLimit;
     }
 
-    public get layoutOptions(): LayoutOptions {
+    public get layoutOptions(): TaskLayoutOptions {
         return this._layoutOptions;
     }
 
