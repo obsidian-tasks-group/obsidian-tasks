@@ -1,5 +1,6 @@
 import { diff } from 'jest-diff';
 import { fromLine } from '../TestHelpers';
+import type { Task } from '../../src/Task';
 
 declare global {
     namespace jest {
@@ -22,13 +23,18 @@ declare global {
 
 export function toToggleTo(line: string, expectedLines: string[]) {
     const task = fromLine({ line: line });
-    const receivedLines = task.toggle().map((t) => t.toFileLineString());
-    return toMatchLines(receivedLines, expectedLines);
+    const tasks = task.toggle();
+    return tasksToMatchLines(tasks, expectedLines);
 }
 
 export function toToggleWithRecurrenceInUsersOrderTo(line: string, expectedLines: string[]) {
     const task = fromLine({ line: line });
     const receivedLines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
+    return toMatchLines(receivedLines, expectedLines);
+}
+
+function tasksToMatchLines(tasks: Task[], expectedLines: string[]) {
+    const receivedLines = tasks.map((t) => t.toFileLineString());
     return toMatchLines(receivedLines, expectedLines);
 }
 
