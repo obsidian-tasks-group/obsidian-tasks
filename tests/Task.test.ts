@@ -1381,20 +1381,24 @@ describe('order of recurring tasks', () => {
         updateSettings({ recurrenceOnNextLine: false });
 
         const line = '- [ ] this is a recurring task 🔁 every day';
-        expect(line).toToggleWithRecurrenceInUsersOrderTo([
+        const expectedLines = [
             '- [ ] this is a recurring task 🔁 every day',
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
-        ]);
+        ];
+
+        expect(line).toToggleWithRecurrenceInUsersOrderTo(expectedLines);
     });
 
     it('should honour old-task-before-new setting', () => {
         updateSettings({ recurrenceOnNextLine: true });
 
         const line = '- [ ] this is a recurring task 🔁 every day';
-        expect(line).toToggleWithRecurrenceInUsersOrderTo([
+        const expectedLines = [
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
             '- [ ] this is a recurring task 🔁 every day',
-        ]);
+        ];
+
+        expect(line).toToggleWithRecurrenceInUsersOrderTo(expectedLines);
     });
 });
 
