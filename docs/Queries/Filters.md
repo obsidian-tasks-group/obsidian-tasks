@@ -718,9 +718,9 @@ Such a filter could be:
 
 > [!released]
 >
-> - Cancelled date was introduced in Tasks X.Y.Z.
+> - Cancelled date was introduced in Tasks 5.5.0.
 
-Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by cancelled date** is now possible, using `task.cancelled`.
+Since Tasks 5.5.0, **[[Custom Filters|custom filtering]] by cancelled date** is now possible, using `task.cancelled`.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.cancelled_docs.approved.md -->
 

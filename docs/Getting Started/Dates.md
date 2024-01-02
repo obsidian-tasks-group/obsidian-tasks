@@ -174,7 +174,7 @@ Related instructions for use in Tasks query blocks:
 ### Cancelled date
 
 > [!released]
-> Cancelled date was introduced in Tasks X.Y.Z.
+> Cancelled date was introduced in Tasks 5.5.0.
 
 Unless you disable 'Set cancelled date on every cancelled task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were cancelled.
 

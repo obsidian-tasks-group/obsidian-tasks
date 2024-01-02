@@ -94,7 +94,7 @@ Note that relative dates will be always interpreted as being in the future, beca
 > [!released]
 >
 > - `Only future dates` was introduced in Tasks 1.15.0.
-> - Editing of [[Dates#Created date|created]], [[Dates#Done date|done]] and [[Dates#Cancelled date|cancelled]] dates was introduced in Tasks X.Y.Z.
+> - Editing of [[Dates#Created date|created]], [[Dates#Done date|done]] and [[Dates#Cancelled date|cancelled]] dates was introduced in Tasks 5.5.0.
 
 ### Date abbreviations
 
