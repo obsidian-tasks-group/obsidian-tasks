@@ -79,6 +79,7 @@ The generic classes are:
 - `task-created`
 - `task-start`
 - `task-scheduled`
+- `task-cancelled`
 - `task-done`
 - `task-recurring`
 
@@ -89,7 +90,7 @@ The `normal` value is special: it is added as a default to a task's upper `task-
 
 <!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
 A **date attribute** represents a due, created, start, scheduled or done date in a format relative to the current date.
-The date attributes are `data-task-due`, `data-task-created`, `data-task-start`, `data-task-scheduled` and `data-task-done` and are populated with a relative expression that denotes the number of days this field represents compared to today:
+The date attributes are `data-task-due`, `data-task-created`, `data-task-start`, `data-task-scheduled`, `data-task-cancelled` and `data-task-done` and are populated with a relative expression that denotes the number of days this field represents compared to today:
 
 - `data-task-due="today"` (or `data-task-start="today"`, `data-task-start="today"` etc) represents today.
 - `data-task-due="future-1d"` (or `data-task-start="future-1d"`) represents 1 day in the future, i.e. tomorrow.
