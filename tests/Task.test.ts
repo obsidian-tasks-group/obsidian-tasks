@@ -1250,8 +1250,7 @@ describe('handle new status', () => {
             const newTasks = doneTask.handleNewStatus(Status.makeCancelled());
 
             // Assert
-            expect(newTasks.length).toEqual(1);
-            expect(newTasks[0].toFileLineString()).toEqual('- [-] Stuff 📅 2023-12-15 ❌ 2023-06-26');
+            expect(newTasks).toMatchMarkdownLines(['- [-] Stuff 📅 2023-12-15 ❌ 2023-06-26']);
         });
 
         it('should not add cancelled date when changing to CANCELLED, if setting disabled', () => {
@@ -1265,8 +1264,7 @@ describe('handle new status', () => {
             const newTasks = task.handleNewStatus(Status.makeCancelled());
 
             // Assert
-            expect(newTasks.length).toEqual(1);
-            expect(newTasks[0].toFileLineString()).toEqual('- [-] Stuff');
+            expect(newTasks).toMatchMarkdownLines(['- [-] Stuff']);
         });
 
         it('should not change the cancelled date, if changing from one CANCELLED status to another', () => {
@@ -1279,9 +1277,8 @@ describe('handle new status', () => {
             const newTasks = cancelledTask.handleNewStatus(Status.makeCancelled());
 
             // Assert
-            expect(newTasks.length).toEqual(1);
             // Check that the cancelled date was not modified:
-            expect(newTasks[0].toFileLineString()).toEqual('- [-] Stuff 📅 2023-12-15 ❌ 2019-01-17');
+            expect(newTasks).toMatchMarkdownLines(['- [-] Stuff 📅 2023-12-15 ❌ 2019-01-17']);
         });
 
         it('should remove cancelled date when toggling CANCELLED recurring task to DONE', () => {
@@ -1294,9 +1291,10 @@ describe('handle new status', () => {
             const newTasks = cancelledTask.handleNewStatus(Status.makeDone());
 
             // Assert
-            expect(newTasks.length).toEqual(2);
-            expect(newTasks[0].toFileLineString()).toEqual('- [ ] Stuff 🔁 every day 📅 2023-05-16');
-            expect(newTasks[1].toFileLineString()).toEqual('- [x] Stuff 🔁 every day 📅 2023-05-15 ✅ 2023-06-26');
+            expect(newTasks).toMatchMarkdownLines([
+                '- [ ] Stuff 🔁 every day 📅 2023-05-16',
+                '- [x] Stuff 🔁 every day 📅 2023-05-15 ✅ 2023-06-26',
+            ]);
         });
     });
 });
