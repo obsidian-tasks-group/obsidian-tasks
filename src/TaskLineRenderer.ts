@@ -286,12 +286,14 @@ export class TaskLineRenderer {
     }
 
     private addTooltip(task: Task, element: HTMLSpanElement, isFilenameUnique: boolean | undefined) {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         const {
             recurrenceSymbol,
             startDateSymbol,
             createdDateSymbol,
             scheduledDateSymbol,
             dueDateSymbol,
+            cancelledDateSymbol,
             doneDateSymbol,
         } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
@@ -327,6 +329,7 @@ export class TaskLineRenderer {
             addDateToTooltip(tooltip, task.startDate, startDateSymbol);
             addDateToTooltip(tooltip, task.scheduledDate, scheduledDateSymbol);
             addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
+            addDateToTooltip(tooltip, task.cancelledDate, cancelledDateSymbol);
             addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
 
             const linkText = task.getLinkText({ isFilenameUnique });
