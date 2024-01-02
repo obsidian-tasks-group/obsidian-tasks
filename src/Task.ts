@@ -490,8 +490,7 @@ export class Task {
      */
     public toggleWithRecurrenceInUsersOrder(): Task[] {
         const newTasks = this.toggle();
-        const { recurrenceOnNextLine } = getSettings();
-        return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
+        return this.putRecurrenceInUsersOrder(newTasks);
     }
 
     public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
@@ -501,6 +500,11 @@ export class Task {
         );
 
         const newTasks = this.handleNewStatus(newStatus);
+        const { recurrenceOnNextLine } = getSettings();
+        return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
+    }
+
+    private putRecurrenceInUsersOrder(newTasks: Task[]) {
         const { recurrenceOnNextLine } = getSettings();
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
