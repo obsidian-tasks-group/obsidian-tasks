@@ -90,7 +90,10 @@ function symbolAndStringValue(shortMode: boolean, symbol: string, value: string)
 
 function symbolAndDateValue(shortMode: boolean, symbol: string, date: moment.Moment | null) {
     if (!date) return '';
-    return symbolAndStringValue(shortMode, symbol, date.format(TaskRegularExpressions.dateFormat));
+    // We could call symbolAndStringValue() to remove a little code repetition,
+    // but doing so would do some wasted date-formatting when in 'short mode',
+    // so instead we repeat the check on shortMode value.
+    return shortMode ? ' ' + symbol : ` ${symbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
 }
 
 export class DefaultTaskSerializer implements TaskSerializer {
