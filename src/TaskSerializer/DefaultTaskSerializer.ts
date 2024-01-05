@@ -26,6 +26,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly scheduledDateSymbol: string;
     readonly dueDateSymbol: string;
     readonly doneDateSymbol: string;
+    readonly cancelledDateSymbol: string;
     readonly recurrenceSymbol: string;
     readonly idSymbol: string;
     readonly blockedBySymbol: string;
@@ -36,6 +37,7 @@ export interface DefaultTaskSerializerSymbols {
         scheduledDateRegex: RegExp;
         dueDateRegex: RegExp;
         doneDateRegex: RegExp;
+        cancelledDateRegex: RegExp;
         recurrenceRegex: RegExp;
         idRegex: RegExp;
         blockedByRegex: RegExp;
@@ -61,6 +63,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     scheduledDateSymbol: '⏳',
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
+    cancelledDateSymbol: '❌',
     recurrenceSymbol: '🔁',
     blockedBySymbol: '⛔️',
     idSymbol: '🆔',
@@ -73,6 +76,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         scheduledDateRegex: /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u,
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
+        cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
         blockedByRegex: /⛔️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
         idRegex: /🆔 *([a-z0-9]+)$/iu,
@@ -91,8 +95,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
     public serialize(task: Task): string {
         const taskLayout = new TaskLayout();
         let taskString = '';
-        for (const component of taskLayout.shownTaskLayoutComponents) {
-            taskString += this.componentToString(task, taskLayout, component);
+        const shortMode = false;
+        for (const component of taskLayout.shownTaskLayoutComponents()) {
+            taskString += this.componentToString(task, shortMode, component);
         }
         return taskString;
     }
@@ -100,7 +105,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
     /**
      * Renders a specific TaskLayoutComponent of the task (its description, priority, etc) as a string.
      */
-    public componentToString(task: Task, layout: TaskLayout, component: TaskLayoutComponent) {
+    public componentToString(task: Task, shortMode: boolean, component: TaskLayoutComponent) {
         const {
             // NEW_TASK_FIELD_EDIT_REQUIRED
             prioritySymbols,
@@ -108,6 +113,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             createdDateSymbol,
             scheduledDateSymbol,
             doneDateSymbol,
+            cancelledDateSymbol,
             recurrenceSymbol,
             dueDateSymbol,
             blockedBySymbol,
@@ -136,34 +142,37 @@ export class DefaultTaskSerializer implements TaskSerializer {
             }
             case 'startDate':
                 if (!task.startDate) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + startDateSymbol
                     : ` ${startDateSymbol} ${task.startDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'createdDate':
                 if (!task.createdDate) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + createdDateSymbol
                     : ` ${createdDateSymbol} ${task.createdDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'scheduledDate':
                 if (!task.scheduledDate || task.scheduledDateIsInferred) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + scheduledDateSymbol
                     : ` ${scheduledDateSymbol} ${task.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'doneDate':
                 if (!task.doneDate) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + doneDateSymbol
                     : ` ${doneDateSymbol} ${task.doneDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'cancelledDate':
+                if (!task.cancelledDate) return '';
+                return shortMode
+                    ? ' ' + cancelledDateSymbol
+                    : ` ${cancelledDateSymbol} ${task.cancelledDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'dueDate':
                 if (!task.dueDate) return '';
-                return layout.options.shortMode
+                return shortMode
                     ? ' ' + dueDateSymbol
                     : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
-                return layout.options.shortMode
-                    ? ' ' + recurrenceSymbol
-                    : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
+                return shortMode ? ' ' + recurrenceSymbol : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
             case 'blockedBy': {
                 if (task.blockedBy.length === 0) return '';
                 let dependsString = ' ' + blockedBySymbol + ' ';
@@ -227,6 +236,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
+        let cancelledDate: Moment | null = null;
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
@@ -254,6 +264,13 @@ export class DefaultTaskSerializer implements TaskSerializer {
             if (doneDateMatch !== null) {
                 doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
                 line = line.replace(TaskFormatRegularExpressions.doneDateRegex, '').trim();
+                matched = true;
+            }
+
+            const cancelledDateMatch = line.match(TaskFormatRegularExpressions.cancelledDateRegex);
+            if (cancelledDateMatch !== null) {
+                cancelledDate = window.moment(cancelledDateMatch[1], TaskRegularExpressions.dateFormat);
+                line = line.replace(TaskFormatRegularExpressions.cancelledDateRegex, '').trim();
                 matched = true;
             }
 
@@ -352,6 +369,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             scheduledDate,
             dueDate,
             doneDate,
+            cancelledDate,
             recurrence,
             id,
             blockedBy,

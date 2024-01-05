@@ -1,4 +1,4 @@
-import type { TaskLayout, TaskLayoutComponent } from '../TaskLayout';
+import type { TaskLayoutComponent } from '../TaskLayout';
 import type { Task } from '../Task';
 import { Priority } from '../Task';
 import { DefaultTaskSerializer } from './DefaultTaskSerializer';
@@ -73,6 +73,7 @@ export const DATAVIEW_SYMBOLS = {
     scheduledDateSymbol: 'scheduled::',
     dueDateSymbol: 'due::',
     doneDateSymbol: 'completion::',
+    cancelledDateSymbol: 'cancelled::',
     recurrenceSymbol: 'repeat::',
     idSymbol: 'id::',
     blockedBySymbol: 'blockedBy::',
@@ -83,6 +84,7 @@ export const DATAVIEW_SYMBOLS = {
         scheduledDateRegex: toInlineFieldRegex(/scheduled:: *(\d{4}-\d{2}-\d{2})/),
         dueDateRegex: toInlineFieldRegex(/due:: *(\d{4}-\d{2}-\d{2})/),
         doneDateRegex: toInlineFieldRegex(/completion:: *(\d{4}-\d{2}-\d{2})/),
+        cancelledDateRegex: toInlineFieldRegex(/cancelled:: *(\d{4}-\d{2}-\d{2})/),
         recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
         blockedByRegex: toInlineFieldRegex(/blockedBy:: *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/),
         idRegex: toInlineFieldRegex(/id:: *([a-z0-9]+)/),
@@ -115,8 +117,8 @@ export class DataviewTaskSerializer extends DefaultTaskSerializer {
         }
     }
 
-    public componentToString(task: Task, layout: TaskLayout, component: TaskLayoutComponent) {
-        const stringComponent = super.componentToString(task, layout, component);
+    public componentToString(task: Task, shortMode: boolean, component: TaskLayoutComponent) {
+        const stringComponent = super.componentToString(task, shortMode, component);
         const notInlineFieldComponents: TaskLayoutComponent[] = ['blockLink', 'description'];
         const shouldMakeInlineField = stringComponent !== '' && !notInlineFieldComponents.includes(component);
         return shouldMakeInlineField

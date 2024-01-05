@@ -13,6 +13,7 @@ classDef NON_TASK    stroke:#99e,stroke-width:3px;
 3["'Cancelled'<br>[x] -> [ ]<br>(CANCELLED)"]:::CANCELLED
 1 --> 2
 2 --> 3
+2-. "🔁" .-> 1
 3 --> 1
 
 linkStyle default stroke:gray

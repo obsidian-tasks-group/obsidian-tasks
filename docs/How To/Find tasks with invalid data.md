@@ -8,7 +8,7 @@ publish: true
 
 For performance reasons, Tasks is stricter in reading data from markdown lines that some users expect.
 
-As a precaution, it can be useful to check the data in your vault periodically, to see if there any tasks with seemingly valid data that is not found by Tasks.
+As a precaution, it can be useful to check the data in your vault periodically, to see if there are any tasks with seemingly valid data that is not found by Tasks.
 
 ## Find tasks with potentially missed emoji signifiers
 
@@ -28,12 +28,11 @@ Tasks sees as an un-dated task with the text description:
 
 The following tasks block lists any tasks that have emoji in the description, which usually means data that has not been interpreted by Tasks. This is typically because there is some text other than emoji signifiers and tags at the end of the line.
 
-<!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
-
+<!-- include: ValidateTasks.test.validate-tasks_find-unread-emojis.approved.text -->
 ````text
 ```tasks
 # These description instructions need to be all on one line:
-(description includes ⏫ ) OR (description includes 🔼 ) OR (description includes 🔽 ) OR (description includes 📅 ) OR (description includes ⏳ ) OR (description includes 🛫 ) OR (description includes ✅ ) OR (description includes 🔁 )
+(description includes 🔺) OR (description includes ⏫) OR (description includes 🔼) OR (description includes 🔽) OR (description includes ⏬) OR (description includes 🛫) OR (description includes ➕) OR (description includes ⏳) OR (description includes 📅) OR (description includes ✅) OR (description includes ❌) OR (description includes 🔁)
 
 # Optionally, uncomment this line and exclude your templates location
 # path does not include _templates
@@ -41,6 +40,7 @@ The following tasks block lists any tasks that have emoji in the description, wh
 group by path
 ```
 ````
+<!-- endInclude -->
 
 The errors can be fixed by editing the Task and moving any text that appears after the unparsed values to earlier in the line.
 
@@ -58,11 +58,10 @@ This task has an illegal due date:
 
 The following tasks block lists any tasks with invalid dates, meaning data that has potentially not been interpreted by Tasks.
 
-<!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED if the new query is for a new date field -->
-
+<!-- include: ValidateTasks.test.validate-tasks_find_problem_dates.approved.text -->
 ````text
 ```tasks
-(done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
+(cancelled date is invalid) OR (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
 
 # Optionally, uncomment this line and exclude your templates location
 # path does not include _templates
@@ -70,6 +69,7 @@ The following tasks block lists any tasks with invalid dates, meaning data that 
 group by path
 ```
 ````
+<!-- endInclude -->
 
 Errors with invalid dates are not easily fixed using the [[Create or edit Task|‘Create or edit Task’ Modal]], as it shows any invalid dates with placeholder text, instead of showing the original values.
 

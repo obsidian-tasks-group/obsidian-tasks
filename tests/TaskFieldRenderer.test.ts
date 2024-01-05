@@ -25,8 +25,7 @@ describe('Field Layouts Container tests', () => {
 
         fieldRenderer.addDataAttribute(span, task, 'dueDate');
 
-        expect(Object.keys(span.dataset).length).toEqual(1);
-        expect(span.dataset['taskDue']).toEqual('future-1d');
+        expect(span).toHaveDataAttributes('taskDue: future-1d');
     });
 
     it('should add a data attribute for an existing component (not date)', () => {
@@ -35,36 +34,65 @@ describe('Field Layouts Container tests', () => {
 
         fieldRenderer.addDataAttribute(span, task, 'priority');
 
-        expect(Object.keys(span.dataset).length).toEqual(1);
-        expect(span.dataset['taskPriority']).toEqual('medium');
+        expect(span).toHaveDataAttributes('taskPriority: medium');
     });
+
     it('should not add any data attributes for a missing component', () => {
         const task = new TaskBuilder().build();
         const span = document.createElement('span');
 
         fieldRenderer.addDataAttribute(span, task, 'recurrenceRule');
 
-        expect(Object.keys(span.dataset).length).toEqual(0);
+        expect(span).toHaveDataAttributes('');
+    });
+
+    it('should add a class name for a component', () => {
+        const span = document.createElement('span');
+
+        fieldRenderer.addClassName(span, 'startDate');
+
+        expect(span.classList.toString()).toEqual('task-start');
     });
 });
 
 describe('Field Layout Detail tests', () => {
     it('should supply a class name', () => {
-        const fieldLayoutDetail = new TaskFieldHTMLData('stuff', 'taskAttribute', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('task-description', '', () => {
             return '';
         });
-        expect(fieldLayoutDetail.className).toEqual('stuff');
+        expect(fieldLayoutDetail.className).toEqual('task-description');
     });
 
-    it('should add a data attribute for an HTML element', () => {
-        const fieldLayoutDetail = new TaskFieldHTMLData('dataAttributeTest', 'aKey', () => {
-            return 'aValue';
+    it('should add a data attribute with a value and a name', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('task-priority', 'taskPriority', () => {
+            return 'highest';
         });
         const span = document.createElement('span');
 
-        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'description');
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'priority');
 
-        expect(Object.keys(span.dataset).length).toEqual(1);
-        expect(span.dataset['aKey']).toEqual('aValue');
+        expect(span).toHaveDataAttributes('taskPriority: highest');
+    });
+
+    it('should not add a data attribute without a name', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('task-due', '', () => {
+            return 'past-far';
+        });
+        const span = document.createElement('span');
+
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'dueDate');
+
+        expect(span).toHaveDataAttributes('');
+    });
+
+    it('should not add a data attribute with a name but without value', () => {
+        const fieldLayoutDetail = new TaskFieldHTMLData('task-start', 'taskStart', () => {
+            return '';
+        });
+        const span = document.createElement('span');
+
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'startDate');
+
+        expect(span).toHaveDataAttributes('');
     });
 });

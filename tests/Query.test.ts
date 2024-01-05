@@ -5,7 +5,6 @@ import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
-import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { TaskLocation } from '../src/TaskLocation';
 import { fieldCreators } from '../src/Query/FilterParser';
 import type { Field } from '../src/Query/Filter/Field';
@@ -43,6 +42,12 @@ describe('Query parsing', () => {
     const filters: ReadonlyArray<string> = [
         // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
         '(due this week) AND (description includes Hello World)',
+        'cancelled after 2021-12-27',
+        'cancelled before 2021-12-27',
+        'cancelled date is invalid',
+        'cancelled in 2021-12-27 2021-12-29',
+        'cancelled on 2021-12-27',
+        'cancelled this week',
         'created after 2021-12-27',
         'created before 2021-12-27',
         'created date is invalid',
@@ -76,6 +81,7 @@ describe('Query parsing', () => {
         'happens in 2021-12-27 2021-12-29',
         'happens on 2021-12-27',
         'happens this week',
+        'has cancelled date',
         'has created date',
         'has done date',
         'has due date',
@@ -91,6 +97,7 @@ describe('Query parsing', () => {
         'is not blocked',
         'is not recurring',
         'is recurring',
+        'no cancelled date',
         'no created date',
         'no due date',
         'no happens date',
@@ -225,6 +232,8 @@ describe('Query parsing', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
             // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
+            'sort by cancelled',
+            'sort by cancelled reverse',
             'sort by created',
             'sort by created reverse',
             'sort by description',
@@ -271,6 +280,7 @@ describe('Query parsing', () => {
             expect(query.error).toBeUndefined();
             expect(query.sorting.length).toEqual(1);
             expect(query.sorting[0]).toBeDefined();
+            expect(query.sorting[0].instruction).toEqual(filter);
 
             // Assert Uppercase
             expect(queryUpperCase.error).toBeUndefined();
@@ -309,6 +319,8 @@ describe('Query parsing', () => {
             // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
             'group by backlink',
             'group by backlink reverse',
+            'group by cancelled',
+            'group by cancelled reverse',
             'group by created',
             'group by created reverse',
             'group by done',
@@ -360,6 +372,7 @@ describe('Query parsing', () => {
             expect(query.error).toBeUndefined();
             expect(query.grouping.length).toEqual(1);
             expect(query.grouping[0]).toBeDefined();
+            expect(query.grouping[0].instruction).toEqual(filter);
 
             // Assert
             expect(queryUpperCase.error).toBeUndefined();
@@ -397,7 +410,10 @@ describe('Query parsing', () => {
         const filters: ReadonlyArray<string> = [
             '# Comment lines are ignored',
             'explain',
+            'full',
+            'full mode',
             'hide backlink',
+            'hide cancelled date',
             'hide created date',
             'hide depends on',
             'hide done date',
@@ -419,6 +435,7 @@ describe('Query parsing', () => {
             'short',
             'short mode',
             'show backlink',
+            'show cancelled date',
             'show created date',
             'show depends on',
             'show done date',
@@ -484,6 +501,16 @@ describe('Query parsing', () => {
 
         expect(new Query('group by status.type').grouping[0].property).toEqual('status.type');
         expect(new Query('GROUP BY STATUS.TYPE').grouping[0].property).toEqual('status.type');
+    });
+
+    it('should parse "short mode" and "full mode" correctly', () => {
+        // Check 'short' mode is enabled:
+        expect(new Query('short').queryLayoutOptions.shortMode).toEqual(true);
+        expect(new Query('short mode').queryLayoutOptions.shortMode).toEqual(true);
+
+        // Check that 'full' reverses short mode:
+        expect(new Query('short\nfull mode').queryLayoutOptions.shortMode).toEqual(false);
+        expect(new Query('short mode\nfull').queryLayoutOptions.shortMode).toEqual(false);
     });
 
     describe('should include instruction in parsing error messages', () => {
@@ -637,6 +664,7 @@ describe('Query', () => {
                     scheduledDate: null,
                     dueDate: null,
                     doneDate: null,
+                    cancelledDate: null,
                     recurrence: null,
                     blockedBy: [],
                     id: '',
@@ -657,6 +685,7 @@ describe('Query', () => {
                     scheduledDate: null,
                     dueDate: null,
                     doneDate: null,
+                    cancelledDate: null,
                     recurrence: null,
                     blockedBy: [],
                     id: '',
@@ -1187,106 +1216,18 @@ describe('Query', () => {
     });
 
     describe('explanations', () => {
-        afterEach(() => {
-            GlobalFilter.getInstance().reset();
-        });
-
-        it('should explain 0 filters', () => {
-            const source = '';
-            const query = new Query(source);
-
-            const expectedDisplayText = 'No filters supplied. All tasks will match the query.';
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
-        });
-
+        // Most tests of explanations are in Explainer.test.ts
         it('should explain 1 filter', () => {
             const source = 'description includes hello';
             const query = new Query(source);
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "description includes hello
 
-            const expectedDisplayText = `description includes hello
-`;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
-        });
+                No grouping instructions supplied.
 
-        it('should explain 2 filters', () => {
-            const source = 'description includes hello\ndue 2012-01-23';
-            const query = new Query(source);
-
-            const expectedDisplayText = `description includes hello
-
-due 2012-01-23 =>
-  due date is on 2012-01-23 (Monday 23rd January 2012)
-`;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
-        });
-
-        it('should include any error message in the explanation', () => {
-            const source = 'i am a nonsense query';
-            const query = new Query(source);
-
-            const expectedDisplayText = `Query has an error:
-do not understand query
-Problem line: "i am a nonsense query"
-`;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
-        });
-
-        it('should explain limit 5', () => {
-            const source = 'limit 5';
-            const query = new Query(source);
-
-            const expectedDisplayText = `No filters supplied. All tasks will match the query.
-
-At most 5 tasks.
-`;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
-        });
-
-        it('should explain limit 1', () => {
-            const source = 'limit 1';
-            const query = new Query(source);
-
-            const expectedDisplayText = `No filters supplied. All tasks will match the query.
-
-At most 1 task.
-`;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
-        });
-
-        it('should explain limit 0', () => {
-            const source = 'limit 0';
-            const query = new Query(source);
-
-            const expectedDisplayText = `No filters supplied. All tasks will match the query.
-
-At most 0 tasks.
-`;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
-        });
-
-        it('should explain group limit 4', () => {
-            const source = 'limit groups 4';
-            const query = new Query(source);
-
-            const expectedDisplayText = `No filters supplied. All tasks will match the query.
-
-At most 4 tasks per group (if any "group by" options are supplied).
-`;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
-        });
-
-        it('should explain all limit options', () => {
-            const source = 'limit 127\nlimit groups to 8 tasks';
-            const query = new Query(source);
-
-            const expectedDisplayText = `No filters supplied. All tasks will match the query.
-
-At most 127 tasks.
-
-
-At most 8 tasks per group (if any "group by" options are supplied).
-`;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
+                No sorting instructions supplied.
+                "
+            `);
         });
     });
 
@@ -1519,14 +1460,28 @@ At most 8 tasks per group (if any "group by" options are supplied).
 with \ backslash)`;
             const query = new Query(source);
             const queryUpperCase = new Query(source);
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "(description includes line 1) OR (description includes line 1 continued with \\ backslash) =>
+                  OR (At least one of):
+                    description includes line 1
+                    description includes line 1 continued with \\ backslash
 
-            const expectedDisplayText = String.raw`(description includes line 1) OR (description includes line 1 continued with \ backslash) =>
-  OR (At least one of):
-    description includes line 1
-    description includes line 1 continued with \ backslash
-`;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
-            expect(queryUpperCase.explainQuery()).toEqual(expectedDisplayText);
+                No grouping instructions supplied.
+
+                No sorting instructions supplied.
+                "
+            `);
+            expect(queryUpperCase.explainQuery()).toMatchInlineSnapshot(`
+                "(description includes line 1) OR (description includes line 1 continued with \\ backslash) =>
+                  OR (At least one of):
+                    description includes line 1
+                    description includes line 1 continued with \\ backslash
+
+                No grouping instructions supplied.
+
+                No sorting instructions supplied.
+                "
+            `);
         });
     });
 });

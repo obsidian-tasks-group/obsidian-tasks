@@ -1,6 +1,5 @@
-import type { Moment, unitOfTime } from 'moment';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
-import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Menu, MenuItem, Notice, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
 import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -12,18 +11,13 @@ import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHel
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/TaskGroups';
-import {
-    type HappensDate,
-    createPostponedTask,
-    getDateFieldToPostpone,
-    postponementSuccessMessage,
-    shouldShowPostponeButton,
-} from './Scripting/Postponer';
+import { postponeButtonTitle, shouldShowPostponeButton } from './Scripting/Postponer';
 import type { Task } from './Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
+import { PostponeMenu } from './ui/Menus/PostponeMenu';
 import type TasksPlugin from './main';
 
 export class QueryRenderer {
@@ -184,7 +178,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
         this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
-        if (this.query.layoutOptions.explainQuery) {
+        if (this.query.queryLayoutOptions.explainQuery) {
             this.createExplanation(content);
         }
 
@@ -227,17 +221,18 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
-        const layout = new TaskLayout(this.query.layoutOptions);
+        const layout = new TaskLayout(this.query.taskLayoutOptions, this.query.queryLayoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
-        taskList.addClasses(layout.taskListHiddenClasses);
+        taskList.addClasses(layout.taskListHiddenClasses());
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
         const taskLineRenderer = new TaskLineRenderer({
             obsidianComponent: this,
             parentUlElement: taskList,
-            layoutOptions: this.query.layoutOptions,
+            taskLayoutOptions: this.query.taskLayoutOptions,
+            queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
@@ -250,22 +245,22 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const extrasSpan = listItem.createSpan('task-extras');
 
-            if (!this.query.layoutOptions.hideUrgency) {
+            if (!this.query.queryLayoutOptions.hideUrgency) {
                 this.addUrgency(extrasSpan, task);
             }
 
-            const shortMode = this.query.layoutOptions.shortMode;
+            const shortMode = this.query.queryLayoutOptions.shortMode;
 
-            if (!this.query.layoutOptions.hideBacklinks) {
+            if (!this.query.queryLayoutOptions.hideBacklinks) {
                 this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
             }
 
-            if (!this.query.layoutOptions.hideEditButton) {
+            if (!this.query.queryLayoutOptions.hideEditButton) {
                 // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
                 this.addEditButton(extrasSpan, task, this.plugin.getTasks()!);
             }
 
-            if (!this.query.layoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+            if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
                 this.addPostponeButton(extrasSpan, task, shortMode);
             }
 
@@ -414,45 +409,36 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
+        const amount = 1;
+        const timeUnit = 'day';
+        const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
         const button = listItem.createEl('button', {
             attr: {
                 id: 'postpone-button',
-                title: 'ℹ️ Postpone the task (right-click for more options)',
+                title: buttonTooltipText,
             },
         });
 
-        const classNames = shortMode ? ['internal-button', 'internal-button-short-mode'] : ['internal-button'];
+        const classNames = shortMode ? ['tasks-postpone', 'tasks-postpone-short-mode'] : ['tasks-postpone'];
         button.addClasses(classNames);
         button.setText(' ⏩');
 
-        button.addEventListener('click', () => this.getOnClickCallback(task, button, 'days'));
+        button.addEventListener('click', (ev: MouseEvent) => {
+            ev.preventDefault(); // suppress the default click behavior
+            PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit);
+        });
 
         /** Open a context menu on right-click.
-         * Give a choice of postponing for a week, month, or quarter.
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
-            const menu = new Menu();
-            const commonTitle = 'Postpone for';
-
-            const getMenuItemCallback = (item: MenuItem, timeUnit: unitOfTime.DurationConstructor, amount = 1) => {
-                const amountOrArticle = amount > 1 ? amount : 'a';
-                item.setTitle(`${commonTitle} ${amountOrArticle} ${timeUnit}`).onClick(() =>
-                    this.getOnClickCallback(task, button, timeUnit, amount),
-                );
-            };
-
-            menu.addItem((item) => getMenuItemCallback(item, 'days', 2));
-            menu.addItem((item) => getMenuItemCallback(item, 'days', 3));
-            menu.addItem((item) => getMenuItemCallback(item, 'week'));
-            menu.addItem((item) => getMenuItemCallback(item, 'weeks', 2));
-            menu.addItem((item) => getMenuItemCallback(item, 'month'));
-
+            ev.stopPropagation(); // suppress the default context menu
+            const menu = new PostponeMenu(button, task);
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
     }
 
     private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
-        if (!this.query.layoutOptions.hideTaskCount) {
+        if (!this.query.queryLayoutOptions.hideTaskCount) {
             content.createDiv({
                 text: queryResult.totalTasksCountDisplayText(),
                 cls: 'tasks-count',
@@ -484,40 +470,5 @@ class QueryRenderChild extends MarkdownRenderChild {
             groupingRules.push(group.property);
         }
         return groupingRules.join(',');
-    }
-
-    private async getOnClickCallback(
-        task: Task,
-        button: HTMLButtonElement,
-        timeUnit: unitOfTime.DurationConstructor = 'days',
-        amount = 1,
-    ) {
-        const dateTypeToUpdate = getDateFieldToPostpone(task);
-        if (dateTypeToUpdate === null) {
-            const errorMessage = '⚠️ Postponement requires a date: due, scheduled or start.';
-            return new Notice(errorMessage, 10000);
-        }
-
-        const { postponedDate, newTasks } = createPostponedTask(task, dateTypeToUpdate, timeUnit, amount);
-
-        this.query.debug('[postpone]: getOnClickCallback() - before call to replaceTaskWithTasks()');
-        await replaceTaskWithTasks({
-            originalTask: task,
-            newTasks,
-        });
-        this.query.debug('[postpone]: getOnClickCallback() - after  call to replaceTaskWithTasks()');
-        this.onPostponeSuccessCallback(button, dateTypeToUpdate, postponedDate);
-    }
-
-    private onPostponeSuccessCallback(button: HTMLButtonElement, updatedDateType: HappensDate, postponedDate: Moment) {
-        this.query.debug('[postpone]: onPostponeSuccessCallback() entered');
-        // Disable the button to prevent update error due to the task not being reloaded yet.
-        button.disabled = true;
-        button.setAttr('title', 'You can perform this action again after reloading the file.');
-
-        const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
-        new Notice(successMessage, 5000);
-        this.events.triggerRequestCacheUpdate(this.render.bind(this));
-        this.query.debug('[postpone]: onPostponeSuccessCallback() exiting');
     }
 }

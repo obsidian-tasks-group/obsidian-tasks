@@ -13,11 +13,20 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- 5.5.0: 🔥 The [[Create or edit Task]] modal can now edit Created, Done and Cancelled dates
+- 5.5.0: 🔥 Add support for [[Dates#Cancelled date|cancelled dates]].
+- 5.4.0: 🔥 Add [[Layout#Full Mode|'full mode']] to turn off `short mode`.
+- 5.4.0: 🔥 Add any [[Grouping|'group by']] and [[Sorting|'sort by']] instructions to [[Explaining Queries|explain]] output.
+- 5.4.0: 🔥 Recurrence now works well [[Recurring Tasks and Custom Statuses#When DONE is not followed by TODO or IN_PROGRESS|when DONE is not followed by TODO or IN_PROGRESS]].
+- 5.3.0: 🔥 Add [[Postponing|postpone button]] to Tasks query results.
+- 5.3.0: 🔥 Add [[Toggling and Editing Statuses#'Change task status' context menu|'change task status' menu]] to Reading mode and Tasks query results.
+- 5.3.0: 🔥 Add documentation section about [[About Editing|editing tasks]].
+- 5.3.0: 🔥 Add documentation page about [[toggling and editing statuses]].
+
+<!--
 - 5.2.0: 🔥 Most query instructions can now include [[About Queries#Capitals in Query Instructions - Case Insensitivity|capital letters]].
 - 5.1.0: 🔥 Add 'Review and check your Statuses' facility: see [[Check your Statuses|check your statuses]].
 - 5.1.0: 🔥 Enable [[Custom Filters|custom filters]] and [[Custom Grouping|custom grouping]] to use [[Query Properties|query properties]] directly - no placeholders required.
-
-<!--
 - 5.0.0: 🔥 Add [[Line Continuations|line continuations]].
   - **Warning**: This is a [[Line Continuations#Appendix Updating pre-5.0.0 searches with trailing backslashes|potentially breaking change]] if you search for backslash (`\`) characters.
 - 5.0.0: 🔥 Document [[Comments#Inline comments|inline comments]]
@@ -62,6 +71,7 @@ These are the main pages and sections, that connect to all the pages here:
 > - [[Installation]]
 > - [[About Getting Started|Getting Started ...]]
 >   - [[About Statuses|Statuses ...]]
+> - [[About Editing|Editing...]]
 > - [[About Queries|Queries ...]]
 > - [[Quick Reference]]
 >

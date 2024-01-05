@@ -7,7 +7,10 @@ import { Status } from '../src/Status';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import { TaskLocation } from '../src/TaskLocation';
+import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
 import * as TestHelpers from './TestHelpers';
+import * as StatusExamples from './TestingTools/StatusExamples';
+import { constructStatuses } from './TestingTools/StatusesTestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -163,13 +166,52 @@ describe('StatusRegistry', () => {
         expect(status2).toStrictEqual(status);
     });
 
-    it('should create a mermaid diagram of default statuses', () => {
+    it('should find unknown statuses from tasks in the vault, sorted by symbol', () => {
         // Arrange
-        const statusRegistry = new StatusRegistry();
+        const registry = new StatusRegistry();
+        expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
+        expect(registry.bySymbol('X').type).toEqual(StatusType.EMPTY);
+        expect(registry.bySymbol('d').type).toEqual(StatusType.EMPTY);
+        const allStatuses = [
+            new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
+            new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
+            new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+            // Include some tasks with duplicate statuses, to make sure duplicates are discarded
+            new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
+            new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
+            new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+            // Check that it does not add copies of any core statuses
+            new Status(new StatusConfiguration('-', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+        ];
+
+        // Act
+        const unknownStatuses = registry.findUnknownStatuses(allStatuses);
 
         // Assert
-        // Without detail:
-        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+        expect(unknownStatuses.length).toEqual(3);
+
+        let s1;
+        s1 = unknownStatuses[0];
+        expect(s1.type).toEqual(StatusType.TODO);
+        expect(s1.name).toEqual('Unknown (!)');
+
+        s1 = unknownStatuses[1];
+        expect(s1.type).toEqual(StatusType.IN_PROGRESS);
+        expect(s1.name).toEqual('Unknown (d)');
+
+        s1 = unknownStatuses[2];
+        expect(s1.type).toEqual(StatusType.DONE);
+        expect(s1.name).toEqual('Unknown (X)');
+    });
+
+    describe('mermaid diagrams', () => {
+        it('should create a mermaid diagram of default statuses', () => {
+            // Arrange
+            const statusRegistry = new StatusRegistry();
+
+            // Assert
+            // Without detail:
+            expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -194,8 +236,8 @@ describe('StatusRegistry', () => {
             "
         `);
 
-        // With detail:
-        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            // With detail:
+            expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -219,24 +261,24 @@ describe('StatusRegistry', () => {
             \`\`\`
             "
         `);
-    });
+        });
 
-    it('should encode symbols in mermaid diagrams when necessary', () => {
-        // This tests the fix for:
-        //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2355
-        //      Fix the handling of special characters in Mermaid status diagrams
+        it('should encode symbols in mermaid diagrams when necessary', () => {
+            // This tests the fix for:
+            //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2355
+            //      Fix the handling of special characters in Mermaid status diagrams
 
-        // Arrange
-        const statusRegistry = new StatusRegistry();
-        statusRegistry.clearStatuses();
-        statusRegistry.add(new StatusConfiguration('<', 'Todo <', '<', false, StatusType.TODO));
-        statusRegistry.add(new StatusConfiguration('>', 'Todo >', '>', false, StatusType.TODO));
-        statusRegistry.add(new StatusConfiguration('"', 'Todo "', '"', false, StatusType.TODO));
-        statusRegistry.add(new StatusConfiguration('&', 'Todo &', '&', false, StatusType.TODO));
+            // Arrange
+            const statusRegistry = new StatusRegistry();
+            statusRegistry.clearStatuses();
+            statusRegistry.add(new StatusConfiguration('<', 'Todo <', '<', false, StatusType.TODO));
+            statusRegistry.add(new StatusConfiguration('>', 'Todo >', '>', false, StatusType.TODO));
+            statusRegistry.add(new StatusConfiguration('"', 'Todo "', '"', false, StatusType.TODO));
+            statusRegistry.add(new StatusConfiguration('&', 'Todo &', '&', false, StatusType.TODO));
 
-        // Assert
-        // Without detail:
-        expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
+            // Assert
+            // Without detail:
+            expect(statusRegistry.mermaidDiagram(false)).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -261,8 +303,8 @@ describe('StatusRegistry', () => {
             "
         `);
 
-        // With detail:
-        expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
+            // With detail:
+            expect(statusRegistry.mermaidDiagram(true)).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -286,22 +328,22 @@ describe('StatusRegistry', () => {
             \`\`\`
             "
         `);
-    });
+        });
 
-    it('should not include unknown nextStatusSymbols in mermaid diagrams', () => {
-        // Arrange
-        const statusRegistry = new StatusRegistry();
-        statusRegistry.clearStatuses();
-        statusRegistry.add(new StatusConfiguration(' ', 'Todo', '/', false, StatusType.TODO));
-        // Leave '/' as not registered
-        const originalNumberOfStatuses = statusRegistry.registeredStatuses.length;
+        it('should not include unknown nextStatusSymbols in mermaid diagrams', () => {
+            // Arrange
+            const statusRegistry = new StatusRegistry();
+            statusRegistry.clearStatuses();
+            statusRegistry.add(new StatusConfiguration(' ', 'Todo', '/', false, StatusType.TODO));
+            // Leave '/' as not registered
+            const originalNumberOfStatuses = statusRegistry.registeredStatuses.length;
 
-        // Act
-        const mermaidText = statusRegistry.mermaidDiagram();
+            // Act
+            const mermaidText = statusRegistry.mermaidDiagram();
 
-        // Assert
-        expect(statusRegistry.registeredStatuses.length).toEqual(originalNumberOfStatuses);
-        expect(mermaidText).toMatchInlineSnapshot(`
+            // Assert
+            expect(statusRegistry.registeredStatuses.length).toEqual(originalNumberOfStatuses);
+            expect(mermaidText).toMatchInlineSnapshot(`
             "
             \`\`\`mermaid
             flowchart LR
@@ -319,23 +361,27 @@ describe('StatusRegistry', () => {
             \`\`\`
             "
         `);
+        });
     });
 
     describe('toggling', () => {
+        const path = 'file.md';
+        const lineNumber = 3456;
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+        const taskLocation = new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const fallbackDate = null;
+
         it('should allow task to toggle through standard transitions', () => {
             // Arrange
             // Global statusRegistry instance - which controls toggling - will have been reset
             // in beforeEach() above.
             const line = '- [ ] this is a task starting at A';
-            const path = 'file.md';
-            const lineNumber = 3456;
-            const sectionStart = 1337;
-            const sectionIndex = 1209;
-            const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                taskLocation: new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader),
-                fallbackDate: null,
+                taskLocation,
+                fallbackDate,
             });
 
             // Act
@@ -356,15 +402,10 @@ describe('StatusRegistry', () => {
             // Global statusRegistry instance - which controls toggling - will have been reset
             // in beforeEach() above.
             const line = '- [-] This is a cancelled task';
-            const path = 'file.md';
-            const lineNumber = 3456;
-            const sectionStart = 1337;
-            const sectionIndex = 1209;
-            const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                taskLocation: new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader),
-                fallbackDate: null,
+                taskLocation,
+                fallbackDate,
             });
 
             // Act
@@ -391,15 +432,10 @@ describe('StatusRegistry', () => {
             globalStatusRegistry.add(statusC);
             globalStatusRegistry.add(statusD);
             const line = '- [a] this is a task starting at A';
-            const path = 'file.md';
-            const lineNumber = 3456;
-            const sectionStart = 1337;
-            const sectionIndex = 1209;
-            const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                taskLocation: new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader),
-                fallbackDate: null,
+                taskLocation,
+                fallbackDate,
             });
 
             // Act
@@ -440,43 +476,129 @@ describe('StatusRegistry', () => {
             // Ensure that the next status was applied, even though it is an unrecognised status
             expect(toggled?.status.symbol).toEqual('D');
         });
+    });
 
-        it('should find unknown statuses from tasks in the vault, sorted by symbol', () => {
+    describe('toggling recurring', () => {
+        /**
+         * Test one scenario of toggling a recurring task: confirm the status of the done task, and the next recurrence.
+         * @param statuses
+         * @param initialStatusSymbol - typically an incomplete status
+         * @param expectedToggledStatus - the next status - is expected to be DONE, so that the next recurrence is created.
+         * @param expectedNextTaskStatus - the expected status of the new recurrence.
+         */
+        function checkToggleAndRecurrenceStatuses(
+            statuses: Array<StatusCollectionEntry>,
+            initialStatusSymbol: string,
+            expectedToggledStatus: string,
+            expectedNextTaskStatus: string,
+        ) {
             // Arrange
-            const registry = new StatusRegistry();
-            expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
-            expect(registry.bySymbol('X').type).toEqual(StatusType.EMPTY);
-            expect(registry.bySymbol('d').type).toEqual(StatusType.EMPTY);
-            const allStatuses = [
-                new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
-                new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
-                new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
-                // Include some tasks with duplicate statuses, to make sure duplicates are discarded
-                new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
-                new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
-                new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
-                // Check that it does not add copies of any core statuses
-                new Status(new StatusConfiguration('-', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+            const statusRegistry = new StatusRegistry();
+            statusRegistry.set(constructStatuses(statuses));
+
+            const initialStatusForRecurringTask = statusRegistry.bySymbol(initialStatusSymbol);
+
+            // Act, Assert
+            const toggledStatus = statusRegistry.getNextStatusOrCreate(initialStatusForRecurringTask);
+            expect(toggledStatus).toEqual(statusRegistry.bySymbol(expectedToggledStatus));
+
+            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(toggledStatus);
+            expect(nextStatus).toEqual(statusRegistry.bySymbolOrCreate(expectedNextTaskStatus));
+        }
+
+        it('should make CANCELLED next task TODO', () => {
+            // See #2304:
+            // Completing a recurring task setting wrong status for new task [if the next custom status is not TODO]
+            // Ensure that the next status skips through to TODO for a recurring task:
+            const statuses = StatusExamples.doneTogglesToCancelled();
+            checkToggleAndRecurrenceStatuses(statuses, '/', 'x', ' ');
+        });
+
+        it('should find IN_PROGRESS for next recurrence, when statuses are IN_PROGRESS then DONE', () => {
+            const statuses: StatusCollection = [
+                ['1', '1 to 2', '2', 'IN_PROGRESS'],
+                ['2', '2 to 1', '1', 'DONE'],
             ];
+            checkToggleAndRecurrenceStatuses(statuses, '1', '2', '1');
+        });
 
-            // Act
-            const unknownStatuses = registry.findUnknownStatuses(allStatuses);
+        it('should find IN_PROGRESS for next recurrence, when statuses are DONE then IN_PROGRESS', () => {
+            const statuses: StatusCollection = [
+                ['1', '1 to 2', '2', 'DONE'],
+                ['2', '2 to 1', '1', 'IN_PROGRESS'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, '2', '1', '2');
+        });
 
-            // Assert
-            expect(unknownStatuses.length).toEqual(3);
+        it('should make CANCELLED next task IN_PROGRESS, if TODO not found', () => {
+            const statuses: StatusCollection = [
+                ['/', '/ to x', 'x', 'IN_PROGRESS'],
+                ['x', 'x to -', '-', 'DONE'],
+                ['-', '- to /', '/', 'CANCELLED'],
+            ];
+            // Ensure that the next status skips through to IN_PROGRESS for a recurring task, if TODO not found
+            checkToggleAndRecurrenceStatuses(statuses, '/', 'x', '/');
+        });
 
-            let s1;
-            s1 = unknownStatuses[0];
-            expect(s1.type).toEqual(StatusType.TODO);
-            expect(s1.name).toEqual('Unknown (!)');
+        it('should select TODO even if DONE is followed by IN_PROGRESS', () => {
+            // This is not intended to be realistic: its sole purpose is to have DONE followed by IN_PROGRESS,
+            // and ensure that this is chosen in preference to the TODO that is further ahead in the sequences
+            // of statuses.
+            const statuses: StatusCollection = [
+                ['T', 'T to D', 'D', 'TODO'],
+                ['D', 'D to I', 'I', 'DONE'],
+                ['I', 'I to T', 'T', 'IN_PROGRESS'],
+            ];
+            // Ensure that TODO is chosen, ignoring the IN_PROGRESS task immediately after DONE:
+            checkToggleAndRecurrenceStatuses(statuses, 'T', 'D', 'T');
+        });
 
-            s1 = unknownStatuses[1];
-            expect(s1.type).toEqual(StatusType.IN_PROGRESS);
-            expect(s1.name).toEqual('Unknown (d)');
+        it('should select the correct next status, when there is ambiguity', () => {
+            const statuses: StatusCollection = [
+                // A set of 4 statuses, chosen to see whether the loop size in getNextRecurrenceStatusOrCreate()
+                // affects the calculation in any way.
+                ['A', 'A to B', 'B', 'NON_TASK'],
+                ['B', 'B to C', 'C', 'NON_TASK'],
+                ['C', 'C to D', 'D', 'NON_TASK'],
+                ['D', 'D to E', 'E', 'NON_TASK'],
+                // A cycle of 6 statuses, not including any TODOs,
+                // to ensure that the correct IN_PROGRESS is selected.
+                ['1', '1 to 2', '2', 'IN_PROGRESS'],
+                ['2', '2 to 3', '3', 'DONE'],
+                ['3', '3 to 4', '4', 'CANCELLED'],
+                ['4', '4 to 5', '5', 'IN_PROGRESS'],
+                ['5', '5 to 6', '6', 'DONE'],
+                ['6', '6 to 1', '1', 'CANCELLED'],
+            ];
+            // Ensure that the IN_PROGRESS soonest after 2 is chosen:
+            checkToggleAndRecurrenceStatuses(statuses, '1', '2', '4');
+        });
 
-            s1 = unknownStatuses[2];
-            expect(s1.type).toEqual(StatusType.DONE);
-            expect(s1.name).toEqual('Unknown (X)');
+        it('should select the correct next status, even when it is unknown', () => {
+            const statuses: StatusCollection = [
+                // A set where the DONE task goes to an unknown symbol
+                ['a', 'Status a', 'b', 'TODO'],
+                ['b', 'Status b', 'c', 'DONE'], // c is not known
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, 'a', 'b', 'c');
+        });
+
+        it('should return space for symbol if there are no TODO or IN_PROGRESS in sequence', () => {
+            const statuses: StatusCollection = [
+                [' ', 'Todo', 'x', 'TODO'],
+                ['x', 'Done', ' ', 'DONE'],
+                ['C', 'C to D', 'D', 'CANCELLED'],
+                ['D', 'D to C', 'C', 'DONE'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, 'C', 'D', ' ');
+        });
+
+        it('should return space for symbol if it is not a known status', () => {
+            const statuses: StatusCollection = [
+                ['C', 'C to D', 'D', 'CANCELLED'],
+                ['D', 'D to C', 'C', 'DONE'],
+            ];
+            checkToggleAndRecurrenceStatuses(statuses, 'C', 'D', ' ');
         });
     });
 });

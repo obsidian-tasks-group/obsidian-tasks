@@ -193,6 +193,13 @@ export class Status {
     }
 
     /**
+     * A sample Non-Task status. Goes to NON_TASK when toggled.
+     */
+    static makeNonTask(): Status {
+        return new Status(new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK));
+    }
+
+    /**
      * Return the StatusType to use for a symbol, if it is not in the StatusRegistry.
      * The core symbols are recognised.
      * Other symbols are treated as StatusType.TODO
@@ -257,6 +264,13 @@ export class Status {
      */
     public isCompleted(): boolean {
         return this.type === StatusType.DONE;
+    }
+
+    /**
+     * Whether the task status type is {@link CANCELLED}.
+     */
+    public isCancelled(): boolean {
+        return this.type === StatusType.CANCELLED;
     }
 
     /**

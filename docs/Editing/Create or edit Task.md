@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Getting Started/Create or edit Task
 ---
 
 # 'Create or edit Task' Modal
@@ -25,6 +27,8 @@ All the fields of the form have "access keys", that is, keyboard shortcuts. The 
 
 - On Windows, press the `Alt`-key and the underlined letter at the same time.
 - On Mac, press `Ctrl`-key and the `Option`-key and the underlined letter at the same time.
+
+See [[#Hotkey and keyboard shortcut conflict]] below for important information relating to keyboard shortcuts and the hotkey used to open this modal.
 
 ### Turning off keyboard shortcuts
 
@@ -71,6 +75,11 @@ Here you can optionally give the task
 [[Dates#Scheduled date|scheduled]] and
 [[Dates#Start date|start]] dates.
 
+You can also add or edit
+[[Dates#Created date|created]],
+[[Dates#Done date|done]] and
+[[Dates#Cancelled date|cancelled]] dates.
+
 There is a lot of flexibility here. For example:
 
 - You can type in exact dates, such as `2022-11-28`.
@@ -79,8 +88,13 @@ There is a lot of flexibility here. For example:
 
 Note that relative dates will be always interpreted as being in the future, because that is usually what you want. You can change this behavior by unchecking "Only future dates" if you want to enter an overdue task or experiment with the way how relative dates in the past would be interpreted in queries.
 
+> [!Info]
+> If you have enabled ‘Set created date on every added task’ in Tasks settings (and restarted Obsidian), when you create a new Task via this modal, today's date will be added automatically.
+
 > [!released]
-`Only future dates` was introduced in Tasks 1.15.0.
+>
+> - `Only future dates` was introduced in Tasks 1.15.0.
+> - Editing of [[Dates#Created date|created]], [[Dates#Done date|done]] and [[Dates#Cancelled date|cancelled]] dates was introduced in Tasks 5.5.0.
 
 ### Date abbreviations
 
@@ -121,7 +135,7 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
 >
-> For now, you should still complete tasks via command or by clicking on task checkboxes.
+> For now, you should still complete tasks via [[Toggling and Editing Statuses#'Tasks Toggle task done' command|command]], by [[Toggling and Editing Statuses#Toggling Tasks with mouse|clicking on task checkboxes]] or by [[Toggling and Editing Statuses#'Change task status' context menu|right-clicking on task checkboxes]].
 
 ## Display values
 
@@ -130,19 +144,6 @@ These values cannot currently be edited in this modal.
 ### Completed
 
 A read-only checkbox, showing whether the task is completed.
-
-### Created on
-
-> [!released]
-Created date was introduced in Tasks 2.0.0.
-
-A read-only display of the task's [[Dates#Created date|created date]], if any.
-
-If you have enabled ‘Set created date on every added task’ in Tasks settings (and restarted Obsidian), when you create a new Task via this modal, today's date will be added automatically.
-
-### Done on
-
-A read-only display of the task's [[Dates#Done date|done date]], if any.
 
 ## Finishing off
 
@@ -169,7 +170,7 @@ To close the modal and cancel your edits, do one of:
 >
 > We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
 >
-> For now, you should still complete tasks via command or by clicking on task checkboxes.
+> For now, you should still complete tasks via [[Toggling and Editing Statuses#'Tasks Toggle task done' command|command]], by [[Toggling and Editing Statuses#Toggling Tasks with mouse|clicking on task checkboxes]] or by [[Toggling and Editing Statuses#'Change task status' context menu|right-clicking on task checkboxes]].
 
 ### Need to scroll on phone screens
 
@@ -181,6 +182,14 @@ Tap on the screen and drag down, and you will see a scrollbar appear temporarily
 More importantly, the scrolling does then work fine.
 
 We are tracking the iPhone scrollbar issue in [issue #1238](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1238).
+
+### Hotkey and keyboard shortcut conflict
+
+If the [custom hotkey](https://help.obsidian.md/Customization/Custom+hotkeys) for the 'Create or edit Task' Modal is the same as one of the keyboard shortcuts  [[#Keyboard shortcuts]] used in this modal, then when the modal opens, **the keyboard shortcut is unexpectedly also triggered**.
+
+For example, making `Alt + O` (Linux and Windows) or `Ctrl + Opt + O` (Mac) will mean that when the modal opens, the `Lowest` priority is selected, instead of `Normal`.
+
+We are tracking this in [issue #2503](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2503).
 
 ## Use this modal in scripts and other plugins
 

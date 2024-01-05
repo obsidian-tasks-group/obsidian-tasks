@@ -4,6 +4,8 @@ import type { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { Query } from '../../src/Query/Query';
 import { explainResults } from '../../src/lib/QueryRendererHelper';
+import type { Task } from '../../src/Task';
+import { verifyMarkdown } from './VerifyMarkdown';
 
 export function printIteration<T1>(func: <T1>(t1: T1) => any, params1: T1[]): string {
     const EMPTY_ENTRY = {};
@@ -94,4 +96,28 @@ export function verifyTaskBlockExplanation(
     const explanation = explainResults(instructions, globalFilter, globalQuery, 'some/sample/file path.md');
 
     verifyWithFileExtension(explanation, 'explanation.text', options);
+}
+
+/**
+ * Write tasks to a markdown file, to enable their contents to be visualised.
+ *
+ * They are written in the order they are given.
+ * @param tasks
+ * @see verifyTaskListInReverseOrder
+ */
+export function verifyTaskList(tasks: Task[]) {
+    verifyMarkdown(tasks.map((task) => task.toFileLineString()).join('\n'));
+}
+
+/**
+ * Write tasks to a markdown file, to enable their contents to be visualised.
+ *
+ * They are written in reverse order, which may be useful for easier understand of toggled tasks.
+ *
+ * @param tasks
+ * @see verifyTaskList
+ */
+export function verifyTaskListInReverseOrder(tasks: Task[]) {
+    const reverse = [...tasks].reverse();
+    verifyTaskList(reverse);
 }

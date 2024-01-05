@@ -2,17 +2,36 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import type { Task } from 'Task';
 import {
     type HappensDate,
+    createPostponedTask,
     getDateFieldToPostpone,
+    postponeButtonTitle,
+    postponeMenuItemTitle,
     postponementSuccessMessage,
     shouldShowPostponeButton,
 } from '../../src/Scripting/Postponer';
-import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { Status } from '../../src/Status';
+import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
+
+const yesterday = '2023-12-02';
+const today = '2023-12-03';
+const tomorrow = '2023-12-04';
+
+const invalidDate = '2023-12-36';
+
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(today));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
 
 describe('postpone - date field choice', () => {
     function checkPostponeField(taskBuilder: TaskBuilder, expected: HappensDate | null) {
@@ -67,13 +86,15 @@ describe('postpone - date field choice', () => {
         const taskBuilder = new TaskBuilder().scheduledDate(date).startDate(date);
         checkPostponeField(taskBuilder, 'scheduledDate');
     });
+
+    // TODO Check it refuses to postpone an invalid date (failing test)
 });
 
 describe('postpone - whether to show button', () => {
     it('should account for status type', () => {
         function checkPostponeButtonVisibility(statusType: StatusType, expected: boolean) {
             const status = new Status(new StatusConfiguration('p', 'Test', 'q', true, statusType));
-            const task = new TaskBuilder().status(status).build();
+            const task = new TaskBuilder().dueDate('2023-10-30').status(status).build();
             expect(shouldShowPostponeButton(task)).toEqual(expected);
         }
 
@@ -86,6 +107,135 @@ describe('postpone - whether to show button', () => {
         checkPostponeButtonVisibility(StatusType.CANCELLED, false);
         checkPostponeButtonVisibility(StatusType.DONE, false);
     });
+
+    it('should not show button for a task with no dates', () => {
+        const task = new TaskBuilder().build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(false);
+    });
+
+    it('should not show button for a task with a created date only', () => {
+        const task = new TaskBuilder().createdDate('2023-11-29').build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(false);
+    });
+
+    it('should not show button for a task with a done date only', () => {
+        const task = new TaskBuilder().doneDate('2023-11-30').build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(false);
+    });
+
+    it('should show button for a task with a start date only', () => {
+        const task = new TaskBuilder().startDate('2023-12-01').build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(true);
+    });
+
+    it('should not show button for a task with an invalid start date', () => {
+        const task = new TaskBuilder().startDate(invalidDate).build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(false);
+    });
+
+    it('should show button for a task with a scheduled date only', () => {
+        const task = new TaskBuilder().scheduledDate('2023-12-02').build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(true);
+    });
+
+    it('should not show button for a task with an invalid scheduled date', () => {
+        const task = new TaskBuilder().scheduledDate(invalidDate).build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(false);
+    });
+
+    it('should show button for a task with a due date only', () => {
+        const task = new TaskBuilder().dueDate('2023-12-03').build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(true);
+    });
+
+    it('should not show button for a task with an invalid due date', () => {
+        const task = new TaskBuilder().dueDate(invalidDate).build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(false);
+    });
+
+    it('should not show button for a task with an invalid created date', () => {
+        const task = new TaskBuilder().createdDate(invalidDate).scheduledDate(today).build();
+
+        expect(shouldShowPostponeButton(task)).toEqual(false);
+    });
+});
+
+describe('postpone - UI text', () => {
+    it('should include date type and new date in button tooltip', () => {
+        const task = new TaskBuilder().dueDate(today).build();
+        expect(postponeButtonTitle(task, 1, 'day')).toEqual(
+            'ℹ️ Due in a day, on Mon 4th Dec (right-click for more options)',
+        );
+        expect(postponeButtonTitle(task, 2, 'days')).toEqual(
+            'ℹ️ Due in 2 days, on Tue 5th Dec (right-click for more options)',
+        );
+    });
+
+    it('should include date type and new date in context menu labels when due today', () => {
+        const task = new TaskBuilder().dueDate(today).build();
+
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Mon 4th Dec');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
+    });
+
+    it('should include date type and new date in context menu labels when overdue', () => {
+        const task = new TaskBuilder().scheduledDate(yesterday).build();
+
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Scheduled in a day, on Mon 4th Dec');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Scheduled in 2 days, on Tue 5th Dec');
+    });
+
+    it('should include date type and new date in context menu labels when due in future', () => {
+        const task = new TaskBuilder().startDate(tomorrow).build();
+
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Postpone start date by a day, to Tue 5th Dec');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Postpone start date by 2 days, to Wed 6th Dec');
+    });
+});
+
+describe('postpone - new task creation', () => {
+    function testPostponedTaskAndDate(task: Task, expectedDateField: HappensDate, expectedPostponedDate: string) {
+        const { postponedDate, postponedTask } = createPostponedTask(task, expectedDateField, 'day', 1);
+        expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+        expect(postponedTask[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+
+        // If the scheduled date was inferred from the filename, and it is the scheduledDate that was postponed,
+        // we must ensure that the 'inferred' flag has been reset to false.
+        // Otherwise, the new scheduled date will be ignored in some locations, like rendering of dates.
+        if (task.scheduledDateIsInferred && expectedDateField === 'scheduledDate') {
+            expect(postponedTask.scheduledDateIsInferred).toEqual(false);
+        }
+    }
+
+    it('should postpone an overdue task to today', () => {
+        const task = new TaskBuilder().dueDate('2023-11-01').build();
+        const expectedPostponedDate = '2023-12-04';
+        testPostponedTaskAndDate(task, 'dueDate', expectedPostponedDate);
+    });
+
+    it('should postpone a task scheduled today to tomorrow', () => {
+        const task = new TaskBuilder().scheduledDate('2023-12-03').build();
+        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
+    });
+
+    it('should postpone a task scheduled today to tomorrow, when the scheduled date is inferred', () => {
+        const task = new TaskBuilder().scheduledDate('2023-12-03').scheduledDateIsInferred(true).build();
+        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
+    });
+
+    it('should postpone a task that starts in the future to the next day', () => {
+        const task = new TaskBuilder().startDate('2024-03-05').build();
+        testPostponedTaskAndDate(task, 'startDate', '2024-03-06');
+    });
 });
 
 describe('postpone - postponement success message', () => {
@@ -95,7 +245,7 @@ describe('postpone - postponement success message', () => {
     });
 
     it('should generate a message for an invalid date', () => {
-        const message = postponementSuccessMessage(moment('2023-13-30'), 'dueDate');
+        const message = postponementSuccessMessage(moment(invalidDate), 'dueDate');
         expect(message).toEqual("Task's dueDate postponed until Invalid date");
     });
 });

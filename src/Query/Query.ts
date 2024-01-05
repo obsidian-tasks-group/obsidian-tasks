@@ -1,6 +1,7 @@
+import { QueryLayoutOptions } from '../QueryLayoutOptions';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
-import { LayoutOptions } from '../TaskLayout';
+import { TaskLayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
@@ -15,6 +16,7 @@ import type { Filter } from './Filter/Filter';
 import { QueryResult } from './QueryResult';
 import { scan } from './Scanner';
 import { SearchInfo } from './SearchInfo';
+import { Explainer } from './Explain/Explainer';
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
@@ -23,7 +25,8 @@ export class Query implements IQuery {
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
-    private _layoutOptions: LayoutOptions = new LayoutOptions();
+    private _taskLayoutOptions: TaskLayoutOptions = new TaskLayoutOptions();
+    private _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorter[] = [];
@@ -31,8 +34,9 @@ export class Query implements IQuery {
     private _ignoreGlobalQuery: boolean = false;
 
     private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|postpone button|urgency|tags|depends on|id)/i;
+        /^(hide|show) (task count|backlink|priority|cancelled date|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|postpone button|urgency|tags|depends on|id)/i;
     private readonly shortModeRegexp = /^short/i;
+    private readonly fullModeRegexp = /^full/i;
     private readonly explainQueryRegexp = /^explain/i;
     private readonly ignoreGlobalQueryRegexp = /^ignore global query/i;
 
@@ -61,10 +65,13 @@ export class Query implements IQuery {
 
             switch (true) {
                 case this.shortModeRegexp.test(line):
-                    this._layoutOptions.shortMode = true;
+                    this._queryLayoutOptions.shortMode = true;
+                    break;
+                case this.fullModeRegexp.test(line):
+                    this._queryLayoutOptions.shortMode = false;
                     break;
                 case this.explainQueryRegexp.test(line):
-                    this._layoutOptions.explainQuery = true;
+                    this._queryLayoutOptions.explainQuery = true;
                     break;
                 case this.ignoreGlobalQueryRegexp.test(line):
                     this._ignoreGlobalQuery = true;
@@ -158,63 +165,24 @@ ${source}`;
      * Use {@link explainResults} if you want to see any global query and global filter as well.
      */
     public explainQuery(): string {
-        let result = '';
-
-        if (this.error !== undefined) {
-            result += 'Query has an error:\n';
-            result += this.error + '\n';
-            return result;
-        }
-
-        const numberOfFilters = this.filters.length;
-        if (numberOfFilters === 0) {
-            result += 'No filters supplied. All tasks will match the query.';
-        } else {
-            for (let i = 0; i < numberOfFilters; i++) {
-                if (i > 0) result += '\n';
-                result += this.filters[i].explainFilterIndented('');
-            }
-        }
-        result += this.explainQueryLimits();
-
-        const { debugSettings } = getSettings();
-        if (debugSettings.ignoreSortInstructions) {
-            result +=
-                "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
-        }
-
-        return result;
-    }
-
-    private explainQueryLimits() {
-        let result = '';
-
-        function getPluralisedText(limit: number) {
-            let text = `\n\nAt most ${limit} task`;
-            if (limit !== 1) {
-                text += 's';
-            }
-            return text;
-        }
-
-        if (this._limit !== undefined) {
-            result += getPluralisedText(this._limit);
-            result += '.\n';
-        }
-
-        if (this._taskGroupLimit !== undefined) {
-            result += getPluralisedText(this._taskGroupLimit);
-            result += ' per group (if any "group by" options are supplied).\n';
-        }
-        return result;
+        const explainer = new Explainer();
+        return explainer.explainQuery(this);
     }
 
     public get limit(): number | undefined {
         return this._limit;
     }
 
-    public get layoutOptions(): LayoutOptions {
-        return this._layoutOptions;
+    public get taskGroupLimit(): number | undefined {
+        return this._taskGroupLimit;
+    }
+
+    public get taskLayoutOptions(): TaskLayoutOptions {
+        return this._taskLayoutOptions;
+    }
+
+    public get queryLayoutOptions(): QueryLayoutOptions {
+        return this._queryLayoutOptions;
     }
 
     public get filters(): Filter[] {
@@ -290,49 +258,52 @@ Problem line: "${line}"`;
 
             switch (option) {
                 case 'task count':
-                    this._layoutOptions.hideTaskCount = hide;
+                    this._queryLayoutOptions.hideTaskCount = hide;
                     break;
                 case 'backlink':
-                    this._layoutOptions.hideBacklinks = hide;
+                    this._queryLayoutOptions.hideBacklinks = hide;
                     break;
                 case 'postpone button':
-                    this._layoutOptions.hidePostponeButton = hide;
+                    this._queryLayoutOptions.hidePostponeButton = hide;
                     break;
                 case 'priority':
-                    this._layoutOptions.hidePriority = hide;
+                    this._taskLayoutOptions.hidePriority = hide;
+                    break;
+                case 'cancelled date':
+                    this._taskLayoutOptions.hideCancelledDate = hide;
                     break;
                 case 'created date':
-                    this._layoutOptions.hideCreatedDate = hide;
+                    this._taskLayoutOptions.hideCreatedDate = hide;
                     break;
                 case 'start date':
-                    this._layoutOptions.hideStartDate = hide;
+                    this._taskLayoutOptions.hideStartDate = hide;
                     break;
                 case 'scheduled date':
-                    this._layoutOptions.hideScheduledDate = hide;
+                    this._taskLayoutOptions.hideScheduledDate = hide;
                     break;
                 case 'due date':
-                    this._layoutOptions.hideDueDate = hide;
+                    this._taskLayoutOptions.hideDueDate = hide;
                     break;
                 case 'done date':
-                    this._layoutOptions.hideDoneDate = hide;
+                    this._taskLayoutOptions.hideDoneDate = hide;
                     break;
                 case 'recurrence rule':
-                    this._layoutOptions.hideRecurrenceRule = hide;
+                    this._taskLayoutOptions.hideRecurrenceRule = hide;
                     break;
                 case 'edit button':
-                    this._layoutOptions.hideEditButton = hide;
+                    this._queryLayoutOptions.hideEditButton = hide;
                     break;
                 case 'urgency':
-                    this._layoutOptions.hideUrgency = hide;
+                    this._queryLayoutOptions.hideUrgency = hide;
                     break;
                 case 'tags':
-                    this._layoutOptions.hideTags = hide;
+                    this._taskLayoutOptions.hideTags = hide;
                     break;
                 case 'id':
-                    this._layoutOptions.hideId = hide;
+                    this._taskLayoutOptions.hideId = hide;
                     break;
                 case 'depends on':
-                    this._layoutOptions.hideBlockedBy = hide;
+                    this._taskLayoutOptions.hideBlockedBy = hide;
                     break;
                 default:
                     this.setError('do not understand hide/show option', line);

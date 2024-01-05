@@ -13,12 +13,16 @@ describe('explain', () => {
     it('should explain a task', () => {
         const source = '';
         const query = new Query(source);
+        expect(explainResults(query.source, new GlobalFilter(), new GlobalQuery())).toMatchInlineSnapshot(`
+            "Explanation of this Tasks code block query:
 
-        const expectedDisplayText = `Explanation of this Tasks code block query:
+              No filters supplied. All tasks will match the query.
 
-No filters supplied. All tasks will match the query.`;
+              No grouping instructions supplied.
 
-        expect(explainResults(query.source, new GlobalFilter(), new GlobalQuery())).toEqual(expectedDisplayText);
+              No sorting instructions supplied.
+            "
+        `);
     });
 
     it('should explain a task with global filter active', () => {
@@ -27,13 +31,18 @@ No filters supplied. All tasks will match the query.`;
 
         const source = '';
         const query = new Query(source);
+        expect(explainResults(query.source, globalFilter, new GlobalQuery())).toMatchInlineSnapshot(`
+            "Only tasks containing the global filter '#task'.
 
-        const expectedDisplayText = `Only tasks containing the global filter '#task'.
+            Explanation of this Tasks code block query:
 
-Explanation of this Tasks code block query:
+              No filters supplied. All tasks will match the query.
 
-No filters supplied. All tasks will match the query.`;
-        expect(explainResults(query.source, globalFilter, new GlobalQuery())).toEqual(expectedDisplayText);
+              No grouping instructions supplied.
+
+              No sorting instructions supplied.
+            "
+        `);
     });
 
     it('should explain a task with global query active', () => {
@@ -41,16 +50,24 @@ No filters supplied. All tasks will match the query.`;
 
         const source = '';
         const query = new Query(source);
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toMatchInlineSnapshot(`
+            "Explanation of the global query:
 
-        const expectedDisplayText = `Explanation of the global query:
+              description includes hello
 
-description includes hello
+              No grouping instructions supplied.
 
-Explanation of this Tasks code block query:
+              No sorting instructions supplied.
 
-No filters supplied. All tasks will match the query.`;
+            Explanation of this Tasks code block query:
 
-        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toEqual(expectedDisplayText);
+              No filters supplied. All tasks will match the query.
+
+              No grouping instructions supplied.
+
+              No sorting instructions supplied.
+            "
+        `);
     });
 
     it('should explain a task with global query and global filter active', () => {
@@ -60,18 +77,26 @@ No filters supplied. All tasks will match the query.`;
 
         const source = '';
         const query = new Query(source);
+        expect(explainResults(query.source, globalFilter, globalQuery)).toMatchInlineSnapshot(`
+            "Only tasks containing the global filter '#task'.
 
-        const expectedDisplayText = `Only tasks containing the global filter '#task'.
+            Explanation of the global query:
 
-Explanation of the global query:
+              description includes hello
 
-description includes hello
+              No grouping instructions supplied.
 
-Explanation of this Tasks code block query:
+              No sorting instructions supplied.
 
-No filters supplied. All tasks will match the query.`;
+            Explanation of this Tasks code block query:
 
-        expect(explainResults(query.source, globalFilter, globalQuery)).toEqual(expectedDisplayText);
+              No filters supplied. All tasks will match the query.
+
+              No grouping instructions supplied.
+
+              No sorting instructions supplied.
+            "
+        `);
     });
 
     it('should explain a task with global query set but ignored without the global query', () => {
@@ -79,12 +104,16 @@ No filters supplied. All tasks will match the query.`;
 
         const source = 'ignore global query';
         const query = new Query(source);
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toMatchInlineSnapshot(`
+            "Explanation of this Tasks code block query:
 
-        const expectedDisplayText = `Explanation of this Tasks code block query:
+              No filters supplied. All tasks will match the query.
 
-No filters supplied. All tasks will match the query.`;
+              No grouping instructions supplied.
 
-        expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toEqual(expectedDisplayText);
+              No sorting instructions supplied.
+            "
+        `);
     });
 });
 

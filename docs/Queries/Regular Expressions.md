@@ -95,8 +95,12 @@ path regex matches /^Root/Sub-Folder/Sample File\.md/i
 ```text
 Explanation of this Tasks code block query:
 
-path regex matches /^Root/Sub-Folder/Sample File\.md/i =>
-  using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
+  path regex matches /^Root/Sub-Folder/Sample File\.md/i =>
+    using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
+
+  No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 

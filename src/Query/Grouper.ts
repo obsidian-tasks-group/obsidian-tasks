@@ -25,6 +25,8 @@ export type GrouperFunction = (task: Task, searchInfo: SearchInfo) => string[];
  * @see {@link TaskGroups} for how to use {@link Grouper} objects to group tasks together.
  */
 export class Grouper {
+    public instruction: string;
+
     /**
      * The type of grouper, for example 'tags' or 'due'.
      *
@@ -43,7 +45,8 @@ export class Grouper {
      */
     public readonly reverse: boolean;
 
-    constructor(property: string, grouper: GrouperFunction, reverse: boolean) {
+    constructor(instruction: string, property: string, grouper: GrouperFunction, reverse: boolean) {
+        this.instruction = instruction;
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;

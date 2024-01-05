@@ -34,6 +34,17 @@ span.related-pages a.tag {
     border-radius: 12px;
 }
 
+/* Style <span class="caption">....</span> */
+/* TODO Experiment with https://www.w3.org/Style/Examples/007/figures.en.html */
+
+span.caption {
+    font-style: italic;
+    /* centering is disabled as images are not currently centered: */
+    /*text-align: center;*/
+    margin-bottom: 1.5rem;
+    display:block; /* force some whitespace after the caption */
+}
+
 /* Simulate a horizontal rule before each level-2 heading.
    This is useful in dividing up long pages, so their structure is visible, by saving contributors
    from having to remember to add actual horizontal rules manually.
@@ -61,7 +72,7 @@ table tr:nth-child(even) {
 
 /* Put a soft border around images, to make them stand out from the background */
 img {
-    margin-bottom: 1.5rem;
+    /*margin-bottom: 1.5rem;*/
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 3px 10px rgba(0, 0, 0, 0.08);
 }

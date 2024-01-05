@@ -14,9 +14,11 @@ The following elements exist:
 <!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
 
 - `edit button`
+- `postpone button`
 - `backlink`
 - `urgency`
 - `priority`
+- `cancelled date`
 - `created date`
 - `start date`
 - `scheduled date`
@@ -35,9 +37,11 @@ The following elements exist:
 > 1. It is not possible to hide or show individual tags. We are tracking this in [discussion #848](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/848).
 
 > [!released]
-`urgency` was introduced in Tasks 1.14.0.<br>
-`created date` was introduced in Tasks 2.0.0.<br>
-`tags` was introduced in Tasks 4.1.0.
+>
+> - `urgency` was introduced in Tasks 1.14.0.
+> - `created date` was introduced in Tasks 2.0.0.
+> - `tags` was introduced in Tasks 4.1.0.
+> - `cancelled date` was introduced in Tasks 5.5.0.
 
 All of these elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.
@@ -56,6 +60,23 @@ Example:
     show urgency
     ```
 
+## Full Mode
+
+In full mode, query results will show the emojis and the concrete recurrence rule or dates.
+
+This is the default mode.
+
+The command is `full mode`.
+
+Example:
+
+    ```tasks
+    not done
+    full mode
+    ```
+
+This can be reversed with [[#Short Mode]].
+
 ## Short Mode
 
 In short mode, query results will only show the emojis, but not the concrete recurrence rule or dates.
@@ -69,3 +90,5 @@ Example:
     not done
     short mode
     ```
+
+This can be reversed with [[#Full Mode]].

@@ -52,6 +52,22 @@ expect.extend({
 });
 
 // ---------------------------------------------------------------------
+// CustomMatchersForRendering
+// ---------------------------------------------------------------------
+import {
+    toHaveAChildSpanWithClass,
+    toHaveAChildSpanWithClassAndDataAttributes,
+    toHaveAmongDataAttributes,
+    toHaveDataAttributes,
+} from './CustomMatchersForRendering';
+expect.extend({
+    toHaveAChildSpanWithClass,
+    toHaveAChildSpanWithClassAndDataAttributes,
+    toHaveAmongDataAttributes,
+    toHaveDataAttributes,
+});
+
+// ---------------------------------------------------------------------
 // CustomMatchersForTaskBuilder
 // ---------------------------------------------------------------------
 import { toBeIdenticalTo } from './CustomMatchersForTaskBuilder';
@@ -62,8 +78,9 @@ expect.extend({
 // ---------------------------------------------------------------------
 // CustomMatchersForTasks
 // ---------------------------------------------------------------------
-import { toToggleTo, toToggleWithRecurrenceInUsersOrderTo } from './CustomMatchersForTasks';
+import { toMatchMarkdownLines, toToggleTo, toToggleWithRecurrenceInUsersOrderTo } from './CustomMatchersForTasks';
 expect.extend({
+    toMatchMarkdownLines,
     toToggleTo,
     toToggleWithRecurrenceInUsersOrderTo,
 });

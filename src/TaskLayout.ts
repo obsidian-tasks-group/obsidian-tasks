@@ -1,25 +1,24 @@
+import { QueryLayoutOptions } from './QueryLayoutOptions';
+
 /**
- * Various rendering options for a query.
+ * Various rendering options of tasks in a query.
  * See applyOptions below when adding options here.
+ *
+ * @see QueryLayoutOptions
  */
-export class LayoutOptions {
-    hidePostponeButton: boolean = false;
-    hideTaskCount: boolean = false;
-    hideBacklinks: boolean = false;
+export class TaskLayoutOptions {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     hidePriority: boolean = false;
     hideCreatedDate: boolean = false;
     hideStartDate: boolean = false;
     hideScheduledDate: boolean = false;
     hideDoneDate: boolean = false;
+    hideCancelledDate: boolean = false;
     hideDueDate: boolean = false;
     hideRecurrenceRule: boolean = false;
-    hideEditButton: boolean = false;
-    hideUrgency: boolean = true;
     hideTags: boolean = false;
     hideId: boolean = false;
     hideBlockedBy: boolean = false;
-    shortMode: boolean = false;
-    explainQuery: boolean = false;
 }
 
 export type TaskLayoutComponent =
@@ -32,16 +31,67 @@ export type TaskLayoutComponent =
     | 'scheduledDate'
     | 'dueDate'
     | 'doneDate'
+    | 'cancelledDate'
     | 'blockedBy'
     | 'id'
     | 'blockLink';
 
+export class QueryLayout {
+    protected queryLayoutOptions: QueryLayoutOptions;
+
+    constructor(queryLayoutOptions?: QueryLayoutOptions) {
+        if (queryLayoutOptions) {
+            this.queryLayoutOptions = queryLayoutOptions;
+        } else {
+            this.queryLayoutOptions = new QueryLayoutOptions();
+        }
+    }
+
+    protected applyQueryLayoutOptions(taskListHiddenClasses: string[]) {
+        const componentsToGenerateClassesOnly: [boolean, string][] = [
+            // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
+            // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
+            // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).
+            // This can benefit from some refactoring, i.e. render these components in a similar flow rather than
+            // separately.
+            [this.queryLayoutOptions.hideUrgency, 'urgency'],
+            [this.queryLayoutOptions.hideBacklinks, 'backlinks'],
+            [this.queryLayoutOptions.hideEditButton, 'edit-button'],
+            [this.queryLayoutOptions.hidePostponeButton, 'postpone-button'],
+        ];
+        for (const [hide, component] of componentsToGenerateClassesOnly) {
+            generateHiddenClassForTaskList(taskListHiddenClasses, hide, component);
+        }
+
+        if (this.queryLayoutOptions.shortMode) taskListHiddenClasses.push('tasks-layout-short-mode');
+    }
+}
+
+function generateHiddenClassForTaskList(taskListHiddenClasses: string[], hide: boolean, component: string) {
+    if (hide) {
+        taskListHiddenClasses.push(hiddenComponentClassName(component));
+    }
+}
+
+function hiddenComponentClassName(component: string) {
+    return `tasks-layout-hide-${component}`;
+}
+
 /**
  * This represents the desired layout of tasks when they are rendered in a given configuration.
  * The layout is used when flattening the task to a string and when rendering queries, and can be
- * modified by applying {@link LayoutOptions} objects.
+ * modified by applying {@link TaskLayoutOptions} objects.
  */
-export class TaskLayout {
+export class TaskLayout extends QueryLayout {
+    public shownTaskLayoutComponents(): TaskLayoutComponent[] {
+        return this._shownTaskLayoutComponents;
+    }
+    public hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
+        return this._hiddenTaskLayoutComponents;
+    }
+    public taskListHiddenClasses(): string[] {
+        return this._taskListHiddenClasses;
+    }
     public defaultLayout: TaskLayoutComponent[] = [
         // NEW_TASK_FIELD_EDIT_REQUIRED
         'description',
@@ -51,71 +101,58 @@ export class TaskLayout {
         'startDate',
         'scheduledDate',
         'dueDate',
+        'cancelledDate',
         'doneDate',
         'blockedBy',
         'id',
         'blockLink',
     ];
-    public shownTaskLayoutComponents: TaskLayoutComponent[];
-    public hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
-    public options: LayoutOptions;
-    public taskListHiddenClasses: string[] = [];
+    private _shownTaskLayoutComponents: TaskLayoutComponent[];
+    private _hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
+    private taskLayoutOptions: TaskLayoutOptions;
+    private _taskListHiddenClasses: string[] = [];
 
-    constructor(options?: LayoutOptions) {
-        if (options) {
-            this.options = options;
+    constructor(taskLayoutOptions?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
+        super(queryLayoutOptions);
+
+        if (taskLayoutOptions) {
+            this.taskLayoutOptions = taskLayoutOptions;
         } else {
-            this.options = new LayoutOptions();
+            this.taskLayoutOptions = new TaskLayoutOptions();
         }
-        this.shownTaskLayoutComponents = this.defaultLayout;
+
+        this._shownTaskLayoutComponents = this.defaultLayout;
         this.applyOptions();
     }
 
     private applyOptions() {
+        this.applyTaskLayoutOptions();
+        this.applyQueryLayoutOptions(this._taskListHiddenClasses);
+    }
+
+    private applyTaskLayoutOptions() {
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
         const componentsToHideAndGenerateClasses: [boolean, TaskLayoutComponent][] = [
             // NEW_TASK_FIELD_EDIT_REQUIRED
-            [this.options.hidePriority, 'priority'],
-            [this.options.hideRecurrenceRule, 'recurrenceRule'],
-            [this.options.hideCreatedDate, 'createdDate'],
-            [this.options.hideStartDate, 'startDate'],
-            [this.options.hideScheduledDate, 'scheduledDate'],
-            [this.options.hideDueDate, 'dueDate'],
-            [this.options.hideDoneDate, 'doneDate'],
-            [this.options.hideBlockedBy, 'blockedBy'],
-            [this.options.hideId, 'id'],
+            [this.taskLayoutOptions.hidePriority, 'priority'],
+            [this.taskLayoutOptions.hideRecurrenceRule, 'recurrenceRule'],
+            [this.taskLayoutOptions.hideCreatedDate, 'createdDate'],
+            [this.taskLayoutOptions.hideStartDate, 'startDate'],
+            [this.taskLayoutOptions.hideScheduledDate, 'scheduledDate'],
+            [this.taskLayoutOptions.hideDueDate, 'dueDate'],
+            [this.taskLayoutOptions.hideCancelledDate, 'cancelledDate'],
+            [this.taskLayoutOptions.hideDoneDate, 'doneDate'],
+            [this.taskLayoutOptions.hideBlockedBy, 'blockedBy'],
+            [this.taskLayoutOptions.hideId, 'id'],
         ];
         for (const [hide, component] of componentsToHideAndGenerateClasses) {
             this.hideComponent(hide, component);
-            this.generateHiddenClassForTaskList(hide, component);
+            generateHiddenClassForTaskList(this._taskListHiddenClasses, hide, component);
         }
 
-        const componentsToGenerateClassesOnly: [boolean, string][] = [
-            // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-            [this.options.hideTags, 'tags'],
-
-            // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
-            // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
-            // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).
-            // This can benefit from some refactoring, i.e. render these components in a similar flow rather than
-            // separately.
-            [this.options.hideUrgency, 'urgency'],
-            [this.options.hideBacklinks, 'backlinks'],
-            [this.options.hideEditButton, 'edit-button'],
-            [this.options.hidePostponeButton, 'postpone-button'],
-        ];
-        for (const [hide, component] of componentsToGenerateClassesOnly) {
-            this.generateHiddenClassForTaskList(hide, component);
-        }
-
-        if (this.options.shortMode) this.taskListHiddenClasses.push('tasks-layout-short-mode');
-    }
-
-    private generateHiddenClassForTaskList(hide: boolean, component: string) {
-        if (hide) {
-            this.taskListHiddenClasses.push(`tasks-layout-hide-${component}`);
-        }
+        // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
+        generateHiddenClassForTaskList(this._taskListHiddenClasses, this.taskLayoutOptions.hideTags, 'tags');
     }
 
     /**
@@ -123,8 +160,8 @@ export class TaskLayout {
      */
     private hideComponent(hide: boolean, component: TaskLayoutComponent) {
         if (hide) {
-            this.hiddenTaskLayoutComponents.push(component);
-            this.shownTaskLayoutComponents = this.shownTaskLayoutComponents.filter((element) => element != component);
+            this._hiddenTaskLayoutComponents.push(component);
+            this._shownTaskLayoutComponents = this._shownTaskLayoutComponents.filter((element) => element != component);
         }
     }
 }

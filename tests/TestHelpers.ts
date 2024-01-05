@@ -168,6 +168,33 @@ export class SampleTasks {
         });
     }
 
+    public static withAllRepresentativeCancelledDates(): Task[] {
+        return representativeDates.map((date) => {
+            return new TaskBuilder().cancelledDate(date).build();
+        });
+    }
+
+    public static withEachDateTypeAndCorrespondingStatus(): Task[] {
+        function desc(fieldName: string) {
+            return `#task Has a ${fieldName} date`;
+        }
+
+        const taskBuilders = [
+            new TaskBuilder().status(Status.makeTodo()).description(desc('created')).createdDate('2023-04-13'),
+            new TaskBuilder().status(Status.makeTodo()).description(desc('scheduled')).scheduledDate('2023-04-14'),
+            new TaskBuilder().status(Status.makeTodo()).description(desc('start')).startDate('2023-04-15'),
+            new TaskBuilder().status(Status.makeTodo()).description(desc('due')).dueDate('2023-04-16'),
+            new TaskBuilder().status(Status.makeDone()).description(desc('done')).doneDate('2023-04-17'),
+            new TaskBuilder().status(Status.makeCancelled()).description(desc('cancelled')).cancelledDate('2023-04-18'),
+        ];
+        // If this test fails, a new date format is now supported, and needs to be added to the above list:
+        const documentedDateFieldsCount = taskBuilders.length;
+        const supportedDateFieldsCount = Task.allDateFields().length;
+        expect(documentedDateFieldsCount).toEqual(supportedDateFieldsCount);
+
+        return taskBuilders.map((builder) => builder.build());
+    }
+
     public static withAllStatuses(): Task[] {
         const statuses = [
             Status.makeCancelled(),

@@ -18,7 +18,8 @@ When you click on the checkbox of a task, the Tasks plugin applies the following
 1. When a task line checkbox is clicked, the next status symbol is looked up in the user's Task plugin's [[Status Settings]].
 2. If the next status symbol is of type `DONE`:
     - A [[Dates#Done date|Done date]] is added (if enabled in user settings).
-    - If the task line has a Recurrence rule, an new task is created, with the next status symbol after the `DONE` symbol.
+    - If the task line has a Recurrence rule, a new task is created, with the next status symbol after the `DONE` symbol.
+    - If that next status is neither `TODO` nor `IN_PROGRESS`, a different status is chosen. See [[#When DONE is not followed by TODO or IN_PROGRESS]] below.
 
 > [!Important]
 > Every time Tasks detects you clicked on a task checkbox, the plugin reads the current status symbol - inside the `[` and `]` - and looks it up in your Tasks status settings, to determine what the next status symbol will be.
@@ -131,6 +132,7 @@ classDef NON_TASK    stroke:#99e,stroke-width:3px;
 4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]:::CANCELLED
 1 --> 3
 2 --> 4
+2-. "🔁" .-> 1
 3 --> 2
 4 --> 1
 
@@ -138,39 +140,35 @@ linkStyle default stroke:gray
 ```
 <!-- endInclude -->
 
-This means that new recurrence of any completed recurring tasks will always be `CANCELLED`.
-
-For example, when the following task is toggled:
-
-```text
-- [/] Do something 🔁 every day 📅 2024-10-16
-```
-
-... it will become ...
-
-```text
-- [x] Do something 🔁 every day 📅 2024-10-16 ✅ 2023-10-16
-- [-] Do something 🔁 every day 📅 2024-10-17
-```
-
-Note that the new task has `CANCELLED` status, so will not typically show up in standard Tasks searches.
-
-> [!Tip]
-> Currently, if you plan to use recurring tasks, you should always ensure that any statuses of type `DONE` are always followed by statuses of type `TODO`.
+> [!important] Status type for next recurrence: always `TODO` or `IN_PROGRESS`
+> When toggling a recurring task creates the next recurrence, it only makes sense for the new task to be `TODO` or `IN_PROGRESS`, so that the new task is found by `not done` searches.)
 >
-> You can [[Check your Statuses]] for any statuses that do not follow this guideline.
+> The dashed arrow with "recurring" emoji in the above diagram indicates that Tasks will skip the `Cancelled` status for new recurrences, and jump to `Todo`.
 
-> [!Note]
-> When [[Custom Statuses]] were introduced, and we had to figure out how integrate them with recurring tasks, we expected that users would always following `DONE` with `TODO`.
+This means that even though the new recurrence of any completed recurring tasks looks like it will always be `CANCELLED`, tasks will look at the other statuses in the loop and:
+
+1. It will follow the arrows, and select the first `TODO` status it finds.
+2. If there wasn't a `TODO` found, it will follow the arrows again, and select the first `IN_PROGRESS` status it finds.
+3. If that fails too, it will just select the status symbol `space` .
+
+> [!example]
+> For example, when the following task is toggled, in a vault with the status settings in the diagram above:
 >
-> It turns out that (at least) two users have opted to follow `DONE` with `CANCELLED`, with recurring tasks.
+> ```text
+> - [/] Do something 🔁 every day 📅 2024-10-16
+> ```
 >
-> At some point we may adjust the Recurrence code so that:
+> ... it will become ...
 >
-> - instead of just taking the next status after the `DONE` task ...
-> - ... it will proceed through the statuses until it finds a `TODO` task.
+> ```text
+> - [x] Do something 🔁 every day 📅 2024-10-16 ✅ 2023-10-16
+> - [ ] Do something 🔁 every day 📅 2024-10-17
+> ```
 >
-> We are tracking this in [issue #2089](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2089) and [issue #2304](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2304).
+> Note that the new task has `TODO` status, so it will show up in standard Tasks searches.
+
+> [!released]
+> This improved selection of status for new recurrences was introduced in Tasks 5.4.0.
 
 ## When the current status type is NON_TASK
 

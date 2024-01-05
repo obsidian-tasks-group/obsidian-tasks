@@ -137,6 +137,7 @@ export class Task {
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
+    public readonly cancelledDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
 
@@ -170,6 +171,7 @@ export class Task {
         scheduledDate,
         dueDate,
         doneDate,
+        cancelledDate,
         recurrence,
         blockedBy,
         id,
@@ -190,6 +192,7 @@ export class Task {
         scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
+        cancelledDate: moment.Moment | null;
         recurrence: Recurrence | null;
         blockedBy: string[] | [];
         id: string;
@@ -214,6 +217,7 @@ export class Task {
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
+        this.cancelledDate = cancelledDate;
 
         this.recurrence = recurrence;
 
@@ -390,23 +394,52 @@ export class Task {
 
         const newStatus = StatusRegistry.getInstance().getNextStatusOrCreate(this.status);
 
+        const newTasks = this.handleNewStatus(newStatus);
+        logEndOfTaskEdit(logger, codeLocation, newTasks);
+        return newTasks;
+    }
+
+    public handleNewStatus(newStatus: Status): Task[] {
+        if (newStatus.identicalTo(this.status)) {
+            // There is no need to create a new Task object if the new status behaviour is identical to the current one.
+            return [this];
+        }
+
         let newDoneDate = null;
+        if (newStatus.isCompleted()) {
+            if (!this.status.isCompleted()) {
+                // Set done date only if setting value is true
+                const { setDoneDate } = getSettings();
+                if (setDoneDate) {
+                    newDoneDate = window.moment();
+                }
+            } else {
+                // This task was already completed, so preserve its done date.
+                newDoneDate = this.doneDate;
+            }
+        }
+
+        let newCancelledDate = null;
+        if (newStatus.isCancelled()) {
+            if (!this.status.isCancelled()) {
+                // Set done cancelled only if setting value is true
+                const { setCancelledDate } = getSettings();
+                if (setCancelledDate) {
+                    newCancelledDate = window.moment();
+                }
+            } else {
+                // This task was already cancelled, so preserve its cancelled date.
+                newCancelledDate = this.cancelledDate;
+            }
+        }
 
         let nextOccurrence: {
             startDate: Moment | null;
             scheduledDate: Moment | null;
             dueDate: Moment | null;
         } | null = null;
-
         if (newStatus.isCompleted()) {
-            // Set done date only if setting value is true
-            const { setDoneDate } = getSettings();
-            if (setDoneDate) {
-                newDoneDate = window.moment();
-            }
-
-            // If this task is no longer todo, we need to check if it is recurring:
-            if (this.recurrence !== null) {
+            if (!this.status.isCompleted() && this.recurrence !== null) {
                 nextOccurrence = this.recurrence.next();
             }
         }
@@ -415,6 +448,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
+            cancelledDate: newCancelledDate,
         });
 
         const newTasks: Task[] = [];
@@ -425,7 +459,10 @@ export class Task {
             if (setCreatedDate) {
                 createdDate = window.moment();
             }
-            const nextStatus = StatusRegistry.getInstance().getNextStatusOrCreate(newStatus);
+            // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
+            const cancelledDate = null;
+            const statusRegistry = StatusRegistry.getInstance();
+            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
             const nextTask = new Task({
                 ...this,
                 ...nextOccurrence,
@@ -435,6 +472,7 @@ export class Task {
                 blockLink: '',
                 // add new createdDate on recurring tasks
                 createdDate,
+                cancelledDate,
             });
             newTasks.push(nextTask);
         }
@@ -442,7 +480,6 @@ export class Task {
         // Write next occurrence before previous occurrence.
         newTasks.push(toggledTask);
 
-        logEndOfTaskEdit(logger, codeLocation, newTasks);
         return newTasks;
     }
 
@@ -465,8 +502,21 @@ export class Task {
      */
     public toggleWithRecurrenceInUsersOrder(): Task[] {
         const newTasks = this.toggle();
+        return this.putRecurrenceInUsersOrder(newTasks);
+    }
 
-        const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
+    public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
+        const logger = logging.getLogger('tasks.Task');
+        logger.debug(
+            `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to '${newStatus.symbol}'`,
+        );
+
+        const newTasks = this.handleNewStatus(newStatus);
+        return this.putRecurrenceInUsersOrder(newTasks);
+    }
+
+    private putRecurrenceInUsersOrder(newTasks: Task[]) {
+        const { recurrenceOnNextLine } = getSettings();
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
 
@@ -539,6 +589,13 @@ export class Task {
 
     public get path(): string {
         return this.taskLocation.path;
+    }
+
+    /**
+     * Return {@link cancelledDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
+     */
+    public get cancelled(): TasksDate {
+        return new TasksDate(this.cancelledDate);
     }
 
     /**
@@ -763,7 +820,7 @@ export class Task {
         }
 
         // Compare Date fields
-        args = ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate'];
+        args = Task.allDateFields();
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
@@ -783,6 +840,17 @@ export class Task {
         }
 
         return true;
+    }
+
+    public static allDateFields(): (keyof Task)[] {
+        return [
+            'createdDate' as keyof Task,
+            'startDate' as keyof Task,
+            'scheduledDate' as keyof Task,
+            'dueDate' as keyof Task,
+            'doneDate' as keyof Task,
+            'cancelledDate' as keyof Task,
+        ];
     }
 
     /**

@@ -43,15 +43,19 @@ the results begin with the following, which demonstrates how each value inside `
 ```text
 Explanation of this Tasks code block query:
 
-path includes some/sample/file path.md
+  path includes some/sample/file path.md
 
-root includes some/
+  root includes some/
 
-folder includes some/sample/
+  folder includes some/sample/
 
-filename includes file path.md
+  filename includes file path.md
 
-description includes Some Cryptic String
+  description includes Some Cryptic String 
+
+  No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 

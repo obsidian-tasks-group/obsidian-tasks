@@ -32,7 +32,10 @@ export class TaskModal extends Modal {
 
     public onOpen(): void {
         this.titleEl.setText('Create or edit Task');
+        this.modalEl.style.paddingBottom = '0';
+
         const { contentEl } = this;
+        this.contentEl.style.paddingBottom = '0';
 
         const statusOptions = this.getKnownStatusesAndCurrentTaskStatusIfNotKnown();
 

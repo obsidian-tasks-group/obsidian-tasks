@@ -4,6 +4,8 @@ publish: true
 
 # Dates
 
+<span class="related-pages">#feature/dates</span>
+
 ## When to work on a task
 
 This section explains the different types of date that you can add to task lines, in order to tell Tasks when you wish/need to do the work.
@@ -37,6 +39,13 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 - [ ] take out the trash 📅 2021-04-09
 ```
 
+Related instructions for use in Tasks query blocks:
+
+- [[Filters#Due Date]]
+- [[Sorting#Due Date]]
+- [[Grouping#Due Date]]
+- Accessible as [[Task Properties#Values for Dates in Tasks|task property]] `task.due`
+
 ---
 
 ### Scheduled date
@@ -54,6 +63,13 @@ See [[Use Filename as Default Date]] for how to optionally make Tasks use any da
 
 > [!released]
 'Use Filename as Default Date' was introduced in Tasks 1.18.0.
+
+Related instructions for use in Tasks query blocks:
+
+- [[Filters#Scheduled Date]]
+- [[Sorting#Scheduled Date]]
+- [[Grouping#Scheduled Date]]
+- Accessible as [[Task Properties#Values for Dates in Tasks|task property]] `task.scheduled`
 
 ---
 
@@ -80,6 +96,13 @@ Such filter could be:
 starts before tomorrow
 ```
 ````
+
+Related instructions for use in Tasks query blocks:
+
+- [[Filters#Start Date]]
+- [[Sorting#Start Date]]
+- [[Grouping#Start Date]]
+- Accessible as [[Task Properties#Values for Dates in Tasks|task property]] `task.start`
 
 ## Track task histories
 
@@ -108,6 +131,13 @@ Created dates use a heavy plus emoji: ➕.
 - [ ] take out the trash ➕ 2021-04-09
 ```
 
+Related instructions for use in Tasks query blocks:
+
+- [[Filters#Created Date]]
+- [[Sorting#Created Date]]
+- [[Grouping#Created Date]]
+- Accessible as [[Task Properties#Values for Dates in Tasks|task property]] `task.created`
+
 #### Adding Created date to tasks
 
 The following Tasks facilities add created dates to tasks...
@@ -133,6 +163,35 @@ Done dates use a white check-mark emoji: ✅.
 ```markdown
 - [x] take out the trash ✅ 2021-04-09
 ```
+
+Related instructions for use in Tasks query blocks:
+
+- [[Filters#Done Date]]
+- [[Sorting#Done Date]]
+- [[Grouping#Done Date]]
+- Accessible as [[Task Properties#Values for Dates in Tasks|task property]] `task.done`
+
+### Cancelled date
+
+> [!released]
+> Cancelled date was introduced in Tasks 5.5.0.
+
+Unless you disable 'Set cancelled date on every cancelled task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were cancelled.
+
+See the [[#Date-tracking settings|screenshot]] above.
+
+Cancelled dates use a red cross-mark emoji: ❌.
+
+```markdown
+- [-] take out the trash ❌ 2021-04-09
+```
+
+Related instructions for use in Tasks query blocks:
+
+- [[Filters#Cancelled Date]]
+- [[Sorting#Cancelled Date]]
+- [[Grouping#Cancelled Date]]
+- Accessible as [[Task Properties#Values for Dates in Tasks|task property]] `task.cancelled`
 
 ## Finding mistakes in dates on task lines
 

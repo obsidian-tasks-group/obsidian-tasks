@@ -5,10 +5,11 @@
 | `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
 | `task.due.moment` | `Moment` | `moment('2023-07-04 00:00')` | `null` | `null` |
 | `task.due.formatAsDate()` | `string` | `'2023-07-04'` | `string` | `''` |
-| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.formatAsDate('no date')` | `string` | `'2023-07-04'` | `string` | `'no date'` |
 | `task.due.formatAsDateAndTime()` | `string` | `'2023-07-04 00:00'` | `string` | `''` |
-| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.formatAsDateAndTime('no date')` | `string` | `'2023-07-04 00:00'` | `string` | `'no date'` |
 | `task.due.format('dddd')` | `string` | `'Tuesday'` | `string` | `''` |
+| `task.due.format('dddd', 'no date')` | `string` | `'Tuesday'` | `string` | `'no date'` |
 | `task.due.toISOString()` | `string` | `'2023-07-04T00:00:00.000Z'` | `string` | `''` |
 | `task.due.toISOString(true)` | `string` | `'2023-07-04T00:00:00.000+00:00'` | `string` | `''` |
 | `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |

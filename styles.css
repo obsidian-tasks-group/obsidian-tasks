@@ -3,6 +3,11 @@
 
 }
 
+/* Fix indentation of wrapped task lines in Tasks search results, when in Live Preview. */
+ul.contains-task-list .task-list-item-checkbox {
+    margin-inline-start: calc(var(--checkbox-size) * -1.5) !important;
+}
+
 .plugin-tasks-query-explanation{
     /* Prevent long explanation lines wrapping, so they are more readable,
        especially on small screens.
@@ -72,7 +77,8 @@
     text-decoration: none;
 }
 
-.internal-button {
+/* Postpone icon. */
+.tasks-postpone {
     background-color: transparent;
     padding: 0;
     font-size: var(--font-text-size);
@@ -136,6 +142,11 @@
 }
 
 .tasks-modal-buttons {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--modal-background);
+    padding-bottom: 16px;
+    padding-top: 16px;
     display: grid;
     grid-template-columns: 3fr 1fr;
     column-gap: .5em;
@@ -215,12 +226,19 @@
 }
 
 .tasks-modal-status {
+    padding-bottom: 6px;
+    margin-bottom: -16px;
     display: flex;
     justify-content: space-between;
 }
 
 .tasks-modal-error {
     border: 1px solid red !important;
+}
+
+.tasks-modal-warning {
+    color: var(--text-warning) !important;
+    background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
 }
 
 .tasks-modal button:disabled {

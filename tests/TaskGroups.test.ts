@@ -105,7 +105,7 @@ describe('Grouping tasks', () => {
         const groupByQueryPath: GrouperFunction = (_task: Task, searchInfo: SearchInfo) => {
             return [searchInfo.queryPath ? searchInfo.queryPath : 'No SearchInfo'];
         };
-        const grouper: Grouper = new Grouper('test', groupByQueryPath, false);
+        const grouper: Grouper = new Grouper('group by test', 'test', groupByQueryPath, false);
 
         const filename = 'somewhere/anything.md';
         const tasks = [new TaskBuilder().build()];
@@ -277,7 +277,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b];
 
         const groupByTags: GrouperFunction = (task: Task) => task.tags;
-        const grouper = new Grouper('custom tag grouper', groupByTags, false);
+        const grouper = new Grouper('group by custom tag grouper', 'custom tag grouper', groupByTags, false);
         const groups = makeTasksGroups([grouper], inputs);
 
         expect(groups.totalTasksCount()).toEqual(2);

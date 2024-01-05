@@ -15,6 +15,7 @@ import { Query } from '../../../src/Query/Query';
 import { verifyMarkdown } from '../../TestingTools/VerifyMarkdown';
 import { SampleTasks } from '../../TestHelpers';
 import { MarkdownTable } from '../../../src/lib/MarkdownTable';
+import { Explainer } from '../../../src/Query/Explain/Explainer';
 
 window.moment = moment;
 
@@ -574,7 +575,8 @@ describe('due date', () => {
                 const query = new Query(`due ${keyword}${date}`);
                 expect(query.error).toBeUndefined();
 
-                newRow.push(query.explainQuery().replace(/(\n)/g, '<br>'));
+                const explainer = new Explainer();
+                newRow.push(explainer.explainFilters(query).replace(/(\n)/g, '<br>'));
             });
 
             table.addRow(newRow);

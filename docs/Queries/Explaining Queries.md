@@ -20,6 +20,8 @@ This has a number of benefits:
 - If there is a [[Global Filter|global filter]] enabled, it is included in the explanation.
   - This often explains why tasks are missing from results.
 - If there is a [[Global Query|global query]] enabled, it too is included in the explanation.
+- Any [[Grouping|'group by']] instructions are listed (since Tasks 5.4.0)
+- Any [[Sorting|'sort by']] instructions are listed (since Tasks 5.4.0)
 
 ## Examples
 
@@ -42,14 +44,18 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-starts after 2 years ago =>
-  start date is after 2020-10-21 (Wednesday 21st October 2020) OR no start date
+  starts after 2 years ago =>
+    start date is after 2020-10-21 (Wednesday 21st October 2020) OR no start date
 
-scheduled after 1 week ago =>
-  scheduled date is after 2022-10-14 (Friday 14th October 2022)
+  scheduled after 1 week ago =>
+    scheduled date is after 2022-10-14 (Friday 14th October 2022)
 
-due before tomorrow =>
-  due date is before 2022-10-22 (Saturday 22nd October 2022)
+  due before tomorrow =>
+    due date is before 2022-10-22 (Saturday 22nd October 2022)
+
+  No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -77,8 +83,12 @@ the results begin with the following:
 ```text
 Explanation of this Tasks code block query:
 
-path regex matches /^Root/Sub-Folder/Sample File\.md/i =>
-  using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
+  path regex matches /^Root/Sub-Folder/Sample File\.md/i =>
+    using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
+
+  No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -100,12 +110,16 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-not done
+  not done
 
-(due before tomorrow) AND (is recurring) =>
-  AND (All of):
-    due date is before 2022-10-22 (Saturday 22nd October 2022)
-    is recurring
+  (due before tomorrow) AND (is recurring) =>
+    AND (All of):
+      due date is before 2022-10-22 (Saturday 22nd October 2022)
+      is recurring
+
+  No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -135,19 +149,23 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7) =>
-  OR (At least one of):
-    AND (All of):
-      description includes 1
-      description includes 2
-      description includes 3
-    AND (All of):
+  ( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7) =>
+    OR (At least one of):
       AND (All of):
-        description includes 5
-        description includes 6
-        description includes 7
-      NOT:
-        description includes 7
+        description includes 1
+        description includes 2
+        description includes 3
+      AND (All of):
+        AND (All of):
+          description includes 5
+          description includes 6
+          description includes 7
+        NOT:
+          description includes 7
+
+  No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -181,19 +199,26 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of the global query:
 
-heading includes tasks
+  heading includes tasks
 
+  No grouping instructions supplied.
 
-At most 50 tasks.
+  No sorting instructions supplied.
+
+  At most 50 tasks.
 
 Explanation of this Tasks code block query:
 
-not done
+  not done
 
-due next week =>
-  due date is between:
-    2022-10-24 (Monday 24th October 2022) and
-    2022-10-30 (Sunday 30th October 2022) inclusive
+  due next week =>
+    due date is between:
+      2022-10-24 (Monday 24th October 2022) and
+      2022-10-30 (Sunday 30th October 2022) inclusive
+
+  No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -222,15 +247,19 @@ the results begin with the following:
 ```text
 Explanation of this Tasks code block query:
 
-path includes some/sample/file path.md
+  path includes some/sample/file path.md
 
-root includes some/
+  root includes some/
 
-folder includes some/sample/
+  folder includes some/sample/
 
-filename includes file path.md
+  filename includes file path.md
 
-description includes Some Cryptic String
+  description includes Some Cryptic String 
+
+  No grouping instructions supplied.
+
+  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -244,7 +273,7 @@ For readability, explanations are shown in a fixed-width font (a `PRE` block), a
 
 Using a [CSS snippet in Obsidian](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets), we can change the appearance of the explanation block.
 
-For example, [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/gh-pages/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-explain-text-blue.css) `tasks-plugin-explain-text-blue.css` makes the explanation block text blue:
+For example, [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-explain-text-blue.css) `tasks-plugin-explain-text-blue.css` makes the explanation block text blue:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-explain-text-blue.css -->
 ```css

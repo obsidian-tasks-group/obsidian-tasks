@@ -1,34 +1,43 @@
 import { diff } from 'jest-diff';
 import { fromLine } from '../TestHelpers';
+import type { Task } from '../../src/Task';
 
 declare global {
     namespace jest {
         interface Matchers<R> {
             toToggleTo(expectedLines: string[]): R;
             toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): R;
+            toMatchMarkdownLines(expectedLines: string[]): R;
         }
 
         interface Expect {
             toToggleTo(expectedLines: string[]): any;
             toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): any;
+            toMatchMarkdownLines(expectedLines: string[]): any;
         }
 
         interface InverseAsymmetricMatchers {
             toToggleTo(expectedLines: string[]): any;
             toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): any;
+            toMatchMarkdownLines(expectedLines: string[]): any;
         }
     }
 }
 
 export function toToggleTo(line: string, expectedLines: string[]) {
     const task = fromLine({ line: line });
-    const receivedLines = task.toggle().map((t) => t.toFileLineString());
-    return toMatchLines(receivedLines, expectedLines);
+    const tasks = task.toggle();
+    return toMatchMarkdownLines(tasks, expectedLines);
 }
 
 export function toToggleWithRecurrenceInUsersOrderTo(line: string, expectedLines: string[]) {
     const task = fromLine({ line: line });
-    const receivedLines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
+    const tasks = task.toggleWithRecurrenceInUsersOrder();
+    return toMatchMarkdownLines(tasks, expectedLines);
+}
+
+export function toMatchMarkdownLines(tasks: Task[], expectedLines: string[]) {
+    const receivedLines = tasks.map((t) => t.toFileLineString());
     return toMatchLines(receivedLines, expectedLines);
 }
 

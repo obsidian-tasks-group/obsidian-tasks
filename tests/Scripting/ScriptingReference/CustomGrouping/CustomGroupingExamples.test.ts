@@ -33,6 +33,17 @@ describe('dates', () => {
         // ---------------------------------------------------------------------------------
 
         [
+            'task.cancelled',
+            [
+                [
+                    'group by function task.cancelled.format("YYYY-MM-DD dddd")',
+                    'Like "group by cancelled", except it uses an empty string instead of "No cancelled date" if there is no cancelled date',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeCancelledDates(),
+        ],
+
+        [
             'task.created',
             [
                 [

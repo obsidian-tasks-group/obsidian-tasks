@@ -1,8 +1,37 @@
-import { TASK_FORMATS, updateSettings } from '../../src/Config/Settings';
+/**
+ * @jest-environment jsdom
+ */
+
+import moment from 'moment';
+
+import { TASK_FORMATS, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { SampleTasks } from '../TestHelpers';
 
+window.moment = moment;
+
+afterEach(() => {
+    resetSettings();
+});
+
 describe('Serializer', () => {
+    describe('Dates', () => {
+        function allDatesLines() {
+            const tasks = SampleTasks.withEachDateTypeAndCorrespondingStatus();
+            return tasks.map((t) => t.toFileLineString()).join('\n');
+        }
+
+        it.each(Object.keys(TASK_FORMATS))('%s-snippet', (key: string) => {
+            updateSettings({ taskFormat: key as keyof TASK_FORMATS });
+            verifyMarkdown(allDatesLines());
+        });
+
+        it.each(Object.keys(TASK_FORMATS))('%s-include', (key: string) => {
+            updateSettings({ taskFormat: key as keyof TASK_FORMATS });
+            verifyMarkdownForDocs(allDatesLines());
+        });
+    });
+
     describe('Priorities', () => {
         function allPriorityLines() {
             const tasks = SampleTasks.withAllPriorities().reverse();

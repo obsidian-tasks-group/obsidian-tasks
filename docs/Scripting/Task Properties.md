@@ -49,6 +49,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.start` | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | `` |
 | `task.scheduled` | `TasksDate` | `2023-07-03 00:00` | `TasksDate` | `` |
 | `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
+| `task.cancelled` | `TasksDate` | `2023-07-06 00:00` | `TasksDate` | `` |
 | `task.done` | `TasksDate` | `2023-07-05 00:00` | `TasksDate` | `` |
 | `task.happens` | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | `` |
 
@@ -56,8 +57,9 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. Each of these values is a `TasksDate` object. The [[#Values in TasksDate Properties]] section below shows what can be done with them.
 1. Note that currently all stored dates have no time, or rather, their time is midnight at the start of the day, local time.
-1. For example uses of date properties, see [[Grouping#Due Date]].
+1. For example uses of date properties, see [[Filters#Due Date]] and [[Grouping#Due Date]].
 1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
+1. `task.cancelled` was added in Tasks 5.5.0.
 
 ## Values in TasksDate Properties
 
@@ -68,10 +70,11 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
 | `task.due.moment` | `Moment` | `moment('2023-07-04 00:00')` | `null` | `null` |
 | `task.due.formatAsDate()` | `string` | `'2023-07-04'` | `string` | `''` |
-| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.formatAsDate('no date')` | `string` | `'2023-07-04'` | `string` | `'no date'` |
 | `task.due.formatAsDateAndTime()` | `string` | `'2023-07-04 00:00'` | `string` | `''` |
-| `task.due.formatAsDate('undated')` | `string` | `'2023-07-04'` | `string` | `'undated'` |
+| `task.due.formatAsDateAndTime('no date')` | `string` | `'2023-07-04 00:00'` | `string` | `'no date'` |
 | `task.due.format('dddd')` | `string` | `'Tuesday'` | `string` | `''` |
+| `task.due.format('dddd', 'no date')` | `string` | `'Tuesday'` | `string` | `'no date'` |
 | `task.due.toISOString()` | `string` | `'2023-07-04T00:00:00.000Z'` | `string` | `''` |
 | `task.due.toISOString(true)` | `string` | `'2023-07-04T00:00:00.000+00:00'` | `string` | `''` |
 | `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |
@@ -85,6 +88,10 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. These examples refer to `task.due`, but they can be used on any of the date properties show in the section [[#Values for Dates in Tasks]] above.
 1. The `TasksDate` formatting methods use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+1. The `TasksDate` formatting methods all take an optional `fallBackText` string value, which is the value to use when there is no date. <br>The `fallBackText` value can be any of:
+    - a fixed string, such as `'no date'`,
+    - an [[Expressions|expression]], such as `task.priorityName` or `task.priorityNameGroupText`,
+    - an empty string `''` or `""`, meaning 'do not add a heading for tasks missing this date property'.
 1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its implementation.
 1. `task.due.toISOString(true)` prevents UTC conversion - see the [moment documentation](https://momentjs.com/docs/#/displaying/as-iso-string/)
 1. `category` divides dates in to 4 named groups:
@@ -118,7 +125,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.isRecurring` | `boolean` | `true` | `boolean` | `false` |
 | `task.recurrenceRule` | `string` | `'every day when done'` | `string` | `''` |
 | `task.tags` | `string[]` | `['#todo', '#health']` | `any[]` | `[]` |
-| `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [/] minimal task'` |
+| `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [/] minimal task'` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
