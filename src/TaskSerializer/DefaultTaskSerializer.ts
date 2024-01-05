@@ -167,9 +167,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return shortMode ? ' ' + recurrenceSymbol : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
             case 'blockedBy': {
                 if (task.blockedBy.length === 0) return '';
-                let dependsString = ' ' + blockedBySymbol + ' ';
-                dependsString += task.blockedBy.join(',');
-                return dependsString;
+                return symbolAndStringValue(shortMode, blockedBySymbol, task.blockedBy.join(','));
             }
             case 'id':
                 if (!task.id) return '';
