@@ -375,24 +375,43 @@ describe('task line rendering - layout options', () => {
         );
     });
 
-    // TODO Reinstate this test, once other tests are updated.
-    // it('renders without id', async () => {
-    //     await testLayoutOptions(
-    //         '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🆔 12345',
-    //         { hideId: true },
-    //         'Full task',
-    //         [' ⏫', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
-    //     );
-    // });
-    //
-    // it('renders without depends on', async () => {
-    //     await testLayoutOptions(
-    //         '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ⛔️ 12345',
-    //         { hideBlockedBy: true },
-    //         'Full task',
-    //         [' ⏫', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
-    //     );
-    // });
+    it('renders without id', async () => {
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
+                ' ✅ 2023-07-05',
+                ' ⛔️ 123456,abc123',
+                ' ^dcf64c',
+            ],
+            { hideId: true },
+        );
+    });
+
+    it('renders without depends on', async () => {
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
+                ' ✅ 2023-07-05',
+                ' 🆔 abcdef',
+                ' ^dcf64c',
+            ],
+            { hideBlockedBy: true },
+        );
+    });
 
     const testLayoutOptionsFromLine = async (taskLine: string, expectedComponents: string[]) => {
         const task = fromLine({
@@ -472,16 +491,10 @@ describe('task line rendering - classes and data attributes', () => {
         );
     });
 
-    // TODO Reinstate this test, once other tests are updated.
-    // it('renders dependency fields with their correct classes', async () => {
-    //     await testComponentClasses('- [ ] Minimal task 🆔 g7317o', {}, fieldRenderer.className('id'), {});
-    //     await testComponentClasses(
-    //         '- [ ] Minimal task ⛔️ ya44g5,hry475',
-    //         {},
-    //         fieldRenderer.className('blockedBy'),
-    //         {},
-    //     );
-    // });
+    it('renders dependency fields with their correct classes', async () => {
+        await testComponentClasses('- [ ] Minimal task 🆔 g7317o', {}, 'task-id', '');
+        await testComponentClasses('- [ ] Minimal task ⛔️ ya44g5,hry475', {}, 'task-blockedBy', '');
+    });
 
     it('should render recurrence component with its class and data attribute', async () => {
         await testComponentClasses(
