@@ -168,10 +168,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
             case 'blockedBy': {
                 if (task.blockedBy.length === 0) return '';
                 let dependsString = ' ' + blockedBySymbol + ' ';
-                task.blockedBy.forEach((depends) => {
-                    dependsString += depends + ',';
-                });
-                return dependsString.slice(0, -1);
+                dependsString += task.blockedBy.join(',');
+                return dependsString;
             }
             case 'id':
                 if (!task.id) return '';
