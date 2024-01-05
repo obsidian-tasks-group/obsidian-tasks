@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
-import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
+import { TaskLayout } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
 import { Priority, Task, TaskRegularExpressions } from '../Task';
 import type { TaskDetails, TaskSerializer } from '.';
@@ -83,9 +83,13 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     },
 } as const;
 
+function symbolAndStringValue(shortMode: boolean, startDateSymbol: string, value: string) {
+    return shortMode ? ' ' + startDateSymbol : ` ${startDateSymbol} ${value}`;
+}
+
 function symbolAndDateValue(shortMode: boolean, startDateSymbol: string, date: moment.Moment | null) {
     if (!date) return '';
-    return shortMode ? ' ' + startDateSymbol : ` ${startDateSymbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
+    return symbolAndStringValue(shortMode, startDateSymbol, date.format(TaskRegularExpressions.dateFormat));
 }
 
 export class DefaultTaskSerializer implements TaskSerializer {
