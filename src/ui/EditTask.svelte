@@ -976,9 +976,10 @@
                 id="created"
                 type="text"
                 class:tasks-modal-error={!isCreatedDateValid}
+                class="input"
                 placeholder={datePlaceholder}
             />
-            <code>{createdDateSymbol} {@html parsedCreatedDate}</code>
+            <code class="results">{createdDateSymbol} {@html parsedCreatedDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done Date  -->
@@ -989,9 +990,10 @@
                 id="done"
                 type="text"
                 class:tasks-modal-error={!isDoneDateValid}
+                class="input"
                 placeholder={datePlaceholder}
             />
-            <code>{doneDateSymbol} {@html parsedDoneDate}</code>
+            <code class="results">{doneDateSymbol} {@html parsedDoneDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Cancelled Date  -->
@@ -1002,9 +1004,10 @@
                 id="cancelled"
                 type="text"
                 class:tasks-modal-error={!isCancelledDateValid}
+                class="input"
                 placeholder={datePlaceholder}
             />
-            <code>{cancelledDateSymbol} {@html parsedCancelledDate}</code>
+            <code class="results">{cancelledDateSymbol} {@html parsedCancelledDate}</code>
         </div>
 
         <div class="tasks-modal-section tasks-modal-buttons">
