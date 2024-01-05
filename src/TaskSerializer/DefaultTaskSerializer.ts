@@ -83,13 +83,13 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     },
 } as const;
 
-function symbolAndStringValue(shortMode: boolean, startDateSymbol: string, value: string) {
-    return shortMode ? ' ' + startDateSymbol : ` ${startDateSymbol} ${value}`;
+function symbolAndStringValue(shortMode: boolean, symbol: string, value: string) {
+    return shortMode ? ' ' + symbol : ` ${symbol} ${value}`;
 }
 
-function symbolAndDateValue(shortMode: boolean, startDateSymbol: string, date: moment.Moment | null) {
+function symbolAndDateValue(shortMode: boolean, symbol: string, date: moment.Moment | null) {
     if (!date) return '';
-    return symbolAndStringValue(shortMode, startDateSymbol, date.format(TaskRegularExpressions.dateFormat));
+    return symbolAndStringValue(shortMode, symbol, date.format(TaskRegularExpressions.dateFormat));
 }
 
 export class DefaultTaskSerializer implements TaskSerializer {
