@@ -148,30 +148,16 @@ export class DefaultTaskSerializer implements TaskSerializer {
             case 'startDate':
                 return symbolAndDateValue(shortMode, startDateSymbol, task.startDate);
             case 'createdDate':
-                if (!task.createdDate) return '';
-                return shortMode
-                    ? ' ' + createdDateSymbol
-                    : ` ${createdDateSymbol} ${task.createdDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, createdDateSymbol, task.createdDate);
             case 'scheduledDate':
-                if (!task.scheduledDate || task.scheduledDateIsInferred) return '';
-                return shortMode
-                    ? ' ' + scheduledDateSymbol
-                    : ` ${scheduledDateSymbol} ${task.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
+                if (task.scheduledDateIsInferred) return '';
+                return symbolAndDateValue(shortMode, scheduledDateSymbol, task.scheduledDate);
             case 'doneDate':
-                if (!task.doneDate) return '';
-                return shortMode
-                    ? ' ' + doneDateSymbol
-                    : ` ${doneDateSymbol} ${task.doneDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, doneDateSymbol, task.doneDate);
             case 'cancelledDate':
-                if (!task.cancelledDate) return '';
-                return shortMode
-                    ? ' ' + cancelledDateSymbol
-                    : ` ${cancelledDateSymbol} ${task.cancelledDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, cancelledDateSymbol, task.cancelledDate);
             case 'dueDate':
-                if (!task.dueDate) return '';
-                return shortMode
-                    ? ' ' + dueDateSymbol
-                    : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, dueDateSymbol, task.dueDate);
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
                 return shortMode ? ' ' + recurrenceSymbol : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
