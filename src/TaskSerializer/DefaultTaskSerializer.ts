@@ -84,6 +84,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
 } as const;
 
 function symbolAndStringValue(shortMode: boolean, symbol: string, value: string) {
+    if (!value) return '';
     return shortMode ? ' ' + symbol : ` ${symbol} ${value}`;
 }
 
@@ -170,8 +171,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return symbolAndStringValue(shortMode, blockedBySymbol, task.blockedBy.join(','));
             }
             case 'id':
-                if (!task.id) return '';
-                return ' ' + idSymbol + ' ' + task.id;
+                return symbolAndStringValue(shortMode, idSymbol, task.id);
             case 'blockLink':
                 return task.blockLink ?? '';
             default:
