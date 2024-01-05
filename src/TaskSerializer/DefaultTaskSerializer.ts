@@ -168,7 +168,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return symbolAndDateValue(shortMode, dueDateSymbol, task.dueDate);
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
-                return shortMode ? ' ' + recurrenceSymbol : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
+                return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
             case 'blockedBy': {
                 if (task.blockedBy.length === 0) return '';
                 return symbolAndStringValue(shortMode, blockedBySymbol, task.blockedBy.join(','));
