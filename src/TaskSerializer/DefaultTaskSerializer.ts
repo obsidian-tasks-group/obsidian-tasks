@@ -83,6 +83,11 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     },
 } as const;
 
+function symbolAndDateValue(shortMode: boolean, startDateSymbol: string, date: moment.Moment | null) {
+    if (!date) return '';
+    return shortMode ? ' ' + startDateSymbol : ` ${startDateSymbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
+}
+
 export class DefaultTaskSerializer implements TaskSerializer {
     constructor(public readonly symbols: DefaultTaskSerializerSymbols) {}
 
@@ -141,10 +146,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return priority;
             }
             case 'startDate':
-                if (!task.startDate) return '';
-                return shortMode
-                    ? ' ' + startDateSymbol
-                    : ` ${startDateSymbol} ${task.startDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, startDateSymbol, task.startDate);
             case 'createdDate':
                 if (!task.createdDate) return '';
                 return shortMode
