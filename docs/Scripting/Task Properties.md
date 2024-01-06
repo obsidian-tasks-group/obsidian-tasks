@@ -110,6 +110,20 @@ For more information, including adding your own customised statuses, see [[Statu
 1. The `category` properties were added in Tasks 4.9.0.
 1. The `fromNow` properties were added in Tasks 4.9.0.
 
+## Values for Task Dependencies
+
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_dependency_fields.approved.md -->
+
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.id` | `string` | `'abcdef'` | `string` | `''` |
+| `task.blockedBy` | `string[]` | `['123456', 'abc123']` | `any[]` | `[]` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+1. See the page [[Task Dependencies]], which explains the dependencies facility.
+1. Task Dependencies were released in Tasks X.Y.Z.
+
 ## Values for Other Task Properties
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_other_fields.approved.md -->
