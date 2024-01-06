@@ -86,6 +86,6 @@ Query
 
 ## Known Limitations
 
-- It's not yet possible to directly navigate from a task to the tasks it depends on
-- Outside of the edit task modal, it is not possible to see the descriptions of the blocking tasks
-- It is not yet possible to visualise the relationships in a graph viewer
+- It's not yet possible to directly navigate from a task to the tasks it depends on.
+- Outside of the edit task modal, it is not possible to see the descriptions of the blocking tasks.
+- It is not yet possible to visualise the relationships in a graph viewer.
