@@ -13,7 +13,8 @@ At a high level, task dependencies define the order in which you want to work on
 This can be useful for mapping out projects, where one part needs to be completed before the other.
 By specifying these dependencies, Obsidian Tasks can streamline your workflow by displaying only the tasks that are actionable at any given moment.
 
-Note: Obsidian tasks exclusively allows for Finish to start (FS) dependencies, meaning Task A needs to be finished before you start on Task B. You can learn more about this concept [here](https://en.wikipedia.org/wiki/Dependency_(project_management)).
+> [!NOTE]
+> Obsidian tasks exclusively allows for Finish to start (FS) dependencies, meaning Task A needs to be finished before you start on Task B. You can learn more about this concept [on Wikipedia](https://en.wikipedia.org/wiki/Dependency_(project_management)).
 
 ## Example
 
@@ -28,7 +29,7 @@ In this scenario, testing with users can only occur after the initial draft is c
 
 1. Open the 'Build a first draft' task in the Edit Task Modal and specify 'Test with users' as a 'Blocking' task
 2. Alternatively, open the 'Test with users' task in the Edit Task Modal and add 'Build a first draft' as a 'Blocked By' task
-![[task-dependencies-blocked-by-example.png]]
+    ![[task-dependencies-blocked-by-example.png]]
 
 By implementing either of these methods, the task list is updated to reflect the dependency relationship:
 
@@ -60,15 +61,18 @@ Until this task is marked as complete, at which time Obsidian Tasks sees that 'T
 
 Fields:
 
-- `depends` (to avoid capitalisation confusion `blockedby`/`blockedBy` - dataview format)
+- `blockedBy`
 - `id`
+
 UI:
+
 - Blocked by [implies an id of another task]
 - Blocks
+
 Query
+
 - blocking
 - blocked
--
 
 ## Adding Dependencies
 
@@ -82,7 +86,6 @@ Query
 
 ## Known Limitations
 
-- Its not yet possible to directly navigate from a task to the tasks it depends on
+- It's not yet possible to directly navigate from a task to the tasks it depends on
 - Outside of the edit task modal, it is not possible to see the descriptions of the blocking tasks
 - It is not yet possible to visualise the relationships in a graph viewer
--
