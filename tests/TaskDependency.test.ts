@@ -31,7 +31,7 @@ describe('TaskDependency', () => {
         expect(newChild === childTask).toEqual(true);
     });
 
-    it('Should not create a duplicate dependency', () => {
+    it('Should not create a duplicate dependency - using addDependency', () => {
         const childTask = new TaskBuilder().id('123456').build();
         const parentTask = new TaskBuilder().blockedBy(['123456']).description('parent task').build();
 
@@ -78,7 +78,7 @@ describe('TaskDependency', () => {
         expect(newParent.blockedBy).toEqual(['123456', '234567', '345678']);
     });
 
-    it('Should not create a duplicate dependency', () => {
+    it('Should not create a duplicate dependency - using setDependenciesOnTasksWithIds', () => {
         const childTask = new TaskBuilder().id('123456').build();
         const parentTask = new TaskBuilder().blockedBy(['123456']).description('parent task').build();
 
