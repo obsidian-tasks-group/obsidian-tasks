@@ -113,6 +113,21 @@ describe('FunctionField - sorting', () => {
         // Sorts on string length - longer first
         expectTaskComparesAfter(sorter!, with_description('xxxx'), with_description('x'));
     });
+
+    it('sort by function reverse', () => {
+        // Arrange
+        const sorter = new FunctionField().createSorterFromLine('sort by function reverse task.description.length');
+
+        // Assert
+        expect(sorter).not.toBeNull();
+        expectTaskComparesEqual(sorter!, with_description('Aaa'), with_description('Aaa'));
+
+        // Sorts on string length - shorter first
+        expectTaskComparesAfter(sorter!, with_description('AAA'), with_description('AAAA'));
+
+        // Sorts on string length - longer first
+        expectTaskComparesBefore(sorter!, with_description('xxxx'), with_description('x'));
+    });
 });
 
 // -----------------------------------------------------------------------------------------------------------------
