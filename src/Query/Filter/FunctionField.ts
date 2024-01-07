@@ -5,7 +5,7 @@ import { Explanation } from '../Explain/Explanation';
 import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
 import type { QueryContext } from '../../Scripting/QueryContext';
 import type { SearchInfo } from '../SearchInfo';
-import type { Comparator, Sorter } from '../Sorter';
+import { type Comparator, Sorter } from '../Sorter';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -65,7 +65,14 @@ export class FunctionField extends Field {
         }
 
         const reverse = !!match[1];
-        return this.createSorter(reverse);
+        const expression = match[2];
+        const taskExpression = new TaskExpression(expression);
+        if (!taskExpression.isValid()) {
+            // TODO Figure out error handling
+            // return FilterOrErrorMessage.fromError(line, taskExpression.parseError!);
+            return null;
+        }
+        return new Sorter(line, this.fieldNameSingular(), this.comparator(), reverse);
     }
 
     comparator(): Comparator {
