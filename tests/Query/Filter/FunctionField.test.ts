@@ -14,6 +14,11 @@ import {
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import type { Task } from '../../../src/Task';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
 
 window.moment = moment;
 
@@ -82,9 +87,31 @@ describe('FunctionField - filtering', () => {
 // -----------------------------------------------------------------------------------------------------------------
 
 describe('FunctionField - sorting', () => {
-    it('should not support sorting', () => {
+    it('should not support sorting - yet', () => {
         const functionField = new FunctionField();
         expect(functionField.supportsSorting()).toEqual(false);
+    });
+
+    // Helper function to create a task with a given path
+    function with_description(description: string) {
+        return new TaskBuilder().description(description).build();
+    }
+
+    it('sort by function', () => {
+        // Arrange
+        const sorter = new FunctionField().createSorterFromLine('sort by function task.description.length');
+
+        // Assert
+        expect(sorter).not.toBeNull();
+        expectTaskComparesEqual(sorter!, with_description('Aaa'), with_description('Aaa'));
+        expectTaskComparesEqual(sorter!, with_description('AAA'), with_description('ZZZ'));
+
+        // Sorts on string length - shorter first
+        expectTaskComparesBefore(sorter!, with_description('AAA'), with_description('AAAA'));
+        expectTaskComparesBefore(sorter!, with_description(''), with_description('B'));
+
+        // Sorts on string length - longer first
+        expectTaskComparesAfter(sorter!, with_description('xxxx'), with_description('x'));
     });
 });
 
