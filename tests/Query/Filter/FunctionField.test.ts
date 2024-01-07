@@ -87,9 +87,9 @@ describe('FunctionField - filtering', () => {
 // -----------------------------------------------------------------------------------------------------------------
 
 describe('FunctionField - sorting', () => {
-    it('should not support sorting - yet', () => {
+    it('should support sorting', () => {
         const functionField = new FunctionField();
-        expect(functionField.supportsSorting()).toEqual(false);
+        expect(functionField.supportsSorting()).toEqual(true);
     });
 
     // Helper function to create a task with a given path

@@ -50,8 +50,7 @@ export class FunctionField extends Field {
     // -----------------------------------------------------------------------------------------------------------------
 
     public supportsSorting(): boolean {
-        // TODO Set to true once sorting is properly implemented
-        return false;
+        return true;
     }
 
     protected sorterRegExp(): RegExp {
