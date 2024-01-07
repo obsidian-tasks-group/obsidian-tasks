@@ -271,6 +271,8 @@ class QueryRenderChild extends MarkdownRenderChild {
     private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = listItem.createEl('a', {
             cls: 'tasks-edit',
+            href: '#',
+            title: 'Edit task',
         });
         editTaskPencil.onClickEvent((event: MouseEvent) => {
             event.preventDefault();
