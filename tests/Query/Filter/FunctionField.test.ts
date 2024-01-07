@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import { Status } from '../../../src/Status';
+import type { Task } from '../../../src/Task';
 import { Priority } from '../../../src/Task';
 import {
     toGroupTaskFromBuilder,
@@ -13,12 +14,12 @@ import {
 } from '../../CustomMatchers/CustomMatchersForGrouping';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
-import type { Task } from '../../../src/Task';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
+import { fromLine } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -97,7 +98,7 @@ describe('FunctionField - sorting', () => {
         return new TaskBuilder().description(description).build();
     }
 
-    it('sort by function', () => {
+    it('sort by function - integer expression', () => {
         // Arrange
         const sorter = new FunctionField().createSorterFromLine('sort by function task.description.length');
 
@@ -114,7 +115,7 @@ describe('FunctionField - sorting', () => {
         expectTaskComparesAfter(sorter!, with_description('xxxx'), with_description('x'));
     });
 
-    it('sort by function reverse', () => {
+    it('sort by function - integer expression - reverse', () => {
         // Arrange
         const sorter = new FunctionField().createSorterFromLine('sort by function reverse task.description.length');
 
@@ -127,6 +128,19 @@ describe('FunctionField - sorting', () => {
 
         // Sorts on string length - longer first
         expectTaskComparesBefore(sorter!, with_description('xxxx'), with_description('x'));
+    });
+
+    it('sort by function - string expression', () => {
+        // Arrange
+        const sorter = new FunctionField().createSorterFromLine('sort by function task.originalMarkdown');
+
+        // Assert
+        expect(sorter).not.toBeNull();
+        expectTaskComparesBefore(sorter!, fromLine({ line: '- [ ] Hello' }), fromLine({ line: '* [ ] Hello' }));
+        expectTaskComparesBefore(sorter!, fromLine({ line: '* [ ] Apple' }), fromLine({ line: '* [ ] Hello' }));
+        expectTaskComparesBefore(sorter!, fromLine({ line: '* [ ] Apple' }), fromLine({ line: '* [ ] APPLE' })); // case-insensitive
+        expectTaskComparesEqual(sorter!, fromLine({ line: '- [ ] Hello' }), fromLine({ line: '- [ ] Hello' }));
+        expectTaskComparesAfter(sorter!, fromLine({ line: '* [ ] Hello' }), fromLine({ line: '- [ ] Hello' }));
     });
 });
 

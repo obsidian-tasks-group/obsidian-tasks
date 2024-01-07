@@ -75,7 +75,16 @@ export class FunctionField extends Field {
             // If the result is negative, a is sorted before b.
             // If the result is positive, b is sorted before a.
             // If the result is 0, no changes are done with the sort order of the two values.
-            return taskExpression.evaluate(a) - taskExpression.evaluate(b);
+
+            const valueA = taskExpression.evaluate(a);
+            const valueB = taskExpression.evaluate(b);
+
+            if (typeof valueA === 'string') {
+                return valueA.localeCompare(valueB, undefined, { numeric: true });
+            }
+
+            // Treat as numeric
+            return valueA - valueB;
         };
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
