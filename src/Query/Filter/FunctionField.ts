@@ -5,6 +5,7 @@ import { Explanation } from '../Explain/Explanation';
 import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
 import type { QueryContext } from '../../Scripting/QueryContext';
 import type { SearchInfo } from '../SearchInfo';
+import type { Comparator, Sorter } from '../Sorter';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -15,6 +16,10 @@ import { FilterOrErrorMessage } from './FilterOrErrorMessage';
  * See also {@link parseAndEvaluateExpression}
  */
 export class FunctionField extends Field {
+    // -----------------------------------------------------------------------------------------------------------------
+    // Filtering
+    // -----------------------------------------------------------------------------------------------------------------
+
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const match = Field.getMatch(this.filterRegExp(), line);
         if (match === null) {
@@ -38,6 +43,39 @@ export class FunctionField extends Field {
 
     protected filterRegExp(): RegExp | null {
         return new RegExp(`^filter by ${this.fieldNameSingularEscaped()} (.*)`, 'i');
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Sorting
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public supportsSorting(): boolean {
+        // TODO Set to true once sorting is properly implemented
+        return false;
+    }
+
+    protected sorterRegExp(): RegExp {
+        return new RegExp(`^sort by ${this.fieldNameSingularEscaped()}( reverse)? (.*)`, 'i');
+    }
+
+    public createSorterFromLine(line: string): Sorter | null {
+        const match = Field.getMatch(this.sorterRegExp(), line);
+        if (match === null) {
+            return null;
+        }
+
+        const reverse = !!match[1];
+        return this.createSorter(reverse);
+    }
+
+    comparator(): Comparator {
+        return (a: Task, b: Task) => {
+            // TODO Make this generic
+            // If the result is negative, a is sorted before b.
+            // If the result is positive, b is sorted before a.
+            // If the result is 0, no changes are done with the sort order of the two values.
+            return a.description.length - b.description.length;
+        };
     }
 
     // -----------------------------------------------------------------------------------------------------------------
