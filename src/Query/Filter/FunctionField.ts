@@ -5,7 +5,7 @@ import { Explanation } from '../Explain/Explanation';
 import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
 import type { QueryContext } from '../../Scripting/QueryContext';
 import type { SearchInfo } from '../SearchInfo';
-import { type Comparator, Sorter } from '../Sorter';
+import { Sorter } from '../Sorter';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -72,17 +72,13 @@ export class FunctionField extends Field {
             // return FilterOrErrorMessage.fromError(line, taskExpression.parseError!);
             return null;
         }
-        return new Sorter(line, this.fieldNameSingular(), this.comparator(), reverse);
-    }
-
-    comparator(): Comparator {
-        return (a: Task, b: Task) => {
-            // TODO Make this generic
+        const comparator = (a: Task, b: Task) => {
             // If the result is negative, a is sorted before b.
             // If the result is positive, b is sorted before a.
             // If the result is 0, no changes are done with the sort order of the two values.
-            return a.description.length - b.description.length;
+            return taskExpression.evaluate(a) - taskExpression.evaluate(b);
         };
+        return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
