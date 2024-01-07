@@ -32,7 +32,7 @@ describe('PostponeMenu', () => {
     it('should populate the menu for overdue task', () => {
         // Arrange
         const task = new TaskBuilder().dueDate(yesterday).build();
-        const button = document.createElement('button');
+        const button = document.createElement('a');
 
         // Act
         const menu = new PostponeMenu(button, task);
@@ -57,7 +57,7 @@ describe('PostponeMenu', () => {
     it('should populate the menu for future task', () => {
         // Arrange
         const task = new TaskBuilder().scheduledDate(tomorrow).build();
-        const button = document.createElement('button');
+        const button = document.createElement('a');
 
         // Act
         const menu = new PostponeMenu(button, task);
@@ -82,7 +82,7 @@ describe('PostponeMenu', () => {
     it('should modify task, if different date selected', () => {
         // Arrange
         const task = new TaskBuilder().startDate(today).build();
-        const button = document.createElement('button');
+        const button = document.createElement('a');
         const menu = new PostponeMenu(button, task, TestableTaskSaver.testableTaskSaver);
 
         // Act

@@ -11,11 +11,11 @@ import {
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 export class PostponeMenu extends TaskEditingMenu {
-    constructor(button: HTMLButtonElement, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
+    constructor(button: HTMLAnchorElement, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
         const postponeMenuItemCallback = (
-            button: HTMLButtonElement,
+            button: HTMLAnchorElement,
             item: MenuItem,
             timeUnit: unitOfTime.DurationConstructor,
             amount = 1,
@@ -39,7 +39,7 @@ export class PostponeMenu extends TaskEditingMenu {
     }
 
     public static async postponeOnClickCallback(
-        button: HTMLButtonElement,
+        button: HTMLAnchorElement,
         task: Task,
         amount: number,
         timeUnit: unitOfTime.DurationConstructor,
@@ -58,12 +58,12 @@ export class PostponeMenu extends TaskEditingMenu {
     }
 
     private static postponeSuccessCallback(
-        button: HTMLButtonElement,
+        button: HTMLAnchorElement,
         updatedDateType: HappensDate,
         postponedDate: Moment,
     ) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
-        button.disabled = true;
+        button.style.pointerEvents = 'none';
 
         const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
         new Notice(successMessage, 2000);
