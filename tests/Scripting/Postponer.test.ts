@@ -212,8 +212,21 @@ describe('postpone - UI text', () => {
 });
 
 describe('postpone - new task creation', () => {
-    function testPostponedTaskAndDate(task: Task, expectedDateField: HappensDate, expectedPostponedDate: string) {
-        const { postponedDate, postponedTask } = createPostponedTask(task, expectedDateField, 'day', 1);
+    function testPostponedTaskAndDate(
+        task: Task,
+        expectedDateField: HappensDate,
+        expectedPostponedDate: string,
+        postponingFunction: (
+            task: Task,
+            dateFieldToPostpone: HappensDate,
+            timeUnit: moment.unitOfTime.DurationConstructor,
+            amount: number,
+        ) => {
+            postponedDate: moment.Moment;
+            postponedTask: Task;
+        },
+    ) {
+        const { postponedDate, postponedTask } = postponingFunction(task, expectedDateField, 'day', 1);
         expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
         expect(postponedTask[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
 
@@ -228,22 +241,22 @@ describe('postpone - new task creation', () => {
     it('should postpone an overdue task to today', () => {
         const task = new TaskBuilder().dueDate('2023-11-01').build();
         const expectedPostponedDate = '2023-12-04';
-        testPostponedTaskAndDate(task, 'dueDate', expectedPostponedDate);
+        testPostponedTaskAndDate(task, 'dueDate', expectedPostponedDate, createPostponedTask);
     });
 
     it('should postpone a task scheduled today to tomorrow', () => {
         const task = new TaskBuilder().scheduledDate('2023-12-03').build();
-        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
+        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04', createPostponedTask);
     });
 
     it('should postpone a task scheduled today to tomorrow, when the scheduled date is inferred', () => {
         const task = new TaskBuilder().scheduledDate('2023-12-03').scheduledDateIsInferred(true).build();
-        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
+        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04', createPostponedTask);
     });
 
     it('should postpone a task that starts in the future to the next day', () => {
         const task = new TaskBuilder().startDate('2024-03-05').build();
-        testPostponedTaskAndDate(task, 'startDate', '2024-03-06');
+        testPostponedTaskAndDate(task, 'startDate', '2024-03-06', createPostponedTask);
     });
 });
 
