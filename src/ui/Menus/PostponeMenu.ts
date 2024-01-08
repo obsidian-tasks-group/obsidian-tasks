@@ -3,7 +3,9 @@ import type { Moment, unitOfTime } from 'moment/moment';
 import type { Task } from '../../Task';
 import {
     type HappensDate,
+    createFixedDateTask,
     createPostponedTask,
+    fixedDateMenuItemTitle,
     getDateFieldToPostpone,
     postponeMenuItemTitle,
     postponementSuccessMessage,
@@ -36,6 +38,13 @@ export class PostponeMenu extends TaskEditingMenu {
             );
         };
 
+        const fixedTitle = fixedDateMenuItemTitle;
+        const fixedDateFunction = createFixedDateTask;
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 0, fixedTitle, fixedDateFunction));
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'day', 1, fixedTitle, fixedDateFunction));
+
+        this.addSeparator();
+
         const titlingFunction = postponeMenuItemTitle;
         const postponingFunction = createPostponedTask;
         this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 2, titlingFunction, postponingFunction));
@@ -43,7 +52,9 @@ export class PostponeMenu extends TaskEditingMenu {
         this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 4, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 5, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 6, titlingFunction, postponingFunction));
+
         this.addSeparator();
+
         this.addItem((item) => postponeMenuItemCallback(button, item, 'week', 1, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'weeks', 2, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'weeks', 3, titlingFunction, postponingFunction));
