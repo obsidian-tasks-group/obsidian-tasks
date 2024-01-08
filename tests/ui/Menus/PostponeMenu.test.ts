@@ -29,17 +29,17 @@ afterEach(() => {
 });
 
 describe('PostponeMenu', () => {
-    it('should populate the menu for overdue task', () => {
-        // Arrange
-        const builderWithDate = new TaskBuilder().dueDate(yesterday);
+    function contentsOfPostponeMenuForTask(builderWithDate: TaskBuilder) {
         const task = builderWithDate.build();
         const button = document.createElement('button');
 
-        // Act
         const menu = new PostponeMenu(button, task);
+        return menuToString(menu);
+    }
 
-        // Assert
-        const itemsAsText = menuToString(menu);
+    it('should populate the menu for overdue task', () => {
+        const builderWithDate = new TaskBuilder().dueDate(yesterday);
+        const itemsAsText = contentsOfPostponeMenuForTask(builderWithDate);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
               Due in 2 days, on Tue 5th Dec
