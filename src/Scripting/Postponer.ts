@@ -62,6 +62,24 @@ export function createPostponedTask(
     return { postponedDate, postponedTask };
 }
 
+export function createFixedDateTask(
+    task: Task,
+    dateFieldToPostpone: HappensDate,
+    timeUnit: unitOfTime.DurationConstructor,
+    amount: number,
+) {
+    const dateToPostpone = window.moment();
+    // TODO Remove duplication
+    const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
+    const postponedTask = DateFallback.removeInferredStatusIfNeeded(task, [
+        new Task({
+            ...task,
+            [dateFieldToPostpone]: postponedDate,
+        }),
+    ])[0];
+    return { postponedDate, postponedTask };
+}
+
 export function postponementSuccessMessage(postponedDate: Moment, dateFieldToPostpone: HappensDate) {
     // TODO all logic for invalid dates
     const postponedDateString = postponedDate?.format('DD MMM YYYY');

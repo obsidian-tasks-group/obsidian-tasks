@@ -5,6 +5,7 @@ import moment from 'moment';
 import type { Task } from 'Task';
 import {
     type HappensDate,
+    createFixedDateTask,
     createPostponedTask,
     fixedDateMenuItemTitle,
     getDateFieldToPostpone,
@@ -257,6 +258,11 @@ describe('postpone - new task creation', () => {
     it('should postpone a task that starts in the future to the next day', () => {
         const task = new TaskBuilder().startDate('2024-03-05').build();
         testPostponedTaskAndDate(task, 'startDate', '2024-03-06', createPostponedTask);
+    });
+
+    it('should postpone a task that starts in the future to tomorrow, if using fixed date', () => {
+        const task = new TaskBuilder().startDate('2024-03-05').build();
+        testPostponedTaskAndDate(task, 'startDate', '2023-12-04', createFixedDateTask);
     });
 });
 
