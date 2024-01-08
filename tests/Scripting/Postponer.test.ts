@@ -6,6 +6,7 @@ import type { Task } from 'Task';
 import {
     type HappensDate,
     createPostponedTask,
+    fixedDateMenuItemTitle,
     getDateFieldToPostpone,
     postponeButtonTitle,
     postponeMenuItemTitle,
@@ -199,6 +200,14 @@ describe('postpone - UI text', () => {
 
         expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Postpone start date by a day, to Tue 5th Dec');
         expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Postpone start date by 2 days, to Wed 6th Dec');
+    });
+
+    it('should show dates relative to today, when using fixed date menu items - foe today and tomorrow', () => {
+        const task = new TaskBuilder().dueDate(tomorrow).build();
+
+        expect(fixedDateMenuItemTitle(task, 0, 'days')).toEqual('Due today, on Sun 3rd Dec');
+        expect(fixedDateMenuItemTitle(task, 1, 'day')).toEqual('Due tomorrow, on Mon 4th Dec');
+        expect(fixedDateMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
     });
 });
 
