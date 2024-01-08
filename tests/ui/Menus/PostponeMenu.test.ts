@@ -38,8 +38,7 @@ describe('PostponeMenu', () => {
     }
 
     it('should populate the menu for overdue task', () => {
-        const builderWithDate = new TaskBuilder().dueDate(yesterday);
-        const itemsAsText = contentsOfPostponeMenuForTask(builderWithDate);
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().dueDate(yesterday));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
               Due in 2 days, on Tue 5th Dec
