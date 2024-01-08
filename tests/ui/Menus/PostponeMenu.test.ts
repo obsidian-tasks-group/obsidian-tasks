@@ -31,7 +31,8 @@ afterEach(() => {
 describe('PostponeMenu', () => {
     it('should populate the menu for overdue task', () => {
         // Arrange
-        const task = new TaskBuilder().dueDate(yesterday).build();
+        const builderWithDate = new TaskBuilder().dueDate(yesterday);
+        const task = builderWithDate.build();
         const button = document.createElement('button');
 
         // Act
