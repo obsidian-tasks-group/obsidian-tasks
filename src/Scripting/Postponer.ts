@@ -73,11 +73,11 @@ export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOf
     return `ℹ️ ${buttonText} (right-click for more options)`;
 }
 
-export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
-    function capitalizeFirstLetter(word: string) {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-    }
+function capitalizeFirstLetter(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
 
+export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = task[updatedDateType] as Moment;
 
