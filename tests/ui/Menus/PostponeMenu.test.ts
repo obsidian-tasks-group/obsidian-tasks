@@ -56,14 +56,7 @@ describe('PostponeMenu', () => {
 
     it('should populate the menu for future task', () => {
         // Arrange
-        const task = new TaskBuilder().scheduledDate(tomorrow).build();
-        const button = document.createElement('button');
-
-        // Act
-        const menu = new PostponeMenu(button, task);
-
-        // Assert
-        const itemsAsText = menuToString(menu);
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(tomorrow));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
               Postpone scheduled date by 2 days, to Wed 6th Dec
