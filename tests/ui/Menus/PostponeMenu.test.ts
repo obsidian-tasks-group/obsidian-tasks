@@ -37,7 +37,7 @@ describe('PostponeMenu', () => {
         return menuToString(menu);
     }
 
-    it('should populate the menu for overdue task', () => {
+    it('should populate the menu for task due yesterday', () => {
         const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().dueDate(yesterday));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
@@ -54,7 +54,7 @@ describe('PostponeMenu', () => {
         `);
     });
 
-    it('should populate the menu for future task', () => {
+    it('should populate the menu for task scheduled tomorrow', () => {
         // Arrange
         const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(tomorrow));
         expect(itemsAsText).toMatchInlineSnapshot(`
