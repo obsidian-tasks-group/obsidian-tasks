@@ -12,9 +12,11 @@ window.moment = moment;
 
 export {};
 
+const farPast = '2022-01-17';
 const yesterday = '2023-12-02';
 const today = '2023-12-03';
 const tomorrow = '2023-12-04';
+const farFuture = '2017-03-25';
 
 // const invalidDate = '2023-12-36';
 
@@ -37,6 +39,23 @@ describe('PostponeMenu', () => {
         return menuToString(menu);
     }
 
+    it('should populate the menu for task scheduled long ao', () => {
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(farPast));
+        expect(itemsAsText).toMatchInlineSnapshot(`
+            "
+              Scheduled in 2 days, on Tue 5th Dec
+              Scheduled in 3 days, on Wed 6th Dec
+              Scheduled in 4 days, on Thu 7th Dec
+              Scheduled in 5 days, on Fri 8th Dec
+              Scheduled in 6 days, on Sat 9th Dec
+              ---
+              Scheduled in a week, on Sun 10th Dec
+              Scheduled in 2 weeks, on Sun 17th Dec
+              Scheduled in 3 weeks, on Sun 24th Dec
+              Scheduled in a month, on Wed 3rd Jan"
+        `);
+    });
+
     it('should populate the menu for task due yesterday', () => {
         const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().dueDate(yesterday));
         expect(itemsAsText).toMatchInlineSnapshot(`
@@ -51,6 +70,24 @@ describe('PostponeMenu', () => {
               Due in 2 weeks, on Sun 17th Dec
               Due in 3 weeks, on Sun 24th Dec
               Due in a month, on Wed 3rd Jan"
+        `);
+    });
+
+    it('should populate the menu for task starting today', () => {
+        // Arrange
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().startDate(today));
+        expect(itemsAsText).toMatchInlineSnapshot(`
+            "
+              Start in 2 days, on Tue 5th Dec
+              Start in 3 days, on Wed 6th Dec
+              Start in 4 days, on Thu 7th Dec
+              Start in 5 days, on Fri 8th Dec
+              Start in 6 days, on Sat 9th Dec
+              ---
+              Start in a week, on Sun 10th Dec
+              Start in 2 weeks, on Sun 17th Dec
+              Start in 3 weeks, on Sun 24th Dec
+              Start in a month, on Wed 3rd Jan"
         `);
     });
 
@@ -69,6 +106,24 @@ describe('PostponeMenu', () => {
               Postpone scheduled date by 2 weeks, to Mon 18th Dec
               Postpone scheduled date by 3 weeks, to Mon 25th Dec
               Postpone scheduled date by a month, to Thu 4th Jan"
+        `);
+    });
+    it('should populate the menu for task due far ahead', () => {
+        // Arrange
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().dueDate(farFuture));
+        // TODO Show the year, if it is not the current year.
+        expect(itemsAsText).toMatchInlineSnapshot(`
+            "
+              Due in 2 days, on Tue 5th Dec
+              Due in 3 days, on Wed 6th Dec
+              Due in 4 days, on Thu 7th Dec
+              Due in 5 days, on Fri 8th Dec
+              Due in 6 days, on Sat 9th Dec
+              ---
+              Due in a week, on Sun 10th Dec
+              Due in 2 weeks, on Sun 17th Dec
+              Due in 3 weeks, on Sun 24th Dec
+              Due in a month, on Wed 3rd Jan"
         `);
     });
 
