@@ -43,6 +43,9 @@ describe('PostponeMenu', () => {
         const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(farPast));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+              Scheduled today, on Sun 3rd Dec
+              Scheduled tomorrow, on Mon 4th Dec
+              ---
               Scheduled in 2 days, on Tue 5th Dec
               Scheduled in 3 days, on Wed 6th Dec
               Scheduled in 4 days, on Thu 7th Dec
@@ -60,6 +63,9 @@ describe('PostponeMenu', () => {
         const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().dueDate(yesterday));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+              Due today, on Sun 3rd Dec
+              Due tomorrow, on Mon 4th Dec
+              ---
               Due in 2 days, on Tue 5th Dec
               Due in 3 days, on Wed 6th Dec
               Due in 4 days, on Thu 7th Dec
@@ -78,6 +84,9 @@ describe('PostponeMenu', () => {
         const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().startDate(today));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+              Start today, on Sun 3rd Dec
+              Start tomorrow, on Mon 4th Dec
+              ---
               Start in 2 days, on Tue 5th Dec
               Start in 3 days, on Wed 6th Dec
               Start in 4 days, on Thu 7th Dec
@@ -96,6 +105,9 @@ describe('PostponeMenu', () => {
         const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(tomorrow));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+              Scheduled today, on Sun 3rd Dec
+              Scheduled tomorrow, on Mon 4th Dec
+              ---
               Postpone scheduled date by 2 days, to Wed 6th Dec
               Postpone scheduled date by 3 days, to Thu 7th Dec
               Postpone scheduled date by 4 days, to Fri 8th Dec
@@ -114,6 +126,9 @@ describe('PostponeMenu', () => {
         // TODO Show the year, if it is not the current year.
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+              Due today, on Sun 3rd Dec
+              Due tomorrow, on Mon 4th Dec
+              ---
               Due in 2 days, on Tue 5th Dec
               Due in 3 days, on Wed 6th Dec
               Due in 4 days, on Thu 7th Dec
@@ -135,7 +150,10 @@ describe('PostponeMenu', () => {
 
         // Act
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'PostponeMenu'.
-        const todoItem = menu.items[0];
+        // item 0 is today.
+        // item 1 is tomorrow.
+        // item 2 is '---' separator.
+        const todoItem = menu.items[3];
         expect(todoItem.title).toEqual('Start in 2 days, on Tue 5th Dec');
         todoItem.callback();
 
