@@ -36,34 +36,18 @@ export class PostponeMenu extends TaskEditingMenu {
             );
         };
 
-        this.addItem((item) =>
-            postponeMenuItemCallback(button, item, 'days', 2, postponeMenuItemTitle, createPostponedTask),
-        );
-        this.addItem((item) =>
-            postponeMenuItemCallback(button, item, 'days', 3, postponeMenuItemTitle, createPostponedTask),
-        );
-        this.addItem((item) =>
-            postponeMenuItemCallback(button, item, 'days', 4, postponeMenuItemTitle, createPostponedTask),
-        );
-        this.addItem((item) =>
-            postponeMenuItemCallback(button, item, 'days', 5, postponeMenuItemTitle, createPostponedTask),
-        );
-        this.addItem((item) =>
-            postponeMenuItemCallback(button, item, 'days', 6, postponeMenuItemTitle, createPostponedTask),
-        );
+        const titlingFunction = postponeMenuItemTitle;
+        const postponingFunction = createPostponedTask;
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 2, titlingFunction, postponingFunction));
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 3, titlingFunction, postponingFunction));
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 4, titlingFunction, postponingFunction));
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 5, titlingFunction, postponingFunction));
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 6, titlingFunction, postponingFunction));
         this.addSeparator();
-        this.addItem((item) =>
-            postponeMenuItemCallback(button, item, 'week', 1, postponeMenuItemTitle, createPostponedTask),
-        );
-        this.addItem((item) =>
-            postponeMenuItemCallback(button, item, 'weeks', 2, postponeMenuItemTitle, createPostponedTask),
-        );
-        this.addItem((item) =>
-            postponeMenuItemCallback(button, item, 'weeks', 3, postponeMenuItemTitle, createPostponedTask),
-        );
-        this.addItem((item) =>
-            postponeMenuItemCallback(button, item, 'month', 1, postponeMenuItemTitle, createPostponedTask),
-        );
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'week', 1, titlingFunction, postponingFunction));
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'weeks', 2, titlingFunction, postponingFunction));
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'weeks', 3, titlingFunction, postponingFunction));
+        this.addItem((item) => postponeMenuItemCallback(button, item, 'month', 1, titlingFunction, postponingFunction));
     }
 
     public static async postponeOnClickCallback(
