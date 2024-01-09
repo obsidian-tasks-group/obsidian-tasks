@@ -53,9 +53,8 @@ ul.contains-task-list .task-list-item-checkbox {
     vertical-align: middle;
     margin-left: .33em;
     cursor: pointer;
-    /*font-size: 1.125em;*/
     font-family: var(--font-interface);
-    color: --var(--text-accent);
+    color: var(--text-accent);
 }
 
 a.tasks-edit, a.tasks-postpone {
