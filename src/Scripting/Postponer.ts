@@ -52,14 +52,7 @@ export function createPostponedTask(
     amount: number,
 ) {
     const dateToPostpone = task[dateFieldToPostpone];
-    const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
-    const postponedTask = DateFallback.removeInferredStatusIfNeeded(task, [
-        new Task({
-            ...task,
-            [dateFieldToPostpone]: postponedDate,
-        }),
-    ])[0];
-    return { postponedDate, postponedTask };
+    return createPostponedTaskFromDate(dateToPostpone, task, dateFieldToPostpone, timeUnit, amount);
 }
 
 export function createFixedDateTask(
@@ -70,6 +63,23 @@ export function createFixedDateTask(
 ) {
     const dateToPostpone = window.moment();
     // TODO Remove duplication
+    const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
+    const postponedTask = DateFallback.removeInferredStatusIfNeeded(task, [
+        new Task({
+            ...task,
+            [dateFieldToPostpone]: postponedDate,
+        }),
+    ])[0];
+    return { postponedDate, postponedTask };
+}
+
+function createPostponedTaskFromDate(
+    dateToPostpone: moment.Moment | null,
+    task: Task,
+    dateFieldToPostpone: HappensDate,
+    timeUnit: moment.unitOfTime.DurationConstructor,
+    amount: number,
+) {
     const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
     const postponedTask = DateFallback.removeInferredStatusIfNeeded(task, [
         new Task({
