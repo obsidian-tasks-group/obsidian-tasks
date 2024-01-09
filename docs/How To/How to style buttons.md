@@ -14,6 +14,9 @@ In the current version of Tasks they look they this:
 
 ![Task buttons with default style](../images/tasks-buttons-default.png)
 
+At least they look like this on Windows 11 -
+icons may appear slightly different on different platforms..
+
 If you don't like how these icons look, this guide shows how you can modify their appearance.
 
 We assume that you know how to [use CSS snippets in Obsidian](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets).
@@ -52,9 +55,13 @@ This would look like so:
 
 ![Task buttons with alt characters](../images/tasks-buttons-alt.png)
 
+Note that the unicode characters used here are from Unicode version 7 and 8 and
+may not yet be supported on all platforms. If you want to support more platforms,
+you should choose characters from Unicode 6 that are more widely available.
+
 ## More style, please
 
-If you want make the buttons look more like real buttons and give them some color, this is also possibe, like in [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-stylish.css):
+If you want to make the buttons look more like real buttons and give them some color, this is also possibe, like in [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-stylish.css):
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-stylish.css -->
 ```css
@@ -110,6 +117,8 @@ You can also use your own graphics instead of existing unicode characters, like 
 The CSS snippet above shows the buttons with a similar look as in earlier versions of Tasks:
 
 ![Task buttons with old style](../images/tasks-buttons-svg.png)
+
+When using graphics, it is also guaranteed that the icons look the same on all platforms.
 
 And finally, if you prefer simple text-based buttons which would more like links, then [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-text.css) shows how to do it:
 
