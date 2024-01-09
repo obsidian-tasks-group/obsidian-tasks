@@ -43,8 +43,12 @@ export class TaskEditingMenu extends Menu {
 
     protected addItemsForInstructions(instructions: TaskEditingInstruction[], task: Task) {
         for (const instruction of instructions) {
-            this.addItem((item) => this.getMenuItemCallback(task, item, instruction));
+            this.addItemForInstruction(task, instruction);
         }
+    }
+
+    private addItemForInstruction(task: Task, instruction: TaskEditingInstruction) {
+        this.addItem((item) => this.getMenuItemCallback(task, item, instruction));
     }
 
     private getMenuItemCallback(task: Task, item: MenuItem, instruction: TaskEditingInstruction) {
