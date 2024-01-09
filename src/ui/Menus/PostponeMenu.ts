@@ -12,6 +12,16 @@ import {
 } from '../../Scripting/Postponer';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
+type PostponingFunction = (
+    task: Task,
+    dateFieldToPostpone: HappensDate,
+    timeUnit: unitOfTime.DurationConstructor,
+    amount: number,
+) => {
+    postponedDate: moment.Moment;
+    postponedTask: Task;
+};
+
 export class PostponeMenu extends TaskEditingMenu {
     constructor(button: HTMLButtonElement, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
@@ -22,15 +32,7 @@ export class PostponeMenu extends TaskEditingMenu {
             timeUnit: unitOfTime.DurationConstructor,
             amount: number,
             itemNamingFunction: (task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) => string,
-            postponingFunction: (
-                task: Task,
-                dateFieldToPostpone: HappensDate,
-                timeUnit: unitOfTime.DurationConstructor,
-                amount: number,
-            ) => {
-                postponedDate: moment.Moment;
-                postponedTask: Task;
-            },
+            postponingFunction: PostponingFunction,
         ) => {
             const title = itemNamingFunction(task, amount, timeUnit);
             item.setTitle(title).onClick(() =>
@@ -66,15 +68,7 @@ export class PostponeMenu extends TaskEditingMenu {
         task: Task,
         amount: number,
         timeUnit: unitOfTime.DurationConstructor,
-        postponingFunction: (
-            task: Task,
-            dateFieldToPostpone: HappensDate,
-            timeUnit: unitOfTime.DurationConstructor,
-            amount: number,
-        ) => {
-            postponedDate: moment.Moment;
-            postponedTask: Task;
-        } = createPostponedTask,
+        postponingFunction: PostponingFunction = createPostponedTask,
         taskSaver: TaskSaver = defaultTaskSaver,
     ) {
         const dateFieldToPostpone = getDateFieldToPostpone(task);
