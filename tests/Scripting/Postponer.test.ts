@@ -175,7 +175,7 @@ describe('postpone - UI text', () => {
     it('should include date type and new date in button tooltip', () => {
         const task = new TaskBuilder().dueDate(today).build();
         expect(postponeButtonTitle(task, 1, 'day')).toEqual(
-            'ℹ️ Due in a day, on Mon 4th Dec (right-click for more options)',
+            'ℹ️ Due tomorrow, on Mon 4th Dec (right-click for more options)',
         );
         expect(postponeButtonTitle(task, 2, 'days')).toEqual(
             'ℹ️ Due in 2 days, on Tue 5th Dec (right-click for more options)',
@@ -185,14 +185,14 @@ describe('postpone - UI text', () => {
     it('should include date type and new date in context menu labels when due today', () => {
         const task = new TaskBuilder().dueDate(today).build();
 
-        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Mon 4th Dec');
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due tomorrow, on Mon 4th Dec');
         expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
     });
 
     it('should include date type and new date in context menu labels when overdue', () => {
         const task = new TaskBuilder().scheduledDate(yesterday).build();
 
-        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Scheduled in a day, on Mon 4th Dec');
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Scheduled tomorrow, on Mon 4th Dec');
         expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Scheduled in 2 days, on Tue 5th Dec');
     });
 
