@@ -20,7 +20,7 @@ export class PostponeMenu extends TaskEditingMenu {
             button: HTMLButtonElement,
             item: MenuItem,
             timeUnit: unitOfTime.DurationConstructor,
-            amount = 1,
+            amount: number,
             itemNamingFunction: (task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) => string,
             postponingFunction: (
                 task: Task,
