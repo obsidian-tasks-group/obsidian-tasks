@@ -12,6 +12,8 @@ import {
 } from '../../Scripting/Postponer';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
+type NamingFunction = (task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) => string;
+
 type PostponingFunction = (
     task: Task,
     dateFieldToPostpone: HappensDate,
@@ -31,7 +33,7 @@ export class PostponeMenu extends TaskEditingMenu {
             item: MenuItem,
             timeUnit: unitOfTime.DurationConstructor,
             amount: number,
-            itemNamingFunction: (task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) => string,
+            itemNamingFunction: NamingFunction,
             postponingFunction: PostponingFunction,
         ) => {
             const title = itemNamingFunction(task, amount, timeUnit);
