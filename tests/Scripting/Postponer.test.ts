@@ -269,11 +269,11 @@ describe('postpone - new task creation', () => {
 describe('postpone - postponement success message', () => {
     it('should generate a message for a valid date', () => {
         const message = postponementSuccessMessage(moment('2023-11-30'), 'scheduledDate');
-        expect(message).toEqual("Task's scheduledDate postponed until 30 Nov 2023");
+        expect(message).toEqual("Task's scheduledDate changed to 30 Nov 2023");
     });
 
     it('should generate a message for an invalid date', () => {
         const message = postponementSuccessMessage(moment(invalidDate), 'dueDate');
-        expect(message).toEqual("Task's dueDate postponed until Invalid date");
+        expect(message).toEqual("Task's dueDate changed to Invalid date");
     });
 });

@@ -85,7 +85,7 @@ function createPostponedTaskFromDate(
 export function postponementSuccessMessage(postponedDate: Moment, dateFieldToPostpone: HappensDate) {
     // TODO all logic for invalid dates
     const postponedDateString = postponedDate?.format('DD MMM YYYY');
-    return `Task's ${dateFieldToPostpone} postponed until ${postponedDateString}`;
+    return `Task's ${dateFieldToPostpone} changed to ${postponedDateString}`;
 }
 
 export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
