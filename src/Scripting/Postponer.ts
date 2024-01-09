@@ -100,18 +100,7 @@ function capitalizeFirstLetter(word: string) {
 export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = task[updatedDateType] as Moment;
-
-    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-    const formattedNewDate = postponedDate.format('ddd Do MMM');
-
-    const amountOrArticle = amount > 1 ? amount : 'a';
-    if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
-        const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
-        return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
-    } else {
-        const updatedDateDisplayText = updatedDateType.replace('Date', ' date');
-        return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
-    }
+    return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
 }
 
 export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
@@ -126,4 +115,23 @@ export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: uni
     const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
     const defaultTitle = `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
     return defaultTitle.replace(' in 0 days', ' today').replace('in a day', 'tomorrow');
+}
+
+function postponeMenuItemTitleFromDate(
+    updatedDateType: HappensDate,
+    dateToUpdate: moment.Moment,
+    amount: number,
+    timeUnit: moment.unitOfTime.DurationConstructor,
+) {
+    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+    const formattedNewDate = postponedDate.format('ddd Do MMM');
+
+    const amountOrArticle = amount > 1 ? amount : 'a';
+    if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
+        const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
+        return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
+    } else {
+        const updatedDateDisplayText = updatedDateType.replace('Date', ' date');
+        return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
+    }
 }
