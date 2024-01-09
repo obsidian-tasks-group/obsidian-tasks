@@ -5,7 +5,9 @@ import moment from 'moment';
 import type { Task } from 'Task';
 import {
     type HappensDate,
+    createFixedDateTask,
     createPostponedTask,
+    fixedDateMenuItemTitle,
     getDateFieldToPostpone,
     postponeButtonTitle,
     postponeMenuItemTitle,
@@ -173,7 +175,7 @@ describe('postpone - UI text', () => {
     it('should include date type and new date in button tooltip', () => {
         const task = new TaskBuilder().dueDate(today).build();
         expect(postponeButtonTitle(task, 1, 'day')).toEqual(
-            'ℹ️ Due in a day, on Mon 4th Dec (right-click for more options)',
+            'ℹ️ Due tomorrow, on Mon 4th Dec (right-click for more options)',
         );
         expect(postponeButtonTitle(task, 2, 'days')).toEqual(
             'ℹ️ Due in 2 days, on Tue 5th Dec (right-click for more options)',
@@ -183,14 +185,14 @@ describe('postpone - UI text', () => {
     it('should include date type and new date in context menu labels when due today', () => {
         const task = new TaskBuilder().dueDate(today).build();
 
-        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due in a day, on Mon 4th Dec');
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Due tomorrow, on Mon 4th Dec');
         expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
     });
 
     it('should include date type and new date in context menu labels when overdue', () => {
         const task = new TaskBuilder().scheduledDate(yesterday).build();
 
-        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Scheduled in a day, on Mon 4th Dec');
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Scheduled tomorrow, on Mon 4th Dec');
         expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Scheduled in 2 days, on Tue 5th Dec');
     });
 
@@ -200,11 +202,32 @@ describe('postpone - UI text', () => {
         expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Postpone start date by a day, to Tue 5th Dec');
         expect(postponeMenuItemTitle(task, 2, 'days')).toEqual('Postpone start date by 2 days, to Wed 6th Dec');
     });
+
+    it('should show dates relative to today, when using fixed date menu items - foe today and tomorrow', () => {
+        const task = new TaskBuilder().dueDate(tomorrow).build();
+
+        expect(fixedDateMenuItemTitle(task, 0, 'days')).toEqual('Due today, on Sun 3rd Dec');
+        expect(fixedDateMenuItemTitle(task, 1, 'day')).toEqual('Due tomorrow, on Mon 4th Dec');
+        expect(fixedDateMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
+    });
 });
 
 describe('postpone - new task creation', () => {
-    function testPostponedTaskAndDate(task: Task, expectedDateField: HappensDate, expectedPostponedDate: string) {
-        const { postponedDate, postponedTask } = createPostponedTask(task, expectedDateField, 'day', 1);
+    function testPostponedTaskAndDate(
+        task: Task,
+        expectedDateField: HappensDate,
+        expectedPostponedDate: string,
+        postponingFunction: (
+            task: Task,
+            dateFieldToPostpone: HappensDate,
+            timeUnit: moment.unitOfTime.DurationConstructor,
+            amount: number,
+        ) => {
+            postponedDate: moment.Moment;
+            postponedTask: Task;
+        },
+    ) {
+        const { postponedDate, postponedTask } = postponingFunction(task, expectedDateField, 'day', 1);
         expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
         expect(postponedTask[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
 
@@ -219,33 +242,38 @@ describe('postpone - new task creation', () => {
     it('should postpone an overdue task to today', () => {
         const task = new TaskBuilder().dueDate('2023-11-01').build();
         const expectedPostponedDate = '2023-12-04';
-        testPostponedTaskAndDate(task, 'dueDate', expectedPostponedDate);
+        testPostponedTaskAndDate(task, 'dueDate', expectedPostponedDate, createPostponedTask);
     });
 
     it('should postpone a task scheduled today to tomorrow', () => {
         const task = new TaskBuilder().scheduledDate('2023-12-03').build();
-        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
+        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04', createPostponedTask);
     });
 
     it('should postpone a task scheduled today to tomorrow, when the scheduled date is inferred', () => {
         const task = new TaskBuilder().scheduledDate('2023-12-03').scheduledDateIsInferred(true).build();
-        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04');
+        testPostponedTaskAndDate(task, 'scheduledDate', '2023-12-04', createPostponedTask);
     });
 
     it('should postpone a task that starts in the future to the next day', () => {
         const task = new TaskBuilder().startDate('2024-03-05').build();
-        testPostponedTaskAndDate(task, 'startDate', '2024-03-06');
+        testPostponedTaskAndDate(task, 'startDate', '2024-03-06', createPostponedTask);
+    });
+
+    it('should postpone a task that starts in the future to tomorrow, if using fixed date', () => {
+        const task = new TaskBuilder().startDate('2024-03-05').build();
+        testPostponedTaskAndDate(task, 'startDate', '2023-12-04', createFixedDateTask);
     });
 });
 
 describe('postpone - postponement success message', () => {
     it('should generate a message for a valid date', () => {
         const message = postponementSuccessMessage(moment('2023-11-30'), 'scheduledDate');
-        expect(message).toEqual("Task's scheduledDate postponed until 30 Nov 2023");
+        expect(message).toEqual("Task's scheduledDate changed to 30 Nov 2023");
     });
 
     it('should generate a message for an invalid date', () => {
         const message = postponementSuccessMessage(moment(invalidDate), 'dueDate');
-        expect(message).toEqual("Task's dueDate postponed until Invalid date");
+        expect(message).toEqual("Task's dueDate changed to Invalid date");
     });
 });

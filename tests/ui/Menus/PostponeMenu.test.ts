@@ -12,9 +12,11 @@ window.moment = moment;
 
 export {};
 
+const farPast = '2022-01-17';
 const yesterday = '2023-12-02';
 const today = '2023-12-03';
 const tomorrow = '2023-12-04';
+const farFuture = '2017-03-25';
 
 // const invalidDate = '2023-12-36';
 
@@ -29,18 +31,41 @@ afterEach(() => {
 });
 
 describe('PostponeMenu', () => {
-    it('should populate the menu for overdue task', () => {
-        // Arrange
-        const task = new TaskBuilder().dueDate(yesterday).build();
+    function contentsOfPostponeMenuForTask(builderWithDate: TaskBuilder) {
+        const task = builderWithDate.build();
         const button = document.createElement('button');
 
-        // Act
         const menu = new PostponeMenu(button, task);
+        return menuToString(menu);
+    }
 
-        // Assert
-        const itemsAsText = menuToString(menu);
+    it('should populate the menu for task scheduled long ao', () => {
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(farPast));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+              Scheduled today, on Sun 3rd Dec
+              Scheduled tomorrow, on Mon 4th Dec
+              ---
+              Scheduled in 2 days, on Tue 5th Dec
+              Scheduled in 3 days, on Wed 6th Dec
+              Scheduled in 4 days, on Thu 7th Dec
+              Scheduled in 5 days, on Fri 8th Dec
+              Scheduled in 6 days, on Sat 9th Dec
+              ---
+              Scheduled in a week, on Sun 10th Dec
+              Scheduled in 2 weeks, on Sun 17th Dec
+              Scheduled in 3 weeks, on Sun 24th Dec
+              Scheduled in a month, on Wed 3rd Jan"
+        `);
+    });
+
+    it('should populate the menu for task due yesterday', () => {
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().dueDate(yesterday));
+        expect(itemsAsText).toMatchInlineSnapshot(`
+            "
+              Due today, on Sun 3rd Dec
+              Due tomorrow, on Mon 4th Dec
+              ---
               Due in 2 days, on Tue 5th Dec
               Due in 3 days, on Wed 6th Dec
               Due in 4 days, on Thu 7th Dec
@@ -54,18 +79,35 @@ describe('PostponeMenu', () => {
         `);
     });
 
-    it('should populate the menu for future task', () => {
+    it('should populate the menu for task starting today', () => {
         // Arrange
-        const task = new TaskBuilder().scheduledDate(tomorrow).build();
-        const button = document.createElement('button');
-
-        // Act
-        const menu = new PostponeMenu(button, task);
-
-        // Assert
-        const itemsAsText = menuToString(menu);
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().startDate(today));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+              Start today, on Sun 3rd Dec
+              Start tomorrow, on Mon 4th Dec
+              ---
+              Start in 2 days, on Tue 5th Dec
+              Start in 3 days, on Wed 6th Dec
+              Start in 4 days, on Thu 7th Dec
+              Start in 5 days, on Fri 8th Dec
+              Start in 6 days, on Sat 9th Dec
+              ---
+              Start in a week, on Sun 10th Dec
+              Start in 2 weeks, on Sun 17th Dec
+              Start in 3 weeks, on Sun 24th Dec
+              Start in a month, on Wed 3rd Jan"
+        `);
+    });
+
+    it('should populate the menu for task scheduled tomorrow', () => {
+        // Arrange
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(tomorrow));
+        expect(itemsAsText).toMatchInlineSnapshot(`
+            "
+              Scheduled today, on Sun 3rd Dec
+              Scheduled tomorrow, on Mon 4th Dec
+              ---
               Postpone scheduled date by 2 days, to Wed 6th Dec
               Postpone scheduled date by 3 days, to Thu 7th Dec
               Postpone scheduled date by 4 days, to Fri 8th Dec
@@ -78,6 +120,27 @@ describe('PostponeMenu', () => {
               Postpone scheduled date by a month, to Thu 4th Jan"
         `);
     });
+    it('should populate the menu for task due far ahead', () => {
+        // Arrange
+        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().dueDate(farFuture));
+        // TODO Show the year, if it is not the current year.
+        expect(itemsAsText).toMatchInlineSnapshot(`
+            "
+              Due today, on Sun 3rd Dec
+              Due tomorrow, on Mon 4th Dec
+              ---
+              Due in 2 days, on Tue 5th Dec
+              Due in 3 days, on Wed 6th Dec
+              Due in 4 days, on Thu 7th Dec
+              Due in 5 days, on Fri 8th Dec
+              Due in 6 days, on Sat 9th Dec
+              ---
+              Due in a week, on Sun 10th Dec
+              Due in 2 weeks, on Sun 17th Dec
+              Due in 3 weeks, on Sun 24th Dec
+              Due in a month, on Wed 3rd Jan"
+        `);
+    });
 
     it('should modify task, if different date selected', () => {
         // Arrange
@@ -87,7 +150,10 @@ describe('PostponeMenu', () => {
 
         // Act
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'PostponeMenu'.
-        const todoItem = menu.items[0];
+        // item 0 is today.
+        // item 1 is tomorrow.
+        // item 2 is '---' separator.
+        const todoItem = menu.items[3];
         expect(todoItem.title).toEqual('Start in 2 days, on Tue 5th Dec');
         todoItem.callback();
 
