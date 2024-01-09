@@ -69,7 +69,7 @@ function createPostponedTaskFromDate(
     dateToPostpone: moment.Moment | null,
     task: Task,
     dateFieldToPostpone: HappensDate,
-    timeUnit: moment.unitOfTime.DurationConstructor,
+    timeUnit: unitOfTime.DurationConstructor,
     amount: number,
 ) {
     const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
@@ -113,7 +113,7 @@ function postponeMenuItemTitleFromDate(
     updatedDateType: HappensDate,
     dateToUpdate: moment.Moment,
     amount: number,
-    timeUnit: moment.unitOfTime.DurationConstructor,
+    timeUnit: unitOfTime.DurationConstructor,
 ) {
     const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
     const formattedNewDate = postponedDate.format('ddd Do MMM');
