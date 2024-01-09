@@ -106,15 +106,7 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unit
 export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = window.moment().startOf('day');
-
-    // TODO Remove duplication
-    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
-    const formattedNewDate = postponedDate.format('ddd Do MMM');
-
-    const amountOrArticle = amount != 1 ? amount : 'a';
-    const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
-    const defaultTitle = `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
-    return defaultTitle.replace(' in 0 days', ' today').replace('in a day', 'tomorrow');
+    return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
 }
 
 function postponeMenuItemTitleFromDate(
