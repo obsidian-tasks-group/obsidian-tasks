@@ -126,10 +126,12 @@ function postponeMenuItemTitleFromDate(
     const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
     const formattedNewDate = postponedDate.format('ddd Do MMM');
 
-    const amountOrArticle = amount > 1 ? amount : 'a';
+    const amountOrArticle = amount != 1 ? amount : 'a';
     if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
         const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
-        return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
+        return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`
+            .replace(' in 0 days', ' today')
+            .replace('in a day', 'tomorrow');
     } else {
         const updatedDateDisplayText = updatedDateType.replace('Date', ' date');
         return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
