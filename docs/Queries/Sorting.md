@@ -4,6 +4,8 @@ publish: true
 
 # Sorting
 
+<span class="related-pages">#feature/sorting</span>
+
 <!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
 
 ## Contents
@@ -25,6 +27,10 @@ This page is long. Here are some links to the main sections:
 By default Tasks sorts tasks by [[Urgency|a calculated score we call "urgency"]].
 
 To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
+
+## Custom Sorting
+
+==TODO Populate this section==
 
 ## Sort by Task Statuses
 
