@@ -40,12 +40,24 @@ For more information, including adding your own customised statuses, see [[Statu
 
 - `sort by status` (done or todo)
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.isDone_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Status Name
 
 - `sort by status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
 
 > [!released]
 `sort by status.name` was introduced in Tasks 1.23.0.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status names** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.statuses_task.status.name_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Status Type
 
@@ -54,23 +66,77 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 `sort by status.type` was introduced in Tasks 1.23.0.
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status types** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.statuses_task.status.type_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Status Symbol
+
+There is no built-in instruction to sort by status symbols.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status symbol** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.statuses_task.status.symbol_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Next Status Symbol
+
+There is no built-in instruction to sort by next status symbols.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by next status symbol** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.statuses_task.status.nextSymbol_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## Sort by Dates in Tasks
 
 ### Done Date
 
 - `sort by done` (the date when the task was done)
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by done date** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.done_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Due Date
 
 - `sort by due` (the date when the task is due)
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by due date** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.due_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.due.advanced_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Scheduled Date
 
 - `sort by scheduled` (the date when the task is scheduled)
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by scheduled date** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.scheduled_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Start Date
 
 - `sort by start` (the date when the task starts)
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by start date** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.start_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Created Date
 
@@ -79,12 +145,24 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 `sort by created` was introduced in Tasks 2.0.0.
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by created date** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.created_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Cancelled Date
 
 - `sort by cancelled` (the date when the task was cancelled)
 
 > [!released]
 `sort by cancelled` was introduced in Tasks 5.5.0.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by cancelled date** is now possible, using `task.cancelled`.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.cancelled_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Happens
 
@@ -93,23 +171,68 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 `sort by happens` was introduced in Tasks 1.21.0.
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by happens date** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.happens_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## Sort by Other Task Properties
 
 ### Description
 
 - `sort by description` (the description of the task)
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by description** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.description_docs.approved.md -->
+
+```javascript
+sort by function task.description.length
+```
+
+- sort by length of description, shortest first.
+- This might be useful for finding tasks that need more information, or could be made less verbose.
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Priority
 
 - `sort by priority` (priority of the task; "low" is below "none": [[Priority|priorities]])
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by priority name and number** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.priorityName_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.priorityNumber_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Urgency
 
 - `sort by urgency` ([[Urgency|urgency]])
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by urgency** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.urgency_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Recurrence
 
 - `sort by recurring` (recurring tasks sort before non-recurring ones: [[Recurring Tasks]])
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by recurrence** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.isRecurring_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Tags
 
@@ -128,19 +251,59 @@ For example this query will sort by the second tag found in the description.
 > [!released]
 Tag sorting was introduced in Tasks 1.6.0.
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by tags** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.tags_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Original Markdown
+
+There is no built-in instruction to sort by the original markdown line.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by original markdown line** is now possible.
+
+For example, this could be used to extract information from `task.originalMarkdown` that Tasks does not parse, to use for sorting tasks.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.originalMarkdown_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## Sort by File Properties
 
 ### File Path
 
 - `sort by path` (the path to the file that contains the task)
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by file path** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.file.path_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Root
 
-It is not currently possible to sort by the top-level folder that contains the task.
+There is no built-in instruction to sort by the top-level folder that contains the task.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by root folder** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.file.root_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Folder
 
-It is not currently possible to sort by the folder that contains the task.
+There is no built-in instruction to sort by the folder that contains the task.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by folder** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.file.folder_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### File Name
 
@@ -150,12 +313,24 @@ It is not currently possible to sort by the folder that contains the task.
 > [!released]
 `sort by filename` was introduced in Tasks 1.21.0.
 
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by file name** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.file.filename_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Heading
 
 - `sort by sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
 
 > [!released]
 `sort by heading` was introduced in Tasks 1.21.0.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by heading** is now possible.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.heading_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Multiple sort criteria
 
