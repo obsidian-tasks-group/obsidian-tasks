@@ -4,7 +4,7 @@
 
 import moment from 'moment';
 import type { Task } from '../../../../src/Task';
-import { SampleTasks, fromLine } from '../../../TestHelpers';
+import { SampleTasks, fromLine, fromLines } from '../../../TestHelpers';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
 import {
     verifyFunctionFieldFilterSamplesForDocs,
@@ -107,6 +107,16 @@ describe('statuses', () => {
 });
 
 describe('other properties', () => {
+    const pseudoCustomPriorityEmojis = fromLines({
+        lines: [
+            '- [ ] 🟦 pseudo low priority',
+            '- [ ] 🟧 pseudo high priority',
+            '- [ ] 🟩 pseudo normal priority',
+            '- [ ] 🟥 pseudo highest priority',
+            '- [ ] 🟨 pseudo medium priority',
+        ],
+    });
+
     const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
         // RECURRENCE FIELDS
@@ -129,8 +139,15 @@ describe('other properties', () => {
                     'sort by length of description, shortest first.',
                     'This might be useful for finding tasks that need more information, or could be made less verbose',
                 ],
+                [
+                    "sort by function task.description.replace('🟥', 1).replace('🟧', 2).replace('🟨', 3).replace('🟩', 4).replace('🟦', 5)",
+                    'A user has defined custom system for their task descriptions, with coloured squares at the **start** of task lines as a home-grown alternative priority system.',
+                    'This allows tasks to be sorted in the order of their coloured squares.',
+                ],
             ],
-            SampleTasks.withAllRepresentativeDescriptions().concat(SampleTasks.withRepresentativeTags()),
+            SampleTasks.withAllRepresentativeDescriptions().concat(
+                SampleTasks.withRepresentativeTags().concat(pseudoCustomPriorityEmojis),
+            ),
         ],
 
         [
