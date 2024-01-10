@@ -13,6 +13,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- X.Y.Z: 🔥 Add [[Custom Sorting|custom sorting]].
 - 5.6.0: 🔥 The [[Postponing|postpone]] menu now offers `today` and `tomorrow`.
 - 5.5.0: 🔥 The [[Create or edit Task]] modal can now edit Created, Done and Cancelled dates
 - 5.5.0: 🔥 Add support for [[Dates#Cancelled date|cancelled dates]].
