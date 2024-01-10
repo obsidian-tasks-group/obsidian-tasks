@@ -7,6 +7,8 @@ import { expandPlaceholders } from '../../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../../src/Scripting/QueryContext';
 import { scan } from '../../../src/Query/Scanner';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
+import { Sort } from '../../../src/Query/Sort';
+import { toLines } from '../../TestHelpers';
 
 /** For example, 'task.due' */
 type TaskPropertyName = string;
@@ -106,6 +108,31 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
 export function verifyFunctionFieldFilterSamplesForDocs(filters: QueryInstructionLineAndDescription[]) {
     const markdown = formatQueryAndCommentsForDocs(filters);
     verifyMarkdownForDocs(markdown);
+}
+
+// -----------------------------------------------------------------------------------------------------------------
+// Sorting
+// -----------------------------------------------------------------------------------------------------------------
+
+export function verifyFunctionFieldSortSamplesOnTasks(
+    instructions: QueryInstructionLineAndDescription[],
+    tasks: Task[],
+) {
+    if (instructions.length === 0) {
+        return;
+    }
+    verifyAll('Results of custom sorters', instructions, (filter) => {
+        const instruction = filter[0];
+        const comment = filter.slice(1);
+
+        const path = 'a/b.md';
+        const expandedInstruction = preprocessSingleInstruction(instruction, path);
+        const sorter = new FunctionField().createSorterFromLine(expandedInstruction);
+        expect(sorter).not.toBeNull();
+
+        const tasksSorted = Sort.by([sorter!], tasks);
+        return formatQueryAndResultsForApproving(instruction, comment, toLines(tasksSorted));
+    });
 }
 
 // -----------------------------------------------------------------------------------------------------------------
