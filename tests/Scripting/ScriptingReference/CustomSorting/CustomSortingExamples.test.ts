@@ -163,7 +163,18 @@ describe('other properties', () => {
 
         ['task.priorityNumber', [], SampleTasks.withAllPriorities()],
 
-        ['task.tags', [], SampleTasks.withRepresentativeTags()],
+        [
+            'task.tags',
+            [
+                [
+                    // TODO Make this simpler, by allowing sort-keys that are arrays - and joining them by ','
+                    'sort by function task.tags.filter( (tag) => tag.includes("#context/")).sort().join(",")',
+                    'Sort by tags that contain "#context/".',
+                    'Any tasks without that tag are sorted first.',
+                ],
+            ],
+            SampleTasks.withRepresentativeTags(),
+        ],
 
         ['task.tags.advanced', [], SampleTasks.withRepresentativeTags()],
 

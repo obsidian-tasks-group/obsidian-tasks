@@ -262,6 +262,13 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by tags** is now possible
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.tags_docs.approved.md -->
 
+```javascript
+sort by function task.tags.filter( (tag) => tag.includes("#context/")).sort().join(",")
+```
+
+- Sort by tags that contain "#context/".
+- Any tasks without that tag are sorted first.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
