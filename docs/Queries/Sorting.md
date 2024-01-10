@@ -196,6 +196,12 @@ sort by function task.description.length
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+### Description without tags
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by description with tags removed** is now possible.
+
+The value `task.descriptionWithoutTags` returns a copy of the description with all the tags removed, so that you can sort together any tasks whose descriptions differ only by their tags.
+
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
 
 ```javascript
