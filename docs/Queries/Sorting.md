@@ -198,6 +198,13 @@ sort by function task.description.length
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
 
+```javascript
+sort by function task.descriptionWithoutTags
+```
+
+- Like `sort by description`, but it removes any tags from the sort key.
+- This might be useful for sorting together completed recurrences of the same task, even if the tags differ in some recurrences.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Priority
