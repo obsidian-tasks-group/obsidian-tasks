@@ -9,6 +9,7 @@ CANCELLED
 DONE
 EMPTY
 IN_PROGRESS
+NON_TASK
 TODO
 ====================================================================================
 
@@ -20,6 +21,7 @@ This sorts the status types in the same order as "group by status.type".
 %%2%%TODO
 %%3%%DONE
 %%4%%CANCELLED
+%%5%%NON_TASK
 %%6%%EMPTY
 ====================================================================================
 

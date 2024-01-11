@@ -210,6 +210,7 @@ export class SampleTasks {
             Status.makeEmpty(),
             Status.makeInProgress(),
             Status.makeTodo(),
+            Status.makeNonTask(),
         ];
 
         return statuses.map((status) => {
