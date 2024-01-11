@@ -5,7 +5,7 @@ Results of custom filters
 filter by function task.status.type === 'NON_TASK'
 Find tasks of type `NON_TASK`.
 =>
-
+- [Q] Status Non-Task
 ====================================================================================
 
 
