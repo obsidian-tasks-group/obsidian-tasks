@@ -197,6 +197,8 @@ Obsidian supports two styles of **comments**:
 -   [ ] This footnote _will not work_[^notworking]
 ```
 
+See also [[About Queries#Footnotes are not displayed in query results]].
+
 ### Tasks with Blockquotes
 
 > [!warning]
