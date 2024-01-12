@@ -9,7 +9,6 @@ import type { Task } from './Task';
 import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 import type { TaskLayoutComponent, TaskLayoutOptions } from './TaskLayout';
-import { TaskLayout } from './TaskLayout';
 import { StatusMenu } from './ui/Menus/StatusMenu';
 import { StatusRegistry } from './StatusRegistry';
 
@@ -27,6 +26,7 @@ export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
+    // @ts-expect-error
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly taskLayoutOptions2: TaskLayoutOptions2;
     private readonly queryLayoutOptions: QueryLayoutOptions;
@@ -159,10 +159,9 @@ export class TaskLineRenderer {
 
     private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
         const fieldRenderer = new TaskFieldRenderer();
-        const taskLayout = new TaskLayout(this.taskLayoutOptions2, this.taskLayoutOptions, this.queryLayoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
-        for (const component of taskLayout.shownTaskLayoutComponents()) {
+        for (const component of this.taskLayoutOptions2.shownComponents) {
             const componentString = emojiSerializer.componentToString(
                 task,
                 this.queryLayoutOptions.shortMode,
@@ -192,7 +191,7 @@ export class TaskLineRenderer {
         }
 
         // Now build classes for the hidden task components without rendering them
-        for (const component of taskLayout.hiddenTaskLayoutComponents()) {
+        for (const component of this.taskLayoutOptions2.hiddenComponents) {
             fieldRenderer.addDataAttribute(li, task, component);
         }
 
