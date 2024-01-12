@@ -26,15 +26,15 @@ describe('TaskLayout tests', () => {
     });
 
     it('should generate expected CSS components with all default option reversed', () => {
+        const taskLayoutOptions = new TaskLayoutOptions();
+        taskLayoutOptions.toggleVisibilityExceptDescriptionAndBlockLink();
+
         const queryLayoutOptions = new QueryLayoutOptions();
         // Negate all the query layout boolean values:
         Object.keys(queryLayoutOptions).forEach((key) => {
             const key2 = key as keyof QueryLayoutOptions;
             queryLayoutOptions[key2] = !queryLayoutOptions[key2];
         });
-
-        const taskLayoutOptions = new TaskLayoutOptions();
-        taskLayoutOptions.toggleVisibilityExceptDescriptionAndBlockLink();
 
         const taskLayout = new TaskLayout(taskLayoutOptions, queryLayoutOptions);
 
