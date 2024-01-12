@@ -1,6 +1,5 @@
 import type { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from './QueryLayoutOptions';
-import type { TaskLayoutOptions } from './TaskLayout';
 import type { Task } from './Task';
 import type { Grouper } from './Query/Grouper';
 import type { QueryResult } from './Query/QueryResult';
@@ -48,7 +47,6 @@ export interface IQuery {
      * @type {TaskLayoutOptions}
      * @memberof IQuery
      */
-    taskLayoutOptions: TaskLayoutOptions;
     taskLayoutOptions2: TaskLayoutOptions2;
 
     /**
