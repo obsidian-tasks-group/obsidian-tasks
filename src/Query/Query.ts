@@ -1,7 +1,7 @@
+import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../QueryLayoutOptions';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
-import { TaskLayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
@@ -177,7 +177,7 @@ ${source}`;
         return this._taskGroupLimit;
     }
 
-    public get taskLayoutOptions(): TaskLayoutOptions {
+    get taskLayoutOptions(): TaskLayoutOptions {
         return this._taskLayoutOptions;
     }
 
@@ -267,28 +267,28 @@ Problem line: "${line}"`;
                     this._queryLayoutOptions.hidePostponeButton = hide;
                     break;
                 case 'priority':
-                    this._taskLayoutOptions.hidePriority = hide;
+                    this._taskLayoutOptions.setVisibility('priority', !hide);
                     break;
                 case 'cancelled date':
-                    this._taskLayoutOptions.hideCancelledDate = hide;
+                    this._taskLayoutOptions.setVisibility('cancelledDate', !hide);
                     break;
                 case 'created date':
-                    this._taskLayoutOptions.hideCreatedDate = hide;
+                    this._taskLayoutOptions.setVisibility('createdDate', !hide);
                     break;
                 case 'start date':
-                    this._taskLayoutOptions.hideStartDate = hide;
+                    this._taskLayoutOptions.setVisibility('startDate', !hide);
                     break;
                 case 'scheduled date':
-                    this._taskLayoutOptions.hideScheduledDate = hide;
+                    this._taskLayoutOptions.setVisibility('scheduledDate', !hide);
                     break;
                 case 'due date':
-                    this._taskLayoutOptions.hideDueDate = hide;
+                    this._taskLayoutOptions.setVisibility('dueDate', !hide);
                     break;
                 case 'done date':
-                    this._taskLayoutOptions.hideDoneDate = hide;
+                    this._taskLayoutOptions.setVisibility('doneDate', !hide);
                     break;
                 case 'recurrence rule':
-                    this._taskLayoutOptions.hideRecurrenceRule = hide;
+                    this._taskLayoutOptions.setVisibility('recurrenceRule', !hide);
                     break;
                 case 'edit button':
                     this._queryLayoutOptions.hideEditButton = hide;
@@ -297,7 +297,7 @@ Problem line: "${line}"`;
                     this._queryLayoutOptions.hideUrgency = hide;
                     break;
                 case 'tags':
-                    this._taskLayoutOptions.hideTags = hide;
+                    this._taskLayoutOptions.setTagsVisibility(!hide);
                     break;
                 default:
                     this.setError('do not understand hide/show option', line);
