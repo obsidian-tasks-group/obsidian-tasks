@@ -95,7 +95,7 @@ export const defaultLayout: TaskLayoutComponent[] = [
  */
 export class TaskLayout extends QueryLayout {
     public shownTaskLayoutComponents(): TaskLayoutComponent[] {
-        return this._shownTaskLayoutComponents;
+        return this.taskLayoutOptions2.shownComponents;
     }
     public hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
         return this._hiddenTaskLayoutComponents;
@@ -104,10 +104,8 @@ export class TaskLayout extends QueryLayout {
         return this._taskListHiddenClasses;
     }
     public defaultLayout: TaskLayoutComponent[] = defaultLayout;
-    private _shownTaskLayoutComponents: TaskLayoutComponent[];
     private _hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     private taskLayoutOptions: TaskLayoutOptions;
-    // @ts-expect-error
     private taskLayoutOptions2: TaskLayoutOptions2;
     private _taskListHiddenClasses: string[] = [];
 
@@ -129,8 +127,6 @@ export class TaskLayout extends QueryLayout {
         } else {
             this.taskLayoutOptions2 = new TaskLayoutOptions2();
         }
-
-        this._shownTaskLayoutComponents = this.defaultLayout;
         this.applyOptions();
     }
 
@@ -168,7 +164,6 @@ export class TaskLayout extends QueryLayout {
     private hideComponent(hide: boolean, component: TaskLayoutComponent) {
         if (hide) {
             this._hiddenTaskLayoutComponents.push(component);
-            this._shownTaskLayoutComponents = this._shownTaskLayoutComponents.filter((element) => element != component);
         }
     }
 }
