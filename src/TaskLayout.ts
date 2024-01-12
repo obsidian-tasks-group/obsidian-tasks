@@ -75,12 +75,6 @@ export const defaultLayout: TaskLayoutComponent[] = [
  * modified by applying {@link TaskLayoutOptions} objects.
  */
 export class TaskLayout extends QueryLayout {
-    public shownTaskLayoutComponents(): TaskLayoutComponent[] {
-        return this.taskLayoutOptions.shownComponents;
-    }
-    public hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
-        return this.taskLayoutOptions.hiddenComponents;
-    }
     public taskListHiddenClasses(): string[] {
         return this._taskListHiddenClasses;
     }
