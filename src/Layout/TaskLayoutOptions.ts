@@ -1,6 +1,6 @@
 import { type TaskLayoutComponent, defaultLayout } from '../TaskLayout';
 
-export class TaskLayoutOptions2 {
+export class TaskLayoutOptions {
     private visible: { [component: string]: boolean } = {};
     private tagsVisible: boolean = true;
 

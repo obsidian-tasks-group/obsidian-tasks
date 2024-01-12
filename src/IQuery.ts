@@ -1,4 +1,4 @@
-import type { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
+import type { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { Task } from './Task';
 import type { Grouper } from './Query/Grouper';
@@ -44,10 +44,10 @@ export interface IQuery {
      * Any layout options the query engine should be aware of or
      * used in the query.
      *
-     * @type {TaskLayoutOptions2}
+     * @type {TaskLayoutOptions}
      * @memberof IQuery
      */
-    taskLayoutOptions2: TaskLayoutOptions2;
+    taskLayoutOptions: TaskLayoutOptions;
 
     /**
      * Any layout options the query engine should be aware of or

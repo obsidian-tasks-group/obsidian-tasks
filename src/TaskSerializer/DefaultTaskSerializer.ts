@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import { TaskLayoutOptions2 } from '../Layout/TaskLayoutOptions';
+import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
 import { Priority, Task, TaskRegularExpressions } from '../Task';
@@ -85,7 +85,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
      * @return The string representation of the task
      */
     public serialize(task: Task): string {
-        const taskLayoutOptions = new TaskLayoutOptions2();
+        const taskLayoutOptions = new TaskLayoutOptions();
         let taskString = '';
         const shortMode = false;
         for (const component of taskLayoutOptions.shownComponents) {

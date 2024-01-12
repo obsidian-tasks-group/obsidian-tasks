@@ -1,4 +1,4 @@
-import { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
+import { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
 
 export type TaskLayoutComponent =
@@ -72,29 +72,29 @@ export const defaultLayout: TaskLayoutComponent[] = [
 /**
  * This represents the desired layout of tasks when they are rendered in a given configuration.
  * The layout is used when flattening the task to a string and when rendering queries, and can be
- * modified by applying {@link TaskLayoutOptions2} objects.
+ * modified by applying {@link TaskLayoutOptions} objects.
  */
 export class TaskLayout extends QueryLayout {
     public shownTaskLayoutComponents(): TaskLayoutComponent[] {
-        return this.taskLayoutOptions2.shownComponents;
+        return this.taskLayoutOptions.shownComponents;
     }
     public hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
-        return this.taskLayoutOptions2.hiddenComponents;
+        return this.taskLayoutOptions.hiddenComponents;
     }
     public taskListHiddenClasses(): string[] {
         return this._taskListHiddenClasses;
     }
     public defaultLayout: TaskLayoutComponent[] = defaultLayout;
-    private taskLayoutOptions2: TaskLayoutOptions2;
+    private taskLayoutOptions: TaskLayoutOptions;
     private _taskListHiddenClasses: string[] = [];
 
-    constructor(taskLayoutOptions2?: TaskLayoutOptions2, queryLayoutOptions?: QueryLayoutOptions) {
+    constructor(taskLayoutOptions?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
         super(queryLayoutOptions);
 
-        if (taskLayoutOptions2) {
-            this.taskLayoutOptions2 = taskLayoutOptions2;
+        if (taskLayoutOptions) {
+            this.taskLayoutOptions = taskLayoutOptions;
         } else {
-            this.taskLayoutOptions2 = new TaskLayoutOptions2();
+            this.taskLayoutOptions = new TaskLayoutOptions();
         }
         this.applyOptions();
     }
@@ -105,15 +105,15 @@ export class TaskLayout extends QueryLayout {
     }
 
     private applyTaskLayoutOptions() {
-        this.taskLayoutOptions2.toggleableComponents.forEach((component) => {
+        this.taskLayoutOptions.toggleableComponents.forEach((component) => {
             generateHiddenClassForTaskList(
                 this._taskListHiddenClasses,
-                !this.taskLayoutOptions2.isShown(component),
+                !this.taskLayoutOptions.isShown(component),
                 component,
             );
         });
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-        generateHiddenClassForTaskList(this._taskListHiddenClasses, !this.taskLayoutOptions2.areTagsShown(), 'tags');
+        generateHiddenClassForTaskList(this._taskListHiddenClasses, !this.taskLayoutOptions.areTagsShown(), 'tags');
     }
 }

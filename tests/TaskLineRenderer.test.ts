@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DebugSettings } from '../src/Config/DebugSettings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
-import { TaskLayoutOptions2 } from '../src/Layout/TaskLayoutOptions';
+import { TaskLayoutOptions } from '../src/Layout/TaskLayoutOptions';
 import { DateParser } from '../src/Query/DateParser';
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import type { Task } from '../src/Task';
@@ -25,7 +25,7 @@ window.moment = moment;
  *
  * @param task to be rendered
  *
- * @param taskLayoutOptions2 for the task rendering. Skip for default options. See {@link TaskLayoutOptions2}.
+ * @param taskLayoutOptions for the task rendering. Skip for default options. See {@link TaskLayoutOptions}.
  *
  * @param testRenderer imitates Obsidian rendering. Skip for the default {@link mockTextRenderer}.
  *
@@ -33,7 +33,7 @@ window.moment = moment;
  */
 async function renderListItem(
     task: Task,
-    taskLayoutOptions2?: TaskLayoutOptions2,
+    taskLayoutOptions?: TaskLayoutOptions,
     queryLayoutOptions?: QueryLayoutOptions,
     testRenderer?: TextRenderer,
 ) {
@@ -41,7 +41,7 @@ async function renderListItem(
         textRenderer: testRenderer ?? mockTextRenderer,
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
-        taskLayoutOptions2: taskLayoutOptions2 ?? new TaskLayoutOptions2(),
+        taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     return await taskLineRenderer.renderTaskLine(task, 0);
@@ -96,7 +96,7 @@ describe('task line rendering - HTML', () => {
             textRenderer: mockTextRenderer,
             obsidianComponent: null,
             parentUlElement: ulElement,
-            taskLayoutOptions2: new TaskLayoutOptions2(),
+            taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
         const listItem = await taskLineRenderer.renderTaskLine(new TaskBuilder().build(), 0);
@@ -178,11 +178,11 @@ describe('task line rendering - global filter', () => {
 describe('task line rendering - layout options', () => {
     const testLayoutOptions = async (expectedComponents: string[], hiddenComponents: TaskLayoutComponent[]) => {
         const task = TaskBuilder.createFullyPopulatedTask();
-        const taskLayoutOptions2 = new TaskLayoutOptions2();
+        const taskLayoutOptions = new TaskLayoutOptions();
         hiddenComponents.forEach((hiddenComponent) => {
-            taskLayoutOptions2.hide(hiddenComponent);
+            taskLayoutOptions.hide(hiddenComponent);
         });
-        const listItem = await renderListItem(task, taskLayoutOptions2);
+        const listItem = await renderListItem(task, taskLayoutOptions);
         const renderedComponents = getListItemComponents(listItem);
         expect(renderedComponents).toEqual(expectedComponents);
     };
@@ -520,7 +520,7 @@ describe('task line rendering - classes and data attributes', () => {
         'should not render "%s" class but should set "%s" data attributes to the list item',
         async (expectedAbsentClass: string, expectedDateAttributes: string, hiddenComponent: string) => {
             const task = TaskBuilder.createFullyPopulatedTask();
-            const options = new TaskLayoutOptions2();
+            const options = new TaskLayoutOptions();
             options.hide(hiddenComponent as TaskLayoutComponent);
             const listItem = await renderListItem(task, options);
 
@@ -543,7 +543,7 @@ describe('task line rendering - classes and data attributes', () => {
         });
         const listItem = await renderListItem(
             task,
-            new TaskLayoutOptions2(),
+            new TaskLayoutOptions(),
             new QueryLayoutOptions(),
             mockHTMLRenderer,
         );
@@ -564,7 +564,7 @@ describe('task line rendering - classes and data attributes', () => {
         });
         const listItem = await renderListItem(
             task,
-            new TaskLayoutOptions2(),
+            new TaskLayoutOptions(),
             new QueryLayoutOptions(),
             mockHTMLRenderer,
         );
@@ -614,14 +614,14 @@ describe('Visualise HTML', () => {
     async function renderAndVerifyHTML(
         task: Task,
         {
-            taskLayoutOptions2,
+            taskLayoutOptions,
             queryLayoutOptions,
         }: {
-            taskLayoutOptions2: TaskLayoutOptions2;
+            taskLayoutOptions: TaskLayoutOptions;
             queryLayoutOptions: QueryLayoutOptions;
         },
     ) {
-        const listItem = await renderListItem(task, taskLayoutOptions2, queryLayoutOptions, mockHTMLRenderer);
+        const listItem = await renderListItem(task, taskLayoutOptions, queryLayoutOptions, mockHTMLRenderer);
 
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
@@ -636,7 +636,7 @@ ${task.toFileLineString()}
 
     function layoutOptionsFullMode() {
         return {
-            taskLayoutOptions2: new TaskLayoutOptions2(), // makes the assumption that all the field are shown by default
+            taskLayoutOptions: new TaskLayoutOptions(), // makes the assumption that all the field are shown by default
             queryLayoutOptions: new QueryLayoutOptions(),
         };
     }
@@ -646,7 +646,7 @@ ${task.toFileLineString()}
         queryLayoutOptions.shortMode = true;
 
         return {
-            taskLayoutOptions2: new TaskLayoutOptions2(),
+            taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions,
         };
     }
