@@ -176,11 +176,7 @@ describe('task line rendering - global filter', () => {
 });
 
 describe('task line rendering - layout options', () => {
-    const testLayoutOptions = async (
-        expectedComponents: string[],
-        _layoutOptions: Partial<TaskLayoutOptions>,
-        hiddenComponents: TaskLayoutComponent[],
-    ) => {
+    const testLayoutOptions = async (expectedComponents: string[], hiddenComponents: TaskLayoutComponent[]) => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const taskLayoutOptions2 = new TaskLayoutOptions2();
         hiddenComponents.forEach((hiddenComponent) => {
@@ -205,7 +201,6 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            {},
             [],
         );
     });
@@ -223,7 +218,6 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hidePriority: true },
             ['priority'],
         );
     });
@@ -241,7 +235,6 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideRecurrenceRule: true },
             ['recurrenceRule'],
         );
     });
@@ -259,7 +252,6 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideCreatedDate: true },
             ['createdDate'],
         );
     });
@@ -277,7 +269,6 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideStartDate: true },
             ['startDate'],
         );
     });
@@ -295,7 +286,6 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideScheduledDate: true },
             ['scheduledDate'],
         );
     });
@@ -313,7 +303,6 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideDueDate: true },
             ['dueDate'],
         );
     });
@@ -332,7 +321,6 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            {},
             [],
         );
     });
@@ -350,7 +338,6 @@ describe('task line rendering - layout options', () => {
                 ' ❌ 2023-07-06',
                 ' ^dcf64c',
             ],
-            { hideDoneDate: true },
             ['doneDate'],
         );
     });
@@ -368,7 +355,6 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideCancelledDate: true },
             ['cancelledDate'],
         );
     });
