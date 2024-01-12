@@ -1,3 +1,4 @@
+import { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
 
 /**
@@ -106,15 +107,27 @@ export class TaskLayout extends QueryLayout {
     private _shownTaskLayoutComponents: TaskLayoutComponent[];
     private _hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     private taskLayoutOptions: TaskLayoutOptions;
+    // @ts-expect-error
+    private taskLayoutOptions2: TaskLayoutOptions2;
     private _taskListHiddenClasses: string[] = [];
 
-    constructor(taskLayoutOptions?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
+    constructor(
+        taskLayoutOptions?: TaskLayoutOptions,
+        queryLayoutOptions?: QueryLayoutOptions,
+        taskLayoutOptions2?: TaskLayoutOptions2,
+    ) {
         super(queryLayoutOptions);
 
         if (taskLayoutOptions) {
             this.taskLayoutOptions = taskLayoutOptions;
         } else {
             this.taskLayoutOptions = new TaskLayoutOptions();
+        }
+
+        if (taskLayoutOptions2) {
+            this.taskLayoutOptions2 = taskLayoutOptions2;
+        } else {
+            this.taskLayoutOptions2 = new TaskLayoutOptions2();
         }
 
         this._shownTaskLayoutComponents = this.defaultLayout;
