@@ -1,5 +1,14 @@
 import { type TaskLayoutComponent, defaultLayout } from '../TaskLayout';
 
+/**
+ * Various rendering options of tasks in a query.
+ *
+ * See {@link TaskLayoutComponent} for the available options.
+ *
+ * Note that there is an additional special case, for whether tags are shown.
+ *
+ * @see QueryLayoutOptions
+ */
 export class TaskLayoutOptions {
     private visible: { [component: string]: boolean } = {};
     private tagsVisible: boolean = true;
