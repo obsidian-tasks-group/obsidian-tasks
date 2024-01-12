@@ -183,6 +183,10 @@ ${source}`;
         return this._taskLayoutOptions;
     }
 
+    get taskLayoutOptions2(): TaskLayoutOptions2 {
+        return this._taskLayoutOptions2;
+    }
+
     public get queryLayoutOptions(): QueryLayoutOptions {
         return this._queryLayoutOptions;
     }

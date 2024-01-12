@@ -1,3 +1,4 @@
+import type { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { TaskLayoutOptions } from './TaskLayout';
 import type { Task } from './Task';
@@ -48,6 +49,7 @@ export interface IQuery {
      * @memberof IQuery
      */
     taskLayoutOptions: TaskLayoutOptions;
+    taskLayoutOptions2: TaskLayoutOptions2;
 
     /**
      * Any layout options the query engine should be aware of or
