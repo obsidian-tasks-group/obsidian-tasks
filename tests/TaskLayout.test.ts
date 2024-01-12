@@ -2,8 +2,9 @@
  * @jest-environment jsdom
  */
 
+import { TaskLayoutOptions } from '../src/Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
-import { TaskLayout, TaskLayoutOptions } from '../src/TaskLayout';
+import { TaskLayout } from '../src/TaskLayout';
 
 describe('TaskLayout tests', () => {
     it('should generate expected CSS components for default layout', () => {
@@ -25,12 +26,8 @@ describe('TaskLayout tests', () => {
     });
 
     it('should generate expected CSS components with all default option reversed', () => {
-        const layoutOptions = new TaskLayoutOptions();
-        // Negate all the task layout boolean values:
-        Object.keys(layoutOptions).forEach((key) => {
-            const key2 = key as keyof TaskLayoutOptions;
-            layoutOptions[key2] = !layoutOptions[key2];
-        });
+        const taskLayoutOptions = new TaskLayoutOptions();
+        taskLayoutOptions.toggleVisibilityExceptDescriptionAndBlockLink();
 
         const queryLayoutOptions = new QueryLayoutOptions();
         // Negate all the query layout boolean values:
@@ -39,7 +36,7 @@ describe('TaskLayout tests', () => {
             queryLayoutOptions[key2] = !queryLayoutOptions[key2];
         });
 
-        const taskLayout = new TaskLayout(layoutOptions, queryLayoutOptions);
+        const taskLayout = new TaskLayout(taskLayoutOptions, queryLayoutOptions);
 
         expect(taskLayout.shownTaskLayoutComponents().join('\n')).toMatchInlineSnapshot(`
             "description

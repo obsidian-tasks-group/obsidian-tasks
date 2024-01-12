@@ -3,12 +3,12 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
+import type { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
-import type { TaskLayoutComponent, TaskLayoutOptions } from './TaskLayout';
-import { TaskLayout } from './TaskLayout';
+import type { TaskLayoutComponent } from './TaskLayout';
 import { StatusMenu } from './ui/Menus/StatusMenu';
 import { StatusRegistry } from './StatusRegistry';
 
@@ -50,7 +50,7 @@ export class TaskLineRenderer {
      *
      * @param parentUlElement HTML element where the task shall be rendered.
      *
-     * @param layoutOptions See {@link TaskLayoutOptions}.
+     * @param taskLayoutOptions See {@link TaskLayoutOptions}.
      *
      * @param queryLayoutOptions See {@link QueryLayoutOptions}.
      */
@@ -154,10 +154,9 @@ export class TaskLineRenderer {
 
     private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
         const fieldRenderer = new TaskFieldRenderer();
-        const taskLayout = new TaskLayout(this.taskLayoutOptions, this.queryLayoutOptions);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
-        for (const component of taskLayout.shownTaskLayoutComponents()) {
+        for (const component of this.taskLayoutOptions.shownComponents) {
             const componentString = emojiSerializer.componentToString(
                 task,
                 this.queryLayoutOptions.shortMode,
@@ -187,7 +186,7 @@ export class TaskLineRenderer {
         }
 
         // Now build classes for the hidden task components without rendering them
-        for (const component of taskLayout.hiddenTaskLayoutComponents()) {
+        for (const component of this.taskLayoutOptions.hiddenComponents) {
             fieldRenderer.addDataAttribute(li, task, component);
         }
 
