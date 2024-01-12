@@ -89,14 +89,9 @@ export class TaskLayout extends QueryLayout {
         } else {
             this.taskLayoutOptions = new TaskLayoutOptions();
         }
-        this.applyOptions();
-    }
-
-    private applyOptions() {
         this.applyTaskLayoutOptions();
         this.applyQueryLayoutOptions(this._taskListHiddenClasses);
     }
-
     private applyTaskLayoutOptions() {
         this.taskLayoutOptions.toggleableComponents.forEach((component) => {
             generateHiddenClassForTaskList(
