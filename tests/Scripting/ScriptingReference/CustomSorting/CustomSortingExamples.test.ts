@@ -30,21 +30,69 @@ describe('dates', () => {
         // DATE FIELDS
         // ---------------------------------------------------------------------------------
 
-        ['task.cancelled', [], SampleTasks.withAllRepresentativeCancelledDates()],
+        [
+            'task.cancelled',
+            [
+                [
+                    'sort by function task.cancelled.format("dddd")',
+                    "Sort by cancelled date's day of the week, alphabetically",
+                ],
+            ],
+            SampleTasks.withAllRepresentativeCancelledDates(),
+        ],
 
-        ['task.created', [], SampleTasks.withAllRepresentativeCreatedDates()],
+        [
+            'task.created',
+            [
+                [
+                    'sort by function task.created.format("dddd")',
+                    "Sort by created date's day of the week, alphabetically",
+                ],
+            ],
+            SampleTasks.withAllRepresentativeCreatedDates(),
+        ],
 
-        ['task.done', [], SampleTasks.withAllRepresentativeDoneDates()],
+        [
+            'task.done',
+            [['sort by function task.done.format("dddd")', "Sort by done date's day of the week, alphabetically"]],
+            SampleTasks.withAllRepresentativeDoneDates(),
+        ],
 
-        ['task.due', [], SampleTasks.withAllRepresentativeDueDates()],
+        [
+            'task.due',
+            [['sort by function task.due.format("dddd")', "Sort by due date's day of the week, alphabetically"]],
+            SampleTasks.withAllRepresentativeDueDates(),
+        ],
 
         ['task.due.advanced', [], SampleTasks.withAllRepresentativeDueDates()],
 
-        ['task.happens', [], SampleTasks.withAllRepresentativeDueDates()],
+        [
+            'task.happens',
+            [
+                [
+                    'sort by function task.happens.format("dddd")',
+                    "Sort by happens date's day of the week, alphabetically",
+                ],
+            ],
+            SampleTasks.withAllRepresentativeDueDates(),
+        ],
 
-        ['task.scheduled', [], SampleTasks.withAllRepresentativeScheduledDates()],
+        [
+            'task.scheduled',
+            [
+                [
+                    'sort by function task.scheduled.format("dddd")',
+                    "Sort by scheduled date's day of the week, alphabetically",
+                ],
+            ],
+            SampleTasks.withAllRepresentativeScheduledDates(),
+        ],
 
-        ['task.start', [], SampleTasks.withAllRepresentativeStartDates()],
+        [
+            'task.start',
+            [['sort by function task.start.format("dddd")', "Sort by start date's day of the week, alphabetically"]],
+            SampleTasks.withAllRepresentativeStartDates(),
+        ],
     ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
@@ -64,15 +112,44 @@ describe('file properties', () => {
         // FILE FIELDS
         // ---------------------------------------------------------------------------------
 
-        ['task.file.path', [], tasks],
+        [
+            'task.file.path',
+            [
+                // comment to force line break
+                ['sort by function task.file.path', "Like 'Sort by path' but includes the file extension"],
+                ['sort by function task.file.pathWithoutExtension', "Like 'Sort by path'"],
+            ],
+            tasks,
+        ],
 
-        ['task.file.root', [], tasks],
+        [
+            'task.file.root',
+            [
+                // comment to force line break
+                ['sort by function task.file.root', 'Enable sorting by the root folder'],
+            ],
+            tasks,
+        ],
 
-        ['task.file.folder', [], tasks],
+        [
+            'task.file.folder',
+            [
+                // comment to force line break
+                ['sort by function task.file.folder', 'Enable sorting by the folder containing the task'],
+            ],
+            tasks,
+        ],
 
-        ['task.file.filename', [], tasks],
+        [
+            'task.file.filename',
+            [
+                ['sort by function task.file.filename', "Like 'sort by filename' but includes the file extension"],
+                ['sort by function task.file.filenameWithoutExtension', "Like 'sort by filename'"],
+            ],
+            tasks,
+        ],
 
-        ['task.heading', [], tasks],
+        ['task.heading', [['sort by function task.heading', "Like 'sort by heading'"]], tasks],
     ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
@@ -88,13 +165,26 @@ describe('statuses', () => {
     const tasks = SampleTasks.withAllStatuses();
 
     const testData: CustomPropertyDocsTestData[] = [
-        ['task.status.name', [], tasks],
+        ['task.status.name', [['sort by function task.status.name', 'Identical to "Sort by status.name"']], tasks],
 
-        ['task.status.nextSymbol', [], tasks],
+        [
+            'task.status.nextSymbol',
+            [['sort by function task.status.nextSymbol', 'Sort by the next status symbol']],
+            tasks,
+        ],
 
-        ['task.status.symbol', [], tasks],
+        ['task.status.symbol', [['sort by function task.status.symbol', 'Sort by the status symbol']], tasks],
 
-        ['task.status.type', [], tasks],
+        [
+            'task.status.type',
+            [
+                [
+                    'sort by function task.status.type',
+                    'Unlike "Sort by status.type", this sorts the status types in alphabetical order',
+                ],
+            ],
+            tasks,
+        ],
     ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
@@ -122,21 +212,38 @@ describe('other properties', () => {
         // RECURRENCE FIELDS
         // ---------------------------------------------------------------------------------
 
-        ['task.isRecurring', [], SampleTasks.withAllRecurrences()],
+        [
+            'task.isRecurring',
+            [['sort by function task.isRecurring', 'Sort by whether the task is recurring']],
+            SampleTasks.withAllRecurrences(),
+        ],
 
-        ['task.recurrenceRule', [], SampleTasks.withAllRecurrences()],
+        [
+            'task.recurrenceRule',
+            [['sort by function task.recurrenceRule', 'Sort by recurrence rule']],
+            SampleTasks.withAllRecurrences(),
+        ],
 
         // ---------------------------------------------------------------------------------
         // OTHER FIELDS
         // ---------------------------------------------------------------------------------
-        ['task.blockLink', [], SampleTasks.withAllRepresentativeBlockLinks()],
+        [
+            'task.blockLink',
+            [
+                [
+                    'sort by function task.blockLink',
+                    'DO NOT RELEASE UNTIL THE LEADING SPACE IS REMOVED FROM BLOCKLINKS. Removing the leading space and carat prevents the rendered heading itself being treated as a blocklink.',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeBlockLinks(),
+        ],
 
         [
             'task.description',
             [
                 [
                     'sort by function task.description.length',
-                    'sort by length of description, shortest first.',
+                    'Sort by length of description, shortest first.',
                     'This might be useful for finding tasks that need more information, or could be made less verbose',
                 ],
                 [
@@ -155,7 +262,7 @@ describe('other properties', () => {
             [
                 [
                     'sort by function task.descriptionWithoutTags',
-                    'Like `sort by description`, but it removes any tags from the sort key.',
+                    'Like `Sort by description`, but it removes any tags from the sort key.',
                     'This might be useful for sorting together completed recurrences of the same task, even if the tags differ in some recurrences',
                 ],
             ],
@@ -164,21 +271,50 @@ describe('other properties', () => {
 
         // [
         //     'task.indentation',
-        //     [['group by function task.indentation', '...']],
+        //     [['sort by function task.indentation', '...']],
         //     SampleTasks.withAllPriorities(), // TODO Choose specific tasks for task.indentation'
         // ],
 
-        ['task.isDone', [], SampleTasks.withAllStatuses()],
+        [
+            'task.isDone',
+            [
+                [
+                    'sort by function task.isDone',
+                    'Tasks with [[Status Types|Status Type]] `TODO` and `IN_PROGRESS` tasks are sorted before those with types `DONE`, `CANCELLED` and `NON_TASK.',
+                ],
+            ],
+            SampleTasks.withAllStatuses(),
+        ],
 
         // [
         //     'task.listMarker',
-        //     [['group by function task.listMarker', '...']],
+        //     [['sort by function task.listMarker', '...']],
         //     SampleTasks.withAllPriorities(), // TODO Choose specific tasks for task.listMarker'
         // ],
 
-        ['task.priorityName', [], SampleTasks.withAllPriorities()],
+        [
+            'task.priorityName',
+            [
+                [
+                    'sort by function task.priorityName',
+                    "Sort by the task's priority name",
+                    'The priority names are displayed in alphabetical order.',
+                    "Note that the default priority is called 'Normal', as opposed to with `Sort by priority` which calls the default 'None'",
+                ],
+            ],
+            SampleTasks.withAllPriorities(),
+        ],
 
-        ['task.priorityNumber', [], SampleTasks.withAllPriorities()],
+        [
+            'task.priorityNumber',
+            [
+                [
+                    'sort by function task.priorityNumber',
+                    "Sort by the task's priority number, where Highest is 0 and Lowest is 5",
+                ],
+            ],
+            SampleTasks.withAllPriorities(),
+        ],
 
         [
             'task.tags',
@@ -189,17 +325,40 @@ describe('other properties', () => {
                     'Sort by tags that contain "#context/".',
                     'Any tasks without that tag are sorted first.',
                 ],
+                [
+                    'sort by function reverse task.tags.length',
+                    'Sort by the number of tags on the task',
+                    'The `reverse` option puts tasks with the most tags first.',
+                ],
+                [
+                    'sort by function -task.tags.length',
+                    'A different way of sorting by the number of tags on the task, still putting tasks with the most tags first.',
+                ],
+            ],
+            SampleTasks.withRepresentativeTags(),
+        ],
+        ['task.tags.advanced', [], SampleTasks.withRepresentativeTags()],
+
+        [
+            'task.originalMarkdown',
+            [
+                [
+                    'sort by function task.originalMarkdown',
+                    "Sort by the raw text of the task's original line in the MarkDown file.",
+                ],
             ],
             SampleTasks.withRepresentativeTags(),
         ],
 
-        ['task.tags.advanced', [], SampleTasks.withRepresentativeTags()],
-
-        ['task.originalMarkdown', [], SampleTasks.withRepresentativeTags()],
-
         [
             'task.urgency',
-            [],
+            [
+                [
+                    'sort by function reverse task.urgency',
+                    'Sort by task urgency values.',
+                    'We use `reverse` to put the most urgent tasks first.',
+                ],
+            ],
             SampleTasks.withAllPriorities().concat(fromLine({ line: '- [ ] due 2023-06-11 📅 2023-06-11' })),
         ],
     ];

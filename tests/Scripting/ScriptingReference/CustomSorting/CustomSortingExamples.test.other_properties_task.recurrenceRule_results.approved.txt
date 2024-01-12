@@ -1,0 +1,23 @@
+Results of custom sorters
+
+
+
+sort by function task.recurrenceRule
+Sort by recurrence rule.
+=>
+- [ ] my description
+- [ ] my description 🔁 every 3 weeks on Thursday
+- [ ] my description 🔁 every 4 months on the 3rd Wednesday
+- [ ] my description 🔁 every 4 weeks
+- [ ] my description 🔁 every 6 days
+- [ ] my description 🔁 every 8 days
+- [ ] my description 🔁 every 8 days when done
+- [ ] my description 🔁 every day
+- [ ] my description 🔁 every month
+- [ ] my description 🔁 every month on the 2nd
+- [ ] my description 🔁 every month on the 2nd when done
+- [ ] my description 🔁 every week
+- [ ] my description 🔁 every week on Tuesday
+- [ ] my description 🔁 every week on Tuesday when done
+====================================================================================
+

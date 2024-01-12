@@ -5,7 +5,7 @@
 sort by function task.description.length
 ```
 
-- sort by length of description, shortest first.
+- Sort by length of description, shortest first.
 - This might be useful for finding tasks that need more information, or could be made less verbose.
 
 ```javascript

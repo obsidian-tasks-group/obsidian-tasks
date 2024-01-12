@@ -5,7 +5,7 @@
 sort by function task.descriptionWithoutTags
 ```
 
-- Like `sort by description`, but it removes any tags from the sort key.
+- Like `Sort by description`, but it removes any tags from the sort key.
 - This might be useful for sorting together completed recurrences of the same task, even if the tags differ in some recurrences.
 
 

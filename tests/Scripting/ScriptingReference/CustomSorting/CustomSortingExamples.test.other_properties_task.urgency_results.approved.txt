@@ -1,0 +1,17 @@
+Results of custom sorters
+
+
+
+sort by function reverse task.urgency
+Sort by task urgency values.
+We use `reverse` to put the most urgent tasks first.
+=>
+- [ ] due 2023-06-11 📅 2023-06-11
+- [ ] #task Highest priority 🔺
+- [ ] #task High priority ⏫
+- [ ] #task Medium priority 🔼
+- [ ] #task Normal priority
+- [ ] #task Low priority 🔽
+- [ ] #task Lowest priority ⏬
+====================================================================================
+

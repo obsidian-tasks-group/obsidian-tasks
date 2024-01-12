@@ -1,0 +1,15 @@
+Results of custom sorters
+
+
+
+sort by function task.isDone
+Tasks with [[Status Types|Status Type]] `TODO` and `IN_PROGRESS` tasks are sorted before those with types `DONE`, `CANCELLED` and `NON_TASK.
+=>
+- [ ] Status Todo
+- [] Status EMPTY
+- [/] Status In Progress
+- [-] Status Cancelled
+- [x] Status Done
+- [Q] Status Non-Task
+====================================================================================
+
