@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 
+import { TaskLayoutOptions2 } from '../src/Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import { TaskLayout, TaskLayoutOptions } from '../src/TaskLayout';
 
@@ -39,7 +40,10 @@ describe('TaskLayout tests', () => {
             queryLayoutOptions[key2] = !queryLayoutOptions[key2];
         });
 
-        const taskLayout = new TaskLayout(layoutOptions, queryLayoutOptions);
+        const taskLayoutOptions2 = new TaskLayoutOptions2();
+        taskLayoutOptions2.toggleVisibilityExceptDescriptionAndBlockLink();
+
+        const taskLayout = new TaskLayout(layoutOptions, queryLayoutOptions, taskLayoutOptions2);
 
         expect(taskLayout.shownTaskLayoutComponents().join('\n')).toMatchInlineSnapshot(`
             "description
