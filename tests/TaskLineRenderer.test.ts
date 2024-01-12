@@ -509,21 +509,16 @@ describe('task line rendering - classes and data attributes', () => {
     });
 
     it.each([
-        ['task-priority', 'taskPriority: medium', { hidePriority: true }, 'priority'],
-        ['task-createdDate', 'taskCreated: past-far', { hideCreatedDate: true }, 'createdDate'],
-        ['task-dueDate', 'taskDue: past-far', { hideDueDate: true }, 'dueDate'],
-        ['task-scheduledDate', 'taskScheduled: past-far', { hideScheduledDate: true }, 'scheduledDate'],
-        ['task-startDate', 'taskStart: past-far', { hideStartDate: true }, 'startDate'],
-        ['task-doneDate', 'taskDone: past-far', { hideDoneDate: true }, 'doneDate'],
-        ['task-cancelledDate', 'taskCancelled: past-far', { hideCancelledDate: true }, 'cancelledDate'],
+        ['task-priority', 'taskPriority: medium', 'priority'],
+        ['task-createdDate', 'taskCreated: past-far', 'createdDate'],
+        ['task-dueDate', 'taskDue: past-far', 'dueDate'],
+        ['task-scheduledDate', 'taskScheduled: past-far', 'scheduledDate'],
+        ['task-startDate', 'taskStart: past-far', 'startDate'],
+        ['task-doneDate', 'taskDone: past-far', 'doneDate'],
+        ['task-cancelledDate', 'taskCancelled: past-far', 'cancelledDate'],
     ])(
         'should not render "%s" class but should set "%s" data attributes to the list item',
-        async (
-            expectedAbsentClass: string,
-            expectedDateAttributes: string,
-            _layoutOptions: Partial<TaskLayoutOptions>,
-            hiddenComponent: string,
-        ) => {
+        async (expectedAbsentClass: string, expectedDateAttributes: string, hiddenComponent: string) => {
             const task = TaskBuilder.createFullyPopulatedTask();
             const options = new TaskLayoutOptions2();
             options.hide(hiddenComponent as TaskLayoutComponent);
