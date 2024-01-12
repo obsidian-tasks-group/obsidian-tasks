@@ -10,7 +10,7 @@ import { DateParser } from '../src/Query/DateParser';
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import type { TaskLayoutComponent, TaskLayoutOptions } from '../src/TaskLayout';
+import type { TaskLayoutComponent } from '../src/TaskLayout';
 import type { TextRenderer } from '../src/TaskLineRenderer';
 import { TaskLineRenderer } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
@@ -578,11 +578,7 @@ describe('task line rendering - classes and data attributes', () => {
         expect(tagSpan.dataset.tagName).toEqual('#illegal-data-attribute');
     });
 
-    const testLiAttributes = async (
-        taskLine: string,
-        _layoutOptions: Partial<TaskLayoutOptions>,
-        attributes: string[],
-    ) => {
+    const testLiAttributes = async (taskLine: string, attributes: string[]) => {
         const task = fromLine({
             line: taskLine,
         });
@@ -593,22 +589,14 @@ describe('task line rendering - classes and data attributes', () => {
     };
 
     it('creates data attributes for custom statuses', async () => {
-        await testLiAttributes('- [ ] An incomplete task', {}, [
-            'task: ',
-            'taskStatusName: Todo',
-            'taskStatusType: TODO',
-        ]);
-        await testLiAttributes('- [x] A complete task', {}, [
-            'task: x',
-            'taskStatusName: Done',
-            'taskStatusType: DONE',
-        ]);
-        await testLiAttributes('- [/] In-progress task', {}, [
+        await testLiAttributes('- [ ] An incomplete task', ['task: ', 'taskStatusName: Todo', 'taskStatusType: TODO']);
+        await testLiAttributes('- [x] A complete task', ['task: x', 'taskStatusName: Done', 'taskStatusType: DONE']);
+        await testLiAttributes('- [/] In-progress task', [
             'task: /',
             'taskStatusName: In Progress',
             'taskStatusType: IN_PROGRESS',
         ]);
-        await testLiAttributes('- [-] In-progress task', {}, [
+        await testLiAttributes('- [-] In-progress task', [
             'task: -',
             'taskStatusName: Cancelled',
             'taskStatusType: CANCELLED',
@@ -616,7 +604,7 @@ describe('task line rendering - classes and data attributes', () => {
     });
 
     it('marks nonexistent task priority as "normal" priority', async () => {
-        await testLiAttributes('- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day', {}, [
+        await testLiAttributes('- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day', [
             'taskPriority: normal',
         ]);
     });
