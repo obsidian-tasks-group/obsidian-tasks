@@ -29,4 +29,34 @@ describe('TaskLayoutOptions2', () => {
         options.setVisibility('scheduledDate', true);
         expect(options.isShown('scheduledDate')).toEqual(true);
     });
+
+    it('should provide a list of visible components', () => {
+        const options = new TaskLayoutOptions2();
+        expect(options.visibleComponents.join('\n')).toMatchInlineSnapshot(`
+            "description
+            priority
+            recurrenceRule
+            createdDate
+            startDate
+            scheduledDate
+            dueDate
+            cancelledDate
+            doneDate
+            blockLink"
+        `);
+
+        options.setVisibility('dueDate', false);
+        options.setVisibility('blockLink', false);
+
+        expect(options.visibleComponents.join('\n')).toMatchInlineSnapshot(`
+            "description
+            priority
+            recurrenceRule
+            createdDate
+            startDate
+            scheduledDate
+            cancelledDate
+            doneDate"
+        `);
+    });
 });
