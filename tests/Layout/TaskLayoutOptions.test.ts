@@ -17,6 +17,8 @@ describe('TaskLayoutOptions2', () => {
             doneDate
             blockLink"
         `);
+
+        expect(options.areTagsShown()).toEqual(true);
     });
 
     it('should show fields by default', () => {
@@ -41,6 +43,17 @@ describe('TaskLayoutOptions2', () => {
 
         options.setVisibility('scheduledDate', true);
         expect(options.isShown('scheduledDate')).toEqual(true);
+    });
+
+    it('should set tag visibility', () => {
+        const options = new TaskLayoutOptions2();
+        expect(options.areTagsShown()).toEqual(true);
+
+        options.setTagsVisibility(false);
+        expect(options.areTagsShown()).toEqual(false);
+
+        options.setTagsVisibility(true);
+        expect(options.areTagsShown()).toEqual(true);
     });
 
     it('should provide a list of shown components', () => {
