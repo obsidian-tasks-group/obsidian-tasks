@@ -104,23 +104,11 @@ export class TaskLayout extends QueryLayout {
         return this._taskListHiddenClasses;
     }
     public defaultLayout: TaskLayoutComponent[] = defaultLayout;
-    // @ts-expect-error
-    private taskLayoutOptions: TaskLayoutOptions;
     private taskLayoutOptions2: TaskLayoutOptions2;
     private _taskListHiddenClasses: string[] = [];
 
-    constructor(
-        taskLayoutOptions2?: TaskLayoutOptions2,
-        taskLayoutOptions?: TaskLayoutOptions,
-        queryLayoutOptions?: QueryLayoutOptions,
-    ) {
+    constructor(taskLayoutOptions2?: TaskLayoutOptions2, queryLayoutOptions?: QueryLayoutOptions) {
         super(queryLayoutOptions);
-
-        if (taskLayoutOptions) {
-            this.taskLayoutOptions = taskLayoutOptions;
-        } else {
-            this.taskLayoutOptions = new TaskLayoutOptions();
-        }
 
         if (taskLayoutOptions2) {
             this.taskLayoutOptions2 = taskLayoutOptions2;
