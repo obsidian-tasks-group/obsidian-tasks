@@ -100,4 +100,19 @@ describe('TaskLayoutOptions2', () => {
         expect(options.isShown('description')).toEqual(true);
         expect(options.isShown('blockLink')).toEqual(true);
     });
+
+    it('should provide toggleable components', () => {
+        const options = new TaskLayoutOptions2();
+
+        expect(options.toggleableComponents.join('\n')).toMatchInlineSnapshot(`
+            "priority
+            recurrenceRule
+            createdDate
+            startDate
+            scheduledDate
+            dueDate
+            cancelledDate
+            doneDate"
+        `);
+    });
 });
