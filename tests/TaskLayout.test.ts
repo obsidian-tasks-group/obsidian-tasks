@@ -43,7 +43,7 @@ describe('TaskLayout tests', () => {
         const taskLayoutOptions2 = new TaskLayoutOptions2();
         taskLayoutOptions2.toggleVisibilityExceptDescriptionAndBlockLink();
 
-        const taskLayout = new TaskLayout(layoutOptions, queryLayoutOptions, taskLayoutOptions2);
+        const taskLayout = new TaskLayout(taskLayoutOptions2, layoutOptions, queryLayoutOptions);
 
         expect(taskLayout.shownTaskLayoutComponents().join('\n')).toMatchInlineSnapshot(`
             "description
