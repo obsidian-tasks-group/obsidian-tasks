@@ -57,5 +57,7 @@ export class TaskLayoutOptions2 {
         this.toggleableComponents.forEach((component) => {
             this.visible[component] = !this.visible[component];
         });
+
+        this.setTagsVisibility(!this.areTagsShown());
     }
 }
