@@ -4,6 +4,19 @@ describe('TaskLayoutOptions2', () => {
     it('should be constructable', () => {
         const options = new TaskLayoutOptions2();
         expect(options).not.toBeNull();
+
+        expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
+            "description
+            priority
+            recurrenceRule
+            createdDate
+            startDate
+            scheduledDate
+            dueDate
+            cancelledDate
+            doneDate
+            blockLink"
+        `);
     });
 
     it('should show fields by default', () => {
@@ -78,9 +91,13 @@ describe('TaskLayoutOptions2', () => {
 
         options.setVisibility('cancelledDate', false);
         options.setVisibility('priority', true);
-        options.toggleVisibility();
+        options.setVisibility('description', true);
+        options.setVisibility('blockLink', true);
+        options.toggleVisibilityExceptDescriptionAndBlockLink();
 
         expect(options.isShown('cancelledDate')).toEqual(true);
         expect(options.isShown('priority')).toEqual(false);
+        expect(options.isShown('description')).toEqual(true);
+        expect(options.isShown('blockLink')).toEqual(true);
     });
 });
