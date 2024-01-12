@@ -91,7 +91,7 @@ export const defaultLayout: TaskLayoutComponent[] = [
 /**
  * This represents the desired layout of tasks when they are rendered in a given configuration.
  * The layout is used when flattening the task to a string and when rendering queries, and can be
- * modified by applying {@link TaskLayoutOptions} objects.
+ * modified by applying {@link TaskLayoutOptions2} objects.
  */
 export class TaskLayout extends QueryLayout {
     public shownTaskLayoutComponents(): TaskLayoutComponent[] {
