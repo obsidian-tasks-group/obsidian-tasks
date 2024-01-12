@@ -33,6 +33,10 @@ export class TaskLayoutOptions2 {
         });
     }
 
+    /**
+     * These represent the existing task options, so some components (description & block link for now) are not
+     * here because there are no layout options to remove them.
+     */
     public get toggleableComponents() {
         return defaultLayout.filter((component) => {
             // Description and blockLink are always shown
