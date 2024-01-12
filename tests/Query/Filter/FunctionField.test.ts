@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import { Status } from '../../../src/Status';
+import type { Task } from '../../../src/Task';
 import { Priority } from '../../../src/Task';
 import {
     toGroupTaskFromBuilder,
@@ -13,7 +14,12 @@ import {
 } from '../../CustomMatchers/CustomMatchersForGrouping';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
-import type { Task } from '../../../src/Task';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
+import { fromLine } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -82,9 +88,59 @@ describe('FunctionField - filtering', () => {
 // -----------------------------------------------------------------------------------------------------------------
 
 describe('FunctionField - sorting', () => {
-    it('should not support sorting', () => {
+    it('should support sorting', () => {
         const functionField = new FunctionField();
-        expect(functionField.supportsSorting()).toEqual(false);
+        expect(functionField.supportsSorting()).toEqual(true);
+    });
+
+    // Helper function to create a task with a given path
+    function with_description(description: string) {
+        return new TaskBuilder().description(description).build();
+    }
+
+    it('sort by function - integer expression', () => {
+        // Arrange
+        const sorter = new FunctionField().createSorterFromLine('sort by function task.description.length');
+
+        // Assert
+        expect(sorter).not.toBeNull();
+        expectTaskComparesEqual(sorter!, with_description('Aaa'), with_description('Aaa'));
+        expectTaskComparesEqual(sorter!, with_description('AAA'), with_description('ZZZ'));
+
+        // Sorts on string length - shorter first
+        expectTaskComparesBefore(sorter!, with_description('AAA'), with_description('AAAA'));
+        expectTaskComparesBefore(sorter!, with_description(''), with_description('B'));
+
+        // Sorts on string length - longer first
+        expectTaskComparesAfter(sorter!, with_description('xxxx'), with_description('x'));
+    });
+
+    it('sort by function - integer expression - reverse', () => {
+        // Arrange
+        const sorter = new FunctionField().createSorterFromLine('sort by function reverse task.description.length');
+
+        // Assert
+        expect(sorter).not.toBeNull();
+        expectTaskComparesEqual(sorter!, with_description('Aaa'), with_description('Aaa'));
+
+        // Sorts on string length - shorter first
+        expectTaskComparesAfter(sorter!, with_description('AAA'), with_description('AAAA'));
+
+        // Sorts on string length - longer first
+        expectTaskComparesBefore(sorter!, with_description('xxxx'), with_description('x'));
+    });
+
+    it('sort by function - string expression', () => {
+        // Arrange
+        const sorter = new FunctionField().createSorterFromLine('sort by function task.originalMarkdown');
+
+        // Assert
+        expect(sorter).not.toBeNull();
+        expectTaskComparesBefore(sorter!, fromLine({ line: '- [ ] Hello' }), fromLine({ line: '* [ ] Hello' }));
+        expectTaskComparesBefore(sorter!, fromLine({ line: '* [ ] Apple' }), fromLine({ line: '* [ ] Hello' }));
+        expectTaskComparesBefore(sorter!, fromLine({ line: '* [ ] Apple' }), fromLine({ line: '* [ ] APPLE' })); // case-insensitive
+        expectTaskComparesEqual(sorter!, fromLine({ line: '- [ ] Hello' }), fromLine({ line: '- [ ] Hello' }));
+        expectTaskComparesAfter(sorter!, fromLine({ line: '* [ ] Hello' }), fromLine({ line: '- [ ] Hello' }));
     });
 });
 

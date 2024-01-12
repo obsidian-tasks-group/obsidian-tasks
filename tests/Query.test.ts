@@ -242,6 +242,8 @@ describe('Query parsing', () => {
             'sort by due reverse',
             'sort by filename',
             'sort by filename reverse',
+            'sort by function reverse task.description.length',
+            'sort by function task.description.length',
             'sort by happens',
             'sort by happens reverse',
             'sort by heading',

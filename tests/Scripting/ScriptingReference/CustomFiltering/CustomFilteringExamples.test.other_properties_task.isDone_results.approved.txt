@@ -7,6 +7,7 @@ Same as the `done` filter, but might be useful in conjunction with other express
 =>
 - [-] Status Cancelled
 - [x] Status Done
+- [Q] Status Non-Task
 ====================================================================================
 
 

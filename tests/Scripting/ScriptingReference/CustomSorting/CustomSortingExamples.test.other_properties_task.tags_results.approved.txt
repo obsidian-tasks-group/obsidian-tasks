@@ -1,0 +1,47 @@
+Results of custom sorters
+
+
+
+sort by function task.tags.filter( (tag) => tag.includes("#context/")).sort().join(",")
+Sort by tags that contain "#context/".
+Any tasks without that tag are sorted first.
+=>
+- [ ] my description
+- [ ] my description #tag
+- [ ] my description #tag/subtag
+- [ ] my description #tag/subtag/sub-sub-tag
+- [ ] my description #multiple-tags1 #multiple-tags2
+- [ ] my description #project/project1
+- [ ] my description #context/home
+- [ ] my description #context/work
+====================================================================================
+
+
+sort by function reverse task.tags.length
+Sort by the number of tags on the task.
+The `reverse` option puts tasks with the most tags first.
+=>
+- [ ] my description #multiple-tags1 #multiple-tags2
+- [ ] my description #tag
+- [ ] my description #tag/subtag
+- [ ] my description #tag/subtag/sub-sub-tag
+- [ ] my description #project/project1
+- [ ] my description #context/home
+- [ ] my description #context/work
+- [ ] my description
+====================================================================================
+
+
+sort by function -task.tags.length
+A different way of sorting by the number of tags on the task, still putting tasks with the most tags first.
+=>
+- [ ] my description #multiple-tags1 #multiple-tags2
+- [ ] my description #tag
+- [ ] my description #tag/subtag
+- [ ] my description #tag/subtag/sub-sub-tag
+- [ ] my description #project/project1
+- [ ] my description #context/home
+- [ ] my description #context/work
+- [ ] my description
+====================================================================================
+
