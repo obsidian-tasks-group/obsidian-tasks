@@ -110,9 +110,9 @@ export class TaskLayout extends QueryLayout {
     private _taskListHiddenClasses: string[] = [];
 
     constructor(
+        taskLayoutOptions2?: TaskLayoutOptions2,
         taskLayoutOptions?: TaskLayoutOptions,
         queryLayoutOptions?: QueryLayoutOptions,
-        taskLayoutOptions2?: TaskLayoutOptions2,
     ) {
         super(queryLayoutOptions);
 
