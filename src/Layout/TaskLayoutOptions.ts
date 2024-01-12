@@ -21,7 +21,7 @@ export class TaskLayoutOptions2 {
         this.visible[component] = visible;
     }
 
-    public get visibleComponents() {
+    public get shownComponents() {
         return defaultLayout.filter((component) => {
             return this.visible[component];
         });

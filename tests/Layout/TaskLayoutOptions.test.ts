@@ -30,9 +30,9 @@ describe('TaskLayoutOptions2', () => {
         expect(options.isShown('scheduledDate')).toEqual(true);
     });
 
-    it('should provide a list of visible components', () => {
+    it('should provide a list of shown components', () => {
         const options = new TaskLayoutOptions2();
-        expect(options.visibleComponents.join('\n')).toMatchInlineSnapshot(`
+        expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
             "description
             priority
             recurrenceRule
@@ -48,7 +48,7 @@ describe('TaskLayoutOptions2', () => {
         options.setVisibility('dueDate', false);
         options.setVisibility('blockLink', false);
 
-        expect(options.visibleComponents.join('\n')).toMatchInlineSnapshot(`
+        expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
             "description
             priority
             recurrenceRule
