@@ -72,4 +72,15 @@ describe('TaskLayoutOptions2', () => {
             doneDate"
         `);
     });
+
+    it('should toggle visibility', () => {
+        const options = new TaskLayoutOptions2();
+
+        options.setVisibility('cancelledDate', false);
+        options.setVisibility('priority', true);
+        options.toggleVisibility();
+
+        expect(options.isShown('cancelledDate')).toEqual(true);
+        expect(options.isShown('priority')).toEqual(false);
+    });
 });

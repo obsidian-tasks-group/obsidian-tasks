@@ -32,4 +32,10 @@ export class TaskLayoutOptions2 {
             return !this.visible[component];
         });
     }
+
+    public toggleVisibility() {
+        defaultLayout.forEach((component) => {
+            this.visible[component] = !this.visible[component];
+        });
+    }
 }
