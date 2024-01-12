@@ -135,22 +135,13 @@ export class TaskLayout extends QueryLayout {
     }
 
     private applyTaskLayoutOptions() {
-        // Remove components from the layout according to the task options. These represent the existing task options,
-        // so some components (e.g. the description) are not here because there are no layout options to remove them.
-        const componentsToHideAndGenerateClasses: [boolean, TaskLayoutComponent][] = [
-            // NEW_TASK_FIELD_EDIT_REQUIRED
-            [this.taskLayoutOptions.hidePriority, 'priority'],
-            [this.taskLayoutOptions.hideRecurrenceRule, 'recurrenceRule'],
-            [this.taskLayoutOptions.hideCreatedDate, 'createdDate'],
-            [this.taskLayoutOptions.hideStartDate, 'startDate'],
-            [this.taskLayoutOptions.hideScheduledDate, 'scheduledDate'],
-            [this.taskLayoutOptions.hideDueDate, 'dueDate'],
-            [this.taskLayoutOptions.hideCancelledDate, 'cancelledDate'],
-            [this.taskLayoutOptions.hideDoneDate, 'doneDate'],
-        ];
-        for (const [hide, component] of componentsToHideAndGenerateClasses) {
-            generateHiddenClassForTaskList(this._taskListHiddenClasses, hide, component);
-        }
+        this.taskLayoutOptions2.toggleableComponents.forEach((component) => {
+            generateHiddenClassForTaskList(
+                this._taskListHiddenClasses,
+                !this.taskLayoutOptions2.isShown(component),
+                component,
+            );
+        });
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
         generateHiddenClassForTaskList(this._taskListHiddenClasses, this.taskLayoutOptions.hideTags, 'tags');
