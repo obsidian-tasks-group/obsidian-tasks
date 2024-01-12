@@ -5,6 +5,7 @@ import moment from 'moment';
 import { DebugSettings } from '../src/Config/DebugSettings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { TaskLayoutOptions2 } from '../src/Layout/TaskLayoutOptions';
 import { DateParser } from '../src/Query/DateParser';
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import type { Task } from '../src/Task';
@@ -26,6 +27,7 @@ window.moment = moment;
  *
  * @param layoutOptions for the task rendering. Skip for default options. See {@link TaskLayoutOptions}.
  *
+ * @param taskLayoutOptions2
  * @param testRenderer imitates Obsidian rendering. Skip for the default {@link mockTextRenderer}.
  *
  * @param queryLayoutOptions for the task rendering. Skip for default options. See {@link QueryLayoutOptions}.
@@ -33,6 +35,7 @@ window.moment = moment;
 async function renderListItem(
     task: Task,
     layoutOptions?: TaskLayoutOptions,
+    taskLayoutOptions2?: TaskLayoutOptions2,
     queryLayoutOptions?: QueryLayoutOptions,
     testRenderer?: TextRenderer,
 ) {
@@ -41,6 +44,7 @@ async function renderListItem(
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
         taskLayoutOptions: layoutOptions ?? new TaskLayoutOptions(),
+        taskLayoutOptions2: taskLayoutOptions2 ?? new TaskLayoutOptions2(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     return await taskLineRenderer.renderTaskLine(task, 0);
@@ -96,6 +100,7 @@ describe('task line rendering - HTML', () => {
             obsidianComponent: null,
             parentUlElement: ulElement,
             taskLayoutOptions: new TaskLayoutOptions(),
+            taskLayoutOptions2: new TaskLayoutOptions2(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
         const listItem = await taskLineRenderer.renderTaskLine(new TaskBuilder().build(), 0);
@@ -558,6 +563,7 @@ describe('task line rendering - classes and data attributes', () => {
         const listItem = await renderListItem(
             task,
             new TaskLayoutOptions(),
+            new TaskLayoutOptions2(),
             new QueryLayoutOptions(),
             mockHTMLRenderer,
         );
@@ -579,6 +585,7 @@ describe('task line rendering - classes and data attributes', () => {
         const listItem = await renderListItem(
             task,
             new TaskLayoutOptions(),
+            new TaskLayoutOptions2(),
             new QueryLayoutOptions(),
             mockHTMLRenderer,
         );
@@ -642,10 +649,21 @@ describe('Visualise HTML', () => {
         task: Task,
         {
             layoutOptions,
+            taskLayoutOptions2,
             queryLayoutOptions,
-        }: { layoutOptions: TaskLayoutOptions; queryLayoutOptions: QueryLayoutOptions },
+        }: {
+            layoutOptions: TaskLayoutOptions;
+            taskLayoutOptions2: TaskLayoutOptions2;
+            queryLayoutOptions: QueryLayoutOptions;
+        },
     ) {
-        const listItem = await renderListItem(task, layoutOptions, queryLayoutOptions, mockHTMLRenderer);
+        const listItem = await renderListItem(
+            task,
+            layoutOptions,
+            taskLayoutOptions2,
+            queryLayoutOptions,
+            mockHTMLRenderer,
+        );
 
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
@@ -670,14 +688,22 @@ ${task.toFileLineString()}
             layoutOptions[key2] = false;
         });
 
-        return { layoutOptions, queryLayoutOptions: new QueryLayoutOptions() };
+        return {
+            layoutOptions,
+            taskLayoutOptions2: new TaskLayoutOptions2(), // makes the assumption that all the field are shown by default
+            queryLayoutOptions: new QueryLayoutOptions(),
+        };
     }
 
     function layoutOptionsShortMode() {
         const queryLayoutOptions = new QueryLayoutOptions();
         queryLayoutOptions.shortMode = true;
 
-        return { layoutOptions: new TaskLayoutOptions(), queryLayoutOptions };
+        return {
+            layoutOptions: new TaskLayoutOptions(),
+            taskLayoutOptions2: new TaskLayoutOptions2(),
+            queryLayoutOptions,
+        };
     }
 
     it('Full task - full mode', async () => {

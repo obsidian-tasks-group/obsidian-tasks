@@ -3,6 +3,7 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
+import type { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { Task } from './Task';
 import * as taskModule from './Task';
@@ -27,6 +28,8 @@ export class TaskLineRenderer {
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
+    // @ts-expect-error unused for now
+    private readonly taskLayoutOptions2: TaskLayoutOptions2;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
     private static async obsidianMarkdownRenderer(
@@ -59,18 +62,21 @@ export class TaskLineRenderer {
         obsidianComponent,
         parentUlElement,
         taskLayoutOptions,
+        taskLayoutOptions2,
         queryLayoutOptions,
     }: {
         textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         taskLayoutOptions: TaskLayoutOptions;
+        taskLayoutOptions2: TaskLayoutOptions2;
         queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
         this.taskLayoutOptions = taskLayoutOptions;
+        this.taskLayoutOptions2 = taskLayoutOptions2;
         this.queryLayoutOptions = queryLayoutOptions;
     }
 
