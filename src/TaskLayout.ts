@@ -73,6 +73,20 @@ function hiddenComponentClassName(component: string) {
     return `tasks-layout-hide-${component}`;
 }
 
+export const defaultLayout: TaskLayoutComponent[] = [
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+    'description',
+    'priority',
+    'recurrenceRule',
+    'createdDate',
+    'startDate',
+    'scheduledDate',
+    'dueDate',
+    'cancelledDate',
+    'doneDate',
+    'blockLink',
+];
+
 /**
  * This represents the desired layout of tasks when they are rendered in a given configuration.
  * The layout is used when flattening the task to a string and when rendering queries, and can be
@@ -88,19 +102,7 @@ export class TaskLayout extends QueryLayout {
     public taskListHiddenClasses(): string[] {
         return this._taskListHiddenClasses;
     }
-    public defaultLayout: TaskLayoutComponent[] = [
-        // NEW_TASK_FIELD_EDIT_REQUIRED
-        'description',
-        'priority',
-        'recurrenceRule',
-        'createdDate',
-        'startDate',
-        'scheduledDate',
-        'dueDate',
-        'cancelledDate',
-        'doneDate',
-        'blockLink',
-    ];
+    public defaultLayout: TaskLayoutComponent[] = defaultLayout;
     private _shownTaskLayoutComponents: TaskLayoutComponent[];
     private _hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     private taskLayoutOptions: TaskLayoutOptions;
