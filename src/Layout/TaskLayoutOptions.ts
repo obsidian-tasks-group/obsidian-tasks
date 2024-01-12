@@ -26,4 +26,10 @@ export class TaskLayoutOptions2 {
             return this.visible[component];
         });
     }
+
+    public get hiddenComponents() {
+        return defaultLayout.filter((component) => {
+            return !this.visible[component];
+        });
+    }
 }

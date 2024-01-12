@@ -59,4 +59,17 @@ describe('TaskLayoutOptions2', () => {
             doneDate"
         `);
     });
+
+    it('should provide a list of hidden components', () => {
+        const options = new TaskLayoutOptions2();
+        expect(options.hiddenComponents.join('\n')).toMatchInlineSnapshot('""');
+
+        options.setVisibility('startDate', false);
+        options.setVisibility('doneDate', false);
+
+        expect(options.hiddenComponents.join('\n')).toMatchInlineSnapshot(`
+            "startDate
+            doneDate"
+        `);
+    });
 });
