@@ -20,4 +20,10 @@ export class TaskLayoutOptions2 {
     public setVisibility(component: TaskLayoutComponent, visible: boolean) {
         this.visible[component] = visible;
     }
+
+    public get visibleComponents() {
+        return defaultLayout.filter((component) => {
+            return this.visible[component];
+        });
+    }
 }
