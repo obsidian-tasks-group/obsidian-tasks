@@ -10,7 +10,7 @@ import { DateParser } from '../src/Query/DateParser';
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import { type TaskLayoutComponent, TaskLayoutOptions } from '../src/TaskLayout';
+import type { TaskLayoutComponent, TaskLayoutOptions } from '../src/TaskLayout';
 import type { TextRenderer } from '../src/TaskLineRenderer';
 import { TaskLineRenderer } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
@@ -680,19 +680,7 @@ ${task.toFileLineString()}
     const minimalTask = fromLine({ line: '- [-] empty' });
 
     function layoutOptionsFullMode() {
-        const layoutOptions = new TaskLayoutOptions();
-
-        // Show every Task field, disable short mode, do not explain the query
-        // Also note that urgency, backlinks and edit button are rendered in QueryRender.createTaskList(),
-        // so they won't be visible in this test it is using TaskLineRenderer.renderTaskLine().
-        // See also comments in TaskLayout.applyOptions().
-        Object.keys(layoutOptions).forEach((key) => {
-            const key2 = key as keyof TaskLayoutOptions;
-            layoutOptions[key2] = false;
-        });
-
         return {
-            layoutOptions,
             taskLayoutOptions2: new TaskLayoutOptions2(), // makes the assumption that all the field are shown by default
             queryLayoutOptions: new QueryLayoutOptions(),
         };
@@ -703,7 +691,6 @@ ${task.toFileLineString()}
         queryLayoutOptions.shortMode = true;
 
         return {
-            layoutOptions: new TaskLayoutOptions(),
             taskLayoutOptions2: new TaskLayoutOptions2(),
             queryLayoutOptions,
         };
