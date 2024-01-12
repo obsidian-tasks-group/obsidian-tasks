@@ -60,21 +60,18 @@ export class TaskLineRenderer {
         textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
         obsidianComponent,
         parentUlElement,
-        taskLayoutOptions,
         taskLayoutOptions2,
         queryLayoutOptions,
     }: {
         textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
-        taskLayoutOptions: TaskLayoutOptions;
         taskLayoutOptions2: TaskLayoutOptions2;
         queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
-        this.taskLayoutOptions = taskLayoutOptions;
         this.taskLayoutOptions2 = taskLayoutOptions2;
         this.queryLayoutOptions = queryLayoutOptions;
     }

@@ -25,7 +25,7 @@ window.moment = moment;
  *
  * @param task to be rendered
  *
- * @param layoutOptions for the task rendering. Skip for default options. See {@link TaskLayoutOptions}.
+ * @param _layoutOptions for the task rendering. Skip for default options. See {@link TaskLayoutOptions}.
  *
  * @param taskLayoutOptions2
  * @param testRenderer imitates Obsidian rendering. Skip for the default {@link mockTextRenderer}.
@@ -34,7 +34,7 @@ window.moment = moment;
  */
 async function renderListItem(
     task: Task,
-    layoutOptions?: TaskLayoutOptions,
+    _layoutOptions?: TaskLayoutOptions,
     taskLayoutOptions2?: TaskLayoutOptions2,
     queryLayoutOptions?: QueryLayoutOptions,
     testRenderer?: TextRenderer,
@@ -43,7 +43,6 @@ async function renderListItem(
         textRenderer: testRenderer ?? mockTextRenderer,
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
-        taskLayoutOptions: layoutOptions ?? new TaskLayoutOptions(),
         taskLayoutOptions2: taskLayoutOptions2 ?? new TaskLayoutOptions2(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
@@ -99,7 +98,6 @@ describe('task line rendering - HTML', () => {
             textRenderer: mockTextRenderer,
             obsidianComponent: null,
             parentUlElement: ulElement,
-            taskLayoutOptions: new TaskLayoutOptions(),
             taskLayoutOptions2: new TaskLayoutOptions2(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
