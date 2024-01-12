@@ -25,16 +25,14 @@ window.moment = moment;
  *
  * @param task to be rendered
  *
- * @param _layoutOptions for the task rendering. Skip for default options. See {@link TaskLayoutOptions}.
+ * @param taskLayoutOptions2 for the task rendering. Skip for default options. See {@link TaskLayoutOptions2}.
  *
- * @param taskLayoutOptions2
  * @param testRenderer imitates Obsidian rendering. Skip for the default {@link mockTextRenderer}.
  *
  * @param queryLayoutOptions for the task rendering. Skip for default options. See {@link QueryLayoutOptions}.
  */
 async function renderListItem(
     task: Task,
-    _layoutOptions?: TaskLayoutOptions,
     taskLayoutOptions2?: TaskLayoutOptions2,
     queryLayoutOptions?: QueryLayoutOptions,
     testRenderer?: TextRenderer,
@@ -180,16 +178,15 @@ describe('task line rendering - global filter', () => {
 describe('task line rendering - layout options', () => {
     const testLayoutOptions = async (
         expectedComponents: string[],
-        layoutOptions: Partial<TaskLayoutOptions>,
+        _layoutOptions: Partial<TaskLayoutOptions>,
         hiddenComponents: TaskLayoutComponent[],
     ) => {
         const task = TaskBuilder.createFullyPopulatedTask();
-        const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
         const taskLayoutOptions2 = new TaskLayoutOptions2();
         hiddenComponents.forEach((hiddenComponent) => {
             taskLayoutOptions2.hide(hiddenComponent);
         });
-        const listItem = await renderListItem(task, fullLayoutOptions, taskLayoutOptions2);
+        const listItem = await renderListItem(task, taskLayoutOptions2);
         const renderedComponents = getListItemComponents(listItem);
         expect(renderedComponents).toEqual(expectedComponents);
     };
@@ -420,15 +417,14 @@ describe('task line rendering - debug info rendering', () => {
 describe('task line rendering - classes and data attributes', () => {
     const testComponentClasses = async (
         taskLine: string,
-        layoutOptions: Partial<TaskLayoutOptions>,
+        _layoutOptions: Partial<TaskLayoutOptions>,
         mainClass: string,
         attributes: string,
     ) => {
         const task = fromLine({
             line: taskLine,
         });
-        const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
+        const listItem = await renderListItem(task);
 
         expect(listItem).toHaveAChildSpanWithClassAndDataAttributes(mainClass, attributes);
     };
@@ -553,14 +549,13 @@ describe('task line rendering - classes and data attributes', () => {
         async (
             expectedAbsentClass: string,
             expectedDateAttributes: string,
-            layoutOptions: Partial<TaskLayoutOptions>,
+            _layoutOptions: Partial<TaskLayoutOptions>,
             hiddenComponent: string,
         ) => {
             const task = TaskBuilder.createFullyPopulatedTask();
-            const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
             const options = new TaskLayoutOptions2();
             options.hide(hiddenComponent as TaskLayoutComponent);
-            const listItem = await renderListItem(task, fullLayoutOptions, options);
+            const listItem = await renderListItem(task, options);
 
             expect(listItem).not.toHaveAChildSpanWithClass(expectedAbsentClass);
             expect(listItem).toHaveAmongDataAttributes(expectedDateAttributes);
@@ -581,7 +576,6 @@ describe('task line rendering - classes and data attributes', () => {
         });
         const listItem = await renderListItem(
             task,
-            new TaskLayoutOptions(),
             new TaskLayoutOptions2(),
             new QueryLayoutOptions(),
             mockHTMLRenderer,
@@ -603,7 +597,6 @@ describe('task line rendering - classes and data attributes', () => {
         });
         const listItem = await renderListItem(
             task,
-            new TaskLayoutOptions(),
             new TaskLayoutOptions2(),
             new QueryLayoutOptions(),
             mockHTMLRenderer,
@@ -620,14 +613,13 @@ describe('task line rendering - classes and data attributes', () => {
 
     const testLiAttributes = async (
         taskLine: string,
-        layoutOptions: Partial<TaskLayoutOptions>,
+        _layoutOptions: Partial<TaskLayoutOptions>,
         attributes: string[],
     ) => {
         const task = fromLine({
             line: taskLine,
         });
-        const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
+        const listItem = await renderListItem(task);
         for (const attribute of attributes) {
             expect(listItem).toHaveAmongDataAttributes(attribute);
         }
@@ -667,22 +659,14 @@ describe('Visualise HTML', () => {
     async function renderAndVerifyHTML(
         task: Task,
         {
-            layoutOptions,
             taskLayoutOptions2,
             queryLayoutOptions,
         }: {
-            layoutOptions: TaskLayoutOptions;
             taskLayoutOptions2: TaskLayoutOptions2;
             queryLayoutOptions: QueryLayoutOptions;
         },
     ) {
-        const listItem = await renderListItem(
-            task,
-            layoutOptions,
-            taskLayoutOptions2,
-            queryLayoutOptions,
-            mockHTMLRenderer,
-        );
+        const listItem = await renderListItem(task, taskLayoutOptions2, queryLayoutOptions, mockHTMLRenderer);
 
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
