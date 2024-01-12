@@ -1,0 +1,15 @@
+Results of custom sorters
+
+
+
+sort by function task.status.type
+Unlike "Sort by status.type", this sorts the status types in alphabetical order.
+=>
+- [-] Status Cancelled
+- [x] Status Done
+- [] Status EMPTY
+- [/] Status In Progress
+- [Q] Status Non-Task
+- [ ] Status Todo
+====================================================================================
+

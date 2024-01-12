@@ -34,6 +34,14 @@ export function fromLines({
     return lines.map((line) => fromLine({ line, path, precedingHeader }));
 }
 
+export function toLine(task: Task) {
+    return task.toFileLineString();
+}
+
+export function toLines(tasks: Task[]) {
+    return tasks.map((task) => toLine(task));
+}
+
 export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, precedingHeader: string): Task[] {
     const taskLines = tasksAsMarkdown.split('\n');
     const tasks: Task[] = [];
@@ -202,6 +210,7 @@ export class SampleTasks {
             Status.makeEmpty(),
             Status.makeInProgress(),
             Status.makeTodo(),
+            Status.makeNonTask(),
         ];
 
         return statuses.map((status) => {

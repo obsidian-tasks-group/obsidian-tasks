@@ -1,0 +1,20 @@
+Results of custom sorters
+
+
+
+sort by function task.descriptionWithoutTags
+Like `Sort by description`, but it removes any tags from the sort key.
+This might be useful for sorting together completed recurrences of the same task, even if the tags differ in some recurrences.
+=>
+- [ ] long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 
+- [ ] my description
+- [ ] my description #tag
+- [ ] my description #tag/subtag
+- [ ] my description #tag/subtag/sub-sub-tag
+- [ ] my description #multiple-tags1 #multiple-tags2
+- [ ] my description #project/project1
+- [ ] my description #context/home
+- [ ] my description #context/work
+- [ ] short description
+====================================================================================
+

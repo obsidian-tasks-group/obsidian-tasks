@@ -5,6 +5,7 @@ import { Explanation } from '../Explain/Explanation';
 import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
 import type { QueryContext } from '../../Scripting/QueryContext';
 import type { SearchInfo } from '../SearchInfo';
+import { Sorter } from '../Sorter';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -15,6 +16,10 @@ import { FilterOrErrorMessage } from './FilterOrErrorMessage';
  * See also {@link parseAndEvaluateExpression}
  */
 export class FunctionField extends Field {
+    // -----------------------------------------------------------------------------------------------------------------
+    // Filtering
+    // -----------------------------------------------------------------------------------------------------------------
+
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const match = Field.getMatch(this.filterRegExp(), line);
         if (match === null) {
@@ -38,6 +43,50 @@ export class FunctionField extends Field {
 
     protected filterRegExp(): RegExp | null {
         return new RegExp(`^filter by ${this.fieldNameSingularEscaped()} (.*)`, 'i');
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Sorting
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public supportsSorting(): boolean {
+        return true;
+    }
+
+    protected sorterRegExp(): RegExp {
+        return new RegExp(`^sort by ${this.fieldNameSingularEscaped()}( reverse)? (.*)`, 'i');
+    }
+
+    public createSorterFromLine(line: string): Sorter | null {
+        const match = Field.getMatch(this.sorterRegExp(), line);
+        if (match === null) {
+            return null;
+        }
+
+        const reverse = !!match[1];
+        const expression = match[2];
+        const taskExpression = new TaskExpression(expression);
+        if (!taskExpression.isValid()) {
+            // TODO Figure out error handling
+            // return FilterOrErrorMessage.fromError(line, taskExpression.parseError!);
+            return null;
+        }
+        const comparator = (a: Task, b: Task) => {
+            // If the result is negative, a is sorted before b.
+            // If the result is positive, b is sorted before a.
+            // If the result is 0, no changes are done with the sort order of the two values.
+
+            const valueA = taskExpression.evaluate(a);
+            const valueB = taskExpression.evaluate(b);
+
+            if (typeof valueA === 'string') {
+                return valueA.localeCompare(valueB, undefined, { numeric: true });
+            }
+
+            // Treat as numeric
+            return valueA - valueB;
+        };
+        return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

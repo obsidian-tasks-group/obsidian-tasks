@@ -1,0 +1,47 @@
+Results of custom sorters
+
+
+
+sort by function task.description.length
+Sort by length of description, shortest first.
+This might be useful for finding tasks that need more information, or could be made less verbose.
+=>
+- [ ] my description
+- [ ] short description
+- [ ] my description #tag
+- [ ] 🟦 pseudo low priority
+- [ ] 🟧 pseudo high priority
+- [ ] 🟩 pseudo normal priority
+- [ ] 🟨 pseudo medium priority
+- [ ] my description #tag/subtag
+- [ ] 🟥 pseudo highest priority
+- [ ] my description #context/home
+- [ ] my description #context/work
+- [ ] my description #project/project1
+- [ ] my description #tag/subtag/sub-sub-tag
+- [ ] my description #multiple-tags1 #multiple-tags2
+- [ ] long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 
+====================================================================================
+
+
+sort by function task.description.replace('🟥', 1).replace('🟧', 2).replace('🟨', 3).replace('🟩', 4).replace('🟦', 5)
+A user has defined custom system for their task descriptions, with coloured squares at the **start** of task lines as a home-grown alternative priority system.
+This allows tasks to be sorted in the order of their coloured squares.
+=>
+- [ ] 🟥 pseudo highest priority
+- [ ] 🟧 pseudo high priority
+- [ ] 🟨 pseudo medium priority
+- [ ] 🟩 pseudo normal priority
+- [ ] 🟦 pseudo low priority
+- [ ] long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 
+- [ ] my description
+- [ ] my description #context/home
+- [ ] my description #context/work
+- [ ] my description #multiple-tags1 #multiple-tags2
+- [ ] my description #project/project1
+- [ ] my description #tag
+- [ ] my description #tag/subtag
+- [ ] my description #tag/subtag/sub-sub-tag
+- [ ] short description
+====================================================================================
+
