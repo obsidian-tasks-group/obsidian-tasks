@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Status Type
 ---
 
 # Status Types
