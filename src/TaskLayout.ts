@@ -1,25 +1,6 @@
 import { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
 
-/**
- * Various rendering options of tasks in a query.
- * See applyOptions below when adding options here.
- *
- * @see QueryLayoutOptions
- */
-export class TaskLayoutOptions {
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    hidePriority: boolean = false;
-    hideCreatedDate: boolean = false;
-    hideStartDate: boolean = false;
-    hideScheduledDate: boolean = false;
-    hideDoneDate: boolean = false;
-    hideCancelledDate: boolean = false;
-    hideDueDate: boolean = false;
-    hideRecurrenceRule: boolean = false;
-    hideTags: boolean = false;
-}
-
 export type TaskLayoutComponent =
     // NEW_TASK_FIELD_EDIT_REQUIRED
     | 'description'
