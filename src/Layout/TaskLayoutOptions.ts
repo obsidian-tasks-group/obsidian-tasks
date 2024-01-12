@@ -33,13 +33,15 @@ export class TaskLayoutOptions2 {
         });
     }
 
-    public toggleVisibilityExceptDescriptionAndBlockLink() {
-        defaultLayout.forEach((component) => {
-            if (component === 'description' || component === 'blockLink') {
-                // Description and blockLink are always shown
-                return;
-            }
+    public get toggleableComponents() {
+        return defaultLayout.filter((component) => {
+            // Description and blockLink are always shown
+            return component !== 'description' && component !== 'blockLink';
+        });
+    }
 
+    public toggleVisibilityExceptDescriptionAndBlockLink() {
+        this.toggleableComponents.forEach((component) => {
             this.visible[component] = !this.visible[component];
         });
     }
