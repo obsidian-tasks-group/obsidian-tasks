@@ -3,7 +3,7 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './File';
-import type { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
+import type { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { Task } from './Task';
 import * as taskModule from './Task';
@@ -26,7 +26,7 @@ export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
-    private readonly taskLayoutOptions2: TaskLayoutOptions2;
+    private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
     private static async obsidianMarkdownRenderer(
@@ -50,7 +50,7 @@ export class TaskLineRenderer {
      *
      * @param parentUlElement HTML element where the task shall be rendered.
      *
-     * @param taskLayoutOptions2 See {@link TaskLayoutOptions2}.
+     * @param taskLayoutOptions See {@link TaskLayoutOptions}.
      *
      * @param queryLayoutOptions See {@link QueryLayoutOptions}.
      */
@@ -58,19 +58,19 @@ export class TaskLineRenderer {
         textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
         obsidianComponent,
         parentUlElement,
-        taskLayoutOptions2,
+        taskLayoutOptions,
         queryLayoutOptions,
     }: {
         textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
-        taskLayoutOptions2: TaskLayoutOptions2;
+        taskLayoutOptions: TaskLayoutOptions;
         queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
-        this.taskLayoutOptions2 = taskLayoutOptions2;
+        this.taskLayoutOptions = taskLayoutOptions;
         this.queryLayoutOptions = queryLayoutOptions;
     }
 
@@ -156,7 +156,7 @@ export class TaskLineRenderer {
         const fieldRenderer = new TaskFieldRenderer();
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
-        for (const component of this.taskLayoutOptions2.shownComponents) {
+        for (const component of this.taskLayoutOptions.shownComponents) {
             const componentString = emojiSerializer.componentToString(
                 task,
                 this.queryLayoutOptions.shortMode,
@@ -186,7 +186,7 @@ export class TaskLineRenderer {
         }
 
         // Now build classes for the hidden task components without rendering them
-        for (const component of this.taskLayoutOptions2.hiddenComponents) {
+        for (const component of this.taskLayoutOptions.hiddenComponents) {
             fieldRenderer.addDataAttribute(li, task, component);
         }
 

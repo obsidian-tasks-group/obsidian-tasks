@@ -1,8 +1,8 @@
-import { TaskLayoutOptions2 } from '../../src/Layout/TaskLayoutOptions';
+import { TaskLayoutOptions } from '../../src/Layout/TaskLayoutOptions';
 
-describe('TaskLayoutOptions2', () => {
+describe('TaskLayoutOptions', () => {
     it('should be constructable', () => {
-        const options = new TaskLayoutOptions2();
+        const options = new TaskLayoutOptions();
         expect(options).not.toBeNull();
 
         expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
@@ -22,21 +22,21 @@ describe('TaskLayoutOptions2', () => {
     });
 
     it('should show fields by default', () => {
-        const options = new TaskLayoutOptions2();
+        const options = new TaskLayoutOptions();
 
         expect(options.isShown('priority')).toEqual(true);
         expect(options.isShown('createdDate')).toEqual(true);
     });
 
     it('should be able to hide a field', () => {
-        const options = new TaskLayoutOptions2();
+        const options = new TaskLayoutOptions();
         options.hide('createdDate');
 
         expect(options.isShown('createdDate')).toEqual(false);
     });
 
     it('should be settable via a boolean', () => {
-        const options = new TaskLayoutOptions2();
+        const options = new TaskLayoutOptions();
 
         options.setVisibility('scheduledDate', false);
         expect(options.isShown('scheduledDate')).toEqual(false);
@@ -46,7 +46,7 @@ describe('TaskLayoutOptions2', () => {
     });
 
     it('should set tag visibility', () => {
-        const options = new TaskLayoutOptions2();
+        const options = new TaskLayoutOptions();
         expect(options.areTagsShown()).toEqual(true);
 
         options.setTagsVisibility(false);
@@ -57,7 +57,7 @@ describe('TaskLayoutOptions2', () => {
     });
 
     it('should provide a list of shown components', () => {
-        const options = new TaskLayoutOptions2();
+        const options = new TaskLayoutOptions();
         expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
             "description
             priority
@@ -87,7 +87,7 @@ describe('TaskLayoutOptions2', () => {
     });
 
     it('should provide a list of hidden components', () => {
-        const options = new TaskLayoutOptions2();
+        const options = new TaskLayoutOptions();
         expect(options.hiddenComponents.join('\n')).toMatchInlineSnapshot('""');
 
         options.setVisibility('startDate', false);
@@ -100,7 +100,7 @@ describe('TaskLayoutOptions2', () => {
     });
 
     it('should toggle visibility', () => {
-        const options = new TaskLayoutOptions2();
+        const options = new TaskLayoutOptions();
 
         options.setVisibility('cancelledDate', false);
         options.setVisibility('priority', true);
@@ -117,7 +117,7 @@ describe('TaskLayoutOptions2', () => {
     });
 
     it('should provide toggleable components', () => {
-        const options = new TaskLayoutOptions2();
+        const options = new TaskLayoutOptions();
 
         expect(options.toggleableComponents.join('\n')).toMatchInlineSnapshot(`
             "priority

@@ -1,7 +1,7 @@
 import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
-import { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
+import { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
 import { Task } from './Task';
 import { TaskLineRenderer } from './TaskLineRenderer';
@@ -91,7 +91,7 @@ export class InlineRenderer {
         const taskLineRenderer = new TaskLineRenderer({
             obsidianComponent: childComponent,
             parentUlElement: element,
-            taskLayoutOptions2: new TaskLayoutOptions2(),
+            taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
 
