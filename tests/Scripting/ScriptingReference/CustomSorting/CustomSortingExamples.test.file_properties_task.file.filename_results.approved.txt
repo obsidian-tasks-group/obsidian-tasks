@@ -1,0 +1,33 @@
+Results of custom sorters
+
+
+
+sort by function task.file.filename
+Like 'sort by filename' but includes the file extension.
+=>
+- [ ] xyz in
+- [ ] xyz in a/b/_c_.md
+- [ ] xyz in a/b/_c_.md
+- [ ] xyz in a_b_c.md
+- [ ] xyz in a/b.md
+- [ ] xyz in a/b/c.md
+- [ ] xyz in a/b/c.md
+- [ ] xyz in a/d/c.md
+- [ ] xyz in e/d/c.md
+====================================================================================
+
+
+sort by function task.file.filenameWithoutExtension
+Like 'sort by filename'.
+=>
+- [ ] xyz in
+- [ ] xyz in a/b/_c_.md
+- [ ] xyz in a/b/_c_.md
+- [ ] xyz in a_b_c.md
+- [ ] xyz in a/b.md
+- [ ] xyz in a/b/c.md
+- [ ] xyz in a/b/c.md
+- [ ] xyz in a/d/c.md
+- [ ] xyz in e/d/c.md
+====================================================================================
+

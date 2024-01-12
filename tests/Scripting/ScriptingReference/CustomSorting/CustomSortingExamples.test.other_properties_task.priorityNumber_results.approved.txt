@@ -1,0 +1,15 @@
+Results of custom sorters
+
+
+
+sort by function task.priorityNumber
+Sort by the task's priority number, where Highest is 0 and Lowest is 5.
+=>
+- [ ] #task Highest priority 🔺
+- [ ] #task High priority ⏫
+- [ ] #task Medium priority 🔼
+- [ ] #task Normal priority
+- [ ] #task Low priority 🔽
+- [ ] #task Lowest priority ⏬
+====================================================================================
+
