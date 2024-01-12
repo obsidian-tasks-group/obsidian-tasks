@@ -98,13 +98,12 @@ export class TaskLayout extends QueryLayout {
         return this.taskLayoutOptions2.shownComponents;
     }
     public hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
-        return this._hiddenTaskLayoutComponents;
+        return this.taskLayoutOptions2.hiddenComponents;
     }
     public taskListHiddenClasses(): string[] {
         return this._taskListHiddenClasses;
     }
     public defaultLayout: TaskLayoutComponent[] = defaultLayout;
-    private _hiddenTaskLayoutComponents: TaskLayoutComponent[] = [];
     private taskLayoutOptions: TaskLayoutOptions;
     private taskLayoutOptions2: TaskLayoutOptions2;
     private _taskListHiddenClasses: string[] = [];
@@ -150,20 +149,10 @@ export class TaskLayout extends QueryLayout {
             [this.taskLayoutOptions.hideDoneDate, 'doneDate'],
         ];
         for (const [hide, component] of componentsToHideAndGenerateClasses) {
-            this.hideComponent(hide, component);
             generateHiddenClassForTaskList(this._taskListHiddenClasses, hide, component);
         }
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
         generateHiddenClassForTaskList(this._taskListHiddenClasses, this.taskLayoutOptions.hideTags, 'tags');
-    }
-
-    /**
-     * Move a component from the shown to hidden if the given layoutOption criteria is met.
-     */
-    private hideComponent(hide: boolean, component: TaskLayoutComponent) {
-        if (hide) {
-            this._hiddenTaskLayoutComponents.push(component);
-        }
     }
 }
