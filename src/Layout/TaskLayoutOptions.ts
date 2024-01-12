@@ -16,4 +16,8 @@ export class TaskLayoutOptions2 {
     public hide(component: TaskLayoutComponent) {
         this.visible[component] = false;
     }
+
+    public setVisibility(component: TaskLayoutComponent, visible: boolean) {
+        this.visible[component] = visible;
+    }
 }

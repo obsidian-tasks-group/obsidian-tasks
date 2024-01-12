@@ -19,4 +19,14 @@ describe('TaskLayoutOptions2', () => {
 
         expect(options.isShown('createdDate')).toEqual(false);
     });
+
+    it('should be settable via a boolean', () => {
+        const options = new TaskLayoutOptions2();
+
+        options.setVisibility('scheduledDate', false);
+        expect(options.isShown('scheduledDate')).toEqual(false);
+
+        options.setVisibility('scheduledDate', true);
+        expect(options.isShown('scheduledDate')).toEqual(true);
+    });
 });
