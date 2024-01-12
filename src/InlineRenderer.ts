@@ -4,7 +4,6 @@ import { GlobalFilter } from './Config/GlobalFilter';
 import { TaskLayoutOptions2 } from './Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
 import { Task } from './Task';
-import { TaskLayoutOptions } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskLocation } from './TaskLocation';
 
@@ -92,7 +91,6 @@ export class InlineRenderer {
         const taskLineRenderer = new TaskLineRenderer({
             obsidianComponent: childComponent,
             parentUlElement: element,
-            taskLayoutOptions: new TaskLayoutOptions(),
             taskLayoutOptions2: new TaskLayoutOptions2(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
