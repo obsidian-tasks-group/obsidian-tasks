@@ -3,7 +3,7 @@
  */
 
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
-import { TaskLayout, type TaskLayoutComponent, TaskLayoutOptions, defaultLayout } from '../src/TaskLayout';
+import { TaskLayout, TaskLayoutOptions } from '../src/TaskLayout';
 
 describe('TaskLayout tests', () => {
     it('should generate expected CSS components for default layout', () => {
@@ -70,44 +70,5 @@ describe('TaskLayout tests', () => {
             tasks-layout-hide-postpone-button
             tasks-layout-short-mode"
         `);
-    });
-});
-
-class TaskLayoutOptions2 {
-    private visible: { [component: string]: boolean } = {};
-
-    constructor() {
-        defaultLayout.forEach((component) => {
-            this.visible[component] = true;
-        });
-    }
-
-    public isShown(component: TaskLayoutComponent) {
-        return this.visible[component];
-    }
-
-    public hide(component: TaskLayoutComponent) {
-        this.visible[component] = false;
-    }
-}
-
-describe('TaskLayoutOptions2', () => {
-    it('should be constructable', () => {
-        const options = new TaskLayoutOptions2();
-        expect(options).not.toBeNull();
-    });
-
-    it('should show fields by default', () => {
-        const options = new TaskLayoutOptions2();
-
-        expect(options.isShown('priority')).toEqual(true);
-        expect(options.isShown('createdDate')).toEqual(true);
-    });
-
-    it('should be able to hide a field', () => {
-        const options = new TaskLayoutOptions2();
-        options.hide('createdDate');
-
-        expect(options.isShown('createdDate')).toEqual(false);
     });
 });
