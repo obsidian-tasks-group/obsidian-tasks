@@ -105,6 +105,7 @@ describe('TaskLayoutOptions', () => {
         options.setVisibility('cancelledDate', false);
         options.setVisibility('priority', true);
         options.setTagsVisibility(true);
+
         options.toggleVisibilityExceptDescriptionAndBlockLink();
 
         expect(options.isShown('cancelledDate')).toEqual(true);
