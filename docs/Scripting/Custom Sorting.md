@@ -93,7 +93,7 @@ You can find many more examples by searching for `sort by function` in the [[Sor
 sort by function task.description.length
 ```
 
-- sort by length of description, shortest first.
+- Sort by length of description, shortest first.
 - This might be useful for finding tasks that need more information, or could be made less verbose.
 
 ```javascript
@@ -109,17 +109,36 @@ sort by function task.description.replace('🟥', 1).replace('🟧', 2).replace(
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.due_docs.approved.md -->
 
+```javascript
+sort by function task.due.format("dddd")
+```
+
+- Sort by due date's day of the week, alphabetically.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Number property examples
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.urgency_docs.approved.md -->
 
+```javascript
+sort by function reverse task.urgency
+```
+
+- Sort by task urgency values.
+- We use `reverse` to put the most urgent tasks first.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### File property examples
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.file.folder_docs.approved.md -->
+
+```javascript
+sort by function task.file.folder
+```
+
+- Enable sorting by the folder containing the task.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

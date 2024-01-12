@@ -44,6 +44,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status** is now possib
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.isDone_docs.approved.md -->
 
+```javascript
+sort by function task.isDone
+```
+
+- Tasks with [[Status Types|Status Type]] `TODO` and `IN_PROGRESS` tasks are sorted before those with types `DONE`, `CANCELLED` and `NON_TASK.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Status Name
@@ -56,6 +62,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status** is now possib
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status names** is now possible.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.statuses_task.status.name_docs.approved.md -->
+
+```javascript
+sort by function task.status.name
+```
+
+- Identical to "Sort by status.name".
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -70,6 +82,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status types** is now 
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.statuses_task.status.type_docs.approved.md -->
 
+```javascript
+sort by function task.status.type
+```
+
+- Unlike "Sort by status.type", this sorts the status types in alphabetical order.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Status Symbol
@@ -80,6 +98,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status symbol** is now
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.statuses_task.status.symbol_docs.approved.md -->
 
+```javascript
+sort by function task.status.symbol
+```
+
+- Sort by the status symbol.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Next Status Symbol
@@ -89,6 +113,12 @@ There is no built-in instruction to sort by next status symbols.
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by next status symbol** is now possible.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.statuses_task.status.nextSymbol_docs.approved.md -->
+
+```javascript
+sort by function task.status.nextSymbol
+```
+
+- Sort by the next status symbol.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -102,6 +132,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by done date** is now pos
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.done_docs.approved.md -->
 
+```javascript
+sort by function task.done.format("dddd")
+```
+
+- Sort by done date's day of the week, alphabetically.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Due Date
@@ -111,6 +147,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by done date** is now pos
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by due date** is now possible.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.due_docs.approved.md -->
+
+```javascript
+sort by function task.due.format("dddd")
+```
+
+- Sort by due date's day of the week, alphabetically.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -126,6 +168,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by scheduled date** is no
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.scheduled_docs.approved.md -->
 
+```javascript
+sort by function task.scheduled.format("dddd")
+```
+
+- Sort by scheduled date's day of the week, alphabetically.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Start Date
@@ -135,6 +183,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by scheduled date** is no
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by start date** is now possible.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.start_docs.approved.md -->
+
+```javascript
+sort by function task.start.format("dddd")
+```
+
+- Sort by start date's day of the week, alphabetically.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -149,6 +203,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by created date** is now 
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.created_docs.approved.md -->
 
+```javascript
+sort by function task.created.format("dddd")
+```
+
+- Sort by created date's day of the week, alphabetically.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Cancelled Date
@@ -162,6 +222,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by cancelled date** is no
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.cancelled_docs.approved.md -->
 
+```javascript
+sort by function task.cancelled.format("dddd")
+```
+
+- Sort by cancelled date's day of the week, alphabetically.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Happens
@@ -174,6 +240,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by cancelled date** is no
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by happens date** is now possible.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.dates_task.happens_docs.approved.md -->
+
+```javascript
+sort by function task.happens.format("dddd")
+```
+
+- Sort by happens date's day of the week, alphabetically.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -191,7 +263,7 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by description** is now p
 sort by function task.description.length
 ```
 
-- sort by length of description, shortest first.
+- Sort by length of description, shortest first.
 - This might be useful for finding tasks that need more information, or could be made less verbose.
 
 ```javascript
@@ -215,7 +287,7 @@ The value `task.descriptionWithoutTags` returns a copy of the description with a
 sort by function task.descriptionWithoutTags
 ```
 
-- Like `sort by description`, but it removes any tags from the sort key.
+- Like `Sort by description`, but it removes any tags from the sort key.
 - This might be useful for sorting together completed recurrences of the same task, even if the tags differ in some recurrences.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
@@ -228,9 +300,23 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by priority name and numb
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.priorityName_docs.approved.md -->
 
+```javascript
+sort by function task.priorityName
+```
+
+- Sort by the task's priority name.
+- The priority names are displayed in alphabetical order.
+- Note that the default priority is called 'Normal', as opposed to with `Sort by priority` which calls the default 'None'.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.priorityNumber_docs.approved.md -->
+
+```javascript
+sort by function task.priorityNumber
+```
+
+- Sort by the task's priority number, where Highest is 0 and Lowest is 5.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -242,6 +328,13 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by urgency** is now possi
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.urgency_docs.approved.md -->
 
+```javascript
+sort by function reverse task.urgency
+```
+
+- Sort by task urgency values.
+- We use `reverse` to put the most urgent tasks first.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Recurrence
@@ -251,6 +344,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by urgency** is now possi
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by recurrence** is now possible.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.isRecurring_docs.approved.md -->
+
+```javascript
+sort by function task.isRecurring
+```
+
+- Sort by whether the task is recurring.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -282,6 +381,19 @@ sort by function task.tags.filter( (tag) => tag.includes("#context/")).sort().jo
 - Sort by tags that contain "#context/".
 - Any tasks without that tag are sorted first.
 
+```javascript
+sort by function reverse task.tags.length
+```
+
+- Sort by the number of tags on the task.
+- The `reverse` option puts tasks with the most tags first.
+
+```javascript
+sort by function -task.tags.length
+```
+
+- A different way of sorting by the number of tags on the task, still putting tasks with the most tags first.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
@@ -298,6 +410,12 @@ For example, this could be used to extract information from `task.originalMarkdo
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.originalMarkdown_docs.approved.md -->
 
+```javascript
+sort by function task.originalMarkdown
+```
+
+- Sort by the raw text of the task's original line in the MarkDown file.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Sort by File Properties
@@ -310,6 +428,18 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by file path** is now pos
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.file.path_docs.approved.md -->
 
+```javascript
+sort by function task.file.path
+```
+
+- Like 'Sort by path' but includes the file extension.
+
+```javascript
+sort by function task.file.pathWithoutExtension
+```
+
+- Like 'Sort by path'.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Root
@@ -320,6 +450,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by root folder** is now p
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.file.root_docs.approved.md -->
 
+```javascript
+sort by function task.file.root
+```
+
+- Enable sorting by the root folder.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Folder
@@ -329,6 +465,12 @@ There is no built-in instruction to sort by the folder that contains the task.
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by folder** is now possible.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.file.folder_docs.approved.md -->
+
+```javascript
+sort by function task.file.folder
+```
+
+- Enable sorting by the folder containing the task.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -344,6 +486,18 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by file name** is now pos
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.file.filename_docs.approved.md -->
 
+```javascript
+sort by function task.file.filename
+```
+
+- Like 'sort by filename' but includes the file extension.
+
+```javascript
+sort by function task.file.filenameWithoutExtension
+```
+
+- Like 'sort by filename'.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Heading
@@ -356,6 +510,12 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by file name** is now pos
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by heading** is now possible.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.file_properties_task.heading_docs.approved.md -->
+
+```javascript
+sort by function task.heading
+```
+
+- Like 'sort by heading'.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
