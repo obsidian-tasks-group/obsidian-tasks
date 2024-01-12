@@ -10,7 +10,7 @@ import { DateParser } from '../src/Query/DateParser';
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import { TaskLayoutOptions } from '../src/TaskLayout';
+import { type TaskLayoutComponent, TaskLayoutOptions } from '../src/TaskLayout';
 import type { TextRenderer } from '../src/TaskLineRenderer';
 import { TaskLineRenderer } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
@@ -180,10 +180,18 @@ describe('task line rendering - global filter', () => {
 });
 
 describe('task line rendering - layout options', () => {
-    const testLayoutOptions = async (expectedComponents: string[], layoutOptions: Partial<TaskLayoutOptions>) => {
+    const testLayoutOptions = async (
+        expectedComponents: string[],
+        layoutOptions: Partial<TaskLayoutOptions>,
+        hiddenComponents: TaskLayoutComponent[],
+    ) => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
+        const taskLayoutOptions2 = new TaskLayoutOptions2();
+        hiddenComponents.forEach((hiddenComponent) => {
+            taskLayoutOptions2.hide(hiddenComponent);
+        });
+        const listItem = await renderListItem(task, fullLayoutOptions, taskLayoutOptions2);
         const renderedComponents = getListItemComponents(listItem);
         expect(renderedComponents).toEqual(expectedComponents);
     };
@@ -203,6 +211,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             {},
+            [],
         );
     });
 
@@ -220,6 +229,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             { hidePriority: true },
+            ['priority'],
         );
     });
 
@@ -237,6 +247,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             { hideRecurrenceRule: true },
+            ['recurrenceRule'],
         );
     });
 
@@ -254,6 +265,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             { hideCreatedDate: true },
+            ['createdDate'],
         );
     });
 
@@ -271,6 +283,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             { hideStartDate: true },
+            ['startDate'],
         );
     });
 
@@ -288,6 +301,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             { hideScheduledDate: true },
+            ['scheduledDate'],
         );
     });
 
@@ -305,6 +319,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             { hideDueDate: true },
+            ['dueDate'],
         );
     });
 
@@ -323,6 +338,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             {},
+            [],
         );
     });
 
@@ -340,6 +356,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             { hideDoneDate: true },
+            ['doneDate'],
         );
     });
 
@@ -357,6 +374,7 @@ describe('task line rendering - layout options', () => {
                 ' ^dcf64c',
             ],
             { hideCancelledDate: true },
+            ['cancelledDate'],
         );
     });
 
@@ -525,23 +543,26 @@ describe('task line rendering - classes and data attributes', () => {
     });
 
     it.each([
-        ['task-priority', 'taskPriority: medium', { hidePriority: true }],
-        ['task-createdDate', 'taskCreated: past-far', { hideCreatedDate: true }],
-        ['task-dueDate', 'taskDue: past-far', { hideDueDate: true }],
-        ['task-scheduledDate', 'taskScheduled: past-far', { hideScheduledDate: true }],
-        ['task-startDate', 'taskStart: past-far', { hideStartDate: true }],
-        ['task-doneDate', 'taskDone: past-far', { hideDoneDate: true }],
-        ['task-cancelledDate', 'taskCancelled: past-far', { hideCancelledDate: true }],
+        ['task-priority', 'taskPriority: medium', { hidePriority: true }, 'priority'],
+        ['task-createdDate', 'taskCreated: past-far', { hideCreatedDate: true }, 'createdDate'],
+        ['task-dueDate', 'taskDue: past-far', { hideDueDate: true }, 'dueDate'],
+        ['task-scheduledDate', 'taskScheduled: past-far', { hideScheduledDate: true }, 'scheduledDate'],
+        ['task-startDate', 'taskStart: past-far', { hideStartDate: true }, 'startDate'],
+        ['task-doneDate', 'taskDone: past-far', { hideDoneDate: true }, 'doneDate'],
+        ['task-cancelledDate', 'taskCancelled: past-far', { hideCancelledDate: true }, 'cancelledDate'],
     ])(
         'should not render "%s" class but should set "%s" data attributes to the list item',
         async (
             expectedAbsentClass: string,
             expectedDateAttributes: string,
             layoutOptions: Partial<TaskLayoutOptions>,
+            hiddenComponent: string,
         ) => {
             const task = TaskBuilder.createFullyPopulatedTask();
             const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
-            const listItem = await renderListItem(task, fullLayoutOptions);
+            const options = new TaskLayoutOptions2();
+            options.hide(hiddenComponent as TaskLayoutComponent);
+            const listItem = await renderListItem(task, fullLayoutOptions, options);
 
             expect(listItem).not.toHaveAChildSpanWithClass(expectedAbsentClass);
             expect(listItem).toHaveAmongDataAttributes(expectedDateAttributes);
