@@ -8,7 +8,7 @@ import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
-import type { TaskLayoutComponent, TaskLayoutOptions } from './TaskLayout';
+import type { TaskLayoutComponent } from './TaskLayout';
 import { StatusMenu } from './ui/Menus/StatusMenu';
 import { StatusRegistry } from './StatusRegistry';
 
@@ -26,8 +26,6 @@ export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
-    // @ts-expect-error
-    private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly taskLayoutOptions2: TaskLayoutOptions2;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
@@ -52,7 +50,7 @@ export class TaskLineRenderer {
      *
      * @param parentUlElement HTML element where the task shall be rendered.
      *
-     * @param layoutOptions See {@link TaskLayoutOptions}.
+     * @param taskLayoutOptions2 See {@link TaskLayoutOptions2}.
      *
      * @param queryLayoutOptions See {@link QueryLayoutOptions}.
      */
