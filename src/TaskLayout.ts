@@ -78,7 +78,6 @@ export class TaskLayout extends QueryLayout {
     public taskListHiddenClasses(): string[] {
         return this._taskListHiddenClasses;
     }
-    public defaultLayout: TaskLayoutComponent[] = defaultLayout;
     private taskLayoutOptions: TaskLayoutOptions;
     private _taskListHiddenClasses: string[] = [];
 
