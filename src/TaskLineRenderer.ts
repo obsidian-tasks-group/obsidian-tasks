@@ -28,7 +28,6 @@ export class TaskLineRenderer {
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
-    // @ts-expect-error unused for now
     private readonly taskLayoutOptions2: TaskLayoutOptions2;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
@@ -160,7 +159,7 @@ export class TaskLineRenderer {
 
     private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
         const fieldRenderer = new TaskFieldRenderer();
-        const taskLayout = new TaskLayout(this.taskLayoutOptions, this.queryLayoutOptions);
+        const taskLayout = new TaskLayout(this.taskLayoutOptions, this.queryLayoutOptions, this.taskLayoutOptions2);
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
         for (const component of taskLayout.shownTaskLayoutComponents()) {
