@@ -312,7 +312,7 @@ Problem line: "${line}"`;
                     break;
                 case 'tags':
                     this._taskLayoutOptions.hideTags = hide;
-                    // this._taskLayoutOptions2.setVisibility('tags', !hide);
+                    this._taskLayoutOptions2.setTagsVisibility(!hide);
                     break;
                 default:
                     this.setError('do not understand hide/show option', line);

@@ -104,6 +104,7 @@ export class TaskLayout extends QueryLayout {
         return this._taskListHiddenClasses;
     }
     public defaultLayout: TaskLayoutComponent[] = defaultLayout;
+    // @ts-expect-error
     private taskLayoutOptions: TaskLayoutOptions;
     private taskLayoutOptions2: TaskLayoutOptions2;
     private _taskListHiddenClasses: string[] = [];
@@ -144,6 +145,6 @@ export class TaskLayout extends QueryLayout {
         });
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-        generateHiddenClassForTaskList(this._taskListHiddenClasses, this.taskLayoutOptions.hideTags, 'tags');
+        generateHiddenClassForTaskList(this._taskListHiddenClasses, !this.taskLayoutOptions2.areTagsShown(), 'tags');
     }
 }

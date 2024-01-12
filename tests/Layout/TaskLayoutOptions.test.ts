@@ -106,12 +106,14 @@ describe('TaskLayoutOptions2', () => {
         options.setVisibility('priority', true);
         options.setVisibility('description', true);
         options.setVisibility('blockLink', true);
+        options.setTagsVisibility(true);
         options.toggleVisibilityExceptDescriptionAndBlockLink();
 
         expect(options.isShown('cancelledDate')).toEqual(true);
         expect(options.isShown('priority')).toEqual(false);
         expect(options.isShown('description')).toEqual(true);
         expect(options.isShown('blockLink')).toEqual(true);
+        expect(options.areTagsShown()).toEqual(false);
     });
 
     it('should provide toggleable components', () => {
