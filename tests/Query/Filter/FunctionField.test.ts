@@ -179,7 +179,7 @@ describe('FunctionField - sorting', () => {
             return new TaskBuilder().description(description).build();
         }
 
-        it('sort by function - integer expression', () => {
+        it('sort by function - integer expression - smaller numbers come before larger ones', () => {
             // Arrange
             const sorter = new FunctionField().createSorterFromLine('sort by function task.description.length');
 
@@ -211,7 +211,7 @@ describe('FunctionField - sorting', () => {
             expectTaskComparesBefore(sorter!, with_description('xxxx'), with_description('x'));
         });
 
-        it('sort by function - string expression', () => {
+        it('sort by function - string expression - case-insensitive, number sort', () => {
             // Arrange
             const sorter = new FunctionField().createSorterFromLine('sort by function task.originalMarkdown');
 
@@ -220,7 +220,7 @@ describe('FunctionField - sorting', () => {
             expectTaskComparesBefore(sorter!, fromLine({ line: '- [ ] Hello' }), fromLine({ line: '* [ ] Hello' }));
             expectTaskComparesBefore(sorter!, fromLine({ line: '* [ ] Apple' }), fromLine({ line: '* [ ] Hello' }));
             expectTaskComparesBefore(sorter!, fromLine({ line: '* [ ] Apple' }), fromLine({ line: '* [ ] APPLE' })); // case-insensitive
-            expectTaskComparesEqual(sorter!, fromLine({ line: '- [ ] Hello' }), fromLine({ line: '- [ ] Hello' }));
+            expectTaskComparesAfter(sorter!, fromLine({ line: '- [ ] 10 Hello' }), fromLine({ line: '- [ ] 9 Hello' }));
             expectTaskComparesAfter(sorter!, fromLine({ line: '* [ ] Hello' }), fromLine({ line: '- [ ] Hello' }));
         });
 
