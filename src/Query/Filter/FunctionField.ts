@@ -85,7 +85,11 @@ export class FunctionField extends Field {
 
             // Treat as numeric, so it works well with booleans
             // We use Number() to prevent implicit type conversion, by making the conversion explicit:
-            return Number(valueA) - Number(valueB);
+            const result = Number(valueA) - Number(valueB);
+            if (isNaN(result)) {
+                throw new Error(`Unable to determine sort order for expression '${line}'`);
+            }
+            return result;
         };
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
