@@ -20,6 +20,7 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { fromLine } from '../../TestHelpers';
+import { Query } from '../../../src/Query/Query';
 
 window.moment = moment;
 
@@ -139,6 +140,24 @@ describe('FunctionField - sorting', () => {
                 field.createReverseSorter();
             };
             expect(t).toThrow(Error);
+        });
+
+        it('should give a meaningful error for invalid syntax', () => {
+            // Arrange
+            const line = 'sort by function hello';
+            const query = new Query(line);
+            const task = fromLine({ line: '- [ ] stuff' });
+
+            // Act
+            const result = query.applyQueryToTasks([task, task]);
+
+            // Assert
+            // TODO It would be good to include the instruction line in this error message.
+            expect(result.searchErrorMessage).toMatchInlineSnapshot(`
+                "Error: Search failed.
+                The error message was:
+                    "ReferenceError: hello is not defined""
+            `);
         });
     });
 
