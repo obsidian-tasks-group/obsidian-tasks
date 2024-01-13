@@ -1,4 +1,4 @@
-import { type TaskLayoutComponent, defaultLayout } from '../TaskLayout';
+import { type TaskLayoutComponent, taskLayoutComponents } from '../TaskLayout';
 
 /**
  * Various rendering options of tasks in a query.
@@ -14,7 +14,7 @@ export class TaskLayoutOptions {
     private tagsVisible: boolean = true;
 
     constructor() {
-        defaultLayout.forEach((component) => {
+        taskLayoutComponents.forEach((component) => {
             this.visible[component] = true;
         });
     }
@@ -40,13 +40,13 @@ export class TaskLayoutOptions {
     }
 
     public get shownComponents() {
-        return defaultLayout.filter((component) => {
+        return taskLayoutComponents.filter((component) => {
             return this.visible[component];
         });
     }
 
     public get hiddenComponents() {
-        return defaultLayout.filter((component) => {
+        return taskLayoutComponents.filter((component) => {
             return !this.visible[component];
         });
     }
@@ -56,7 +56,7 @@ export class TaskLayoutOptions {
      * here because there are no layout options to remove them.
      */
     public get toggleableComponents() {
-        return defaultLayout.filter((component) => {
+        return taskLayoutComponents.filter((component) => {
             // Description and blockLink are always shown
             return component !== 'description' && component !== 'blockLink';
         });
