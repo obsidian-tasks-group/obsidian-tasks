@@ -223,6 +223,17 @@ describe('FunctionField - sorting', () => {
             expectTaskComparesEqual(sorter!, fromLine({ line: '- [ ] Hello' }), fromLine({ line: '- [ ] Hello' }));
             expectTaskComparesAfter(sorter!, fromLine({ line: '* [ ] Hello' }), fromLine({ line: '- [ ] Hello' }));
         });
+
+        it('sort by function - boolean expression - false sorts before true', () => {
+            // Arrange
+            const sorter = new FunctionField().createSorterFromLine('sort by function task.isDone');
+            const todoTask = fromLine({ line: '- [ ] todo' });
+            const doneTask = fromLine({ line: '- [x] done' });
+
+            // Assert
+            expect(sorter).not.toBeNull();
+            expectTaskComparesBefore(sorter!, todoTask, doneTask);
+        });
     });
 });
 

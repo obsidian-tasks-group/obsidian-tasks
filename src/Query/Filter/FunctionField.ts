@@ -83,8 +83,9 @@ export class FunctionField extends Field {
                 return valueA.localeCompare(valueB, undefined, { numeric: true });
             }
 
-            // Treat as numeric
-            return valueA - valueB;
+            // Treat as numeric, so it works well with booleans
+            // We use Number() to prevent implicit type conversion, by making the conversion explicit:
+            return Number(valueA) - Number(valueB);
         };
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
