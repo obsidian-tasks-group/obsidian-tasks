@@ -142,7 +142,11 @@ export class SampleTasks {
         const t = '- [ ] xyz';
 
         return allPathsAndHeadings.map(([path, heading]) => {
-            return fromLine({ line: t + ' in ' + path, path: path, precedingHeader: heading });
+            return fromLine({
+                line: `${t} in '${path}' in heading '${heading}'`,
+                path: path,
+                precedingHeader: heading,
+            });
         });
     }
 
