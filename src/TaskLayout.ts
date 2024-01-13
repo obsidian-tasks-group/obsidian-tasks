@@ -14,6 +14,20 @@ export type TaskLayoutComponent =
     | 'cancelledDate'
     | 'blockLink';
 
+export const taskLayoutComponents: TaskLayoutComponent[] = [
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+    'description',
+    'priority',
+    'recurrenceRule',
+    'createdDate',
+    'startDate',
+    'scheduledDate',
+    'dueDate',
+    'cancelledDate',
+    'doneDate',
+    'blockLink',
+];
+
 export class QueryLayout {
     protected queryLayoutOptions: QueryLayoutOptions;
 
@@ -54,20 +68,6 @@ function generateHiddenClassForTaskList(taskListHiddenClasses: string[], hide: b
 function hiddenComponentClassName(component: string) {
     return `tasks-layout-hide-${component}`;
 }
-
-export const taskLayoutComponents: TaskLayoutComponent[] = [
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    'description',
-    'priority',
-    'recurrenceRule',
-    'createdDate',
-    'startDate',
-    'scheduledDate',
-    'dueDate',
-    'cancelledDate',
-    'doneDate',
-    'blockLink',
-];
 
 /**
  * This represents the desired layout of tasks when they are rendered in a given configuration.
