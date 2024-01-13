@@ -159,6 +159,18 @@ describe('FunctionField - sorting', () => {
                     "ReferenceError: hello is not defined""
             `);
         });
+
+        it.failing('should give a meaningful error for unknown task field', () => {
+            const line = 'sort by function task.nonExistentField';
+            const query = new Query(line);
+            const task = fromLine({ line: '- [ ] stuff' });
+
+            // Act
+            const result = query.applyQueryToTasks([task, task]);
+
+            // Assert
+            expect(result.searchErrorMessage).not.toBeUndefined();
+        });
     });
 
     describe('example functions', () => {
