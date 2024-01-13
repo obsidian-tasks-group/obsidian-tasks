@@ -55,7 +55,7 @@ function hiddenComponentClassName(component: string) {
     return `tasks-layout-hide-${component}`;
 }
 
-export const defaultLayout: TaskLayoutComponent[] = [
+export const taskLayoutComponents: TaskLayoutComponent[] = [
     // NEW_TASK_FIELD_EDIT_REQUIRED
     'description',
     'priority',
