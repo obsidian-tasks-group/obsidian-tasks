@@ -7,25 +7,12 @@ import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import { TaskLayout } from '../src/TaskLayout';
 
 describe('TaskLayout tests', () => {
-    it('should generate expected CSS components for default layout', () => {
+    it('should generate expected CSS classes for default layout', () => {
         const taskLayout = new TaskLayout();
-        expect(taskLayout.shownTaskLayoutComponents().join('\n')).toMatchInlineSnapshot(`
-            "description
-            priority
-            recurrenceRule
-            createdDate
-            startDate
-            scheduledDate
-            dueDate
-            cancelledDate
-            doneDate
-            blockLink"
-        `);
-        expect(taskLayout.hiddenTaskLayoutComponents().join('\n')).toMatchInlineSnapshot('""');
         expect(taskLayout.taskListHiddenClasses().join('\n')).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
     });
 
-    it('should generate expected CSS components with all default option reversed', () => {
+    it('should generate expected CSS classes with all default options reversed', () => {
         const taskLayoutOptions = new TaskLayoutOptions();
         taskLayoutOptions.toggleVisibilityExceptDescriptionAndBlockLink();
 
@@ -38,20 +25,6 @@ describe('TaskLayout tests', () => {
 
         const taskLayout = new TaskLayout(taskLayoutOptions, queryLayoutOptions);
 
-        expect(taskLayout.shownTaskLayoutComponents().join('\n')).toMatchInlineSnapshot(`
-            "description
-            blockLink"
-        `);
-        expect(taskLayout.hiddenTaskLayoutComponents().join('\n')).toMatchInlineSnapshot(`
-            "priority
-            recurrenceRule
-            createdDate
-            startDate
-            scheduledDate
-            dueDate
-            cancelledDate
-            doneDate"
-        `);
         expect(taskLayout.taskListHiddenClasses().join('\n')).toMatchInlineSnapshot(`
             "tasks-layout-hide-priority
             tasks-layout-hide-recurrenceRule

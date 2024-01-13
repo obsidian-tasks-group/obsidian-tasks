@@ -14,6 +14,20 @@ export type TaskLayoutComponent =
     | 'cancelledDate'
     | 'blockLink';
 
+export const taskLayoutComponents: TaskLayoutComponent[] = [
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+    'description',
+    'priority',
+    'recurrenceRule',
+    'createdDate',
+    'startDate',
+    'scheduledDate',
+    'dueDate',
+    'cancelledDate',
+    'doneDate',
+    'blockLink',
+];
+
 export class QueryLayout {
     protected queryLayoutOptions: QueryLayoutOptions;
 
@@ -55,36 +69,15 @@ function hiddenComponentClassName(component: string) {
     return `tasks-layout-hide-${component}`;
 }
 
-export const defaultLayout: TaskLayoutComponent[] = [
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    'description',
-    'priority',
-    'recurrenceRule',
-    'createdDate',
-    'startDate',
-    'scheduledDate',
-    'dueDate',
-    'cancelledDate',
-    'doneDate',
-    'blockLink',
-];
-
 /**
  * This represents the desired layout of tasks when they are rendered in a given configuration.
  * The layout is used when flattening the task to a string and when rendering queries, and can be
  * modified by applying {@link TaskLayoutOptions} objects.
  */
 export class TaskLayout extends QueryLayout {
-    public shownTaskLayoutComponents(): TaskLayoutComponent[] {
-        return this.taskLayoutOptions.shownComponents;
-    }
-    public hiddenTaskLayoutComponents(): TaskLayoutComponent[] {
-        return this.taskLayoutOptions.hiddenComponents;
-    }
     public taskListHiddenClasses(): string[] {
         return this._taskListHiddenClasses;
     }
-    public defaultLayout: TaskLayoutComponent[] = defaultLayout;
     private taskLayoutOptions: TaskLayoutOptions;
     private _taskListHiddenClasses: string[] = [];
 
@@ -96,14 +89,9 @@ export class TaskLayout extends QueryLayout {
         } else {
             this.taskLayoutOptions = new TaskLayoutOptions();
         }
-        this.applyOptions();
-    }
-
-    private applyOptions() {
         this.applyTaskLayoutOptions();
         this.applyQueryLayoutOptions(this._taskListHiddenClasses);
     }
-
     private applyTaskLayoutOptions() {
         this.taskLayoutOptions.toggleableComponents.forEach((component) => {
             generateHiddenClassForTaskList(
