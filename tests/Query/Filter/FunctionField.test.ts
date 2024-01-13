@@ -93,6 +93,26 @@ describe('FunctionField - sorting', () => {
             const functionField = new FunctionField();
             expect(functionField.supportsSorting()).toEqual(true);
         });
+
+        it('should parse "sort by function" line', () => {
+            // Arrange
+            const field = new FunctionField();
+            const instruction = 'sort by function task.path';
+
+            // Assert
+            const sorter = field.createSorterFromLine(instruction);
+            expect(sorter).not.toBeNull();
+        });
+
+        it('should parse "sort by function reverse" line', () => {
+            // Arrange
+            const field = new FunctionField();
+            const instruction = 'sort by function reverse task.path';
+
+            // Assert
+            const sorter = field.createSorterFromLine(instruction);
+            expect(sorter).not.toBeNull();
+        });
     });
 
     describe('example functions', () => {
