@@ -115,6 +115,33 @@ describe('FunctionField - sorting', () => {
         });
     });
 
+    describe('error-handling', () => {
+        const field = new FunctionField();
+
+        it('should throw in comparator()', () => {
+            // It's not possible to create a Comparator without a line,
+            // so comparator() method needs to throw and report it cannot work.
+            const t = () => {
+                field.comparator();
+            };
+            expect(t).toThrow(Error);
+        });
+
+        it('should throw creating a normal sorter()', () => {
+            const t = () => {
+                field.createNormalSorter();
+            };
+            expect(t).toThrow(Error);
+        });
+
+        it('should throw creating a reverse sorter()', () => {
+            const t = () => {
+                field.createReverseSorter();
+            };
+            expect(t).toThrow(Error);
+        });
+    });
+
     describe('example functions', () => {
         // Helper function to create a task with a given path
         function with_description(description: string) {
