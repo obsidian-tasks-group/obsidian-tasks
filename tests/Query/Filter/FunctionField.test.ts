@@ -160,7 +160,7 @@ describe('FunctionField - sorting', () => {
             `);
         });
 
-        it.failing('should give a meaningful error for unknown task field', () => {
+        it('should give a meaningful error for unknown task field', () => {
             const line = 'sort by function task.nonExistentField';
             const query = new Query(line);
             const task = fromLine({ line: '- [ ] stuff' });
@@ -169,7 +169,28 @@ describe('FunctionField - sorting', () => {
             const result = query.applyQueryToTasks([task, task]);
 
             // Assert
-            expect(result.searchErrorMessage).not.toBeUndefined();
+            expect(result.searchErrorMessage).toMatchInlineSnapshot(`
+                "Error: Search failed.
+                The error message was:
+                    "Error: Unable to determine sort order for expression 'sort by function task.nonExistentField'""
+            `);
+        });
+
+        it('should give a meaningful error when sorting by arrays', () => {
+            // Arrange
+            const line = 'sort by function task.tags';
+            const query = new Query(line);
+            const task = fromLine({ line: '- [ ] stuff #tag1' });
+
+            // Act
+            const result = query.applyQueryToTasks([task, task]);
+
+            // Assert
+            expect(result.searchErrorMessage).toMatchInlineSnapshot(`
+                "Error: Search failed.
+                The error message was:
+                    "Error: Unable to determine sort order for expression 'sort by function task.tags'""
+            `);
         });
     });
 
