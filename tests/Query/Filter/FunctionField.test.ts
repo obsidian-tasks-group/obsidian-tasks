@@ -187,7 +187,12 @@ describe('FunctionField - sorting', () => {
             expect(field.compareTaskSortKeys(3.15634, 1.535436, '3.15634 and 1.535436')).toBeGreaterThan(0);
         });
 
-        // TODO boolean
+        it('should sort false boolean before true', () => {
+            expect(field.compareTaskSortKeys(1, 1, '1 1')).toEqual(SAME);
+            expect(field.compareTaskSortKeys(false, true, 'false and true')).toEqual(BEFORE);
+            expect(field.compareTaskSortKeys(true, false, 'true and false')).toEqual(AFTER);
+        });
+
         // TODO string
         // TODO array
         // TODO mixed types
