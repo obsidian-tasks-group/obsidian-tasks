@@ -135,6 +135,15 @@ describe('FunctionField - sorting', () => {
                 expect(t).toThrow(Error);
                 expect(t).toThrowError('"undefined" is not a valid sort key, from expression: "undefined"');
             });
+
+            it('should forbid NaN sort key', () => {
+                const key = NaN;
+                const t = () => {
+                    field.validateTaskSortKey(key, 'NaN');
+                };
+                expect(t).toThrow(Error);
+                expect(t).toThrowError('"NaN (Not a Number)" is not a valid sort key, from expression: "NaN"');
+            });
         });
     });
 
