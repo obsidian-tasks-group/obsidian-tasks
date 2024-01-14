@@ -193,9 +193,14 @@ describe('FunctionField - sorting', () => {
             expect(field.compareTaskSortKeys(true, false, 'true and false')).toEqual(AFTER);
         });
 
-        // TODO string
+        it('should sort strings case-sensitively and be number-aware', () => {
+            expect(field.compareTaskSortKeys('9', '10', 'true and false')).toEqual(BEFORE);
+            expect(field.compareTaskSortKeys('ABCDE', 'abcde', 'ABCDE and abcde')).toEqual(AFTER);
+        });
+
         // TODO array
         // TODO mixed types
+        // TODO TaskDates
     });
 
     describe('error-handling', () => {
