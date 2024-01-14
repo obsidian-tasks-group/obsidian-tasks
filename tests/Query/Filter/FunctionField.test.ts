@@ -125,6 +125,11 @@ describe('FunctionField - sorting', () => {
                 expect(Object.is(field.validateTaskSortKey(key, 'group by function "anything"'), key)).toEqual(true);
             });
 
+            it('should accept number sort key', () => {
+                expect(field.validateTaskSortKey(42, 'group by function 42')).toEqual(42);
+                expect(field.validateTaskSortKey(0.15634, 'group by function 0.15634')).toEqual(0.15634);
+            });
+
             it('should accept boolean sort key', () => {
                 expect(field.validateTaskSortKey(true, 'group by function true')).toEqual(true);
                 expect(field.validateTaskSortKey(false, 'group by function false')).toEqual(false);
