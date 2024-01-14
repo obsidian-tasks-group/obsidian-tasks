@@ -116,6 +116,28 @@ describe('FunctionField - sorting', () => {
         });
     });
 
+    describe('validation', () => {
+        const field = new FunctionField();
+
+        describe('allowed sort key types', () => {
+            it('should accept string sort key', () => {
+                const key = 'anything';
+                expect(Object.is(field.validateTaskSortKey(key, key), key)).toEqual(true);
+            });
+        });
+
+        describe('forbidden sort key types', () => {
+            it('should forbid undefined sort key', () => {
+                const key = undefined;
+                const t = () => {
+                    field.validateTaskSortKey(key, 'undefined');
+                };
+                expect(t).toThrow(Error);
+                expect(t).toThrowError('"undefined" is not a valid sort key, from expression: "undefined"');
+            });
+        });
+    });
+
     describe('error-handling', () => {
         const field = new FunctionField();
 
@@ -172,7 +194,7 @@ describe('FunctionField - sorting', () => {
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "Error: Unable to determine sort order for expression 'sort by function task.nonExistentField'""
+                    "Error: "undefined" is not a valid sort key, from expression: "sort by function task.nonExistentField"""
             `);
         });
 
