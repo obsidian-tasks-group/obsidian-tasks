@@ -110,7 +110,15 @@ export class FunctionField extends Field {
             return 1;
         }
 
-        if (typeof valueA === 'string') {
+        const valueAType = typeof valueA;
+        const valueBType = typeof valueB;
+        if (valueAType !== valueBType) {
+            throw new Error(
+                `Unable to compare two different types: '${valueAType}' and '${valueBType}' order for expression '${line}'`,
+            );
+        }
+
+        if (valueAType === 'string') {
             return valueA.localeCompare(valueB, undefined, { numeric: true });
         }
 
