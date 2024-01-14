@@ -72,10 +72,6 @@ export class FunctionField extends Field {
             return null;
         }
         const comparator = (a: Task, b: Task) => {
-            // If the result is negative, a is sorted before b.
-            // If the result is positive, b is sorted before a.
-            // If the result is 0, no changes are done with the sort order of the two values.
-
             const valueA = this.validateTaskSortKey(taskExpression.evaluate(a), line);
             const valueB = this.validateTaskSortKey(taskExpression.evaluate(b), line);
             return this.compareTaskSortKeys(valueA, valueB, line);
@@ -90,11 +86,28 @@ export class FunctionField extends Field {
         if (Number.isNaN(sortKey)) {
             throw new Error(`"NaN (Not a Number)" is not a valid sort key, from expression: "${line}"`);
         }
+        if (Array.isArray(sortKey)) {
+            throw new Error(`"array" is not a valid sort key, from expression: "${line}"`);
+        }
         return sortKey;
     }
 
-    // TODO Write tests of the behaviour of this for wide range of different value types
+    /**
+     * A comparator function for sorting two values
+     *
+     * **IMPORTANT**: Both values must already have been checked by {@link validateTaskSortKey}.
+     *
+     * - If the result is negative, a is sorted before b.
+     * - If the result is positive, b is sorted before a.
+     * - If the result is 0, no changes are done with the sort order of the two values.
+     *
+     * @param valueA - a value that satisfies {@link validateTaskSortKey}.
+     * @param valueB - a value that satisfies {@link validateTaskSortKey}.
+     * @param line - the instruction line: used for error messages.
+     */
     public compareTaskSortKeys(valueA: any, valueB: any, line: string) {
+        // Precondition: Both parameter values have satisfied constraints in validateTaskSortKey().
+
         if (valueA === null && valueB === null) {
             return 0;
         }

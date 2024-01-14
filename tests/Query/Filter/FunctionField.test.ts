@@ -162,6 +162,24 @@ describe('FunctionField - sorting', () => {
                     '"NaN (Not a Number)" is not a valid sort key, from expression: "group by function NaN"',
                 );
             });
+
+            it('should forbid a non-empty array sort key', () => {
+                const key = [17];
+                const t = () => {
+                    field.validateTaskSortKey(key, 'group by function [17]');
+                };
+                expect(t).toThrow(Error);
+                expect(t).toThrowError('"array" is not a valid sort key, from expression: "group by function [17]"');
+            });
+
+            it('should forbid an empty array sort key', () => {
+                const key: number[] = [];
+                const t = () => {
+                    field.validateTaskSortKey(key, 'group by function []');
+                };
+                expect(t).toThrow(Error);
+                expect(t).toThrowError('"array" is not a valid sort key, from expression: "group by function []"');
+            });
         });
     });
 
@@ -198,7 +216,7 @@ describe('FunctionField - sorting', () => {
             expect(field.compareTaskSortKeys('ABCDE', 'abcde', 'ABCDE and abcde')).toEqual(AFTER);
         });
 
-        // TODO array
+        // Note: Arrays are rejected at the validateTaskSortKey() stage.
         // TODO TaskDates
 
         it('should refuse to compare values of different types (other than null)', () => {
@@ -287,7 +305,7 @@ describe('FunctionField - sorting', () => {
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "Error: Unable to determine sort order for expression 'sort by function task.tags'""
+                    "Error: "array" is not a valid sort key, from expression: "sort by function task.tags"""
             `);
         });
     });
