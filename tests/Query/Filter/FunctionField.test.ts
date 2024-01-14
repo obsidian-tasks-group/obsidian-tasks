@@ -124,6 +124,10 @@ describe('FunctionField - sorting', () => {
                 const key = 'anything';
                 expect(Object.is(field.validateTaskSortKey(key, key), key)).toEqual(true);
             });
+
+            it('should accept null sort key', () => {
+                expect(Object.is(field.validateTaskSortKey(null, 'null'), null)).toEqual(true);
+            });
         });
 
         describe('forbidden sort key types', () => {
