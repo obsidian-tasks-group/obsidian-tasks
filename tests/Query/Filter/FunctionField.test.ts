@@ -199,8 +199,19 @@ describe('FunctionField - sorting', () => {
         });
 
         // TODO array
-        // TODO mixed types
         // TODO TaskDates
+
+        it('should refuse to compare values of different types (other than null)', () => {
+            const valueA = 42;
+            const valueB = '97';
+            const t = () => {
+                field.compareTaskSortKeys(valueA, valueB, 'group by function something or other...');
+            };
+            expect(t).toThrow(Error);
+            expect(t).toThrowError(
+                "Unable to compare two different types: 'number' and 'string' order for expression 'group by function something or other...'",
+            );
+        });
     });
 
     describe('error-handling', () => {
