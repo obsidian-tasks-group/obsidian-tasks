@@ -94,7 +94,22 @@ export class FunctionField extends Field {
     }
 
     // TODO Write tests of the behaviour of this for wide range of different value types
-    private compareTaskSortKeys(valueA: any, valueB: any, line: string) {
+    public compareTaskSortKeys(valueA: any, valueB: any, line: string) {
+        if (valueA === null && valueB === null) {
+            return 0;
+        }
+
+        // Null sorts before anything else.
+        // This is consistent with how null headings are handled.
+        // However, it differs from how compareByDate() works, so special-case code will be needed
+        // for that, later.
+        if (valueA === null && valueB !== null) {
+            return -1;
+        }
+        if (valueA !== null && valueB === null) {
+            return 1;
+        }
+
         if (typeof valueA === 'string') {
             return valueA.localeCompare(valueB, undefined, { numeric: true });
         }
