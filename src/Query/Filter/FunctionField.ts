@@ -76,11 +76,15 @@ export class FunctionField extends Field {
             // If the result is positive, b is sorted before a.
             // If the result is 0, no changes are done with the sort order of the two values.
 
-            const valueA = taskExpression.evaluate(a);
-            const valueB = taskExpression.evaluate(b);
+            const valueA = this.validateTaskSortKey(taskExpression.evaluate(a));
+            const valueB = this.validateTaskSortKey(taskExpression.evaluate(b));
             return this.compareTaskSortKeys(valueA, valueB, line);
         };
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
+    }
+
+    private validateTaskSortKey(sortKey: any) {
+        return sortKey;
     }
 
     // TODO Write tests of the behaviour of this for wide range of different value types
