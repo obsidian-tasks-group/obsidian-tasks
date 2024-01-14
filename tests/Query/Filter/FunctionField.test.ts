@@ -122,16 +122,16 @@ describe('FunctionField - sorting', () => {
         describe('allowed sort key types', () => {
             it('should accept string sort key', () => {
                 const key = 'anything';
-                expect(Object.is(field.validateTaskSortKey(key, key), key)).toEqual(true);
+                expect(Object.is(field.validateTaskSortKey(key, 'group by function "anything"'), key)).toEqual(true);
             });
 
             it('should accept boolean sort key', () => {
-                expect(field.validateTaskSortKey(true, 'boolean - true')).toEqual(true);
-                expect(field.validateTaskSortKey(false, 'boolean - false')).toEqual(false);
+                expect(field.validateTaskSortKey(true, 'group by function true')).toEqual(true);
+                expect(field.validateTaskSortKey(false, 'group by function false')).toEqual(false);
             });
 
             it('should accept null sort key', () => {
-                expect(Object.is(field.validateTaskSortKey(null, 'null'), null)).toEqual(true);
+                expect(Object.is(field.validateTaskSortKey(null, 'group by function null'), null)).toEqual(true);
             });
         });
 
@@ -139,19 +139,23 @@ describe('FunctionField - sorting', () => {
             it('should forbid undefined sort key', () => {
                 const key = undefined;
                 const t = () => {
-                    field.validateTaskSortKey(key, 'undefined');
+                    field.validateTaskSortKey(key, 'group by function undefined');
                 };
                 expect(t).toThrow(Error);
-                expect(t).toThrowError('"undefined" is not a valid sort key, from expression: "undefined"');
+                expect(t).toThrowError(
+                    '"undefined" is not a valid sort key, from expression: "group by function undefined"',
+                );
             });
 
             it('should forbid NaN sort key', () => {
                 const key = NaN;
                 const t = () => {
-                    field.validateTaskSortKey(key, 'NaN');
+                    field.validateTaskSortKey(key, 'group by function NaN');
                 };
                 expect(t).toThrow(Error);
-                expect(t).toThrowError('"NaN (Not a Number)" is not a valid sort key, from expression: "NaN"');
+                expect(t).toThrowError(
+                    '"NaN (Not a Number)" is not a valid sort key, from expression: "group by function NaN"',
+                );
             });
         });
     });
