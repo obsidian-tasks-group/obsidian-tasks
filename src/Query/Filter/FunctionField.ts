@@ -76,14 +76,17 @@ export class FunctionField extends Field {
             // If the result is positive, b is sorted before a.
             // If the result is 0, no changes are done with the sort order of the two values.
 
-            const valueA = this.validateTaskSortKey(taskExpression.evaluate(a));
-            const valueB = this.validateTaskSortKey(taskExpression.evaluate(b));
+            const valueA = this.validateTaskSortKey(taskExpression.evaluate(a), line);
+            const valueB = this.validateTaskSortKey(taskExpression.evaluate(b), line);
             return this.compareTaskSortKeys(valueA, valueB, line);
         };
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
 
-    private validateTaskSortKey(sortKey: any) {
+    public validateTaskSortKey(sortKey: any, line: string) {
+        if (sortKey === undefined) {
+            throw new Error(`"undefined" is not a valid sort key, from expression: "${line}"`);
+        }
         return sortKey;
     }
 
