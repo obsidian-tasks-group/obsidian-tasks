@@ -78,20 +78,24 @@ export class FunctionField extends Field {
 
             const valueA = taskExpression.evaluate(a);
             const valueB = taskExpression.evaluate(b);
-
-            if (typeof valueA === 'string') {
-                return valueA.localeCompare(valueB, undefined, { numeric: true });
-            }
-
-            // Treat as numeric, so it works well with booleans
-            // We use Number() to prevent implicit type conversion, by making the conversion explicit:
-            const result = Number(valueA) - Number(valueB);
-            if (isNaN(result)) {
-                throw new Error(`Unable to determine sort order for expression '${line}'`);
-            }
-            return result;
+            return this.compareTaskSortKeys(valueA, valueB, line);
         };
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
+    }
+
+    // TODO Write tests of the behaviour of this for wide range of different value types
+    private compareTaskSortKeys(valueA: any, valueB: any, line: string) {
+        if (typeof valueA === 'string') {
+            return valueA.localeCompare(valueB, undefined, { numeric: true });
+        }
+
+        // Treat as numeric, so it works well with booleans
+        // We use Number() to prevent implicit type conversion, by making the conversion explicit:
+        const result = Number(valueA) - Number(valueB);
+        if (isNaN(result)) {
+            throw new Error(`Unable to determine sort order for expression '${line}'`);
+        }
+        return result;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
