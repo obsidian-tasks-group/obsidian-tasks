@@ -178,6 +178,19 @@ describe('FunctionField - sorting', () => {
             expect(field.compareTaskSortKeys(null, 'a string', 'null and "a string"')).toEqual(BEFORE);
             expect(field.compareTaskSortKeys(false, null, 'false and null')).toEqual(AFTER);
         });
+
+        it('should sort numbers in ascending order', () => {
+            expect(field.compareTaskSortKeys(1, 1, '1 1')).toEqual(SAME);
+            // number comparison is implementing with subtraction of the two values,
+            // so we cannot just check for values -1 pr +1.
+            expect(field.compareTaskSortKeys(42, 47, '42 and 47')).toBeLessThan(0);
+            expect(field.compareTaskSortKeys(3.15634, 1.535436, '3.15634 and 1.535436')).toBeGreaterThan(0);
+        });
+
+        // TODO boolean
+        // TODO string
+        // TODO array
+        // TODO mixed types
     });
 
     describe('error-handling', () => {
