@@ -125,6 +125,11 @@ describe('FunctionField - sorting', () => {
                 expect(Object.is(field.validateTaskSortKey(key, key), key)).toEqual(true);
             });
 
+            it('should accept boolean sort key', () => {
+                expect(field.validateTaskSortKey(true, 'boolean - true')).toEqual(true);
+                expect(field.validateTaskSortKey(false, 'boolean - false')).toEqual(false);
+            });
+
             it('should accept null sort key', () => {
                 expect(Object.is(field.validateTaskSortKey(null, 'null'), null)).toEqual(true);
             });
