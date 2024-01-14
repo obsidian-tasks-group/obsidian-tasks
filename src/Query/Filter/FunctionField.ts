@@ -87,6 +87,9 @@ export class FunctionField extends Field {
         if (sortKey === undefined) {
             throw new Error(`"undefined" is not a valid sort key, from expression: "${line}"`);
         }
+        if (Number.isNaN(sortKey)) {
+            throw new Error(`"NaN (Not a Number)" is not a valid sort key, from expression: "${line}"`);
+        }
         return sortKey;
     }
 
