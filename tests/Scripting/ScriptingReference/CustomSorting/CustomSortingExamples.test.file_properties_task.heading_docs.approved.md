@@ -2,7 +2,7 @@
 
 
 ```javascript
-sort by function task.heading ? task.heading : ''
+sort by function task.heading
 ```
 
 - Like 'sort by heading'.
