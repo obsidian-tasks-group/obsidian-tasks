@@ -107,20 +107,9 @@ export class FunctionField extends Field {
      */
     public compareTaskSortKeys(valueA: any, valueB: any, line: string) {
         // Precondition: Both parameter values have satisfied constraints in validateTaskSortKey().
-
-        if (valueA === null && valueB === null) {
-            return 0;
-        }
-
-        // Null sorts before anything else.
-        // This is consistent with how null headings are handled.
-        // However, it differs from how compareByDate() works, so special-case code will be needed
-        // for that, later.
-        if (valueA === null && valueB !== null) {
-            return -1;
-        }
-        if (valueA !== null && valueB === null) {
-            return 1;
+        const resultIfNull = this.compareTaskSortKeysIfEitherIsNull(valueA, valueB);
+        if (resultIfNull !== undefined) {
+            return resultIfNull;
         }
 
         const valueAType = typeof valueA;
@@ -142,6 +131,25 @@ export class FunctionField extends Field {
             throw new Error(`Unable to determine sort order for expression '${line}'`);
         }
         return result;
+    }
+
+    private compareTaskSortKeysIfEitherIsNull(valueA: any, valueB: any) {
+        if (valueA === null && valueB === null) {
+            return 0;
+        }
+
+        // Null sorts before anything else.
+        // This is consistent with how null headings are handled.
+        // However, it differs from how compareByDate() works, so special-case code will be needed
+        // for that, later.
+        if (valueA === null && valueB !== null) {
+            return -1;
+        }
+        if (valueA !== null && valueB === null) {
+            return 1;
+        }
+
+        return undefined;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
