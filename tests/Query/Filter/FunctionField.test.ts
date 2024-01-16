@@ -137,21 +137,21 @@ describe('FunctionField - sorting', () => {
         describe('allowed sort key types', () => {
             it('should accept string sort key', () => {
                 const key = 'anything';
-                expect(Object.is(field.validateTaskSortKey(key, 'group by function "anything"'), key)).toEqual(true);
+                expect(Object.is(field.validateTaskSortKey(key), key)).toEqual(true);
             });
 
             it('should accept number sort key', () => {
-                expect(field.validateTaskSortKey(42, 'group by function 42')).toEqual(42);
-                expect(field.validateTaskSortKey(0.15634, 'group by function 0.15634')).toEqual(0.15634);
+                expect(field.validateTaskSortKey(42)).toEqual(42);
+                expect(field.validateTaskSortKey(0.15634)).toEqual(0.15634);
             });
 
             it('should accept boolean sort key', () => {
-                expect(field.validateTaskSortKey(true, 'group by function true')).toEqual(true);
-                expect(field.validateTaskSortKey(false, 'group by function false')).toEqual(false);
+                expect(field.validateTaskSortKey(true)).toEqual(true);
+                expect(field.validateTaskSortKey(false)).toEqual(false);
             });
 
             it('should accept null sort key', () => {
-                expect(Object.is(field.validateTaskSortKey(null, 'group by function null'), null)).toEqual(true);
+                expect(Object.is(field.validateTaskSortKey(null), null)).toEqual(true);
             });
         });
 
@@ -159,7 +159,7 @@ describe('FunctionField - sorting', () => {
             it('should forbid undefined sort key', () => {
                 const key = undefined;
                 const t = () => {
-                    field.validateTaskSortKey(key, 'group by function undefined');
+                    field.validateTaskSortKey(key);
                 };
                 expect(t).toThrow(Error);
                 expect(t).toThrowError('"undefined" is not a valid sort key');
@@ -168,7 +168,7 @@ describe('FunctionField - sorting', () => {
             it('should forbid NaN sort key', () => {
                 const key = NaN;
                 const t = () => {
-                    field.validateTaskSortKey(key, 'group by function NaN');
+                    field.validateTaskSortKey(key);
                 };
                 expect(t).toThrow(Error);
                 expect(t).toThrowError('"NaN (Not a Number)" is not a valid sort key');
@@ -177,7 +177,7 @@ describe('FunctionField - sorting', () => {
             it('should forbid a non-empty array sort key', () => {
                 const key = [17];
                 const t = () => {
-                    field.validateTaskSortKey(key, 'group by function [17]');
+                    field.validateTaskSortKey(key);
                 };
                 expect(t).toThrow(Error);
                 expect(t).toThrowError('"array" is not a valid sort key');
@@ -186,7 +186,7 @@ describe('FunctionField - sorting', () => {
             it('should forbid an empty array sort key', () => {
                 const key: number[] = [];
                 const t = () => {
-                    field.validateTaskSortKey(key, 'group by function []');
+                    field.validateTaskSortKey(key);
                 };
                 expect(t).toThrow(Error);
                 expect(t).toThrowError('"array" is not a valid sort key');
@@ -201,14 +201,14 @@ describe('FunctionField - sorting', () => {
         const BEFORE = -1;
         const AFTER = 1;
 
-        function checkAndCompareSortKeys(valueA: any, valueB: any, description: string) {
+        function checkAndCompareSortKeys(valueA: any, valueB: any, _description: string) {
             // A pre-condition of compareTaskSortKeys() is that the values satisfy validateTaskSortKey().
             // By calling validateTaskSortKey() here, we ensure that any test failures from
             // compareTaskSortKeys() are failing for the correct reason.
-            field.validateTaskSortKey(valueA, description);
-            field.validateTaskSortKey(valueB, description);
+            field.validateTaskSortKey(valueA);
+            field.validateTaskSortKey(valueB);
 
-            return field.compareTaskSortKeys(valueA, valueB, description);
+            return field.compareTaskSortKeys(valueA, valueB);
         }
 
         it('should sort null before any other valid values - except for Moment and TasksDate', () => {

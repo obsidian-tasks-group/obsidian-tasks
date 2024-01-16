@@ -73,9 +73,9 @@ export class FunctionField extends Field {
         }
         const comparator = (a: Task, b: Task) => {
             try {
-                const valueA = this.validateTaskSortKey(taskExpression.evaluate(a), line);
-                const valueB = this.validateTaskSortKey(taskExpression.evaluate(b), line);
-                return this.compareTaskSortKeys(valueA, valueB, line);
+                const valueA = this.validateTaskSortKey(taskExpression.evaluate(a));
+                const valueB = this.validateTaskSortKey(taskExpression.evaluate(b));
+                return this.compareTaskSortKeys(valueA, valueB);
             } catch (exception) {
                 if (exception instanceof Error) {
                     exception.message += ` from instruction "${line}"`;
@@ -86,7 +86,7 @@ export class FunctionField extends Field {
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
 
-    public validateTaskSortKey(sortKey: any, _line: string) {
+    public validateTaskSortKey(sortKey: any) {
         function throwSortKeyTypeError(sortKeyType: string) {
             throw new Error(`"${sortKeyType}" is not a valid sort key`);
         }
@@ -114,9 +114,8 @@ export class FunctionField extends Field {
      *
      * @param valueA - a value that satisfies {@link validateTaskSortKey}.
      * @param valueB - a value that satisfies {@link validateTaskSortKey}.
-     * @param line - the instruction line: used for error messages.
      */
-    public compareTaskSortKeys(valueA: any, valueB: any, _line: string) {
+    public compareTaskSortKeys(valueA: any, valueB: any) {
         // Precondition: Both parameter values have satisfied constraints in validateTaskSortKey().
 
         const valueAType = getValueType(valueA);
