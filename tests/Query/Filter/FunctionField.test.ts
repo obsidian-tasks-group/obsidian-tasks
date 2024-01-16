@@ -330,15 +330,8 @@ The error message was:
         });
 
         it('should give a meaningful error for unknown task field', () => {
-            const line = 'sort by function task.nonExistentField';
-            const query = new Query(line);
-            const task = fromLine({ line: '- [ ] stuff' });
-
-            // Act
-            const result = query.applyQueryToTasks([task, task]);
-
-            // Assert
-            expect(result.searchErrorMessage).toMatchInlineSnapshot(`
+            const searchErrorMessage = getQueryErrorMessage('sort by function task.nonExistentField');
+            expect(searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
                     "Error: "undefined" is not a valid sort key: while evaluating instruction 'sort by function task.nonExistentField'""
@@ -346,16 +339,8 @@ The error message was:
         });
 
         it('should give a meaningful error when sorting by arrays', () => {
-            // Arrange
-            const line = 'sort by function task.tags';
-            const query = new Query(line);
-            const task = fromLine({ line: '- [ ] stuff #tag1' });
-
-            // Act
-            const result = query.applyQueryToTasks([task, task]);
-
-            // Assert
-            expect(result.searchErrorMessage).toMatchInlineSnapshot(`
+            const searchErrorMessage = getQueryErrorMessage('sort by function task.tags');
+            expect(searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
                     "Error: "array" is not a valid sort key: while evaluating instruction 'sort by function task.tags'""
