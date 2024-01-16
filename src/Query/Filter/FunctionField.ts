@@ -80,17 +80,21 @@ export class FunctionField extends Field {
     }
 
     public validateTaskSortKey(sortKey: any, line: string) {
+        function throwSortKeyTypeError(sortKeyType: string) {
+            throw new Error(`"${sortKeyType}" is not a valid sort key, from instruction "${line}"`);
+        }
+
         if (sortKey === undefined) {
             const sortKeyType = 'undefined';
-            throw new Error(`"${sortKeyType}" is not a valid sort key, from instruction "${line}"`);
+            throwSortKeyTypeError(sortKeyType);
         }
         if (Number.isNaN(sortKey)) {
             const sortKeyType = 'NaN (Not a Number)';
-            throw new Error(`"${sortKeyType}" is not a valid sort key, from instruction "${line}"`);
+            throwSortKeyTypeError(sortKeyType);
         }
         if (Array.isArray(sortKey)) {
             const sortKeyType = 'array';
-            throw new Error(`"${sortKeyType}" is not a valid sort key, from instruction "${line}"`);
+            throwSortKeyTypeError(sortKeyType);
         }
         return sortKey;
     }
