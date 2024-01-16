@@ -6,9 +6,10 @@ import { DueDateField } from './Filter/DueDateField';
 import { PriorityField } from './Filter/PriorityField';
 import { PathField } from './Filter/PathField';
 import { UrgencyField } from './Filter/UrgencyField';
+import type { SearchInfo } from './SearchInfo';
 
 export class Sort {
-    public static by(sorters: Sorter[], tasks: Task[]) {
+    public static by(sorters: Sorter[], tasks: Task[], _searchInfo: SearchInfo) {
         const defaultComparators: Comparator[] = [
             new UrgencyField().comparator(),
             new StatusField().comparator(),
