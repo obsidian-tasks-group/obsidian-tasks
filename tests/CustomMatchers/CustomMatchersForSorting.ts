@@ -3,6 +3,7 @@ import { DateParser } from '../../src/Query/DateParser';
 import type { Sorter } from '../../src/Query/Sorter';
 import type { Task } from '../../src/Task';
 import { compareByDate } from '../../src/lib/DateTools';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 
 declare global {
     namespace jest {
@@ -38,7 +39,7 @@ expect.extend({
         expect(tasks.length).toEqual(2);
         const taskA = tasks[0];
         const taskB = tasks[1];
-        const actual = sorting.comparator(taskA, taskB);
+        const actual = sorting.comparator(taskA, taskB, new SearchInfo('dummy path.md', tasks));
 
         let pass;
         let expectedDesription: string;
