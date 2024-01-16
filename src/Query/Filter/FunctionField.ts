@@ -69,7 +69,7 @@ export class FunctionField extends Field {
         const expression = match[2];
         const taskExpression = new TaskExpression(expression);
         if (!taskExpression.isValid()) {
-            throw new Error(`${taskExpression.parseError}, from instruction: "${line}"`);
+            throw new Error(`${taskExpression.parseError}: while parsing instruction: '${line}'`);
         }
         const comparator = (a: Task, b: Task) => {
             try {
@@ -78,7 +78,7 @@ export class FunctionField extends Field {
                 return this.compareTaskSortKeys(valueA, valueB);
             } catch (exception) {
                 if (exception instanceof Error) {
-                    exception.message += ` from instruction "${line}"`;
+                    exception.message += `: while evaluating instruction '${line}'`;
                 }
                 throw exception;
             }
