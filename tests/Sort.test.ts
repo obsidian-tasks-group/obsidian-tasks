@@ -57,9 +57,7 @@ describe('Sort', () => {
         const five = fromLine({ line: '- [x] b 📅 1970-01-02', path: '3' });
         const six = fromLine({ line: '- [x] d 📅 1970-01-03', path: '2' });
         const expectedOrder = [one, two, three, four, five, six];
-        const sorters: Sorter[] = [];
-        const tasks = [six, five, one, four, two, three];
-        expect(sortBy(sorters, tasks)).toEqual(expectedOrder);
+        expect(sortBy([], [six, five, one, four, two, three])).toEqual(expectedOrder);
     });
 
     // Just a couple of tests to verify the handling of
