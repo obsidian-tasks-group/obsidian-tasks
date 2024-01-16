@@ -11,6 +11,16 @@ describe('getValueType', () => {
         expect(getValueType('stuff')).toEqual('string');
 
         expect(getValueType([])).toEqual('Array');
+        expect(getValueType(new Set([1, 2, 3]))).toEqual('Set');
+        expect(
+            getValueType(
+                new Map([
+                    [1, 'one'],
+                    [2, 'two'],
+                    [4, 'four'],
+                ]),
+            ),
+        ).toEqual('Map');
         expect(getValueType({})).toEqual('Object');
 
         expect(getValueType(undefined)).toEqual('undefined');
