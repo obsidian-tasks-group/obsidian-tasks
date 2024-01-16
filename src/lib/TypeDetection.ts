@@ -3,5 +3,9 @@
  * @param value
  */
 export function getValueType(value: any): string {
+    if (value === null) {
+        return 'null';
+    }
+
     return typeof value;
 }

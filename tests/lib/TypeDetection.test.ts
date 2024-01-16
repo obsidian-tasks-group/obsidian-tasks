@@ -11,7 +11,7 @@ describe('getValueType', () => {
         expect(getValueType({})).toEqual('object');
 
         expect(getValueType(undefined)).toEqual('undefined');
-        expect(getValueType(null)).toEqual('object');
+        expect(getValueType(null)).toEqual('null');
 
         expect(getValueType(new TasksDate(null))).toEqual('object');
         // TODO "function"
