@@ -22,6 +22,7 @@ describe('getValueType', () => {
         expect(squared(3)).toEqual(9);
         expect(getValueType(squared)).toEqual('function');
 
-        // TODO "symbol"
+        // https://www.typescriptlang.org/docs/handbook/symbols.html
+        expect(getValueType(Symbol('key'))).toEqual('symbol');
     });
 });
