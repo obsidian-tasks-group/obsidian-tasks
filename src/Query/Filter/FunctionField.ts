@@ -72,16 +72,23 @@ export class FunctionField extends Field {
             throw new Error(`${taskExpression.parseError}, from instruction: "${line}"`);
         }
         const comparator = (a: Task, b: Task) => {
-            const valueA = this.validateTaskSortKey(taskExpression.evaluate(a), line);
-            const valueB = this.validateTaskSortKey(taskExpression.evaluate(b), line);
-            return this.compareTaskSortKeys(valueA, valueB, line);
+            try {
+                const valueA = this.validateTaskSortKey(taskExpression.evaluate(a), line);
+                const valueB = this.validateTaskSortKey(taskExpression.evaluate(b), line);
+                return this.compareTaskSortKeys(valueA, valueB, line);
+            } catch (exception) {
+                if (exception instanceof Error) {
+                    exception.message += ` from instruction "${line}"`;
+                }
+                throw exception;
+            }
         };
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
 
-    public validateTaskSortKey(sortKey: any, line: string) {
+    public validateTaskSortKey(sortKey: any, _line: string) {
         function throwSortKeyTypeError(sortKeyType: string) {
-            throw new Error(`"${sortKeyType}" is not a valid sort key, from instruction "${line}"`);
+            throw new Error(`"${sortKeyType}" is not a valid sort key`);
         }
 
         if (sortKey === undefined) {
@@ -109,7 +116,7 @@ export class FunctionField extends Field {
      * @param valueB - a value that satisfies {@link validateTaskSortKey}.
      * @param line - the instruction line: used for error messages.
      */
-    public compareTaskSortKeys(valueA: any, valueB: any, line: string) {
+    public compareTaskSortKeys(valueA: any, valueB: any, _line: string) {
         // Precondition: Both parameter values have satisfied constraints in validateTaskSortKey().
 
         const valueAType = getValueType(valueA);
@@ -128,9 +135,7 @@ export class FunctionField extends Field {
         }
 
         if (valueAType !== valueBType) {
-            throw new Error(
-                `Unable to compare two different sort key types '${valueAType}' and '${valueBType}' order from instruction '${line}'`,
-            );
+            throw new Error(`Unable to compare two different sort key types '${valueAType}' and '${valueBType}' order`);
         }
 
         if (valueAType === 'string') {
@@ -145,9 +150,7 @@ export class FunctionField extends Field {
         // We use Number() to prevent implicit type conversion, by making the conversion explicit:
         const result = Number(valueA) - Number(valueB);
         if (isNaN(result)) {
-            throw new Error(
-                `Unable to determine sort order for sort key types '${valueAType}' and '${valueBType}' from instruction '${line}'`,
-            );
+            throw new Error(`Unable to determine sort order for sort key types '${valueAType}' and '${valueBType}'`);
         }
         return result;
     }

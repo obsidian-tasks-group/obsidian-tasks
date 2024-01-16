@@ -162,9 +162,7 @@ describe('FunctionField - sorting', () => {
                     field.validateTaskSortKey(key, 'group by function undefined');
                 };
                 expect(t).toThrow(Error);
-                expect(t).toThrowError(
-                    '"undefined" is not a valid sort key, from instruction "group by function undefined"',
-                );
+                expect(t).toThrowError('"undefined" is not a valid sort key');
             });
 
             it('should forbid NaN sort key', () => {
@@ -173,9 +171,7 @@ describe('FunctionField - sorting', () => {
                     field.validateTaskSortKey(key, 'group by function NaN');
                 };
                 expect(t).toThrow(Error);
-                expect(t).toThrowError(
-                    '"NaN (Not a Number)" is not a valid sort key, from instruction "group by function NaN"',
-                );
+                expect(t).toThrowError('"NaN (Not a Number)" is not a valid sort key');
             });
 
             it('should forbid a non-empty array sort key', () => {
@@ -184,7 +180,7 @@ describe('FunctionField - sorting', () => {
                     field.validateTaskSortKey(key, 'group by function [17]');
                 };
                 expect(t).toThrow(Error);
-                expect(t).toThrowError('"array" is not a valid sort key, from instruction "group by function [17]"');
+                expect(t).toThrowError('"array" is not a valid sort key');
             });
 
             it('should forbid an empty array sort key', () => {
@@ -193,7 +189,7 @@ describe('FunctionField - sorting', () => {
                     field.validateTaskSortKey(key, 'group by function []');
                 };
                 expect(t).toThrow(Error);
-                expect(t).toThrowError('"array" is not a valid sort key, from instruction "group by function []"');
+                expect(t).toThrowError('"array" is not a valid sort key');
             });
         });
     });
@@ -267,9 +263,7 @@ describe('FunctionField - sorting', () => {
                 checkAndCompareSortKeys(valueA, valueB, 'group by function something or other...');
             };
             expect(t).toThrow(Error);
-            expect(t).toThrowError(
-                "Unable to compare two different sort key types 'number' and 'string' order from instruction 'group by function something or other...'",
-            );
+            expect(t).toThrowError("Unable to compare two different sort key types 'number' and 'string' order");
         });
 
         it('should refuse to compare unrecognised type', () => {
@@ -279,9 +273,7 @@ describe('FunctionField - sorting', () => {
                 checkAndCompareSortKeys(taskA, taskB, 'two Task objects');
             };
             expect(t).toThrow(Error);
-            expect(t).toThrowError(
-                "Unable to determine sort order for sort key types 'Task' and 'Task' from instruction 'two Task objects'",
-            );
+            expect(t).toThrowError("Unable to determine sort order for sort key types 'Task' and 'Task'");
         });
     });
 
@@ -338,7 +330,7 @@ The error message was:
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "ReferenceError: hello is not defined""
+                    "ReferenceError: hello is not defined from instruction "sort by function hello"""
             `);
         });
 
@@ -354,7 +346,7 @@ The error message was:
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "Error: "undefined" is not a valid sort key, from instruction "sort by function task.nonExistentField"""
+                    "Error: "undefined" is not a valid sort key from instruction "sort by function task.nonExistentField"""
             `);
         });
 
@@ -371,7 +363,7 @@ The error message was:
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "Error: "array" is not a valid sort key, from instruction "sort by function task.tags"""
+                    "Error: "array" is not a valid sort key from instruction "sort by function task.tags"""
             `);
         });
     });
