@@ -326,7 +326,6 @@ The error message was:
             const result = query.applyQueryToTasks([task, task]);
 
             // Assert
-            // TODO It would be good to include the instruction line in this error message.
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
