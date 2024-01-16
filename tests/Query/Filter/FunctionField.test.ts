@@ -206,6 +206,12 @@ describe('FunctionField - sorting', () => {
         const AFTER = 1;
 
         function checkAndCompareSortKeys(valueA: any, valueB: any, description: string) {
+            // A pre-condition of compareTaskSortKeys() is that the values satisfy validateTaskSortKey().
+            // By calling validateTaskSortKey() here, we ensure that any test failures from
+            // compareTaskSortKeys() are failing for the correct reason.
+            field.validateTaskSortKey(valueA, description);
+            field.validateTaskSortKey(valueB, description);
+
             return field.compareTaskSortKeys(valueA, valueB, description);
         }
 
