@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { getValueType } from '../../src/lib/TypeDetection';
 import { TasksDate } from '../../src/Scripting/TasksDate';
 
@@ -26,6 +28,7 @@ describe('getValueType', () => {
         expect(getValueType(undefined)).toEqual('undefined');
         expect(getValueType(null)).toEqual('null');
 
+        expect(getValueType(moment('2021-06-20'))).toEqual('Moment');
         expect(getValueType(new TasksDate(null))).toEqual('TasksDate');
 
         const squared = (x: number) => x * x;
