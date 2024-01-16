@@ -7,13 +7,13 @@ describe('getValueType', () => {
         expect(getValueType(true)).toEqual('boolean');
         expect(getValueType('stuff')).toEqual('string');
 
-        expect(getValueType([])).toEqual('object');
-        expect(getValueType({})).toEqual('object');
+        expect(getValueType([])).toEqual('Array');
+        expect(getValueType({})).toEqual('Object');
 
         expect(getValueType(undefined)).toEqual('undefined');
         expect(getValueType(null)).toEqual('null');
 
-        expect(getValueType(new TasksDate(null))).toEqual('object');
+        expect(getValueType(new TasksDate(null))).toEqual('TasksDate');
         // TODO "function"
         // TODO "symbol"
         // TODO "bigint"

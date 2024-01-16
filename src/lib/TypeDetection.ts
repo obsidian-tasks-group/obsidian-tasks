@@ -7,5 +7,10 @@ export function getValueType(value: any): string {
         return 'null';
     }
 
-    return typeof value;
+    const type = typeof value;
+    if (type === 'object') {
+        return value.constructor.name;
+    }
+
+    return type;
 }
