@@ -364,13 +364,13 @@ describe('Sort by tags', () => {
 
         it('should create a default comparator, sorting by first tag', () => {
             const comparator = tagsField.comparator();
-            expect(comparator(tags_a_d, tags_a_c)).toBeLessThan(0);
+            expect(comparator(tags_a_d, tags_a_c, SearchInfo.fromAllTasks([tags_a_d, tags_a_c]))).toBeLessThan(0);
         });
 
         it('should parse a valid line with default tag number', () => {
             const sorter = tagsField.createSorterFromLine('sort by tag');
             expect(sorter?.property).toEqual('tag');
-            expect(sorter?.comparator(tag_a, tag_b)).toBeLessThan(0);
+            expect(sorter?.comparator(tag_a, tag_b, SearchInfo.fromAllTasks([tag_a, tag_b]))).toBeLessThan(0);
             expectTaskComparesBefore(sorter!, tag_a, tag_b);
         });
 
