@@ -6,6 +6,8 @@ import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/Task
 import type { QueryContext } from '../../Scripting/QueryContext';
 import type { SearchInfo } from '../SearchInfo';
 import { Sorter } from '../Sorter';
+import { compareByDate } from '../../lib/DateTools';
+import { getValueType } from '../../lib/TypeDetection';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -67,26 +69,125 @@ export class FunctionField extends Field {
         const expression = match[2];
         const taskExpression = new TaskExpression(expression);
         if (!taskExpression.isValid()) {
-            // TODO Figure out error handling
-            // return FilterOrErrorMessage.fromError(line, taskExpression.parseError!);
-            return null;
+            // This does not need to report the line, and that it was parsing, as calling code
+            // will add that information.
+            throw new Error(taskExpression.parseError);
         }
         const comparator = (a: Task, b: Task) => {
-            // If the result is negative, a is sorted before b.
-            // If the result is positive, b is sorted before a.
-            // If the result is 0, no changes are done with the sort order of the two values.
-
-            const valueA = taskExpression.evaluate(a);
-            const valueB = taskExpression.evaluate(b);
-
-            if (typeof valueA === 'string') {
-                return valueA.localeCompare(valueB, undefined, { numeric: true });
+            try {
+                const valueA = this.validateTaskSortKey(taskExpression.evaluate(a));
+                const valueB = this.validateTaskSortKey(taskExpression.evaluate(b));
+                return this.compareTaskSortKeys(valueA, valueB);
+            } catch (exception) {
+                if (exception instanceof Error) {
+                    exception.message += `: while evaluating instruction '${line}'`;
+                }
+                throw exception;
             }
-
-            // Treat as numeric
-            return valueA - valueB;
         };
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
+    }
+
+    public validateTaskSortKey(sortKey: any) {
+        function throwSortKeyTypeError(sortKeyType: string) {
+            throw new Error(`"${sortKeyType}" is not a valid sort key`);
+        }
+
+        if (sortKey === undefined) {
+            throwSortKeyTypeError('undefined');
+        }
+        if (Number.isNaN(sortKey)) {
+            throwSortKeyTypeError('NaN (Not a Number)');
+        }
+        if (Array.isArray(sortKey)) {
+            throwSortKeyTypeError('array');
+        }
+        return sortKey;
+    }
+
+    /**
+     * A comparator function for sorting two values
+     *
+     * **IMPORTANT**: Both values must already have been checked by {@link validateTaskSortKey}.
+     *
+     * - If the result is negative, a is sorted before b.
+     * - If the result is positive, b is sorted before a.
+     * - If the result is 0, no changes are done with the sort order of the two values.
+     *
+     * @param valueA - a value that satisfies {@link validateTaskSortKey}.
+     * @param valueB - a value that satisfies {@link validateTaskSortKey}.
+     */
+    public compareTaskSortKeys(valueA: any, valueB: any) {
+        // Precondition: Both parameter values have satisfied constraints in validateTaskSortKey().
+
+        const valueAType = getValueType(valueA);
+        const valueBType = getValueType(valueB);
+
+        // Sort Task.dueDate and similar in same order as 'sort by due' etc: null values come after Moment values:
+        const resultIfMoment = this.compareTaskSortKeysIfOptionalMoment(valueA, valueB, valueAType, valueBType);
+        if (resultIfMoment !== undefined) {
+            return resultIfMoment;
+        }
+
+        // Otherwise, any null values come after non-null values
+        const resultIfNull = this.compareTaskSortKeysIfEitherIsNull(valueA, valueB);
+        if (resultIfNull !== undefined) {
+            return resultIfNull;
+        }
+
+        if (valueAType !== valueBType) {
+            throw new Error(`Unable to compare two different sort key types '${valueAType}' and '${valueBType}' order`);
+        }
+
+        if (valueAType === 'string') {
+            return valueA.localeCompare(valueB, undefined, { numeric: true });
+        }
+
+        if (valueAType === 'TasksDate') {
+            return compareByDate(valueA.moment, valueB.moment);
+        }
+
+        // Treat as numeric, so it works well with booleans
+        // We use Number() to prevent implicit type conversion, by making the conversion explicit:
+        const result = Number(valueA) - Number(valueB);
+        if (isNaN(result)) {
+            throw new Error(`Unable to determine sort order for sort key types '${valueAType}' and '${valueBType}'`);
+        }
+        return result;
+    }
+
+    private compareTaskSortKeysIfOptionalMoment(valueA: any, valueB: any, valueAType: string, valueBType: string) {
+        const aIsMoment = valueAType === 'Moment';
+        const bIsMoment = valueBType === 'Moment';
+
+        const bothAreMoment = aIsMoment && bIsMoment;
+        const aIsMomentBIsNull = aIsMoment && valueB === null;
+        const bIsMomentAIsNull = bIsMoment && valueA === null;
+
+        if (bothAreMoment || aIsMomentBIsNull || bIsMomentAIsNull) {
+            return compareByDate(valueA, valueB);
+        }
+
+        return undefined;
+    }
+
+    private compareTaskSortKeysIfEitherIsNull(valueA: any, valueB: any) {
+        if (valueA === null && valueB === null) {
+            return 0;
+        }
+
+        // Null sorts before anything else.
+        // This is consistent with how null headings are handled.
+        // However, it differs from how compareByDate() works, so special-case code will be needed
+        // for that, later.
+        if (valueA === null && valueB !== null) {
+            return -1;
+        }
+        if (valueA !== null && valueB === null) {
+            return 1;
+        }
+
+        return undefined;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

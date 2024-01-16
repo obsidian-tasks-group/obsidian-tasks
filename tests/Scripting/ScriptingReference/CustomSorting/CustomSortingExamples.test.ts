@@ -149,7 +149,17 @@ describe('file properties', () => {
             tasks,
         ],
 
-        ['task.heading', [['sort by function task.heading', "Like 'sort by heading'"]], tasks],
+        [
+            'task.heading',
+            [
+                [
+                    'sort by function task.heading',
+                    "Like 'sort by heading'",
+                    'Any tasks with no preceding heading have `task.heading` values of `null`, and these tasks sort before any tasks with headings.',
+                ],
+            ],
+            tasks,
+        ],
     ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
