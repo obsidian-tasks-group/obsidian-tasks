@@ -62,39 +62,42 @@ export class Query implements IQuery {
                 // There was an error expanding placeholders.
                 return;
             }
-
-            switch (true) {
-                case this.shortModeRegexp.test(line):
-                    this._queryLayoutOptions.shortMode = true;
-                    break;
-                case this.fullModeRegexp.test(line):
-                    this._queryLayoutOptions.shortMode = false;
-                    break;
-                case this.explainQueryRegexp.test(line):
-                    this._queryLayoutOptions.explainQuery = true;
-                    break;
-                case this.ignoreGlobalQueryRegexp.test(line):
-                    this._ignoreGlobalQuery = true;
-                    break;
-                case this.limitRegexp.test(line):
-                    this.parseLimit(line);
-                    break;
-                case this.parseSortBy(line):
-                    break;
-                case this.parseGroupBy(line):
-                    break;
-                case this.hideOptionsRegexp.test(line):
-                    this.parseHideOptions(line);
-                    break;
-                case this.commentRegexp.test(line):
-                    // Comment lines are ignored
-                    break;
-                case this.parseFilter(line):
-                    break;
-                default:
-                    this.setError('do not understand query', line);
-            }
+            this.parseLine(line);
         });
+    }
+
+    private parseLine(line: string) {
+        switch (true) {
+            case this.shortModeRegexp.test(line):
+                this._queryLayoutOptions.shortMode = true;
+                break;
+            case this.fullModeRegexp.test(line):
+                this._queryLayoutOptions.shortMode = false;
+                break;
+            case this.explainQueryRegexp.test(line):
+                this._queryLayoutOptions.explainQuery = true;
+                break;
+            case this.ignoreGlobalQueryRegexp.test(line):
+                this._ignoreGlobalQuery = true;
+                break;
+            case this.limitRegexp.test(line):
+                this.parseLimit(line);
+                break;
+            case this.parseSortBy(line):
+                break;
+            case this.parseGroupBy(line):
+                break;
+            case this.hideOptionsRegexp.test(line):
+                this.parseHideOptions(line);
+                break;
+            case this.commentRegexp.test(line):
+                // Comment lines are ignored
+                break;
+            case this.parseFilter(line):
+                break;
+            default:
+                this.setError('do not understand query', line);
+        }
     }
 
     private formatQueryForLogging() {
