@@ -17,7 +17,11 @@ describe('getValueType', () => {
         expect(getValueType(null)).toEqual('null');
 
         expect(getValueType(new TasksDate(null))).toEqual('TasksDate');
-        // TODO "function"
+
+        const squared = (x: number) => x * x;
+        expect(squared(3)).toEqual(9);
+        expect(getValueType(squared)).toEqual('function');
+
         // TODO "symbol"
     });
 });
