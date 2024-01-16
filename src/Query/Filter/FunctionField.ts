@@ -113,13 +113,9 @@ export class FunctionField extends Field {
         const valueAType = getValueType(valueA);
         const valueBType = getValueType(valueB);
 
-        const aIsMoment = valueAType === 'Moment';
-        const bIsMoment = valueBType === 'Moment';
-        const bothAreMoment = aIsMoment && bIsMoment;
-        const aIsMomentBIsNull = aIsMoment && valueB === null;
-        const bIsMomentAIsNull = bIsMoment && valueA === null;
-        if (bothAreMoment || aIsMomentBIsNull || bIsMomentAIsNull) {
-            return compareByDate(valueA, valueB);
+        const resultIfMoment = this.compareTaskSortKeysIfOptionalMoment(valueA, valueB, valueAType, valueBType);
+        if (resultIfMoment !== undefined) {
+            return resultIfMoment;
         }
 
         const resultIfNull = this.compareTaskSortKeysIfEitherIsNull(valueA, valueB);
@@ -148,6 +144,21 @@ export class FunctionField extends Field {
             throw new Error(`Unable to determine sort order for expression '${line}'`);
         }
         return result;
+    }
+
+    private compareTaskSortKeysIfOptionalMoment(valueA: any, valueB: any, valueAType: string, valueBType: string) {
+        const aIsMoment = valueAType === 'Moment';
+        const bIsMoment = valueBType === 'Moment';
+
+        const bothAreMoment = aIsMoment && bIsMoment;
+        const aIsMomentBIsNull = aIsMoment && valueB === null;
+        const bIsMomentAIsNull = bIsMoment && valueA === null;
+
+        if (bothAreMoment || aIsMomentBIsNull || bIsMomentAIsNull) {
+            return compareByDate(valueA, valueB);
+        }
+
+        return undefined;
     }
 
     private compareTaskSortKeysIfEitherIsNull(valueA: any, valueB: any) {
