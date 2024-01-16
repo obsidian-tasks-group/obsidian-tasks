@@ -113,11 +113,13 @@ export class FunctionField extends Field {
         const valueAType = getValueType(valueA);
         const valueBType = getValueType(valueB);
 
+        // Sort Task.dueDate and similar in same order as 'sort by due' etc: null values come after Moment values:
         const resultIfMoment = this.compareTaskSortKeysIfOptionalMoment(valueA, valueB, valueAType, valueBType);
         if (resultIfMoment !== undefined) {
             return resultIfMoment;
         }
 
+        // Otherwise, any null values come after non-null values
         const resultIfNull = this.compareTaskSortKeysIfEitherIsNull(valueA, valueB);
         if (resultIfNull !== undefined) {
             return resultIfNull;
