@@ -261,6 +261,18 @@ describe('FunctionField - sorting', () => {
                 "Unable to compare two different types: 'number' and 'string' order for expression 'group by function something or other...'",
             );
         });
+
+        it('should refuse to compare unrecognised type', () => {
+            const taskA = new TaskBuilder().description('A').build();
+            const taskB = new TaskBuilder().description('B').build();
+            const t = () => {
+                field.compareTaskSortKeys(taskA, taskB, 'two Task objects');
+            };
+            expect(t).toThrow(Error);
+            expect(t).toThrowError(
+                "Unable to determine sort order for sort key types 'Task' and 'Task' from expression 'two Task objects'",
+            );
+        });
     });
 
     describe('error-handling', () => {
