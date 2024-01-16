@@ -217,10 +217,7 @@ describe('FunctionField - sorting', () => {
 
         it('should sort null before any other valid values', () => {
             // Note: once we test sorting by date, we will need extra tests here. See compareByDate()
-            const valueA = null;
-            const valueB = null;
-            const description = 'two nulls';
-            expect(checkAndCompareSortKeys(valueA, valueB, description)).toEqual(SAME);
+            expect(checkAndCompareSortKeys(null, null, 'two nulls')).toEqual(SAME);
             expect(checkAndCompareSortKeys(null, 'a string', 'null and "a string"')).toEqual(BEFORE);
             expect(checkAndCompareSortKeys(false, null, 'false and null')).toEqual(AFTER);
         });
