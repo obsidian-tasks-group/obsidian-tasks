@@ -69,9 +69,7 @@ export class FunctionField extends Field {
         const expression = match[2];
         const taskExpression = new TaskExpression(expression);
         if (!taskExpression.isValid()) {
-            // TODO Figure out error handling
-            // return FilterOrErrorMessage.fromError(line, taskExpression.parseError!);
-            return null;
+            throw new Error(`${taskExpression.parseError}, from instruction: "${line}"`);
         }
         const comparator = (a: Task, b: Task) => {
             const valueA = this.validateTaskSortKey(taskExpression.evaluate(a), line);
