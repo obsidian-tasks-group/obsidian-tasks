@@ -239,6 +239,17 @@ describe('FunctionField - sorting', () => {
             expect(field.compareTaskSortKeys(todayDate, undated, 'today and undated')).toEqual(BEFORE);
         });
 
+        it('should sort Moment objects in ascending date order, before any undated objects', () => {
+            expect(field.compareTaskSortKeys(todayDate.moment, yesterdayDate.moment, 'today and yesterday')).toEqual(
+                AFTER,
+            );
+            expect(field.compareTaskSortKeys(todayDate.moment, tomorrowDate.moment, 'today and tomorrow')).toEqual(
+                BEFORE,
+            );
+            expect(field.compareTaskSortKeys(todayDate.moment, undated.moment, 'today and undated')).toEqual(BEFORE);
+            expect(field.compareTaskSortKeys(undated.moment, todayDate.moment, 'undated and today')).toEqual(AFTER);
+        });
+
         it('should refuse to compare values of different types (other than null)', () => {
             const valueA = 42;
             const valueB = '97';

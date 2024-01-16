@@ -109,13 +109,24 @@ export class FunctionField extends Field {
      */
     public compareTaskSortKeys(valueA: any, valueB: any, line: string) {
         // Precondition: Both parameter values have satisfied constraints in validateTaskSortKey().
+
+        const valueAType = getValueType(valueA);
+        const valueBType = getValueType(valueB);
+
+        const aIsMoment = valueAType === 'Moment';
+        const bIsMoment = valueBType === 'Moment';
+        const bothAreMoment = aIsMoment && bIsMoment;
+        const aIsMomentBIsNull = aIsMoment && valueB === null;
+        const bIsMomentAIsNull = bIsMoment && valueA === null;
+        if (bothAreMoment || aIsMomentBIsNull || bIsMomentAIsNull) {
+            return compareByDate(valueA, valueB);
+        }
+
         const resultIfNull = this.compareTaskSortKeysIfEitherIsNull(valueA, valueB);
         if (resultIfNull !== undefined) {
             return resultIfNull;
         }
 
-        const valueAType = getValueType(valueA);
-        const valueBType = getValueType(valueB);
         if (valueAType !== valueBType) {
             throw new Error(
                 `Unable to compare two different types: '${valueAType}' and '${valueBType}' order for expression '${line}'`,
