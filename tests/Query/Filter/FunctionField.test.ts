@@ -205,7 +205,7 @@ describe('FunctionField - sorting', () => {
         const BEFORE = -1;
         const AFTER = 1;
 
-        function checkAndCompareSortKeys(valueA: null, valueB: null, description: string) {
+        function checkAndCompareSortKeys(valueA: any, valueB: any, description: string) {
             return field.compareTaskSortKeys(valueA, valueB, description);
         }
 
@@ -215,53 +215,53 @@ describe('FunctionField - sorting', () => {
             const valueB = null;
             const description = 'two nulls';
             expect(checkAndCompareSortKeys(valueA, valueB, description)).toEqual(SAME);
-            expect(field.compareTaskSortKeys(null, 'a string', 'null and "a string"')).toEqual(BEFORE);
-            expect(field.compareTaskSortKeys(false, null, 'false and null')).toEqual(AFTER);
+            expect(checkAndCompareSortKeys(null, 'a string', 'null and "a string"')).toEqual(BEFORE);
+            expect(checkAndCompareSortKeys(false, null, 'false and null')).toEqual(AFTER);
         });
 
         it('should sort numbers in ascending order', () => {
-            expect(field.compareTaskSortKeys(1, 1, '1 1')).toEqual(SAME);
+            expect(checkAndCompareSortKeys(1, 1, '1 1')).toEqual(SAME);
             // number comparison is implementing with subtraction of the two values,
             // so we cannot just check for values -1 pr +1.
-            expect(field.compareTaskSortKeys(42, 47, '42 and 47')).toBeLessThan(0);
-            expect(field.compareTaskSortKeys(3.15634, 1.535436, '3.15634 and 1.535436')).toBeGreaterThan(0);
+            expect(checkAndCompareSortKeys(42, 47, '42 and 47')).toBeLessThan(0);
+            expect(checkAndCompareSortKeys(3.15634, 1.535436, '3.15634 and 1.535436')).toBeGreaterThan(0);
         });
 
         it('should sort false boolean before true', () => {
-            expect(field.compareTaskSortKeys(1, 1, '1 1')).toEqual(SAME);
-            expect(field.compareTaskSortKeys(false, true, 'false and true')).toEqual(BEFORE);
-            expect(field.compareTaskSortKeys(true, false, 'true and false')).toEqual(AFTER);
+            expect(checkAndCompareSortKeys(1, 1, '1 1')).toEqual(SAME);
+            expect(checkAndCompareSortKeys(false, true, 'false and true')).toEqual(BEFORE);
+            expect(checkAndCompareSortKeys(true, false, 'true and false')).toEqual(AFTER);
         });
 
         it('should sort strings case-sensitively and be number-aware', () => {
-            expect(field.compareTaskSortKeys('9', '10', 'true and false')).toEqual(BEFORE);
-            expect(field.compareTaskSortKeys('ABCDE', 'abcde', 'ABCDE and abcde')).toEqual(AFTER);
+            expect(checkAndCompareSortKeys('9', '10', 'true and false')).toEqual(BEFORE);
+            expect(checkAndCompareSortKeys('ABCDE', 'abcde', 'ABCDE and abcde')).toEqual(AFTER);
         });
 
         // Note: Arrays are rejected at the validateTaskSortKey() stage.
 
         it('should sort TaskDate objects in ascending date order, before any undated objects', () => {
-            expect(field.compareTaskSortKeys(todayDate, yesterdayDate, 'today and yesterday')).toEqual(AFTER);
-            expect(field.compareTaskSortKeys(todayDate, tomorrowDate, 'today and tomorrow')).toEqual(BEFORE);
-            expect(field.compareTaskSortKeys(todayDate, undated, 'today and undated')).toEqual(BEFORE);
+            expect(checkAndCompareSortKeys(todayDate, yesterdayDate, 'today and yesterday')).toEqual(AFTER);
+            expect(checkAndCompareSortKeys(todayDate, tomorrowDate, 'today and tomorrow')).toEqual(BEFORE);
+            expect(checkAndCompareSortKeys(todayDate, undated, 'today and undated')).toEqual(BEFORE);
         });
 
         it('should sort Moment objects in ascending date order, before any undated objects', () => {
-            expect(field.compareTaskSortKeys(todayDate.moment, yesterdayDate.moment, 'today and yesterday')).toEqual(
+            expect(checkAndCompareSortKeys(todayDate.moment, yesterdayDate.moment, 'today and yesterday')).toEqual(
                 AFTER,
             );
-            expect(field.compareTaskSortKeys(todayDate.moment, tomorrowDate.moment, 'today and tomorrow')).toEqual(
+            expect(checkAndCompareSortKeys(todayDate.moment, tomorrowDate.moment, 'today and tomorrow')).toEqual(
                 BEFORE,
             );
-            expect(field.compareTaskSortKeys(todayDate.moment, undated.moment, 'today and undated')).toEqual(BEFORE);
-            expect(field.compareTaskSortKeys(undated.moment, todayDate.moment, 'undated and today')).toEqual(AFTER);
+            expect(checkAndCompareSortKeys(todayDate.moment, undated.moment, 'today and undated')).toEqual(BEFORE);
+            expect(checkAndCompareSortKeys(undated.moment, todayDate.moment, 'undated and today')).toEqual(AFTER);
         });
 
         it('should refuse to compare values of different types (other than null)', () => {
             const valueA = 42;
             const valueB = '97';
             const t = () => {
-                field.compareTaskSortKeys(valueA, valueB, 'group by function something or other...');
+                checkAndCompareSortKeys(valueA, valueB, 'group by function something or other...');
             };
             expect(t).toThrow(Error);
             expect(t).toThrowError(
@@ -273,7 +273,7 @@ describe('FunctionField - sorting', () => {
             const taskA = new TaskBuilder().description('A').build();
             const taskB = new TaskBuilder().description('B').build();
             const t = () => {
-                field.compareTaskSortKeys(taskA, taskB, 'two Task objects');
+                checkAndCompareSortKeys(taskA, taskB, 'two Task objects');
             };
             expect(t).toThrow(Error);
             expect(t).toThrowError(
