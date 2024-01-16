@@ -15,6 +15,10 @@ import { PathField } from '../src/Query/Filter/PathField';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
+function sortBy(sorters: Sorter[], tasks: Task[]) {
+    return Sort.by(sorters, tasks);
+}
+
 describe('Sort', () => {
     it('constructs Sorting both ways from Comparator function', () => {
         const comparator: Comparator = (a: Task, b: Task) => {
@@ -54,7 +58,9 @@ describe('Sort', () => {
         const five = fromLine({ line: '- [x] b 📅 1970-01-02', path: '3' });
         const six = fromLine({ line: '- [x] d 📅 1970-01-03', path: '2' });
         const expectedOrder = [one, two, three, four, five, six];
-        expect(Sort.by([], [six, five, one, four, two, three])).toEqual(expectedOrder);
+        const sorters: Sorter[] = [];
+        const tasks = [six, five, one, four, two, three];
+        expect(sortBy(sorters, tasks)).toEqual(expectedOrder);
     });
 
     // Just a couple of tests to verify the handling of
