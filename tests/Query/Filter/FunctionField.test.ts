@@ -163,7 +163,7 @@ describe('FunctionField - sorting', () => {
                 };
                 expect(t).toThrow(Error);
                 expect(t).toThrowError(
-                    '"undefined" is not a valid sort key, from expression: "group by function undefined"',
+                    '"undefined" is not a valid sort key, from instruction "group by function undefined"',
                 );
             });
 
@@ -174,7 +174,7 @@ describe('FunctionField - sorting', () => {
                 };
                 expect(t).toThrow(Error);
                 expect(t).toThrowError(
-                    '"NaN (Not a Number)" is not a valid sort key, from expression: "group by function NaN"',
+                    '"NaN (Not a Number)" is not a valid sort key, from instruction "group by function NaN"',
                 );
             });
 
@@ -184,7 +184,7 @@ describe('FunctionField - sorting', () => {
                     field.validateTaskSortKey(key, 'group by function [17]');
                 };
                 expect(t).toThrow(Error);
-                expect(t).toThrowError('"array" is not a valid sort key, from expression: "group by function [17]"');
+                expect(t).toThrowError('"array" is not a valid sort key, from instruction "group by function [17]"');
             });
 
             it('should forbid an empty array sort key', () => {
@@ -193,7 +193,7 @@ describe('FunctionField - sorting', () => {
                     field.validateTaskSortKey(key, 'group by function []');
                 };
                 expect(t).toThrow(Error);
-                expect(t).toThrowError('"array" is not a valid sort key, from expression: "group by function []"');
+                expect(t).toThrowError('"array" is not a valid sort key, from instruction "group by function []"');
             });
         });
     });
@@ -268,7 +268,7 @@ describe('FunctionField - sorting', () => {
             };
             expect(t).toThrow(Error);
             expect(t).toThrowError(
-                "Unable to compare two different types: 'number' and 'string' order for expression 'group by function something or other...'",
+                "Unable to compare two different sort key types 'number' and 'string' order from instruction 'group by function something or other...'",
             );
         });
 
@@ -280,7 +280,7 @@ describe('FunctionField - sorting', () => {
             };
             expect(t).toThrow(Error);
             expect(t).toThrowError(
-                "Unable to determine sort order for sort key types 'Task' and 'Task' from expression 'two Task objects'",
+                "Unable to determine sort order for sort key types 'Task' and 'Task' from instruction 'two Task objects'",
             );
         });
     });
@@ -354,7 +354,7 @@ The error message was:
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "Error: "undefined" is not a valid sort key, from expression: "sort by function task.nonExistentField"""
+                    "Error: "undefined" is not a valid sort key, from instruction "sort by function task.nonExistentField"""
             `);
         });
 
@@ -371,7 +371,7 @@ The error message was:
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "Error: "array" is not a valid sort key, from expression: "sort by function task.tags"""
+                    "Error: "array" is not a valid sort key, from instruction "sort by function task.tags"""
             `);
         });
     });

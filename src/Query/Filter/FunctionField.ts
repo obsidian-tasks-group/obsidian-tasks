@@ -81,13 +81,13 @@ export class FunctionField extends Field {
 
     public validateTaskSortKey(sortKey: any, line: string) {
         if (sortKey === undefined) {
-            throw new Error(`"undefined" is not a valid sort key, from expression: "${line}"`);
+            throw new Error(`"undefined" is not a valid sort key, from instruction "${line}"`);
         }
         if (Number.isNaN(sortKey)) {
-            throw new Error(`"NaN (Not a Number)" is not a valid sort key, from expression: "${line}"`);
+            throw new Error(`"NaN (Not a Number)" is not a valid sort key, from instruction "${line}"`);
         }
         if (Array.isArray(sortKey)) {
-            throw new Error(`"array" is not a valid sort key, from expression: "${line}"`);
+            throw new Error(`"array" is not a valid sort key, from instruction "${line}"`);
         }
         return sortKey;
     }
@@ -125,7 +125,7 @@ export class FunctionField extends Field {
 
         if (valueAType !== valueBType) {
             throw new Error(
-                `Unable to compare two different types: '${valueAType}' and '${valueBType}' order for expression '${line}'`,
+                `Unable to compare two different sort key types '${valueAType}' and '${valueBType}' order from instruction '${line}'`,
             );
         }
 
@@ -142,7 +142,7 @@ export class FunctionField extends Field {
         const result = Number(valueA) - Number(valueB);
         if (isNaN(result)) {
             throw new Error(
-                `Unable to determine sort order for sort key types '${valueAType}' and '${valueBType}' from expression '${line}'`,
+                `Unable to determine sort order for sort key types '${valueAType}' and '${valueBType}' from instruction '${line}'`,
             );
         }
         return result;
