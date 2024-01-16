@@ -276,6 +276,14 @@ describe('FunctionField - sorting', () => {
     describe('error-handling', () => {
         const field = new FunctionField();
 
+        function getQueryErrorMessage(line: string) {
+            const query = new Query(line);
+            const task = fromLine({ line: '- [ ] stuff' });
+
+            const result = query.applyQueryToTasks([task, task]);
+            return result.searchErrorMessage;
+        }
+
         it('should throw in comparator()', () => {
             // It's not possible to create a Comparator without a line,
             // so comparator() method needs to throw and report it cannot work.
@@ -313,16 +321,8 @@ The error message was:
         });
 
         it('should give a meaningful error for invalid syntax', () => {
-            // Arrange
-            const line = 'sort by function hello';
-            const query = new Query(line);
-            const task = fromLine({ line: '- [ ] stuff' });
-
-            // Act
-            const result = query.applyQueryToTasks([task, task]);
-
-            // Assert
-            expect(result.searchErrorMessage).toMatchInlineSnapshot(`
+            const searchErrorMessage = getQueryErrorMessage('sort by function hello');
+            expect(searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
                     "ReferenceError: hello is not defined: while evaluating instruction 'sort by function hello'""
