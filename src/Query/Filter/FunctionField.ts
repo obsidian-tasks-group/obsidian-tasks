@@ -69,7 +69,9 @@ export class FunctionField extends Field {
         const expression = match[2];
         const taskExpression = new TaskExpression(expression);
         if (!taskExpression.isValid()) {
-            throw new Error(`${taskExpression.parseError}: while parsing instruction: '${line}'`);
+            // This does not need to report the line, and that it was parsing, as calling code
+            // will add that information.
+            throw new Error(taskExpression.parseError);
         }
         const comparator = (a: Task, b: Task) => {
             try {
