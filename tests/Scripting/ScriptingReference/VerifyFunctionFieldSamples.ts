@@ -130,7 +130,7 @@ export function verifyFunctionFieldSortSamplesOnTasks(
         const sorter = new FunctionField().createSorterFromLine(expandedInstruction);
         expect(sorter).not.toBeNull();
 
-        const tasksSorted = Sort.by([sorter!], tasks);
+        const tasksSorted = Sort.by([sorter!], tasks, new SearchInfo(path, tasks));
         return formatQueryAndResultsForApproving(instruction, comment, toLines(tasksSorted));
     });
 }

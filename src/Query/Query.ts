@@ -250,7 +250,7 @@ Problem line: "${line}"`;
             });
 
             const { debugSettings } = getSettings();
-            const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks);
+            const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks, searchInfo);
             const tasksSortedLimited = tasksSorted.slice(0, this.limit);
 
             const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited, searchInfo);
