@@ -11,6 +11,7 @@ import type { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { PathField } from '../src/Query/Filter/PathField';
+import { SearchInfo } from '../src/Query/SearchInfo';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { sortBy } from './TestingTools/SortingTestHelpers';
@@ -29,20 +30,22 @@ describe('Sort', () => {
         const short = new TaskBuilder().description('short').build();
         const long = new TaskBuilder().description('longer description').build();
 
+        const searchInfo = SearchInfo.fromAllTasks([short, long]);
+
         // Normal way round
         {
             const sortByDescriptionLength = new Sorter('sort by description length', 'junk', comparator, false);
-            expect(sortByDescriptionLength.comparator(short, long)).toEqual(1);
-            expect(sortByDescriptionLength.comparator(short, short)).toEqual(0);
-            expect(sortByDescriptionLength.comparator(long, short)).toEqual(-1);
+            expect(sortByDescriptionLength.comparator(short, long, searchInfo)).toEqual(1);
+            expect(sortByDescriptionLength.comparator(short, short, searchInfo)).toEqual(0);
+            expect(sortByDescriptionLength.comparator(long, short, searchInfo)).toEqual(-1);
         }
 
         // Reversed
         {
             const sortByDescriptionLength = new Sorter('sort by description length reverse', 'junk', comparator, true);
-            expect(sortByDescriptionLength.comparator(short, long)).toEqual(-1);
-            expect(sortByDescriptionLength.comparator(short, short)).toEqual(-0);
-            expect(sortByDescriptionLength.comparator(long, short)).toEqual(1);
+            expect(sortByDescriptionLength.comparator(short, long, searchInfo)).toEqual(-1);
+            expect(sortByDescriptionLength.comparator(short, short, searchInfo)).toEqual(-0);
+            expect(sortByDescriptionLength.comparator(long, short, searchInfo)).toEqual(1);
         }
     });
 

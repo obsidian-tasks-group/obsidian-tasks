@@ -1190,9 +1190,11 @@ describe('Query', () => {
             const query = new Query('sort by status reverse');
             const sorter = query.sorting[0];
 
-            expect(sorter!.comparator(todoTask, doneTask)).toEqual(1);
-            expect(sorter!.comparator(doneTask, doneTask)).toEqual(-0); // Note the minus sign. It's a consequence of
-            expect(sorter!.comparator(doneTask, todoTask)).toEqual(-1);
+            const searchInfo = SearchInfo.fromAllTasks([todoTask, doneTask]);
+
+            expect(sorter!.comparator(todoTask, doneTask, searchInfo)).toEqual(1);
+            expect(sorter!.comparator(doneTask, doneTask, searchInfo)).toEqual(-0); // Note the minus sign. It's a consequence of
+            expect(sorter!.comparator(doneTask, todoTask, searchInfo)).toEqual(-1);
         });
     });
 
