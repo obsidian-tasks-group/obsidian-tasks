@@ -422,6 +422,19 @@ The error message was:
             expect(sorter).not.toBeNull();
             expectTaskComparesBefore(sorter!, todoTask, doneTask);
         });
+
+        it('sort by function - using query.file.path', () => {
+            // Arrange
+            const sorter = new FunctionField().createSorterFromLine(
+                'sort by function task.file.path === query.file.path',
+            );
+            const todoTask = fromLine({ line: '- [ ] todo' });
+            const doneTask = fromLine({ line: '- [x] done' });
+
+            // Assert
+            expect(sorter).not.toBeNull();
+            expectTaskComparesEqual(sorter!, todoTask, doneTask);
+        });
     });
 });
 
