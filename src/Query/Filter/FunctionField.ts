@@ -73,10 +73,11 @@ export class FunctionField extends Field {
             // will add that information.
             throw new Error(taskExpression.parseError);
         }
-        const comparator = (a: Task, b: Task) => {
+        const comparator = (a: Task, b: Task, searchInfo: SearchInfo) => {
             try {
-                const valueA = this.validateTaskSortKey(taskExpression.evaluate(a));
-                const valueB = this.validateTaskSortKey(taskExpression.evaluate(b));
+                const queryContext = searchInfo.queryContext();
+                const valueA = this.validateTaskSortKey(taskExpression.evaluate(a, queryContext));
+                const valueB = this.validateTaskSortKey(taskExpression.evaluate(b, queryContext));
                 return this.compareTaskSortKeys(valueA, valueB);
             } catch (exception) {
                 if (exception instanceof Error) {

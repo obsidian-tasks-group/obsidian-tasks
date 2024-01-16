@@ -6,14 +6,15 @@ import moment from 'moment';
 window.moment = moment;
 
 import type { Comparator } from '../src/Query/Sorter';
-import { Sort } from '../src/Query/Sort';
 import { Sorter } from '../src/Query/Sorter';
 import type { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { PathField } from '../src/Query/Filter/PathField';
+import { SearchInfo } from '../src/Query/SearchInfo';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
+import { sortBy } from './TestingTools/SortingTestHelpers';
 
 describe('Sort', () => {
     it('constructs Sorting both ways from Comparator function', () => {
@@ -29,20 +30,22 @@ describe('Sort', () => {
         const short = new TaskBuilder().description('short').build();
         const long = new TaskBuilder().description('longer description').build();
 
+        const searchInfo = SearchInfo.fromAllTasks([short, long]);
+
         // Normal way round
         {
             const sortByDescriptionLength = new Sorter('sort by description length', 'junk', comparator, false);
-            expect(sortByDescriptionLength.comparator(short, long)).toEqual(1);
-            expect(sortByDescriptionLength.comparator(short, short)).toEqual(0);
-            expect(sortByDescriptionLength.comparator(long, short)).toEqual(-1);
+            expect(sortByDescriptionLength.comparator(short, long, searchInfo)).toEqual(1);
+            expect(sortByDescriptionLength.comparator(short, short, searchInfo)).toEqual(0);
+            expect(sortByDescriptionLength.comparator(long, short, searchInfo)).toEqual(-1);
         }
 
         // Reversed
         {
             const sortByDescriptionLength = new Sorter('sort by description length reverse', 'junk', comparator, true);
-            expect(sortByDescriptionLength.comparator(short, long)).toEqual(-1);
-            expect(sortByDescriptionLength.comparator(short, short)).toEqual(-0);
-            expect(sortByDescriptionLength.comparator(long, short)).toEqual(1);
+            expect(sortByDescriptionLength.comparator(short, long, searchInfo)).toEqual(-1);
+            expect(sortByDescriptionLength.comparator(short, short, searchInfo)).toEqual(-0);
+            expect(sortByDescriptionLength.comparator(long, short, searchInfo)).toEqual(1);
         }
     });
 
@@ -54,7 +57,7 @@ describe('Sort', () => {
         const five = fromLine({ line: '- [x] b 📅 1970-01-02', path: '3' });
         const six = fromLine({ line: '- [x] d 📅 1970-01-03', path: '2' });
         const expectedOrder = [one, two, three, four, five, six];
-        expect(Sort.by([], [six, five, one, four, two, three])).toEqual(expectedOrder);
+        expect(sortBy([], [six, five, one, four, two, three])).toEqual(expectedOrder);
     });
 
     // Just a couple of tests to verify the handling of
@@ -72,7 +75,7 @@ describe('Sort', () => {
             four, // Done tasks are sorted after open tasks for status.
         ];
         expect(
-            Sort.by(
+            sortBy(
                 [
                     new DueDateField().createNormalSorter(),
                     new PathField().createNormalSorter(),
@@ -94,7 +97,7 @@ describe('Sort', () => {
         const expectedOrder = [one, two, three, four, five, six];
 
         expect(
-            Sort.by(
+            sortBy(
                 [
                     new StatusField().createReverseSorter(),
                     new DueDateField().createReverseSorter(),

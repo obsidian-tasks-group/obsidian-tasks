@@ -136,6 +136,11 @@ describe('file properties', () => {
             [
                 // comment to force line break
                 ['sort by function task.file.folder', 'Enable sorting by the folder containing the task'],
+                [
+                    'sort by function reverse task.file.path === query.file.path',
+                    'Sort tasks in the same file as the query before tasks in other files.',
+                    '**Note**: `false` sort keys sort first, so we `reverse` the result, to get the desired results.',
+                ],
             ],
             tasks,
         ],

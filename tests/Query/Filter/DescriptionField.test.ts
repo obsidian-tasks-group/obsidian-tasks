@@ -8,13 +8,13 @@ import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
-import { Sort } from '../../../src/Query/Sort';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { sortBy } from '../../TestingTools/SortingTestHelpers';
 
 window.moment = moment;
 
@@ -392,7 +392,7 @@ describe('sorting by description', () => {
         });
 
         const expectedOrder = [one, two, three, four, five];
-        expect(Sort.by([new DescriptionField().createNormalSorter()], [two, one, five, four, three])).toEqual(
+        expect(sortBy([new DescriptionField().createNormalSorter()], [two, one, five, four, three])).toEqual(
             expectedOrder,
         );
     });

@@ -1,4 +1,5 @@
 import type { Task } from '../Task';
+import type { SearchInfo } from './SearchInfo';
 
 /**
  * A sorting function, that takes two Task objects and returns
@@ -8,8 +9,11 @@ import type { Task } from '../Task';
  * - `0` or sometimes `-0`, if a equals b by the ordering criterion.
  *
  * Typically Comparator functions are stored in a {@link Sorter} object.
+ *
+ * The {@link SearchInfo} parameter allows implementations to inspect selected information
+ * about the {@link Query} containing the search being run.
  */
-export type Comparator = (a: Task, b: Task) => number;
+export type Comparator = (a: Task, b: Task, searchInfo: SearchInfo) => number;
 
 /**
  * Sorter represents a single 'sort by' instruction.
@@ -41,6 +45,6 @@ export class Sorter {
 
     private static makeReversedComparator(comparator: Comparator): Comparator {
         // Note: This can return -0.
-        return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
+        return (a, b, searchInfo) => (comparator(a, b, searchInfo) * -1) as -1 | 0 | 1;
     }
 }
