@@ -301,6 +301,19 @@ describe('FunctionField - sorting', () => {
             expect(t).toThrow(Error);
         });
 
+        it('should throw if SyntaxError in expression', () => {
+            const line = 'sort by function task.due.formatAsDate(';
+            const t = () => {
+                field.createSorterFromLine(line);
+            };
+            expect(t).toThrow(Error);
+            expect(t).toThrowError(
+                `Error: Failed parsing expression "task.due.formatAsDate(".
+The error message was:
+    "SyntaxError: Unexpected token '}'", from instruction: "sort by function task.due.formatAsDate("`,
+            );
+        });
+
         it('should give a meaningful error for invalid syntax', () => {
             // Arrange
             const line = 'sort by function hello';
