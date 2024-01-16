@@ -85,16 +85,13 @@ export class FunctionField extends Field {
         }
 
         if (sortKey === undefined) {
-            const sortKeyType = 'undefined';
-            throwSortKeyTypeError(sortKeyType);
+            throwSortKeyTypeError('undefined');
         }
         if (Number.isNaN(sortKey)) {
-            const sortKeyType = 'NaN (Not a Number)';
-            throwSortKeyTypeError(sortKeyType);
+            throwSortKeyTypeError('NaN (Not a Number)');
         }
         if (Array.isArray(sortKey)) {
-            const sortKeyType = 'array';
-            throwSortKeyTypeError(sortKeyType);
+            throwSortKeyTypeError('array');
         }
         return sortKey;
     }
