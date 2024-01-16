@@ -78,7 +78,7 @@ describe('Sort', () => {
             four, // Done tasks are sorted after open tasks for status.
         ];
         expect(
-            Sort.by(
+            sortBy(
                 [
                     new DueDateField().createNormalSorter(),
                     new PathField().createNormalSorter(),
@@ -100,7 +100,7 @@ describe('Sort', () => {
         const expectedOrder = [one, two, three, four, five, six];
 
         expect(
-            Sort.by(
+            sortBy(
                 [
                     new StatusField().createReverseSorter(),
                     new DueDateField().createReverseSorter(),
