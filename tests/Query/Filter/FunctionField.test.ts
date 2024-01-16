@@ -278,6 +278,9 @@ describe('FunctionField - sorting', () => {
 
         function getQueryErrorMessage(line: string) {
             const query = new Query(line);
+            if (query.error) {
+                return query.error;
+            }
             const task = fromLine({ line: '- [ ] stuff' });
 
             const result = query.applyQueryToTasks([task, task]);
@@ -318,6 +321,17 @@ describe('FunctionField - sorting', () => {
 The error message was:
     "SyntaxError: Unexpected token '}'": while parsing instruction: 'sort by function task.due.formatAsDate('`,
             );
+        });
+
+        it('should give a meaningful error for syntax error', () => {
+            const searchErrorMessage = getQueryErrorMessage('sort by function task.due.formatAsDate(');
+            // TODO This is too verbose - simplify it.
+            expect(searchErrorMessage).toMatchInlineSnapshot(`
+                "Error: Failed parsing expression "task.due.formatAsDate(".
+                The error message was:
+                    "SyntaxError: Unexpected token '}'": while parsing instruction: 'sort by function task.due.formatAsDate('
+                Problem line: "sort by function task.due.formatAsDate(""
+            `);
         });
 
         it('should give a meaningful error for invalid syntax', () => {

@@ -62,7 +62,20 @@ export class Query implements IQuery {
                 // There was an error expanding placeholders.
                 return;
             }
-            this.parseLine(line);
+
+            try {
+                this.parseLine(line);
+            } catch (e) {
+                let message;
+                if (e instanceof Error) {
+                    message = e.message;
+                } else {
+                    message = 'Unknown error';
+                }
+
+                this.setError(message, line);
+                return;
+            }
         });
     }
 
