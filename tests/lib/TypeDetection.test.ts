@@ -4,6 +4,9 @@ import { TasksDate } from '../../src/Scripting/TasksDate';
 describe('getValueType', () => {
     it('should name values correctly', () => {
         expect(getValueType(5)).toEqual('number');
+        expect(getValueType(Number('5'))).toEqual('number');
+        expect(getValueType(BigInt(9007199254740991))).toEqual('bigint');
+
         expect(getValueType(true)).toEqual('boolean');
         expect(getValueType('stuff')).toEqual('string');
 
@@ -16,7 +19,5 @@ describe('getValueType', () => {
         expect(getValueType(new TasksDate(null))).toEqual('TasksDate');
         // TODO "function"
         // TODO "symbol"
-        // TODO "bigint"
-        // TODO Number
     });
 });
