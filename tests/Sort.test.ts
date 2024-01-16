@@ -6,7 +6,6 @@ import moment from 'moment';
 window.moment = moment;
 
 import type { Comparator } from '../src/Query/Sorter';
-import { Sort } from '../src/Query/Sort';
 import { Sorter } from '../src/Query/Sorter';
 import type { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
@@ -14,10 +13,7 @@ import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { PathField } from '../src/Query/Filter/PathField';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
-
-function sortBy(sorters: Sorter[], tasks: Task[]) {
-    return Sort.by(sorters, tasks);
-}
+import { sortBy } from './TestingTools/SortingTestHelpers';
 
 describe('Sort', () => {
     it('constructs Sorting both ways from Comparator function', () => {
