@@ -21,8 +21,23 @@ import {
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { fromLine } from '../../TestHelpers';
 import { Query } from '../../../src/Query/Query';
+import { TasksDate } from '../../../src/Scripting/TasksDate';
 
 window.moment = moment;
+
+const yesterday = '2023-12-02';
+const today = '2023-12-03';
+const tomorrow = '2023-12-04';
+
+const yesterdayDate = new TasksDate(moment(yesterday));
+const todayDate = new TasksDate(moment(today));
+const tomorrowDate = new TasksDate(moment(tomorrow));
+const undated = new TasksDate(null);
+
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(today));
+});
 
 // -----------------------------------------------------------------------------------------------------------------
 // Filtering
@@ -217,7 +232,12 @@ describe('FunctionField - sorting', () => {
         });
 
         // Note: Arrays are rejected at the validateTaskSortKey() stage.
-        // TODO TaskDates
+
+        it('should sort TaskDate objects in ascending date order, before any undated objects', () => {
+            expect(field.compareTaskSortKeys(todayDate, yesterdayDate, 'today and yesterday')).toEqual(AFTER);
+            expect(field.compareTaskSortKeys(todayDate, tomorrowDate, 'today and tomorrow')).toEqual(BEFORE);
+            expect(field.compareTaskSortKeys(todayDate, undated, 'today and undated')).toEqual(BEFORE);
+        });
 
         it('should refuse to compare values of different types (other than null)', () => {
             const valueA = 42;

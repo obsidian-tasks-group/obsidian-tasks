@@ -6,6 +6,7 @@ import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/Task
 import type { QueryContext } from '../../Scripting/QueryContext';
 import type { SearchInfo } from '../SearchInfo';
 import { Sorter } from '../Sorter';
+import { compareByDate } from '../../lib/DateTools';
 import { getValueType } from '../../lib/TypeDetection';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
@@ -123,6 +124,10 @@ export class FunctionField extends Field {
 
         if (valueAType === 'string') {
             return valueA.localeCompare(valueB, undefined, { numeric: true });
+        }
+
+        if (valueAType === 'TasksDate') {
+            return compareByDate(valueA.moment, valueB.moment);
         }
 
         // Treat as numeric, so it works well with booleans
