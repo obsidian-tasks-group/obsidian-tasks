@@ -6,6 +6,7 @@ import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/Task
 import type { QueryContext } from '../../Scripting/QueryContext';
 import type { SearchInfo } from '../SearchInfo';
 import { Sorter } from '../Sorter';
+import { getValueType } from '../../lib/TypeDetection';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -112,8 +113,8 @@ export class FunctionField extends Field {
             return resultIfNull;
         }
 
-        const valueAType = typeof valueA;
-        const valueBType = typeof valueB;
+        const valueAType = getValueType(valueA);
+        const valueBType = getValueType(valueB);
         if (valueAType !== valueBType) {
             throw new Error(
                 `Unable to compare two different types: '${valueAType}' and '${valueBType}' order for expression '${line}'`,
