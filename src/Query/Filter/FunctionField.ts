@@ -141,7 +141,9 @@ export class FunctionField extends Field {
         // We use Number() to prevent implicit type conversion, by making the conversion explicit:
         const result = Number(valueA) - Number(valueB);
         if (isNaN(result)) {
-            throw new Error(`Unable to determine sort order for expression '${line}'`);
+            throw new Error(
+                `Unable to determine sort order for sort key types '${valueAType}' and '${valueBType}' from expression '${line}'`,
+            );
         }
         return result;
     }
