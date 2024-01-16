@@ -319,17 +319,16 @@ describe('FunctionField - sorting', () => {
             expect(t).toThrowError(
                 `Error: Failed parsing expression "task.due.formatAsDate(".
 The error message was:
-    "SyntaxError: Unexpected token '}'": while parsing instruction: 'sort by function task.due.formatAsDate('`,
+    "SyntaxError: Unexpected token '}'"`,
             );
         });
 
         it('should give a meaningful error for syntax error', () => {
             const searchErrorMessage = getQueryErrorMessage('sort by function task.due.formatAsDate(');
-            // TODO This is too verbose - simplify it.
             expect(searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Failed parsing expression "task.due.formatAsDate(".
                 The error message was:
-                    "SyntaxError: Unexpected token '}'": while parsing instruction: 'sort by function task.due.formatAsDate('
+                    "SyntaxError: Unexpected token '}'"
                 Problem line: "sort by function task.due.formatAsDate(""
             `);
         });
