@@ -30,13 +30,13 @@ Errors when evaluating 'sort by function' instructions during searches.
 sort by function hello
 ```
 
-#### Non-existent field
+#### Non-existent task field
 
 ```tasks
 sort by function task.nonExistentField
 ```
 
-#### task.tags
+#### Unsupported sort key type
 
 ```tasks
 sort by function task.tags
