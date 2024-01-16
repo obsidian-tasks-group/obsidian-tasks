@@ -215,8 +215,8 @@ describe('FunctionField - sorting', () => {
             return field.compareTaskSortKeys(valueA, valueB, description);
         }
 
-        it('should sort null before any other valid values', () => {
-            // Note: once we test sorting by date, we will need extra tests here. See compareByDate()
+        it('should sort null before any other valid values - except for Moment and TasksDate', () => {
+            // Note: TasksDate and Moment with null sorts the opposite round - see later tests.
             expect(checkAndCompareSortKeys(null, null, 'two nulls')).toEqual(SAME);
             expect(checkAndCompareSortKeys(null, 'a string', 'null and "a string"')).toEqual(BEFORE);
             expect(checkAndCompareSortKeys(false, null, 'false and null')).toEqual(AFTER);
@@ -225,7 +225,7 @@ describe('FunctionField - sorting', () => {
         it('should sort numbers in ascending order', () => {
             expect(checkAndCompareSortKeys(1, 1, '1 1')).toEqual(SAME);
             // number comparison is implementing with subtraction of the two values,
-            // so we cannot just check for values -1 pr +1.
+            // so we cannot just check for values -1 or +1.
             expect(checkAndCompareSortKeys(42, 47, '42 and 47')).toBeLessThan(0);
             expect(checkAndCompareSortKeys(3.15634, 1.535436, '3.15634 and 1.535436')).toBeGreaterThan(0);
         });
