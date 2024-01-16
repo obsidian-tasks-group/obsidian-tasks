@@ -308,7 +308,7 @@ describe('FunctionField - sorting', () => {
             expect(t).toThrowError(
                 `Error: Failed parsing expression "task.due.formatAsDate(".
 The error message was:
-    "SyntaxError: Unexpected token '}'", from instruction: "sort by function task.due.formatAsDate("`,
+    "SyntaxError: Unexpected token '}'": while parsing instruction: 'sort by function task.due.formatAsDate('`,
             );
         });
 
@@ -325,7 +325,7 @@ The error message was:
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "ReferenceError: hello is not defined from instruction "sort by function hello"""
+                    "ReferenceError: hello is not defined: while evaluating instruction 'sort by function hello'""
             `);
         });
 
@@ -341,7 +341,7 @@ The error message was:
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "Error: "undefined" is not a valid sort key from instruction "sort by function task.nonExistentField"""
+                    "Error: "undefined" is not a valid sort key: while evaluating instruction 'sort by function task.nonExistentField'""
             `);
         });
 
@@ -358,7 +358,7 @@ The error message was:
             expect(result.searchErrorMessage).toMatchInlineSnapshot(`
                 "Error: Search failed.
                 The error message was:
-                    "Error: "array" is not a valid sort key from instruction "sort by function task.tags"""
+                    "Error: "array" is not a valid sort key: while evaluating instruction 'sort by function task.tags'""
             `);
         });
     });
