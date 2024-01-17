@@ -1,0 +1,19 @@
+Results of custom sorters
+
+
+
+sort by function task.heading
+Like 'sort by heading'.
+Any tasks with no preceding heading have `task.heading` values of `null`, and these tasks sort before any tasks with headings.
+=>
+- [ ] xyz in 'a/b.md' in heading 'null'
+- [ ] xyz in 'a/b/_c_.md' in heading 'null'
+- [ ] xyz in 'a/b/c.md' in heading 'null'
+- [ ] xyz in 'a_b_c.md' in heading 'a_b_c'
+- [ ] xyz in 'a/b/c.md' in heading 'c'
+- [ ] xyz in '' in heading 'heading'
+- [ ] xyz in 'a/d/c.md' in heading 'heading'
+- [ ] xyz in 'e/d/c.md' in heading 'heading'
+- [ ] xyz in 'a/b/_c_.md' in heading 'heading _italic text_'
+====================================================================================
+

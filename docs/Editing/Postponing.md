@@ -80,10 +80,6 @@ One of these reasons:
 - The task has at least one date field with an invalid date value.
 - The `hide postpone button` instruction was used.
 
-### Can I Postpone a date to 'today'?
-
-Currently, no.
-
 ### Can I use Postpone to add a date to an undated task?
 
 Currently, no.

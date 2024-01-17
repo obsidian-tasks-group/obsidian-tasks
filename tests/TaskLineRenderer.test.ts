@@ -5,11 +5,12 @@ import moment from 'moment';
 import { DebugSettings } from '../src/Config/DebugSettings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { TaskLayoutOptions } from '../src/Layout/TaskLayoutOptions';
 import { DateParser } from '../src/Query/DateParser';
 import { QueryLayoutOptions } from '../src/QueryLayoutOptions';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
-import { TaskLayoutOptions } from '../src/TaskLayout';
+import type { TaskLayoutComponent } from '../src/TaskLayout';
 import type { TextRenderer } from '../src/TaskLineRenderer';
 import { TaskLineRenderer } from '../src/TaskLineRenderer';
 import { fromLine } from './TestHelpers';
@@ -24,7 +25,7 @@ window.moment = moment;
  *
  * @param task to be rendered
  *
- * @param layoutOptions for the task rendering. Skip for default options. See {@link TaskLayoutOptions}.
+ * @param taskLayoutOptions for the task rendering. Skip for default options. See {@link TaskLayoutOptions}.
  *
  * @param testRenderer imitates Obsidian rendering. Skip for the default {@link mockTextRenderer}.
  *
@@ -32,7 +33,7 @@ window.moment = moment;
  */
 async function renderListItem(
     task: Task,
-    layoutOptions?: TaskLayoutOptions,
+    taskLayoutOptions?: TaskLayoutOptions,
     queryLayoutOptions?: QueryLayoutOptions,
     testRenderer?: TextRenderer,
 ) {
@@ -40,7 +41,7 @@ async function renderListItem(
         textRenderer: testRenderer ?? mockTextRenderer,
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
-        taskLayoutOptions: layoutOptions ?? new TaskLayoutOptions(),
+        taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     return await taskLineRenderer.renderTaskLine(task, 0);
@@ -175,10 +176,13 @@ describe('task line rendering - global filter', () => {
 });
 
 describe('task line rendering - layout options', () => {
-    const testLayoutOptions = async (expectedComponents: string[], layoutOptions: Partial<TaskLayoutOptions>) => {
+    const testLayoutOptions = async (expectedComponents: string[], hiddenComponents: TaskLayoutComponent[]) => {
         const task = TaskBuilder.createFullyPopulatedTask();
-        const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
+        const taskLayoutOptions = new TaskLayoutOptions();
+        hiddenComponents.forEach((hiddenComponent) => {
+            taskLayoutOptions.hide(hiddenComponent);
+        });
+        const listItem = await renderListItem(task, taskLayoutOptions);
         const renderedComponents = getListItemComponents(listItem);
         expect(renderedComponents).toEqual(expectedComponents);
     };
@@ -197,7 +201,7 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            {},
+            [],
         );
     });
 
@@ -214,7 +218,7 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hidePriority: true },
+            ['priority'],
         );
     });
 
@@ -231,7 +235,7 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideRecurrenceRule: true },
+            ['recurrenceRule'],
         );
     });
 
@@ -248,7 +252,7 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideCreatedDate: true },
+            ['createdDate'],
         );
     });
 
@@ -265,7 +269,7 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideStartDate: true },
+            ['startDate'],
         );
     });
 
@@ -282,7 +286,7 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideScheduledDate: true },
+            ['scheduledDate'],
         );
     });
 
@@ -299,7 +303,7 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideDueDate: true },
+            ['dueDate'],
         );
     });
 
@@ -317,7 +321,7 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            {},
+            [],
         );
     });
 
@@ -334,7 +338,7 @@ describe('task line rendering - layout options', () => {
                 ' ❌ 2023-07-06',
                 ' ^dcf64c',
             ],
-            { hideDoneDate: true },
+            ['doneDate'],
         );
     });
 
@@ -351,7 +355,7 @@ describe('task line rendering - layout options', () => {
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
             ],
-            { hideCancelledDate: true },
+            ['cancelledDate'],
         );
     });
 
@@ -397,17 +401,11 @@ describe('task line rendering - debug info rendering', () => {
 });
 
 describe('task line rendering - classes and data attributes', () => {
-    const testComponentClasses = async (
-        taskLine: string,
-        layoutOptions: Partial<TaskLayoutOptions>,
-        mainClass: string,
-        attributes: string,
-    ) => {
+    const testComponentClasses = async (taskLine: string, mainClass: string, attributes: string) => {
         const task = fromLine({
             line: taskLine,
         });
-        const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
+        const listItem = await renderListItem(task);
 
         expect(listItem).toHaveAChildSpanWithClassAndDataAttributes(mainClass, attributes);
     };
@@ -415,19 +413,16 @@ describe('task line rendering - classes and data attributes', () => {
     it('should render priority component with its class and data attribute', async () => {
         await testComponentClasses(
             '- [ ] Full task ⏫ ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            {},
             'task-priority',
             'taskPriority: high',
         );
         await testComponentClasses(
             '- [ ] Full task 🔼 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            {},
             'task-priority',
             'taskPriority: medium',
         );
         await testComponentClasses(
             '- [ ] Full task 🔽 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            {},
             'task-priority',
             'taskPriority: low',
         );
@@ -436,7 +431,6 @@ describe('task line rendering - classes and data attributes', () => {
     it('should render recurrence component with its class and data attribute', async () => {
         await testComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            {},
             'task-recurring',
             '',
         );
@@ -444,99 +438,91 @@ describe('task line rendering - classes and data attributes', () => {
 
     it('should render date component with its class and data attribute with "today" value', async () => {
         const today = DateParser.parseDate('today').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${today}`, {}, 'task-created', 'taskCreated: today');
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${today}`, {}, 'task-due', 'taskDue: today');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${today}`, {}, 'task-scheduled', 'taskScheduled: today');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${today}`, {}, 'task-start', 'taskStart: today');
-        await testComponentClasses(`- [x] Done task ✅ ${today}`, {}, 'task-done', 'taskDone: today');
-        await testComponentClasses(`- [-] Canc task ❌ ${today}`, {}, 'task-cancelled', 'taskCancelled: today');
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${today}`, 'task-created', 'taskCreated: today');
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${today}`, 'task-due', 'taskDue: today');
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${today}`, 'task-scheduled', 'taskScheduled: today');
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${today}`, 'task-start', 'taskStart: today');
+        await testComponentClasses(`- [x] Done task ✅ ${today}`, 'task-done', 'taskDone: today');
+        await testComponentClasses(`- [-] Canc task ❌ ${today}`, 'task-cancelled', 'taskCancelled: today');
     });
 
     it('should render date component with its class and data attribute with "future-1d" value', async () => {
         const future = DateParser.parseDate('tomorrow').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, {}, 'task-created', 'taskCreated: future-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, 'task-due', 'taskDue: future-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, 'task-scheduled', 'taskScheduled: future-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, 'task-start', 'taskStart: future-1d');
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, 'task-done', 'taskDone: future-1d');
-        await testComponentClasses(`- [-] Canc task ❌ ${future}`, {}, 'task-cancelled', 'taskCancelled: future-1d');
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, 'task-created', 'taskCreated: future-1d');
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, 'task-due', 'taskDue: future-1d');
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, 'task-scheduled', 'taskScheduled: future-1d');
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, 'task-start', 'taskStart: future-1d');
+        await testComponentClasses(`- [x] Done task ✅ ${future}`, 'task-done', 'taskDone: future-1d');
+        await testComponentClasses(`- [-] Canc task ❌ ${future}`, 'task-cancelled', 'taskCancelled: future-1d');
     });
 
     it('should render date component with its class and data attribute with "future-7d" value', async () => {
         const future = DateParser.parseDate('in 7 days').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, {}, 'task-created', 'taskCreated: future-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, 'task-due', 'taskDue: future-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, 'task-scheduled', 'taskScheduled: future-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, 'task-start', 'taskStart: future-7d');
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, 'task-done', 'taskDone: future-7d');
-        await testComponentClasses(`- [-] Canc task ❌ ${future}`, {}, 'task-cancelled', 'taskCancelled: future-7d');
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, 'task-created', 'taskCreated: future-7d');
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, 'task-due', 'taskDue: future-7d');
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, 'task-scheduled', 'taskScheduled: future-7d');
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, 'task-start', 'taskStart: future-7d');
+        await testComponentClasses(`- [x] Done task ✅ ${future}`, 'task-done', 'taskDone: future-7d');
+        await testComponentClasses(`- [-] Canc task ❌ ${future}`, 'task-cancelled', 'taskCancelled: future-7d');
     });
 
     it('should render date component with its class and data attribute with "past-1d" value', async () => {
         const past = DateParser.parseDate('yesterday').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, 'task-created', 'taskCreated: past-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, 'task-due', 'taskDue: past-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, 'task-scheduled', 'taskScheduled: past-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, 'task-start', 'taskStart: past-1d');
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, 'task-done', 'taskDone: past-1d');
-        await testComponentClasses(`- [-] Canc task ❌ ${past}`, {}, 'task-cancelled', 'taskCancelled: past-1d');
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, 'task-created', 'taskCreated: past-1d');
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, 'task-due', 'taskDue: past-1d');
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, 'task-scheduled', 'taskScheduled: past-1d');
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, 'task-start', 'taskStart: past-1d');
+        await testComponentClasses(`- [x] Done task ✅ ${past}`, 'task-done', 'taskDone: past-1d');
+        await testComponentClasses(`- [-] Canc task ❌ ${past}`, 'task-cancelled', 'taskCancelled: past-1d');
     });
 
     it('should render date component with its class and data attribute with "past-7d" value', async () => {
         const past = DateParser.parseDate('7 days ago').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, 'task-created', 'taskCreated: past-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, 'task-due', 'taskDue: past-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, 'task-scheduled', 'taskScheduled: past-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, 'task-start', 'taskStart: past-7d');
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, 'task-done', 'taskDone: past-7d');
-        await testComponentClasses(`- [-] Canc task ❌ ${past}`, {}, 'task-cancelled', 'taskCancelled: past-7d');
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, 'task-created', 'taskCreated: past-7d');
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, 'task-due', 'taskDue: past-7d');
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, 'task-scheduled', 'taskScheduled: past-7d');
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, 'task-start', 'taskStart: past-7d');
+        await testComponentClasses(`- [x] Done task ✅ ${past}`, 'task-done', 'taskDone: past-7d');
+        await testComponentClasses(`- [-] Canc task ❌ ${past}`, 'task-cancelled', 'taskCancelled: past-7d');
     });
 
     it('should render date component with its class and data attribute with "future-far" & "past-far" values', async () => {
         const future = DateParser.parseDate('in 8 days').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, {}, 'task-created', 'taskCreated: future-far');
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, 'task-due', 'taskDue: future-far');
-        await testComponentClasses(
-            `- [ ] Full task ⏫ ⏳ ${future}`,
-            {},
-            'task-scheduled',
-            'taskScheduled: future-far',
-        );
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, 'task-start', 'taskStart: future-far');
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, 'task-done', 'taskDone: future-far');
-        await testComponentClasses(`- [-] Canc task ❌ ${future}`, {}, 'task-cancelled', 'taskCancelled: future-far');
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, 'task-created', 'taskCreated: future-far');
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, 'task-due', 'taskDue: future-far');
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, 'task-scheduled', 'taskScheduled: future-far');
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, 'task-start', 'taskStart: future-far');
+        await testComponentClasses(`- [x] Done task ✅ ${future}`, 'task-done', 'taskDone: future-far');
+        await testComponentClasses(`- [-] Canc task ❌ ${future}`, 'task-cancelled', 'taskCancelled: future-far');
 
         const past = DateParser.parseDate('8 days ago').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, {}, 'task-created', 'taskCreated: past-far');
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, 'task-due', 'taskDue: past-far');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, 'task-scheduled', 'taskScheduled: past-far');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, 'task-start', 'taskStart: past-far');
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, 'task-done', 'taskDone: past-far');
-        await testComponentClasses(`- [-] Canc task ❌ ${past}`, {}, 'task-cancelled', 'taskCancelled: past-far');
+        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, 'task-created', 'taskCreated: past-far');
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, 'task-due', 'taskDue: past-far');
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, 'task-scheduled', 'taskScheduled: past-far');
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, 'task-start', 'taskStart: past-far');
+        await testComponentClasses(`- [x] Done task ✅ ${past}`, 'task-done', 'taskDone: past-far');
+        await testComponentClasses(`- [-] Canc task ❌ ${past}`, 'task-cancelled', 'taskCancelled: past-far');
     });
 
     it('should not add data attributes for invalid dates', async () => {
-        await testComponentClasses('- [ ] task with invalid due date 📅 2023-02-29', {}, 'task-due', '');
+        await testComponentClasses('- [ ] task with invalid due date 📅 2023-02-29', 'task-due', '');
     });
 
     it.each([
-        ['task-priority', 'taskPriority: medium', { hidePriority: true }],
-        ['task-createdDate', 'taskCreated: past-far', { hideCreatedDate: true }],
-        ['task-dueDate', 'taskDue: past-far', { hideDueDate: true }],
-        ['task-scheduledDate', 'taskScheduled: past-far', { hideScheduledDate: true }],
-        ['task-startDate', 'taskStart: past-far', { hideStartDate: true }],
-        ['task-doneDate', 'taskDone: past-far', { hideDoneDate: true }],
-        ['task-cancelledDate', 'taskCancelled: past-far', { hideCancelledDate: true }],
+        ['task-priority', 'taskPriority: medium', 'priority'],
+        ['task-createdDate', 'taskCreated: past-far', 'createdDate'],
+        ['task-dueDate', 'taskDue: past-far', 'dueDate'],
+        ['task-scheduledDate', 'taskScheduled: past-far', 'scheduledDate'],
+        ['task-startDate', 'taskStart: past-far', 'startDate'],
+        ['task-doneDate', 'taskDone: past-far', 'doneDate'],
+        ['task-cancelledDate', 'taskCancelled: past-far', 'cancelledDate'],
     ])(
         'should not render "%s" class but should set "%s" data attributes to the list item',
-        async (
-            expectedAbsentClass: string,
-            expectedDateAttributes: string,
-            layoutOptions: Partial<TaskLayoutOptions>,
-        ) => {
+        async (expectedAbsentClass: string, expectedDateAttributes: string, hiddenComponent: string) => {
             const task = TaskBuilder.createFullyPopulatedTask();
-            const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
-            const listItem = await renderListItem(task, fullLayoutOptions);
+            const options = new TaskLayoutOptions();
+            options.hide(hiddenComponent as TaskLayoutComponent);
+            const listItem = await renderListItem(task, options);
 
             expect(listItem).not.toHaveAChildSpanWithClass(expectedAbsentClass);
             expect(listItem).toHaveAmongDataAttributes(expectedDateAttributes);
@@ -592,38 +578,25 @@ describe('task line rendering - classes and data attributes', () => {
         expect(tagSpan.dataset.tagName).toEqual('#illegal-data-attribute');
     });
 
-    const testLiAttributes = async (
-        taskLine: string,
-        layoutOptions: Partial<TaskLayoutOptions>,
-        attributes: string[],
-    ) => {
+    const testLiAttributes = async (taskLine: string, attributes: string[]) => {
         const task = fromLine({
             line: taskLine,
         });
-        const fullLayoutOptions = { ...new TaskLayoutOptions(), ...layoutOptions };
-        const listItem = await renderListItem(task, fullLayoutOptions);
+        const listItem = await renderListItem(task);
         for (const attribute of attributes) {
             expect(listItem).toHaveAmongDataAttributes(attribute);
         }
     };
 
     it('creates data attributes for custom statuses', async () => {
-        await testLiAttributes('- [ ] An incomplete task', {}, [
-            'task: ',
-            'taskStatusName: Todo',
-            'taskStatusType: TODO',
-        ]);
-        await testLiAttributes('- [x] A complete task', {}, [
-            'task: x',
-            'taskStatusName: Done',
-            'taskStatusType: DONE',
-        ]);
-        await testLiAttributes('- [/] In-progress task', {}, [
+        await testLiAttributes('- [ ] An incomplete task', ['task: ', 'taskStatusName: Todo', 'taskStatusType: TODO']);
+        await testLiAttributes('- [x] A complete task', ['task: x', 'taskStatusName: Done', 'taskStatusType: DONE']);
+        await testLiAttributes('- [/] In-progress task', [
             'task: /',
             'taskStatusName: In Progress',
             'taskStatusType: IN_PROGRESS',
         ]);
-        await testLiAttributes('- [-] In-progress task', {}, [
+        await testLiAttributes('- [-] In-progress task', [
             'task: -',
             'taskStatusName: Cancelled',
             'taskStatusType: CANCELLED',
@@ -631,7 +604,7 @@ describe('task line rendering - classes and data attributes', () => {
     });
 
     it('marks nonexistent task priority as "normal" priority', async () => {
-        await testLiAttributes('- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day', {}, [
+        await testLiAttributes('- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day', [
             'taskPriority: normal',
         ]);
     });
@@ -641,11 +614,14 @@ describe('Visualise HTML', () => {
     async function renderAndVerifyHTML(
         task: Task,
         {
-            layoutOptions,
+            taskLayoutOptions,
             queryLayoutOptions,
-        }: { layoutOptions: TaskLayoutOptions; queryLayoutOptions: QueryLayoutOptions },
+        }: {
+            taskLayoutOptions: TaskLayoutOptions;
+            queryLayoutOptions: QueryLayoutOptions;
+        },
     ) {
-        const listItem = await renderListItem(task, layoutOptions, queryLayoutOptions, mockHTMLRenderer);
+        const listItem = await renderListItem(task, taskLayoutOptions, queryLayoutOptions, mockHTMLRenderer);
 
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
@@ -659,25 +635,20 @@ ${task.toFileLineString()}
     const minimalTask = fromLine({ line: '- [-] empty' });
 
     function layoutOptionsFullMode() {
-        const layoutOptions = new TaskLayoutOptions();
-
-        // Show every Task field, disable short mode, do not explain the query
-        // Also note that urgency, backlinks and edit button are rendered in QueryRender.createTaskList(),
-        // so they won't be visible in this test it is using TaskLineRenderer.renderTaskLine().
-        // See also comments in TaskLayout.applyOptions().
-        Object.keys(layoutOptions).forEach((key) => {
-            const key2 = key as keyof TaskLayoutOptions;
-            layoutOptions[key2] = false;
-        });
-
-        return { layoutOptions, queryLayoutOptions: new QueryLayoutOptions() };
+        return {
+            taskLayoutOptions: new TaskLayoutOptions(), // makes the assumption that all the field are shown by default
+            queryLayoutOptions: new QueryLayoutOptions(),
+        };
     }
 
     function layoutOptionsShortMode() {
         const queryLayoutOptions = new QueryLayoutOptions();
         queryLayoutOptions.shortMode = true;
 
-        return { layoutOptions: new TaskLayoutOptions(), queryLayoutOptions };
+        return {
+            taskLayoutOptions: new TaskLayoutOptions(),
+            queryLayoutOptions,
+        };
     }
 
     it('Full task - full mode', async () => {

@@ -95,13 +95,17 @@ If a query gives unexpected results, see [[Explaining Queries]] and add the `exp
 
 ## Limitations of Queries
 
+### Tasks are not indented in query results
+
 > [!warning]
 > The result list will list tasks unindented.
 See [#60](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/60) for a discussion around the topic.
 Do not hesitate to contribute 😊
 
----
+### Footnotes are not displayed in query results
 
 > [!warning]
 > The result list will not contain any footnotes of the original task.
-The footnotes will *not* be carried over to documents with ```tasks blocks.
+> The footnotes will *not* be carried over to documents with ```tasks blocks. We are tracking this in [issue #2571](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2571).
+
+See also [[Getting Started#Tasks with Footnotes]].
