@@ -13,9 +13,9 @@ Numbers indicate the sort order I feel is useful, as invalid dates require actio
 
 ### Group by due - built-in
 
-`Invalid date` should be the first heading, as action is required.
+`Invalid due date` is the first heading, as action is required.
 
-[Bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2591): **`group by due` and similar should put `Invalid date` heading before the headings for valid dates.**
+==FIXED==: [Bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2591): **`group by due` and similar should put `Invalid date` heading before the headings for valid dates.**
 
 ```tasks
 group by due
@@ -67,17 +67,6 @@ The invalid task is before the dated ones.
 ```tasks
 sort by function task.due.category.groupText
 
-path includes {{query.file.path}}
-hide backlinks
-hide postpone button
-hide task count
-```
-
-### Default sort order
-
-The invalid task should be before the dated ones.
-
-```tasks
 path includes {{query.file.path}}
 hide backlinks
 hide postpone button
