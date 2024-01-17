@@ -21,6 +21,7 @@ afterEach(() => {
 const overdue = new TasksDate(moment('2023-06-10'));
 const today = new TasksDate(moment('2023-06-11'));
 const future = new TasksDate(moment('2023-06-12'));
+const invalid = new TasksDate(moment('2023-02-31'));
 const undated = new TasksDate(null);
 
 describe('TasksDate', () => {
@@ -58,6 +59,7 @@ describe('TasksDate', () => {
     });
 
     it('should categorise dates for grouping, relative to today - with PropertyCategory object', () => {
+        expect(invalid.category.groupText).toEqual('%%0%% Invalid date');
         expect(overdue.category.groupText).toEqual('%%1%% Overdue');
         expect(today.category.groupText).toEqual('%%2%% Today');
         expect(future.category.groupText).toEqual('%%3%% Future');
