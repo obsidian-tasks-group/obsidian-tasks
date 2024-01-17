@@ -33,7 +33,7 @@ afterEach(() => {
 describe('PostponeMenu', () => {
     function contentsOfPostponeMenuForTask(builderWithDate: TaskBuilder) {
         const task = builderWithDate.build();
-        const button = document.createElement('button');
+        const button = document.createElement('a');
 
         const menu = new PostponeMenu(button, task);
         return menuToString(menu);
@@ -145,7 +145,7 @@ describe('PostponeMenu', () => {
     it('should modify task, if different date selected', () => {
         // Arrange
         const task = new TaskBuilder().startDate(today).build();
-        const button = document.createElement('button');
+        const button = document.createElement('a');
         const menu = new PostponeMenu(button, task, TestableTaskSaver.testableTaskSaver);
 
         // Act
