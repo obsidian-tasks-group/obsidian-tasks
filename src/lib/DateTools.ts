@@ -1,7 +1,8 @@
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
         return -1;
-    } else if (a === null && b !== null) {
+    }
+    if (a === null && b !== null) {
         return 1;
     } else if (a !== null && b !== null) {
         if (a.isValid() && !b.isValid()) {
