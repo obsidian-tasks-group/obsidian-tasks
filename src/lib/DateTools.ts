@@ -5,7 +5,9 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
     if (a === null && b !== null) {
         return 1;
     }
-    if (a !== null && b !== null) {
+    if (!(a !== null && b !== null)) {
+        return 0;
+    } else {
         if (a.isValid() && !b.isValid()) {
             return -1;
         } else if (!a.isValid() && b.isValid()) {
@@ -19,7 +21,5 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
         } else {
             return 0;
         }
-    } else {
-        return 0;
     }
 }
