@@ -15,7 +15,7 @@ Numbers indicate the sort order I feel is useful, as invalid dates require actio
 
 `Invalid date` should be the first heading, as action is required.
 
-Bug report: **`group by due` and similar should put `Invalid date` heading before the headings for valid dates.**
+[Bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2591): **`group by due` and similar should put `Invalid date` heading before the headings for valid dates.**
 
 ```tasks
 group by due
