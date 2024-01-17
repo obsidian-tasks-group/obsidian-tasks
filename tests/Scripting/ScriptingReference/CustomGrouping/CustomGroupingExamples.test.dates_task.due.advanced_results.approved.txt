@@ -52,15 +52,17 @@ Undated
 group by function \
     const date = task.due.moment; \
     return \
-        (!date)                           ? '%%4%% Undated' : \
-        date.isBefore(moment(), 'day')    ? '%%1%% Overdue' : \
-        date.isSame(moment(), 'day')      ? '%%2%% Today'   : \
+        (!date)                           ? '%%4%% Undated' :      \
+        !date.isValid()                   ? '%%0%% Invalid date' : \
+        date.isBefore(moment(), 'day')    ? '%%1%% Overdue' :      \
+        date.isSame(moment(), 'day')      ? '%%2%% Today'   :      \
         '%%3%% Future';
 This gives exactly the same output as `group by function task.due.category.groupText`, and is shown here in case you want to customise the behaviour in some way.
-Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
+Group task due dates in to 5 broad categories: `Invalid date`, `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
 Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 Note that because we use variables to avoid repetition of values, we need to add `return`
 =>
+%%0%% Invalid date
 %%1%% Overdue
 %%2%% Today
 %%3%% Future
@@ -71,13 +73,15 @@ Note that because we use variables to avoid repetition of values, we need to add
 group by function \
     const date = task.due.moment; \
     return \
-        (!date)                           ? '%%4%% ==Undated==' : \
-        date.isBefore(moment(), 'day')    ? '%%1%% ==Overdue==' : \
-        date.isSame(moment(), 'day')      ? '%%2%% ==Today=='   : \
+        (!date)                           ? '%%4%% ==Undated==' :      \
+        !date.isValid()                   ? '%%0%% ==Invalid date==' : \
+        date.isBefore(moment(), 'day')    ? '%%1%% ==Overdue==' :      \
+        date.isSame(moment(), 'day')      ? '%%2%% ==Today=='   :      \
         '%%3%% ==Future==';
-As above, but the headings `Overdue`, `Today`, `Future` and `Undated` are highlighted.
+As above, but the headings `Invalid date`, `Overdue`, `Today`, `Future` and `Undated` are highlighted.
 See the sample screenshot below.
 =>
+%%0%% ==Invalid date==
 %%1%% ==Overdue==
 %%2%% ==Today==
 %%3%% ==Future==
@@ -90,11 +94,13 @@ group by function \
     const now = moment(); \
     const label = (order, name) => `%%${order}%% ==${name}==`; \
     if (!date)                      return label(4, 'Undated'); \
+    if (!date.isValid())            return label(0, 'Invalid date'); \
     if (date.isBefore(now, 'day'))  return label(1, 'Overdue'); \
     if (date.isSame(now, 'day'))    return label(2, 'Today'); \
     return label(3, 'Future');
 As above, but using a local function, and `if` statements.
 =>
+%%0%% ==Invalid date==
 %%1%% ==Overdue==
 %%2%% ==Today==
 %%3%% ==Future==
