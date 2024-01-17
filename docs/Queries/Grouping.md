@@ -167,7 +167,7 @@ group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "
 ### Due Date
 
 - `group by due`
-  - The due date of the task, including the week-day, or `No due date`.
+  - The due date of the task, including the week-day, or `Invalid due date` or `No due date`.
 
 > [!released]
 >
@@ -330,7 +330,7 @@ Sample image showing tasks grouped first by highlighted words `Overdue`, `Today`
 ### Done Date
 
 - `group by done`
-  - The done date of the task, including the week-day, or `No done date`.
+  - The done date of the task, including the week-day, or `Invalid done date` or `No done date`.
 
 > [!released]
 >
@@ -353,7 +353,7 @@ For more examples, see [[#Due Date]].
 ### Scheduled Date
 
 - `group by scheduled`
-  - The scheduled date of the task, including the week-day, or `No scheduled date`.
+  - The scheduled date of the task, including the week-day, or `Invalid scheduled date` or `No scheduled date`.
 
 > [!released]
 >
@@ -376,7 +376,7 @@ For more examples, see [[#Due Date]].
 ### Start Date
 
 - `group by start`
-  - The start date of the task, including the week-day, or `No start date`.
+  - The start date of the task, including the week-day, or `Invalid start date` or `No start date`.
 
 > [!released]
 >
@@ -399,7 +399,7 @@ For more examples, see [[#Due Date]].
 ### Created Date
 
 - `group by created`
-  - The created date of the task, including the week-day, or `No created date`.
+  - The created date of the task, including the week-day, or `Invalid created date` or `No created date`.
 
 > [!released]
 `created` grouping option was introduced in Tasks 2.0.0.
@@ -421,7 +421,7 @@ For more examples, see [[#Due Date]].
 ### Cancelled Date
 
 - `group by cancelled`
-  - The cancelled date of the task, including the week-day, or `No cancelled date`.
+  - The cancelled date of the task, including the week-day, or `Invalid cancelled date` or `No cancelled date`.
 
 > [!released]
 `cancelled` grouping option was introduced in Tasks 5.5.0.
