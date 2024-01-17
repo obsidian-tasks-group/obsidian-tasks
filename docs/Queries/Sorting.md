@@ -124,6 +124,17 @@ sort by function task.status.nextSymbol
 
 ## Sort by Dates in Tasks
 
+### How dates are sorted
+
+When sorting tasks by date, such as with `sort by due`, tasks are sorted in this order:
+
+1. Tasks with **invalid** `due` dates come first
+2. Tasks with valid `due` dates, **earliest** to **latest**
+3. Tasks with **no due date** come last.
+
+> [!NOTE]
+> Prior to Tasks X.Y.Z, tasks with invalid dates were sorted **after** the tasks with valid dates.
+
 ### Done Date
 
 - `sort by done` (the date when the task was done)
