@@ -637,13 +637,22 @@ export class Task {
      * Generally speaking, the earliest date is considered to be the highest priority,
      * as it is the first point at which the user might wish to act on the task.
      *
+     * Invalid dates are ignored.
+     *
      * @see happensDates
      * @see {@link HappensDateField}
      */
     public get happens(): TasksDate {
         const happensDates = this.happensDates;
         const sortedHappensDates = happensDates.sort(compareByDate);
-        return new TasksDate(sortedHappensDates[0]);
+
+        // Return the first non-null, valid date:
+        for (const date of sortedHappensDates) {
+            if (date && date.isValid()) {
+                return new TasksDate(date);
+            }
+        }
+        return new TasksDate(null);
     }
 
     /**

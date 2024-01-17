@@ -5,8 +5,8 @@ Results of custom sorters
 sort by function task.happens.format("dddd")
 Sort by happens date's day of the week, alphabetically.
 =>
-- [ ] my description
 - [ ] my description 📅 Invalid date
+- [ ] my description
 - [ ] my description 📅 2023-06-01
 - [ ] my description 📅 2023-05-30
 - [ ] my description 📅 2023-05-31
