@@ -518,6 +518,12 @@ describe('properties for scripting', () => {
         expect(new TaskBuilder().doneDate(sampleDate).build().happens.moment).toBeNull();
     });
 
+    it('happens should ignore invalid date fields', () => {
+        const invalidDate = '2023-02-31';
+        const task = new TaskBuilder().startDate(invalidDate).scheduledDate(invalidDate).dueDate(invalidDate).build();
+        expect(task.happens.moment).toBeNull();
+    });
+
     it('should provide access to recurring-related properties', () => {
         const non_recurring = '- [ ] non-recurring task';
         const recurring = '- [ ] recurring 🔁 every day 📅 2022-06-17';
