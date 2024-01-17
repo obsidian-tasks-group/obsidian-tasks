@@ -271,6 +271,11 @@ export abstract class DateField extends Field {
             if (date === null) {
                 return ['No ' + this.fieldName() + ' date'];
             }
+            if (!date.isValid()) {
+                // Use comment-out text to force Invalid dates to be sorted before the other headings.
+                // When the heading is rendered by Obsidian, the comment will be invisible.
+                return ['%%0%% Invalid ' + this.fieldName() + ' date'];
+            }
             return [date.format('YYYY-MM-DD dddd')];
         };
     }
