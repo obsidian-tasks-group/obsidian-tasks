@@ -47,7 +47,7 @@ hide task count
 
 The invalid task should be before the dated ones.
 
-Bug report: **`sort by due` and similar should put tasks with invalid dates before the tasks with valid dates.**
+[Bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2589): **`sort by due` and similar should put tasks with invalid dates before the tasks with valid dates.**
 
 ```tasks
 sort by due
