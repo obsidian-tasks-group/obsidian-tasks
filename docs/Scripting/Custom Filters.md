@@ -103,7 +103,7 @@ filter by function \
     return date ? !date.isValid() : false;
 ```
 
-- Like `due date is invalid.
+- Like `due date is invalid`.
 - It matches tasks that have a due date and the due date is invalid, such as `2022-13-32`
 
 ```javascript
