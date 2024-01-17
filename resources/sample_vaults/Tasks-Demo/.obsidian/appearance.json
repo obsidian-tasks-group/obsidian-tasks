@@ -1,5 +1,7 @@
 {
   "theme": "moonstone",
-  "enabledCssSnippets": [],
+  "enabledCssSnippets": [
+    "tasks-code-block-blue-border"
+  ],
   "accentColor": ""
 }
