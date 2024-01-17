@@ -28,9 +28,9 @@ hide task count
 
 ### Group by due - custom function
 
-A heading `Invalid` should be the first heading, with the invalid task inside it.
+A heading `Invalid date` is the first heading, with the invalid task inside it.
 
-[Bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2592): **`task.due.category.groupText` and similar should put tasks with invalid dates in a heading `Invalid` or `Invalid date`, not `Future`.**
+==FIXED==: [Bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2592): **`task.due.category.groupText` and similar should put tasks with invalid dates in a heading `Invalid` or `Invalid date`, not `Future`.**
 
 ```tasks
 group by function task.due.category.groupText
@@ -60,9 +60,9 @@ hide task count
 
 ### Sort by due - custom function
 
-The invalid task should be before the dated ones.
+The invalid task is before the dated ones.
 
-[Bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2592): **`sort by function task.due.category.groupText` and similar should put tasks with invalid dates before the tasks with valid dates - same for `task.due.category.sortOrder`.**
+==FIXED==: [Bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2592): **`sort by function task.due.category.groupText` and similar should put tasks with invalid dates before the tasks with valid dates - same for `task.due.category.sortOrder`.**
 
 ```tasks
 sort by function task.due.category.groupText
