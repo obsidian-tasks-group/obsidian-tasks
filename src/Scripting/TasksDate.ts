@@ -69,6 +69,9 @@ export class TasksDate {
         if (date.isSame(today, 'day')) {
             return new PropertyCategory('Today', 2);
         }
+        if (!date.isValid()) {
+            return new PropertyCategory('Invalid date', 0);
+        }
         return new PropertyCategory('Future', 3);
     }
 
