@@ -21,6 +21,7 @@ afterEach(() => {
 const overdue = new TasksDate(moment('2023-06-10'));
 const today = new TasksDate(moment('2023-06-11'));
 const future = new TasksDate(moment('2023-06-12'));
+const invalid = new TasksDate(moment('2023-02-31'));
 const undated = new TasksDate(null);
 
 describe('TasksDate', () => {
@@ -58,6 +59,7 @@ describe('TasksDate', () => {
     });
 
     it('should categorise dates for grouping, relative to today - with PropertyCategory object', () => {
+        expect(invalid.category.groupText).toEqual('%%0%% Invalid date');
         expect(overdue.category.groupText).toEqual('%%1%% Overdue');
         expect(today.category.groupText).toEqual('%%2%% Today');
         expect(future.category.groupText).toEqual('%%3%% Future');
@@ -101,9 +103,9 @@ describe('TasksDate', () => {
 
     it('should categorise edge-case dates for grouping, relative to today', () => {
         expect(new TasksDate(null).fromNow.groupText).toEqual('');
-        // Invalid dates always get sorted next to current date
-        expect(new TasksDate(moment('1999-02-31')).fromNow.groupText).toEqual('%%320230611%% Invalid date');
-        expect(new TasksDate(moment('2023-02-31')).fromNow.groupText).toEqual('%%320230611%% Invalid date');
+        // Invalid dates always get put first
+        expect(new TasksDate(moment('1999-02-31')).fromNow.groupText).toEqual('%%0%% Invalid date');
+        expect(new TasksDate(moment('2023-02-31')).fromNow.groupText).toEqual('%%0%% Invalid date');
     });
 });
 

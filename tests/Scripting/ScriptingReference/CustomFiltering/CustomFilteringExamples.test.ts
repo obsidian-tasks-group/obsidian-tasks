@@ -84,6 +84,14 @@ describe('dates', () => {
             'task.due.advanced',
             [
                 [
+                    // comment to force line break
+                    `filter by function \\
+    const date = task.due.moment; \\
+    return date ? !date.isValid() : false;`,
+                    'Like `due date is invalid`.',
+                    'It matches tasks that have a due date and the due date is invalid, such as `2022-13-32`',
+                ],
+                [
                     "filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false",
                     'Find all tasks due today or earlier.',
                     '`moment()` returns the current date and time, which we need to convert to the start of the day.',

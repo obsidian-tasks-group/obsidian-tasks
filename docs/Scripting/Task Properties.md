@@ -94,12 +94,13 @@ For more information, including adding your own customised statuses, see [[Statu
     - an empty string `''` or `""`, meaning 'do not add a heading for tasks missing this date property'.
 1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its implementation.
 1. `task.due.toISOString(true)` prevents UTC conversion - see the [moment documentation](https://momentjs.com/docs/#/displaying/as-iso-string/)
-1. `category` divides dates in to 4 named groups:
+1. `category` divides dates in to 5 named groups:
+    - `Invalid date`
     - `Overdue`
     - `Today`
     - `Future`
     - `Undated`
-    - And they are numbered 1, 2, 3 and 4, in the order listed above.
+    - And they are numbered 0, 1, 2, 3 and 4, in the order listed above.
 1. `fromNow` groups dates by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example:
     - `2 months ago`
     - `8 days ago`
@@ -108,6 +109,7 @@ For more information, including adding your own customised statuses, see [[Statu
     - `in 3 months`
     - `in a year`
 1. The `category` properties were added in Tasks 4.9.0.
+    - The `Invalid date` category was added in Tasks X.Y.Z.
 1. The `fromNow` properties were added in Tasks 4.9.0.
 
 ## Values for Other Task Properties
