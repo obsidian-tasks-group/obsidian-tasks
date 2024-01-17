@@ -15,6 +15,8 @@ Numbers indicate the sort order I feel is useful, as invalid dates require actio
 
 `Invalid date` should be the first heading, as action is required.
 
+Bug report: **`group by due` and similar should put `Invalid date` heading before the headings for valid dates.**
+
 ```tasks
 group by due
 
@@ -27,6 +29,8 @@ hide task count
 ### Group by due - custom function
 
 A heading `Invalid` should be the first heading, with the invalid task inside it.
+
+Bug report: **`task.due.category.groupText` and similar should put tasks with invalid dates in a heading `Invalid` or `Invalid date`, not `Future`.**
 
 ```tasks
 group by function task.due.category.groupText
@@ -43,6 +47,8 @@ hide task count
 
 The invalid task should be before the dated ones.
 
+Bug report: **`sort by due` and similar should put tasks with invalid dates before the tasks with valid dates.**
+
 ```tasks
 sort by due
 
@@ -55,6 +61,8 @@ hide task count
 ### Sort by due - custom function
 
 The invalid task should be before the dated ones.
+
+Bug report: **`sort by function task.due.category.groupText` and similar should put tasks with invalid dates before the tasks with valid dates - same for `task.due.category.sortOrder`.**
 
 ```tasks
 sort by function task.due.category.groupText
