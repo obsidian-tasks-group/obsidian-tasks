@@ -85,6 +85,11 @@ export class TasksDate {
     }
 
     private fromNowOrder(date: moment.Moment) {
+        // Always put invalid dates first:
+        if (!date.isValid()) {
+            return 0;
+        }
+
         // Calculate a number that:
         //   - is the same for all dates with the same 'fromNow()' name,
         //   - sorts in ascending order of the date.
