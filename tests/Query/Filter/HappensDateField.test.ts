@@ -166,10 +166,10 @@ describe('grouping by happens date', () => {
         ];
 
         expect({ grouper, tasks }).groupHeadingsToBe([
+            '%%0%% Invalid happens date',
             '2023-05-30 Tuesday',
             '2023-05-31 Wednesday',
             '2023-06-01 Thursday',
-            'Invalid date',
             'No happens date',
         ]);
     });

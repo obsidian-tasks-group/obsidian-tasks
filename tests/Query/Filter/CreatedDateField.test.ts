@@ -112,10 +112,10 @@ describe('grouping by created date', () => {
         const tasks = SampleTasks.withAllRepresentativeCreatedDates();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
+            '%%0%% Invalid created date',
             '2023-05-30 Tuesday',
             '2023-05-31 Wednesday',
             '2023-06-01 Thursday',
-            'Invalid date',
             'No created date',
         ]);
     });
