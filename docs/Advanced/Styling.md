@@ -121,6 +121,10 @@ The CSS `:has` selector is available with Obsidian installer version 1.1.9 and n
 
 **Grouping rules** will add a `data-task-group-by` attribute to the query container, e.g. `data-task-group-by="due,scheduled"`.
 
+## Buttons
+
+See [[How to style buttons]] for a variety of ways to style the Edit and Postpone buttons in Tasks query results.
+
 ## Custom Statuses
 
 Task statuses are represented by a few data attributes, all set on the `task-list-item` `LI` element:
@@ -134,7 +138,7 @@ These attributes can be used to style tasks according to their status, with the 
 ## Limitations of styling
 
 - The CSS classes and data attributes described here are **not available for markdown in Source and Live Preview modes**.
-- Specifically. the CSS classes described here are applied to:
+- Specifically, the CSS classes described here are applied to:
   - Reading mode,
   - Tasks query blocks in Reading and Live Preview modes.
 - Styles **cannot access any automatic scheduled date** that is created if the [[Use Filename as Default Date]]  option is enabled.
@@ -158,6 +162,7 @@ The following additional components have the following classes:
 > - `tasks-group-heading` was introduced in Tasks 1.6.0.
 > - `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
 > - `tasks-postpone` was added in Tasks 5.3.0.
+> - Styling of the Edit and Postpone buttons was changed in Tasks X.Y.Z: see [[How to style buttons]].
 
 ## CSS Examples
 
@@ -377,7 +382,7 @@ The following organizes the task structure into a 3-line grid, on which:
 
 - the description is in the first line,
 - and the various components are on the second,
-- the urgency, backlink and edit button are, if displayed, on the third.
+- the urgency, backlink, edit and postpone buttons are, if displayed, on the third.
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-grid-layout.css -->
 ```css

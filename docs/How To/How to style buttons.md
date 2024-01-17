@@ -9,13 +9,13 @@ publish: true
 ## Motivation and assumptions
 
 In Tasks results, by default each task is displayed with two buttons &ndash;
-one to edit the task, and one to postpone the task, using corresponding icons.
+one to [[Create or edit Task|edit]] the task, and one to [[Postponing|postpone]] the task, using corresponding icons.
 In the current version of Tasks they look they this:
 
 ![Task buttons with default style](../images/tasks-buttons-default.png)
 
 At least they look like this on Windows 11 -
-icons may appear slightly different on different platforms..
+icons may appear slightly different on different platforms.
 
 If you don't like how these icons look, this guide shows how you can modify their appearance.
 
@@ -61,7 +61,7 @@ you should choose characters from Unicode 6 that are more widely available.
 
 ## More style, please
 
-If you want to make the buttons look more like real buttons and give them some color, this is also possibe, like in [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-stylish.css):
+If you want to make the buttons look more like real buttons and give them some color, this is also possible, like in [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-stylish.css):
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-stylish.css -->
 ```css
@@ -87,6 +87,8 @@ This example snippet result in the follow style:
 ![Task buttons with more style](../images/tasks-buttons-stylish.png)
 
 ## Back to the roots
+
+This section shows how to recreate the pre-Tasks X.Y.Z appearance of the Edit button.
 
 You can also use your own graphics instead of existing unicode characters, like in [this example CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-svg.css):
 
@@ -120,7 +122,9 @@ The CSS snippet above shows the buttons with a similar look as in earlier versio
 
 When using graphics, it is also guaranteed that the icons look the same on all platforms.
 
-And finally, if you prefer simple text-based buttons which would more like links, then [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-text.css) shows how to do it:
+## Text-based buttons
+
+And finally, if you prefer simple text-based buttons which would look more like links, then [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-text.css) shows how to do it:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-text.css -->
 ```css
@@ -144,3 +148,7 @@ And finally, if you prefer simple text-based buttons which would more like links
 The CSS snippet above results in the following style:
 
 ![Task buttons with text style](../images/tasks-buttons-text.png)
+
+## Related pages
+
+For details on styling tasks with CSS, see [[Styling]].
