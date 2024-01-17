@@ -271,6 +271,8 @@ class QueryRenderChild extends MarkdownRenderChild {
     private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = listItem.createEl('a', {
             cls: 'tasks-edit',
+            href: '#',
+            title: 'Edit task',
         });
         editTaskPencil.onClickEvent((event: MouseEvent) => {
             event.preventDefault();
@@ -402,16 +404,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         const amount = 1;
         const timeUnit = 'day';
         const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
-        const button = listItem.createEl('button', {
-            attr: {
-                id: 'postpone-button',
-                title: buttonTooltipText,
-            },
+        const button = listItem.createEl('a', {
+            cls: 'tasks-postpone' + (shortMode ? ' tasks-postpone-short-mode' : ''),
+            href: '#',
+            title: buttonTooltipText,
         });
-
-        const classNames = shortMode ? ['tasks-postpone', 'tasks-postpone-short-mode'] : ['tasks-postpone'];
-        button.addClasses(classNames);
-        button.setText(' ⏩');
 
         button.addEventListener('click', (ev: MouseEvent) => {
             ev.preventDefault(); // suppress the default click behavior

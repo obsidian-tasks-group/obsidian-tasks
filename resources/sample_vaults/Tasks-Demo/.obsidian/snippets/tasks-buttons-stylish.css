@@ -1,0 +1,14 @@
+.tasks-edit::after {
+    content: '\1f58b';
+}
+
+.tasks-postpone::after {
+    content: '\1f4a4';
+}
+
+.tasks-edit, .tasks-postpone {
+    background: linear-gradient(to bottom, #ffda89, #ffa07a);
+    padding: 2px 5px;
+    border-radius: var(--radius-s);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}

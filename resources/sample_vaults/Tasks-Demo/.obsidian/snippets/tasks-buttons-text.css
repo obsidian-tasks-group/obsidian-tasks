@@ -1,0 +1,14 @@
+.tasks-edit, .tasks-postpone {
+    font-size: var(--font-ui-smaller);
+    font-variant: small-caps;
+    font-weight: bold;
+    margin-left: 1em;
+}
+
+.tasks-edit::after {
+    content: '[edit]';
+}
+
+.tasks-postpone::after {
+    content: '[move]';
+}

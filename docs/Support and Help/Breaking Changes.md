@@ -25,3 +25,5 @@ To help users updating across multiple Tasks releases, we collect here links to 
   - The order of `group by urgency` [[Grouping#Urgency|was reversed]].
 - Tasks [5.0.0](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/5.0.0) (21 October 2023):
   - The meaning of final backslash (`\`) characters on query lines [[Line Continuations#Appendix Updating pre-5.0.0 searches with trailing backslashes|has changed]].
+- Tasks [X.Y.Z](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/X.Y.Z) (21 January 2024):
+  - Code snippets used to change the look of the edit and postpone buttons must be changed, as explained in [[How to style buttons]], which gives several examples.
