@@ -79,10 +79,10 @@ describe('grouping by start date', () => {
         const tasks = SampleTasks.withAllRepresentativeStartDates();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
+            '%%0%% Invalid start date',
             '2023-05-30 Tuesday',
             '2023-05-31 Wednesday',
             '2023-06-01 Thursday',
-            'Invalid date',
             'No start date',
         ]);
     });
