@@ -1,6 +1,6 @@
 import type { Task } from '../Task';
 import type { Comparator, Sorter } from './Sorter';
-import { StatusField } from './Filter/StatusField';
+import { StatusTypeField } from './Filter/StatusTypeField';
 import { DueDateField } from './Filter/DueDateField';
 import { PriorityField } from './Filter/PriorityField';
 import { PathField } from './Filter/PathField';
@@ -24,8 +24,8 @@ export class Sort {
 
     public static defaultSorters() {
         return [
+            new StatusTypeField().createNormalSorter(),
             new UrgencyField().createNormalSorter(),
-            new StatusField().createNormalSorter(),
             new DueDateField().createNormalSorter(),
             new PriorityField().createNormalSorter(),
             new PathField().createNormalSorter(),
