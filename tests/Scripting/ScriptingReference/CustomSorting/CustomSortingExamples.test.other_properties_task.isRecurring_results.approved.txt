@@ -3,9 +3,8 @@ Results of custom sorters
 
 
 sort by function task.isRecurring
-Sort by whether the task is recurring.
+Sort by whether the task is recurring: recurring tasks will be listed before non-recurring ones.
 =>
-- [ ] my description
 - [ ] my description 🔁 every 4 months on the 3rd Wednesday
 - [ ] my description 🔁 every month
 - [ ] my description 🔁 every month on the 2nd
@@ -19,5 +18,6 @@ Sort by whether the task is recurring.
 - [ ] my description 🔁 every 8 days
 - [ ] my description 🔁 every 8 days when done
 - [ ] my description 🔁 every day
+- [ ] my description
 ====================================================================================
 
