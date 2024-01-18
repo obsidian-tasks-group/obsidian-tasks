@@ -12,7 +12,7 @@ publish: true
 
 This page is long. Here are some links to the main sections:
 
-- [[#Basics]]
+- [[#Default sort order]]
 - [[#Sort by Task Statuses]]
 - [[#Sort by Dates in Tasks]]
 - [[#Sort by Other Task Properties]]
@@ -22,11 +22,32 @@ This page is long. Here are some links to the main sections:
 - [[#Reverse sorting]]
 - [[#Examples]]
 
-## Basics
+## Default sort order
 
-By default Tasks sorts tasks by [[Urgency|a calculated score we call "urgency"]].
+The following instructions are the default sort order, and they are **automatically appended to the end of *every* Tasks search**:
 
-To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
+<!-- snippet: Sort.test.Sort_save_default_sort_order.approved.text -->
+```text
+sort by status.type
+sort by urgency
+sort by due
+sort by priority
+sort by path
+```
+<!-- endSnippet -->
+
+It first sorts tasks in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK` to ensure that actionable tasks appear first, which is important in searches without a filter like `not done`.
+
+Then it sorts by [[Urgency]], which is a calculated score derived from several Task properties.
+
+The above lines are *always* appended to the end of any `sort by` instructions supplied by the user. There is no way to disable this.
+
+However, any `sort by` instructions in queries take precedence over these default ones.
+
+> [!tip]
+> To sort the results of a query differently from the default, you must add at least one `sort by` line to the query. The sort instructions you supply will take priority over the appended defaults.
+>
+> Adding `sort by` lines to the [[Global Query]] provides a way override to the default sort order for **all** searches (except those that [[Global Query#Ignoring the global query|ignore the global query]]).
 
 ## Custom Sorting
 

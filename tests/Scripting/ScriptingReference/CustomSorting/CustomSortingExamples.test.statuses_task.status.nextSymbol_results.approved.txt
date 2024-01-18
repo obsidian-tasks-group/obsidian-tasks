@@ -6,10 +6,10 @@ sort by function task.status.nextSymbol
 Sort by the next status symbol.
 =>
 - [] Status EMPTY
-- [-] Status Cancelled
 - [x] Status Done
+- [-] Status Cancelled
 - [Q] Status Non-Task
-- [ ] Status Todo
 - [/] Status In Progress
+- [ ] Status Todo
 ====================================================================================
 
