@@ -128,40 +128,33 @@ describe('Sort', () => {
 
     it('visualise date impact on default sort order', () => {
         const dates = [
-            // force linebreak
-            longAgo,
-            yesterday,
-            today,
-            tomorrow,
-            farFuture,
-            null,
-            invalid,
+            ['long ago', longAgo],
+            ['yesterday', yesterday],
+            ['today', today],
+            ['tomorrow', tomorrow],
+            ['far future', farFuture],
+            ['', null],
+            ['invalid', invalid],
         ];
         const tasks: Task[] = [];
         // Since we update all the same fields in the loop, we can re-use a single TaskBuilder.
         const taskBuilder = new TaskBuilder();
 
-        function pad(date: string | null) {
-            let label: string;
-            if (!date) {
-                label = 'Null';
-            } else if (date === invalid) {
-                label = 'Invalid';
-            } else {
-                label = date;
-            }
-            return label.padEnd(12);
+        function pad(date: string) {
+            return date.padEnd(12);
         }
 
         for (const start of dates) {
             for (const scheduled of dates) {
                 for (const due of dates) {
-                    const description = `Start: ${pad(start)} Scheduled: ${pad(scheduled)} Due: ${pad(due)}`;
+                    const description = `Start: ${pad(start[0]!)} Scheduled: ${pad(scheduled[0]!)} Due: ${pad(
+                        due[0]!,
+                    )}`;
                     const task = taskBuilder
                         .description(description)
-                        .startDate(start)
-                        .scheduledDate(scheduled)
-                        .dueDate(due)
+                        .startDate(start[1])
+                        .scheduledDate(scheduled[1])
+                        .dueDate(due[1])
                         .build();
                     const description2 = `${description} urgency = ${task.urgency.toFixed(5)}`;
                     const task2 = new Task({ ...task, description: description2 });
