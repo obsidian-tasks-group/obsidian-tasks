@@ -141,6 +141,14 @@ describe('Sort', () => {
             return date.padEnd(12);
         }
 
+        function addDateIfSet(emoji: string, date: any) {
+            let dateIfSet = '';
+            if (date) {
+                dateIfSet = ` ${emoji} ${date}`;
+            }
+            return dateIfSet;
+        }
+
         for (const start of dates) {
             for (const scheduled of dates) {
                 for (const due of dates) {
@@ -150,10 +158,7 @@ describe('Sort', () => {
                     let line = `- [ ] ${description}`;
                     const date = start[1];
                     const emoji = '🛫';
-                    let dateIfSet = '';
-                    if (date) {
-                        dateIfSet = ` ${emoji} ${date}`;
-                    }
+                    const dateIfSet = addDateIfSet(emoji, date);
                     line += dateIfSet;
 
                     if (scheduled[1]) {
