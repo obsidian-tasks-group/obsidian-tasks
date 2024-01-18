@@ -45,10 +45,11 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status** is now possib
 <!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.isDone_docs.approved.md -->
 
 ```javascript
-sort by function task.isDone
+sort by function !task.isDone
 ```
 
-- Tasks with [[Status Types|Status Type]] `TODO` and `IN_PROGRESS` tasks are sorted before those with types `DONE`, `CANCELLED` and `NON_TASK.
+- `sort by function` sorts `true` before `false`
+- Hence, we use `!` to negate `task.isDone`, so tasks with [[Status Types|Status Type]] `TODO` and `IN_PROGRESS` tasks are sorted **before** `DONE`, `CANCELLED` and `NON_TASK`.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -368,7 +369,7 @@ Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by recurrence** is now po
 sort by function task.isRecurring
 ```
 
-- Sort by whether the task is recurring.
+- Sort by whether the task is recurring: recurring tasks will be listed before non-recurring ones.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -492,11 +493,11 @@ sort by function task.file.folder
 - Enable sorting by the folder containing the task.
 
 ```javascript
-sort by function reverse task.file.path === query.file.path
+sort by function task.file.path === query.file.path
 ```
 
 - Sort tasks in the same file as the query before tasks in other files.
-- **Note**: `false` sort keys sort first, so we `reverse` the result, to get the desired results.
+- **Note**: `true` sort keys sort before `false`.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
