@@ -148,8 +148,11 @@ describe('Sort', () => {
                         due[0]!,
                     )}`;
                     let line = `- [ ] ${description}`;
-                    if (start[1]) {
-                        line += ` 🛫 ${start[1]}`;
+                    const date = start[1];
+                    const emoji = '🛫';
+                    if (date) {
+                        const dateIfSet = ` ${emoji} ${date}`;
+                        line += dateIfSet;
                     }
                     if (scheduled[1]) {
                         line += ` ⏳ ${scheduled[1]}`;
