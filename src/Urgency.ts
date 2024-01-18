@@ -11,7 +11,7 @@ export class Urgency {
     public static calculate(task: Task): number {
         let urgency = 0.0;
 
-        if (task.dueDate !== null) {
+        if (task.dueDate !== null && task.dueDate.isValid()) {
             // Map a range of 21 days to the value 0.2 - 1.0
             const startOfToday = window.moment().startOf('day');
             const daysOverdue = Math.round(startOfToday.diff(task.dueDate) / Urgency.milliSecondsPerDay);
@@ -29,13 +29,13 @@ export class Urgency {
             urgency += dueMultiplier * Urgency.dueCoefficient;
         }
 
-        if (task.scheduledDate !== null) {
+        if (task.scheduledDate !== null && task.scheduledDate.isValid()) {
             if (window.moment().isSameOrAfter(task.scheduledDate)) {
                 urgency += 1 * Urgency.scheduledCoefficient;
             }
         }
 
-        if (task.startDate !== null) {
+        if (task.startDate !== null && task.startDate.isValid()) {
             if (window.moment().isBefore(task.startDate)) {
                 urgency += 1 * Urgency.startedCoefficient;
             }

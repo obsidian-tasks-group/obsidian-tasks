@@ -27,6 +27,8 @@ Tasks simply sums up urgency scores of different aspects of a task:
 
 As you can tell from the table below, **due dates have the strongest influence on urgency.**
 
+Note that any invalid date values, referring to non-existent dates, are ignored.
+
 The scores are as follows:
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForUrgency.test.UrgencyTable_urgency-html-table.approved.md -->

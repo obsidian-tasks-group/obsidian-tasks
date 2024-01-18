@@ -2,11 +2,11 @@
 - [/] In progress
 - [ ] #task Highest priority 🔺
 - [ ] #task High priority ⏫
-- [ ] my description 📅 Invalid date
 - [ ] my description 📅 2023-05-30
 - [ ] my description 📅 2023-05-31
 - [ ] my description 📅 2023-06-01
 - [ ] #task Medium priority 🔼
+- [ ] my description 📅 Invalid date
 - [ ] my description
 - [ ] my description 🛫 Invalid date
 - [ ] my description
