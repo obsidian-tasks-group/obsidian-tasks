@@ -137,9 +137,6 @@ describe('Sort', () => {
             ['invalid', invalid],
         ];
         const tasks: Task[] = [];
-        // Since we update all the same fields in the loop, we can re-use a single TaskBuilder.
-        const taskBuilder = new TaskBuilder();
-
         function pad(date: string) {
             return date.padEnd(12);
         }
@@ -150,12 +147,17 @@ describe('Sort', () => {
                     const description = `Start: ${pad(start[0]!)} Scheduled: ${pad(scheduled[0]!)} Due: ${pad(
                         due[0]!,
                     )}`;
-                    const task = taskBuilder
-                        .description(description)
-                        .startDate(start[1])
-                        .scheduledDate(scheduled[1])
-                        .dueDate(due[1])
-                        .build();
+                    let line = `- [ ] ${description}`;
+                    if (start[1]) {
+                        line += ` 🛫 ${start[1]}`;
+                    }
+                    if (scheduled[1]) {
+                        line += ` ⏳ ${scheduled[1]}`;
+                    }
+                    if (due[1]) {
+                        line += ` 📅 ${due[1]}`;
+                    }
+                    const task = fromLine({ line });
                     const description2 = `${description} urgency = ${task.urgency.toFixed(5)}`;
                     const task2 = new Task({ ...task, description: description2 });
                     tasks.push(task2);
