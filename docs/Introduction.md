@@ -15,6 +15,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
 
 - X.Y.Z:
   - Add [[Custom Sorting|custom sorting]].
+  - Document the [[Sorting#Default sort order|default sort order]].
   - **Warning**: This release contains some **bug-fixes** to **sorting** and to treatment of **invalid dates**.
     - The changes are detailed in [[breaking changes]], even though they are all improvements to the previous behaviour.
     - You may need to update any CSS snippets for the Edit or Postpone buttons: see [[How to style buttons]].
