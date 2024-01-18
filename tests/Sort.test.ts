@@ -14,9 +14,12 @@ import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { PathField } from '../src/Query/Filter/PathField';
 import { SearchInfo } from '../src/Query/SearchInfo';
 import { Sort } from '../src/Query/Sort';
-import { fromLine, toLines } from './TestHelpers';
+import { StatusRegistry } from '../src/StatusRegistry';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
+import { SampleTasks, fromLine, fromLines, toLines } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { sortBy } from './TestingTools/SortingTestHelpers';
+import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 
 const longAgo = '2022-01-01';
 const yesterday = '2022-01-14';
@@ -33,6 +36,15 @@ beforeAll(() => {
 afterAll(() => {
     jest.useRealTimers();
 });
+
+afterEach(() => {
+    StatusRegistry.getInstance().resetToDefaultStatuses();
+});
+
+function verifySortedTasks(tasks: Task[]) {
+    const sortedTasks = Sort.by([], tasks, SearchInfo.fromAllTasks(tasks));
+    verify(toLines(sortedTasks).join('\n'));
+}
 
 describe('Sort', () => {
     it('constructs Sorting both ways from Comparator function', () => {
@@ -126,6 +138,29 @@ describe('Sort', () => {
         ).toEqual(expectedOrder);
     });
 
+    it('save default sort order', () => {
+        const sorters = Sort.defaultSorters();
+        const defaultSortInstructions = sorters.map((sorter) => sorter.instruction).join('\n');
+        verifyWithFileExtension(defaultSortInstructions, 'text');
+    });
+
+    it('visualise default sort order', () => {
+        StatusRegistry.getInstance().add(new StatusConfiguration('^', 'Non-task', ' ', false, StatusType.NON_TASK));
+
+        const extraTaskLines = `- [x] #task Done        🔺 📅 1970-01-02
+- [/] #task In progress 🔺 📅 1970-01-02
+- [-] #task Cancelled   🔺 📅 1970-01-02`;
+        const extraTasks = fromLines({ lines: extraTaskLines.split('\n') });
+        const tasks = SampleTasks.withAllRepresentativeDueDates()
+            .concat(SampleTasks.withAllRepresentativeStartDates())
+            .concat(SampleTasks.withAllRepresentativeScheduledDates())
+            .concat(SampleTasks.withAllPriorities())
+            .concat(SampleTasks.withAllStatusTypes())
+            .concat(SampleTasks.withAllRootsPathsHeadings())
+            .concat(extraTasks);
+        verifySortedTasks(tasks);
+    });
+
     it('visualise date impact on default sort order', () => {
         const dates = [
             ['long ago', longAgo],
@@ -166,7 +201,6 @@ describe('Sort', () => {
                 }
             }
         }
-        const sortedTasks = Sort.by([], tasks, SearchInfo.fromAllTasks(tasks));
-        verify(toLines(sortedTasks).join('\n'));
+        verifySortedTasks(tasks);
     });
 });
