@@ -157,13 +157,8 @@ describe('Sort', () => {
                     )}`;
                     let line = `- [ ] ${description}`;
                     line += addDateIfSet('🛫', start[1]);
-
-                    if (scheduled[1]) {
-                        line += ` ⏳ ${scheduled[1]}`;
-                    }
-                    if (due[1]) {
-                        line += ` 📅 ${due[1]}`;
-                    }
+                    line += addDateIfSet('⏳', scheduled[1]);
+                    line += addDateIfSet('📅', due[1]);
                     const task = fromLine({ line });
                     const description2 = `${description} urgency = ${task.urgency.toFixed(5)}`;
                     const task2 = new Task({ ...task, description: description2 });
