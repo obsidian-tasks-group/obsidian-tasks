@@ -1,6 +1,5 @@
 import type { Task } from '../Task';
-import type { Comparator } from './Sorter';
-import type { Sorter } from './Sorter';
+import type { Comparator, Sorter } from './Sorter';
 import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
 import { PriorityField } from './Filter/PriorityField';
@@ -12,13 +11,7 @@ type PlainComparator = (a: Task, b: Task) => number;
 
 export class Sort {
     public static by(sorters: Sorter[], tasks: Task[], searchInfo: SearchInfo) {
-        const defaultComparators: Comparator[] = [
-            new UrgencyField().comparator(),
-            new StatusField().comparator(),
-            new DueDateField().comparator(),
-            new PriorityField().comparator(),
-            new PathField().comparator(),
-        ];
+        const defaultComparators: Comparator[] = this.defaultSorters().map((sorter) => sorter.comparator);
 
         const userComparators: Comparator[] = [];
 
@@ -27,6 +20,16 @@ export class Sort {
         }
 
         return tasks.sort(Sort.makeCompositeComparator([...userComparators, ...defaultComparators], searchInfo));
+    }
+
+    public static defaultSorters() {
+        return [
+            new UrgencyField().createNormalSorter(),
+            new StatusField().createNormalSorter(),
+            new DueDateField().createNormalSorter(),
+            new PriorityField().createNormalSorter(),
+            new PathField().createNormalSorter(),
+        ];
     }
 
     private static makeCompositeComparator(comparators: Comparator[], searchInfo: SearchInfo): PlainComparator {
