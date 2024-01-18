@@ -43,5 +43,6 @@ These are all bug-fixes, improving the default behaviour, and recorded here for 
   - [[Filters#Happens|happens]] date now ignores any invalid dates.
   - `sort by [date]` now puts invalid dates before valid dates, as action is required. See [[Sorting#How dates are sorted]].
   - `group by [date]` now puts `Invalid [date] date` as the first heading.
+  - The [[urgency]] calculation now ignores any invalid dates.
   - `task.due.category` and `task.due.fromNow` now handle invalid dates as different from future dates. See [[Task Properties#Values in TasksDate Properties|Values in TasksDate Properties]].
 - Code snippets used to change the look of the Edit and Postpone buttons must be changed, as explained in [[How to style buttons]], which gives several examples.
