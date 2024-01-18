@@ -26,5 +26,13 @@ To help users updating across multiple Tasks releases, we collect here links to 
 - Tasks [5.0.0](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/5.0.0) (21 October 2023):
   - The meaning of final backslash (`\`) characters on query lines [[Line Continuations#Appendix Updating pre-5.0.0 searches with trailing backslashes|has changed]].
 - Tasks [X.Y.Z](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/X.Y.Z) (21 January 2024):
-  - Code snippets used to change the look of the edit and postpone buttons must be changed, as explained in [[How to style buttons]], which gives several examples.
-  - When sorting tasks, invalid dates are now sorted before valid dates. See [[Sorting#How dates are sorted]].
+  - These are all bug-fixes, improving the default behaviour.
+  - We record them here for transparency.
+  - Sorting
+    - The [[Sorting#Default sort order|default sort order]] now sorts first by status type, to greatly improve search results that include completed tasks.
+  - Invalid dates
+    - [[Filters#Happens|happens]] date now ignores any invalid dates.
+    - `sort by [date]` now puts invalid dates before valid dates, as action is required. See [[Sorting#How dates are sorted]].
+    - `group by [date]` now puts `Invalid [date] date` as the first heading.
+    - `task.due.category` and `task.due.fromNow` now handle invalid dates as different from future dates.
+  - Code snippets used to change the look of the Edit and Postpone buttons must be changed, as explained in [[How to style buttons]], which gives several examples.
