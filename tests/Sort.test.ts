@@ -5,16 +5,34 @@ import moment from 'moment';
 
 window.moment = moment;
 
+import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Comparator } from '../src/Query/Sorter';
 import { Sorter } from '../src/Query/Sorter';
-import type { Task } from '../src/Task';
+import { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { PathField } from '../src/Query/Filter/PathField';
 import { SearchInfo } from '../src/Query/SearchInfo';
-import { fromLine } from './TestHelpers';
+import { Sort } from '../src/Query/Sort';
+import { fromLine, toLines } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { sortBy } from './TestingTools/SortingTestHelpers';
+
+const longAgo = '2022-01-01';
+const yesterday = '2022-01-14';
+const today = '2022-01-15';
+const tomorrow = '2022-01-16';
+const farFuture = '2022-01-31';
+const invalid = '2022-13-33';
+
+beforeAll(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(today));
+});
+
+afterAll(() => {
+    jest.useRealTimers();
+});
 
 describe('Sort', () => {
     it('constructs Sorting both ways from Comparator function', () => {
@@ -106,5 +124,49 @@ describe('Sort', () => {
                 [six, five, one, four, three, two],
             ),
         ).toEqual(expectedOrder);
+    });
+
+    it('visualise date impact on default sort order', () => {
+        const dates = [
+            ['long ago', longAgo],
+            ['yesterday', yesterday],
+            ['today', today],
+            ['tomorrow', tomorrow],
+            ['far future', farFuture],
+            ['', null],
+            ['invalid', invalid],
+        ];
+        const tasks: Task[] = [];
+        function pad(date: string) {
+            return date.padEnd(12);
+        }
+
+        function addDateIfSet(emoji: string, date: any) {
+            let dateIfSet = '';
+            if (date) {
+                dateIfSet = ` ${emoji} ${date}`;
+            }
+            return dateIfSet;
+        }
+
+        for (const start of dates) {
+            for (const scheduled of dates) {
+                for (const due of dates) {
+                    const description = `Start: ${pad(start[0]!)} Scheduled: ${pad(scheduled[0]!)} Due: ${pad(
+                        due[0]!,
+                    )}`;
+                    let line = `- [ ] ${description}`;
+                    line += addDateIfSet('🛫', start[1]);
+                    line += addDateIfSet('⏳', scheduled[1]);
+                    line += addDateIfSet('📅', due[1]);
+                    const task = fromLine({ line });
+                    const description2 = `${description} urgency = ${task.urgency.toFixed(5)}`;
+                    const task2 = new Task({ ...task, description: description2 });
+                    tasks.push(task2);
+                }
+            }
+        }
+        const sortedTasks = Sort.by([], tasks, SearchInfo.fromAllTasks(tasks));
+        verify(toLines(sortedTasks).join('\n'));
     });
 });

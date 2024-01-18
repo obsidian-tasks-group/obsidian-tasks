@@ -637,13 +637,28 @@ export class Task {
      * Generally speaking, the earliest date is considered to be the highest priority,
      * as it is the first point at which the user might wish to act on the task.
      *
+     * Invalid dates are ignored.
+     *
      * @see happensDates
      * @see {@link HappensDateField}
      */
     public get happens(): TasksDate {
         const happensDates = this.happensDates;
-        const sortedHappensDates = happensDates.sort(compareByDate);
-        return new TasksDate(sortedHappensDates[0]);
+        // Array.from() creates a copy of the array, to stop SonarLint
+        // complaining about sort() mutating the original.
+        // The preferred solution would to use toSorted(), but that is not currently available
+        // in the project configuration, without changing the compiler options, which seems
+        // a step too far in the middle of a bug-fix branch.
+        // https://stackoverflow.com/questions/76593892/how-to-use-tosorted-method-in-typescript
+        const sortedHappensDates = Array.from(happensDates).sort(compareByDate);
+
+        // Return the first non-null, valid date:
+        for (const date of sortedHappensDates) {
+            if (date?.isValid()) {
+                return new TasksDate(date);
+            }
+        }
+        return new TasksDate(null);
     }
 
     /**

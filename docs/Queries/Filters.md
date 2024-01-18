@@ -757,6 +757,8 @@ For example, `happens before tomorrow` will return all tasks that are starting, 
 If a task starts today and is due in a week from today, `happens before tomorrow` will match,
 because the tasks starts before tomorrow. Only one of the dates needs to match.
 
+Invalid start, scheduled or due dates are ignored by `happens`.
+
 - `no happens date`
   - Return tasks where _none_ of start date, scheduled date, and due date are set.
 - `has happens date`
