@@ -34,6 +34,11 @@ afterAll(() => {
     jest.useRealTimers();
 });
 
+function verifySortedTasks(tasks: Task[]) {
+    const sortedTasks = Sort.by([], tasks, SearchInfo.fromAllTasks(tasks));
+    verify(toLines(sortedTasks).join('\n'));
+}
+
 describe('Sort', () => {
     it('constructs Sorting both ways from Comparator function', () => {
         const comparator: Comparator = (a: Task, b: Task) => {
@@ -166,7 +171,6 @@ describe('Sort', () => {
                 }
             }
         }
-        const sortedTasks = Sort.by([], tasks, SearchInfo.fromAllTasks(tasks));
-        verify(toLines(sortedTasks).join('\n'));
+        verifySortedTasks(tasks);
     });
 });
