@@ -5,16 +5,34 @@ import moment from 'moment';
 
 window.moment = moment;
 
+import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Comparator } from '../src/Query/Sorter';
 import { Sorter } from '../src/Query/Sorter';
-import type { Task } from '../src/Task';
+import { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { PathField } from '../src/Query/Filter/PathField';
 import { SearchInfo } from '../src/Query/SearchInfo';
-import { fromLine } from './TestHelpers';
+import { Sort } from '../src/Query/Sort';
+import { fromLine, toLines } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { sortBy } from './TestingTools/SortingTestHelpers';
+
+const longAgo = '2022-01-01';
+const yesterday = '2022-01-14';
+const today = '2022-01-15';
+const tomorrow = '2022-01-16';
+const farFuture = '2022-01-31';
+const invalid = '2022-13-33';
+
+beforeAll(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(today));
+});
+
+afterAll(() => {
+    jest.useRealTimers();
+});
 
 describe('Sort', () => {
     it('constructs Sorting both ways from Comparator function', () => {
@@ -106,5 +124,52 @@ describe('Sort', () => {
                 [six, five, one, four, three, two],
             ),
         ).toEqual(expectedOrder);
+    });
+
+    it('visualise date impact on default sort order', () => {
+        const dates = [
+            // force linebreak
+            longAgo,
+            yesterday,
+            today,
+            tomorrow,
+            farFuture,
+            null,
+            invalid,
+        ];
+        const tasks: Task[] = [];
+        // Since we update all the same fields in the loop, we can re-use a single TaskBuilder.
+        const taskBuilder = new TaskBuilder();
+
+        function pad(date: string | null) {
+            let label: string;
+            if (!date) {
+                label = 'Null';
+            } else if (date === invalid) {
+                label = 'Invalid';
+            } else {
+                label = date;
+            }
+            return label.padEnd(12);
+        }
+
+        for (const start of dates) {
+            for (const scheduled of dates) {
+                for (const due of dates) {
+                    const description = `Start: ${pad(start)} Scheduled: ${pad(scheduled)} Due: ${pad(due)}`;
+                    const task = taskBuilder
+                        .description(description)
+                        .startDate(start)
+                        .scheduledDate(scheduled)
+                        .dueDate(due)
+                        .build();
+                    const description2 = `${description} urgency = ${task.urgency.toFixed(5)}`;
+                    const task2 = new Task({ ...task, description: description2 });
+                    tasks.push(task2);
+                }
+            }
+        }
+        const sortedTasks = Sort.by([], tasks, SearchInfo.fromAllTasks(tasks));
+        verify(toLines(sortedTasks).join('\n'));
     });
 });
