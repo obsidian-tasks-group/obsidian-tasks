@@ -648,7 +648,7 @@ export class Task {
 
         // Return the first non-null, valid date:
         for (const date of sortedHappensDates) {
-            if (date && date.isValid()) {
+            if (date?.isValid()) {
                 return new TasksDate(date);
             }
         }
