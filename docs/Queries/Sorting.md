@@ -24,29 +24,30 @@ This page is long. Here are some links to the main sections:
 
 ## Default sort order
 
-The following instructions are the default sort order, and they are **automatically appended to the end of every Tasks search**:
+The following instructions are the default sort order, and they are **automatically appended to the end of *every* Tasks search**:
 
 <!-- snippet: Sort.test.Sort_save_default_sort_order.approved.text -->
 ```text
+sort by status.type
 sort by urgency
-sort by status
 sort by due
 sort by priority
 sort by path
 ```
 <!-- endSnippet -->
 
-The above lines are _always_ appended to the end of any `sort by` instructions supplied by the user. There is no way to disable this.
+It first sorts tasks in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK` to ensure that actionable tasks appear first, which is important in searches without a filter like `not done`.
 
-> [!Warning]
-> [[Urgency]] is a calculated score, which is derived from several Task properties.
->
-> Because `urgency` does not take account of status, this default sort order can put urgent-but-done tasks ahead of not-yet-done tasks.
->
-> We are tracking this in [issue #439](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/439).
+Then it sorts by [[Urgency]], which is a calculated score derived from several Task properties.
+
+The above lines are *always* appended to the end of any `sort by` instructions supplied by the user. There is no way to disable this.
+
+However, any `sort by` instructions in queries take precedence over these default ones.
 
 > [!tip]
-> To sort the results of a query different from the default, you must add at least one `sort by` line to the query. The sort instructions you supply will take priority over the appended defaults.
+> To sort the results of a query differently from the default, you must add at least one `sort by` line to the query. The sort instructions you supply will take priority over the appended defaults.
+>
+> Adding `sort by` lines to the [[Global Query]] provides a way override to the default sort order for **all** searches (except those that [[Global Query#Ignoring the global query|ignore the global query]]).
 
 ## Custom Sorting
 
