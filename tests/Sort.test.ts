@@ -150,10 +150,12 @@ describe('Sort', () => {
                     let line = `- [ ] ${description}`;
                     const date = start[1];
                     const emoji = '🛫';
+                    let dateIfSet = '';
                     if (date) {
-                        const dateIfSet = ` ${emoji} ${date}`;
-                        line += dateIfSet;
+                        dateIfSet = ` ${emoji} ${date}`;
                     }
+                    line += dateIfSet;
+
                     if (scheduled[1]) {
                         line += ` ⏳ ${scheduled[1]}`;
                     }
