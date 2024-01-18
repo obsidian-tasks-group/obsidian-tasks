@@ -12,10 +12,7 @@ This file contains samples for experimenting with 'sort by function'.
 folder includes {{query.file.folder}}
 
 # Put tasks in the same file as the query first.
-# Important:
-#     It's a bit counter-intuitive:
-#     False sort keys sort first, so we reverse the result, to get the desired results.
-sort by function reverse task.file.path === query.file.path
+sort by function task.file.path === query.file.path
 ```
 
 ## Error Handling
