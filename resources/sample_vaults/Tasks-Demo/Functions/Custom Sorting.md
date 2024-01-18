@@ -1,6 +1,6 @@
 # Custom Sorting
 
-This file contains samples for experimenting with 'sort by function'.
+This file contains samples for experimenting with `sort by function`.
 
 ## Tasks
 
@@ -15,13 +15,11 @@ folder includes {{query.file.folder}}
 sort by function task.file.path === query.file.path
 ```
 
-## Error Handling
-
-Demonstrate how errors are handled.
+## Demonstrate Error Handling
 
 ### Parsing Errors
 
-Errors when reading 'sort by function' instructions.
+This section demonstrate how Tasks handles errors when reading `sort by function` instructions.
 
 #### SyntaxError
 
@@ -31,7 +29,7 @@ sort by function task.due.formatAsDate(
 
 ### Evaluation Errors
 
-Errors when evaluating 'sort by function' instructions during searches.
+This section demonstrate how Tasks handles when evaluating `sort by function` instructions during searches.
 
 #### ReferenceError
 
