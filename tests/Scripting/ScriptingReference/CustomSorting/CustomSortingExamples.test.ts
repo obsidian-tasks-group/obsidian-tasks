@@ -137,9 +137,9 @@ describe('file properties', () => {
                 // comment to force line break
                 ['sort by function task.file.folder', 'Enable sorting by the folder containing the task'],
                 [
-                    'sort by function reverse task.file.path === query.file.path',
+                    'sort by function task.file.path === query.file.path',
                     'Sort tasks in the same file as the query before tasks in other files.',
-                    '**Note**: `false` sort keys sort first, so we `reverse` the result, to get the desired results.',
+                    '**Note**: `true` sort keys sort before `false`.',
                 ],
             ],
             tasks,
@@ -229,7 +229,12 @@ describe('other properties', () => {
 
         [
             'task.isRecurring',
-            [['sort by function task.isRecurring', 'Sort by whether the task is recurring']],
+            [
+                [
+                    'sort by function task.isRecurring',
+                    'Sort by whether the task is recurring: recurring tasks will be listed before non-recurring ones.',
+                ],
+            ],
             SampleTasks.withAllRecurrences(),
         ],
 
@@ -302,8 +307,9 @@ describe('other properties', () => {
             'task.isDone',
             [
                 [
-                    'sort by function task.isDone',
-                    'Tasks with [[Status Types|Status Type]] `TODO` and `IN_PROGRESS` tasks are sorted before those with types `DONE`, `CANCELLED` and `NON_TASK.',
+                    'sort by function !task.isDone',
+                    '`sort by function` sorts `true` before `false`',
+                    'Hence, we use `!` to negate `task.isDone`, so tasks with [[Status Types|Status Type]] `TODO` and `IN_PROGRESS` tasks are sorted **before** `DONE`, `CANCELLED` and `NON_TASK`.',
                 ],
             ],
             SampleTasks.withAllStatuses(),
