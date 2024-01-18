@@ -19,6 +19,7 @@ import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { SampleTasks, fromLine, fromLines, toLines } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { sortBy } from './TestingTools/SortingTestHelpers';
+import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 
 const longAgo = '2022-01-01';
 const yesterday = '2022-01-14';
@@ -135,6 +136,12 @@ describe('Sort', () => {
                 [six, five, one, four, three, two],
             ),
         ).toEqual(expectedOrder);
+    });
+
+    it('save default sort order', () => {
+        const sorters = Sort.defaultSorters();
+        const defaultSortInstructions = sorters.map((sorter) => sorter.instruction).join('\n');
+        verifyWithFileExtension(defaultSortInstructions, 'text');
     });
 
     it('visualise default sort order', () => {
