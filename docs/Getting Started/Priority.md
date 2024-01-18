@@ -43,8 +43,8 @@ The following instructions use the priority signifiers in tasks.
 - `priority is (above, below)? (lowest, low, none, medium, high, highest)`
   - [[Filters#Priority|Documentation]]
 - `sort by priority`
-  - [[Sorting#Basics|Documentation]]
+  - [[Sorting#Priority|Documentation]]
 - `group by priority`
-  - [[Grouping#Basics|Documentation]]
+  - [[Grouping#Priority|Documentation]]
 - `hide priority`
   - [[Layout|Documentation]]
