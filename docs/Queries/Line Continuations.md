@@ -42,7 +42,7 @@ Explanation of this Tasks code block query:
 ```
 <!-- endSnippet -->
 
-This facility will be helpful for long [[Combining Filters]], [[Custom Filters]], and [[Custom Grouping]] lines, and other queries that may be difficult to read on one line.
+This facility will be helpful for long [[Combining Filters]], [[Custom Sorting]], and [[Custom Grouping]] lines, and other queries that may be difficult to read on one line.
 
 There are some more realistic examples towards the end of the [[Grouping#Due Date|Due date custom grouping examples]].
 
