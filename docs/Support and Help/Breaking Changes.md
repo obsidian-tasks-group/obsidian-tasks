@@ -41,7 +41,7 @@ To help users updating across multiple Tasks releases, we collect here links to 
 
 - The meaning of final backslash (`\`) characters on query lines [[Line Continuations#Appendix Updating pre-5.0.0 searches with trailing backslashes|has changed]].
 
-## Tasks (21 January 2024)
+## Tasks X.Y.Z (21 January 2024)
 
 *Release notes: [Tasks X.Y.Z](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/X.Y.Z).*
 
