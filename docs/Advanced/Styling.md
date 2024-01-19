@@ -162,7 +162,7 @@ The following additional components have the following classes:
 > - `tasks-group-heading` was introduced in Tasks 1.6.0.
 > - `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
 > - `tasks-postpone` was added in Tasks 5.3.0.
-> - Styling of the Edit and Postpone buttons was changed in Tasks X.Y.Z: see [[How to style buttons]].
+> - Styling of the Edit and Postpone buttons was changed in Tasks 6.0.0: see [[How to style buttons]].
 
 ## CSS Examples
 

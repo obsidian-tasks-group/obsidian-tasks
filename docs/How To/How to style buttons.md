@@ -88,7 +88,7 @@ This example snippet result in the follow style:
 
 ## Back to the roots
 
-This section shows how to recreate the pre-Tasks X.Y.Z appearance of the Edit button.
+This section shows how to recreate the pre-Tasks 6.0.0 appearance of the Edit button.
 
 You can also use your own graphics instead of existing unicode characters, like in [this example CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-svg.css):
 

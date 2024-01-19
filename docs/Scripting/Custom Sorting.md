@@ -7,7 +7,7 @@ publish: true
 <span class="related-pages">#feature/scripting #feature/sorting</span>
 
 > [!released]
-> Custom sorting was introduced in Tasks X.Y.Z.
+> Custom sorting was introduced in Tasks 6.0.0.
 
 ## Summary
 
