@@ -17,6 +17,7 @@ In a growing number of locations, Tasks allows programmatic/scripting access to 
 
 - [[Placeholders]]
 - [[Custom Filters]]
+- [[Custom Sorting]]
 - [[Custom Grouping]]
 
 This page documents all the available pieces of information in Queries that you can access.
