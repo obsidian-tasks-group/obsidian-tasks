@@ -13,6 +13,7 @@ publish: true
 This page is long. Here are some links to the main sections:
 
 - [[#Default sort order]]
+- [[#Custom Sorting]]
 - [[#Sort by Task Statuses]]
 - [[#Sort by Dates in Tasks]]
 - [[#Sort by Other Task Properties]]
@@ -51,7 +52,16 @@ However, any `sort by` instructions in queries take precedence over these defaul
 
 ## Custom Sorting
 
-==TODO Populate this section==
+> [!released]
+> `sort by function` was introduced in Tasks X.Y.Z.
+
+Tasks provides many built-in sorting options, but sometimes they don't quite do what is wanted by all users.
+
+Now Tasks has a powerful mechanism for you to create your own **custom sort orders**, offering incredible flexibility.
+
+There are many examples of the custom filtering instruction `sort by function` in the documentation below, with explanations, for when the instructions built in to Tasks do not satisfy your preferences.
+
+You can find out more about this very powerful facility in [[Custom Sorting]].
 
 ## Sort by Task Statuses
 
@@ -60,6 +70,9 @@ For more information, including adding your own customised statuses, see [[Statu
 ### Status
 
 - `sort by status` (done or todo)
+
+> [!Tip]
+> `sort by status.type` gives a much more useful sort order than `sort by status`. See [[#Status Type#]] below.
 
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by status** is now possible.
 
