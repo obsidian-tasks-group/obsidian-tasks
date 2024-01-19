@@ -87,7 +87,7 @@ The only exceptions to this flexibility are:
 
 - When [[Combining Filters]], the boolean operators such as `AND`, `OR` and `NOT` must still be capitalised.
 - In [[Regular Expressions]], the search pattern and flags are still case-sensitive.
-- The code in expressions in [[Custom Filters]] and [[Custom Grouping]] remain case-sensitive.
+- The code in expressions in [[Custom Filters]], [[Custom Sorting]] and [[Custom Grouping]] remain case-sensitive.
 
 ### Why is my query not working?
 

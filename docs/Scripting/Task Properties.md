@@ -14,6 +14,7 @@ publish: true
 In a growing number of locations, Tasks allows programmatic/scripting access to values in your Tasks:
 
 - [[Grouping#Custom Groups]]
+- [[Sorting#Custom Sorting]]
 - [[Filters#Custom Filters]]
 
 This page documents all the available pieces of information in Tasks that you can access.
