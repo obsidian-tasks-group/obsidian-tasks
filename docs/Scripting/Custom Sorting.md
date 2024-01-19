@@ -18,7 +18,6 @@ publish: true
 - Find all the **supported tasks properties** in [[Task Properties]] and [[Quick Reference]].
   - A number of properties are only available for custom sorting, and not for built-in sorting instructions.
 - Find all the **supported query properties** in [[Query Properties]].
-  - ==TODO Query properties are not yet supported in custom sorters.==
 - Learn a bit about how expressions work in [[Expressions]].
 
 ## Custom sorting introduction
@@ -40,12 +39,7 @@ The Reference section [[Task Properties]] shows all the task properties availabl
 The available task properties are also shown in the [[Quick Reference]] table.
 ### Available Query Properties
 
-The Reference section [[Query Properties]] shows all the query properties available for use via [[Placeholders]] in custom sorting.
-
-Any placeholders in custom sorts must be surrounded by quotes.
-
-> [!released]
-> Query properties and placeholders were introduced in Tasks 4.7.0.
+The Reference section [[Query Properties]] shows all the query properties available for use in custom sorting.
 
 ### Expressions
 
