@@ -40,12 +40,12 @@ The available task properties are also shown in the [[Quick Reference]] table.
 
 ### Available Query Properties
 
-The Reference section [[Query Properties]] shows all the query properties available for use via [[Placeholders]] in custom grouping.
-
-Any placeholders in custom groups must be surrounded by quotes.
+The Reference section [[Query Properties]] shows all the query properties available for in custom grouping.
 
 > [!released]
-> Query properties and placeholders were introduced in Tasks 4.7.0.
+>
+> - Query properties and placeholders were introduced in Tasks 4.7.0.
+> - Direct access to Query properties was introduced in Tasks 5.1.0.
 
 ### Expressions
 
