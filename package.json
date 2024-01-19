@@ -63,7 +63,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "boon-js": "^2.0.4",
+    "boon-js": "^2.0.5",
     "chrono-node": "2.3.9",
     "eventemitter2": "^6.4.5",
     "mustache": "^4.2.0",
