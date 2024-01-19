@@ -25,7 +25,7 @@ publish: true
 - One task is passed in to the expression, and a calculation is performed.
   - As of Tasks 4.0.0, a single task is passed in, to implement [[Custom Grouping]].
   - As of Tasks 4.2.0, a single task is passed in, to implement [[Custom Filters]].
-  - As of Tasks X.Y.Z, a single task is passed in, to implement [[Custom Sorting]].
+  - As of Tasks 6.0.0, a single task is passed in, to implement [[Custom Sorting]].
 - Tasks then calculates a value from the inputs.
 
 ## Example expressions

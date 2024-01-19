@@ -110,7 +110,7 @@ For more information, including adding your own customised statuses, see [[Statu
     - `in 3 months`
     - `in a year`
 1. The `category` properties were added in Tasks 4.9.0.
-    - The `Invalid date` category was added in Tasks X.Y.Z.
+    - The `Invalid date` category was added in Tasks 6.0.0.
 1. The `fromNow` properties were added in Tasks 4.9.0.
 
 ## Values for Other Task Properties
