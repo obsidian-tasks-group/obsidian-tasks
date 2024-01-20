@@ -1,5 +1,5 @@
 {
-  "globalQuery": "",
+  "globalQuery": "# Exclude templates files:\nroot does not include _meta\n\n# Ignore the sample tasks that demonstrate Theme and Snippet support:\npath does not include Manual Testing/SlrVb's Alternative Checkboxes\npath does not include Styling/Snippet -\npath does not include Styling/Theme -\n",
   "globalFilter": "#task",
   "removeGlobalFilter": true,
   "taskFormat": "tasksPluginEmoji",
