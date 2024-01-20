@@ -55,7 +55,10 @@ File name of downloaded snippet: S - Checkboxes.css
 ## Status grouped by status.type
 
 ```tasks
-path includes Snippet - SlRvb's Alternate Checkboxes
+# We need to ignore the global query, as it ignores this file:
+ignore global query
+
+path includes {{query.file.path}}
 group by status.type
 sort by description
 ```

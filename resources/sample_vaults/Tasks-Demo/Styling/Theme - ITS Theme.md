@@ -49,7 +49,10 @@ This offers the same checkboxes as [[Snippet - SlRvb's Alternate Checkboxes]].
 ## Status grouped by status.type
 
 ```tasks
-path includes Theme - ITS Theme
+# We need to ignore the global query, as it ignores this file:
+ignore global query
+
+path includes {{query.file.path}}
 group by status.type
 sort by description
 ```

@@ -69,7 +69,10 @@ Available task states, as of version `7cb837d73d3f39e056d0be8c98539577529c0f90` 
 ## Rendered in Tasks results block
 
 ```tasks
-path includes SlrVb's Alternative Checkboxes
+# We need to ignore the global query, as it ignores this file:
+ignore global query
+
+path includes {{query.file.path}}
 group by filename
 short mode
 group by status

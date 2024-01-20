@@ -38,7 +38,10 @@
 ## Status grouped by status.type
 
 ```tasks
-path includes Theme - AnuPpuccin
+# We need to ignore the global query, as it ignores this file:
+ignore global query
+
+path includes {{query.file.path}}
 group by status.type
 sort by description
 ```
