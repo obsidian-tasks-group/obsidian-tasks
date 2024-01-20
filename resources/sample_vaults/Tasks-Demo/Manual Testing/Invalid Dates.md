@@ -42,7 +42,7 @@ Tasks that have invalid dates: expect 6 matches.
 <!-- the Boolean filter line below can be copied from 'docs/How To/Find tasks with invalid data.md' -->
 
 ```tasks
-path includes Manual Testing/Invalid Dates
+path includes Manual Testing/Invalid Dates.md
 (cancelled date is invalid) OR (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
 sort by description
 ```

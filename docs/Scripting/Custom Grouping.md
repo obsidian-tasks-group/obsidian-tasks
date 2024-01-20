@@ -40,12 +40,12 @@ The available task properties are also shown in the [[Quick Reference]] table.
 
 ### Available Query Properties
 
-The Reference section [[Query Properties]] shows all the query properties available for use via [[Placeholders]] in custom grouping.
-
-Any placeholders in custom groups must be surrounded by quotes.
+The Reference section [[Query Properties]] shows all the query properties available for in custom grouping.
 
 > [!released]
-> Query properties and placeholders were introduced in Tasks 4.7.0.
+>
+> - Query properties and placeholders were introduced in Tasks 4.7.0.
+> - Direct access to Query properties was introduced in Tasks 5.1.0.
 
 ### Expressions
 
@@ -127,7 +127,7 @@ group by function task.description.replace('short', '==short==')
 group by function task.due.category.groupText
 ```
 
-- Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
+- Group task due dates in to 5 broad categories: `Invalid date`, `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
 - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 - The values `task.due.category.name` and `task.due.category.sortOrder` are also available.
 

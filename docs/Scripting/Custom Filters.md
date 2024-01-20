@@ -98,6 +98,15 @@ For users who are comfortable with JavaScript, these more complicated examples m
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
 
 ```javascript
+filter by function \
+    const date = task.due.moment; \
+    return date ? !date.isValid() : false;
+```
+
+- Like `due date is invalid`.
+- It matches tasks that have a due date and the due date is invalid, such as `2022-13-32`
+
+```javascript
 filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false
 ```
 

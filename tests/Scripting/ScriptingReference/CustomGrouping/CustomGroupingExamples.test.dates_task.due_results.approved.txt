@@ -3,10 +3,11 @@ Results of custom groupers
 
 
 group by function task.due.category.groupText
-Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
+Group task due dates in to 5 broad categories: `Invalid date`, `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
 Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 The values `task.due.category.name` and `task.due.category.sortOrder` are also available.
 =>
+%%0%% Invalid date
 %%1%% Overdue
 %%2%% Today
 %%3%% Future
@@ -19,9 +20,9 @@ Group by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), f
 It users an empty string (so no heading) if there is no due date.
 The values `task.due.fromNow.name` and `task.due.fromNow.sortOrder` are also available.
 =>
+%%0%% Invalid date
 %%120230529%% 2 days ago
 %%120230531%% 20 hours ago
-%%320230531%% Invalid date
 %%320230601%% in 4 hours
 ====================================================================================
 

@@ -1,0 +1,34 @@
+Results of custom sorters
+
+
+
+sort by function task.file.folder
+Enable sorting by the folder containing the task.
+=>
+- [ ] xyz in '' in heading 'heading'
+- [ ] xyz in 'a_b_c.md' in heading 'a_b_c'
+- [ ] xyz in 'a/b.md' in heading 'null'
+- [ ] xyz in 'a/b/_c_.md' in heading 'null'
+- [ ] xyz in 'a/b/_c_.md' in heading 'heading _italic text_'
+- [ ] xyz in 'a/b/c.md' in heading 'null'
+- [ ] xyz in 'a/b/c.md' in heading 'c'
+- [ ] xyz in 'a/d/c.md' in heading 'heading'
+- [ ] xyz in 'e/d/c.md' in heading 'heading'
+====================================================================================
+
+
+sort by function task.file.path === query.file.path
+Sort tasks in the same file as the query before tasks in other files.
+**Note**: `true` sort keys sort before `false`.
+=>
+- [ ] xyz in 'a/b.md' in heading 'null'
+- [ ] xyz in '' in heading 'heading'
+- [ ] xyz in 'a_b_c.md' in heading 'a_b_c'
+- [ ] xyz in 'a/b/_c_.md' in heading 'null'
+- [ ] xyz in 'a/b/_c_.md' in heading 'heading _italic text_'
+- [ ] xyz in 'a/b/c.md' in heading 'null'
+- [ ] xyz in 'a/b/c.md' in heading 'c'
+- [ ] xyz in 'a/d/c.md' in heading 'heading'
+- [ ] xyz in 'e/d/c.md' in heading 'heading'
+====================================================================================
+

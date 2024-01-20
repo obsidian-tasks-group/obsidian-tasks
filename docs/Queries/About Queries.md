@@ -87,7 +87,7 @@ The only exceptions to this flexibility are:
 
 - When [[Combining Filters]], the boolean operators such as `AND`, `OR` and `NOT` must still be capitalised.
 - In [[Regular Expressions]], the search pattern and flags are still case-sensitive.
-- The code in expressions in [[Custom Filters]] and [[Custom Grouping]] remain case-sensitive.
+- The code in expressions in [[Custom Filters]], [[Custom Sorting]] and [[Custom Grouping]] remain case-sensitive.
 
 ### Why is my query not working?
 
@@ -95,13 +95,17 @@ If a query gives unexpected results, see [[Explaining Queries]] and add the `exp
 
 ## Limitations of Queries
 
+### Tasks are not indented in query results
+
 > [!warning]
 > The result list will list tasks unindented.
 See [#60](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/60) for a discussion around the topic.
 Do not hesitate to contribute 😊
 
----
+### Footnotes are not displayed in query results
 
 > [!warning]
 > The result list will not contain any footnotes of the original task.
-The footnotes will *not* be carried over to documents with ```tasks blocks.
+> The footnotes will *not* be carried over to documents with ```tasks blocks. We are tracking this in [issue #2571](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2571).
+
+See also [[Getting Started#Tasks with Footnotes]].

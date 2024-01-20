@@ -1,0 +1,15 @@
+Results of custom sorters
+
+
+
+sort by function task.status.nextSymbol
+Sort by the next status symbol.
+=>
+- [] Status EMPTY
+- [x] Status Done
+- [-] Status Cancelled
+- [Q] Status Non-Task
+- [/] Status In Progress
+- [ ] Status Todo
+====================================================================================
+

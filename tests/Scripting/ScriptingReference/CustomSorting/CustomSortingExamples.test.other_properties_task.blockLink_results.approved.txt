@@ -1,0 +1,12 @@
+Results of custom sorters
+
+
+
+sort by function task.blockLink
+DO NOT RELEASE UNTIL THE LEADING SPACE IS REMOVED FROM BLOCKLINKS. Removing the leading space and carat prevents the rendered heading itself being treated as a blocklink.
+=>
+- [ ] my description
+- [ ] my description ^ca47c7
+- [ ] my description ^fromseparatefile
+====================================================================================
+

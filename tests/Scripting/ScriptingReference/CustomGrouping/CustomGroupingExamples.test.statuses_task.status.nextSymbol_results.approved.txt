@@ -6,6 +6,7 @@ group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "
 Group by the next status symbol, making space characters visible.
 =>
 Next status symbol: 
+Next status symbol: A
 Next status symbol: space
 Next status symbol: x
 ====================================================================================

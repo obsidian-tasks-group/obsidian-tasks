@@ -6,8 +6,8 @@ filter by function task.file.root === '/'
 Find tasks in files in the root of the vault.
 Note that this is **case-sensitive**: capitalisation matters.
 =>
-- [ ] xyz in
-- [ ] xyz in a_b_c.md
+- [ ] xyz in '' in heading 'heading'
+- [ ] xyz in 'a_b_c.md' in heading 'a_b_c'
 - [ ] Due on 2023-06-10 📅 2023-06-10
 - [ ] Due on 2023-06-11 📅 2023-06-11
 - [ ] No due date but I have 2023-06-10 in my preceding heading

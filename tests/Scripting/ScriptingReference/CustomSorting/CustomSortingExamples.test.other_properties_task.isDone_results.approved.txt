@@ -1,0 +1,16 @@
+Results of custom sorters
+
+
+
+sort by function !task.isDone
+`sort by function` sorts `true` before `false`
+Hence, we use `!` to negate `task.isDone`, so tasks with [[Status Types|Status Type]] `TODO` and `IN_PROGRESS` tasks are sorted **before** `DONE`, `CANCELLED` and `NON_TASK`.
+=>
+- [/] Status In Progress
+- [ ] Status Todo
+- [] Status EMPTY
+- [x] Status Done
+- [-] Status Cancelled
+- [Q] Status Non-Task
+====================================================================================
+

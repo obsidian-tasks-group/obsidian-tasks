@@ -63,10 +63,10 @@ describe('grouping by scheduled date', () => {
         const tasks = SampleTasks.withAllRepresentativeScheduledDates();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
+            '%%0%% Invalid scheduled date',
             '2023-05-30 Tuesday',
             '2023-05-31 Wednesday',
             '2023-06-01 Thursday',
-            'Invalid date',
             'No scheduled date',
         ]);
     });

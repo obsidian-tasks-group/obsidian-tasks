@@ -76,6 +76,16 @@ describe('accessing earliest happens date', () => {
             '1989-12-17',
         );
     });
+
+    it('should give undated if all 3 dates are invalid', () => {
+        const task = new TaskBuilder()
+            .dueDate('1989-02-31')
+            .startDate('1999-02-31')
+            .scheduledDate('2009-02-31')
+            .build();
+        const earliest = new HappensDateField().earliestDate(task);
+        expect(earliest).toBeNull();
+    });
 });
 
 describe('explain happens date queries', () => {
@@ -165,11 +175,12 @@ describe('grouping by happens date', () => {
             ...SampleTasks.withAllRepresentativeStartDates(),
         ];
 
+        // There is no heading '%%0%% Invalid happens date', because happens date ignores invalid dates.
+        // Tasks with only invalid dates in the candidate 'happens' dates are treated as undated.
         expect({ grouper, tasks }).groupHeadingsToBe([
             '2023-05-30 Tuesday',
             '2023-05-31 Wednesday',
             '2023-06-01 Thursday',
-            'Invalid date',
             'No happens date',
         ]);
     });

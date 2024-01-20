@@ -495,6 +495,15 @@ For users who are comfortable with JavaScript, these more complicated examples m
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
 
 ```javascript
+filter by function \
+    const date = task.due.moment; \
+    return date ? !date.isValid() : false;
+```
+
+- Like `due date is invalid`.
+- It matches tasks that have a due date and the due date is invalid, such as `2022-13-32`
+
+```javascript
 filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false
 ```
 
@@ -747,6 +756,8 @@ For more examples, see [[#Due Date]].
 For example, `happens before tomorrow` will return all tasks that are starting, scheduled, or due earlier than tomorrow.
 If a task starts today and is due in a week from today, `happens before tomorrow` will match,
 because the tasks starts before tomorrow. Only one of the dates needs to match.
+
+Invalid start, scheduled or due dates are ignored by `happens`.
 
 - `no happens date`
   - Return tasks where _none_ of start date, scheduled date, and due date are set.

@@ -22,9 +22,10 @@ publish: true
 - The expression is a string instruction.
 - As of Tasks 4.4.0, variables, functions, `if` blocks and similar can be used. See [[#More complex expressions]].
 - As of Tasks 5.0.0, long expressions can be written over multiple lines thanks to [[Line Continuations]].
-- Depending on the context, one or two tasks are passed in to the expression, and a calculation is performed.
-  - As of Tasks 4.0.0, in fact only a single task is passed in, to implement [[Custom Grouping]].
+- One task is passed in to the expression, and a calculation is performed.
+  - As of Tasks 4.0.0, a single task is passed in, to implement [[Custom Grouping]].
   - As of Tasks 4.2.0, a single task is passed in, to implement [[Custom Filters]].
+  - As of Tasks 6.0.0, a single task is passed in, to implement [[Custom Sorting]].
 - Tasks then calculates a value from the inputs.
 
 ## Example expressions

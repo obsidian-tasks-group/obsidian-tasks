@@ -1,7 +1,7 @@
+import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../QueryLayoutOptions';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
-import { TaskLayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
@@ -63,38 +63,54 @@ export class Query implements IQuery {
                 return;
             }
 
-            switch (true) {
-                case this.shortModeRegexp.test(line):
-                    this._queryLayoutOptions.shortMode = true;
-                    break;
-                case this.fullModeRegexp.test(line):
-                    this._queryLayoutOptions.shortMode = false;
-                    break;
-                case this.explainQueryRegexp.test(line):
-                    this._queryLayoutOptions.explainQuery = true;
-                    break;
-                case this.ignoreGlobalQueryRegexp.test(line):
-                    this._ignoreGlobalQuery = true;
-                    break;
-                case this.limitRegexp.test(line):
-                    this.parseLimit(line);
-                    break;
-                case this.parseSortBy(line):
-                    break;
-                case this.parseGroupBy(line):
-                    break;
-                case this.hideOptionsRegexp.test(line):
-                    this.parseHideOptions(line);
-                    break;
-                case this.commentRegexp.test(line):
-                    // Comment lines are ignored
-                    break;
-                case this.parseFilter(line):
-                    break;
-                default:
-                    this.setError('do not understand query', line);
+            try {
+                this.parseLine(line);
+            } catch (e) {
+                let message;
+                if (e instanceof Error) {
+                    message = e.message;
+                } else {
+                    message = 'Unknown error';
+                }
+
+                this.setError(message, line);
+                return;
             }
         });
+    }
+
+    private parseLine(line: string) {
+        switch (true) {
+            case this.shortModeRegexp.test(line):
+                this._queryLayoutOptions.shortMode = true;
+                break;
+            case this.fullModeRegexp.test(line):
+                this._queryLayoutOptions.shortMode = false;
+                break;
+            case this.explainQueryRegexp.test(line):
+                this._queryLayoutOptions.explainQuery = true;
+                break;
+            case this.ignoreGlobalQueryRegexp.test(line):
+                this._ignoreGlobalQuery = true;
+                break;
+            case this.limitRegexp.test(line):
+                this.parseLimit(line);
+                break;
+            case this.parseSortBy(line):
+                break;
+            case this.parseGroupBy(line):
+                break;
+            case this.hideOptionsRegexp.test(line):
+                this.parseHideOptions(line);
+                break;
+            case this.commentRegexp.test(line):
+                // Comment lines are ignored
+                break;
+            case this.parseFilter(line):
+                break;
+            default:
+                this.setError('do not understand query', line);
+        }
     }
 
     private formatQueryForLogging() {
@@ -177,7 +193,7 @@ ${source}`;
         return this._taskGroupLimit;
     }
 
-    public get taskLayoutOptions(): TaskLayoutOptions {
+    get taskLayoutOptions(): TaskLayoutOptions {
         return this._taskLayoutOptions;
     }
 
@@ -234,7 +250,7 @@ Problem line: "${line}"`;
             });
 
             const { debugSettings } = getSettings();
-            const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks);
+            const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks, searchInfo);
             const tasksSortedLimited = tasksSorted.slice(0, this.limit);
 
             const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited, searchInfo);
@@ -267,28 +283,28 @@ Problem line: "${line}"`;
                     this._queryLayoutOptions.hidePostponeButton = hide;
                     break;
                 case 'priority':
-                    this._taskLayoutOptions.hidePriority = hide;
+                    this._taskLayoutOptions.setVisibility('priority', !hide);
                     break;
                 case 'cancelled date':
-                    this._taskLayoutOptions.hideCancelledDate = hide;
+                    this._taskLayoutOptions.setVisibility('cancelledDate', !hide);
                     break;
                 case 'created date':
-                    this._taskLayoutOptions.hideCreatedDate = hide;
+                    this._taskLayoutOptions.setVisibility('createdDate', !hide);
                     break;
                 case 'start date':
-                    this._taskLayoutOptions.hideStartDate = hide;
+                    this._taskLayoutOptions.setVisibility('startDate', !hide);
                     break;
                 case 'scheduled date':
-                    this._taskLayoutOptions.hideScheduledDate = hide;
+                    this._taskLayoutOptions.setVisibility('scheduledDate', !hide);
                     break;
                 case 'due date':
-                    this._taskLayoutOptions.hideDueDate = hide;
+                    this._taskLayoutOptions.setVisibility('dueDate', !hide);
                     break;
                 case 'done date':
-                    this._taskLayoutOptions.hideDoneDate = hide;
+                    this._taskLayoutOptions.setVisibility('doneDate', !hide);
                     break;
                 case 'recurrence rule':
-                    this._taskLayoutOptions.hideRecurrenceRule = hide;
+                    this._taskLayoutOptions.setVisibility('recurrenceRule', !hide);
                     break;
                 case 'edit button':
                     this._queryLayoutOptions.hideEditButton = hide;
@@ -297,13 +313,13 @@ Problem line: "${line}"`;
                     this._queryLayoutOptions.hideUrgency = hide;
                     break;
                 case 'tags':
-                    this._taskLayoutOptions.hideTags = hide;
+                    this._taskLayoutOptions.setTagsVisibility(!hide);
                     break;
                 case 'id':
-                    this._taskLayoutOptions.hideId = hide;
+                    this._taskLayoutOptions.setVisibility('id', !hide);
                     break;
                 case 'depends on':
-                    this._taskLayoutOptions.hideBlockedBy = hide;
+                    this._taskLayoutOptions.setVisibility('blockedBy', !hide);
                     break;
                 default:
                     this.setError('do not understand hide/show option', line);

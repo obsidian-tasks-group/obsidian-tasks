@@ -1,0 +1,17 @@
+Results of custom sorters
+
+
+
+sort by function task.originalMarkdown
+Sort by the raw text of the task's original line in the MarkDown file.
+=>
+- [ ] my description
+- [ ] my description #context/home
+- [ ] my description #context/work
+- [ ] my description #multiple-tags1 #multiple-tags2
+- [ ] my description #project/project1
+- [ ] my description #tag
+- [ ] my description #tag/subtag
+- [ ] my description #tag/subtag/sub-sub-tag
+====================================================================================
+

@@ -23,6 +23,8 @@ We are using the word 'scripting' in a very loose sense here:
 
 - [[Custom Filters]] - write short JavaScript expressions to create task search filters.
   - See also the many `filter by function` examples added to the [[Filters]] documentation.
+- [[Custom Sorting]] - write short JavaScript expressions to sort tasks in Tasks query results.
+  - See also the many `sort by function` examples added to the [[Sorting]] documentation.
 - [[Custom Grouping]] - write short JavaScript expressions to create task group names in Tasks query results.
   - See also the many `group by function` examples added to the [[Grouping]] documentation.
 

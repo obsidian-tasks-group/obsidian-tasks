@@ -8,6 +8,5 @@ Like "group by happens", except it uses an empty string instead of "No happens d
 2023-05-30 Tuesday
 2023-05-31 Wednesday
 2023-06-01 Thursday
-Invalid date
 ====================================================================================
 

@@ -29,6 +29,7 @@ describe('compareBy', () => {
 
         expectDateComparesBefore(invalidDate, null); // invalid dates sort before no date
         expectDateComparesEqual(invalidDate, invalidDate);
-        expectDateComparesAfter(invalidDate, earlierDate); // invalid dates sort after valid ones
+        expectDateComparesBefore(invalidDate, earlierDate); // invalid dates sort before valid ones
+        expectDateComparesAfter(laterDate, invalidDate); // invalid dates sort before valid ones
     });
 });

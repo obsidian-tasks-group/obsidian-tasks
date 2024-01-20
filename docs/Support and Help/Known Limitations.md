@@ -75,6 +75,10 @@ This page gathers together all the documentation on known limitations of the plu
 
 ![[Regular Expressions#Known limitations]]
 
+## Queries: Custom Sorting
+
+![[Custom Sorting#Limitations of Custom Sorting]]
+
 ## Settings: Status Settings
 
 ![[Status Settings#Limitations and Issues]]

@@ -167,7 +167,7 @@ group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "
 ### Due Date
 
 - `group by due`
-  - The due date of the task, including the week-day, or `No due date`.
+  - The due date of the task, including the week-day, or `Invalid due date` or `No due date`.
 
 > [!released]
 >
@@ -185,7 +185,7 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
 group by function task.due.category.groupText
 ```
 
-- Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
+- Group task due dates in to 5 broad categories: `Invalid date`, `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
 - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 - The values `task.due.category.name` and `task.due.category.sortOrder` are also available.
 
@@ -281,14 +281,15 @@ group by function                                   \
 group by function \
     const date = task.due.moment; \
     return \
-        (!date)                           ? '%%4%% Undated' : \
-        date.isBefore(moment(), 'day')    ? '%%1%% Overdue' : \
-        date.isSame(moment(), 'day')      ? '%%2%% Today'   : \
+        (!date)                           ? '%%4%% Undated' :      \
+        !date.isValid()                   ? '%%0%% Invalid date' : \
+        date.isBefore(moment(), 'day')    ? '%%1%% Overdue' :      \
+        date.isSame(moment(), 'day')      ? '%%2%% Today'   :      \
         '%%3%% Future';
 ```
 
 - This gives exactly the same output as `group by function task.due.category.groupText`, and is shown here in case you want to customise the behaviour in some way.
-- Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
+- Group task due dates in to 5 broad categories: `Invalid date`, `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
 - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
 - Note that because we use variables to avoid repetition of values, we need to add `return`
 
@@ -296,13 +297,14 @@ group by function \
 group by function \
     const date = task.due.moment; \
     return \
-        (!date)                           ? '%%4%% ==Undated==' : \
-        date.isBefore(moment(), 'day')    ? '%%1%% ==Overdue==' : \
-        date.isSame(moment(), 'day')      ? '%%2%% ==Today=='   : \
+        (!date)                           ? '%%4%% ==Undated==' :      \
+        !date.isValid()                   ? '%%0%% ==Invalid date==' : \
+        date.isBefore(moment(), 'day')    ? '%%1%% ==Overdue==' :      \
+        date.isSame(moment(), 'day')      ? '%%2%% ==Today=='   :      \
         '%%3%% ==Future==';
 ```
 
-- As above, but the headings `Overdue`, `Today`, `Future` and `Undated` are highlighted.
+- As above, but the headings `Invalid date`, `Overdue`, `Today`, `Future` and `Undated` are highlighted.
 - See the sample screenshot below.
 
 ```javascript
@@ -311,6 +313,7 @@ group by function \
     const now = moment(); \
     const label = (order, name) => `%%${order}%% ==${name}==`; \
     if (!date)                      return label(4, 'Undated'); \
+    if (!date.isValid())            return label(0, 'Invalid date'); \
     if (date.isBefore(now, 'day'))  return label(1, 'Overdue'); \
     if (date.isSame(now, 'day'))    return label(2, 'Today'); \
     return label(3, 'Future');
@@ -327,7 +330,7 @@ Sample image showing tasks grouped first by highlighted words `Overdue`, `Today`
 ### Done Date
 
 - `group by done`
-  - The done date of the task, including the week-day, or `No done date`.
+  - The done date of the task, including the week-day, or `Invalid done date` or `No done date`.
 
 > [!released]
 >
@@ -350,7 +353,7 @@ For more examples, see [[#Due Date]].
 ### Scheduled Date
 
 - `group by scheduled`
-  - The scheduled date of the task, including the week-day, or `No scheduled date`.
+  - The scheduled date of the task, including the week-day, or `Invalid scheduled date` or `No scheduled date`.
 
 > [!released]
 >
@@ -373,7 +376,7 @@ For more examples, see [[#Due Date]].
 ### Start Date
 
 - `group by start`
-  - The start date of the task, including the week-day, or `No start date`.
+  - The start date of the task, including the week-day, or `Invalid start date` or `No start date`.
 
 > [!released]
 >
@@ -396,7 +399,7 @@ For more examples, see [[#Due Date]].
 ### Created Date
 
 - `group by created`
-  - The created date of the task, including the week-day, or `No created date`.
+  - The created date of the task, including the week-day, or `Invalid created date` or `No created date`.
 
 > [!released]
 `created` grouping option was introduced in Tasks 2.0.0.
@@ -418,7 +421,7 @@ For more examples, see [[#Due Date]].
 ### Cancelled Date
 
 - `group by cancelled`
-  - The cancelled date of the task, including the week-day, or `No cancelled date`.
+  - The cancelled date of the task, including the week-day, or `Invalid cancelled date` or `No cancelled date`.
 
 > [!released]
 `cancelled` grouping option was introduced in Tasks 5.5.0.

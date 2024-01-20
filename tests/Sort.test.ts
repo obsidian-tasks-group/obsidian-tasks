@@ -5,15 +5,46 @@ import moment from 'moment';
 
 window.moment = moment;
 
+import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Comparator } from '../src/Query/Sorter';
-import { Sort } from '../src/Query/Sort';
 import { Sorter } from '../src/Query/Sorter';
-import type { Task } from '../src/Task';
+import { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { PathField } from '../src/Query/Filter/PathField';
-import { fromLine } from './TestHelpers';
+import { SearchInfo } from '../src/Query/SearchInfo';
+import { Sort } from '../src/Query/Sort';
+import { StatusRegistry } from '../src/StatusRegistry';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
+import { SampleTasks, fromLine, fromLines, toLines } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
+import { sortBy } from './TestingTools/SortingTestHelpers';
+import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
+
+const longAgo = '2022-01-01';
+const yesterday = '2022-01-14';
+const today = '2022-01-15';
+const tomorrow = '2022-01-16';
+const farFuture = '2022-01-31';
+const invalid = '2022-13-33';
+
+beforeAll(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(today));
+});
+
+afterAll(() => {
+    jest.useRealTimers();
+});
+
+afterEach(() => {
+    StatusRegistry.getInstance().resetToDefaultStatuses();
+});
+
+function verifySortedTasks(tasks: Task[]) {
+    const sortedTasks = Sort.by([], tasks, SearchInfo.fromAllTasks(tasks));
+    verify(toLines(sortedTasks).join('\n'));
+}
 
 describe('Sort', () => {
     it('constructs Sorting both ways from Comparator function', () => {
@@ -29,20 +60,22 @@ describe('Sort', () => {
         const short = new TaskBuilder().description('short').build();
         const long = new TaskBuilder().description('longer description').build();
 
+        const searchInfo = SearchInfo.fromAllTasks([short, long]);
+
         // Normal way round
         {
             const sortByDescriptionLength = new Sorter('sort by description length', 'junk', comparator, false);
-            expect(sortByDescriptionLength.comparator(short, long)).toEqual(1);
-            expect(sortByDescriptionLength.comparator(short, short)).toEqual(0);
-            expect(sortByDescriptionLength.comparator(long, short)).toEqual(-1);
+            expect(sortByDescriptionLength.comparator(short, long, searchInfo)).toEqual(1);
+            expect(sortByDescriptionLength.comparator(short, short, searchInfo)).toEqual(0);
+            expect(sortByDescriptionLength.comparator(long, short, searchInfo)).toEqual(-1);
         }
 
         // Reversed
         {
             const sortByDescriptionLength = new Sorter('sort by description length reverse', 'junk', comparator, true);
-            expect(sortByDescriptionLength.comparator(short, long)).toEqual(-1);
-            expect(sortByDescriptionLength.comparator(short, short)).toEqual(-0);
-            expect(sortByDescriptionLength.comparator(long, short)).toEqual(1);
+            expect(sortByDescriptionLength.comparator(short, long, searchInfo)).toEqual(-1);
+            expect(sortByDescriptionLength.comparator(short, short, searchInfo)).toEqual(-0);
+            expect(sortByDescriptionLength.comparator(long, short, searchInfo)).toEqual(1);
         }
     });
 
@@ -54,7 +87,7 @@ describe('Sort', () => {
         const five = fromLine({ line: '- [x] b 📅 1970-01-02', path: '3' });
         const six = fromLine({ line: '- [x] d 📅 1970-01-03', path: '2' });
         const expectedOrder = [one, two, three, four, five, six];
-        expect(Sort.by([], [six, five, one, four, two, three])).toEqual(expectedOrder);
+        expect(sortBy([], [six, five, one, four, two, three])).toEqual(expectedOrder);
     });
 
     // Just a couple of tests to verify the handling of
@@ -72,7 +105,7 @@ describe('Sort', () => {
             four, // Done tasks are sorted after open tasks for status.
         ];
         expect(
-            Sort.by(
+            sortBy(
                 [
                     new DueDateField().createNormalSorter(),
                     new PathField().createNormalSorter(),
@@ -94,7 +127,7 @@ describe('Sort', () => {
         const expectedOrder = [one, two, three, four, five, six];
 
         expect(
-            Sort.by(
+            sortBy(
                 [
                     new StatusField().createReverseSorter(),
                     new DueDateField().createReverseSorter(),
@@ -103,5 +136,71 @@ describe('Sort', () => {
                 [six, five, one, four, three, two],
             ),
         ).toEqual(expectedOrder);
+    });
+
+    it('save default sort order', () => {
+        const sorters = Sort.defaultSorters();
+        const defaultSortInstructions = sorters.map((sorter) => sorter.instruction).join('\n');
+        verifyWithFileExtension(defaultSortInstructions, 'text');
+    });
+
+    it('visualise default sort order', () => {
+        StatusRegistry.getInstance().add(new StatusConfiguration('^', 'Non-task', ' ', false, StatusType.NON_TASK));
+
+        const extraTaskLines = `- [x] #task Done        🔺 📅 1970-01-02
+- [/] #task In progress 🔺 📅 1970-01-02
+- [-] #task Cancelled   🔺 📅 1970-01-02`;
+        const extraTasks = fromLines({ lines: extraTaskLines.split('\n') });
+        const tasks = SampleTasks.withAllRepresentativeDueDates()
+            .concat(SampleTasks.withAllRepresentativeStartDates())
+            .concat(SampleTasks.withAllRepresentativeScheduledDates())
+            .concat(SampleTasks.withAllPriorities())
+            .concat(SampleTasks.withAllStatusTypes())
+            .concat(SampleTasks.withAllRootsPathsHeadings())
+            .concat(extraTasks);
+        verifySortedTasks(tasks);
+    });
+
+    it('visualise date impact on default sort order', () => {
+        const dates = [
+            ['long ago', longAgo],
+            ['yesterday', yesterday],
+            ['today', today],
+            ['tomorrow', tomorrow],
+            ['far future', farFuture],
+            ['', null],
+            ['invalid', invalid],
+        ];
+        const tasks: Task[] = [];
+        function pad(date: string) {
+            return date.padEnd(12);
+        }
+
+        function addDateIfSet(emoji: string, date: any) {
+            let dateIfSet = '';
+            if (date) {
+                dateIfSet = ` ${emoji} ${date}`;
+            }
+            return dateIfSet;
+        }
+
+        for (const start of dates) {
+            for (const scheduled of dates) {
+                for (const due of dates) {
+                    const description = `Start: ${pad(start[0]!)} Scheduled: ${pad(scheduled[0]!)} Due: ${pad(
+                        due[0]!,
+                    )}`;
+                    let line = `- [ ] ${description}`;
+                    line += addDateIfSet('🛫', start[1]);
+                    line += addDateIfSet('⏳', scheduled[1]);
+                    line += addDateIfSet('📅', due[1]);
+                    const task = fromLine({ line });
+                    const description2 = `${description} urgency = ${task.urgency.toFixed(5)}`;
+                    const task2 = new Task({ ...task, description: description2 });
+                    tasks.push(task2);
+                }
+            }
+        }
+        verifySortedTasks(tasks);
     });
 });

@@ -1,0 +1,55 @@
+Results of custom sorters
+
+
+
+sort by function task.description.length
+Sort by length of description, shortest first.
+This might be useful for finding tasks that need more information, or could be made less verbose.
+=>
+- [ ] my description
+- [ ] short description
+- [ ] my description #tag
+- [ ] 🟦 pseudo low priority
+- [ ] 🟧 pseudo high priority
+- [ ] 🟩 pseudo normal priority
+- [ ] 🟨 pseudo medium priority
+- [ ] my description #tag/subtag
+- [ ] 🟥 pseudo highest priority
+- [ ] my description #context/home
+- [ ] my description #context/work
+- [ ] my description #project/project1
+- [ ] my description #tag/subtag/sub-sub-tag
+- [ ] my description #multiple-tags1 #multiple-tags2
+- [ ] long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 
+====================================================================================
+
+
+sort by function \
+    const priorities = [...'🟥🟧🟨🟩🟦'];  \
+    for (let i = 0; i < priorities.length; i++) {  \
+        if (task.description.includes(priorities[i])) return i;  \
+    }  \
+    return 999;
+A user has defined a custom system for their task descriptions, with coloured squares as a home-grown alternative priority system.
+This allows tasks to be sorted in the order of their coloured squares.
+The function returns 0 if the first square is found in the task description, 1 if the second square is found, and so on.
+And it returns `999` if none of the squares are found.
+It is important that we use a consistent value for all the tasks not containing any of the squares, to retain their original order, so that any later `sort by` instructions still work.
+=>
+- [ ] 🟥 pseudo highest priority
+- [ ] 🟧 pseudo high priority
+- [ ] 🟨 pseudo medium priority
+- [ ] 🟩 pseudo normal priority
+- [ ] 🟦 pseudo low priority
+- [ ] my description
+- [ ] short description
+- [ ] my description #tag
+- [ ] my description #tag/subtag
+- [ ] my description #context/home
+- [ ] my description #context/work
+- [ ] my description #project/project1
+- [ ] my description #tag/subtag/sub-sub-tag
+- [ ] my description #multiple-tags1 #multiple-tags2
+- [ ] long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 
+====================================================================================
+
