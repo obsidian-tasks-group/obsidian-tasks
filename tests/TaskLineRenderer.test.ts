@@ -202,6 +202,8 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(
             [
                 'Do exercises #todo #health',
+                ' 🆔 abcdef',
+                ' ⛔️ 123456,abc123',
                 ' 🔼',
                 ' 🔁 every day when done',
                 ' ➕ 2023-07-01',
@@ -210,8 +212,6 @@ describe('task line rendering - layout options', () => {
                 ' 📅 2023-07-04',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
-                ' ⛔️ 123456,abc123',
-                ' 🆔 abcdef',
                 ' ^dcf64c',
             ],
             taskLayoutComponents,
@@ -246,6 +246,8 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(
             [
                 'Do exercises #todo #health',
+                ' 🆔 abcdef',
+                ' ⛔️ 123456,abc123',
                 ' 🔼',
                 ' 🔁 every day when done',
                 ' ➕ 2023-07-01',
@@ -254,8 +256,6 @@ describe('task line rendering - layout options', () => {
                 ' 📅 2023-07-04',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
-                ' ⛔️ 123456,abc123',
-                ' 🆔 abcdef',
                 ' ^dcf64c',
             ],
             taskLayoutComponents,

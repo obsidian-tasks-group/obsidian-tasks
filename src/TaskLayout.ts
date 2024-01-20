@@ -16,9 +16,12 @@ export type TaskLayoutComponent =
     | 'id'
     | 'blockLink';
 
+// The order here determines the order that task fields are rendered and written to markdown.
 export const taskLayoutComponents: TaskLayoutComponent[] = [
     // NEW_TASK_FIELD_EDIT_REQUIRED
     'description',
+    'id',
+    'blockedBy',
     'priority',
     'recurrenceRule',
     'createdDate',
@@ -27,8 +30,6 @@ export const taskLayoutComponents: TaskLayoutComponent[] = [
     'dueDate',
     'cancelledDate',
     'doneDate',
-    'blockedBy',
-    'id',
     'blockLink',
 ];
 
