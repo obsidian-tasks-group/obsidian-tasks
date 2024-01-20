@@ -263,6 +263,15 @@ export class SampleTasks {
         });
     }
 
+    public static withAllRepresentativeDependencyFields(): Task[] {
+        const id1 = 'dcf64c';
+        const id2 = '0h17ye';
+        return [
+            new TaskBuilder().description('do this first').id(id1).build(),
+            new TaskBuilder().description('do this after first and some other task').blockedBy([id1, id2]).build(),
+        ];
+    }
+
     public static withAllRepresentativeBlockLinks(): Task[] {
         const descriptions = ['', ' ^ca47c7', ' ^fromseparatefile'];
         return descriptions.map((blockLink) => {

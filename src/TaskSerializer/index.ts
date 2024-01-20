@@ -21,6 +21,8 @@ export type TaskDetails = Writeable<
         | 'doneDate'
         | 'cancelledDate'
         | 'recurrence'
+        | 'blockedBy'
+        | 'id'
         | 'tags'
     >
 >;

@@ -91,6 +91,14 @@ describe('task', () => {
         ]);
     });
 
+    it('dependency fields', () => {
+        verifyFieldDataForReferenceDocs([
+            // force line break
+            'task.id',
+            'task.blockedBy',
+        ]);
+    });
+
     it('other fields', () => {
         verifyFieldDataForReferenceDocs([
             'task.description',

@@ -67,6 +67,7 @@ declare global {
             toBeValid(): R;
             toHaveExplanation(expectedExplanation: string): R;
             toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): R;
+            toMatchTaskInTaskList(task: Task, allTasks: Task[]): R;
             toMatchTask(task: Task): R;
             toMatchTaskFromLine(line: string): R;
             toMatchTaskWithDescription(description: string): R;
@@ -79,6 +80,7 @@ declare global {
             toBeValid(): any;
             toHaveExplanation(expectedExplanation: string): any;
             toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
+            toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithDescription(description: string): any;
@@ -91,6 +93,7 @@ declare global {
             toBeValid(): any;
             toHaveExplanation(expectedExplanation: string): any;
             toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
+            toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithDescription(description: string): any;
@@ -168,6 +171,10 @@ task:        "${task.toFileLineString()}"
 with filter: "${filter.instruction}"`,
         pass: true,
     };
+}
+
+export function toMatchTaskInTaskList(filter: FilterOrErrorMessage, task: Task, allTasks: Task[]) {
+    return toMatchTaskWithSearchInfo(filter, task, SearchInfo.fromAllTasks(allTasks));
 }
 
 export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {

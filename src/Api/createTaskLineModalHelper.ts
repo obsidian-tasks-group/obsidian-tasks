@@ -19,5 +19,12 @@ export const defaultTaskModalFactory: taskModalFactory = (
     onSubmit: (updatedTasks: Task[]) => void,
 ): ITaskModal => {
     const task = taskFromLine({ line: '', path: '' });
-    return new TaskModal({ app, task, onSubmit }) as ITaskModal;
+    // TODO This is going to need some thought. It is missing the Cache argument.
+    //      This file is part of the Tasks API that allows users to open the Edit Task modal from JavaScript:
+    //          https://publish.obsidian.md/tasks/Advanced/Tasks+Api
+    //      As a published API, to change the parameters would be a breaking change.
+    //      One option is to make the allTasks parameter to the Edit task modal be optional,
+    //      and if it's not provided, then hide the dependency fields in the modal.
+    //      For now, we pass in an empty list of tasks.
+    return new TaskModal({ app, task, onSubmit, allTasks: [] }) as ITaskModal;
 };

@@ -131,6 +131,17 @@ For more information, see [[Priority]].
 
 For more information, see [[Recurring Tasks]].
 
+### Dataview Format for Dependencies
+
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_dataview-snippet.approved.md -->
+```md
+- [ ] do this first  [id:: dcf64c]
+- [ ] do this after first and some other task  [blockedBy:: dcf64c,0h17ye]
+```
+<!-- endSnippet -->
+
+For more information, see [[Task Dependencies]].
+
 ## Auto-Suggest and Dataview format
 
 The Dataview format fully supports Tasks' [[Auto-Suggest]] feature, but requires users to manually type out surrounding brackets (`[]` or `()`).  This works best with `Settings > Editor > Autopair Brackets` enabled.

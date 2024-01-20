@@ -46,6 +46,8 @@ export class TaskBuilder {
     private _blockLink: string = '';
 
     private _scheduledDateIsInferred: boolean = false;
+    private _id: string = '';
+    private _blockedBy: string[] = [];
 
     /**
      * Build a Task
@@ -85,6 +87,8 @@ export class TaskBuilder {
             doneDate: this._doneDate,
             cancelledDate: this._cancelledDate,
             recurrence: this._recurrence,
+            blockedBy: this._blockedBy,
+            id: this._id,
             blockLink: this._blockLink,
             tags: this._tags,
             originalMarkdown: '',
@@ -113,6 +117,8 @@ export class TaskBuilder {
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
             .cancelledDate('2023-07-06')
+            .blockedBy(['123456', 'abc123'])
+            .id('abcdef')
             .blockLink(' ^dcf64c')
             // Values in TaskLocation:
             .path('some/folder/fileName.md')
@@ -266,6 +272,16 @@ export class TaskBuilder {
 
     public scheduledDateIsInferred(isInferred: boolean) {
         this._scheduledDateIsInferred = isInferred;
+        return this;
+    }
+
+    public blockedBy(blockedBy: string[]) {
+        this._blockedBy = blockedBy;
+        return this;
+    }
+
+    public id(id: string) {
+        this._id = id;
         return this;
     }
 

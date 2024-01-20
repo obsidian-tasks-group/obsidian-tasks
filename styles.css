@@ -96,6 +96,10 @@ a.tasks-edit, a.tasks-postpone {
     white-space: nowrap;
 }
 
+.task-list-item-checkbox {
+    cursor: pointer;
+}
+
 /* Hide tags that Obsidian recognises, if `hide tags` instruction was used. */
 .tasks-layout-hide-tags .task-description a.tag {
     display: none;
@@ -117,7 +121,7 @@ a.tasks-edit, a.tasks-postpone {
  *------------------------------------------------------------------------**/
 
 .tasks-modal-section + .tasks-modal-section {
-    margin-top: 16px;
+    margin-top: 8px;
 }
 
 .tasks-modal-section label {
@@ -205,12 +209,12 @@ a.tasks-edit, a.tasks-postpone {
     margin-top: 6px;
 }
 
-.tasks-modal-dates > input, .tasks-modal-dates > code {
+.tasks-modal-dates > .input, .tasks-modal-dates > .results {
     grid-column: 2;
     align-items: stretch;
 }
 
-.tasks-modal-dates > code {
+.tasks-modal-dates > .results {
     margin-bottom: 5px;
 }
 
@@ -254,7 +258,7 @@ a.tasks-edit, a.tasks-postpone {
     .tasks-modal-dates > label {
         margin: 0;
     }
-    .tasks-modal-dates > input, .tasks-modal-dates > code {
+    .tasks-modal-dates > .input, .tasks-modal-dates > .results {
         grid-column: 1;
     }
     .tasks-modal-dates > div {
@@ -283,6 +287,108 @@ a.tasks-edit, a.tasks-postpone {
         grid-row: 1;
     }
 }
+
+/* Dependency Styles */
+
+.chip-container {
+    padding-bottom: 4px;
+    padding-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.chip {
+    display: inline-flex;
+    background-color: var(--interactive-normal);
+    box-shadow: var(--input-shadow);
+    border-radius: 28px;
+    padding: 6px 8px 6px 12px;
+}
+
+.chip-name {
+    font-size: 14px;
+    max-width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chip-close {
+    padding: 3px;
+    border-radius: 50%;
+    margin-left: 6px;
+    cursor: pointer;
+    height: inherit;
+    box-shadow: none !important;
+    background-color: var(--background-primary) !important;
+}
+
+.suggested-tasks {
+    list-style: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 4px;
+    margin: 0;
+    background-color: var(--background-primary);
+    border: 1px;
+    border-radius: 6px;
+    border-color: var(--background-modifier-border);
+    border-style: solid;
+    z-index: 99;
+    max-height: 170px;
+    overflow-y: auto;
+}
+
+.suggested-tasks li {
+    padding: 5px;
+    margin: 2px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between
+}
+.suggested-tasks li .dependency-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.suggested-tasks li .dependency-name-shared {
+    width: calc(60%);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.suggested-tasks li .dependency-location {
+    width: calc(40%);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-style: italic;
+    text-align: right;
+    color: var(--italic-color)
+}
+
+.suggested-tasks li.selected {
+    background-color: var(--text-selection);
+}
+
+.blocking-tooltip {
+    display: none;
+    width: max-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #222;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 90%;
+}
+
 
 /**------------------------------------------------------------------------
  **                            SETTINGS

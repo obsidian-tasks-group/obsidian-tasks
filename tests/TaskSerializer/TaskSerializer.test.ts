@@ -70,6 +70,8 @@ describe('TaskSerializer Example', () => {
                 doneDate: null,
                 cancelledDate: null,
                 recurrence: null,
+                blockedBy: [],
+                id: '',
             };
         }
 

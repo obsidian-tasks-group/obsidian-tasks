@@ -140,6 +140,10 @@ export class Task {
     public readonly cancelledDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
+
+    public readonly blockedBy: string[];
+    public readonly id: string;
+
     /** The blockLink is a "^" annotation after the dates/recurrence rules.
      * Any non-empty value must begin with ' ^'. */
     public readonly blockLink: string;
@@ -169,6 +173,8 @@ export class Task {
         doneDate,
         cancelledDate,
         recurrence,
+        blockedBy,
+        id,
         blockLink,
         tags,
         originalMarkdown,
@@ -188,6 +194,8 @@ export class Task {
         doneDate: moment.Moment | null;
         cancelledDate: moment.Moment | null;
         recurrence: Recurrence | null;
+        blockedBy: string[] | [];
+        id: string;
         blockLink: string;
         tags: string[] | [];
         originalMarkdown: string;
@@ -212,6 +220,10 @@ export class Task {
         this.cancelledDate = cancelledDate;
 
         this.recurrence = recurrence;
+
+        this.blockedBy = blockedBy;
+        this.id = id;
+
         this.blockLink = blockLink;
         this.originalMarkdown = originalMarkdown;
 
@@ -798,9 +810,11 @@ export class Task {
             'priority',
             'blockLink',
             'scheduledDateIsInferred',
+            'id',
+            'blockedBy',
         ];
         for (const el of args) {
-            if (this[el] !== other[el]) return false;
+            if (this[el]?.toString() !== other[el]?.toString()) return false;
         }
 
         if (!this.status.identicalTo(other.status)) {

@@ -8,11 +8,15 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
+    import { computePosition, flip, offset, shift, size } from "@floating-ui/dom";
+    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../TaskDependency";
+    import { replaceTaskWithTasks } from "../File";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
+    export let allTasks: Task[];
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -40,6 +44,8 @@
         doneDate: string;
         cancelledDate: string,
         forwardOnly: boolean;
+        blockedBy: Task[];
+        blocking: Task[];
     } = {
         description: '',
         status: Status.TODO,
@@ -51,7 +57,9 @@
         dueDate: '',
         doneDate: '',
         cancelledDate: '',
-        forwardOnly: true
+        forwardOnly: true,
+        blockedBy: [],
+        blocking: []
     };
 
     let isDescriptionValid: boolean = true;
@@ -81,7 +89,22 @@
     let withAccessKeys: boolean = true;
     let formIsValid: boolean = true;
 
-    // 'weekend' abbreviation ommitted due to lack of space.
+    let blockedBySearch: string = '';
+    let blockedBySearchResults: Task[] | null = null;
+    let blockedBySearchIndex: number | null = 0;
+
+    let originalBlocking: Task[] = [];
+
+    let blockingSearch: string = '';
+    let blockingSearchResults: Task[] | null = null;
+    let blockingSearchIndex: number | null = 0;
+
+    let displayResultsIfSearchEmpty = false;
+
+    let blockedByFocused = false;
+    let blockingFocused = false;
+
+    // 'weekend' abbreviation omitted due to lack of space.
     let datePlaceholder =
         "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
@@ -199,6 +222,145 @@
         return date;
     }
 
+    function addBlockedByTask(task: Task) {
+        editableTask.blockedBy = [...editableTask.blockedBy, task];
+        blockedBySearch = '';
+        blockedByFocused = false;
+    }
+
+    function removeBlockedByTask(task: Task) {
+        editableTask.blockedBy = editableTask.blockedBy.filter(item => item !== task)
+    }
+
+    function addBlockingTask(task: Task) {
+        editableTask.blocking = [...editableTask.blocking, task];
+        blockingSearch = '';
+        blockingFocused = false;
+    }
+
+    function removeBlockingTask(task: Task) {
+        editableTask.blocking = editableTask.blocking.filter(item => item !== task)
+    }
+
+    async function serialiseTaskId(task: Task) {
+        if (task.id !== "") return task;
+
+        const tasksWithId = allTasks.filter(task => task.id !== "");
+
+        const updatedTask = ensureTaskHasId(task, tasksWithId.map(task => task.id));
+
+        await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
+
+        return updatedTask;
+    }
+
+    function generateSearchResults(search: string) {
+        if (!search && !displayResultsIfSearchEmpty) return [];
+
+        displayResultsIfSearchEmpty = false;
+
+        let results = allTasks.filter(task => task.description.toLowerCase().includes(search.toLowerCase()));
+
+        // remove itself, and tasks this task already has a relationship with from results
+        results = results.filter((item) => {
+            // line number is unavailable for the task being edited
+            // Known issue - filters out duplicate lines in task file
+            const sameFile = item.description === task.description &&
+                item.taskLocation.path === task.taskLocation.path &&
+                item.originalMarkdown === task.originalMarkdown
+
+            return ![...editableTask.blockedBy, ...editableTask.blocking].includes(item) && !sameFile;
+        });
+
+        // search results favour tasks from the same file as this task
+        results.sort((a, b) => {
+            const aInSamePath = a.taskLocation.path === task.taskLocation.path;
+            const bInSamePath = b.taskLocation.path === task.taskLocation.path;
+
+            // prioritise tasks close to this task in the same file
+            if (aInSamePath && bInSamePath) {
+                return Math.abs(a.taskLocation.lineNumber - task.taskLocation.lineNumber)
+                    - Math.abs(b.taskLocation.lineNumber - task.taskLocation.lineNumber);
+            } else if (aInSamePath) {
+                return -1;
+            } else if (bInSamePath) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
+        return results.slice(0,20);
+    }
+
+    function taskKeydown(e: KeyboardEvent, field: "blockedBy" | "blocking") {
+        const resultsList = field === "blockedBy" ? blockedBySearchResults : blockingSearchResults;
+        let searchIndex = field === "blockedBy" ? blockedBySearchIndex : blockingSearchIndex;
+
+        if (resultsList === null) return;
+
+        switch(e.key) {
+            case "ArrowUp":
+                e.preventDefault();
+                if (searchIndex === 0 || searchIndex === null) {
+                    searchIndex = resultsList.length - 1;
+                } else {
+                    searchIndex -= 1;
+                }
+                break;
+            case "ArrowDown":
+                e.preventDefault();
+                if (searchIndex === resultsList.length - 1 || searchIndex === null) {
+                    searchIndex = 0;
+                } else {
+                    searchIndex += 1;
+                }
+                break;
+            case "Enter":
+                if (searchIndex !== null) {
+                    e.preventDefault();
+                    if (field === "blockedBy") {
+                        addBlockedByTask(resultsList[searchIndex]);
+                        searchIndex = null;
+                        blockedByFocused = false
+                    }
+                    else {
+                        addBlockingTask(resultsList[searchIndex]);
+                        searchIndex = null;
+                        blockingFocused = false
+                    }
+                } else {
+                    _onDescriptionKeyDown(e);
+                }
+                break;
+            default:
+                searchIndex = 0;
+                break;
+        }
+
+        if (field === "blockedBy") {
+            blockedBySearchIndex = searchIndex;
+            if (blockedBySearchIndex !== null) {
+                blockedByContent?.getElementsByTagName('li')[blockedBySearchIndex]?.scrollIntoView(false)
+            }
+        } else {
+            blockingSearchIndex = searchIndex;
+            if (blockingSearchIndex !== null) {
+                blockingContent?.getElementsByTagName('li')[blockingSearchIndex]?.scrollIntoView(false)
+            }
+        }
+    }
+
+    function onBlockedByFocused() {
+        blockedByFocused = true;
+        displayResultsIfSearchEmpty = true;
+    }
+
+    function onBlockingFocused() {
+        blockingFocused = true;
+        displayResultsIfSearchEmpty = true;
+    }
+
     $: accesskey = (key: string) => withAccessKeys ? key : null;
     $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid && isCancelledDateValid && isCreatedDateValid && isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
@@ -264,6 +426,76 @@
         }
     }
 
+    $: {
+        blockedBySearchResults = blockedByFocused ? generateSearchResults(blockedBySearch) : null;
+    }
+
+    $: {
+        blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch) : null;
+    }
+
+
+    let depInputWidth: number;
+
+    function positionDropdown(ref: HTMLElement, content: HTMLElement) {
+        if (!ref || !content) return;
+
+        computePosition(ref, content, {
+            middleware: [
+                offset(6),
+                shift(),
+                flip(),
+                size({
+                    apply() {
+                        content && Object.assign(content.style, { width: `${depInputWidth}px` });
+                    },
+                }),
+            ],
+        }).then(({ x, y }) => {
+            Object.assign(content.style, {
+                left: `${x}px`,
+                top: `${y}px`,
+            });
+        });
+    }
+
+    let blockedByRef: HTMLElement;
+    let blockedByContent: HTMLElement;
+
+    $: {
+        positionDropdown(blockedByRef, blockedByContent);
+    }
+
+    let blockingRef: HTMLElement;
+    let blockingContent: HTMLElement;
+
+    $: {
+        positionDropdown(blockingRef, blockingContent);
+    }
+
+    function showDescriptionTooltip(element: HTMLElement, text: string) {
+        const tooltip = element.createDiv();
+        tooltip.addClasses(['tooltip', 'pop-up']);
+        tooltip.innerText = text;
+
+        computePosition(element, tooltip, {
+            placement: "top",
+            middleware: [
+                offset(-18),
+                shift()
+            ]
+        }).then(({x, y}) => {
+            Object.assign(tooltip.style, {
+                left: `${x}px`,
+                top: `${y}px`,
+            });
+        });
+
+        element.addEventListener('mouseleave', () => {
+            tooltip.remove();
+        });
+    }
+
     onMount(() => {
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
@@ -287,6 +519,18 @@
             priority = 'highest';
         }
 
+        const blockedBy: Task[] = [];
+
+        for (const taskId of task.blockedBy) {
+            const depTask = allTasks.find(cacheTask => cacheTask.id === taskId);
+
+            if (!depTask) continue;
+
+            blockedBy.push(depTask);
+        }
+
+        originalBlocking = allTasks.filter(cacheTask => cacheTask.blockedBy.includes(task.id));
+
         editableTask = {
             // NEW_TASK_FIELD_EDIT_REQUIRED
             description,
@@ -300,6 +544,8 @@
             doneDate: new TasksDate(task.doneDate).formatAsDate(),
             cancelledDate: new TasksDate(task.cancelledDate).formatAsDate(),
             forwardOnly: true,
+            blockedBy: blockedBy,
+            blocking: originalBlocking
         };
         setTimeout(() => {
             descriptionInput.focus();
@@ -334,7 +580,13 @@
         setTimeout(() => { editableTask.description = editableTask.description.replace(/[\r\n]+/g, ' ')}, 0);
     }
 
-    const _onSubmit = () => {
+    const _displayableFilePath = (path: string) => {
+        if (path === task.taskLocation.path) return "";
+
+        return path.slice(0,-3);
+    }
+
+    const _onSubmit = async () => {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
@@ -380,6 +632,27 @@
                 parsedPriority = Priority.None;
         }
 
+        let blockedByWithIds = [];
+
+        for (const depTask of editableTask.blockedBy) {
+            const newDep = await serialiseTaskId(depTask);
+            blockedByWithIds.push(newDep);
+        }
+
+        let id = task.id;
+        let removedBlocking: Task[] = [];
+        let addedBlocking: Task[] = [];
+
+        if (editableTask.blocking.toString() !== originalBlocking.toString() || editableTask.blocking.length !== 0) {
+            if (task.id === "") {
+                id = generateUniqueId(allTasks.filter(task => task.id !== "").map(task => task.id));
+            }
+
+            removedBlocking = originalBlocking.filter(task => !editableTask.blocking.includes(task))
+
+            addedBlocking = editableTask.blocking.filter(task => !originalBlocking.includes(task))
+        }
+
         const updatedTask = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             ...task,
@@ -393,7 +666,19 @@
             doneDate,
             createdDate,
             cancelledDate,
+            blockedBy: blockedByWithIds.map(task => task.id),
+            id
         });
+
+        for (const blocking of removedBlocking) {
+            const newParent = removeDependency(blocking, updatedTask)
+            await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
+        }
+
+        for (const blocking of addedBlocking) {
+            const newParent = addDependencyToParent(blocking, updatedTask)
+            await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
+        }
 
         onSubmit([updatedTask]);
     };
@@ -461,10 +746,11 @@
                 id="recurrence"
                 type="text"
                 class:tasks-modal-error={!isRecurrenceValid}
+                class="input"
                 placeholder="Try 'every 2 weeks on Thursday'."
                 accesskey={accesskey("r")}
             />
-            <code>{recurrenceSymbol} {@html parsedRecurrence}</code>
+            <code class="results">{recurrenceSymbol} {@html parsedRecurrence}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Due Date  -->
@@ -475,11 +761,12 @@
                 bind:value={editableTask.dueDate}
                 id="due"
                 type="text"
+                class="input"
                 class:tasks-modal-error={!isDueDateValid}
                 placeholder={datePlaceholder}
                 accesskey={accesskey("d")}
             />
-            <code>{dueDateSymbol} {@html parsedDueDate}</code>
+            <code class="results">{dueDateSymbol} {@html parsedDueDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Scheduled Date  -->
@@ -491,10 +778,11 @@
                 id="scheduled"
                 type="text"
                 class:tasks-modal-error={!isScheduledDateValid}
+                class="input"
                 placeholder={datePlaceholder}
                 accesskey={accesskey("s")}
             />
-            <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
+            <code class="results">{scheduledDateSymbol} {@html parsedScheduledDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Start Date  -->
@@ -506,10 +794,11 @@
                 id="start"
                 type="text"
                 class:tasks-modal-error={!isStartDateValid}
+                class="input"
                 placeholder={datePlaceholder}
                 accesskey={accesskey("a")}
             />
-            <code>{startDateSymbol} {@html parsedStartDate}</code>
+            <code class="results">{startDateSymbol} {@html parsedStartDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Only future dates  -->
@@ -522,10 +811,124 @@
                     bind:checked={editableTask.forwardOnly}
                     id="forwardOnly"
                     type="checkbox"
-                    class="task-list-item-checkbox tasks-modal-checkbox"
+                    class="input task-list-item-checkbox tasks-modal-checkbox"
                     accesskey={accesskey("f")}
                 />
             </div>
+
+            {#if allTasks.length > 0}
+                <!-- --------------------------------------------------------------------------- -->
+                <!--  Blocked By Tasks  -->
+                <!-- --------------------------------------------------------------------------- -->
+                <label for="start">Blocked B<span class="accesskey">y</span></label>
+                <!-- svelte-ignore a11y-accesskey -->
+                <span class="input" bind:clientWidth={depInputWidth}>
+                    <input
+                        bind:this={blockedByRef}
+                        bind:value={blockedBySearch}
+                        on:keydown={(e) => taskKeydown(e, "blockedBy")}
+                        on:focus={onBlockedByFocused}
+                        on:blur={() => blockedByFocused = false}
+                        accesskey={accesskey("y")}
+                        id="blockedBy"
+                        type="text"
+                        placeholder="Type to search..."
+                    />
+                </span>
+                {#if blockedBySearchResults && blockedBySearchResults.length !== 0}
+                    <ul class="suggested-tasks"
+                        bind:this={blockedByContent}
+                        on:mouseleave={() => blockedBySearchIndex = null}>
+                        {#each blockedBySearchResults as searchTask, index}
+                            {@const filepath = _displayableFilePath(searchTask.taskLocation.path)}
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <li on:mousedown={() => addBlockedByTask(searchTask)}
+                                class:selected={blockedBySearchIndex !== null && index === blockedBySearchIndex}
+                                on:mouseenter={() => blockedBySearchIndex = index}
+                            >
+                                <div class="{filepath ? 'dependency-name-shared' : 'dependency-name'}"
+                                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, searchTask.descriptionWithoutTags)}>
+                                    [{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}
+                                </div>
+                                {#if filepath}
+                                    <div class="dependency-location"
+                                         on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}>
+                                        {filepath}
+                                    </div>
+                                {/if}
+                            </li>
+                        {/each}
+                    </ul>
+                {/if}
+                <div class="chip-container results">
+                    {#each editableTask.blockedBy as task}
+                        <div class="chip"
+                             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, task.descriptionWithoutTags)}>
+                            <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
+
+                            <button on:click={() => removeBlockedByTask(task)} type="button" class="chip-close">
+                                <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                            </button>
+                        </div>
+                    {/each}
+                </div>
+
+                <!-- --------------------------------------------------------------------------- -->
+                <!--  Blocking Tasks  -->
+                <!-- --------------------------------------------------------------------------- -->
+                <label for="start" class="accesskey-first">Blocking</label>
+                <!-- svelte-ignore a11y-accesskey -->
+                <input
+                    bind:this={blockingRef}
+                    bind:value={blockingSearch}
+                    on:keydown={(e) => taskKeydown(e, "blocking")}
+                    on:focus={onBlockingFocused}
+                    on:blur={() => blockingFocused = false}
+                    accesskey={accesskey("b")}
+                    id="blocking"
+                    class="input"
+                    type="text"
+                    placeholder="Type to search..."
+                />
+                {#if blockingSearchResults && blockingSearchResults.length !== 0}
+                    <ul class="suggested-tasks"
+                        bind:this={blockingContent}
+                        on:mouseleave={() => blockingSearchIndex = null}>
+                        {#each blockingSearchResults as searchTask, index}
+                            {@const filepath = _displayableFilePath(searchTask.taskLocation.path)}
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <li on:mousedown={() => addBlockingTask(searchTask)}
+                                class:selected={blockingSearch !== null && index === blockingSearchIndex}
+                                on:mouseenter={() => blockingSearchIndex = index}>
+                                <div class="{filepath ? 'dependency-name-shared' : 'dependency-name'}"
+                                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, searchTask.descriptionWithoutTags)}>
+                                    [{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}
+                                </div>
+                                {#if filepath}
+                                    <div class="dependency-location"
+                                         on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}>
+                                        {filepath}
+                                    </div>
+                                {/if}
+                            </li>
+                        {/each}
+                    </ul>
+                {/if}
+                <div class="chip-container results">
+                    {#each editableTask.blocking as task}
+                        <div class="chip"
+                             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, task.descriptionWithoutTags)}>
+                            <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
+
+                            <button on:click={() => removeBlockingTask(task)} type="button" class="chip-close">
+                                <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                            </button>
+                        </div>
+                    {/each}
+                </div>
+            {:else}
+                <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
+            {/if}
         </div>
 
         <!-- --------------------------------------------------------------------------- -->
@@ -573,9 +976,10 @@
                 id="created"
                 type="text"
                 class:tasks-modal-error={!isCreatedDateValid}
+                class="input"
                 placeholder={datePlaceholder}
             />
-            <code>{createdDateSymbol} {@html parsedCreatedDate}</code>
+            <code class="results">{createdDateSymbol} {@html parsedCreatedDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done Date  -->
@@ -586,9 +990,10 @@
                 id="done"
                 type="text"
                 class:tasks-modal-error={!isDoneDateValid}
+                class="input"
                 placeholder={datePlaceholder}
             />
-            <code>{doneDateSymbol} {@html parsedDoneDate}</code>
+            <code class="results">{doneDateSymbol} {@html parsedDoneDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Cancelled Date  -->
@@ -599,9 +1004,10 @@
                 id="cancelled"
                 type="text"
                 class:tasks-modal-error={!isCancelledDateValid}
+                class="input"
                 placeholder={datePlaceholder}
             />
-            <code>{cancelledDateSymbol} {@html parsedCancelledDate}</code>
+            <code class="results">{cancelledDateSymbol} {@html parsedCancelledDate}</code>
         </div>
 
         <div class="tasks-modal-section tasks-modal-buttons">
