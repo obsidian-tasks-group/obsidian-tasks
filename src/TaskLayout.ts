@@ -12,6 +12,8 @@ export type TaskLayoutComponent =
     | 'dueDate'
     | 'doneDate'
     | 'cancelledDate'
+    | 'blockedBy'
+    | 'id'
     | 'blockLink';
 
 export const taskLayoutComponents: TaskLayoutComponent[] = [
@@ -25,6 +27,8 @@ export const taskLayoutComponents: TaskLayoutComponent[] = [
     'dueDate',
     'cancelledDate',
     'doneDate',
+    'blockedBy',
+    'id',
     'blockLink',
 ];
 

@@ -63,6 +63,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.5.3",
     "boon-js": "^2.0.4",
     "chrono-node": "2.3.9",
     "eventemitter2": "^6.4.5",

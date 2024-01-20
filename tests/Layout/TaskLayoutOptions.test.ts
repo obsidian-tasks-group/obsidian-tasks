@@ -15,6 +15,8 @@ describe('TaskLayoutOptions', () => {
             dueDate
             cancelledDate
             doneDate
+            blockedBy
+            id
             blockLink"
         `);
 
@@ -68,6 +70,8 @@ describe('TaskLayoutOptions', () => {
             dueDate
             cancelledDate
             doneDate
+            blockedBy
+            id
             blockLink"
         `);
 
@@ -82,7 +86,9 @@ describe('TaskLayoutOptions', () => {
             startDate
             scheduledDate
             cancelledDate
-            doneDate"
+            doneDate
+            blockedBy
+            id"
         `);
     });
 
@@ -135,7 +141,9 @@ describe('TaskLayoutOptions', () => {
             scheduledDate
             dueDate
             cancelledDate
-            doneDate"
+            doneDate
+            blockedBy
+            id"
         `);
     });
 });

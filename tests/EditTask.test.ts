@@ -38,8 +38,8 @@ function constructSerialisingOnSubmit(task: Task) {
     return { waitForClose, onSubmit };
 }
 
-function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void) {
-    const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit });
+function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void, allTasks = [task]) {
+    const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit, allTasks });
     const { container } = result;
     expect(() => container).toBeTruthy();
     return { result, container };

@@ -25,8 +25,16 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
     const taskSerializer = new DefaultTaskSerializer(symbols);
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
-    const { startDateSymbol, createdDateSymbol, recurrenceSymbol, scheduledDateSymbol, dueDateSymbol, doneDateSymbol } =
-        symbols;
+    const {
+        startDateSymbol,
+        createdDateSymbol,
+        recurrenceSymbol,
+        scheduledDateSymbol,
+        dueDateSymbol,
+        doneDateSymbol,
+        idSymbol,
+        blockedBySymbol,
+    } = symbols;
 
     describe('deserialize', () => {
         it('should parse an empty string', () => {
@@ -62,6 +70,24 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             expect(taskDetails).toMatchTaskDetails({
                 recurrence: new RecurrenceBuilder().rule('every day').build(),
             });
+        });
+
+        it('should parse depends on one task', () => {
+            const id = `${blockedBySymbol} 123456`;
+            const taskDetails = deserialize(id);
+            expect(taskDetails).toMatchTaskDetails({ blockedBy: ['123456'] });
+        });
+
+        it('should parse depends on two tasks', () => {
+            const id = `${blockedBySymbol} 123456,abc123`;
+            const taskDetails = deserialize(id);
+            expect(taskDetails).toMatchTaskDetails({ blockedBy: ['123456', 'abc123'] });
+        });
+
+        it('should parse id', () => {
+            const id = `${idSymbol} Abcd0f`;
+            const taskDetails = deserialize(id);
+            expect(taskDetails).toMatchTaskDetails({ id: 'Abcd0f' });
         });
 
         it('should parse tags', () => {
@@ -110,6 +136,18 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 .build();
             const serialized = serialize(task);
             expect(serialized).toEqual(` ${recurrenceSymbol} every day`);
+        });
+
+        it('should serialize depends on', () => {
+            const task = new TaskBuilder().description('').blockedBy(['123456', 'abc123']).build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(` ${blockedBySymbol} 123456,abc123`);
+        });
+
+        it('should serialize id', () => {
+            const task = new TaskBuilder().description('').id('abcdef').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(` ${idSymbol} abcdef`);
         });
 
         it('should serialize tags', () => {

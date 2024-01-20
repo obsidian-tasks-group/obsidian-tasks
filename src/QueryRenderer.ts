@@ -1,5 +1,5 @@
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
-import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
 import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -18,13 +18,16 @@ import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import { PostponeMenu } from './ui/Menus/PostponeMenu';
+import type TasksPlugin from './main';
 
 export class QueryRenderer {
     private readonly app: App;
+    private plugin: TasksPlugin;
     private readonly events: TasksEvents;
 
-    constructor({ plugin, events }: { plugin: Plugin; events: TasksEvents }) {
+    constructor({ plugin, events }: { plugin: TasksPlugin; events: TasksEvents }) {
         this.app = plugin.app;
+        this.plugin = plugin;
         this.events = events;
 
         plugin.registerMarkdownCodeBlockProcessor('tasks', this._addQueryRenderChild.bind(this));
@@ -36,6 +39,7 @@ export class QueryRenderer {
         context.addChild(
             new QueryRenderChild({
                 app: this.app,
+                plugin: this.plugin,
                 events: this.events,
                 container: element,
                 source,
@@ -47,6 +51,7 @@ export class QueryRenderer {
 
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
+    private plugin: TasksPlugin;
     private readonly events: TasksEvents;
 
     /**
@@ -73,12 +78,14 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     constructor({
         app,
+        plugin,
         events,
         container,
         source,
         filePath,
     }: {
         app: App;
+        plugin: TasksPlugin;
         events: TasksEvents;
         container: HTMLElement;
         source: string;
@@ -87,6 +94,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         super(container);
 
         this.app = app;
+        this.plugin = plugin;
         this.events = events;
         this.source = source;
         this.filePath = filePath;
@@ -248,7 +256,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             }
 
             if (!this.query.queryLayoutOptions.hideEditButton) {
-                this.addEditButton(extrasSpan, task);
+                // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
+                this.addEditButton(extrasSpan, task, this.plugin.getTasks()!);
             }
 
             if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
@@ -268,7 +277,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         content.appendChild(taskList);
     }
 
-    private addEditButton(listItem: HTMLElement, task: Task) {
+    private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[]) {
         const editTaskPencil = listItem.createEl('a', {
             cls: 'tasks-edit',
             href: '#',
@@ -289,6 +298,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 app: this.app,
                 task,
                 onSubmit,
+                allTasks,
             });
             taskModal.open();
         });

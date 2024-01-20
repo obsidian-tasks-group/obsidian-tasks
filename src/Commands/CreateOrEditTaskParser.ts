@@ -89,6 +89,8 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             doneDate: null,
             cancelledDate: null,
             recurrence: null,
+            blockedBy: [],
+            id: '',
             blockLink: '',
             tags: [],
             originalMarkdown: '',
@@ -131,5 +133,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         originalMarkdown: '',
         // Not needed since the inferred status is always re-computed after submitting.
         scheduledDateIsInferred: false,
+        id: '',
+        blockedBy: [],
     });
 };

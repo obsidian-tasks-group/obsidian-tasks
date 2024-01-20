@@ -28,6 +28,8 @@ export interface DefaultTaskSerializerSymbols {
     readonly doneDateSymbol: string;
     readonly cancelledDateSymbol: string;
     readonly recurrenceSymbol: string;
+    readonly idSymbol: string;
+    readonly blockedBySymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
@@ -37,6 +39,8 @@ export interface DefaultTaskSerializerSymbols {
         doneDateRegex: RegExp;
         cancelledDateRegex: RegExp;
         recurrenceRegex: RegExp;
+        idRegex: RegExp;
+        blockedByRegex: RegExp;
     };
 }
 
@@ -61,6 +65,8 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
     recurrenceSymbol: '🔁',
+    blockedBySymbol: '⛔️',
+    idSymbol: '🆔',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
         // removed from the end until none are left.
@@ -72,8 +78,23 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
+        blockedByRegex: /⛔️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
+        idRegex: /🆔 *([a-z0-9]+)$/iu,
     },
 } as const;
+
+function symbolAndStringValue(shortMode: boolean, symbol: string, value: string) {
+    if (!value) return '';
+    return shortMode ? ' ' + symbol : ` ${symbol} ${value}`;
+}
+
+function symbolAndDateValue(shortMode: boolean, symbol: string, date: moment.Moment | null) {
+    if (!date) return '';
+    // We could call symbolAndStringValue() to remove a little code repetition,
+    // but doing so would do some wasted date-formatting when in 'short mode',
+    // so instead we repeat the check on shortMode value.
+    return shortMode ? ' ' + symbol : ` ${symbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
+}
 
 export class DefaultTaskSerializer implements TaskSerializer {
     constructor(public readonly symbols: DefaultTaskSerializerSymbols) {}
@@ -108,6 +129,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
             cancelledDateSymbol,
             recurrenceSymbol,
             dueDateSymbol,
+            blockedBySymbol,
+            idSymbol,
         } = this.symbols;
 
         switch (component) {
@@ -131,38 +154,27 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return priority;
             }
             case 'startDate':
-                if (!task.startDate) return '';
-                return shortMode
-                    ? ' ' + startDateSymbol
-                    : ` ${startDateSymbol} ${task.startDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, startDateSymbol, task.startDate);
             case 'createdDate':
-                if (!task.createdDate) return '';
-                return shortMode
-                    ? ' ' + createdDateSymbol
-                    : ` ${createdDateSymbol} ${task.createdDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, createdDateSymbol, task.createdDate);
             case 'scheduledDate':
-                if (!task.scheduledDate || task.scheduledDateIsInferred) return '';
-                return shortMode
-                    ? ' ' + scheduledDateSymbol
-                    : ` ${scheduledDateSymbol} ${task.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
+                if (task.scheduledDateIsInferred) return '';
+                return symbolAndDateValue(shortMode, scheduledDateSymbol, task.scheduledDate);
             case 'doneDate':
-                if (!task.doneDate) return '';
-                return shortMode
-                    ? ' ' + doneDateSymbol
-                    : ` ${doneDateSymbol} ${task.doneDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, doneDateSymbol, task.doneDate);
             case 'cancelledDate':
-                if (!task.cancelledDate) return '';
-                return shortMode
-                    ? ' ' + cancelledDateSymbol
-                    : ` ${cancelledDateSymbol} ${task.cancelledDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, cancelledDateSymbol, task.cancelledDate);
             case 'dueDate':
-                if (!task.dueDate) return '';
-                return shortMode
-                    ? ' ' + dueDateSymbol
-                    : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
+                return symbolAndDateValue(shortMode, dueDateSymbol, task.dueDate);
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
-                return shortMode ? ' ' + recurrenceSymbol : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
+                return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
+            case 'blockedBy': {
+                if (task.blockedBy.length === 0) return '';
+                return symbolAndStringValue(shortMode, blockedBySymbol, task.blockedBy.join(','));
+            }
+            case 'id':
+                return symbolAndStringValue(shortMode, idSymbol, task.id);
             case 'blockLink':
                 return task.blockLink ?? '';
             default:
@@ -219,6 +231,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
+        let id: string = '';
+        let blockedBy: string[] | [] = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
@@ -300,6 +314,25 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             }
 
+            const idMatch = line.match(TaskFormatRegularExpressions.idRegex);
+
+            if (idMatch != null) {
+                line = line.replace(TaskFormatRegularExpressions.idRegex, '').trim();
+                id = idMatch[1].trim();
+                matched = true;
+            }
+
+            const blockedByMatch = line.match(TaskFormatRegularExpressions.blockedByRegex);
+
+            if (blockedByMatch != null) {
+                line = line.replace(TaskFormatRegularExpressions.blockedByRegex, '').trim();
+                blockedBy = blockedByMatch[1]
+                    .replace(' ', '')
+                    .split(',')
+                    .filter((item) => item !== '');
+                matched = true;
+            }
+
             runs++;
         } while (matched && runs <= maxRuns);
 
@@ -329,6 +362,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDate,
             cancelledDate,
             recurrence,
+            id,
+            blockedBy,
             tags: Task.extractHashtags(line),
         };
     }

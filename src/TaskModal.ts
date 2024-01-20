@@ -7,11 +7,23 @@ import { Status } from './Status';
 export class TaskModal extends Modal {
     public readonly task: Task;
     public readonly onSubmit: (updatedTasks: Task[]) => void;
+    public readonly allTasks: Task[];
 
-    constructor({ app, task, onSubmit }: { app: App; task: Task; onSubmit: (updatedTasks: Task[]) => void }) {
+    constructor({
+        app,
+        task,
+        onSubmit,
+        allTasks,
+    }: {
+        app: App;
+        task: Task;
+        onSubmit: (updatedTasks: Task[]) => void;
+        allTasks: Task[];
+    }) {
         super(app);
 
         this.task = task;
+        this.allTasks = allTasks;
         this.onSubmit = (updatedTasks: Task[]) => {
             updatedTasks.length && onSubmit(updatedTasks);
             this.close();
@@ -29,7 +41,7 @@ export class TaskModal extends Modal {
 
         new EditTask({
             target: contentEl,
-            props: { task: this.task, statusOptions: statusOptions, onSubmit: this.onSubmit },
+            props: { task: this.task, statusOptions: statusOptions, onSubmit: this.onSubmit, allTasks: this.allTasks },
         });
     }
 

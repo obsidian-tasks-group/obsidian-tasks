@@ -48,6 +48,17 @@ For more information, see [[Priority]].
 
 For more information, see [[Recurring Tasks]].
 
+## Tasks Emoji  Format for Dependencies
+
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_tasksPluginEmoji-snippet.approved.md -->
+```md
+- [ ] do this first 🆔 dcf64c
+- [ ] do this after first and some other task ⛔️ dcf64c,0h17ye
+```
+<!-- endSnippet -->
+
+For more information, see [[Task Dependencies]].
+
 ## Limitations of Tasks Emoji Format
 
 ### Non-breaking spaces: NBSP characters
