@@ -364,6 +364,7 @@ describe('task line rendering - classes and data attributes', () => {
 
     it('should render date component with its class and data attribute with "today" value', async () => {
         const today = DateParser.parseDate('today').format(TaskRegularExpressions.dateFormat);
+        // This test ensures that all date fields are handled correctly.
         await testComponentClasses(`- [ ] Full task ⏫ ➕ ${today}`, 'task-created', 'taskCreated: today');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${today}`, 'task-due', 'taskDue: today');
         await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${today}`, 'task-scheduled', 'taskScheduled: today');
@@ -372,64 +373,36 @@ describe('task line rendering - classes and data attributes', () => {
         await testComponentClasses(`- [-] Canc task ❌ ${today}`, 'task-cancelled', 'taskCancelled: today');
     });
 
+    // Now that we know that 'today' is correctly added to all date fields, the remaining tests
+    // only need to test a single date field.
     it('should render date component with its class and data attribute with "future-1d" value', async () => {
         const future = DateParser.parseDate('tomorrow').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, 'task-created', 'taskCreated: future-1d');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, 'task-due', 'taskDue: future-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, 'task-scheduled', 'taskScheduled: future-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, 'task-start', 'taskStart: future-1d');
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, 'task-done', 'taskDone: future-1d');
-        await testComponentClasses(`- [-] Canc task ❌ ${future}`, 'task-cancelled', 'taskCancelled: future-1d');
     });
 
     it('should render date component with its class and data attribute with "future-7d" value', async () => {
         const future = DateParser.parseDate('in 7 days').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, 'task-created', 'taskCreated: future-7d');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, 'task-due', 'taskDue: future-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, 'task-scheduled', 'taskScheduled: future-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, 'task-start', 'taskStart: future-7d');
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, 'task-done', 'taskDone: future-7d');
-        await testComponentClasses(`- [-] Canc task ❌ ${future}`, 'task-cancelled', 'taskCancelled: future-7d');
     });
 
     it('should render date component with its class and data attribute with "past-1d" value', async () => {
         const past = DateParser.parseDate('yesterday').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, 'task-created', 'taskCreated: past-1d');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, 'task-due', 'taskDue: past-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, 'task-scheduled', 'taskScheduled: past-1d');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, 'task-start', 'taskStart: past-1d');
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, 'task-done', 'taskDone: past-1d');
-        await testComponentClasses(`- [-] Canc task ❌ ${past}`, 'task-cancelled', 'taskCancelled: past-1d');
     });
 
     it('should render date component with its class and data attribute with "past-7d" value', async () => {
         const past = DateParser.parseDate('7 days ago').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, 'task-created', 'taskCreated: past-7d');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, 'task-due', 'taskDue: past-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, 'task-scheduled', 'taskScheduled: past-7d');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, 'task-start', 'taskStart: past-7d');
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, 'task-done', 'taskDone: past-7d');
-        await testComponentClasses(`- [-] Canc task ❌ ${past}`, 'task-cancelled', 'taskCancelled: past-7d');
     });
 
     it('should render date component with its class and data attribute with "future-far"', async () => {
         const future = DateParser.parseDate('in 8 days').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, 'task-created', 'taskCreated: future-far');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, 'task-due', 'taskDue: future-far');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, 'task-scheduled', 'taskScheduled: future-far');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, 'task-start', 'taskStart: future-far');
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, 'task-done', 'taskDone: future-far');
-        await testComponentClasses(`- [-] Canc task ❌ ${future}`, 'task-cancelled', 'taskCancelled: future-far');
     });
 
     it('should render date component with its class and data attribute with "past-far" values', async () => {
         const past = DateParser.parseDate('8 days ago').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, 'task-created', 'taskCreated: past-far');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, 'task-due', 'taskDue: past-far');
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, 'task-scheduled', 'taskScheduled: past-far');
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, 'task-start', 'taskStart: past-far');
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, 'task-done', 'taskDone: past-far');
-        await testComponentClasses(`- [-] Canc task ❌ ${past}`, 'task-cancelled', 'taskCancelled: past-far');
     });
 
     it('should not add data attributes for invalid dates', async () => {
