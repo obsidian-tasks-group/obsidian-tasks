@@ -2,7 +2,7 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { getPrintableSymbol } from '../../src/Statuses/StatusRegistryReport';
 import type { Status } from '../../src/Statuses/Status';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
-import type { Task } from '../../src/Task';
+import type { Task } from '../../src/Task/Task';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import * as FilterParser from '../../src/Query/FilterParser';

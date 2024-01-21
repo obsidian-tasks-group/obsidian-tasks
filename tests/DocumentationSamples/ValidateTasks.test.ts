@@ -1,6 +1,6 @@
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
-import { Task } from '../../src/Task';
+import { Task } from '../../src/Task/Task';
 
 describe('validate-tasks', () => {
     it('find-unread-emojis', () => {

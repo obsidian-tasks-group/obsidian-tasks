@@ -1,4 +1,4 @@
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import { StatusTypeField } from '../Filter/StatusTypeField';
 import { DueDateField } from '../Filter/DueDateField';
 import { PriorityField } from '../Filter/PriorityField';

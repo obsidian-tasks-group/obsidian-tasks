@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { PriorityTools } from './lib/PriorityTools';
-import type { Task } from './Task';
+import type { Task } from './Task/Task';
 import type { TaskLayoutComponent } from './TaskLayout';
 
 export class TaskFieldRenderer {

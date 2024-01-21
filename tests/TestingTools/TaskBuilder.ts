@@ -1,11 +1,11 @@
 // Builder
 import type { Moment } from 'moment';
 import { Status } from '../../src/Statuses/Status';
-import { Priority, Task } from '../../src/Task';
-import { Recurrence } from '../../src/Recurrence';
+import { Priority, Task } from '../../src/Task/Task';
+import { Recurrence } from '../../src/Task/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { TaskLocation } from '../../src/TaskLocation';
+import { TaskLocation } from '../../src/Task/TaskLocation';
 
 /**
  * A fluent class for creating tasks for tests.

@@ -4,7 +4,7 @@ import type { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { Query } from '../../src/Query/Query';
 import { explainResults } from '../../src/lib/QueryRendererHelper';
-import type { Task } from '../../src/Task';
+import type { Task } from '../../src/Task/Task';
 import { verifyMarkdown } from './VerifyMarkdown';
 
 export function printIteration<T1>(func: <T1>(t1: T1) => any, params1: T1[]): string {

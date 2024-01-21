@@ -1,4 +1,9 @@
-import { addDependency, ensureTaskHasId, removeDependency, setDependenciesOnTasksWithIds } from '../src/TaskDependency';
+import {
+    addDependency,
+    ensureTaskHasId,
+    removeDependency,
+    setDependenciesOnTasksWithIds,
+} from '../src/Task/TaskDependency';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 describe('TaskDependency', () => {

@@ -1,5 +1,5 @@
 import { diff } from 'jest-diff';
-import type { Task } from '../../src/Task';
+import type { Task } from '../../src/Task/Task';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import { fromLine } from '../TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';

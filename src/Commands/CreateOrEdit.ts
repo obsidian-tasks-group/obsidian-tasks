@@ -1,6 +1,6 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
 import { TaskModal } from '../TaskModal';
-import type { Task } from '../Task';
+import type { Task } from '../Task/Task';
 import { DateFallback } from '../DateFallback';
 import { taskFromLine } from './CreateOrEditTaskParser';
 

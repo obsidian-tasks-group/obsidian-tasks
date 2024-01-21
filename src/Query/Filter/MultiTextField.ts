@@ -1,4 +1,4 @@
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Grouper } from '../Group/Grouper';
 import { TextField } from './TextField';

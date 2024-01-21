@@ -2,7 +2,7 @@ import { parse as boonParse } from 'boon-js';
 import type { PostfixExpression } from 'boon-js';
 
 import { parseFilter } from '../FilterParser';
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import { Explanation } from '../Explain/Explanation';
 import type { SearchInfo } from '../SearchInfo';
 import { Field } from './Field';

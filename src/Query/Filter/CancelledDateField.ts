@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import { DateField } from './DateField';
 
 /**

@@ -1,5 +1,5 @@
 import type { App } from 'obsidian';
-import type { Task } from '../../src/Task';
+import type { Task } from '../../src/Task/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { createTaskLineModal } from '../../src/Api/createTaskLineModal';
 import type { ITaskModal, taskModalFactory } from '../../src/Api/createTaskLineModal';

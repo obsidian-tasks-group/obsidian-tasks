@@ -1,6 +1,6 @@
 import type { Moment, unitOfTime } from 'moment';
 import { DateFallback } from '../DateFallback';
-import { Task } from '../Task';
+import { Task } from '../Task/Task';
 import { TasksDate } from './TasksDate';
 
 export function shouldShowPostponeButton(task: Task) {

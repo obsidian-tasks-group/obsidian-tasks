@@ -1,4 +1,4 @@
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 
 /**
  * An instruction interface, for editing a {@link Task} object.

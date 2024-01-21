@@ -1,4 +1,4 @@
-import { Priority, Task } from '../../Task';
+import { Priority, Task } from '../../Task/Task';
 import { PriorityTools } from '../../lib/PriorityTools';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 

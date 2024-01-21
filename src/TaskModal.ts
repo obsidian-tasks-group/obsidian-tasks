@@ -1,6 +1,6 @@
 import { App, Modal } from 'obsidian';
 import EditTask from './ui/EditTask.svelte';
-import type { Task } from './Task';
+import type { Task } from './Task/Task';
 import { StatusRegistry } from './Statuses/StatusRegistry';
 import { Status } from './Statuses/Status';
 

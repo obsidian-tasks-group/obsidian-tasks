@@ -1,5 +1,5 @@
 import { SearchInfo } from '../../src/Query/SearchInfo';
-import type { Task } from '../../src/Task';
+import type { Task } from '../../src/Task/Task';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import { Filter } from '../../src/Query/Filter/Filter';

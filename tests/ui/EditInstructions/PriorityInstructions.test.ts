@@ -1,5 +1,5 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { Priority } from '../../../src/Task';
+import { Priority } from '../../../src/Task/Task';
 import { SetPriority, allPriorityInstructions } from '../../../src/ui/EditInstructions/PriorityInstructions';
 
 describe('SetPriority', () => {

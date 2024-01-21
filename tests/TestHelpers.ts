@@ -1,9 +1,9 @@
-import { Priority, Task } from '../src/Task';
-import { TaskLocation } from '../src/TaskLocation';
+import { Priority, Task } from '../src/Task/Task';
+import { TaskLocation } from '../src/Task/TaskLocation';
 import { PriorityTools } from '../src/lib/PriorityTools';
 import { Status } from '../src/Statuses/Status';
 import { StatusType } from '../src/Statuses/StatusConfiguration';
-import { Recurrence } from '../src/Recurrence';
+import { Recurrence } from '../src/Task/Recurrence';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 export function fromLine({

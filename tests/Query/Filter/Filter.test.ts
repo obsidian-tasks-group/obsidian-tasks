@@ -1,7 +1,7 @@
 import { Filter } from '../../../src/Query/Filter/Filter';
 import { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import type { FilterFunction } from '../../../src/Query/Filter/Filter';
-import type { Task } from '../../../src/Task';
+import type { Task } from '../../../src/Task/Task';
 import { Explanation } from '../../../src/Query/Explain/Explanation';
 
 describe('Filter', () => {

@@ -1,8 +1,8 @@
 import type { Moment } from 'moment';
 import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import type { TaskLayoutComponent } from '../TaskLayout';
-import { Recurrence } from '../Recurrence';
-import { Priority, Task, TaskRegularExpressions } from '../Task';
+import { Recurrence } from '../Task/Recurrence';
+import { Priority, Task, TaskRegularExpressions } from '../Task/Task';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}

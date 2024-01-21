@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { DateRange } from '../DateRange';
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sort/Sorter';

@@ -4,8 +4,8 @@
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
 import { Status } from '../../src/Statuses/Status';
-import { Priority, Task } from '../../src/Task';
-import { TaskLocation } from '../../src/TaskLocation';
+import { Priority, Task } from '../../src/Task/Task';
+import { TaskLocation } from '../../src/Task/TaskLocation';
 import { fieldCreators } from '../../src/Query/FilterParser';
 import type { Field } from '../../src/Query/Filter/Field';
 import type { BooleanField } from '../../src/Query/Filter/BooleanField';

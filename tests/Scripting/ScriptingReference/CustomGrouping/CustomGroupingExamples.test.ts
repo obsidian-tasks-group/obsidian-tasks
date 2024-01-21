@@ -4,7 +4,7 @@
 
 import moment from 'moment';
 
-import type { Task } from '../../../../src/Task';
+import type { Task } from '../../../../src/Task/Task';
 import { SampleTasks } from '../../../TestHelpers';
 import {
     type CustomPropertyDocsTestData,

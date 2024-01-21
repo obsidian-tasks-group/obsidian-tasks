@@ -8,7 +8,7 @@ window.moment = moment;
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Comparator } from '../../../src/Query/Sort/Sorter';
 import { Sorter } from '../../../src/Query/Sort/Sorter';
-import { Task } from '../../../src/Task';
+import { Task } from '../../../src/Task/Task';
 import { StatusField } from '../../../src/Query/Filter/StatusField';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import { PathField } from '../../../src/Query/Filter/PathField';

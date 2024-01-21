@@ -12,7 +12,7 @@ import type { GroupDisplayHeading } from './Query/Group/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/Group/TaskGroups';
 import { postponeButtonTitle, shouldShowPostponeButton } from './Scripting/Postponer';
-import type { Task } from './Task';
+import type { Task } from './Task/Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { TaskModal } from './TaskModal';
