@@ -2,8 +2,8 @@ import { EditorView, ViewPlugin } from '@codemirror/view';
 import type { PluginValue } from '@codemirror/view';
 import { Notice } from 'obsidian';
 
-import { Task } from './Task/Task';
-import { TaskLocation } from './Task/TaskLocation';
+import { Task } from '../Task/Task';
+import { TaskLocation } from '../Task/TaskLocation';
 
 export const newLivePreviewExtension = () => {
     return ViewPlugin.fromClass(LivePreviewExtension);

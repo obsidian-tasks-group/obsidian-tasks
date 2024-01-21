@@ -1,12 +1,12 @@
 import { Plugin } from 'obsidian';
 
-import { Cache } from './Cache';
+import { Cache } from './Obsidian/Cache';
 import { Commands } from './Commands';
 import { GlobalQuery } from './Config/GlobalQuery';
-import { TasksEvents } from './TasksEvents';
-import { initializeFile } from './File';
-import { InlineRenderer } from './InlineRenderer';
-import { newLivePreviewExtension } from './LivePreviewExtension';
+import { TasksEvents } from './Obsidian/TasksEvents';
+import { initializeFile } from './Obsidian/File';
+import { InlineRenderer } from './Obsidian/InlineRenderer';
+import { newLivePreviewExtension } from './Obsidian/LivePreviewExtension';
 import { QueryRenderer } from './QueryRenderer';
 import { getSettings, updateSettings } from './Config/Settings';
 import { SettingsTab } from './Config/SettingsTab';

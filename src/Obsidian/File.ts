@@ -1,9 +1,9 @@
 import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
-import { GlobalFilter } from './Config/GlobalFilter';
-import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
-import type { Task } from './Task/Task';
-import { logging } from './lib/logging';
-import { logEndOfTaskEdit, logStartOfTaskEdit } from './lib/LogTasksHelper';
+import { GlobalFilter } from '../Config/GlobalFilter';
+import { type MockListItemCache, type MockTask, saveMockDataForTesting } from '../lib/MockDataCreator';
+import type { Task } from '../Task/Task';
+import { logging } from '../lib/logging';
+import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
 
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
