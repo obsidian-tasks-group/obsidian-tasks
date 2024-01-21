@@ -1,5 +1,5 @@
-import { TaskGroups } from '../../src/Query/TaskGroups';
-import type { Grouper } from '../../src/Query/Grouper';
+import { TaskGroups } from '../../src/Query/Group/TaskGroups';
+import type { Grouper } from '../../src/Query/Group/Grouper';
 import type { Task } from '../../src/Task';
 import { QueryResult } from '../../src/Query/QueryResult';
 import { fromLine } from '../TestHelpers';

@@ -5,7 +5,7 @@ import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
-import type { GrouperFunction } from '../Grouper';
+import type { GrouperFunction } from '../Group/Grouper';
 import { TemplatingPluginTools } from '../../lib/TemplatingPluginTools';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';

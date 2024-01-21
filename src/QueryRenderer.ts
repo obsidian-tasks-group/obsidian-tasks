@@ -8,9 +8,9 @@ import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 
 import type { IQuery } from './IQuery';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
-import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
+import type { GroupDisplayHeading } from './Query/Group/GroupDisplayHeading';
 import type { QueryResult } from './Query/QueryResult';
-import type { TaskGroups } from './Query/TaskGroups';
+import type { TaskGroups } from './Query/Group/TaskGroups';
 import { postponeButtonTitle, shouldShowPostponeButton } from './Scripting/Postponer';
 import type { Task } from './Task';
 import { TaskLayout } from './TaskLayout';
