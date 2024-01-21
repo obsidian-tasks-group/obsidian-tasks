@@ -1,4 +1,4 @@
-import { GlobalFilter } from '../src/Config/GlobalFilter';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
 describe('Global Filter tests', () => {
     it('getInstance() should return the same object', () => {
