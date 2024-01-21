@@ -277,7 +277,9 @@ describe('task line rendering - layout options', () => {
     it('renders with depends on', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' ⛔️ 123456,abc123'], ['blockedBy']);
     });
+});
 
+describe('task line rendering - errors in task fields', () => {
     const testLayoutOptionsFromLine = async (taskLine: string, expectedComponents: string[]) => {
         const task = fromLine({
             line: taskLine,
