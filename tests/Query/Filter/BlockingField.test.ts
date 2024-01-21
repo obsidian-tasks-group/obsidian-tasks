@@ -1,7 +1,7 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { BlockingField } from '../../../src/Query/Filter/BlockingField';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
-import { Status } from '../../../src/Status';
+import { Status } from '../../../src/Statuses/Status';
 
 describe('blocking', () => {
     const notBlocking = new TaskBuilder().build();

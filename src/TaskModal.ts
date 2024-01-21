@@ -1,8 +1,8 @@
 import { App, Modal } from 'obsidian';
 import EditTask from './ui/EditTask.svelte';
 import type { Task } from './Task';
-import { StatusRegistry } from './StatusRegistry';
-import { Status } from './Status';
+import { StatusRegistry } from './Statuses/StatusRegistry';
+import { Status } from './Statuses/Status';
 
 export class TaskModal extends Modal {
     public readonly task: Task;

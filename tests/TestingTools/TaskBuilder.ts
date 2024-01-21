@@ -1,10 +1,10 @@
 // Builder
 import type { Moment } from 'moment';
-import { Status } from '../../src/Status';
+import { Status } from '../../src/Statuses/Status';
 import { Priority, Task } from '../../src/Task';
 import { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
-import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskLocation } from '../../src/TaskLocation';
 
 /**

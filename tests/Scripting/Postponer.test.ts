@@ -14,8 +14,8 @@ import {
     postponementSuccessMessage,
     shouldShowPostponeButton,
 } from '../../src/Scripting/Postponer';
-import { Status } from '../../src/Status';
-import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
+import { Status } from '../../src/Statuses/Status';
+import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;

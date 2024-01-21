@@ -1,5 +1,5 @@
-import { StatusSettings } from './Config/StatusSettings';
-import { MarkdownTable } from './lib/MarkdownTable';
+import { StatusSettings } from '../Config/StatusSettings';
+import { MarkdownTable } from '../lib/MarkdownTable';
 import type { StatusConfiguration } from './StatusConfiguration';
 import { getPrintableSymbol } from './StatusRegistryReport';
 import { Status } from './Status';

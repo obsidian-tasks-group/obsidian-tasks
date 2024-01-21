@@ -1,9 +1,9 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { StatusSettings } from '../../src/Config/StatusSettings';
-import { Status } from '../../src/Status';
-import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
-import { StatusRegistry } from '../../src/StatusRegistry';
-import type { StatusCollection } from '../../src/StatusCollection';
+import { Status } from '../../src/Statuses/Status';
+import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
+import type { StatusCollection } from '../../src/Statuses/StatusCollection';
 
 describe('StatusSettings', () => {
     it('verify default status settings', () => {

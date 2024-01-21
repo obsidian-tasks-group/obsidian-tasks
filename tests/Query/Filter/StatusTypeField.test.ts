@@ -5,8 +5,8 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { StatusType } from '../../../src/StatusConfiguration';
-import { Status } from '../../../src/Status';
+import { StatusType } from '../../../src/Statuses/StatusConfiguration';
+import { Status } from '../../../src/Statuses/Status';
 import * as FilterParser from '../../../src/Query/FilterParser';
 import { SampleTasks, fromLine } from '../../TestHelpers';
 

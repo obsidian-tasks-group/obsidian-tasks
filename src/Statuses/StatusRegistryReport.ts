@@ -1,5 +1,5 @@
+import type { StatusSettings } from '../Config/StatusSettings';
 import type { StatusRegistry } from './StatusRegistry';
-import type { StatusSettings } from './Config/StatusSettings';
 import { tabulateStatusSettings } from './StatusSettingsReport';
 
 export function createStatusRegistryReport(

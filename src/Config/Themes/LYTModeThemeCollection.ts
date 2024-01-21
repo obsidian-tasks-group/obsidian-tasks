@@ -1,4 +1,4 @@
-import type { StatusCollection } from '../../StatusCollection';
+import type { StatusCollection } from '../../Statuses/StatusCollection';
 
 /**
  * Status supported by the LYT Mode theme. {@link https://github.com/nickmilo/LYT-Mode}

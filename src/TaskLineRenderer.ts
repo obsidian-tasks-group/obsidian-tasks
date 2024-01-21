@@ -10,7 +10,7 @@ import * as taskModule from './Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 import type { TaskLayoutComponent } from './TaskLayout';
 import { StatusMenu } from './ui/Menus/StatusMenu';
-import { StatusRegistry } from './StatusRegistry';
+import { StatusRegistry } from './Statuses/StatusRegistry';
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.

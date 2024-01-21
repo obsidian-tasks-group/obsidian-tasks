@@ -1,4 +1,4 @@
-import type { StatusCollection } from '../../StatusCollection';
+import type { StatusCollection } from '../../Statuses/StatusCollection';
 
 /**
  * Status supported by the Ebullientworks theme. {@link https://github.com/ebullient/obsidian-theme-ebullientworks}
