@@ -1,7 +1,7 @@
-import { createStatusRegistryReport } from '../src/Statuses/StatusRegistryReport';
-import type { StatusCollection } from '../src/Statuses/StatusCollection';
-import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
-import { coreStatusesData, createStatuses } from './TestingTools/StatusesTestHelpers';
+import { createStatusRegistryReport } from '../../src/Statuses/StatusRegistryReport';
+import type { StatusCollection } from '../../src/Statuses/StatusCollection';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { coreStatusesData, createStatuses } from '../TestingTools/StatusesTestHelpers';
 
 describe('StatusRegistryReport', function () {
     it('should create a report', () => {

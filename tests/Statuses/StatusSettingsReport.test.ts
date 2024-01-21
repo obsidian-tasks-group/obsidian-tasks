@@ -1,8 +1,8 @@
-import { StatusSettings } from '../src/Config/StatusSettings';
-import { tabulateStatusSettings } from '../src/Statuses/StatusSettingsReport';
-import type { StatusCollection } from '../src/Statuses/StatusCollection';
-import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
-import { coreStatusesData, createStatuses } from './TestingTools/StatusesTestHelpers';
+import { StatusSettings } from '../../src/Config/StatusSettings';
+import { tabulateStatusSettings } from '../../src/Statuses/StatusSettingsReport';
+import type { StatusCollection } from '../../src/Statuses/StatusCollection';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { coreStatusesData, createStatuses } from '../TestingTools/StatusesTestHelpers';
 
 describe('StatusSettingsReport', () => {
     it('should tabulate StatusSettings', () => {

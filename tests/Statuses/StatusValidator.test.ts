@@ -1,6 +1,6 @@
-import { StatusConfiguration, StatusType } from '../src/Statuses/StatusConfiguration';
-import { StatusValidator } from '../src/Statuses/StatusValidator';
-import type { StatusCollectionEntry } from '../src/Statuses/StatusCollection';
+import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { StatusValidator } from '../../src/Statuses/StatusValidator';
+import type { StatusCollectionEntry } from '../../src/Statuses/StatusCollection';
 
 describe('StatusValidator', () => {
     const statusValidator = new StatusValidator();
