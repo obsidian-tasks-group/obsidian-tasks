@@ -10,7 +10,7 @@ import type { StatusCollection } from '../../src/Statuses/StatusCollection';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { fromLine } from '../TestHelpers';
+import { fromLine } from '../TestingTools/TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 

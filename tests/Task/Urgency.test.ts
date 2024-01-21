@@ -7,7 +7,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Urgency } from '../../src/Task/Urgency';
 import { Priority } from '../../src/Task/Task';
 import { calculateRelativeDate } from '../TestingTools/DateTestHelpers';
-import { fromLine } from '../TestHelpers';
+import { fromLine } from '../TestingTools/TestHelpers';
 
 window.moment = moment;
 

@@ -19,7 +19,7 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { fromLine } from '../../TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
 import { Query } from '../../../src/Query/Query';
 import { TasksDate } from '../../../src/Scripting/TasksDate';
 

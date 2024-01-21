@@ -11,7 +11,7 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { SampleTasks } from '../../TestHelpers';
+import { SampleTasks } from '../../TestingTools/TestHelpers';
 
 window.moment = moment;
 

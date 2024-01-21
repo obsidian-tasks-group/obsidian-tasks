@@ -1,5 +1,5 @@
 import { diff } from 'jest-diff';
-import { fromLine } from '../TestHelpers';
+import { fromLine } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
 
 declare global {

@@ -2,7 +2,7 @@ import { TaskGroups } from '../../src/Query/Group/TaskGroups';
 import type { Grouper } from '../../src/Query/Group/Grouper';
 import type { Task } from '../../src/Task/Task';
 import { QueryResult } from '../../src/Query/QueryResult';
-import { fromLine } from '../TestHelpers';
+import { fromLine } from '../TestingTools/TestHelpers';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 
 describe('QueryResult', () => {

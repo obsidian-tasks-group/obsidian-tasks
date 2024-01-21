@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
-import { fromLine } from '../../TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import {

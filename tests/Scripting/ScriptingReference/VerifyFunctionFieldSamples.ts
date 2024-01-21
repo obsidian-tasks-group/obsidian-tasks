@@ -8,7 +8,7 @@ import { makeQueryContext } from '../../../src/Scripting/QueryContext';
 import { scan } from '../../../src/Query/Scanner';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { Sort } from '../../../src/Query/Sort/Sort';
-import { toLines } from '../../TestHelpers';
+import { toLines } from '../../TestingTools/TestHelpers';
 
 /** For example, 'task.due' */
 type TaskPropertyName = string;
