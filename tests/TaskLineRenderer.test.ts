@@ -238,6 +238,8 @@ describe('task line rendering - layout options', () => {
         );
     });
 
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+
     it('renders with priority', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' 🔼'], ['priority']);
     });
@@ -330,6 +332,8 @@ describe('task line rendering - classes and data attributes', () => {
 
         expect(listItem).toHaveAChildSpanWithClassAndDataAttributes(mainClass, attributes);
     };
+
+    // NEW_TASK_FIELD_EDIT_REQUIRED
 
     it('should render priority component with its class and data attribute', async () => {
         await testComponentClasses(
