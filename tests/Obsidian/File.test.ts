@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { findLineNumberOfTaskToToggle } from '../src/Obsidian/File';
-import type { MockTogglingDataForTesting } from '../src/lib/MockDataCreator';
+import { findLineNumberOfTaskToToggle } from '../../src/Obsidian/File';
+import type { MockTogglingDataForTesting } from '../../src/lib/MockDataCreator';
 
 /**
  * A function to help test File.findLineNumberOfTaskToToggle()
