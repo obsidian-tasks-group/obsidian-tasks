@@ -412,7 +412,7 @@ describe('task line rendering - classes and data attributes', () => {
         await testComponentClasses(`- [-] Canc task ❌ ${past}`, 'task-cancelled', 'taskCancelled: past-7d');
     });
 
-    it('should render date component with its class and data attribute with "future-far" & "past-far" values', async () => {
+    it('should render date component with its class and data attribute with "future-far"', async () => {
         const future = DateParser.parseDate('in 8 days').format(TaskRegularExpressions.dateFormat);
         await testComponentClasses(`- [ ] Full task ⏫ ➕ ${future}`, 'task-created', 'taskCreated: future-far');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, 'task-due', 'taskDue: future-far');
@@ -420,7 +420,9 @@ describe('task line rendering - classes and data attributes', () => {
         await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, 'task-start', 'taskStart: future-far');
         await testComponentClasses(`- [x] Done task ✅ ${future}`, 'task-done', 'taskDone: future-far');
         await testComponentClasses(`- [-] Canc task ❌ ${future}`, 'task-cancelled', 'taskCancelled: future-far');
+    });
 
+    it('should render date component with its class and data attribute with "past-far" values', async () => {
         const past = DateParser.parseDate('8 days ago').format(TaskRegularExpressions.dateFormat);
         await testComponentClasses(`- [ ] Full task ⏫ ➕ ${past}`, 'task-created', 'taskCreated: past-far');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, 'task-due', 'taskDue: past-far');
