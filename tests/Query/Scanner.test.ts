@@ -1,5 +1,5 @@
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { continue_lines, scan } from '../src/Query/Scanner';
+import { continue_lines, scan } from '../../src/Query/Scanner';
 
 // There is no way to have a literal \ at the end of a raw string.
 // In such cases, we use substitution instead.
