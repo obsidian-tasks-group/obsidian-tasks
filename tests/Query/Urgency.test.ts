@@ -4,8 +4,8 @@
 
 import moment from 'moment';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { Urgency } from '../../src/Urgency';
-import { Priority } from '../../src/Task';
+import { Urgency } from '../../src/Task/Urgency';
+import { Priority } from '../../src/Task/Task';
 import { calculateRelativeDate } from '../TestingTools/DateTestHelpers';
 import { fromLine } from '../TestHelpers';
 

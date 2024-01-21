@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import type { FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 import type { DateFilterFunction } from './DateField';

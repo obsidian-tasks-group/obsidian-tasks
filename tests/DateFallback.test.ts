@@ -3,10 +3,10 @@
  */
 import type { Moment } from 'moment';
 import moment from 'moment';
-import { Task } from '../src/Task';
+import { Task } from '../src/Task/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateFallback } from '../src/DateFallback';
-import { TaskLocation } from '../src/TaskLocation';
+import { TaskLocation } from '../src/Task/TaskLocation';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 jest.mock('obsidian');

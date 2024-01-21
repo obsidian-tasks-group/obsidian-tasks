@@ -1,5 +1,5 @@
 import { Menu, type MenuItem } from 'obsidian';
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import { replaceTaskWithTasks } from '../../File';
 import type { TaskEditingInstruction } from '../EditInstructions/TaskEditingInstruction';
 

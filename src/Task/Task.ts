@@ -1,19 +1,19 @@
 import type { Moment } from 'moment';
-import type { TaskLocation } from './TaskLocation';
-import type { Recurrence } from './Recurrence';
-import { getSettings, getUserSelectedTaskFormat } from './Config/Settings';
-import { GlobalFilter } from './Config/GlobalFilter';
-import { StatusRegistry } from './Statuses/StatusRegistry';
-import type { Status } from './Statuses/Status';
+import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
+import { GlobalFilter } from '../Config/GlobalFilter';
+import { StatusRegistry } from '../Statuses/StatusRegistry';
+import type { Status } from '../Statuses/Status';
+import { DateFallback } from '../DateFallback';
+import { compareByDate } from '../lib/DateTools';
+import { TasksDate } from '../Scripting/TasksDate';
+import { StatusType } from '../Statuses/StatusConfiguration';
+import { TasksFile } from '../Scripting/TasksFile';
+import { PriorityTools } from '../lib/PriorityTools';
+import { logging } from '../lib/logging';
+import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
 import { Urgency } from './Urgency';
-import { DateFallback } from './DateFallback';
-import { compareByDate } from './lib/DateTools';
-import { TasksDate } from './Scripting/TasksDate';
-import { StatusType } from './Statuses/StatusConfiguration';
-import { TasksFile } from './Scripting/TasksFile';
-import { PriorityTools } from './lib/PriorityTools';
-import { logging } from './lib/logging';
-import { logEndOfTaskEdit, logStartOfTaskEdit } from './lib/LogTasksHelper';
+import type { Recurrence } from './Recurrence';
+import type { TaskLocation } from './TaskLocation';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting

@@ -1,4 +1,4 @@
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import type { SearchInfo } from '../SearchInfo';
 import type { Grouper } from './Grouper';
 import { GroupDisplayHeadingSelector } from './GroupDisplayHeadingSelector';

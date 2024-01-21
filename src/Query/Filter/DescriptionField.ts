@@ -1,5 +1,5 @@
 import { GlobalFilter } from '../../Config/GlobalFilter';
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import type { Comparator } from '../Sort/Sorter';
 import { TextField } from './TextField';
 

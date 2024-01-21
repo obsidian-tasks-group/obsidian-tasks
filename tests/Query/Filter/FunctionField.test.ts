@@ -5,8 +5,8 @@ import moment from 'moment';
 
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import { Status } from '../../../src/Statuses/Status';
-import type { Task } from '../../../src/Task';
-import { Priority } from '../../../src/Task';
+import type { Task } from '../../../src/Task/Task';
+import { Priority } from '../../../src/Task/Task';
 import {
     toGroupTaskFromBuilder,
     toGroupTaskUsingSearchInfo,

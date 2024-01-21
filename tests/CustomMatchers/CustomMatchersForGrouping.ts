@@ -1,5 +1,5 @@
 import { diff } from 'jest-diff';
-import type { Task } from 'Task';
+import type { Task } from '../../src/Task/Task';
 import type { Grouper } from '../../src/Query/Group/Grouper';
 import type { Field } from '../../src/Query/Filter/Field';
 import { TaskGroups } from '../../src/Query/Group/TaskGroups';

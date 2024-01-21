@@ -2,7 +2,7 @@ import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../QueryLayoutOptions';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
-import type { Task } from '../Task';
+import type { Task } from '../Task/Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
 import { errorMessageForException } from '../lib/ExceptionTools';

@@ -1,5 +1,5 @@
 import type { App } from 'obsidian';
-import type { Task } from '../Task';
+import type { Task } from '../Task/Task';
 
 /**
  * Interface to remove all references to {TaskModal} in this file.

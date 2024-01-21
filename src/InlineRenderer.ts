@@ -3,9 +3,9 @@ import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
-import { Task } from './Task';
+import { Task } from './Task/Task';
 import { TaskLineRenderer } from './TaskLineRenderer';
-import { TaskLocation } from './TaskLocation';
+import { TaskLocation } from './Task/TaskLocation';
 
 export class InlineRenderer {
     constructor({ plugin }: { plugin: Plugin }) {

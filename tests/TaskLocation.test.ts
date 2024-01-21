@@ -1,4 +1,4 @@
-import { TaskLocation } from '../src/TaskLocation';
+import { TaskLocation } from '../src/Task/TaskLocation';
 
 describe('TaskLocation', () => {
     it('should store the full task location', () => {

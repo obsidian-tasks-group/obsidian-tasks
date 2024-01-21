@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Priority } from '../../../src/Task';
+import { Priority } from '../../../src/Task/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { UrgencyField } from '../../../src/Query/Filter/UrgencyField';
 

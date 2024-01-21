@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { Priority } from '../../src/Task';
+import { Priority } from '../../src/Task/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 

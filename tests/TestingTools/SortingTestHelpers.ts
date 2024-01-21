@@ -1,5 +1,5 @@
 import type { Sorter } from '../../src/Query/Sort/Sorter';
-import type { Task } from '../../src/Task';
+import type { Task } from '../../src/Task/Task';
 import { Sort } from '../../src/Query/Sort/Sort';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 

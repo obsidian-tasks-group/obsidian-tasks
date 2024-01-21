@@ -1,6 +1,6 @@
 import type { DurationInputArg2, Moment, unitOfTime } from 'moment';
 import { Notice } from 'obsidian';
-import { TaskRegularExpressions } from '../Task';
+import { TaskRegularExpressions } from '../Task/Task';
 import { PropertyCategory } from '../lib/PropertyCategory';
 
 /**

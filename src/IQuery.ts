@@ -1,6 +1,6 @@
 import type { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from './QueryLayoutOptions';
-import type { Task } from './Task';
+import type { Task } from './Task/Task';
 import type { Grouper } from './Query/Group/Grouper';
 import type { QueryResult } from './Query/QueryResult';
 

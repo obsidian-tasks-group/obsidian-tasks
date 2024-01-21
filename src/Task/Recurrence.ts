@@ -3,7 +3,7 @@ import type { Moment } from 'moment';
 // end-snippet
 
 import { RRule } from 'rrule';
-import { compareByDate } from './lib/DateTools';
+import { compareByDate } from '../lib/DateTools';
 
 export class Recurrence {
     private readonly rrule: RRule;

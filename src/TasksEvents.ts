@@ -1,7 +1,7 @@
 import type { EventRef, Events as ObsidianEvents } from 'obsidian';
 
 import type { State } from './Cache';
-import type { Task } from './Task';
+import type { Task } from './Task/Task';
 import { logging } from './lib/logging';
 
 enum Event {

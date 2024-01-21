@@ -1,6 +1,6 @@
 import { diff } from 'jest-diff';
 import { fromLine } from '../TestHelpers';
-import type { Task } from '../../src/Task';
+import type { Task } from '../../src/Task/Task';
 
 declare global {
     namespace jest {

@@ -3,12 +3,12 @@
  */
 import moment from 'moment';
 import { Status } from '../src/Statuses/Status';
-import { Priority, Task } from '../src/Task';
+import { Priority, Task } from '../src/Task/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import type { StatusCollection } from '../src/Statuses/StatusCollection';
 import { StatusRegistry } from '../src/Statuses/StatusRegistry';
-import { TaskLocation } from '../src/TaskLocation';
+import { TaskLocation } from '../src/Task/TaskLocation';
 import { StatusConfiguration, StatusType } from '../src/Statuses/StatusConfiguration';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
