@@ -1,5 +1,5 @@
-import type { Task } from '../Task';
-import type { SearchInfo } from './SearchInfo';
+import type { Task } from '../../Task';
+import type { SearchInfo } from '../SearchInfo';
 
 /**
  * A group-naming function, that takes a Task object and returns zero or more

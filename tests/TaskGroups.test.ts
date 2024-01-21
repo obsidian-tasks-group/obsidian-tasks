@@ -3,12 +3,12 @@
  */
 import moment from 'moment';
 import { FilenameField } from '../src/Query/Filter/FilenameField';
-import { Grouper, type GrouperFunction } from '../src/Query/Grouper';
+import { Grouper, type GrouperFunction } from '../src/Query/Group/Grouper';
 import type { Task } from '../src/Task';
 import { PathField } from '../src/Query/Filter/PathField';
 import { TagsField } from '../src/Query/Filter/TagsField';
 import { FolderField } from '../src/Query/Filter/FolderField';
-import { TaskGroups } from '../src/Query/TaskGroups';
+import { TaskGroups } from '../src/Query/Group/TaskGroups';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import { HappensDateField } from '../src/Query/Filter/HappensDateField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';

@@ -1,4 +1,4 @@
-import type { Task } from '../Task';
+import type { Task } from '../../Task';
 import type { GroupDisplayHeading } from './GroupDisplayHeading';
 
 /**

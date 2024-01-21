@@ -1,4 +1,4 @@
-import type { GrouperFunction } from '../Grouper';
+import type { GrouperFunction } from '../Group/Grouper';
 import type { Task } from '../../Task';
 import { TextField } from './TextField';
 

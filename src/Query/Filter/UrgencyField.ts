@@ -1,6 +1,6 @@
 import type { Comparator } from '../Sorter';
 import type { Task } from '../../Task';
-import type { Grouper, GrouperFunction } from '../Grouper';
+import type { Grouper, GrouperFunction } from '../Group/Grouper';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 

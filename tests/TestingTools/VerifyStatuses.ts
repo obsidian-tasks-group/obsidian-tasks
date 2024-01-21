@@ -6,7 +6,7 @@ import type { Task } from '../../src/Task';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import * as FilterParser from '../../src/Query/FilterParser';
-import type { GrouperFunction } from '../../src/Query/Grouper';
+import type { GrouperFunction } from '../../src/Query/Group/Grouper';
 import { StatusField } from '../../src/Query/Filter/StatusField';
 import { StatusTypeField } from '../../src/Query/Filter/StatusTypeField';
 import { StatusNameField } from '../../src/Query/Filter/StatusNameField';
