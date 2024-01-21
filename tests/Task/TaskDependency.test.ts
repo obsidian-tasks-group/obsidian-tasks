@@ -3,8 +3,8 @@ import {
     ensureTaskHasId,
     removeDependency,
     setDependenciesOnTasksWithIds,
-} from '../src/Task/TaskDependency';
-import { TaskBuilder } from './TestingTools/TaskBuilder';
+} from '../../src/Task/TaskDependency';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 describe('TaskDependency', () => {
     it('Should add id to task without id', () => {
