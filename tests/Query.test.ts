@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { Query } from '../src/Query/Query';
-import { Status } from '../src/Status';
+import { Status } from '../src/Statuses/Status';
 import { Priority, Task } from '../src/Task';
 import { TaskLocation } from '../src/TaskLocation';
 import { fieldCreators } from '../src/Query/FilterParser';

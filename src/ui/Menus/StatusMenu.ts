@@ -1,4 +1,4 @@
-import type { StatusRegistry } from '../../StatusRegistry';
+import type { StatusRegistry } from '../../Statuses/StatusRegistry';
 import type { Task } from '../../Task';
 import { allStatusInstructions } from '../EditInstructions/StatusInstructions';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';

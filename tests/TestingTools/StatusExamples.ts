@@ -1,4 +1,4 @@
-import type { StatusCollection } from '../../src/StatusCollection';
+import type { StatusCollection } from '../../src/Statuses/StatusCollection';
 
 export function doneTogglesToCancelled() {
     const statuses: StatusCollection = [

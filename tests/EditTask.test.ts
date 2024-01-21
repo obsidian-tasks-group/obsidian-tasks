@@ -7,7 +7,7 @@ import moment from 'moment';
 import { taskFromLine } from '../src/Commands/CreateOrEditTaskParser';
 import type { Task } from '../src/Task';
 import EditTask from '../src/ui/EditTask.svelte';
-import { Status } from '../src/Status';
+import { Status } from '../src/Statuses/Status';
 import { DateFallback } from '../src/DateFallback';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';

@@ -6,11 +6,11 @@ import moment from 'moment';
 
 import { StatusMenu } from '../../../src/ui/Menus/StatusMenu';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { StatusRegistry } from '../../../src/StatusRegistry';
+import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
 import { StatusSettings } from '../../../src/Config/StatusSettings';
 import { resetSettings, updateSettings } from '../../../src/Config/Settings';
-import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
-import { Status } from '../../../src/Status';
+import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
+import { Status } from '../../../src/Statuses/Status';
 import { TestableTaskSaver, menuToString } from './MenuTestingHelpers';
 
 window.moment = moment;

@@ -4,7 +4,7 @@
     import { Recurrence } from '../Recurrence';
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
-    import { Status } from '../Status';
+    import { Status } from '../Statuses/Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';

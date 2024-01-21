@@ -1,7 +1,7 @@
-import type { StatusConfiguration } from '../StatusConfiguration';
-import type { StatusRegistry } from '../StatusRegistry';
-import { Status } from '../Status';
-import type { StatusCollection } from '../StatusCollection';
+import type { StatusConfiguration } from '../Statuses/StatusConfiguration';
+import type { StatusRegistry } from '../Statuses/StatusRegistry';
+import { Status } from '../Statuses/Status';
+import type { StatusCollection } from '../Statuses/StatusCollection';
 
 /**
  * Class for encapsulating the settings that control custom statuses.

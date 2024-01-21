@@ -1,6 +1,6 @@
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
-import { StatusType } from '../../StatusConfiguration';
+import { StatusType } from '../../Statuses/StatusConfiguration';
 import type { Comparator } from '../Sorter';
 import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';

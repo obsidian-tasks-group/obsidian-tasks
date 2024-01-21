@@ -1,4 +1,4 @@
-import type { StatusCollection } from '../../StatusCollection';
+import type { StatusCollection } from '../../Statuses/StatusCollection';
 
 /**
  * Status supported by the ITS theme. {@link https://github.com/SlRvb/Obsidian--ITS-Theme}

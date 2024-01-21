@@ -1,7 +1,7 @@
-import { Status } from '../Status';
+import { Status } from '../Statuses/Status';
 import { Priority, Task, TaskRegularExpressions } from '../Task';
 import { DateFallback } from '../DateFallback';
-import { StatusRegistry } from '../StatusRegistry';
+import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { TaskLocation } from '../TaskLocation';
 import { getSettings } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';

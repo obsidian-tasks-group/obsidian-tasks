@@ -2,9 +2,9 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Status } from '../src/Status';
-import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
-import type { StatusCollectionEntry } from '../src/StatusCollection';
+import { Status } from '../src/Statuses/Status';
+import { StatusConfiguration, StatusType } from '../src/Statuses/StatusConfiguration';
+import type { StatusCollectionEntry } from '../src/Statuses/StatusCollection';
 
 jest.mock('obsidian');
 window.moment = moment;

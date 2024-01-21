@@ -1,13 +1,13 @@
 import { StatusField } from '../../../src/Query/Filter/StatusField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { Status } from '../../../src/Status';
+import { Status } from '../../../src/Statuses/Status';
 import * as TestHelpers from '../../TestHelpers';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
 import { fromLine } from '../../TestHelpers';
 
 describe('status', () => {

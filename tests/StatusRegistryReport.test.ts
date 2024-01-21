@@ -1,5 +1,5 @@
-import { createStatusRegistryReport } from '../src/StatusRegistryReport';
-import type { StatusCollection } from '../src/StatusCollection';
+import { createStatusRegistryReport } from '../src/Statuses/StatusRegistryReport';
+import type { StatusCollection } from '../src/Statuses/StatusCollection';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 import { coreStatusesData, createStatuses } from './TestingTools/StatusesTestHelpers';
 

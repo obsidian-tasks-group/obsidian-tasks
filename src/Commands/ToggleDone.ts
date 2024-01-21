@@ -1,5 +1,5 @@
 import { Editor, type EditorPosition, type MarkdownFileInfo, MarkdownView } from 'obsidian';
-import { StatusRegistry } from '../StatusRegistry';
+import { StatusRegistry } from '../Statuses/StatusRegistry';
 
 import { Task, TaskRegularExpressions } from '../Task';
 import { TaskLocation } from '../TaskLocation';

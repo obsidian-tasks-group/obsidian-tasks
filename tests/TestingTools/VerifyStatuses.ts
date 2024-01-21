@@ -1,6 +1,6 @@
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { getPrintableSymbol } from '../../src/StatusRegistryReport';
-import type { Status } from '../../src/Status';
+import { getPrintableSymbol } from '../../src/Statuses/StatusRegistryReport';
+import type { Status } from '../../src/Statuses/Status';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import type { Task } from '../../src/Task';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
@@ -10,7 +10,7 @@ import type { GrouperFunction } from '../../src/Query/Grouper';
 import { StatusField } from '../../src/Query/Filter/StatusField';
 import { StatusTypeField } from '../../src/Query/Filter/StatusTypeField';
 import { StatusNameField } from '../../src/Query/Filter/StatusNameField';
-import { StatusRegistry } from '../../src/StatusRegistry';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { TaskBuilder } from './TaskBuilder';
 import { verifyMarkdownForDocs } from './VerifyMarkdown';
 import { verifyWithFileExtension } from './ApprovalTestHelpers';

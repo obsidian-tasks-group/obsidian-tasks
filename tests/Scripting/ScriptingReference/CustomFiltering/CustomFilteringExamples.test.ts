@@ -10,8 +10,8 @@ import {
     verifyFunctionFieldFilterSamplesForDocs,
     verifyFunctionFieldFilterSamplesOnTasks,
 } from '../VerifyFunctionFieldSamples';
-import { StatusRegistry } from '../../../../src/StatusRegistry';
-import { StatusConfiguration } from '../../../../src/StatusConfiguration';
+import { StatusRegistry } from '../../../../src/Statuses/StatusRegistry';
+import { StatusConfiguration } from '../../../../src/Statuses/StatusConfiguration';
 
 window.moment = moment;
 

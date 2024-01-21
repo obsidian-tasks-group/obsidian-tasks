@@ -2,14 +2,14 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Status } from '../src/Status';
+import { Status } from '../src/Statuses/Status';
 import { Priority, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
-import type { StatusCollection } from '../src/StatusCollection';
-import { StatusRegistry } from '../src/StatusRegistry';
+import type { StatusCollection } from '../src/Statuses/StatusCollection';
+import { StatusRegistry } from '../src/Statuses/StatusRegistry';
 import { TaskLocation } from '../src/TaskLocation';
-import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../src/Statuses/StatusConfiguration';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
