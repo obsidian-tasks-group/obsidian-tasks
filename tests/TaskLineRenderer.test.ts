@@ -218,6 +218,26 @@ describe('task line rendering - layout options', () => {
         );
     });
 
+    it('renders a done task correctly with the default layout', async () => {
+        await testLayoutOptions(
+            [
+                'Do exercises #todo #health',
+                ' 🆔 abcdef',
+                ' ⛔️ 123456,abc123',
+                ' 🔼',
+                ' 🔁 every day when done',
+                ' ➕ 2023-07-01',
+                ' 🛫 2023-07-02',
+                ' ⏳ 2023-07-03',
+                ' 📅 2023-07-04',
+                ' ❌ 2023-07-06',
+                ' ✅ 2023-07-05',
+                ' ^dcf64c',
+            ],
+            taskLayoutComponents,
+        );
+    });
+
     it('renders with priority', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' 🔼'], ['priority']);
     });
@@ -240,26 +260,6 @@ describe('task line rendering - layout options', () => {
 
     it('renders with due date', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' 📅 2023-07-04'], ['dueDate']);
-    });
-
-    it('renders a done task correctly with the default layout', async () => {
-        await testLayoutOptions(
-            [
-                'Do exercises #todo #health',
-                ' 🆔 abcdef',
-                ' ⛔️ 123456,abc123',
-                ' 🔼',
-                ' 🔁 every day when done',
-                ' ➕ 2023-07-01',
-                ' 🛫 2023-07-02',
-                ' ⏳ 2023-07-03',
-                ' 📅 2023-07-04',
-                ' ❌ 2023-07-06',
-                ' ✅ 2023-07-05',
-                ' ^dcf64c',
-            ],
-            taskLayoutComponents,
-        );
     });
 
     it('renders with done date', async () => {
