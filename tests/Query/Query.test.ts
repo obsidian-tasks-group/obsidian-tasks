@@ -2,22 +2,22 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Query } from '../src/Query/Query';
-import { Status } from '../src/Statuses/Status';
-import { Priority, Task } from '../src/Task';
-import { TaskLocation } from '../src/TaskLocation';
-import { fieldCreators } from '../src/Query/FilterParser';
-import type { Field } from '../src/Query/Filter/Field';
-import type { BooleanField } from '../src/Query/Filter/BooleanField';
-import { SearchInfo } from '../src/Query/SearchInfo';
-import { FilterOrErrorMessage } from '../src/Query/Filter/FilterOrErrorMessage';
-import { Explanation } from '../src/Query/Explain/Explanation';
-import { Filter } from '../src/Query/Filter/Filter';
-import { DescriptionField } from '../src/Query/Filter/DescriptionField';
-import { createTasksFromMarkdown, fromLine } from './TestHelpers';
-import type { FilteringCase } from './TestingTools/FilterTestHelpers';
-import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
-import { TaskBuilder } from './TestingTools/TaskBuilder';
+import { Query } from '../../src/Query/Query';
+import { Status } from '../../src/Statuses/Status';
+import { Priority, Task } from '../../src/Task';
+import { TaskLocation } from '../../src/TaskLocation';
+import { fieldCreators } from '../../src/Query/FilterParser';
+import type { Field } from '../../src/Query/Filter/Field';
+import type { BooleanField } from '../../src/Query/Filter/BooleanField';
+import { SearchInfo } from '../../src/Query/SearchInfo';
+import { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
+import { Explanation } from '../../src/Query/Explain/Explanation';
+import { Filter } from '../../src/Query/Filter/Filter';
+import { DescriptionField } from '../../src/Query/Filter/DescriptionField';
+import { createTasksFromMarkdown, fromLine } from '../TestHelpers';
+import type { FilteringCase } from '../TestingTools/FilterTestHelpers';
+import { shouldSupportFiltering } from '../TestingTools/FilterTestHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
