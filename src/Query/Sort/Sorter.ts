@@ -1,5 +1,5 @@
-import type { Task } from '../Task';
-import type { SearchInfo } from './SearchInfo';
+import type { Task } from '../../Task';
+import type { SearchInfo } from '../SearchInfo';
 
 /**
  * A sorting function, that takes two Task objects and returns

@@ -7,7 +7,7 @@ import { expandPlaceholders } from '../../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../../src/Scripting/QueryContext';
 import { scan } from '../../../src/Query/Scanner';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
-import { Sort } from '../../../src/Query/Sort';
+import { Sort } from '../../../src/Query/Sort/Sort';
 import { toLines } from '../../TestHelpers';
 
 /** For example, 'task.due' */
