@@ -1,5 +1,5 @@
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
-import { fromLine } from '../../TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
 import { ExcludeSubItemsField } from '../../../src/Query/Filter/ExcludeSubItemsField';
 
 describe('sub-items', () => {

@@ -13,7 +13,7 @@ import { TaskRegularExpressions } from '../src/Task/Task';
 import { type TaskLayoutComponent, taskLayoutComponents } from '../src/TaskLayout';
 import type { TextRenderer } from '../src/TaskLineRenderer';
 import { TaskLineRenderer } from '../src/TaskLineRenderer';
-import { fromLine } from './TestHelpers';
+import { fromLine } from './TestingTools/TestHelpers';
 import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 

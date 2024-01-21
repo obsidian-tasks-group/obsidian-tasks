@@ -6,7 +6,7 @@ import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
-import { SampleTasks, fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
 
 window.moment = moment;
 

@@ -13,7 +13,7 @@ import { StatusTypeField } from '../../../src/Query/Filter/StatusTypeField';
 import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
-import { fromLine } from '../../TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 window.moment = moment;

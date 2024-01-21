@@ -16,7 +16,7 @@ import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { Sort } from '../../../src/Query/Sort/Sort';
 import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
-import { SampleTasks, fromLine, fromLines, toLines } from '../../TestHelpers';
+import { SampleTasks, fromLine, fromLines, toLines } from '../../TestingTools/TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { sortBy } from '../../TestingTools/SortingTestHelpers';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';

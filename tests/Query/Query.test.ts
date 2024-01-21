@@ -14,7 +14,7 @@ import { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessag
 import { Explanation } from '../../src/Query/Explain/Explanation';
 import { Filter } from '../../src/Query/Filter/Filter';
 import { DescriptionField } from '../../src/Query/Filter/DescriptionField';
-import { createTasksFromMarkdown, fromLine } from '../TestHelpers';
+import { createTasksFromMarkdown, fromLine } from '../TestingTools/TestHelpers';
 import type { FilteringCase } from '../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';

@@ -8,7 +8,7 @@ import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfig
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import type { StatusCollection, StatusCollectionEntry } from '../../src/Statuses/StatusCollection';
-import * as TestHelpers from '../TestHelpers';
+import * as TestHelpers from '../TestingTools/TestHelpers';
 import * as StatusExamples from '../TestingTools/StatusExamples';
 import { constructStatuses } from '../TestingTools/StatusesTestHelpers';
 
