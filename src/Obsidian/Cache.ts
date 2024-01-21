@@ -3,14 +3,13 @@ import type { CachedMetadata, EventRef } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
-import { Task } from './Task/Task';
+import { Task } from '../Task/Task';
+import { DateFallback } from '../DateFallback';
+import { getSettings } from '../Config/Settings';
+import { Lazy } from '../lib/Lazy';
+import { TaskLocation } from '../Task/TaskLocation';
+import { logging } from '../lib/logging';
 import type { TasksEvents } from './TasksEvents';
-import { DateFallback } from './DateFallback';
-import { getSettings } from './Config/Settings';
-import { Lazy } from './lib/Lazy';
-import { TaskLocation } from './Task/TaskLocation';
-// import { logging } from './lib/logging';
-import { logging } from './lib/logging';
 
 export enum State {
     Cold = 'Cold',

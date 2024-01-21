@@ -10,7 +10,7 @@
     import { TasksDate } from '../Scripting/TasksDate';
     import { computePosition, flip, offset, shift, size } from "@floating-ui/dom";
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../Task/TaskDependency";
-    import { replaceTaskWithTasks } from "../File";
+    import { replaceTaskWithTasks } from "../Obsidian/File";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;

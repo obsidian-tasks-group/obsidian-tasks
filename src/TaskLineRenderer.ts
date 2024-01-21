@@ -2,7 +2,7 @@ import type { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
-import { replaceTaskWithTasks } from './File';
+import { replaceTaskWithTasks } from './Obsidian/File';
 import type { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from './QueryLayoutOptions';
 import type { Task } from './Task/Task';

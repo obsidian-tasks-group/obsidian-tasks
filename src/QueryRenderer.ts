@@ -1,10 +1,8 @@
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
-import { State } from './Cache';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { GlobalQuery } from './Config/GlobalQuery';
 import { DateFallback } from './DateFallback';
-import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 
 import type { IQuery } from './IQuery';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
@@ -15,10 +13,12 @@ import { postponeButtonTitle, shouldShowPostponeButton } from './Scripting/Postp
 import type { Task } from './Task/Task';
 import { TaskLayout } from './TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
-import { TaskModal } from './TaskModal';
-import type { TasksEvents } from './TasksEvents';
 import { PostponeMenu } from './ui/Menus/PostponeMenu';
 import type TasksPlugin from './main';
+import { TaskModal } from './Obsidian/TaskModal';
+import type { TasksEvents } from './Obsidian/TasksEvents';
+import { getTaskLineAndFile, replaceTaskWithTasks } from './Obsidian/File';
+import { State } from './Obsidian/Cache';
 
 export class QueryRenderer {
     private readonly app: App;
