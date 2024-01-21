@@ -6,14 +6,14 @@ import moment from 'moment';
 window.moment = moment;
 
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import type { Comparator } from '../src/Query/Sorter';
-import { Sorter } from '../src/Query/Sorter';
+import type { Comparator } from '../src/Query/Sort/Sorter';
+import { Sorter } from '../src/Query/Sort/Sorter';
 import { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { PathField } from '../src/Query/Filter/PathField';
 import { SearchInfo } from '../src/Query/SearchInfo';
-import { Sort } from '../src/Query/Sort';
+import { Sort } from '../src/Query/Sort/Sort';
 import { StatusRegistry } from '../src/Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from '../src/Statuses/StatusConfiguration';
 import { SampleTasks, fromLine, fromLines, toLines } from './TestHelpers';

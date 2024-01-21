@@ -5,7 +5,7 @@ import { Explanation } from '../Explain/Explanation';
 import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
 import type { QueryContext } from '../../Scripting/QueryContext';
 import type { SearchInfo } from '../SearchInfo';
-import { Sorter } from '../Sorter';
+import { Sorter } from '../Sort/Sorter';
 import { compareByDate } from '../../lib/DateTools';
 import { getValueType } from '../../lib/TypeDetection';
 import { Field } from './Field';

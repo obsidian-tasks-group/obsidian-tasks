@@ -1,4 +1,4 @@
-import type { Comparator } from '../Sorter';
+import type { Comparator } from '../Sort/Sorter';
 import type { Task } from '../../Task';
 import type { Grouper, GrouperFunction } from '../Group/Grouper';
 import { Field } from './Field';

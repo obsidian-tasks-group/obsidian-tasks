@@ -1,7 +1,7 @@
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Group/Grouper';
 import { StatusType } from '../../Statuses/StatusConfiguration';
-import type { Comparator } from '../Sorter';
+import type { Comparator } from '../Sort/Sorter';
 import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
 import { Filter } from './Filter';

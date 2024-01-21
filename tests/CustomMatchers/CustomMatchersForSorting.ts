@@ -1,6 +1,6 @@
 import type moment from 'moment';
 import { DateParser } from '../../src/Query/DateParser';
-import type { Sorter } from '../../src/Query/Sorter';
+import type { Sorter } from '../../src/Query/Sort/Sorter';
 import type { Task } from '../../src/Task';
 import { compareByDate } from '../../src/lib/DateTools';
 import { SearchInfo } from '../../src/Query/SearchInfo';
