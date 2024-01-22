@@ -2,7 +2,7 @@ import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { QueryLayoutOptions } from '../QueryLayoutOptions';
+import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { Task } from '../Task/Task';
 import { TaskLineRenderer } from '../TaskLineRenderer';
 import { TaskLocation } from '../Task/TaskLocation';
