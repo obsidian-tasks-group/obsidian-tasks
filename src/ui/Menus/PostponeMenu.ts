@@ -1,6 +1,6 @@
 import { MenuItem, Notice } from 'obsidian';
 import type { Moment, unitOfTime } from 'moment/moment';
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import {
     type HappensDate,
     createFixedDateTask,

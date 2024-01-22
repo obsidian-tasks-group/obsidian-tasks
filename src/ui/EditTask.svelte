@@ -1,16 +1,16 @@
 <script lang="ts">
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
-    import { Recurrence } from '../Recurrence';
+    import { Recurrence } from '../Task/Recurrence';
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
-    import { Status } from '../Status';
-    import { Priority, Task } from '../Task';
-    import { doAutocomplete } from '../DateAbbreviations';
+    import { Status } from '../Statuses/Status';
+    import { Priority, Task } from '../Task/Task';
+    import { doAutocomplete } from '../lib/DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
     import { computePosition, flip, offset, shift, size } from "@floating-ui/dom";
-    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../TaskDependency";
-    import { replaceTaskWithTasks } from "../File";
+    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../Task/TaskDependency";
+    import { replaceTaskWithTasks } from "../Obsidian/File";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;

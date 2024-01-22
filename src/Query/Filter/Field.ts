@@ -1,8 +1,8 @@
-import { Sorter } from '../Sorter';
-import type { Comparator } from '../Sorter';
+import { Sorter } from '../Sort/Sorter';
+import type { Comparator } from '../Sort/Sorter';
 import * as RegExpTools from '../../lib/RegExpTools';
-import { Grouper } from '../Grouper';
-import type { GrouperFunction } from '../Grouper';
+import { Grouper } from '../Group/Grouper';
+import type { GrouperFunction } from '../Group/Grouper';
 import type { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**

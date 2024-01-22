@@ -1,8 +1,8 @@
-import { Priority } from '../../../src/Task';
+import { Priority } from '../../../src/Task/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
-import { SampleTasks, fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
 
 import {
     expectTaskComparesAfter,

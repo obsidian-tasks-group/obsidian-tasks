@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { TaskRegularExpressions } from '../../src/Task';
+import { TaskRegularExpressions } from '../../src/Task/Task';
 import { TasksDate } from '../../src/Scripting/TasksDate';
 
 export function formatToRepresentType(x: any): string {

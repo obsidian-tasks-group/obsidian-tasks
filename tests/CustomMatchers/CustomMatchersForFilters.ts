@@ -1,10 +1,10 @@
 import { diff } from 'jest-diff';
-import type { Task } from '../../src/Task';
+import type { Task } from '../../src/Task/Task';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
-import { fromLine } from '../TestHelpers';
+import { fromLine } from '../TestingTools/TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import type { StatusConfiguration } from '../../src/StatusConfiguration';
-import { Status } from '../../src/Status';
+import type { StatusConfiguration } from '../../src/Statuses/StatusConfiguration';
+import { Status } from '../../src/Statuses/Status';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 
 /**

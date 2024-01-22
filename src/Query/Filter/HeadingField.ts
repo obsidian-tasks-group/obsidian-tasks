@@ -1,5 +1,5 @@
-import type { GrouperFunction } from '../Grouper';
-import type { Task } from '../../Task';
+import type { GrouperFunction } from '../Group/Grouper';
+import type { Task } from '../../Task/Task';
 import { TextField } from './TextField';
 
 /** Support the 'heading' search instruction.

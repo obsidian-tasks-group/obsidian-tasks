@@ -1,5 +1,5 @@
-import { TaskGroups } from './TaskGroups';
-import type { TaskGroup } from './TaskGroup';
+import { TaskGroups } from './Group/TaskGroups';
+import type { TaskGroup } from './Group/TaskGroup';
 import { SearchInfo } from './SearchInfo';
 
 function taskCountPluralised(tasksCount: number) {

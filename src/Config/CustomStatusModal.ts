@@ -1,8 +1,8 @@
 import { Modal, Notice, Setting, TextComponent } from 'obsidian';
 import type { Plugin } from 'obsidian';
-import { StatusConfiguration, StatusType } from '../StatusConfiguration';
-import { StatusValidator } from '../StatusValidator';
-import { Status } from '../Status';
+import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
+import { StatusValidator } from '../Statuses/StatusValidator';
+import { Status } from '../Statuses/Status';
 
 const validator = new StatusValidator();
 

@@ -1,4 +1,4 @@
-import type { Task } from '../Task';
+import type { Task } from '../Task/Task';
 import type { Logger } from './logging';
 
 /**

@@ -3,7 +3,7 @@
  */
 
 import moment from 'moment';
-import { Status } from '../../src/Status';
+import { Status } from '../../src/Statuses/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';

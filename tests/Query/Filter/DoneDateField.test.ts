@@ -7,7 +7,7 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErr
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
-import { SampleTasks } from '../../TestHelpers';
+import { SampleTasks } from '../../TestingTools/TestHelpers';
 
 window.moment = moment;
 

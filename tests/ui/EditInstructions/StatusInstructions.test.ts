@@ -4,12 +4,12 @@
 
 import moment from 'moment/moment';
 
-import { Status } from '../../../src/Status';
+import { Status } from '../../../src/Statuses/Status';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { SetStatus, allStatusInstructions } from '../../../src/ui/EditInstructions/StatusInstructions';
 import * as StatusExamples from '../../TestingTools/StatusExamples';
 import { constructStatuses } from '../../TestingTools/StatusesTestHelpers';
-import { StatusRegistry } from '../../../src/StatusRegistry';
+import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
 
 window.moment = moment;
 

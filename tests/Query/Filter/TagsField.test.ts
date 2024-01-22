@@ -3,11 +3,11 @@ import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
 import { TagsField } from '../../../src/Query/Filter/TagsField';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
-import { fromLine } from '../../TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
-import type { Grouper } from '../../../src/Query/Grouper';
-import { TaskGroups } from '../../../src/Query/TaskGroups';
+import type { Grouper } from '../../../src/Query/Group/Grouper';
+import { TaskGroups } from '../../../src/Query/Group/TaskGroups';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { sortBy } from '../../TestingTools/SortingTestHelpers';
 

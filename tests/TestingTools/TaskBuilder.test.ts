@@ -3,7 +3,7 @@
  */
 
 import moment from 'moment';
-import type { Task } from '../../src/Task';
+import type { Task } from '../../src/Task/Task';
 import { TaskBuilder } from './TaskBuilder';
 
 export {};

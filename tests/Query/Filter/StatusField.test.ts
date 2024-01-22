@@ -1,14 +1,14 @@
 import { StatusField } from '../../../src/Query/Filter/StatusField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { Status } from '../../../src/Status';
-import * as TestHelpers from '../../TestHelpers';
+import { Status } from '../../../src/Statuses/Status';
+import * as TestHelpers from '../../TestingTools/TestHelpers';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
-import { fromLine } from '../../TestHelpers';
+import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
+import { fromLine } from '../../TestingTools/TestHelpers';
 
 describe('status', () => {
     it('done', () => {

@@ -1,4 +1,4 @@
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import type { Explanation } from '../Explain/Explanation';
 import type { SearchInfo } from '../SearchInfo';
 

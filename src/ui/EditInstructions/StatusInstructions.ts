@@ -1,7 +1,7 @@
 // @ts-ignore
-import { Status } from '../../Status';
-import type { Task } from '../../Task';
-import type { StatusRegistry } from '../../StatusRegistry';
+import { Status } from '../../Statuses/Status';
+import type { Task } from '../../Task/Task';
+import type { StatusRegistry } from '../../Statuses/StatusRegistry';
 import { StatusSettings } from '../../Config/StatusSettings';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
