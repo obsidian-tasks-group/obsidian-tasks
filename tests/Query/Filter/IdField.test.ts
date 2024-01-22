@@ -9,7 +9,7 @@ describe('id', () => {
         expect(idField.fieldName()).toEqual('id');
     });
 
-    it.failing('by id presence', () => {
+    it('by id presence', () => {
         // Arrange
         const filter = new IdField().createFilterOrErrorMessage('has id');
 
