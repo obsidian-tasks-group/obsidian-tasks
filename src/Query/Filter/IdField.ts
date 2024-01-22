@@ -9,6 +9,7 @@ export class IdField extends Field {
     constructor() {
         super();
         this.filterInstructions.add('has id', (task: Task) => task.id.length > 0);
+        this.filterInstructions.add('no id', (task: Task) => task.id.length === 0);
     }
 
     public canCreateFilterForLine(line: string): boolean {
