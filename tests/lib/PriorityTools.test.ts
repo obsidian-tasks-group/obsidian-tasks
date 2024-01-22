@@ -1,4 +1,4 @@
-import { Priority } from '../../src/Task';
+import { Priority } from '../../src/Task/Task';
 import { PriorityTools } from '../../src/lib/PriorityTools';
 
 describe('priority naming', () => {

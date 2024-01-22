@@ -1,8 +1,8 @@
 import { diff } from 'jest-diff';
-import type { Grouper } from 'Query/Grouper';
-import type { Task } from 'Task';
+import type { Task } from '../../src/Task/Task';
+import type { Grouper } from '../../src/Query/Group/Grouper';
 import type { Field } from '../../src/Query/Filter/Field';
-import { TaskGroups } from '../../src/Query/TaskGroups';
+import { TaskGroups } from '../../src/Query/Group/TaskGroups';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 

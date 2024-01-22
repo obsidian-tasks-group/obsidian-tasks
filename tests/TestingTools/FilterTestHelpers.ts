@@ -1,7 +1,7 @@
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
-import { Task } from '../../src/Task';
+import { Task } from '../../src/Task/Task';
 import { Query } from '../../src/Query/Query';
-import { TaskLocation } from '../../src/TaskLocation';
+import { TaskLocation } from '../../src/Task/TaskLocation';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { TaskBuilder } from './TaskBuilder';
 

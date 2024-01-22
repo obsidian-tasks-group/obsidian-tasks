@@ -6,9 +6,9 @@ import moment from 'moment';
 import type { EditorPosition } from 'obsidian';
 import { getNewCursorPosition, toggleLine } from '../../src/Commands/ToggleDone';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { StatusRegistry } from '../../src/StatusRegistry';
-import { Status } from '../../src/Status';
-import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
+import { Status } from '../../src/Statuses/Status';
+import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 
 window.moment = moment;
 

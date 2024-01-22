@@ -1,6 +1,6 @@
 import { FilterInstruction } from '../../../src/Query/Filter/FilterInstruction';
 import type { FilterFunction } from '../../../src/Query/Filter/Filter';
-import type { Task } from '../../../src/Task';
+import type { Task } from '../../../src/Task/Task';
 
 describe('FilterInstruction', () => {
     const filter: FilterFunction = (_task: Task) => true;

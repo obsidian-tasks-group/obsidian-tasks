@@ -1,20 +1,20 @@
 import { Plugin } from 'obsidian';
 
-import { Cache } from './Cache';
+import { Cache } from './Obsidian/Cache';
 import { Commands } from './Commands';
 import { GlobalQuery } from './Config/GlobalQuery';
-import { TasksEvents } from './TasksEvents';
-import { initializeFile } from './File';
-import { InlineRenderer } from './InlineRenderer';
-import { newLivePreviewExtension } from './LivePreviewExtension';
-import { QueryRenderer } from './QueryRenderer';
+import { TasksEvents } from './Obsidian/TasksEvents';
+import { initializeFile } from './Obsidian/File';
+import { InlineRenderer } from './Obsidian/InlineRenderer';
+import { newLivePreviewExtension } from './Obsidian/LivePreviewExtension';
+import { QueryRenderer } from './Renderer/QueryRenderer';
 import { getSettings, updateSettings } from './Config/Settings';
 import { SettingsTab } from './Config/SettingsTab';
-import { StatusRegistry } from './StatusRegistry';
+import { StatusRegistry } from './Statuses/StatusRegistry';
 import { log, logging } from './lib/logging';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
-import type { Task } from './Task';
+import type { Task } from './Task/Task';
 import { tasksApiV1 } from './Api';
 import { GlobalFilter } from './Config/GlobalFilter';
 

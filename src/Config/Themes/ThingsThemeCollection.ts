@@ -1,4 +1,4 @@
-import type { StatusCollection } from '../../StatusCollection';
+import type { StatusCollection } from '../../Statuses/StatusCollection';
 
 /**
  * Status supported by the Things theme. {@link https://github.com/colineckert/obsidian-things}

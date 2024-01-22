@@ -5,7 +5,7 @@ import moment from 'moment';
 import { RecurringField } from '../../../src/Query/Filter/RecurringField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
-import { SampleTasks, fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import {
     expectTaskComparesAfter,

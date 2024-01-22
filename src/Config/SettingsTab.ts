@@ -1,10 +1,10 @@
 import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
-import { StatusConfiguration, StatusType } from '../StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
 import type TasksPlugin from '../main';
-import { StatusRegistry } from '../StatusRegistry';
-import { Status } from '../Status';
-import type { StatusCollection } from '../StatusCollection';
-import { createStatusRegistryReport } from '../StatusRegistryReport';
+import { StatusRegistry } from '../Statuses/StatusRegistry';
+import { Status } from '../Statuses/Status';
+import type { StatusCollection } from '../Statuses/StatusCollection';
+import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import * as Themes from './Themes';
 import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';

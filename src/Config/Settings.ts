@@ -5,8 +5,8 @@ import {
 } from '../Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../TaskSerializer/DataviewTaskSerializer';
-import { StatusConfiguration } from '../StatusConfiguration';
-import { Status } from '../Status';
+import { StatusConfiguration } from '../Statuses/StatusConfiguration';
+import { Status } from '../Statuses/Status';
 import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import type { SuggestionBuilder } from '../Suggestor';
 import type { LogOptions } from '../lib/logging';

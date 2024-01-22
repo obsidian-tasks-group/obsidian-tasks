@@ -1,5 +1,5 @@
 import type { ListItemCache, Pos } from 'obsidian';
-import type { Task } from '../Task';
+import type { Task } from '../Task/Task';
 
 type MockTaskLocation = {
     path: string;

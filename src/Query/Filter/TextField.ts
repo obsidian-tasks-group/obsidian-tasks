@@ -1,9 +1,9 @@
-import type { Task } from '../../Task';
+import type { Task } from '../../Task/Task';
 import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
-import type { Comparator } from '../Sorter';
-import type { GrouperFunction } from '../Grouper';
+import type { Comparator } from '../Sort/Sorter';
+import type { GrouperFunction } from '../Group/Grouper';
 import { errorMessageForException } from '../../lib/ExceptionTools';
 import { Field } from './Field';
 import type { FilterFunction } from './Filter';

@@ -3,15 +3,15 @@
  */
 
 import moment from 'moment';
-import type { Task } from '../../../../src/Task';
-import { SampleTasks, fromLine, fromLines } from '../../../TestHelpers';
+import type { Task } from '../../../../src/Task/Task';
+import { SampleTasks, fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
 import {
     verifyFunctionFieldFilterSamplesForDocs,
     verifyFunctionFieldFilterSamplesOnTasks,
 } from '../VerifyFunctionFieldSamples';
-import { StatusRegistry } from '../../../../src/StatusRegistry';
-import { StatusConfiguration } from '../../../../src/StatusConfiguration';
+import { StatusRegistry } from '../../../../src/Statuses/StatusRegistry';
+import { StatusConfiguration } from '../../../../src/Statuses/StatusConfiguration';
 
 window.moment = moment;
 

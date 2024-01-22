@@ -1,4 +1,4 @@
-import type { Task } from '../Task';
+import type { Task } from '../Task/Task';
 import { FunctionOrError, evaluateExpression, evaluateExpressionOrCatch, parseExpression } from './Expression';
 import type { QueryContext } from './QueryContext';
 

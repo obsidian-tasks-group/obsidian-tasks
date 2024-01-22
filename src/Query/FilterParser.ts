@@ -22,8 +22,8 @@ import { StatusTypeField } from './Filter/StatusTypeField';
 
 import { RecurrenceField } from './Filter/RecurrenceField';
 import type { FilterOrErrorMessage } from './Filter/FilterOrErrorMessage';
-import type { Sorter } from './Sorter';
-import type { Grouper } from './Grouper';
+import type { Sorter } from './Sort/Sorter';
+import type { Grouper } from './Group/Grouper';
 import { FolderField } from './Filter/FolderField';
 import { RootField } from './Filter/RootField';
 import { BacklinkField } from './Filter/BacklinkField';

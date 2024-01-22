@@ -3,7 +3,7 @@
  */
 
 import moment from 'moment';
-import { Priority, Task, TaskRegularExpressions } from '../../src/Task';
+import { Priority, Task, TaskRegularExpressions } from '../../src/Task/Task';
 import type { TaskDetails, TaskSerializer } from '../../src/TaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 

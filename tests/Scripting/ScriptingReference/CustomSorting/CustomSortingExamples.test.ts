@@ -3,8 +3,8 @@
  */
 
 import moment from 'moment';
-import type { Task } from '../../../../src/Task';
-import { SampleTasks, fromLine, fromLines } from '../../../TestHelpers';
+import type { Task } from '../../../../src/Task/Task';
+import { SampleTasks, fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
 import {
     verifyFunctionFieldFilterSamplesForDocs,

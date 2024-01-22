@@ -1,7 +1,7 @@
-import type { StatusCollection, StatusCollectionEntry } from '../../src/StatusCollection';
+import type { StatusCollection, StatusCollectionEntry } from '../../src/Statuses/StatusCollection';
 import { StatusSettings } from '../../src/Config/StatusSettings';
-import { Status } from '../../src/Status';
-import { StatusRegistry } from '../../src/StatusRegistry';
+import { Status } from '../../src/Statuses/Status';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 
 export const coreStatusesData: StatusCollection = [
     [' ', 'Todo', 'x', 'TODO'],

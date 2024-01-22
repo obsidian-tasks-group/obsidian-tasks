@@ -1,4 +1,4 @@
-import type { StatusCollection } from '../../StatusCollection';
+import type { StatusCollection } from '../../Statuses/StatusCollection';
 
 /**
  * Status supported by the Aura theme. {@link https://github.com/ashwinjadhav818/obsidian-aura}

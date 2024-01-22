@@ -1,7 +1,7 @@
 import { Field } from '../../../src/Query/Filter/Field';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
-import type { Comparator } from '../../../src/Query/Sorter';
-import type { Task } from '../../../src/Task';
+import type { Comparator } from '../../../src/Query/Sort/Sorter';
+import type { Task } from '../../../src/Task/Task';
 import { expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
