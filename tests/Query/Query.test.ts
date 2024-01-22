@@ -348,6 +348,8 @@ describe('Query parsing', () => {
             'group by happens reverse',
             'group by heading',
             'group by heading reverse',
+            'group by id',
+            'group by id reverse',
             'group by path',
             'group by path reverse',
             'group by priority',

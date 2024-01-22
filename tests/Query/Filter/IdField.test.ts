@@ -7,9 +7,14 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 
-describe('id', () => {
-    const idField = new IdField();
+const idField = new IdField();
 
+// Helper function to create a task with a given id
+function with_id(id: string) {
+    return new TaskBuilder().id(id).build();
+}
+
+describe('id', () => {
     it('should supply field name', () => {
         expect(idField.fieldName()).toEqual('id');
     });
@@ -81,11 +86,6 @@ describe('sorting by id', () => {
         expect(field.supportsSorting()).toEqual(true);
     });
 
-    // Helper function to create a task with a given id
-    function with_id(id: string) {
-        return new TaskBuilder().id(id).build();
-    }
-
     it('sort by id', () => {
         // Arrange
         const sorter = new IdField().createNormalSorter();
@@ -104,5 +104,18 @@ describe('sorting by id', () => {
         // (There's no need to repeat all the examples above)
         const sorter = new IdField().createReverseSorter();
         expectTaskComparesAfter(sorter, with_id('bbb'), with_id('ddd'));
+    });
+});
+
+describe('grouping by id', () => {
+    // Only minimal tests needed, as TextField is well covered by other tests
+    it('supports grouping methods correctly', () => {
+        expect(idField).toSupportGroupingWithProperty('id');
+    });
+
+    it('should group by id name', () => {
+        const grouper = idField.createNormalGrouper();
+        expect({ grouper, tasks: [with_id('')] }).groupHeadingsToBe([]);
+        expect({ grouper, tasks: [with_id('rot7gb')] }).groupHeadingsToBe(['rot7gb']);
     });
 });
