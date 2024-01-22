@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { TaskFieldHTMLData, TaskFieldRenderer } from '../src/TaskFieldRenderer';
+import { TaskFieldHTMLData, TaskFieldRenderer } from '../src/Renderer/TaskFieldRenderer';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;

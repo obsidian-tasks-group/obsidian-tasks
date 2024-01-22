@@ -1,24 +1,24 @@
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
-import { GlobalFilter } from './Config/GlobalFilter';
-import { GlobalQuery } from './Config/GlobalQuery';
-import { DateFallback } from './DateFallback';
+import { GlobalFilter } from '../Config/GlobalFilter';
+import { GlobalQuery } from '../Config/GlobalQuery';
+import { DateFallback } from '../DateFallback';
 
-import type { IQuery } from './IQuery';
-import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
-import type { GroupDisplayHeading } from './Query/Group/GroupDisplayHeading';
-import type { QueryResult } from './Query/QueryResult';
-import type { TaskGroups } from './Query/Group/TaskGroups';
-import { postponeButtonTitle, shouldShowPostponeButton } from './Scripting/Postponer';
-import type { Task } from './Task/Task';
-import { TaskLayout } from './Layout/TaskLayout';
+import type { IQuery } from '../IQuery';
+import { explainResults, getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
+import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
+import type { QueryResult } from '../Query/QueryResult';
+import type { TaskGroups } from '../Query/Group/TaskGroups';
+import { postponeButtonTitle, shouldShowPostponeButton } from '../Scripting/Postponer';
+import type { Task } from '../Task/Task';
+import { TaskLayout } from '../Layout/TaskLayout';
+import { PostponeMenu } from '../ui/Menus/PostponeMenu';
+import type TasksPlugin from '../main';
+import { TaskModal } from '../Obsidian/TaskModal';
+import type { TasksEvents } from '../Obsidian/TasksEvents';
+import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
+import { State } from '../Obsidian/Cache';
 import { TaskLineRenderer } from './TaskLineRenderer';
-import { PostponeMenu } from './ui/Menus/PostponeMenu';
-import type TasksPlugin from './main';
-import { TaskModal } from './Obsidian/TaskModal';
-import type { TasksEvents } from './Obsidian/TasksEvents';
-import { getTaskLineAndFile, replaceTaskWithTasks } from './Obsidian/File';
-import { State } from './Obsidian/Cache';
 
 export class QueryRenderer {
     private readonly app: App;

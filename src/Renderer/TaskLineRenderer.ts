@@ -1,16 +1,16 @@
 import type { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
-import { GlobalFilter } from './Config/GlobalFilter';
-import { TASK_FORMATS, getSettings } from './Config/Settings';
-import { replaceTaskWithTasks } from './Obsidian/File';
-import type { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
-import type { QueryLayoutOptions } from './Layout/QueryLayoutOptions';
-import type { Task } from './Task/Task';
-import * as taskModule from './Task/Task';
+import { GlobalFilter } from '../Config/GlobalFilter';
+import { TASK_FORMATS, getSettings } from '../Config/Settings';
+import { replaceTaskWithTasks } from '../Obsidian/File';
+import type { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
+import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
+import type { Task } from '../Task/Task';
+import * as taskModule from '../Task/Task';
+import type { TaskLayoutComponent } from '../Layout/TaskLayout';
+import { StatusMenu } from '../ui/Menus/StatusMenu';
+import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
-import type { TaskLayoutComponent } from './Layout/TaskLayout';
-import { StatusMenu } from './ui/Menus/StatusMenu';
-import { StatusRegistry } from './Statuses/StatusRegistry';
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.

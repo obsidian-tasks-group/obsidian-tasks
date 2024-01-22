@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
-import { PriorityTools } from './lib/PriorityTools';
-import type { Task } from './Task/Task';
-import type { TaskLayoutComponent } from './Layout/TaskLayout';
+import { PriorityTools } from '../lib/PriorityTools';
+import type { Task } from '../Task/Task';
+import type { TaskLayoutComponent } from '../Layout/TaskLayout';
 
 export class TaskFieldRenderer {
     private readonly data = taskFieldHTMLData;

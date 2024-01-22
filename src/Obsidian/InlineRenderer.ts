@@ -4,7 +4,7 @@ import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { Task } from '../Task/Task';
-import { TaskLineRenderer } from '../TaskLineRenderer';
+import { TaskLineRenderer } from '../Renderer/TaskLineRenderer';
 import { TaskLocation } from '../Task/TaskLocation';
 
 export class InlineRenderer {
