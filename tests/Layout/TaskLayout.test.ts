@@ -2,9 +2,9 @@
  * @jest-environment jsdom
  */
 
-import { TaskLayoutOptions } from '../src/Layout/TaskLayoutOptions';
-import { QueryLayoutOptions } from '../src/Layout/QueryLayoutOptions';
-import { TaskLayout } from '../src/Layout/TaskLayout';
+import { TaskLayoutOptions } from '../../src/Layout/TaskLayoutOptions';
+import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
+import { TaskLayout } from '../../src/Layout/TaskLayout';
 
 describe('TaskLayout tests', () => {
     it('should generate expected CSS classes for default layout', () => {
