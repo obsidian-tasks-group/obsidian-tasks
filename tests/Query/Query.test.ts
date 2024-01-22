@@ -103,6 +103,7 @@ describe('Query parsing', () => {
         'no created date',
         'no due date',
         'no happens date',
+        'no id',
         'no scheduled date',
         'no start date',
         'no tag',

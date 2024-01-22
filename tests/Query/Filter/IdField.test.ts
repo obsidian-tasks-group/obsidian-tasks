@@ -19,4 +19,15 @@ describe('id', () => {
         testFilter(filter, new TaskBuilder().id(''), false);
         testFilter(filter, new TaskBuilder().id('abcdef'), true);
     });
+
+    it('by id absence', () => {
+        // Arrange
+        const line = 'no id';
+        const filter = new IdField().createFilterOrErrorMessage(line);
+        expect(idField.canCreateFilterForLine(line)).toEqual(true);
+
+        // Act, Assert
+        testFilter(filter, new TaskBuilder().id(''), true);
+        testFilter(filter, new TaskBuilder().id('abcdef'), false);
+    });
 });
