@@ -1,6 +1,6 @@
 import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
-import { doAutocomplete } from '../DateAbbreviations';
+import { doAutocomplete } from '../lib/DateAbbreviations';
 import { Recurrence } from '../Task/Recurrence';
 import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
 import { Task, TaskRegularExpressions } from '../Task/Task';

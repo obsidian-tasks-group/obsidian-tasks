@@ -6,7 +6,7 @@
     import { GlobalFilter } from '../Config/GlobalFilter';
     import { Status } from '../Statuses/Status';
     import { Priority, Task } from '../Task/Task';
-    import { doAutocomplete } from '../DateAbbreviations';
+    import { doAutocomplete } from '../lib/DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
     import { computePosition, flip, offset, shift, size } from "@floating-ui/dom";
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../Task/TaskDependency";
