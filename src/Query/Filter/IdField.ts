@@ -1,9 +1,9 @@
 import type { Task } from '../../Task/Task';
-import { Field } from './Field';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import type { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { FilterInstructions } from './FilterInstructions';
+import { TextField } from './TextField';
 
-export class IdField extends Field {
+export class IdField extends TextField {
     private readonly filterInstructions: FilterInstructions = new FilterInstructions();
 
     constructor() {
@@ -26,14 +26,14 @@ export class IdField extends Field {
             return filterResult;
         }
 
-        return FilterOrErrorMessage.fromError(line, 'Unknown instruction');
+        return super.createFilterOrErrorMessage(line);
     }
 
     public fieldName(): string {
         return 'id';
     }
 
-    protected filterRegExp(): RegExp | null {
-        return null;
+    public value(task: Task): string {
+        return task.id;
     }
 }

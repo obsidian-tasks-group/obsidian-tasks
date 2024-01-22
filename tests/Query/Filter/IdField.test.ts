@@ -30,4 +30,42 @@ describe('id', () => {
         testFilter(filter, new TaskBuilder().id(''), true);
         testFilter(filter, new TaskBuilder().id('abcdef'), false);
     });
+
+    it('by id (includes)', () => {
+        // Arrange
+        const filter = new IdField().createFilterOrErrorMessage('id includes DEF');
+
+        // Assert
+        testFilter(filter, new TaskBuilder().id(''), false);
+        testFilter(filter, new TaskBuilder().id('abcdef'), true);
+    });
+
+    it('by id (does not include)', () => {
+        // Arrange
+        const filter = new IdField().createFilterOrErrorMessage('id does not include def');
+
+        // Assert
+        testFilter(filter, new TaskBuilder().id(''), true);
+        testFilter(filter, new TaskBuilder().id('abcdef'), false);
+    });
+
+    it('by id (regex matches)', () => {
+        // Arrange
+        const filter = new IdField().createFilterOrErrorMessage(String.raw`id regex matches /\d/`);
+
+        // Assert
+        testFilter(filter, new TaskBuilder().id(''), false);
+        testFilter(filter, new TaskBuilder().id('a1'), true);
+        testFilter(filter, new TaskBuilder().id('bc'), false);
+    });
+
+    it('by id (regex does not match)', () => {
+        // Arrange
+        const filter = new IdField().createFilterOrErrorMessage(String.raw`id regex does not match /\d/`);
+
+        // Assert
+        testFilter(filter, new TaskBuilder().id(''), true);
+        testFilter(filter, new TaskBuilder().id('a1'), false);
+        testFilter(filter, new TaskBuilder().id('bc'), true);
+    });
 });
