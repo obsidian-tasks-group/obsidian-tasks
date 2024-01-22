@@ -48,4 +48,12 @@ export class IdField extends TextField {
     public supportsSorting(): boolean {
         return true;
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Grouping
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
 }
