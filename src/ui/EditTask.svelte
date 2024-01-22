@@ -8,9 +8,10 @@
     import { Priority, Task } from '../Task/Task';
     import { doAutocomplete } from '../lib/DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
-    import { computePosition, flip, offset, shift, size } from "@floating-ui/dom";
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../Task/TaskDependency";
     import { replaceTaskWithTasks } from "../Obsidian/File";
+    import type { EditableTask } from "./EditableTask";
+    import Dependency from "./Dependency.svelte";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -31,22 +32,7 @@
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
-    let editableTask: {
-        // NEW_TASK_FIELD_EDIT_REQUIRED
-        description: string;
-        status: Status;
-        priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
-        recurrenceRule: string;
-        createdDate: string;
-        startDate: string;
-        scheduledDate: string;
-        dueDate: string;
-        doneDate: string;
-        cancelledDate: string,
-        forwardOnly: boolean;
-        blockedBy: Task[];
-        blocking: Task[];
-    } = {
+    let editableTask: EditableTask = {
         description: '',
         status: Status.TODO,
         priority: 'none',
@@ -89,20 +75,9 @@
     let withAccessKeys: boolean = true;
     let formIsValid: boolean = true;
 
-    let blockedBySearch: string = '';
-    let blockedBySearchResults: Task[] | null = null;
-    let blockedBySearchIndex: number | null = 0;
-
     let originalBlocking: Task[] = [];
 
-    let blockingSearch: string = '';
-    let blockingSearchResults: Task[] | null = null;
-    let blockingSearchIndex: number | null = 0;
-
-    let displayResultsIfSearchEmpty = false;
-
-    let blockedByFocused = false;
-    let blockingFocused = false;
+    let onMountComplete = false;
 
     // 'weekend' abbreviation omitted due to lack of space.
     let datePlaceholder =
@@ -222,26 +197,6 @@
         return date;
     }
 
-    function addBlockedByTask(task: Task) {
-        editableTask.blockedBy = [...editableTask.blockedBy, task];
-        blockedBySearch = '';
-        blockedByFocused = false;
-    }
-
-    function removeBlockedByTask(task: Task) {
-        editableTask.blockedBy = editableTask.blockedBy.filter(item => item !== task)
-    }
-
-    function addBlockingTask(task: Task) {
-        editableTask.blocking = [...editableTask.blocking, task];
-        blockingSearch = '';
-        blockingFocused = false;
-    }
-
-    function removeBlockingTask(task: Task) {
-        editableTask.blocking = editableTask.blocking.filter(item => item !== task)
-    }
-
     async function serialiseTaskId(task: Task) {
         if (task.id !== "") return task;
 
@@ -252,113 +207,6 @@
         await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
 
         return updatedTask;
-    }
-
-    function generateSearchResults(search: string) {
-        if (!search && !displayResultsIfSearchEmpty) return [];
-
-        displayResultsIfSearchEmpty = false;
-
-        let results = allTasks.filter(task => task.description.toLowerCase().includes(search.toLowerCase()));
-
-        // remove itself, and tasks this task already has a relationship with from results
-        results = results.filter((item) => {
-            // line number is unavailable for the task being edited
-            // Known issue - filters out duplicate lines in task file
-            const sameFile = item.description === task.description &&
-                item.taskLocation.path === task.taskLocation.path &&
-                item.originalMarkdown === task.originalMarkdown
-
-            return ![...editableTask.blockedBy, ...editableTask.blocking].includes(item) && !sameFile;
-        });
-
-        // search results favour tasks from the same file as this task
-        results.sort((a, b) => {
-            const aInSamePath = a.taskLocation.path === task.taskLocation.path;
-            const bInSamePath = b.taskLocation.path === task.taskLocation.path;
-
-            // prioritise tasks close to this task in the same file
-            if (aInSamePath && bInSamePath) {
-                return Math.abs(a.taskLocation.lineNumber - task.taskLocation.lineNumber)
-                    - Math.abs(b.taskLocation.lineNumber - task.taskLocation.lineNumber);
-            } else if (aInSamePath) {
-                return -1;
-            } else if (bInSamePath) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
-
-        return results.slice(0,20);
-    }
-
-    function taskKeydown(e: KeyboardEvent, field: "blockedBy" | "blocking") {
-        const resultsList = field === "blockedBy" ? blockedBySearchResults : blockingSearchResults;
-        let searchIndex = field === "blockedBy" ? blockedBySearchIndex : blockingSearchIndex;
-
-        if (resultsList === null) return;
-
-        switch(e.key) {
-            case "ArrowUp":
-                e.preventDefault();
-                if (searchIndex === 0 || searchIndex === null) {
-                    searchIndex = resultsList.length - 1;
-                } else {
-                    searchIndex -= 1;
-                }
-                break;
-            case "ArrowDown":
-                e.preventDefault();
-                if (searchIndex === resultsList.length - 1 || searchIndex === null) {
-                    searchIndex = 0;
-                } else {
-                    searchIndex += 1;
-                }
-                break;
-            case "Enter":
-                if (searchIndex !== null) {
-                    e.preventDefault();
-                    if (field === "blockedBy") {
-                        addBlockedByTask(resultsList[searchIndex]);
-                        searchIndex = null;
-                        blockedByFocused = false
-                    }
-                    else {
-                        addBlockingTask(resultsList[searchIndex]);
-                        searchIndex = null;
-                        blockingFocused = false
-                    }
-                } else {
-                    _onDescriptionKeyDown(e);
-                }
-                break;
-            default:
-                searchIndex = 0;
-                break;
-        }
-
-        if (field === "blockedBy") {
-            blockedBySearchIndex = searchIndex;
-            if (blockedBySearchIndex !== null) {
-                blockedByContent?.getElementsByTagName('li')[blockedBySearchIndex]?.scrollIntoView(false)
-            }
-        } else {
-            blockingSearchIndex = searchIndex;
-            if (blockingSearchIndex !== null) {
-                blockingContent?.getElementsByTagName('li')[blockingSearchIndex]?.scrollIntoView(false)
-            }
-        }
-    }
-
-    function onBlockedByFocused() {
-        blockedByFocused = true;
-        displayResultsIfSearchEmpty = true;
-    }
-
-    function onBlockingFocused() {
-        blockingFocused = true;
-        displayResultsIfSearchEmpty = true;
     }
 
     $: accesskey = (key: string) => withAccessKeys ? key : null;
@@ -424,76 +272,6 @@
                 parsedRecurrence = recurrenceFromText;
             }
         }
-    }
-
-    $: {
-        blockedBySearchResults = blockedByFocused ? generateSearchResults(blockedBySearch) : null;
-    }
-
-    $: {
-        blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch) : null;
-    }
-
-
-    let depInputWidth: number;
-
-    function positionDropdown(ref: HTMLElement, content: HTMLElement) {
-        if (!ref || !content) return;
-
-        computePosition(ref, content, {
-            middleware: [
-                offset(6),
-                shift(),
-                flip(),
-                size({
-                    apply() {
-                        content && Object.assign(content.style, { width: `${depInputWidth}px` });
-                    },
-                }),
-            ],
-        }).then(({ x, y }) => {
-            Object.assign(content.style, {
-                left: `${x}px`,
-                top: `${y}px`,
-            });
-        });
-    }
-
-    let blockedByRef: HTMLElement;
-    let blockedByContent: HTMLElement;
-
-    $: {
-        positionDropdown(blockedByRef, blockedByContent);
-    }
-
-    let blockingRef: HTMLElement;
-    let blockingContent: HTMLElement;
-
-    $: {
-        positionDropdown(blockingRef, blockingContent);
-    }
-
-    function showDescriptionTooltip(element: HTMLElement, text: string) {
-        const tooltip = element.createDiv();
-        tooltip.addClasses(['tooltip', 'pop-up']);
-        tooltip.innerText = text;
-
-        computePosition(element, tooltip, {
-            placement: "top",
-            middleware: [
-                offset(-18),
-                shift()
-            ]
-        }).then(({x, y}) => {
-            Object.assign(tooltip.style, {
-                left: `${x}px`,
-                top: `${y}px`,
-            });
-        });
-
-        element.addEventListener('mouseleave', () => {
-            tooltip.remove();
-        });
     }
 
     onMount(() => {
@@ -578,12 +356,6 @@
     const _removeLinebreaksFromDescription = () => {
         // wrapped into a timer to run after the paste/drop event
         setTimeout(() => { editableTask.description = editableTask.description.replace(/[\r\n]+/g, ' ')}, 0);
-    }
-
-    const _displayableFilePath = (path: string) => {
-        if (path === task.taskLocation.path) return "";
-
-        return path.slice(0,-3);
     }
 
     const _onSubmit = async () => {
@@ -821,111 +593,19 @@
                 <!--  Blocked By Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
                 <label for="start">Blocked B<span class="accesskey">y</span></label>
-                <!-- svelte-ignore a11y-accesskey -->
-                <span class="input" bind:clientWidth={depInputWidth}>
-                    <input
-                        bind:this={blockedByRef}
-                        bind:value={blockedBySearch}
-                        on:keydown={(e) => taskKeydown(e, "blockedBy")}
-                        on:focus={onBlockedByFocused}
-                        on:blur={() => blockedByFocused = false}
-                        accesskey={accesskey("y")}
-                        id="blockedBy"
-                        type="text"
-                        placeholder="Type to search..."
-                    />
-                </span>
-                {#if blockedBySearchResults && blockedBySearchResults.length !== 0}
-                    <ul class="suggested-tasks"
-                        bind:this={blockedByContent}
-                        on:mouseleave={() => blockedBySearchIndex = null}>
-                        {#each blockedBySearchResults as searchTask, index}
-                            {@const filepath = _displayableFilePath(searchTask.taskLocation.path)}
-                            <!-- svelte-ignore a11y-click-events-have-key-events -->
-                            <li on:mousedown={() => addBlockedByTask(searchTask)}
-                                class:selected={blockedBySearchIndex !== null && index === blockedBySearchIndex}
-                                on:mouseenter={() => blockedBySearchIndex = index}
-                            >
-                                <div class="{filepath ? 'dependency-name-shared' : 'dependency-name'}"
-                                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, searchTask.descriptionWithoutTags)}>
-                                    [{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}
-                                </div>
-                                {#if filepath}
-                                    <div class="dependency-location"
-                                         on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}>
-                                        {filepath}
-                                    </div>
-                                {/if}
-                            </li>
-                        {/each}
-                    </ul>
+                {#if onMountComplete}
+                    <Dependency type="blockedBy" task={task} editableTask={editableTask} allTasks={allTasks}
+                                _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} />
                 {/if}
-                <div class="chip-container results">
-                    {#each editableTask.blockedBy as task}
-                        <div class="chip"
-                             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, task.descriptionWithoutTags)}>
-                            <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
-
-                            <button on:click={() => removeBlockedByTask(task)} type="button" class="chip-close">
-                                <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                            </button>
-                        </div>
-                    {/each}
-                </div>
 
                 <!-- --------------------------------------------------------------------------- -->
                 <!--  Blocking Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
                 <label for="start" class="accesskey-first">Blocking</label>
-                <!-- svelte-ignore a11y-accesskey -->
-                <input
-                    bind:this={blockingRef}
-                    bind:value={blockingSearch}
-                    on:keydown={(e) => taskKeydown(e, "blocking")}
-                    on:focus={onBlockingFocused}
-                    on:blur={() => blockingFocused = false}
-                    accesskey={accesskey("b")}
-                    id="blocking"
-                    class="input"
-                    type="text"
-                    placeholder="Type to search..."
-                />
-                {#if blockingSearchResults && blockingSearchResults.length !== 0}
-                    <ul class="suggested-tasks"
-                        bind:this={blockingContent}
-                        on:mouseleave={() => blockingSearchIndex = null}>
-                        {#each blockingSearchResults as searchTask, index}
-                            {@const filepath = _displayableFilePath(searchTask.taskLocation.path)}
-                            <!-- svelte-ignore a11y-click-events-have-key-events -->
-                            <li on:mousedown={() => addBlockingTask(searchTask)}
-                                class:selected={blockingSearch !== null && index === blockingSearchIndex}
-                                on:mouseenter={() => blockingSearchIndex = index}>
-                                <div class="{filepath ? 'dependency-name-shared' : 'dependency-name'}"
-                                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, searchTask.descriptionWithoutTags)}>
-                                    [{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}
-                                </div>
-                                {#if filepath}
-                                    <div class="dependency-location"
-                                         on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}>
-                                        {filepath}
-                                    </div>
-                                {/if}
-                            </li>
-                        {/each}
-                    </ul>
+                {#if onMountComplete}
+                    <Dependency type="blocking" task={task} editableTask={editableTask} allTasks={allTasks}
+                                _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} />
                 {/if}
-                <div class="chip-container results">
-                    {#each editableTask.blocking as task}
-                        <div class="chip"
-                             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, task.descriptionWithoutTags)}>
-                            <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
-
-                            <button on:click={() => removeBlockingTask(task)} type="button" class="chip-close">
-                                <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                            </button>
-                        </div>
-                    {/each}
-                </div>
             {:else}
                 <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
             {/if}
