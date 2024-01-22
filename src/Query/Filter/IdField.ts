@@ -12,6 +12,10 @@ export class IdField extends TextField {
         this.filterInstructions.add('no id', (task: Task) => task.id.length === 0);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Filtering
+    // -----------------------------------------------------------------------------------------------------------------
+
     public canCreateFilterForLine(line: string): boolean {
         if (this.filterInstructions.canCreateFilterForLine(line)) {
             return true;
@@ -35,5 +39,13 @@ export class IdField extends TextField {
 
     public value(task: Task): string {
         return task.id;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Sorting
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public supportsSorting(): boolean {
+        return true;
     }
 }
