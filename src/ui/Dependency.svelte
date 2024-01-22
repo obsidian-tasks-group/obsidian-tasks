@@ -181,7 +181,7 @@
     />
 </span>
 {#if searchResults && searchResults.length !== 0}
-    <ul class="suggested-tasks"
+    <ul class="task-dependency-dropdown"
         bind:this={dropdown}
         on:mouseleave={() => searchIndex = null}>
         {#each searchResults as searchTask, index}
@@ -195,7 +195,7 @@
                     [{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}
                 </div>
                 {#if filepath}
-                    <div class="dependency-location"
+                    <div class="dependency-path"
                          on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}>
                         {filepath}
                     </div>
@@ -204,13 +204,13 @@
         {/each}
     </ul>
 {/if}
-<div class="chip-container results">
+<div class="task-dependencies-container results">
     {#each editableTask[type] as task}
-        <div class="chip"
+        <div class="task-dependency"
              on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, task.descriptionWithoutTags)}>
-            <span class="chip-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
+            <span class="task-dependency-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
 
-            <button on:click={() => removeTask(task)} type="button" class="chip-close">
+            <button on:click={() => removeTask(task)} type="button" class="task-dependency-delete">
                 <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12"
                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"
                      stroke-linejoin="round" class="lucide lucide-x">
