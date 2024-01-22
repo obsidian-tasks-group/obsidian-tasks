@@ -4,7 +4,7 @@ import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
 import { Task } from '../Task/Task';
-import { DateFallback } from '../DateFallback';
+import { DateFallback } from '../Task/DateFallback';
 import { getSettings } from '../Config/Settings';
 import { Lazy } from '../lib/Lazy';
 import { TaskLocation } from '../Task/TaskLocation';

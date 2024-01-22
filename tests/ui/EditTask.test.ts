@@ -8,7 +8,7 @@ import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import type { Task } from '../../src/Task/Task';
 import EditTask from '../../src/ui/EditTask.svelte';
 import { Status } from '../../src/Statuses/Status';
-import { DateFallback } from '../../src/DateFallback';
+import { DateFallback } from '../../src/Task/DateFallback';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';

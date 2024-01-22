@@ -1,6 +1,6 @@
 import { Status } from '../Statuses/Status';
 import { Priority, Task, TaskRegularExpressions } from '../Task/Task';
-import { DateFallback } from '../DateFallback';
+import { DateFallback } from '../Task/DateFallback';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { TaskLocation } from '../Task/TaskLocation';
 import { getSettings } from '../Config/Settings';
