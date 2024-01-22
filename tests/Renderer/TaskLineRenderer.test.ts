@@ -2,20 +2,20 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { DebugSettings } from '../src/Config/DebugSettings';
-import { GlobalFilter } from '../src/Config/GlobalFilter';
-import { resetSettings, updateSettings } from '../src/Config/Settings';
-import { TaskLayoutOptions } from '../src/Layout/TaskLayoutOptions';
-import { DateParser } from '../src/Query/DateParser';
-import { QueryLayoutOptions } from '../src/Layout/QueryLayoutOptions';
-import type { Task } from '../src/Task/Task';
-import { TaskRegularExpressions } from '../src/Task/Task';
-import { type TaskLayoutComponent, taskLayoutComponents } from '../src/Layout/TaskLayout';
-import type { TextRenderer } from '../src/Renderer/TaskLineRenderer';
-import { TaskLineRenderer } from '../src/Renderer/TaskLineRenderer';
-import { fromLine } from './TestingTools/TestHelpers';
-import { verifyWithFileExtension } from './TestingTools/ApprovalTestHelpers';
-import { TaskBuilder } from './TestingTools/TaskBuilder';
+import { DebugSettings } from '../../src/Config/DebugSettings';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { TaskLayoutOptions } from '../../src/Layout/TaskLayoutOptions';
+import { DateParser } from '../../src/Query/DateParser';
+import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
+import type { Task } from '../../src/Task/Task';
+import { TaskRegularExpressions } from '../../src/Task/Task';
+import { type TaskLayoutComponent, taskLayoutComponents } from '../../src/Layout/TaskLayout';
+import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
+import { TaskLineRenderer } from '../../src/Renderer/TaskLineRenderer';
+import { fromLine } from '../TestingTools/TestHelpers';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
