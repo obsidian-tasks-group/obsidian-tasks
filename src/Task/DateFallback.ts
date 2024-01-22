@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
-import { getSettings } from './Config/Settings';
-import { Task } from './Task/Task';
+import { getSettings } from '../Config/Settings';
+import { Task } from './Task';
 
 /**
  * Implement date from path detection

@@ -2,7 +2,7 @@ import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
-import { DateFallback } from '../DateFallback';
+import { DateFallback } from '../Task/DateFallback';
 
 import type { IQuery } from '../IQuery';
 import { explainResults, getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
