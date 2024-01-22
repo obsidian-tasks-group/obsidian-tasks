@@ -27,7 +27,7 @@ For help on writing and running the tests, see [[About Testing]]
 - Add to [tests/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Query/Filter) a new test file.
   - This should focus on testing whether or not individual Task objects, with carefully selected sample date, match the filter.
   - Think about edge cases.
-- Add the new instruction(s) to  'Query parsing' test in  [tests/Query.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query.test.ts)
+- Add the new instruction(s) to  'Query parsing' test in  [tests/Query/Query.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Query.test.ts)
   - This verifies that the new filter instruction has been correctly wired in to the Query class.
 
 ## Update doc/
