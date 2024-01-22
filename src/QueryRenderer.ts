@@ -11,7 +11,7 @@ import type { QueryResult } from './Query/QueryResult';
 import type { TaskGroups } from './Query/Group/TaskGroups';
 import { postponeButtonTitle, shouldShowPostponeButton } from './Scripting/Postponer';
 import type { Task } from './Task/Task';
-import { TaskLayout } from './TaskLayout';
+import { TaskLayout } from './Layout/TaskLayout';
 import { TaskLineRenderer } from './TaskLineRenderer';
 import { PostponeMenu } from './ui/Menus/PostponeMenu';
 import type TasksPlugin from './main';

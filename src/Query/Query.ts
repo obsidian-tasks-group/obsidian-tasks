@@ -1,5 +1,5 @@
 import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { QueryLayoutOptions } from '../QueryLayoutOptions';
+import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
 import type { Task } from '../Task/Task';

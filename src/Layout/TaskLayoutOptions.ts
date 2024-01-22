@@ -1,4 +1,4 @@
-import { type TaskLayoutComponent, taskLayoutComponents } from '../TaskLayout';
+import { type TaskLayoutComponent, taskLayoutComponents } from './TaskLayout';
 
 /**
  * Various rendering options of tasks in a query.

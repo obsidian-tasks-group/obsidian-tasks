@@ -1,4 +1,4 @@
-import { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
+import { TaskLayoutOptions } from './TaskLayoutOptions';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
 
 export type TaskLayoutComponent =

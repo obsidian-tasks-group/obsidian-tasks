@@ -4,11 +4,11 @@ import { GlobalFilter } from './Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { replaceTaskWithTasks } from './Obsidian/File';
 import type { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
-import type { QueryLayoutOptions } from './QueryLayoutOptions';
+import type { QueryLayoutOptions } from './Layout/QueryLayoutOptions';
 import type { Task } from './Task/Task';
 import * as taskModule from './Task/Task';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
-import type { TaskLayoutComponent } from './TaskLayout';
+import type { TaskLayoutComponent } from './Layout/TaskLayout';
 import { StatusMenu } from './ui/Menus/StatusMenu';
 import { StatusRegistry } from './Statuses/StatusRegistry';
 
