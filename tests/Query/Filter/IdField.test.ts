@@ -1,6 +1,11 @@
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { IdField } from '../../../src/Query/Filter/IdField';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
 
 describe('id', () => {
     const idField = new IdField();
@@ -67,5 +72,37 @@ describe('id', () => {
         testFilter(filter, new TaskBuilder().id(''), true);
         testFilter(filter, new TaskBuilder().id('a1'), false);
         testFilter(filter, new TaskBuilder().id('bc'), true);
+    });
+});
+
+describe('sorting by id', () => {
+    it('supports Field sorting methods correctly', () => {
+        const field = new IdField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
+    // Helper function to create a task with a given id
+    function with_id(id: string) {
+        return new TaskBuilder().id(id).build();
+    }
+
+    it('sort by id', () => {
+        // Arrange
+        const sorter = new IdField().createNormalSorter();
+
+        // Assert
+        expectTaskComparesEqual(sorter, with_id('mvplec'), with_id('mvplec'));
+        expectTaskComparesBefore(sorter, with_id('g7317o'), with_id('rot7gb'));
+
+        // Beginning with numbers
+        expectTaskComparesBefore(sorter, with_id('1'), with_id('9'));
+        expectTaskComparesBefore(sorter, with_id('9'), with_id('11'));
+    });
+
+    it('sort by id reverse', () => {
+        // Single example just to prove reverse works.
+        // (There's no need to repeat all the examples above)
+        const sorter = new IdField().createReverseSorter();
+        expectTaskComparesAfter(sorter, with_id('bbb'), with_id('ddd'));
     });
 });
