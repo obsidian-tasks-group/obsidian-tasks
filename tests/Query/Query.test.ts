@@ -87,6 +87,7 @@ describe('Query parsing', () => {
         'has done date',
         'has due date',
         'has happens date',
+        'has id',
         'has scheduled date',
         'has start date',
         'has tag',

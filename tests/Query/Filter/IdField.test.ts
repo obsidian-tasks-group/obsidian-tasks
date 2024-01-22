@@ -11,7 +11,9 @@ describe('id', () => {
 
     it('by id presence', () => {
         // Arrange
-        const filter = new IdField().createFilterOrErrorMessage('has id');
+        const line = 'has id';
+        const filter = new IdField().createFilterOrErrorMessage(line);
+        expect(idField.canCreateFilterForLine(line)).toEqual(true);
 
         // Act, Assert
         testFilter(filter, new TaskBuilder().id(''), false);
