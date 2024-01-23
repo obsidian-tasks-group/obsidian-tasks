@@ -2,6 +2,7 @@ import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
+import { QueryLayout } from '../Layout/QueryLayout';
 import { DateFallback } from '../Task/DateFallback';
 
 import type { IQuery } from '../IQuery';
@@ -221,10 +222,11 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
-        const layout = new TaskLayout(this.query.taskLayoutOptions, this.query.queryLayoutOptions);
+        const layout = new TaskLayout(this.query.taskLayoutOptions);
+        const queryLayout = new QueryLayout(this.query.queryLayoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
-        taskList.addClasses(layout.taskListHiddenClasses());
+        taskList.addClasses([...layout.applyTaskLayoutOptions(), ...queryLayout.applyQueryLayoutOptions()]);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
