@@ -9,7 +9,9 @@ import { TaskLayout } from '../../src/Layout/TaskLayout';
 describe('TaskLayout tests', () => {
     it('should generate expected CSS classes for default layout', () => {
         const taskLayout = new TaskLayout();
-        expect(taskLayout.taskListHiddenClasses().join('\n')).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
+        expect(
+            [...taskLayout.applyTaskLayoutOptions(), ...taskLayout.applyQueryLayoutOptions()].join('\n'),
+        ).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
     });
 
     it('should generate expected CSS classes with all default options reversed', () => {
@@ -25,7 +27,8 @@ describe('TaskLayout tests', () => {
 
         const taskLayout = new TaskLayout(taskLayoutOptions, queryLayoutOptions);
 
-        expect(taskLayout.taskListHiddenClasses().join('\n')).toMatchInlineSnapshot(`
+        expect([...taskLayout.applyTaskLayoutOptions(), ...taskLayout.applyQueryLayoutOptions()].join('\n'))
+            .toMatchInlineSnapshot(`
             "tasks-layout-hide-id
             tasks-layout-hide-blockedBy
             tasks-layout-hide-priority
