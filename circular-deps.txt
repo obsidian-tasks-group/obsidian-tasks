@@ -1,17 +1,16 @@
-Processed 151 files (7.5s) (16 warnings)
+Processed 152 files (1s) (16 warnings)
 
 1) Config/Settings.ts > Suggestor/Suggestor.ts
 2) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts
 3) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > TaskSerializer/DefaultTaskSerializer.ts
 4) Task/Task.ts > Config/Settings.ts > TaskSerializer/DataviewTaskSerializer.ts
-5) Task/Task.ts > Scripting/TasksDate.ts
-6) Task/Task.ts > Task/DateFallback.ts
-7) Task/Task.ts > Task/Urgency.ts
-8) Task/Task.ts > lib/LogTasksHelper.ts
-9) Query/Query.ts > Query/Explain/Explainer.ts
-10) Query/FilterParser.ts > Query/Filter/BooleanField.ts
-11) Statuses/StatusRegistryReport.ts > Statuses/StatusSettingsReport.ts
-12) main.ts > Config/SettingsTab.ts
-13) Obsidian/Cache.ts > Obsidian/TasksEvents.ts
-14) main.ts > Renderer/QueryRenderer.ts
+5) Task/Task.ts > Task/DateFallback.ts
+6) Task/Task.ts > Task/Urgency.ts
+7) Task/Task.ts > lib/LogTasksHelper.ts
+8) Query/Query.ts > Query/Explain/Explainer.ts
+9) Query/FilterParser.ts > Query/Filter/BooleanField.ts
+10) Statuses/StatusRegistryReport.ts > Statuses/StatusSettingsReport.ts
+11) main.ts > Config/SettingsTab.ts
+12) Obsidian/Cache.ts > Obsidian/TasksEvents.ts
+13) main.ts > Renderer/QueryRenderer.ts
 

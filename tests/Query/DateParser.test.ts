@@ -3,7 +3,8 @@
  */
 import moment from 'moment';
 import { DateParser } from '../../src/Query/DateParser';
-import { TaskRegularExpressions } from '../../src/Task/Task';
+
+import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 
 window.moment = moment;
 

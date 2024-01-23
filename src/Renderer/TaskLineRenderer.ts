@@ -6,9 +6,9 @@ import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import type { Task } from '../Task/Task';
-import * as taskModule from '../Task/Task';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
+import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 
 /**
@@ -309,7 +309,7 @@ export class TaskLineRenderer {
             }
 
             function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-                return `${signifier} ${date.format(taskModule.TaskRegularExpressions.dateFormat)} (${date.from(
+                return `${signifier} ${date.format(TaskRegularExpressions.dateFormat)} (${date.from(
                     window.moment().startOf('day'),
                 )})`;
             }

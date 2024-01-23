@@ -9,12 +9,12 @@ import { type TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } fro
 import { DateParser } from '../../src/Query/DateParser';
 import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
 import type { Task } from '../../src/Task/Task';
-import { TaskRegularExpressions } from '../../src/Task/Task';
 import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
 import { TaskLineRenderer } from '../../src/Renderer/TaskLineRenderer';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 
 jest.mock('obsidian');
 window.moment = moment;
