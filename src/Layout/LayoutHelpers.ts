@@ -1,6 +1,6 @@
-export function generateHiddenClassForTaskList(taskListHiddenClasses: string[], hide: boolean, component: string) {
+export function generateHiddenClassForTaskList(hiddenClasses: string[], hide: boolean, component: string) {
     if (hide) {
-        taskListHiddenClasses.push(hiddenComponentClassName(component));
+        hiddenClasses.push(hiddenComponentClassName(component));
     }
 }
 

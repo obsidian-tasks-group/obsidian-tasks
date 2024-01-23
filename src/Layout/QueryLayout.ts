@@ -17,7 +17,7 @@ export class QueryLayout {
     }
 
     public getHiddenClasses() {
-        const taskListHiddenClasses: string[] = [];
+        const hiddenClasses: string[] = [];
         const componentsToGenerateClassesOnly: [boolean, string][] = [
             // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
             // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
@@ -30,11 +30,11 @@ export class QueryLayout {
             [this.queryLayoutOptions.hidePostponeButton, 'postpone-button'],
         ];
         for (const [hide, component] of componentsToGenerateClassesOnly) {
-            generateHiddenClassForTaskList(taskListHiddenClasses, hide, component);
+            generateHiddenClassForTaskList(hiddenClasses, hide, component);
         }
 
-        if (this.queryLayoutOptions.shortMode) taskListHiddenClasses.push('tasks-layout-short-mode');
+        if (this.queryLayoutOptions.shortMode) hiddenClasses.push('tasks-layout-short-mode');
 
-        return taskListHiddenClasses;
+        return hiddenClasses;
     }
 }
