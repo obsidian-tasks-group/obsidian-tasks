@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { Status } from '../../src/Statuses/Status';
-import { Priority, Task } from '../../src/Task/Task';
+import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { StatusCollection } from '../../src/Statuses/StatusCollection';
@@ -13,6 +13,7 @@ import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfig
 import { fromLine } from '../TestingTools/TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
+import { Priority } from '../../src/Task/Priority';
 
 window.moment = moment;
 

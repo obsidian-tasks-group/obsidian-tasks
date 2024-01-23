@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Priority } from '../../../src/Task/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { UrgencyField } from '../../../src/Query/Filter/UrgencyField';
 
@@ -12,6 +11,7 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { fromLine } from '../../TestingTools/TestHelpers';
+import { Priority } from '../../../src/Task/Priority';
 
 window.moment = moment;
 

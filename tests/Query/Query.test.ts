@@ -4,7 +4,7 @@
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
 import { Status } from '../../src/Statuses/Status';
-import { Priority, Task } from '../../src/Task/Task';
+import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { fieldCreators } from '../../src/Query/FilterParser';
 import type { Field } from '../../src/Query/Filter/Field';
@@ -18,6 +18,7 @@ import { createTasksFromMarkdown, fromLine } from '../TestingTools/TestHelpers';
 import type { FilteringCase } from '../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { Priority } from '../../src/Task/Priority';
 
 window.moment = moment;
 

@@ -1,10 +1,11 @@
 import { Status } from '../Statuses/Status';
-import { Priority, Task, TaskRegularExpressions } from '../Task/Task';
+import { Task, TaskRegularExpressions } from '../Task/Task';
 import { DateFallback } from '../Task/DateFallback';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { TaskLocation } from '../Task/TaskLocation';
 import { getSettings } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
+import { Priority } from '../Task/Priority';
 
 function getDefaultCreatedDate() {
     const { setCreatedDate } = getSettings();

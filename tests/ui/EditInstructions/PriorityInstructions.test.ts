@@ -1,6 +1,6 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { Priority } from '../../../src/Task/Task';
 import { SetPriority, allPriorityInstructions } from '../../../src/ui/EditInstructions/PriorityInstructions';
+import { Priority } from '../../../src/Task/Priority';
 
 describe('SetPriority', () => {
     const lowPriorityTask = new TaskBuilder().priority(Priority.Low).build();
