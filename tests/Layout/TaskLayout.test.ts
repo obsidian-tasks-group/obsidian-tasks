@@ -26,7 +26,7 @@ describe('TaskLayout tests', () => {
             queryLayoutOptions[key2] = !queryLayoutOptions[key2];
         });
 
-        const taskLayout = new TaskLayout(taskLayoutOptions, queryLayoutOptions);
+        const taskLayout = new TaskLayout(taskLayoutOptions);
         const queryLayout = new QueryLayout(queryLayoutOptions);
 
         const hiddenClasses = [...taskLayout.applyTaskLayoutOptions(), ...queryLayout.applyQueryLayoutOptions()];

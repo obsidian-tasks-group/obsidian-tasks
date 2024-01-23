@@ -85,8 +85,8 @@ function hiddenComponentClassName(component: string) {
 export class TaskLayout extends QueryLayout {
     private taskLayoutOptions: TaskLayoutOptions;
 
-    constructor(taskLayoutOptions?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
-        super(queryLayoutOptions);
+    constructor(taskLayoutOptions?: TaskLayoutOptions) {
+        super();
 
         if (taskLayoutOptions) {
             this.taskLayoutOptions = taskLayoutOptions;
