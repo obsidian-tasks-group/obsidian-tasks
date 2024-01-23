@@ -1,6 +1,10 @@
 import { generateHiddenClassForTaskList } from './LayoutHelpers';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
 
+/**
+ * This class generates a list of hidden query components' classes.
+ * The output depends on {@link QueryLayoutOptions} objects.
+ */
 export class QueryLayout {
     protected queryLayoutOptions: QueryLayoutOptions;
 
