@@ -16,7 +16,7 @@ export class QueryLayout {
         }
     }
 
-    public applyQueryLayoutOptions() {
+    public getHiddenClasses() {
         const taskListHiddenClasses: string[] = [];
         const componentsToGenerateClassesOnly: [boolean, string][] = [
             // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that

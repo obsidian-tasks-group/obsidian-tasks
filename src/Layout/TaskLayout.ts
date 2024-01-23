@@ -15,7 +15,7 @@ export class TaskLayout {
             this.taskLayoutOptions = new TaskLayoutOptions();
         }
     }
-    public applyTaskLayoutOptions() {
+    public generateHiddenClasses() {
         const taskListHiddenClasses: string[] = [];
         this.taskLayoutOptions.toggleableComponents.forEach((component) => {
             generateHiddenClassForTaskList(
