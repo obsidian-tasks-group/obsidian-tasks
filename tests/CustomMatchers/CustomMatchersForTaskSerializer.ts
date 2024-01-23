@@ -2,8 +2,9 @@ import { diff } from 'jest-diff';
 import type { MatcherFunction } from 'expect';
 import moment from 'moment';
 import type { TaskDetails } from '../../src/TaskSerializer';
-import { Priority, TaskRegularExpressions } from '../../src/Task/Task';
 import { Recurrence } from '../../src/Task/Recurrence';
+import { Priority } from '../../src/Task/Priority';
+import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 
 declare global {
     namespace jest {

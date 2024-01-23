@@ -3,8 +3,9 @@ import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
 import { Recurrence } from '../Task/Recurrence';
 import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
-import { Task, TaskRegularExpressions } from '../Task/Task';
+import { Task } from '../Task/Task';
 import { GlobalFilter } from '../Config/GlobalFilter';
+import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 /**

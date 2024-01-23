@@ -1,0 +1,15 @@
+Processed 152 files (995ms) (16 warnings)
+
+1) Config/Settings.ts > Suggestor/Suggestor.ts
+2) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts
+3) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > TaskSerializer/DefaultTaskSerializer.ts
+4) Task/Task.ts > Config/Settings.ts > TaskSerializer/DataviewTaskSerializer.ts
+5) Task/Task.ts > Task/DateFallback.ts
+6) Task/Task.ts > Task/Urgency.ts
+7) Task/Task.ts > lib/LogTasksHelper.ts
+8) Query/Query.ts > Query/Explain/Explainer.ts
+9) Query/FilterParser.ts > Query/Filter/BooleanField.ts
+10) main.ts > Config/SettingsTab.ts
+11) Obsidian/Cache.ts > Obsidian/TasksEvents.ts
+12) main.ts > Renderer/QueryRenderer.ts
+
