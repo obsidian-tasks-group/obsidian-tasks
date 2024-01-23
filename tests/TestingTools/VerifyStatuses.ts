@@ -1,5 +1,4 @@
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { getPrintableSymbol } from '../../src/Statuses/StatusRegistryReport';
 import type { Status } from '../../src/Statuses/Status';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import type { Task } from '../../src/Task/Task';
@@ -11,6 +10,7 @@ import { StatusField } from '../../src/Query/Filter/StatusField';
 import { StatusTypeField } from '../../src/Query/Filter/StatusTypeField';
 import { StatusNameField } from '../../src/Query/Filter/StatusNameField';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
+import { getPrintableSymbol } from '../../src/Statuses/StatusSettingsReport';
 import { TaskBuilder } from './TaskBuilder';
 import { verifyMarkdownForDocs } from './VerifyMarkdown';
 import { verifyWithFileExtension } from './ApprovalTestHelpers';
