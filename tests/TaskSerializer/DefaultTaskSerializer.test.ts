@@ -2,12 +2,12 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Priority } from '../../src/Task/Task';
 import type { Settings } from '../../src/Config/Settings';
 import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { Priority } from '../../src/Task/Priority';
 
 jest.mock('obsidian');
 window.moment = moment;

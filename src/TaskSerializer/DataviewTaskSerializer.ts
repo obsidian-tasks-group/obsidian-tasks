@@ -1,6 +1,6 @@
 import type { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import type { Task } from '../Task/Task';
-import { Priority } from '../Task/Task';
+import { Priority } from '../Task/Priority';
 import { DefaultTaskSerializer } from './DefaultTaskSerializer';
 
 /**
