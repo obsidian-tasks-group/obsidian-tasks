@@ -44,7 +44,7 @@ export class QueryLayout {
         }
     }
 
-    protected applyQueryLayoutOptions() {
+    public applyQueryLayoutOptions() {
         const taskListHiddenClasses: string[] = [];
         const componentsToGenerateClassesOnly: [boolean, string][] = [
             // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
@@ -83,9 +83,6 @@ function hiddenComponentClassName(component: string) {
  * modified by applying {@link TaskLayoutOptions} objects.
  */
 export class TaskLayout extends QueryLayout {
-    public taskListHiddenClasses(): string[] {
-        return [...this.applyTaskLayoutOptions(), ...this.applyQueryLayoutOptions()];
-    }
     private taskLayoutOptions: TaskLayoutOptions;
 
     constructor(taskLayoutOptions?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
@@ -97,7 +94,7 @@ export class TaskLayout extends QueryLayout {
             this.taskLayoutOptions = new TaskLayoutOptions();
         }
     }
-    private applyTaskLayoutOptions() {
+    public applyTaskLayoutOptions() {
         const taskListHiddenClasses: string[] = [];
         this.taskLayoutOptions.toggleableComponents.forEach((component) => {
             generateHiddenClassForTaskList(
