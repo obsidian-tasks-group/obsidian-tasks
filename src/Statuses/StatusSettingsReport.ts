@@ -1,12 +1,22 @@
 import { StatusSettings } from '../Config/StatusSettings';
 import { MarkdownTable } from '../lib/MarkdownTable';
 import type { StatusConfiguration } from './StatusConfiguration';
-import { getPrintableSymbol } from './StatusRegistryReport';
-import { Status } from './Status';
 import { StatusType } from './StatusConfiguration';
+import { Status } from './Status';
 
 function getFirstIndex(statusConfigurations: StatusConfiguration[], wantedSymbol: string) {
     return statusConfigurations.findIndex((s) => s.symbol === wantedSymbol);
+}
+
+export function getPrintableSymbol(symbol: string) {
+    // Do not put backticks around an empty symbol, as the two backticks are rendered
+    // by Obsidian as ordinary characters and the meaning is unclear.
+    // Better to just display nothing in this situation.
+    if (symbol === '') {
+        return symbol;
+    }
+    const result = symbol !== ' ' ? symbol : 'space';
+    return '`' + result + '`';
 }
 
 function checkIfConventionalType(status: StatusConfiguration, problems: string[]) {
