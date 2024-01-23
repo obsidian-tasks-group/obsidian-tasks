@@ -147,9 +147,13 @@ function createFieldWithoutDataAttributes(className: string) {
     );
 }
 
+function createDateField(className: string, attributeName: string) {
+    return new TaskFieldHTMLData(className, attributeName, TaskFieldHTMLData.dateAttributeCalculator);
+}
+
 const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    createdDate: new TaskFieldHTMLData('task-created', 'taskCreated', TaskFieldHTMLData.dateAttributeCalculator),
+    createdDate: createDateField('task-created', 'taskCreated'),
     dueDate: new TaskFieldHTMLData('task-due', 'taskDue', TaskFieldHTMLData.dateAttributeCalculator),
     startDate: new TaskFieldHTMLData('task-start', 'taskStart', TaskFieldHTMLData.dateAttributeCalculator),
     scheduledDate: new TaskFieldHTMLData('task-scheduled', 'taskScheduled', TaskFieldHTMLData.dateAttributeCalculator),
