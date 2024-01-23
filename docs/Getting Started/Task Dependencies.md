@@ -78,6 +78,8 @@ Query
 
 ## Searching For Dependencies
 
+See [[Filters#Filters for Task Dependencies]].
+
 `is not blocked`
 
 `is blocking`
