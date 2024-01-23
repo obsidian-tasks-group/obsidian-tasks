@@ -2,9 +2,8 @@ import { generateHiddenClassForTaskList } from './LayoutHelpers';
 import { TaskLayoutOptions } from './TaskLayoutOptions';
 
 /**
- * This represents the desired layout of tasks when they are rendered in a given configuration.
- * The layout is used when flattening the task to a string and when rendering queries, and can be
- * modified by applying {@link TaskLayoutOptions} objects.
+ * This class generates a list of hidden task components' classes.
+ * The output depends on {@link TaskLayoutOptions} objects.
  */
 export class TaskLayout {
     private taskLayoutOptions: TaskLayoutOptions;
