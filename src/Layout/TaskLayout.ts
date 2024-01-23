@@ -84,10 +84,9 @@ function hiddenComponentClassName(component: string) {
  */
 export class TaskLayout extends QueryLayout {
     public taskListHiddenClasses(): string[] {
-        return this._taskListHiddenClasses;
+        return [...this.applyTaskLayoutOptions(), ...this.applyQueryLayoutOptions()];
     }
     private taskLayoutOptions: TaskLayoutOptions;
-    private _taskListHiddenClasses: string[] = [];
 
     constructor(taskLayoutOptions?: TaskLayoutOptions, queryLayoutOptions?: QueryLayoutOptions) {
         super(queryLayoutOptions);
@@ -97,8 +96,6 @@ export class TaskLayout extends QueryLayout {
         } else {
             this.taskLayoutOptions = new TaskLayoutOptions();
         }
-
-        this._taskListHiddenClasses = [...this.applyTaskLayoutOptions(), ...this.applyQueryLayoutOptions()];
     }
     private applyTaskLayoutOptions() {
         const taskListHiddenClasses: string[] = [];
