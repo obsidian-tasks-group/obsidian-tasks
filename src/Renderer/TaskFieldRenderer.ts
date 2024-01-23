@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
+import type { TaskLayoutComponent } from '../Layout/TaskLayout';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Task } from '../Task/Task';
-import type { TaskLayoutComponent } from '../Layout/TaskLayout';
 
 export class TaskFieldRenderer {
     private readonly data = taskFieldHTMLData;
@@ -139,6 +139,14 @@ export class TaskFieldHTMLData {
     }
 }
 
+function createFieldWithoutDataAttributes(className: string) {
+    return new TaskFieldHTMLData(
+        className,
+        TaskFieldHTMLData.noAttributeName,
+        TaskFieldHTMLData.noAttributeValueCalculator,
+    );
+}
+
 const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     createdDate: new TaskFieldHTMLData('task-created', 'taskCreated', TaskFieldHTMLData.dateAttributeCalculator),
@@ -148,11 +156,7 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     doneDate: new TaskFieldHTMLData('task-done', 'taskDone', TaskFieldHTMLData.dateAttributeCalculator),
     cancelledDate: new TaskFieldHTMLData('task-cancelled', 'taskCancelled', TaskFieldHTMLData.dateAttributeCalculator),
 
-    description: new TaskFieldHTMLData(
-        'task-description',
-        TaskFieldHTMLData.noAttributeName,
-        TaskFieldHTMLData.noAttributeValueCalculator,
-    ),
+    description: createFieldWithoutDataAttributes('task-description'),
     recurrenceRule: new TaskFieldHTMLData(
         'task-recurring',
         TaskFieldHTMLData.noAttributeName,
