@@ -154,11 +154,11 @@ function createDateField(className: string, attributeName: string) {
 const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     createdDate: createDateField('task-created', 'taskCreated'),
-    dueDate: new TaskFieldHTMLData('task-due', 'taskDue', TaskFieldHTMLData.dateAttributeCalculator),
-    startDate: new TaskFieldHTMLData('task-start', 'taskStart', TaskFieldHTMLData.dateAttributeCalculator),
-    scheduledDate: new TaskFieldHTMLData('task-scheduled', 'taskScheduled', TaskFieldHTMLData.dateAttributeCalculator),
-    doneDate: new TaskFieldHTMLData('task-done', 'taskDone', TaskFieldHTMLData.dateAttributeCalculator),
-    cancelledDate: new TaskFieldHTMLData('task-cancelled', 'taskCancelled', TaskFieldHTMLData.dateAttributeCalculator),
+    dueDate: createDateField('task-due', 'taskDue'),
+    startDate: createDateField('task-start', 'taskStart'),
+    scheduledDate: createDateField('task-scheduled', 'taskScheduled'),
+    doneDate: createDateField('task-done', 'taskDone'),
+    cancelledDate: createDateField('task-cancelled', 'taskCancelled'),
 
     description: createFieldWithoutDataAttributes('task-description'),
     recurrenceRule: createFieldWithoutDataAttributes('task-recurring'),
