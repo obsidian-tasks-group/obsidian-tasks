@@ -1,7 +1,7 @@
 import type { DurationInputArg2, Moment, unitOfTime } from 'moment';
 import { Notice } from 'obsidian';
-import { TaskRegularExpressions } from '../Task/Task';
 import { PropertyCategory } from '../lib/PropertyCategory';
+import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 
 /**
  * TasksDate encapsulates a date, for simplifying the JavaScript expressions users need to
