@@ -21,7 +21,7 @@ yarn-error.log
 
 # Code analysis output files
 /circular-deps.png
-/circular-deps.txt
+#/circular-deps.txt
 
 # approval test files
 *.received.*
