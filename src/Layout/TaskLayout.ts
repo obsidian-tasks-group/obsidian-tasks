@@ -82,12 +82,10 @@ function hiddenComponentClassName(component: string) {
  * The layout is used when flattening the task to a string and when rendering queries, and can be
  * modified by applying {@link TaskLayoutOptions} objects.
  */
-export class TaskLayout extends QueryLayout {
+export class TaskLayout {
     private taskLayoutOptions: TaskLayoutOptions;
 
     constructor(taskLayoutOptions?: TaskLayoutOptions) {
-        super();
-
         if (taskLayoutOptions) {
             this.taskLayoutOptions = taskLayoutOptions;
         } else {
