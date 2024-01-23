@@ -16,18 +16,14 @@ export class TaskLayout {
         }
     }
     public generateHiddenClasses() {
-        const taskListHiddenClasses: string[] = [];
+        const hiddenClasses: string[] = [];
         this.taskLayoutOptions.toggleableComponents.forEach((component) => {
-            generateHiddenClassForTaskList(
-                taskListHiddenClasses,
-                !this.taskLayoutOptions.isShown(component),
-                component,
-            );
+            generateHiddenClassForTaskList(hiddenClasses, !this.taskLayoutOptions.isShown(component), component);
         });
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-        generateHiddenClassForTaskList(taskListHiddenClasses, !this.taskLayoutOptions.areTagsShown(), 'tags');
+        generateHiddenClassForTaskList(hiddenClasses, !this.taskLayoutOptions.areTagsShown(), 'tags');
 
-        return taskListHiddenClasses;
+        return hiddenClasses;
     }
 }
