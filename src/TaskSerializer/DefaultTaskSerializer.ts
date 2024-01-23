@@ -1,6 +1,5 @@
 import type { Moment } from 'moment';
-import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import type { TaskLayoutComponent } from '../Layout/TaskLayout';
+import { type TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { Recurrence } from '../Task/Recurrence';
 import { Priority, Task, TaskRegularExpressions } from '../Task/Task';
 import type { TaskDetails, TaskSerializer } from '.';

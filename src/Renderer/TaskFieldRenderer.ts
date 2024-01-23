@@ -1,5 +1,6 @@
 import type { Moment } from 'moment';
-import type { TaskLayoutComponent } from '../Layout/TaskLayout';
+
+import type { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Task } from '../Task/Task';
 
