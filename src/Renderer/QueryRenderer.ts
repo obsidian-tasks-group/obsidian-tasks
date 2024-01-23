@@ -2,6 +2,7 @@ import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
+import { QueryLayout } from '../Layout/QueryLayout';
 import { DateFallback } from '../Task/DateFallback';
 
 import type { IQuery } from '../IQuery';
@@ -11,7 +12,7 @@ import type { QueryResult } from '../Query/QueryResult';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../Scripting/Postponer';
 import type { Task } from '../Task/Task';
-import { QueryLayout, TaskLayout } from '../Layout/TaskLayout';
+import { TaskLayout } from '../Layout/TaskLayout';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import type TasksPlugin from '../main';
 import { TaskModal } from '../Obsidian/TaskModal';
