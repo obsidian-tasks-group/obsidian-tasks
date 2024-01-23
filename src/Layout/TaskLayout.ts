@@ -1,5 +1,6 @@
-import { TaskLayoutOptions } from './TaskLayoutOptions';
+import { generateHiddenClassForTaskList } from './LayoutHelpers';
 import { QueryLayoutOptions } from './QueryLayoutOptions';
+import { TaskLayoutOptions } from './TaskLayoutOptions';
 
 export type TaskLayoutComponent =
     // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -65,16 +66,6 @@ export class QueryLayout {
 
         return taskListHiddenClasses;
     }
-}
-
-function generateHiddenClassForTaskList(taskListHiddenClasses: string[], hide: boolean, component: string) {
-    if (hide) {
-        taskListHiddenClasses.push(hiddenComponentClassName(component));
-    }
-}
-
-function hiddenComponentClassName(component: string) {
-    return `tasks-layout-hide-${component}`;
 }
 
 /**
