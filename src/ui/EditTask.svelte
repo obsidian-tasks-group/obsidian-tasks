@@ -77,7 +77,7 @@
 
     let originalBlocking: Task[] = [];
 
-    let onMountComplete = false;
+    let mountComplete = false;
 
     // 'weekend' abbreviation omitted due to lack of space.
     let datePlaceholder =
@@ -325,6 +325,9 @@
             blockedBy: blockedBy,
             blocking: originalBlocking
         };
+
+        mountComplete = true;
+
         setTimeout(() => {
             descriptionInput.focus();
         }, 10);
@@ -588,7 +591,7 @@
                 />
             </div>
 
-            {#if allTasks.length > 0 && onMountComplete}
+            {#if allTasks.length > 0 && mountComplete}
                 <!-- --------------------------------------------------------------------------- -->
                 <!--  Blocked By Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
