@@ -11,7 +11,7 @@ import type { QueryResult } from '../Query/QueryResult';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../Scripting/Postponer';
 import type { Task } from '../Task/Task';
-import { TaskLayout } from '../Layout/TaskLayout';
+import { QueryLayout, TaskLayout } from '../Layout/TaskLayout';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import type TasksPlugin from '../main';
 import { TaskModal } from '../Obsidian/TaskModal';
@@ -222,9 +222,10 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
         const layout = new TaskLayout(this.query.taskLayoutOptions, this.query.queryLayoutOptions);
+        const queryLayout = new QueryLayout(this.query.queryLayoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
-        taskList.addClasses([...layout.applyTaskLayoutOptions(), ...layout.applyQueryLayoutOptions()]);
+        taskList.addClasses([...layout.applyTaskLayoutOptions(), ...queryLayout.applyQueryLayoutOptions()]);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
