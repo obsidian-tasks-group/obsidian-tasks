@@ -12,7 +12,7 @@ describe('TaskLayout tests', () => {
         const taskLayout = new TaskLayout();
         const queryLayout = new QueryLayout();
 
-        const hiddenClasses = [...taskLayout.applyTaskLayoutOptions(), ...queryLayout.applyQueryLayoutOptions()];
+        const hiddenClasses = [...taskLayout.generateHiddenClasses(), ...queryLayout.getHiddenClasses()];
         expect(hiddenClasses.join('\n')).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
     });
 
@@ -30,7 +30,7 @@ describe('TaskLayout tests', () => {
         const taskLayout = new TaskLayout(taskLayoutOptions);
         const queryLayout = new QueryLayout(queryLayoutOptions);
 
-        const hiddenClasses = [...taskLayout.applyTaskLayoutOptions(), ...queryLayout.applyQueryLayoutOptions()];
+        const hiddenClasses = [...taskLayout.generateHiddenClasses(), ...queryLayout.getHiddenClasses()];
         expect(hiddenClasses.join('\n')).toMatchInlineSnapshot(`
             "tasks-layout-hide-id
             tasks-layout-hide-blockedBy
