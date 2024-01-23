@@ -160,13 +160,12 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     doneDate: createDateField('task-done', 'taskDone'),
     cancelledDate: createDateField('task-cancelled', 'taskCancelled'),
 
-    description: createFieldWithoutDataAttributes('task-description'),
-    recurrenceRule: createFieldWithoutDataAttributes('task-recurring'),
-
     priority: new TaskFieldHTMLData('task-priority', 'taskPriority', (_component, task) => {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),
 
+    description: createFieldWithoutDataAttributes('task-description'),
+    recurrenceRule: createFieldWithoutDataAttributes('task-recurring'),
     blockedBy: createFieldWithoutDataAttributes('task-blockedBy'),
     id: createFieldWithoutDataAttributes('task-id'),
     blockLink: createFieldWithoutDataAttributes('task-block-link'),
