@@ -1,4 +1,4 @@
-Processed 150 files (1s) (16 warnings)
+Processed 151 files (7.5s) (16 warnings)
 
 1) Config/Settings.ts > Suggestor/Suggestor.ts
 2) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts
@@ -8,11 +8,10 @@ Processed 150 files (1s) (16 warnings)
 6) Task/Task.ts > Task/DateFallback.ts
 7) Task/Task.ts > Task/Urgency.ts
 8) Task/Task.ts > lib/LogTasksHelper.ts
-9) Task/Task.ts > lib/PriorityTools.ts
-10) Query/Query.ts > Query/Explain/Explainer.ts
-11) Query/FilterParser.ts > Query/Filter/BooleanField.ts
-12) Statuses/StatusRegistryReport.ts > Statuses/StatusSettingsReport.ts
-13) main.ts > Config/SettingsTab.ts
-14) Obsidian/Cache.ts > Obsidian/TasksEvents.ts
-15) main.ts > Renderer/QueryRenderer.ts
+9) Query/Query.ts > Query/Explain/Explainer.ts
+10) Query/FilterParser.ts > Query/Filter/BooleanField.ts
+11) Statuses/StatusRegistryReport.ts > Statuses/StatusSettingsReport.ts
+12) main.ts > Config/SettingsTab.ts
+13) Obsidian/Cache.ts > Obsidian/TasksEvents.ts
+14) main.ts > Renderer/QueryRenderer.ts
 

@@ -3,9 +3,10 @@
  */
 
 import moment from 'moment';
-import { Priority, Task, TaskRegularExpressions } from '../../src/Task/Task';
+import { Task, TaskRegularExpressions } from '../../src/Task/Task';
 import type { TaskDetails, TaskSerializer } from '../../src/TaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { Priority } from '../../src/Task/Priority';
 
 jest.mock('obsidian');
 window.moment = moment;

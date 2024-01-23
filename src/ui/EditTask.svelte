@@ -5,13 +5,14 @@
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
     import { Status } from '../Statuses/Status';
-    import { Priority, Task } from '../Task/Task';
+    import { Task } from '../Task/Task';
     import { doAutocomplete } from '../lib/DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../Task/TaskDependency";
     import { replaceTaskWithTasks } from "../Obsidian/File";
     import type { EditableTask } from "./EditableTask";
     import Dependency from "./Dependency.svelte";
+    import { Priority } from '../Task/Priority';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
