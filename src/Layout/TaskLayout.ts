@@ -44,7 +44,8 @@ export class QueryLayout {
         }
     }
 
-    protected applyQueryLayoutOptions(taskListHiddenClasses: string[]) {
+    protected applyQueryLayoutOptions() {
+        const taskListHiddenClasses: string[] = [];
         const componentsToGenerateClassesOnly: [boolean, string][] = [
             // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
             // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
@@ -61,6 +62,8 @@ export class QueryLayout {
         }
 
         if (this.queryLayoutOptions.shortMode) taskListHiddenClasses.push('tasks-layout-short-mode');
+
+        return taskListHiddenClasses;
     }
 }
 
@@ -94,8 +97,8 @@ export class TaskLayout extends QueryLayout {
         } else {
             this.taskLayoutOptions = new TaskLayoutOptions();
         }
-        this._taskListHiddenClasses = this.applyTaskLayoutOptions();
-        this.applyQueryLayoutOptions(this._taskListHiddenClasses);
+
+        this._taskListHiddenClasses = [...this.applyTaskLayoutOptions(), ...this.applyQueryLayoutOptions()];
     }
     private applyTaskLayoutOptions() {
         const taskListHiddenClasses: string[] = [];
