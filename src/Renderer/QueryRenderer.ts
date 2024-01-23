@@ -226,7 +226,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         const queryLayout = new QueryLayout(this.query.queryLayoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
-        taskList.addClasses([...layout.applyTaskLayoutOptions(), ...queryLayout.applyQueryLayoutOptions()]);
+        taskList.addClasses(layout.applyTaskLayoutOptions());
+        taskList.addClasses(queryLayout.applyQueryLayoutOptions());
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
