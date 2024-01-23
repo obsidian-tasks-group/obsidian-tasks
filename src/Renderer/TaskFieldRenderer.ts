@@ -1,7 +1,8 @@
 import type { Moment } from 'moment';
+
+import type { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Task } from '../Task/Task';
-import type { TaskLayoutComponent } from '../Layout/TaskLayout';
 
 export class TaskFieldRenderer {
     private readonly data = taskFieldHTMLData;
@@ -139,43 +140,34 @@ export class TaskFieldHTMLData {
     }
 }
 
+function createFieldWithoutDataAttributes(className: string) {
+    return new TaskFieldHTMLData(
+        className,
+        TaskFieldHTMLData.noAttributeName,
+        TaskFieldHTMLData.noAttributeValueCalculator,
+    );
+}
+
+function createDateField(className: string, attributeName: string) {
+    return new TaskFieldHTMLData(className, attributeName, TaskFieldHTMLData.dateAttributeCalculator);
+}
+
 const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    createdDate: new TaskFieldHTMLData('task-created', 'taskCreated', TaskFieldHTMLData.dateAttributeCalculator),
-    dueDate: new TaskFieldHTMLData('task-due', 'taskDue', TaskFieldHTMLData.dateAttributeCalculator),
-    startDate: new TaskFieldHTMLData('task-start', 'taskStart', TaskFieldHTMLData.dateAttributeCalculator),
-    scheduledDate: new TaskFieldHTMLData('task-scheduled', 'taskScheduled', TaskFieldHTMLData.dateAttributeCalculator),
-    doneDate: new TaskFieldHTMLData('task-done', 'taskDone', TaskFieldHTMLData.dateAttributeCalculator),
-    cancelledDate: new TaskFieldHTMLData('task-cancelled', 'taskCancelled', TaskFieldHTMLData.dateAttributeCalculator),
-
-    description: new TaskFieldHTMLData(
-        'task-description',
-        TaskFieldHTMLData.noAttributeName,
-        TaskFieldHTMLData.noAttributeValueCalculator,
-    ),
-    recurrenceRule: new TaskFieldHTMLData(
-        'task-recurring',
-        TaskFieldHTMLData.noAttributeName,
-        TaskFieldHTMLData.noAttributeValueCalculator,
-    ),
+    createdDate: createDateField('task-created', 'taskCreated'),
+    dueDate: createDateField('task-due', 'taskDue'),
+    startDate: createDateField('task-start', 'taskStart'),
+    scheduledDate: createDateField('task-scheduled', 'taskScheduled'),
+    doneDate: createDateField('task-done', 'taskDone'),
+    cancelledDate: createDateField('task-cancelled', 'taskCancelled'),
 
     priority: new TaskFieldHTMLData('task-priority', 'taskPriority', (_component, task) => {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),
 
-    blockedBy: new TaskFieldHTMLData(
-        'task-blockedBy',
-        TaskFieldHTMLData.noAttributeName,
-        TaskFieldHTMLData.noAttributeValueCalculator,
-    ),
-    id: new TaskFieldHTMLData(
-        'task-id',
-        TaskFieldHTMLData.noAttributeName,
-        TaskFieldHTMLData.noAttributeValueCalculator,
-    ),
-    blockLink: new TaskFieldHTMLData(
-        'task-block-link',
-        TaskFieldHTMLData.noAttributeName,
-        TaskFieldHTMLData.noAttributeValueCalculator,
-    ),
+    description: createFieldWithoutDataAttributes('task-description'),
+    recurrenceRule: createFieldWithoutDataAttributes('task-recurring'),
+    blockedBy: createFieldWithoutDataAttributes('task-blockedBy'),
+    id: createFieldWithoutDataAttributes('task-id'),
+    blockLink: createFieldWithoutDataAttributes('task-block-link'),
 };
