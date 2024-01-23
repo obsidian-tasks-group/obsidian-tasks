@@ -33,6 +33,7 @@
 
     let descriptionInput: HTMLTextAreaElement;
     let editableTask: EditableTask = {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
         status: Status.TODO,
         priority: 'none',
