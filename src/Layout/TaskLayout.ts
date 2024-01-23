@@ -94,19 +94,22 @@ export class TaskLayout extends QueryLayout {
         } else {
             this.taskLayoutOptions = new TaskLayoutOptions();
         }
-        this.applyTaskLayoutOptions();
+        this._taskListHiddenClasses = this.applyTaskLayoutOptions();
         this.applyQueryLayoutOptions(this._taskListHiddenClasses);
     }
     private applyTaskLayoutOptions() {
+        const taskListHiddenClasses: string[] = [];
         this.taskLayoutOptions.toggleableComponents.forEach((component) => {
             generateHiddenClassForTaskList(
-                this._taskListHiddenClasses,
+                taskListHiddenClasses,
                 !this.taskLayoutOptions.isShown(component),
                 component,
             );
         });
 
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-        generateHiddenClassForTaskList(this._taskListHiddenClasses, !this.taskLayoutOptions.areTagsShown(), 'tags');
+        generateHiddenClassForTaskList(taskListHiddenClasses, !this.taskLayoutOptions.areTagsShown(), 'tags');
+
+        return taskListHiddenClasses;
     }
 }
