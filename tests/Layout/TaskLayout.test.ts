@@ -4,14 +4,15 @@
 
 import { TaskLayoutOptions } from '../../src/Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
-import { TaskLayout } from '../../src/Layout/TaskLayout';
+import { QueryLayout, TaskLayout } from '../../src/Layout/TaskLayout';
 
 describe('TaskLayout tests', () => {
     it('should generate expected CSS classes for default layout', () => {
         const taskLayout = new TaskLayout();
-        expect(
-            [...taskLayout.applyTaskLayoutOptions(), ...taskLayout.applyQueryLayoutOptions()].join('\n'),
-        ).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
+        const queryLayout = new QueryLayout();
+
+        const hiddenClasses = [...taskLayout.applyTaskLayoutOptions(), ...queryLayout.applyQueryLayoutOptions()];
+        expect(hiddenClasses.join('\n')).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
     });
 
     it('should generate expected CSS classes with all default options reversed', () => {
@@ -26,9 +27,10 @@ describe('TaskLayout tests', () => {
         });
 
         const taskLayout = new TaskLayout(taskLayoutOptions, queryLayoutOptions);
+        const queryLayout = new QueryLayout(queryLayoutOptions);
 
-        expect([...taskLayout.applyTaskLayoutOptions(), ...taskLayout.applyQueryLayoutOptions()].join('\n'))
-            .toMatchInlineSnapshot(`
+        const hiddenClasses = [...taskLayout.applyTaskLayoutOptions(), ...queryLayout.applyQueryLayoutOptions()];
+        expect(hiddenClasses.join('\n')).toMatchInlineSnapshot(`
             "tasks-layout-hide-id
             tasks-layout-hide-blockedBy
             tasks-layout-hide-priority
