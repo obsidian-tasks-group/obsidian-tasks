@@ -15,6 +15,7 @@ This page is long. Here are some links to the main sections:
 - [[#Default sort order]]
 - [[#Custom Sorting]]
 - [[#Sort by Task Statuses]]
+- [[#Sort by Task Dependencies]]
 - [[#Sort by Dates in Tasks]]
 - [[#Sort by Other Task Properties]]
 - [[#Sort by File Properties]]
@@ -156,6 +157,20 @@ sort by function task.status.nextSymbol
 - Sort by the next status symbol.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+## Sort by Task Dependencies
+
+### Id
+
+- `sort by id`
+
+For more information, see [[Task Dependencies]].
+
+> [!released]
+>
+> - Task Id was introduced in Tasks X.Y.Z.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by Id** is now possible, using `task.id`.
 
 ## Sort by Dates in Tasks
 

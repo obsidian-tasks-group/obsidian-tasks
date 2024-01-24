@@ -17,6 +17,7 @@ This page is long. Here are some links to the main sections:
 - [[#Text filters]]
 - [[#Matching multiple filters]]
 - [[#Filters for Task Statuses]]
+- [[#Filters for Task Dependencies]]
 - [[#Filters for Dates in Tasks]]
 - [[#Filters for Other Task Properties]]
 - [[#Filters for File Properties]]
@@ -449,6 +450,26 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
     status.name includes unknown
     group by path
     ```
+
+## Filters for Task Dependencies
+
+### Id
+
+- `has id`
+- `no id`
+- `id (includes|does not include) <string>`
+  - Matches case-insensitive (disregards capitalization).
+- `id (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+For more information, see [[Task Dependencies]].
+
+> [!released]
+>
+> - Task Id was introduced in Tasks X.Y.Z.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Id** is now possible, using `task.id`.
 
 ## Filters for Dates in Tasks
 
