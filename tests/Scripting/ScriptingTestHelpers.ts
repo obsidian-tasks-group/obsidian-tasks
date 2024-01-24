@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { TasksDate } from '../../src/Scripting/TasksDate';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { Task } from '../../src/Task/Task';
 
 export function formatToRepresentType(x: any): string {
     if (typeof x === 'string') {
@@ -9,6 +10,10 @@ export function formatToRepresentType(x: any): string {
 
     if (moment.isMoment(x)) {
         return `moment('${x.format(TaskRegularExpressions.dateTimeFormat)}')`;
+    }
+
+    if (x instanceof Task) {
+        return x.description;
     }
 
     if (x instanceof TasksDate) {
@@ -33,7 +38,7 @@ export function addBackticks(x: any) {
     return quotedText;
 }
 
-export function determineExpressionType(value: any) {
+export function determineExpressionType(value: any): string {
     if (value === null) {
         return 'null';
     }
@@ -42,13 +47,17 @@ export function determineExpressionType(value: any) {
         return 'Moment';
     }
 
+    if (value instanceof Task) {
+        return 'Task';
+    }
+
     if (value instanceof TasksDate) {
         return 'TasksDate';
     }
 
     if (Array.isArray(value)) {
         if (value.length > 0) {
-            return `${typeof value[0]}[]`;
+            return `${determineExpressionType(value[0])}[]`;
         } else {
             return 'any[]';
         }
