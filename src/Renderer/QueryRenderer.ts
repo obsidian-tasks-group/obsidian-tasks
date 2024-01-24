@@ -222,11 +222,14 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
-        const layout = new TaskLayout(this.query.taskLayoutOptions);
-        const queryLayout = new QueryLayout(this.query.queryLayoutOptions);
         const taskList = content.createEl('ul');
+
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
-        taskList.addClasses([...layout.applyTaskLayoutOptions(), ...queryLayout.applyQueryLayoutOptions()]);
+        const taskLayout = new TaskLayout(this.query.taskLayoutOptions);
+        taskList.addClasses(taskLayout.generateHiddenClasses());
+        const queryLayout = new QueryLayout(this.query.queryLayoutOptions);
+        taskList.addClasses(queryLayout.getHiddenClasses());
+
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
