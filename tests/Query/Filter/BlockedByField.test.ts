@@ -9,7 +9,7 @@ describe('id', () => {
         expect(blockedByField.fieldName()).toEqual('blocked by');
     });
 
-    it.failing('by id presence', () => {
+    it('by blocked by presence', () => {
         // Arrange
         const filter = new BlockedByField().createFilterOrErrorMessage('has blocked by');
 

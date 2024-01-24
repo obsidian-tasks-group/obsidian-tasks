@@ -1,9 +1,23 @@
+import type { Task } from '../../Task/Task';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import { FilterInstructions } from './FilterInstructions';
 
 export class BlockedByField extends Field {
+    private readonly filterInstructions: FilterInstructions = new FilterInstructions();
+
+    constructor() {
+        super();
+        this.filterInstructions.add('has blocked by', (task: Task) => task.blockedBy.length > 0);
+    }
+
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        return FilterOrErrorMessage.fromError(line, 'Filtering blocked by not yet implemented');
+        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
+        if (filterResult.filter !== undefined) {
+            return filterResult;
+        }
+
+        return FilterOrErrorMessage.fromError(line, 'Unknown instruction');
     }
 
     public fieldName(): string {
