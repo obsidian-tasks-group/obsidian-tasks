@@ -177,6 +177,17 @@ For more information, see [[Task Dependencies]].
 
 Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by Id** is now possible, using `task.id`.
 
+<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dependencies_task.id_docs.approved.md -->
+
+```javascript
+group by function task.id
+```
+
+- Group by task Ids, if any.
+- Note that currently there is no way to access any tasks that are blocked by these Ids.
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Blocked By
 
 There is no built-in instruction to group by 'Blocked By'.
@@ -188,6 +199,18 @@ For more information, see [[Task Dependencies]].
 > - Task Blocked By was introduced in Tasks X.Y.Z.
 
 Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]]  by Blocked By** is now possible, using `task.blockedBy`.
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dependencies_task.blockedBy_docs.approved.md -->
+
+```javascript
+group by function task.blockedBy
+```
+
+- Group by the Ids of the tasks that this task depends on, if any.
+- If a task depends on more than one other task, it will be listed multiple times.
+- Note that currently there is no way to access the tasks being depended on.
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Group by Dates in Tasks
 

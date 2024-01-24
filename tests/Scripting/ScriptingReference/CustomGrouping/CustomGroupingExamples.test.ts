@@ -26,6 +26,47 @@ afterEach(() => {
 
 // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
 
+describe('dependencies', () => {
+    const testData: CustomPropertyDocsTestData[] = [
+        // ---------------------------------------------------------------------------------
+        // DEPENDENCIES FIELDS
+        // ---------------------------------------------------------------------------------
+
+        [
+            'task.id',
+            [
+                [
+                    'group by function task.id',
+                    'Group by task Ids, if any.',
+                    'Note that currently there is no way to access any tasks that are blocked by these Ids.',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeDependencyFields(),
+        ],
+
+        [
+            'task.blockedBy',
+            [
+                [
+                    'group by function task.blockedBy',
+                    'Group by the Ids of the tasks that each task depends on, if any',
+                    'If a task depends on more than one other task, it will be listed multiple times.',
+                    'Note that currently there is no way to access the tasks being depended on',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeDependencyFields(),
+        ],
+    ];
+
+    it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
+        verifyFunctionFieldGrouperSamplesOnTasks(groups, tasks);
+    });
+
+    it.each(testData)('%s docs', (_: string, groups: QueryInstructionLineAndDescription[], _tasks: Task[]) => {
+        verifyFunctionFieldGrouperSamplesForDocs(groups);
+    });
+});
+
 describe('dates', () => {
     const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------

@@ -1,0 +1,11 @@
+Results of custom groupers
+
+
+
+group by function task.id
+Group by task Ids, if any.
+Note that currently there is no way to access any tasks that are blocked by these Ids.
+=>
+dcf64c
+====================================================================================
+
