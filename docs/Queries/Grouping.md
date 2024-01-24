@@ -206,7 +206,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]]  by Blocked By** is now
 group by function task.blockedBy
 ```
 
-- Group by the Ids of the tasks that this task depends on, if any.
+- Group by the Ids of the tasks that each task depends on, if any.
 - If a task depends on more than one other task, it will be listed multiple times.
 - Note that currently there is no way to access the tasks being depended on.
 
