@@ -1,17 +1,19 @@
-import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
-import { makeQueryContext } from '../../src/Scripting/QueryContext';
+import { makeQueryContextWithTasks } from '../../src/Scripting/QueryContext';
 
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
+import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('query', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const markdownTable = new MarkdownTable(['Field', 'Type', 'Example']);
         const path = 'root/sub-folder/file containing query.md';
-        const queryContext = makeQueryContext(path);
+        const task = new TaskBuilder().build();
+        const queryContext = makeQueryContextWithTasks(path, [task]);
         for (const field of fields) {
-            const value1 = expandPlaceholders('{{' + field + '}}', queryContext);
+            const value1 = parseAndEvaluateExpression(task, field, queryContext);
             const cells = [
                 addBackticks(field),
                 addBackticks(determineExpressionType(value1)),
