@@ -15,6 +15,7 @@ This page is long. Here are some links to the main sections:
 - [[#Basics]]
 - [[#Custom Groups]]
 - [[#Group by Task Statuses]]
+- [[#Group by Task Dependencies]]
 - [[#Group by Dates in Tasks]]
 - [[#Group by Other Task Properties]]
 - [[#Group by File Properties]]
@@ -161,6 +162,20 @@ group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "
 - Group by the next status symbol, making space characters visible.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+## Group by Task Dependencies
+
+### Id
+
+- `group by id`
+
+For more information, see [[Task Dependencies]].
+
+> [!released]
+>
+> - Task Id was introduced in Tasks X.Y.Z.
+
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]]] by Id** is now possible, using `task.id`.
 
 ## Group by Dates in Tasks
 
