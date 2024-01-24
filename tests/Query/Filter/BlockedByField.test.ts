@@ -17,4 +17,15 @@ describe('id', () => {
         testFilter(filter, new TaskBuilder().blockedBy([]), false);
         testFilter(filter, new TaskBuilder().blockedBy(['abcdef']), true);
     });
+
+    it('by blocked by absence', () => {
+        // Arrange
+        const line = 'no blocked by';
+        const filter = new BlockedByField().createFilterOrErrorMessage(line);
+        expect(blockedByField.canCreateFilterForLine(line)).toEqual(true);
+
+        // Act, Assert
+        testFilter(filter, new TaskBuilder().blockedBy([]), true);
+        testFilter(filter, new TaskBuilder().blockedBy(['abcdef']), false);
+    });
 });

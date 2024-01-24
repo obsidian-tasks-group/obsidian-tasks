@@ -103,6 +103,7 @@ describe('Query parsing', () => {
         'is not blocked',
         'is not recurring',
         'is recurring',
+        'no blocked by',
         'no cancelled date',
         'no created date',
         'no due date',

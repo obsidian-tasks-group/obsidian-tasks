@@ -9,7 +9,12 @@ export class BlockedByField extends Field {
     constructor() {
         super();
         this.filterInstructions.add('has blocked by', (task: Task) => task.blockedBy.length > 0);
+        this.filterInstructions.add('no blocked by', (task: Task) => task.blockedBy.length === 0);
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Filtering
+    // -----------------------------------------------------------------------------------------------------------------
 
     public canCreateFilterForLine(line: string): boolean {
         if (this.filterInstructions.canCreateFilterForLine(line)) {
