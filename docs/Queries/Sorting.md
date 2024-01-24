@@ -172,6 +172,18 @@ For more information, see [[Task Dependencies]].
 
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by Id** is now possible, using `task.id`.
 
+### Blocked By
+
+There is no built-in instruction to sort by 'Blocked By'.
+
+For more information, see [[Task Dependencies]].
+
+> [!released]
+>
+> - Task Blocked By was introduced in Tasks X.Y.Z.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]]  by Blocked By** is now possible, using `task.blockedBy`.
+
 ## Sort by Dates in Tasks
 
 ### How dates are sorted

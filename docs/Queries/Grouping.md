@@ -175,7 +175,19 @@ For more information, see [[Task Dependencies]].
 >
 > - Task Id was introduced in Tasks X.Y.Z.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]]] by Id** is now possible, using `task.id`.
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by Id** is now possible, using `task.id`.
+
+### Blocked By
+
+There is no built-in instruction to group by 'Blocked By'.
+
+For more information, see [[Task Dependencies]].
+
+> [!released]
+>
+> - Task Blocked By was introduced in Tasks X.Y.Z.
+
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]]  by Blocked By** is now possible, using `task.blockedBy`.
 
 ## Group by Dates in Tasks
 
