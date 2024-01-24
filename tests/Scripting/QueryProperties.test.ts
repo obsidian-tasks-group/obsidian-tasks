@@ -10,7 +10,9 @@ describe('query', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const markdownTable = new MarkdownTable(['Field', 'Type', 'Example']);
         const path = 'root/sub-folder/file containing query.md';
-        const task = new TaskBuilder().build();
+        const task = new TaskBuilder()
+            .description('... an array with all the Tasks-tracked tasks in the vault ...')
+            .build();
         const queryContext = makeQueryContextWithTasks(path, [task]);
         for (const field of fields) {
             const value1 = parseAndEvaluateExpression(task, field, queryContext);
@@ -33,5 +35,9 @@ describe('query', () => {
             'query.file.filename',
             'query.file.filenameWithoutExtension',
         ]);
+    });
+
+    it('search properties', () => {
+        verifyFieldDataForReferenceDocs(['query.allTasks']);
     });
 });
