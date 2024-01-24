@@ -1,3 +1,4 @@
+import type { Task } from '../Task/Task';
 import { TasksFile } from './TasksFile';
 
 /**
@@ -18,6 +19,7 @@ import { TasksFile } from './TasksFile';
 export interface QueryContext {
     query: {
         file: TasksFile;
+        allTasks: Readonly<Task[]>;
     };
 }
 
@@ -32,6 +34,17 @@ export function makeQueryContext(path: string): QueryContext {
     return {
         query: {
             file: tasksFile,
+            allTasks: [],
+        },
+    };
+}
+
+export function makeQueryContextWithTasks(path: string, allTasks: Readonly<Task[]>): QueryContext {
+    const tasksFile = new TasksFile(path);
+    return {
+        query: {
+            file: tasksFile,
+            allTasks: allTasks,
         },
     };
 }

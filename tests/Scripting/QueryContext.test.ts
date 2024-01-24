@@ -4,6 +4,8 @@ import { FolderField } from '../../src/Query/Filter/FolderField';
 import { PathField } from '../../src/Query/Filter/PathField';
 import { RootField } from '../../src/Query/Filter/RootField';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
+import { FunctionField } from '../../src/Query/Filter/FunctionField';
+import { SearchInfo } from '../../src/Query/SearchInfo';
 
 describe('QueryContext', () => {
     describe('values should all match their corresponding filters', () => {
@@ -33,6 +35,21 @@ describe('QueryContext', () => {
             const instruction = `filename includes ${queryContext.query.file.filename}`;
             const filter = new FilenameField().createFilterOrErrorMessage(instruction);
             expect(filter).toMatchTask(task);
+        });
+
+        it('allTasks', () => {
+            // Arrange
+            // An artificial example, just to demonstrate that query.allTasks is accessible via scripting
+            const instruction = 'group by function query.allTasks.length';
+            const grouper = new FunctionField().createGrouperFromLine(instruction);
+            expect(grouper).not.toBeNull();
+            const searchInfo = new SearchInfo(path, [task]);
+
+            // Act
+            const group: string[] = grouper!.grouper(task, searchInfo);
+
+            // Assert
+            expect(group).toEqual(['1']);
         });
     });
 });
