@@ -76,7 +76,11 @@ Query
 
 ## Adding Dependencies
 
-## Searching For Dependencies
+## Using Dependencies in Tasks Searches
+
+- [[Filters#Filters for Task Dependencies]]
+- [[Sorting#Sort by Task Dependencies]]
+- [[Grouping#Group by Task Dependencies]]
 
 `is not blocked`
 
