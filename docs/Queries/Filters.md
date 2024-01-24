@@ -471,6 +471,19 @@ For more information, see [[Task Dependencies]].
 
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Id** is now possible, using `task.id`.
 
+### Blocked By
+
+- `has blocked by`
+- `no blocked by`
+
+For more information, see [[Task Dependencies]].
+
+> [!released]
+>
+> - Task Blocked By was introduced in Tasks X.Y.Z.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Blocked By** is now possible, using `task.blockedBy`.
+
 ## Filters for Dates in Tasks
 
 ### Due Date
