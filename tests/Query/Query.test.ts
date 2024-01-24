@@ -82,6 +82,7 @@ describe('Query parsing', () => {
         'happens in 2021-12-27 2021-12-29',
         'happens on 2021-12-27',
         'happens this week',
+        'has blocked by',
         'has cancelled date',
         'has created date',
         'has done date',

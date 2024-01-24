@@ -11,6 +11,14 @@ export class BlockedByField extends Field {
         this.filterInstructions.add('has blocked by', (task: Task) => task.blockedBy.length > 0);
     }
 
+    public canCreateFilterForLine(line: string): boolean {
+        if (this.filterInstructions.canCreateFilterForLine(line)) {
+            return true;
+        }
+
+        return super.canCreateFilterForLine(line);
+    }
+
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
         if (filterResult.filter !== undefined) {
