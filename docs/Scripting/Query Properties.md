@@ -42,3 +42,19 @@ This page documents all the available pieces of information in Queries that you 
 1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
 1. `query.file.pathWithoutExtension` was added in Tasks 4.8.0.
 1. `query.file.filenameWithoutExtension` was added in Tasks 4.8.0.
+
+## Values for Query Search Properties
+
+<!-- placeholder to force blank line before included text --><!-- include: QueryProperties.test.query_search_properties.approved.md -->
+
+| Field | Type | Example |
+| ----- | ----- | ----- |
+| `query.allTasks` | `Task[]` | `[... an array with all the Tasks-tracked tasks in the vault ...]` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+1. `query.allTasks` provides access to all the tasks that Tasks has read from the vault.
+    - If [[Global Filter|global filter]] is enabled, only tasks containing the global filter are included.
+    - The [[Global Query|global query]] does not affect `query.allTasks`: all tasks tracked by the Tasks plugin are included.
+    - See [[Task Properties]] for the available properties on each task.
+    - `query.allTasks` was added in Tasks X.Y.Z.
