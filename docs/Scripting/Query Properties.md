@@ -54,5 +54,7 @@ This page documents all the available pieces of information in Queries that you 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 1. `query.allTasks` provides access to all the tasks that Tasks has read from the vault.
-1. See [[Task Properties]] for the available properties on each task in `query.allTasks`.
-1. `query.allTasks` was added in Tasks X.Y.Z.
+    - If [[Global Filter|global filter]] is enabled, only tasks containing the global filter are included.
+    - The [[Global Query|global query]] does not affect `query.allTasks`: all tasks tracked by the Tasks plugin are included.
+    - See [[Task Properties]] for the available properties on each task.
+    - `query.allTasks` was added in Tasks X.Y.Z.
