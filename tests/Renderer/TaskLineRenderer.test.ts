@@ -5,16 +5,16 @@ import moment from 'moment';
 import { DebugSettings } from '../../src/Config/DebugSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { type TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
-import { DateParser } from '../../src/Query/DateParser';
 import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
-import type { Task } from '../../src/Task/Task';
+import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
+import { DateParser } from '../../src/Query/DateParser';
 import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
 import { TaskLineRenderer } from '../../src/Renderer/TaskLineRenderer';
-import { fromLine } from '../TestingTools/TestHelpers';
+import type { Task } from '../../src/Task/Task';
+import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { fromLine } from '../TestingTools/TestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -185,7 +185,7 @@ describe('task line rendering - layout options', () => {
         });
 
         // Re-enable description
-        taskLayoutOptions.setVisibility('description', true);
+        taskLayoutOptions.setVisibility(TaskLayoutComponent.Description, true);
 
         // Re-enable the requested components:
         shownComponents.forEach((hiddenComponent) => {
@@ -240,43 +240,46 @@ describe('task line rendering - layout options', () => {
     // NEW_TASK_FIELD_EDIT_REQUIRED
 
     it('renders with priority', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' 🔼'], ['priority']);
+        await testLayoutOptions(['Do exercises #todo #health', ' 🔼'], [TaskLayoutComponent.Priority]);
     });
 
     it('renders with recurrence rule', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' 🔁 every day when done'], ['recurrenceRule']);
+        await testLayoutOptions(
+            ['Do exercises #todo #health', ' 🔁 every day when done'],
+            [TaskLayoutComponent.RecurrenceRule],
+        );
     });
 
     it('renders with created date', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' ➕ 2023-07-01'], ['createdDate']);
+        await testLayoutOptions(['Do exercises #todo #health', ' ➕ 2023-07-01'], [TaskLayoutComponent.CreatedDate]);
     });
 
     it('renders with start date', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' 🛫 2023-07-02'], ['startDate']);
+        await testLayoutOptions(['Do exercises #todo #health', ' 🛫 2023-07-02'], [TaskLayoutComponent.StartDate]);
     });
 
     it('renders with scheduled date', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' ⏳ 2023-07-03'], ['scheduledDate']);
+        await testLayoutOptions(['Do exercises #todo #health', ' ⏳ 2023-07-03'], [TaskLayoutComponent.ScheduledDate]);
     });
 
     it('renders with due date', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' 📅 2023-07-04'], ['dueDate']);
+        await testLayoutOptions(['Do exercises #todo #health', ' 📅 2023-07-04'], [TaskLayoutComponent.DueDate]);
     });
 
     it('renders with done date', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' ✅ 2023-07-05'], ['doneDate']);
+        await testLayoutOptions(['Do exercises #todo #health', ' ✅ 2023-07-05'], [TaskLayoutComponent.DoneDate]);
     });
 
     it('renders with cancelled date', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' ❌ 2023-07-06'], ['cancelledDate']);
+        await testLayoutOptions(['Do exercises #todo #health', ' ❌ 2023-07-06'], [TaskLayoutComponent.CancelledDate]);
     });
 
     it('renders with id', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' 🆔 abcdef'], ['id']);
+        await testLayoutOptions(['Do exercises #todo #health', ' 🆔 abcdef'], [TaskLayoutComponent.Id]);
     });
 
     it('renders with depends on', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' ⛔️ 123456,abc123'], ['blockedBy']);
+        await testLayoutOptions(['Do exercises #todo #health', ' ⛔️ 123456,abc123'], [TaskLayoutComponent.BlockedBy]);
     });
 });
 

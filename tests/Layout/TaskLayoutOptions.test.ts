@@ -1,4 +1,4 @@
-import { TaskLayoutOptions } from '../../src/Layout/TaskLayoutOptions';
+import { TaskLayoutComponent, TaskLayoutOptions } from '../../src/Layout/TaskLayoutOptions';
 
 describe('TaskLayoutOptions', () => {
     it('should be constructable', () => {
@@ -26,25 +26,25 @@ describe('TaskLayoutOptions', () => {
     it('should show fields by default', () => {
         const options = new TaskLayoutOptions();
 
-        expect(options.isShown('priority')).toEqual(true);
-        expect(options.isShown('createdDate')).toEqual(true);
+        expect(options.isShown(TaskLayoutComponent.Priority)).toEqual(true);
+        expect(options.isShown(TaskLayoutComponent.CreatedDate)).toEqual(true);
     });
 
     it('should be able to hide a field', () => {
         const options = new TaskLayoutOptions();
-        options.hide('createdDate');
+        options.hide(TaskLayoutComponent.CreatedDate);
 
-        expect(options.isShown('createdDate')).toEqual(false);
+        expect(options.isShown(TaskLayoutComponent.CreatedDate)).toEqual(false);
     });
 
     it('should be settable via a boolean', () => {
         const options = new TaskLayoutOptions();
 
-        options.setVisibility('scheduledDate', false);
-        expect(options.isShown('scheduledDate')).toEqual(false);
+        options.setVisibility(TaskLayoutComponent.ScheduledDate, false);
+        expect(options.isShown(TaskLayoutComponent.ScheduledDate)).toEqual(false);
 
-        options.setVisibility('scheduledDate', true);
-        expect(options.isShown('scheduledDate')).toEqual(true);
+        options.setVisibility(TaskLayoutComponent.ScheduledDate, true);
+        expect(options.isShown(TaskLayoutComponent.ScheduledDate)).toEqual(true);
     });
 
     it('should set tag visibility', () => {
@@ -75,8 +75,8 @@ describe('TaskLayoutOptions', () => {
             blockLink"
         `);
 
-        options.setVisibility('dueDate', false);
-        options.setVisibility('blockLink', false);
+        options.setVisibility(TaskLayoutComponent.DueDate, false);
+        options.setVisibility(TaskLayoutComponent.BlockLink, false);
 
         expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
             "description
@@ -96,8 +96,8 @@ describe('TaskLayoutOptions', () => {
         const options = new TaskLayoutOptions();
         expect(options.hiddenComponents.join('\n')).toMatchInlineSnapshot('""');
 
-        options.setVisibility('startDate', false);
-        options.setVisibility('doneDate', false);
+        options.setVisibility(TaskLayoutComponent.StartDate, false);
+        options.setVisibility(TaskLayoutComponent.DoneDate, false);
 
         expect(options.hiddenComponents.join('\n')).toMatchInlineSnapshot(`
             "startDate
@@ -108,26 +108,26 @@ describe('TaskLayoutOptions', () => {
     it('should toggle visibility', () => {
         const options = new TaskLayoutOptions();
 
-        options.setVisibility('cancelledDate', false);
-        options.setVisibility('priority', true);
+        options.setVisibility(TaskLayoutComponent.CancelledDate, false);
+        options.setVisibility(TaskLayoutComponent.Priority, true);
         options.setTagsVisibility(true);
 
         options.toggleVisibilityExceptDescriptionAndBlockLink();
 
-        expect(options.isShown('cancelledDate')).toEqual(true);
-        expect(options.isShown('priority')).toEqual(false);
+        expect(options.isShown(TaskLayoutComponent.CancelledDate)).toEqual(true);
+        expect(options.isShown(TaskLayoutComponent.Priority)).toEqual(false);
         expect(options.areTagsShown()).toEqual(false);
     });
 
     it('should not toggle visibility of description and blockLink', () => {
         const options = new TaskLayoutOptions();
-        options.setVisibility('description', true);
-        options.setVisibility('blockLink', true);
+        options.setVisibility(TaskLayoutComponent.Description, true);
+        options.setVisibility(TaskLayoutComponent.BlockLink, true);
 
         options.toggleVisibilityExceptDescriptionAndBlockLink();
 
-        expect(options.isShown('description')).toEqual(true);
-        expect(options.isShown('blockLink')).toEqual(true);
+        expect(options.isShown(TaskLayoutComponent.Description)).toEqual(true);
+        expect(options.isShown(TaskLayoutComponent.BlockLink)).toEqual(true);
     });
 
     it('should provide toggleable components', () => {

@@ -1,6 +1,6 @@
-import type { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
-import type { Task } from '../Task/Task';
+import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { Priority } from '../Task/Priority';
+import type { Task } from '../Task/Task';
 import { DefaultTaskSerializer } from './DefaultTaskSerializer';
 
 /**
@@ -119,7 +119,10 @@ export class DataviewTaskSerializer extends DefaultTaskSerializer {
 
     public componentToString(task: Task, shortMode: boolean, component: TaskLayoutComponent) {
         const stringComponent = super.componentToString(task, shortMode, component);
-        const notInlineFieldComponents: TaskLayoutComponent[] = ['blockLink', 'description'];
+        const notInlineFieldComponents: TaskLayoutComponent[] = [
+            TaskLayoutComponent.BlockLink,
+            TaskLayoutComponent.Description,
+        ];
         const shouldMakeInlineField = stringComponent !== '' && !notInlineFieldComponents.includes(component);
         return shouldMakeInlineField
             ? // Having 2 (TWO) leading spaces avoids a rendering issues that makes every other
