@@ -27,5 +27,6 @@ For convenience, here is a list of all those documentation pages (in the order t
 - [[Status Settings]]
 - [[Dates#Date-tracking settings]]
 - [[Recurring Tasks#Order of the new task]]
+- [[On Completion]]
 - [[Auto-Suggest]]
 - [[Create or edit Task#Turning off keyboard shortcuts]]
