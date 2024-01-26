@@ -77,6 +77,8 @@ There are two ways to mark a task done:
 A "done" task will have the date it was done appended to the end of its line.
 For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 
+See [[On Completion]] to learn about optional automatic processing of tasks when they're marked 'done'.
+
 ## Limitations and warnings
 
 ### Restart after updating Tasks plugin
