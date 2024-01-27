@@ -12,7 +12,7 @@ publish: false
 > [!released]
 > Introduced in Tasks X.Y.Z.
 
-Obsidian Tasks can automatically act upon a task when it is marked 'done'.  
+Obsidian Tasks can automatically act upon a task when it is marked 'done'.
 
 This feature is enabled by adding (*after* a task's description) the *checkered flag* signifier 🏁, followed by a word that identifies the desired ***Action*** to take "On Completion" of the item.  The following are supported:
 
@@ -28,8 +28,8 @@ Imagine that your vault consists of a single note file `My Project`, with the fo
 ```text
 # My Project Tasks
 - [ ] Move me to end of current task list 🏁 Bottom
-- [ ] Move me to "**# Completed Tasks Log**" list in this note 🏁 Log
-- [ ] Move me to the "**Completed Tasks Archive**" note 🏁 Archive
+- [ ] Move me to "**# Task Log**" list in this note 🏁 Log
+- [ ] Move me to the "**Task Archive**" note 🏁 Archive
 - [ ] Delete me 🏁 Delete
 - [ ] Leave me alone
 ```
@@ -43,15 +43,18 @@ Your `My Project` note file:
 - [x] Leave me alone
 - [x] Move me to end of current task list 🏁 Bottom
 
-# Completed Tasks Log
-- [x] Move me to "**# Completed Tasks Log**" list in this note 🏁 Log
+# Task Log
+- [x] Move me to "**# Task Log**" list in this note 🏁 Log
 ```
 
-And a new `Completed Tasks Archive` note file:
+And a new `Task Archive` note file:
 
 ```text
-- [x] Move me to the "**Completed Tasks Archive**" note 🏁 Archive
+- [x] Move me to the "**Task Archive**" note 🏁 Archive
 ```
+
+> [!note]
+> Since they didn't already exist, Tasks created the in-note list with the "# Task Log" header and the "Task Archive" file
 
 ## Assigning and changing a task's "On Completion" action
 
@@ -63,7 +66,7 @@ Alternatively:  when a task already already has an assigned "On Completion" ***A
 
 ### Vault-wide
 
-The default values of both the **Archive** file's name ("Completed Tasks Archive") and the default **Header** for in-note lists of completed tasks ("# Completed Tasks Log") can be changed on a vault-wide basis in the Task plugin's configuration dialog.
+The default values of both the **Archive** file's name ("Task Archive.md") and the default **Header** for in-note lists of completed tasks ("# Task Log") can be changed on a vault-wide basis in the Task plugin's configuration dialog.
 
 ### Note-specific
 
@@ -74,11 +77,11 @@ An alternative **Archive** file name and/or **Header** for in-note lists of comp
 
 ## Migrating from other plugins that processed "completed tasks"
 
-Prior to the "On Completion" feature being added to Tasks, a few other Obsidian plugins were created to help manage completed tasks.  
+Prior to the "On Completion" feature being added to Tasks, a few other Obsidian plugins were created to help manage completed tasks.
 
 For some of these plugins, no migration steps will be necessary to update your existing tasks to work with "On Completion".  For others, it may be both desirable and possible to systematically re-write your tasks to take advantage of this new feature.
 
-If and as we learn of resources to facilitate migration from those plugins, we'll provide links below.  
+If and as we learn of resources to facilitate migration from those plugins, we'll provide links below.
 
 - #TODO ***Packrat*** ('insert URI for Packrat repo's "'On Completion' migration page" here')
 
