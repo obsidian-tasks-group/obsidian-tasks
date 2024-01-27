@@ -15,10 +15,10 @@ pre-commit:
   commands:
     lint:
       glob: '*.ts'
-      run: yarn lint {staged_files} && git add {staged_files}
+      run: yarn lint "{staged_files}" && git add "{staged_files}"
     lint-markdown:
       glob: '*.md'
-      run: yarn lint:markdown && git add {staged_files}
+      run: yarn lint:markdown && git add "{staged_files}"
     test:
       glob: '*.ts'
-      run: yarn test {staged_files} --findRelatedTests --passWithNoTests
+      run: yarn test "{staged_files}" --findRelatedTests --passWithNoTests
