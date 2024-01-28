@@ -1,3 +1,5 @@
+.gitconfig   # likely contains developer- and/or fork-specific data
+
 # Intellij
 *.iml
 .idea
