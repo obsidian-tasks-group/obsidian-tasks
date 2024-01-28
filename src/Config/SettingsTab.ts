@@ -15,6 +15,9 @@ import settingsJson from './settingsConfiguration.json';
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
 
+import { VaultArchiveFile } from './OnCompletion';
+import { VaultLogListHeading } from './OnCompletion';
+
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
     // custom function and specify it from the json file. It will
@@ -268,6 +271,46 @@ export class SettingsTab extends PluginSettingTab {
                     updateSettings({ recurrenceOnNextLine: value });
                     await this.plugin.saveSettings();
                 });
+            });
+
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: '`On Completion` Settings' });
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName('Filepath and name for archive note of completed tasks (vault-wide)')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    '<b>If you override the default value, remember the `.md` extension</b></br>' +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/On+Completion">documentation</a>.</p>',
+                ),
+            )
+            .addText((text) => {
+                text.setPlaceholder('Task Archive.md')
+                    .setValue(VaultArchiveFile.getInstance().get())
+                    .onChange(async (value) => {
+                        updateSettings({ vaultArchiveFile: value });
+                        VaultArchiveFile.getInstance().set(value);
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName('Heading for in-file log of completed tasks (vault-wide)')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    '<b>If you override the default value, remember the initial hashmark(s) and space</b></br>' +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/On+Completion">documentation</a>.</p>',
+                ),
+            )
+            .addText((text) => {
+                text.setPlaceholder('# Task Log')
+                    .setValue(VaultLogListHeading.getInstance().get())
+                    .onChange(async (value) => {
+                        updateSettings({ vaultLogListHeading: value });
+                        VaultLogListHeading.getInstance().set(value);
+                        await this.plugin.saveSettings();
+                    });
             });
 
         // ---------------------------------------------------------------------------

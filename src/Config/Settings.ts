@@ -74,6 +74,8 @@ export interface Settings {
     useFilenameAsScheduledDate: boolean;
     filenameAsDateFolders: string[];
     recurrenceOnNextLine: boolean;
+    vaultArchiveFile: string;
+    vaultLogListHeading: string;
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -107,6 +109,8 @@ const defaultSettings: Settings = {
     useFilenameAsScheduledDate: false,
     filenameAsDateFolders: [],
     recurrenceOnNextLine: false,
+    vaultArchiveFile: '',
+    vaultLogListHeading: '',
     statusSettings: new StatusSettings(),
     features: Feature.settingsFlags,
     generalSettings: {
