@@ -17,6 +17,8 @@ import { StatusSettings } from './Config/StatusSettings';
 import type { Task } from './Task/Task';
 import { tasksApiV1 } from './Api';
 import { GlobalFilter } from './Config/GlobalFilter';
+import { VaultArchiveFile } from './Config/OnCompletion';
+import { VaultLogListHeading } from './Config/OnCompletion';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -82,6 +84,8 @@ export default class TasksPlugin extends Plugin {
         GlobalFilter.getInstance().set(newSettings.globalFilter);
         GlobalFilter.getInstance().setRemoveGlobalFilter(newSettings.removeGlobalFilter);
         GlobalQuery.getInstance().set(newSettings.globalQuery);
+        VaultArchiveFile.getInstance().set(newSettings.vaultArchiveFile);
+        VaultLogListHeading.getInstance().set(newSettings.vaultLogListHeading);
 
         await this.loadTaskStatuses();
     }
