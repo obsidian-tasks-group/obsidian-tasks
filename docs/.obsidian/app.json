@@ -10,5 +10,6 @@
   "promptDelete": false,
   "showInlineTitle": false,
   "alwaysUpdateLinks": true,
-  "useMarkdownLinks": false
+  "useMarkdownLinks": false,
+  "tabSize": 2
 }
