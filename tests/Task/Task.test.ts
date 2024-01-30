@@ -633,6 +633,8 @@ describe('task dependencies', () => {
             '- [x] scenario 4 - DONE depends on DONE ⛔️ scenario4',
             //
             '- [ ] scenario 5 - TODO depends on non-existing ID ⛔️ nosuchid',
+            //
+            '- [ ] scenario 6 - TODO depends on self 🆔 self ⛔️ self',
         ];
         const tasks = fromLines({ lines });
 
