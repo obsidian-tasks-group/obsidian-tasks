@@ -28,7 +28,7 @@ Visualise blocking methods on Task, for a collection of tasks
 
 - [ ] scenario 3 - DONE depends on TODO 🆔 scenario3
     isBlocked():  false
-    isBlocking(): true
+    isBlocking(): false
 
 - [x] scenario 3 - DONE depends on TODO ⛔️ scenario3
     isBlocked():  false
