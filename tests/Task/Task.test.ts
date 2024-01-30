@@ -556,7 +556,7 @@ describe('task dependencies', () => {
     // and then later move them to be methods on Task:
 
     /**
-     * A task is treated as blocked if it depends on any existing task ids.
+     * A task is treated as blocked if it depends on any existing task ids on tasks that are TODO or IN_PROGRESS.
      *
      * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocked.
      * @param thisTask
