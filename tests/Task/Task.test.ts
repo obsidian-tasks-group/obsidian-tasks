@@ -575,11 +575,15 @@ describe('task dependencies', () => {
             const depTask = allTasks.find((task) => task.id === depId);
             if (!depTask) continue;
 
-            // We found a task that depends on this one:
+            // Done tasks don't ever block:
+            if (depTask.isDone) {
+                continue;
+            }
+
+            // We found a not-done task that this depends on, meaning this one is blocked:
             return true;
         }
 
-        // This task is blockedBy non-existent ids.
         return false;
     }
 
