@@ -557,11 +557,17 @@ describe('task dependencies', () => {
 
     /**
      * A task is treated as blocked if it depends on any existing task ids.
+     *
+     * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocked.
      * @param thisTask
      * @param allTasks
      */
     function isBlocked(thisTask: Task, allTasks: Task[]) {
         if (thisTask.blockedBy.length === 0) {
+            return false;
+        }
+
+        if (thisTask.isDone) {
             return false;
         }
 
