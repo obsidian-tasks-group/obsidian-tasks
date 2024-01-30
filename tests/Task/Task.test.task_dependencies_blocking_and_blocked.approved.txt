@@ -1,0 +1,47 @@
+Visualise blocking methods on Task, for a collection of tasks
+
+
+
+- [ ] No dependency - TODO
+    isBlocked():  false
+    isBlocking(): false
+
+- [x] No dependency - DONE
+    isBlocked():  false
+    isBlocking(): false
+
+- [ ] scenario 1 - TODO depends on TODO 🆔 scenario1
+    isBlocked():  false
+    isBlocking(): false
+
+- [ ] scenario 1 - TODO depends on TODO ⛔️ scenario1
+    isBlocked():  false
+    isBlocking(): false
+
+- [x] scenario 2 - TODO depends on DONE 🆔 scenario2
+    isBlocked():  false
+    isBlocking(): false
+
+- [ ] scenario 2 - TODO depends on DONE ⛔️ scenario2
+    isBlocked():  false
+    isBlocking(): false
+
+- [ ] scenario 3 - DONE depends on TODO 🆔 scenario3
+    isBlocked():  false
+    isBlocking(): false
+
+- [x] scenario 3 - DONE depends on TODO ⛔️ scenario3
+    isBlocked():  false
+    isBlocking(): false
+
+- [x] scenario 4 - DONE depends on DONE 🆔 scenario4
+    isBlocked():  false
+    isBlocking(): false
+
+- [x] scenario 4 - DONE depends on DONE ⛔️ scenario4
+    isBlocked():  false
+    isBlocking(): false
+
+- [ ] scenario 5 - TODO depends on non-existing ID 🆔 nosuchid
+    isBlocked():  false
+    isBlocking(): false

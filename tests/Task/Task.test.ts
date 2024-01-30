@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { Status } from '../../src/Statuses/Status';
 import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
@@ -10,7 +11,7 @@ import type { StatusCollection } from '../../src/Statuses/StatusCollection';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { fromLine } from '../TestingTools/TestHelpers';
+import { fromLine, fromLines } from '../TestingTools/TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Priority } from '../../src/Task/Priority';
@@ -547,6 +548,47 @@ describe('properties for scripting', () => {
 
         expect(new TaskBuilder().build().hasHeading).toEqual(false);
         expect(new TaskBuilder().precedingHeader('my heading').build().hasHeading).toEqual(true);
+    });
+});
+
+describe('task dependencies', () => {
+    // Develop with local functions first of all, for a faster turnaround,
+    // and then later move them to be methods on Task:
+    function isBlocked(_task: Task, _allTasks: Task[]) {
+        return false;
+    }
+
+    function isBlocking(_task: Task, _allTasks: Task[]) {
+        return false;
+    }
+
+    it('blocking and blocked', () => {
+        const lines = [
+            '- [ ] No dependency - TODO',
+            '- [x] No dependency - DONE',
+            //
+            '- [ ] scenario 1 - TODO depends on TODO 🆔 scenario1',
+            '- [ ] scenario 1 - TODO depends on TODO ⛔️ scenario1',
+            //
+            '- [x] scenario 2 - TODO depends on DONE 🆔 scenario2',
+            '- [ ] scenario 2 - TODO depends on DONE ⛔️ scenario2',
+            //
+            '- [ ] scenario 3 - DONE depends on TODO 🆔 scenario3',
+            '- [x] scenario 3 - DONE depends on TODO ⛔️ scenario3',
+            //
+            '- [x] scenario 4 - DONE depends on DONE 🆔 scenario4',
+            '- [x] scenario 4 - DONE depends on DONE ⛔️ scenario4',
+            //
+            '- [ ] scenario 5 - TODO depends on non-existing ID 🆔 nosuchid',
+        ];
+        const tasks = fromLines({ lines });
+
+        verifyAll('Visualise blocking methods on Task, for a collection of tasks', tasks, (task) => {
+            return `
+${task.toFileLineString()}
+    isBlocked():  ${isBlocked(task, tasks)}
+    isBlocking(): ${isBlocking(task, tasks)}`;
+        });
     });
 });
 
