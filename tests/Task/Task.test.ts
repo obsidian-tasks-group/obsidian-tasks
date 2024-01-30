@@ -560,11 +560,19 @@ describe('task dependencies', () => {
 
     /**
      * A Task is blocking if there is any other task blockedBy value with its id.
+     *
+     * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocking.
      * @param thisTask
      * @param allTasks
      */
     function isBlocking(thisTask: Task, allTasks: Task[]) {
-        if (thisTask.id === '') return false;
+        if (thisTask.id === '') {
+            return false;
+        }
+
+        if (thisTask.isDone) {
+            return false;
+        }
 
         return allTasks.some((task) => {
             return task.blockedBy.includes(thisTask.id);
