@@ -554,8 +554,14 @@ describe('properties for scripting', () => {
 describe('task dependencies', () => {
     // Develop with local functions first of all, for a faster turnaround,
     // and then later move them to be methods on Task:
-    function isBlocked(_task: Task, _allTasks: Task[]) {
-        return false;
+
+    /**
+     * A task is treated as blocked if it has any blockedBy values
+     * @param thisTask
+     * @param _allTasks
+     */
+    function isBlocked(thisTask: Task, _allTasks: Task[]) {
+        return thisTask.blockedBy.length > 0;
     }
 
     /**
@@ -600,7 +606,7 @@ describe('task dependencies', () => {
             '- [x] scenario 4 - DONE depends on DONE 🆔 scenario4',
             '- [x] scenario 4 - DONE depends on DONE ⛔️ scenario4',
             //
-            '- [ ] scenario 5 - TODO depends on non-existing ID 🆔 nosuchid',
+            '- [ ] scenario 5 - TODO depends on non-existing ID ⛔️ nosuchid',
         ];
         const tasks = fromLines({ lines });
 
