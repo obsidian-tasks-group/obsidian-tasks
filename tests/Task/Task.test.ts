@@ -558,8 +558,17 @@ describe('task dependencies', () => {
         return false;
     }
 
-    function isBlocking(_task: Task, _allTasks: Task[]) {
-        return false;
+    /**
+     * A Task is blocking if there is any other task blockedBy value with its id.
+     * @param thisTask
+     * @param allTasks
+     */
+    function isBlocking(thisTask: Task, allTasks: Task[]) {
+        if (thisTask.id === '') return false;
+
+        return allTasks.some((task) => {
+            return task.blockedBy.includes(thisTask.id);
+        });
     }
 
     it('blocking and blocked', () => {
