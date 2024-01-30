@@ -573,10 +573,13 @@ describe('task dependencies', () => {
 
         for (const depId of thisTask.blockedBy) {
             const depTask = allTasks.find((task) => task.id === depId);
-            if (!depTask) continue;
+            if (!depTask) {
+                // There is no task with this id.
+                continue;
+            }
 
-            // Done tasks don't ever block:
             if (depTask.isDone) {
+                // Done tasks don't ever block:
                 continue;
             }
 
