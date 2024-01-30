@@ -610,6 +610,10 @@ describe('task dependencies', () => {
         });
     }
 
+    function toEmoji(boolean: boolean) {
+        return boolean ? '✅ true' : '❌ false';
+    }
+
     it('blocking and blocked', () => {
         const lines = [
             '- [ ] No dependency - TODO',
@@ -640,8 +644,8 @@ describe('task dependencies', () => {
         verifyAll('Visualise blocking methods on Task, for a collection of tasks', tasks, (task) => {
             return `
 ${task.toFileLineString()}
-    isBlocked():  ${isBlocked(task, tasks)}
-    isBlocking(): ${isBlocking(task, tasks)}`;
+    isBlocked():  ${toEmoji(isBlocked(task, tasks))}
+    isBlocking(): ${toEmoji(isBlocking(task, tasks))}`;
         });
     });
 });

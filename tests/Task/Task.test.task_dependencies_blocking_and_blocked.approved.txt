@@ -3,61 +3,61 @@ Visualise blocking methods on Task, for a collection of tasks
 
 
 - [ ] No dependency - TODO
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [x] No dependency - DONE
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [ ] scenario 1 - TODO depends on TODO 🆔 scenario1
-    isBlocked():  false
-    isBlocking(): true
+    isBlocked():  ❌ false
+    isBlocking(): ✅ true
 
 - [ ] scenario 1 - TODO depends on TODO ⛔️ scenario1
-    isBlocked():  true
-    isBlocking(): false
+    isBlocked():  ✅ true
+    isBlocking(): ❌ false
 
 - [x] scenario 2 - TODO depends on DONE 🆔 scenario2
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [ ] scenario 2 - TODO depends on DONE ⛔️ scenario2
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [ ] scenario 3 - DONE depends on TODO 🆔 scenario3
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [x] scenario 3 - DONE depends on TODO ⛔️ scenario3
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [x] scenario 4 - DONE depends on DONE 🆔 scenario4
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [x] scenario 4 - DONE depends on DONE ⛔️ scenario4
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [ ] scenario 5 - TODO depends on non-existing ID ⛔️ nosuchid
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [ ] scenario 6 - TODO depends on self 🆔 self ⛔️ self
-    isBlocked():  true
-    isBlocking(): true
+    isBlocked():  ✅ true
+    isBlocking(): ✅ true
 
 - [x] scenario 7 - task with duplicated id - this is DONE 🆔 scenario7
-    isBlocked():  false
-    isBlocking(): false
+    isBlocked():  ❌ false
+    isBlocking(): ❌ false
 
 - [ ] scenario 7 - task with duplicated id - this is TODO - and is blocking 🆔 scenario7
-    isBlocked():  false
-    isBlocking(): true
+    isBlocked():  ❌ false
+    isBlocking(): ✅ true
 
 - [ ] scenario 7 - TODO depends on id that is duplicated, first of which is done - should be blocked ⛔️ scenario7
-    isBlocked():  true
-    isBlocking(): false
+    isBlocked():  ✅ true
+    isBlocking(): ❌ false
