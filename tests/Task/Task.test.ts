@@ -572,14 +572,9 @@ describe('task dependencies', () => {
         }
 
         for (const depId of thisTask.blockedBy) {
-            const depTask = allTasks.find((task) => task.id === depId);
+            const depTask = allTasks.find((task) => task.id === depId && !task.isDone);
             if (!depTask) {
-                // There is no task with this id.
-                continue;
-            }
-
-            if (depTask.isDone) {
-                // Done tasks don't ever block:
+                // There is no not-done task with this id.
                 continue;
             }
 
@@ -637,7 +632,7 @@ describe('task dependencies', () => {
             '- [ ] scenario 6 - TODO depends on self 🆔 self ⛔️ self',
             //
             '- [x] scenario 7 - task with duplicated id - this is DONE 🆔 scenario7',
-            '- [ ] scenario 7 - task with duplicated id - this is TODO 🆔 scenario7',
+            '- [ ] scenario 7 - task with duplicated id - this is TODO - and is blocking 🆔 scenario7',
             '- [ ] scenario 7 - TODO depends on id that is duplicated, first of which is done - should be blocked ⛔️ scenario7',
         ];
         const tasks = fromLines({ lines });

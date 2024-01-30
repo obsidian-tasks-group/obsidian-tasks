@@ -54,10 +54,10 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  false
     isBlocking(): false
 
-- [ ] scenario 7 - task with duplicated id - this is TODO 🆔 scenario7
+- [ ] scenario 7 - task with duplicated id - this is TODO - and is blocking 🆔 scenario7
     isBlocked():  false
     isBlocking(): true
 
 - [ ] scenario 7 - TODO depends on id that is duplicated, first of which is done - should be blocked ⛔️ scenario7
-    isBlocked():  false
+    isBlocked():  true
     isBlocking(): false
