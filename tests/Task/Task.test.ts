@@ -556,12 +556,25 @@ describe('task dependencies', () => {
     // and then later move them to be methods on Task:
 
     /**
-     * A task is treated as blocked if it has any blockedBy values
+     * A task is treated as blocked if it depends on any existing task ids.
      * @param thisTask
-     * @param _allTasks
+     * @param allTasks
      */
-    function isBlocked(thisTask: Task, _allTasks: Task[]) {
-        return thisTask.blockedBy.length > 0;
+    function isBlocked(thisTask: Task, allTasks: Task[]) {
+        if (thisTask.blockedBy.length === 0) {
+            return false;
+        }
+
+        for (const depId of thisTask.blockedBy) {
+            const depTask = allTasks.find((task) => task.id === depId);
+            if (!depTask) continue;
+
+            // We found a task that depends on this one:
+            return true;
+        }
+
+        // This task is blockedBy non-existent ids.
+        return false;
     }
 
     /**

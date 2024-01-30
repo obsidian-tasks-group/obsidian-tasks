@@ -43,5 +43,5 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocking(): false
 
 - [ ] scenario 5 - TODO depends on non-existing ID ⛔️ nosuchid
-    isBlocked():  true
+    isBlocked():  false
     isBlocking(): false
