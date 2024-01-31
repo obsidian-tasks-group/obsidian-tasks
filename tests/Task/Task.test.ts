@@ -639,9 +639,12 @@ describe('task dependencies', () => {
             '- [ ] scenario 7 - task with duplicated id - this is TODO - and is blocking 🆔 scenario7',
             '- [ ] scenario 7 - TODO depends on id that is duplicated, first of which is done - should be blocked ⛔️ scenario7',
             //
-            '- [ ] scenario 8 - cyclic dependency 🆔 scenario8a ⛔️ scenario8c',
-            '- [ ] scenario 8 - cyclic dependency 🆔 scenario8b ⛔️ scenario8a',
-            '- [ ] scenario 8 - cyclic dependency 🆔 scenario8c ⛔️ scenario8b',
+            '- [ ] scenario 8 - mutually dependant 🆔 scenario8a ⛔️ scenario8a',
+            '- [ ] scenario 8 - mutually dependant 🆔 scenario8b ⛔️ scenario8a',
+            //
+            '- [ ] scenario 9 - cyclic dependency 🆔 scenario9a ⛔️ scenario9c',
+            '- [ ] scenario 9 - cyclic dependency 🆔 scenario9b ⛔️ scenario9a',
+            '- [ ] scenario 9 - cyclic dependency 🆔 scenario9c ⛔️ scenario9b',
         ];
         const tasks = fromLines({ lines });
 
