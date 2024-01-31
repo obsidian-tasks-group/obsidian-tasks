@@ -4,7 +4,7 @@
 import moment from 'moment';
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { Status } from '../../src/Statuses/Status';
-import { Task, isBlocked, isBlocking } from '../../src/Task/Task';
+import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { StatusCollection } from '../../src/Statuses/StatusCollection';
@@ -609,8 +609,8 @@ describe('task dependencies', () => {
         verifyAll('Visualise blocking methods on Task, for a collection of tasks', tasks, (task) => {
             return `
 ${task.toFileLineString()}
-    isBlocked():  ${toEmoji(isBlocked(task, tasks))}
-    isBlocking(): ${toEmoji(isBlocking(task, tasks))}`;
+    isBlocked():  ${toEmoji(task.isBlocked(tasks))}
+    isBlocking(): ${toEmoji(task.isBlocking(tasks))}`;
         });
     });
 });

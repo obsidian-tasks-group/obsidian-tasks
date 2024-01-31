@@ -450,6 +450,14 @@ export class Task {
         );
     }
 
+    public isBlocked(allTasks: Task[]) {
+        return isBlocked(this, allTasks);
+    }
+
+    public isBlocking(allTasks: Task[]) {
+        return isBlocking(this, allTasks);
+    }
+
     /**
      * Return the number of the Task's priority.
      *     - Highest = 0
