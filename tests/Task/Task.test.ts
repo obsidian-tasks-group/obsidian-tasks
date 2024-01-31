@@ -644,9 +644,9 @@ describe('task dependencies', () => {
             //
             '- [ ] scenario 6 - TODO depends on self 🆔 self ⛔️ self',
             //
-            '- [x] scenario 7 - task with duplicated id - this is DONE 🆔 scenario7',
-            '- [ ] scenario 7 - task with duplicated id - this is TODO - and is blocking 🆔 scenario7',
-            '- [ ] scenario 7 - TODO depends on id that is duplicated, first of which is done - should be blocked ⛔️ scenario7',
+            '- [x] scenario 7 - task with duplicated id - this is DONE                                  - 🆔 scenario7',
+            '- [ ] scenario 7 - task with duplicated id - this is TODO - and is blocking                - 🆔 scenario7',
+            '- [ ] scenario 7 - TODO depends on id that is duplicated - ensure all tasks are checked    - ⛔️ scenario7',
             //
             '- [ ] scenario 8 - mutually dependant 🆔 scenario8a ⛔️ scenario8a',
             '- [ ] scenario 8 - mutually dependant 🆔 scenario8b ⛔️ scenario8a',
@@ -655,12 +655,12 @@ describe('task dependencies', () => {
             '- [ ] scenario 9 - cyclic dependency 🆔 scenario9b ⛔️ scenario9a',
             '- [ ] scenario 9 - cyclic dependency 🆔 scenario9c ⛔️ scenario9b',
             //
-            '- [ ] scenario 10 - multiple dependencies TODO 🆔 scenario10a',
-            '- [/] scenario 10 - multiple dependencies IN_PROGRESS 🆔 scenario10b',
-            '- [x] scenario 10 - multiple dependencies DONE 🆔 scenario10c',
-            '- [-] scenario 10 - multiple dependencies CANCELLED 🆔 scenario10d',
-            '- [Q] scenario 10 - multiple dependencies NON_TASK 🆔 scenario10e',
-            '- [ ] scenario 10 - multiple dependencies ⛔️ scenario10a,scenario10b,scenario10c,scenario10d,scenario10e',
+            '- [ ] scenario 10 - multiple dependencies TODO         - 🆔 scenario10a',
+            '- [/] scenario 10 - multiple dependencies IN_PROGRESS  - 🆔 scenario10b',
+            '- [x] scenario 10 - multiple dependencies DONE         - 🆔 scenario10c',
+            '- [-] scenario 10 - multiple dependencies CANCELLED    - 🆔 scenario10d',
+            '- [Q] scenario 10 - multiple dependencies NON_TASK     - 🆔 scenario10e',
+            '- [ ] scenario 10 - multiple dependencies              - ⛔️ scenario10a,scenario10b,scenario10c,scenario10d,scenario10e',
         ];
         const tasks = fromLines({ lines });
 

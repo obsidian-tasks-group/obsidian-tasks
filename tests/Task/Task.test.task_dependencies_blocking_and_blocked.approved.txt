@@ -50,15 +50,15 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ✅ true
     isBlocking(): ✅ true
 
-- [x] scenario 7 - task with duplicated id - this is DONE 🆔 scenario7
+- [x] scenario 7 - task with duplicated id - this is DONE                                  - 🆔 scenario7
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [ ] scenario 7 - task with duplicated id - this is TODO - and is blocking 🆔 scenario7
+- [ ] scenario 7 - task with duplicated id - this is TODO - and is blocking                - 🆔 scenario7
     isBlocked():  ❌ false
     isBlocking(): ✅ true
 
-- [ ] scenario 7 - TODO depends on id that is duplicated, first of which is done - should be blocked ⛔️ scenario7
+- [ ] scenario 7 - TODO depends on id that is duplicated - ensure all tasks are checked    - ⛔️ scenario7
     isBlocked():  ✅ true
     isBlocking(): ❌ false
 
@@ -82,26 +82,26 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ✅ true
     isBlocking(): ✅ true
 
-- [ ] scenario 10 - multiple dependencies TODO 🆔 scenario10a
+- [ ] scenario 10 - multiple dependencies TODO         - 🆔 scenario10a
     isBlocked():  ❌ false
     isBlocking(): ✅ true
 
-- [/] scenario 10 - multiple dependencies IN_PROGRESS 🆔 scenario10b
+- [/] scenario 10 - multiple dependencies IN_PROGRESS  - 🆔 scenario10b
     isBlocked():  ❌ false
     isBlocking(): ✅ true
 
-- [x] scenario 10 - multiple dependencies DONE 🆔 scenario10c
+- [x] scenario 10 - multiple dependencies DONE         - 🆔 scenario10c
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [-] scenario 10 - multiple dependencies CANCELLED 🆔 scenario10d
+- [-] scenario 10 - multiple dependencies CANCELLED    - 🆔 scenario10d
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [Q] scenario 10 - multiple dependencies NON_TASK 🆔 scenario10e
+- [Q] scenario 10 - multiple dependencies NON_TASK     - 🆔 scenario10e
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [ ] scenario 10 - multiple dependencies ⛔️ scenario10a,scenario10b,scenario10c,scenario10d,scenario10e
+- [ ] scenario 10 - multiple dependencies              - ⛔️ scenario10a,scenario10b,scenario10c,scenario10d,scenario10e
     isBlocked():  ✅ true
     isBlocking(): ❌ false
