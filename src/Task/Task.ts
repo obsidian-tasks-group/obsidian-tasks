@@ -450,12 +450,57 @@ export class Task {
         );
     }
 
+    /**
+     * A task is treated as blocked if it depends on any existing task ids on tasks that are TODO or IN_PROGRESS.
+     *
+     * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocked.
+     * @param allTasks - all the tasks in the vault. In custom queries, this is available via query.allTasks.
+     */
     public isBlocked(allTasks: Task[]) {
-        return isBlocked(this, allTasks);
+        if (this.blockedBy.length === 0) {
+            return false;
+        }
+
+        if (this.isDone) {
+            return false;
+        }
+
+        for (const depId of this.blockedBy) {
+            const depTask = allTasks.find((task) => task.id === depId && !task.isDone);
+            if (!depTask) {
+                // There is no not-done task with this id.
+                continue;
+            }
+
+            // We found a not-done task that this depends on, meaning this one is blocked:
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * A Task is blocking if there is any other not-done task blockedBy value with its id.
+     *
+     * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocking.
+     * @param allTasks - all the tasks in the vault. In custom queries, this is available via query.allTasks.
+     */
     public isBlocking(allTasks: Task[]) {
-        return isBlocking(this, allTasks);
+        if (this.id === '') {
+            return false;
+        }
+
+        if (this.isDone) {
+            return false;
+        }
+
+        return allTasks.some((task) => {
+            if (task.isDone) {
+                return false;
+            }
+
+            return task.blockedBy.includes(this.id);
+        });
     }
 
     /**
@@ -834,29 +879,4 @@ export function isBlocked(thisTask: Task, allTasks: Task[]) {
     }
 
     return false;
-}
-
-/**
- * A Task is blocking if there is any other not-done task blockedBy value with its id.
- *
- * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocking.
- * @param thisTask
- * @param allTasks
- */
-export function isBlocking(thisTask: Task, allTasks: Task[]) {
-    if (thisTask.id === '') {
-        return false;
-    }
-
-    if (thisTask.isDone) {
-        return false;
-    }
-
-    return allTasks.some((task) => {
-        if (task.isDone) {
-            return false;
-        }
-
-        return task.blockedBy.includes(thisTask.id);
-    });
 }
