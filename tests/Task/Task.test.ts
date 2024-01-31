@@ -4,7 +4,7 @@
 import moment from 'moment';
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { Status } from '../../src/Statuses/Status';
-import { Task } from '../../src/Task/Task';
+import { Task, isBlocked, isBlocking } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { StatusCollection } from '../../src/Statuses/StatusCollection';
@@ -550,64 +550,6 @@ describe('properties for scripting', () => {
         expect(new TaskBuilder().precedingHeader('my heading').build().hasHeading).toEqual(true);
     });
 });
-
-// Develop with local functions first of all, for a faster turnaround,
-// and then later move them to be methods on Task:
-
-/**
- * A task is treated as blocked if it depends on any existing task ids on tasks that are TODO or IN_PROGRESS.
- *
- * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocked.
- * @param thisTask
- * @param allTasks
- */
-function isBlocked(thisTask: Task, allTasks: Task[]) {
-    if (thisTask.blockedBy.length === 0) {
-        return false;
-    }
-
-    if (thisTask.isDone) {
-        return false;
-    }
-
-    for (const depId of thisTask.blockedBy) {
-        const depTask = allTasks.find((task) => task.id === depId && !task.isDone);
-        if (!depTask) {
-            // There is no not-done task with this id.
-            continue;
-        }
-
-        // We found a not-done task that this depends on, meaning this one is blocked:
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * A Task is blocking if there is any other not-done task blockedBy value with its id.
- *
- * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocking.
- * @param thisTask
- * @param allTasks
- */
-function isBlocking(thisTask: Task, allTasks: Task[]) {
-    if (thisTask.id === '') {
-        return false;
-    }
-
-    if (thisTask.isDone) {
-        return false;
-    }
-
-    return allTasks.some((task) => {
-        if (task.isDone) {
-            return false;
-        }
-
-        return task.blockedBy.includes(thisTask.id);
-    });
-}
 
 describe('task dependencies', () => {
     beforeEach(() => {

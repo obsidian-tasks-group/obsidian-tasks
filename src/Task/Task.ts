@@ -797,3 +797,58 @@ export class Task {
         return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
     }
 }
+
+/**
+ * A task is treated as blocked if it depends on any existing task ids on tasks that are TODO or IN_PROGRESS.
+ *
+ * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocked.
+ * @param thisTask
+ * @param allTasks
+ */
+export function isBlocked(thisTask: Task, allTasks: Task[]) {
+    if (thisTask.blockedBy.length === 0) {
+        return false;
+    }
+
+    if (thisTask.isDone) {
+        return false;
+    }
+
+    for (const depId of thisTask.blockedBy) {
+        const depTask = allTasks.find((task) => task.id === depId && !task.isDone);
+        if (!depTask) {
+            // There is no not-done task with this id.
+            continue;
+        }
+
+        // We found a not-done task that this depends on, meaning this one is blocked:
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * A Task is blocking if there is any other not-done task blockedBy value with its id.
+ *
+ * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocking.
+ * @param thisTask
+ * @param allTasks
+ */
+export function isBlocking(thisTask: Task, allTasks: Task[]) {
+    if (thisTask.id === '') {
+        return false;
+    }
+
+    if (thisTask.isDone) {
+        return false;
+    }
+
+    return allTasks.some((task) => {
+        if (task.isDone) {
+            return false;
+        }
+
+        return task.blockedBy.includes(thisTask.id);
+    });
+}
