@@ -454,6 +454,7 @@ export class Task {
      * A task is treated as blocked if it depends on any existing task ids on tasks that are TODO or IN_PROGRESS.
      *
      * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocked.
+     * Only direct dependencies are considered.
      * @param allTasks - all the tasks in the vault. In custom queries, this is available via query.allTasks.
      */
     public isBlocked(allTasks: Task[]) {
@@ -483,6 +484,7 @@ export class Task {
      * A Task is blocking if there is any other not-done task blockedBy value with its id.
      *
      * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocking.
+     * Only direct dependencies are considered.
      * @param allTasks - all the tasks in the vault. In custom queries, this is available via query.allTasks.
      */
     public isBlocking(allTasks: Task[]) {

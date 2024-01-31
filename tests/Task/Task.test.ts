@@ -603,6 +603,10 @@ describe('task dependencies', () => {
             '- [-] scenario 10 - multiple dependencies CANCELLED    - 🆔 scenario10d',
             '- [Q] scenario 10 - multiple dependencies NON_TASK     - 🆔 scenario10e',
             '- [ ] scenario 10 - multiple dependencies              - ⛔️ scenario10a,scenario10b,scenario10c,scenario10d,scenario10e',
+            //
+            '- [ ] scenario 11 - indirect dependency - indirect blocking of scenario11c ignored - 🆔 scenario11a',
+            '- [x] scenario 11 - indirect dependency - DONE                                     - 🆔 scenario11b ⛔️ scenario11a',
+            '- [ ] scenario 11 - indirect dependency - indirect blocking of scenario11a ignored - 🆔 scenario11c ⛔️ scenario11b',
         ];
         const tasks = fromLines({ lines });
 
