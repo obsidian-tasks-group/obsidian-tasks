@@ -1,3 +1,6 @@
+/**
+ * {@link Task} fields used for rendering.
+ */
 export enum TaskLayoutComponent {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     Description = 'description',
