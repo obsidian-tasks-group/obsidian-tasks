@@ -552,6 +552,15 @@ describe('properties for scripting', () => {
 });
 
 describe('task dependencies', () => {
+    beforeEach(() => {
+        const nonTaskStatus = new StatusConfiguration('Q', 'Question', 'A', true, StatusType.NON_TASK);
+        StatusRegistry.getInstance().add(nonTaskStatus);
+    });
+
+    afterEach(() => {
+        StatusRegistry.getInstance().resetToDefaultStatuses();
+    });
+
     // Develop with local functions first of all, for a faster turnaround,
     // and then later move them to be methods on Task:
 
@@ -645,6 +654,13 @@ describe('task dependencies', () => {
             '- [ ] scenario 9 - cyclic dependency 🆔 scenario9a ⛔️ scenario9c',
             '- [ ] scenario 9 - cyclic dependency 🆔 scenario9b ⛔️ scenario9a',
             '- [ ] scenario 9 - cyclic dependency 🆔 scenario9c ⛔️ scenario9b',
+            //
+            '- [ ] scenario 10 - multiple dependencies TODO 🆔 scenario10a',
+            '- [/] scenario 10 - multiple dependencies IN_PROGRESS 🆔 scenario10b',
+            '- [x] scenario 10 - multiple dependencies DONE 🆔 scenario10c',
+            '- [-] scenario 10 - multiple dependencies CANCELLED 🆔 scenario10d',
+            '- [Q] scenario 10 - multiple dependencies NON_TASK 🆔 scenario10e',
+            '- [ ] scenario 10 - multiple dependencies ⛔️ scenario10a,scenario10b,scenario10c,scenario10d,scenario10e',
         ];
         const tasks = fromLines({ lines });
 
