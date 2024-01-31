@@ -1,5 +1,7 @@
 /**
  * {@link Task} fields used for rendering.
+ *
+ * The order here determines the order that task fields are rendered and written to markdown.
  */
 export enum TaskLayoutComponent {
     // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -17,7 +19,6 @@ export enum TaskLayoutComponent {
     BlockLink = 'blockLink',
 }
 
-// The order here determines the order that task fields are rendered and written to markdown.
 export const taskLayoutComponents = Object.values(TaskLayoutComponent);
 
 /**
