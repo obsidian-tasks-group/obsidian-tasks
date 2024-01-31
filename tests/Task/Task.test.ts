@@ -551,6 +551,64 @@ describe('properties for scripting', () => {
     });
 });
 
+// Develop with local functions first of all, for a faster turnaround,
+// and then later move them to be methods on Task:
+
+/**
+ * A task is treated as blocked if it depends on any existing task ids on tasks that are TODO or IN_PROGRESS.
+ *
+ * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocked.
+ * @param thisTask
+ * @param allTasks
+ */
+function isBlocked(thisTask: Task, allTasks: Task[]) {
+    if (thisTask.blockedBy.length === 0) {
+        return false;
+    }
+
+    if (thisTask.isDone) {
+        return false;
+    }
+
+    for (const depId of thisTask.blockedBy) {
+        const depTask = allTasks.find((task) => task.id === depId && !task.isDone);
+        if (!depTask) {
+            // There is no not-done task with this id.
+            continue;
+        }
+
+        // We found a not-done task that this depends on, meaning this one is blocked:
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * A Task is blocking if there is any other not-done task blockedBy value with its id.
+ *
+ * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocking.
+ * @param thisTask
+ * @param allTasks
+ */
+function isBlocking(thisTask: Task, allTasks: Task[]) {
+    if (thisTask.id === '') {
+        return false;
+    }
+
+    if (thisTask.isDone) {
+        return false;
+    }
+
+    return allTasks.some((task) => {
+        if (task.isDone) {
+            return false;
+        }
+
+        return task.blockedBy.includes(thisTask.id);
+    });
+}
+
 describe('task dependencies', () => {
     beforeEach(() => {
         const nonTaskStatus = new StatusConfiguration('Q', 'Question', 'A', true, StatusType.NON_TASK);
@@ -560,64 +618,6 @@ describe('task dependencies', () => {
     afterEach(() => {
         StatusRegistry.getInstance().resetToDefaultStatuses();
     });
-
-    // Develop with local functions first of all, for a faster turnaround,
-    // and then later move them to be methods on Task:
-
-    /**
-     * A task is treated as blocked if it depends on any existing task ids on tasks that are TODO or IN_PROGRESS.
-     *
-     * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocked.
-     * @param thisTask
-     * @param allTasks
-     */
-    function isBlocked(thisTask: Task, allTasks: Task[]) {
-        if (thisTask.blockedBy.length === 0) {
-            return false;
-        }
-
-        if (thisTask.isDone) {
-            return false;
-        }
-
-        for (const depId of thisTask.blockedBy) {
-            const depTask = allTasks.find((task) => task.id === depId && !task.isDone);
-            if (!depTask) {
-                // There is no not-done task with this id.
-                continue;
-            }
-
-            // We found a not-done task that this depends on, meaning this one is blocked:
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * A Task is blocking if there is any other not-done task blockedBy value with its id.
-     *
-     * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocking.
-     * @param thisTask
-     * @param allTasks
-     */
-    function isBlocking(thisTask: Task, allTasks: Task[]) {
-        if (thisTask.id === '') {
-            return false;
-        }
-
-        if (thisTask.isDone) {
-            return false;
-        }
-
-        return allTasks.some((task) => {
-            if (task.isDone) {
-                return false;
-            }
-
-            return task.blockedBy.includes(thisTask.id);
-        });
-    }
 
     function toEmoji(boolean: boolean) {
         return boolean ? '✅ true' : '❌ false';
