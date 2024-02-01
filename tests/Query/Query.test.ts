@@ -101,6 +101,7 @@ describe('Query parsing', () => {
         'id includes AND', // Verify Query doesn't confuse this with a boolean query
         'is blocking',
         'is not blocked',
+        'is not blocking',
         'is not recurring',
         'is recurring',
         'no blocked by',
