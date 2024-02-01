@@ -81,7 +81,5 @@ describe('is not blocked', () => {
         expect(isNotBlocked).toMatchTaskInTaskList(blockedByComplete, allTasks);
         expect(isNotBlocked).not.toMatchTaskInTaskList(blockedByIncomplete, allTasks);
         expect(isNotBlocked).not.toMatchTaskInTaskList(blockedByAll, allTasks);
-
-        blocking.status.isCompleted();
     });
 });
