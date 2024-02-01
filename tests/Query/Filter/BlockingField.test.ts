@@ -13,6 +13,7 @@ describe('blocking', () => {
     const allTasks = [notBlocking, child, childWithoutParent, childThatIsDone, parent];
 
     const isBlocking = new BlockingField().createFilterOrErrorMessage('is blocking');
+    const isNotBlocking = new BlockingField().createFilterOrErrorMessage('is not blocking');
 
     it('is blocking', () => {
         expect(isBlocking).toBeValid();
@@ -20,6 +21,14 @@ describe('blocking', () => {
         expect(isBlocking).toMatchTaskInTaskList(child, allTasks);
         expect(isBlocking).not.toMatchTaskInTaskList(parent, allTasks);
         expect(isBlocking).not.toMatchTaskInTaskList(childWithoutParent, allTasks);
+    });
+
+    it('is not blocking', () => {
+        expect(isNotBlocking).toBeValid();
+        expect(isNotBlocking).toMatchTaskInTaskList(notBlocking, allTasks);
+        expect(isNotBlocking).not.toMatchTaskInTaskList(child, allTasks);
+        expect(isNotBlocking).toMatchTaskInTaskList(parent, allTasks);
+        expect(isNotBlocking).toMatchTaskInTaskList(childWithoutParent, allTasks);
     });
 
     it('should not treat a done task as blocking', () => {
