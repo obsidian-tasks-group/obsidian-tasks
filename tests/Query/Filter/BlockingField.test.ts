@@ -21,7 +21,7 @@ describe('blocking', () => {
         expect(isBlocking).not.toMatchTaskInTaskList(childWithoutParent, allTasks);
     });
 
-    it.failing('should not treat a done task as blocking', () => {
+    it('should not treat a done task as blocking', () => {
         expect(isBlocking).not.toMatchTaskInTaskList(childThatIsDone, allTasks);
     });
 
