@@ -44,7 +44,7 @@ describe('blocking and blocked filters', () => {
         const table = new MarkdownTable(columnNames);
 
         tasks.forEach((task) => {
-            const newRow = [task.toFileLineString()];
+            const newRow = [addBackticks(task.toFileLineString())];
             filters.forEach((filter) => {
                 const matches = filter!.filterFunction(task, searchInfo);
                 newRow.push(booleanToEmoji(matches));
