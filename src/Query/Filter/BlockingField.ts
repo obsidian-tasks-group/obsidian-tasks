@@ -9,17 +9,7 @@ export class BlockingField extends FilterInstructionsBasedField {
         });
 
         this._filters.add('is not blocked', (task, searchInfo: SearchInfo) => {
-            if (task.blockedBy.length === 0) return true;
-
-            for (const depId of task.blockedBy) {
-                const depTask = searchInfo.allTasks.find((task) => task.id === depId);
-
-                if (!depTask) continue;
-
-                if (!depTask.status.isCompleted()) return false;
-            }
-
-            return true;
+            return !task.isBlocked(searchInfo.allTasks);
         });
     }
 
