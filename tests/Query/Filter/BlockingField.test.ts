@@ -84,7 +84,7 @@ describe('is not blocked', () => {
         expect(isNotBlocked).not.toMatchTaskInTaskList(blockedByAll, allTasks);
     });
 
-    it.failing('should not treat completed tasks as blocked', () => {
+    it('should not treat completed tasks as blocked', () => {
         const doneTaskDependingOnBlocking = fromLine({ line: `- [x] Done ⛔️ ${blockingId}` });
         const allTasks = [blocking, doneTaskDependingOnBlocking];
         expect(isNotBlocked).toMatchTaskInTaskList(doneTaskDependingOnBlocking, allTasks);
