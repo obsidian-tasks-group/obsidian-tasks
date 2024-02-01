@@ -7,8 +7,9 @@ describe('blocking', () => {
     const notBlocking = new TaskBuilder().build();
     const child = new TaskBuilder().id('12345').build();
     const childWithoutParent = new TaskBuilder().id('23456').build();
-    const parent = new TaskBuilder().blockedBy(['12345']).build();
-    const allTasks = [notBlocking, child, childWithoutParent, parent];
+    const childThatIsDone = new TaskBuilder().id('34567').status(Status.makeDone()).build();
+    const parent = new TaskBuilder().blockedBy(['12345', '34567']).build();
+    const allTasks = [notBlocking, child, childWithoutParent, childThatIsDone, parent];
 
     const isBlocking = new BlockingField().createFilterOrErrorMessage('is blocking');
 
@@ -18,6 +19,10 @@ describe('blocking', () => {
         expect(isBlocking).toMatchTaskInTaskList(child, allTasks);
         expect(isBlocking).not.toMatchTaskInTaskList(parent, allTasks);
         expect(isBlocking).not.toMatchTaskInTaskList(childWithoutParent, allTasks);
+    });
+
+    it.failing('should not treat a done task as blocking', () => {
+        expect(isBlocking).not.toMatchTaskInTaskList(childThatIsDone, allTasks);
     });
 
     it('is blocking - with circular dependencies, all tasks are matched', () => {
