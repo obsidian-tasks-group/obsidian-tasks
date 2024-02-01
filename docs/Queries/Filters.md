@@ -455,7 +455,7 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
 
 At a high level, task dependencies define the order in which you want to work on a set of tasks. You can read more about them in [[Task Dependencies]].
 
-### Blocking
+### Blocking Tasks
 
 - `is blocking`
   - This shows tasks that you probably want to do first, as they are preventing other tasks from being done.
@@ -487,7 +487,7 @@ For more information, see [[Task Dependencies]].
 >
 > - `is blocking` and `is not blocking` were introduced in Tasks X.Y.Z.
 
-### Blocked
+### Blocked Tasks
 
 - `is blocked`
   - This shows tasks you cannot currently do, as they are waiting for another task to be completed.
@@ -521,6 +521,8 @@ For more information, see [[Task Dependencies]].
 
 ### Id
 
+The `id` field adds an identifier to a task, so that other tasks may be marked as `blockedBy` that task.
+
 - `has id`
 - `no id`
 - `id (includes|does not include) <string>`
@@ -538,6 +540,8 @@ For more information, see [[Task Dependencies]].
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Id** is now possible, using `task.id`.
 
 ### Blocked By
+
+The `blockedBy` field allows a task to be marked as depending on the `id` of one or more other tasks. Multiple `id` values are separated by commas (`,`) with no spaces.
 
 - `has blocked by`
 - `no blocked by`
