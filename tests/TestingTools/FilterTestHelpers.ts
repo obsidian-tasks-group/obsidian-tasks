@@ -95,6 +95,6 @@ export function shouldSupportFiltering(
     expect(filteredTaskLines).toMatchObject(expectedResult);
 }
 
-export function toEmoji(boolean: boolean) {
+export function booleanToEmoji(boolean: boolean) {
     return boolean ? '✅ true' : '❌ false';
 }

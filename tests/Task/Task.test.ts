@@ -16,7 +16,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { SampleTasks } from '../TestingTools/SampleTasks';
-import { toEmoji } from '../TestingTools/FilterTestHelpers';
+import { booleanToEmoji } from '../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
@@ -569,8 +569,8 @@ describe('task dependencies', () => {
         verifyAll('Visualise blocking methods on Task, for a collection of tasks', tasks, (task) => {
             return `
 ${task.toFileLineString()}
-    isBlocked():  ${toEmoji(task.isBlocked(tasks))}
-    isBlocking(): ${toEmoji(task.isBlocking(tasks))}`;
+    isBlocked():  ${booleanToEmoji(task.isBlocked(tasks))}
+    isBlocking(): ${booleanToEmoji(task.isBlocking(tasks))}`;
         });
     });
 });
