@@ -75,7 +75,7 @@ describe('is not blocked', () => {
         const blockedByComplete = new TaskBuilder().blockedBy([blockingCompletedId]).build();
         const blockedByAll = new TaskBuilder().blockedBy([blockingId, blockingCompletedId]).build();
 
-        const allTasks = [blocking, blockedByIncomplete, blockedByComplete, blockedByAll];
+        const allTasks = [blocking, blockedByIncomplete, blockedByComplete, blockedByAll, blockingCompleted];
 
         expect(isNotBlocked).toMatchTaskInTaskList(blockingCompleted, allTasks);
         expect(isNotBlocked).toMatchTaskInTaskList(blockedByComplete, allTasks);

@@ -174,6 +174,10 @@ with filter: "${filter.instruction}"`,
 }
 
 export function toMatchTaskInTaskList(filter: FilterOrErrorMessage, task: Task, allTasks: Task[]) {
+    // Make sure that the task being filtered is actually in allTasks,
+    // to guard against tests passing for the wrong reason:
+    expect(allTasks.includes(task)).toEqual(true);
+
     return toMatchTaskWithSearchInfo(filter, task, SearchInfo.fromAllTasks(allTasks));
 }
 
