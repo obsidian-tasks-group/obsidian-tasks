@@ -94,3 +94,7 @@ export function shouldSupportFiltering(
     const filteredTaskLines = filteredTasks.map((task) => `- [ ] ${task.toString()}`);
     expect(filteredTaskLines).toMatchObject(expectedResult);
 }
+
+export function toEmoji(boolean: boolean) {
+    return boolean ? '✅ true' : '❌ false';
+}

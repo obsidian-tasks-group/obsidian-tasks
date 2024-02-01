@@ -16,6 +16,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { SampleTasks } from '../TestingTools/SampleTasks';
+import { toEmoji } from '../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
@@ -561,10 +562,6 @@ describe('task dependencies', () => {
     afterEach(() => {
         StatusRegistry.getInstance().resetToDefaultStatuses();
     });
-
-    function toEmoji(boolean: boolean) {
-        return boolean ? '✅ true' : '❌ false';
-    }
 
     it('blocking and blocked', () => {
         const tasks = SampleTasks.withWideSelectionOfDependencyScenarios();
