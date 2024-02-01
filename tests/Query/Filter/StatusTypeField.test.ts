@@ -8,7 +8,8 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { StatusType } from '../../../src/Statuses/StatusConfiguration';
 import { Status } from '../../../src/Statuses/Status';
 import * as FilterParser from '../../../src/Query/FilterParser';
-import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../TestingTools/SampleTasks';
 
 // Abbreviated names so that the markdown text is aligned
 const todoTask = fromLine({ line: '- [ ] Todo' });

@@ -6,7 +6,8 @@ import moment from 'moment';
 import { RecurrenceField } from '../../../src/Query/Filter/RecurrenceField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../../TestingTools/RecurrenceBuilder';
-import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../TestingTools/SampleTasks';
 
 window.moment = moment;
 

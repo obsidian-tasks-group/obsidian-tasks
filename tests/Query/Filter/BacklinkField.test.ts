@@ -1,5 +1,6 @@
 import { BacklinkField } from '../../../src/Query/Filter/BacklinkField';
-import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../TestingTools/SampleTasks';
 
 describe('backlink', () => {
     it('should provide the backlink', () => {
