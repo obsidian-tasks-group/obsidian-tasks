@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { TASK_FORMATS, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
-import { SampleTasks } from '../TestingTools/TestHelpers';
+import { SampleTasks } from '../TestingTools/SampleTasks';
 
 window.moment = moment;
 

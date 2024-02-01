@@ -1,7 +1,8 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { FilenameField } from '../../../src/Query/Filter/FilenameField';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
-import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../TestingTools/SampleTasks';
 
 describe('filename', () => {
     it('should provide access to the file name with extension', () => {

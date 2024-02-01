@@ -13,7 +13,7 @@ import {
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { Query } from '../../../src/Query/Query';
 import { verifyMarkdown } from '../../TestingTools/VerifyMarkdown';
-import { SampleTasks } from '../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../TestingTools/SampleTasks';
 import { MarkdownTable } from '../../../src/lib/MarkdownTable';
 import { Explainer } from '../../../src/Query/Explain/Explainer';
 

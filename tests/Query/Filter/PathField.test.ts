@@ -7,7 +7,8 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../TestingTools/SampleTasks';
 
 function testTaskFilterForTaskWithPath(filter: FilterOrErrorMessage, path: string, expected: boolean) {
     const builder = new TaskBuilder();

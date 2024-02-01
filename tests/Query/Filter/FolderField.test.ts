@@ -1,5 +1,6 @@
 import { FolderField } from '../../../src/Query/Filter/FolderField';
-import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../TestingTools/SampleTasks';
 
 describe('folder', () => {
     it('should provide access to the folder', () => {

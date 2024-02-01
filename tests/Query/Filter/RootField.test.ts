@@ -1,5 +1,6 @@
 import { RootField } from '../../../src/Query/Filter/RootField';
-import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../TestingTools/SampleTasks';
 
 describe('root', () => {
     it('should provide access to root folder name with trailing slash', () => {

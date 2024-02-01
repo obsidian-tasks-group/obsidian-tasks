@@ -1,7 +1,8 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
-import { SampleTasks, fromLine } from '../../TestingTools/TestHelpers';
+import { fromLine } from '../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../TestingTools/SampleTasks';
 
 import {
     expectTaskComparesAfter,

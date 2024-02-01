@@ -4,7 +4,8 @@
 
 import moment from 'moment';
 import type { Task } from '../../../../src/Task/Task';
-import { SampleTasks, fromLine, fromLines } from '../../../TestingTools/TestHelpers';
+import { fromLine, fromLines } from '../../../TestingTools/TestHelpers';
+import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
 import {
     verifyFunctionFieldFilterSamplesForDocs,
