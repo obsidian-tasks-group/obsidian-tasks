@@ -17,7 +17,7 @@
 not done
 
 path includes {{query.file.path}}
-explain
+#explain
 ```
 
 ---
@@ -30,7 +30,7 @@ explain
 is blocking
 
 path includes {{query.file.path}}
-explain
+#explain
 ```
 
 ### Blocking Tasks - Not Done
@@ -40,7 +40,7 @@ is blocking
 not done
 
 path includes {{query.file.path}}
-explain
+#explain
 ```
 
 ---
@@ -53,7 +53,7 @@ explain
 is not blocked
 
 path includes {{query.file.path}}
-explain
+#explain
 ```
 
 ### Blocked Tasks  - Not Done
@@ -63,7 +63,7 @@ is not blocked
 not done
 
 path includes {{query.file.path}}
-explain
+#explain
 ```
 
 ---
@@ -75,7 +75,7 @@ explain
 ```tasks
 hide id
 path includes {{query.file.path}}
-explain
+#explain
 ```
 
 ### Hide blockedBy
@@ -83,5 +83,5 @@ explain
 ```tasks
 hide depends on
 path includes {{query.file.path}}
-explain
+#explain
 ```
