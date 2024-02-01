@@ -457,7 +457,7 @@ export class Task {
      * Only direct dependencies are considered.
      * @param allTasks - all the tasks in the vault. In custom queries, this is available via query.allTasks.
      */
-    public isBlocked(allTasks: Task[]) {
+    public isBlocked(allTasks: Readonly<Task[]>) {
         if (this.blockedBy.length === 0) {
             return false;
         }
@@ -487,7 +487,7 @@ export class Task {
      * Only direct dependencies are considered.
      * @param allTasks - all the tasks in the vault. In custom queries, this is available via query.allTasks.
      */
-    public isBlocking(allTasks: Task[]) {
+    public isBlocking(allTasks: Readonly<Task[]>) {
         if (this.id === '') {
             return false;
         }
