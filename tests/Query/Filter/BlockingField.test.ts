@@ -63,8 +63,9 @@ describe('blocking', () => {
     });
 });
 
-describe('is not blocked', () => {
+describe('blocked', () => {
     const isNotBlocked = new BlockingField().createFilterOrErrorMessage('is not blocked');
+    const isBlocked = new BlockingField().createFilterOrErrorMessage('is blocked');
     const blockingId = 'abc';
     const blocking = new TaskBuilder().id(blockingId).build();
 
@@ -73,8 +74,12 @@ describe('is not blocked', () => {
         const allTasks = [blocking, blocked];
 
         expect(isNotBlocked).toBeValid();
+
         expect(isNotBlocked).not.toMatchTaskInTaskList(blocked, allTasks);
         expect(isNotBlocked).toMatchTaskInTaskList(blocking, allTasks);
+
+        expect(isBlocked).toMatchTaskInTaskList(blocked, allTasks);
+        expect(isBlocked).not.toMatchTaskInTaskList(blocking, allTasks);
     });
 
     it('should treat completed deps as non-blocking', () => {
