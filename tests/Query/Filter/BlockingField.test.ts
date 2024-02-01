@@ -2,6 +2,7 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { BlockingField } from '../../../src/Query/Filter/BlockingField';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { Status } from '../../../src/Statuses/Status';
+import { fromLine } from '../../TestingTools/TestHelpers';
 
 describe('blocking', () => {
     const notBlocking = new TaskBuilder().build();
@@ -81,5 +82,11 @@ describe('is not blocked', () => {
         expect(isNotBlocked).toMatchTaskInTaskList(blockedByComplete, allTasks);
         expect(isNotBlocked).not.toMatchTaskInTaskList(blockedByIncomplete, allTasks);
         expect(isNotBlocked).not.toMatchTaskInTaskList(blockedByAll, allTasks);
+    });
+
+    it.failing('should not treat completed tasks as blocked', () => {
+        const doneTaskDependingOnBlocking = fromLine({ line: `- [x] Done ⛔️ ${blockingId}` });
+        const allTasks = [blocking, doneTaskDependingOnBlocking];
+        expect(isNotBlocked).toMatchTaskInTaskList(doneTaskDependingOnBlocking, allTasks);
     });
 });
