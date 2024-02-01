@@ -7,14 +7,42 @@
 - [ ] #task Craft a conclusion 🆔 0wigip ⛔️ mvplec
 - [ ] #task Proofread and edit 🆔 5ti6bf ⛔️ 0wigip
 - [ ] #task Publish the article ⛔️ 5ti6bf
+- [ ] #task Do something on a different project
 
 ---
 
-## Do Next
+## Real-world searches
+
+### Blocking and Not Blocked - Do very soon
 
 ```tasks
-((is blocking) AND (is not blocked)) OR (is not blocked)
+is blocking
+is not blocked
+# by definition these are all 'not done'
+
+path includes {{query.file.path}}
+#explain
+```
+
+### Not Blocking and Not Blocked - Do any time
+
+```tasks
+is not blocking
+is not blocked
+
+# DONE, CANCELLED and NON_TASK are never blocking nor blocked,
+# so we need to exclude those:
 not done
+
+path includes {{query.file.path}}
+#explain
+```
+
+### Blocked - Cannot yet do
+
+```tasks
+is blocked
+# by definition these are all 'not done'
 
 path includes {{query.file.path}}
 #explain
@@ -22,9 +50,9 @@ path includes {{query.file.path}}
 
 ---
 
-## Blocking Tasks
+## Demonstration searches - showing the Blocking instructions
 
-### Blocking Tasks - Any Status
+### `is blocking` - Blocking Tasks - tasks which prevent others from being done
 
 ```tasks
 is blocking
@@ -33,11 +61,20 @@ path includes {{query.file.path}}
 #explain
 ```
 
-### Blocking Tasks - Not Done
+### `is not blocking` - Non-blocking Tasks - Not Done
 
 ```tasks
-is blocking
+is not blocking
 not done
+
+path includes {{query.file.path}}
+#explain
+```
+
+### `is not blocking` - Non-blocking Tasks - Any Status
+
+```tasks
+is not blocking
 
 path includes {{query.file.path}}
 #explain
@@ -45,22 +82,31 @@ path includes {{query.file.path}}
 
 ---
 
-## Blocked Tasks
+## Demonstration searches - showing the Blocked instructions
 
-### Blocked Tasks  - Any Status
+### `is blocked` - Blocked Tasks - tasks which cannot be done yet
 
 ```tasks
-is not blocked
+is blocked
 
 path includes {{query.file.path}}
 #explain
 ```
 
-### Blocked Tasks  - Not Done
+### `is not blocked` - Non-blocked Tasks - Not Done
 
 ```tasks
 is not blocked
 not done
+
+path includes {{query.file.path}}
+#explain
+```
+
+### `is not blocked` - Non-blocked Tasks - Any Status
+
+```tasks
+is not blocked
 
 path includes {{query.file.path}}
 #explain
@@ -70,7 +116,7 @@ path includes {{query.file.path}}
 
 ## Show/Hide Instructions
 
-### Hide Id
+### `hide id`
 
 ```tasks
 hide id
@@ -78,7 +124,7 @@ path includes {{query.file.path}}
 #explain
 ```
 
-### Hide blockedBy
+### `hide depends on` ==TODO Rename to blocked by==
 
 ```tasks
 hide depends on
