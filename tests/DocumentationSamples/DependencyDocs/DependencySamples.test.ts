@@ -13,6 +13,7 @@ import { SampleTasks } from '../../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../../TestingTools/FilterTestHelpers';
 import { MarkdownTable } from '../../../src/lib/MarkdownTable';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
+import { addBackticks } from '../../Scripting/ScriptingTestHelpers';
 
 window.moment = moment;
 
@@ -38,7 +39,10 @@ describe('blocking and blocked filters', () => {
         });
         const searchInfo = SearchInfo.fromAllTasks(tasks);
 
-        const table = new MarkdownTable(['Task'].concat(instructions));
+        const columnNames = ['Task'];
+        instructions.forEach((instruction) => columnNames.push(addBackticks(instruction)));
+        const table = new MarkdownTable(columnNames);
+
         tasks.forEach((task) => {
             const newRow = [task.toFileLineString()];
             filters.forEach((filter) => {

@@ -1,6 +1,6 @@
 <!-- placeholder to force blank line before included text -->
 
-| Task | is blocking | is blocked |
+| Task | `is blocking` | `is blocked` |
 | ----- | ----- | ----- |
 | - [ ] No dependency - TODO | ❌ false | ❌ false |
 | - [x] No dependency - DONE | ❌ false | ❌ false |
