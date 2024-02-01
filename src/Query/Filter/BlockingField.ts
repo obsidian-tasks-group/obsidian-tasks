@@ -12,6 +12,10 @@ export class BlockingField extends FilterInstructionsBasedField {
             return !task.isBlocking(searchInfo.allTasks);
         });
 
+        this._filters.add('is blocked', (task, searchInfo: SearchInfo) => {
+            return task.isBlocked(searchInfo.allTasks);
+        });
+
         this._filters.add('is not blocked', (task, searchInfo: SearchInfo) => {
             return !task.isBlocked(searchInfo.allTasks);
         });
