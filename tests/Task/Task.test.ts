@@ -590,7 +590,7 @@ describe('task dependencies', () => {
             '- [ ] scenario 7 - task with duplicated id - this is TODO - and is blocking                - 🆔 scenario7',
             '- [ ] scenario 7 - TODO depends on id that is duplicated - ensure all tasks are checked    - ⛔️ scenario7',
             //
-            '- [ ] scenario 8 - mutually dependant 🆔 scenario8a ⛔️ scenario8a',
+            '- [ ] scenario 8 - mutually dependant 🆔 scenario8a ⛔️ scenario8b',
             '- [ ] scenario 8 - mutually dependant 🆔 scenario8b ⛔️ scenario8a',
             //
             '- [ ] scenario 9 - cyclic dependency 🆔 scenario9a ⛔️ scenario9c',

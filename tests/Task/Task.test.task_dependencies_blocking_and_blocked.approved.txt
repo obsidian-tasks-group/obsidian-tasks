@@ -62,13 +62,13 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ✅ true
     isBlocking(): ❌ false
 
-- [ ] scenario 8 - mutually dependant 🆔 scenario8a ⛔️ scenario8a
+- [ ] scenario 8 - mutually dependant 🆔 scenario8a ⛔️ scenario8b
     isBlocked():  ✅ true
     isBlocking(): ✅ true
 
 - [ ] scenario 8 - mutually dependant 🆔 scenario8b ⛔️ scenario8a
     isBlocked():  ✅ true
-    isBlocking(): ❌ false
+    isBlocking(): ✅ true
 
 - [ ] scenario 9 - cyclic dependency 🆔 scenario9a ⛔️ scenario9c
     isBlocked():  ✅ true
