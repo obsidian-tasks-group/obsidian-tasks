@@ -4,7 +4,6 @@
 
 import moment from 'moment';
 
-import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
 import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
@@ -12,6 +11,8 @@ import type { Filter } from '../../../src/Query/Filter/Filter';
 import { parseFilter } from '../../../src/Query/FilterParser';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../../TestingTools/FilterTestHelpers';
+import { MarkdownTable } from '../../../src/lib/MarkdownTable';
+import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 
 window.moment = moment;
 
@@ -37,14 +38,15 @@ describe('blocking and blocked filters', () => {
         });
         const searchInfo = SearchInfo.fromAllTasks(tasks);
 
-        verifyAll('Visualise dependency-related filters on Task, for a collection of tasks', tasks, (task) => {
-            let result = task.toFileLineString() + '\n';
+        const table = new MarkdownTable(['Task'].concat(instructions));
+        tasks.forEach((task) => {
+            const newRow = [task.toFileLineString()];
             filters.forEach((filter) => {
                 const matches = filter!.filterFunction(task, searchInfo);
-                result += `    ${filter?.instruction}
-        ${booleanToEmoji(matches)}\n`;
+                newRow.push(booleanToEmoji(matches));
             });
-            return result;
+            table.addRow(newRow);
         });
+        verifyMarkdownForDocs(table.markdown);
     });
 });
