@@ -7,7 +7,6 @@ import moment from 'moment';
 import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
 import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
-import type { Filter } from '../../../src/Query/Filter/Filter';
 import { parseFilter } from '../../../src/Query/FilterParser';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../../TestingTools/FilterTestHelpers';
@@ -16,6 +15,17 @@ import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { addBackticks } from '../../Scripting/ScriptingTestHelpers';
 
 window.moment = moment;
+
+function makeFilters() {
+    const instructions = [
+        //
+        'is blocking',
+        'is blocked',
+    ];
+    return instructions.map((instruction) => {
+        return parseFilter(instruction)!.filter!;
+    });
+}
 
 describe('blocking and blocked filters', () => {
     beforeEach(() => {
@@ -29,14 +39,7 @@ describe('blocking and blocked filters', () => {
 
     it('blocking and blocked', () => {
         const tasks = SampleTasks.withWideSelectionOfDependencyScenarios();
-        const instructions = [
-            //
-            'is blocking',
-            'is blocked',
-        ];
-        const filters: Filter[] = instructions.map((instruction) => {
-            return parseFilter(instruction)!.filter!;
-        });
+        const filters = makeFilters();
         const searchInfo = SearchInfo.fromAllTasks(tasks);
 
         const columnNames = ['Task'];
