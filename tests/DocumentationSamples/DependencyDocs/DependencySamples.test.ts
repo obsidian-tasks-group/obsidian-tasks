@@ -40,7 +40,7 @@ describe('blocking and blocked filters', () => {
         const searchInfo = SearchInfo.fromAllTasks(tasks);
 
         const columnNames = ['Task'];
-        instructions.forEach((instruction) => columnNames.push(addBackticks(instruction)));
+        filters.forEach((filter) => columnNames.push(addBackticks(filter.instruction)));
         const table = new MarkdownTable(columnNames);
 
         tasks.forEach((task) => {
