@@ -121,10 +121,14 @@ For more information, including adding your own customised statuses, see [[Statu
 | ----- | ----- | ----- | ----- | ----- |
 | `task.id` | `string` | `'abcdef'` | `string` | `''` |
 | `task.blockedBy` | `string[]` | `['123456', 'abc123']` | `any[]` | `[]` |
+| `task.isBlocked(query.allTasks)` | `boolean` | `false` | `boolean` | `false` |
+| `task.isBlocking(query.allTasks)` | `boolean` | `false` | `boolean` | `false` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 1. See the page [[Task Dependencies]], which explains the dependencies facility.
+1. `Task.isBlocked()` behaves the same as `is blocked`: see [[Filters#Blocked Tasks]].
+1. `Task.isBlocking()` behaves the same as `is blocking`: see  [[Filters#Blocking Tasks]].
 1. Task Dependencies were released in Tasks X.Y.Z.
 
 ## Values for Other Task Properties
