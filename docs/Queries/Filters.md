@@ -453,7 +453,75 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
 
 ## Filters for Task Dependencies
 
+At a high level, task dependencies define the order in which you want to work on a set of tasks. You can read more about them in [[Task Dependencies]].
+
+### Blocking Tasks
+
+- `is blocking`
+  - This shows tasks that you probably want to do first, as they are preventing other tasks from being done.
+- `is not blocking`
+  - This shows tasks that are not preventing others from being done, so perhaps may be considered as lower priority.
+  - This would typically be used with `not done`.
+
+A task is treated as `blocking` if:
+
+- it has an `id` value,
+- at least one other task in the vault has that `id` value in its `blockedBy` list,
+- both tasks have status type `TODO` or `IN_PROGRESS`.
+
+For example:
+
+```text
+- [ ] I am blocking 🆔 12345
+- [ ] I am not blocking ⛔️ 12345
+```
+
+Note also:
+
+- Only direct dependencies are considered.
+- Tasks with status type `DONE`, `CANCELLED` or `NON_TASK` are never treated as `blocked`.
+
+For more information, see [[Task Dependencies]].
+
+> [!released]
+>
+> - `is blocking` and `is not blocking` were introduced in Tasks X.Y.Z.
+
+### Blocked Tasks
+
+- `is blocked`
+  - This shows tasks you cannot currently do, as they are waiting for another task to be completed.
+- `is not blocked`
+  - This shows tasks that are not waiting for any other tasks to be completed.
+  - This would typically be used with `not done`.
+
+A task is treated as `blocked` if:
+
+- it has one or more `blockedBy` values,
+- its `blockedBy` list includes the id any tasks in the vault,
+- both tasks have status type `TODO` or `IN_PROGRESS`.
+
+For example:
+
+```text
+- [ ] I am not blocked 🆔 12345
+- [ ] I am blocked ⛔️ 12345
+```
+
+Note also:
+
+- Only direct dependencies are considered.
+- Tasks with status type `DONE`, `CANCELLED` or `NON_TASK` are never treated as `blocked`.
+
+For more information, see [[Task Dependencies]].
+
+> [!released]
+>
+> - `is blocked` and `is not blocked` were introduced in Tasks X.Y.Z.
+
 ### Id
+
+The `id` field adds an identifier to a task, so that other tasks may be marked as `blockedBy` that task.
 
 - `has id`
 - `no id`
@@ -472,6 +540,8 @@ For more information, see [[Task Dependencies]].
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Id** is now possible, using `task.id`.
 
 ### Blocked By
+
+The `blockedBy` field allows a task to be marked as depending on the `id` of one or more other tasks. Multiple `id` values are separated by commas (`,`) with no spaces.
 
 - `has blocked by`
 - `no blocked by`

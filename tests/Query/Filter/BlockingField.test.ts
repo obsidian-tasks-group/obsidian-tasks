@@ -2,15 +2,18 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { BlockingField } from '../../../src/Query/Filter/BlockingField';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { Status } from '../../../src/Statuses/Status';
+import { fromLine } from '../../TestingTools/TestHelpers';
 
 describe('blocking', () => {
     const notBlocking = new TaskBuilder().build();
     const child = new TaskBuilder().id('12345').build();
     const childWithoutParent = new TaskBuilder().id('23456').build();
-    const parent = new TaskBuilder().blockedBy(['12345']).build();
-    const allTasks = [notBlocking, child, childWithoutParent, parent];
+    const childThatIsDone = new TaskBuilder().id('34567').status(Status.makeDone()).build();
+    const parent = new TaskBuilder().blockedBy(['12345', '34567']).build();
+    const allTasks = [notBlocking, child, childWithoutParent, childThatIsDone, parent];
 
     const isBlocking = new BlockingField().createFilterOrErrorMessage('is blocking');
+    const isNotBlocking = new BlockingField().createFilterOrErrorMessage('is not blocking');
 
     it('is blocking', () => {
         expect(isBlocking).toBeValid();
@@ -18,6 +21,18 @@ describe('blocking', () => {
         expect(isBlocking).toMatchTaskInTaskList(child, allTasks);
         expect(isBlocking).not.toMatchTaskInTaskList(parent, allTasks);
         expect(isBlocking).not.toMatchTaskInTaskList(childWithoutParent, allTasks);
+    });
+
+    it('is not blocking', () => {
+        expect(isNotBlocking).toBeValid();
+        expect(isNotBlocking).toMatchTaskInTaskList(notBlocking, allTasks);
+        expect(isNotBlocking).not.toMatchTaskInTaskList(child, allTasks);
+        expect(isNotBlocking).toMatchTaskInTaskList(parent, allTasks);
+        expect(isNotBlocking).toMatchTaskInTaskList(childWithoutParent, allTasks);
+    });
+
+    it('should not treat a done task as blocking', () => {
+        expect(isBlocking).not.toMatchTaskInTaskList(childThatIsDone, allTasks);
     });
 
     it('is blocking - with circular dependencies, all tasks are matched', () => {
@@ -48,8 +63,9 @@ describe('blocking', () => {
     });
 });
 
-describe('is not blocked', () => {
+describe('blocked', () => {
     const isNotBlocked = new BlockingField().createFilterOrErrorMessage('is not blocked');
+    const isBlocked = new BlockingField().createFilterOrErrorMessage('is blocked');
     const blockingId = 'abc';
     const blocking = new TaskBuilder().id(blockingId).build();
 
@@ -58,8 +74,12 @@ describe('is not blocked', () => {
         const allTasks = [blocking, blocked];
 
         expect(isNotBlocked).toBeValid();
+
         expect(isNotBlocked).not.toMatchTaskInTaskList(blocked, allTasks);
         expect(isNotBlocked).toMatchTaskInTaskList(blocking, allTasks);
+
+        expect(isBlocked).toMatchTaskInTaskList(blocked, allTasks);
+        expect(isBlocked).not.toMatchTaskInTaskList(blocking, allTasks);
     });
 
     it('should treat completed deps as non-blocking', () => {
@@ -70,13 +90,17 @@ describe('is not blocked', () => {
         const blockedByComplete = new TaskBuilder().blockedBy([blockingCompletedId]).build();
         const blockedByAll = new TaskBuilder().blockedBy([blockingId, blockingCompletedId]).build();
 
-        const allTasks = [blocking, blockedByIncomplete, blockedByComplete, blockedByAll];
+        const allTasks = [blocking, blockedByIncomplete, blockedByComplete, blockedByAll, blockingCompleted];
 
         expect(isNotBlocked).toMatchTaskInTaskList(blockingCompleted, allTasks);
         expect(isNotBlocked).toMatchTaskInTaskList(blockedByComplete, allTasks);
         expect(isNotBlocked).not.toMatchTaskInTaskList(blockedByIncomplete, allTasks);
         expect(isNotBlocked).not.toMatchTaskInTaskList(blockedByAll, allTasks);
+    });
 
-        blocking.status.isCompleted();
+    it('should not treat completed tasks as blocked', () => {
+        const doneTaskDependingOnBlocking = fromLine({ line: `- [x] Done ⛔️ ${blockingId}` });
+        const allTasks = [blocking, doneTaskDependingOnBlocking];
+        expect(isNotBlocked).toMatchTaskInTaskList(doneTaskDependingOnBlocking, allTasks);
     });
 });
