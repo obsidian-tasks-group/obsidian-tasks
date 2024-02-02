@@ -4,6 +4,8 @@
 | ----- | ----- | ----- | ----- | ----- |
 | `task.id` | `string` | `'abcdef'` | `string` | `''` |
 | `task.blockedBy` | `string[]` | `['123456', 'abc123']` | `any[]` | `[]` |
+| `task.isBlocked(query.allTasks)` | `boolean` | `false` | `boolean` | `false` |
+| `task.isBlocking(query.allTasks)` | `boolean` | `false` | `boolean` | `false` |
 
 
 <!-- placeholder to force blank line after included text -->
