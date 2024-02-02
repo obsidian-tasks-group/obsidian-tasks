@@ -5,24 +5,19 @@ export class BlockingField extends FilterInstructionsBasedField {
     constructor() {
         super();
         this._filters.add('is blocking', (task, searchInfo: SearchInfo) => {
-            if (task.id === '') return false;
-
-            return searchInfo.allTasks.some((cacheTask) => {
-                return cacheTask.blockedBy.includes(task.id);
-            });
+            return task.isBlocking(searchInfo.allTasks);
         });
+
+        this._filters.add('is not blocking', (task, searchInfo: SearchInfo) => {
+            return !task.isBlocking(searchInfo.allTasks);
+        });
+
+        this._filters.add('is blocked', (task, searchInfo: SearchInfo) => {
+            return task.isBlocked(searchInfo.allTasks);
+        });
+
         this._filters.add('is not blocked', (task, searchInfo: SearchInfo) => {
-            if (task.blockedBy.length === 0) return true;
-
-            for (const depId of task.blockedBy) {
-                const depTask = searchInfo.allTasks.find((task) => task.id === depId);
-
-                if (!depTask) continue;
-
-                if (!depTask.status.isCompleted()) return false;
-            }
-
-            return true;
+            return !task.isBlocked(searchInfo.allTasks);
         });
     }
 

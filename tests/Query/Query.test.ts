@@ -99,8 +99,10 @@ describe('Query parsing', () => {
         'id does not include abc123',
         'id includes abc123',
         'id includes AND', // Verify Query doesn't confuse this with a boolean query
+        'is blocked',
         'is blocking',
         'is not blocked',
+        'is not blocking',
         'is not recurring',
         'is recurring',
         'no blocked by',
