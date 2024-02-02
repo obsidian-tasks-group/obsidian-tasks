@@ -9,6 +9,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
+import { makeQueryContextWithTasks } from '../../src/Scripting/QueryContext';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -20,9 +21,10 @@ describe('task', () => {
         const markdownTable = new MarkdownTable(['Field', 'Type 1', 'Example 1', 'Type 2', 'Example 2']);
         const task1 = TaskBuilder.createFullyPopulatedTask();
         const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
+        const queryContext = makeQueryContextWithTasks(task1.path, [task1, task2]);
         for (const field of fields) {
-            const value1 = parseAndEvaluateExpression(task1, field, undefined);
-            const value2 = parseAndEvaluateExpression(task2, field, undefined);
+            const value1 = parseAndEvaluateExpression(task1, field, queryContext);
+            const value2 = parseAndEvaluateExpression(task2, field, queryContext);
             const cells = [
                 addBackticks(field),
                 addBackticks(determineExpressionType(value1)),
@@ -96,6 +98,8 @@ describe('task', () => {
             // force line break
             'task.id',
             'task.blockedBy',
+            'task.isBlocked(query.allTasks)',
+            'task.isBlocking(query.allTasks)',
         ]);
     });
 
