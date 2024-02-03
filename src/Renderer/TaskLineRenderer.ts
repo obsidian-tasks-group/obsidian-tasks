@@ -208,7 +208,7 @@ export class TaskLineRenderer {
         component: TaskLayoutComponent,
         task: Task,
     ) {
-        if (component === 'description') {
+        if (component === TaskLayoutComponent.Description) {
             componentString = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(componentString);
 
             const { debugSettings } = getSettings();
@@ -270,7 +270,7 @@ export class TaskLineRenderer {
             else return null;
         }
 
-        if (component === 'description') {
+        if (component === TaskLayoutComponent.Description) {
             const tags = internalSpan.getElementsByClassName('tag');
             for (let i = 0; i < tags.length; i++) {
                 const tagName = tags[i].textContent;
