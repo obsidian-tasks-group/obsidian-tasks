@@ -597,14 +597,14 @@
                 <!-- --------------------------------------------------------------------------- -->
                 <!--  Blocked By Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
-                <label for="start">Blocked B<span class="accesskey">y</span></label>
+                <label for="blockedBy">Blocked B<span class="accesskey">y</span></label>
                 <Dependency type="blockedBy" task={task} editableTask={editableTask} allTasks={allTasks}
                             _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="y" />
 
                 <!-- --------------------------------------------------------------------------- -->
                 <!--  Blocking Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
-                <label for="start" class="accesskey-first">Blocking</label>
+                <label for="blocking" class="accesskey-first">Blocking</label>
                 <Dependency type="blocking" task={task} editableTask={editableTask} allTasks={allTasks}
                             _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="B" />
             {:else}
