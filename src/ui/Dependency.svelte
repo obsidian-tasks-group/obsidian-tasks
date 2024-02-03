@@ -9,6 +9,7 @@
     export let _onDescriptionKeyDown: (e: KeyboardEvent) => void;
     export let type: "blocking" | "blockedBy";
     export let accesskey: (key: string) => string | null;
+    export let accesskeyLetter: string = '';
 
     const MAX_SEARCH_RESULTS = 20;
 
@@ -173,7 +174,7 @@
         on:keydown={(e) => taskKeydown(e)}
         on:focus={onFocused}
         on:blur={() => inputFocused = false}
-        accesskey={accesskey("b")}
+        accesskey={accesskey(accesskeyLetter)}
         id="{type}"
         class="input"
         type="text"
