@@ -1,22 +1,22 @@
-import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
+import { getSettings } from '../Config/Settings';
+import type { IQuery } from '../IQuery';
 import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
+import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
+import { errorMessageForException } from '../lib/ExceptionTools';
+import { logging } from '../lib/logging';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
 import type { Task } from '../Task/Task';
-import type { IQuery } from '../IQuery';
-import { getSettings } from '../Config/Settings';
-import { errorMessageForException } from '../lib/ExceptionTools';
-import { logging } from '../lib/logging';
-import { Sort } from './Sort/Sort';
-import type { Sorter } from './Sort/Sorter';
-import { TaskGroups } from './Group/TaskGroups';
+import { Explainer } from './Explain/Explainer';
+import type { Filter } from './Filter/Filter';
 import * as FilterParser from './FilterParser';
 import type { Grouper } from './Group/Grouper';
-import type { Filter } from './Filter/Filter';
+import { TaskGroups } from './Group/TaskGroups';
 import { QueryResult } from './QueryResult';
 import { scan } from './Scanner';
 import { SearchInfo } from './SearchInfo';
-import { Explainer } from './Explain/Explainer';
+import { Sort } from './Sort/Sort';
+import type { Sorter } from './Sort/Sorter';
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
@@ -283,28 +283,28 @@ Problem line: "${line}"`;
                     this._queryLayoutOptions.hidePostponeButton = hide;
                     break;
                 case 'priority':
-                    this._taskLayoutOptions.setVisibility('priority', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, !hide);
                     break;
                 case 'cancelled date':
-                    this._taskLayoutOptions.setVisibility('cancelledDate', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CancelledDate, !hide);
                     break;
                 case 'created date':
-                    this._taskLayoutOptions.setVisibility('createdDate', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CreatedDate, !hide);
                     break;
                 case 'start date':
-                    this._taskLayoutOptions.setVisibility('startDate', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.StartDate, !hide);
                     break;
                 case 'scheduled date':
-                    this._taskLayoutOptions.setVisibility('scheduledDate', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.ScheduledDate, !hide);
                     break;
                 case 'due date':
-                    this._taskLayoutOptions.setVisibility('dueDate', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, !hide);
                     break;
                 case 'done date':
-                    this._taskLayoutOptions.setVisibility('doneDate', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, !hide);
                     break;
                 case 'recurrence rule':
-                    this._taskLayoutOptions.setVisibility('recurrenceRule', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, !hide);
                     break;
                 case 'edit button':
                     this._queryLayoutOptions.hideEditButton = hide;
@@ -316,10 +316,10 @@ Problem line: "${line}"`;
                     this._taskLayoutOptions.setTagsVisibility(!hide);
                     break;
                 case 'id':
-                    this._taskLayoutOptions.setVisibility('id', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, !hide);
                     break;
                 case 'depends on':
-                    this._taskLayoutOptions.setVisibility('blockedBy', !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.BlockedBy, !hide);
                     break;
                 default:
                     this.setError('do not understand hide/show option', line);

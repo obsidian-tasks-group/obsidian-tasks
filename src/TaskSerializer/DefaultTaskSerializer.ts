@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import { type TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
+import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
@@ -136,9 +136,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
 
         switch (component) {
             // NEW_TASK_FIELD_EDIT_REQUIRED
-            case 'description':
+            case TaskLayoutComponent.Description:
                 return task.description;
-            case 'priority': {
+            case TaskLayoutComponent.Priority: {
                 let priority: string = '';
 
                 if (task.priority === Priority.Highest) {
@@ -154,29 +154,29 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 }
                 return priority;
             }
-            case 'startDate':
+            case TaskLayoutComponent.StartDate:
                 return symbolAndDateValue(shortMode, startDateSymbol, task.startDate);
-            case 'createdDate':
+            case TaskLayoutComponent.CreatedDate:
                 return symbolAndDateValue(shortMode, createdDateSymbol, task.createdDate);
-            case 'scheduledDate':
+            case TaskLayoutComponent.ScheduledDate:
                 if (task.scheduledDateIsInferred) return '';
                 return symbolAndDateValue(shortMode, scheduledDateSymbol, task.scheduledDate);
-            case 'doneDate':
+            case TaskLayoutComponent.DoneDate:
                 return symbolAndDateValue(shortMode, doneDateSymbol, task.doneDate);
-            case 'cancelledDate':
+            case TaskLayoutComponent.CancelledDate:
                 return symbolAndDateValue(shortMode, cancelledDateSymbol, task.cancelledDate);
-            case 'dueDate':
+            case TaskLayoutComponent.DueDate:
                 return symbolAndDateValue(shortMode, dueDateSymbol, task.dueDate);
-            case 'recurrenceRule':
+            case TaskLayoutComponent.RecurrenceRule:
                 if (!task.recurrence) return '';
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
-            case 'blockedBy': {
+            case TaskLayoutComponent.BlockedBy: {
                 if (task.blockedBy.length === 0) return '';
                 return symbolAndStringValue(shortMode, blockedBySymbol, task.blockedBy.join(','));
             }
-            case 'id':
+            case TaskLayoutComponent.Id:
                 return symbolAndStringValue(shortMode, idSymbol, task.id);
-            case 'blockLink':
+            case TaskLayoutComponent.BlockLink:
                 return task.blockLink ?? '';
             default:
                 throw new Error(`Don't know how to render task component of type '${component}'`);

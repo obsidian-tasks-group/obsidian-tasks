@@ -1,34 +1,26 @@
-export type TaskLayoutComponent =
+/**
+ * {@link Task} fields used for rendering. Use references to this enum ({@link TaskLayoutComponent.Id})
+ * instead of plain string values (`id`).
+ *
+ * The order here determines the order that task fields are rendered and written to markdown.
+ */
+export enum TaskLayoutComponent {
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    | 'description'
-    | 'priority'
-    | 'recurrenceRule'
-    | 'createdDate'
-    | 'startDate'
-    | 'scheduledDate'
-    | 'dueDate'
-    | 'doneDate'
-    | 'cancelledDate'
-    | 'blockedBy'
-    | 'id'
-    | 'blockLink';
+    Description = 'description',
+    Id = 'id',
+    BlockedBy = 'blockedBy',
+    Priority = 'priority',
+    RecurrenceRule = 'recurrenceRule',
+    CreatedDate = 'createdDate',
+    StartDate = 'startDate',
+    ScheduledDate = 'scheduledDate',
+    DueDate = 'dueDate',
+    CancelledDate = 'cancelledDate',
+    DoneDate = 'doneDate',
+    BlockLink = 'blockLink',
+}
 
-// The order here determines the order that task fields are rendered and written to markdown.
-export const taskLayoutComponents: TaskLayoutComponent[] = [
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    'description',
-    'id',
-    'blockedBy',
-    'priority',
-    'recurrenceRule',
-    'createdDate',
-    'startDate',
-    'scheduledDate',
-    'dueDate',
-    'cancelledDate',
-    'doneDate',
-    'blockLink',
-];
+export const taskLayoutComponents = Object.values(TaskLayoutComponent);
 
 /**
  * Various rendering options of tasks in a query.
@@ -88,7 +80,7 @@ export class TaskLayoutOptions {
     public get toggleableComponents() {
         return taskLayoutComponents.filter((component) => {
             // Description and blockLink are always shown
-            return component !== 'description' && component !== 'blockLink';
+            return component !== TaskLayoutComponent.Description && component !== TaskLayoutComponent.BlockLink;
         });
     }
 

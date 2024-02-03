@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
 import { TaskFieldHTMLData, TaskFieldRenderer } from '../../src/Renderer/TaskFieldRenderer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
@@ -23,7 +24,7 @@ describe('Field Layouts Container tests', () => {
         const task = new TaskBuilder().dueDate('2023-11-20').build();
         const span = document.createElement('span');
 
-        fieldRenderer.addDataAttribute(span, task, 'dueDate');
+        fieldRenderer.addDataAttribute(span, task, TaskLayoutComponent.DueDate);
 
         expect(span).toHaveDataAttributes('taskDue: future-1d');
     });
@@ -32,7 +33,7 @@ describe('Field Layouts Container tests', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const span = document.createElement('span');
 
-        fieldRenderer.addDataAttribute(span, task, 'priority');
+        fieldRenderer.addDataAttribute(span, task, TaskLayoutComponent.Priority);
 
         expect(span).toHaveDataAttributes('taskPriority: medium');
     });
@@ -41,7 +42,7 @@ describe('Field Layouts Container tests', () => {
         const task = new TaskBuilder().build();
         const span = document.createElement('span');
 
-        fieldRenderer.addDataAttribute(span, task, 'recurrenceRule');
+        fieldRenderer.addDataAttribute(span, task, TaskLayoutComponent.RecurrenceRule);
 
         expect(span).toHaveDataAttributes('');
     });
@@ -49,7 +50,7 @@ describe('Field Layouts Container tests', () => {
     it('should add a class name for a component', () => {
         const span = document.createElement('span');
 
-        fieldRenderer.addClassName(span, 'startDate');
+        fieldRenderer.addClassName(span, TaskLayoutComponent.StartDate);
 
         expect(span.classList.toString()).toEqual('task-start');
     });
@@ -69,7 +70,7 @@ describe('Field Layout Detail tests', () => {
         });
         const span = document.createElement('span');
 
-        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'priority');
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), TaskLayoutComponent.Priority);
 
         expect(span).toHaveDataAttributes('taskPriority: highest');
     });
@@ -80,7 +81,7 @@ describe('Field Layout Detail tests', () => {
         });
         const span = document.createElement('span');
 
-        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'dueDate');
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), TaskLayoutComponent.DueDate);
 
         expect(span).toHaveDataAttributes('');
     });
@@ -91,7 +92,7 @@ describe('Field Layout Detail tests', () => {
         });
         const span = document.createElement('span');
 
-        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), 'startDate');
+        fieldLayoutDetail.addDataAttribute(span, new TaskBuilder().build(), TaskLayoutComponent.StartDate);
 
         expect(span).toHaveDataAttributes('');
     });
