@@ -139,7 +139,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         it('should serialize depends on', () => {
-            const task = new TaskBuilder().description('').blockedBy(['123456', 'abc123']).build();
+            const task = new TaskBuilder().description('').dependsOn(['123456', 'abc123']).build();
             const serialized = serialize(task);
             expect(serialized).toEqual(` ${blockedBySymbol} 123456,abc123`);
         });

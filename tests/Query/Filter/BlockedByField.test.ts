@@ -14,8 +14,8 @@ describe('id', () => {
         const filter = new BlockedByField().createFilterOrErrorMessage('has blocked by');
 
         // Act, Assert
-        testFilter(filter, new TaskBuilder().blockedBy([]), false);
-        testFilter(filter, new TaskBuilder().blockedBy(['abcdef']), true);
+        testFilter(filter, new TaskBuilder().dependsOn([]), false);
+        testFilter(filter, new TaskBuilder().dependsOn(['abcdef']), true);
     });
 
     it('by blocked by absence', () => {
@@ -25,7 +25,7 @@ describe('id', () => {
         expect(blockedByField.canCreateFilterForLine(line)).toEqual(true);
 
         // Act, Assert
-        testFilter(filter, new TaskBuilder().blockedBy([]), true);
-        testFilter(filter, new TaskBuilder().blockedBy(['abcdef']), false);
+        testFilter(filter, new TaskBuilder().dependsOn([]), true);
+        testFilter(filter, new TaskBuilder().dependsOn(['abcdef']), false);
     });
 });

@@ -217,7 +217,7 @@ export class SampleTasks {
         const id2 = '0h17ye';
         return [
             new TaskBuilder().description('do this first').id(id1).build(),
-            new TaskBuilder().description('do this after first and some other task').blockedBy([id1, id2]).build(),
+            new TaskBuilder().description('do this after first and some other task').dependsOn([id1, id2]).build(),
         ];
     }
 
