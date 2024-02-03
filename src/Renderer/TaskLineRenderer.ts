@@ -2,13 +2,13 @@ import type { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from '../Config/Settings';
-import { replaceTaskWithTasks } from '../Obsidian/File';
-import type { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
-import type { Task } from '../Task/Task';
-import { StatusMenu } from '../ui/Menus/StatusMenu';
+import { TaskLayoutComponent, type TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
+import { replaceTaskWithTasks } from '../Obsidian/File';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
+import type { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { StatusMenu } from '../ui/Menus/StatusMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 
 /**
@@ -195,7 +195,7 @@ export class TaskLineRenderer {
         // So if the priority was not rendered, force it through the pipe of getting the component data for the
         // priority field.
         if (li.dataset.taskPriority === undefined) {
-            fieldRenderer.addDataAttribute(li, task, 'priority');
+            fieldRenderer.addDataAttribute(li, task, TaskLayoutComponent.Priority);
         }
     }
 
@@ -208,7 +208,7 @@ export class TaskLineRenderer {
         component: TaskLayoutComponent,
         task: Task,
     ) {
-        if (component === 'description') {
+        if (component === TaskLayoutComponent.Description) {
             componentString = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(componentString);
 
             const { debugSettings } = getSettings();
@@ -270,7 +270,7 @@ export class TaskLineRenderer {
             else return null;
         }
 
-        if (component === 'description') {
+        if (component === TaskLayoutComponent.Description) {
             const tags = internalSpan.getElementsByClassName('tag');
             for (let i = 0; i < tags.length; i++) {
                 const tagName = tags[i].textContent;
