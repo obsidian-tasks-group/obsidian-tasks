@@ -76,7 +76,7 @@ export const DATAVIEW_SYMBOLS = {
     cancelledDateSymbol: 'cancelled::',
     recurrenceSymbol: 'repeat::',
     idSymbol: 'id::',
-    dependsOnSymbol: 'blockedBy::',
+    dependsOnSymbol: 'dependsOn::',
     TaskFormatRegularExpressions: {
         priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
         startDateRegex: toInlineFieldRegex(/start:: *(\d{4}-\d{2}-\d{2})/),
@@ -86,7 +86,7 @@ export const DATAVIEW_SYMBOLS = {
         doneDateRegex: toInlineFieldRegex(/completion:: *(\d{4}-\d{2}-\d{2})/),
         cancelledDateRegex: toInlineFieldRegex(/cancelled:: *(\d{4}-\d{2}-\d{2})/),
         recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
-        dependsOnRegex: toInlineFieldRegex(/blockedBy:: *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/),
+        dependsOnRegex: toInlineFieldRegex(/dependsOn:: *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/),
         idRegex: toInlineFieldRegex(/id:: *([a-z0-9]+)/),
     },
 } as const;
