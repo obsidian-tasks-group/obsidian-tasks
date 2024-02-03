@@ -2,7 +2,7 @@
 
 
 ```javascript
-group by function task.blockedBy
+group by function task.dependsOn
 ```
 
 - Group by the Ids of the tasks that each task depends on, if any.

@@ -1578,7 +1578,7 @@ describe('identicalTo', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().id('12345'));
     });
 
-    it('should check blockedBy', () => {
+    it('should check dependsOn', () => {
         const lhs = new TaskBuilder().dependsOn([]);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().dependsOn([]));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dependsOn(['12345']));

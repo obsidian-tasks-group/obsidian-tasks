@@ -28,8 +28,8 @@ export function setDependenciesOnTasksWithIds(parent: Task, childrenWithIds: Tas
         return task.id;
     });
     let newParent = parent;
-    if (parent.blockedBy.toString() !== newBlockedBy.toString()) {
-        newParent = new Task({ ...parent, blockedBy: newBlockedBy });
+    if (parent.dependsOn.toString() !== newBlockedBy.toString()) {
+        newParent = new Task({ ...parent, dependsOn: newBlockedBy });
     }
 
     return newParent;
@@ -37,9 +37,9 @@ export function setDependenciesOnTasksWithIds(parent: Task, childrenWithIds: Tas
 
 export function addDependencyToParent(parent: Task, child: Task) {
     let newParent = parent;
-    if (!parent.blockedBy.includes(child.id)) {
-        const newBlockedBy = [...parent.blockedBy, child.id];
-        newParent = new Task({ ...parent, blockedBy: newBlockedBy });
+    if (!parent.dependsOn.includes(child.id)) {
+        const newBlockedBy = [...parent.dependsOn, child.id];
+        newParent = new Task({ ...parent, dependsOn: newBlockedBy });
     }
     return newParent;
 }
@@ -52,9 +52,9 @@ export function addDependency(parent: Task, child: Task, existingIds: string[]) 
 
 export function removeDependency(parent: Task, child: Task) {
     let newParent = parent;
-    if (parent.blockedBy.includes(child.id)) {
-        const newBlockedBy = parent.blockedBy.filter((blockedBy) => blockedBy !== child.id);
-        newParent = new Task({ ...parent, blockedBy: newBlockedBy });
+    if (parent.dependsOn.includes(child.id)) {
+        const newBlockedBy = parent.dependsOn.filter((blockedBy) => blockedBy !== child.id);
+        newParent = new Task({ ...parent, dependsOn: newBlockedBy });
     }
 
     return newParent;

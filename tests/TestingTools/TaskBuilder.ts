@@ -88,7 +88,7 @@ export class TaskBuilder {
             doneDate: this._doneDate,
             cancelledDate: this._cancelledDate,
             recurrence: this._recurrence,
-            blockedBy: this._dependsOn,
+            dependsOn: this._dependsOn,
             id: this._id,
             blockLink: this._blockLink,
             tags: this._tags,
