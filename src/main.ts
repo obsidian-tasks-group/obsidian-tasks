@@ -17,8 +17,8 @@ import { StatusSettings } from './Config/StatusSettings';
 import type { Task } from './Task/Task';
 import { tasksApiV1 } from './Api';
 import { GlobalFilter } from './Config/GlobalFilter';
-import { VaultArchiveFile } from './Config/OnCompletion';
-import { VaultLogListHeading } from './Config/OnCompletion';
+import { VaultArchiveFile } from './Config/OnCompletionSettings';
+import { VaultLogListHeading } from './Config/OnCompletionSettings';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;

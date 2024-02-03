@@ -2,7 +2,7 @@ import type { App, Editor, MarkdownFileInfo, MarkdownView, View } from 'obsidian
 import type TasksPlugin from '../main';
 import { createOrEdit } from './CreateOrEdit';
 import { toggleDone } from './ToggleDone';
-import { deleteLine, moveLineToArchive, moveLineToListEnd, moveLineToLogList } from './OnCompletion';
+import { deleteLine, moveLineToArchive, moveLineToListEnd, moveLineToLogList } from './OnCompletionCommands';
 
 export class Commands {
     private readonly plugin: TasksPlugin;

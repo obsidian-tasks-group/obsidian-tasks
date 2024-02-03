@@ -15,8 +15,8 @@ import settingsJson from './settingsConfiguration.json';
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
 
-import { VaultArchiveFile } from './OnCompletion';
-import { VaultLogListHeading } from './OnCompletion';
+import { VaultArchiveFile } from './OnCompletionSettings';
+import { VaultLogListHeading } from './OnCompletionSettings';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
