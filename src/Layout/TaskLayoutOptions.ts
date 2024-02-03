@@ -79,7 +79,7 @@ export class TaskLayoutOptions {
     public get toggleableComponents() {
         return taskLayoutComponents.filter((component) => {
             // Description and blockLink are always shown
-            return component !== 'description' && component !== 'blockLink';
+            return component !== TaskLayoutComponent.Description && component !== TaskLayoutComponent.BlockLink;
         });
     }
 
