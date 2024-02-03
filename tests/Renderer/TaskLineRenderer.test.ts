@@ -279,7 +279,7 @@ describe('task line rendering - layout options', () => {
     });
 
     it('renders with depends on', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' ⛔️ 123456,abc123'], [TaskLayoutComponent.BlockedBy]);
+        await testLayoutOptions(['Do exercises #todo #health', ' ⛔️ 123456,abc123'], [TaskLayoutComponent.DependsOn]);
     });
 });
 
