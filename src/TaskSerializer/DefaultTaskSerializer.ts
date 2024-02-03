@@ -170,7 +170,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             case TaskLayoutComponent.RecurrenceRule:
                 if (!task.recurrence) return '';
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
-            case TaskLayoutComponent.BlockedBy: {
+            case TaskLayoutComponent.DependsOn: {
                 if (task.blockedBy.length === 0) return '';
                 return symbolAndStringValue(shortMode, dependsOnSymbol, task.blockedBy.join(','));
             }

@@ -319,7 +319,7 @@ Problem line: "${line}"`;
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, !hide);
                     break;
                 case 'depends on':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.BlockedBy, !hide);
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, !hide);
                     break;
                 default:
                     this.setError('do not understand hide/show option', line);
