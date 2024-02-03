@@ -30,7 +30,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly cancelledDateSymbol: string;
     readonly recurrenceSymbol: string;
     readonly idSymbol: string;
-    readonly blockedBySymbol: string;
+    readonly dependsOnSymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
@@ -41,7 +41,7 @@ export interface DefaultTaskSerializerSymbols {
         cancelledDateRegex: RegExp;
         recurrenceRegex: RegExp;
         idRegex: RegExp;
-        blockedByRegex: RegExp;
+        dependsOnRegex: RegExp;
     };
 }
 
@@ -66,7 +66,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
     recurrenceSymbol: '🔁',
-    blockedBySymbol: '⛔️',
+    dependsOnSymbol: '⛔️',
     idSymbol: '🆔',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
@@ -79,7 +79,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        blockedByRegex: /⛔️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
+        dependsOnRegex: /⛔️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
         idRegex: /🆔 *([a-z0-9]+)$/iu,
     },
 } as const;
@@ -130,7 +130,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             cancelledDateSymbol,
             recurrenceSymbol,
             dueDateSymbol,
-            blockedBySymbol,
+            dependsOnSymbol,
             idSymbol,
         } = this.symbols;
 
@@ -172,7 +172,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
             case TaskLayoutComponent.BlockedBy: {
                 if (task.blockedBy.length === 0) return '';
-                return symbolAndStringValue(shortMode, blockedBySymbol, task.blockedBy.join(','));
+                return symbolAndStringValue(shortMode, dependsOnSymbol, task.blockedBy.join(','));
             }
             case TaskLayoutComponent.Id:
                 return symbolAndStringValue(shortMode, idSymbol, task.id);
@@ -233,7 +233,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
         let id: string = '';
-        let blockedBy: string[] | [] = [];
+        let dependsOn: string[] | [] = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
@@ -323,11 +323,11 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 matched = true;
             }
 
-            const blockedByMatch = line.match(TaskFormatRegularExpressions.blockedByRegex);
+            const dependsOnMatch = line.match(TaskFormatRegularExpressions.dependsOnRegex);
 
-            if (blockedByMatch != null) {
-                line = line.replace(TaskFormatRegularExpressions.blockedByRegex, '').trim();
-                blockedBy = blockedByMatch[1]
+            if (dependsOnMatch != null) {
+                line = line.replace(TaskFormatRegularExpressions.dependsOnRegex, '').trim();
+                dependsOn = dependsOnMatch[1]
                     .replace(' ', '')
                     .split(',')
                     .filter((item) => item !== '');
@@ -364,7 +364,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             cancelledDate,
             recurrence,
             id,
-            blockedBy,
+            blockedBy: dependsOn,
             tags: Task.extractHashtags(line),
         };
     }
