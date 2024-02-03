@@ -7,7 +7,8 @@
 - [ ] #task Craft a conclusion 🆔 0wigip ⛔️ mvplec
 - [ ] #task Proofread and edit 🆔 5ti6bf ⛔️ 0wigip
 - [ ] #task Publish the article ⛔️ 5ti6bf
-- [ ] #task Do something on a different project
+- [ ] #task Do something on a different project 🆔 g2q2hg
+- [ ] #task sadfadfa ⛔️ g2q2hg
 
 ---
 

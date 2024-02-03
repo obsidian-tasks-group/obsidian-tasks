@@ -301,7 +301,7 @@
 
         const blockedBy: Task[] = [];
 
-        for (const taskId of task.blockedBy) {
+        for (const taskId of task.dependsOn) {
             const depTask = allTasks.find(cacheTask => cacheTask.id === taskId);
 
             if (!depTask) continue;
@@ -309,7 +309,7 @@
             blockedBy.push(depTask);
         }
 
-        originalBlocking = allTasks.filter(cacheTask => cacheTask.blockedBy.includes(task.id));
+        originalBlocking = allTasks.filter(cacheTask => cacheTask.dependsOn.includes(task.id));
 
         editableTask = {
             // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -443,7 +443,7 @@
             doneDate,
             createdDate,
             cancelledDate,
-            blockedBy: blockedByWithIds.map(task => task.id),
+            dependsOn: blockedByWithIds.map(task => task.id),
             id
         });
 
