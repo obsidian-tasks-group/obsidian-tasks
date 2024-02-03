@@ -1,5 +1,6 @@
 /**
- * {@link Task} fields used for rendering.
+ * {@link Task} fields used for rendering. Use references to this enum ({@link TaskLayoutComponent.Id})
+ * instead of plain string values (`id`).
  *
  * The order here determines the order that task fields are rendered and written to markdown.
  */
