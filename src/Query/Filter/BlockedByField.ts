@@ -8,8 +8,8 @@ export class BlockedByField extends Field {
 
     constructor() {
         super();
-        this.filterInstructions.add('has blocked by', (task: Task) => task.dependsOn.length > 0);
-        this.filterInstructions.add('no blocked by', (task: Task) => task.dependsOn.length === 0);
+        this.filterInstructions.add('has depends on', (task: Task) => task.dependsOn.length > 0);
+        this.filterInstructions.add('no depends on', (task: Task) => task.dependsOn.length === 0);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
