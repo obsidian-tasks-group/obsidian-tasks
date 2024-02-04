@@ -61,7 +61,7 @@ Until this task is marked as complete, at which time Obsidian Tasks sees that 'T
 
 Fields:
 
-- `blockedBy`
+- `dependsOn`
 - `id`
 
 UI:
