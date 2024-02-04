@@ -539,7 +539,7 @@ For more information, see [[Task Dependencies]].
 
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Id** is now possible, using `task.id`.
 
-### Blocked By
+### Depends On
 
 The `blockedBy` field allows a task to be marked as depending on the `id` of one or more other tasks. Multiple `id` values are separated by commas (`,`) with no spaces.
 
@@ -550,9 +550,9 @@ For more information, see [[Task Dependencies]].
 
 > [!released]
 >
-> - Task Blocked By was introduced in Tasks X.Y.Z.
+> - Task Depends On was introduced in Tasks X.Y.Z.
 
-Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Blocked By** is now possible, using `task.dependsOn`.
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Depends On** is now possible, using `task.dependsOn`.
 
 ## Filters for Dates in Tasks
 

@@ -188,17 +188,17 @@ group by function task.id
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-### Blocked By
+### Depends On
 
-There is no built-in instruction to group by 'Blocked By'.
+There is no built-in instruction to group by 'Depends On'.
 
 For more information, see [[Task Dependencies]].
 
 > [!released]
 >
-> - Task Blocked By was introduced in Tasks X.Y.Z.
+> - Task Depends On was introduced in Tasks X.Y.Z.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]]  by Blocked By** is now possible, using `task.dependsOn`.
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by Depends On** is now possible, using `task.dependsOn`.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dependencies_task.dependsOn_docs.approved.md -->
 
