@@ -136,7 +136,7 @@ For more information, see [[Recurring Tasks]].
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_dataview-snippet.approved.md -->
 ```md
 - [ ] do this first  [id:: dcf64c]
-- [ ] do this after first and some other task  [blockedBy:: dcf64c,0h17ye]
+- [ ] do this after first and some other task  [dependsOn:: dcf64c,0h17ye]
 ```
 <!-- endSnippet -->
 
