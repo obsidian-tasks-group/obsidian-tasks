@@ -200,10 +200,10 @@ For more information, see [[Task Dependencies]].
 
 Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]]  by Blocked By** is now possible, using `task.blockedBy`.
 
-<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dependencies_task.blockedBy_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dependencies_task.dependsOn_docs.approved.md -->
 
 ```javascript
-group by function task.blockedBy
+group by function task.dependsOn
 ```
 
 - Group by the Ids of the tasks that each task depends on, if any.
