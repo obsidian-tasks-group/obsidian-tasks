@@ -421,19 +421,20 @@ class QueryRenderChild extends MarkdownRenderChild {
         const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
         const button = listItem.createEl('a', {
             cls: 'tasks-postpone' + (shortMode ? ' tasks-postpone-short-mode' : ''),
-            href: '#',
             title: buttonTooltipText,
         });
 
         button.addEventListener('click', (ev: MouseEvent) => {
             ev.preventDefault(); // suppress the default click behavior
+            ev.stopPropagation(); // suppress further event propagation
             PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit);
         });
 
         /** Open a context menu on right-click.
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
-            ev.stopPropagation(); // suppress the default context menu
+            ev.preventDefault(); // suppress the default context menu
+            ev.stopPropagation(); // suppress further event propagation
             const menu = new PostponeMenu(button, task);
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
