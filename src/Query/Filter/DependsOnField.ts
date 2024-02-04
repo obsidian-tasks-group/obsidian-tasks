@@ -3,7 +3,7 @@ import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { FilterInstructions } from './FilterInstructions';
 
-export class BlockedByField extends Field {
+export class DependsOnField extends Field {
     private readonly filterInstructions: FilterInstructions = new FilterInstructions();
 
     constructor() {
