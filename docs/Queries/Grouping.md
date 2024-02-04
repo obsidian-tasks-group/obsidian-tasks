@@ -198,7 +198,7 @@ For more information, see [[Task Dependencies]].
 >
 > - Task Blocked By was introduced in Tasks X.Y.Z.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]]  by Blocked By** is now possible, using `task.blockedBy`.
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]]  by Blocked By** is now possible, using `task.dependsOn`.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dependencies_task.dependsOn_docs.approved.md -->
 
