@@ -1578,10 +1578,10 @@ describe('identicalTo', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().id('12345'));
     });
 
-    it('should check blockedBy', () => {
-        const lhs = new TaskBuilder().blockedBy([]);
-        expect(lhs).toBeIdenticalTo(new TaskBuilder().blockedBy([]));
-        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().blockedBy(['12345']));
+    it('should check dependsOn', () => {
+        const lhs = new TaskBuilder().dependsOn([]);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().dependsOn([]));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dependsOn(['12345']));
     });
 
     it('should correctly compare a task with status read from user settings', () => {

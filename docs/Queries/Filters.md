@@ -466,7 +466,7 @@ At a high level, task dependencies define the order in which you want to work on
 A task is treated as `blocking` if:
 
 - it has an `id` value,
-- at least one other task in the vault has that `id` value in its `blockedBy` list,
+- at least one other task in the vault has that `id` value in its `dependsOn` list,
 - both tasks have status type `TODO` or `IN_PROGRESS`.
 
 For example:
@@ -497,8 +497,8 @@ For more information, see [[Task Dependencies]].
 
 A task is treated as `blocked` if:
 
-- it has one or more `blockedBy` values,
-- its `blockedBy` list includes the id any tasks in the vault,
+- it has one or more `dependsOn` values,
+- its `dependsOn` list includes the id any tasks in the vault,
 - both tasks have status type `TODO` or `IN_PROGRESS`.
 
 For example:
@@ -521,7 +521,7 @@ For more information, see [[Task Dependencies]].
 
 ### Id
 
-The `id` field adds an identifier to a task, so that other tasks may be marked as `blockedBy` that task.
+The `id` field adds an identifier to a task, so that other tasks may be marked as `dependsOn` that task.
 
 - `has id`
 - `no id`
@@ -539,9 +539,9 @@ For more information, see [[Task Dependencies]].
 
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Id** is now possible, using `task.id`.
 
-### Blocked By
+### Depends On
 
-The `blockedBy` field allows a task to be marked as depending on the `id` of one or more other tasks. Multiple `id` values are separated by commas (`,`) with no spaces.
+The `dependsOn` field allows a task to be marked as depending on the `id` of one or more other tasks. Multiple `id` values are separated by commas (`,`) with no spaces.
 
 - `has blocked by`
 - `no blocked by`
@@ -550,9 +550,9 @@ For more information, see [[Task Dependencies]].
 
 > [!released]
 >
-> - Task Blocked By was introduced in Tasks X.Y.Z.
+> - Task Depends On was introduced in Tasks X.Y.Z.
 
-Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Blocked By** is now possible, using `task.blockedBy`.
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Depends On** is now possible, using `task.dependsOn`.
 
 ## Filters for Dates in Tasks
 

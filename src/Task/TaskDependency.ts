@@ -24,12 +24,12 @@ export function ensureTaskHasId(child: Task, existingIds: string[]) {
 }
 
 export function setDependenciesOnTasksWithIds(parent: Task, childrenWithIds: Task[]): Task {
-    const newBlockedBy = childrenWithIds.map((task) => {
+    const newDependsOn = childrenWithIds.map((task) => {
         return task.id;
     });
     let newParent = parent;
-    if (parent.blockedBy.toString() !== newBlockedBy.toString()) {
-        newParent = new Task({ ...parent, blockedBy: newBlockedBy });
+    if (parent.dependsOn.toString() !== newDependsOn.toString()) {
+        newParent = new Task({ ...parent, dependsOn: newDependsOn });
     }
 
     return newParent;
@@ -37,9 +37,9 @@ export function setDependenciesOnTasksWithIds(parent: Task, childrenWithIds: Tas
 
 export function addDependencyToParent(parent: Task, child: Task) {
     let newParent = parent;
-    if (!parent.blockedBy.includes(child.id)) {
-        const newBlockedBy = [...parent.blockedBy, child.id];
-        newParent = new Task({ ...parent, blockedBy: newBlockedBy });
+    if (!parent.dependsOn.includes(child.id)) {
+        const newDependsOn = [...parent.dependsOn, child.id];
+        newParent = new Task({ ...parent, dependsOn: newDependsOn });
     }
     return newParent;
 }
@@ -52,9 +52,9 @@ export function addDependency(parent: Task, child: Task, existingIds: string[]) 
 
 export function removeDependency(parent: Task, child: Task) {
     let newParent = parent;
-    if (parent.blockedBy.includes(child.id)) {
-        const newBlockedBy = parent.blockedBy.filter((blockedBy) => blockedBy !== child.id);
-        newParent = new Task({ ...parent, blockedBy: newBlockedBy });
+    if (parent.dependsOn.includes(child.id)) {
+        const newDependsOn = parent.dependsOn.filter((dependsOn) => dependsOn !== child.id);
+        newParent = new Task({ ...parent, dependsOn: newDependsOn });
     }
 
     return newParent;

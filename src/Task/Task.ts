@@ -59,7 +59,7 @@ export class Task {
 
     public readonly recurrence: Recurrence | null;
 
-    public readonly blockedBy: string[];
+    public readonly dependsOn: string[];
     public readonly id: string;
 
     /** The blockLink is a "^" annotation after the dates/recurrence rules.
@@ -91,7 +91,7 @@ export class Task {
         doneDate,
         cancelledDate,
         recurrence,
-        blockedBy,
+        dependsOn,
         id,
         blockLink,
         tags,
@@ -112,7 +112,7 @@ export class Task {
         doneDate: moment.Moment | null;
         cancelledDate: moment.Moment | null;
         recurrence: Recurrence | null;
-        blockedBy: string[] | [];
+        dependsOn: string[] | [];
         id: string;
         blockLink: string;
         tags: string[] | [];
@@ -139,7 +139,7 @@ export class Task {
 
         this.recurrence = recurrence;
 
-        this.blockedBy = blockedBy;
+        this.dependsOn = dependsOn;
         this.id = id;
 
         this.blockLink = blockLink;
@@ -458,7 +458,7 @@ export class Task {
      * @param allTasks - all the tasks in the vault. In custom queries, this is available via query.allTasks.
      */
     public isBlocked(allTasks: Readonly<Task[]>) {
-        if (this.blockedBy.length === 0) {
+        if (this.dependsOn.length === 0) {
             return false;
         }
 
@@ -466,7 +466,7 @@ export class Task {
             return false;
         }
 
-        for (const depId of this.blockedBy) {
+        for (const depId of this.dependsOn) {
             const depTask = allTasks.find((task) => task.id === depId && !task.isDone);
             if (!depTask) {
                 // There is no not-done task with this id.
@@ -481,7 +481,7 @@ export class Task {
     }
 
     /**
-     * A Task is blocking if there is any other not-done task blockedBy value with its id.
+     * A Task is blocking if there is any other not-done task dependsOn value with its id.
      *
      * 'Done' tasks (with status DONE, CANCELLED or NON_TASK) are never blocking.
      * Only direct dependencies are considered.
@@ -501,7 +501,7 @@ export class Task {
                 return false;
             }
 
-            return task.blockedBy.includes(this.id);
+            return task.dependsOn.includes(this.id);
         });
     }
 
@@ -784,7 +784,7 @@ export class Task {
             'blockLink',
             'scheduledDateIsInferred',
             'id',
-            'blockedBy',
+            'dependsOn',
         ];
         for (const el of args) {
             if (this[el]?.toString() !== other[el]?.toString()) return false;
@@ -861,7 +861,7 @@ export class Task {
  * @param allTasks
  */
 export function isBlocked(thisTask: Task, allTasks: Task[]) {
-    if (thisTask.blockedBy.length === 0) {
+    if (thisTask.dependsOn.length === 0) {
         return false;
     }
 
@@ -869,7 +869,7 @@ export function isBlocked(thisTask: Task, allTasks: Task[]) {
         return false;
     }
 
-    for (const depId of thisTask.blockedBy) {
+    for (const depId of thisTask.dependsOn) {
         const depTask = allTasks.find((task) => task.id === depId && !task.isDone);
         if (!depTask) {
             // There is no not-done task with this id.

@@ -172,17 +172,17 @@ For more information, see [[Task Dependencies]].
 
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by Id** is now possible, using `task.id`.
 
-### Blocked By
+### Depends On
 
-There is no built-in instruction to sort by 'Blocked By'.
+There is no built-in instruction to sort by 'Depends On'.
 
 For more information, see [[Task Dependencies]].
 
 > [!released]
 >
-> - Task Blocked By was introduced in Tasks X.Y.Z.
+> - Task Depends On was introduced in Tasks X.Y.Z.
 
-Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]]  by Blocked By** is now possible, using `task.blockedBy`.
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]]  by Depends On** is now possible, using `task.dependsOn`.
 
 ## Sort by Dates in Tasks
 

@@ -33,7 +33,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         dueDateSymbol,
         doneDateSymbol,
         idSymbol,
-        blockedBySymbol,
+        dependsOnSymbol,
     } = symbols;
 
     describe('deserialize', () => {
@@ -73,15 +73,15 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         it('should parse depends on one task', () => {
-            const id = `${blockedBySymbol} 123456`;
+            const id = `${dependsOnSymbol} 123456`;
             const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ blockedBy: ['123456'] });
+            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456'] });
         });
 
         it('should parse depends on two tasks', () => {
-            const id = `${blockedBySymbol} 123456,abc123`;
+            const id = `${dependsOnSymbol} 123456,abc123`;
             const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ blockedBy: ['123456', 'abc123'] });
+            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abc123'] });
         });
 
         it('should parse id', () => {
@@ -139,9 +139,9 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         it('should serialize depends on', () => {
-            const task = new TaskBuilder().description('').blockedBy(['123456', 'abc123']).build();
+            const task = new TaskBuilder().description('').dependsOn(['123456', 'abc123']).build();
             const serialized = serialize(task);
-            expect(serialized).toEqual(` ${blockedBySymbol} 123456,abc123`);
+            expect(serialized).toEqual(` ${dependsOnSymbol} 123456,abc123`);
         });
 
         it('should serialize id', () => {
