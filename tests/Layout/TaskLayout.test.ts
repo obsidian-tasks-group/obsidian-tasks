@@ -33,7 +33,7 @@ describe('TaskLayout tests', () => {
         const hiddenClasses = [...taskLayout.generateHiddenClasses(), ...queryLayout.getHiddenClasses()];
         expect(hiddenClasses.join('\n')).toMatchInlineSnapshot(`
             "tasks-layout-hide-id
-            tasks-layout-hide-blockedBy
+            tasks-layout-hide-dependsOn
             tasks-layout-hide-priority
             tasks-layout-hide-recurrenceRule
             tasks-layout-hide-createdDate

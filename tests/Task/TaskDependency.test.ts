@@ -29,8 +29,8 @@ describe('TaskDependency', () => {
 
         const [newParent, newChild] = addDependency(parentTask, childTask, ['123456']);
 
-        expect(parentTask.blockedBy).toEqual([]);
-        expect(newParent.blockedBy).toEqual(['123456']);
+        expect(parentTask.dependsOn).toEqual([]);
+        expect(newParent.dependsOn).toEqual(['123456']);
         expect(childTask.id).toEqual('123456');
         expect(newChild.id).toEqual('123456');
         expect(newChild === childTask).toEqual(true);
@@ -38,12 +38,12 @@ describe('TaskDependency', () => {
 
     it('Should not create a duplicate dependency - using addDependency', () => {
         const childTask = new TaskBuilder().id('123456').build();
-        const parentTask = new TaskBuilder().blockedBy(['123456']).description('parent task').build();
+        const parentTask = new TaskBuilder().dependsOn(['123456']).description('parent task').build();
 
         const [newParent, newChild] = addDependency(parentTask, childTask, ['123456']);
 
-        expect(parentTask.blockedBy).toEqual(['123456']);
-        expect(newParent.blockedBy).toEqual(['123456']);
+        expect(parentTask.dependsOn).toEqual(['123456']);
+        expect(newParent.dependsOn).toEqual(['123456']);
         expect(childTask.id).toEqual('123456');
         expect(newChild.id).toEqual('123456');
         expect(newChild === childTask).toEqual(true);
@@ -57,17 +57,17 @@ describe('TaskDependency', () => {
         const [newParent, newChild] = addDependency(parentTask, childTask, []);
 
         expect(newChild.id).not.toEqual('');
-        expect(newParent.blockedBy).toEqual([newChild.id]);
+        expect(newParent.dependsOn).toEqual([newChild.id]);
     });
 
     it('Should remove a dependency', () => {
         const childTask = new TaskBuilder().id('123456').build();
-        const parentTask = new TaskBuilder().blockedBy(['123456']).description('parent task').build();
+        const parentTask = new TaskBuilder().dependsOn(['123456']).description('parent task').build();
 
         const newParent = removeDependency(parentTask, childTask);
 
-        expect(parentTask.blockedBy).toEqual(['123456']);
-        expect(newParent.blockedBy).toEqual([]);
+        expect(parentTask.dependsOn).toEqual(['123456']);
+        expect(newParent.dependsOn).toEqual([]);
         expect(childTask.id).toEqual('123456');
     });
 
@@ -75,22 +75,22 @@ describe('TaskDependency', () => {
         const childTask1 = new TaskBuilder().id('123456').build();
         const childTask2 = new TaskBuilder().id('234567').build();
         const childTask3 = new TaskBuilder().id('345678').build();
-        const parentTask = new TaskBuilder().description('parent task').blockedBy(['012345']).build();
+        const parentTask = new TaskBuilder().description('parent task').dependsOn(['012345']).build();
 
         const newParent = setDependenciesOnTasksWithIds(parentTask, [childTask1, childTask2, childTask3]);
 
-        expect(parentTask.blockedBy).toEqual(['012345']);
-        expect(newParent.blockedBy).toEqual(['123456', '234567', '345678']);
+        expect(parentTask.dependsOn).toEqual(['012345']);
+        expect(newParent.dependsOn).toEqual(['123456', '234567', '345678']);
     });
 
     it('Should not create a duplicate dependency - using setDependenciesOnTasksWithIds', () => {
         const childTask = new TaskBuilder().id('123456').build();
-        const parentTask = new TaskBuilder().blockedBy(['123456']).description('parent task').build();
+        const parentTask = new TaskBuilder().dependsOn(['123456']).description('parent task').build();
 
         const newParent = setDependenciesOnTasksWithIds(parentTask, [childTask]);
 
-        expect(parentTask.blockedBy).toEqual(['123456']);
-        expect(newParent.blockedBy).toEqual(['123456']);
+        expect(parentTask.dependsOn).toEqual(['123456']);
+        expect(newParent.dependsOn).toEqual(['123456']);
         expect(childTask.id).toEqual('123456');
         expect(newParent === parentTask).toEqual(true);
     });

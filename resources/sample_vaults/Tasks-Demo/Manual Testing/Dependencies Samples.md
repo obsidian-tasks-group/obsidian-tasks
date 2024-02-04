@@ -124,7 +124,7 @@ path includes {{query.file.path}}
 #explain
 ```
 
-### `hide depends on` ==TODO Rename to blocked by==
+### `hide depends on`
 
 ```tasks
 hide depends on

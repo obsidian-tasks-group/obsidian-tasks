@@ -97,7 +97,7 @@ describe('task', () => {
         verifyFieldDataForReferenceDocs([
             // force line break
             'task.id',
-            'task.blockedBy',
+            'task.dependsOn',
             'task.isBlocked(query.allTasks)',
             'task.isBlocking(query.allTasks)',
         ]);
