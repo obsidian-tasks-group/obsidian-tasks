@@ -552,7 +552,7 @@ For more information, see [[Task Dependencies]].
 >
 > - Task Blocked By was introduced in Tasks X.Y.Z.
 
-Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Blocked By** is now possible, using `task.blockedBy`.
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Blocked By** is now possible, using `task.dependsOn`.
 
 ## Filters for Dates in Tasks
 
