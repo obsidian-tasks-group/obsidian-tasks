@@ -543,8 +543,8 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Id** is now possible
 
 The `dependsOn` field allows a task to be marked as depending on the `id` of one or more other tasks. Multiple `id` values are separated by commas (`,`) with no spaces.
 
-- `has blocked by`
-- `no blocked by`
+- `has depends on`
+- `no depends on`
 
 For more information, see [[Task Dependencies]].
 

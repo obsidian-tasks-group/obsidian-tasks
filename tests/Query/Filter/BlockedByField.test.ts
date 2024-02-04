@@ -11,7 +11,7 @@ describe('id', () => {
 
     it('by blocked by presence', () => {
         // Arrange
-        const filter = new BlockedByField().createFilterOrErrorMessage('has blocked by');
+        const filter = new BlockedByField().createFilterOrErrorMessage('has depends on');
 
         // Act, Assert
         testFilter(filter, new TaskBuilder().dependsOn([]), false);
@@ -20,7 +20,7 @@ describe('id', () => {
 
     it('by blocked by absence', () => {
         // Arrange
-        const line = 'no blocked by';
+        const line = 'no depends on';
         const filter = new BlockedByField().createFilterOrErrorMessage(line);
         expect(blockedByField.canCreateFilterForLine(line)).toEqual(true);
 
