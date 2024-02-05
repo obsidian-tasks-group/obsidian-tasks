@@ -55,6 +55,9 @@ ul.contains-task-list .task-list-item-checkbox {
     cursor: pointer;
     font-family: var(--font-interface);
     color: var(--text-accent);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 a.tasks-edit, a.tasks-postpone {
