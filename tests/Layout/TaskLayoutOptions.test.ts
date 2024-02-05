@@ -9,6 +9,7 @@ describe('TaskLayoutOptions', () => {
             "description
             id
             dependsOn
+            onCompletion
             priority
             recurrenceRule
             createdDate
@@ -64,6 +65,7 @@ describe('TaskLayoutOptions', () => {
             "description
             id
             dependsOn
+            onCompletion
             priority
             recurrenceRule
             createdDate
@@ -82,6 +84,7 @@ describe('TaskLayoutOptions', () => {
             "description
             id
             dependsOn
+            onCompletion
             priority
             recurrenceRule
             createdDate
@@ -136,6 +139,7 @@ describe('TaskLayoutOptions', () => {
         expect(options.toggleableComponents.join('\n')).toMatchInlineSnapshot(`
             "id
             dependsOn
+            onCompletion
             priority
             recurrenceRule
             createdDate

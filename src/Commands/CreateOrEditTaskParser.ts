@@ -93,6 +93,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             recurrence: null,
             dependsOn: [],
             id: '',
+            onCompletion: '',
             blockLink: '',
             tags: [],
             originalMarkdown: '',
@@ -137,5 +138,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         scheduledDateIsInferred: false,
         id: '',
         dependsOn: [],
+        onCompletion: '',
     });
 };

@@ -49,6 +49,7 @@ export class TaskBuilder {
     private _scheduledDateIsInferred: boolean = false;
     private _id: string = '';
     private _dependsOn: string[] = [];
+    private _onCompletion: string = '';
 
     /**
      * Build a Task
@@ -90,6 +91,7 @@ export class TaskBuilder {
             recurrence: this._recurrence,
             dependsOn: this._dependsOn,
             id: this._id,
+            onCompletion: this._onCompletion,
             blockLink: this._blockLink,
             tags: this._tags,
             originalMarkdown: '',
@@ -120,6 +122,7 @@ export class TaskBuilder {
             .cancelledDate('2023-07-06')
             .dependsOn(['123456', 'abc123'])
             .id('abcdef')
+            .onCompletion('Delete')
             .blockLink(' ^dcf64c')
             // Values in TaskLocation:
             .path('some/folder/fileName.md')
@@ -283,6 +286,10 @@ export class TaskBuilder {
 
     public id(id: string) {
         this._id = id;
+        return this;
+    }
+    public onCompletion(onCompletion: string): TaskBuilder {
+        this._onCompletion = onCompletion;
         return this;
     }
 

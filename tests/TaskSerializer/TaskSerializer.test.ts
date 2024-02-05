@@ -20,7 +20,7 @@ window.moment = moment;
  This file should also contain any {@link TaskSerializer} tests that should be tested
  against all the {@link TaskSerializer}s defined in this repo. Tests that only
  apply to one should be housed in that serializer's specific test file
-*/
+ */
 
 describe('TaskSerializer Example', () => {
     /**
@@ -74,6 +74,7 @@ describe('TaskSerializer Example', () => {
                 recurrence: null,
                 dependsOn: [],
                 id: '',
+                onCompletion: '',
             };
         }
 

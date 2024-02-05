@@ -23,6 +23,7 @@ export type TaskDetails = Writeable<
         | 'recurrence'
         | 'dependsOn'
         | 'id'
+        | 'onCompletion'
         | 'tags'
     >
 >;

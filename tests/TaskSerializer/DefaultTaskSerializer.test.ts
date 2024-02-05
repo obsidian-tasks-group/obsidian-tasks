@@ -34,6 +34,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         doneDateSymbol,
         idSymbol,
         dependsOnSymbol,
+        onCompletionSymbol,
     } = symbols;
 
     describe('deserialize', () => {
@@ -88,6 +89,12 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const id = `${idSymbol} Abcd0f`;
             const taskDetails = deserialize(id);
             expect(taskDetails).toMatchTaskDetails({ id: 'Abcd0f' });
+        });
+
+        it('should parse onCompletion', () => {
+            const onCompletion = `${onCompletionSymbol} Delete`;
+            const taskDetails = deserialize(onCompletion);
+            expect(taskDetails).toMatchTaskDetails({ onCompletion: 'Delete' });
         });
 
         it('should parse tags', () => {

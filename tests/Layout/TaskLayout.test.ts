@@ -34,6 +34,7 @@ describe('TaskLayout tests', () => {
         expect(hiddenClasses.join('\n')).toMatchInlineSnapshot(`
             "tasks-layout-hide-id
             tasks-layout-hide-dependsOn
+            tasks-layout-hide-onCompletion
             tasks-layout-hide-priority
             tasks-layout-hide-recurrenceRule
             tasks-layout-hide-createdDate

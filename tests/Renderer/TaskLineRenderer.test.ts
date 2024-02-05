@@ -203,6 +203,7 @@ describe('task line rendering - layout options', () => {
                 'Do exercises #todo #health',
                 ' 🆔 abcdef',
                 ' ⛔️ 123456,abc123',
+                ' 🏁 Delete',
                 ' 🔼',
                 ' 🔁 every day when done',
                 ' ➕ 2023-07-01',
@@ -223,6 +224,7 @@ describe('task line rendering - layout options', () => {
                 'Do exercises #todo #health',
                 ' 🆔 abcdef',
                 ' ⛔️ 123456,abc123',
+                ' 🏁 Delete',
                 ' 🔼',
                 ' 🔁 every day when done',
                 ' ➕ 2023-07-01',
@@ -280,6 +282,10 @@ describe('task line rendering - layout options', () => {
 
     it('renders with depends on', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' ⛔️ 123456,abc123'], [TaskLayoutComponent.DependsOn]);
+    });
+
+    it('renders with onCompletion', async () => {
+        await testLayoutOptions(['Do exercises #todo #health', ' 🏁 Delete'], [TaskLayoutComponent.OnCompletion]);
     });
 });
 
@@ -358,6 +364,10 @@ describe('task line rendering - classes and data attributes', () => {
     it('renders dependency fields with their correct classes', async () => {
         await testComponentClasses('- [ ] Minimal task 🆔 g7317o', 'task-id', '');
         await testComponentClasses('- [ ] Minimal task ⛔️ ya44g5,hry475', 'task-dependsOn', '');
+    });
+
+    it('renders onCompletion field with correct classes', async () => {
+        await testComponentClasses('- [ ] Minimal task 🏁 Delete', 'task-onCompletion', '');
     });
 
     it('should render recurrence component with its class and data attribute', async () => {
