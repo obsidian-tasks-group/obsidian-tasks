@@ -6,6 +6,12 @@ publish: true
 
 <span class="related-pages">#plugin/quickadd</span>
 
+## Launching the Edit task modal via QuickAdd
+
+See [[Tasks Api#Usage with QuickAdd]] for how to use the [[Create or edit Task]] modal to add a task.
+
+## Creating your own shortcut to build a task
+
 The [quickadd](https://github.com/chhoumann/quickadd) plugin can help when creating tasks.
 Additional to the official command to create a task, you can set up a quickadd command with a custom capture format.
 
@@ -17,7 +23,7 @@ For example:
 
 You can remove/leave some fields to make different types of tasks. And each one can have its own command.
 
-## Some Examples
+### Some Examples
 
 Task with due date only:
 
