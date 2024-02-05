@@ -4,7 +4,7 @@
       "id": "bc717930-2b21-4755-b373-77df97ec953d",
       "name": "Add task",
       "type": "Capture",
-      "command": false,
+      "command": true,
       "appendLink": false,
       "captureTo": "",
       "captureToActiveFile": false,
