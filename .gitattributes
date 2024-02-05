@@ -1,5 +1,6 @@
 *.css text eol=lf
 *.git* text eol=lf
+*.html text eol=lf
 *.js text eol=lf
 *.json text eol=lf
 *.jsonc text eol=lf
@@ -8,6 +9,7 @@
 *.ps1 text eol=lf
 *.py text eol=lf
 *.sh text eol=lf
+*.text text eol=lf
 *.ts text eol=lf
 *.txt text eol=lf
 *.yml text eol=lf
