@@ -86,6 +86,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         cancelledDate: t.cancelledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
         id: t.id?.valueOf().toString() ?? null,
+        onCompletion: t.onCompletion?.valueOf().toString() ?? null,
     };
 }
 
@@ -112,6 +113,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         recurrence: null,
         dependsOn: [],
         id: '',
+        onCompletion: '',
         tags: [],
         ...t,
     };

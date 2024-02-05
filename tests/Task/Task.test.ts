@@ -1584,6 +1584,12 @@ describe('identicalTo', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dependsOn(['12345']));
     });
 
+    it('should check onCompletion', () => {
+        const lhs = new TaskBuilder().onCompletion('');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().onCompletion(''));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().onCompletion('Delete'));
+    });
+
     it('should correctly compare a task with status read from user settings', () => {
         // This was added when fixing:
         // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2044

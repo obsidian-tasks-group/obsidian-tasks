@@ -62,6 +62,8 @@ export class Task {
     public readonly dependsOn: string[];
     public readonly id: string;
 
+    public readonly onCompletion: string;
+
     /** The blockLink is a "^" annotation after the dates/recurrence rules.
      * Any non-empty value must begin with ' ^'. */
     public readonly blockLink: string;
@@ -93,6 +95,7 @@ export class Task {
         recurrence,
         dependsOn,
         id,
+        onCompletion,
         blockLink,
         tags,
         originalMarkdown,
@@ -114,6 +117,7 @@ export class Task {
         recurrence: Recurrence | null;
         dependsOn: string[] | [];
         id: string;
+        onCompletion: string;
         blockLink: string;
         tags: string[] | [];
         originalMarkdown: string;
@@ -141,6 +145,8 @@ export class Task {
 
         this.dependsOn = dependsOn;
         this.id = id;
+
+        this.onCompletion = onCompletion;
 
         this.blockLink = blockLink;
         this.originalMarkdown = originalMarkdown;
@@ -785,6 +791,7 @@ export class Task {
             'scheduledDateIsInferred',
             'id',
             'dependsOn',
+            'onCompletion',
         ];
         for (const el of args) {
             if (this[el]?.toString() !== other[el]?.toString()) return false;

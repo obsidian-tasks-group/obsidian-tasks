@@ -31,6 +31,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly recurrenceSymbol: string;
     readonly idSymbol: string;
     readonly dependsOnSymbol: string;
+    readonly onCompletionSymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
@@ -42,6 +43,7 @@ export interface DefaultTaskSerializerSymbols {
         recurrenceRegex: RegExp;
         idRegex: RegExp;
         dependsOnRegex: RegExp;
+        onCompletionRegex: RegExp;
     };
 }
 
@@ -68,9 +70,11 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     recurrenceSymbol: '🔁',
     dependsOnSymbol: '⛔️',
     idSymbol: '🆔',
+    onCompletionSymbol: '🏁',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
         // removed from the end until none are left.
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         priorityRegex: /([🔺⏫🔼🔽⏬])$/u,
         startDateRegex: /🛫 *(\d{4}-\d{2}-\d{2})$/u,
         createdDateRegex: /➕ *(\d{4}-\d{2}-\d{2})$/u,
@@ -81,6 +85,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
         dependsOnRegex: /⛔️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
         idRegex: /🆔 *([a-z0-9]+)$/iu,
+        onCompletionRegex: /🏁 *([A-Z][a-zA-Z]+)$/iu,
     },
 } as const;
 
@@ -132,6 +137,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             dueDateSymbol,
             dependsOnSymbol,
             idSymbol,
+            onCompletionSymbol,
         } = this.symbols;
 
         switch (component) {
@@ -176,6 +182,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
             }
             case TaskLayoutComponent.Id:
                 return symbolAndStringValue(shortMode, idSymbol, task.id);
+            case TaskLayoutComponent.OnCompletion:
+                return symbolAndStringValue(shortMode, onCompletionSymbol, task.onCompletion);
             case TaskLayoutComponent.BlockLink:
                 return task.blockLink ?? '';
             default:
@@ -234,6 +242,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let recurrence: Recurrence | null = null;
         let id: string = '';
         let dependsOn: string[] | [] = [];
+        let onCompletion: string = '';
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
@@ -334,6 +343,15 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 matched = true;
             }
 
+            const onCompletionMatch = line.match(TaskFormatRegularExpressions.onCompletionRegex);
+
+            if (onCompletionMatch != null) {
+                line = line.replace(TaskFormatRegularExpressions.onCompletionRegex, '').trim();
+                // I've copied idMatch and recurrenceMatch -- but is that correct?
+                onCompletion = onCompletionMatch[1].trim();
+                matched = true;
+            }
+
             runs++;
         } while (matched && runs <= maxRuns);
 
@@ -365,6 +383,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             recurrence,
             id,
             dependsOn,
+            onCompletion,
             tags: Task.extractHashtags(line),
         };
     }
