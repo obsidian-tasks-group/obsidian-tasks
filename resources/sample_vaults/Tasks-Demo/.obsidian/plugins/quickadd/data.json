@@ -1,5 +1,41 @@
 {
-  "choices": [],
+  "choices": [
+    {
+      "id": "bc717930-2b21-4755-b373-77df97ec953d",
+      "name": "Add task",
+      "type": "Capture",
+      "command": false,
+      "appendLink": false,
+      "captureTo": "",
+      "captureToActiveFile": false,
+      "createFileIfItDoesntExist": {
+        "enabled": true,
+        "createWithTemplate": true,
+        "template": ""
+      },
+      "format": {
+        "enabled": true,
+        "format": "```js quickadd\nreturn await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal();\n```"
+      },
+      "insertAfter": {
+        "enabled": true,
+        "after": "## New Tasks",
+        "insertAtEnd": true,
+        "considerSubsections": false,
+        "createIfNotFound": true,
+        "createIfNotFoundLocation": "bottom"
+      },
+      "prepend": false,
+      "task": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default"
+    }
+  ],
   "macros": [],
   "inputPrompt": "single-line",
   "devMode": false,
