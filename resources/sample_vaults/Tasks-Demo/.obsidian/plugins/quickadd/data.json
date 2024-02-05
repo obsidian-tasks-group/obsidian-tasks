@@ -15,7 +15,7 @@
       },
       "format": {
         "enabled": true,
-        "format": "```js quickadd\nreturn await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal();\n```"
+        "format": "```js quickadd\nreturn await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal() + '\\n';\n```"
       },
       "insertAfter": {
         "enabled": true,
