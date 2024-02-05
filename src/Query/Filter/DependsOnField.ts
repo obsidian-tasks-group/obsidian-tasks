@@ -3,13 +3,13 @@ import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { FilterInstructions } from './FilterInstructions';
 
-export class BlockedByField extends Field {
+export class DependsOnField extends Field {
     private readonly filterInstructions: FilterInstructions = new FilterInstructions();
 
     constructor() {
         super();
-        this.filterInstructions.add('has blocked by', (task: Task) => task.dependsOn.length > 0);
-        this.filterInstructions.add('no blocked by', (task: Task) => task.dependsOn.length === 0);
+        this.filterInstructions.add('has depends on', (task: Task) => task.dependsOn.length > 0);
+        this.filterInstructions.add('no depends on', (task: Task) => task.dependsOn.length === 0);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
