@@ -22,3 +22,7 @@ This section provides some more advanced material - content which is typically t
   - About the Reminders plugin, in conjunction with Tasks
 - [[Tasks Api]]
   - Integrate Tasks in to other Plugins, scripts or dynamic code blocks.
+
+## Related pages
+
+See also [[About Other Plugins]] for some information about plugins that may be useful with Tasks.
