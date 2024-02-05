@@ -11,6 +11,7 @@ All these links should still work:
 <!-- Alphabetical order, please -->
 
 - <https://publish.obsidian.md/tasks/Advanced/Advanced>
+- <https://publish.obsidian.md/tasks/Advanced/Quickadd>
 - <https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest>
 - <https://publish.obsidian.md/tasks/Getting+Started/Backlinks>
 - <https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task>
