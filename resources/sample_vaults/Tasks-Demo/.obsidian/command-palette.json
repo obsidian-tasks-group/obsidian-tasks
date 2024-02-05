@@ -1,6 +1,7 @@
 {
   "pinned": [
     "obsidian-tasks-plugin:edit-task",
-    "obsidian-tasks-plugin:toggle-done"
+    "obsidian-tasks-plugin:toggle-done",
+    "quickadd:choice:bc717930-2b21-4755-b373-77df97ec953d"
   ]
 }
