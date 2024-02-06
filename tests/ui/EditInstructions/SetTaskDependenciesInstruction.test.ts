@@ -51,13 +51,12 @@ describe('Edit dependencies', () => {
 - [ ] my description 🆔 67890
 - [ ] my description ⛔️ 12345,67890`;
         const allTasks = createTasksFromMarkdown(s, 'stuff.md', 'Heading');
-        const id1 = '12345';
         const doFirst = allTasks[0];
         const dontDependOnMe = allTasks[1];
         const doSecond = allTasks[2];
         const dependedUpon: Task[] = [];
 
         expect(setDependencies(doSecond, allTasks, [doFirst, dontDependOnMe], dependedUpon)).toBe(doSecond);
-        expect(setDependencies(doSecond, allTasks, [doFirst], dependedUpon).dependsOn).toEqual([id1]);
+        expect(setDependencies(doSecond, allTasks, [doFirst], dependedUpon).dependsOn).toEqual([doFirst.id]);
     });
 });
