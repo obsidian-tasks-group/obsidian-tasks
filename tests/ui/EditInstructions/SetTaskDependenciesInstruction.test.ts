@@ -57,6 +57,9 @@ describe('Edit dependencies', () => {
         const dependedUpon: Task[] = [];
 
         expect(setDependencies(doSecond, allTasks, [doFirst, dontDependOnMe], dependedUpon)).toBe(doSecond);
-        expect(setDependencies(doSecond, allTasks, [doFirst], dependedUpon).dependsOn).toEqual([doFirst.id]);
+
+        const newTask = setDependencies(doSecond, allTasks, [doFirst], dependedUpon);
+        expect(newTask.dependsOn).toEqual([doFirst.id]);
+        expect(newTask.toFileLineString()).toMatchInlineSnapshot('"- [ ] my description ⛔️ 12345"');
     });
 });
