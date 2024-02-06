@@ -29,14 +29,14 @@ describe('Edit dependencies', () => {
 
     it('should remove a dependency', () => {
         const id = '12345';
-        const task1 = new TaskBuilder().id(id).build();
-        const task2 = new TaskBuilder().dependsOn([id]).build();
+        const doFirst = new TaskBuilder().id(id).build();
+        const doSecond = new TaskBuilder().dependsOn([id]).build();
         const dependsOn: Task[] = [];
         const dependedUpon: Task[] = [];
-        const allTasks = [task1, task2];
+        const allTasks = [doFirst, doSecond];
 
-        const editedTask = setDependencies(task2, allTasks, dependsOn, dependedUpon);
+        const doSecondWithoutTheFirst = setDependencies(doSecond, allTasks, dependsOn, dependedUpon);
 
-        expect(editedTask.dependsOn).toEqual([]);
+        expect(doSecondWithoutTheFirst.dependsOn).toEqual([]);
     });
 });
