@@ -46,7 +46,7 @@ describe('Edit dependencies', () => {
         expect(doSecondWithoutTheFirst.dependsOn).toEqual([]);
     });
 
-    it('should remove dependencies', () => {
+    it('should not create a new task if dependencies are unchanged', () => {
         const s = `- [ ] my description 🆔 12345
 - [ ] my description 🆔 67890
 - [ ] my description ⛔️ 12345,67890`;
@@ -57,7 +57,18 @@ describe('Edit dependencies', () => {
         const dependedUpon: Task[] = [];
 
         expect(setDependencies(doSecond, allTasks, [doFirst, dontDependOnMe], dependedUpon)).toBe(doSecond);
+    });
 
+    it('should remove one of two dependencies', () => {
+        const s = `- [ ] my description 🆔 12345
+- [ ] my description 🆔 67890
+- [ ] my description ⛔️ 12345,67890`;
+        const allTasks = createTasksFromMarkdown(s, 'stuff.md', 'Heading');
+        const doFirst = allTasks[0];
+        const doSecond = allTasks[2];
+        const dependedUpon: Task[] = [];
+
+        // Remove a dependency
         const newTask = setDependencies(doSecond, allTasks, [doFirst], dependedUpon);
         expect(newTask.dependsOn).toEqual([doFirst.id]);
         expect(newTask.toFileLineString()).toMatchInlineSnapshot('"- [ ] my description ⛔️ 12345"');
