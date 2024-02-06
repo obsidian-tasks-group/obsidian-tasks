@@ -5,6 +5,7 @@
 import moment from 'moment/moment';
 import { Task } from '../../../src/Task/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { createTasksFromMarkdown } from '../../TestingTools/TestHelpers';
 
 window.moment = moment;
 
@@ -46,13 +47,15 @@ describe('Edit dependencies', () => {
     });
 
     it('should remove dependencies', () => {
+        const s = `- [ ] my description 🆔 12345
+- [ ] my description 🆔 67890
+- [ ] my description ⛔️ 12345,67890`;
+        const allTasks = createTasksFromMarkdown(s, 'stuff.md', 'Heading');
         const id1 = '12345';
-        const doFirst = new TaskBuilder().id(id1).build();
-        const id2 = '67890';
-        const dontDependOnMe = new TaskBuilder().id(id2).build();
-        const doSecond = new TaskBuilder().dependsOn([id1, id2]).build();
+        const doFirst = allTasks[0];
+        const dontDependOnMe = allTasks[1];
+        const doSecond = allTasks[2];
         const dependedUpon: Task[] = [];
-        const allTasks = [doFirst, doSecond, dontDependOnMe];
 
         expect(setDependencies(doSecond, allTasks, [doFirst, dontDependOnMe], dependedUpon)).toBe(doSecond);
         expect(setDependencies(doSecond, allTasks, [doFirst], dependedUpon).dependsOn).toEqual([id1]);
