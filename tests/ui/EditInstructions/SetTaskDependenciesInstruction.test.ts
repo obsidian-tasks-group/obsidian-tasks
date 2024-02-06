@@ -1,8 +1,19 @@
-import type { Task } from '../../../src/Task/Task';
+/**
+ * @jest-environment jsdom
+ */
+
+import moment from 'moment/moment';
+import { Task } from '../../../src/Task/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
-function setDependencies(task: Task, _dependsOn: Task[], _dependedUpon: Task[]) {
-    return task;
+window.moment = moment;
+
+function setDependencies(task: Task, _allTasks: Task[], _dependsOn: Task[], _dependedUpon: Task[]) {
+    if (task.dependsOn.length === 0) {
+        return task;
+    }
+
+    return new Task({ ...task, dependsOn: [] });
 }
 
 describe('Edit dependencies', () => {
@@ -11,8 +22,21 @@ describe('Edit dependencies', () => {
         const dependsOn: Task[] = [];
         const dependedUpon: Task[] = [];
 
-        const editedTask = setDependencies(task, dependsOn, dependedUpon);
+        const editedTask = setDependencies(task, [task], dependsOn, dependedUpon);
 
         expect(editedTask).toBe(task);
+    });
+
+    it('should remove a dependency', () => {
+        const id = '12345';
+        const task1 = new TaskBuilder().id(id).build();
+        const task2 = new TaskBuilder().dependsOn([id]).build();
+        const dependsOn: Task[] = [];
+        const dependedUpon: Task[] = [];
+        const allTasks = [task1, task2];
+
+        const editedTask = setDependencies(task2, allTasks, dependsOn, dependedUpon);
+
+        expect(editedTask.dependsOn).toEqual([]);
     });
 });
