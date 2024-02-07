@@ -79,12 +79,12 @@ To help visualise the structure above, here is the HTML for a sample task shown 
 <li
   class="task-list-item plugin-tasks-list-item"
   data-task-priority="medium"
-  data-task-created="past-far"
-  data-task-start="past-far"
-  data-task-scheduled="past-far"
-  data-task-due="past-far"
-  data-task-cancelled="past-far"
-  data-task-done="past-far"
+  data-task-created="past-4d"
+  data-task-start="past-3d"
+  data-task-scheduled="past-2d"
+  data-task-due="past-1d"
+  data-task-cancelled="future-1d"
+  data-task-done="today"
   data-task=""
   data-line="0"
   data-task-status-name="Todo"
@@ -96,12 +96,12 @@ To help visualise the structure above, here is the HTML for a sample task shown 
     <span class="task-dependsOn"><span>⛔️ 123456,abc123</span></span>
     <span class="task-priority" data-task-priority="medium"><span>🔼</span></span>
     <span class="task-recurring"><span>🔁 every day when done</span></span>
-    <span class="task-created" data-task-created="past-far"><span>➕ 2023-07-01</span></span>
-    <span class="task-start" data-task-start="past-far"><span>🛫 2023-07-02</span></span>
-    <span class="task-scheduled" data-task-scheduled="past-far"><span>⏳ 2023-07-03</span></span>
-    <span class="task-due" data-task-due="past-far"><span>📅 2023-07-04</span></span>
-    <span class="task-cancelled" data-task-cancelled="past-far"><span>❌ 2023-07-06</span></span>
-    <span class="task-done" data-task-done="past-far"><span>✅ 2023-07-05</span></span>
+    <span class="task-created" data-task-created="past-4d"><span>➕ 2023-07-01</span></span>
+    <span class="task-start" data-task-start="past-3d"><span>🛫 2023-07-02</span></span>
+    <span class="task-scheduled" data-task-scheduled="past-2d"><span>⏳ 2023-07-03</span></span>
+    <span class="task-due" data-task-due="past-1d"><span>📅 2023-07-04</span></span>
+    <span class="task-cancelled" data-task-cancelled="future-1d"><span>❌ 2023-07-06</span></span>
+    <span class="task-done" data-task-done="today"><span>✅ 2023-07-05</span></span>
     <span class="task-block-link"><span>^dcf64c</span></span>
   </span>
 </li>
@@ -124,12 +124,12 @@ Here is the same task in [[Layout#Short Mode|short mode]]. The only difference i
 <li
   class="task-list-item plugin-tasks-list-item"
   data-task-priority="medium"
-  data-task-created="past-far"
-  data-task-start="past-far"
-  data-task-scheduled="past-far"
-  data-task-due="past-far"
-  data-task-cancelled="past-far"
-  data-task-done="past-far"
+  data-task-created="past-4d"
+  data-task-start="past-3d"
+  data-task-scheduled="past-2d"
+  data-task-due="past-1d"
+  data-task-cancelled="future-1d"
+  data-task-done="today"
   data-task=""
   data-line="0"
   data-task-status-name="Todo"
@@ -141,12 +141,12 @@ Here is the same task in [[Layout#Short Mode|short mode]]. The only difference i
     <span class="task-dependsOn"><span>⛔️</span></span>
     <span class="task-priority" data-task-priority="medium"><span>🔼</span></span>
     <span class="task-recurring"><span>🔁</span></span>
-    <span class="task-created" data-task-created="past-far"><span>➕</span></span>
-    <span class="task-start" data-task-start="past-far"><span>🛫</span></span>
-    <span class="task-scheduled" data-task-scheduled="past-far"><span>⏳</span></span>
-    <span class="task-due" data-task-due="past-far"><span>📅</span></span>
-    <span class="task-cancelled" data-task-cancelled="past-far"><span>❌</span></span>
-    <span class="task-done" data-task-done="past-far"><span>✅</span></span>
+    <span class="task-created" data-task-created="past-4d"><span>➕</span></span>
+    <span class="task-start" data-task-start="past-3d"><span>🛫</span></span>
+    <span class="task-scheduled" data-task-scheduled="past-2d"><span>⏳</span></span>
+    <span class="task-due" data-task-due="past-1d"><span>📅</span></span>
+    <span class="task-cancelled" data-task-cancelled="future-1d"><span>❌</span></span>
+    <span class="task-done" data-task-done="today"><span>✅</span></span>
     <span class="task-block-link"><span>^dcf64c</span></span>
   </span>
 </li>

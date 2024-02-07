@@ -520,6 +520,15 @@ describe('task line rendering - classes and data attributes', () => {
 });
 
 describe('Visualise HTML', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-07-05'));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     async function renderAndVerifyHTML(
         task: Task,
         {
