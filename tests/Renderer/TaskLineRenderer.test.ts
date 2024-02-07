@@ -2,6 +2,8 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import * as prettier from 'prettier';
+
 import { DebugSettings } from '../../src/Config/DebugSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
@@ -518,6 +520,15 @@ describe('task line rendering - classes and data attributes', () => {
 });
 
 describe('Visualise HTML', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-07-05'));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     async function renderAndVerifyHTML(
         task: Task,
         {
@@ -533,9 +544,15 @@ describe('Visualise HTML', () => {
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
 -->\n\n`;
-        const taskAsHTML = listItem.outerHTML.replace(/ data-/g, '\n    data-').replace(/<span/g, '\n        <span');
+        const taskAsHTML = listItem.outerHTML;
+        const prettyHTML = prettier.format(taskAsHTML, {
+            parser: 'html',
+            bracketSameLine: true,
+            htmlWhitespaceSensitivity: 'ignore',
+            printWidth: 120,
+        });
 
-        verifyWithFileExtension(taskAsMarkdown + taskAsHTML, 'html');
+        verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
     }
 
     const fullTask = TaskBuilder.createFullyPopulatedTask();

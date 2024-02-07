@@ -63,6 +63,96 @@ Each component span is marked with a **generic class**, which denotes the type o
 Within each component span there is an additional "internal" span, which is the one holding the actual component text.
 The reason for this additional internal span is that it allows CSS styles that closely wrap the text itself, rather than its container box, e.g. for the purpose of drawing a highlight or a box that is exactly in the size of the text.
 
+### Sample HTML: Full mode
+
+To help visualise the structure above, here is the HTML for a sample task shown in [[Layout#Full Mode|full mode]].
+
+> [!Note]
+> The below does not (yet) show the "Task extras".
+
+<!-- snippet: TaskLineRenderer.test.Visualise_HTML_Full_task_-_full_mode.approved.html -->
+```html
+<!--
+  - [ ] Do exercises #todo #health 🆔 abcdef ⛔️ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
+-->
+
+<li
+  class="task-list-item plugin-tasks-list-item"
+  data-task-priority="medium"
+  data-task-created="past-4d"
+  data-task-start="past-3d"
+  data-task-scheduled="past-2d"
+  data-task-due="past-1d"
+  data-task-cancelled="future-1d"
+  data-task-done="today"
+  data-task=""
+  data-line="0"
+  data-task-status-name="Todo"
+  data-task-status-type="TODO">
+  <input class="task-list-item-checkbox" type="checkbox" title="Right-click for options" data-line="0" />
+  <span class="tasks-list-text">
+    <span class="task-description"><span>Do exercises #todo #health</span></span>
+    <span class="task-id"><span>🆔 abcdef</span></span>
+    <span class="task-dependsOn"><span>⛔️ 123456,abc123</span></span>
+    <span class="task-priority" data-task-priority="medium"><span>🔼</span></span>
+    <span class="task-recurring"><span>🔁 every day when done</span></span>
+    <span class="task-created" data-task-created="past-4d"><span>➕ 2023-07-01</span></span>
+    <span class="task-start" data-task-start="past-3d"><span>🛫 2023-07-02</span></span>
+    <span class="task-scheduled" data-task-scheduled="past-2d"><span>⏳ 2023-07-03</span></span>
+    <span class="task-due" data-task-due="past-1d"><span>📅 2023-07-04</span></span>
+    <span class="task-cancelled" data-task-cancelled="future-1d"><span>❌ 2023-07-06</span></span>
+    <span class="task-done" data-task-done="today"><span>✅ 2023-07-05</span></span>
+    <span class="task-block-link"><span>^dcf64c</span></span>
+  </span>
+</li>
+```
+<!-- endSnippet -->
+
+### Sample HTML: Short mode
+
+Here is the same task in [[Layout#Short Mode|short mode]]. The only difference is that any text values after Tasks emoji are omitted:
+
+> [!Note]
+> The below does not (yet) show the "Task extras".
+>
+<!-- snippet: TaskLineRenderer.test.Visualise_HTML_Full_task_-_short_mode.approved.html -->
+```html
+<!--
+  - [ ] Do exercises #todo #health 🆔 abcdef ⛔️ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
+-->
+
+<li
+  class="task-list-item plugin-tasks-list-item"
+  data-task-priority="medium"
+  data-task-created="past-4d"
+  data-task-start="past-3d"
+  data-task-scheduled="past-2d"
+  data-task-due="past-1d"
+  data-task-cancelled="future-1d"
+  data-task-done="today"
+  data-task=""
+  data-line="0"
+  data-task-status-name="Todo"
+  data-task-status-type="TODO">
+  <input class="task-list-item-checkbox" type="checkbox" title="Right-click for options" data-line="0" />
+  <span class="tasks-list-text">
+    <span class="task-description"><span>Do exercises #todo #health</span></span>
+    <span class="task-id"><span>🆔</span></span>
+    <span class="task-dependsOn"><span>⛔️</span></span>
+    <span class="task-priority" data-task-priority="medium"><span>🔼</span></span>
+    <span class="task-recurring"><span>🔁</span></span>
+    <span class="task-created" data-task-created="past-4d"><span>➕</span></span>
+    <span class="task-start" data-task-start="past-3d"><span>🛫</span></span>
+    <span class="task-scheduled" data-task-scheduled="past-2d"><span>⏳</span></span>
+    <span class="task-due" data-task-due="past-1d"><span>📅</span></span>
+    <span class="task-cancelled" data-task-cancelled="future-1d"><span>❌</span></span>
+    <span class="task-done" data-task-done="today"><span>✅</span></span>
+    <span class="task-block-link"><span>^dcf64c</span></span>
+  </span>
+</li>
+```
+<!-- endSnippet -->
+
 ## Generic Classes and Data Attributes
 
 > [!released]
