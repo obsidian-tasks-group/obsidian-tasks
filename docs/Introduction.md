@@ -15,6 +15,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
 
 - X.Y.Z:
   - `query.allTasks` is now available in custom searches: see [[Query Properties#Values for Query Search Properties|query search properties]].
+  - Add HTML samples in [[Styling#Sample HTML Full mode|full]] and [[Styling#Sample HTML Short mode|short]] modes to demonstrate custom styling.
 - 6.0.0:
   - Add [[Custom Sorting|custom sorting]].
   - Document the [[Sorting#Default sort order|default sort order]].
