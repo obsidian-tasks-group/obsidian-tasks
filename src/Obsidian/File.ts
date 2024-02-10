@@ -65,7 +65,7 @@ export const replaceTaskWithTasks = async ({
     logStartOfTaskEdit(logger, codeLocation, originalTask);
     logEndOfTaskEdit(logger, codeLocation, newTasks);
 
-    tryRepetitive({
+    await tryRepetitive({
         originalTask,
         newTasks,
         vault,
@@ -118,7 +118,7 @@ const tryRepetitive = async ({
 }): Promise<void> => {
     const logger = getFileLogger();
     logger.debug(`tryRepetitive after ${previousTries} previous tries`);
-    const retry = () => {
+    const retry = async () => {
         if (previousTries > 10) {
             const message = `Tasks: Could not find the correct task line to update.
 
@@ -142,8 +142,8 @@ Recommendations:
 
         const timeout = Math.min(Math.pow(10, previousTries), 100); // 1, 10, 100, 100, 100, ...
         logger.debug(`timeout = ${timeout}`);
-        setTimeout(() => {
-            tryRepetitive({
+        setTimeout(async () => {
+            await tryRepetitive({
                 originalTask,
                 newTasks,
                 vault,
@@ -167,9 +167,11 @@ Recommendations:
     } catch (e) {
         if (e instanceof WarningWorthRetrying) {
             if (e.message) warnAndNotice(e.message);
-            return retry();
+            await retry();
+            return;
         } else if (e instanceof RetryWithoutWarning) {
-            return retry();
+            await retry();
+            return;
         } else if (e instanceof Error) {
             errorAndNotice(e.message);
         }
