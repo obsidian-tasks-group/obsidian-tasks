@@ -34,13 +34,14 @@ describe('Edit dependencies', () => {
     });
 
     describe('1 task depended on by 1 task', () => {
+        const markdown = `- [ ] my description 🆔 12345
+- [ ] my description ⛔️ 12345`;
+        const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
+
         it('should remove a dependency', () => {
-            const id = '12345';
-            const doFirst = new TaskBuilder().id(id).build();
-            const doSecond = new TaskBuilder().dependsOn([id]).build();
+            const doSecond = allTasks[1];
             const dependsOn: Task[] = [];
             const dependedUpon: Task[] = [];
-            const allTasks = [doFirst, doSecond];
 
             const doSecondWithoutTheFirst = setDependencies(doSecond, allTasks, dependsOn, dependedUpon);
 
