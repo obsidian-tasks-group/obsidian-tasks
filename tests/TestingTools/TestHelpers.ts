@@ -49,9 +49,17 @@ export function toLine(task: Task) {
 /**
  * @see toLine
  * @see fromLines
+ * @see toMarkdown
  */
 export function toLines(tasks: Task[]) {
     return tasks.map((task) => toLine(task));
+}
+
+/**
+ * @see toLines
+ */
+export function toMarkdown(tasks: Task[]) {
+    return toLines(tasks).join('\n');
 }
 
 /**
