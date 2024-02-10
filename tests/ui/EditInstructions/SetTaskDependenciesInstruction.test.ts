@@ -52,7 +52,7 @@ describe('Edit dependencies', () => {
         });
     });
 
-    describe('should edit 2 tasks depended on by 1 task', () => {
+    describe('2 tasks depended on by 1 task', () => {
         const markdown = `
 - [ ] my description 🆔 12345
 - [ ] my description 🆔 67890
@@ -78,6 +78,19 @@ describe('Edit dependencies', () => {
             const newTask = setDependencies(doSecond, allTasks, [doFirst], dependedUpon);
             expect(newTask.dependsOn).toEqual([doFirst.id]);
             expect(newTask.toFileLineString()).toMatchInlineSnapshot('"- [ ] my description ⛔️ 12345"');
+        });
+    });
+
+    describe('task with broken dependencies', () => {
+        const markdown = `
+- [ ] I started with no ID
+- [ ] I started depending on non-existent ID ⛔️ 12345
+`;
+        // @ts-expect-error Unused variable
+        const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
+
+        it.failing('should remove invalid ID when editing a dependency', () => {
+            expect(2).toEqual(1);
         });
     });
 });
