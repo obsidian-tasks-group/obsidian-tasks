@@ -27,13 +27,8 @@ describe('Edit dependencies', () => {
 
     describe('1 tasks, no dependencies', () => {
         it('should return original task if no edits were made', () => {
-            const task = allTasks[0];
-            const dependsOn: Task[] = [];
-            const dependedUpon: Task[] = [];
-
-            const editedTask = setDependencies(task, allTasks, dependsOn, dependedUpon);
-
-            expect(editedTask).toBe(task);
+            const editedTask = setDependencies(allTasks[0], allTasks, [], []);
+            expect(editedTask).toBe(allTasks[0]);
         });
     });
 
