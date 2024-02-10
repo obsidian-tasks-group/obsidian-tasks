@@ -22,7 +22,9 @@ function setDependencies(task: Task, _allTasks: Task[], dependsOn: Task[], _depe
 }
 
 describe('Edit dependencies', () => {
-    const markdown = '- [ ] my description';
+    const markdown = `
+- [ ] my description
+`;
     const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
 
     describe('1 tasks, no dependencies', () => {
@@ -33,8 +35,10 @@ describe('Edit dependencies', () => {
     });
 
     describe('1 task depended on by 1 task', () => {
-        const markdown = `- [ ] my description 🆔 12345
-- [ ] my description ⛔️ 12345`;
+        const markdown = `
+- [ ] my description 🆔 12345
+- [ ] my description ⛔️ 12345
+`;
         const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
 
         it('should remove a dependency', () => {
@@ -49,10 +53,12 @@ describe('Edit dependencies', () => {
     });
 
     describe('should edit 2 tasks depended on by 1 task', () => {
-        const s = `- [ ] my description 🆔 12345
+        const markdown = `
+- [ ] my description 🆔 12345
 - [ ] my description 🆔 67890
-- [ ] my description ⛔️ 12345,67890`;
-        const allTasks = createTasksFromMarkdown(s, 'stuff.md', 'Heading');
+- [ ] my description ⛔️ 12345,67890
+`;
+        const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
 
         it('should not create a new task if dependencies are unchanged', () => {
             const doFirst = allTasks[0];
