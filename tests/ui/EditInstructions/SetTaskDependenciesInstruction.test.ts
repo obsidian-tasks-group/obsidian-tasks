@@ -21,12 +21,16 @@ function setDependencies(task: Task, _allTasks: Task[], dependsOn: Task[], _depe
     return new Task({ ...task, dependsOn: newDependsOn });
 }
 
+function createTasks(markdown: string) {
+    return createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
+}
+
 describe('Edit dependencies', () => {
     describe('1 tasks, no dependencies', () => {
         const markdown = `
 - [ ] my description
 `;
-        const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
+        const allTasks = createTasks(markdown);
 
         it('should return original task if no edits were made', () => {
             const editedTask = setDependencies(allTasks[0], allTasks, [], []);
@@ -39,7 +43,7 @@ describe('Edit dependencies', () => {
 - [ ] my description 🆔 12345
 - [ ] my description ⛔️ 12345
 `;
-        const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
+        const allTasks = createTasks(markdown);
 
         it('should remove a dependency', () => {
             const doSecond = allTasks[1];
@@ -58,7 +62,7 @@ describe('Edit dependencies', () => {
 - [ ] my description 🆔 67890
 - [ ] my description ⛔️ 12345,67890
 `;
-        const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
+        const allTasks = createTasks(markdown);
 
         it('should not create a new task if dependencies are unchanged', () => {
             const doFirst = allTasks[0];
@@ -87,7 +91,7 @@ describe('Edit dependencies', () => {
 - [ ] I started depending on non-existent ID ⛔️ 12345
 `;
         // @ts-expect-error Unused variable
-        const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
+        const allTasks = createTasks(markdown);
 
         it.failing('should remove invalid ID when editing a dependency', () => {
             expect(2).toEqual(1);
