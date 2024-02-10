@@ -22,12 +22,12 @@ function setDependencies(task: Task, _allTasks: Task[], dependsOn: Task[], _depe
 }
 
 describe('Edit dependencies', () => {
-    const markdown = `
+    describe('1 tasks, no dependencies', () => {
+        const markdown = `
 - [ ] my description
 `;
-    const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
+        const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
 
-    describe('1 tasks, no dependencies', () => {
         it('should return original task if no edits were made', () => {
             const editedTask = setDependencies(allTasks[0], allTasks, [], []);
             expect(editedTask).toBe(allTasks[0]);
