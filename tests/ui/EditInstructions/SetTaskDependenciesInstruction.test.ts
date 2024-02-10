@@ -23,14 +23,16 @@ function setDependencies(task: Task, _allTasks: Task[], dependsOn: Task[], _depe
 }
 
 describe('Edit dependencies', () => {
-    it('should return original task if no edits were made', () => {
-        const task = new TaskBuilder().build();
-        const dependsOn: Task[] = [];
-        const dependedUpon: Task[] = [];
+    describe('1 tasks, no dependencies', () => {
+        it('should return original task if no edits were made', () => {
+            const task = new TaskBuilder().build();
+            const dependsOn: Task[] = [];
+            const dependedUpon: Task[] = [];
 
-        const editedTask = setDependencies(task, [task], dependsOn, dependedUpon);
+            const editedTask = setDependencies(task, [task], dependsOn, dependedUpon);
 
-        expect(editedTask).toBe(task);
+            expect(editedTask).toBe(task);
+        });
     });
 
     describe('1 task depended on by 1 task', () => {
