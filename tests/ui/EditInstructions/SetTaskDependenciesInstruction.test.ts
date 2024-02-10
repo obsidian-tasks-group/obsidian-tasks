@@ -4,7 +4,6 @@
 
 import moment from 'moment/moment';
 import { Task } from '../../../src/Task/Task';
-import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { createTasksFromMarkdown } from '../../TestingTools/TestHelpers';
 
 window.moment = moment;
@@ -23,13 +22,16 @@ function setDependencies(task: Task, _allTasks: Task[], dependsOn: Task[], _depe
 }
 
 describe('Edit dependencies', () => {
+    const markdown = '- [ ] my description';
+    const allTasks = createTasksFromMarkdown(markdown, 'stuff.md', 'Heading');
+
     describe('1 tasks, no dependencies', () => {
         it('should return original task if no edits were made', () => {
-            const task = new TaskBuilder().build();
+            const task = allTasks[0];
             const dependsOn: Task[] = [];
             const dependedUpon: Task[] = [];
 
-            const editedTask = setDependencies(task, [task], dependsOn, dependedUpon);
+            const editedTask = setDependencies(task, allTasks, dependsOn, dependedUpon);
 
             expect(editedTask).toBe(task);
         });
