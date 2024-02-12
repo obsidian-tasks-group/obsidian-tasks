@@ -226,3 +226,24 @@ Invariably this is because the user's Tasks data is incorrect in some way that p
 And the most likely current cause of that is incorrectly ordered values in a task: see [[Auto-Suggest#What do I need to know about the order of items in a task?|What do I need to know about the order of items in a task?]].
 
 We are tracking this ordering limitation in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).
+
+## Limitations of the Urgency Score
+
+### Urgency score ignores task status
+
+If you wish to sort by status, and include tasks which may be complete, this gives misleading results, as old completed tasks will appear first.
+
+The workaround for this is to first sort by [[Status Types|Status Type]]:
+
+````text
+```tasks
+sort by status.type
+sort by urgency
+```
+````
+
+### Urgency score is not aware of task dependencies
+
+Blocking tasks should have higher urgency. And blocked tasks should have lower urgency.
+
+We are tracking this in [issue #2655](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2655).
