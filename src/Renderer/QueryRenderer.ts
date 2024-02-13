@@ -19,7 +19,7 @@ import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { State } from '../Obsidian/Cache';
-import { TaskLineRenderer } from './TaskLineRenderer';
+import { TaskLineRenderer, createElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -163,7 +163,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
 
-        const content = this.containerEl.createEl('div');
+        const content = createElement(this.containerEl, 'div');
         if (state === State.Warm && this.query.error === undefined) {
             await this.renderQuerySearchResults(tasks, state, content);
         } else if (this.query.error !== undefined) {
@@ -215,14 +215,14 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.filePath,
         );
 
-        const explanationsBlock = content.createEl('pre');
+        const explanationsBlock = createElement(content, 'pre');
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
         explanationsBlock.setText(explanationAsString);
         content.appendChild(explanationsBlock);
     }
 
     private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
-        const taskList = content.createEl('ul');
+        const taskList = createElement(content, 'ul');
 
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
         const taskLayout = new TaskLayout(this.query.taskLayoutOptions);
@@ -359,7 +359,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             backLink.append(' (');
         }
 
-        const link = backLink.createEl('a');
+        const link = createElement(backLink, 'a');
 
         link.rel = 'noopener';
         link.target = '_blank';
