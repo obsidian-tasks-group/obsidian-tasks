@@ -43,9 +43,9 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
     //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
     //  appendChild() calls.
 
-    const li: HTMLElementTagNameMap[K] = document.createElement(tagName);
-    parentUlElement.appendChild(li);
-    return li;
+    const el: HTMLElementTagNameMap[K] = document.createElement(tagName);
+    parentUlElement.appendChild(el);
+    return el;
 }
 
 export class TaskLineRenderer {
