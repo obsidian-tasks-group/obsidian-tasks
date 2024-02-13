@@ -36,7 +36,7 @@ export type TextRenderer = (
  * @example <caption>Example call:</caption>
  * const li = createElement(this.parentUlElement, 'li');
  */
-function createElement<K extends keyof HTMLElementTagNameMap>(
+export function createElement<K extends keyof HTMLElementTagNameMap>(
     parentUlElement: HTMLElement,
     tagName: K,
     options?: ElementCreationOptions,
