@@ -1,4 +1,10 @@
+---
+publish: true
+---
+
 # Console logging facilities in Tasks
+
+<span class="related-pages">#debugging</span>
 
 The source file [src/lib/logging.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/lib/logging.ts) provides a logging facility that writes to the developer console.
 

@@ -1,5 +1,7 @@
 # How do I enable hidden debugging/visualisation facilities?
 
+<span class="related-pages">#debugging</span>
+
 > [!Released]
 > Introduced in Tasks 1.26.0.
 
