@@ -6,4 +6,5 @@ This section is intended to document how to place debugger breakpoints in the Ta
 
 ## Current Content
 
+- [[Console logging facilities in Tasks]]
 - [[How do I enable hidden debugging and visualisation facilities]]
