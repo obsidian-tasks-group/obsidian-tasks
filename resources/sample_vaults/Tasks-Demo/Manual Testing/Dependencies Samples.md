@@ -1,5 +1,7 @@
 # Dependencies Samples
 
+## Write the article
+
 - [ ] #task Choose a topic 🆔 ya44g5
 - [ ] #task Research the subject 🆔 g7317o ⛔️ ya44g5
 - [ ] #task Create an outline 🆔 rot7gb ⛔️ g7317o
@@ -7,7 +9,23 @@
 - [ ] #task Craft a conclusion 🆔 0wigip ⛔️ mvplec
 - [ ] #task Proofread and edit 🆔 5ti6bf ⛔️ 0wigip
 - [ ] #task Publish the article ⛔️ 5ti6bf
+
+## Multiple dependencies
+
+- [ ] #task Invite the guests 🆔 iv0euw
+- [ ] #task Make the food 🆔 rukpy8
+- [ ] #task Have a party ⛔️ iv0euw,rukpy8
+
+## No dependencies
+
 - [ ] #task Do something on a different project
+
+## Problem cases
+
+- [ ] #task Cyclic Dependency 1 🆔 cyclic1 ⛔️ cyclic2
+- [ ] #task Cyclic Dependency 2 🆔 cyclic2 ⛔️ cyclic1
+- [ ] #task Depends on a non-existent task ⛔️ doesnotexist
+- [ ] #task Depends on a non-existent task ⛔️ Not-A-Valid-ID
 
 ---
 
