@@ -21,6 +21,33 @@ export type TextRenderer = (
     obsidianComponent: Component | null, // null is allowed here only for tests
 ) => Promise<void>;
 
+/**
+ * Create an HTML element.
+ *
+ * Unlike the equivalent Obsidian convenience function li.createEl(),
+ * this can be called from our automated tests.
+ *
+ * @param parentUlElement
+ * @param tagName
+ *
+ * @example <caption>Example call:</caption>
+ * const li = createElement(this.parentUlElement, 'li');
+ */
+function createElement<K extends keyof HTMLElementTagNameMap>(
+    parentUlElement: HTMLElement,
+    tagName: K,
+): HTMLElementTagNameMap[K] {
+    // Maintenance note:
+    //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
+    //  when running tests, and we want the tests to be able to create the full div and span structure,
+    //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
+    //  appendChild() calls.
+
+    const li: HTMLElementTagNameMap[K] = document.createElement(tagName);
+    parentUlElement.appendChild(li);
+    return li;
+}
+
 export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianComponent: Component | null;
@@ -88,16 +115,10 @@ export class TaskLineRenderer {
      *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine(task: Task, taskIndex: number, isFilenameUnique?: boolean): Promise<HTMLLIElement> {
-        const li: HTMLLIElement = document.createElement('li');
-        this.parentUlElement.appendChild(li);
+        const li = createElement(this.parentUlElement, 'li');
 
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-        // Maintenance note:
-        //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
-        //  when running tests, and we want the tests to be able to create the full div and span structure,
-        //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
-        //  appendChild() calls.
         const textSpan = document.createElement('span');
         li.appendChild(textSpan);
         textSpan.classList.add('tasks-list-text');
