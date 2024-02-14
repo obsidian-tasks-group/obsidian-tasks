@@ -29,9 +29,6 @@ export type TextRenderer = (
  *
  * @param parentElement
  * @param tagName
- * @param options - See the `document.createElement()` call in
- *      [Web component example](https://developer.mozilla.org/en-US/docs/web/api/document/createelement#web_component_example)
- *      for an example of use.
  *
  * @example <caption>Example call:</caption>
  * const li = createElement(parentElement, 'li');
@@ -39,7 +36,6 @@ export type TextRenderer = (
 export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     parentElement: HTMLElement,
     tagName: K,
-    options?: ElementCreationOptions,
 ): HTMLElementTagNameMap[K] {
     // Maintenance note:
     //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
@@ -47,7 +43,7 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
     //  appendChild() calls.
 
-    const el: HTMLElementTagNameMap[K] = document.createElement(tagName, options);
+    const el: HTMLElementTagNameMap[K] = document.createElement(tagName);
     parentElement.appendChild(el);
     return el;
 }
