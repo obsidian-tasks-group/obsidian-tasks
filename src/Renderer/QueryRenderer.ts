@@ -346,9 +346,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             header = 'h5';
         }
 
-        const headerEl = content.createEl(header, {
-            cls: 'tasks-group-heading',
-        });
+        const headerEl = createAndAppendElement(content, header);
+        headerEl.addClass('tasks-group-heading');
         await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.filePath, this);
     }
 
