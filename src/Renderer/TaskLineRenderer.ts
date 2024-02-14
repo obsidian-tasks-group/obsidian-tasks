@@ -27,15 +27,15 @@ export type TextRenderer = (
  * Unlike the equivalent Obsidian convenience function li.createEl(),
  * this can be called from our automated tests.
  *
- * @param parentElement
  * @param tagName
+ * @param parentElement
  *
  * @example <caption>Example call:</caption>
  * const li = createElement(parentElement, 'li');
  */
 export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
-    parentElement: HTMLElement,
     tagName: K,
+    parentElement: HTMLElement,
 ): HTMLElementTagNameMap[K] {
     // Maintenance note:
     //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
@@ -115,17 +115,17 @@ export class TaskLineRenderer {
      *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine(task: Task, taskIndex: number, isFilenameUnique?: boolean): Promise<HTMLLIElement> {
-        const li = createAndAppendElement(this.parentUlElement, 'li');
+        const li = createAndAppendElement('li', this.parentUlElement);
 
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-        const textSpan = createAndAppendElement(li, 'span');
+        const textSpan = createAndAppendElement('span', li);
         textSpan.classList.add('tasks-list-text');
         await this.taskToHtml(task, textSpan, li);
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
         // moving the code, remember to update that reference too.
-        const checkbox = createAndAppendElement(li, 'input');
+        const checkbox = createAndAppendElement('input', li);
         checkbox.classList.add('task-list-item-checkbox');
         checkbox.type = 'checkbox';
         if (task.status.symbol !== ' ') {
@@ -182,13 +182,13 @@ export class TaskLineRenderer {
             );
             if (componentString) {
                 // Create the text span that will hold the rendered component
-                const span = createAndAppendElement(parentElement, 'span');
+                const span = createAndAppendElement('span', parentElement);
 
                 // Inside that text span, we are creating another internal span, that will hold the text itself.
                 // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
                 // to differentiate between the container of the text and the text itself, so it will be possible
                 // to do things like surrounding only the text (rather than its whole placeholder) with a highlight
-                const internalSpan = createAndAppendElement(span, 'span');
+                const internalSpan = createAndAppendElement('span', span);
                 await this.renderComponentText(internalSpan, componentString, component, task);
                 this.addInternalClasses(component, internalSpan);
 
