@@ -22,16 +22,16 @@ export type TextRenderer = (
 ) => Promise<void>;
 
 /**
- * Create an HTML element.
+ * Create an HTML element, and append it to a parent element.
  *
  * Unlike the equivalent Obsidian convenience function li.createEl(),
  * this can be called from our automated tests.
  *
- * @param tagName
- * @param parentElement
+ * @param tagName - the type of element to be created, for example 'ul', 'div', 'span', 'li'.
+ * @param parentElement - the parent element, to which the created element will be appended.
  *
  * @example <caption>Example call:</caption>
- * const li = createElement(parentElement, 'li');
+ * const li = createAndAppendElement('li', parentElement);
  */
 export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     tagName: K,
