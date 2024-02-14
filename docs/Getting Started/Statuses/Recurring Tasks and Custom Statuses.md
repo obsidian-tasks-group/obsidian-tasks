@@ -51,7 +51,7 @@ linkStyle default stroke:gray
 ```
 <!-- endInclude -->
 
-And we have selected the Tasks setting to put [[#Order of the new task|the new recurrence below the initial one]].
+And we have selected the Tasks setting to put [[Recurring Tasks#Order of the new task|the new recurrence below the initial one]].
 
 Now imagine we have the **following task line**:
 
