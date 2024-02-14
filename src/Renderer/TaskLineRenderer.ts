@@ -36,7 +36,7 @@ export type TextRenderer = (
  * @example <caption>Example call:</caption>
  * const li = createElement(parentElement, 'li');
  */
-export function createElement<K extends keyof HTMLElementTagNameMap>(
+export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     parentElement: HTMLElement,
     tagName: K,
     options?: ElementCreationOptions,
@@ -119,17 +119,17 @@ export class TaskLineRenderer {
      *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine(task: Task, taskIndex: number, isFilenameUnique?: boolean): Promise<HTMLLIElement> {
-        const li = createElement(this.parentUlElement, 'li');
+        const li = createAndAppendElement(this.parentUlElement, 'li');
 
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-        const textSpan = createElement(li, 'span');
+        const textSpan = createAndAppendElement(li, 'span');
         textSpan.classList.add('tasks-list-text');
         await this.taskToHtml(task, textSpan, li);
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
         // moving the code, remember to update that reference too.
-        const checkbox = createElement(li, 'input');
+        const checkbox = createAndAppendElement(li, 'input');
         checkbox.classList.add('task-list-item-checkbox');
         checkbox.type = 'checkbox';
         if (task.status.symbol !== ' ') {
@@ -186,13 +186,13 @@ export class TaskLineRenderer {
             );
             if (componentString) {
                 // Create the text span that will hold the rendered component
-                const span = createElement(parentElement, 'span');
+                const span = createAndAppendElement(parentElement, 'span');
 
                 // Inside that text span, we are creating another internal span, that will hold the text itself.
                 // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
                 // to differentiate between the container of the text and the text itself, so it will be possible
                 // to do things like surrounding only the text (rather than its whole placeholder) with a highlight
-                const internalSpan = createElement(span, 'span');
+                const internalSpan = createAndAppendElement(span, 'span');
                 await this.renderComponentText(internalSpan, componentString, component, task);
                 this.addInternalClasses(component, internalSpan);
 
