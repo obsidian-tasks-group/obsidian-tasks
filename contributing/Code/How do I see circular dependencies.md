@@ -4,7 +4,7 @@ publish: true
 
 # How do I see circular dependencies
 
-This page assumes that you have already set up your [[Setting up build environment#local build environment]]
+This page assumes that you have already set up your [[Local development]]
 
 ## What are circular dependencies?
 

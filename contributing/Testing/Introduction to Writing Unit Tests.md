@@ -25,7 +25,7 @@ There are some sub-folders there, to try and keep the number of files manageable
 
 ### Introduction to Jest
 
-We use the [[About Testing#Jest test framework|Jest test framework]] for writing our tests.
+We use the [[Jest test framework]] for writing our tests.
 
 This looks like a good introduction to writing tests using Jest: [Jest Tutorial for Beginners: Getting Started With JavaScript Testing](https://www.valentinog.com/blog/jest/#test-structure-and-a-first-failing-test).
 
