@@ -283,12 +283,11 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[]) {
-        // TODO Need to figure out how to replace this with a call to createElement() and then set cls, href and title.
-        const editTaskPencil = listItem.createEl('a', {
-            cls: 'tasks-edit',
-            href: '#',
-            title: 'Edit task',
-        });
+        const editTaskPencil = createAndAppendElement(listItem, 'a');
+        editTaskPencil.addClass('tasks-edit');
+        editTaskPencil.title = 'Edit task';
+        editTaskPencil.href = '#';
+
         editTaskPencil.onClickEvent((event: MouseEvent) => {
             event.preventDefault();
 
