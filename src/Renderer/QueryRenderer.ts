@@ -163,7 +163,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
 
-        const content = createAndAppendElement(this.containerEl, 'div');
+        const content = createAndAppendElement('div', this.containerEl);
         if (state === State.Warm && this.query.error === undefined) {
             await this.renderQuerySearchResults(tasks, state, content);
         } else if (this.query.error !== undefined) {
@@ -215,14 +215,14 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.filePath,
         );
 
-        const explanationsBlock = createAndAppendElement(content, 'pre');
+        const explanationsBlock = createAndAppendElement('pre', content);
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
         explanationsBlock.setText(explanationAsString);
         content.appendChild(explanationsBlock);
     }
 
     private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
-        const taskList = createAndAppendElement(content, 'ul');
+        const taskList = createAndAppendElement('ul', content);
 
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
         const taskLayout = new TaskLayout(this.query.taskLayoutOptions);
@@ -283,7 +283,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[]) {
-        const editTaskPencil = createAndAppendElement(listItem, 'a');
+        const editTaskPencil = createAndAppendElement('a', listItem);
         editTaskPencil.addClass('tasks-edit');
         editTaskPencil.title = 'Edit task';
         editTaskPencil.href = '#';
@@ -346,7 +346,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             header = 'h5';
         }
 
-        const headerEl = createAndAppendElement(content, header);
+        const headerEl = createAndAppendElement(header, content);
         headerEl.addClass('tasks-group-heading');
         await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.filePath, this);
     }
@@ -358,7 +358,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             backLink.append(' (');
         }
 
-        const link = createAndAppendElement(backLink, 'a');
+        const link = createAndAppendElement('a', backLink);
 
         link.rel = 'noopener';
         link.target = '_blank';
@@ -420,7 +420,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
         const classes = ('tasks-postpone' + (shortMode ? ' tasks-postpone-short-mode' : '')).split(' ');
 
-        const button = createAndAppendElement(listItem, 'a');
+        const button = createAndAppendElement('a', listItem);
         button.addClasses(classes);
         button.title = buttonTooltipText;
 
