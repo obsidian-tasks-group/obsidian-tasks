@@ -73,7 +73,7 @@ For more information, including adding your own customised statuses, see [[Statu
 - `sort by status` (done or todo)
 
 > [!Tip]
-> `sort by status.type` gives a much more useful sort order than `sort by status`. See [[#Status Type#]] below.
+> `sort by status.type` gives a much more useful sort order than `sort by status`. See [[#Status Type]] below.
 
 Since Tasks 6.0.0, **[[Custom Sorting|custom sorting]] by status** is now possible.
 

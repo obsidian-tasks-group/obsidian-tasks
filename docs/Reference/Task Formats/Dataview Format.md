@@ -152,7 +152,7 @@ Since Tasks 4.6.1, the Auto-Suggest menu *only* appears between square brackets 
 
 Essential reading:
 
-- [[About Task Formats#Impact of non-default formats on Tasks behaviour]]
+- [[About Task Formats#Impact of non-default task formats on Tasks behaviour]]
 - [[About Task Formats#Limitations of task format support]]
 
 Additional limitations, compared to the Dataview's own parsing of task lines:

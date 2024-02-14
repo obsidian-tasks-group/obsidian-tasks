@@ -89,7 +89,7 @@ Because calendar months differ in length, there are some pitfalls in monthly rec
 
 Below are some representative examples to demonstrate the differences in behavior, to help you choose which approach to use.
 
-Note that there are several more month-based options in the [Examples](#examples) section below.
+Note that there are several more month-based options in the [[#Examples]] section below.
 
 ### every month on the last: reliable and safe
 

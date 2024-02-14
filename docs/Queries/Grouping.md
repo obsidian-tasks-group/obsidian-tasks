@@ -958,7 +958,7 @@ Each subsequent `group by` will generate a new heading-level within the existing
 - Second `group by` is displayed as `h5` headings
 - Third and subsequent `group by` are displayed as `h6` headings
 
-See the [screenshots below](#screenshots) for how this looks in practice.
+See the [[#Screenshots|screenshots below]] for how this looks in practice.
 
 > [!info]
 > Headings are displayed in case-sensitive alphabetical order, not the original order.
