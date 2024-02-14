@@ -14,6 +14,10 @@ The goal is to replace this with an automated test of `QueryRenderer`. This is p
 
 ## Instructions
 
+### Part 1 - Full Mode
+
+Do the following, using the tasks code block in [[#Query - Full Mode]].
+
 1. View this file in Obsidian, in Reading mode.
 1. Copy the HTML for the tasks code block:
     1. Open the Obsidian Developer Tools.
@@ -33,14 +37,29 @@ The goal is to replace this with an automated test of `QueryRenderer`. This is p
 1. Review the results
     1. Unless the code has intentionally changed, the only expect difference will be the date of 'tomorrow' in the 'Postpone tooltip'.
 
+### Part 2 - Short Mode
+
+Repeat the above steps for the tasks code block in [[#Query - Short Mode]].
+
+Save the HTML in `HTML from Query - short mode.html`
+
 ## Task
 
 - [ ] #task Do exercises #todo #health 🆔 abcdef ⛔️ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
 
-## Query
+## Query - Full Mode
 
 ```tasks
 path includes {{query.file.path}}
 show urgency
 group by due
+```
+
+## Query - Short Mode
+
+```tasks
+path includes {{query.file.path}}
+show urgency
+group by due
+short mode
 ```
