@@ -21,6 +21,33 @@ export type TextRenderer = (
     obsidianComponent: Component | null, // null is allowed here only for tests
 ) => Promise<void>;
 
+/**
+ * Create an HTML element, and append it to a parent element.
+ *
+ * Unlike the equivalent Obsidian convenience function li.createEl(),
+ * this can be called from our automated tests.
+ *
+ * @param tagName - the type of element to be created, for example 'ul', 'div', 'span', 'li'.
+ * @param parentElement - the parent element, to which the created element will be appended.
+ *
+ * @example <caption>Example call:</caption>
+ * const li = createAndAppendElement('li', parentElement);
+ */
+export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
+    tagName: K,
+    parentElement: HTMLElement,
+): HTMLElementTagNameMap[K] {
+    // Maintenance note:
+    //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
+    //  when running tests, and we want the tests to be able to create the full div and span structure,
+    //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
+    //  appendChild() calls.
+
+    const el: HTMLElementTagNameMap[K] = document.createElement(tagName);
+    parentElement.appendChild(el);
+    return el;
+}
+
 export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianComponent: Component | null;
@@ -88,25 +115,17 @@ export class TaskLineRenderer {
      *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine(task: Task, taskIndex: number, isFilenameUnique?: boolean): Promise<HTMLLIElement> {
-        const li: HTMLLIElement = document.createElement('li');
-        this.parentUlElement.appendChild(li);
+        const li = createAndAppendElement('li', this.parentUlElement);
 
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-        // Maintenance note:
-        //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
-        //  when running tests, and we want the tests to be able to create the full div and span structure,
-        //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
-        //  appendChild() calls.
-        const textSpan = document.createElement('span');
-        li.appendChild(textSpan);
+        const textSpan = createAndAppendElement('span', li);
         textSpan.classList.add('tasks-list-text');
         await this.taskToHtml(task, textSpan, li);
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
         // moving the code, remember to update that reference too.
-        const checkbox = document.createElement('input');
-        li.appendChild(checkbox);
+        const checkbox = createAndAppendElement('input', li);
         checkbox.classList.add('task-list-item-checkbox');
         checkbox.type = 'checkbox';
         if (task.status.symbol !== ' ') {
@@ -163,15 +182,13 @@ export class TaskLineRenderer {
             );
             if (componentString) {
                 // Create the text span that will hold the rendered component
-                const span = document.createElement('span');
-                parentElement.appendChild(span);
+                const span = createAndAppendElement('span', parentElement);
 
                 // Inside that text span, we are creating another internal span, that will hold the text itself.
                 // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
                 // to differentiate between the container of the text and the text itself, so it will be possible
                 // to do things like surrounding only the text (rather than its whole placeholder) with a highlight
-                const internalSpan = document.createElement('span');
-                span.appendChild(internalSpan);
+                const internalSpan = createAndAppendElement('span', span);
                 await this.renderComponentText(internalSpan, componentString, component, task);
                 this.addInternalClasses(component, internalSpan);
 
