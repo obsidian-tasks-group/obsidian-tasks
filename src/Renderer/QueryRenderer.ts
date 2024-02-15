@@ -19,7 +19,7 @@ import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { State } from '../Obsidian/Cache';
-import { TaskLineRenderer } from './TaskLineRenderer';
+import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -163,7 +163,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
 
-        const content = this.containerEl.createEl('div');
+        const content = createAndAppendElement('div', this.containerEl);
         if (state === State.Warm && this.query.error === undefined) {
             await this.renderQuerySearchResults(tasks, state, content);
         } else if (this.query.error !== undefined) {
@@ -215,14 +215,14 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.filePath,
         );
 
-        const explanationsBlock = content.createEl('pre');
+        const explanationsBlock = createAndAppendElement('pre', content);
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
         explanationsBlock.setText(explanationAsString);
         content.appendChild(explanationsBlock);
     }
 
     private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
-        const taskList = content.createEl('ul');
+        const taskList = createAndAppendElement('ul', content);
 
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
         const taskLayout = new TaskLayout(this.query.taskLayoutOptions);
@@ -283,11 +283,11 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[]) {
-        const editTaskPencil = listItem.createEl('a', {
-            cls: 'tasks-edit',
-            href: '#',
-            title: 'Edit task',
-        });
+        const editTaskPencil = createAndAppendElement('a', listItem);
+        editTaskPencil.addClass('tasks-edit');
+        editTaskPencil.title = 'Edit task';
+        editTaskPencil.href = '#';
+
         editTaskPencil.onClickEvent((event: MouseEvent) => {
             event.preventDefault();
 
@@ -346,9 +346,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             header = 'h5';
         }
 
-        const headerEl = content.createEl(header, {
-            cls: 'tasks-group-heading',
-        });
+        const headerEl = createAndAppendElement(header, content);
+        headerEl.addClass('tasks-group-heading');
         await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.filePath, this);
     }
 
@@ -359,7 +358,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             backLink.append(' (');
         }
 
-        const link = backLink.createEl('a');
+        const link = createAndAppendElement('a', backLink);
 
         link.rel = 'noopener';
         link.target = '_blank';
@@ -419,10 +418,13 @@ class QueryRenderChild extends MarkdownRenderChild {
         const amount = 1;
         const timeUnit = 'day';
         const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
-        const button = listItem.createEl('a', {
-            cls: 'tasks-postpone' + (shortMode ? ' tasks-postpone-short-mode' : ''),
-            title: buttonTooltipText,
-        });
+
+        const button = createAndAppendElement('a', listItem);
+        button.addClass('tasks-postpone');
+        if (shortMode) {
+            button.addClass('tasks-postpone-short-mode');
+        }
+        button.title = buttonTooltipText;
 
         button.addEventListener('click', (ev: MouseEvent) => {
             ev.preventDefault(); // suppress the default click behavior
