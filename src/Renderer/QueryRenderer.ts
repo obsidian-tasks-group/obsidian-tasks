@@ -418,10 +418,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         const amount = 1;
         const timeUnit = 'day';
         const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
-        const classes = ('tasks-postpone' + (shortMode ? ' tasks-postpone-short-mode' : '')).split(' ');
 
         const button = createAndAppendElement('a', listItem);
-        button.addClasses(classes);
+        button.addClass('tasks-postpone');
+        if (shortMode) {
+            button.addClass('tasks-postpone-short-mode');
+        }
         button.title = buttonTooltipText;
 
         button.addEventListener('click', (ev: MouseEvent) => {
