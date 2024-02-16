@@ -6,7 +6,7 @@ function createTasksValidationCodeBlock(filters: string[]) {
     return `
 \`\`\`\`text
 \`\`\`tasks
-# These description instructions need to be all on one line:
+# These instructions need to be all on one line:
 ${filters.join(' OR ')}
 
 # Optionally, uncomment this line and exclude your templates location
