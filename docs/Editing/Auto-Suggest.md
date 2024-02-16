@@ -127,9 +127,15 @@ As soon as it finds any unrecognised text, it stops reading, and ignores any emo
 > [!warning]
 > Mixing any descriptive text in amongst the emojis and their values **will cause emojis before the descriptive text to not be recognised by Tasks, and not be searchable**.
 
-See the next section for how to check your tasks, as you start using this powerful feature.
+We are tracking this ordering limitation in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).
 
-### How can I check that my Task is formatted correctly?
+See the next two sections for how to check your tasks, as you start using this powerful feature.
+
+### How can I find all tasks that may be formatted incorrectly?
+
+See [[Find tasks with invalid data#Finding unread emojis|Finding unread emojis]] to find and fix any tasks with unread emoji values.
+
+### How can I check that a particular Task is formatted correctly?
 
 The Tasks plugin's ability to search tasks depends on the information in the tasks matching the plugin's parsing behaviour, described in the previous section. If not, tasks may be silently omitted from task searches.
 
