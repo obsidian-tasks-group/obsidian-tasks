@@ -37,19 +37,7 @@ describe('validate-tasks', () => {
         });
 
         const descriptionInstructions = allEmojis.map((emoji) => `(description includes ${emoji})`);
-        const output = `
-\`\`\`\`text
-\`\`\`tasks
-# These description instructions need to be all on one line:
-${descriptionInstructions.join(' OR ')}
-
-# Optionally, uncomment this line and exclude your templates location
-# path does not include _templates
-
-group by path
-\`\`\`
-\`\`\`\`
-`;
+        const output = createTasksValidationCodeBlock(descriptionInstructions);
         verifyWithFileExtension(output, 'text');
     });
 
