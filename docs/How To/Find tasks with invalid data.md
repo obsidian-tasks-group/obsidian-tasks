@@ -31,7 +31,7 @@ The following tasks block lists any tasks that have emoji in the description, wh
 <!-- include: ValidateTasks.test.validate-tasks_find-unread-emojis.approved.text -->
 ````text
 ```tasks
-# These description instructions need to be all on one line:
+# These instructions need to be all on one line:
 (description includes 🔺) OR (description includes ⏫) OR (description includes 🔼) OR (description includes 🔽) OR (description includes ⏬) OR (description includes 🛫) OR (description includes ➕) OR (description includes ⏳) OR (description includes 📅) OR (description includes ✅) OR (description includes ❌) OR (description includes 🔁) OR (description includes ⛔️) OR (description includes 🆔)
 
 # Optionally, uncomment this line and exclude your templates location
@@ -61,6 +61,7 @@ The following tasks block lists any tasks with invalid dates, meaning data that 
 <!-- include: ValidateTasks.test.validate-tasks_find_problem_dates.approved.text -->
 ````text
 ```tasks
+# These instructions need to be all on one line:
 (cancelled date is invalid) OR (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
 
 # Optionally, uncomment this line and exclude your templates location
