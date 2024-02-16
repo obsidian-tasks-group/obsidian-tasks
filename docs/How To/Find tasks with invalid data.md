@@ -78,7 +78,14 @@ So to fix any found tasks, use the [[Backlinks|backlink]] to navigate to the ori
 
 ## Invalid recurrence rules
 
-There is not currently a way to find any tasks with invalid recurrence rules.
+The following finds tasks that are likely to have invalid recurrence rules, as they are seen as not recurring, despite having the 🔁 emoji.
+
+````text
+```tasks
+is not recurring
+filter by function task.originalMarkdown.includes('🔁')
+```
+````
 
 ## More Information
 
