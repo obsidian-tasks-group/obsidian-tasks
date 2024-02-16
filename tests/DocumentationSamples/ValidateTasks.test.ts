@@ -43,6 +43,7 @@ group by path
         const output = `
 \`\`\`\`text
 \`\`\`tasks
+# These description instructions need to be all on one line:
 ${instructions.join(' OR ')}
 
 # Optionally, uncomment this line and exclude your templates location
