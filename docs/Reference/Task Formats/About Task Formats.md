@@ -74,6 +74,7 @@ In this early support for multiple formats, the following facilities don't (yet)
 - The order of fields on the task line still matters.
   - See [[Auto-Suggest#What do I need to know about the order of items in a task?]]
   - We are tracking this in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).
+  - See [[Find tasks with invalid data#Finding unread emojis|Finding unread emojis]] to find and fix any tasks with unread emoji values.
 - Currently, Tasks only supports one format at a time (as mentioned above).
   - If you select the Dataview format, it will no longer read or write Tasks emoji signifiers.
   - We are tracking this in [issue #1891](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1891).

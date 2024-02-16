@@ -231,7 +231,10 @@ This means that you can only put **block links** (`^link-name`) and **tags** aft
 
 We are tracking this in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).
 
-If you are concerned that some values in a task are not being parsed as you intended, perhaps because a task is not being found by Tasks searches, you can view the task in the [[Create or edit Task|‘Create or edit Task’ Modal]].
+If you are concerned that some values in a task are not being parsed as you intended, perhaps because a task is not being found by Tasks searches, you can:
+
+- view an individual task in the [[Create or edit Task|‘Create or edit Task’ Modal]]
+- search for all possible problems: see [[Find tasks with invalid data#Finding unread emojis|Finding unread emojis]].
 
 If there are any **Tasks emojis visible in the Description field**, close the modal and delete or move to the left any unrecognised text.
 
