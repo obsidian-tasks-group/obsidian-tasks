@@ -42,11 +42,20 @@ export function makeDefaultSuggestionBuilder(
         // rather than insert a suggestion
         if (suggestions.length > 0 && !suggestions.some((value) => value.suggestionType === 'match')) {
             // No actual match, only default ones
-            suggestions.unshift({
-                suggestionType: 'empty',
-                displayText: '⏎',
-                appendText: '\n',
-            });
+            if (settings.taskFormat == 'dataview') {
+                suggestions.unshift({
+                    // suggestionType: 'empty',
+                    displayText: '⏎',
+                    appendText: ' ',
+                    insertAt: cursorPos + 1,
+                });
+            } else {
+                suggestions.unshift({
+                    suggestionType: 'empty',
+                    displayText: '⏎',
+                    appendText: '\n',
+                });
+            }
         }
 
         // Either way, after all the aggregations above, never suggest more than the max items
@@ -69,6 +78,7 @@ function addTaskPropertySuggestions(
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
 
     const genericSuggestions: SuggestInfo[] = [];
+    const gap = _settings.taskFormat == 'dataview' ? '' : ' ';
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     if (!line.includes(symbols.dueDateSymbol))
@@ -87,27 +97,51 @@ function addTaskPropertySuggestions(
             appendText: `${symbols.scheduledDateSymbol} `,
         });
     if (!hasPriority(line)) {
-        genericSuggestions.push({
-            displayText: `${symbols.prioritySymbols.High} high priority`,
-            appendText: `${symbols.prioritySymbols.High} `,
-        });
-        genericSuggestions.push({
-            displayText: `${symbols.prioritySymbols.Medium} medium priority`,
-            appendText: `${symbols.prioritySymbols.Medium} `,
-        });
-        genericSuggestions.push({
-            displayText: `${symbols.prioritySymbols.Low} low priority`,
-            appendText: `${symbols.prioritySymbols.Low} `,
-        });
-        genericSuggestions.push({
-            displayText: `${symbols.prioritySymbols.Highest} highest priority`,
-            appendText: `${symbols.prioritySymbols.Highest} `,
-        });
-        genericSuggestions.push({
-            displayText: `${symbols.prioritySymbols.Lowest} lowest priority`,
-            appendText: `${symbols.prioritySymbols.Lowest} `,
-        });
+        if (_settings.taskFormat == 'dataview') {
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.High} priority`,
+                appendText: `${symbols.prioritySymbols.High}`,
+            });
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.Medium} priority`,
+                appendText: `${symbols.prioritySymbols.Medium}`,
+            });
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.Low} priority`,
+                appendText: `${symbols.prioritySymbols.Low}`,
+            });
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.Highest} priority`,
+                appendText: `${symbols.prioritySymbols.Highest}`,
+            });
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.Lowest} priority`,
+                appendText: `${symbols.prioritySymbols.Lowest}`,
+            });
+        } else {
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.High} high priority`,
+                appendText: `${symbols.prioritySymbols.High} `,
+            });
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.Medium} medium priority`,
+                appendText: `${symbols.prioritySymbols.Medium} `,
+            });
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.Low} low priority`,
+                appendText: `${symbols.prioritySymbols.Low} `,
+            });
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.Highest} highest priority`,
+                appendText: `${symbols.prioritySymbols.Highest} `,
+            });
+            genericSuggestions.push({
+                displayText: `${symbols.prioritySymbols.Lowest} lowest priority`,
+                appendText: `${symbols.prioritySymbols.Lowest} `,
+            });
+        }
     }
+
     if (!line.includes(symbols.recurrenceSymbol))
         genericSuggestions.push({
             displayText: `${symbols.recurrenceSymbol} recurring (repeat)`,
@@ -120,7 +154,7 @@ function addTaskPropertySuggestions(
             // We don't want this to match when the user types "today"
             textToMatch: `${symbols.createdDateSymbol} created`,
             displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
-            appendText: `${symbols.createdDateSymbol} ${formattedDate} `,
+            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + gap,
         });
     }
 
@@ -184,7 +218,7 @@ function addDatesSuggestions(
         'next month',
         'next year',
     ];
-
+    const gap = settings.taskFormat == 'dataview' ? '' : ' ';
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const dateMatch = matchByPosition(line, dateRegex, cursorPos);
@@ -236,7 +270,7 @@ function addDatesSuggestions(
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,
-                appendText: `${datePrefix} ${formattedDate} `,
+                appendText: `${datePrefix} ${formattedDate}` + gap,
                 insertAt: dateMatch.index,
                 insertSkip: dateMatch[0].length,
             });
@@ -269,7 +303,7 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
         'every week on Friday',
         'every week on Saturday',
     ];
-
+    const gap = settings.taskFormat == 'dataview' ? '' : ' ';
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
@@ -287,7 +321,7 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
                 dueDate: null,
             })?.toText();
             if (parsedRecurrence) {
-                const appendedText = `${recurrencePrefix} ${parsedRecurrence} `;
+                const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + gap;
                 results.push({
                     suggestionType: 'match',
                     displayText: `✅ ${parsedRecurrence}`,
@@ -329,7 +363,7 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
             results.push({
                 suggestionType: 'match',
                 displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match} `,
+                appendText: `${recurrencePrefix} ${match}` + gap,
                 insertAt: recurrenceMatch.index,
                 insertSkip: recurrenceMatch[0].length,
             });
