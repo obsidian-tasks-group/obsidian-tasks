@@ -78,7 +78,7 @@ function addTaskPropertySuggestions(
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
 
     const genericSuggestions: SuggestInfo[] = [];
-    const gap = _settings.taskFormat == 'dataview' ? '' : ' ';
+    const postfixGap = _settings.taskFormat == 'dataview' ? '' : ' ';
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     if (!line.includes(symbols.dueDateSymbol))
@@ -97,47 +97,19 @@ function addTaskPropertySuggestions(
             appendText: `${symbols.scheduledDateSymbol} `,
         });
     if (!hasPriority(line)) {
-        if (_settings.taskFormat == 'dataview') {
+        const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
+        const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
+
+        for (let i = 0; i < priorityTexts.length; i++) {
+            const priorityText = priorityTexts[i];
+            const prioritySymbol = prioritySymbols[priorityText];
+
             genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.High} priority`,
-                appendText: `${symbols.prioritySymbols.High}`,
-            });
-            genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.Medium} priority`,
-                appendText: `${symbols.prioritySymbols.Medium}`,
-            });
-            genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.Low} priority`,
-                appendText: `${symbols.prioritySymbols.Low}`,
-            });
-            genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.Highest} priority`,
-                appendText: `${symbols.prioritySymbols.Highest}`,
-            });
-            genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.Lowest} priority`,
-                appendText: `${symbols.prioritySymbols.Lowest}`,
-            });
-        } else {
-            genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.High} high priority`,
-                appendText: `${symbols.prioritySymbols.High} `,
-            });
-            genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.Medium} medium priority`,
-                appendText: `${symbols.prioritySymbols.Medium} `,
-            });
-            genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.Low} low priority`,
-                appendText: `${symbols.prioritySymbols.Low} `,
-            });
-            genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.Highest} highest priority`,
-                appendText: `${symbols.prioritySymbols.Highest} `,
-            });
-            genericSuggestions.push({
-                displayText: `${symbols.prioritySymbols.Lowest} lowest priority`,
-                appendText: `${symbols.prioritySymbols.Lowest} `,
+                displayText:
+                    _settings.taskFormat == 'dataview'
+                        ? `${prioritySymbol} priority`
+                        : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
+                appendText: `${prioritySymbol}${postfixGap}`,
             });
         }
     }
@@ -154,7 +126,7 @@ function addTaskPropertySuggestions(
             // We don't want this to match when the user types "today"
             textToMatch: `${symbols.createdDateSymbol} created`,
             displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
-            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + gap,
+            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + postfixGap,
         });
     }
 
@@ -218,7 +190,7 @@ function addDatesSuggestions(
         'next month',
         'next year',
     ];
-    const gap = settings.taskFormat == 'dataview' ? '' : ' ';
+    const postfixGap = settings.taskFormat == 'dataview' ? '' : ' ';
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const dateMatch = matchByPosition(line, dateRegex, cursorPos);
@@ -270,7 +242,7 @@ function addDatesSuggestions(
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,
-                appendText: `${datePrefix} ${formattedDate}` + gap,
+                appendText: `${datePrefix} ${formattedDate}` + postfixGap,
                 insertAt: dateMatch.index,
                 insertSkip: dateMatch[0].length,
             });
@@ -303,7 +275,7 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
         'every week on Friday',
         'every week on Saturday',
     ];
-    const gap = settings.taskFormat == 'dataview' ? '' : ' ';
+    const postfixGap = settings.taskFormat == 'dataview' ? '' : ' ';
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
@@ -321,7 +293,7 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
                 dueDate: null,
             })?.toText();
             if (parsedRecurrence) {
-                const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + gap;
+                const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + postfixGap;
                 results.push({
                     suggestionType: 'match',
                     displayText: `✅ ${parsedRecurrence}`,
@@ -363,7 +335,7 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
             results.push({
                 suggestionType: 'match',
                 displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match}` + gap,
+                appendText: `${recurrencePrefix} ${match}` + postfixGap,
                 insertAt: recurrenceMatch.index,
                 insertSkip: recurrenceMatch[0].length,
             });
