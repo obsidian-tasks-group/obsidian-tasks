@@ -108,6 +108,11 @@ function addEventsToLinkToTaskLine(link: HTMLAnchorElement, task: Task, app: App
     });
 }
 
+function linkToTaskLine(task: Task, linkText: string, listItem: HTMLElement, shortMode: boolean, app: App) {
+    const link = createLinkToTaskLine(listItem, shortMode, linkText);
+    addEventsToLinkToTaskLine(link, task, app);
+}
+
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private plugin: TasksPlugin;
@@ -416,10 +421,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         } else {
             linkText = task.getLinkText({ isFilenameUnique }) ?? '';
         }
-        const link = createLinkToTaskLine(listItem, shortMode, linkText);
-
         const app = this.app;
-        addEventsToLinkToTaskLine(link, task, app);
+        linkToTaskLine(task, linkText, listItem, shortMode, app);
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
