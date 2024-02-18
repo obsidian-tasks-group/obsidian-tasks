@@ -3,8 +3,15 @@ import type { Task } from '../Task/Task';
 import { getTaskLineAndFile } from '../Obsidian/File';
 import { createAndAppendElement } from './TaskLineRenderer';
 
-export function linkToTaskLine(task: Task, linkText: string, listItem: HTMLElement, shortMode: boolean, app: App) {
-    const link = createLinkToTaskLine(listItem, shortMode, !shortMode, linkText);
+export function linkToTaskLine(
+    task: Task,
+    linkText: string,
+    listItem: HTMLElement,
+    shortMode: boolean,
+    surroundWithParentheses: boolean,
+    app: App,
+) {
+    const link = createLinkToTaskLine(listItem, shortMode, surroundWithParentheses, linkText);
     addEventsToLinkToTaskLine(link, task, app);
 }
 

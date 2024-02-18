@@ -361,7 +361,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             linkText = task.getLinkText({ isFilenameUnique }) ?? '';
         }
 
-        linkToTaskLine(task, linkText, listItem, shortMode, this.app);
+        linkToTaskLine(task, linkText, listItem, shortMode, !shortMode, this.app);
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {

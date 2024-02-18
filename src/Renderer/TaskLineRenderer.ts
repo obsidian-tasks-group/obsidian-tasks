@@ -280,7 +280,7 @@ export class TaskLineRenderer {
                 // TODO Really want to show some kind of preview when hovering over the link,
                 //      to see the task without needing to jump to it.
                 // Use global app for now.
-                linkToTaskLine(firstDependentTask, componentString, span, true, app);
+                linkToTaskLine(firstDependentTask, componentString, span, true, false, app);
             } else {
                 span.innerHTML = componentString;
             }
@@ -289,7 +289,7 @@ export class TaskLineRenderer {
             if (firstDependee) {
                 // TODO This only links to the first referenced task, instead of all of them.
                 // Also, See also the TODOS for Id above.
-                linkToTaskLine(firstDependee, componentString, span, true, app);
+                linkToTaskLine(firstDependee, componentString, span, true, false, app);
             } else {
                 span.innerHTML = componentString;
             }
