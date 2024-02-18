@@ -352,6 +352,13 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
+        let linkText: string;
+        if (shortMode) {
+            linkText = ' 🔗';
+        } else {
+            linkText = task.getLinkText({ isFilenameUnique }) ?? '';
+        }
+
         const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
         if (!shortMode) {
@@ -365,13 +372,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         link.addClass('internal-link');
         if (shortMode) {
             link.addClass('internal-link-short-mode');
-        }
-
-        let linkText: string;
-        if (shortMode) {
-            linkText = ' 🔗';
-        } else {
-            linkText = task.getLinkText({ isFilenameUnique }) ?? '';
         }
 
         link.setText(linkText);
