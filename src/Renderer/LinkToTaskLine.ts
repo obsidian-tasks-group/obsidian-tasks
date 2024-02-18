@@ -11,7 +11,8 @@ export function linkToTaskLine(task: Task, linkText: string, listItem: HTMLEleme
 function createLinkToTaskLine(listItem: HTMLElement, shortMode: boolean, linkText: string) {
     const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
-    if (!shortMode) {
+    const doNotSurroundWithParentheses = shortMode;
+    if (!doNotSurroundWithParentheses) {
         backLink.append(' (');
     }
 
@@ -26,7 +27,7 @@ function createLinkToTaskLine(listItem: HTMLElement, shortMode: boolean, linkTex
 
     link.setText(linkText);
 
-    if (!shortMode) {
+    if (!doNotSurroundWithParentheses) {
         backLink.append(')');
     }
     return link;
