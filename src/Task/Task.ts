@@ -854,10 +854,19 @@ export class Task {
     }
 
     public onCompletion(completedTask: Task) {
+        const ocFlag = ' 🏁 ';
         const taskString = completedTask.toString();
-        if (!taskString.includes(' 🏁 ')) {
+        if (!taskString.includes(ocFlag)) {
             return true;
         }
+        // type ocAction = "Delete" | "Archive";
+        // const compareValue = ocFlag + ;
+        //
+        // switch (compareValue){
+        //     case 'x y':
+        //         //"some code here"
+        //         break;
+        // }
     }
 }
 
