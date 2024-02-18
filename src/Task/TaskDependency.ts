@@ -60,8 +60,27 @@ export function removeDependency(parent: Task, child: Task) {
     return newParent;
 }
 
-export function firstTaskDependingOnThisIDWithAnyStatus(id: string, allTasks: Readonly<Task[]>) {
+export function firstTaskDependingOnThisIDWithAnyStatus(id: string, allTasks: Readonly<Task[]>): Task | undefined {
     return allTasks.find((task) => {
         return task.dependsOn.includes(id);
     });
+}
+
+export function firstTaskThisDependsOnWithAnyStatus(task: Task, allTasks: Readonly<Task[]>): Task | undefined {
+    if (task.dependsOn.length === 0) {
+        return undefined;
+    }
+
+    for (const depId of task.dependsOn) {
+        const depTask = allTasks.find((task) => task.id === depId);
+        if (!depTask) {
+            // There is no task with this id.
+            continue;
+        }
+
+        // We found a task that this depends on:
+        return depTask;
+    }
+
+    return undefined;
 }

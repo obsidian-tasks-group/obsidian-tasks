@@ -9,7 +9,7 @@ import { StatusRegistry } from '../Statuses/StatusRegistry';
 import type { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
-import { firstTaskDependingOnThisIDWithAnyStatus } from '../Task/TaskDependency';
+import { firstTaskDependingOnThisIDWithAnyStatus, firstTaskThisDependsOnWithAnyStatus } from '../Task/TaskDependency';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 import { linkToTaskLine } from './LinkToTaskLine';
 
@@ -279,6 +279,15 @@ export class TaskLineRenderer {
                 // TODO Use styling to indicate if no tasks depend on this one.
                 // Use global app for now.
                 linkToTaskLine(firstDependentTask, componentString, span, true, app);
+            } else {
+                span.innerHTML = componentString;
+            }
+        } else if (component === TaskLayoutComponent.DependsOn) {
+            const firstDependee = firstTaskThisDependsOnWithAnyStatus(task, this.allTasks);
+            if (firstDependee) {
+                // TODO This only links to the first referenced task, instead of all of them.
+                // Also, See also the TODOS for Id above.
+                linkToTaskLine(firstDependee, componentString, span, true, app);
             } else {
                 span.innerHTML = componentString;
             }
