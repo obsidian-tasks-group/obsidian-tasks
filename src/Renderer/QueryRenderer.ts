@@ -376,6 +376,10 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         link.setText(linkText);
 
+        if (!shortMode) {
+            backLink.append(')');
+        }
+
         // Go to the line the task is defined at
         const vault = this.app.vault;
         link.addEventListener('click', async (ev: MouseEvent) => {
@@ -408,10 +412,6 @@ class QueryRenderChild extends MarkdownRenderChild {
                 }
             }
         });
-
-        if (!shortMode) {
-            backLink.append(')');
-        }
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
