@@ -277,6 +277,8 @@ export class TaskLineRenderer {
                 // TODO Make this add a link in dataview format.
                 // TODO Use CSS different from that of backlink
                 // TODO Use styling to indicate if no tasks depend on this one.
+                // TODO Really want to show some kind of preview when hovering over the link,
+                //      to see the task without needing to jump to it.
                 // Use global app for now.
                 linkToTaskLine(firstDependentTask, componentString, span, true, app);
             } else {
