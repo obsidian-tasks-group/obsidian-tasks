@@ -9,7 +9,9 @@ import { StatusRegistry } from '../Statuses/StatusRegistry';
 import type { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
+import { firstTaskDependingOnThisIDWithAnyStatus } from '../Task/TaskDependency';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
+import { linkToTaskLine } from './LinkToTaskLine';
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
@@ -54,6 +56,7 @@ export class TaskLineRenderer {
     private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
+    private readonly allTasks: Readonly<Task[]>;
 
     private static async obsidianMarkdownRenderer(
         text: string,
@@ -86,18 +89,21 @@ export class TaskLineRenderer {
         parentUlElement,
         taskLayoutOptions,
         queryLayoutOptions,
+        allTasks,
     }: {
         textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         taskLayoutOptions: TaskLayoutOptions;
         queryLayoutOptions: QueryLayoutOptions;
+        allTasks: Readonly<Task[]>;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
         this.taskLayoutOptions = taskLayoutOptions;
         this.queryLayoutOptions = queryLayoutOptions;
+        this.allTasks = allTasks;
     }
 
     /**
@@ -261,6 +267,21 @@ export class TaskLineRenderer {
             span.querySelectorAll('.footnotes').forEach((footnoteElement) => {
                 footnoteElement.remove();
             });
+        } else if (component === TaskLayoutComponent.Id) {
+            const firstDependentTask = firstTaskDependingOnThisIDWithAnyStatus(task.id, this.allTasks);
+            if (firstDependentTask) {
+                // Link to first task that depends on this ID, regardless of status of either task.
+                // The Emoji is included in the link, which means that this works in Short mode.
+                // It works in Reading mode for Tasks format, but does not add a link in Dataview format in Reading mode.
+                // TODO Provide a way to link to all tasks that depend on this ID
+                // TODO Make this add a link in dataview format.
+                // TODO Use CSS different from that of backlink
+                // TODO Use styling to indicate if no tasks depend on this one.
+                // Use global app for now.
+                linkToTaskLine(firstDependentTask, componentString, span, true, app);
+            } else {
+                span.innerHTML = componentString;
+            }
         } else {
             span.innerHTML = componentString;
         }

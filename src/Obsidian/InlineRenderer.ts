@@ -1,4 +1,4 @@
-import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import type { MarkdownPostProcessorContext } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
@@ -6,10 +6,14 @@ import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { Task } from '../Task/Task';
 import { TaskLineRenderer } from '../Renderer/TaskLineRenderer';
 import { TaskLocation } from '../Task/TaskLocation';
+import type TasksPlugin from '../main';
 
 export class InlineRenderer {
-    constructor({ plugin }: { plugin: Plugin }) {
+    private readonly plugin: TasksPlugin;
+
+    constructor({ plugin }: { plugin: TasksPlugin }) {
         plugin.registerMarkdownPostProcessor(this._markdownPostProcessor.bind(this));
+        this.plugin = plugin;
     }
 
     public markdownPostProcessor = this._markdownPostProcessor.bind(this);
@@ -93,6 +97,7 @@ export class InlineRenderer {
             parentUlElement: element,
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
+            allTasks: this.plugin.getTasks(),
         });
 
         // The section index is the nth task within this section.

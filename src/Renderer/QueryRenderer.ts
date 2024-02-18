@@ -239,6 +239,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             parentUlElement: taskList,
             taskLayoutOptions: this.query.taskLayoutOptions,
             queryLayoutOptions: this.query.queryLayoutOptions,
+            allTasks: this.plugin.getTasks(),
         });
 
         for (const [taskIndex, task] of tasks.entries()) {

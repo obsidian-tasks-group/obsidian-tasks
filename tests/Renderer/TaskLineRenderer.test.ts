@@ -44,6 +44,7 @@ async function renderListItem(
         parentUlElement: document.createElement('div'),
         taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
+        allTasks: [task],
     });
     return await taskLineRenderer.renderTaskLine(task, 0);
 }
@@ -99,6 +100,7 @@ describe('task line rendering - HTML', () => {
             parentUlElement: ulElement,
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
+            allTasks: [],
         });
         const listItem = await taskLineRenderer.renderTaskLine(new TaskBuilder().build(), 0);
 

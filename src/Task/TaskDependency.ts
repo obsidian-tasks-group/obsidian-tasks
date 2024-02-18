@@ -59,3 +59,9 @@ export function removeDependency(parent: Task, child: Task) {
 
     return newParent;
 }
+
+export function firstTaskDependingOnThisIDWithAnyStatus(id: string, allTasks: Readonly<Task[]>) {
+    return allTasks.find((task) => {
+        return task.dependsOn.includes(id);
+    });
+}
