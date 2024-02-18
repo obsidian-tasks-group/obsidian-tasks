@@ -78,6 +78,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             line: currentCursor.line,
             ch: value.insertAt ?? currentCursor.ch,
         };
+        console.log('Fromch: ', value.insertAt ?? currentCursor.ch);
         const replaceTo = value.insertSkip
             ? {
                   line: currentCursor.line,
