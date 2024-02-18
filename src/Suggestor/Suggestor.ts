@@ -42,14 +42,7 @@ export function makeDefaultSuggestionBuilder(
         // rather than insert a suggestion
         if (suggestions.length > 0 && !suggestions.some((value) => value.suggestionType === 'match')) {
             // No actual match, only default ones
-            if (settings.taskFormat == 'dataview') {
-                suggestions.unshift({
-                    // suggestionType: 'empty',
-                    displayText: '⏎',
-                    appendText: ' ',
-                    insertAt: cursorPos + 1,
-                });
-            } else {
+            if (settings.taskFormat != 'dataview') {
                 suggestions.unshift({
                     suggestionType: 'empty',
                     displayText: '⏎',
@@ -78,7 +71,9 @@ function addTaskPropertySuggestions(
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
 
     const genericSuggestions: SuggestInfo[] = [];
-    const postfixGap = _settings.taskFormat == 'dataview' ? '' : ' ';
+    const dataviewMode = _settings.taskFormat === 'dataview';
+    const postfix = dataviewMode ? '] ' : ' ';
+    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === ']' ? 1 : 0;
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     if (!line.includes(symbols.dueDateSymbol))
@@ -109,7 +104,7 @@ function addTaskPropertySuggestions(
                     _settings.taskFormat == 'dataview'
                         ? `${prioritySymbol} priority`
                         : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
-                appendText: `${prioritySymbol}${postfixGap}`,
+                appendText: `${prioritySymbol}${postfix}`,
             });
         }
     }
@@ -126,7 +121,7 @@ function addTaskPropertySuggestions(
             // We don't want this to match when the user types "today"
             textToMatch: `${symbols.createdDateSymbol} created`,
             displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
-            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + postfixGap,
+            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + postfix,
         });
     }
 
@@ -144,12 +139,17 @@ function addTaskPropertySuggestions(
                 return textToMatch.toLowerCase().includes(wordUnderCursor.toLowerCase());
             });
             for (const filtered of filteredSuggestions) {
+                const insertSkipValue =
+                    dataviewMode &&
+                    (filtered.displayText.includes('priority') || filtered.displayText.includes('created'))
+                        ? wordUnderCursor.length + insertSkip
+                        : wordUnderCursor.length;
                 matchingSuggestions.push({
                     suggestionType: 'match',
                     displayText: filtered.displayText,
                     appendText: filtered.appendText,
                     insertAt: wordMatch.index,
-                    insertSkip: wordUnderCursor.length,
+                    insertSkip: insertSkipValue,
                 });
             }
         }
@@ -190,7 +190,11 @@ function addDatesSuggestions(
         'next month',
         'next year',
     ];
-    const postfixGap = settings.taskFormat == 'dataview' ? '' : ' ';
+
+    const dataviewMode = settings.taskFormat === 'dataview';
+    const postfix = dataviewMode ? '] ' : ' ';
+    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === ']' ? 1 : 0;
+
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const dateMatch = matchByPosition(line, dateRegex, cursorPos);
@@ -239,12 +243,13 @@ function addDatesSuggestions(
         for (const match of genericMatches) {
             const parsedDate = DateParser.parseDate(match, true);
             const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
+            const insertSkipValue = dataviewMode ? dateMatch[0].length + insertSkip : dateMatch[0].length;
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,
-                appendText: `${datePrefix} ${formattedDate}` + postfixGap,
+                appendText: `${datePrefix} ${formattedDate}` + postfix,
                 insertAt: dateMatch.index,
-                insertSkip: dateMatch[0].length,
+                insertSkip: insertSkipValue,
             });
         }
     }
@@ -275,7 +280,10 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
         'every week on Friday',
         'every week on Saturday',
     ];
-    const postfixGap = settings.taskFormat == 'dataview' ? '' : ' ';
+    const dataviewMode = settings.taskFormat === 'dataview';
+    const postfix = dataviewMode ? '] ' : ' ';
+    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === ']' ? 1 : 0;
+
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
@@ -293,13 +301,16 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
                 dueDate: null,
             })?.toText();
             if (parsedRecurrence) {
-                const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + postfixGap;
+                const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + postfix;
+                const insertSkipValue = dataviewMode
+                    ? recurrenceMatch[0].length + insertSkip
+                    : recurrenceMatch[0].length;
                 results.push({
                     suggestionType: 'match',
                     displayText: `✅ ${parsedRecurrence}`,
                     appendText: appendedText,
                     insertAt: recurrenceMatch.index,
-                    insertSkip: recurrenceMatch[0].length,
+                    insertSkip: insertSkipValue,
                 });
                 // If the full match includes a complete valid suggestion *ending with space*,
                 // don't suggest anything. The user is trying to continue to type something that is likely
@@ -331,11 +342,12 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
             // there *was* a text to match (because it means the user is actually typing something else)
             genericMatches = genericSuggestions.slice(0, maxGenericDateSuggestions);
         }
+
         for (const match of genericMatches) {
             results.push({
                 suggestionType: 'match',
                 displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match}` + postfixGap,
+                appendText: `${recurrencePrefix} ${match} `,
                 insertAt: recurrenceMatch.index,
                 insertSkip: recurrenceMatch[0].length,
             });
