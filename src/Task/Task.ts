@@ -1,4 +1,6 @@
+import * as Console from 'console';
 import type { Moment } from 'moment';
+import { Notice } from 'obsidian';
 import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
@@ -854,19 +856,35 @@ export class Task {
     }
 
     public onCompletion(completedTask: Task) {
-        const ocFlag = ' 🏁 ';
+        // enum onCompletionActions {
+        //     delete = 'Delete',
+        //     archive = 'Archive',
+        // }
         const taskString = completedTask.toString();
-        if (!taskString.includes(ocFlag)) {
+        const ocTrigger = ' 🏁 ';
+        if (!taskString.includes(ocTrigger)) {
             return true;
         }
-        // type ocAction = "Delete" | "Archive";
-        // const compareValue = ocFlag + ;
-        //
-        // switch (compareValue){
-        //     case 'x y':
-        //         //"some code here"
-        //         break;
-        // }
+        const taskEnd = taskString.substring(taskString.indexOf(ocTrigger) + 4);
+        const ocAction = taskEnd.substring(0, taskEnd.indexOf(' '));
+        switch (ocAction) {
+            case 'Delete': {
+                // All anticipated valid On Completion _Actions_ will delete the completed task
+                // Future _Actions_ that leave completed tasks in place will necessitate refactoring!
+                break;
+            }
+            // case 'Archive': {
+            //     //"some code here"
+            //     break;
+            // }
+            default: {
+                const console = Console;
+                const errorMessage = 'Unknown On Completion action: ' + ocAction;
+                console.log(errorMessage);
+                new Notice(errorMessage);
+                return true;
+            }
+        }
     }
 }
 

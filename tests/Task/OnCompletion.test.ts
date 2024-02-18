@@ -24,6 +24,25 @@ afterEach(() => {
 });
 
 describe('OnCompletion', () => {
+    it('should log and issue Alert for invalid OC action', () => {
+        // Arrange
+        const dueDate = '2024-02-10';
+        const task = new TaskBuilder()
+            .description('A non-recurring task with invalid OC trigger 🏁 WHATEVER')
+            .dueDate(dueDate)
+            .build();
+        expect(task.status.type).toEqual(StatusType.TODO);
+
+        // Act
+        const tasks = task.handleNewStatus(Status.makeDone());
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+        expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(
+            '"- [x] A non-recurring task with invalid OC trigger 🏁 WHATEVER 📅 2024-02-10 ✅ 2024-02-11"',
+        );
+    });
+
     it('should not impact a non-recurring task with no OC trigger/action', () => {
         // Arrange
         const dueDate = '2024-02-10';
@@ -40,13 +59,10 @@ describe('OnCompletion', () => {
         );
     });
 
-    it('should delete a non-recurring task with OC trigger/action', () => {
+    it('should handle non-recurring task with OC Delete action', () => {
         // Arrange
         const dueDate = '2024-02-10';
-        const task = new TaskBuilder()
-            .description('A non-recurring task with OC trigger 🏁 WHATEVER')
-            .dueDate(dueDate)
-            .build();
+        const task = new TaskBuilder().description('A non-recurring task with 🏁 Delete').dueDate(dueDate).build();
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
@@ -78,12 +94,12 @@ describe('OnCompletion', () => {
         `);
     });
 
-    it('should delete a recurring task with OC trigger/action', () => {
+    it('should handle a recurring task with OC Delete action', () => {
         // Arrange
         const dueDate = '2024-02-10';
         const recurrence = new RecurrenceBuilder().rule('every day').dueDate(dueDate).build();
         const task = new TaskBuilder()
-            .description('A recurring task with OC trigger 🏁 WHATEVER')
+            .description('A recurring task with 🏁 Delete')
             .recurrence(recurrence)
             .dueDate(dueDate)
             .build();
@@ -95,7 +111,7 @@ describe('OnCompletion', () => {
         // Assert
         expect(tasks.length).toEqual(1);
         expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(
-            '"- [ ] A recurring task with OC trigger 🏁 WHATEVER 🔁 every day 📅 2024-02-11"',
+            '"- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-11"',
         );
     });
 });
