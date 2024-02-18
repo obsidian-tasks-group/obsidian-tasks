@@ -105,6 +105,7 @@ function addTaskPropertySuggestions(
                         ? `${prioritySymbol} priority`
                         : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
                 appendText: `${prioritySymbol}${postfix}`,
+                insertSkip: dataviewMode ? insertSkip : undefined,
             });
         }
     }
@@ -122,6 +123,7 @@ function addTaskPropertySuggestions(
             textToMatch: `${symbols.createdDateSymbol} created`,
             displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
             appendText: `${symbols.createdDateSymbol} ${formattedDate}` + postfix,
+            insertSkip: dataviewMode ? insertSkip : undefined,
         });
     }
 
