@@ -381,11 +381,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         // Go to the line the task is defined at
+        const app = this.app;
         link.addEventListener('click', async (ev: MouseEvent) => {
-            const result = await getTaskLineAndFile(task, this.app.vault);
+            const result = await getTaskLineAndFile(task, app.vault);
             if (result) {
                 const [line, file] = result;
-                const leaf = this.app.workspace.getLeaf(Keymap.isModEvent(ev));
+                const leaf = app.workspace.getLeaf(Keymap.isModEvent(ev));
                 // When the corresponding task has been found,
                 // suppress the default behavior of the mouse click event
                 // (which would interfere e.g. if the query is rendered inside a callout).
@@ -402,10 +403,10 @@ class QueryRenderChild extends MarkdownRenderChild {
             // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
             // the 'click' event is more generic for touch devices etc.)
             if (ev.button === 1) {
-                const result = await getTaskLineAndFile(task, this.app.vault);
+                const result = await getTaskLineAndFile(task, app.vault);
                 if (result) {
                     const [line, file] = result;
-                    const leaf = this.app.workspace.getLeaf('tab');
+                    const leaf = app.workspace.getLeaf('tab');
                     ev.preventDefault();
                     await leaf.openFile(file, { eState: { line: line } });
                 }
