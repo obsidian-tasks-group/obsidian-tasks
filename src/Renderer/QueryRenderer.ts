@@ -50,6 +50,30 @@ export class QueryRenderer {
     }
 }
 
+function createLinkToTaskLine(listItem: HTMLElement, shortMode: boolean, linkText: string) {
+    const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
+
+    if (!shortMode) {
+        backLink.append(' (');
+    }
+
+    const link = createAndAppendElement('a', backLink);
+
+    link.rel = 'noopener';
+    link.target = '_blank';
+    link.addClass('internal-link');
+    if (shortMode) {
+        link.addClass('internal-link-short-mode');
+    }
+
+    link.setText(linkText);
+
+    if (!shortMode) {
+        backLink.append(')');
+    }
+    return link;
+}
+
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private plugin: TasksPlugin;
@@ -358,27 +382,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         } else {
             linkText = task.getLinkText({ isFilenameUnique }) ?? '';
         }
-
-        const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
-
-        if (!shortMode) {
-            backLink.append(' (');
-        }
-
-        const link = createAndAppendElement('a', backLink);
-
-        link.rel = 'noopener';
-        link.target = '_blank';
-        link.addClass('internal-link');
-        if (shortMode) {
-            link.addClass('internal-link-short-mode');
-        }
-
-        link.setText(linkText);
-
-        if (!shortMode) {
-            backLink.append(')');
-        }
+        const link = createLinkToTaskLine(listItem, shortMode, linkText);
 
         // Go to the line the task is defined at
         const app = this.app;
