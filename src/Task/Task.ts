@@ -394,10 +394,11 @@ export class Task {
             });
             newTasks.push(nextTask);
         }
-
-        // Write next occurrence before previous occurrence.
-        newTasks.push(toggledTask);
-
+        if (this.onCompletion(toggledTask)) {
+            // Task did _not_ have a valid OnCompletion action, so:
+            // Write next occurrence before previous occurrence.
+            newTasks.push(toggledTask);
+        }
         return newTasks;
     }
 
@@ -850,6 +851,13 @@ export class Task {
      */
     public static extractHashtags(description: string): string[] {
         return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
+    }
+
+    public onCompletion(completedTask: Task) {
+        const taskString = completedTask.toString();
+        if (!taskString.includes(' 🏁 ')) {
+            return true;
+        }
     }
 }
 
