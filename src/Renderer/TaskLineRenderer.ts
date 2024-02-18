@@ -279,6 +279,14 @@ export class TaskLineRenderer {
                 // TODO Use styling to indicate if no tasks depend on this one.
                 // TODO Really want to show some kind of preview when hovering over the link,
                 //      to see the task without needing to jump to it.
+                // TODO In Reading mode, updating a task's ID or dependsOn values does not redraw
+                //      any of the tasks that link to it. This can break the linking via id or dependsOn.
+                //      Does this mean that the callback now needs to be dynamic, rather than jumping
+                //      to a location that was fixed at the point that a task with id or dependsOn was rendered?
+                // TODO In query results mode, need to record in the code that the query results can now be unchanged,
+                //      but can still need redrawing, if linked-to tasks have been changed.
+                //      This invalidates one of on my assumptions about a possible performance improvement.
+                //      See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1186.
                 // Use global app for now.
                 linkToTaskLine(
                     firstDependentTask,
