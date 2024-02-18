@@ -36,8 +36,8 @@ The fields shown below can be surrounded by either `[]` or `()`.
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForTaskFormats.test.Serializer_Dependencies_dataview-include.approved.md -->
 
-- [ ] do this first  [id:: dcf64c]
-- [ ] do this after first and some other task  [dependsOn:: dcf64c,0h17ye]
+- [ ] #task do this first  [id:: dcf64c]
+- [ ] #task do this after first and some other task  [dependsOn:: dcf64c,0h17ye]
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
