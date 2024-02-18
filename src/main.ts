@@ -91,6 +91,6 @@ export default class TasksPlugin extends Plugin {
     }
 
     public getTasks(): Task[] {
-        return this.cache ? this.cache?.getTasks() : [];
+        return this.cache ? this.cache.getTasks() : [];
     }
 }
