@@ -45,12 +45,17 @@ Save the HTML in `HTML from Query - short mode.html`
 
 ## Task
 
+- [ ] #task Blocking 1 🆔 123456
+- [ ] #task Blocking 2 🆔 abc123
 - [ ] #task Do exercises #todo #health 🆔 abcdef ⛔️ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
+- [ ] #task Blocked 1 ⛔️ abcdef
+- [ ] #task Blocked 2 ⛔️ abcdef
 
 ## Query - Full Mode
 
 ```tasks
 path includes {{query.file.path}}
+description includes Do exercises
 show urgency
 group by due
 ```
@@ -59,6 +64,7 @@ group by due
 
 ```tasks
 path includes {{query.file.path}}
+description includes Do exercises
 show urgency
 group by due
 short mode
