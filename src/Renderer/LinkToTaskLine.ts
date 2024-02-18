@@ -4,14 +4,18 @@ import { getTaskLineAndFile } from '../Obsidian/File';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export function linkToTaskLine(task: Task, linkText: string, listItem: HTMLElement, shortMode: boolean, app: App) {
-    const link = createLinkToTaskLine(listItem, shortMode, linkText);
+    const link = createLinkToTaskLine(listItem, shortMode, !shortMode, linkText);
     addEventsToLinkToTaskLine(link, task, app);
 }
 
-function createLinkToTaskLine(listItem: HTMLElement, shortMode: boolean, linkText: string) {
+function createLinkToTaskLine(
+    listItem: HTMLElement,
+    shortMode: boolean,
+    surroundWithParentheses: boolean,
+    linkText: string,
+) {
     const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
-    const surroundWithParentheses = !shortMode;
     if (surroundWithParentheses) {
         backLink.append(' (');
     }
