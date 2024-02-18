@@ -421,8 +421,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         } else {
             linkText = task.getLinkText({ isFilenameUnique }) ?? '';
         }
-        const app = this.app;
-        linkToTaskLine(task, linkText, listItem, shortMode, app);
+
+        linkToTaskLine(task, linkText, listItem, shortMode, this.app);
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
