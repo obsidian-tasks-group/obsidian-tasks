@@ -879,9 +879,10 @@ export class Task {
             // }
             default: {
                 const console = Console;
-                const errorMessage = 'Unknown On Completion action: ' + ocAction;
+                const hint = '\nClick here to clear';
+                const errorMessage = 'Unknown On Completion action: ' + ocAction + hint;
                 console.log(errorMessage);
-                new Notice(errorMessage);
+                new Notice(errorMessage, 0);
                 return true;
             }
         }
