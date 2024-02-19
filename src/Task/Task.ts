@@ -1,6 +1,4 @@
-import * as Console from 'console';
 import type { Moment } from 'moment';
-import { Notice } from 'obsidian';
 import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
@@ -396,11 +394,10 @@ export class Task {
             });
             newTasks.push(nextTask);
         }
-        if (this.onCompletion(toggledTask)) {
-            // Task did _not_ have a valid OnCompletion action, so:
-            // Write next occurrence before previous occurrence.
-            newTasks.push(toggledTask);
-        }
+
+        // Write next occurrence before previous occurrence.
+        newTasks.push(toggledTask);
+
         return newTasks;
     }
 
@@ -853,39 +850,6 @@ export class Task {
      */
     public static extractHashtags(description: string): string[] {
         return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
-    }
-
-    public onCompletion(completedTask: Task) {
-        // enum onCompletionActions {
-        //     delete = 'Delete',
-        //     archive = 'Archive',
-        // }
-        const taskString = completedTask.toString();
-        const ocTrigger = ' 🏁 ';
-        if (!taskString.includes(ocTrigger)) {
-            return true;
-        }
-        const taskEnd = taskString.substring(taskString.indexOf(ocTrigger) + 4);
-        const ocAction = taskEnd.substring(0, taskEnd.indexOf(' '));
-        switch (ocAction) {
-            case 'Delete': {
-                // All anticipated valid On Completion _Actions_ will delete the completed task
-                // Future _Actions_ that leave completed tasks in place will necessitate refactoring!
-                break;
-            }
-            // case 'Archive': {
-            //     //"some code here"
-            //     break;
-            // }
-            default: {
-                const console = Console;
-                const hint = '\nClick here to clear';
-                const errorMessage = 'Unknown On Completion action: ' + ocAction + hint;
-                console.log(errorMessage);
-                new Notice(errorMessage, 0);
-                return true;
-            }
-        }
     }
 }
 
