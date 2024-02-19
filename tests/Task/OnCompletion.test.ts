@@ -6,7 +6,7 @@ import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 // import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Status } from '../../src/Statuses/Status';
 import { StatusType } from '../../src/Statuses/StatusConfiguration';
-// import type { Task } from '../../src/Task/Task';
+import type { Task } from '../../src/Task/Task';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toLines } from '../TestingTools/TestHelpers';
 // import { onCompletion } from '../src/Task/OnCompletion';
@@ -23,6 +23,10 @@ afterEach(() => {
     // resetSettings();
 });
 
+function applyStatusAndActOnCompletion(task: Task) {
+    return task.handleNewStatus(Status.makeDone());
+}
+
 describe('OnCompletion', () => {
     it('should log and issue Alert for invalid OC action', () => {
         // Arrange
@@ -34,7 +38,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = task.handleNewStatus(Status.makeDone());
+        const tasks = applyStatusAndActOnCompletion(task);
 
         // Assert
         expect(tasks.length).toEqual(1);
@@ -50,7 +54,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = task.handleNewStatus(Status.makeDone());
+        const tasks = applyStatusAndActOnCompletion(task);
 
         // Assert
         expect(tasks.length).toEqual(1);
@@ -66,7 +70,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = task.handleNewStatus(Status.makeDone());
+        const tasks = applyStatusAndActOnCompletion(task);
 
         // Assert
         expect(tasks.length).toEqual(0);
@@ -84,7 +88,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = task.handleNewStatus(Status.makeDone());
+        const tasks = applyStatusAndActOnCompletion(task);
 
         // Assert
         expect(tasks.length).toEqual(2);
@@ -106,7 +110,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = task.handleNewStatus(Status.makeDone());
+        const tasks = applyStatusAndActOnCompletion(task);
 
         // Assert
         expect(tasks.length).toEqual(1);
