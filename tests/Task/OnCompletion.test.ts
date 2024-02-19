@@ -22,11 +22,14 @@ afterEach(() => {
     // resetSettings();
 });
 
-function handleOnCompletion(tasks: Task[]): Task[] {
+function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Status): Task[] {
     const tasksArrayLength = tasks.length;
     const completedTask = tasks[tasksArrayLength - 1];
     if (completedTask == undefined) {
         console.log('Passed-in completedTask is Undefined!');
+        return tasks;
+    }
+    if (endStatus == startStatus) {
         return tasks;
     }
     const taskString = completedTask.toString();
@@ -58,8 +61,10 @@ function handleOnCompletion(tasks: Task[]): Task[] {
 }
 
 function applyStatusAndActOnCompletion(task: Task) {
+    const startStatus = task.status;
     const tasks = task.handleNewStatus(Status.makeDone());
-    return handleOnCompletion(tasks);
+    const endStatus = tasks[tasks.length - 1].status;
+    return handleOnCompletion(tasks, startStatus, endStatus);
 }
 
 describe('OnCompletion', () => {
@@ -79,6 +84,27 @@ describe('OnCompletion', () => {
         expect(returnedTasks.length).toEqual(1);
         expect(toLines(returnedTasks).join('\n')).toMatchInlineSnapshot(
             '"- [x] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10 ✅ 2024-02-11"',
+        );
+    });
+
+    it('should just return task if StatusType has not changed', () => {
+        // Arrange
+        const dueDate = '2024-02-10';
+        const task = new TaskBuilder()
+            .description('An already-DONE, non-recurring task 🏁 Delete')
+            .dueDate(dueDate)
+            .doneDate(dueDate)
+            .status(Status.DONE)
+            .build();
+        expect(task.status.type).toEqual(StatusType.DONE);
+
+        // Act
+        const returnedTasks = applyStatusAndActOnCompletion(task);
+
+        // Assert
+        expect(returnedTasks.length).toEqual(1);
+        expect(toLines(returnedTasks).join('\n')).toMatchInlineSnapshot(
+            '"- [x] An already-DONE, non-recurring task 🏁 Delete 📅 2024-02-10 ✅ 2024-02-10"',
         );
     });
 
@@ -149,7 +175,7 @@ describe('OnCompletion', () => {
         const tasks = applyStatusAndActOnCompletion(task);
 
         // Assert
-        // expect(tasks.length).toEqual(1);
+        expect(tasks.length).toEqual(1);
         expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(
             '"- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-11"',
         );
