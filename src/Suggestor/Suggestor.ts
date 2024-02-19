@@ -72,8 +72,15 @@ function addTaskPropertySuggestions(
 
     const genericSuggestions: SuggestInfo[] = [];
     const dataviewMode = _settings.taskFormat === 'dataview';
-    const postfix = dataviewMode ? '] ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === ']' ? 1 : 0;
+    const close_bracket =
+        lastOpenBracket(line.substring(0, cursorPos), [
+            ['(', ')'],
+            ['[', ']'],
+        ]) == '('
+            ? ')'
+            : ']';
+    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
+    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     if (!line.includes(symbols.dueDateSymbol))
@@ -194,8 +201,15 @@ function addDatesSuggestions(
     ];
 
     const dataviewMode = settings.taskFormat === 'dataview';
-    const postfix = dataviewMode ? '] ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === ']' ? 1 : 0;
+    const close_bracket =
+        lastOpenBracket(line.substring(0, cursorPos), [
+            ['(', ')'],
+            ['[', ']'],
+        ]) == '('
+            ? ')'
+            : ']';
+    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
+    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
 
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
@@ -283,8 +297,15 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
         'every week on Saturday',
     ];
     const dataviewMode = settings.taskFormat === 'dataview';
-    const postfix = dataviewMode ? '] ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === ']' ? 1 : 0;
+    const close_bracket =
+        lastOpenBracket(line.substring(0, cursorPos), [
+            ['(', ')'],
+            ['[', ']'],
+        ]) == '('
+            ? ')'
+            : ']';
+    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
+    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
 
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
@@ -404,6 +425,50 @@ function isAnyBracketOpen(line: string, brackets: [opening_bracket: string, clos
     }
 
     return Object.values(numOpeningBrackets).some((n) => n > 0);
+}
+
+/**
+ * Checks whether _any_ of the bracket pairs in {@link brackets} is open at the end of the string {@link line}
+ * If there are any open brackets, returns the last one. Else, returns null.
+ *
+ * @example
+ *     lastOpenBracket("(hello world",   [['(', ')']]);             // '('
+ *     lastOpenBracket("[hello world",   [['[', ']']]);             // '['
+ *     lastOpenBracket("[hello world",   [['(', ')'], ['[', ']']]); // '['
+ *     lastOpenBracket("([hello world)", [['(', ')'], ['[', ']']])  // '['
+ *     lastOpenBracket("))))(",          [['(', ')']])              // '('
+ *     lastOpenBracket("(hello world)",  [['(', ')']]);             // null
+ *     lastOpenBracket("(hello world)",  []);                       // null
+ *
+ * @param line - The line of text to scan
+ * @param brackets - A listed of tuples that defines bracket pairs.
+ * @returns The last open bracket in line among the given bracket pairs. If no such bracket exists, return null.
+ */
+function lastOpenBracket(line: string, brackets: [opening_bracket: string, closing_bracket: string][]): string | null {
+    if (brackets.length === 0) {
+        return null;
+    }
+    const numOpeningBrackets = Object.fromEntries(brackets.map(([open, _]) => [open, 0]));
+    const openingOf = Object.fromEntries(brackets.map(([open, close]) => [close, open]));
+    const openBracketsStack = [];
+    for (let i = 0; i < line.length; i++) {
+        const c = line[i];
+        if (c in numOpeningBrackets) {
+            numOpeningBrackets[c]++;
+            openBracketsStack.push({ bracket: c, idx: i });
+        } else if (c in openingOf) {
+            if (numOpeningBrackets[openingOf[c]] >= 1) {
+                for (let idx = openBracketsStack.length - 1; idx >= 0; idx--) {
+                    if (openBracketsStack[idx].bracket == openingOf[c]) {
+                        openBracketsStack.splice(idx, 1);
+                        break;
+                    }
+                }
+            }
+            numOpeningBrackets[openingOf[c]] = Math.max(0, numOpeningBrackets[openingOf[c]] - 1);
+        }
+    }
+    return openBracketsStack.length > 0 ? openBracketsStack[openBracketsStack.length - 1].bracket : null;
 }
 
 /**
