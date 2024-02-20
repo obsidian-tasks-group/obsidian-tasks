@@ -288,14 +288,7 @@ export class TaskLineRenderer {
                 //      This invalidates one of on my assumptions about a possible performance improvement.
                 //      See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1186.
                 // Use global app for now.
-                linkToTaskLine(
-                    firstDependentTask,
-                    componentString,
-                    span,
-                    this.queryLayoutOptions.shortMode,
-                    false,
-                    app,
-                );
+                linkToTaskLine(firstDependentTask, componentString, span, this.queryLayoutOptions.shortMode, false);
             } else {
                 span.innerHTML = componentString;
             }
@@ -304,7 +297,7 @@ export class TaskLineRenderer {
             if (firstDependee) {
                 // TODO This only links to the first referenced task, instead of all of them.
                 // Also, See also the TODOS for Id above.
-                linkToTaskLine(firstDependee, componentString, span, this.queryLayoutOptions.shortMode, false, app);
+                linkToTaskLine(firstDependee, componentString, span, this.queryLayoutOptions.shortMode, false);
             } else {
                 span.innerHTML = componentString;
             }

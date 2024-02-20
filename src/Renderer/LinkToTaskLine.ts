@@ -1,4 +1,4 @@
-import { App, Keymap } from 'obsidian';
+import { Keymap } from 'obsidian';
 import type { Task } from '../Task/Task';
 import { getTaskLineAndFile } from '../Obsidian/File';
 import { createAndAppendElement } from './TaskLineRenderer';
@@ -9,10 +9,9 @@ export function linkToTaskLine(
     listItem: HTMLElement,
     shortMode: boolean,
     surroundWithParentheses: boolean,
-    app: App,
 ) {
     const link = createLinkToTaskLine(listItem, shortMode, surroundWithParentheses, linkText);
-    addEventsToLinkToTaskLine(link, task, app);
+    addEventsToLinkToTaskLine(link, task);
 }
 
 function createLinkToTaskLine(
@@ -44,7 +43,7 @@ function createLinkToTaskLine(
     return link;
 }
 
-function addEventsToLinkToTaskLine(link: HTMLAnchorElement, task: Task, app: App) {
+function addEventsToLinkToTaskLine(link: HTMLAnchorElement, task: Task) {
     // Go to the line the task is defined at
     link.addEventListener('click', async (ev: MouseEvent) => {
         const result = await getTaskLineAndFile(task, app.vault);
