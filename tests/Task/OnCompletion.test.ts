@@ -1,14 +1,13 @@
 /**
  * @jest-environment jsdom
  */
-import Console from 'console';
 import moment from 'moment';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import type { Task } from '../../src/Task/Task';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toLines } from '../TestingTools/TestHelpers';
+import { applyStatusAndOnCompletionAction } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
 
@@ -21,57 +20,6 @@ afterEach(() => {
     jest.useRealTimers();
     // resetSettings();
 });
-
-function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Status): Task[] {
-    const tasksArrayLength = tasks.length;
-    const completedTask = tasks[tasksArrayLength - 1];
-    if (completedTask == undefined) {
-        console.log('Passed-in completedTask is Undefined!');
-        return tasks;
-    }
-
-    const ocTrigger = ' 🏁 ';
-    const taskString = completedTask.toString();
-
-    if (!taskString.includes(ocTrigger) || endStatus.type != StatusType.DONE || endStatus.type == startStatus.type) {
-        return tasks;
-    }
-
-    if (taskString.includes(ocTrigger)) {
-        const taskEnd = taskString.substring(taskString.indexOf(ocTrigger) + 4);
-        const ocAction = taskEnd.substring(0, taskEnd.indexOf(' '));
-        switch (ocAction) {
-            case 'Delete': {
-                if (tasksArrayLength == 2) {
-                    return [tasks[0]];
-                }
-                if (tasksArrayLength == 1) {
-                    return [];
-                }
-                break;
-            }
-            default: {
-                const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
-                const console = Console;
-                console.log(errorMessage);
-                // const hint = '\nClick here to clear';
-                // const noticeMessage = errorMessage + hint;
-                // new Notice(noticeMessage, 0);
-                return tasks;
-            }
-        }
-    }
-    console.log('Uh-oh -- we should never actually get here...  :( ');
-    throw new Error('Something went wrong');
-    return tasks;
-}
-
-function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
-    const startStatus = task.status;
-    const tasks = task.handleNewStatus(newStatus);
-    const endStatus = tasks[tasks.length - 1].status;
-    return handleOnCompletion(tasks, startStatus, endStatus);
-}
 
 describe('OnCompletion', () => {
     it('should just return task if Action is not recognized', () => {
