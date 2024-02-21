@@ -52,28 +52,32 @@ describe('DataviewTaskSerializer', () => {
             });
         });
 
-        it('should parse depends on one task', () => {
-            const id = '[dependsOn:: F12345]';
-            const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
+        describe('should parse depends on', () => {
+            it('should parse depends on one task', () => {
+                const id = '[dependsOn:: F12345]';
+                const taskDetails = deserialize(id);
+                expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
+            });
+
+            it('should parse depends on two tasks', () => {
+                const id = '[dependsOn:: 123456,abC123]';
+                const taskDetails = deserialize(id);
+                expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abC123'] });
+            });
         });
 
-        it('should parse depends on two tasks', () => {
-            const id = '[dependsOn:: 123456,abC123]';
-            const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abC123'] });
-        });
+        describe('should parse id', () => {
+            it('should parse id with lower-case and numbers', () => {
+                const id = '[id:: pqrd0f]';
+                const taskDetails = deserialize(id);
+                expect(taskDetails).toMatchTaskDetails({ id: 'pqrd0f' });
+            });
 
-        it('should parse id with lower-case and numbers', () => {
-            const id = '[id:: pqrd0f]';
-            const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ id: 'pqrd0f' });
-        });
-
-        it('should parse id with capitals', () => {
-            const id = '[id:: Abcd0f]';
-            const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ id: 'Abcd0f' });
+            it('should parse id with capitals', () => {
+                const id = '[id:: Abcd0f]';
+                const taskDetails = deserialize(id);
+                expect(taskDetails).toMatchTaskDetails({ id: 'Abcd0f' });
+            });
         });
 
         it('should parse a task with multiple fields and tags', () => {
