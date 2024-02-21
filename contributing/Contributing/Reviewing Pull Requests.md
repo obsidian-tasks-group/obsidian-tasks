@@ -23,4 +23,4 @@ publish: true
 ### Any changes in `docs/` or `contributing/`
 
 - Always open the vault in Obsidian
-  - Use the Dangling Links plugin to check for broken links
+  - Use the (installed) Broken Links plugin to check for broken links and embeds.

@@ -1,11 +1,11 @@
 [
   "note-refactor-obsidian",
-  "obsidian-dangling-links",
   "reveal-active-file-button",
   "table-editor-obsidian",
   "copy-publish-url",
   "cmdr",
   "vault-name-status-bar",
   "templater-obsidian",
-  "tag-wrangler"
+  "tag-wrangler",
+  "broken-links"
 ]
