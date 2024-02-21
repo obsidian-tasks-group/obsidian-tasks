@@ -60,7 +60,7 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
     return tasks;
 }
 
-function applyStatusAndActOnCompletion(task: Task) {
+function applyStatusAndOnCompletionAction(task: Task) {
     const startStatus = task.status;
     const tasks = task.handleNewStatus(Status.makeDone());
     const endStatus = tasks[tasks.length - 1].status;
@@ -78,7 +78,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const returnedTasks = applyStatusAndActOnCompletion(task);
+        const returnedTasks = applyStatusAndOnCompletionAction(task);
 
         // Assert
         expect(returnedTasks.length).toEqual(1);
@@ -99,7 +99,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.DONE);
 
         // Act
-        const returnedTasks = applyStatusAndActOnCompletion(task);
+        const returnedTasks = applyStatusAndOnCompletionAction(task);
 
         // Assert
         expect(returnedTasks.length).toEqual(1);
@@ -115,7 +115,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = applyStatusAndActOnCompletion(task);
+        const tasks = applyStatusAndOnCompletionAction(task);
 
         // Assert
         expect(tasks.length).toEqual(1);
@@ -136,7 +136,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = applyStatusAndActOnCompletion(task);
+        const tasks = applyStatusAndOnCompletionAction(task);
 
         // Assert
         expect(tasks.length).toEqual(2);
@@ -154,7 +154,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = applyStatusAndActOnCompletion(task);
+        const tasks = applyStatusAndOnCompletionAction(task);
 
         // Assert
         expect(tasks).toEqual([]);
@@ -172,7 +172,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = applyStatusAndActOnCompletion(task);
+        const tasks = applyStatusAndOnCompletionAction(task);
 
         // Assert
         expect(tasks.length).toEqual(1);
