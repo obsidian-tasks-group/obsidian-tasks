@@ -1,0 +1,23 @@
+{
+  "version": "1.2.1",
+  "previousVersion": "1.0.0",
+  "groupBy": 0,
+  "expandedFolderItems": [
+    "_meta",
+    "_meta/templates",
+    "_meta/templates/image embed.md"
+  ],
+  "expandedFileItems": [],
+  "expandedLinkItems": [],
+  "folderSort": 0,
+  "fileSort": 3,
+  "linkSort": 3,
+  "linkFilter": {
+    "filterString": "",
+    "matchCase": false
+  },
+  "ignoredFolders": [
+    "_meta"
+  ],
+  "consolidateLinks": false
+}
