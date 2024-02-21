@@ -289,6 +289,18 @@ describe('DataviewTaskSerializer', () => {
             expect(serialized).toEqual(' #hello #world #task');
         });
 
+        it('should serialize depends on', () => {
+            const task = new TaskBuilder().description('').dependsOn(['123456', 'abc123']).build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual('  [dependsOn:: 123456,abc123]');
+        });
+
+        it('should serialize id', () => {
+            const task = new TaskBuilder().description('').id('abcdef').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual('  [id:: abcdef]');
+        });
+
         it('should serialize a fully populated task', () => {
             const task = TaskBuilder.createFullyPopulatedTask();
             const serialized = serialize(task);
