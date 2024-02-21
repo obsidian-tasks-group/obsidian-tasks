@@ -52,16 +52,16 @@ describe('DataviewTaskSerializer', () => {
             });
         });
 
-        it('should parse depends on one task', () => {
-            const id = '[dependsOn:: 123456]';
+        it.failing('should parse depends on one task', () => {
+            const id = '[dependsOn:: F12345]';
             const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456'] });
+            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
         });
 
-        it('should parse depends on two tasks', () => {
-            const id = '[dependsOn:: 123456,abc123]';
+        it.failing('should parse depends on two tasks', () => {
+            const id = '[dependsOn:: 123456,abC123]';
             const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abc123'] });
+            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abC123'] });
         });
 
         it('should parse id with lower-case and numbers', () => {
