@@ -70,6 +70,12 @@ describe('DataviewTaskSerializer', () => {
                 const taskDetails = deserialize(id);
                 expect(taskDetails).toMatchTaskDetails({ dependsOn: ['ab', 'CD', 'EF', 'GK'] });
             });
+
+            it('should treat dependsOn as case-sensitive, so dependson remains in the description', () => {
+                const id = '[dependson:: F12345]';
+                const taskDetails = deserialize(id);
+                expect(taskDetails).toMatchTaskDetails({ description: id, dependsOn: [] });
+            });
         });
 
         describe('should parse id', () => {
