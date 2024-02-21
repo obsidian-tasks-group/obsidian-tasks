@@ -84,6 +84,13 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 const taskDetails = deserialize(id);
                 expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abC123'] });
             });
+
+            it('should parse depends on multiple tasks with varying spaces tasks', () => {
+                const id = `${dependsOnSymbol} ab, CD,  EF,    GK`;
+                const taskDetails = deserialize(id);
+                // TODO Fix retention of spaces: there show be no spaces in id values
+                expect(taskDetails).toMatchTaskDetails({ dependsOn: ['ab', 'CD', '  EF', '    GK'] });
+            });
         });
 
         describe('should parse id', () => {
