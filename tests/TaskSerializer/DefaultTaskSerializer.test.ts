@@ -73,18 +73,24 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         it('should parse depends on one task', () => {
-            const id = `${dependsOnSymbol} 123456`;
+            const id = `${dependsOnSymbol} F12345`;
             const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456'] });
+            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
         });
 
         it('should parse depends on two tasks', () => {
-            const id = `${dependsOnSymbol} 123456,abc123`;
+            const id = `${dependsOnSymbol} 123456,abC123`;
             const taskDetails = deserialize(id);
-            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abc123'] });
+            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abC123'] });
         });
 
-        it('should parse id', () => {
+        it('should parse id with lower-case and numbers', () => {
+            const id = `${idSymbol} pqrd0f`;
+            const taskDetails = deserialize(id);
+            expect(taskDetails).toMatchTaskDetails({ id: 'pqrd0f' });
+        });
+
+        it('should parse id with capitals', () => {
             const id = `${idSymbol} Abcd0f`;
             const taskDetails = deserialize(id);
             expect(taskDetails).toMatchTaskDetails({ id: 'Abcd0f' });
