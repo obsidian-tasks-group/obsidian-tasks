@@ -86,8 +86,10 @@ export const DATAVIEW_SYMBOLS = {
         doneDateRegex: toInlineFieldRegex(/completion:: *(\d{4}-\d{2}-\d{2})/),
         cancelledDateRegex: toInlineFieldRegex(/cancelled:: *(\d{4}-\d{2}-\d{2})/),
         recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
-        dependsOnRegex: toInlineFieldRegex(/dependsOn:: *([a-zA-Z0-9]+( *, *[a-zA-Z0-9]+ *)*)/),
-        idRegex: toInlineFieldRegex(/id:: *([a-zA-Z0-9]+)/),
+        // Ignore https://rules.sonarsource.com/javascript/RSPEC-6325/
+        // Regular expression literals should be used when possible
+        dependsOnRegex: toInlineFieldRegex(new RegExp('dependsOn:: *([a-zA-Z0-9]+( *, *[a-zA-Z0-9]+ *)*)')),
+        idRegex: toInlineFieldRegex(new RegExp('id:: *([a-zA-Z0-9]+)')),
     },
 } as const;
 
