@@ -58,7 +58,7 @@ describe('DataviewTaskSerializer', () => {
             expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
         });
 
-        it.failing('should parse depends on two tasks', () => {
+        it('should parse depends on two tasks', () => {
             const id = '[dependsOn:: 123456,abC123]';
             const taskDetails = deserialize(id);
             expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abC123'] });
