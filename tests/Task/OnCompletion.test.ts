@@ -1,11 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-// import Console from 'console';
+import Console from 'console';
 import moment from 'moment';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Status } from '../../src/Statuses/Status';
-import { StatusType } from '../../src/Statuses/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import type { Task } from '../../src/Task/Task';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toLines } from '../TestingTools/TestHelpers';
@@ -29,11 +29,14 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
         console.log('Passed-in completedTask is Undefined!');
         return tasks;
     }
-    if (endStatus == startStatus) {
+
+    const ocTrigger = ' 🏁 ';
+    const taskString = completedTask.toString();
+
+    if (!taskString.includes(ocTrigger) || endStatus.type != StatusType.DONE || endStatus.type == startStatus.type) {
         return tasks;
     }
-    const taskString = completedTask.toString();
-    const ocTrigger = ' 🏁 ';
+
     if (taskString.includes(ocTrigger)) {
         const taskEnd = taskString.substring(taskString.indexOf(ocTrigger) + 4);
         const ocAction = taskEnd.substring(0, taskEnd.indexOf(' '));
@@ -48,21 +51,24 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
                 break;
             }
             default: {
-                // const console = Console;
+                const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
+                const console = Console;
+                console.log(errorMessage);
                 // const hint = '\nClick here to clear';
-                // const errorMessage = 'Unknown "On Completion" action: ' + ocAction + hint;
-                // console.log(errorMessage);
-                // new Notice(errorMessage, 0);
+                // const noticeMessage = errorMessage + hint;
+                // new Notice(noticeMessage, 0);
                 return tasks;
             }
         }
     }
+    console.log('Uh-oh -- we should never actually get here...  :( ');
+    throw new Error('Something went wrong');
     return tasks;
 }
 
-function applyStatusAndOnCompletionAction(task: Task) {
+function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
     const startStatus = task.status;
-    const tasks = task.handleNewStatus(Status.makeDone());
+    const tasks = task.handleNewStatus(newStatus);
     const endStatus = tasks[tasks.length - 1].status;
     return handleOnCompletion(tasks, startStatus, endStatus);
 }
@@ -78,7 +84,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const returnedTasks = applyStatusAndOnCompletionAction(task);
+        const returnedTasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
         expect(returnedTasks.length).toEqual(1);
@@ -99,7 +105,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.DONE);
 
         // Act
-        const returnedTasks = applyStatusAndOnCompletionAction(task);
+        const returnedTasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
         expect(returnedTasks.length).toEqual(1);
@@ -115,7 +121,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task);
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
         expect(tasks.length).toEqual(1);
@@ -136,7 +142,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task);
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
         expect(tasks.length).toEqual(2);
@@ -154,7 +160,7 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task);
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
         expect(tasks).toEqual([]);
@@ -172,12 +178,55 @@ describe('OnCompletion', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task);
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
         expect(tasks.length).toEqual(1);
         expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(
             '"- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-11"',
         );
+    });
+    it('should delete a simple task with flag on completion', () => {
+        // Arrange
+        const task = new TaskBuilder().description('A non-recurring task with 🏁 Delete').build();
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+
+        // Assert
+        expect(tasks.length).toEqual(0);
+    });
+
+    it('should retain the task when going from TODO to IN_PROGRESS', () => {
+        // Arrange
+        const dueDate = '2024-02-10';
+        const recurrence = new RecurrenceBuilder().rule('every day').dueDate(dueDate).build();
+        const task = new TaskBuilder()
+            .description('A recurring task with 🏁 Delete')
+            .recurrence(recurrence)
+            .dueDate(dueDate)
+            .build();
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeInProgress());
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+        expect(tasks[0].status.type).toEqual(StatusType.IN_PROGRESS);
+    });
+
+    it('should retain the task when going from one DONE status to another DONE status', () => {
+        // Arrange
+        const done1 = new Status(new StatusConfiguration('x', 'done', ' ', true, StatusType.DONE));
+        const done2 = new Status(new StatusConfiguration('X', 'DONE', ' ', true, StatusType.DONE));
+        const task = new TaskBuilder().description('A simple done task with 🏁 Delete').status(done1).build();
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, done2);
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+        expect(tasks[0].status.symbol).toEqual('X');
+        expect(tasks[0].status.type).toEqual(StatusType.DONE);
     });
 });
