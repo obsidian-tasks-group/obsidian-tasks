@@ -10,6 +10,11 @@
 - [ ] #task Proofread and edit 🆔 5ti6bf ⛔️ 0wigip
 - [ ] #task Publish the article ⛔️ 5ti6bf
 
+## Hyphens and underscores allowed
+
+- [ ] #task A task with ID with underscore and hyphen 🆔 Is-A-Valid_ID
+- [ ] #task A task that depends on task with ID with underscore and hyphen ⛔️ Is-A-Valid_ID
+
 ## Multiple dependencies
 
 - [ ] #task Invite the guests 🆔 iv0euw
@@ -25,7 +30,6 @@
 - [ ] #task Cyclic Dependency 1 🆔 cyclic1 ⛔️ cyclic2
 - [ ] #task Cyclic Dependency 2 🆔 cyclic2 ⛔️ cyclic1
 - [ ] #task Depends on a non-existent task ⛔️ doesnotexist
-- [ ] #task Depends on a non-existent task ⛔️ Not-A-Valid-ID
 
 ---
 
