@@ -87,7 +87,7 @@ export const DATAVIEW_SYMBOLS = {
         cancelledDateRegex: toInlineFieldRegex(/cancelled:: *(\d{4}-\d{2}-\d{2})/),
         recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
         dependsOnRegex: toInlineFieldRegex(/dependsOn:: *([a-z0-9]+( *, *[a-z0-9]+ *)*)/),
-        idRegex: toInlineFieldRegex(/id:: *([a-z0-9]+)/),
+        idRegex: toInlineFieldRegex(/id:: *([a-zA-Z0-9]+)/),
     },
 } as const;
 

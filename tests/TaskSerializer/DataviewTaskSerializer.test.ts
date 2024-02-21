@@ -70,7 +70,7 @@ describe('DataviewTaskSerializer', () => {
             expect(taskDetails).toMatchTaskDetails({ id: 'pqrd0f' });
         });
 
-        it.failing('should parse id with capitals', () => {
+        it('should parse id with capitals', () => {
             const id = '[id:: Abcd0f]';
             const taskDetails = deserialize(id);
             expect(taskDetails).toMatchTaskDetails({ id: 'Abcd0f' });
