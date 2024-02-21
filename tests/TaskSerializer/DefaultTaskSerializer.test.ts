@@ -86,7 +86,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             });
 
             it('should parse depends on multiple tasks with varying spaces tasks', () => {
-                const id = `${dependsOnSymbol} ab, CD,  EF,    GK`;
+                const id = `${dependsOnSymbol} ab , CD ,  EF  ,    GK`;
                 const taskDetails = deserialize(id);
                 expect(taskDetails).toMatchTaskDetails({ dependsOn: ['ab', 'CD', 'EF', 'GK'] });
             });

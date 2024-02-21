@@ -66,7 +66,7 @@ describe('DataviewTaskSerializer', () => {
             });
 
             it('should parse depends on multiple tasks with varying spaces tasks', () => {
-                const id = '[dependsOn::  ab, CD,  EF,    GK]';
+                const id = '[dependsOn::  ab , CD ,  EF  ,    GK]';
                 const taskDetails = deserialize(id);
                 expect(taskDetails).toMatchTaskDetails({ dependsOn: ['ab', 'CD', 'EF', 'GK'] });
             });
