@@ -328,7 +328,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             if (dependsOnMatch != null) {
                 line = line.replace(TaskFormatRegularExpressions.dependsOnRegex, '').trim();
                 dependsOn = dependsOnMatch[1]
-                    .replace(' ', '')
+                    .replace(/ /g, '')
                     .split(',')
                     .filter((item) => item !== '');
                 matched = true;
