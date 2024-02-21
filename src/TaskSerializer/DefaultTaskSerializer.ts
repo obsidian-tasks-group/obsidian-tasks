@@ -46,7 +46,7 @@ export interface DefaultTaskSerializerSymbols {
 }
 
 // The allowed characters in a single task id:
-const taskIdRegex = /[a-z0-9]+/;
+export const taskIdRegex = /[a-zA-Z0-9]+/;
 
 /**
  * A symbol map for obsidian-task's default task style.
