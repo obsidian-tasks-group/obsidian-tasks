@@ -79,8 +79,10 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        dependsOnRegex: /⛔️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$/iu,
-        idRegex: /🆔 *([a-z0-9]+)$/iu,
+        // Ignore https://rules.sonarsource.com/javascript/RSPEC-6325/
+        // Regular expression literals should be used when possible
+        dependsOnRegex: new RegExp('⛔️ *([a-z0-9]+( *, *[a-z0-9]+ *)*)$', 'iu'),
+        idRegex: new RegExp('🆔 *([a-z0-9]+)$', 'iu'),
     },
 } as const;
 
