@@ -52,7 +52,7 @@ describe('DataviewTaskSerializer', () => {
             });
         });
 
-        it.failing('should parse depends on one task', () => {
+        it('should parse depends on one task', () => {
             const id = '[dependsOn:: F12345]';
             const taskDetails = deserialize(id);
             expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
