@@ -444,7 +444,10 @@ function isAnyBracketOpen(line: string, brackets: [opening_bracket: string, clos
  * @param brackets - A listed of tuples that defines bracket pairs.
  * @returns The last open bracket in line among the given bracket pairs. If no such bracket exists, return null.
  */
-function lastOpenBracket(line: string, brackets: [opening_bracket: string, closing_bracket: string][]): string | null {
+export function lastOpenBracket(
+    line: string,
+    brackets: [opening_bracket: string, closing_bracket: string][],
+): string | null {
     if (brackets.length === 0) {
         return null;
     }

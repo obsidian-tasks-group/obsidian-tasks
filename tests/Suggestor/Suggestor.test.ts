@@ -7,6 +7,7 @@ import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
 import {
     canSuggestForLine,
+    lastOpenBracket,
     makeDefaultSuggestionBuilder,
     onlySuggestIfBracketOpen,
 } from '../../src/Suggestor/Suggestor';
@@ -281,5 +282,41 @@ describe('canSuggestForLine', () => {
     it('should suggest correctly when task is indented', () => {
         expect(canSuggestForLineWithCursor('    - [ ]|')).toEqual(false);
         expect(canSuggestForLineWithCursor('    - [ ] |')).toEqual(true);
+    });
+});
+
+describe('lastOpenBracket', () => {
+    it('should return null if there are no open brackets', () => {
+        expect(lastOpenBracket('hello world', [])).toEqual(null);
+        expect(
+            lastOpenBracket('hello world', [
+                ['(', ')'],
+                ['[', ']'],
+            ]),
+        ).toEqual(null);
+        expect(
+            lastOpenBracket('(hello world) [Hello world]', [
+                ['(', ')'],
+                ['[', ']'],
+            ]),
+        ).toEqual(null);
+        expect(
+            lastOpenBracket('([hello world)]', [
+                ['(', ')'],
+                ['[', ']'],
+            ]),
+        ).toEqual(null);
+    });
+
+    it('should return the last open bracket', () => {
+        expect(lastOpenBracket('(hello world', [['(', ')']])).toEqual('(');
+        expect(lastOpenBracket('[hello world', [['[', ']']])).toEqual('[');
+        expect(
+            lastOpenBracket('([hello world)', [
+                ['(', ')'],
+                ['[', ']'],
+            ]),
+        ).toEqual('[');
+        expect(lastOpenBracket('))))(', [['(', ')']])).toEqual('(');
     });
 });
