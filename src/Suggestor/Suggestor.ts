@@ -108,10 +108,9 @@ function addTaskPropertySuggestions(
             const prioritySymbol = prioritySymbols[priorityText];
 
             genericSuggestions.push({
-                displayText:
-                    _settings.taskFormat == 'dataview'
-                        ? `${prioritySymbol} priority`
-                        : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
+                displayText: dataviewMode
+                    ? `${prioritySymbol} priority`
+                    : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
                 appendText: `${prioritySymbol}${postfix}`,
                 insertSkip: dataviewMode ? insertSkip : undefined,
             });
