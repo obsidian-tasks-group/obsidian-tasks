@@ -17,6 +17,7 @@ export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
     maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
+    isDataview: boolean,
 ): SuggestionBuilder {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
@@ -42,7 +43,7 @@ export function makeDefaultSuggestionBuilder(
         // rather than insert a suggestion
         if (suggestions.length > 0 && !suggestions.some((value) => value.suggestionType === 'match')) {
             // No actual match, only default ones
-            if (settings.taskFormat != 'dataview') {
+            if (!isDataview) {
                 suggestions.unshift({
                     suggestionType: 'empty',
                     displayText: '⏎',
