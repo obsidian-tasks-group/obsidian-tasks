@@ -327,18 +327,7 @@ export class Task {
         const wasCompleted = this.status.isCompleted();
         const isNowCompleted = newStatus.isCompleted();
         const { setDoneDate } = getSettings();
-        let newDoneDate = null;
-        if (isNowCompleted) {
-            if (!wasCompleted) {
-                // Set done date only if setting value is true
-                if (setDoneDate) {
-                    newDoneDate = window.moment();
-                }
-            } else {
-                // This task was already completed, so preserve its done date.
-                newDoneDate = this[component];
-            }
-        }
+        const newDoneDate = this.getNewDateForComponent(component, wasCompleted, isNowCompleted, setDoneDate);
 
         let newCancelledDate = null;
         if (newStatus.isCancelled()) {
@@ -402,6 +391,27 @@ export class Task {
         newTasks.push(toggledTask);
 
         return newTasks;
+    }
+
+    private getNewDateForComponent(
+        component: keyof Task,
+        wasCompleted: boolean,
+        isNowCompleted: boolean,
+        setDoneDate: boolean,
+    ) {
+        let newDoneDate = null;
+        if (isNowCompleted) {
+            if (!wasCompleted) {
+                // Set done date only if setting value is true
+                if (setDoneDate) {
+                    newDoneDate = window.moment();
+                }
+            } else {
+                // This task was already completed, so preserve its done date.
+                newDoneDate = this[component];
+            }
+        }
+        return newDoneDate;
     }
 
     /**
