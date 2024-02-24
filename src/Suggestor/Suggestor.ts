@@ -62,15 +62,15 @@ export function makeDefaultSuggestionBuilder(
 }
 
 function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
-    const close_bracket =
+    const closingBracket =
         lastOpenBracket(line.substring(0, cursorPos), [
             ['(', ')'],
             ['[', ']'],
         ]) == '('
             ? ')'
             : ']';
-    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
+    const postfix = dataviewMode ? closingBracket + ' ' : ' ';
+    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === closingBracket ? 1 : 0;
     return { postfix, insertSkip };
 }
 
