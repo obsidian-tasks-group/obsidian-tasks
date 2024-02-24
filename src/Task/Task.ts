@@ -324,19 +324,19 @@ export class Task {
         }
 
         const newDoneDate = this.getNewDateForComponent(
-            this.doneDate,
-            getSettings()['setDoneDate'],
             this.status,
             newStatus,
             StatusType.DONE,
+            this.doneDate,
+            getSettings()['setDoneDate'],
         );
 
         const newCancelledDate = this.getNewDateForComponent(
-            this.cancelledDate,
-            getSettings()['setCancelledDate'],
             this.status,
             newStatus,
             StatusType.CANCELLED,
+            this.cancelledDate,
+            getSettings()['setCancelledDate'],
         );
 
         let nextOccurrence: {
@@ -395,19 +395,19 @@ export class Task {
      *
      * Currently, this is used to calculate the new Done Date or Cancelled Date,
      *
-     * @param oldDate
-     * @param setDoneDate
      * @param oldStatus
      * @param newStatus
      * @param statusType
+     * @param oldDate
+     * @param setDoneDate
      * @private
      */
     private getNewDateForComponent(
-        oldDate: moment.Moment | null,
-        setDoneDate: boolean,
         oldStatus: Status,
         newStatus: Status,
         statusType: StatusType,
+        oldDate: moment.Moment | null,
+        setDoneDate: boolean,
     ) {
         let newDoneDate = null;
         if (newStatus.type === statusType) {
