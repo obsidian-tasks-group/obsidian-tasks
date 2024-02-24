@@ -1,0 +1,29 @@
+[
+  {
+    "displayText": "due:: due date",
+    "appendText": "due:: "
+  },
+  {
+    "displayText": "start:: start date",
+    "appendText": "start:: "
+  },
+  {
+    "displayText": "scheduled:: scheduled date",
+    "appendText": "scheduled:: "
+  },
+  {
+    "displayText": "priority:: high priority",
+    "appendText": "priority:: high] ",
+    "insertSkip": 0
+  },
+  {
+    "displayText": "priority:: medium priority",
+    "appendText": "priority:: medium] ",
+    "insertSkip": 0
+  },
+  {
+    "displayText": "priority:: low priority",
+    "appendText": "priority:: low] ",
+    "insertSkip": 0
+  }
+]
