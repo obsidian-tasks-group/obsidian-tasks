@@ -411,6 +411,11 @@ export class Task {
             // New occurrences cannot have the same block link.
             // And random block links don't help.
             blockLink: '',
+
+            // New occurrences also cannot have the same dependency fields. See #2654.
+            id: '',
+            dependsOn: [],
+
             // add new createdDate on recurring tasks
             createdDate,
             cancelledDate,
