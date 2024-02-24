@@ -375,12 +375,12 @@ export class Task {
         let newDate = null;
         if (newStatus.type === statusType) {
             if (this.status.type !== statusType) {
-                // Set done date only if setting value is true
+                // Set date only if setting value is true.
                 if (dateEnabledInSettings) {
                     newDate = window.moment();
                 }
             } else {
-                // This task was already completed, so preserve its done date.
+                // This task was already in statusType, so preserve its existing date.
                 newDate = oldDate;
             }
         }
