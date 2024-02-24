@@ -328,6 +328,9 @@ export class Task {
             this.status.type === StatusType.DONE,
             newStatus.type === StatusType.DONE,
             getSettings()['setDoneDate'],
+            this.status,
+            newStatus,
+            StatusType.DONE,
         );
 
         const newCancelledDate = this.getNewDateForComponent(
@@ -335,6 +338,9 @@ export class Task {
             this.status.type === StatusType.CANCELLED,
             newStatus.type === StatusType.CANCELLED,
             getSettings()['setCancelledDate'],
+            this.status,
+            newStatus,
+            StatusType.CANCELLED,
         );
 
         let nextOccurrence: {
@@ -397,6 +403,9 @@ export class Task {
      * @param wasCompleted
      * @param isNowCompleted
      * @param setDoneDate
+     * @param _oldStatus
+     * @param _newStatus
+     * @param _statusType
      * @private
      */
     private getNewDateForComponent(
@@ -404,6 +413,9 @@ export class Task {
         wasCompleted: boolean,
         isNowCompleted: boolean,
         setDoneDate: boolean,
+        _oldStatus: Status,
+        _newStatus: Status,
+        _statusType: StatusType,
     ) {
         let newDoneDate = null;
         if (isNowCompleted) {
