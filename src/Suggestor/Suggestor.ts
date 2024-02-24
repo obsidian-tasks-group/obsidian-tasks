@@ -29,7 +29,7 @@ export function makeDefaultSuggestionBuilder(
 
         // Step 1: add date suggestions if relevant
         suggestions = suggestions.concat(
-            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions),
+            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions, isDataview),
         );
 
         // Step 2: add recurrence suggestions if relevant
@@ -184,6 +184,7 @@ function addDatesSuggestions(
     settings: Settings,
     datePrefixRegex: string,
     maxGenericSuggestions: number,
+    dataviewMode: boolean,
 ): SuggestInfo[] {
     const genericSuggestions = [
         'today',
@@ -200,7 +201,6 @@ function addDatesSuggestions(
         'next year',
     ];
 
-    const dataviewMode = settings.taskFormat === 'dataview';
     const close_bracket =
         lastOpenBracket(line.substring(0, cursorPos), [
             ['(', ')'],
