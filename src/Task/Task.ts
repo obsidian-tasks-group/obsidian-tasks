@@ -323,33 +323,11 @@ export class Task {
             return [this];
         }
 
-        let newDoneDate = null;
-        if (newStatus.isCompleted()) {
-            if (!this.status.isCompleted()) {
-                // Set done date only if setting value is true
-                const { setDoneDate } = getSettings();
-                if (setDoneDate) {
-                    newDoneDate = window.moment();
-                }
-            } else {
-                // This task was already completed, so preserve its done date.
-                newDoneDate = this.doneDate;
-            }
-        }
+        const { setDoneDate } = getSettings();
+        const newDoneDate = this.newDate(newStatus, StatusType.DONE, this.doneDate, setDoneDate);
 
-        let newCancelledDate = null;
-        if (newStatus.isCancelled()) {
-            if (!this.status.isCancelled()) {
-                // Set done cancelled only if setting value is true
-                const { setCancelledDate } = getSettings();
-                if (setCancelledDate) {
-                    newCancelledDate = window.moment();
-                }
-            } else {
-                // This task was already cancelled, so preserve its cancelled date.
-                newCancelledDate = this.cancelledDate;
-            }
-        }
+        const { setCancelledDate } = getSettings();
+        const newCancelledDate = this.newDate(newStatus, StatusType.CANCELLED, this.cancelledDate, setCancelledDate);
 
         let nextOccurrence: {
             startDate: Moment | null;
@@ -372,26 +350,7 @@ export class Task {
         const newTasks: Task[] = [];
 
         if (nextOccurrence !== null) {
-            const { setCreatedDate } = getSettings();
-            let createdDate: moment.Moment | null = null;
-            if (setCreatedDate) {
-                createdDate = window.moment();
-            }
-            // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
-            const cancelledDate = null;
-            const statusRegistry = StatusRegistry.getInstance();
-            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
-            const nextTask = new Task({
-                ...this,
-                ...nextOccurrence,
-                status: nextStatus,
-                // New occurrences cannot have the same block link.
-                // And random block links don't help.
-                blockLink: '',
-                // add new createdDate on recurring tasks
-                createdDate,
-                cancelledDate,
-            });
+            const nextTask = this.createNextOccurrence(newStatus, nextOccurrence);
             newTasks.push(nextTask);
         }
 
@@ -399,6 +358,63 @@ export class Task {
         newTasks.push(toggledTask);
 
         return newTasks;
+    }
+
+    /**
+     * Returns the new value to use for a date that tracks progress on tasks upon transition to a different
+     * {@link StatusType}.
+     *
+     * Currently, this is used to calculate the new Done Date or Cancelled Date,
+     */
+    private newDate(
+        newStatus: Status,
+        statusType: StatusType,
+        oldDate: moment.Moment | null,
+        dateEnabledInSettings: boolean,
+    ) {
+        let newDate = null;
+        if (newStatus.type === statusType) {
+            if (this.status.type !== statusType) {
+                // Set date only if setting value is true.
+                if (dateEnabledInSettings) {
+                    newDate = window.moment();
+                }
+            } else {
+                // This task was already in statusType, so preserve its existing date.
+                newDate = oldDate;
+            }
+        }
+        return newDate;
+    }
+
+    private createNextOccurrence(
+        newStatus: Status,
+        nextOccurrence: {
+            startDate: moment.Moment | null;
+            scheduledDate: moment.Moment | null;
+            dueDate: moment.Moment | null;
+        },
+    ) {
+        const { setCreatedDate } = getSettings();
+        let createdDate: moment.Moment | null = null;
+        if (setCreatedDate) {
+            createdDate = window.moment();
+        }
+        // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
+        const cancelledDate = null;
+        const statusRegistry = StatusRegistry.getInstance();
+        const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
+        return new Task({
+            ...this,
+            ...nextOccurrence,
+            status: nextStatus,
+            // New occurrences cannot have the same block link.
+            // And random block links don't help.
+            blockLink: '',
+            // add new createdDate on recurring tasks
+            createdDate,
+            cancelledDate,
+        });
     }
 
     /**
