@@ -324,7 +324,7 @@ export class Task {
         }
 
         const { setDoneDate } = getSettings();
-        const newDoneDate = this.getNewDateForComponent(
+        const newDoneDate = this.newDateIfStatusTypeChanged(
             this.status,
             newStatus,
             StatusType.DONE,
@@ -333,7 +333,7 @@ export class Task {
         );
 
         const { setCancelledDate } = getSettings();
-        const newCancelledDate = this.getNewDateForComponent(
+        const newCancelledDate = this.newDateIfStatusTypeChanged(
             this.status,
             newStatus,
             StatusType.CANCELLED,
@@ -404,7 +404,7 @@ export class Task {
      * @param setDoneDate
      * @private
      */
-    private getNewDateForComponent(
+    private newDateIfStatusTypeChanged(
         oldStatus: Status,
         newStatus: Status,
         statusType: StatusType,
