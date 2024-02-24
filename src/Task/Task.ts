@@ -323,12 +323,11 @@ export class Task {
             return [this];
         }
 
-        const { setDoneDate } = getSettings();
         const newDoneDate = this.getNewDateForComponent(
             'doneDate',
             this.status.isCompleted(),
             newStatus.isCompleted(),
-            setDoneDate,
+            getSettings()['setDoneDate'],
         );
 
         let newCancelledDate = null;
