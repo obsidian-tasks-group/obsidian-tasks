@@ -17,6 +17,7 @@ export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
     maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
+    dataviewMode: boolean,
 ): SuggestionBuilder {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
@@ -28,21 +29,23 @@ export function makeDefaultSuggestionBuilder(
 
         // Step 1: add date suggestions if relevant
         suggestions = suggestions.concat(
-            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions),
+            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions, dataviewMode),
         );
 
         // Step 2: add recurrence suggestions if relevant
-        suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol));
+        suggestions = suggestions.concat(
+            addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, dataviewMode),
+        );
 
         // Step 3: add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols));
+        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
         // rather than insert a suggestion
         if (suggestions.length > 0 && !suggestions.some((value) => value.suggestionType === 'match')) {
             // No actual match, only default ones
-            if (settings.taskFormat != 'dataview') {
+            if (!dataviewMode) {
                 suggestions.unshift({
                     suggestionType: 'empty',
                     displayText: '⏎',
@@ -58,6 +61,20 @@ export function makeDefaultSuggestionBuilder(
     };
 }
 
+function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
+    const closingBracket =
+        lastOpenBracket(line.substring(0, cursorPos), [
+            // TODO this array duplicates code in Settings.ts. Can we introduce an abstraction for this?
+            ['(', ')'],
+            ['[', ']'],
+        ]) == '('
+            ? ')'
+            : ']';
+    const postfix = dataviewMode ? closingBracket + ' ' : ' ';
+    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === closingBracket ? 1 : 0;
+    return { postfix, insertSkip };
+}
+
 /*
  * Get suggestions for generic task components, e.g. a priority or a 'due' symbol
  */
@@ -66,21 +83,13 @@ function addTaskPropertySuggestions(
     cursorPos: number,
     _settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
+    dataviewMode: boolean,
 ): SuggestInfo[] {
     const hasPriority = (line: string) =>
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
 
     const genericSuggestions: SuggestInfo[] = [];
-    const dataviewMode = _settings.taskFormat === 'dataview';
-    const close_bracket =
-        lastOpenBracket(line.substring(0, cursorPos), [
-            ['(', ')'],
-            ['[', ']'],
-        ]) == '('
-            ? ')'
-            : ']';
-    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
+    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     if (!line.includes(symbols.dueDateSymbol))
@@ -107,10 +116,9 @@ function addTaskPropertySuggestions(
             const prioritySymbol = prioritySymbols[priorityText];
 
             genericSuggestions.push({
-                displayText:
-                    _settings.taskFormat == 'dataview'
-                        ? `${prioritySymbol} priority`
-                        : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
+                displayText: dataviewMode
+                    ? `${prioritySymbol} priority`
+                    : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
                 appendText: `${prioritySymbol}${postfix}`,
                 insertSkip: dataviewMode ? insertSkip : undefined,
             });
@@ -184,6 +192,7 @@ function addDatesSuggestions(
     settings: Settings,
     datePrefixRegex: string,
     maxGenericSuggestions: number,
+    dataviewMode: boolean,
 ): SuggestInfo[] {
     const genericSuggestions = [
         'today',
@@ -200,16 +209,7 @@ function addDatesSuggestions(
         'next year',
     ];
 
-    const dataviewMode = settings.taskFormat === 'dataview';
-    const close_bracket =
-        lastOpenBracket(line.substring(0, cursorPos), [
-            ['(', ')'],
-            ['[', ']'],
-        ]) == '('
-            ? ')'
-            : ']';
-    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
+    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
@@ -280,7 +280,13 @@ function addDatesSuggestions(
  * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
  * something where a recurrence is expected) or unfiltered
  */
-function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Settings, recurrenceSymbol: string) {
+function addRecurrenceSuggestions(
+    line: string,
+    cursorPos: number,
+    settings: Settings,
+    recurrenceSymbol: string,
+    dataviewMode: boolean,
+) {
     const genericSuggestions = [
         'every',
         'every day',
@@ -296,16 +302,8 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
         'every week on Friday',
         'every week on Saturday',
     ];
-    const dataviewMode = settings.taskFormat === 'dataview';
-    const close_bracket =
-        lastOpenBracket(line.substring(0, cursorPos), [
-            ['(', ')'],
-            ['[', ']'],
-        ]) == '('
-            ? ')'
-            : ']';
-    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
+
+    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
