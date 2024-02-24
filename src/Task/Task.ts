@@ -323,11 +323,13 @@ export class Task {
             return [this];
         }
 
-        const component = 'doneDate';
-        const wasCompleted = this.status.isCompleted();
-        const isNowCompleted = newStatus.isCompleted();
         const { setDoneDate } = getSettings();
-        const newDoneDate = this.getNewDateForComponent(component, wasCompleted, isNowCompleted, setDoneDate);
+        const newDoneDate = this.getNewDateForComponent(
+            'doneDate',
+            this.status.isCompleted(),
+            newStatus.isCompleted(),
+            setDoneDate,
+        );
 
         let newCancelledDate = null;
         if (newStatus.isCancelled()) {
