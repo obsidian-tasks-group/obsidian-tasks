@@ -324,17 +324,10 @@ export class Task {
         }
 
         const { setDoneDate } = getSettings();
-        const newDoneDate = this.newDateIfStatusTypeChanged(
-            this.status,
-            newStatus,
-            StatusType.DONE,
-            this.doneDate,
-            setDoneDate,
-        );
+        const newDoneDate = this.newDateIfStatusTypeChanged(newStatus, StatusType.DONE, this.doneDate, setDoneDate);
 
         const { setCancelledDate } = getSettings();
         const newCancelledDate = this.newDateIfStatusTypeChanged(
-            this.status,
             newStatus,
             StatusType.CANCELLED,
             this.cancelledDate,
@@ -379,7 +372,6 @@ export class Task {
      * Currently, this is used to calculate the new Done Date or Cancelled Date,
      */
     private newDateIfStatusTypeChanged(
-        oldStatus: Status,
         newStatus: Status,
         statusType: StatusType,
         oldDate: moment.Moment | null,
@@ -387,7 +379,7 @@ export class Task {
     ) {
         let newDate = null;
         if (newStatus.type === statusType) {
-            if (oldStatus.type !== statusType) {
+            if (this.status.type !== statusType) {
                 // Set done date only if setting value is true
                 if (dateEnabledInSettings) {
                     newDate = window.moment();
