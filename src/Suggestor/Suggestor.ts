@@ -64,6 +64,7 @@ export function makeDefaultSuggestionBuilder(
 function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
     const closingBracket =
         lastOpenBracket(line.substring(0, cursorPos), [
+            // TODO this array duplicates code in Settings.ts. Can we introduce an abstraction for this?
             ['(', ')'],
             ['[', ']'],
         ]) == '('
