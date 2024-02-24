@@ -401,7 +401,7 @@ export class Task {
      * @param newStatus
      * @param statusType
      * @param oldDate
-     * @param setDoneDate
+     * @param dateEnabledInSettings
      * @private
      */
     private newDateIfStatusTypeChanged(
@@ -409,21 +409,21 @@ export class Task {
         newStatus: Status,
         statusType: StatusType,
         oldDate: moment.Moment | null,
-        setDoneDate: boolean,
+        dateEnabledInSettings: boolean,
     ) {
-        let newDoneDate = null;
+        let newDate = null;
         if (newStatus.type === statusType) {
             if (oldStatus.type !== statusType) {
                 // Set done date only if setting value is true
-                if (setDoneDate) {
-                    newDoneDate = window.moment();
+                if (dateEnabledInSettings) {
+                    newDate = window.moment();
                 }
             } else {
                 // This task was already completed, so preserve its done date.
-                newDoneDate = oldDate;
+                newDate = oldDate;
             }
         }
-        return newDoneDate;
+        return newDate;
     }
 
     /**
