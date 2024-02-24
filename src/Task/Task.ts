@@ -362,26 +362,7 @@ export class Task {
         const newTasks: Task[] = [];
 
         if (nextOccurrence !== null) {
-            const { setCreatedDate } = getSettings();
-            let createdDate: moment.Moment | null = null;
-            if (setCreatedDate) {
-                createdDate = window.moment();
-            }
-            // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
-            const cancelledDate = null;
-            const statusRegistry = StatusRegistry.getInstance();
-            const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
-            const nextTask = new Task({
-                ...this,
-                ...nextOccurrence,
-                status: nextStatus,
-                // New occurrences cannot have the same block link.
-                // And random block links don't help.
-                blockLink: '',
-                // add new createdDate on recurring tasks
-                createdDate,
-                cancelledDate,
-            });
+            const nextTask = this.createNextOccurrence(newStatus, nextOccurrence);
             newTasks.push(nextTask);
         }
 
@@ -417,6 +398,36 @@ export class Task {
             }
         }
         return newDate;
+    }
+
+    private createNextOccurrence(
+        newStatus: Status,
+        nextOccurrence: {
+            startDate: moment.Moment | null;
+            scheduledDate: moment.Moment | null;
+            dueDate: moment.Moment | null;
+        },
+    ) {
+        const { setCreatedDate } = getSettings();
+        let createdDate: moment.Moment | null = null;
+        if (setCreatedDate) {
+            createdDate = window.moment();
+        }
+        // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
+        const cancelledDate = null;
+        const statusRegistry = StatusRegistry.getInstance();
+        const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
+        return new Task({
+            ...this,
+            ...nextOccurrence,
+            status: nextStatus,
+            // New occurrences cannot have the same block link.
+            // And random block links don't help.
+            blockLink: '',
+            // add new createdDate on recurring tasks
+            createdDate,
+            cancelledDate,
+        });
     }
 
     /**
