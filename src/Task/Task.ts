@@ -396,13 +396,6 @@ export class Task {
      * {@link StatusType}.
      *
      * Currently, this is used to calculate the new Done Date or Cancelled Date,
-     *
-     * @param oldStatus
-     * @param newStatus
-     * @param statusType
-     * @param oldDate
-     * @param dateEnabledInSettings
-     * @private
      */
     private newDateIfStatusTypeChanged(
         oldStatus: Status,
