@@ -36,7 +36,7 @@ export function makeDefaultSuggestionBuilder(
         suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol));
 
         // Step 3: add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols));
+        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, isDataview));
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
@@ -67,12 +67,12 @@ function addTaskPropertySuggestions(
     cursorPos: number,
     _settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
+    dataviewMode: boolean,
 ): SuggestInfo[] {
     const hasPriority = (line: string) =>
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
 
     const genericSuggestions: SuggestInfo[] = [];
-    const dataviewMode = _settings.taskFormat === 'dataview';
     const close_bracket =
         lastOpenBracket(line.substring(0, cursorPos), [
             ['(', ')'],
