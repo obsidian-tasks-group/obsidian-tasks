@@ -42,13 +42,13 @@ export const TASK_FORMATS = {
     tasksPluginEmoji: {
         displayName: 'Tasks Emoji Format',
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
-        buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS),
+        buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, false),
     },
     dataview: {
         displayName: 'Dataview',
         taskSerializer: new DataviewTaskSerializer(),
         buildSuggestions: onlySuggestIfBracketOpen(
-            makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS),
+            makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, true),
             [
                 ['(', ')'],
                 ['[', ']'],

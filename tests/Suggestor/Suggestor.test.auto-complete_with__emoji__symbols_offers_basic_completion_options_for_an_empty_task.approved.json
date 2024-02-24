@@ -1,0 +1,27 @@
+[
+  {
+    "suggestionType": "empty",
+    "displayText": "⏎",
+    "appendText": "\n"
+  },
+  {
+    "displayText": "📅 due date",
+    "appendText": "📅 "
+  },
+  {
+    "displayText": "🛫 start date",
+    "appendText": "🛫 "
+  },
+  {
+    "displayText": "⏳ scheduled date",
+    "appendText": "⏳ "
+  },
+  {
+    "displayText": "⏫ high priority",
+    "appendText": "⏫ "
+  },
+  {
+    "displayText": "🔼 medium priority",
+    "appendText": "🔼 "
+  }
+]
