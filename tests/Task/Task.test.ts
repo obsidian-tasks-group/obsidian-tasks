@@ -11,7 +11,7 @@ import type { StatusCollection } from '../../src/Statuses/StatusCollection';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { fromLine } from '../TestingTools/TestHelpers';
+import { fromLine, toMarkdown } from '../TestingTools/TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Priority } from '../../src/Task/Priority';
@@ -1191,6 +1191,40 @@ describe('toggle done', () => {
             nextDue: '2021-09-13',
             nextScheduled: undefined,
             nextStart: undefined,
+        });
+    });
+
+    describe('toggling tasks with dependencies fields', () => {
+        beforeEach(() => {
+            // By not adding the done date to these completed tasks, we:
+            //  1. Make the output more readable,
+            //  2. Remove the need to set a fixed fake current date.
+            updateSettings({ setDoneDate: false });
+        });
+
+        afterEach(() => {
+            resetSettings();
+        });
+
+        it('should retain id and dependsOn after toggle NON-recurring task', () => {
+            const task = fromLine({ line: '- [ ] should retain *id* and *dependsOn* 🆔 id2 ⛔️ id1' });
+            const tasks = task.toggle();
+
+            expect(toMarkdown(tasks)).toMatchInlineSnapshot(
+                '"- [x] should retain *id* and *dependsOn* 🆔 id2 ⛔️ id1"',
+            );
+        });
+
+        it('should remove id and dependsOn after toggle RECURRING task', () => {
+            const task = fromLine({
+                line: '- [ ] should remove *id* and *dependsOn* in next recurrence 🆔 id2 ⛔️ id1 🔁 every day 📅 2024-02-13',
+            });
+            const tasks = task.toggle();
+
+            expect(toMarkdown(tasks)).toMatchInlineSnapshot(`
+                "- [ ] should remove *id* and *dependsOn* in next recurrence 🔁 every day 📅 2024-02-14
+                - [x] should remove *id* and *dependsOn* in next recurrence 🆔 id2 ⛔️ id1 🔁 every day 📅 2024-02-13"
+            `);
         });
     });
 });
