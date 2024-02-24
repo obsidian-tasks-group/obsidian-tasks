@@ -323,20 +323,22 @@ export class Task {
             return [this];
         }
 
+        const { setDoneDate } = getSettings();
         const newDoneDate = this.getNewDateForComponent(
             this.status,
             newStatus,
             StatusType.DONE,
             this.doneDate,
-            getSettings()['setDoneDate'],
+            setDoneDate,
         );
 
+        const { setCancelledDate } = getSettings();
         const newCancelledDate = this.getNewDateForComponent(
             this.status,
             newStatus,
             StatusType.CANCELLED,
             this.cancelledDate,
-            getSettings()['setCancelledDate'],
+            setCancelledDate,
         );
 
         let nextOccurrence: {
