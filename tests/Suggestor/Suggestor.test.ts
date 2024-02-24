@@ -4,7 +4,7 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
-import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
 import {
     canSuggestForLine,
@@ -56,20 +56,6 @@ describe.each([
     { name: 'emoji', symbols: DEFAULT_SYMBOLS },
     { name: 'dataview', symbols: DATAVIEW_SYMBOLS },
 ])("auto-complete with '$name' symbols", ({ name, symbols }) => {
-    beforeAll(() => {
-        resetSettings();
-
-        if (name === 'emoji') {
-            updateSettings({ taskFormat: 'tasksPluginEmoji' });
-        } else {
-            updateSettings({ taskFormat: 'dataview' });
-        }
-    });
-
-    afterAll(() => {
-        resetSettings();
-    });
-
     const buildSuggestions = makeDefaultSuggestionBuilder(
         symbols,
         MAX_GENERIC_SUGGESTIONS_FOR_TESTS,
