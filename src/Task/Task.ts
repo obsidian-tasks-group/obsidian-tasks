@@ -400,26 +400,26 @@ export class Task {
      * Currently, this is used to calculate the new Done Date or Cancelled Date,
      *
      * @param oldDate
-     * @param wasCompleted
-     * @param isNowCompleted
+     * @param _wasCompleted
+     * @param _isNowCompleted
      * @param setDoneDate
-     * @param _oldStatus
-     * @param _newStatus
-     * @param _statusType
+     * @param oldStatus
+     * @param newStatus
+     * @param statusType
      * @private
      */
     private getNewDateForComponent(
         oldDate: moment.Moment | null,
-        wasCompleted: boolean,
-        isNowCompleted: boolean,
+        _wasCompleted: boolean,
+        _isNowCompleted: boolean,
         setDoneDate: boolean,
-        _oldStatus: Status,
-        _newStatus: Status,
-        _statusType: StatusType,
+        oldStatus: Status,
+        newStatus: Status,
+        statusType: StatusType,
     ) {
         let newDoneDate = null;
-        if (isNowCompleted) {
-            if (!wasCompleted) {
+        if (newStatus.type === statusType) {
+            if (oldStatus.type !== statusType) {
                 // Set done date only if setting value is true
                 if (setDoneDate) {
                     newDoneDate = window.moment();
