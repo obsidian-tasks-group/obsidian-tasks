@@ -70,7 +70,11 @@ describe.each([
         resetSettings();
     });
 
-    const buildSuggestions = makeDefaultSuggestionBuilder(symbols, MAX_GENERIC_SUGGESTIONS_FOR_TESTS);
+    const buildSuggestions = makeDefaultSuggestionBuilder(
+        symbols,
+        MAX_GENERIC_SUGGESTIONS_FOR_TESTS,
+        name === 'dataview',
+    );
 
     const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, createdDateSymbol, recurrenceSymbol } = symbols;
     it('offers basic completion options for an empty task', () => {
