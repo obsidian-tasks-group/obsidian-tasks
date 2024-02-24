@@ -324,14 +324,14 @@ export class Task {
         }
 
         const newDoneDate = this.getNewDateForComponent(
-            'doneDate',
+            this.doneDate,
             this.status.isCompleted(),
             newStatus.isCompleted(),
             getSettings()['setDoneDate'],
         );
 
         const newCancelledDate = this.getNewDateForComponent(
-            'cancelledDate',
+            this.cancelledDate,
             this.status.isCancelled(),
             newStatus.isCancelled(),
             getSettings()['setCancelledDate'],
@@ -388,7 +388,7 @@ export class Task {
     }
 
     private getNewDateForComponent(
-        component: keyof Task,
+        oldDate: moment.Moment | null,
         wasCompleted: boolean,
         isNowCompleted: boolean,
         setDoneDate: boolean,
@@ -402,7 +402,7 @@ export class Task {
                 }
             } else {
                 // This task was already completed, so preserve its done date.
-                newDoneDate = this[component];
+                newDoneDate = oldDate;
             }
         }
         return newDoneDate;
