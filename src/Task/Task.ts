@@ -324,9 +324,10 @@ export class Task {
         }
 
         const component = 'doneDate';
+        const wasCompleted = this.status.isCompleted();
         let newDoneDate = null;
         if (newStatus.isCompleted()) {
-            if (!this.status.isCompleted()) {
+            if (!wasCompleted) {
                 // Set done date only if setting value is true
                 const { setDoneDate } = getSettings();
                 if (setDoneDate) {
