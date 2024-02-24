@@ -33,7 +33,9 @@ export function makeDefaultSuggestionBuilder(
         );
 
         // Step 2: add recurrence suggestions if relevant
-        suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol));
+        suggestions = suggestions.concat(
+            addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, isDataview),
+        );
 
         // Step 3: add task property suggestions ('due', 'recurrence' etc)
         suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, isDataview));
@@ -280,7 +282,13 @@ function addDatesSuggestions(
  * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
  * something where a recurrence is expected) or unfiltered
  */
-function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Settings, recurrenceSymbol: string) {
+function addRecurrenceSuggestions(
+    line: string,
+    cursorPos: number,
+    settings: Settings,
+    recurrenceSymbol: string,
+    dataviewMode: boolean,
+) {
     const genericSuggestions = [
         'every',
         'every day',
@@ -296,7 +304,6 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
         'every week on Friday',
         'every week on Saturday',
     ];
-    const dataviewMode = settings.taskFormat === 'dataview';
     const close_bracket =
         lastOpenBracket(line.substring(0, cursorPos), [
             ['(', ')'],
