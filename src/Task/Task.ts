@@ -325,15 +325,15 @@ export class Task {
 
         const newDoneDate = this.getNewDateForComponent(
             this.doneDate,
-            this.status.isCompleted(),
-            newStatus.isCompleted(),
+            this.status.type === StatusType.DONE,
+            newStatus.type === StatusType.DONE,
             getSettings()['setDoneDate'],
         );
 
         const newCancelledDate = this.getNewDateForComponent(
             this.cancelledDate,
-            this.status.isCancelled(),
-            newStatus.isCancelled(),
+            this.status.type === StatusType.CANCELLED,
+            newStatus.type === StatusType.CANCELLED,
             getSettings()['setCancelledDate'],
         );
 
