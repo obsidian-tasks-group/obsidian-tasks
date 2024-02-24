@@ -1,9 +1,10 @@
 /**
  * @jest-environment jsdom
  */
+import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
-import { getSettings } from '../../src/Config/Settings';
+import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
 import {
     canSuggestForLine,
@@ -54,29 +55,30 @@ const MAX_GENERIC_SUGGESTIONS_FOR_TESTS = 50;
 describe.each([
     { name: 'emoji', symbols: DEFAULT_SYMBOLS },
     { name: 'dataview', symbols: DATAVIEW_SYMBOLS },
-])("auto-complete with '$name' symbols", ({ symbols }) => {
+])("auto-complete with '$name' symbols", ({ name, symbols }) => {
+    beforeAll(() => {
+        resetSettings();
+
+        if (name === 'emoji') {
+            updateSettings({ taskFormat: 'tasksPluginEmoji' });
+        } else {
+            updateSettings({ taskFormat: 'dataview' });
+        }
+    });
+
+    afterAll(() => {
+        resetSettings();
+    });
+
     const buildSuggestions = makeDefaultSuggestionBuilder(symbols, MAX_GENERIC_SUGGESTIONS_FOR_TESTS);
-    const {
-        dueDateSymbol,
-        scheduledDateSymbol,
-        startDateSymbol,
-        createdDateSymbol,
-        recurrenceSymbol,
-        prioritySymbols,
-    } = symbols;
+
+    const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, createdDateSymbol, recurrenceSymbol } = symbols;
     it('offers basic completion options for an empty task', () => {
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] ';
         const suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings);
-        expect(suggestions).toEqual([
-            { suggestionType: 'empty', displayText: '⏎', appendText: '\n' },
-            { displayText: `${dueDateSymbol} due date`, appendText: `${dueDateSymbol} ` },
-            { displayText: `${startDateSymbol} start date`, appendText: `${startDateSymbol} ` },
-            { displayText: `${scheduledDateSymbol} scheduled date`, appendText: `${scheduledDateSymbol} ` },
-            { displayText: `${prioritySymbols.High} high priority`, appendText: `${prioritySymbols.High} ` },
-            { displayText: `${prioritySymbols.Medium} medium priority`, appendText: `${prioritySymbols.Medium} ` },
-        ]);
+        verifyAsJson(suggestions);
     });
 
     it('offers generic due date completions', () => {
@@ -140,7 +142,17 @@ describe.each([
 
         line = '- [ ] some task tod';
         suggestions = buildSuggestions(line, 19, originalSettings);
-        expect(suggestions[0].suggestionType).toEqual('empty');
+        if (name === 'emoji') {
+            // The first suggestion is new line
+            expect(suggestions[0].suggestionType).toEqual('empty');
+        } else if (name === 'dataview') {
+            // the new line suggestion is not offered for dataview
+            expect(suggestions[0].suggestionType).toEqual(undefined);
+        } else {
+            // we should never reach here
+            // add a new case above if adding a new format
+            expect(1).toEqual(2);
+        }
         expect(suggestions[0].displayText).not.toContain('created today');
     });
 
