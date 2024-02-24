@@ -17,7 +17,7 @@ export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
     maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
-    isDataview: boolean,
+    dataviewMode: boolean,
 ): SuggestionBuilder {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
@@ -29,23 +29,23 @@ export function makeDefaultSuggestionBuilder(
 
         // Step 1: add date suggestions if relevant
         suggestions = suggestions.concat(
-            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions, isDataview),
+            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions, dataviewMode),
         );
 
         // Step 2: add recurrence suggestions if relevant
         suggestions = suggestions.concat(
-            addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, isDataview),
+            addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, dataviewMode),
         );
 
         // Step 3: add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, isDataview));
+        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
         // rather than insert a suggestion
         if (suggestions.length > 0 && !suggestions.some((value) => value.suggestionType === 'match')) {
             // No actual match, only default ones
-            if (!isDataview) {
+            if (!dataviewMode) {
                 suggestions.unshift({
                     suggestionType: 'empty',
                     displayText: '⏎',
