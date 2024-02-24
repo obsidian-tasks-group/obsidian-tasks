@@ -387,6 +387,18 @@ export class Task {
         return newTasks;
     }
 
+    /**
+     * Returns the new value to use for a date that tracks progress on tasks upon transition to a different
+     * {@link StatusType}.
+     *
+     * Currently, this is used to calculate the new Done Date or Cancelled Date,
+     *
+     * @param oldDate
+     * @param wasCompleted
+     * @param isNowCompleted
+     * @param setDoneDate
+     * @private
+     */
     private getNewDateForComponent(
         oldDate: moment.Moment | null,
         wasCompleted: boolean,
