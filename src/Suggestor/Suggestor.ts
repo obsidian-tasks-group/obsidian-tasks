@@ -61,6 +61,19 @@ export function makeDefaultSuggestionBuilder(
     };
 }
 
+function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
+    const close_bracket =
+        lastOpenBracket(line.substring(0, cursorPos), [
+            ['(', ')'],
+            ['[', ']'],
+        ]) == '('
+            ? ')'
+            : ']';
+    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
+    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
+    return { postfix, insertSkip };
+}
+
 /*
  * Get suggestions for generic task components, e.g. a priority or a 'due' symbol
  */
@@ -75,15 +88,7 @@ function addTaskPropertySuggestions(
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
 
     const genericSuggestions: SuggestInfo[] = [];
-    const close_bracket =
-        lastOpenBracket(line.substring(0, cursorPos), [
-            ['(', ')'],
-            ['[', ']'],
-        ]) == '('
-            ? ')'
-            : ']';
-    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
+    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     if (!line.includes(symbols.dueDateSymbol))
