@@ -330,19 +330,12 @@ export class Task {
             getSettings()['setDoneDate'],
         );
 
-        let newCancelledDate = null;
-        if (newStatus.isCancelled()) {
-            if (!this.status.isCancelled()) {
-                // Set done cancelled only if setting value is true
-                const { setCancelledDate } = getSettings();
-                if (setCancelledDate) {
-                    newCancelledDate = window.moment();
-                }
-            } else {
-                // This task was already cancelled, so preserve its cancelled date.
-                newCancelledDate = this.cancelledDate;
-            }
-        }
+        const newCancelledDate = this.getNewDateForComponent(
+            'cancelledDate',
+            this.status.isCancelled(),
+            newStatus.isCancelled(),
+            getSettings()['setCancelledDate'],
+        );
 
         let nextOccurrence: {
             startDate: Moment | null;
