@@ -50,7 +50,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
     - use the up/down keyboard keys and then type `Return` or `Enter`
     - type a few more characters, to make the menu items more specific. For example, type `pri` to show all the options for setting the task's priority.
 
-    **Note**: When the `⏎` item is shown at the top of the menu, it is given as a default option to enter a new line instead of choosing a suggestion. It is only shown when there is no concrete match.
+    **Note**: When the `⏎` item is shown at the top of the menu, it is given as a default option to enter a new line instead of choosing a suggestion. It is only shown when there is no concrete match when using the [[Tasks Emoji Format]].
 
 3. Here we selected the 'high priority' item, and so now the menu is updated to show the next most likely items you might want to add. We are going to select 'recurring (repeat)' from this menu:
 
