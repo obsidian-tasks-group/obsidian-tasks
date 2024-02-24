@@ -325,8 +325,6 @@ export class Task {
 
         const newDoneDate = this.getNewDateForComponent(
             this.doneDate,
-            this.status.type === StatusType.DONE,
-            newStatus.type === StatusType.DONE,
             getSettings()['setDoneDate'],
             this.status,
             newStatus,
@@ -335,8 +333,6 @@ export class Task {
 
         const newCancelledDate = this.getNewDateForComponent(
             this.cancelledDate,
-            this.status.type === StatusType.CANCELLED,
-            newStatus.type === StatusType.CANCELLED,
             getSettings()['setCancelledDate'],
             this.status,
             newStatus,
@@ -400,8 +396,6 @@ export class Task {
      * Currently, this is used to calculate the new Done Date or Cancelled Date,
      *
      * @param oldDate
-     * @param _wasCompleted
-     * @param _isNowCompleted
      * @param setDoneDate
      * @param oldStatus
      * @param newStatus
@@ -410,8 +404,6 @@ export class Task {
      */
     private getNewDateForComponent(
         oldDate: moment.Moment | null,
-        _wasCompleted: boolean,
-        _isNowCompleted: boolean,
         setDoneDate: boolean,
         oldStatus: Status,
         newStatus: Status,
