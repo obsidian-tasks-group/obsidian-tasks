@@ -323,6 +323,7 @@ export class Task {
             return [this];
         }
 
+        const component = 'doneDate';
         let newDoneDate = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted()) {
@@ -333,7 +334,7 @@ export class Task {
                 }
             } else {
                 // This task was already completed, so preserve its done date.
-                newDoneDate = this.doneDate;
+                newDoneDate = this[component];
             }
         }
 
