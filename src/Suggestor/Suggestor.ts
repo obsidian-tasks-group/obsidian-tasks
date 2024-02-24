@@ -208,15 +208,7 @@ function addDatesSuggestions(
         'next year',
     ];
 
-    const close_bracket =
-        lastOpenBracket(line.substring(0, cursorPos), [
-            ['(', ')'],
-            ['[', ']'],
-        ]) == '('
-            ? ')'
-            : ']';
-    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
+    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
@@ -309,15 +301,8 @@ function addRecurrenceSuggestions(
         'every week on Friday',
         'every week on Saturday',
     ];
-    const close_bracket =
-        lastOpenBracket(line.substring(0, cursorPos), [
-            ['(', ')'],
-            ['[', ']'],
-        ]) == '('
-            ? ')'
-            : ']';
-    const postfix = dataviewMode ? close_bracket + ' ' : ' ';
-    const insertSkip = dataviewMode && line.length > cursorPos && line.charAt(cursorPos) === close_bracket ? 1 : 0;
+
+    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
