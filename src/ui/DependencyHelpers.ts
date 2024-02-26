@@ -11,8 +11,13 @@ export function searchForCandidateTasksForDependency(
 ) {
     let results = allTasks.filter((task) => task.description.toLowerCase().includes(search.toLowerCase()));
 
-    // remove itself, and tasks this task already has a relationship with from results
     results = results.filter((item) => {
+        // Do not show any tasks that look like templates:
+        if (item.description.includes('<%') && item.description.includes('%>')) {
+            return false;
+        }
+
+        // remove itself, and tasks this task already has a relationship with from results
         // line number is unavailable for the task being edited
         // Known issue - filters out duplicate lines in task file
         const sameFile =
