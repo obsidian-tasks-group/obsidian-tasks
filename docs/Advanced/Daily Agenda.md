@@ -26,7 +26,7 @@ If you want to use the default `Daily-notes` plugin, the workaround is replacing
 For example, `due before {{date+14d:YYYY-MM-DD}}` can be replaced with
 
 ```markdown
-filter by function task.due.moment?.isSameOrBefore(moment("{{date:YYYY-MM-DD}}").add(2, 'weeks'), 'day') || false
+filter by function task.due.moment?.isBefore(moment("{{date:YYYY-MM-DD}}").add(14, 'days'), 'day') || false
 ```
 
 ## Example Daily Agenda **template**
