@@ -37,7 +37,6 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
     }
     console.log('Uh-oh -- we should never actually get here...  :( ');
     throw new Error('Something went wrong');
-    return tasks;
 }
 
 export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
