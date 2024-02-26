@@ -3,12 +3,13 @@ import type { Status } from '../Statuses/Status';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { Task } from './Task';
 
-function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Status): Task[] {
+function handleOnCompletion(tasks: Task[], startStatus: Status): Task[] {
     const tasksArrayLength = tasks.length;
     if (tasksArrayLength === 0) {
         return tasks;
     }
     const completedTask = tasks[tasksArrayLength - 1];
+    const endStatus = completedTask.status;
 
     const ocTrigger = ' 🏁 ';
     const taskString = completedTask.description;
@@ -33,8 +34,7 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
 }
 
 export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
-    const startStatus = task.status;
     const tasks = task.handleNewStatus(newStatus);
-    const endStatus = tasks[tasks.length - 1].status;
-    return handleOnCompletion(tasks, startStatus, endStatus);
+    const startStatus = task.status;
+    return handleOnCompletion(tasks, startStatus);
 }
