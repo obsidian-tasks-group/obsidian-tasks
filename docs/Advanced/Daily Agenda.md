@@ -22,6 +22,13 @@ make sure new notes are created via one of these two plugins, and not `Daily-not
 | template syntax | `due on {{date+14d:YYYY-MM-DD}}` | `due on {{date+14d:YYYY-MM-DD}}` | `due on {{date+14d:YYYY-MM-DD}}` |
 | output          | `due on {{date+14d:YYYY-MM-DD}}` | `due on 2021-08-28`              | `due on 2021-08-28`              |
 
+If you want to use the default `Daily-notes` plugin, the workaround is replacing unsupported syntax with [[Custom Filters|custom filtering]] expression.
+For example, `due before {{date+14d:YYYY-MM-DD}}` can be replaced with
+
+```markdown
+filter by function task.due.moment?.isBefore(moment("{{date:YYYY-MM-DD}}").add(14, 'days'), 'day') || false
+```
+
 ## Example Daily Agenda **template**
 
     ## Tasks
