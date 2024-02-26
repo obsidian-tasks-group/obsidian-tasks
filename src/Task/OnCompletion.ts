@@ -17,26 +17,24 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
         return tasks;
     }
 
-    if (taskString.includes(ocTrigger)) {
-        const taskEnd = taskString.substring(taskString.indexOf(ocTrigger) + 4);
-        const ocAction = taskEnd.substring(0, taskEnd.indexOf(' '));
-        switch (ocAction) {
-            case 'Delete': {
-                return tasks.filter((task) => task !== completedTask);
-            }
-            default: {
-                const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
-                const console = Console;
-                console.log(errorMessage);
-                // const hint = '\nClick here to clear';
-                // const noticeMessage = errorMessage + hint;
-                // new Notice(noticeMessage, 0);
-                return tasks;
-            }
+    const taskEnd = taskString.substring(taskString.indexOf(ocTrigger) + 4);
+    const ocAction = taskEnd.substring(0, taskEnd.indexOf(' '));
+    switch (ocAction) {
+        case 'Delete': {
+            return tasks.filter((task) => task !== completedTask);
+        }
+        default: {
+            const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
+            const console = Console;
+            console.log(errorMessage);
+            // const hint = '\nClick here to clear';
+            // const noticeMessage = errorMessage + hint;
+            // new Notice(noticeMessage, 0);
+            return tasks;
         }
     }
-    console.log('Uh-oh -- we should never actually get here...  :( ');
-    throw new Error('Something went wrong');
+    // console.log('Uh-oh -- we should never actually get here...  :( ');
+    // throw new Error('Something went wrong');
 }
 
 export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
