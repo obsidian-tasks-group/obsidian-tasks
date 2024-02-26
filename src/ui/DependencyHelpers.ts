@@ -1,5 +1,4 @@
 import type { Task } from '../Task/Task';
-import type { EditableTask } from './EditableTask';
 
 const MAX_SEARCH_RESULTS = 20;
 
@@ -7,7 +6,8 @@ export function searchForCandidateTasksForDependency(
     search: string,
     allTasks: Task[],
     task: Task,
-    editableTask: EditableTask,
+    blockedBy: Task[],
+    blocking: Task[],
 ) {
     let results = allTasks.filter((task) => task.description.toLowerCase().includes(search.toLowerCase()));
 
@@ -25,7 +25,7 @@ export function searchForCandidateTasksForDependency(
             item.taskLocation.path === task.taskLocation.path &&
             item.originalMarkdown === task.originalMarkdown;
 
-        return ![...editableTask.blockedBy, ...editableTask.blocking].includes(item) && !sameFile;
+        return ![...blockedBy, ...blocking].includes(item) && !sameFile;
     });
 
     // search results favour tasks from the same file as this task
