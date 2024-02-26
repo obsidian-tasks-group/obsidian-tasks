@@ -3,6 +3,13 @@ import { searchForCandidateTasksForDependency } from '../../src/ui/DependencyHel
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 
+function shouldOfferTheseCandidates(markdown: string, descriptionsOfCandidateTasks: string[]) {
+    const allTasks = createTasksFromMarkdown(markdown, 'filename.md', 'header');
+    const suggestions = searchForCandidateTasksForDependency('', allTasks, allTasks[0], [], []);
+
+    expect(suggestions.map((task) => task.description)).toEqual(descriptionsOfCandidateTasks);
+}
+
 describe('searching for tasks', () => {
     beforeEach(() => {
         StatusRegistry.getInstance().resetToDefaultStatuses();
@@ -15,14 +22,13 @@ describe('searching for tasks', () => {
     });
 
     it('should show tasks other than the one being edited', () => {
-        const markdown = `
+        shouldOfferTheseCandidates(
+            `
 - [ ] Task being edited
 - [ ] Some other task
-`;
-        const allTasks = createTasksFromMarkdown(markdown, 'filename.md', 'header');
-        const suggestions = searchForCandidateTasksForDependency('', allTasks, allTasks[0], [], []);
-
-        expect(suggestions.map((task) => task.description)).toEqual(['Some other task']);
+`,
+            ['Some other task'],
+        );
     });
 
     it('does offer DONE, CANCELLED and NON_TASK tasks', () => {
