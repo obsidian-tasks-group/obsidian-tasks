@@ -9,7 +9,10 @@ function offersTheseCandidatesForTasks(
     allTasks: Task[],
     descriptionsOfCandidateTasks: string[],
 ) {
-    const suggestions = searchForCandidateTasksForDependency('', allTasks, taskBeingEdited, [], []);
+    const blockedBy: Task[] = [];
+    // TODO: Put this code in somewhere that it is tested and re-usable:
+    const blocking: Task[] = allTasks.filter((t) => t.dependsOn.includes(taskBeingEdited.id));
+    const suggestions = searchForCandidateTasksForDependency('', allTasks, taskBeingEdited, blockedBy, blocking);
 
     expect(suggestions.map((task) => task.description)).toEqual(descriptionsOfCandidateTasks);
 }
@@ -80,6 +83,17 @@ describe('searching for tasks', () => {
                 - [Q] Non-Task
             `,
             ['Todo', 'In Progress'],
+        );
+    });
+
+    it('should exclude tasks which depend on the edited task', () => {
+        offersTheseCandidates(
+            `
+                - [ ] Task being edited 🆔 12345
+                - [ ] Depends on task being edited️ ⛔️ 12345
+                - [ ] Does not depend on task being edited️
+            `,
+            ['Does not depend on task being edited️'],
         );
     });
 });
