@@ -24,9 +24,9 @@ describe('searching for tasks', () => {
     it('should show tasks other than the one being edited', () => {
         shouldOfferTheseCandidates(
             `
-- [ ] Task being edited
-- [ ] Some other task
-`,
+                - [ ] Task being edited
+                - [ ] Some other task
+            `,
             ['Some other task'],
         );
     });
@@ -34,13 +34,13 @@ describe('searching for tasks', () => {
     it('does offer DONE, CANCELLED and NON_TASK tasks', () => {
         shouldOfferTheseCandidates(
             `
-- [ ] Task being edited
-- [ ] Todo
-- [/] In Progress
-- [-] Cancelled
-- [x] Done
-- [Q] Non-Task
-`,
+                - [ ] Task being edited
+                - [ ] Todo
+                - [/] In Progress
+                - [-] Cancelled
+                - [x] Done
+                - [Q] Non-Task
+            `,
             ['Todo', 'In Progress', 'Cancelled', 'Done', 'Non-Task'],
         );
     });
