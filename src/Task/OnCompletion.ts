@@ -11,7 +11,7 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
     const completedTask = tasks[tasksArrayLength - 1];
 
     const ocTrigger = ' 🏁 ';
-    const taskString = completedTask.toString();
+    const taskString = completedTask.description;
 
     if (!taskString.includes(ocTrigger) || endStatus.type !== StatusType.DONE || endStatus.type === startStatus.type) {
         return tasks;
