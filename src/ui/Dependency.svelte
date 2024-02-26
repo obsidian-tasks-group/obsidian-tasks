@@ -74,7 +74,10 @@
         if (!search && !showDropdown) return [];
 
         showDropdown = false;
+        return searchForCandidateTasksForDependency(search);
+    }
 
+    function searchForCandidateTasksForDependency(search: string) {
         let results = allTasks.filter(task => task.description.toLowerCase().includes(search.toLowerCase()));
 
         // remove itself, and tasks this task already has a relationship with from results
@@ -82,8 +85,8 @@
             // line number is unavailable for the task being edited
             // Known issue - filters out duplicate lines in task file
             const sameFile = item.description === task.description &&
-                item.taskLocation.path === task.taskLocation.path &&
-                item.originalMarkdown === task.originalMarkdown
+                             item.taskLocation.path === task.taskLocation.path &&
+                             item.originalMarkdown === task.originalMarkdown
 
             return ![...editableTask.blockedBy, ...editableTask.blocking].includes(item) && !sameFile;
         });
@@ -96,7 +99,7 @@
             // prioritise tasks close to this task in the same file
             if (aInSamePath && bInSamePath) {
                 return Math.abs(a.taskLocation.lineNumber - task.taskLocation.lineNumber)
-                    - Math.abs(b.taskLocation.lineNumber - task.taskLocation.lineNumber);
+                       - Math.abs(b.taskLocation.lineNumber - task.taskLocation.lineNumber);
             } else if (aInSamePath) {
                 return -1;
             } else if (bInSamePath) {
@@ -106,7 +109,7 @@
             }
         });
 
-        return results.slice(0,MAX_SEARCH_RESULTS);
+        return results.slice(0, MAX_SEARCH_RESULTS);
     }
 
     function onFocused() {
