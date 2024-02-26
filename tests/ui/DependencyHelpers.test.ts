@@ -3,7 +3,7 @@ import { searchForCandidateTasksForDependency } from '../../src/ui/DependencyHel
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 
-function shouldOfferTheseCandidates(markdown: string, descriptionsOfCandidateTasks: string[]) {
+function offersTheseCandidates(markdown: string, descriptionsOfCandidateTasks: string[]) {
     const allTasks = createTasksFromMarkdown(markdown, 'filename.md', 'header');
     const suggestions = searchForCandidateTasksForDependency('', allTasks, allTasks[0], [], []);
 
@@ -22,7 +22,7 @@ describe('searching for tasks', () => {
     });
 
     it('should show tasks other than the one being edited', () => {
-        shouldOfferTheseCandidates(
+        offersTheseCandidates(
             `
                 - [ ] Task being edited
                 - [ ] Some other task
@@ -32,7 +32,7 @@ describe('searching for tasks', () => {
     });
 
     it('should not offer DONE, CANCELLED and NON_TASK tasks', () => {
-        shouldOfferTheseCandidates(
+        offersTheseCandidates(
             `
                 - [ ] Task being edited
                 - [ ] Todo
