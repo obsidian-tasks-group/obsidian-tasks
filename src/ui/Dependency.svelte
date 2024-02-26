@@ -73,7 +73,7 @@
         if (!search && !showDropdown) return [];
 
         showDropdown = false;
-        return searchForCandidateTasksForDependency(search, allTasks, task, editableTask);
+        return searchForCandidateTasksForDependency(search, allTasks, task, editableTask.blockedBy, editableTask.blocking);
     }
 
     function onFocused() {
