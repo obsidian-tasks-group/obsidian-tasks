@@ -17,24 +17,17 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
         return tasks;
     }
 
-    let ocAction = '';
     if (taskString.includes('🏁 Delete')) {
-        ocAction = 'Delete';
+        return tasks.filter((task) => task !== completedTask);
     }
-    switch (ocAction) {
-        case 'Delete': {
-            return tasks.filter((task) => task !== completedTask);
-        }
-        default: {
-            const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
-            const console = Console;
-            console.log(errorMessage);
-            // const hint = '\nClick here to clear';
-            // const noticeMessage = errorMessage + hint;
-            // new Notice(noticeMessage, 0);
-            return tasks;
-        }
-    }
+    // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
+    const errorMessage = 'Unknown "On Completion" action';
+    const console = Console;
+    console.log(errorMessage);
+    return tasks;
+    // const hint = '\nClick here to clear';
+    // const noticeMessage = errorMessage + hint;
+    // new Notice(noticeMessage, 0);
     // console.log('Uh-oh -- we should never actually get here...  :( ');
     // throw new Error('Something went wrong');
 }
