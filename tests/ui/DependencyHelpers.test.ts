@@ -32,23 +32,16 @@ describe('searching for tasks', () => {
     });
 
     it('does offer DONE, CANCELLED and NON_TASK tasks', () => {
-        const markdown = `
+        shouldOfferTheseCandidates(
+            `
 - [ ] Task being edited
 - [ ] Todo
 - [/] In Progress
 - [-] Cancelled
 - [x] Done
 - [Q] Non-Task
-`;
-        const allTasks = createTasksFromMarkdown(markdown, 'filename.md', 'header');
-        const suggestions = searchForCandidateTasksForDependency('', allTasks, allTasks[0], [], []);
-
-        expect(suggestions.map((task) => task.description)).toEqual([
-            'Todo',
-            'In Progress',
-            'Cancelled',
-            'Done',
-            'Non-Task',
-        ]);
+`,
+            ['Todo', 'In Progress', 'Cancelled', 'Done', 'Non-Task'],
+        );
     });
 });
