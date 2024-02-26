@@ -5,16 +5,15 @@ import type { Task } from './Task';
 
 function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Status): Task[] {
     const tasksArrayLength = tasks.length;
-    const completedTask = tasks[tasksArrayLength - 1];
-    if (completedTask == undefined) {
-        console.log('Passed-in completedTask is Undefined!');
+    if (tasksArrayLength === 0) {
         return tasks;
     }
+    const completedTask = tasks[tasksArrayLength - 1];
 
     const ocTrigger = ' 🏁 ';
     const taskString = completedTask.toString();
 
-    if (!taskString.includes(ocTrigger) || endStatus.type != StatusType.DONE || endStatus.type == startStatus.type) {
+    if (!taskString.includes(ocTrigger) || endStatus.type !== StatusType.DONE || endStatus.type === startStatus.type) {
         return tasks;
     }
 
