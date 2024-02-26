@@ -17,8 +17,10 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
         return tasks;
     }
 
-    const taskEnd = taskString.substring(taskString.indexOf(ocTrigger) + 4);
-    const ocAction = taskEnd.substring(0, taskEnd.indexOf(' '));
+    let ocAction = '';
+    if (taskString.includes('🏁 Delete')) {
+        ocAction = 'Delete';
+    }
     switch (ocAction) {
         case 'Delete': {
             return tasks.filter((task) => task !== completedTask);
