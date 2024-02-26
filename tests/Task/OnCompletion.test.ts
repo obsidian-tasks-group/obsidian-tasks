@@ -7,7 +7,8 @@ import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toLines } from '../TestingTools/TestHelpers';
-import { applyStatusAndOnCompletionAction } from '../../src/Task/OnCompletion';
+import type { Task } from '../../src/Task/Task';
+import { handleOnCompletion } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
 
@@ -20,6 +21,11 @@ afterEach(() => {
     jest.useRealTimers();
     // resetSettings();
 });
+
+export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
+    const tasks = task.handleNewStatus(newStatus);
+    return handleOnCompletion(task, tasks);
+}
 
 describe('OnCompletion', () => {
     it('should just return task if Action is not recognized', () => {

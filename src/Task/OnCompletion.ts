@@ -1,9 +1,8 @@
 import Console from 'console';
-import type { Status } from '../Statuses/Status';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { Task } from './Task';
 
-function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
+export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const tasksArrayLength = tasks.length;
     if (tasksArrayLength === 0) {
         return tasks;
@@ -33,9 +32,4 @@ function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     // new Notice(noticeMessage, 0);
     // console.log('Uh-oh -- we should never actually get here...  :( ');
     // throw new Error('Something went wrong');
-}
-
-export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
-    const tasks = task.handleNewStatus(newStatus);
-    return handleOnCompletion(task, tasks);
 }
