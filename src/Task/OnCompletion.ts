@@ -23,13 +23,7 @@ function handleOnCompletion(tasks: Task[], startStatus: Status, endStatus: Statu
         const ocAction = taskEnd.substring(0, taskEnd.indexOf(' '));
         switch (ocAction) {
             case 'Delete': {
-                if (tasksArrayLength == 2) {
-                    return [tasks[0]];
-                }
-                if (tasksArrayLength == 1) {
-                    return [];
-                }
-                break;
+                return tasks.filter((task) => task !== completedTask);
             }
             default: {
                 const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
