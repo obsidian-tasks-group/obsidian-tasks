@@ -31,7 +31,7 @@ describe('searching for tasks', () => {
         );
     });
 
-    it('does offer DONE, CANCELLED and NON_TASK tasks', () => {
+    it('should not offer DONE, CANCELLED and NON_TASK tasks', () => {
         shouldOfferTheseCandidates(
             `
                 - [ ] Task being edited
@@ -41,7 +41,7 @@ describe('searching for tasks', () => {
                 - [x] Done
                 - [Q] Non-Task
             `,
-            ['Todo', 'In Progress', 'Cancelled', 'Done', 'Non-Task'],
+            ['Todo', 'In Progress'],
         );
     });
 });

@@ -12,6 +12,11 @@ export function searchForCandidateTasksForDependency(
     let results = allTasks.filter((task) => task.description.toLowerCase().includes(search.toLowerCase()));
 
     results = results.filter((item) => {
+        // Do not offer to depend on DONE, CANCELLED or NON_TASK tasks:
+        if (item.isDone) {
+            return false;
+        }
+
         // Do not show any tasks that look like templates:
         if (item.description.includes('<%') && item.description.includes('%>')) {
             return false;
