@@ -180,7 +180,7 @@ describe('OnCompletion', () => {
 
     it('should return a task featuring the On Completion flag trigger but an empty string Action', () => {
         // Arrange
-        const task = new TaskBuilder().description('A non-recurring task with 🏁    ').build();
+        const task = new TaskBuilder().description('A non-recurring task with 🏁').build();
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
