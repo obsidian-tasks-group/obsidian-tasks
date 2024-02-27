@@ -168,6 +168,11 @@ a.tasks-edit, a.tasks-postpone {
     resize: vertical;
 }
 
+.tasks-modal hr {
+    margin: 0.35rem 0;
+    padding-bottom: 0.5rem;
+}
+
 .tasks-modal-priorities {
     display: grid;
     grid-template-columns: 4em 8em 8em 8em;
