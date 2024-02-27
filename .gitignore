@@ -35,7 +35,6 @@ yarn-error.log
 # files in local vaults
 **/workspace
 **/workspace.json
-.hotreload
 
 # Backup files.
 *.bak
