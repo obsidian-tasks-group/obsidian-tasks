@@ -1,0 +1,127 @@
+/* @settings
+name: 'Theme Design Utilities: Color Playground'
+description:
+id: theme-design-utilities
+settings:
+  -
+   id: theme-design-utilities-colorplay-1
+   title: First Color
+   type: variable-themed-color
+   format: hex
+   default-dark: '#7f6df2'
+   default-light: '#7f6df2'
+  -
+   id: theme-design-utilities-colorplay-2
+   title: Second Color
+   type: variable-themed-color
+   format: hex
+   default-dark: '#3AB1C4'
+   default-light: '#3AB1C4'
+  -
+   id: theme-design-utilities-colorplay-3
+   title: Third Color
+   type: variable-themed-color
+   format: hex
+   default-dark: '#6DC43A'
+   default-light: '#6DC43A'
+  -
+   id: theme-design-utilities-colorplay-4
+   title: Fourth Color
+   type: variable-themed-color
+   format: hex
+   default-dark: '#C4913A'
+   default-light: '#C4913A'
+  -
+   id: theme-design-utilities-colorplay-5
+   title: Fifth Color
+   type: variable-themed-color
+   format: hex
+   default-dark: '#C43A6D'
+   default-light: '#C43A6D'
+  -
+   id: theme-design-utilities-colorplay-6
+   title: Sixth Color
+   type: variable-themed-color
+   format: hex
+   default-dark: '#913AC4'
+   default-light: '#913AC4'
+ */
+
+
+/** Colors */
+
+:root {
+	--theme-design-utilities-colorplay-1: #7f6df2;
+	--theme-design-utilities-colorplay-2: #3ab1c4;
+	--theme-design-utilities-colorplay-3: #6dc43a;
+	--theme-design-utilities-colorplay-4: #c4913a;
+	--theme-design-utilities-colorplay-5: #c43a6d;
+	--theme-design-utilities-colorplay-6: #913ac4;
+}
+
+.theme-design-utilities-colorplay .color-one.display-bg {
+	background-color: var(--theme-design-utilities-colorplay-1);
+}
+.theme-design-utilities-colorplay .color-one.display-text-border,
+.theme-design-utilities-colorplay .text-wrapper span.color-one {
+	color: var(--theme-design-utilities-colorplay-1);
+}
+.theme-design-utilities-colorplay .color-two.display-bg {
+	background-color: var(--theme-design-utilities-colorplay-2);
+}
+.theme-design-utilities-colorplay .color-two.display-text-border,
+.theme-design-utilities-colorplay .text-wrapper span.color-two {
+	color: var(--theme-design-utilities-colorplay-2);
+}
+.theme-design-utilities-colorplay .color-three.display-bg {
+	background-color: var(--theme-design-utilities-colorplay-3);
+}
+.theme-design-utilities-colorplay .color-three.display-text-border,
+.theme-design-utilities-colorplay .text-wrapper span.color-three {
+	color: var(--theme-design-utilities-colorplay-3);
+}
+.theme-design-utilities-colorplay .color-four.display-bg {
+	background-color: var(--theme-design-utilities-colorplay-4);
+}
+.theme-design-utilities-colorplay .color-four.display-text-border,
+.theme-design-utilities-colorplay .text-wrapper span.color-four {
+	color: var(--theme-design-utilities-colorplay-4);
+}
+.theme-design-utilities-colorplay .color-five.display-bg {
+	background-color: var(--theme-design-utilities-colorplay-5);
+}
+.theme-design-utilities-colorplay .color-five.display-text-border,
+.theme-design-utilities-colorplay .text-wrapper span.color-five {
+	color: var(--theme-design-utilities-colorplay-5);
+}
+.theme-design-utilities-colorplay .color-six.display-bg {
+	background-color: var(--theme-design-utilities-colorplay-6);
+}
+.theme-design-utilities-colorplay .color-six.display-text-border,
+.theme-design-utilities-colorplay .text-wrapper span.color-six {
+	color: var(--theme-design-utilities-colorplay-6);
+}
+
+.theme-design-utilities-colorplay .grid-wrapper > div.display-text-border{
+	border: 2px solid;
+}
+
+.theme-design-utilities-colorplay .grid-wrapper {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 10px;
+	grid-auto-rows: minmax(100px, auto);
+}
+.theme-design-utilities-colorplay .grid-wrapper > div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 1em;
+}
+.theme-design-utilities-colorplay .text-wrapper {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 1em;
+	margin-top: 20px;
+	padding: 15px;
+	text-align: justify;
+}
