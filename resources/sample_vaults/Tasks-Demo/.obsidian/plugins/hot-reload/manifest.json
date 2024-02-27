@@ -1,0 +1,1 @@
+{"id":"hot-reload","name":"Hot Reload","author":"PJ Eby","authorUrl":"https://github.com/pjeby","version":"0.1.10","minAppVersion":"0.15.9","description":"Automatically reload in-development plugins when their files are changed","isDesktopOnly":true}
