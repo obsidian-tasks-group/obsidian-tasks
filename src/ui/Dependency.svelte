@@ -11,6 +11,7 @@
     export let type: "blocking" | "blockedBy";
     export let accesskey: (key: string) => string | null;
     export let accesskeyLetter: string = '';
+    export let placeholder: string = 'Type to search...';
 
     let search: string = '';
     let searchResults: Task[] | null = null;
@@ -145,7 +146,7 @@
         id="{type}"
         class="input"
         type="text"
-        placeholder="Type to search..."
+        placeholder={placeholder}
     />
 </span>
 {#if searchResults && searchResults.length !== 0}
