@@ -1,4 +1,4 @@
-| suggestion | expansion |
+| Searchable Text | Text that is added |
 | ----- | ----- |
 | ⏎ | &lt;new line> |
 | 📅 due date | 📅  |

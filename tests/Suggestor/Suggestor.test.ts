@@ -157,7 +157,7 @@ describe.each([
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
         ];
-        const markdownTable = new MarkdownTable(['suggestion', 'expansion']);
+        const markdownTable = new MarkdownTable(['Searchable Text', 'Text that is added']);
         for (const line of lines) {
             const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings);
             for (const suggestion of suggestions) {
