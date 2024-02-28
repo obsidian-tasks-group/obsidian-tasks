@@ -461,6 +461,36 @@
     };
 </script>
 
+<!--
+Availability of access keys:
+- A: Start
+- B:
+- C:
+- D: Due
+- E:
+- F: Only future dates
+- G:
+- H: High
+- I: Highest
+- J:
+- K:
+- L: Low
+- M: Medium
+- N: Normal
+- O: Lowest
+- P:
+- Q:
+- R: Recurs
+- S: Scheduled
+- T: Description
+- U: Status
+- V:
+- W:
+- X:
+- Y:
+- Z:
+-->
+
 <div class="tasks-modal">
     <form on:submit|preventDefault={_onSubmit} class:with-accesskeys="{withAccessKeys}">
         <!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
