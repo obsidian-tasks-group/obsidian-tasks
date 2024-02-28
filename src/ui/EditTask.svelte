@@ -611,14 +611,14 @@
                 <!-- --------------------------------------------------------------------------- -->
                 <label for="blockedBy" class="accesskey-first">Before this</label>
                 <Dependency type="blockedBy" task={task} editableTask={editableTask} allTasks={allTasks}
-                            _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="b" placeholder='Search for tasks you need to do before this task' />
+                            _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="b" placeholder='Search for tasks that the task being edited depends on...' />
 
                 <!-- --------------------------------------------------------------------------- -->
                 <!--  Blocking Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
                 <label for="blocking" class="accesskey-first">After this</label>
                 <Dependency type="blocking" task={task} editableTask={editableTask} allTasks={allTasks}
-                            _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="A" placeholder='Search for tasks you need to do after this task' />
+                            _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="A" placeholder='Search for tasks that depend on this task being done...' />
             {:else}
                 <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
             {/if}
