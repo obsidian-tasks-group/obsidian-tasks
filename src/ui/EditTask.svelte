@@ -464,10 +464,10 @@
 <!--
 Availability of access keys:
 - A: Start
-- B:
+- B: Before this
 - C:
 - D: Due
-- E:
+- E: After this
 - F: Only future dates
 - G:
 - H: High
@@ -646,9 +646,9 @@ Availability of access keys:
                 <!-- --------------------------------------------------------------------------- -->
                 <!--  Blocking Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
-                <label for="blocking" class="accesskey-first">After this</label>
+                <label for="blocking">Aft<span class="accesskey">e</span>r this</label>
                 <Dependency type="blocking" task={task} editableTask={editableTask} allTasks={allTasks}
-                            _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="A" placeholder='Search for tasks that depend on this task being done...' />
+                            _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="e" placeholder='Search for tasks that depend on this task being done...' />
             {:else}
                 <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
             {/if}
