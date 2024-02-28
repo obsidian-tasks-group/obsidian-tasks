@@ -2,7 +2,7 @@
     import type { Task } from "../Task/Task";
     import { computePosition, flip, offset, shift, size } from "@floating-ui/dom";
     import type { EditableTask } from "./EditableTask";
-    import { searchForCandidateTasksForDependency } from './DependencyHelpers';
+    import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
 
     export let task: Task;
     export let editableTask: EditableTask;
@@ -160,8 +160,8 @@
                 class:selected={search !== null && index === searchIndex}
                 on:mouseenter={() => searchIndex = index}>
                 <div class="{filepath ? 'dependency-name-shared' : 'dependency-name'}"
-                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, searchTask.descriptionWithoutTags)}>
-                    [{searchTask.status.symbol}] {searchTask.descriptionWithoutTags}
+                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionAdjustedForDependencySearch(searchTask))}>
+                    [{searchTask.status.symbol}] {descriptionAdjustedForDependencySearch(searchTask)}
                 </div>
                 {#if filepath}
                     <div class="dependency-path"
@@ -176,8 +176,8 @@
 <div class="task-dependencies-container results">
     {#each editableTask[type] as task}
         <div class="task-dependency"
-             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, task.descriptionWithoutTags)}>
-            <span class="task-dependency-name">[{task.status.symbol}] {task.descriptionWithoutTags}</span>
+             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionAdjustedForDependencySearch(task))}>
+            <span class="task-dependency-name">[{task.status.symbol}] {descriptionAdjustedForDependencySearch(task)}</span>
 
             <button on:click={() => removeTask(task)} type="button" class="task-dependency-delete">
                 <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12"

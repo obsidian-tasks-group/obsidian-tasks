@@ -3,6 +3,14 @@ import type { Task } from '../Task/Task';
 
 const MAX_SEARCH_RESULTS = 20;
 
+/**
+ * Return the text to use for searching and displaying tasks, for the dependency fields.
+ * @param task
+ */
+export function descriptionAdjustedForDependencySearch(task: Task) {
+    return task.descriptionWithoutTags;
+}
+
 function fuzzySearchDescriptionWithoutTags(query: string, allTasks: Task[]): Task[] {
     if (query === '') {
         return allTasks;
@@ -15,7 +23,7 @@ function fuzzySearchDescriptionWithoutTags(query: string, allTasks: Task[]): Tas
 
     const matches: FuzzyMatch<Task>[] = allTasks
         .map((task) => {
-            const result = preparedSearch(task.descriptionWithoutTags);
+            const result = preparedSearch(descriptionAdjustedForDependencySearch(task));
             if (result && result.score > minimumScoreCutoff) {
                 return {
                     item: task,
@@ -32,7 +40,7 @@ function fuzzySearchDescriptionWithoutTags(query: string, allTasks: Task[]): Tas
     // Retain commented-out logging until confident in the minimumScoreCutoff value.
     // console.log('>>>>>>>>>> start of matches');
     // sortedMatches.forEach((match) => {
-    //     console.log(`${JSON.stringify(match.match)}: ${match.item.descriptionWithoutTags}`);
+    //     console.log(`${JSON.stringify(match.match)}: ${descriptionAdjustedForDependencySearch(match.item)}`);
     // });
     // console.log('<<<<<<<<<< end of matches');
 
