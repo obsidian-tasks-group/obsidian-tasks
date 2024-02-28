@@ -1,6 +1,43 @@
+import { type FuzzyMatch, prepareFuzzySearch } from 'obsidian';
 import type { Task } from '../Task/Task';
 
 const MAX_SEARCH_RESULTS = 20;
+
+function fuzzySearchDescriptionWithoutTags(query: string, allTasks: Task[]): Task[] {
+    if (query === '') {
+        return allTasks;
+    }
+
+    const preparedSearch = prepareFuzzySearch(query);
+
+    // The cutoff was chosen empirically, to filter out very poor matches:
+    const minimumScoreCutoff = -4.0;
+
+    const matches: FuzzyMatch<Task>[] = allTasks
+        .map((task) => {
+            const result = preparedSearch(task.descriptionWithoutTags);
+            if (result && result.score > minimumScoreCutoff) {
+                return {
+                    item: task,
+                    match: result,
+                };
+            }
+            return null;
+        })
+        .filter(Boolean) as FuzzyMatch<Task>[];
+
+    // All scores are negative. Closer to zero is better.
+    const sortedMatches = matches.sort((a, b) => b.match.score - a.match.score);
+
+    // Retain commented-out logging until confident in the minimumScoreCutoff value.
+    // console.log('>>>>>>>>>> start of matches');
+    // sortedMatches.forEach((match) => {
+    //     console.log(`${JSON.stringify(match.match)}: ${match.item.descriptionWithoutTags}`);
+    // });
+    // console.log('<<<<<<<<<< end of matches');
+
+    return sortedMatches.map((item) => item.item);
+}
 
 export function searchForCandidateTasksForDependency(
     search: string,
@@ -9,7 +46,7 @@ export function searchForCandidateTasksForDependency(
     blockedBy: Task[],
     blocking: Task[],
 ) {
-    let results = allTasks.filter((task) => task.description.toLowerCase().includes(search.toLowerCase()));
+    let results = fuzzySearchDescriptionWithoutTags(search, allTasks);
 
     results = results.filter((item) => {
         // Do not offer to depend on DONE, CANCELLED or NON_TASK tasks:
