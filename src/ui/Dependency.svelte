@@ -106,6 +106,10 @@
         return path === task.taskLocation.path ? "" : path;
     }
 
+    function descriptionTooltipText(task: Task) {
+        return descriptionAdjustedForDependencySearch(task);
+    }
+
     function showDescriptionTooltip(element: HTMLElement, text: string) {
         const tooltip = element.createDiv();
         tooltip.addClasses(['tooltip', 'pop-up']);
@@ -160,7 +164,7 @@
                 class:selected={search !== null && index === searchIndex}
                 on:mouseenter={() => searchIndex = index}>
                 <div class="{filepath ? 'dependency-name-shared' : 'dependency-name'}"
-                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionAdjustedForDependencySearch(searchTask))}>
+                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(searchTask))}>
                     [{searchTask.status.symbol}] {descriptionAdjustedForDependencySearch(searchTask)}
                 </div>
                 {#if filepath}
@@ -176,7 +180,7 @@
 <div class="task-dependencies-container results">
     {#each editableTask[type] as task}
         <div class="task-dependency"
-             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionAdjustedForDependencySearch(task))}>
+             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(task))}>
             <span class="task-dependency-name">[{task.status.symbol}] {descriptionAdjustedForDependencySearch(task)}</span>
 
             <button on:click={() => removeTask(task)} type="button" class="task-dependency-delete">
