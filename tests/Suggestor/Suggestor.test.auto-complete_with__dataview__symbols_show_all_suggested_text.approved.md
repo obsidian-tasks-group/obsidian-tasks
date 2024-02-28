@@ -1,4 +1,4 @@
-| suggestion | expansion |
+| Searchable Text | Text that is added |
 | ----- | ----- |
 | due:: due date | due::  |
 | start:: start date | start::  |
