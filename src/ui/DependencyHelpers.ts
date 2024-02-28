@@ -1,14 +1,18 @@
 import { type FuzzyMatch, prepareFuzzySearch } from 'obsidian';
 import type { Task } from '../Task/Task';
+import { GlobalFilter } from '../Config/GlobalFilter';
 
 const MAX_SEARCH_RESULTS = 20;
 
 /**
  * Return the text to use for searching and displaying tasks, for the dependency fields.
+ *
+ * The global filter is removed, but sub-tags of the global filter are
+ * not removed.
  * @param task
  */
 export function descriptionAdjustedForDependencySearch(task: Task) {
-    return task.descriptionWithoutTags;
+    return GlobalFilter.getInstance().removeAsWordFrom(task.description);
 }
 
 function fuzzySearchDescriptionWithoutTags(query: string, allTasks: Task[]): Task[] {
