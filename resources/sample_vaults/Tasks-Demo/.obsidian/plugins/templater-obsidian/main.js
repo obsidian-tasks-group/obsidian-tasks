@@ -2437,8 +2437,8 @@ var InternalModuleFile = class extends InternalModule {
     };
   }
   generate_exists() {
-    return async (filename) => {
-      const path = (0, import_obsidian8.normalizePath)(filename);
+    return async (filepath) => {
+      const path = (0, import_obsidian8.normalizePath)(filepath);
       return await app.vault.exists(path);
     };
   }
@@ -2704,7 +2704,7 @@ var PromptModal = class extends import_obsidian9.Modal {
   onClose() {
     this.contentEl.empty();
     if (!this.submitted) {
-      this.reject();
+      this.reject(new TemplaterError("Cancelled prompt"));
     }
   }
   createForm() {
@@ -2731,16 +2731,11 @@ var PromptModal = class extends import_obsidian9.Modal {
     textInput.inputEl.addEventListener("keydown", (evt) => this.enterCallback(evt));
   }
   enterCallback(evt) {
+    if (evt.isComposing || evt.keyCode === 229)
+      return;
     if (this.multi_line) {
-      if (import_obsidian9.Platform.isDesktop) {
-        if (evt.shiftKey && evt.key === "Enter") {
-        } else if (evt.key === "Enter") {
-          this.resolveAndClose(evt);
-        }
-      } else {
-        if (evt.key === "Enter") {
-          evt.preventDefault();
-        }
+      if (import_obsidian9.Platform.isDesktop && evt.key === "Enter" && !evt.shiftKey) {
+        this.resolveAndClose(evt);
       }
     } else {
       if (evt.key === "Enter") {
@@ -2986,8 +2981,8 @@ var UserScriptFunctions = class {
       exports: exp
     };
     const file_content = await app.vault.read(file);
-    const wrapping_fn = window.eval("(function anonymous(require, module, exports){" + file_content + "\n})");
     try {
+      const wrapping_fn = window.eval("(function anonymous(require, module, exports){" + file_content + "\n})");
       wrapping_fn(req, mod, exp);
     } catch (err) {
       throw new TemplaterError(`Failed to load user script at "${file.path}".`, err.message);
@@ -3585,7 +3580,11 @@ var Templater = class {
           break;
       }
     }
-    const created_note = await errorWrapper(async () => app.fileManager.createNewMarkdownFile(folder, filename ?? "Untitled"), "Couldn't create markdown file.");
+    const extension = template instanceof import_obsidian12.TFile ? template.extension || "md" : "md";
+    const created_note = await errorWrapper(async () => {
+      const path = app.vault.getAvailablePath((0, import_obsidian12.normalizePath)(`${folder?.path ?? ""}/${filename ?? "Untitled"}`), extension);
+      return app.vault.create(path, "");
+    }, `Couldn't create ${extension} file.`);
     if (created_note == null) {
       await this.end_templater_task();
       return;
@@ -3658,13 +3657,14 @@ var Templater = class {
   async write_template_to_file(template_file, file) {
     this.start_templater_task();
     const active_editor = app.workspace.activeEditor;
+    const active_file = get_active_file(app);
     const running_config = this.create_running_config(template_file, file, 2);
     const output_content = await errorWrapper(async () => this.read_and_parse_template(running_config), "Template parsing error, aborting.");
     if (output_content == null) {
       return;
     }
     await app.vault.modify(file, output_content);
-    if (active_editor && active_editor.editor) {
+    if (active_file?.path === file.path && active_editor && active_editor.editor) {
       const editor = active_editor.editor;
       editor.setSelection({ line: 0, ch: 0 }, { line: 0, ch: 0 });
     }
@@ -3803,7 +3803,7 @@ var EventHandler = class {
     this.settings = settings;
   }
   setup() {
-    app.workspace.onLayoutReady(() => {
+    this.plugin.app.workspace.onLayoutReady(() => {
       this.update_trigger_file_on_creation();
     });
     this.update_syntax_highlighting();
@@ -3813,35 +3813,24 @@ var EventHandler = class {
     const desktopShouldHighlight = this.plugin.editor_handler.desktopShouldHighlight();
     const mobileShouldHighlight = this.plugin.editor_handler.mobileShouldHighlight();
     if (desktopShouldHighlight || mobileShouldHighlight) {
-      this.syntax_highlighting_event = app.workspace.on("codemirror", (cm) => {
-        cm.setOption("mode", "templater");
-      });
-      app.workspace.iterateCodeMirrors((cm) => {
-        cm.setOption("mode", "templater");
-      });
-      this.plugin.registerEvent(this.syntax_highlighting_event);
+      this.plugin.editor_handler.enable_highlighter();
     } else {
-      if (this.syntax_highlighting_event) {
-        app.vault.offref(this.syntax_highlighting_event);
-      }
-      app.workspace.iterateCodeMirrors((cm) => {
-        cm.setOption("mode", "hypermd");
-      });
+      this.plugin.editor_handler.disable_highlighter();
     }
   }
   update_trigger_file_on_creation() {
     if (this.settings.trigger_on_file_creation) {
-      this.trigger_on_file_creation_event = app.vault.on("create", (file) => Templater.on_file_creation(this.templater, file));
+      this.trigger_on_file_creation_event = this.plugin.app.vault.on("create", (file) => Templater.on_file_creation(this.templater, file));
       this.plugin.registerEvent(this.trigger_on_file_creation_event);
     } else {
       if (this.trigger_on_file_creation_event) {
-        app.vault.offref(this.trigger_on_file_creation_event);
+        this.plugin.app.vault.offref(this.trigger_on_file_creation_event);
         this.trigger_on_file_creation_event = void 0;
       }
     }
   }
   update_file_menu() {
-    this.plugin.registerEvent(app.workspace.on("file-menu", (menu, file) => {
+    this.plugin.registerEvent(this.plugin.app.workspace.on("file-menu", (menu, file) => {
       if (file instanceof import_obsidian13.TFolder) {
         menu.addItem((item) => {
           item.setTitle("Create new note from template").setIcon("templater-icon").onClick(() => {
@@ -3862,6 +3851,7 @@ var CommandHandler = class {
     this.plugin.addCommand({
       id: "insert-templater",
       name: "Open Insert Template modal",
+      icon: "templater-icon",
       hotkeys: [
         {
           modifiers: ["Alt"],
@@ -3875,6 +3865,7 @@ var CommandHandler = class {
     this.plugin.addCommand({
       id: "replace-in-file-templater",
       name: "Replace templates in the active file",
+      icon: "templater-icon",
       hotkeys: [
         {
           modifiers: ["Alt"],
@@ -3888,6 +3879,7 @@ var CommandHandler = class {
     this.plugin.addCommand({
       id: "jump-to-next-cursor-location",
       name: "Jump to next cursor location",
+      icon: "text-cursor",
       hotkeys: [
         {
           modifiers: ["Alt"],
@@ -3901,6 +3893,7 @@ var CommandHandler = class {
     this.plugin.addCommand({
       id: "create-new-note-from-template",
       name: "Create new note from template",
+      icon: "templater-icon",
       hotkeys: [
         {
           modifiers: ["Alt"],
@@ -3926,6 +3919,7 @@ var CommandHandler = class {
       this.plugin.addCommand({
         id: new_template,
         name: `Insert ${new_template}`,
+        icon: "templater-icon",
         callback: () => {
           const template = errorWrapperSync(() => resolve_tfile(new_template), `Couldn't find the template file associated with this hotkey`);
           if (!template) {
@@ -4038,7 +4032,7 @@ var CursorJumper = class {
 var import_obsidian15 = __toModule(require("obsidian"));
 
 // toml:/home/runner/work/Templater/Templater/docs/documentation.toml
-var tp = { config: { name: "config", description: "This module exposes Templater's running configuration.\n\nThis is mostly useful when writing scripts requiring some context information.\n", functions: { template_file: { name: "template_file", description: "The `TFile` object representing the template file.", definition: "tp.config.template_file" }, target_file: { name: "target_file", description: "The `TFile` object representing the target file where the template will be inserted.", definition: "tp.config.target_file" }, run_mode: { name: "run_mode", description: "The `RunMode`, representing the way Templater was launched (Create new from template, Append to active file, ...)", definition: "tp.config.run_mode" }, active_file: { name: "active_file", description: "The active file (if existing) when launching Templater.", definition: "tp.config.active_file?" } } }, date: { name: "date", description: "This module contains every internal function related to dates.", functions: { now: { name: "now", description: "Retrieves the date.", definition: 'tp.date.now(format: string = "YYYY-MM-DD", offset?: number\u23AEstring, reference?: string, reference_format?: string)', args: [{ name: "format", description: "Format for the date, refer to [format reference](https://momentjs.com/docs/#/displaying/format/)" }, { name: "offset", description: "Offset for the day, e.g. set this to `-7` to get last week's date. You can also specify the offset as a string using the ISO 8601 format" }, { name: "reference", description: "The date referential, e.g. set this to the note's title" }, { name: "reference_format", description: "The date reference format." }] }, tomorrow: { name: "tomorrow", description: "Retrieves tomorrow's date.", definition: 'tp.date.tomorrow(format: string = "YYYY-MM-DD")', args: [{ name: "format", description: "Format for the date, refer to [format reference](https://momentjs.com/docs/#/displaying/format/)" }] }, yesterday: { name: "yesterday", description: "Retrieves yesterday's date.", definition: 'tp.date.yesterday(format: string = "YYYY-MM-DD")', args: [{ name: "format", description: "Format for the date, refer to [format reference](https://momentjs.com/docs/#/displaying/format/)" }] }, weekday: { name: "weekday", description: "", definition: 'tp.date.weekday(format: string = "YYYY-MM-DD", weekday: number, reference?: string, reference_format?: string)', args: [{ name: "format", description: "Format for the date, refer to [format reference](https://momentjs.com/docs/#/displaying/format/)" }, { name: "weekday", description: "Week day number. If the locale assigns Monday as the first day of the week, `0` will be Monday, `-7` will be last week's day." }, { name: "reference", description: "The date referential, e.g. set this to the note's title" }, { name: "reference_format", description: "The date reference format." }] } } }, file: { name: "file", description: "This module contains every internal function related to files.", functions: { content: { name: "content", description: "Retrieves the file's content", definition: "tp.file.content" }, create_new: { name: "create_new", description: "Creates a new file using a specified template or with a specified content.", definition: "tp.file.create_new(template: TFile \u23AE string, filename?: string, open_new: boolean = false, folder?: TFolder)", args: [{ name: "template", description: "Either the template used for the new file content, or the file content as a string. If it is the template to use, you retrieve it with `tp.file.find_tfile(TEMPLATENAME)`" }, { name: "filename", description: 'The filename of the new file, defaults to "Untitled".' }, { name: "open_new", description: "Whether to open or not the newly created file. Warning: if you use this option, since commands are executed asynchronously, the file can be opened first and then other commands are appended to that new file and not the previous file." }, { name: "folder", description: 'The folder to put the new file in, defaults to obsidian\'s default location. If you want the file to appear in a different folder, specify it with `app.vault.getAbstractFileByPath("FOLDERNAME")`' }] }, creation_date: { name: "creation_date", description: "Retrieves the file's creation date.", definition: 'tp.file.creation_date(format: string = "YYYY-MM-DD HH:mm")', args: [{ name: "format", description: "Format for the date, refer to format reference" }] }, cursor: { name: "cursor", description: "Sets the cursor to this location after the template has been inserted. \n\nYou can navigate between the different tp.file.cursor using the configured hotkey in obsidian settings.\n", definition: "tp.file.cursor(order?: number)", args: [{ name: "order", description: "The order of the different cursors jump, e.g. it will jump from 1 to 2 to 3, and so on.\nIf you specify multiple tp.file.cursor with the same order, the editor will switch to multi-cursor.\n" }] }, cursor_append: { name: "cursor_append", description: "Appends some content after the active cursor in the file.", definition: "tp.file.cursor_append(content: string)", args: [{ name: "content", description: "The content to append after the active cursor" }] }, exists: { name: "exists", description: "The filename of the file we want to check existence. The fullpath to the file, relative to the Vault and containing the extension, must be provided. e.g. MyFolder/SubFolder/MyFile.", definition: "tp.file.exists(filename: string)", args: [{ name: "filename", description: "The filename of the file we want to check existence, e.g. MyFile." }] }, find_tfile: { name: "find_tfile", description: "Search for a file and returns its `TFile` instance", definition: "tp.file.find_tfile(filename: string)", args: [{ name: "filename", description: "The filename we want to search and resolve as a `TFile`" }] }, folder: { name: "folder", description: "Retrieves the file's folder name.", definition: "tp.file.folder(relative: boolean = false)", args: [{ name: "relative", description: "If set to true, appends the vault relative path to the folder name." }] }, include: { name: "include", description: "Includes the file's link content. Templates in the included content will be resolved.", definition: "tp.file.include(include_link: string \u23AE TFile)", args: [{ name: "include_link", description: "The link to the file to include, e.g. [[MyFile]], or a TFile object. Also supports sections or blocks inclusions, e.g. [[MyFile#Section1]]" }] }, last_modified_date: { name: "last_modified_date", description: "Retrieves the file's last modification date.", definition: 'tp.file.last_modified_date(format: string = "YYYY-MM-DD HH:mm")', args: [{ name: "format", description: "Format for the date, refer to format reference." }] }, move: { name: "functions.move", description: "Moves the file to the desired vault location.", definition: "tp.file.move(new_path: string, file_to_move?: TFile)", example: '<% tp.file.move("/Notes/MyNote") %>', args: [{ name: "new_path", description: 'The new vault relative path of the file, without the file extension. Note: the new path needs to include the folder and the filename, e.g. `"/Notes/MyNote"`' }, { name: "file_to_move", description: "The file to move, defaults to the current file." }] }, path: { name: "path", description: "Retrieves the file's absolute path on the system.", definition: "tp.file.path(relative: boolean = false)", args: [{ name: "relative", description: "If set to true, only retrieves the vault's relative path." }] }, rename: { name: "rename", description: "Renames the file (keeps the same file extension).", definition: "tp.file.rename(new_title: string)", args: [{ name: "new_title", description: "The new file title." }] }, selection: { name: "selection", description: "Retrieves the active file's text selection.", definition: "tp.file.selection()" }, tags: { name: "tags", description: "Retrieves the file's tags (array of string)", definition: "tp.file.tags" }, title: { name: "title", definition: "tp.file.title", description: "Retrieves the file's title." } } }, frontmatter: { name: "frontmatter", description: "This modules exposes all the frontmatter variables of a file as variables." }, hooks: { name: "hooks", description: "This module exposes hooks that allow you to execute code when a Templater event occurs.", functions: { on_all_templates_executed: { name: "on_all_templates_executed", description: "Hooks into when all actively running templates have finished executing. Most of the time this will be a single template, unless you are using `tp.file.include` or `tp.file.create_new`.\n\nMultiple invokations of this method will have their callback functions run in parallel.", definition: "tp.hooks.on_all_templates_executed(callback_function: () => any)", args: [{ name: "callback_function", description: "Callback function that will be executed when all actively running templates have finished executing." }] } } }, obsidian: { name: "obsidian", description: "This module exposes all the functions and classes from the obsidian API." }, system: { name: "system", description: "This module contains system related functions.", functions: { clipboard: { name: "clipboard", description: "Retrieves the clipboard's content", definition: "tp.system.clipboard()" }, prompt: { name: "prompt", description: "Spawns a prompt modal and returns the user's input.", definition: "tp.system.prompt(prompt_text?: string, default_value?: string, throw_on_cancel: boolean = false, multiline?: boolean = false)", args: [{ name: "prompt_text", description: "Text placed above the input field" }, { name: "default_value", description: "A default value for the input field" }, { name: "throw_on_cancel", description: "Throws an error if the prompt is canceled, instead of returning a `null` value" }, { name: "multiline", description: "If set to true, the input field will be a multiline textarea" }] }, suggester: { name: "suggester", description: "Spawns a suggester prompt and returns the user's chosen item.", definition: 'tp.system.suggester(text_items: string[] \u23AE ((item: T) => string), items: T[], throw_on_cancel: boolean = false, placeholder: string = "", limit?: number = undefined)', args: [{ name: "text_items", description: "Array of strings representing the text that will be displayed for each item in the suggester prompt. This can also be a function that maps an item to its text representation." }, { name: "items", description: "Array containing the values of each item in the correct order." }, { name: "throw_on_cancel", description: "Throws an error if the prompt is canceled, instead of returning a `null` value" }, { name: "placeholder", description: "Placeholder string of the prompt" }, { name: "limit", description: "Limit the number of items rendered at once (useful to improve performance when displaying large lists)" }] } } }, web: { name: "web", description: "This modules contains every internal function related to the web (making web requests).", functions: { daily_quote: { name: "daily_quote", description: "Retrieves and parses the daily quote from the API https://api.quotable.io", definition: "tp.web.daily_quote()" }, random_picture: { name: "random_picture", description: "Gets a random image from https://unsplash.com/", definition: "tp.web.random_picture(size?: string, query?: string, include_size?: boolean)", args: [{ name: "size", description: "Image size in the format `<width>x<height>`" }, { name: "query", description: "Limits selection to photos matching a search term. Multiple search terms can be passed separated by a comma `,`" }, { name: "include_size", description: "Optional argument to include the specified size in the image link markdown. Defaults to false" }] } } } };
+var tp = { config: { name: "config", description: "This module exposes Templater's running configuration.\n\nThis is mostly useful when writing scripts requiring some context information.\n", functions: { template_file: { name: "template_file", description: "The `TFile` object representing the template file.", definition: "tp.config.template_file" }, target_file: { name: "target_file", description: "The `TFile` object representing the target file where the template will be inserted.", definition: "tp.config.target_file" }, run_mode: { name: "run_mode", description: "The `RunMode`, representing the way Templater was launched (Create new from template, Append to active file, ...).", definition: "tp.config.run_mode" }, active_file: { name: "active_file", description: "The active file (if existing) when launching Templater.", definition: "tp.config.active_file?" } } }, date: { name: "date", description: "This module contains every internal function related to dates.", functions: { now: { name: "now", description: "Retrieves the date.", definition: 'tp.date.now(format: string = "YYYY-MM-DD", offset?: number\u23AEstring, reference?: string, reference_format?: string)', args: [{ name: "format", description: 'The format for the date. Defaults to `"YYYY-MM-DD"`. Refer to [format reference](https://momentjs.com/docs/#/displaying/format/).' }, { name: "offset", description: "Duration to offset the date from. If a number is provided, duration will be added to the date in days. You can also specify the offset as a string using the ISO 8601 format." }, { name: "reference", description: "The date referential, e.g. set this to the note's title." }, { name: "reference_format", description: "The format for the reference date. Refer to [format reference](https://momentjs.com/docs/#/displaying/format/)." }], examples: [{ name: "Date now", example: "<% tp.date.now() %>" }, { name: "Date now with format", example: '<% tp.date.now("Do MMMM YYYY") %>' }, { name: "Last week", example: '<% tp.date.now("YYYY-MM-DD", -7) %>' }, { name: "Next week", example: '<% tp.date.now("YYYY-MM-DD", 7) %>' }, { name: "Last month", example: '<% tp.date.now("YYYY-MM-DD", "P-1M") %>' }, { name: "Next year", example: '<% tp.date.now("YYYY-MM-DD", "P1Y") %>' }, { name: "File's title date + 1 day (tomorrow)", example: '<% tp.date.now("YYYY-MM-DD", 1, tp.file.title, "YYYY-MM-DD") %>' }, { name: "File's title date - 1 day (yesterday)", example: '<% tp.date.now("YYYY-MM-DD", -1, tp.file.title, "YYYY-MM-DD") %>' }] }, tomorrow: { name: "tomorrow", description: "Retrieves tomorrow's date.", definition: 'tp.date.tomorrow(format: string = "YYYY-MM-DD")', args: [{ name: "format", description: 'The format for the date. Defaults to `"YYYY-MM-DD"`. Refer to [format reference](https://momentjs.com/docs/#/displaying/format/).' }], examples: [{ name: "Date tomorrow", example: "<% tp.date.tomorrow() %>" }, { name: "Date tomorrow with format", example: '<% tp.date.tomorrow("Do MMMM YYYY") %>' }] }, yesterday: { name: "yesterday", description: "Retrieves yesterday's date.", definition: 'tp.date.yesterday(format: string = "YYYY-MM-DD")', args: [{ name: "format", description: 'The format for the date. Defaults to `"YYYY-MM-DD"`. Refer to [format reference](https://momentjs.com/docs/#/displaying/format/).' }], examples: [{ name: "Date yesterday", example: "<% tp.date.yesterday() %>" }, { name: "Date yesterday with format", example: '<% tp.date.yesterday("Do MMMM YYYY") %>' }] }, weekday: { name: "weekday", description: "", definition: 'tp.date.weekday(format: string = "YYYY-MM-DD", weekday: number, reference?: string, reference_format?: string)', args: [{ name: "format", description: 'The format for the date. Defaults to `"YYYY-MM-DD"`. Refer to [format reference](https://momentjs.com/docs/#/displaying/format/).' }, { name: "weekday", description: "Week day number. If the locale assigns Monday as the first day of the week, `0` will be Monday, `-7` will be last week's day." }, { name: "reference", description: "The date referential, e.g. set this to the note's title." }, { name: "reference_format", description: "The format for the reference date. Refer to [format reference](https://momentjs.com/docs/#/displaying/format/)." }], examples: [{ name: "This week's Monday", example: '<% tp.date.weekday("YYYY-MM-DD", 0) %>' }, { name: "Next Monday", example: '<% tp.date.weekday("YYYY-MM-DD", 7) %>' }, { name: "File's title Monday", example: '<% tp.date.weekday("YYYY-MM-DD", 0, tp.file.title, "YYYY-MM-DD") %>' }, { name: "File's title previous Monday", example: '<% tp.date.weekday("YYYY-MM-DD", -7, tp.file.title, "YYYY-MM-DD") %>' }] } }, momentjs: { examples: [{ name: "Date now", example: '<% moment(tp.file.title, "YYYY-MM-DD").format("YYYY-MM-DD") %>' }, { name: "Get start of month from note title", example: '<% moment(tp.file.title, "YYYY-MM-DD").startOf("month").format("YYYY-MM-DD") %>' }, { name: "Get end of month from note title", example: '<% moment(tp.file.title, "YYYY-MM-DD").endOf("month").format("YYYY-MM-DD") %>' }] } }, file: { name: "file", description: "This module contains every internal function related to files.", functions: { content: { name: "content", description: "The string contents of the file at the time that Templater was executed. Manipulating this string will *not* update the current file.", definition: "tp.file.content", examples: [{ name: "Retrieve file content", example: "<% tp.file.content %>" }] }, create_new: { name: "create_new", description: "Creates a new file using a specified template or with a specified content.", definition: "tp.file.create_new(template: TFile \u23AE string, filename?: string, open_new: boolean = false, folder?: TFolder)", args: [{ name: "template", description: "Either the template used for the new file content, or the file content as a string. If it is the template to use, you retrieve it with `tp.file.find_tfile(TEMPLATENAME)`." }, { name: "filename", description: 'The filename of the new file, defaults to "Untitled".' }, { name: "open_new", description: "Whether to open or not the newly created file. Warning: if you use this option, since commands are executed asynchronously, the file can be opened first and then other commands are appended to that new file and not the previous file." }, { name: "folder", description: 'The folder to put the new file in, defaults to Obsidian\'s default location. If you want the file to appear in a different folder, specify it with `app.vault.getAbstractFileByPath("FOLDERNAME")`.' }], examples: [{ name: "File creation", example: '<%* await tp.file.create_new("MyFileContent", "MyFilename") %>' }, { name: "File creation with template", example: '<%* await tp.file.create_new(tp.file.find_tfile("MyTemplate"), "MyFilename") %>' }, { name: "File creation and open created note", example: '<%* await tp.file.create_new("MyFileContent", "MyFilename", true) %>' }, { name: "File creation in current folder", example: '<%* await tp.file.create_new("MyFileContent", "MyFilename", false, tp.file.folder()) %>' }, { name: "File creation in specified folder", example: '<%* await tp.file.create_new("MyFileContent", "MyFilename", false, app.vault.getAbstractFileByPath("MyFolder")) %>' }, { name: "File creation and append link to current note", example: '[[<% (await tp.file.create_new("MyFileContent", "MyFilename")).basename %>]]' }] }, creation_date: { name: "creation_date", description: "Retrieves the file's creation date.", definition: 'tp.file.creation_date(format: string = "YYYY-MM-DD HH:mm")', args: [{ name: "format", description: 'The format for the date. Defaults to `"YYYY-MM-DD HH:mm"`. Refer to [format reference](https://momentjs.com/docs/#/displaying/format/).' }], examples: [{ name: "File creation date", example: "<% tp.file.creation_date() %>" }, { name: "File creation date with format", example: '<% tp.file.creation_date("dddd Do MMMM YYYY HH:mm") %>' }] }, cursor: { name: "cursor", description: "Sets the cursor to this location after the template has been inserted. \n\nYou can navigate between the different cursors using the configured hotkey in Obsidian settings.\n", definition: "tp.file.cursor(order?: number)", args: [{ name: "order", description: "The order of the different cursors jump, e.g. it will jump from 1 to 2 to 3, and so on.\nIf you specify multiple tp.file.cursor with the same order, the editor will switch to multi-cursor.\n" }], examples: [{ name: "File cursor", example: "<% tp.file.cursor() %>" }, { name: "File multi-cursor", example: "<% tp.file.cursor(1) %>Content<% tp.file.cursor(1) %>" }] }, cursor_append: { name: "cursor_append", description: "Appends some content after the active cursor in the file.", definition: "tp.file.cursor_append(content: string)", args: [{ name: "content", description: "The content to append after the active cursor." }], examples: [{ name: "File cursor append", example: '<% tp.file.cursor_append("Some text") %>' }] }, exists: { name: "exists", description: "Check to see if a file exists by it's file path. The full path to the file, relative to the Vault and containing the extension, must be provided.", definition: "tp.file.exists(filepath: string)", args: [{ name: "filepath", description: "The full file path of the file we want to check existence for." }], examples: [{ name: "File existence", example: '<% await tp.file.exists("MyFolder/MyFile.md") %>' }, { name: "File existence of current file", example: '<% await tp.file.exists(tp.file.folder(true) + "/" + tp.file.title + ".md") %>' }] }, find_tfile: { name: "find_tfile", description: "Search for a file and returns its `TFile` instance.", definition: "tp.file.find_tfile(filename: string)", args: [{ name: "filename", description: "The filename we want to search and resolve as a `TFile`." }], examples: [{ name: "File find TFile", example: '<% tp.file.find_tfile("MyFile").basename %>' }] }, folder: { name: "folder", description: "Retrieves the file's folder name.", definition: "tp.file.folder(relative: boolean = false)", args: [{ name: "relative", description: "If set to `true`, appends the vault relative path to the folder name. If `false`, only retrieves name of folder. Defaults to `false`." }], examples: [{ name: "File folder (Folder)", example: "<% tp.file.folder() %>" }, { name: "File folder with relative path (Path/To/Folder)", example: "<% tp.file.folder(true) %>" }] }, include: { name: "include", description: "Includes the file's link content. Templates in the included content will be resolved.", definition: "tp.file.include(include_link: string \u23AE TFile)", args: [{ name: "include_link", description: 'The link to the file to include, e.g. `"[[MyFile]]"`, or a TFile object. Also supports sections or blocks inclusions.' }], examples: [{ name: "File include", example: '<% tp.file.include("[[Template1]]") %>' }, { name: "File include TFile", example: '<% tp.file.include(tp.file.find_tfile("MyFile")) %>' }, { name: "File include section", example: '<% tp.file.include("[[MyFile#Section1]]") %>' }, { name: "File include block", example: '<% tp.file.include("[[MyFile#^block1]]") %>' }] }, last_modified_date: { name: "last_modified_date", description: "Retrieves the file's last modification date.", definition: 'tp.file.last_modified_date(format: string = "YYYY-MM-DD HH:mm")', args: [{ name: "format", description: 'The format for the date. Defaults to `"YYYY-MM-DD HH:mm"`. Refer to [format reference](https://momentjs.com/docs/#/displaying/format/).' }], examples: [{ name: "File last modified date", example: "<% tp.file.last_modified_date() %>" }, { name: "File last modified date with format", example: '<% tp.file.last_modified_date("dddd Do MMMM YYYY HH:mm") %>' }] }, move: { name: "move", description: "Moves the file to the desired vault location.", definition: "tp.file.move(new_path: string, file_to_move?: TFile)", args: [{ name: "new_path", description: 'The new vault relative path of the file, without the file extension. Note: the new path needs to include the folder and the filename, e.g. `"/Notes/MyNote"`.' }, { name: "file_to_move", description: "The file to move, defaults to the current file." }], examples: [{ name: "File move", example: '<% await tp.file.move("/A/B/" + tp.file.title) %>' }, { name: "File move and rename", example: '<% await tp.file.move("/A/B/NewTitle") %>' }] }, path: { name: "path", description: "Retrieves the file's absolute path on the system.", definition: "tp.file.path(relative: boolean = false)", args: [{ name: "relative", description: "If set to `true`, only retrieves the vault's relative path." }], examples: [{ name: "File path", example: "<% tp.file.path() %>" }, { name: "File relative path (relative to vault root)", example: "<% tp.file.path(true) %>" }] }, rename: { name: "rename", description: "Renames the file (keeps the same file extension).", definition: "tp.file.rename(new_title: string)", args: [{ name: "new_title", description: "The new file title." }], examples: [{ name: "File rename", example: '<% await tp.file.rename("MyNewName") %>' }, { name: "File append a 2 to the file name", example: '<% await tp.file.rename(tp.file.title + "2") %>' }] }, selection: { name: "selection", description: "Retrieves the active file's text selection.", definition: "tp.file.selection()", examples: [{ name: "File selection", example: "<% tp.file.selection() %>" }] }, tags: { name: "tags", description: "Retrieves the file's tags (array of string).", definition: "tp.file.tags", examples: [{ name: "File tags", example: "<% tp.file.tags %>" }] }, title: { name: "title", definition: "tp.file.title", description: "Retrieves the file's title.", examples: [{ name: "File title", example: "<% tp.file.title %>" }, { name: "Strip the Zettelkasten ID of title (if space separated)", example: '<% tp.file.title.split(" ")[1] %>' }] } } }, frontmatter: { name: "frontmatter", description: "This modules exposes all the frontmatter variables of a file as variables." }, hooks: { name: "hooks", description: "This module exposes hooks that allow you to execute code when a Templater event occurs.", functions: { on_all_templates_executed: { name: "on_all_templates_executed", description: "Hooks into when all actively running templates have finished executing. Most of the time this will be a single template, unless you are using `tp.file.include` or `tp.file.create_new`.\n\nMultiple invokations of this method will have their callback functions run in parallel.", definition: "tp.hooks.on_all_templates_executed(callback_function: () => any)", args: [{ name: "callback_function", description: "Callback function that will be executed when all actively running templates have finished executing." }] } } }, obsidian: { name: "obsidian", description: "This module exposes all the functions and classes from the Obsidian API." }, system: { name: "system", description: "This module contains system related functions.", functions: { clipboard: { name: "clipboard", description: "Retrieves the clipboard's content.", definition: "tp.system.clipboard()", examples: [{ name: "Clipboard", example: "<% tp.system.clipboard() %>" }] }, prompt: { name: "prompt", description: "Spawns a prompt modal and returns the user's input.", definition: "tp.system.prompt(prompt_text?: string, default_value?: string, throw_on_cancel: boolean = false, multiline?: boolean = false)", args: [{ name: "prompt_text", description: "Text placed above the input field." }, { name: "default_value", description: "A default value for the input field." }, { name: "throw_on_cancel", description: "Throws an error if the prompt is canceled, instead of returning a `null` value." }, { name: "multiline", description: "If set to `true`, the input field will be a multiline textarea. Defaults to `false`." }], examples: [{ name: "Prompt", example: '<% tp.system.prompt("Please enter a value") %>' }, { name: "Prompt with default value", example: '<% tp.system.prompt("What is your mood today?", "happy") %>' }, { name: "Multiline prompt", example: '<% tp.system.prompt("What is your mood today?", null, false, true) %>' }] }, suggester: { name: "suggester", description: "Spawns a suggester prompt and returns the user's chosen item.", definition: 'tp.system.suggester(text_items: string[] \u23AE ((item: T) => string), items: T[], throw_on_cancel: boolean = false, placeholder: string = "", limit?: number = undefined)', args: [{ name: "text_items", description: "Array of strings representing the text that will be displayed for each item in the suggester prompt. This can also be a function that maps an item to its text representation." }, { name: "items", description: "Array containing the values of each item in the correct order." }, { name: "throw_on_cancel", description: "Throws an error if the prompt is canceled, instead of returning a `null` value." }, { name: "placeholder", description: "Placeholder string of the prompt." }, { name: "limit", description: "Limit the number of items rendered at once (useful to improve performance when displaying large lists)." }], examples: [{ name: "Suggester", example: '<% tp.system.suggester(["Happy", "Sad", "Confused"], ["Happy", "Sad", "Confused"]) %>' }, { name: "Suggester with mapping function (same as above example)", example: '<% tp.system.suggester((item) => item, ["Happy", "Sad", "Confused"]) %>' }, { name: "Suggester for files", example: "[[<% (await tp.system.suggester((item) => item.basename, app.vault.getMarkdownFiles())).basename %>]]" }, { name: "Suggester for tags", example: '<% tp.system.suggester(item => item, Object.keys(app.metadataCache.getTags()).map(x => x.replace("#", ""))) %>' }] } } }, web: { name: "web", description: "This modules contains every internal function related to the web (making web requests).", functions: { daily_quote: { name: "daily_quote", description: "Retrieves and parses the daily quote from the API `https://api.quotable.io` as a callout.", definition: "tp.web.daily_quote()", examples: [{ name: "Daily quote", example: "<% tp.web.daily_quote() %>" }] }, random_picture: { name: "random_picture", description: "Gets a random image from `https://unsplash.com/`.", definition: "tp.web.random_picture(size?: string, query?: string, include_size?: boolean)", args: [{ name: "size", description: "Image size in the format `<width>x<height>`." }, { name: "query", description: "Limits selection to photos matching a search term. Multiple search terms can be passed separated by a comma." }, { name: "include_size", description: "Optional argument to include the specified size in the image link markdown. Defaults to false." }], examples: [{ name: "Random picture", example: "<% tp.web.random_picture() %>" }, { name: "Random picture with size", example: '<% tp.web.random_picture("200x200") %>' }, { name: "Random picture with size and query", example: '<% tp.web.random_picture("200x200", "landscape,water") %>' }] } } } };
 var documentation_default = { tp };
 
 // src/editor/TpDocumentation.ts
@@ -5440,7 +5434,7 @@ var Autocomplete = class extends import_obsidian15.EditorSuggest {
         return { state: state.base, mode: base };
       },
       blankLine: function(state) {
-        var baseToken, overlayToken;
+        let baseToken, overlayToken;
         if (base.blankLine)
           baseToken = base.blankLine(state.base);
         if (overlay.blankLine)
@@ -5453,6 +5447,8 @@ var Autocomplete = class extends import_obsidian15.EditorSuggest {
 
 // src/editor/Editor.ts
 var import_language = __toModule(require("@codemirror/language"));
+var import_state = __toModule(require("@codemirror/state"));
+var TEMPLATER_MODE_NAME = "templater";
 var TP_CMD_TOKEN_CLASS = "templater-command";
 var TP_INLINE_CLASS = "templater-inline";
 var TP_OPENING_TAG_TOKEN_CLASS = "templater-opening-tag";
@@ -5463,6 +5459,7 @@ var Editor2 = class {
   constructor(plugin) {
     this.plugin = plugin;
     this.cursor_jumper = new CursorJumper();
+    this.activeEditorExtensions = [];
   }
   desktopShouldHighlight() {
     return import_obsidian16.Platform.isDesktopApp && this.plugin.settings.syntax_highlighting;
@@ -5471,17 +5468,34 @@ var Editor2 = class {
     return import_obsidian16.Platform.isMobileApp && this.plugin.settings.syntax_highlighting_mobile;
   }
   async setup() {
-    await this.registerCodeMirrorMode();
     this.plugin.registerEditorSuggest(new Autocomplete(this.plugin.settings));
+    await this.registerCodeMirrorMode();
+    this.templaterLanguage = import_state.Prec.high(import_language.StreamLanguage.define(window.CodeMirror.getMode({}, TEMPLATER_MODE_NAME)));
+    if (this.templaterLanguage === void 0) {
+      log_error(new TemplaterError("Unable to enable syntax highlighting. Could not define language."));
+    }
+    this.plugin.registerEditorExtension(this.activeEditorExtensions);
     if (this.desktopShouldHighlight() || this.mobileShouldHighlight()) {
-      this.plugin.registerEditorExtension(import_language.StreamLanguage.define(window.CodeMirror.getMode({}, { name: "templater" })));
+      await this.enable_highlighter();
+    }
+  }
+  async enable_highlighter() {
+    if (this.activeEditorExtensions.length === 0 && this.templaterLanguage) {
+      this.activeEditorExtensions.push(this.templaterLanguage);
+      this.plugin.app.workspace.updateOptions();
+    }
+  }
+  async disable_highlighter() {
+    if (this.activeEditorExtensions.length > 0) {
+      this.activeEditorExtensions.pop();
+      this.plugin.app.workspace.updateOptions();
     }
   }
   async jump_to_next_cursor_location(file = null, auto_jump = false) {
     if (auto_jump && !this.plugin.settings.auto_jump_to_cursor) {
       return;
     }
-    if (file && get_active_file(app) !== file) {
+    if (file && get_active_file(this.plugin.app) !== file) {
       return;
     }
     await this.cursor_jumper.jump_to_next_cursor_location();
@@ -5500,7 +5514,7 @@ var Editor2 = class {
       log_error(new TemplaterError("Couldn't find customOverlayMode, can't enable syntax highlighting."));
       return;
     }
-    window.CodeMirror.defineMode("templater", function(config) {
+    window.CodeMirror.defineMode(TEMPLATER_MODE_NAME, function(config) {
       const templaterOverlay = {
         startState: function() {
           const js_state = window.CodeMirror.startState(js_mode);

@@ -147,7 +147,7 @@ __export(main_exports, {
   default: () => QuickAdd
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian40 = require("obsidian");
+var import_obsidian41 = require("obsidian");
 
 // src/quickAddSettingsTab.ts
 var import_obsidian33 = require("obsidian");
@@ -7471,6 +7471,7 @@ var FILE_NUMBER_REGEX = new RegExp(/([0-9]*)\.md$/);
 var NUMBER_REGEX = new RegExp(/^-?[0-9]*$/);
 var CREATE_IF_NOT_FOUND_TOP = "top";
 var CREATE_IF_NOT_FOUND_BOTTOM = "bottom";
+var CREATE_IF_NOT_FOUND_CURSOR = "cursor";
 var DATE_REGEX = new RegExp(/{{DATE(\+-?[0-9]+)?}}/i);
 var DATE_REGEX_FORMATTED = new RegExp(
   /{{DATE:([^}\n\r+]*)(\+-?[0-9]+)?}}/i
@@ -10799,7 +10800,7 @@ function invariant(condition, message) {
   return;
 }
 
-// node_modules/.pnpm/zustand@4.3.8/node_modules/zustand/esm/vanilla.mjs
+// node_modules/.pnpm/zustand@4.3.8_react@18.2.0/node_modules/zustand/esm/vanilla.mjs
 var import_meta = {};
 var createStoreImpl = (createState) => {
   let state;
@@ -11959,15 +11960,7 @@ function waitFor(ms) {
   return new Promise((res) => setTimeout(res, ms));
 }
 function getLinesInString(input) {
-  const lines = [];
-  let tempString = input;
-  while (tempString.includes("\n")) {
-    const lineEndIndex = tempString.indexOf("\n");
-    lines.push(tempString.slice(0, lineEndIndex));
-    tempString = tempString.slice(lineEndIndex + 1);
-  }
-  lines.push(tempString);
-  return lines;
+  return input.split("\n");
 }
 function escapeRegExp(text2) {
   return text2.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -13831,7 +13824,7 @@ var CaptureChoiceBuilder = class extends ChoiceBuilder {
       }).addDropdown((dropdown) => {
         if (!this.choice.insertAfter?.createIfNotFoundLocation)
           this.choice.insertAfter.createIfNotFoundLocation = CREATE_IF_NOT_FOUND_TOP;
-        dropdown.addOption(CREATE_IF_NOT_FOUND_TOP, "Top").addOption(CREATE_IF_NOT_FOUND_BOTTOM, "Bottom").setValue(
+        dropdown.addOption(CREATE_IF_NOT_FOUND_TOP, "Top").addOption(CREATE_IF_NOT_FOUND_BOTTOM, "Bottom").addOption(CREATE_IF_NOT_FOUND_CURSOR, "Cursor").setValue(
           this.choice.insertAfter?.createIfNotFoundLocation
         ).onChange(
           (value) => this.choice.insertAfter.createIfNotFoundLocation = value
@@ -17716,6 +17709,9 @@ var TemplateChoiceEngine = class extends TemplateEngine {
   }
 };
 
+// src/formatters/captureChoiceFormatter.ts
+var import_obsidian36 = require("obsidian");
+
 // src/formatters/helpers/getEndOfSection.ts
 function isSameHeading(heading1, heading2) {
   return heading1.line === heading2.line;
@@ -17736,9 +17732,7 @@ function getMarkdownHeadings(bodyLines) {
 }
 function getEndOfSection(lines, targetLine, shouldConsiderSubsections = false) {
   const headings = getMarkdownHeadings(lines);
-  const targetHeading = headings.find(
-    (heading) => heading.line === targetLine
-  );
+  const targetHeading = headings.find((heading) => heading.line === targetLine);
   const targetIsHeading = !!targetHeading;
   if (!targetIsHeading && shouldConsiderSubsections) {
     throw new Error(
@@ -17852,8 +17846,8 @@ function findNextIdx(items, fromIdx, condition) {
 
 // src/formatters/captureChoiceFormatter.ts
 var CaptureChoiceFormatter = class extends CompleteFormatter {
-  constructor(app2, plugin, choiceExecutor) {
-    super(app2, plugin, choiceExecutor);
+  constructor() {
+    super(...arguments);
     this.file = null;
     this.fileContent = "";
   }
@@ -17898,6 +17892,7 @@ var CaptureChoiceFormatter = class extends CompleteFormatter {
     return this.insertTextAfterPositionInBody(
       formatted,
       this.fileContent,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       frontmatterEndPosition
     );
   }
@@ -17954,12 +17949,45 @@ ${formatted}`;
       return this.insertTextAfterPositionInBody(
         insertAfterLineAndFormatted,
         this.fileContent,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         frontmatterEndPosition
       );
     }
     if (this.choice.insertAfter?.createIfNotFoundLocation === CREATE_IF_NOT_FOUND_BOTTOM) {
       return `${this.fileContent}
 ${insertAfterLineAndFormatted}`;
+    }
+    if (this.choice.insertAfter?.createIfNotFoundLocation === CREATE_IF_NOT_FOUND_CURSOR) {
+      try {
+        const activeView = this.app.workspace.getActiveViewOfType(import_obsidian36.MarkdownView);
+        if (!activeView) {
+          throw new Error("No active view.");
+        }
+        const cursor = activeView.editor.getCursor();
+        let targetPosition = cursor.line;
+        if (this.choice.insertAfter?.insertAtEnd) {
+          if (!this.file)
+            throw new Error("Tried to get sections without file.");
+          const fileContentLines = getLinesInString(this.fileContent);
+          const endOfSectionIndex = getEndOfSection(
+            fileContentLines,
+            targetPosition,
+            !!this.choice.insertAfter.considerSubsections
+          );
+          targetPosition = endOfSectionIndex ?? fileContentLines.length - 1;
+        }
+        const newFileContent = this.insertTextAfterPositionInBody(
+          insertAfterLineAndFormatted,
+          this.fileContent,
+          targetPosition
+        );
+        return newFileContent;
+      } catch (e) {
+        log.logError(
+          `unable to insert line '${this.choice.insertAfter.after}' on your cursor.
+${e}`
+        );
+      }
     }
   }
   getFrontmatterEndPosition(file) {
@@ -17968,8 +17996,11 @@ ${insertAfterLineAndFormatted}`;
       log.logMessage("could not get frontmatter. Maybe there isn't any.");
       return -1;
     }
-    if (fileCache.frontmatter.position)
-      return fileCache.frontmatter.position.end.line;
+    if (fileCache.frontmatter.position || fileCache.frontmatterPosition) {
+      if (fileCache.frontmatter.position) {
+        return fileCache.frontmatter.position.end.line;
+      }
+    }
     return -1;
   }
   insertTextAfterPositionInBody(text2, body, pos) {
@@ -18633,11 +18664,7 @@ var CaptureChoiceEngine = class extends QuickAddChoiceEngine {
     this.choiceExecutor = choiceExecutor;
     this.choice = choice;
     this.plugin = plugin;
-    this.formatter = new CaptureChoiceFormatter(
-      app2,
-      plugin,
-      choiceExecutor
-    );
+    this.formatter = new CaptureChoiceFormatter(app2, plugin, choiceExecutor);
   }
   async run() {
     try {
@@ -18662,11 +18689,7 @@ var CaptureChoiceEngine = class extends QuickAddChoiceEngine {
       }
       const { file, newFileContent, captureContent } = await getFileAndAddContentFn(filePath, content);
       if (this.choice.captureToActiveFile && !this.choice.prepend && !this.choice.insertAfter.enabled) {
-        const content2 = await templaterParseTemplate(
-          app,
-          captureContent,
-          file
-        );
+        const content2 = await templaterParseTemplate(app, captureContent, file);
         appendToCurrentLine(content2, this.app);
       } else {
         await this.app.vault.modify(file, newFileContent);
@@ -18714,18 +18737,12 @@ var CaptureChoiceEngine = class extends QuickAddChoiceEngine {
   async getFormattedPathToCaptureTo(shouldCaptureToActiveFile) {
     if (shouldCaptureToActiveFile) {
       const activeFile = this.app.workspace.getActiveFile();
-      invariant(
-        activeFile,
-        `Cannot capture to active file - no active file.`
-      );
+      invariant(activeFile, "Cannot capture to active file - no active file.");
       return activeFile.path;
     }
     const captureTo = this.choice.captureTo;
     const formattedCaptureTo = await this.formatFilePath(captureTo);
-    const folderPath = formattedCaptureTo.replace(
-      /^\/$|\/\.md$|^\.md$/,
-      ""
-    );
+    const folderPath = formattedCaptureTo.replace(/^\/$|\/\.md$|^\.md$/, "");
     const captureAnywhereInVault = folderPath === "";
     const shouldCaptureToFolder = captureAnywhereInVault || isFolder(folderPath);
     const shouldCaptureWithTag = formattedCaptureTo.startsWith("#");
@@ -18741,10 +18758,7 @@ var CaptureChoiceEngine = class extends QuickAddChoiceEngine {
   async selectFileInFolder(folderPath, captureAnywhereInVault) {
     const folderPathSlash = folderPath.endsWith("/") || captureAnywhereInVault ? folderPath : `${folderPath}/`;
     const filesInFolder = getMarkdownFilesInFolder(folderPathSlash);
-    invariant(
-      filesInFolder.length > 0,
-      `Folder ${folderPathSlash} is empty.`
-    );
+    invariant(filesInFolder.length > 0, `Folder ${folderPathSlash} is empty.`);
     const filePaths = filesInFolder.map((f) => f.path);
     const targetFilePath = await InputSuggester.Suggest(
       app,
@@ -18753,7 +18767,7 @@ var CaptureChoiceEngine = class extends QuickAddChoiceEngine {
     );
     invariant(
       !!targetFilePath && targetFilePath.length > 0,
-      `No file selected for capture.`
+      "No file selected for capture."
     );
     const filePath = targetFilePath.startsWith(`${folderPathSlash}`) ? targetFilePath : `${folderPathSlash}/${targetFilePath}`;
     return await this.formatFilePath(filePath);
@@ -18770,7 +18784,7 @@ var CaptureChoiceEngine = class extends QuickAddChoiceEngine {
     );
     invariant(
       !!targetFilePath && targetFilePath.length > 0,
-      `No file selected for capture.`
+      "No file selected for capture."
     );
     return await this.formatFilePath(targetFilePath);
   }
@@ -18815,14 +18829,9 @@ This is in order to prevent data loss.`
       );
       fileContent = await singleTemplateEngine.run();
     }
-    const file = await this.createFileWithInput(
-      filePath,
-      fileContent
-    );
+    const file = await this.createFileWithInput(filePath, fileContent);
     await replaceTemplaterTemplatesInCreatedFile(this.app, file);
-    const updatedFileContent = await this.app.vault.cachedRead(
-      file
-    );
+    const updatedFileContent = await this.app.vault.cachedRead(file);
     const newFileContent = await this.formatter.formatContentWithFile(
       captureContent,
       this.choice,
@@ -18841,8 +18850,8 @@ This is in order to prevent data loss.`
 };
 
 // src/gui/suggesters/choiceSuggester.ts
-var import_obsidian36 = require("obsidian");
-var ChoiceSuggester = class extends import_obsidian36.FuzzySuggestModal {
+var import_obsidian37 = require("obsidian");
+var ChoiceSuggester = class extends import_obsidian37.FuzzySuggestModal {
   constructor(plugin, choices, choiceExecutor) {
     super(plugin.app);
     this.plugin = plugin;
@@ -18859,7 +18868,7 @@ var ChoiceSuggester = class extends import_obsidian36.FuzzySuggestModal {
   }
   renderSuggestion(item, el) {
     el.empty();
-    void import_obsidian36.MarkdownRenderer.renderMarkdown(item.item.name, el, "", this.plugin);
+    void import_obsidian37.MarkdownRenderer.renderMarkdown(item.item.name, el, "", this.plugin);
     el.classList.add("quickadd-choice-suggestion");
   }
   getItemText(item) {
@@ -19184,8 +19193,8 @@ QuickAdd will now revert to backup.`
 var migrate_default = migrate;
 
 // src/gui/UpdateModal/UpdateModal.ts
-var import_obsidian37 = require("obsidian");
 var import_obsidian38 = require("obsidian");
+var import_obsidian39 = require("obsidian");
 async function getReleaseNotesAfter(repoOwner, repoName, releaseTagName) {
   const response = await fetch(
     `https://api.github.com/repos/${repoOwner}/${repoName}/releases`
@@ -19213,7 +19222,7 @@ function addExtraHashToHeadings(markdownText, numHashes = 1) {
   }
   return lines.join("\n");
 }
-var UpdateModal = class extends import_obsidian38.Modal {
+var UpdateModal = class extends import_obsidian39.Modal {
   constructor(previousQAVersion) {
     super(app);
     this.previousVersion = previousQAVersion;
@@ -19268,18 +19277,18 @@ ${andNow}
 ${addExtraHashToHeadings(
       releaseNotes
     )}`;
-    void import_obsidian38.MarkdownRenderer.renderMarkdown(
+    void import_obsidian39.MarkdownRenderer.renderMarkdown(
       markdownStr,
       contentDiv,
       app.vault.getRoot().path,
-      new import_obsidian37.Component()
+      new import_obsidian38.Component()
     );
   }
 };
 
 // src/gui/MacroGUIs/AIAssistantInfiniteCommandSettingsModal.ts
-var import_obsidian39 = require("obsidian");
-var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Modal {
+var import_obsidian40 = require("obsidian");
+var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian40.Modal {
   constructor(settings) {
     super(app);
     this.showAdvancedSettings = false;
@@ -19341,7 +19350,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     this.display();
   }
   addModelSetting(container) {
-    new import_obsidian39.Setting(container).setName("Model").setDesc("The model the AI Assistant will use").addDropdown((dropdown) => {
+    new import_obsidian40.Setting(container).setName("Model").setDesc("The model the AI Assistant will use").addDropdown((dropdown) => {
       for (const model of models_and_ask_me) {
         dropdown.addOption(model, model);
       }
@@ -19353,7 +19362,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addOutputVariableNameSetting(container) {
-    new import_obsidian39.Setting(container).setName("Output variable name").setDesc(
+    new import_obsidian40.Setting(container).setName("Output variable name").setDesc(
       "The name of the variable used to store the AI Assistant output, i.e. {{value:output}}."
     ).addText((text2) => {
       text2.setValue(this.settings.outputVariableName).onChange(
@@ -19364,12 +19373,12 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addSystemPromptSetting(contentEl) {
-    new import_obsidian39.Setting(contentEl).setName("System Prompt").setDesc("The system prompt for the AI Assistant");
+    new import_obsidian40.Setting(contentEl).setName("System Prompt").setDesc("The system prompt for the AI Assistant");
     const container = this.contentEl.createEl("div");
     const tokenCount = container.createEl("span");
     tokenCount.style.color = "var(--text-muted-color)";
     container.appendChild(tokenCount);
-    const textAreaComponent = new import_obsidian39.TextAreaComponent(contentEl);
+    const textAreaComponent = new import_obsidian40.TextAreaComponent(contentEl);
     textAreaComponent.setValue(this.settings.systemPrompt).onChange(async (value) => {
       this.settings.systemPrompt = value;
       formatDisplay.innerText = await displayFormatter.format(value);
@@ -19389,7 +19398,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     textAreaComponent.inputEl.style.minHeight = "100px";
     textAreaComponent.inputEl.style.marginBottom = "1em";
     const formatDisplay = this.contentEl.createEl("span");
-    const updateTokenCount = (0, import_obsidian39.debounce)(() => {
+    const updateTokenCount = (0, import_obsidian40.debounce)(() => {
       tokenCount.innerText = `Token count: ${this.systemPromptTokenLength}`;
     }, 50);
     updateTokenCount();
@@ -19398,7 +19407,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     ))();
   }
   addShowAdvancedSettingsToggle(container) {
-    new import_obsidian39.Setting(container).setName("Show advanced settings").setDesc(
+    new import_obsidian40.Setting(container).setName("Show advanced settings").setDesc(
       "Show advanced settings such as temperature, top p, and frequency penalty."
     ).addToggle((toggle) => {
       toggle.setValue(this.showAdvancedSettings);
@@ -19409,7 +19418,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addTemperatureSetting(container) {
-    new import_obsidian39.Setting(container).setName("Temperature").setDesc(
+    new import_obsidian40.Setting(container).setName("Temperature").setDesc(
       "Sampling temperature. Higher values like 0.8 makes the output more random, whereas lower values like 0.2 will make it more focused and deterministic. The default is 1."
     ).addSlider((slider) => {
       slider.setLimits(0, 1, 0.1);
@@ -19423,7 +19432,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addTopPSetting(container) {
-    new import_obsidian39.Setting(container).setName("Top P").setDesc(
+    new import_obsidian40.Setting(container).setName("Top P").setDesc(
       "Nucleus sampling - consider this an alternative to temperature. The model considers the results of the tokens with top_p probability mass. 0.1 means only tokens compromising the top 10% probability mass are considered. The default is 1."
     ).addSlider((slider) => {
       slider.setLimits(0, 1, 0.1);
@@ -19437,7 +19446,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addFrequencyPenaltySetting(container) {
-    new import_obsidian39.Setting(container).setName("Frequency Penalty").setDesc(
+    new import_obsidian40.Setting(container).setName("Frequency Penalty").setDesc(
       "Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim. The default is 0."
     ).addSlider((slider) => {
       slider.setLimits(0, 2, 0.1);
@@ -19451,7 +19460,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addPresencePenaltySetting(container) {
-    new import_obsidian39.Setting(container).setName("Presence Penalty").setDesc(
+    new import_obsidian40.Setting(container).setName("Presence Penalty").setDesc(
       "Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics. The default is 0."
     ).addSlider((slider) => {
       slider.setLimits(0, 2, 0.1);
@@ -19465,7 +19474,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addResultJoinerSetting(container) {
-    new import_obsidian39.Setting(container).setName("Result Joiner").setDesc(
+    new import_obsidian40.Setting(container).setName("Result Joiner").setDesc(
       "The string used to join multiple LLM responses together. The default is a newline."
     ).addText((text2) => {
       text2.setValue(this.settings.resultJoiner).onChange((value) => {
@@ -19474,7 +19483,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addChunkSeparatorSetting(container) {
-    new import_obsidian39.Setting(container).setName("Chunk Separator").setDesc(
+    new import_obsidian40.Setting(container).setName("Chunk Separator").setDesc(
       "The string used to separate chunks of text. The default is a newline."
     ).addText((text2) => {
       text2.setValue(this.settings.chunkSeparator).onChange(
@@ -19485,7 +19494,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addMaxTokensSetting(container) {
-    new import_obsidian39.Setting(container).setName("Max Chunk Tokens").setDesc(
+    new import_obsidian40.Setting(container).setName("Max Chunk Tokens").setDesc(
       "The maximum number of tokens in each chunk, calculated as the chunk token size + prompt template token size + system prompt token size. Make sure you leave room for the model to respond to the prompt."
     ).addSlider((slider) => {
       const modelMaxTokens = getModelMaxTokens(this.settings.model);
@@ -19498,7 +19507,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
     });
   }
   addMergeChunksSetting(container) {
-    new import_obsidian39.Setting(container).setName("Merge Chunks").setDesc(
+    new import_obsidian40.Setting(container).setName("Merge Chunks").setDesc(
       "Merge chunks together by putting them in the same prompt, until the max tokens limit is reached. Useful for sending fewer queries overall, but may result in less coherent responses."
     ).addToggle((toggle) => {
       toggle.setValue(this.settings.mergeChunks);
@@ -19514,7 +19523,7 @@ var InfiniteAIAssistantCommandSettingsModal = class extends import_obsidian39.Mo
 };
 
 // src/main.ts
-var QuickAdd = class extends import_obsidian40.Plugin {
+var QuickAdd = class extends import_obsidian41.Plugin {
   get api() {
     return QuickAddApi.GetApi(app, this, new ChoiceExecutor(app, this));
   }

@@ -3,6 +3,11 @@
 
 }
 
+/* Fix indentation of wrapped task lines in Tasks search results, when in Live Preview. */
+ul.contains-task-list .task-list-item-checkbox {
+    margin-inline-start: calc(var(--checkbox-size) * -1.5) !important;
+}
+
 .plugin-tasks-query-explanation{
     /* Prevent long explanation lines wrapping, so they are more readable,
        especially on small screens.
@@ -41,19 +46,27 @@
   }
 }
 
-/* Pencil icon. */
-.tasks-edit {
-    background-color: var(--text-faint);
-    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20width%3D%221em%22%20height%3D%221em%22%20style%3D%22-ms-transform%3A%20rotate(360deg)%3B%20-webkit-transform%3A%20rotate(360deg)%3B%20transform%3A%20rotate(360deg)%3B%22%20preserveAspectRatio%3D%22xMidYMid%20meet%22%20viewBox%3D%220%200%201536%201536%22%3E%3Cpath%20d%3D%22M363%201408l91-91l-235-235l-91%2091v107h128v128h107zm523-928q0-22-22-22q-10%200-17%207l-542%20542q-7%207-7%2017q0%2022%2022%2022q10%200%2017-7l542-542q7-7%207-17zm-54-192l416%20416l-832%20832H0v-416zm683%2096q0%2053-37%2090l-166%20166l-416-416l166-165q36-38%2090-38q53%200%2091%2038l235%20234q37%2039%2037%2091z%22%20fill%3D%22%23626262%22%2F%3E%3C%2Fsvg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20width%3D%221em%22%20height%3D%221em%22%20style%3D%22-ms-transform%3A%20rotate(360deg)%3B%20-webkit-transform%3A%20rotate(360deg)%3B%20transform%3A%20rotate(360deg)%3B%22%20preserveAspectRatio%3D%22xMidYMid%20meet%22%20viewBox%3D%220%200%201536%201536%22%3E%3Cpath%20d%3D%22M363%201408l91-91l-235-235l-91%2091v107h128v128h107zm523-928q0-22-22-22q-10%200-17%207l-542%20542q-7%207-7%2017q0%2022%2022%2022q10%200%2017-7l542-542q7-7%207-17zm-54-192l416%20416l-832%20832H0v-416zm683%2096q0%2053-37%2090l-166%20166l-416-416l166-165q36-38%2090-38q53%200%2091%2038l235%20234q37%2039%2037%2091z%22%20fill%3D%22%23626262%22%2F%3E%3C%2Fsvg%3E");
-    mask-size: contain;
-    -webkit-mask-size: contain;
-    display: inline-block;
+/* Edit and postpone */
+.tasks-edit, .tasks-postpone {
     width: 1em;
     height: 1em;
     vertical-align: middle;
-    margin-left: 0.5em;
+    margin-left: .33em;
     cursor: pointer;
+    font-family: var(--font-interface);
+    color: var(--text-accent);
+}
+
+a.tasks-edit, a.tasks-postpone {
+    text-decoration: none;
+}
+
+.tasks-edit::after {
+    content: '📝';
+}
+
+.tasks-postpone::after {
+    content: '⏩';
 }
 
 /* Urgency score */
@@ -123,6 +136,11 @@
 }
 
 .tasks-modal-buttons {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--modal-background);
+    padding-bottom: 16px;
+    padding-top: 16px;
     display: grid;
     grid-template-columns: 3fr 1fr;
     column-gap: .5em;
@@ -202,12 +220,19 @@
 }
 
 .tasks-modal-status {
+    padding-bottom: 6px;
+    margin-bottom: -16px;
     display: flex;
     justify-content: space-between;
 }
 
 .tasks-modal-error {
     border: 1px solid red !important;
+}
+
+.tasks-modal-warning {
+    color: var(--text-warning) !important;
+    background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
 }
 
 .tasks-modal button:disabled {
