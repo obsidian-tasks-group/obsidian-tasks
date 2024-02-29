@@ -58,6 +58,51 @@ linkStyle default stroke:gray
 
 See [[Dataview Format#Dataview Format for Dependencies|Dataview Format for Dependencies]] for the dataview equivalent.
 
+## Dependency fields
+
+### `id`
+
+Task `id` values consistent of **one or more of the following allowed characters**:
+
+- `abcdefghijklmnopqrstuvwxyz`
+- `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+- `0123456789`
+- underscore (`_`)
+- hyphen (`-`)
+
+The following are examples of valid `id` values:
+
+- `1`
+- `2`
+- `hftw84745`
+- `task_1`
+- `do-me-first`
+
+Task `id` values are intended to be **unique across the whole vault**, each different `id` being only used on one task. However, there is no checking for this.
+
+%%
+#### Duplicate `id` values
+
+This section commented out for now, because although the search handles tasks with duplicate `id` well, the Edit Task modal does not make clear when a task depends on the same `id` multiple times.
+
+Task `id` values are *intended* to be unique across the whole vault.
+
+However, a task that depends on an `id` that occurs multiple times in your vault will depend on *all* those other tasks. You can use this to your advantage, if you want to quickly make one task depend on a long list of other tasks.
+%%
+
+### `dependsOn`
+
+Task `dependsOn` values consist of:
+
+- one or more `id` values of other tasks
+- separated by commas (`,`) with optional spaces allowed.
+
+The following are valid `dependsOn` values:
+
+- `1`
+- `dcf64c,0h17ye`
+- `dcf64c, 0h17ye`
+
 ## Example
 
 To illustrate the concept of task dependencies, let's consider a scenario where we are outlining the tasks required to develop an application. Two tasks are identified:
