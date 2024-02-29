@@ -144,25 +144,6 @@ Until this task is marked as complete, at which time Obsidian Tasks sees that 'T
 - [ ] Test with users ⛔️ 4ijuhyz
 ```
 
-## Nomenclature
-
-Fields:
-
-- `dependsOn`
-- `id`
-
-UI:
-
-- Blocked by [implies an id of another task]
-- Blocks
-
-Query
-
-- blocking
-- blocked
-
-## Adding Dependencies
-
 ## Using Dependencies in Tasks Searches
 
 - [[Filters#Filters for Task Dependencies]]
