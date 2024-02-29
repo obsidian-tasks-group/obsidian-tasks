@@ -8,18 +8,18 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
     const startStatus = task.status;
 
-    const completedTask = tasks[tasksArrayLength - 1];
-    const endStatus = completedTask.status;
+    const changedStatusTask = tasks[tasksArrayLength - 1];
+    const endStatus = changedStatusTask.status;
 
     const ocTrigger = ' 🏁 ';
-    const taskString = completedTask.description;
+    const taskString = changedStatusTask.description;
 
     if (!taskString.includes(ocTrigger) || endStatus.type !== StatusType.DONE || endStatus.type === startStatus.type) {
         return tasks;
     }
 
     if (taskString.includes('🏁 Delete')) {
-        return tasks.filter((task) => task !== completedTask);
+        return tasks.filter((task) => task !== changedStatusTask);
     }
     // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
     const errorMessage = 'Unknown "On Completion" action';
