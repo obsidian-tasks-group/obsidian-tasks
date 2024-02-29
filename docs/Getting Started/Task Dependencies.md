@@ -58,7 +58,7 @@ linkStyle default stroke:gray
 
 See [[Dataview Format#Dataview Format for Dependencies|Dataview Format for Dependencies]] for the dataview equivalent.
 
-## Dependency fields
+## Defining dependencies
 
 ### `id`
 
@@ -103,7 +103,9 @@ The following are valid `dependsOn` values:
 - `dcf64c,0h17ye`
 - `dcf64c, 0h17ye`
 
-## Example
+## Editing dependencies
+
+### Worked example
 
 To illustrate the concept of task dependencies, let's consider a scenario where we are outlining the tasks required to develop an application. Two tasks are identified:
 
@@ -144,7 +146,15 @@ Until this task is marked as complete, at which time Obsidian Tasks sees that 'T
 - [ ] Test with users ⛔️ 4ijuhyz
 ```
 
-## Using Dependencies in Tasks Searches
+## Visualising dependencies
+
+## Search concepts
+
+### Blocked
+
+### Blocking
+
+### Using Dependencies in Tasks Searches
 
 - [[Filters#Filters for Task Dependencies]]
 - [[Sorting#Sort by Task Dependencies]]
