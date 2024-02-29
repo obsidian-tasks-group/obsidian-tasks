@@ -1,4 +1,3 @@
-import Console from 'console';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { Task } from './Task';
 
@@ -24,7 +23,6 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
     // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
     const errorMessage = 'Unknown "On Completion" action';
-    const console = Console;
     console.log(errorMessage);
     return tasks;
     // const hint = '\nClick here to clear';
