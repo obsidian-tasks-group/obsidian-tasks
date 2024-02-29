@@ -16,6 +16,48 @@ By specifying these dependencies, Obsidian Tasks can streamline your workflow by
 > [!NOTE]
 > Obsidian tasks exclusively allows for 'Finish to start (FS)' dependencies, meaning Task A needs to be finished before you start on Task B. You can learn more about this concept [on Wikipedia](https://en.wikipedia.org/wiki/Dependency_(project_management)).
 
+## Sample dependency
+
+Here is an example dependency, to tell Tasks that ==the second task cannot be started until the first task is completed==:
+
+%%
+### Tasks Emoji Format
+%%
+
+- The first task has an **`id`** field with the value `abcdef`.
+- The second task has a **`dependsOn`** the same value `abcdef`, which is a reference or pointer to the first task.
+
+```mermaid
+flowchart BT
+
+classDef TASK        stroke-width:3px,font-family:monospace;
+
+2["- [ ] do this first 🆔 abcdef"]:::TASK
+1["- [ ] do this after first ⛔️ abcdef"]:::TASK
+1-- depends --> 2
+
+linkStyle default stroke:gray
+```
+
+%%
+### Dataview Format
+
+```mermaid
+flowchart BT
+
+classDef TASK        stroke-width:3px,font-family:monospace;
+
+2["- [ ] do this first&nbsp;&nbsp;[id:: abcdef]"]:::TASK
+1["- [ ] do this after first&nbsp;&nbsp;[dependsOn:: abcdef]"]:::TASK
+1-- depends on --> 2
+
+linkStyle default stroke:gray
+```
+
+%%
+
+See [[Dataview Format#Dataview Format for Dependencies|Dataview Format for Dependencies]] for the dataview equivalent.
+
 ## Example
 
 To illustrate the concept of task dependencies, let's consider a scenario where we are outlining the tasks required to develop an application. Two tasks are identified:
