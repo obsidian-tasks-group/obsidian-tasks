@@ -117,6 +117,15 @@ Supported abbreviations:
 | `weekend`    | `sat`         |
 | `we`         | `sat`         |
 
+### Dependencies
+
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
+Use this section to specify relationships between tasks, to define the order in which you want to work on a set of tasks.
+
+For details, see [[Task Dependencies]].
+
 ### Status
 
 > [!released]
