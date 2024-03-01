@@ -14,7 +14,6 @@ import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-// import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
@@ -48,9 +47,9 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
 }
 
 function getAndCheckRenderedElement(container: HTMLElement, elementId: string) {
-    const renderedDescription = container.ownerDocument.getElementById(elementId) as HTMLInputElement;
-    expect(() => renderedDescription).toBeTruthy();
-    return renderedDescription;
+    const element = container.ownerDocument.getElementById(elementId) as HTMLInputElement;
+    expect(() => element).toBeTruthy();
+    return element;
 }
 
 function getAndCheckRenderedDescriptionElement(container: HTMLElement): HTMLInputElement {
