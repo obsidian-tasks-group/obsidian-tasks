@@ -144,16 +144,6 @@ async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: str
     return { waitForClose, container, submit };
 }
 
-async function editStatusAndSave(line: string, newStatusSymbol: string) {
-    const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, newStatusSymbol);
-
-    const doneDate = getAndCheckRenderedElement(container, 'done');
-    expect(doneDate.value).toMatchInlineSnapshot('""');
-
-    submit.click();
-    return await waitForClose;
-}
-
 describe('Task rendering', () => {
     afterEach(() => {
         GlobalFilter.getInstance().reset();
@@ -313,8 +303,13 @@ describe('Task editing', () => {
     describe('Status editing', () => {
         const line = '- [ ] simple';
         it('should change status to Done', async () => {
-            const newTask = await editStatusAndSave(line, 'x');
-            expect(newTask).toMatchInlineSnapshot('"- [x] simple"');
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, 'x');
+
+            const doneDate = getAndCheckRenderedElement(container, 'done');
+            expect(doneDate.value).toMatchInlineSnapshot('""');
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot('"- [x] simple"');
         });
     });
 
