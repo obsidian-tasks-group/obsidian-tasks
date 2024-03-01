@@ -46,14 +46,20 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
     return { result, container };
 }
 
-function getAndCheckRenderedElement(container: HTMLElement, elementId: string) {
-    const element = container.ownerDocument.getElementById(elementId) as HTMLInputElement;
+/**
+ * Find the element with the given id.
+ * Template type T might be, for example, HTMLInputElement or HTMLSelectElement
+ * @param container
+ * @param elementId
+ */
+function getAndCheckRenderedElement<T>(container: HTMLElement, elementId: string) {
+    const element = container.ownerDocument.getElementById(elementId) as T;
     expect(() => element).toBeTruthy();
     return element;
 }
 
 function getAndCheckRenderedDescriptionElement(container: HTMLElement): HTMLInputElement {
-    return getAndCheckRenderedElement(container, 'description');
+    return getAndCheckRenderedElement<HTMLInputElement>(container, 'description');
 }
 
 function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonElement {
@@ -124,7 +130,7 @@ async function editFieldAndSave(line: string, elementId: string, newValue: strin
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
 
-    const description = getAndCheckRenderedElement(container, elementId);
+    const description = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
     const submit = getAndCheckApplyButton(result);
 
     return await editInputElementAndSubmit(description, newValue, submit, waitForClose);
@@ -135,7 +141,7 @@ async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: str
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
 
-    const statusSelector = getAndCheckRenderedElement(container, 'status-type');
+    const statusSelector = getAndCheckRenderedElement<HTMLSelectElement>(container, 'status-type');
     const submit = getAndCheckApplyButton(result);
 
     await fireEvent.change(statusSelector, {
@@ -155,7 +161,7 @@ describe('Task rendering', () => {
         const onSubmit = (_: Task[]): void => {};
         const { container } = renderAndCheckModal(task, onSubmit);
 
-        const inputElement = getAndCheckRenderedElement(container, elementId);
+        const inputElement = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
         expect(inputElement!.value).toEqual(expectedElementValue);
     }
 
@@ -315,7 +321,7 @@ describe('Task editing', () => {
         it('should change status to Done', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, 'x');
 
-            const doneDate = getAndCheckRenderedElement(container, 'done');
+            const doneDate = getAndCheckRenderedElement<HTMLInputElement>(container, 'done');
             expect(doneDate.value).toEqual(today);
 
             submit.click();
