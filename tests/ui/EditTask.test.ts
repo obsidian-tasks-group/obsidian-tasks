@@ -142,6 +142,9 @@ async function editStatusAndSave(line: string, newStatusSymbol: string) {
         target: { value: StatusRegistry.getInstance().bySymbol(newStatusSymbol) },
     });
 
+    const doneDate = getAndCheckRenderedElement(container, 'done');
+    expect(doneDate.value).toMatchInlineSnapshot('""');
+
     submit.click();
     return await waitForClose;
 }
