@@ -211,7 +211,7 @@
         return updatedTask;
     }
 
-    const onStatusChange = () => {
+    const _onStatusChange = () => {
         const selectedStatus = editableTask.status;
 
         // Obtain a temporary task with the new status applied, to see what would
@@ -675,7 +675,7 @@ Availability of access keys:
             <label for="status">Stat<span class="accesskey">u</span>s</label>
             <!-- svelte-ignore a11y-accesskey -->
             <select bind:value={editableTask.status}
-                    on:change={onStatusChange}
+                    on:change={_onStatusChange}
                     id="status-type"
                     class="dropdown"
                     accesskey={accesskey('u')}>
