@@ -211,6 +211,19 @@
         return updatedTask;
     }
 
+    const onStatusChange = () => {
+        const selectedStatus = editableTask.status;
+
+        // Obtain a temporary task with the new status applied, to see what would
+        // happen to the done date:
+        const taskWithEditedStatusApplied = task.handleNewStatus(selectedStatus).pop();
+
+        if (taskWithEditedStatusApplied) {
+            // Update the doneDate field, in case changing the status changed the value:
+            editableTask.doneDate = taskWithEditedStatusApplied.done.formatAsDate();
+        }
+    }
+
     $: accesskey = (key: string) => withAccessKeys ? key : null;
     $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid && isCancelledDateValid && isCreatedDateValid && isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
@@ -662,6 +675,7 @@ Availability of access keys:
             <label for="status">Stat<span class="accesskey">u</span>s</label>
             <!-- svelte-ignore a11y-accesskey -->
             <select bind:value={editableTask.status}
+                    on:change={onStatusChange}
                     id="status-type"
                     class="dropdown"
                     accesskey={accesskey('u')}>
@@ -670,7 +684,7 @@ Availability of access keys:
                 {/each}
             </select>
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="tasks-modal-warning">⚠️ Changing the status does not yet auto-update Done or Cancelled Dates, nor create a new recurrence.
+            <label class="tasks-modal-warning">⚠️ Changing the status does not yet auto-update Cancelled Date, nor create a new recurrence.
                 Complete tasks via command, by clicking on task checkboxes or by right-clicking on task checkboxes.</label>
         </div>
 

@@ -301,15 +301,25 @@ describe('Task editing', () => {
     });
 
     describe('Status editing', () => {
+        const today = '2024-02-29';
+        beforeAll(() => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date(today));
+        });
+
+        afterAll(() => {
+            jest.useRealTimers();
+        });
+
         const line = '- [ ] simple';
         it('should change status to Done', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, 'x');
 
             const doneDate = getAndCheckRenderedElement(container, 'done');
-            expect(doneDate.value).toMatchInlineSnapshot('""');
+            expect(doneDate.value).toEqual(today);
 
             submit.click();
-            expect(await waitForClose).toMatchInlineSnapshot('"- [x] simple"');
+            expect(await waitForClose).toMatchInlineSnapshot('"- [x] simple ✅ 2024-02-29"');
         });
     });
 
