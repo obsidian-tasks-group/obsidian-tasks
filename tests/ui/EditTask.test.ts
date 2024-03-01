@@ -13,6 +13,8 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
+// import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
@@ -127,6 +129,22 @@ async function editFieldAndSave(line: string, elementId: string, newValue: strin
     const submit = getAndCheckApplyButton(result);
 
     return await editInputElementAndSubmit(description, newValue, submit, waitForClose);
+}
+
+async function editStatusAndSave(line: string, newStatusSymbol: string) {
+    const task = taskFromLine({ line: line, path: '' });
+    const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
+    const { result, container } = renderAndCheckModal(task, onSubmit);
+
+    const statusSelector = getAndCheckRenderedElement(container, 'status-type');
+    const submit = getAndCheckApplyButton(result);
+
+    await fireEvent.change(statusSelector, {
+        target: { value: StatusRegistry.getInstance().bySymbol(newStatusSymbol) },
+    });
+
+    submit.click();
+    return await waitForClose;
 }
 
 describe('Task rendering', () => {
@@ -283,6 +301,14 @@ describe('Task editing', () => {
             newDescription,
             `${globalFilter} ${newDescription}`,
         );
+    });
+
+    describe('Status editing', () => {
+        const line = '- [ ] simple';
+        it('should change status to Done', async () => {
+            const newTask = await editStatusAndSave(line, 'x');
+            expect(newTask).toMatchInlineSnapshot('"- [x] simple"');
+        });
     });
 
     describe('Date editing', () => {
