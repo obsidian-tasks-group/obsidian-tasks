@@ -130,7 +130,7 @@ async function editFieldAndSave(line: string, elementId: string, newValue: strin
     return await editInputElementAndSubmit(description, newValue, submit, waitForClose);
 }
 
-async function editStatusAndSave(line: string, newStatusSymbol: string) {
+async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: string) {
     const task = taskFromLine({ line: line, path: '' });
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
@@ -141,6 +141,11 @@ async function editStatusAndSave(line: string, newStatusSymbol: string) {
     await fireEvent.change(statusSelector, {
         target: { value: StatusRegistry.getInstance().bySymbol(newStatusSymbol) },
     });
+    return { waitForClose, container, submit };
+}
+
+async function editStatusAndSave(line: string, newStatusSymbol: string) {
+    const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, newStatusSymbol);
 
     const doneDate = getAndCheckRenderedElement(container, 'done');
     expect(doneDate.value).toMatchInlineSnapshot('""');
