@@ -230,6 +230,7 @@
         if (taskWithEditedStatusApplied) {
             // Update the doneDate field, in case changing the status changed the value:
             editableTask.doneDate = taskWithEditedStatusApplied.done.formatAsDate();
+            editableTask.cancelledDate = taskWithEditedStatusApplied.cancelled.formatAsDate();
         }
     }
 
@@ -693,8 +694,8 @@ Availability of access keys:
                 {/each}
             </select>
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="tasks-modal-warning">⚠️ Changing the status does not yet auto-update Cancelled Date, nor create a new recurrence.
-                Complete tasks via command, by clicking on task checkboxes or by right-clicking on task checkboxes.</label>
+            <label class="tasks-modal-warning">⚠️ Changing the status does not yet create a new recurrence.
+                Complete recurring tasks via command, by clicking on task checkboxes or by right-clicking on task checkboxes.</label>
         </div>
 
         <div class="tasks-modal-section tasks-modal-status">

@@ -343,7 +343,7 @@ describe('Task editing', () => {
             expect(await waitForClose).toMatchInlineSnapshot('"- [ ] simple"');
         });
 
-        it.failing('should change status to Cancelled and add cancelledDate', async () => {
+        it('should change status to Cancelled and add cancelledDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, '-');
 
             const cancelledDate = getAndCheckRenderedElement<HTMLInputElement>(container, 'cancelled');
