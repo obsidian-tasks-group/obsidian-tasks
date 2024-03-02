@@ -361,6 +361,7 @@ describe('Task editing', () => {
         });
 
         it('should create new instance of recurring task, with doneDate set to today', async () => {
+            updateSettings({ recurrenceOnNextLine: false });
             const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] Recurring 🔁 every day 📅 2024-02-17',
                 'x',
@@ -370,6 +371,20 @@ describe('Task editing', () => {
             expect(await waitForClose).toMatchInlineSnapshot(`
                 "- [ ] Recurring 🔁 every day 📅 2024-02-18
                 - [x] Recurring 🔁 every day 📅 2024-02-17 ✅ 2024-02-29"
+            `);
+        });
+
+        it('should respect user setting for order of new recurring tasks', async () => {
+            updateSettings({ recurrenceOnNextLine: true });
+            const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] Recurring 🔁 every day 📅 2024-02-17',
+                'x',
+            );
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot(`
+                "- [x] Recurring 🔁 every day 📅 2024-02-17 ✅ 2024-02-29
+                - [ ] Recurring 🔁 every day 📅 2024-02-18"
             `);
         });
 

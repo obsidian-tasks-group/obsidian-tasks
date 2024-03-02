@@ -486,7 +486,7 @@
         // If there is a 'done' date, use that for today's date for recurrence calculations.
         // Otherwise, use the current date.
         const today = doneDate ? doneDate : window.moment();
-        const newTasks = updatedTask.handleNewStatus(editableTask.status, today);
+        const newTasks = updatedTask.handleNewStatusWithRecurrenceInUsersOrder(editableTask.status, today);
         onSubmit(newTasks);
     };
 </script>

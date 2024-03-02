@@ -480,13 +480,13 @@ export class Task {
         return this.putRecurrenceInUsersOrder(newTasks);
     }
 
-    public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
+    public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status, today = window.moment()): Task[] {
         const logger = logging.getLogger('tasks.Task');
         logger.debug(
             `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to '${newStatus.symbol}'`,
         );
 
-        const newTasks = this.handleNewStatus(newStatus);
+        const newTasks = this.handleNewStatus(newStatus, today);
         return this.putRecurrenceInUsersOrder(newTasks);
     }
 
