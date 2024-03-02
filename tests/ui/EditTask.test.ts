@@ -13,6 +13,7 @@ import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
+import { createTasksFromMarkdown } from '../TestingTools/TestHelpers';
 
 window.moment = moment;
 /**
@@ -385,6 +386,41 @@ describe('Task editing', () => {
             expect(await waitForClose).toMatchInlineSnapshot(`
                 "- [ ] Recurring 🔁 every day when done ➕ 2024-02-29 📅 2024-03-01
                 - [x] Recurring 🔁 every day when done 📅 2024-02-17 ✅ 2024-02-29"
+            `);
+        });
+
+        it.failing('should calculate the next recurrence date based on the actual done date in the field', async () => {
+            updateSettings({ setCreatedDate: true });
+
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] Recurring 🔁 every day when done 📅 2024-02-17',
+                'x',
+            );
+
+            const doneField = getAndCheckRenderedElement<HTMLInputElement>(container, 'done');
+            await editInputElement(doneField, '2024-02-23');
+
+            submit.click();
+            const newTaskLines = await waitForClose;
+
+            const newTasks = createTasksFromMarkdown(newTaskLines, 'test.md', 'heading');
+
+            const editedTask = newTasks.pop();
+            // These expects() are needed to be able to mark the test as 'failing',
+            // as a failure only in toMatchInlineSnapshot() seems to be treated as 'passing'
+            // in a test marked as '.failing'...
+            expect(editedTask!.done.formatAsDate()).toEqual('2024-02-23');
+
+            const nextOccurrence = newTasks.pop();
+            expect(nextOccurrence!.created.formatAsDate()).toEqual('2024-02-29');
+            // Must calculate the next recurrence date based on the actual done date in the field:
+            expect(nextOccurrence!.due.formatAsDate()).toEqual('2024-02-24');
+
+            expect(newTasks.length).toEqual(0);
+
+            expect(newTaskLines).toMatchInlineSnapshot(`
+                "- [ ] Recurring 🔁 every day when done ➕ 2024-02-29 📅 2024-02-24
+                - [x] Recurring 🔁 every day when done 📅 2024-02-17 ✅ 2024-02-23"
             `);
         });
     });
