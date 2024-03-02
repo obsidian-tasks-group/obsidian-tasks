@@ -152,6 +152,11 @@ async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: str
     return { waitForClose, container, submit };
 }
 
+function getElementValue(container: HTMLElement, elementId: string) {
+    const element = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
+    return element.value;
+}
+
 describe('Task rendering', () => {
     afterEach(() => {
         GlobalFilter.getInstance().reset();
@@ -322,9 +327,7 @@ describe('Task editing', () => {
         const line = '- [ ] simple';
         it('should change status to Done and add doneDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, 'x');
-
-            const doneDate = getAndCheckRenderedElement<HTMLInputElement>(container, 'done');
-            expect(doneDate.value).toEqual(today);
+            expect(getElementValue(container, 'done')).toEqual(today);
 
             submit.click();
             expect(await waitForClose).toMatchInlineSnapshot('"- [x] simple ✅ 2024-02-29"');
