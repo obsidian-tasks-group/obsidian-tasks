@@ -128,14 +128,10 @@ Use the Status dropdown to change the Status Symbol for the task.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
-> [!warning]
-> Editing the Status in the modal does not yet add, remove or update the Done date.
->
-> Also, completing a recurring task via the Status in the modal does not yet add the new recurrence.
->
-> We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
->
-> For now, you should still complete tasks via [[Toggling and Editing Statuses#'Tasks Toggle task done' command|command]], by [[Toggling and Editing Statuses#Toggling Tasks with mouse|clicking on task checkboxes]] or by [[Toggling and Editing Statuses#'Change task status' context menu|right-clicking on task checkboxes]].
+Since Tasks X.Y.Z:
+
+- editing the Status in the modal *does* now update the Done and Cancelled dates automatically,
+- and completing a recurring task via the Status in the modal *does* now add the new recurrence.
 
 ## Display values
 
@@ -160,17 +156,6 @@ To close the modal and cancel your edits, do one of:
 - hit the `Esc` key.
 
 ## Known limitations
-
-### Editing status on Edit task modal
-
-> [!warning]
-> Editing the Status in the modal does not yet add, remove or update the Done date.
->
-> Also, completing a recurring task via the Status in the modal does not yet add the new recurrence.
->
-> We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
->
-> For now, you should still complete tasks via [[Toggling and Editing Statuses#'Tasks Toggle task done' command|command]], by [[Toggling and Editing Statuses#Toggling Tasks with mouse|clicking on task checkboxes]] or by [[Toggling and Editing Statuses#'Change task status' context menu|right-clicking on task checkboxes]].
 
 ### Need to scroll on phone screens
 
