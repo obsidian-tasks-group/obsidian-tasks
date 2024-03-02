@@ -453,11 +453,12 @@
             addedBlocking = editableTask.blocking.filter(task => !originalBlocking.includes(task))
         }
 
+        // First create an updated task, with all edits except Status:
         const updatedTask = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             ...task,
             description,
-            status: editableTask.status,
+            status: task.status,
             priority: parsedPriority,
             recurrence,
             startDate,
@@ -480,7 +481,10 @@
             await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
         }
 
-        onSubmit([updatedTask]);
+        // Then apply the new status to the updated task, in case a new reccurrence
+        // needs to be created:
+        const newTasks = updatedTask.handleNewStatus(editableTask.status);
+        onSubmit(newTasks);
     };
 </script>
 
@@ -694,8 +698,8 @@ Availability of access keys:
                 {/each}
             </select>
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="tasks-modal-warning">⚠️ Changing the status does not yet create a new recurrence.
-                Complete recurring tasks via command, by clicking on task checkboxes or by right-clicking on task checkboxes.</label>
+            <label class="tasks-modal-warning">⚠️ Changing the status to Done creates a new recurrence,
+                but does not yet check settings, for which order the new task should be in.</label>
         </div>
 
         <div class="tasks-modal-section tasks-modal-status">

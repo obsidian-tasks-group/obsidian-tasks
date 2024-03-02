@@ -402,6 +402,11 @@ export class Task {
         }
         // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
         const cancelledDate = null;
+
+        // Also set the new done date to zero, to simplify the
+        // saving of edited tasks in the Edit Task modal:
+        const doneDate = null;
+
         const statusRegistry = StatusRegistry.getInstance();
         const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
         return new Task({
@@ -419,6 +424,7 @@ export class Task {
             // add new createdDate on recurring tasks
             createdDate,
             cancelledDate,
+            doneDate,
         });
     }
 
