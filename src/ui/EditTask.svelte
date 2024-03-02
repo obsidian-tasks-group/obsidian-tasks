@@ -702,22 +702,6 @@ Availability of access keys:
             </select>
         </div>
 
-        <div class="tasks-modal-section tasks-modal-status">
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Completed  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <div>
-                <label for="status">Completed:</label>
-                <input
-                    id="status"
-                    type="checkbox"
-                    class="task-list-item-checkbox tasks-modal-checkbox"
-                    checked={editableTask.status.isCompleted()}
-                    disabled
-                />
-            </div>
-        </div>
-
         <div class="tasks-modal-section tasks-modal-dates">
             <!-- --------------------------------------------------------------------------- -->
             <!--  Created Date  -->
