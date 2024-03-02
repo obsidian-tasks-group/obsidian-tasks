@@ -481,9 +481,12 @@
             await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
         }
 
-        // Then apply the new status to the updated task, in case a new reccurrence
-        // needs to be created:
-        const newTasks = updatedTask.handleNewStatus(editableTask.status);
+        // Then apply the new status to the updated task, in case a new recurrence
+        // needs to be created.
+        // If there is a 'done' date, use that for today's date for recurrence calculations.
+        // Otherwise, use the current date.
+        const today = doneDate ? doneDate : window.moment();
+        const newTasks = updatedTask.handleNewStatus(editableTask.status, today);
         onSubmit(newTasks);
     };
 </script>

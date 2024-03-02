@@ -389,7 +389,7 @@ describe('Task editing', () => {
             `);
         });
 
-        it.failing('should calculate the next recurrence date based on the actual done date in the field', async () => {
+        it('should calculate the next recurrence date based on the actual done date in the field', async () => {
             updateSettings({ setCreatedDate: true });
 
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
