@@ -20,6 +20,8 @@
     export let statusOptions: Status[];
     export let allTasks: Task[];
 
+    let statusSymbol = task.status.symbol;
+
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         prioritySymbols,
@@ -212,7 +214,14 @@
     }
 
     const _onStatusChange = () => {
-        const selectedStatus = editableTask.status;
+        // Use statusSymbol to find the status to save to editableTask.status
+        const selectedStatus: Status | undefined = statusOptions.find((s)=> s.symbol === statusSymbol);
+        if (selectedStatus) {
+            editableTask.status = selectedStatus;
+        } else {
+            console.log(`Error in EditTask: cannot find status with symbol ${statusSymbol}`);
+            return;
+        }
 
         // Obtain a temporary task with the new status applied, to see what would
         // happen to the done date:
@@ -674,13 +683,13 @@ Availability of access keys:
         <div class="tasks-modal-section">
             <label for="status">Stat<span class="accesskey">u</span>s</label>
             <!-- svelte-ignore a11y-accesskey -->
-            <select bind:value={editableTask.status}
+            <select bind:value={statusSymbol}
                     on:change={_onStatusChange}
                     id="status-type"
                     class="dropdown"
                     accesskey={accesskey('u')}>
                 {#each statusOptions as status}
-                    <option value={status}>{status.name} [{status.symbol}]</option>
+                    <option value={status.symbol}>{status.name} [{status.symbol}]</option>
                 {/each}
             </select>
             <!-- svelte-ignore a11y-label-has-associated-control -->
