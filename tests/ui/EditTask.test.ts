@@ -13,7 +13,6 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 
 window.moment = moment;
 const statusOptions: Status[] = [Status.DONE, Status.TODO];
@@ -145,7 +144,7 @@ async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: str
     const submit = getAndCheckApplyButton(result);
 
     await fireEvent.change(statusSelector, {
-        target: { value: StatusRegistry.getInstance().bySymbol(newStatusSymbol) },
+        target: { value: newStatusSymbol },
     });
     return { waitForClose, container, submit };
 }
@@ -328,9 +327,7 @@ describe('Task editing', () => {
             expect(await waitForClose).toMatchInlineSnapshot('"- [x] simple ✅ 2024-02-29"');
         });
 
-        it.failing('should change status to Todo', async () => {
-            // TODO This does not successfully change the status in the modal,
-            //      and so the done date is not removed, and the status does not change to TODO
+        it('should change status to Todo', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [x] simple ✅ 2024-02-29',
                 ' ',
