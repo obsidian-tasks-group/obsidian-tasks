@@ -351,6 +351,19 @@ describe('Task editing', () => {
             submit.click();
             expect(await waitForClose).toMatchInlineSnapshot('"- [-] simple ❌ 2024-02-29"');
         });
+
+        it('should create new instance of recurring task, with doneDate set to today', async () => {
+            const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] Recurring 🔁 every day 📅 2024-02-17',
+                'x',
+            );
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot(`
+                "- [ ] Recurring 🔁 every day 📅 2024-02-18
+                - [x] Recurring 🔁 every day 📅 2024-02-17 ✅ 2024-02-29"
+            `);
+        });
     });
 
     describe('Date editing', () => {
