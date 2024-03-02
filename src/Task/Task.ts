@@ -317,6 +317,24 @@ export class Task {
         return newTasks;
     }
 
+    /**
+     * Edits the {@link status} of this task and returns the resulting task(s).
+     *
+     * Use this method if you need to know which is the original (edited)
+     * task and which is the new recurrence, if any.
+     *
+     * If the task is not recurring, it will return `[edited]`,
+     * or `[this]` if the status is unchanged.
+     *
+     * Editing the status can result in more than one returned task in the case of
+     * recurrence. In this case, the edited task will be returned
+     * together with the next occurrence in the order `[next, edited]`.
+     *
+     * There is a possibility to use user set order `[next, edited]`
+     * or `[toggled, next]` - {@link handleNewStatusWithRecurrenceInUsersOrder}.
+     *
+     * @param newStatus
+     */
     public handleNewStatus(newStatus: Status): Task[] {
         if (newStatus.identicalTo(this.status)) {
             // There is no need to create a new Task object if the new status behaviour is identical to the current one.
