@@ -338,9 +338,7 @@ describe('Task editing', () => {
                 '- [x] simple ✅ 2024-02-29',
                 ' ',
             );
-
-            const doneDate = getAndCheckRenderedElement<HTMLInputElement>(container, 'done');
-            expect(doneDate.value).toEqual('');
+            expect(getElementValue(container, 'done')).toEqual('');
 
             submit.click();
             expect(await waitForClose).toMatchInlineSnapshot('"- [ ] simple"');
@@ -348,9 +346,7 @@ describe('Task editing', () => {
 
         it('should change status to Cancelled and add cancelledDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, '-');
-
-            const cancelledDate = getAndCheckRenderedElement<HTMLInputElement>(container, 'cancelled');
-            expect(cancelledDate.value).toEqual(today);
+            expect(getElementValue(container, 'cancelled')).toEqual(today);
 
             submit.click();
             expect(await waitForClose).toMatchInlineSnapshot('"- [-] simple ❌ 2024-02-29"');
