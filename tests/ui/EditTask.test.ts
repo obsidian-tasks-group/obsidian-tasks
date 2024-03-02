@@ -70,13 +70,17 @@ function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonEleme
     return submit;
 }
 
+async function editInputElement(inputElement: HTMLInputElement, newValue: string) {
+    await fireEvent.input(inputElement, { target: { value: newValue } });
+}
+
 async function editInputElementAndSubmit(
     inputElement: HTMLInputElement,
     newValue: string,
     submit: HTMLButtonElement,
     waitForClose: Promise<string>,
 ): Promise<string> {
-    await fireEvent.input(inputElement, { target: { value: newValue } });
+    await editInputElement(inputElement, newValue);
     submit.click();
     return await waitForClose;
 }
