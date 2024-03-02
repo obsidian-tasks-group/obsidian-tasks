@@ -334,18 +334,29 @@ export class Task {
      * or `[toggled, next]` - {@link handleNewStatusWithRecurrenceInUsersOrder}.
      *
      * @param newStatus
+     * @param today - Optional date representing the completion date. This defaults to today.
+     *                It is used for any new done date, and for the calculation of new
+     *                dates on recurring tasks that are marked as 'when done'.
+     *                However, any created date on a new recurrence is, for now, calculated from the
+     *                actual current date, rather than this parameter.
      */
-    public handleNewStatus(newStatus: Status): Task[] {
+    public handleNewStatus(newStatus: Status, today = window.moment()): Task[] {
         if (newStatus.identicalTo(this.status)) {
             // There is no need to create a new Task object if the new status behaviour is identical to the current one.
             return [this];
         }
 
         const { setDoneDate } = getSettings();
-        const newDoneDate = this.newDate(newStatus, StatusType.DONE, this.doneDate, setDoneDate);
+        const newDoneDate = this.newDate(newStatus, StatusType.DONE, this.doneDate, setDoneDate, today);
 
         const { setCancelledDate } = getSettings();
-        const newCancelledDate = this.newDate(newStatus, StatusType.CANCELLED, this.cancelledDate, setCancelledDate);
+        const newCancelledDate = this.newDate(
+            newStatus,
+            StatusType.CANCELLED,
+            this.cancelledDate,
+            setCancelledDate,
+            today,
+        );
 
         let nextOccurrence: {
             startDate: Moment | null;
@@ -354,7 +365,7 @@ export class Task {
         } | null = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted() && this.recurrence !== null) {
-                nextOccurrence = this.recurrence.next();
+                nextOccurrence = this.recurrence.next(today);
             }
         }
 
@@ -389,13 +400,14 @@ export class Task {
         statusType: StatusType,
         oldDate: moment.Moment | null,
         dateEnabledInSettings: boolean,
+        today: moment.Moment,
     ) {
         let newDate = null;
         if (newStatus.type === statusType) {
             if (this.status.type !== statusType) {
                 // Set date only if setting value is true.
                 if (dateEnabledInSettings) {
-                    newDate = window.moment();
+                    newDate = today;
                 }
             } else {
                 // This task was already in statusType, so preserve its existing date.
