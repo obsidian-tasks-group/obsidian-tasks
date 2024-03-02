@@ -700,9 +700,6 @@ Availability of access keys:
                     <option value={status.symbol}>{status.name} [{status.symbol}]</option>
                 {/each}
             </select>
-            <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="tasks-modal-warning">⚠️ Changing the status to Done creates a new recurrence,
-                but does not yet check settings, for which order the new task should be in.</label>
         </div>
 
         <div class="tasks-modal-section tasks-modal-status">
