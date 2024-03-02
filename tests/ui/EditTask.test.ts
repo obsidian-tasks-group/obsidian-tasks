@@ -324,6 +324,10 @@ describe('Task editing', () => {
             jest.useRealTimers();
         });
 
+        afterEach(() => {
+            resetSettings();
+        });
+
         const line = '- [ ] simple';
         it('should change status to Done and add doneDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, 'x');
@@ -362,6 +366,21 @@ describe('Task editing', () => {
             expect(await waitForClose).toMatchInlineSnapshot(`
                 "- [ ] Recurring 🔁 every day 📅 2024-02-18
                 - [x] Recurring 🔁 every day 📅 2024-02-17 ✅ 2024-02-29"
+            `);
+        });
+
+        it('should create new instance of "when done" recurring task, with doneDate set to today', async () => {
+            updateSettings({ setCreatedDate: true });
+
+            const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] Recurring 🔁 every day when done 📅 2024-02-17',
+                'x',
+            );
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot(`
+                "- [ ] Recurring 🔁 every day when done ➕ 2024-02-29 📅 2024-03-01
+                - [x] Recurring 🔁 every day when done 📅 2024-02-17 ✅ 2024-02-29"
             `);
         });
     });
