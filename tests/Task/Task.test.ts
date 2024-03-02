@@ -1243,6 +1243,11 @@ describe('handle new status', () => {
     beforeEach(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date('2023-06-26'));
+        resetSettings();
+    });
+
+    afterEach(() => {
+        resetSettings();
     });
 
     // Note: We only need to test transitions which are not covered by the standard 'toggle done' tests above.
@@ -1303,6 +1308,26 @@ describe('handle new status', () => {
         expect(newTasks.length).toEqual(1);
         // But check that the new symbol has been applied:
         expect(newTasks[0].status.symbol).toEqual('X');
+    });
+
+    it('should allow "today" to be overridden, and to determine created, done and next due dates', () => {
+        // Arrange
+        const originalTask = fromLine({
+            line: '- [ ] Annual task 🔁 every year when done 📅 1989-12-23',
+        });
+        const newStatus = StatusRegistry.getInstance().bySymbol('x');
+        updateSettings({ setCreatedDate: true });
+
+        // Act
+        const completionDate = moment('2023-01-23');
+        const newTasks = originalTask.handleNewStatus(newStatus, completionDate);
+
+        // Assert
+        // 'Created' date of new task is based on today, ignoring the manually set completion date.
+        expect(toMarkdown(newTasks)).toMatchInlineSnapshot(`
+            "- [ ] Annual task 🔁 every year when done ➕ 2023-06-26 📅 2024-01-23
+            - [x] Annual task 🔁 every year when done 📅 1989-12-23 ✅ 2023-01-23"
+        `);
     });
 
     describe('cancelled dates and new status', () => {
