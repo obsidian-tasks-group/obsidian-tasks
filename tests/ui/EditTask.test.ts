@@ -327,6 +327,21 @@ describe('Task editing', () => {
             submit.click();
             expect(await waitForClose).toMatchInlineSnapshot('"- [x] simple ✅ 2024-02-29"');
         });
+
+        it.failing('should change status to Todo', async () => {
+            // TODO This does not successfully change the status in the modal,
+            //      and so the done date is not removed, and the status does not change to TODO
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
+                '- [x] simple ✅ 2024-02-29',
+                ' ',
+            );
+
+            const doneDate = getAndCheckRenderedElement<HTMLInputElement>(container, 'done');
+            expect(doneDate.value).toEqual('');
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot('"- [ ] simple"');
+        });
     });
 
     describe('Date editing', () => {
