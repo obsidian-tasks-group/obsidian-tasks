@@ -7,16 +7,14 @@ import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import type { Task } from '../../src/Task/Task';
 import EditTask from '../../src/ui/EditTask.svelte';
-import { Status } from '../../src/Statuses/Status';
 import { DateFallback } from '../../src/Task/DateFallback';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 
 window.moment = moment;
-const statusOptions: Status[] = [Status.DONE, Status.TODO];
-
 /**
  * Construct an onSubmit function for editing the given task, and when Apply is clicked,
  * returning the edit task(s) converted to a string.
@@ -39,7 +37,12 @@ function constructSerialisingOnSubmit(task: Task) {
 }
 
 function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void, allTasks = [task]) {
-    const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit, allTasks });
+    const result: RenderResult<EditTask> = render(EditTask, {
+        task,
+        statusOptions: StatusRegistry.getInstance().registeredStatuses,
+        onSubmit,
+        allTasks,
+    });
     const { container } = result;
     expect(() => container).toBeTruthy();
     return { result, container };
