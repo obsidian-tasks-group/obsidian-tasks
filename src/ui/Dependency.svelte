@@ -107,7 +107,7 @@
     }
 
     function descriptionTooltipText(task: Task) {
-        return descriptionAdjustedForDependencySearch(task) + '\n' + task.path;
+        return descriptionAdjustedForDependencySearch(task);
     }
 
     function showDescriptionTooltip(element: HTMLElement, text: string) {
