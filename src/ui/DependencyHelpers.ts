@@ -1,4 +1,4 @@
-import { type FuzzyMatch, prepareFuzzySearch } from 'obsidian';
+import { type FuzzyMatch, prepareSimpleSearch } from 'obsidian';
 import type { Task } from '../Task/Task';
 import { GlobalFilter } from '../Config/GlobalFilter';
 
@@ -15,12 +15,12 @@ export function descriptionAdjustedForDependencySearch(task: Task) {
     return GlobalFilter.getInstance().removeAsWordFrom(task.description);
 }
 
-function fuzzySearchDescriptionWithoutTags(query: string, allTasks: Task[]): Task[] {
+function searchDescriptionWithoutTags(query: string, allTasks: Task[]): Task[] {
     if (query === '') {
         return allTasks;
     }
 
-    const preparedSearch = prepareFuzzySearch(query);
+    const preparedSearch = prepareSimpleSearch(query);
 
     // The cutoff was chosen empirically, to filter out very poor matches:
     const minimumScoreCutoff = -4.0;
@@ -58,7 +58,7 @@ export function searchForCandidateTasksForDependency(
     blockedBy: Task[],
     blocking: Task[],
 ) {
-    let results = fuzzySearchDescriptionWithoutTags(search, allTasks);
+    let results = searchDescriptionWithoutTags(search, allTasks);
 
     results = results.filter((item) => {
         // Do not offer to depend on DONE, CANCELLED or NON_TASK tasks:
