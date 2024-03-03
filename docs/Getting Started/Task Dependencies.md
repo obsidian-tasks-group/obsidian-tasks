@@ -105,6 +105,10 @@ The following are valid `dependsOn` values:
 
 ## Editing dependencies
 
+Below is a worked example, walking through adding one dependency.
+
+For a more detailed explanation of how to add and edit dependencies between tasks, see [[Create or edit Task#Dependencies]].
+
 ### Worked example
 
 To illustrate the concept of task dependencies, let's consider a scenario where we are outlining the tasks required to develop an application. Two tasks are identified:
@@ -221,11 +225,52 @@ is not blocked
 ```
 ````
 
-### Using Dependencies in Tasks Searches
+## Using Dependencies in Tasks Searches
 
-- [[Filters#Filters for Task Dependencies]]
-- [[Sorting#Sort by Task Dependencies]]
-- [[Grouping#Group by Task Dependencies]]
+### Filters
+
+The built-in filters relating to task dependencies are:
+
+```text
+is blocking
+is not blocking
+is blocked
+is not blocked
+
+has id
+no id
+id (includes|does not include) <string>
+id (regex matches|regex does not match) /<JavaScript-style Regex>/
+
+has depends on
+no depends on
+```
+
+See details in [[Filters#Filters for Task Dependencies|Filters for Task Dependencies]].
+
+### Sorting
+
+The only built-in sort instruction relating to task dependencies is:
+
+```text
+sort by id
+```
+
+See [[Sorting#Sort by Task Dependencies|Sort by Task Dependencies]].
+
+### Grouping
+
+The only built-in group instruction relating to task dependencies is:
+
+```text
+group by id
+```
+
+See [[Grouping#Group by Task Dependencies|Group by Task Dependencies]].
+
+### Task Properties
+
+See [[Task Properties#Values for Task Dependencies|Task property values for Task Dependencies]].
 
 ## Known Limitations
 
