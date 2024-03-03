@@ -128,10 +128,33 @@ Use the Status dropdown to change the Status Symbol for the task.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
-Since Tasks X.Y.Z:
+#### Automatic setting of dates upon status change
 
-- editing the Status in the modal *does* now update the Done and Cancelled dates automatically,
-- and completing a recurring task via the Status in the modal *does* now add the new recurrence.
+When you change the Status Symbol for a Task, the [[Dates#Date-tracking settings|Date-tracking settings]] are used to determine whether to update any date fields:
+
+- **If** the status is changed **to** a [[Status Types#DONE|DONE status type]] **from** any other status type,
+  - **and** the "Set done date on every completed task" option is enabled,
+  - **then** the **Done date** is changed to today's date.
+- **If** the status is changed **to** a [[Status Types#CANCELLED|CANCELLED status type]] **from** any other status type,
+  - **and** the "Set cancelled date on every completed task" option is enabled,
+  - **then** the **Cancelled date** is changed to today's date.
+
+#### Overriding dates on status change
+
+When Tasks has automatically set a Created, Done or Cancelled date to today, you are free to edit the value.
+
+For example, perhaps you actually completed a task yesterday and forget to mark it as complete. Now you can complete it in the modal, and set the Done date to yesterday, before clicking Apply.
+
+#### Rewriting history: completing recurring tasks in the modal
+
+> [!Tip]
+> When marking `when done` recurring tasks as Done in the Edit Task modal, the date of the *next* occurrence is now calculated from the value in the Done date field.
+
+The Done date value defaults to the current date, but can then be edited before clicking Apply.
+
+This might be useful if you realise that you had forgotten to mark a recurring task as Done on the actual day that you completed it, and so you would like the new instance to be created based on the day you really completed the task, rather than today when you are marking it as done.
+
+(Today's date is still used for an Created day on a new recurrence, though.)
 
 ## Display values
 
