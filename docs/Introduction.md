@@ -15,6 +15,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
 
 - X.Y.Z:
   - `query.allTasks` is now available in custom searches: see [[Query Properties#Values for Query Search Properties|query search properties]].
+  - The [[Create or edit Task]] modal now fully supports editing of statuses, updating done and cancelled dates, and creating new recurrences. See the [[Create or edit Task#Status|section on editing statuses]] for details and tips.
   - Add HTML samples in [[Styling#Sample HTML Full mode|full]] and [[Styling#Sample HTML Short mode|short]] modes to demonstrate custom styling.
 - 6.0.0:
   - Add [[Custom Sorting|custom sorting]].

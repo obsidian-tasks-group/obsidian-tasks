@@ -20,6 +20,8 @@
     export let statusOptions: Status[];
     export let allTasks: Task[];
 
+    let statusSymbol = task.status.symbol;
+
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         prioritySymbols,
@@ -209,6 +211,27 @@
         await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
 
         return updatedTask;
+    }
+
+    const _onStatusChange = () => {
+        // Use statusSymbol to find the status to save to editableTask.status
+        const selectedStatus: Status | undefined = statusOptions.find((s)=> s.symbol === statusSymbol);
+        if (selectedStatus) {
+            editableTask.status = selectedStatus;
+        } else {
+            console.log(`Error in EditTask: cannot find status with symbol ${statusSymbol}`);
+            return;
+        }
+
+        // Obtain a temporary task with the new status applied, to see what would
+        // happen to the done date:
+        const taskWithEditedStatusApplied = task.handleNewStatus(selectedStatus).pop();
+
+        if (taskWithEditedStatusApplied) {
+            // Update the doneDate field, in case changing the status changed the value:
+            editableTask.doneDate = taskWithEditedStatusApplied.done.formatAsDate();
+            editableTask.cancelledDate = taskWithEditedStatusApplied.cancelled.formatAsDate();
+        }
     }
 
     $: accesskey = (key: string) => withAccessKeys ? key : null;
@@ -430,11 +453,12 @@
             addedBlocking = editableTask.blocking.filter(task => !originalBlocking.includes(task))
         }
 
+        // First create an updated task, with all edits except Status:
         const updatedTask = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             ...task,
             description,
-            status: editableTask.status,
+            status: task.status,
             priority: parsedPriority,
             recurrence,
             startDate,
@@ -457,7 +481,13 @@
             await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
         }
 
-        onSubmit([updatedTask]);
+        // Then apply the new status to the updated task, in case a new recurrence
+        // needs to be created.
+        // If there is a 'done' date, use that for today's date for recurrence calculations.
+        // Otherwise, use the current date.
+        const today = doneDate ? doneDate : window.moment();
+        const newTasks = updatedTask.handleNewStatusWithRecurrenceInUsersOrder(editableTask.status, today);
+        onSubmit(newTasks);
     };
 </script>
 
@@ -661,33 +691,15 @@ Availability of access keys:
         <div class="tasks-modal-section">
             <label for="status">Stat<span class="accesskey">u</span>s</label>
             <!-- svelte-ignore a11y-accesskey -->
-            <select bind:value={editableTask.status}
+            <select bind:value={statusSymbol}
+                    on:change={_onStatusChange}
                     id="status-type"
                     class="dropdown"
                     accesskey={accesskey('u')}>
                 {#each statusOptions as status}
-                    <option value={status}>{status.name} [{status.symbol}]</option>
+                    <option value={status.symbol}>{status.name} [{status.symbol}]</option>
                 {/each}
             </select>
-            <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="tasks-modal-warning">⚠️ Changing the status does not yet auto-update Done or Cancelled Dates, nor create a new recurrence.
-                Complete tasks via command, by clicking on task checkboxes or by right-clicking on task checkboxes.</label>
-        </div>
-
-        <div class="tasks-modal-section tasks-modal-status">
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Completed  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <div>
-                <label for="status">Completed:</label>
-                <input
-                    id="status"
-                    type="checkbox"
-                    class="task-list-item-checkbox tasks-modal-checkbox"
-                    checked={editableTask.status.isCompleted()}
-                    disabled
-                />
-            </div>
         </div>
 
         <div class="tasks-modal-section tasks-modal-dates">

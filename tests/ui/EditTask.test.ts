@@ -7,16 +7,14 @@ import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import type { Task } from '../../src/Task/Task';
 import EditTask from '../../src/ui/EditTask.svelte';
-import { Status } from '../../src/Statuses/Status';
 import { DateFallback } from '../../src/Task/DateFallback';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 
 window.moment = moment;
-const statusOptions: Status[] = [Status.DONE, Status.TODO];
-
 /**
  * Construct an onSubmit function for editing the given task, and when Apply is clicked,
  * returning the edit task(s) converted to a string.
@@ -39,20 +37,31 @@ function constructSerialisingOnSubmit(task: Task) {
 }
 
 function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void, allTasks = [task]) {
-    const result: RenderResult<EditTask> = render(EditTask, { task, statusOptions, onSubmit, allTasks });
+    const result: RenderResult<EditTask> = render(EditTask, {
+        task,
+        statusOptions: StatusRegistry.getInstance().registeredStatuses,
+        onSubmit,
+        allTasks,
+    });
     const { container } = result;
     expect(() => container).toBeTruthy();
     return { result, container };
 }
 
-function getAndCheckRenderedElement(container: HTMLElement, elementId: string) {
-    const renderedDescription = container.ownerDocument.getElementById(elementId) as HTMLInputElement;
-    expect(() => renderedDescription).toBeTruthy();
-    return renderedDescription;
+/**
+ * Find the element with the given id.
+ * Template type T might be, for example, HTMLInputElement or HTMLSelectElement
+ * @param container
+ * @param elementId
+ */
+function getAndCheckRenderedElement<T>(container: HTMLElement, elementId: string) {
+    const element = container.ownerDocument.getElementById(elementId) as T;
+    expect(() => element).toBeTruthy();
+    return element;
 }
 
 function getAndCheckRenderedDescriptionElement(container: HTMLElement): HTMLInputElement {
-    return getAndCheckRenderedElement(container, 'description');
+    return getAndCheckRenderedElement<HTMLInputElement>(container, 'description');
 }
 
 function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonElement {
@@ -61,13 +70,17 @@ function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonEleme
     return submit;
 }
 
+async function editInputElement(inputElement: HTMLInputElement, newValue: string) {
+    await fireEvent.input(inputElement, { target: { value: newValue } });
+}
+
 async function editInputElementAndSubmit(
     inputElement: HTMLInputElement,
     newValue: string,
     submit: HTMLButtonElement,
     waitForClose: Promise<string>,
 ): Promise<string> {
-    await fireEvent.input(inputElement, { target: { value: newValue } });
+    await editInputElement(inputElement, newValue);
     submit.click();
     return await waitForClose;
 }
@@ -123,10 +136,29 @@ async function editFieldAndSave(line: string, elementId: string, newValue: strin
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
 
-    const description = getAndCheckRenderedElement(container, elementId);
+    const description = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
     const submit = getAndCheckApplyButton(result);
 
     return await editInputElementAndSubmit(description, newValue, submit, waitForClose);
+}
+
+async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: string) {
+    const task = taskFromLine({ line: line, path: '' });
+    const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
+    const { result, container } = renderAndCheckModal(task, onSubmit);
+
+    const statusSelector = getAndCheckRenderedElement<HTMLSelectElement>(container, 'status-type');
+    const submit = getAndCheckApplyButton(result);
+
+    await fireEvent.change(statusSelector, {
+        target: { value: newStatusSymbol },
+    });
+    return { waitForClose, container, submit };
+}
+
+function getElementValue(container: HTMLElement, elementId: string) {
+    const element = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
+    return element.value;
 }
 
 describe('Task rendering', () => {
@@ -140,7 +172,7 @@ describe('Task rendering', () => {
         const onSubmit = (_: Task[]): void => {};
         const { container } = renderAndCheckModal(task, onSubmit);
 
-        const inputElement = getAndCheckRenderedElement(container, elementId);
+        const inputElement = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
         expect(inputElement!.value).toEqual(expectedElementValue);
     }
 
@@ -283,6 +315,111 @@ describe('Task editing', () => {
             newDescription,
             `${globalFilter} ${newDescription}`,
         );
+    });
+
+    describe('Status editing', () => {
+        const today = '2024-02-29';
+        beforeAll(() => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date(today));
+        });
+
+        afterAll(() => {
+            jest.useRealTimers();
+        });
+
+        afterEach(() => {
+            resetSettings();
+        });
+
+        const line = '- [ ] simple';
+        it('should change status to Done and add doneDate', async () => {
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, 'x');
+            expect(getElementValue(container, 'done')).toEqual(today);
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot('"- [x] simple ✅ 2024-02-29"');
+        });
+
+        it('should change status to Todo and remove doneDate', async () => {
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
+                '- [x] simple ✅ 2024-02-29',
+                ' ',
+            );
+            expect(getElementValue(container, 'done')).toEqual('');
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot('"- [ ] simple"');
+        });
+
+        it('should change status to Cancelled and add cancelledDate', async () => {
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, '-');
+            expect(getElementValue(container, 'cancelled')).toEqual(today);
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot('"- [-] simple ❌ 2024-02-29"');
+        });
+
+        it('should create new instance of recurring task, with doneDate set to today', async () => {
+            updateSettings({ recurrenceOnNextLine: false });
+            const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] Recurring 🔁 every day 📅 2024-02-17',
+                'x',
+            );
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot(`
+                "- [ ] Recurring 🔁 every day 📅 2024-02-18
+                - [x] Recurring 🔁 every day 📅 2024-02-17 ✅ 2024-02-29"
+            `);
+        });
+
+        it('should respect user setting for order of new recurring tasks', async () => {
+            updateSettings({ recurrenceOnNextLine: true });
+            const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] Recurring 🔁 every day 📅 2024-02-17',
+                'x',
+            );
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot(`
+                "- [x] Recurring 🔁 every day 📅 2024-02-17 ✅ 2024-02-29
+                - [ ] Recurring 🔁 every day 📅 2024-02-18"
+            `);
+        });
+
+        it('should create new instance of "when done" recurring task, with doneDate set to today', async () => {
+            updateSettings({ setCreatedDate: true });
+
+            const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] Recurring 🔁 every day when done 📅 2024-02-17',
+                'x',
+            );
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot(`
+                "- [ ] Recurring 🔁 every day when done ➕ 2024-02-29 📅 2024-03-01
+                - [x] Recurring 🔁 every day when done 📅 2024-02-17 ✅ 2024-02-29"
+            `);
+        });
+
+        it('should calculate the next recurrence date based on the actual done date in the field', async () => {
+            updateSettings({ setCreatedDate: true });
+
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] Recurring 🔁 every day when done 📅 2024-02-17',
+                'x',
+            );
+
+            const doneField = getAndCheckRenderedElement<HTMLInputElement>(container, 'done');
+            await editInputElement(doneField, '2024-02-23');
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot(`
+                "- [ ] Recurring 🔁 every day when done ➕ 2024-02-29 📅 2024-02-24
+                - [x] Recurring 🔁 every day when done 📅 2024-02-17 ✅ 2024-02-23"
+            `);
+        });
     });
 
     describe('Date editing', () => {
