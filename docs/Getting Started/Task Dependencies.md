@@ -119,7 +119,7 @@ In this scenario, testing with users can only occur after the initial draft is c
 1. Open the 'Build a first draft' task in the Edit Task Modal and specify 'Test with users' in **Before this**.
 2. Alternatively, open the 'Test with users' task in the Edit Task Modal and add 'Build a first draft' in **After this**.
 
-   ![Add Alt Text here - this description will be read aloud by screen-reading software](../images/task-dependencies-blocked-by-example.png)
+   ![Making the 'Test with users' task depend on the 'Build a first draft'](../images/task-dependencies-blocked-by-example.png)
 <span class="caption">Making the 'Test with users' task depend on the 'Build a first draft'.</span>
 
 By implementing either of these methods, the task list is updated to reflect the dependency relationship:
