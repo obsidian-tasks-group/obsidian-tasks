@@ -4,10 +4,10 @@ publish: true
 
 # Task Dependencies
 
-> [!released]
-> Introduced in Tasks X.Y.Z.
-
 ## Introduction
+
+> [!released]
+> Task Dependencies were introduced in Tasks X.Y.Z.
 
 At a high level, task dependencies define the order in which you want to work on a set of tasks.
 This can be useful for mapping out projects, where one part needs to be completed before the other.
@@ -16,16 +16,19 @@ By specifying these dependencies, Obsidian Tasks can streamline your workflow by
 > [!NOTE]
 > Obsidian tasks exclusively allows for 'Finish to start (FS)' dependencies, meaning Task A needs to be finished before you start on Task B. You can learn more about this concept [on Wikipedia](https://en.wikipedia.org/wiki/Dependency_(project_management)).
 
+> [!Tip]
+> This page explains the dependencies facility and how to use it.
+>
+> For an explanation of how to add and edit dependencies between tasks, see [[Create or edit Task#Dependencies]].
+
 ## Sample dependency
 
 Here is an example dependency, to tell Tasks that ==the second task cannot be started until the first task is completed==:
 
-%%
-### Tasks Emoji Format
-%%
+### Tasks Emoji format sample
 
 - The first task has an **`id`** field with the value `abcdef`.
-- The second task has a **`dependsOn`** the same value `abcdef`, which is a reference or pointer to the first task.
+- The second task has a **`dependsOn`** which is the same value `abcdef`, and is a reference or pointer to the first task.
 
 ```mermaid
 flowchart BT
@@ -34,13 +37,14 @@ classDef TASK        stroke-width:3px,font-family:monospace;
 
 2["- [ ] do this first 🆔 abcdef"]:::TASK
 1["- [ ] do this after first ⛔️ abcdef"]:::TASK
-1-- depends --> 2
+1-- depends on --> 2
 
 linkStyle default stroke:gray
 ```
 
-%%
-### Dataview Format
+### Dataview format sample
+
+In Dataview format, the above would be written as:
 
 ```mermaid
 flowchart BT
@@ -53,10 +57,6 @@ classDef TASK        stroke-width:3px,font-family:monospace;
 
 linkStyle default stroke:gray
 ```
-
-%%
-
-See [[Dataview Format#Dataview Format for Dependencies|Dataview Format for Dependencies]] for the dataview equivalent.
 
 ## Defining dependencies
 
@@ -148,25 +148,84 @@ Until this task is marked as complete, at which time Obsidian Tasks sees that 'T
 - [ ] Test with users ⛔️ 4ijuhyz
 ```
 
-## Visualising dependencies
-
 ## Search concepts
 
-### Blocked
+`id` and `dependsOn` indicate dependency ordering relationships between tasks, that is, an order in which tasks should be done.
 
-### Blocking
+When using those dependencies in searches, we define two more relationships: `blocking` and `blocked`.
+
+### Blocking tasks
+
+> [!Summary]
+> Tasks are `blocking` when:
+>
+> 1. they are not yet done
+> 2. and there is at least one other task **directly depending on them**, that is also not yet done.
+>
+> You might wish to work on blocking tasks first, in order to un-block later tasks.
+
+A task is `blocking` is:
+
+- It is `TODO` or `IN_PROGRESS`.
+- And any of the tasks that **directly depend on it** are also `TODO` or `IN_PROGRESS`.
+
+Note that:
+
+- Only direct dependencies are considered.
+- Tasks with status type `DONE`, `CANCELLED` or `NON_TASK` are never treated as `blocking`.
+
+Search for `blocking` tasks with:
+
+````text
+```tasks
+is blocking
+```
+````
+
+### Blocked tasks
+
+> [!Summary]
+> Tasks are `blocked` when:
+>
+> 1. they are not yet done
+> 2. and there is at least one other task **they directly depend on**, that is also not yet done.
+>
+> They cannot yet be worked on.
+
+A task is `blocked` if:
+
+- It is `TODO` or `IN_PROGRESS`.
+- And any of the tasks **it directly depends on** are also `TODO` or `IN_PROGRESS`.
+
+Note that:
+
+- Only direct dependencies are considered.
+- Tasks with status type `DONE`, `CANCELLED` or `NON_TASK` are never treated as `blocked`.
+
+Search for `blocked` tasks with:
+
+````text
+```tasks
+is blocked
+```
+````
+
+### Non-blocked tasks
+
+To find tasks which are **not** `blocked` and *can* be acted on, use:
+
+````text
+```tasks
+not done
+is not blocked
+```
+````
 
 ### Using Dependencies in Tasks Searches
 
 - [[Filters#Filters for Task Dependencies]]
 - [[Sorting#Sort by Task Dependencies]]
 - [[Grouping#Group by Task Dependencies]]
-
-`is not blocked`
-
-`is blocking`
-
-![[Pasted image 20231011181837.png]]
 
 ## Known Limitations
 
