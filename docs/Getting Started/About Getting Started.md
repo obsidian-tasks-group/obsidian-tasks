@@ -36,6 +36,12 @@ publish: true
 - [[Tags]]
   - Why and how to use tags to manage your tasks.
 
+## More specialised facilities
+
+- [[Task Dependencies]]
+  - Define the order in which you want to work on a set of tasks.
+  - Then adjust your searches, perhaps to see tasks that are [[Filters#Blocking Tasks|blocking others]], or hide ones that are [[Filters#Blocked Tasks|blocked]] and cannot yet be done.
+
 ## Easy editing of tasks
 
 See [[About Editing]].
