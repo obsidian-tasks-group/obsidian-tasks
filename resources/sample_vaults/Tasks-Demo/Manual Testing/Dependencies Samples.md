@@ -19,7 +19,8 @@
 
 - [ ] #task Invite the guests 🆔 iv0euw
 - [ ] #task Make the food 🆔 rukpy8
-- [ ] #task Have a party ⛔️ iv0euw,rukpy8
+- [ ] #task Have a party 🆔 i38dxn ⛔️ iv0euw,rukpy8
+- [ ] #task Tidy up after party ⛔️ i38dxn
 
 ## No dependencies
 
