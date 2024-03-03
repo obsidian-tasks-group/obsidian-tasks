@@ -122,13 +122,15 @@ export class Recurrence {
 
     /**
      * Returns the dates of the next occurrence or null if there is no next occurrence.
+     *
+     * @param today - Optional date representing the completion date. Defaults to today.
      */
-    public next(): {
+    public next(today = window.moment()): {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     } | null {
-        const next = this.nextReferenceDate();
+        const next = this.nextReferenceDate(today);
 
         if (next !== null) {
             // Keep the relative difference between the reference date and
@@ -195,11 +197,10 @@ export class Recurrence {
         return this.toText() === other.toText(); // this also checks baseOnToday
     }
 
-    private nextReferenceDate(): Date {
+    private nextReferenceDate(today: Moment): Date {
         if (this.baseOnToday) {
             // The next occurrence should happen based off the current date.
             // begin-snippet: use-moment-in-src
-            const today = window.moment();
             // end-snippet
             return this.nextReferenceDateFromToday(today).toDate();
         } else {

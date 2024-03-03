@@ -317,17 +317,46 @@ export class Task {
         return newTasks;
     }
 
-    public handleNewStatus(newStatus: Status): Task[] {
+    /**
+     * Edits the {@link status} of this task and returns the resulting task(s).
+     *
+     * Use this method if you need to know which is the original (edited)
+     * task and which is the new recurrence, if any.
+     *
+     * If the task is not recurring, it will return `[edited]`,
+     * or `[this]` if the status is unchanged.
+     *
+     * Editing the status can result in more than one returned task in the case of
+     * recurrence. In this case, the edited task will be returned
+     * together with the next occurrence in the order `[next, edited]`.
+     *
+     * There is a possibility to use user set order `[next, edited]`
+     * or `[toggled, next]` - {@link handleNewStatusWithRecurrenceInUsersOrder}.
+     *
+     * @param newStatus
+     * @param today - Optional date representing the completion date. This defaults to today.
+     *                It is used for any new done date, and for the calculation of new
+     *                dates on recurring tasks that are marked as 'when done'.
+     *                However, any created date on a new recurrence is, for now, calculated from the
+     *                actual current date, rather than this parameter.
+     */
+    public handleNewStatus(newStatus: Status, today = window.moment()): Task[] {
         if (newStatus.identicalTo(this.status)) {
             // There is no need to create a new Task object if the new status behaviour is identical to the current one.
             return [this];
         }
 
         const { setDoneDate } = getSettings();
-        const newDoneDate = this.newDate(newStatus, StatusType.DONE, this.doneDate, setDoneDate);
+        const newDoneDate = this.newDate(newStatus, StatusType.DONE, this.doneDate, setDoneDate, today);
 
         const { setCancelledDate } = getSettings();
-        const newCancelledDate = this.newDate(newStatus, StatusType.CANCELLED, this.cancelledDate, setCancelledDate);
+        const newCancelledDate = this.newDate(
+            newStatus,
+            StatusType.CANCELLED,
+            this.cancelledDate,
+            setCancelledDate,
+            today,
+        );
 
         let nextOccurrence: {
             startDate: Moment | null;
@@ -336,7 +365,7 @@ export class Task {
         } | null = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted() && this.recurrence !== null) {
-                nextOccurrence = this.recurrence.next();
+                nextOccurrence = this.recurrence.next(today);
             }
         }
 
@@ -371,13 +400,14 @@ export class Task {
         statusType: StatusType,
         oldDate: moment.Moment | null,
         dateEnabledInSettings: boolean,
+        today: moment.Moment,
     ) {
         let newDate = null;
         if (newStatus.type === statusType) {
             if (this.status.type !== statusType) {
                 // Set date only if setting value is true.
                 if (dateEnabledInSettings) {
-                    newDate = window.moment();
+                    newDate = today;
                 }
             } else {
                 // This task was already in statusType, so preserve its existing date.
@@ -402,6 +432,11 @@ export class Task {
         }
         // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
         const cancelledDate = null;
+
+        // Also set the new done date to zero, to simplify the
+        // saving of edited tasks in the Edit Task modal:
+        const doneDate = null;
+
         const statusRegistry = StatusRegistry.getInstance();
         const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
         return new Task({
@@ -419,6 +454,7 @@ export class Task {
             // add new createdDate on recurring tasks
             createdDate,
             cancelledDate,
+            doneDate,
         });
     }
 
@@ -444,13 +480,13 @@ export class Task {
         return this.putRecurrenceInUsersOrder(newTasks);
     }
 
-    public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status): Task[] {
+    public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status, today = window.moment()): Task[] {
         const logger = logging.getLogger('tasks.Task');
         logger.debug(
             `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to '${newStatus.symbol}'`,
         );
 
-        const newTasks = this.handleNewStatus(newStatus);
+        const newTasks = this.handleNewStatus(newStatus, today);
         return this.putRecurrenceInUsersOrder(newTasks);
     }
 

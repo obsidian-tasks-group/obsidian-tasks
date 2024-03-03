@@ -82,12 +82,3 @@ Obsidian allows you to assign a [hotkey](https://help.obsidian.md/Customization/
 ## Edit task modal
 
 The [[Create or edit Task]] modal also allows editing of task statuses.
-
-> [!warning]
-> Unlike the other options listed in this page, editing the Status in the modal does not yet add, remove or update the Done date.
->
-> Also, completing a recurring task via the Status in the modal does not yet add the new recurrence.
->
-> We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
->
-> For now, you should still complete tasks via command or by clicking or [[Toggling and Editing Statuses#'Change task status' context menu|right-clicking]] on task checkboxes.
