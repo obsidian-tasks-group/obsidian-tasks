@@ -41,7 +41,7 @@ Obsidian provides access to the `moment()` function as `window.moment()`, and th
 
 <!-- snippet: use-moment-in-src -->
 ```ts
-const today = window.moment();
+
 ```
 <!-- endSnippet -->
 
