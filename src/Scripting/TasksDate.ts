@@ -58,7 +58,9 @@ export class TasksDate {
     }
 
     public get category(): PropertyCategory {
+        // begin-snippet: use-moment-in-src
         const today = window.moment();
+        // end-snippet
         const date = this.moment;
         if (!date) {
             return new PropertyCategory('Undated', 4);
