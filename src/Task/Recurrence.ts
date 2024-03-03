@@ -200,8 +200,6 @@ export class Recurrence {
     private nextReferenceDate(today: Moment): Date {
         if (this.baseOnToday) {
             // The next occurrence should happen based off the current date.
-            // begin-snippet: use-moment-in-src
-            // end-snippet
             return this.nextReferenceDateFromToday(today).toDate();
         } else {
             return this.nextReferenceDateFromOriginalReferenceDate().toDate();
