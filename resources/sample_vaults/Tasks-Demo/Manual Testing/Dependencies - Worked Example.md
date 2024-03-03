@@ -9,7 +9,17 @@ This file can be used to work through the 'Worked example' in the [the Task Depe
 
 ## Searches
 
-### Things to do first
+### Things to do first as they are block
+
+```tasks
+is blocking
+
+path includes {{query.file.path}}
+hide backlink
+hide task count
+```
+
+### Search for any tasks to do, that are not blocked
 
 ```tasks
 not done
@@ -23,7 +33,6 @@ hide task count
 ### Things that cannot be done yet
 
 ```tasks
-not done
 is blocked
 
 path includes {{query.file.path}}
