@@ -124,6 +124,12 @@ Supported abbreviations:
 
 Use this section to specify relationships between tasks, to define the order in which you want to work on a set of tasks.
 
+> [!Example]
+> This is what the dependencies might look like for a task 'Have a party':
+>
+> ![A task which requires two tasks to be done first, and, when done, will allow one other task to be started on.](task-dependencies-party.png)
+> <span class="caption">A task which requires two tasks to be done first, and, when done, will allow one other task to be started on.</span>
+
 For details, see [[Task Dependencies]].
 
 ### Status
