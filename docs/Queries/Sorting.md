@@ -160,6 +160,11 @@ sort by function task.status.nextSymbol
 
 ## Sort by Task Dependencies
 
+At a high level, task dependencies define the order in which you want to work on a set of tasks. You can read more about them in [[Task Dependencies]].
+
+> [!released]
+> Task Dependencies were introduced in Tasks X.Y.Z.
+
 ### Id
 
 - `sort by id`

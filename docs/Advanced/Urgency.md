@@ -244,6 +244,8 @@ sort by urgency
 
 ### Urgency score is not aware of task dependencies
 
-Blocking tasks should have higher urgency. And blocked tasks should have lower urgency.
+When using [[Task Dependencies]], blocking tasks should have higher urgency. And blocked tasks should have lower urgency.
+
+This is not yet implemented.
 
 We are tracking this in [issue #2655](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2655).

@@ -455,6 +455,9 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
 
 At a high level, task dependencies define the order in which you want to work on a set of tasks. You can read more about them in [[Task Dependencies]].
 
+> [!released]
+> Task Dependencies were introduced in Tasks X.Y.Z.
+
 ### Blocking Tasks
 
 - `is blocking`
