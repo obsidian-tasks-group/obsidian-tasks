@@ -7,7 +7,7 @@ publish: true
 ## Introduction
 
 > [!released]
-> Task Dependencies were introduced in Tasks X.Y.Z.
+> Task Dependencies were introduced in Tasks 6.1.0.
 
 At a high level, task dependencies define the order in which you want to work on a set of tasks.
 This can be useful for mapping out projects, where one part needs to be completed before the other.

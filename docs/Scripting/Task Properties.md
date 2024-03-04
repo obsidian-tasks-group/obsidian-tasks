@@ -129,7 +129,7 @@ For more information, including adding your own customised statuses, see [[Statu
 1. See the page [[Task Dependencies]], which explains the dependencies facility.
 1. `Task.isBlocked()` behaves the same as `is blocked`: see [[Filters#Blocked Tasks]].
 1. `Task.isBlocking()` behaves the same as `is blocking`: see  [[Filters#Blocking Tasks]].
-1. Task Dependencies were released in Tasks X.Y.Z.
+1. Task Dependencies were released in Tasks 6.1.0.
 
 ## Values for Other Task Properties
 
