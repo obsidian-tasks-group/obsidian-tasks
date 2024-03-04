@@ -190,6 +190,9 @@ For more information, including adding your own customised statuses, see [[Statu
 
 #### Automatic setting of dates upon status change
 
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
 When you change the Status Symbol for a Task, the [[Dates#Date-tracking settings|Date-tracking settings]] are used to determine whether to update any date fields:
 
 - **If** the status is changed **to** a [[Status Types#DONE|DONE status type]] **from** any other status type,

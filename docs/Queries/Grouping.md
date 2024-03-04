@@ -165,6 +165,11 @@ group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "
 
 ## Group by Task Dependencies
 
+At a high level, task dependencies define the order in which you want to work on a set of tasks. You can read more about them in [[Task Dependencies]].
+
+> [!released]
+> Task Dependencies were introduced in Tasks X.Y.Z.
+
 ### Id
 
 - `group by id`
