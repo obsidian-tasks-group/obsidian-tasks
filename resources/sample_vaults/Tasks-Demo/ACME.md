@@ -2,8 +2,8 @@
 
 ## Steps to world domination
 
-- [ ] #task Take out the trash 🔁 every week on Monday 📅 2021-11-22
-- [x] #task Take out the trash 🔁 every week on Monday 📅 2021-11-15 ✅ 2021-11-15
+- [ ] #task Take out the trash 🔁 every week on Monday ➕ 2024-02-19 📅 2024-03-04
+- [x] #task Take out the trash 🔁 every week on Monday ➕ 2024-02-12 📅 2024-02-19 ✅ 2024-02-19
 - [ ] #task **?** 📅 2021-11-22
 - [ ] #task ==Profit== 📅 2021-11-22
 - [ ] #task Cook dinner ⏫ ⏳ 2021-11-23

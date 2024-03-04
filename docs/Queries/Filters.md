@@ -479,7 +479,7 @@ For example:
 Note also:
 
 - Only direct dependencies are considered.
-- Tasks with status type `DONE`, `CANCELLED` or `NON_TASK` are never treated as `blocked`.
+- Tasks with status type `DONE`, `CANCELLED` or `NON_TASK` are never treated as `blocking`.
 
 For more information, see [[Task Dependencies]].
 
