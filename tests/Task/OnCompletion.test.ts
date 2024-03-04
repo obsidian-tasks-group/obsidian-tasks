@@ -2,11 +2,12 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { toLines } from '../TestingTools/TestHelpers';
+import { fromLine, toLines, toMarkdown } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
 import { handleOnCompletion } from '../../src/Task/OnCompletion';
 
@@ -193,5 +194,96 @@ describe('OnCompletion', () => {
 
         // Assert
         expect(tasks.length).toEqual(1);
+    });
+});
+
+type ToggleCase = {
+    // inputs:
+    nextStatus: Status;
+    line: string;
+};
+
+function getCases(): ToggleCase[] {
+    return [
+        // Non-recurring
+        {
+            nextStatus: Status.makeDone(),
+            line: '- [ ] A non-recurring task with no trigger 📅 2024-02-10',
+        },
+
+        {
+            nextStatus: Status.makeDone(),
+            line: '- [ ] A non-recurring task with 🏁 Delete',
+        },
+
+        {
+            nextStatus: Status.makeDone(),
+            line: '- [ ] A non-recurring task with 🏁 Delete 📅 2024-02-10',
+        },
+
+        {
+            nextStatus: Status.makeDone(),
+            line: '- [ ] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10',
+        },
+
+        {
+            nextStatus: Status.makeDone(),
+            line: '- [ ] A non-recurring task with 🏁',
+        },
+
+        // Recurring
+
+        {
+            nextStatus: Status.makeDone(),
+            line: '- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10',
+        },
+
+        {
+            nextStatus: Status.makeDone(),
+            line: '- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-10',
+        },
+
+        {
+            nextStatus: Status.makeInProgress(),
+            line: '- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-10',
+        },
+
+        // Other
+
+        {
+            nextStatus: Status.makeDone(),
+            line: '- [x] An already-DONE task, changing to Same      DONE status 🏁 Delete 📅 2024-02-10 ✅ 2024-02-10',
+        },
+
+        {
+            nextStatus: new Status(new StatusConfiguration('X', 'new status', ' ', false, StatusType.DONE)),
+            line: '- [x] An already-DONE task, changing to Different DONE status 🏁 Delete 📅 2024-02-10 ✅ 2024-02-10',
+        },
+    ];
+}
+
+function action(toggleCase: ToggleCase): string {
+    const newStatus = toggleCase.nextStatus;
+    const task = fromLine({ line: toggleCase.line, path: 'anything.md', precedingHeader: 'heading' });
+    const step1 = task.handleNewStatus(newStatus);
+    const step2 = applyStatusAndOnCompletionAction(task, newStatus);
+    return `
+initial task:
+${task.toFileLineString()}
+
+=> advances to status [${newStatus.symbol}] and type ${newStatus.type}:
+${toMarkdown(step1)}
+
+=> which, after any on-completion action, results in:
+${toMarkdown(step2)}
+----------------------------------------------
+`;
+}
+
+describe('visualise completion-behaviour', () => {
+    it('visualise', () => {
+        // List of status and task
+        const cases = getCases();
+        verifyAll('checking on completion', cases, (toggleCase) => action(toggleCase));
     });
 });
