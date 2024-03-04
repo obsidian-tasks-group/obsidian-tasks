@@ -117,6 +117,66 @@ Supported abbreviations:
 | `weekend`    | `sat`         |
 | `we`         | `sat`         |
 
+### Dependencies
+
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
+> [!Tip]
+> This section describes the mechanics of adding and editing dependencies between your tasks.
+>
+> For an explanation of the dependencies facility itself, see [[Task Dependencies]].
+
+Use the "Dependencies" area of the modal to specify relationships between tasks, to define the order in which you want to work on a set of tasks.
+
+> [!Example]
+> This is what the dependencies might look like for a task 'Have a party':
+>
+> ![A task which requires two tasks to be done first, and, when done, will allow one other task to be started on.](task-dependencies-party.png)
+> <span class="caption">A task which requires two tasks, 'Invite the guests' and 'Make the food' to be done first, and, when done, will allow one other task, 'Tidy up after party', to be started on.</span>
+
+#### Before this
+
+Use the "Before this" region to find and link to any tasks that **must be finished before the task being edited can be started**.
+
+This is marked **1** and **2** in the image above.
+
+#### After this
+
+Use the "After this" region to find and link to any tasks that **can only be started after the task being edited is finished**.
+
+This is areas **3** and **4** in the image above.
+
+#### Searching for tasks
+
+Understanding the search query:
+
+- In either "Before this" or "After this", start typing any text from the description of a required task.
+- Currently only task descriptions are searched, and not file paths.
+- You can type bits of words, in any order, and capitalisation does not matter.
+- For example, you could quickly find `Invite the guests` with `inv gu`, or `gu inv`.
+
+Understanding the matches:
+
+- As you type, Tasks will show you up to 20 closest matching tasks.
+- Other tasks in the same file as the task being edited are listed first.
+- Then matching tasks elsewhere in the vault are shown, followed by their path.
+- If any text is too long to fit, it is truncated with `...` and you can hover over the name to see the full text.
+
+This is what the above process looks like:
+
+![Searching for a task, to set up a dependency](../images/task-dependencies-search.png)
+<span class="caption">Searching for a task, to set up a dependency</span>
+
+#### Saving dependencies
+
+When you click Apply after editing dependencies:
+
+- `id` fields are added to any tasks that are now depended upon,
+- `dependsOn` fields are adjusted to add or remove dependencies.
+
+This is currently the only operation in Tasks that can edit multiple files in the vault in one step.
+
 ### Status
 
 > [!released]
