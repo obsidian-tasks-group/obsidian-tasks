@@ -1,0 +1,116 @@
+checking on completion
+
+
+
+initial task:
+- [ ] A non-recurring task with no trigger 📅 2024-02-10
+
+=> advances to status [x] and type DONE:
+- [x] A non-recurring task with no trigger 📅 2024-02-10 ✅ 2024-02-11
+
+=> which, after any on-completion action, results in:
+- [x] A non-recurring task with no trigger 📅 2024-02-10 ✅ 2024-02-11
+----------------------------------------------
+
+
+initial task:
+- [ ] A non-recurring task with 🏁 Delete
+
+=> advances to status [x] and type DONE:
+- [x] A non-recurring task with 🏁 Delete ✅ 2024-02-11
+
+=> which, after any on-completion action, results in:
+
+----------------------------------------------
+
+
+initial task:
+- [ ] A non-recurring task with 🏁 Delete 📅 2024-02-10
+
+=> advances to status [x] and type DONE:
+- [x] A non-recurring task with 🏁 Delete 📅 2024-02-10 ✅ 2024-02-11
+
+=> which, after any on-completion action, results in:
+
+----------------------------------------------
+
+
+initial task:
+- [ ] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10
+
+=> advances to status [x] and type DONE:
+- [x] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10 ✅ 2024-02-11
+
+=> which, after any on-completion action, results in:
+- [x] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10 ✅ 2024-02-11
+----------------------------------------------
+
+
+initial task:
+- [ ] A non-recurring task with 🏁
+
+=> advances to status [x] and type DONE:
+- [x] A non-recurring task with 🏁 ✅ 2024-02-11
+
+=> which, after any on-completion action, results in:
+- [x] A non-recurring task with 🏁 ✅ 2024-02-11
+----------------------------------------------
+
+
+initial task:
+- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10
+
+=> advances to status [x] and type DONE:
+- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-11
+- [x] A recurring task with no trigger 🔁 every day 📅 2024-02-10 ✅ 2024-02-11
+
+=> which, after any on-completion action, results in:
+- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-11
+- [x] A recurring task with no trigger 🔁 every day 📅 2024-02-10 ✅ 2024-02-11
+----------------------------------------------
+
+
+initial task:
+- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-10
+
+=> advances to status [x] and type DONE:
+- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-11
+- [x] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-10 ✅ 2024-02-11
+
+=> which, after any on-completion action, results in:
+- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-11
+----------------------------------------------
+
+
+initial task:
+- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-10
+
+=> advances to status [/] and type IN_PROGRESS:
+- [/] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-10
+
+=> which, after any on-completion action, results in:
+- [/] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-10
+----------------------------------------------
+
+
+initial task:
+- [x] An already-DONE task, changing to Same      DONE status 🏁 Delete 📅 2024-02-10 ✅ 2024-02-10
+
+=> advances to status [x] and type DONE:
+- [x] An already-DONE task, changing to Same      DONE status 🏁 Delete 📅 2024-02-10 ✅ 2024-02-10
+
+=> which, after any on-completion action, results in:
+- [x] An already-DONE task, changing to Same      DONE status 🏁 Delete 📅 2024-02-10 ✅ 2024-02-10
+----------------------------------------------
+
+
+initial task:
+- [x] An already-DONE task, changing to Different DONE status 🏁 Delete 📅 2024-02-10 ✅ 2024-02-10
+
+=> advances to status [X] and type DONE:
+- [X] An already-DONE task, changing to Different DONE status 🏁 Delete 📅 2024-02-10 ✅ 2024-02-10
+
+=> which, after any on-completion action, results in:
+- [X] An already-DONE task, changing to Different DONE status 🏁 Delete 📅 2024-02-10 ✅ 2024-02-10
+----------------------------------------------
+
