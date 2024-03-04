@@ -120,7 +120,7 @@ Supported abbreviations:
 ### Dependencies
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 6.1.0.
 
 > [!Tip]
 > This section describes the mechanics of adding and editing dependencies between your tasks.
@@ -191,7 +191,7 @@ For more information, including adding your own customised statuses, see [[Statu
 #### Automatic setting of dates upon status change
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 6.1.0.
 
 When you change the Status Symbol for a Task, the [[Dates#Date-tracking settings|Date-tracking settings]] are used to determine whether to update any date fields:
 

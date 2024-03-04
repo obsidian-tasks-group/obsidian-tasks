@@ -456,7 +456,7 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
 At a high level, task dependencies define the order in which you want to work on a set of tasks. You can read more about them in [[Task Dependencies]].
 
 > [!released]
-> Task Dependencies were introduced in Tasks X.Y.Z.
+> Task Dependencies were introduced in Tasks 6.1.0.
 
 ### Blocking Tasks
 
@@ -488,7 +488,7 @@ For more information, see [[Task Dependencies]].
 
 > [!released]
 >
-> - `is blocking` and `is not blocking` were introduced in Tasks X.Y.Z.
+> - `is blocking` and `is not blocking` were introduced in Tasks 6.1.0.
 
 ### Blocked Tasks
 
@@ -520,7 +520,7 @@ For more information, see [[Task Dependencies]].
 
 > [!released]
 >
-> - `is blocked` and `is not blocked` were introduced in Tasks X.Y.Z.
+> - `is blocked` and `is not blocked` were introduced in Tasks 6.1.0.
 
 ### Id
 
@@ -538,9 +538,9 @@ For more information, see [[Task Dependencies]].
 
 > [!released]
 >
-> - Task Id was introduced in Tasks X.Y.Z.
+> - Task Id was introduced in Tasks 6.1.0.
 
-Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Id** is now possible, using `task.id`.
+Since Tasks 6.1.0, **[[Custom Filters|custom filtering]] by Id** is now possible, using `task.id`.
 
 ### Depends On
 
@@ -553,9 +553,9 @@ For more information, see [[Task Dependencies]].
 
 > [!released]
 >
-> - Task Depends On was introduced in Tasks X.Y.Z.
+> - Task Depends On was introduced in Tasks 6.1.0.
 
-Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by Depends On** is now possible, using `task.dependsOn`.
+Since Tasks 6.1.0, **[[Custom Filters|custom filtering]] by Depends On** is now possible, using `task.dependsOn`.
 
 ## Filters for Dates in Tasks
 
