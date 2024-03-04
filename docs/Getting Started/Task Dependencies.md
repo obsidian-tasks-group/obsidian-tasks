@@ -225,6 +225,55 @@ is not blocked
 ```
 ````
 
+### Demonstration of blocking and blocked
+
+> [!Example] Blocking occurs
+> If *both* ends of a `dependsOn` link are `TODO` or `IN_PROGRESS`, blocking occurs:
+>
+> ```mermaid
+> flowchart BT
+>
+> classDef TASK        stroke-width:3px,font-family:monospace;
+>
+> 2["- [ ] this is blocking  🆔 abcdef"]:::TASK
+> 1["- [ ] this is blocked&nbsp ⛔️ abcdef"]:::TASK
+> 1-- depends on --> 2
+>
+> linkStyle default stroke:gray
+> ```
+
+> [!Example] No blocking
+> If *either* end of  `dependsOn` link is `DONE`, `CANCELLED` or `NON_TASK`, no blocking occurs:
+>
+> ```mermaid
+> flowchart BT
+>
+> classDef TASK        stroke-width:3px,font-family:monospace;
+>
+> 4["- [ ] not blocking  🆔 abcdef"]:::TASK
+> 3["- [x] not blocked&nbsp ⛔️ abcdef"]:::TASK
+> 3-- depends on --> 4
+>
+> linkStyle default stroke:gray
+> ```
+
+> [!Example] A mixture
+> A task is only un-blocked when *all* of the tasks it `dependsOn` have been `DONE` or `CANCELLED` (or marked as `NON_TASK`):
+>
+> ```mermaid
+> flowchart BT
+>
+> classDef TASK        stroke-width:3px,font-family:monospace;
+>
+> 5["- [x] not blocking  🆔 abcdef"]:::TASK
+> 4["- [ ] blocking 🆔 ghijkl"]:::TASK
+> 3["- [ ] blocked ⛔️ abcdef,ghijkl"]:::TASK
+> 3-- depends on --> 5
+> 3-- depends on --> 4
+>
+> linkStyle default stroke:gray
+> ```
+
 ## Using Dependencies in Tasks Searches
 
 ### Filters
