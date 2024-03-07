@@ -69,7 +69,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
     recurrenceSymbol: '🔁',
-    dependsOnSymbol: '⛔️',
+    dependsOnSymbol: '⛔️', // TODO Remove Variant Selector 16 from this string
     idSymbol: '🆔',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
@@ -83,7 +83,10 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        dependsOnRegex: new RegExp('⛔️ *(' + taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*)$', 'iu'),
+        dependsOnRegex: new RegExp(
+            '⛔\uFE0F? *(' + taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*)$',
+            'iu',
+        ),
         idRegex: new RegExp('🆔 *(' + taskIdRegex.source + ')$', 'iu'),
     },
 } as const;
