@@ -73,7 +73,7 @@ To help visualise the structure above, here is the HTML for a sample task shown 
 <!-- snippet: TaskLineRenderer.test.Visualise_HTML_Full_task_-_full_mode.approved.html -->
 ```html
 <!--
-  - [ ] Do exercises #todo #health 🆔 abcdef ⛔️ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
+  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
 -->
 
 <li
@@ -93,7 +93,7 @@ To help visualise the structure above, here is the HTML for a sample task shown 
   <span class="tasks-list-text">
     <span class="task-description"><span>Do exercises #todo #health</span></span>
     <span class="task-id"><span>🆔 abcdef</span></span>
-    <span class="task-dependsOn"><span>⛔️ 123456,abc123</span></span>
+    <span class="task-dependsOn"><span>⛔ 123456,abc123</span></span>
     <span class="task-priority" data-task-priority="medium"><span>🔼</span></span>
     <span class="task-recurring"><span>🔁 every day when done</span></span>
     <span class="task-created" data-task-created="past-4d"><span>➕ 2023-07-01</span></span>
@@ -118,7 +118,7 @@ Here is the same task in [[Layout#Short Mode|short mode]]. The only difference i
 <!-- snippet: TaskLineRenderer.test.Visualise_HTML_Full_task_-_short_mode.approved.html -->
 ```html
 <!--
-  - [ ] Do exercises #todo #health 🆔 abcdef ⛔️ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
+  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
 -->
 
 <li
@@ -138,7 +138,7 @@ Here is the same task in [[Layout#Short Mode|short mode]]. The only difference i
   <span class="tasks-list-text">
     <span class="task-description"><span>Do exercises #todo #health</span></span>
     <span class="task-id"><span>🆔</span></span>
-    <span class="task-dependsOn"><span>⛔️</span></span>
+    <span class="task-dependsOn"><span>⛔</span></span>
     <span class="task-priority" data-task-priority="medium"><span>🔼</span></span>
     <span class="task-recurring"><span>🔁</span></span>
     <span class="task-created" data-task-created="past-4d"><span>➕</span></span>
