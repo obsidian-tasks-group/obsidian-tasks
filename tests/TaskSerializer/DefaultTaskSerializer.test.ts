@@ -87,7 +87,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 expect(taskDetails).toMatchTaskDetails({ priority: Priority.High });
             });
 
-            it.failing('should parse a high priority with Variant Selector 16', () => {
+            it('should parse a high priority with Variant Selector 16', () => {
                 // This test showed the existing of https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2273
                 const line = '⏫️'; // There is a hidden Variant Selector 16 character at the end of this string
                 expect(hasVariantSelector16(line)).toBe(true);
