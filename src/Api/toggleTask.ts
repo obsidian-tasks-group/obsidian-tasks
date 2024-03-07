@@ -1,8 +1,9 @@
 import { replaceTaskWithTasks } from 'Obsidian/File';
-import type { Task } from '../Task/Task';
+import { Task } from '../Task/Task';
 
 export const toggleTask = async (task: Task): Promise<Task[]> => {
-    const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
+    const newTask = new Task({ ...task });
+    const toggledTasks = newTask.toggleWithRecurrenceInUsersOrder();
 
     await replaceTaskWithTasks({
         originalTask: task,
