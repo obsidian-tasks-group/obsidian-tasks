@@ -37,7 +37,7 @@
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForTaskFormats.test.Serializer_Dependencies_tasksPluginEmoji-include.approved.md -->
 
 - [ ] #task do this first 🆔 dcf64c
-- [ ] #task do this after first and some other task ⛔️ dcf64c,0h17ye
+- [ ] #task do this after first and some other task ⛔ dcf64c,0h17ye
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
