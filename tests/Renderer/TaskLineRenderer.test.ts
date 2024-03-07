@@ -204,7 +204,7 @@ describe('task line rendering - layout options', () => {
             [
                 'Do exercises #todo #health',
                 ' 🆔 abcdef',
-                ' ⛔️ 123456,abc123',
+                ' ⛔ 123456,abc123',
                 ' 🔼',
                 ' 🔁 every day when done',
                 ' ➕ 2023-07-01',
@@ -224,7 +224,7 @@ describe('task line rendering - layout options', () => {
             [
                 'Do exercises #todo #health',
                 ' 🆔 abcdef',
-                ' ⛔️ 123456,abc123',
+                ' ⛔ 123456,abc123',
                 ' 🔼',
                 ' 🔁 every day when done',
                 ' ➕ 2023-07-01',
@@ -281,7 +281,7 @@ describe('task line rendering - layout options', () => {
     });
 
     it('renders with depends on', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' ⛔️ 123456,abc123'], [TaskLayoutComponent.DependsOn]);
+        await testLayoutOptions(['Do exercises #todo #health', ' ⛔ 123456,abc123'], [TaskLayoutComponent.DependsOn]);
     });
 });
 

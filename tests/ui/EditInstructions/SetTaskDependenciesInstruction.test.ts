@@ -81,7 +81,7 @@ describe('Edit dependencies', () => {
             // Remove a dependency
             const newTask = setDependencies(doSecond, allTasks, [doFirst], dependedUpon);
             expect(newTask.dependsOn).toEqual([doFirst.id]);
-            expect(newTask.toFileLineString()).toMatchInlineSnapshot('"- [ ] my description ⛔️ 12345"');
+            expect(newTask.toFileLineString()).toMatchInlineSnapshot('"- [ ] my description ⛔ 12345"');
         });
     });
 

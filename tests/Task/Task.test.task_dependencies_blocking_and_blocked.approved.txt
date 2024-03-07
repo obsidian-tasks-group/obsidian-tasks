@@ -14,7 +14,7 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ❌ false
     isBlocking(): ✅ true
 
-- [ ] scenario 1 - TODO depends on TODO ⛔️ scenario1
+- [ ] scenario 1 - TODO depends on TODO ⛔ scenario1
     isBlocked():  ✅ true
     isBlocking(): ❌ false
 
@@ -22,7 +22,7 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [ ] scenario 2 - TODO depends on DONE ⛔️ scenario2
+- [ ] scenario 2 - TODO depends on DONE ⛔ scenario2
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
@@ -30,7 +30,7 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [x] scenario 3 - DONE depends on TODO ⛔️ scenario3
+- [x] scenario 3 - DONE depends on TODO ⛔ scenario3
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
@@ -38,15 +38,15 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [x] scenario 4 - DONE depends on DONE ⛔️ scenario4
+- [x] scenario 4 - DONE depends on DONE ⛔ scenario4
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [ ] scenario 5 - TODO depends on non-existing ID ⛔️ nosuchid
+- [ ] scenario 5 - TODO depends on non-existing ID ⛔ nosuchid
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [ ] scenario 6 - TODO depends on self 🆔 self ⛔️ self
+- [ ] scenario 6 - TODO depends on self 🆔 self ⛔ self
     isBlocked():  ✅ true
     isBlocking(): ✅ true
 
@@ -58,27 +58,27 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ❌ false
     isBlocking(): ✅ true
 
-- [ ] scenario 7 - TODO depends on id that is duplicated - ensure all tasks are checked    - ⛔️ scenario7
+- [ ] scenario 7 - TODO depends on id that is duplicated - ensure all tasks are checked    - ⛔ scenario7
     isBlocked():  ✅ true
     isBlocking(): ❌ false
 
-- [ ] scenario 8 - mutually dependant 🆔 scenario8a ⛔️ scenario8b
+- [ ] scenario 8 - mutually dependant 🆔 scenario8a ⛔ scenario8b
     isBlocked():  ✅ true
     isBlocking(): ✅ true
 
-- [ ] scenario 8 - mutually dependant 🆔 scenario8b ⛔️ scenario8a
+- [ ] scenario 8 - mutually dependant 🆔 scenario8b ⛔ scenario8a
     isBlocked():  ✅ true
     isBlocking(): ✅ true
 
-- [ ] scenario 9 - cyclic dependency 🆔 scenario9a ⛔️ scenario9c
+- [ ] scenario 9 - cyclic dependency 🆔 scenario9a ⛔ scenario9c
     isBlocked():  ✅ true
     isBlocking(): ✅ true
 
-- [ ] scenario 9 - cyclic dependency 🆔 scenario9b ⛔️ scenario9a
+- [ ] scenario 9 - cyclic dependency 🆔 scenario9b ⛔ scenario9a
     isBlocked():  ✅ true
     isBlocking(): ✅ true
 
-- [ ] scenario 9 - cyclic dependency 🆔 scenario9c ⛔️ scenario9b
+- [ ] scenario 9 - cyclic dependency 🆔 scenario9c ⛔ scenario9b
     isBlocked():  ✅ true
     isBlocking(): ✅ true
 
@@ -102,7 +102,7 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [ ] scenario 10 - multiple dependencies              - ⛔️ scenario10a,scenario10b,scenario10c,scenario10d,scenario10e
+- [ ] scenario 10 - multiple dependencies              - ⛔ scenario10a,scenario10b,scenario10c,scenario10d,scenario10e
     isBlocked():  ✅ true
     isBlocking(): ❌ false
 
@@ -110,10 +110,10 @@ Visualise blocking methods on Task, for a collection of tasks
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [x] scenario 11 - indirect dependency - DONE                                     - 🆔 scenario11b ⛔️ scenario11a
+- [x] scenario 11 - indirect dependency - DONE                                     - 🆔 scenario11b ⛔ scenario11a
     isBlocked():  ❌ false
     isBlocking(): ❌ false
 
-- [ ] scenario 11 - indirect dependency - indirect blocking of scenario11a ignored - 🆔 scenario11c ⛔️ scenario11b
+- [ ] scenario 11 - indirect dependency - indirect blocking of scenario11a ignored - 🆔 scenario11c ⛔ scenario11b
     isBlocked():  ❌ false
     isBlocking(): ❌ false
