@@ -69,7 +69,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
     recurrenceSymbol: '🔁',
-    dependsOnSymbol: '⛔️', // TODO Remove Variant Selector 16 from this string
+    dependsOnSymbol: '⛔',
     idSymbol: '🆔',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and

@@ -45,7 +45,7 @@ Save the HTML in `HTML from Query - short mode.html`
 
 ## Task
 
-- [ ] #task Do exercises #todo #health 🆔 abcdef ⛔️ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
+- [ ] #task Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
 
 ## Query - Full Mode
 

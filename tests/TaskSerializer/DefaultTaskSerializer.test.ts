@@ -37,13 +37,7 @@ function hasVariantSelector16(text: string) {
 describe('validate emojis', () => {
     // If these tests fail, paste the problem emoji in to https://apps.timwhitlock.info/unicode/inspect
     it.each(allTaskPluginEmojis())('emoji does not contain Variant Selector 16: "%s"', (emoji: string) => {
-        if (emoji === DEFAULT_SYMBOLS.dependsOnSymbol) {
-            // TODO Remove the VS16 from the dependsOn symbol:
-            //      see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2693
-            expect(hasVariantSelector16(emoji)).toBe(true);
-        } else {
-            expect(hasVariantSelector16(emoji)).toBe(false);
-        }
+        expect(hasVariantSelector16(emoji)).toBe(false);
     });
 });
 
