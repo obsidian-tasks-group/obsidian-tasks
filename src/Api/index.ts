@@ -15,8 +15,8 @@ export const tasksApiV1 = (app: App): TasksApiV1 => {
         createTaskLineModal: (): Promise<string> => {
             return createTaskLineModal(app, defaultTaskModalFactory);
         },
-        toggleTask: (task: Task): void => {
-            return toggleTask(task);
+        toggleTask: async (task: Task): Promise<Task[]> => {
+            return await toggleTask(task);
         },
     };
 };
