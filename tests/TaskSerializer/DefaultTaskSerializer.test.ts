@@ -19,6 +19,17 @@ type DefaultTaskSerializeSymbolMap = readonly {
 // A map that facilitates parameterizing the tests over symbols
 const symbolMap: DefaultTaskSerializeSymbolMap = [{ taskFormat: 'tasksPluginEmoji', symbols: DEFAULT_SYMBOLS }];
 
+/**
+ * Since Variant Selectors are invisible, any tests whose behaviour is dependent on the
+ * presence or absence of one MUST 'expect' on the result of this function,
+ * to confirm that the test is doing what it claims to be doing.
+ * @param text
+ */
+function hasVariantSelector16(text: string) {
+    const vs16Regex = /\uFE0F/u;
+    return text.match(vs16Regex) !== null;
+}
+
 // NEW_TASK_FIELD_EDIT_REQUIRED
 
 describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ symbols }) => {
@@ -66,6 +77,23 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
 
                     expect(taskDetails).toMatchTaskDetails({ priority });
                 }
+            });
+
+            it('should parse a high priority without Variant Selector 16', () => {
+                const line = '⏫';
+                expect(hasVariantSelector16(line)).toBe(false);
+
+                const taskDetails = deserialize(line);
+                expect(taskDetails).toMatchTaskDetails({ priority: Priority.High });
+            });
+
+            it.failing('should parse a high priority with Variant Selector 16', () => {
+                // This test showed the existing of https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2273
+                const line = '⏫️'; // There is a hidden Variant Selector 16 character at the end of this string
+                expect(hasVariantSelector16(line)).toBe(true);
+
+                const taskDetails = deserialize(line);
+                expect(taskDetails).toMatchTaskDetails({ priority: Priority.High });
             });
         });
 
