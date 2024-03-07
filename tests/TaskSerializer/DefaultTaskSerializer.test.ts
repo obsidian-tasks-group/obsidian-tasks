@@ -42,27 +42,31 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             expect(taskDetails).toMatchTaskDetails({});
         });
 
-        it.each([
-            { what: 'startDate', symbol: startDateSymbol },
-            { what: 'createdDate', symbol: createdDateSymbol },
-            { what: 'scheduledDate', symbol: scheduledDateSymbol },
-            { what: 'dueDate', symbol: dueDateSymbol },
-            { what: 'doneDate', symbol: doneDateSymbol },
-        ] as const)('should parse a $what', ({ what, symbol }) => {
-            const taskDetails = deserialize(`${symbol} 2021-06-20`);
-            expect(taskDetails).toMatchTaskDetails({ [what]: moment('2021-06-20', 'YYYY-MM-DD') });
+        describe('should parse dates', () => {
+            it.each([
+                { what: 'startDate', symbol: startDateSymbol },
+                { what: 'createdDate', symbol: createdDateSymbol },
+                { what: 'scheduledDate', symbol: scheduledDateSymbol },
+                { what: 'dueDate', symbol: dueDateSymbol },
+                { what: 'doneDate', symbol: doneDateSymbol },
+            ] as const)('should parse a $what', ({ what, symbol }) => {
+                const taskDetails = deserialize(`${symbol} 2021-06-20`);
+                expect(taskDetails).toMatchTaskDetails({ [what]: moment('2021-06-20', 'YYYY-MM-DD') });
+            });
         });
 
-        it('should parse a priority', () => {
-            const priorities = ['Highest', 'High', 'None', 'Medium', 'Low', 'Lowest'] as const;
-            for (const p of priorities) {
-                const prioritySymbol = symbols.prioritySymbols[p];
-                const priority = Priority[p];
+        describe('should parse priorities', () => {
+            it('should parse a priority', () => {
+                const priorities = ['Highest', 'High', 'None', 'Medium', 'Low', 'Lowest'] as const;
+                for (const p of priorities) {
+                    const prioritySymbol = symbols.prioritySymbols[p];
+                    const priority = Priority[p];
 
-                const taskDetails = deserialize(`${prioritySymbol}`);
+                    const taskDetails = deserialize(`${prioritySymbol}`);
 
-                expect(taskDetails).toMatchTaskDetails({ priority });
-            }
+                    expect(taskDetails).toMatchTaskDetails({ priority });
+                }
+            });
         });
 
         it('should parse a recurrence', () => {
