@@ -100,6 +100,25 @@ function symbolAndDateValue(shortMode: boolean, symbol: string, date: moment.Mom
     return shortMode ? ' ' + symbol : ` ${symbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
 }
 
+export function allTaskPluginEmojis() {
+    const allEmojis: string[] = [];
+
+    // All the priority emojis:
+    Object.values(DEFAULT_SYMBOLS.prioritySymbols).forEach((value) => {
+        if (value.length > 0) {
+            allEmojis.push(value);
+        }
+    });
+
+    // All the other field emojis:
+    Object.values(DEFAULT_SYMBOLS).forEach((value) => {
+        if (typeof value === 'string') {
+            allEmojis.push(value);
+        }
+    });
+    return allEmojis;
+}
+
 export class DefaultTaskSerializer implements TaskSerializer {
     constructor(public readonly symbols: DefaultTaskSerializerSymbols) {}
 
