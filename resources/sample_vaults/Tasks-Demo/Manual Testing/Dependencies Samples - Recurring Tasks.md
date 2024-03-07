@@ -10,7 +10,7 @@ Step 1:
 
 Step 2:
 
-- [ ] #task I am recurring task **step 2** ⛔️ step1 🔁 every day 📅 2024-02-12
+- [ ] #task I am recurring task **step 2** ⛔ step1 🔁 every day 📅 2024-02-12
 
 ## Search
 

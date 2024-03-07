@@ -476,7 +476,7 @@ For example:
 
 ```text
 - [ ] I am blocking 🆔 12345
-- [ ] I am not blocking ⛔️ 12345
+- [ ] I am not blocking ⛔ 12345
 ```
 
 Note also:
@@ -508,7 +508,7 @@ For example:
 
 ```text
 - [ ] I am not blocked 🆔 12345
-- [ ] I am blocked ⛔️ 12345
+- [ ] I am blocked ⛔ 12345
 ```
 
 Note also:

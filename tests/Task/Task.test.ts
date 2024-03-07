@@ -1207,23 +1207,21 @@ describe('toggle done', () => {
         });
 
         it('should retain id and dependsOn after toggle NON-recurring task', () => {
-            const task = fromLine({ line: '- [ ] should retain *id* and *dependsOn* 🆔 id2 ⛔️ id1' });
+            const task = fromLine({ line: '- [ ] should retain *id* and *dependsOn* 🆔 id2 ⛔ id1' });
             const tasks = task.toggle();
 
-            expect(toMarkdown(tasks)).toMatchInlineSnapshot(
-                '"- [x] should retain *id* and *dependsOn* 🆔 id2 ⛔️ id1"',
-            );
+            expect(toMarkdown(tasks)).toMatchInlineSnapshot('"- [x] should retain *id* and *dependsOn* 🆔 id2 ⛔ id1"');
         });
 
         it('should remove id and dependsOn after toggle RECURRING task', () => {
             const task = fromLine({
-                line: '- [ ] should remove *id* and *dependsOn* in next recurrence 🆔 id2 ⛔️ id1 🔁 every day 📅 2024-02-13',
+                line: '- [ ] should remove *id* and *dependsOn* in next recurrence 🆔 id2 ⛔ id1 🔁 every day 📅 2024-02-13',
             });
             const tasks = task.toggle();
 
             expect(toMarkdown(tasks)).toMatchInlineSnapshot(`
                 "- [ ] should remove *id* and *dependsOn* in next recurrence 🔁 every day 📅 2024-02-14
-                - [x] should remove *id* and *dependsOn* in next recurrence 🆔 id2 ⛔️ id1 🔁 every day 📅 2024-02-13"
+                - [x] should remove *id* and *dependsOn* in next recurrence 🆔 id2 ⛔ id1 🔁 every day 📅 2024-02-13"
             `);
         });
     });
