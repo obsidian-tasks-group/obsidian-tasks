@@ -41,7 +41,7 @@ describe('Edit dependencies', () => {
     describe('1 task depended on by 1 task', () => {
         const markdown = `
 - [ ] my description 🆔 12345
-- [ ] my description ⛔️ 12345
+- [ ] my description ⛔ 12345
 `;
         const allTasks = createTasks(markdown);
 
@@ -60,7 +60,7 @@ describe('Edit dependencies', () => {
         const markdown = `
 - [ ] my description 🆔 12345
 - [ ] my description 🆔 67890
-- [ ] my description ⛔️ 12345,67890
+- [ ] my description ⛔ 12345,67890
 `;
         const allTasks = createTasks(markdown);
 
@@ -88,7 +88,7 @@ describe('Edit dependencies', () => {
     describe('task with broken dependencies', () => {
         const markdown = `
 - [ ] I started with no ID
-- [ ] I started depending on non-existent ID ⛔️ 12345
+- [ ] I started depending on non-existent ID ⛔ 12345
 `;
         // @ts-expect-error Unused variable
         const allTasks = createTasks(markdown);

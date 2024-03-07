@@ -359,7 +359,7 @@ describe('task line rendering - classes and data attributes', () => {
 
     it('renders dependency fields with their correct classes', async () => {
         await testComponentClasses('- [ ] Minimal task 🆔 g7317o', 'task-id', '');
-        await testComponentClasses('- [ ] Minimal task ⛔️ ya44g5,hry475', 'task-dependsOn', '');
+        await testComponentClasses('- [ ] Minimal task ⛔ ya44g5,hry475', 'task-dependsOn', '');
     });
 
     it('should render recurrence component with its class and data attribute', async () => {

@@ -100,7 +100,7 @@ describe('searching for tasks', () => {
         offersTheseCandidates(
             `
                 - [ ] Task being edited 🆔 12345
-                - [ ] Depends on task being edited️ ⛔️ 12345
+                - [ ] Depends on task being edited️ ⛔ 12345
                 - [ ] Does not depend on task being edited️
             `,
             ['Does not depend on task being edited️'],
@@ -110,7 +110,7 @@ describe('searching for tasks', () => {
     it('should exclude tasks which the task being edited depends on', () => {
         offersTheseCandidates(
             `
-                - [ ] Task being edited ⛔️ 12345
+                - [ ] Task being edited ⛔ 12345
                 - [ ] Task being edited️ depends on this 🆔 12345
                 - [ ] Is not depended on by the task being edited
             `,
