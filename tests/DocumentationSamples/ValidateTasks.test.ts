@@ -1,4 +1,4 @@
-import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
+import { allTaskPluginEmojis } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { Task } from '../../src/Task/Task';
 
@@ -16,25 +16,6 @@ group by path
 \`\`\`
 \`\`\`\`
 `;
-}
-
-function allTaskPluginEmojis() {
-    const allEmojis: string[] = [];
-
-    // All the priority emojis:
-    Object.values(DEFAULT_SYMBOLS.prioritySymbols).forEach((value) => {
-        if (value.length > 0) {
-            allEmojis.push(value);
-        }
-    });
-
-    // All the other field emojis:
-    Object.values(DEFAULT_SYMBOLS).forEach((value) => {
-        if (typeof value === 'string') {
-            allEmojis.push(value);
-        }
-    });
-    return allEmojis;
 }
 
 describe('validate-tasks', () => {
