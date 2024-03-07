@@ -5,7 +5,11 @@ import moment from 'moment';
 import type { Settings } from '../../src/Config/Settings';
 import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
-import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
+import {
+    DEFAULT_SYMBOLS,
+    type DefaultTaskSerializerSymbols,
+    allTaskPluginEmojis,
+} from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
 
@@ -29,6 +33,19 @@ function hasVariantSelector16(text: string) {
     const vs16Regex = /\uFE0F/u;
     return text.match(vs16Regex) !== null;
 }
+
+describe('validate emojis', () => {
+    // If these tests fail, paste the problem emoji in to https://apps.timwhitlock.info/unicode/inspect
+    it.each(allTaskPluginEmojis())('emoji does not contain Variant Selector 16: "%s"', (emoji: string) => {
+        if (emoji === DEFAULT_SYMBOLS.dependsOnSymbol) {
+            // TODO Remove the VS16 from the dependsOn symbol:
+            //      see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2693
+            expect(hasVariantSelector16(emoji)).toBe(true);
+        } else {
+            expect(hasVariantSelector16(emoji)).toBe(false);
+        }
+    });
+});
 
 // NEW_TASK_FIELD_EDIT_REQUIRED
 
@@ -88,7 +105,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             });
 
             it('should parse a high priority with Variant Selector 16', () => {
-                // This test showed the existing of https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2273
+                // This test showed the existence of https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2273
                 const line = '⏫️'; // There is a hidden Variant Selector 16 character at the end of this string
                 expect(hasVariantSelector16(line)).toBe(true);
 
@@ -107,6 +124,23 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         describe('should parse depends on', () => {
             it('should parse depends on one task', () => {
                 const id = `${dependsOnSymbol} F12345`;
+                const taskDetails = deserialize(id);
+                expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
+            });
+
+            it('should parse depends on one task - without Variant Selector 16', () => {
+                // This test showed the existence of https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2693
+                const id = '⛔ F12345';
+                expect(hasVariantSelector16(id)).toBe(false);
+
+                const taskDetails = deserialize(id);
+                expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
+            });
+
+            it('should parse depends on one task - with Variant Selector 16', () => {
+                const id = '⛔️ F12345'; // There is a hidden Variant Selector 16 character at the end of this string
+                expect(hasVariantSelector16(id)).toBe(true);
+
                 const taskDetails = deserialize(id);
                 expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
             });
