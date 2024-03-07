@@ -5,7 +5,11 @@ import moment from 'moment';
 import type { Settings } from '../../src/Config/Settings';
 import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
-import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
+import {
+    DEFAULT_SYMBOLS,
+    type DefaultTaskSerializerSymbols,
+    allTaskPluginEmojis,
+} from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
 
@@ -29,6 +33,19 @@ function hasVariantSelector16(text: string) {
     const vs16Regex = /\uFE0F/u;
     return text.match(vs16Regex) !== null;
 }
+
+describe('validate emojis', () => {
+    // If these tests fail, paste the problem emoji in to https://apps.timwhitlock.info/unicode/inspect
+    it.each(allTaskPluginEmojis())('emoji does not contain Variant Selector 16: "%s"', (emoji: string) => {
+        if (emoji === DEFAULT_SYMBOLS.dependsOnSymbol) {
+            // TODO Remove the VS16 from the dependsOn symbol:
+            //      see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2693
+            expect(hasVariantSelector16(emoji)).toBe(true);
+        } else {
+            expect(hasVariantSelector16(emoji)).toBe(false);
+        }
+    });
+});
 
 // NEW_TASK_FIELD_EDIT_REQUIRED
 
