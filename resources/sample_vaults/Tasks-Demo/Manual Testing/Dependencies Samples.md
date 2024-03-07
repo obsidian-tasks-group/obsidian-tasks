@@ -3,24 +3,24 @@
 ## Write the article
 
 - [ ] #task Choose a topic 🆔 ya44g5
-- [ ] #task Research the subject 🆔 g7317o ⛔️ ya44g5
-- [ ] #task Create an outline 🆔 rot7gb ⛔️ g7317o
-- [ ] #task Develop main points 🆔 mvplec ⛔️ rot7gb
-- [ ] #task Craft a conclusion 🆔 0wigip ⛔️ mvplec
-- [ ] #task Proofread and edit 🆔 5ti6bf ⛔️ 0wigip
-- [ ] #task Publish the article ⛔️ 5ti6bf
+- [ ] #task Research the subject 🆔 g7317o ⛔ ya44g5
+- [ ] #task Create an outline 🆔 rot7gb ⛔ g7317o
+- [ ] #task Develop main points 🆔 mvplec ⛔ rot7gb
+- [ ] #task Craft a conclusion 🆔 0wigip ⛔ mvplec
+- [ ] #task Proofread and edit 🆔 5ti6bf ⛔ 0wigip
+- [ ] #task Publish the article ⛔ 5ti6bf
 
 ## Hyphens and underscores allowed
 
 - [ ] #task A task with ID with underscore and hyphen 🆔 Is-A-Valid_ID
-- [ ] #task A task that depends on task with ID with underscore and hyphen ⛔️ Is-A-Valid_ID
+- [ ] #task A task that depends on task with ID with underscore and hyphen ⛔ Is-A-Valid_ID
 
 ## Multiple dependencies
 
 - [ ] #task Invite the guests 🆔 iv0euw
 - [ ] #task Make the food 🆔 rukpy8
-- [ ] #task Have a party 🆔 i38dxn ⛔️ iv0euw,rukpy8
-- [ ] #task Tidy up after party ⛔️ i38dxn
+- [ ] #task Have a party 🆔 i38dxn ⛔ iv0euw,rukpy8
+- [ ] #task Tidy up after party ⛔ i38dxn
 
 ## No dependencies
 
@@ -28,9 +28,9 @@
 
 ## Problem cases
 
-- [ ] #task Cyclic Dependency 1 🆔 cyclic1 ⛔️ cyclic2
-- [ ] #task Cyclic Dependency 2 🆔 cyclic2 ⛔️ cyclic1
-- [ ] #task Depends on a non-existent task ⛔️ doesnotexist
+- [ ] #task Cyclic Dependency 1 🆔 cyclic1 ⛔ cyclic2
+- [ ] #task Cyclic Dependency 2 🆔 cyclic2 ⛔ cyclic1
+- [ ] #task Depends on a non-existent task ⛔ doesnotexist
 
 ---
 
