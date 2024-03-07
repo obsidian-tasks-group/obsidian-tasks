@@ -128,7 +128,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 expect(taskDetails).toMatchTaskDetails({ dependsOn: ['F12345'] });
             });
 
-            it.failing('should parse depends on one task - without Variant Selector 16', () => {
+            it('should parse depends on one task - without Variant Selector 16', () => {
                 // This test showed the existence of https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2693
                 const id = '⛔ F12345';
                 expect(hasVariantSelector16(id)).toBe(false);
