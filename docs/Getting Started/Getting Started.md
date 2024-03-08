@@ -167,11 +167,6 @@ We are tracking this in [issue #1989](https://github.com/obsidian-tasks-group/ob
 
 We are tracking this in [issue #2100](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2100).
 
-> [!warning]
-> Tasks sometimes prevents checking off/completing tasks in **Obsidian Canvas cards**.
-
-We are tracking this in [issue #2130](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2130).
-
 ### Tasks in Code Blocks
 
 > [!warning]

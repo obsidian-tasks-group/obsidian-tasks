@@ -133,26 +133,32 @@ export class TaskLineRenderer {
             li.classList.add('is-checked');
         }
 
-        checkbox.addEventListener('click', (event: MouseEvent) => {
-            event.preventDefault();
-            // It is required to stop propagation so that obsidian won't write the file with the
-            // checkbox (un)checked. Obsidian would write after us and overwrite our change.
-            event.stopPropagation();
+        // If we don't have a path, the task is likely to be in a card on a canvas file,
+        // and we cannot save any edits, so there is no point listening for any events on the task.
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2130
+        const addEventListeners = task.taskLocation.hasKnownPath;
+        if (addEventListeners) {
+            checkbox.addEventListener('click', (event: MouseEvent) => {
+                event.preventDefault();
+                // It is required to stop propagation so that obsidian won't write the file with the
+                // checkbox (un)checked. Obsidian would write after us and overwrite our change.
+                event.stopPropagation();
 
-            // Should be re-rendered as enabled after update in file.
-            checkbox.disabled = true;
-            const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
-            replaceTaskWithTasks({
-                originalTask: task,
-                newTasks: toggledTasks,
+                // Should be re-rendered as enabled after update in file.
+                checkbox.disabled = true;
+                const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
+                replaceTaskWithTasks({
+                    originalTask: task,
+                    newTasks: toggledTasks,
+                });
             });
-        });
 
-        checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
-            const menu = new StatusMenu(StatusRegistry.getInstance(), task);
-            menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
-        });
-        checkbox.setAttribute('title', 'Right-click for options');
+            checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
+                const menu = new StatusMenu(StatusRegistry.getInstance(), task);
+                menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+            });
+            checkbox.setAttribute('title', 'Right-click for options');
+        }
 
         li.prepend(checkbox);
 
