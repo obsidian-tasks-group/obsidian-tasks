@@ -75,6 +75,21 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 const taskDetails = deserialize(`${symbol} 2021-06-20`);
                 expect(taskDetails).toMatchTaskDetails({ [what]: moment('2021-06-20', 'YYYY-MM-DD') });
             });
+
+            it('should parse a scheduledDate - with non-standard emoji', () => {
+                const taskDetails = deserialize('⌛ 2021-06-20');
+                expect(taskDetails).toMatchTaskDetails({ ['scheduledDate']: moment('2021-06-20', 'YYYY-MM-DD') });
+            });
+
+            it('should parse a dueDate - with non-standard emoji 1', () => {
+                const taskDetails = deserialize('📆 2021-06-20');
+                expect(taskDetails).toMatchTaskDetails({ ['dueDate']: moment('2021-06-20', 'YYYY-MM-DD') });
+            });
+
+            it('should parse a dueDate - with non-standard emoji 2', () => {
+                const taskDetails = deserialize('🗓 2021-06-20');
+                expect(taskDetails).toMatchTaskDetails({ ['dueDate']: moment('2021-06-20', 'YYYY-MM-DD') });
+            });
         });
 
         describe('should parse priorities', () => {
