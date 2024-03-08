@@ -60,4 +60,17 @@ export class TaskLocation {
     public get precedingHeader(): string | null {
         return this._precedingHeader;
     }
+
+    /**
+     * Whether the path is known, that-is, non-empty.
+     *
+     * This doesn't check whether the path points to an existing file.
+     *
+     * It was written to allow detection of tasks in Canvas cards, but note
+     * that some editing code in this plugin does not bother to set the location
+     * of the task, if not needed.
+     */
+    public get hasKnownPath(): boolean {
+        return this.path !== '';
+    }
 }
