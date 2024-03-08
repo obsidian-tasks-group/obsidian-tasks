@@ -7,6 +7,8 @@ import moment from 'moment';
 import { TASK_FORMATS, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { SampleTasks } from '../TestingTools/SampleTasks';
+import { allTaskPluginEmojis } from '../../src/TaskSerializer/DefaultTaskSerializer';
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
 
 window.moment = moment;
 
@@ -15,6 +17,28 @@ afterEach(() => {
 });
 
 describe('Serializer', () => {
+    describe('Emojis', () => {
+        it('tabulate-emojis', () => {
+            const table = new MarkdownTable(['Emoji', 'Codepoint']);
+
+            const emojis = allTaskPluginEmojis();
+            emojis
+                .map((emoji) => {
+                    const hex = emoji.codePointAt(0)?.toString(16);
+                    const s = hex ? `U+${hex.toUpperCase()}` : 'undefined';
+                    return [emoji, s];
+                })
+                .sort((a, b) => {
+                    // Sort by the codepoint:
+                    return a[1].localeCompare(b[1]);
+                })
+                .forEach((row) => {
+                    table.addRow(row);
+                });
+            verifyMarkdownForDocs(table.markdown);
+        });
+    });
+
     describe('Dates', () => {
         function allDatesLines() {
             const tasks = SampleTasks.withEachDateTypeAndCorrespondingStatus();
