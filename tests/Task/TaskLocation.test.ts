@@ -56,7 +56,7 @@ describe('TaskLocation', () => {
         expect(newLocation.precedingHeader).toStrictEqual(precedingHeader);
     });
 
-    it('should recognise invalid paths', () => {
+    it('should recognise unknown paths', () => {
         expect(TaskLocation.fromUnknownPosition('x.md').hasKnownPath).toBe(true);
         expect(TaskLocation.fromUnknownPosition('').hasKnownPath).toBe(false);
     });
