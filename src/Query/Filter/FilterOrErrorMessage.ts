@@ -29,6 +29,10 @@ export class FilterOrErrorMessage {
         return this.object.queryComponent;
     }
 
+    public isValid() {
+        return this.object.isValid();
+    }
+
     public get error(): string | undefined {
         return this.object.error;
     }

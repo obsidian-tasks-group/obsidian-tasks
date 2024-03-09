@@ -55,7 +55,7 @@ export abstract class DateField extends Field {
         }
 
         const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
-        if (filterResult.filter !== undefined) {
+        if (filterResult.isValid()) {
             return filterResult;
         }
 
