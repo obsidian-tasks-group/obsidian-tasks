@@ -53,7 +53,7 @@ export class TaskExpression {
     }
 
     public isValid() {
-        return this.functionOrError.error === undefined;
+        return this.functionOrError.isValid();
     }
 
     public get parseError(): string | undefined {
