@@ -500,7 +500,7 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
  *  - Is the line a task line (with a checkbox)
  * @param line
  * @param cursorPosition - the cursor position, when 0 is presumed to mean 'at the start of the line'.
- *                          See 'ch' in https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition/EditorPosition
+ *                          See 'ch' in https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition
  */
 export function canSuggestForLine(line: string, cursorPosition: number) {
     return GlobalFilter.getInstance().includedIn(line) && cursorIsInTaskLineDescription(line, cursorPosition);
