@@ -1,6 +1,6 @@
 {
   "legacyEditor": false,
-  "livePreview": true,
+  "livePreview": false,
   "useTab": false,
   "readableLineLength": false,
   "newFileLocation": "current",
