@@ -32,6 +32,13 @@ export class QueryComponentOrError<QueryComponent> {
     }
 
     /**
+     * This object is valid if {@link queryComponent} isn't undefined.
+     */
+    public isValid() {
+        return this._queryComponent !== undefined;
+    }
+
+    /**
      * Construct an ObjectOrErrorMessage with the given QueryComponent.
      *
      * @param instruction
