@@ -28,7 +28,7 @@ export class TagsField extends MultiTextField {
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
-        if (filterResult.filter !== undefined) {
+        if (filterResult.isValid()) {
             return filterResult;
         }
 
