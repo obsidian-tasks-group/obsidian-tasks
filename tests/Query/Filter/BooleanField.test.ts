@@ -111,6 +111,14 @@ describe('boolean query', () => {
             testWithDescription(filter, 'xxx #context/location1', true);
             testWithDescription(filter, 'xxx #context/location2', false);
         });
+
+        it('should work with single filter in heavily nested parentheses - via BooleanField', () => {
+            // Confirm that redundant () are ignored.
+            const filter = createValidFilter('(((((description includes #context/location1)))))');
+
+            testWithDescription(filter, 'xxx #context/location1', true);
+            testWithDescription(filter, 'xxx #context/location2', false);
+        });
     });
 
     describe('error cases - to show error messages', () => {
