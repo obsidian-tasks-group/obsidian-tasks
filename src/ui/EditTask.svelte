@@ -188,7 +188,7 @@
      * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
     function parseTypedDateForDisplayUsingFutureDate(
-        fieldName: 'start' | 'scheduled' | 'due' | 'done' | | 'reminder' | 'created' | 'cancelled',
+        fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'reminder' | 'created' | 'cancelled',
         typedDate: string,
     ): string {
         return parseTypedDateForDisplay(fieldName, typedDate, editableTask.forwardOnly ? new Date() : undefined);
