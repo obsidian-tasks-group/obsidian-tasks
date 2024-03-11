@@ -3,6 +3,7 @@ import { DescriptionField } from './Filter/DescriptionField';
 import { CreatedDateField } from './Filter/CreatedDateField';
 import { DoneDateField } from './Filter/DoneDateField';
 import { DueDateField } from './Filter/DueDateField';
+import { ReminderDateField } from './Filter/ReminderDateField';
 import { ExcludeSubItemsField } from './Filter/ExcludeSubItemsField';
 import { FunctionField } from './Filter/FunctionField';
 import { HeadingField } from './Filter/HeadingField';
@@ -50,6 +51,7 @@ export const fieldCreators: EndsWith<BooleanField> = [
     () => new StartDateField(),
     () => new ScheduledDateField(),
     () => new DueDateField(),
+    () => new ReminderDateField(),
     () => new DoneDateField(),
     () => new PathField(),
     () => new FolderField(),

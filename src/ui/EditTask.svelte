@@ -29,6 +29,7 @@
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
+        reminderDateSymbol,
         cancelledDateSymbol,
         createdDateSymbol,
         doneDateSymbol,
@@ -45,6 +46,7 @@
         startDate: '',
         scheduledDate: '',
         dueDate: '',
+        reminderDate: '',
         doneDate: '',
         cancelledDate: '',
         forwardOnly: true,
@@ -60,7 +62,7 @@
     let isDueDateValid: boolean = true;
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
-
+    let isReminderDateValid: boolean = true;
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
 
@@ -162,6 +164,7 @@
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
         isDueDateValid &&
+        isReminderDateValid &&
         isRecurrenceValid &&
         isScheduledDateValid &&
         isStartDateValid &&
@@ -183,12 +186,13 @@
                 startDate: null,
                 scheduledDate: null,
                 dueDate: null,
+                reminderDate: null,
             })?.toText();
             if (!recurrenceFromText) {
                 parsedRecurrence = '<i>invalid recurrence rule</i>';
                 isRecurrenceValid = false;
-            } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
-                parsedRecurrence = '<i>due, scheduled or start date required</i>';
+            } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate && !editableTask.reminderDate) {
+                parsedRecurrence = '<i>due, scheduled, reminder or start date required</i>';
                 isRecurrenceValid = false;
             } else {
                 parsedRecurrence = recurrenceFromText;
@@ -241,6 +245,7 @@
             startDate: new TasksDate(task.startDate).formatAsDate(),
             scheduledDate: new TasksDate(task.scheduledDate).formatAsDate(),
             dueDate: new TasksDate(task.dueDate).formatAsDate(),
+            reminderDate: new TasksDate(task.reminderDate).formatAsDateAndTimeOrDate(),
             doneDate: new TasksDate(task.doneDate).formatAsDate(),
             cancelledDate: new TasksDate(task.cancelledDate).formatAsDate(),
             forwardOnly: true,
@@ -294,7 +299,7 @@
         const startDate = parseTypedDateForSaving(editableTask.startDate, editableTask.forwardOnly);
         const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate, editableTask.forwardOnly);
         const dueDate = parseTypedDateForSaving(editableTask.dueDate, editableTask.forwardOnly);
-
+        const reminderDate = parseTypedDateForSaving(editableTask.reminderDate, editableTask.forwardOnly);
         const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate, editableTask.forwardOnly);
         const createdDate = parseTypedDateForSaving(editableTask.createdDate, editableTask.forwardOnly);
         const doneDate = parseTypedDateForSaving(editableTask.doneDate, editableTask.forwardOnly);
@@ -306,6 +311,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
+                reminderDate,
             });
         }
 
@@ -362,6 +368,7 @@
             startDate,
             scheduledDate,
             dueDate,
+            reminderDate,
             doneDate,
             createdDate,
             cancelledDate,
@@ -393,7 +400,7 @@
 Availability of access keys:
 - A: Start
 - B: Before this
-- C:
+- C: Reminder
 - D: Due
 - E: After this
 - F: Only future dates
@@ -507,7 +514,18 @@ Availability of access keys:
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('d')}
             />
-
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Reminder Date  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="reminder" class="accesskey-first">Reminder</label>
+            <DateEditor
+                id="reminder"
+                dateSymbol={reminderDateSymbol}
+                bind:date={editableTask.reminderDate}
+                bind:isDateValid={isReminderDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('c')}
+            />
             <!-- --------------------------------------------------------------------------- -->
             <!--  Scheduled Date  -->
             <!-- --------------------------------------------------------------------------- -->

@@ -15,6 +15,7 @@ export enum TaskLayoutComponent {
     StartDate = 'startDate',
     ScheduledDate = 'scheduledDate',
     DueDate = 'dueDate',
+    ReminderDate = 'reminderDate',
     CancelledDate = 'cancelledDate',
     DoneDate = 'doneDate',
     BlockLink = 'blockLink',

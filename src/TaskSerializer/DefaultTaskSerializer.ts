@@ -26,6 +26,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly createdDateSymbol: string;
     readonly scheduledDateSymbol: string;
     readonly dueDateSymbol: string;
+    readonly reminderDateSymbol: string;
     readonly doneDateSymbol: string;
     readonly cancelledDateSymbol: string;
     readonly recurrenceSymbol: string;
@@ -37,6 +38,7 @@ export interface DefaultTaskSerializerSymbols {
         createdDateRegex: RegExp;
         scheduledDateRegex: RegExp;
         dueDateRegex: RegExp;
+        reminderDateRegex: RegExp;
         doneDateRegex: RegExp;
         cancelledDateRegex: RegExp;
         recurrenceRegex: RegExp;
@@ -66,6 +68,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     createdDateSymbol: '➕',
     scheduledDateSymbol: '⏳',
     dueDateSymbol: '📅',
+    reminderDateSymbol: '⏰',
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
     recurrenceSymbol: '🔁',
@@ -80,6 +83,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         createdDateRegex: /➕ *(\d{4}-\d{2}-\d{2})$/u,
         scheduledDateRegex: /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u,
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
+        reminderDateRegex: /[⏰⏲️] *(\d{4}-\d{2}-\d{2} \d{2}:\d{2}|\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
@@ -156,6 +160,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             cancelledDateSymbol,
             recurrenceSymbol,
             dueDateSymbol,
+            reminderDateSymbol,
             dependsOnSymbol,
             idSymbol,
         } = this.symbols;
@@ -193,6 +198,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return symbolAndDateValue(shortMode, cancelledDateSymbol, task.cancelledDate);
             case TaskLayoutComponent.DueDate:
                 return symbolAndDateValue(shortMode, dueDateSymbol, task.dueDate);
+            case TaskLayoutComponent.ReminderDate:
+                return symbolAndDateValue(shortMode, dueDateSymbol, task.reminderDate);
             case TaskLayoutComponent.RecurrenceRule:
                 if (!task.recurrence) return '';
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
@@ -253,6 +260,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
+        let reminderDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let cancelledDate: Moment | null = null;
         let createdDate: Moment | null = null;
@@ -296,6 +304,13 @@ export class DefaultTaskSerializer implements TaskSerializer {
             if (dueDateMatch !== null) {
                 dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
                 line = line.replace(TaskFormatRegularExpressions.dueDateRegex, '').trim();
+                matched = true;
+            }
+
+            const reminderDateMatch = line.match(TaskFormatRegularExpressions.reminderDateRegex);
+            if (reminderDateMatch !== null) {
+                reminderDate = window.moment(reminderDateMatch[1], TaskRegularExpressions.dateFormat);
+                line = line.replace(TaskFormatRegularExpressions.reminderDateRegex, '').trim();
                 matched = true;
             }
 
@@ -370,6 +385,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 startDate,
                 scheduledDate,
                 dueDate,
+                reminderDate,
             });
         }
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
@@ -386,6 +402,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             createdDate,
             scheduledDate,
             dueDate,
+            reminderDate,
             doneDate,
             cancelledDate,
             recurrence,

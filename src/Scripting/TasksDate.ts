@@ -38,6 +38,18 @@ export class TasksDate {
     }
 
     /**
+     * Return the date formatted as YYYY-MM-DD HH:mm, or {@link fallBackText} if there is no date.
+     @param fallBackText - the string to use if the date is null. Defaults to empty string.
+     */
+    public formatAsDateAndTimeOrDate(fallBackText: string = ''): string {
+        let hasTime = false;
+        if (this.moment != null && this.moment._f === 'YYYY-MM-DD HH:mm') {
+            hasTime = true;
+        }
+        return hasTime ? this.formatAsDateAndTime(fallBackText) :  this.formatAsDate(fallBackText)
+    }
+
+    /**
      * Return the date formatted with the given format string, or {@link fallBackText} if there is no date.
      * See https://momentjs.com/docs/#/displaying/ for all the available formatting options.
      * @param format

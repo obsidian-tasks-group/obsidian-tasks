@@ -20,7 +20,7 @@ export function makeDefaultSuggestionBuilder(
     dataviewMode: boolean,
 ): SuggestionBuilder {
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
+    const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol, symbols.reminderDateSymbol].join('|');
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
      */
