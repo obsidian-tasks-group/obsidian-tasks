@@ -43,6 +43,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
+        reminderDate: Moment | null;
     }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;

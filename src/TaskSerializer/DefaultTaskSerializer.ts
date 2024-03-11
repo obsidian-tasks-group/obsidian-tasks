@@ -39,6 +39,7 @@ export interface DefaultTaskSerializerSymbols {
         scheduledDateRegex: RegExp;
         dueDateRegex: RegExp;
         reminderDateRegex: RegExp;
+        reminderDateTimeRegex: RegExp;
         doneDateRegex: RegExp;
         cancelledDateRegex: RegExp;
         recurrenceRegex: RegExp;
@@ -83,7 +84,8 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         createdDateRegex: /➕ *(\d{4}-\d{2}-\d{2})$/u,
         scheduledDateRegex: /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u,
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
-        reminderDateRegex: /[⏰⏲️] *(\d{4}-\d{2}-\d{2} \d{2}:\d{2}|\d{4}-\d{2}-\d{2})$/u,
+        reminderDateRegex: /[⏰] *(\d{4}-\d{2}-\d{2})$/u,
+        reminderDateTimeRegex: /[⏰] *(\d{4}-\d{2}-\d{2} \d{2}:\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
@@ -199,7 +201,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             case TaskLayoutComponent.DueDate:
                 return symbolAndDateValue(shortMode, dueDateSymbol, task.dueDate);
             case TaskLayoutComponent.ReminderDate:
-                return symbolAndDateValue(shortMode, dueDateSymbol, task.reminderDate);
+                return symbolAndDateValue(shortMode, reminderDateSymbol, task.reminderDate);
             case TaskLayoutComponent.RecurrenceRule:
                 if (!task.recurrence) return '';
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
@@ -307,8 +309,13 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 matched = true;
             }
 
+            const reminderDateTimeMatch = line.match(TaskFormatRegularExpressions.reminderDateTimeRegex);
             const reminderDateMatch = line.match(TaskFormatRegularExpressions.reminderDateRegex);
-            if (reminderDateMatch !== null) {
+            if (reminderDateTimeMatch !== null) {
+                reminderDate = window.moment(reminderDateTimeMatch[1], TaskRegularExpressions.dateTimeFormat);
+                line = line.replace(TaskFormatRegularExpressions.reminderDateTimeRegex, '').trim();
+                matched = true;
+            } else if (reminderDateMatch !== null) {
                 reminderDate = window.moment(reminderDateMatch[1], TaskRegularExpressions.dateFormat);
                 line = line.replace(TaskFormatRegularExpressions.reminderDateRegex, '').trim();
                 matched = true;

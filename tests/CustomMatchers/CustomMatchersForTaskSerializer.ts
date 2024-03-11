@@ -1,6 +1,7 @@
 import { diff } from 'jest-diff';
 import type { MatcherFunction } from 'expect';
 import moment from 'moment';
+import { isDateTime } from 'Scripting/TasksDate';
 import type { TaskDetails } from '../../src/TaskSerializer';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Priority } from '../../src/Task/Priority';
@@ -75,6 +76,7 @@ type SummarizedTaskDetails = { [K in keyof TaskDetails]: AsString<TaskDetails[K]
  */
 function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | null {
     if (t === null) return null;
+
     return {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         ...t,
@@ -83,6 +85,10 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         scheduledDate: t.scheduledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
+        reminderDate:
+            t.reminderDate?.format(
+                isDateTime(t.reminderDate) ? TaskRegularExpressions.dateTimeFormat : TaskRegularExpressions.dateFormat,
+            ) ?? null,
         cancelledDate: t.cancelledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
         id: t.id?.valueOf().toString() ?? null,

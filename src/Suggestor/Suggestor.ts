@@ -20,7 +20,12 @@ export function makeDefaultSuggestionBuilder(
     dataviewMode: boolean,
 ): SuggestionBuilder {
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol, symbols.reminderDateSymbol].join('|');
+    const datePrefixRegex = [
+        symbols.startDateSymbol,
+        symbols.scheduledDateSymbol,
+        symbols.dueDateSymbol,
+        symbols.reminderDateSymbol,
+    ].join('|');
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
      */
@@ -96,6 +101,11 @@ function addTaskPropertySuggestions(
         genericSuggestions.push({
             displayText: `${symbols.dueDateSymbol} due date`,
             appendText: `${symbols.dueDateSymbol} `,
+        });
+    if (!line.includes(symbols.reminderDateSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.reminderDateSymbol} reminder date`,
+            appendText: `${symbols.reminderDateSymbol} `,
         });
     if (!line.includes(symbols.startDateSymbol))
         genericSuggestions.push({
@@ -320,6 +330,7 @@ function addRecurrenceSuggestions(
                 startDate: null,
                 scheduledDate: null,
                 dueDate: null,
+                reminderDate: null,
             })?.toText();
             if (parsedRecurrence) {
                 const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + postfix;
