@@ -36,6 +36,7 @@
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
+    
     let editableTask: EditableTask = {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
