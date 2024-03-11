@@ -169,12 +169,32 @@ describe('explain boolean queries', () => {
         expect(filterOrMessage).toHaveExplanation(expected);
     });
 
+    it('should explain Boolean AND NOT', () => {
+        const instruction = '(description includes d1) AND NOT (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        const expected = `AND (All of):
+  description includes d1
+  NOT:
+    priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
+    });
+
     it('should explain Boolean OR', () => {
         const instruction = '(description includes d1) OR (priority medium)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
         const expected = `OR (At least one of):
   description includes d1
   priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
+    });
+
+    it('should explain Boolean OR NOT', () => {
+        const instruction = '(description includes d1) OR NOT (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        const expected = `OR (At least one of):
+  description includes d1
+  NOT:
+    priority is medium`;
         expect(filterOrMessage).toHaveExplanation(expected);
     });
 
