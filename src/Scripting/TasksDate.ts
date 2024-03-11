@@ -42,11 +42,7 @@ export class TasksDate {
      @param fallBackText - the string to use if the date is null. Defaults to empty string.
      */
     public formatAsDateAndTimeOrDate(fallBackText: string = ''): string {
-        let hasTime = false;
-        if (this.moment != null && this.moment._f === 'YYYY-MM-DD HH:mm') {
-            hasTime = true;
-        }
-        return hasTime ? this.formatAsDateAndTime(fallBackText) :  this.formatAsDate(fallBackText)
+        return isDateTime(this.moment) ? this.formatAsDateAndTime(fallBackText) : this.formatAsDate(fallBackText);
     }
 
     /**
@@ -146,4 +142,19 @@ export class TasksDate {
 
         return this._date.clone().add(amount, unitOfTime);
     }
+}
+
+/**
+ * Returns whether the moment object was initialized with a time. Used for reminders
+ * returns false if task has no moment
+ * @param dateObj
+ */
+export function isDateTime(dateObj: Moment | null): boolean {
+    let hasTime = false;
+    // @ts-ignore
+    if (dateObj != null && (dateObj._f ?? '') === 'YYYY-MM-DD HH:mm') {
+        hasTime = true;
+    }
+
+    return hasTime;
 }
