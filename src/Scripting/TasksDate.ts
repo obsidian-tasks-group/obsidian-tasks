@@ -152,8 +152,8 @@ export class TasksDate {
 export function isDateTime(dateObj: Moment | null): boolean {
     let hasTime = false;
     // @ts-ignore
-    if (dateObj != null && (dateObj._f ?? '') === 'YYYY-MM-DD HH:mm') {
-        hasTime = true;
+    if (dateObj != null) {
+        hasTime = dateObj.creationData().format === 'YYYY-MM-DD HH:mm';
     }
 
     return hasTime;

@@ -1,5 +1,6 @@
 import type { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
+import { isDateTime } from 'Scripting/TasksDate';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from '../Config/Settings';
 import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
@@ -333,9 +334,10 @@ export class TaskLineRenderer {
             }
 
             function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-                return `${signifier} ${date.format(TaskRegularExpressions.dateFormat)} (${date.from(
-                    window.moment().startOf('day'),
-                )})`;
+                const format = isDateTime(date)
+                    ? TaskRegularExpressions.dateTimeFormat
+                    : TaskRegularExpressions.dateFormat;
+                return `${signifier} ${date.format(format)} (${date.from(window.moment().startOf('day'))})`;
             }
 
             const tooltip = element.createDiv();
