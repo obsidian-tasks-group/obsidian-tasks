@@ -36,7 +36,7 @@
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
-    
+
     let editableTask: EditableTask = {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
@@ -61,9 +61,9 @@
     let isCreatedDateValid: boolean = true;
     let isDoneDateValid: boolean = true;
     let isDueDateValid: boolean = true;
+    let isReminderDateValid: boolean = true;
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
-    let isReminderDateValid: boolean = true;
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
 
@@ -162,16 +162,25 @@
         }
     };
 
-    $: accesskey = (key: string) => (withAccessKeys ? key : null);
+    $: accesskey = (key: string) => ((withAccessKeys ? key : null));
     $: formIsValid =
+       
         isDueDateValid &&
+       
         isReminderDateValid &&
+        
         isRecurrenceValid &&
+       
         isScheduledDateValid &&
+       
         isStartDateValid &&
+       
         isDescriptionValid &&
+       
         isCancelledDateValid &&
+       
         isCreatedDateValid &&
+       
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
@@ -527,6 +536,19 @@ Availability of access keys:
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('c')}
             />
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Reminder Date  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="reminder" class="accesskey-first">Reminder</label>
+            <DateEditor
+                id="reminder"
+                dateSymbol={reminderDateSymbol}
+                bind:date={editableTask.reminderDate}
+                bind:isDateValid={isReminderDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('c')}
+            />
+
             <!-- --------------------------------------------------------------------------- -->
             <!--  Scheduled Date  -->
             <!-- --------------------------------------------------------------------------- -->
