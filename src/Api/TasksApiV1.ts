@@ -17,7 +17,7 @@ export interface TasksApiV1 {
      */
     toggleTask(task: Task): Promise<Task[]>;
     /**
-     * @param task - task to toggle
+     * @param task - task to toggle.
      *
      * @returns {Promise<Task[]>} A promise that contains the Markdown string for the task entered
      */
