@@ -8,10 +8,10 @@
     import { Task } from '../Task/Task';
     import { doAutocomplete } from '../lib/DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
-    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../Task/TaskDependency";
-    import { replaceTaskWithTasks } from "../Obsidian/File";
-    import type { EditableTask } from "./EditableTask";
-    import Dependency from "./Dependency.svelte";
+    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
+    import { replaceTaskWithTasks } from '../Obsidian/File';
+    import type { EditableTask } from './EditableTask';
+    import Dependency from './Dependency.svelte';
     import { Priority } from '../Task/Priority';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -29,6 +29,7 @@
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
+        reminderDateSymbol,
         cancelledDateSymbol,
         createdDateSymbol,
         doneDateSymbol,
@@ -45,11 +46,12 @@
         startDate: '',
         scheduledDate: '',
         dueDate: '',
+        reminderDate: '',
         doneDate: '',
         cancelledDate: '',
         forwardOnly: true,
         blockedBy: [],
-        blocking: []
+        blocking: [],
     };
 
     let isDescriptionValid: boolean = true;
@@ -65,6 +67,9 @@
 
     let parsedDueDate: string = '';
     let isDueDateValid: boolean = true;
+
+    let parsedReminderDate: string = '';
+    let isReminderDateValid: boolean = true;
 
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
@@ -84,52 +89,58 @@
     let mountComplete = false;
 
     // 'weekend' abbreviation omitted due to lack of space.
-    let datePlaceholder =
-        "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
+    let datePlaceholder = "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
     const priorityOptions: {
-            value: typeof editableTask.priority,
-            label: string,
-            symbol: string,
-            accessKey: string,
-            accessKeyIndex: number}[] =
-        [{
+        value: typeof editableTask.priority;
+        label: string;
+        symbol: string;
+        accessKey: string;
+        accessKeyIndex: number;
+    }[] = [
+        {
             value: 'lowest',
             label: 'Lowest',
             symbol: prioritySymbols.Lowest,
             accessKey: 'o',
-            accessKeyIndex: 1
-        }, {
+            accessKeyIndex: 1,
+        },
+        {
             value: 'low',
             label: 'Low',
             symbol: prioritySymbols.Low,
             accessKey: 'l',
-            accessKeyIndex: 0
-        }, {
+            accessKeyIndex: 0,
+        },
+        {
             value: 'none',
             label: 'Normal',
             symbol: prioritySymbols.None,
             accessKey: 'n',
-            accessKeyIndex: 0
-        }, {
+            accessKeyIndex: 0,
+        },
+        {
             value: 'medium',
             label: 'Medium',
             symbol: prioritySymbols.Medium,
             accessKey: 'm',
-            accessKeyIndex: 0
-        }, {
+            accessKeyIndex: 0,
+        },
+        {
             value: 'high',
             label: 'High',
             symbol: prioritySymbols.High,
             accessKey: 'h',
-            accessKeyIndex: 0
-        }, {
+            accessKeyIndex: 0,
+        },
+        {
             value: 'highest',
             label: 'Highest',
             symbol: prioritySymbols.Highest,
             accessKey: 'i',
-            accessKeyIndex: 1
-        }]
+            accessKeyIndex: 1,
+        },
+    ];
 
     /*
         MAINTENANCE NOTE on these Date functions:
@@ -154,7 +165,7 @@
      * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
     function parseTypedDateForDisplay(
-        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done' | 'cancelled',
+        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'reminder' | 'done' | 'cancelled',
         typedDate: string,
         forwardDate: Date | undefined = undefined,
     ): string {
@@ -176,12 +187,11 @@
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
-    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled', typedDate: string): string {
-        return parseTypedDateForDisplay(
-            fieldName,
-            typedDate,
-            editableTask.forwardOnly ? new Date() : undefined,
-        );
+    function parseTypedDateForDisplayUsingFutureDate(
+        fieldName: 'start' | 'scheduled' | 'due' | 'done' | | 'reminder' | 'created' | 'cancelled',
+        typedDate: string,
+    ): string {
+        return parseTypedDateForDisplay(fieldName, typedDate, editableTask.forwardOnly ? new Date() : undefined);
     }
 
     /**
@@ -190,11 +200,7 @@
      */
     function parseTypedDateForSaving(typedDate: string): moment.Moment | null {
         let date: moment.Moment | null = null;
-        const parsedDate = chrono.parseDate(
-            typedDate,
-            new Date(),
-            { forwardDate: editableTask.forwardOnly },
-        );
+        const parsedDate = chrono.parseDate(typedDate, new Date(), { forwardDate: editableTask.forwardOnly });
         if (parsedDate !== null) {
             date = window.moment(parsedDate);
         }
@@ -202,20 +208,23 @@
     }
 
     async function serialiseTaskId(task: Task) {
-        if (task.id !== "") return task;
+        if (task.id !== '') return task;
 
-        const tasksWithId = allTasks.filter(task => task.id !== "");
+        const tasksWithId = allTasks.filter((task) => task.id !== '');
 
-        const updatedTask = ensureTaskHasId(task, tasksWithId.map(task => task.id));
+        const updatedTask = ensureTaskHasId(
+            task,
+            tasksWithId.map((task) => task.id),
+        );
 
-        await replaceTaskWithTasks({originalTask: task, newTasks: updatedTask});
+        await replaceTaskWithTasks({ originalTask: task, newTasks: updatedTask });
 
         return updatedTask;
     }
 
     const _onStatusChange = () => {
         // Use statusSymbol to find the status to save to editableTask.status
-        const selectedStatus: Status | undefined = statusOptions.find((s)=> s.symbol === statusSymbol);
+        const selectedStatus: Status | undefined = statusOptions.find((s) => s.symbol === statusSymbol);
         if (selectedStatus) {
             editableTask.status = selectedStatus;
         } else {
@@ -232,10 +241,19 @@
             editableTask.doneDate = taskWithEditedStatusApplied.done.formatAsDate();
             editableTask.cancelledDate = taskWithEditedStatusApplied.cancelled.formatAsDate();
         }
-    }
+    };
 
-    $: accesskey = (key: string) => withAccessKeys ? key : null;
-    $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid && isCancelledDateValid && isCreatedDateValid && isDoneDateValid;
+    $: accesskey = (key: string) => (withAccessKeys ? key : null);
+    $: formIsValid =
+        isDueDateValid &&
+        isReminderDateValid &&
+        isRecurrenceValid &&
+        isScheduledDateValid &&
+        isStartDateValid &&
+        isDescriptionValid &&
+        isCancelledDateValid &&
+        isCreatedDateValid &&
+        isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -255,6 +273,12 @@
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
         parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate);
         isDueDateValid = !parsedDueDate.includes('invalid');
+    }
+
+    $: {
+        editableTask.reminderDate = doAutocomplete(editableTask.reminderDate);
+        parsedReminderDate = parseTypedDateForDisplayUsingFutureDate('reminder', editableTask.reminderDate);
+        isReminderDateValid = !parsedReminderDate.includes('invalid');
     }
 
     $: {
@@ -281,17 +305,18 @@
             parsedRecurrence = '<i>not recurring</>';
         } else {
             const recurrenceFromText = Recurrence.fromText({
-                    recurrenceRuleText: editableTask.recurrenceRule,
-                    // Only for representation in the modal, no dates required.
-                    startDate: null,
-                    scheduledDate: null,
-                    dueDate: null,
-                })?.toText();
+                recurrenceRuleText: editableTask.recurrenceRule,
+                // Only for representation in the modal, no dates required.
+                startDate: null,
+                scheduledDate: null,
+                dueDate: null,
+                reminderDate: null,
+            })?.toText();
             if (!recurrenceFromText) {
                 parsedRecurrence = '<i>invalid recurrence rule</i>';
                 isRecurrenceValid = false;
-            } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
-                parsedRecurrence = '<i>due, scheduled or start date required</i>';
+            } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate && !editableTask.reminderDate) {
+                parsedRecurrence = '<i>due, scheduled, reminder or start date required</i>';
                 isRecurrenceValid = false;
             } else {
                 parsedRecurrence = recurrenceFromText;
@@ -325,14 +350,14 @@
         const blockedBy: Task[] = [];
 
         for (const taskId of task.dependsOn) {
-            const depTask = allTasks.find(cacheTask => cacheTask.id === taskId);
+            const depTask = allTasks.find((cacheTask) => cacheTask.id === taskId);
 
             if (!depTask) continue;
 
             blockedBy.push(depTask);
         }
 
-        originalBlocking = allTasks.filter(cacheTask => cacheTask.dependsOn.includes(task.id));
+        originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
         editableTask = {
             // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -344,11 +369,12 @@
             startDate: new TasksDate(task.startDate).formatAsDate(),
             scheduledDate: new TasksDate(task.scheduledDate).formatAsDate(),
             dueDate: new TasksDate(task.dueDate).formatAsDate(),
+            reminderDate: new TasksDate(task.reminderDate).formatAsDateAndTimeOrDate(),
             doneDate: new TasksDate(task.doneDate).formatAsDate(),
             cancelledDate: new TasksDate(task.cancelledDate).formatAsDate(),
             forwardOnly: true,
             blockedBy: blockedBy,
-            blocking: originalBlocking
+            blocking: originalBlocking,
         };
 
         mountComplete = true;
@@ -360,31 +386,32 @@
 
     const _onPriorityKeyup = (event: KeyboardEvent) => {
         if (event.key && !event.altKey && !event.ctrlKey) {
-            const priorityOption = priorityOptions.find(
-                option => option.label.charAt(0).toLowerCase() == event.key);
+            const priorityOption = priorityOptions.find((option) => option.label.charAt(0).toLowerCase() == event.key);
             if (priorityOption) {
                 editableTask.priority = priorityOption.value;
             }
         }
-    }
+    };
 
     const _onClose = () => {
         onSubmit([]);
-    }
+    };
 
     const _onDescriptionKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             if (formIsValid) _onSubmit();
         }
-    }
+    };
 
     // this is called, when text is pasted or dropped into
     // the description field, to remove any linebreaks
     const _removeLinebreaksFromDescription = () => {
         // wrapped into a timer to run after the paste/drop event
-        setTimeout(() => { editableTask.description = editableTask.description.replace(/[\r\n]+/g, ' ')}, 0);
-    }
+        setTimeout(() => {
+            editableTask.description = editableTask.description.replace(/[\r\n]+/g, ' ');
+        }, 0);
+    };
 
     const _onSubmit = async () => {
         // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -396,6 +423,7 @@
         const startDate = parseTypedDateForSaving(editableTask.startDate);
         const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate);
         const dueDate = parseTypedDateForSaving(editableTask.dueDate);
+        const reminderDate = parseTypedDateForSaving(editableTask.reminderDate);
 
         const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate);
         const createdDate = parseTypedDateForSaving(editableTask.createdDate);
@@ -408,6 +436,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
+                reminderDate,
             });
         }
 
@@ -444,13 +473,13 @@
         let addedBlocking: Task[] = [];
 
         if (editableTask.blocking.toString() !== originalBlocking.toString() || editableTask.blocking.length !== 0) {
-            if (task.id === "") {
-                id = generateUniqueId(allTasks.filter(task => task.id !== "").map(task => task.id));
+            if (task.id === '') {
+                id = generateUniqueId(allTasks.filter((task) => task.id !== '').map((task) => task.id));
             }
 
-            removedBlocking = originalBlocking.filter(task => !editableTask.blocking.includes(task))
+            removedBlocking = originalBlocking.filter((task) => !editableTask.blocking.includes(task));
 
-            addedBlocking = editableTask.blocking.filter(task => !originalBlocking.includes(task))
+            addedBlocking = editableTask.blocking.filter((task) => !originalBlocking.includes(task));
         }
 
         // First create an updated task, with all edits except Status:
@@ -464,21 +493,22 @@
             startDate,
             scheduledDate,
             dueDate,
+            reminderDate,
             doneDate,
             createdDate,
             cancelledDate,
-            dependsOn: blockedByWithIds.map(task => task.id),
-            id
+            dependsOn: blockedByWithIds.map((task) => task.id),
+            id,
         });
 
         for (const blocking of removedBlocking) {
-            const newParent = removeDependency(blocking, updatedTask)
-            await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
+            const newParent = removeDependency(blocking, updatedTask);
+            await replaceTaskWithTasks({ originalTask: blocking, newTasks: newParent });
         }
 
         for (const blocking of addedBlocking) {
-            const newParent = addDependencyToParent(blocking, updatedTask)
-            await replaceTaskWithTasks({originalTask: blocking, newTasks: newParent});
+            const newParent = addDependencyToParent(blocking, updatedTask);
+            await replaceTaskWithTasks({ originalTask: blocking, newTasks: newParent });
         }
 
         // Then apply the new status to the updated task, in case a new recurrence
@@ -495,7 +525,7 @@
 Availability of access keys:
 - A: Start
 - B: Before this
-- C:
+- C: Reminder
 - D: Due
 - E: After this
 - F: Only future dates
@@ -522,7 +552,7 @@ Availability of access keys:
 -->
 
 <div class="tasks-modal">
-    <form on:submit|preventDefault={_onSubmit} class:with-accesskeys="{withAccessKeys}">
+    <form on:submit|preventDefault={_onSubmit} class:with-accesskeys={withAccessKeys}>
         <!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
 
         <!-- --------------------------------------------------------------------------- -->
@@ -537,7 +567,7 @@ Availability of access keys:
                 id="description"
                 class="tasks-modal-description"
                 placeholder="Take out the trash"
-                accesskey={accesskey("t")}
+                accesskey={accesskey('t')}
                 on:keydown={_onDescriptionKeyDown}
                 on:paste={_removeLinebreaksFromDescription}
                 on:drop={_removeLinebreaksFromDescription}
@@ -549,7 +579,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
             <label for="priority-{editableTask.priority}">Priority</label>
-            {#each priorityOptions as {value, label, symbol, accessKey, accessKeyIndex}}
+            {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
                 <span>
                     <!-- svelte-ignore a11y-accesskey -->
                     <input
@@ -560,7 +590,9 @@ Availability of access keys:
                         accesskey={accesskey(accessKey)}
                     />
                     <label for="priority-{value}">
-                        <span>{label.substring(0,accessKeyIndex)}</span><span class="accesskey">{label.substring(accessKeyIndex,accessKeyIndex+1)}</span><span>{label.substring(accessKeyIndex+1)}</span>
+                        <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
+                            >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span
+                        ><span>{label.substring(accessKeyIndex + 1)}</span>
                         {#if symbol && symbol.charCodeAt(0) >= 0x100}
                             <span>{symbol}</span>
                         {/if}
@@ -585,7 +617,7 @@ Availability of access keys:
                 class:tasks-modal-error={!isRecurrenceValid}
                 class="input"
                 placeholder="Try 'every 2 weeks on Thursday'."
-                accesskey={accesskey("r")}
+                accesskey={accesskey('r')}
             />
             <code class="results">{recurrenceSymbol} {@html parsedRecurrence}</code>
         </div>
@@ -593,7 +625,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Dates  -->
         <!-- --------------------------------------------------------------------------- -->
-        <hr>
+        <hr />
         <div class="tasks-modal-section tasks-modal-dates">
             <!-- --------------------------------------------------------------------------- -->
             <!--  Due Date  -->
@@ -607,9 +639,24 @@ Availability of access keys:
                 class="input"
                 class:tasks-modal-error={!isDueDateValid}
                 placeholder={datePlaceholder}
-                accesskey={accesskey("d")}
+                accesskey={accesskey('d')}
             />
             <code class="results">{dueDateSymbol} {@html parsedDueDate}</code>
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Reminder Date  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="reminder" class="accesskey-first">Reminder</label>
+            <!-- svelte-ignore a11y-accesskey -->
+            <input
+                bind:value={editableTask.reminderDate}
+                id="reminder"
+                type="text"
+                class="input"
+                class:tasks-modal-error={!isReminderDateValid}
+                placeholder={datePlaceholder}
+                accesskey={accesskey('c')}
+            />
+            <code class="results">{reminderDateSymbol} {@html parsedReminderDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Scheduled Date  -->
@@ -623,7 +670,7 @@ Availability of access keys:
                 class:tasks-modal-error={!isScheduledDateValid}
                 class="input"
                 placeholder={datePlaceholder}
-                accesskey={accesskey("s")}
+                accesskey={accesskey('s')}
             />
             <code class="results">{scheduledDateSymbol} {@html parsedScheduledDate}</code>
 
@@ -639,7 +686,7 @@ Availability of access keys:
                 class:tasks-modal-error={!isStartDateValid}
                 class="input"
                 placeholder={datePlaceholder}
-                accesskey={accesskey("a")}
+                accesskey={accesskey('a')}
             />
             <code class="results">{startDateSymbol} {@html parsedStartDate}</code>
 
@@ -647,15 +694,17 @@ Availability of access keys:
             <!--  Only future dates  -->
             <!-- --------------------------------------------------------------------------- -->
             <div>
-                <label for="forwardOnly">Only
-                    <span class="accesskey-first">future</span> dates:</label>
+                <label for="forwardOnly"
+                    >Only
+                    <span class="accesskey-first">future</span> dates:</label
+                >
                 <!-- svelte-ignore a11y-accesskey -->
                 <input
                     bind:checked={editableTask.forwardOnly}
                     id="forwardOnly"
                     type="checkbox"
                     class="input task-list-item-checkbox tasks-modal-checkbox"
-                    accesskey={accesskey("f")}
+                    accesskey={accesskey('f')}
                 />
             </div>
         </div>
@@ -663,22 +712,38 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Dependencies  -->
         <!-- --------------------------------------------------------------------------- -->
-        <hr>
+        <hr />
         <div class="tasks-modal-section tasks-modal-dates">
             {#if allTasks.length > 0 && mountComplete}
                 <!-- --------------------------------------------------------------------------- -->
                 <!--  Blocked By Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
                 <label for="blockedBy" class="accesskey-first">Before this</label>
-                <Dependency type="blockedBy" task={task} editableTask={editableTask} allTasks={allTasks}
-                            _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="b" placeholder='Search for tasks that the task being edited depends on...' />
+                <Dependency
+                    type="blockedBy"
+                    {task}
+                    {editableTask}
+                    {allTasks}
+                    {_onDescriptionKeyDown}
+                    {accesskey}
+                    accesskeyLetter="b"
+                    placeholder="Search for tasks that the task being edited depends on..."
+                />
 
                 <!-- --------------------------------------------------------------------------- -->
                 <!--  Blocking Tasks  -->
                 <!-- --------------------------------------------------------------------------- -->
                 <label for="blocking">Aft<span class="accesskey">e</span>r this</label>
-                <Dependency type="blocking" task={task} editableTask={editableTask} allTasks={allTasks}
-                            _onDescriptionKeyDown={_onDescriptionKeyDown} accesskey={accesskey} accesskeyLetter="e" placeholder='Search for tasks that depend on this task being done...' />
+                <Dependency
+                    type="blocking"
+                    {task}
+                    {editableTask}
+                    {allTasks}
+                    {_onDescriptionKeyDown}
+                    {accesskey}
+                    accesskeyLetter="e"
+                    placeholder="Search for tasks that depend on this task being done..."
+                />
             {:else}
                 <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
             {/if}
@@ -687,15 +752,17 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        <hr>
+        <hr />
         <div class="tasks-modal-section">
             <label for="status">Stat<span class="accesskey">u</span>s</label>
             <!-- svelte-ignore a11y-accesskey -->
-            <select bind:value={statusSymbol}
-                    on:change={_onStatusChange}
-                    id="status-type"
-                    class="dropdown"
-                    accesskey={accesskey('u')}>
+            <select
+                bind:value={statusSymbol}
+                on:change={_onStatusChange}
+                id="status-type"
+                class="dropdown"
+                accesskey={accesskey('u')}
+            >
                 {#each statusOptions as status}
                     <option value={status.symbol}>{status.name} [{status.symbol}]</option>
                 {/each}
@@ -747,8 +814,7 @@ Availability of access keys:
         </div>
 
         <div class="tasks-modal-section tasks-modal-buttons">
-            <button disabled={!formIsValid} type="submit" class="mod-cta">Apply
-            </button>
+            <button disabled={!formIsValid} type="submit" class="mod-cta">Apply </button>
             <button type="button" on:click={_onClose}>Cancel</button>
         </div>
     </form>
