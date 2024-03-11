@@ -11,6 +11,7 @@ export type EditableTask = {
     startDate: string;
     scheduledDate: string;
     dueDate: string;
+    reminderDate: string;
     doneDate: string;
     cancelledDate: string;
     forwardOnly: boolean;

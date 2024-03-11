@@ -54,6 +54,7 @@ export class Task {
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
+    public readonly reminderDate: Moment | null;
     public readonly doneDate: Moment | null;
     public readonly cancelledDate: Moment | null;
 
@@ -88,6 +89,7 @@ export class Task {
         startDate,
         scheduledDate,
         dueDate,
+        reminderDate,
         doneDate,
         cancelledDate,
         recurrence,
@@ -109,6 +111,7 @@ export class Task {
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
+        reminderDate: moment.Moment | null;
         doneDate: moment.Moment | null;
         cancelledDate: moment.Moment | null;
         recurrence: Recurrence | null;
@@ -134,6 +137,7 @@ export class Task {
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
+        this.reminderDate = reminderDate;
         this.doneDate = doneDate;
         this.cancelledDate = cancelledDate;
 
@@ -362,6 +366,7 @@ export class Task {
             startDate: Moment | null;
             scheduledDate: Moment | null;
             dueDate: Moment | null;
+            reminderDate: Moment | null;
         } | null = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted() && this.recurrence !== null) {
@@ -423,6 +428,7 @@ export class Task {
             startDate: moment.Moment | null;
             scheduledDate: moment.Moment | null;
             dueDate: moment.Moment | null;
+            reminderDate: moment.Moment | null;
         },
     ) {
         const { setCreatedDate } = getSettings();
@@ -647,6 +653,13 @@ export class Task {
      */
     public get due(): TasksDate {
         return new TasksDate(this.dueDate);
+    }
+
+    /**
+     * Return {@link reminderDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
+     */
+    public get reminder(): TasksDate {
+        return new TasksDate(this.reminderDate);
     }
 
     /**
@@ -893,6 +906,7 @@ export class Task {
             'startDate' as keyof Task,
             'scheduledDate' as keyof Task,
             'dueDate' as keyof Task,
+            'reminderDate' as keyof Task,
             'doneDate' as keyof Task,
             'cancelledDate' as keyof Task,
         ];

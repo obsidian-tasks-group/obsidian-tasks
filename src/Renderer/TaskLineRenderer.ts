@@ -314,6 +314,7 @@ export class TaskLineRenderer {
             createdDateSymbol,
             scheduledDateSymbol,
             dueDateSymbol,
+            reminderDateSymbol,
             cancelledDateSymbol,
             doneDateSymbol,
         } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
@@ -350,6 +351,7 @@ export class TaskLineRenderer {
             addDateToTooltip(tooltip, task.startDate, startDateSymbol);
             addDateToTooltip(tooltip, task.scheduledDate, scheduledDateSymbol);
             addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
+            addDateToTooltip(tooltip, task.reminderDate, reminderDateSymbol);
             addDateToTooltip(tooltip, task.cancelledDate, cancelledDateSymbol);
             addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
 

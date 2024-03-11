@@ -305,6 +305,9 @@ Problem line: "${line}"`;
                 case 'due date':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, !hide);
                     break;
+                case 'reminder date':
+                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.ReminderDate, !hide);
+                    break;
                 case 'done date':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, !hide);
                     break;
