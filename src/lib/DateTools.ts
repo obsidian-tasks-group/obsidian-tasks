@@ -33,7 +33,7 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
  * @param forwardDate
  * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
  */
-export function parseTypedDateForDisplay(
+function parseTypedDateForDisplay(
     fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done' | 'cancelled',
     typedDate: string,
     forwardDate: Date | undefined = undefined,
@@ -48,4 +48,19 @@ export function parseTypedDateForDisplay(
         return window.moment(parsed).format('YYYY-MM-DD');
     }
     return `<i>invalid ${fieldName} date</i>`;
+}
+
+/**
+ * Like {@link parseTypedDateForDisplay} but also accounts for the 'Only future dates' setting.
+ * @param fieldName
+ * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+ * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
+ * @param forwardOnly
+ */
+export function parseTypedDateForDisplayUsingFutureDate(
+    fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled',
+    typedDate: string,
+    forwardOnly: boolean,
+): string {
+    return parseTypedDateForDisplay(fieldName, typedDate, forwardOnly ? new Date() : undefined);
 }

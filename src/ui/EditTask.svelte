@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
-    import { parseTypedDateForDisplay } from '../lib/DateTools';
+    import { parseTypedDateForDisplayUsingFutureDate } from '../lib/DateTools';
     import { Recurrence } from '../Task/Recurrence';
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
@@ -146,21 +146,6 @@
             parseTypedDateForDisplayUsingFutureDate() and parseTypedDateForDisplay()
             may collapse in to a single case.
      */
-
-    /**
-     * Like {@link parseTypedDateForDisplay} but also accounts for the 'Only future dates' setting.
-     * @param fieldName
-     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
-     * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
-     * @param forwardOnly
-     */
-    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled', typedDate: string, forwardOnly: boolean): string {
-        return parseTypedDateForDisplay(
-            fieldName,
-            typedDate,
-            forwardOnly ? new Date() : undefined,
-        );
-    }
 
     /**
      * Read the entered value for a date field, and return the value to be saved in the edited task.
