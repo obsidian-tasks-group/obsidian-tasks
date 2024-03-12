@@ -7,7 +7,10 @@ function appendToEndOfFile(initialContent: string, textToAppend: string) {
     if (result.length > 0 && !result.endsWith(newLineChar)) {
         result += newLineChar;
     }
-    result += textToAppend + newLineChar;
+    result += textToAppend;
+    if (!textToAppend.endsWith(newLineChar)) {
+        result += newLineChar;
+    }
     return result;
 }
 
@@ -45,10 +48,20 @@ describe('FileWriter', () => {
         const newFile = appendToEndOfFile(initialContent, textToAppend);
         expect(newFile).toEqual(initialContent);
     });
-});
 
-// the above code and tests were written while pairing with Clare 2024-03-11
-// I wrote following afterward
+    // the above code and tests were written while pairing with Clare 2024-03-11
+    // I wrote following afterward
+    it('should not append a newline to new text if not needed', () => {
+        const initialContent = '- [ ] an existing task';
+        const textToAppend = `- [ ] a new sample task
+`;
+        const newFile = appendToEndOfFile(initialContent, textToAppend);
+        const expectedOutput = `- [ ] an existing task
+- [ ] a new sample task
+`;
+        expect(newFile).toEqual(expectedOutput);
+    });
+});
 
 describe('ListWriter', () => {
     it('should be able to append to an existing list', () => {
