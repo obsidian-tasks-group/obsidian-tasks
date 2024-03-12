@@ -150,13 +150,14 @@
     /**
      * Read the entered value for a date field, and return the value to be saved in the edited task.
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+     * @param forwardDate
      */
-    function parseTypedDateForSaving(typedDate: string): moment.Moment | null {
+    function parseTypedDateForSaving(typedDate: string, forwardDate: boolean): moment.Moment | null {
         let date: moment.Moment | null = null;
         const parsedDate = chrono.parseDate(
             typedDate,
             new Date(),
-            { forwardDate: editableTask.forwardOnly },
+            { forwardDate },
         );
         if (parsedDate !== null) {
             date = window.moment(parsedDate);
@@ -356,13 +357,13 @@
             description = GlobalFilter.getInstance().prependTo(description);
         }
 
-        const startDate = parseTypedDateForSaving(editableTask.startDate);
-        const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate);
-        const dueDate = parseTypedDateForSaving(editableTask.dueDate);
+        const startDate = parseTypedDateForSaving(editableTask.startDate, editableTask.forwardOnly);
+        const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate, editableTask.forwardOnly);
+        const dueDate = parseTypedDateForSaving(editableTask.dueDate, editableTask.forwardOnly);
 
-        const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate);
-        const createdDate = parseTypedDateForSaving(editableTask.createdDate);
-        const doneDate = parseTypedDateForSaving(editableTask.doneDate);
+        const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate, editableTask.forwardOnly);
+        const createdDate = parseTypedDateForSaving(editableTask.createdDate, editableTask.forwardOnly);
+        const doneDate = parseTypedDateForSaving(editableTask.doneDate, editableTask.forwardOnly);
 
         let recurrence: Recurrence | null = null;
         if (editableTask.recurrenceRule) {
