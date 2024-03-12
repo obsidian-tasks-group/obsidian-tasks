@@ -1,7 +1,6 @@
 <script lang="ts">
-    import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
-    import { parseTypedDateForDisplayUsingFutureDate } from '../lib/DateTools';
+    import { parseTypedDateForDisplayUsingFutureDate, parseTypedDateForSaving } from '../lib/DateTools';
     import { Recurrence } from '../Task/Recurrence';
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
@@ -146,24 +145,6 @@
             parseTypedDateForDisplayUsingFutureDate() and parseTypedDateForDisplay()
             may collapse in to a single case.
      */
-
-    /**
-     * Read the entered value for a date field, and return the value to be saved in the edited task.
-     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
-     * @param forwardDate
-     */
-    function parseTypedDateForSaving(typedDate: string, forwardDate: boolean): moment.Moment | null {
-        let date: moment.Moment | null = null;
-        const parsedDate = chrono.parseDate(
-            typedDate,
-            new Date(),
-            { forwardDate },
-        );
-        if (parsedDate !== null) {
-            date = window.moment(parsedDate);
-        }
-        return date;
-    }
 
     async function serialiseTaskId(task: Task) {
         if (task.id !== "") return task;
