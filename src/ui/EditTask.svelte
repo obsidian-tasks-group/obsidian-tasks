@@ -152,12 +152,13 @@
      * @param fieldName
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
+     * @param forwardOnly
      */
-    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled', typedDate: string): string {
+    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled', typedDate: string, forwardOnly: boolean): string {
         return parseTypedDateForDisplay(
             fieldName,
             typedDate,
-            editableTask.forwardOnly ? new Date() : undefined,
+            forwardOnly ? new Date() : undefined,
         );
     }
 
@@ -218,37 +219,37 @@
     // NEW_TASK_FIELD_EDIT_REQUIRED
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
-        parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate);
+        parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate, editableTask.forwardOnly);
         isStartDateValid = !parsedStartDate.includes('invalid');
     }
 
     $: {
         editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
-        parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate);
+        parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate, editableTask.forwardOnly);
         isScheduledDateValid = !parsedScheduledDate.includes('invalid');
     }
 
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
-        parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate);
+        parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate, editableTask.forwardOnly);
         isDueDateValid = !parsedDueDate.includes('invalid');
     }
 
     $: {
         editableTask.doneDate = doAutocomplete(editableTask.doneDate);
-        parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate);
+        parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate, editableTask.forwardOnly);
         isDoneDateValid = !parsedDoneDate.includes('invalid');
     }
 
     $: {
         editableTask.createdDate = doAutocomplete(editableTask.createdDate);
-        parsedCreatedDate = parseTypedDateForDisplayUsingFutureDate('created', editableTask.createdDate);
+        parsedCreatedDate = parseTypedDateForDisplayUsingFutureDate('created', editableTask.createdDate, editableTask.forwardOnly);
         isCreatedDateValid = !parsedCreatedDate.includes('invalid');
     }
 
     $: {
         editableTask.cancelledDate = doAutocomplete(editableTask.cancelledDate);
-        parsedCancelledDate = parseTypedDateForDisplayUsingFutureDate('cancelled', editableTask.cancelledDate);
+        parsedCancelledDate = parseTypedDateForDisplayUsingFutureDate('cancelled', editableTask.cancelledDate, editableTask.forwardOnly);
         isCancelledDateValid = !parsedCancelledDate.includes('invalid');
     }
 
