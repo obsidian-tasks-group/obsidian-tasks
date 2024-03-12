@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
+    import { parseTypedDateForDisplay } from '../lib/DateTools';
     import { Recurrence } from '../Task/Recurrence';
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
@@ -145,30 +146,6 @@
             parseTypedDateForDisplayUsingFutureDate() and parseTypedDateForDisplay()
             may collapse in to a single case.
      */
-
-    /**
-     * Parse and return the entered value for a date field.
-     * @param fieldName
-     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
-     * @param forwardDate
-     * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
-     */
-    function parseTypedDateForDisplay(
-        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done' | 'cancelled',
-        typedDate: string,
-        forwardDate: Date | undefined = undefined,
-    ): string {
-        if (!typedDate) {
-            return `<i>no ${fieldName} date</i>`;
-        }
-        const parsed = chrono.parseDate(typedDate, forwardDate, {
-            forwardDate: forwardDate != undefined,
-        });
-        if (parsed !== null) {
-            return window.moment(parsed).format('YYYY-MM-DD');
-        }
-        return `<i>invalid ${fieldName} date</i>`;
-    }
 
     /**
      * Like {@link parseTypedDateForDisplay} but also accounts for the 'Only future dates' setting.
