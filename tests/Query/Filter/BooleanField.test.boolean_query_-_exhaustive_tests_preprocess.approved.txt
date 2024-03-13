@@ -112,6 +112,15 @@ Result:
 
 
 Input:
+'(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) AND (description includes 5) AND (description includes 6) AND (description includes 7) AND (description includes 8) AND (description includes 9)'
+=>
+Result:
+"(\"description includes 1\") AND (\"description includes 2\") AND (\"description includes 3\") AND (\"description includes 4\") AND (\"description includes 5\") AND (\"description includes 6\") AND (\"description includes 7\") AND (\"description includes 8\") AND (\"description includes 9\")"
+
+--------------------------------------------------------
+
+
+Input:
 '(description includes 1)   AND   (description includes 2)   AND   (description includes 3)   AND   (description includes 4)   AND   (description includes 5)   AND   (description includes 6)   AND   (description includes 7)   AND   (description includes 8)   AND   (description includes 9)'
 =>
 Result:
@@ -134,6 +143,15 @@ Input:
 =>
 Result:
 "(\"description includes d1\") AND NOT (\"description includes d2\")"
+
+--------------------------------------------------------
+
+
+Input:
+'(description includes d1) AND NOT (priority medium)'
+=>
+Result:
+"(\"description includes d1\") AND NOT (\"priority medium\")"
 
 --------------------------------------------------------
 
@@ -170,6 +188,15 @@ Input:
 =>
 Result:
 "(\"description includes d1\") OR NOT (\"description includes d2\")"
+
+--------------------------------------------------------
+
+
+Input:
+'(description includes d1) OR NOT (priority medium)'
+=>
+Result:
+"(\"description includes d1\") OR NOT (\"priority medium\")"
 
 --------------------------------------------------------
 
