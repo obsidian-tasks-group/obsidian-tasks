@@ -157,10 +157,9 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": " ((((( (f1)   (f2)  )))))) ",
+    "simplifiedLine": " (((((  NOT  (    (f1)  )))))) ",
     "filters": {
-        "f1": "NOT  (",
-        "f2": "description includes d1"
+        "f1": "description includes d1"
     }
 }
 
@@ -278,12 +277,11 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": " ( (f1)(f2)   (f3)(f4) ) ",
+    "simplifiedLine": " ( (f1)(f2)    NOT ( (f3) ) ",
     "filters": {
         "f1": "description includes d1",
         "f2": ") AND",
-        "f3": "NOT (",
-        "f4": "description includes d2"
+        "f3": "description includes d2"
     }
 }
 
@@ -295,12 +293,11 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": " ( (f1)(f2)     (f3)(f4) ) ",
+    "simplifiedLine": " ( (f1)(f2)      NOT ( (f3) ) ",
     "filters": {
         "f1": "description includes d1",
         "f2": ") AND",
-        "f3": "NOT (",
-        "f4": "priority medium"
+        "f3": "priority medium"
     }
 }
 
@@ -358,12 +355,11 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": " ( (f1)(f2)   (f3)(f4) ) ",
+    "simplifiedLine": " ( (f1)(f2)    NOT ( (f3) ) ",
     "filters": {
         "f1": "description includes d1",
         "f2": ") OR",
-        "f3": "NOT (",
-        "f4": "description includes d2"
+        "f3": "description includes d2"
     }
 }
 
@@ -375,12 +371,11 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": " ( (f1)(f2)     (f3)(f4) ) ",
+    "simplifiedLine": " ( (f1)(f2)      NOT ( (f3) ) ",
     "filters": {
         "f1": "description includes d1",
         "f2": ") OR",
-        "f3": "NOT (",
-        "f4": "priority medium"
+        "f3": "priority medium"
     }
 }
 
@@ -437,10 +432,9 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)(f2) ) ",
+    "simplifiedLine": " NOT ( (f1) ) ",
     "filters": {
-        "f1": "NOT (",
-        "f2": "description blahblah d1"
+        "f1": "description blahblah d1"
     }
 }
 
@@ -452,10 +446,9 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)   (f2)  ) ",
+    "simplifiedLine": " NOT  (    (f1)  ) ",
     "filters": {
-        "f1": "NOT  (",
-        "f2": "description includes d1"
+        "f1": "description includes d1"
     }
 }
 
@@ -467,10 +460,9 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)    (f2)   ) ",
+    "simplifiedLine": " NOT   (     (f1)   ) ",
     "filters": {
-        "f1": "NOT   (",
-        "f2": "happens before blahblahblah"
+        "f1": "happens before blahblahblah"
     }
 }
 

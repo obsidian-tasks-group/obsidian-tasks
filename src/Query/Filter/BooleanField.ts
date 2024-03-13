@@ -203,10 +203,10 @@ export class BooleanField extends Field {
             return false;
         }
 
-        // const unaryOperatorAndParentheses = /^NOT *\($/;
-        // if (RegExp(unaryOperatorAndParentheses).exec(part)) {
-        //     return false;
-        // }
+        const unaryOperatorAndParentheses = /^NOT *\($/;
+        if (RegExp(unaryOperatorAndParentheses).exec(part)) {
+            return false;
+        }
         return true;
     }
 
