@@ -124,7 +124,8 @@ export class BooleanField extends Field {
         // and the remaining filter text.
         // Some filters end up incorrectly having leading or trailing parentheses, so more work will be needed.
 
-        // Escape special regex characters for boolean operators and create a regex pattern to match binary operators and capture surrounding parentheses.
+        // Escape special regex characters for Binary boolean operators and create a regex pattern to match
+        // operators and capture surrounding parentheses.
         // This matches text such as:
         //   ') AND ('
         //   ')  AND  NOT  ('
@@ -133,7 +134,8 @@ export class BooleanField extends Field {
         // Divide up line, split at binary operator boundaries
         const substrings = line.split(binaryOperatorsRegex);
 
-        // Escape special regex characters for boolean operators and create a regex pattern to match unary operators and capture surrounding parentheses.
+        // Escape special regex characters for Unary boolean operators and create a regex pattern to match
+        // operators and capture surrounding parentheses.
         // This matches text such as:
         //   'NOT ('
         //   'NOT  ('
