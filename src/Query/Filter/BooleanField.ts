@@ -179,7 +179,7 @@ export class BooleanField extends Field {
             // Check if the part is an operator by matching against the regex without surrounding parentheses
             if (!BooleanField.isAFilter(part)) {
                 // It's an operator, space or parenthesis, so add it directly to the simplifiedLine
-                simplifiedLine += ` ${part} `;
+                simplifiedLine += `${part}`;
             } else {
                 // It's a filter, replace it with a placeholder, and save it:
                 const placeholder = `f${currentIndex}`;
