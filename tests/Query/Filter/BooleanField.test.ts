@@ -6,7 +6,10 @@ import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import { verifyBooleanExpressionPreprocessing } from './VerifyBooleanExpressionPreprocessing';
+import {
+    verifyBooleanExpressionExplanation,
+    verifyBooleanExpressionPreprocessing,
+} from './VerifyBooleanExpressionPreprocessing';
 
 window.moment = moment;
 
@@ -213,6 +216,10 @@ describe('boolean query', () => {
 describe('boolean query - exhaustive tests', () => {
     it('preprocess', () => {
         verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpression);
+    });
+
+    it('explain', () => {
+        verifyBooleanExpressionExplanation();
     });
 });
 
