@@ -45,7 +45,7 @@ OR (description includes d1)
 `;
 
 export function verifyBooleanExpressionPreprocessing(fn: (text: string) => any) {
-    verifyAll('Results of parsing boolean expressions', inputs.split('\n'), (input) => {
+    verifyAll('Results of preprocessing boolean expressions', inputs.split('\n'), (input) => {
         if (input.trim() === '') {
             return '';
         }
