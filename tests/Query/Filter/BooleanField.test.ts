@@ -154,7 +154,7 @@ describe('boolean query', () => {
                 'malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)',
             ],
             [
-                '(path includes a)AND OR(path includes b)',
+                '(path includes a)AND NOT(path includes b)',
                 'malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)',
             ],
             [
@@ -176,7 +176,7 @@ describe('boolean query', () => {
                 'malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)',
             ],
             [
-                '(path includes a) AND OR(path includes b)',
+                '(path includes a) AND NOT(path includes b)',
                 'malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)',
             ],
             [
