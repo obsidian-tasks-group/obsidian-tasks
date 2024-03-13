@@ -1,5 +1,5 @@
-import { parse as boonParse } from 'boon-js';
 import type { PostfixExpression } from 'boon-js';
+import { parse as boonParse } from 'boon-js';
 
 import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task/Task';
@@ -114,6 +114,24 @@ export class BooleanField extends Field {
         // Boon doesn't process expression with spaces unless they are surrounded by quotes, so replace
         // (due today) by ("due today").
         return line.replace(/\(([^()]+)\)/g, '("$1")');
+    }
+
+    public static preprocessExpression2(line: string): string[] {
+        // This code is currently one of a series of iterations, attempting to improve the
+        // handling of parentheses within Boolean filter lines.
+
+        // In this iteration, we try to split the input line in to separate operators-plus-adjacent-parentheses
+        // and the remaining filter text.
+        // Some filters end up incorrectly having leading or trailing parentheses, so more work will be needed.
+
+        // Escape special regex characters for boolean operators and create a regex pattern to match operators and capture surrounding parentheses.
+        // This matches text such as:
+        //   ') AND ('
+        //   ')  AND NOT  ('
+        const operatorsRegex = /(\)\s+(?:AND|OR|AND NOT|OR NOT|XOR)\s+\()/g;
+
+        // The returned array will hold the divided up line, split at operator boundaries
+        return line.split(operatorsRegex);
     }
 
     /*

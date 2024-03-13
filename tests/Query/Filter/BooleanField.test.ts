@@ -215,6 +215,10 @@ describe('boolean query - exhaustive tests', () => {
         verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpression);
     });
 
+    it('preprocess - rewrite', () => {
+        verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpression2);
+    });
+
     it('explain', () => {
         verifyBooleanExpressionExplanation();
     });
