@@ -197,10 +197,14 @@ export class BooleanField extends Field {
         const onlySpacesAndParentheses = /^[ ()]+$/;
         const binaryOperatorAndParentheses = /^ *\) *(AND|OR|XOR) *\( *$/;
         const unaryOperatorAndParentheses = /^NOT *\($/;
+        const remnantsOfNot = /^\) *(AND|OR)$/;
 
-        return ![onlySpacesAndParentheses, binaryOperatorAndParentheses, unaryOperatorAndParentheses].some((regex) =>
-            RegExp(regex).exec(part),
-        );
+        return ![
+            onlySpacesAndParentheses,
+            binaryOperatorAndParentheses,
+            unaryOperatorAndParentheses,
+            remnantsOfNot,
+        ].some((regex) => RegExp(regex).exec(part));
     }
 
     /*

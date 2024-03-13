@@ -277,11 +277,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": " ( (f1)(f2)    NOT ( (f3) ) ",
+    "simplifiedLine": " ( (f1) ) AND     NOT ( (f2) ) ",
     "filters": {
         "f1": "description includes d1",
-        "f2": ") AND",
-        "f3": "description includes d2"
+        "f2": "description includes d2"
     }
 }
 
@@ -293,11 +292,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": " ( (f1)(f2)      NOT ( (f3) ) ",
+    "simplifiedLine": " ( (f1) ) AND       NOT ( (f2) ) ",
     "filters": {
         "f1": "description includes d1",
-        "f2": ") AND",
-        "f3": "priority medium"
+        "f2": "priority medium"
     }
 }
 
@@ -355,11 +353,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": " ( (f1)(f2)    NOT ( (f3) ) ",
+    "simplifiedLine": " ( (f1) ) OR     NOT ( (f2) ) ",
     "filters": {
         "f1": "description includes d1",
-        "f2": ") OR",
-        "f3": "description includes d2"
+        "f2": "description includes d2"
     }
 }
 
@@ -371,11 +368,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": " ( (f1)(f2)      NOT ( (f3) ) ",
+    "simplifiedLine": " ( (f1) ) OR       NOT ( (f2) ) ",
     "filters": {
         "f1": "description includes d1",
-        "f2": ") OR",
-        "f3": "priority medium"
+        "f2": "priority medium"
     }
 }
 
