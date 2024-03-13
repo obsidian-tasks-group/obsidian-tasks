@@ -1,4 +1,4 @@
-Results of parsing boolean expressions
+Results of preprocessing boolean expressions
 
 
 
