@@ -6,10 +6,7 @@ import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import {
-    verifyBooleanExpressionExplanation,
-    verifyBooleanExpressionPreprocessing,
-} from './VerifyBooleanExpressionPreprocessing';
+import { verifyBooleanExpressionExplanation, verifyBooleanExpressionPreprocessing } from './BooleanFieldVerify';
 
 window.moment = moment;
 
