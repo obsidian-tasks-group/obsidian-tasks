@@ -133,6 +133,18 @@ Result:
 
 
 Input:
+'(((((NOT  ( description includes d1 ))))))'
+=>
+Result:
+  (((((NOT  ( description includes d1 )))))) =>
+    NOT:
+      description includes d1
+
+
+--------------------------------------------------------
+
+
+Input:
 '(description includes #context/location1)'
 =>
 Result:

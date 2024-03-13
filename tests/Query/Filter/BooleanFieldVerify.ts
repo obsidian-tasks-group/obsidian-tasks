@@ -12,6 +12,7 @@ export const inputs = `
 ( description includes a )   AND ( (description includes b)  AND (description includes c) )
 ( description includes a )   OR  ( (description includes b)  OR  (description includes c) )
 (((((description includes #context/location1)))))
+(((((NOT  ( description includes d1 ))))))
 (description includes #context/location1)
 (description includes #context/location1) OR (description includes #context/location2 ) OR (  description includes #context/location3 ) OR   (  description includes #context/location4 )
 (description includes 1) AND (description includes 2) AND (description includes 3)
