@@ -153,6 +153,95 @@ describe('boolean query', () => {
             );
         });
 
+        describe('Missing spaces before operator', () => {
+            it('No space before AND - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage('(path includes a)AND (path includes b)');
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)"',
+                );
+            });
+
+            it('No space before AND OR - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage(
+                    '(path includes a)AND OR(path includes b)',
+                );
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)"',
+                );
+            });
+
+            it('No space before OR - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage('(path includes a)OR (path includes b)');
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: O. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)"',
+                );
+            });
+
+            it('No space before OR NOT - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage(
+                    '(path includes a)OR NOT (path includes b)',
+                );
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: O. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)"',
+                );
+            });
+
+            it('No space before XOR - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage('(path includes a)XOR (path includes b)');
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: X. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)"',
+                );
+            });
+        });
+
+        describe('Missing spaces after operator', () => {
+            it('No space after AND - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage('(path includes a) AND(path includes b)');
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)"',
+                );
+            });
+
+            it('No space after AND OR - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage(
+                    '(path includes a) AND OR(path includes b)',
+                );
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)"',
+                );
+            });
+
+            it('No space after OR - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage('(path includes a) OR(path includes b)');
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)"',
+                );
+            });
+
+            it('No space after OR NOT - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage(
+                    '(path includes a) OR NOT(path includes b)',
+                );
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)"',
+                );
+            });
+
+            it('No space after XOR - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage('(path includes a) XOR(path includes b)');
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)"',
+                );
+            });
+
+            it('No space after NOT - gives error', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage('NOT(path includes b)');
+                expect(filter.error).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)"',
+                );
+            });
+        });
+
         // Have not managed to create instructions that trigger these errors:
         //      result.error = 'empty operator in boolean query';
         //      result.error = `unknown boolean operator '${token.value}'`;
