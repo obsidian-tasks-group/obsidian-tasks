@@ -58,19 +58,19 @@ Result:
 
 
 Input:
-'( description includes a ) AND ( (description includes b) AND (description includes c) )'
+'( description includes a )   AND ( (description includes b)  AND (description includes c) )'
 =>
 Result:
-"(\" description includes a \") AND ( (\"description includes b\") AND (\"description includes c\") )"
+"(\" description includes a \")   AND ( (\"description includes b\")  AND (\"description includes c\") )"
 
 --------------------------------------------------------
 
 
 Input:
-'( description includes a ) OR ( (description includes b) OR (description includes c) )'
+'( description includes a )   OR  ( (description includes b)  OR  (description includes c) )'
 =>
 Result:
-"(\" description includes a \") OR ( (\"description includes b\") OR (\"description includes c\") )"
+"(\" description includes a \")   OR  ( (\"description includes b\")  OR  (\"description includes c\") )"
 
 --------------------------------------------------------
 
@@ -148,10 +148,10 @@ Result:
 
 
 Input:
-'(description includes d1) AND NOT (priority medium)'
+'(description includes d1) AND   NOT (priority medium)'
 =>
 Result:
-"(\"description includes d1\") AND NOT (\"priority medium\")"
+"(\"description includes d1\") AND   NOT (\"priority medium\")"
 
 --------------------------------------------------------
 
@@ -193,10 +193,10 @@ Result:
 
 
 Input:
-'(description includes d1) OR NOT (priority medium)'
+'(description includes d1) OR   NOT (priority medium)'
 =>
 Result:
-"(\"description includes d1\") OR NOT (\"priority medium\")"
+"(\"description includes d1\") OR   NOT (\"priority medium\")"
 
 --------------------------------------------------------
 
@@ -239,19 +239,19 @@ Result:
 
 
 Input:
-'NOT (description includes d1)'
+'NOT  ( description includes d1 )'
 =>
 Result:
-"NOT (\"description includes d1\")"
+"NOT  (\" description includes d1 \")"
 
 --------------------------------------------------------
 
 
 Input:
-'NOT (happens before blahblahblah)'
+'NOT   (  happens before blahblahblah  )'
 =>
 Result:
-"NOT (\"happens before blahblahblah\")"
+"NOT   (\"  happens before blahblahblah  \")"
 
 --------------------------------------------------------
 

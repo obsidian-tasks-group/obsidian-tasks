@@ -92,10 +92,10 @@ malformed boolean query -- Invalid token (check the documentation for guidelines
 
 
 Input:
-'( description includes a ) AND ( (description includes b) AND (description includes c) )'
+'( description includes a )   AND ( (description includes b)  AND (description includes c) )'
 =>
 Result:
-  ( description includes a ) AND ( (description includes b) AND (description includes c) ) =>
+  ( description includes a )   AND ( (description includes b)  AND (description includes c) ) =>
     AND (All of):
       description includes a
       AND (All of):
@@ -107,10 +107,10 @@ Result:
 
 
 Input:
-'( description includes a ) OR ( (description includes b) OR (description includes c) )'
+'( description includes a )   OR  ( (description includes b)  OR  (description includes c) )'
 =>
 Result:
-  ( description includes a ) OR ( (description includes b) OR (description includes c) ) =>
+  ( description includes a )   OR  ( (description includes b)  OR  (description includes c) ) =>
     OR (At least one of):
       description includes a
       OR (At least one of):
@@ -240,10 +240,10 @@ Result:
 
 
 Input:
-'(description includes d1) AND NOT (priority medium)'
+'(description includes d1) AND   NOT (priority medium)'
 =>
 Result:
-  (description includes d1) AND NOT (priority medium) =>
+  (description includes d1) AND   NOT (priority medium) =>
     AND (All of):
       description includes d1
       NOT:
@@ -308,10 +308,10 @@ Result:
 
 
 Input:
-'(description includes d1) OR NOT (priority medium)'
+'(description includes d1) OR   NOT (priority medium)'
 =>
 Result:
-  (description includes d1) OR NOT (priority medium) =>
+  (description includes d1) OR   NOT (priority medium) =>
     OR (At least one of):
       description includes d1
       NOT:
@@ -367,10 +367,10 @@ couldn't parse sub-expression 'description blahblah d1'
 
 
 Input:
-'NOT (description includes d1)'
+'NOT  ( description includes d1 )'
 =>
 Result:
-  NOT (description includes d1) =>
+  NOT  ( description includes d1 ) =>
     NOT:
       description includes d1
 
@@ -379,7 +379,7 @@ Result:
 
 
 Input:
-'NOT (happens before blahblahblah)'
+'NOT   (  happens before blahblahblah  )'
 =>
 Result:
 couldn't parse sub-expression 'happens before blahblahblah': do not understand happens date
