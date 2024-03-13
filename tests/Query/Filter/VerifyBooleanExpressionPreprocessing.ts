@@ -1,5 +1,6 @@
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { errorMessageForException } from '../../../src/lib/ExceptionTools';
+import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 
 export const inputs = `
 "description includes d1" AND "description includes d2"
@@ -51,6 +52,31 @@ export function verifyBooleanExpressionPreprocessing(fn: (text: string) => any) 
             result = JSON.stringify(fn(input), null, 4);
         } catch (e) {
             result = errorMessageForException('Parsing expression', e);
+        }
+        return `
+Input:
+'${input}'
+=>
+Result:
+${result}
+
+--------------------------------------------------------
+`;
+    });
+}
+
+export function verifyBooleanExpressionExplanation() {
+    verifyAll('Results of parsing and explaining boolean expressions', inputs.split('\n'), (input) => {
+        if (input.trim() === '') {
+            return '';
+        }
+
+        let result: string = '';
+        const filterOrErrorMessage = new BooleanField().createFilterOrErrorMessage(input);
+        if (filterOrErrorMessage.isValid()) {
+            result = filterOrErrorMessage.filter!.explainFilterIndented('  ');
+        } else {
+            result = filterOrErrorMessage.error!;
         }
         return `
 Input:
