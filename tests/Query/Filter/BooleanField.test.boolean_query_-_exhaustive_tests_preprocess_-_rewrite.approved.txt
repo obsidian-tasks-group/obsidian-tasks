@@ -276,7 +276,9 @@ Input:
 =>
 Result:
 [
-    "(description includes d1) AND   NOT (priority medium)"
+    "(description includes d1",
+    ") AND   NOT (",
+    "priority medium)"
 ]
 
 --------------------------------------------------------
@@ -341,7 +343,9 @@ Input:
 =>
 Result:
 [
-    "(description includes d1) OR   NOT (priority medium)"
+    "(description includes d1",
+    ") OR   NOT (",
+    "priority medium)"
 ]
 
 --------------------------------------------------------

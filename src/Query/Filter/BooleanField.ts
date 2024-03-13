@@ -127,8 +127,8 @@ export class BooleanField extends Field {
         // Escape special regex characters for boolean operators and create a regex pattern to match operators and capture surrounding parentheses.
         // This matches text such as:
         //   ') AND ('
-        //   ')  AND NOT  ('
-        const operatorsRegex = /(\)\s+(?:AND|OR|AND NOT|OR NOT|XOR)\s+\()/g;
+        //   ')  AND  NOT  ('
+        const operatorsRegex = /(\)\s+(?:AND|OR|AND +NOT|OR +NOT|XOR)\s+\()/g;
 
         // The returned array will hold the divided up line, split at operator boundaries
         return line.split(operatorsRegex);
