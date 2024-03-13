@@ -19,11 +19,14 @@ Input:
 =>
 Result:
 [
-    "( (description includes a",
+    "( (",
+    "description includes a",
     ") AND (",
-    "description includes b) ",
+    "description includes b",
+    ") ",
     ") AND (",
-    "description includes c)"
+    "description includes c",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -34,17 +37,21 @@ Input:
 =>
 Result:
 [
-    "( (description includes a",
+    "( (",
+    "description includes a",
     ") AND (",
     "description includes b",
     ") AND (",
-    "description includes c) ",
+    "description includes c",
+    ") ",
     ") OR (",
-    " (description includes d",
+    " (",
+    "description includes d",
     ") AND (",
     "description includes e",
     ") AND (",
-    "description includes f) )"
+    "description includes f",
+    ") )"
 ]
 
 --------------------------------------------------------
@@ -55,11 +62,14 @@ Input:
 =>
 Result:
 [
-    "( (description includes a",
+    "( (",
+    "description includes a",
     ") OR (",
-    "description includes b) ",
+    "description includes b",
+    ") ",
     ") OR (",
-    "description includes c)"
+    "description includes c",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -70,17 +80,21 @@ Input:
 =>
 Result:
 [
-    "( (description includes a",
+    "( (",
+    "description includes a",
     ") OR (",
     "description includes b",
     ") OR (",
-    "description includes c) ",
+    "description includes c",
+    ") ",
     ") AND (",
-    " (description includes d",
+    " (",
+    "description includes d",
     ") OR (",
     "description includes e",
     ") OR (",
-    "description includes f) )"
+    "description includes f",
+    ") )"
 ]
 
 --------------------------------------------------------
@@ -91,17 +105,25 @@ Input:
 =>
 Result:
 [
-    "( (filter by function task.description.includes('a')",
+    "( (",
+    "filter by function task.description.includes('a'",
+    ")",
     ") OR (",
-    "filter by function task.description.includes('b')",
+    "filter by function task.description.includes('b'",
+    ")",
     ") OR (",
-    "filter by function task.description.includes('c')) ",
+    "filter by function task.description.includes('c'",
+    ")) ",
     ") AND (",
-    " (filter by function task.description.includes('d')",
+    " (",
+    "filter by function task.description.includes('d'",
+    ")",
     ") OR (",
-    "filter by function task.description.includes('e')",
+    "filter by function task.description.includes('e'",
+    ")",
     ") OR (",
-    "filter by function task.description.includes('f')) )"
+    "filter by function task.description.includes('f'",
+    ")) )"
 ]
 
 --------------------------------------------------------
@@ -112,11 +134,16 @@ Input:
 =>
 Result:
 [
-    "( description includes a ",
+    "(",
+    " ",
+    "description includes a",
+    " ",
     ")   AND (",
-    " (description includes b",
+    " (",
+    "description includes b",
     ")  AND (",
-    "description includes c) )"
+    "description includes c",
+    ") )"
 ]
 
 --------------------------------------------------------
@@ -127,11 +154,16 @@ Input:
 =>
 Result:
 [
-    "( description includes a ",
+    "(",
+    " ",
+    "description includes a",
+    " ",
     ")   OR  (",
-    " (description includes b",
+    " (",
+    "description includes b",
     ")  OR  (",
-    "description includes c) )"
+    "description includes c",
+    ") )"
 ]
 
 --------------------------------------------------------
@@ -142,7 +174,9 @@ Input:
 =>
 Result:
 [
-    "(((((description includes #context/location1)))))"
+    "(((((",
+    "description includes #context/location1",
+    ")))))"
 ]
 
 --------------------------------------------------------
@@ -155,7 +189,9 @@ Result:
 [
     "(((((",
     "NOT  (",
-    " description includes d1 ))))))"
+    " ",
+    "description includes d1",
+    " ))))))"
 ]
 
 --------------------------------------------------------
@@ -166,7 +202,9 @@ Input:
 =>
 Result:
 [
-    "(description includes #context/location1)"
+    "(",
+    "description includes #context/location1",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -177,13 +215,19 @@ Input:
 =>
 Result:
 [
-    "(description includes #context/location1",
+    "(",
+    "description includes #context/location1",
     ") OR (",
-    "description includes #context/location2 ",
+    "description includes #context/location2",
+    " ",
     ") OR (",
-    "  description includes #context/location3 ",
+    "  ",
+    "description includes #context/location3",
+    " ",
     ") OR   (",
-    "  description includes #context/location4 )"
+    "  ",
+    "description includes #context/location4",
+    " )"
 ]
 
 --------------------------------------------------------
@@ -194,11 +238,13 @@ Input:
 =>
 Result:
 [
-    "(description includes 1",
+    "(",
+    "description includes 1",
     ") AND (",
     "description includes 2",
     ") AND (",
-    "description includes 3)"
+    "description includes 3",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -209,7 +255,8 @@ Input:
 =>
 Result:
 [
-    "(description includes 1",
+    "(",
+    "description includes 1",
     ") AND (",
     "description includes 2",
     ") AND (",
@@ -225,7 +272,8 @@ Result:
     ") AND (",
     "description includes 8",
     ") AND (",
-    "description includes 9)"
+    "description includes 9",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -236,7 +284,8 @@ Input:
 =>
 Result:
 [
-    "(description includes 1",
+    "(",
+    "description includes 1",
     ")   AND   (",
     "description includes 2",
     ")   AND   (",
@@ -252,7 +301,8 @@ Result:
     ")   AND   (",
     "description includes 8",
     ")   AND   (",
-    "description includes 9)"
+    "description includes 9",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -263,9 +313,11 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") AND (",
-    "priority medium)"
+    "priority medium",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -276,10 +328,13 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
-    ") AND ",
+    "(",
+    "description includes d1",
+    ") AND",
+    " ",
     "NOT (",
-    "description includes d2)"
+    "description includes d2",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -290,10 +345,13 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
-    ") AND   ",
+    "(",
+    "description includes d1",
+    ") AND",
+    "   ",
     "NOT (",
-    "priority medium)"
+    "priority medium",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -304,9 +362,11 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") OR (",
-    "description includes d2)"
+    "description includes d2",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -317,11 +377,13 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") OR (",
     "description includes d2",
     ") OR (",
-    "priority medium)"
+    "priority medium",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -332,9 +394,11 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") OR (",
-    "priority medium)"
+    "priority medium",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -345,10 +409,13 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
-    ") OR ",
+    "(",
+    "description includes d1",
+    ") OR",
+    " ",
     "NOT (",
-    "description includes d2)"
+    "description includes d2",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -359,10 +426,13 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
-    ") OR   ",
+    "(",
+    "description includes d1",
+    ") OR",
+    "   ",
     "NOT (",
-    "priority medium)"
+    "priority medium",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -373,9 +443,11 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") XOR (",
-    "description includes d2)"
+    "description includes d2",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -386,9 +458,11 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") XOR (",
-    "priority medium)"
+    "priority medium",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -400,7 +474,8 @@ Input:
 =>
 Result:
 [
-    "AND (description includes d1)"
+    "AND (description includes d1",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -412,7 +487,8 @@ Input:
 Result:
 [
     "NOT (",
-    "description blahblah d1)"
+    "description blahblah d1",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -424,7 +500,9 @@ Input:
 Result:
 [
     "NOT  (",
-    " description includes d1 )"
+    " ",
+    "description includes d1",
+    " )"
 ]
 
 --------------------------------------------------------
@@ -436,7 +514,9 @@ Input:
 Result:
 [
     "NOT   (",
-    "  happens before blahblahblah  )"
+    "  ",
+    "happens before blahblahblah",
+    "  )"
 ]
 
 --------------------------------------------------------
@@ -447,7 +527,8 @@ Input:
 =>
 Result:
 [
-    "OR (description includes d1)"
+    "OR (description includes d1",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -458,7 +539,9 @@ Input:
 =>
 Result:
 [
-    "(description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)"
+    "(",
+    "description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -470,9 +553,11 @@ Input:
 =>
 Result:
 [
-    "(path includes (some example",
+    "(",
+    "path includes (some example",
     ") OR (",
-    "path includes )some example()"
+    "path includes )some example(",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -483,9 +568,12 @@ Input:
 =>
 Result:
 [
-    "(path includes (some example)",
+    "(",
+    "path includes (some example",
+    ")",
     ") OR (",
-    "path includes )some example()"
+    "path includes )some example(",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -496,9 +584,11 @@ Input:
 =>
 Result:
 [
-    "(path includes )some example(",
+    "(",
+    "path includes )some example(",
     ") OR (",
-    "path includes (some example))"
+    "path includes (some example",
+    "))"
 ]
 
 --------------------------------------------------------
@@ -509,9 +599,12 @@ Input:
 =>
 Result:
 [
-    "(path includes ()some example()",
+    "(",
+    "path includes ()some example(",
+    ")",
     ") OR (",
-    "path includes ((some example)))"
+    "path includes ((some example",
+    ")))"
 ]
 
 --------------------------------------------------------
@@ -523,9 +616,14 @@ Input:
 =>
 Result:
 [
-    "( description regex matches /(buy|order|voucher|lakeland|purchase|\\spresent)/i ",
+    "(",
+    " ",
+    "description regex matches /(buy|order|voucher|lakeland|purchase|\\spresent)/i",
+    " ",
     ") OR (",
-    " path includes Home/Shopping )"
+    " ",
+    "path includes Home/Shopping",
+    " )"
 ]
 
 --------------------------------------------------------
@@ -536,21 +634,38 @@ Input:
 =>
 Result:
 [
-    "( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ",
+    "(",
+    " ",
+    "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type",
+    ") ",
     ") OR (",
-    " filter by function const date = task.due.moment; return date ? !date.isValid() : false; ",
+    " ",
+    "filter by function const date = task.due.moment; return date ? !date.isValid() : false;",
+    " ",
     ") OR (",
-    " filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ",
+    " ",
+    "filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false",
+    " ",
     ") OR (",
-    " filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ",
+    " ",
+    "filter by function task.urgency.toFixed(2) === 1.95.toFixed(2",
+    ") ",
     ") OR (",
-    " filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ",
+    " ",
+    "filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'",
+    ") ",
     ") OR (",
-    " filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ",
+    " ",
+    "filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(",
+    ") ",
     ") OR (",
-    " filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ",
+    " ",
+    "filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false",
+    " ",
     ") OR (",
-    " filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )"
+    " ",
+    "filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;",
+    " )"
 ]
 
 --------------------------------------------------------

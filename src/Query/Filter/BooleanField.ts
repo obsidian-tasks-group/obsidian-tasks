@@ -120,9 +120,13 @@ export class BooleanField extends Field {
         // This code is currently one of a series of iterations, attempting to improve the
         // handling of parentheses within Boolean filter lines.
 
-        // In this iteration, we try to split the input line in to separate operators-plus-adjacent-parentheses
+        // In this iteration, we split the input line in to separate operators-plus-adjacent-parentheses
         // and the remaining filter text.
-        // Some filters end up incorrectly having leading or trailing parentheses, so more work will be needed.
+
+        // This will now correctly split up almost all valid Boolean instructions - many more cases than the
+        // original preprocessExpression() method.
+        // The one current exception is that any Spaces ) at the end of sub-expressions/filters are interpreted
+        //  as part ofthe Boolean condition, not the filter.
 
         // Escape special regex characters for Binary boolean operators and create a regex pattern to match
         // operators and capture surrounding parentheses.
@@ -145,8 +149,19 @@ export class BooleanField extends Field {
         // Divide up the divided components, this time splitting at unary operator boundaries.
         // flatMap() divides and then flattens the result.
         // Then we filter out empty values.
-        return substrings
+        const substringsSplitAtOperatorBoundaries = substrings
             .flatMap((substring) => substring.split(unaryOperatorsRegex))
+            .filter((substring) => substring !== '');
+
+        // All that remains now is to separate:
+        // - any spaces and opening parentheses at the start of filters
+        // - any spaces and close   parentheses at the end of filters
+        const openingParensAndSpacesAtStartRegex = /(^[ (]*)/;
+        const closingParensAndSpacesAtEndRegex = /([ )]*$)/;
+
+        return substringsSplitAtOperatorBoundaries
+            .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
+            .flatMap((substring) => substring.split(closingParensAndSpacesAtEndRegex))
             .filter((substring) => substring !== '');
     }
 
