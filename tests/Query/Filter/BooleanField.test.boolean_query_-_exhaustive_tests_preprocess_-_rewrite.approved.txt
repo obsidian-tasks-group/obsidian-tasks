@@ -7,9 +7,12 @@ Input:
 '"description includes d1" AND "description includes d2"'
 =>
 Result:
-[
-    "\"description includes d1\" AND \"description includes d2\""
-]
+{
+    "simplifiedLine": "(f1)",
+    "filters": {
+        "f1": "\"description includes d1\" AND \"description includes d2\""
+    }
+}
 
 --------------------------------------------------------
 
@@ -18,16 +21,14 @@ Input:
 '( (description includes a) AND (description includes b) ) AND (description includes c)'
 =>
 Result:
-[
-    "( (",
-    "description includes a",
-    ") AND (",
-    "description includes b",
-    ") ",
-    ") AND (",
-    "description includes c",
-    ")"
-]
+{
+    "simplifiedLine": " ( ( (f1) ) AND ( (f2) )   ) AND ( (f3) ) ",
+    "filters": {
+        "f1": "description includes a",
+        "f2": "description includes b",
+        "f3": "description includes c"
+    }
+}
 
 --------------------------------------------------------
 
@@ -36,23 +37,17 @@ Input:
 '( (description includes a) AND (description includes b) AND (description includes c) ) OR ( (description includes d) AND (description includes e) AND (description includes f) )'
 =>
 Result:
-[
-    "( (",
-    "description includes a",
-    ") AND (",
-    "description includes b",
-    ") AND (",
-    "description includes c",
-    ") ",
-    ") OR (",
-    " (",
-    "description includes d",
-    ") AND (",
-    "description includes e",
-    ") AND (",
-    "description includes f",
-    ") )"
-]
+{
+    "simplifiedLine": " ( ( (f1) ) AND ( (f2) ) AND ( (f3) )   ) OR (   ( (f4) ) AND ( (f5) ) AND ( (f6) ) ) ",
+    "filters": {
+        "f1": "description includes a",
+        "f2": "description includes b",
+        "f3": "description includes c",
+        "f4": "description includes d",
+        "f5": "description includes e",
+        "f6": "description includes f"
+    }
+}
 
 --------------------------------------------------------
 
@@ -61,16 +56,14 @@ Input:
 '( (description includes a) OR (description includes b) ) OR (description includes c)'
 =>
 Result:
-[
-    "( (",
-    "description includes a",
-    ") OR (",
-    "description includes b",
-    ") ",
-    ") OR (",
-    "description includes c",
-    ")"
-]
+{
+    "simplifiedLine": " ( ( (f1) ) OR ( (f2) )   ) OR ( (f3) ) ",
+    "filters": {
+        "f1": "description includes a",
+        "f2": "description includes b",
+        "f3": "description includes c"
+    }
+}
 
 --------------------------------------------------------
 
@@ -79,23 +72,17 @@ Input:
 '( (description includes a) OR (description includes b) OR (description includes c) ) AND ( (description includes d) OR (description includes e) OR (description includes f) )'
 =>
 Result:
-[
-    "( (",
-    "description includes a",
-    ") OR (",
-    "description includes b",
-    ") OR (",
-    "description includes c",
-    ") ",
-    ") AND (",
-    " (",
-    "description includes d",
-    ") OR (",
-    "description includes e",
-    ") OR (",
-    "description includes f",
-    ") )"
-]
+{
+    "simplifiedLine": " ( ( (f1) ) OR ( (f2) ) OR ( (f3) )   ) AND (   ( (f4) ) OR ( (f5) ) OR ( (f6) ) ) ",
+    "filters": {
+        "f1": "description includes a",
+        "f2": "description includes b",
+        "f3": "description includes c",
+        "f4": "description includes d",
+        "f5": "description includes e",
+        "f6": "description includes f"
+    }
+}
 
 --------------------------------------------------------
 
@@ -104,27 +91,17 @@ Input:
 '( (filter by function task.description.includes('a')) OR (filter by function task.description.includes('b')) OR (filter by function task.description.includes('c')) ) AND ( (filter by function task.description.includes('d')) OR (filter by function task.description.includes('e')) OR (filter by function task.description.includes('f')) )'
 =>
 Result:
-[
-    "( (",
-    "filter by function task.description.includes('a'",
-    ")",
-    ") OR (",
-    "filter by function task.description.includes('b'",
-    ")",
-    ") OR (",
-    "filter by function task.description.includes('c'",
-    ")) ",
-    ") AND (",
-    " (",
-    "filter by function task.description.includes('d'",
-    ")",
-    ") OR (",
-    "filter by function task.description.includes('e'",
-    ")",
-    ") OR (",
-    "filter by function task.description.includes('f'",
-    ")) )"
-]
+{
+    "simplifiedLine": " ( ( (f1) )  ) OR ( (f2) )  ) OR ( (f3) ))   ) AND (   ( (f4) )  ) OR ( (f5) )  ) OR ( (f6) )) ) ",
+    "filters": {
+        "f1": "filter by function task.description.includes('a'",
+        "f2": "filter by function task.description.includes('b'",
+        "f3": "filter by function task.description.includes('c'",
+        "f4": "filter by function task.description.includes('d'",
+        "f5": "filter by function task.description.includes('e'",
+        "f6": "filter by function task.description.includes('f'"
+    }
+}
 
 --------------------------------------------------------
 
@@ -133,18 +110,14 @@ Input:
 '( description includes a )   AND ( (description includes b)  AND (description includes c) )'
 =>
 Result:
-[
-    "(",
-    " ",
-    "description includes a",
-    " ",
-    ")   AND (",
-    " (",
-    "description includes b",
-    ")  AND (",
-    "description includes c",
-    ") )"
-]
+{
+    "simplifiedLine": " (    (f1)    )   AND (   ( (f2) )  AND ( (f3) ) ) ",
+    "filters": {
+        "f1": "description includes a",
+        "f2": "description includes b",
+        "f3": "description includes c"
+    }
+}
 
 --------------------------------------------------------
 
@@ -153,18 +126,14 @@ Input:
 '( description includes a )   OR  ( (description includes b)  OR  (description includes c) )'
 =>
 Result:
-[
-    "(",
-    " ",
-    "description includes a",
-    " ",
-    ")   OR  (",
-    " (",
-    "description includes b",
-    ")  OR  (",
-    "description includes c",
-    ") )"
-]
+{
+    "simplifiedLine": " (    (f1)    )   OR  (   ( (f2) )  OR  ( (f3) ) ) ",
+    "filters": {
+        "f1": "description includes a",
+        "f2": "description includes b",
+        "f3": "description includes c"
+    }
+}
 
 --------------------------------------------------------
 
@@ -173,11 +142,12 @@ Input:
 '(((((description includes #context/location1)))))'
 =>
 Result:
-[
-    "(((((",
-    "description includes #context/location1",
-    ")))))"
-]
+{
+    "simplifiedLine": " ((((( (f1) ))))) ",
+    "filters": {
+        "f1": "description includes #context/location1"
+    }
+}
 
 --------------------------------------------------------
 
@@ -186,13 +156,13 @@ Input:
 '(((((NOT  ( description includes d1 ))))))'
 =>
 Result:
-[
-    "(((((",
-    "NOT  (",
-    " ",
-    "description includes d1",
-    " ))))))"
-]
+{
+    "simplifiedLine": " ((((( (f1)   (f2)  )))))) ",
+    "filters": {
+        "f1": "NOT  (",
+        "f2": "description includes d1"
+    }
+}
 
 --------------------------------------------------------
 
@@ -201,11 +171,12 @@ Input:
 '(description includes #context/location1)'
 =>
 Result:
-[
-    "(",
-    "description includes #context/location1",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) ",
+    "filters": {
+        "f1": "description includes #context/location1"
+    }
+}
 
 --------------------------------------------------------
 
@@ -214,21 +185,15 @@ Input:
 '(description includes #context/location1) OR (description includes #context/location2 ) OR (  description includes #context/location3 ) OR   (  description includes #context/location4 )'
 =>
 Result:
-[
-    "(",
-    "description includes #context/location1",
-    ") OR (",
-    "description includes #context/location2",
-    " ",
-    ") OR (",
-    "  ",
-    "description includes #context/location3",
-    " ",
-    ") OR   (",
-    "  ",
-    "description includes #context/location4",
-    " )"
-]
+{
+    "simplifiedLine": " ( (f1) ) OR ( (f2)    ) OR (     (f3)    ) OR   (     (f4)  ) ",
+    "filters": {
+        "f1": "description includes #context/location1",
+        "f2": "description includes #context/location2",
+        "f3": "description includes #context/location3",
+        "f4": "description includes #context/location4"
+    }
+}
 
 --------------------------------------------------------
 
@@ -237,15 +202,14 @@ Input:
 '(description includes 1) AND (description includes 2) AND (description includes 3)'
 =>
 Result:
-[
-    "(",
-    "description includes 1",
-    ") AND (",
-    "description includes 2",
-    ") AND (",
-    "description includes 3",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) AND ( (f2) ) AND ( (f3) ) ",
+    "filters": {
+        "f1": "description includes 1",
+        "f2": "description includes 2",
+        "f3": "description includes 3"
+    }
+}
 
 --------------------------------------------------------
 
@@ -254,27 +218,20 @@ Input:
 '(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) AND (description includes 5) AND (description includes 6) AND (description includes 7) AND (description includes 8) AND (description includes 9)'
 =>
 Result:
-[
-    "(",
-    "description includes 1",
-    ") AND (",
-    "description includes 2",
-    ") AND (",
-    "description includes 3",
-    ") AND (",
-    "description includes 4",
-    ") AND (",
-    "description includes 5",
-    ") AND (",
-    "description includes 6",
-    ") AND (",
-    "description includes 7",
-    ") AND (",
-    "description includes 8",
-    ") AND (",
-    "description includes 9",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) AND ( (f2) ) AND ( (f3) ) AND ( (f4) ) AND ( (f5) ) AND ( (f6) ) AND ( (f7) ) AND ( (f8) ) AND ( (f9) ) ",
+    "filters": {
+        "f1": "description includes 1",
+        "f2": "description includes 2",
+        "f3": "description includes 3",
+        "f4": "description includes 4",
+        "f5": "description includes 5",
+        "f6": "description includes 6",
+        "f7": "description includes 7",
+        "f8": "description includes 8",
+        "f9": "description includes 9"
+    }
+}
 
 --------------------------------------------------------
 
@@ -283,27 +240,20 @@ Input:
 '(description includes 1)   AND   (description includes 2)   AND   (description includes 3)   AND   (description includes 4)   AND   (description includes 5)   AND   (description includes 6)   AND   (description includes 7)   AND   (description includes 8)   AND   (description includes 9)'
 =>
 Result:
-[
-    "(",
-    "description includes 1",
-    ")   AND   (",
-    "description includes 2",
-    ")   AND   (",
-    "description includes 3",
-    ")   AND   (",
-    "description includes 4",
-    ")   AND   (",
-    "description includes 5",
-    ")   AND   (",
-    "description includes 6",
-    ")   AND   (",
-    "description includes 7",
-    ")   AND   (",
-    "description includes 8",
-    ")   AND   (",
-    "description includes 9",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) )   AND   ( (f2) )   AND   ( (f3) )   AND   ( (f4) )   AND   ( (f5) )   AND   ( (f6) )   AND   ( (f7) )   AND   ( (f8) )   AND   ( (f9) ) ",
+    "filters": {
+        "f1": "description includes 1",
+        "f2": "description includes 2",
+        "f3": "description includes 3",
+        "f4": "description includes 4",
+        "f5": "description includes 5",
+        "f6": "description includes 6",
+        "f7": "description includes 7",
+        "f8": "description includes 8",
+        "f9": "description includes 9"
+    }
+}
 
 --------------------------------------------------------
 
@@ -312,13 +262,13 @@ Input:
 '(description includes d1) AND (priority medium)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") AND (",
-    "priority medium",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) AND ( (f2) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": "priority medium"
+    }
+}
 
 --------------------------------------------------------
 
@@ -327,15 +277,15 @@ Input:
 '(description includes d1) AND NOT (description includes d2)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") AND",
-    " ",
-    "NOT (",
-    "description includes d2",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1)(f2)   (f3)(f4) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": ") AND",
+        "f3": "NOT (",
+        "f4": "description includes d2"
+    }
+}
 
 --------------------------------------------------------
 
@@ -344,15 +294,15 @@ Input:
 '(description includes d1) AND   NOT (priority medium)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") AND",
-    "   ",
-    "NOT (",
-    "priority medium",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1)(f2)     (f3)(f4) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": ") AND",
+        "f3": "NOT (",
+        "f4": "priority medium"
+    }
+}
 
 --------------------------------------------------------
 
@@ -361,13 +311,13 @@ Input:
 '(description includes d1) OR (description includes d2)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") OR (",
-    "description includes d2",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) OR ( (f2) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": "description includes d2"
+    }
+}
 
 --------------------------------------------------------
 
@@ -376,15 +326,14 @@ Input:
 '(description includes d1) OR (description includes d2) OR (priority medium)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") OR (",
-    "description includes d2",
-    ") OR (",
-    "priority medium",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) OR ( (f2) ) OR ( (f3) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": "description includes d2",
+        "f3": "priority medium"
+    }
+}
 
 --------------------------------------------------------
 
@@ -393,13 +342,13 @@ Input:
 '(description includes d1) OR (priority medium)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") OR (",
-    "priority medium",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) OR ( (f2) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": "priority medium"
+    }
+}
 
 --------------------------------------------------------
 
@@ -408,15 +357,15 @@ Input:
 '(description includes d1) OR NOT (description includes d2)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") OR",
-    " ",
-    "NOT (",
-    "description includes d2",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1)(f2)   (f3)(f4) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": ") OR",
+        "f3": "NOT (",
+        "f4": "description includes d2"
+    }
+}
 
 --------------------------------------------------------
 
@@ -425,15 +374,15 @@ Input:
 '(description includes d1) OR   NOT (priority medium)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") OR",
-    "   ",
-    "NOT (",
-    "priority medium",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1)(f2)     (f3)(f4) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": ") OR",
+        "f3": "NOT (",
+        "f4": "priority medium"
+    }
+}
 
 --------------------------------------------------------
 
@@ -442,13 +391,13 @@ Input:
 '(description includes d1) XOR (description includes d2)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") XOR (",
-    "description includes d2",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) XOR ( (f2) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": "description includes d2"
+    }
+}
 
 --------------------------------------------------------
 
@@ -457,13 +406,13 @@ Input:
 '(description includes d1) XOR (priority medium)'
 =>
 Result:
-[
-    "(",
-    "description includes d1",
-    ") XOR (",
-    "priority medium",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) XOR ( (f2) ) ",
+    "filters": {
+        "f1": "description includes d1",
+        "f2": "priority medium"
+    }
+}
 
 --------------------------------------------------------
 
@@ -473,10 +422,12 @@ Input:
 'AND (description includes d1)'
 =>
 Result:
-[
-    "AND (description includes d1",
-    ")"
-]
+{
+    "simplifiedLine": "(f1) ) ",
+    "filters": {
+        "f1": "AND (description includes d1"
+    }
+}
 
 --------------------------------------------------------
 
@@ -485,11 +436,13 @@ Input:
 'NOT (description blahblah d1)'
 =>
 Result:
-[
-    "NOT (",
-    "description blahblah d1",
-    ")"
-]
+{
+    "simplifiedLine": "(f1)(f2) ) ",
+    "filters": {
+        "f1": "NOT (",
+        "f2": "description blahblah d1"
+    }
+}
 
 --------------------------------------------------------
 
@@ -498,12 +451,13 @@ Input:
 'NOT  ( description includes d1 )'
 =>
 Result:
-[
-    "NOT  (",
-    " ",
-    "description includes d1",
-    " )"
-]
+{
+    "simplifiedLine": "(f1)   (f2)  ) ",
+    "filters": {
+        "f1": "NOT  (",
+        "f2": "description includes d1"
+    }
+}
 
 --------------------------------------------------------
 
@@ -512,12 +466,13 @@ Input:
 'NOT   (  happens before blahblahblah  )'
 =>
 Result:
-[
-    "NOT   (",
-    "  ",
-    "happens before blahblahblah",
-    "  )"
-]
+{
+    "simplifiedLine": "(f1)    (f2)   ) ",
+    "filters": {
+        "f1": "NOT   (",
+        "f2": "happens before blahblahblah"
+    }
+}
 
 --------------------------------------------------------
 
@@ -526,10 +481,12 @@ Input:
 'OR (description includes d1)'
 =>
 Result:
-[
-    "OR (description includes d1",
-    ")"
-]
+{
+    "simplifiedLine": "(f1) ) ",
+    "filters": {
+        "f1": "OR (description includes d1"
+    }
+}
 
 --------------------------------------------------------
 
@@ -538,11 +495,12 @@ Input:
 '(description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)'
 =>
 Result:
-[
-    "(",
-    "description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) ",
+    "filters": {
+        "f1": "description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR"
+    }
+}
 
 --------------------------------------------------------
 
@@ -552,13 +510,13 @@ Input:
 '(path includes (some example) OR (path includes )some example()'
 =>
 Result:
-[
-    "(",
-    "path includes (some example",
-    ") OR (",
-    "path includes )some example(",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) ) OR ( (f2) ) ",
+    "filters": {
+        "f1": "path includes (some example",
+        "f2": "path includes )some example("
+    }
+}
 
 --------------------------------------------------------
 
@@ -567,14 +525,13 @@ Input:
 '(path includes (some example)) OR (path includes )some example()'
 =>
 Result:
-[
-    "(",
-    "path includes (some example",
-    ")",
-    ") OR (",
-    "path includes )some example(",
-    ")"
-]
+{
+    "simplifiedLine": " ( (f1) )  ) OR ( (f2) ) ",
+    "filters": {
+        "f1": "path includes (some example",
+        "f2": "path includes )some example("
+    }
+}
 
 --------------------------------------------------------
 
@@ -583,13 +540,13 @@ Input:
 '(path includes )some example() OR (path includes (some example))'
 =>
 Result:
-[
-    "(",
-    "path includes )some example(",
-    ") OR (",
-    "path includes (some example",
-    "))"
-]
+{
+    "simplifiedLine": " ( (f1) ) OR ( (f2) )) ",
+    "filters": {
+        "f1": "path includes )some example(",
+        "f2": "path includes (some example"
+    }
+}
 
 --------------------------------------------------------
 
@@ -598,14 +555,13 @@ Input:
 '(path includes ()some example()) OR (path includes ((some example)))'
 =>
 Result:
-[
-    "(",
-    "path includes ()some example(",
-    ")",
-    ") OR (",
-    "path includes ((some example",
-    ")))"
-]
+{
+    "simplifiedLine": " ( (f1) )  ) OR ( (f2) ))) ",
+    "filters": {
+        "f1": "path includes ()some example(",
+        "f2": "path includes ((some example"
+    }
+}
 
 --------------------------------------------------------
 
@@ -615,16 +571,13 @@ Input:
 '( description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i ) OR ( path includes Home/Shopping )'
 =>
 Result:
-[
-    "(",
-    " ",
-    "description regex matches /(buy|order|voucher|lakeland|purchase|\\spresent)/i",
-    " ",
-    ") OR (",
-    " ",
-    "path includes Home/Shopping",
-    " )"
-]
+{
+    "simplifiedLine": " (    (f1)    ) OR (    (f2)  ) ",
+    "filters": {
+        "f1": "description regex matches /(buy|order|voucher|lakeland|purchase|\\spresent)/i",
+        "f2": "path includes Home/Shopping"
+    }
+}
 
 --------------------------------------------------------
 
@@ -633,40 +586,19 @@ Input:
 '( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )'
 =>
 Result:
-[
-    "(",
-    " ",
-    "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type",
-    ") ",
-    ") OR (",
-    " ",
-    "filter by function const date = task.due.moment; return date ? !date.isValid() : false;",
-    " ",
-    ") OR (",
-    " ",
-    "filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false",
-    " ",
-    ") OR (",
-    " ",
-    "filter by function task.urgency.toFixed(2) === 1.95.toFixed(2",
-    ") ",
-    ") OR (",
-    " ",
-    "filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'",
-    ") ",
-    ") OR (",
-    " ",
-    "filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(",
-    ") ",
-    ") OR (",
-    " ",
-    "filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false",
-    " ",
-    ") OR (",
-    " ",
-    "filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;",
-    " )"
-]
+{
+    "simplifiedLine": " (    (f1) )   ) OR (    (f2)    ) OR (    (f3)    ) OR (    (f4) )   ) OR (    (f5) )   ) OR (    (f6) )   ) OR (    (f7)    ) OR (    (f8)  ) ",
+    "filters": {
+        "f1": "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type",
+        "f2": "filter by function const date = task.due.moment; return date ? !date.isValid() : false;",
+        "f3": "filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false",
+        "f4": "filter by function task.urgency.toFixed(2) === 1.95.toFixed(2",
+        "f5": "filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'",
+        "f6": "filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(",
+        "f7": "filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false",
+        "f8": "filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;"
+    }
+}
 
 --------------------------------------------------------
 

@@ -215,20 +215,8 @@ describe('boolean query - exhaustive tests', () => {
         verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpression);
     });
 
-    // Add a consistency check to BooleanField.preprocessExpression2(), for the stage where
-    // we are simply dividing up the input line at operator boundaries.
-    // This would detect any accidental swallowing or adding of characters during the processing.
-    function newPreprocessAndCheckTextUnchanged(input: string): string[] {
-        const output = BooleanField.preprocessExpression2(input);
-        const collatedOutput = output.join('');
-        if (collatedOutput !== input) {
-            output.push('ERROR: Unintentional modification of instruction line');
-        }
-        return output;
-    }
-
     it('preprocess - rewrite', () => {
-        verifyBooleanExpressionPreprocessing(newPreprocessAndCheckTextUnchanged);
+        verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpression2);
     });
 
     it('explain', () => {

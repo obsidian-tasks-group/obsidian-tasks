@@ -9,6 +9,11 @@ import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 
+export type ParseResult = {
+    simplifiedLine: string;
+    filters: { [key: string]: string };
+};
+
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
  * the format --
@@ -116,7 +121,7 @@ export class BooleanField extends Field {
         return line.replace(/\(([^()]+)\)/g, '("$1")');
     }
 
-    public static preprocessExpression2(line: string): string[] {
+    public static preprocessExpression2(line: string): ParseResult {
         // This code is currently one of a series of iterations, attempting to improve the
         // handling of parentheses within Boolean filter lines.
 
@@ -159,10 +164,50 @@ export class BooleanField extends Field {
         const openingParensAndSpacesAtStartRegex = /(^[ (]*)/;
         const closingParensAndSpacesAtEndRegex = /([ )]*$)/;
 
-        return substringsSplitAtOperatorBoundaries
+        const parts = substringsSplitAtOperatorBoundaries
             .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
             .flatMap((substring) => substring.split(closingParensAndSpacesAtEndRegex))
             .filter((substring) => substring !== '');
+
+        // Holds the reconstructed expression with placeholders
+        let simplifiedLine = '';
+        let currentIndex = 1; // Placeholder index starts at 1
+        const filters: { [key: string]: string } = {}; // To store filter placeholders and their corresponding text
+
+        // Loop to add placeholders-for-filters or operators to the simplifiedLine
+        parts.forEach((part, _index) => {
+            // Check if the part is an operator by matching against the regex without surrounding parentheses
+            if (!BooleanField.isAFilter(part)) {
+                // It's an operator, space or parenthesis, so add it directly to the simplifiedLine
+                simplifiedLine += ` ${part} `;
+            } else {
+                // It's a filter, replace it with a placeholder, and save it:
+                const placeholder = `f${currentIndex}`;
+                filters[placeholder] = part;
+                simplifiedLine += `(${placeholder})`;
+                currentIndex++;
+            }
+        });
+
+        return { simplifiedLine, filters };
+    }
+
+    private static isAFilter(part: string) {
+        const onlySpacesAndParentheses = /^[ ()]+$/;
+        if (RegExp(onlySpacesAndParentheses).exec(part)) {
+            return false;
+        }
+
+        const binaryOperatorAndParentheses = /^ *\) *(AND|OR|XOR) *\( *$/;
+        if (RegExp(binaryOperatorAndParentheses).exec(part)) {
+            return false;
+        }
+
+        // const unaryOperatorAndParentheses = /^NOT *\($/;
+        // if (RegExp(unaryOperatorAndParentheses).exec(part)) {
+        //     return false;
+        // }
+        return true;
     }
 
     /*
