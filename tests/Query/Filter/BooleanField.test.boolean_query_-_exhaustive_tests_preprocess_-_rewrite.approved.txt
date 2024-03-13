@@ -153,7 +153,9 @@ Input:
 =>
 Result:
 [
-    "(((((NOT  ( description includes d1 ))))))"
+    "(((((",
+    "NOT  (",
+    " description includes d1 ))))))"
 ]
 
 --------------------------------------------------------
@@ -275,7 +277,9 @@ Input:
 Result:
 [
     "(description includes d1",
-    ") AND NOT (",
+    ") AND ",
+    "NOT (",
+    "",
     "description includes d2)"
 ]
 
@@ -288,7 +292,9 @@ Input:
 Result:
 [
     "(description includes d1",
-    ") AND   NOT (",
+    ") AND   ",
+    "NOT (",
+    "",
     "priority medium)"
 ]
 
@@ -342,7 +348,9 @@ Input:
 Result:
 [
     "(description includes d1",
-    ") OR NOT (",
+    ") OR ",
+    "NOT (",
+    "",
     "description includes d2)"
 ]
 
@@ -355,7 +363,9 @@ Input:
 Result:
 [
     "(description includes d1",
-    ") OR   NOT (",
+    ") OR   ",
+    "NOT (",
+    "",
     "priority medium)"
 ]
 
@@ -405,7 +415,9 @@ Input:
 =>
 Result:
 [
-    "NOT (description blahblah d1)"
+    "",
+    "NOT (",
+    "description blahblah d1)"
 ]
 
 --------------------------------------------------------
@@ -416,7 +428,9 @@ Input:
 =>
 Result:
 [
-    "NOT  ( description includes d1 )"
+    "",
+    "NOT  (",
+    " description includes d1 )"
 ]
 
 --------------------------------------------------------
@@ -427,7 +441,9 @@ Input:
 =>
 Result:
 [
-    "NOT   (  happens before blahblahblah  )"
+    "",
+    "NOT   (",
+    "  happens before blahblahblah  )"
 ]
 
 --------------------------------------------------------
