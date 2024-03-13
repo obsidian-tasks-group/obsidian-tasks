@@ -193,21 +193,14 @@ export class BooleanField extends Field {
     }
 
     private static isAFilter(part: string) {
+        // These *could* be inlined, but their variable names add meaning.
         const onlySpacesAndParentheses = /^[ ()]+$/;
-        if (RegExp(onlySpacesAndParentheses).exec(part)) {
-            return false;
-        }
-
         const binaryOperatorAndParentheses = /^ *\) *(AND|OR|XOR) *\( *$/;
-        if (RegExp(binaryOperatorAndParentheses).exec(part)) {
-            return false;
-        }
-
         const unaryOperatorAndParentheses = /^NOT *\($/;
-        if (RegExp(unaryOperatorAndParentheses).exec(part)) {
-            return false;
-        }
-        return true;
+
+        return ![onlySpacesAndParentheses, binaryOperatorAndParentheses, unaryOperatorAndParentheses].some((regex) =>
+            RegExp(regex).exec(part),
+        );
     }
 
     /*
