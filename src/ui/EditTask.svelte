@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
+    import { parseTypedDateForDisplayUsingFutureDate, parseTypedDateForSaving } from '../lib/DateTools';
     import { Recurrence } from '../Task/Recurrence';
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
@@ -131,76 +131,6 @@
             accessKeyIndex: 1
         }]
 
-    /*
-        MAINTENANCE NOTE on these Date functions:
-            Repetitious date-related code in this file has been extracted
-            out in to several parseTypedDateFor....() functions over time.
-
-            There is some similarity between these functions, and also
-            some subtle differences.
-
-            Future refactoring to simplify them would be welcomed.
-
-            When editing of Done date is introduced, the functions
-            parseTypedDateForDisplayUsingFutureDate() and parseTypedDateForDisplay()
-            may collapse in to a single case.
-     */
-
-    /**
-     * Parse and return the entered value for a date field.
-     * @param fieldName
-     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
-     * @param forwardDate
-     * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
-     */
-    function parseTypedDateForDisplay(
-        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done' | 'cancelled',
-        typedDate: string,
-        forwardDate: Date | undefined = undefined,
-    ): string {
-        if (!typedDate) {
-            return `<i>no ${fieldName} date</i>`;
-        }
-        const parsed = chrono.parseDate(typedDate, forwardDate, {
-            forwardDate: forwardDate != undefined,
-        });
-        if (parsed !== null) {
-            return window.moment(parsed).format('YYYY-MM-DD');
-        }
-        return `<i>invalid ${fieldName} date</i>`;
-    }
-
-    /**
-     * Like {@link parseTypedDateForDisplay} but also accounts for the 'Only future dates' setting.
-     * @param fieldName
-     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
-     * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
-     */
-    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled', typedDate: string): string {
-        return parseTypedDateForDisplay(
-            fieldName,
-            typedDate,
-            editableTask.forwardOnly ? new Date() : undefined,
-        );
-    }
-
-    /**
-     * Read the entered value for a date field, and return the value to be saved in the edited task.
-     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
-     */
-    function parseTypedDateForSaving(typedDate: string): moment.Moment | null {
-        let date: moment.Moment | null = null;
-        const parsedDate = chrono.parseDate(
-            typedDate,
-            new Date(),
-            { forwardDate: editableTask.forwardOnly },
-        );
-        if (parsedDate !== null) {
-            date = window.moment(parsedDate);
-        }
-        return date;
-    }
-
     async function serialiseTaskId(task: Task) {
         if (task.id !== "") return task;
 
@@ -241,37 +171,37 @@
     // NEW_TASK_FIELD_EDIT_REQUIRED
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
-        parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate);
+        parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate, editableTask.forwardOnly);
         isStartDateValid = !parsedStartDate.includes('invalid');
     }
 
     $: {
         editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
-        parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate);
+        parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate, editableTask.forwardOnly);
         isScheduledDateValid = !parsedScheduledDate.includes('invalid');
     }
 
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
-        parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate);
+        parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate, editableTask.forwardOnly);
         isDueDateValid = !parsedDueDate.includes('invalid');
     }
 
     $: {
         editableTask.doneDate = doAutocomplete(editableTask.doneDate);
-        parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate);
+        parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate, editableTask.forwardOnly);
         isDoneDateValid = !parsedDoneDate.includes('invalid');
     }
 
     $: {
         editableTask.createdDate = doAutocomplete(editableTask.createdDate);
-        parsedCreatedDate = parseTypedDateForDisplayUsingFutureDate('created', editableTask.createdDate);
+        parsedCreatedDate = parseTypedDateForDisplayUsingFutureDate('created', editableTask.createdDate, editableTask.forwardOnly);
         isCreatedDateValid = !parsedCreatedDate.includes('invalid');
     }
 
     $: {
         editableTask.cancelledDate = doAutocomplete(editableTask.cancelledDate);
-        parsedCancelledDate = parseTypedDateForDisplayUsingFutureDate('cancelled', editableTask.cancelledDate);
+        parsedCancelledDate = parseTypedDateForDisplayUsingFutureDate('cancelled', editableTask.cancelledDate, editableTask.forwardOnly);
         isCancelledDateValid = !parsedCancelledDate.includes('invalid');
     }
 
@@ -393,13 +323,13 @@
             description = GlobalFilter.getInstance().prependTo(description);
         }
 
-        const startDate = parseTypedDateForSaving(editableTask.startDate);
-        const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate);
-        const dueDate = parseTypedDateForSaving(editableTask.dueDate);
+        const startDate = parseTypedDateForSaving(editableTask.startDate, editableTask.forwardOnly);
+        const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate, editableTask.forwardOnly);
+        const dueDate = parseTypedDateForSaving(editableTask.dueDate, editableTask.forwardOnly);
 
-        const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate);
-        const createdDate = parseTypedDateForSaving(editableTask.createdDate);
-        const doneDate = parseTypedDateForSaving(editableTask.doneDate);
+        const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate, editableTask.forwardOnly);
+        const createdDate = parseTypedDateForSaving(editableTask.createdDate, editableTask.forwardOnly);
+        const doneDate = parseTypedDateForSaving(editableTask.doneDate, editableTask.forwardOnly);
 
         let recurrence: Recurrence | null = null;
         if (editableTask.recurrenceRule) {
