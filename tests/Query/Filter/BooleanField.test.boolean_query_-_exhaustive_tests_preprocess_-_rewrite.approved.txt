@@ -279,7 +279,6 @@ Result:
     "(description includes d1",
     ") AND ",
     "NOT (",
-    "",
     "description includes d2)"
 ]
 
@@ -294,7 +293,6 @@ Result:
     "(description includes d1",
     ") AND   ",
     "NOT (",
-    "",
     "priority medium)"
 ]
 
@@ -350,7 +348,6 @@ Result:
     "(description includes d1",
     ") OR ",
     "NOT (",
-    "",
     "description includes d2)"
 ]
 
@@ -365,7 +362,6 @@ Result:
     "(description includes d1",
     ") OR   ",
     "NOT (",
-    "",
     "priority medium)"
 ]
 
@@ -415,7 +411,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     "description blahblah d1)"
 ]
@@ -428,7 +423,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT  (",
     " description includes d1 )"
 ]
@@ -441,7 +435,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT   (",
     "  happens before blahblahblah  )"
 ]

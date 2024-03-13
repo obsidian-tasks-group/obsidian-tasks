@@ -144,7 +144,10 @@ export class BooleanField extends Field {
 
         // Divide up the divided components, this time splitting at unary operator boundaries.
         // flatMap() divides and then flattens the result.
-        return substrings.flatMap((substring) => substring.split(unaryOperatorsRegex));
+        // Then we filter out empty values.
+        return substrings
+            .flatMap((substring) => substring.split(unaryOperatorsRegex))
+            .filter((substring) => substring !== '');
     }
 
     /*
