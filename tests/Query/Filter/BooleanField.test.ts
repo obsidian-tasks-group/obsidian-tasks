@@ -122,10 +122,16 @@ describe('boolean query', () => {
     });
 
     describe('error cases - to show error messages', () => {
-        it('empty line', () => {
-            const filter = new BooleanField().createFilterOrErrorMessage('');
-            expect(filter.error).toStrictEqual('empty line');
-        });
+        it.each([
+            // force line break
+            ['', 'empty line'],
+        ])(
+            'should report expected error message: on "%s" - expected "%s"',
+            (instruction: string, expectedError: string) => {
+                const filter = new BooleanField().createFilterOrErrorMessage(instruction);
+                expect(filter.error).toStrictEqual(expectedError);
+            },
+        );
 
         it('Invalid AND', () => {
             const filter = new BooleanField().createFilterOrErrorMessage('AND (description includes d1)');
