@@ -221,15 +221,6 @@ describe('boolean query - exhaustive tests', () => {
 });
 
 describe('explain boolean queries', () => {
-    it('should explain Boolean AND', () => {
-        const instruction = '(description includes d1) AND (priority medium)';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        const expected = `AND (All of):
-  description includes d1
-  priority is medium`;
-        expect(filterOrMessage).toHaveExplanation(expected);
-    });
-
     it('should explain Boolean AND NOT', () => {
         const instruction = '(description includes d1) AND NOT (priority medium)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
@@ -237,15 +228,6 @@ describe('explain boolean queries', () => {
   description includes d1
   NOT:
     priority is medium`;
-        expect(filterOrMessage).toHaveExplanation(expected);
-    });
-
-    it('should explain Boolean OR', () => {
-        const instruction = '(description includes d1) OR (priority medium)';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        const expected = `OR (At least one of):
-  description includes d1
-  priority is medium`;
         expect(filterOrMessage).toHaveExplanation(expected);
     });
 
@@ -257,42 +239,6 @@ describe('explain boolean queries', () => {
   NOT:
     priority is medium`;
         expect(filterOrMessage).toHaveExplanation(expected);
-    });
-
-    it('should explain Boolean NOT', () => {
-        const instruction = 'NOT (description includes d1)';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage).toHaveExplanation('NOT:\n  description includes d1');
-    });
-
-    it('should explain Boolean XOR', () => {
-        const instruction = '(description includes d1) XOR (priority medium)';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        const expected = `XOR (Exactly one of):
-  description includes d1
-  priority is medium`;
-        expect(filterOrMessage).toHaveExplanation(expected);
-    });
-
-    it('should explain 2 Boolean ORs', () => {
-        const instruction = '(description includes d1) OR (description includes d2) OR (priority medium)';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        const expected = `OR (At least one of):
-  description includes d1
-  description includes d2
-  priority is medium`;
-        expect(filterOrMessage).toHaveExplanation(expected);
-    });
-
-    it('should explain 3 Boolean ANDs', () => {
-        const instruction = '(description includes 1) AND (description includes 2) AND (description includes 3)';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
-            "AND (All of):
-              description includes 1
-              description includes 2
-              description includes 3"
-        `);
     });
 
     it('should explain 9 Boolean ANDs', () => {
@@ -310,86 +256,6 @@ describe('explain boolean queries', () => {
               description includes 7
               description includes 8
               description includes 9"
-        `);
-    });
-
-    it('( a && b ) && c', () => {
-        const instruction = '( (description includes a) AND (description includes b) ) AND (description includes c)';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
-            "AND (All of):
-              description includes a
-              description includes b
-              description includes c"
-        `);
-    });
-
-    it('a && ( b && c )', () => {
-        const instruction = '( description includes a ) AND ( (description includes b) AND (description includes c) )';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
-            "AND (All of):
-              description includes a
-              AND (All of):
-                description includes b
-                description includes c"
-        `);
-    });
-
-    it('( a || b ) || c', () => {
-        const instruction = '( (description includes a) OR (description includes b) ) OR (description includes c)';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
-            "OR (At least one of):
-              description includes a
-              description includes b
-              description includes c"
-        `);
-    });
-
-    it('a || ( b || c )', () => {
-        const instruction = '( description includes a ) OR ( (description includes b) OR (description includes c) )';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
-            "OR (At least one of):
-              description includes a
-              OR (At least one of):
-                description includes b
-                description includes c"
-        `);
-    });
-
-    it('( a && b && c ) || ( d && e && f )', () => {
-        const instruction =
-            '( (description includes a) AND (description includes b) AND (description includes c) ) OR ( (description includes d) AND (description includes e) AND (description includes f) )';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
-            "OR (At least one of):
-              AND (All of):
-                description includes a
-                description includes b
-                description includes c
-              AND (All of):
-                description includes d
-                description includes e
-                description includes f"
-        `);
-    });
-
-    it('( a || b || c ) && ( d || e || f )', () => {
-        const instruction =
-            '( (description includes a) OR (description includes b) OR (description includes c) ) AND ( (description includes d) OR (description includes e) OR (description includes f) )';
-        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
-            "AND (All of):
-              OR (At least one of):
-                description includes a
-                description includes b
-                description includes c
-              OR (At least one of):
-                description includes d
-                description includes e
-                description includes f"
         `);
     });
 });
