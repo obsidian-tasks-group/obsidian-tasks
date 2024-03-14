@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
-import { isDateTime } from 'Scripting/TasksDate';
+import { isDateTime } from '../Scripting/TasksDate';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from '../Config/Settings';
 import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
