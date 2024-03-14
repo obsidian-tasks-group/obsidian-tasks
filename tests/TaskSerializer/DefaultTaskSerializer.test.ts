@@ -53,6 +53,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         recurrenceSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
+        reminderDateSymbol,
         doneDateSymbol,
         idSymbol,
         dependsOnSymbol,
@@ -70,6 +71,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 { what: 'createdDate', symbol: createdDateSymbol },
                 { what: 'scheduledDate', symbol: scheduledDateSymbol },
                 { what: 'dueDate', symbol: dueDateSymbol },
+                { what: 'reminderDate', symbol: reminderDateSymbol },
                 { what: 'doneDate', symbol: doneDateSymbol },
             ] as const)('should parse a $what', ({ what, symbol }) => {
                 const taskDetails = deserialize(`${symbol} 2021-06-20`);
@@ -217,6 +219,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             { what: 'createdDate', symbol: createdDateSymbol },
             { what: 'scheduledDate', symbol: scheduledDateSymbol },
             { what: 'dueDate', symbol: dueDateSymbol },
+            { what: 'reminderDate', symbol: reminderDateSymbol },
             { what: 'doneDate', symbol: doneDateSymbol },
         ] as const)('should serialize a $what', ({ what, symbol }) => {
             const serialized = serialize(new TaskBuilder()[what]('2021-06-20').description('').build());

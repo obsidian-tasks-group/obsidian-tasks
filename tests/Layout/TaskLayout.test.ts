@@ -40,6 +40,7 @@ describe('TaskLayout tests', () => {
             tasks-layout-hide-startDate
             tasks-layout-hide-scheduledDate
             tasks-layout-hide-dueDate
+            tasks-layout-hide-reminderDate
             tasks-layout-hide-cancelledDate
             tasks-layout-hide-doneDate
             tasks-layout-hide-tags

@@ -62,12 +62,19 @@ describe.each([
         name === 'dataview',
     );
 
-    const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, createdDateSymbol, recurrenceSymbol } = symbols;
+    const {
+        dueDateSymbol,
+        scheduledDateSymbol,
+        startDateSymbol,
+        createdDateSymbol,
+        recurrenceSymbol,
+        reminderDateSymbol,
+    } = symbols;
     it('offers basic completion options for an empty task', () => {
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] ';
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings);
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 6, originalSettings);
         verifyAsJson(suggestions);
     });
 
@@ -81,10 +88,20 @@ describe.each([
         expect(suggestions.length).toEqual(6);
     });
 
+    it('offers generic reminder date completions', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        const line = `- [ ] some task ${reminderDateSymbol}`;
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 17, originalSettings);
+        expect(suggestions[0].displayText).toContain('today');
+        expect(suggestions[1].displayText).toContain('tomorrow');
+        expect(suggestions.length).toEqual(6);
+    });
+
     it('offers specific due date completions', () => {
         // Arrange
         const originalSettings = getSettings();
-        const line = `- [ ] some task ${dueDateSymbol} to`;
+        const line = `- [ ] some task ${reminderDateSymbol} to`;
         const suggestions: SuggestInfo[] = buildSuggestions(line, 20, originalSettings);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
@@ -154,6 +171,7 @@ describe.each([
             '- [ ] some task',
             `- [ ] some task ${recurrenceSymbol} `,
             `- [ ] some task ${dueDateSymbol} `,
+            `- [ ] some task ${reminderDateSymbol} `,
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
         ];
