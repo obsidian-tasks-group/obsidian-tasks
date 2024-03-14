@@ -212,11 +212,11 @@ describe('boolean query', () => {
 
 describe('boolean query - exhaustive tests', () => {
     it('preprocess', () => {
-        verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpression);
+        verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpressionV1);
     });
 
     it('preprocess - rewrite', () => {
-        verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpression2);
+        verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpressionV2);
     });
 
     it('explain', () => {
