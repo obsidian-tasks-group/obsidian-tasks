@@ -8,6 +8,7 @@ import type { TaskDetails, TaskSerializer } from '../../src/TaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { isDateTime } from '../../src/Scripting/TasksDate';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -35,7 +36,7 @@ describe('TaskSerializer Example', () => {
         deserialize(line: string): TaskDetails {
             // Parse tokens
             const parsedTokens = line.trim().split(/\s+/);
-            const [priorityString, dueDateString, ...descriptionParts] = parsedTokens;
+            const [priorityString, dueDateString, reminderDateString, ...descriptionParts] = parsedTokens;
 
             // Validate dueDate
             let dueDate = null;
@@ -46,6 +47,23 @@ describe('TaskSerializer Example', () => {
                 } else {
                     // Add back to description if invalid
                     descriptionParts.unshift(dueDateString);
+                }
+            }
+
+            // Validate reminderDate
+            let reminderDate = null;
+            if (reminderDateString) {
+                const parsedReminderDate = moment(
+                    reminderDateString,
+                    reminderDateString.length > 10
+                        ? TaskRegularExpressions.dateTimeFormat
+                        : TaskRegularExpressions.dateFormat,
+                );
+                if (parsedReminderDate.isValid()) {
+                    reminderDate = parsedReminderDate;
+                } else {
+                    // Add back to description if invalid
+                    descriptionParts.unshift(reminderDateString);
                 }
             }
 
@@ -65,6 +83,7 @@ describe('TaskSerializer Example', () => {
                 description,
                 tags: Task.extractHashtags(description),
                 dueDate,
+                reminderDate,
                 priority,
                 startDate: null,
                 createdDate: null,
@@ -79,7 +98,16 @@ describe('TaskSerializer Example', () => {
 
         /* Represents task as a string */
         serialize(task: Task): string {
-            return [task.priority, task.dueDate?.format(TaskRegularExpressions.dateFormat), task.description]
+            return [
+                task.priority,
+                task.dueDate?.format(TaskRegularExpressions.dateFormat),
+                task.description,
+                task.reminderDate?.format(
+                    isDateTime(task.reminderDate)
+                        ? TaskRegularExpressions.dateTimeFormat
+                        : TaskRegularExpressions.dateFormat,
+                ),
+            ]
                 .filter((x) => x)
                 .join(' ');
         }

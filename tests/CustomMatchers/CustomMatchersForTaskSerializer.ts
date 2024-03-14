@@ -1,7 +1,7 @@
 import { diff } from 'jest-diff';
 import type { MatcherFunction } from 'expect';
 import moment from 'moment';
-import { isDateTime } from 'Scripting/TasksDate';
+import { isDateTime } from '../../src/Scripting/TasksDate';
 import type { TaskDetails } from '../../src/TaskSerializer';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Priority } from '../../src/Task/Priority';
@@ -42,6 +42,7 @@ function isTaskDetails(val: any): val is TaskDetails {
         'createdDate',
         'scheduledDate',
         'dueDate',
+        'reminderDate',
         'doneDate',
         'cancelledDate',
     ] as const;
@@ -113,6 +114,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         createdDate: null,
         scheduledDate: null,
         dueDate: null,
+        reminderDate: null,
         doneDate: null,
         cancelledDate: null,
         recurrence: null,
