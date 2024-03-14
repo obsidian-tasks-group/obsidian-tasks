@@ -591,3 +591,24 @@ Result:
 --------------------------------------------------------
 
 
+Input:
+'( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type); ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false; ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2); ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'); ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(); ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false; ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )'
+=>
+Result:
+{
+    "simplifiedLine": "( (f1) ) OR ( (f2) ) OR ( (f3) ) OR ( (f4) ) OR ( (f5) ) OR ( (f6) ) OR ( (f7) ) OR ( (f8) )",
+    "filters": {
+        "f1": "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type);",
+        "f2": "filter by function const date = task.due.moment; return date ? !date.isValid() : false;",
+        "f3": "filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false;",
+        "f4": "filter by function task.urgency.toFixed(2) === 1.95.toFixed(2);",
+        "f5": "filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁');",
+        "f6": "filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase();",
+        "f7": "filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false;",
+        "f8": "filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;"
+    }
+}
+
+--------------------------------------------------------
+
+
