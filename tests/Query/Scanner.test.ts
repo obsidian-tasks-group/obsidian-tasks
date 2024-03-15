@@ -161,7 +161,7 @@ input:
 ${querySource}
 -------------------------------------
 
-result after calling continue_lines():
+result after calling continueLines():
 -------------------------------------
 ${continueLines(querySource)
     .map((line) => JSON.stringify(line, null, 4))

@@ -37,7 +37,7 @@ description includes 17 hello world \\
 
 -------------------------------------
 
-result after calling continue_lines():
+result after calling continueLines():
 -------------------------------------
 {
     "rawInstruction": "",
