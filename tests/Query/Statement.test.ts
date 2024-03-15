@@ -1,11 +1,11 @@
-import { Instruction } from '../../src/Query/Instruction';
+import { Statement } from '../../src/Query/Statement';
 
-describe('Instruction', () => {
+describe('Statement', () => {
     it('should store the instruction', () => {
         const raw = `hello \\
 world`;
         const final = 'hello world';
-        const instruction = new Instruction(raw, final);
+        const instruction = new Statement(raw, final);
         expect(instruction.rawInstruction).toEqual(raw);
         expect(instruction.instruction).toEqual('hello world');
     });
