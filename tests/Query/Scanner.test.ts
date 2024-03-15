@@ -160,7 +160,12 @@ ${querySource}
 result after calling continueLines():
 -------------------------------------
 ${continueLines(querySource)
-    .map((line) => JSON.stringify(line, null, 4))
+    .map(
+        (statement) => `
+"${statement.rawInstruction}"
+=>
+"${statement.anyContinuationLinesRemoved}"`,
+    )
     .join('\n')}
 -------------------------------------
 `;
