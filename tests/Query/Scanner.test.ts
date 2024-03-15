@@ -73,7 +73,6 @@ describe('continue_lines', () => {
             [
                 // force linebreak
                 String.raw`line1 ${bs}`,
-                '',
                 'line2',
             ].join('\n'),
         );
@@ -84,14 +83,12 @@ describe('continue_lines', () => {
             // force linebreak
             String.raw`line\1 ${bs}`,
             `continued ${bs}${bs}${bs}`,
-            '',
             'line2',
         ].join('\n');
         expect(continueLinesFlattened(text)).toEqual(
             [
                 // force linebreak
                 String.raw`line\1 continued \\`,
-                '',
                 'line2',
             ].join('\n'),
         );
@@ -101,14 +98,12 @@ describe('continue_lines', () => {
         const text = [
             // force linebreak
             String.raw`line1${bs}${bs}`,
-            '',
             'line2',
         ].join('\n');
         expect(continueLinesFlattened(text)).toEqual(
             [
                 // force linebreak
                 String.raw`line1${bs}`,
-                '',
                 'line2',
             ].join('\n'),
         );
@@ -187,9 +182,6 @@ describe('scan', () => {
             // force line break
             ' not done   ',
             '        due this week',
-            '',
-            '        ',
-            '        ',
         ].join('\n');
         expect(scan(text)).toEqual(['not done', 'due this week']);
     });

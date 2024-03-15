@@ -40,40 +40,20 @@ description includes 17 hello world \\
 result after calling continueLines():
 -------------------------------------
 {
-    "rawInstruction": "",
-    "instruction": ""
-}
-{
     "rawInstruction": "description includes 1 hello world    ",
     "instruction": "description includes 1 hello world    "
-}
-{
-    "rawInstruction": "",
-    "instruction": ""
 }
 {
     "rawInstruction": "description includes 2 hello   \\\n   world   ",
     "instruction": "description includes 2 hello world   "
 }
 {
-    "rawInstruction": "",
-    "instruction": ""
-}
-{
     "rawInstruction": "description includes 3 hello \\\nworld",
     "instruction": "description includes 3 hello world"
 }
 {
-    "rawInstruction": "",
-    "instruction": ""
-}
-{
     "rawInstruction": "description includes 4 hello    \\\nworld",
     "instruction": "description includes 4 hello world"
-}
-{
-    "rawInstruction": "",
-    "instruction": ""
 }
 {
     "rawInstruction": "description includes 5 hello    \\\\",
@@ -84,10 +64,6 @@ result after calling continueLines():
     "instruction": "description includes 6 world"
 }
 {
-    "rawInstruction": "",
-    "instruction": ""
-}
-{
     "rawInstruction": "description includes 7 hello world\\\n",
     "instruction": "description includes 7 hello world "
 }
@@ -96,16 +72,8 @@ result after calling continueLines():
     "instruction": "description includes 8 hello world\\"
 }
 {
-    "rawInstruction": "",
-    "instruction": ""
-}
-{
     "rawInstruction": "description includes 9 hello world\\\ndescription includes 10 hello world\\\\",
     "instruction": "description includes 9 hello world description includes 10 hello world\\"
-}
-{
-    "rawInstruction": "",
-    "instruction": ""
 }
 {
     "rawInstruction": "description includes 11 hello world\\\\",
@@ -116,20 +84,12 @@ result after calling continueLines():
     "instruction": "description includes 12 hello world"
 }
 {
-    "rawInstruction": "",
-    "instruction": ""
-}
-{
     "rawInstruction": "description includes 13 hello world\\\\",
     "instruction": "description includes 13 hello world\\"
 }
 {
     "rawInstruction": "description includes 14 hello world\\\\",
     "instruction": "description includes 14 hello world\\"
-}
-{
-    "rawInstruction": "",
-    "instruction": ""
 }
 {
     "rawInstruction": "description includes 15 hello world\\\n",
@@ -142,13 +102,5 @@ result after calling continueLines():
 {
     "rawInstruction": "description includes 17 hello world \\\\ ",
     "instruction": "description includes 17 hello world \\\\ "
-}
-{
-    "rawInstruction": "",
-    "instruction": ""
-}
-{
-    "rawInstruction": "",
-    "instruction": ""
 }
 -------------------------------------
