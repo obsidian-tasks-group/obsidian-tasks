@@ -34,14 +34,6 @@ function adjustLine(inputLine: string, continuePreviousLine: boolean) {
     return adjustedLine;
 }
 
-function saveLine(outputLines: string[], continuePreviousLine: boolean, adjustedLine: string) {
-    if (continuePreviousLine) {
-        outputLines[outputLines.length - 1] += ' ' + adjustedLine;
-    } else {
-        outputLines.push(adjustedLine);
-    }
-}
-
 /**
  * Removes newlines escaped by a backslash.
  * A trailing backslash at the end of a line can be escaped by doubling it.
@@ -69,7 +61,11 @@ function continueLines(input: string) {
     let continuePreviousLine = false;
     for (const inputLine of input.split('\n')) {
         const adjustedLine = adjustLine(inputLine, continuePreviousLine);
-        saveLine(outputLines, continuePreviousLine, adjustedLine);
+        if (continuePreviousLine) {
+            outputLines[outputLines.length - 1] += ' ' + adjustedLine;
+        } else {
+            outputLines.push(adjustedLine);
+        }
 
         // Decide what to do with the next line:
         if (endsWith2Slashes(inputLine)) {
