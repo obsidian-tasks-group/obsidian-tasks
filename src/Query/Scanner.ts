@@ -59,12 +59,14 @@ export function continueLinesFlattened(input: string): string {
 function continueLines(input: string) {
     const outputLines: string[] = [];
     let continuePreviousLine = false;
+
+    let currentStatementProcessed = '';
     for (const inputLine of input.split('\n')) {
         const adjustedLine = adjustLine(inputLine, continuePreviousLine);
         if (continuePreviousLine) {
-            outputLines[outputLines.length - 1] += ' ' + adjustedLine;
+            currentStatementProcessed += ' ' + adjustedLine;
         } else {
-            outputLines.push(adjustedLine);
+            currentStatementProcessed = adjustedLine;
         }
 
         // Decide what to do with the next line:
@@ -72,6 +74,10 @@ function continueLines(input: string) {
             continuePreviousLine = false;
         } else {
             continuePreviousLine = endsWith1Slash(inputLine);
+        }
+        if (!continuePreviousLine) {
+            outputLines.push(currentStatementProcessed);
+            currentStatementProcessed = '';
         }
     }
     return outputLines;
