@@ -16,20 +16,24 @@ export type FilterFunction = (task: Task, searchInfo: SearchInfo) => boolean;
  *
  * Currently it provides access to:
  *
- * - The original {@link instruction}
+ * - The original {@link _instruction}
  * - The {@link filterFunction} - a {@link FilterFunction} which tests whether a task matches the filter
  *
  * Later, the plan is to add a human-readable explanation of the filter.
  */
 export class Filter {
-    readonly instruction: string;
+    private readonly _instruction: string;
     readonly explanation: Explanation;
     public filterFunction: FilterFunction;
 
     public constructor(instruction: string, filterFunction: FilterFunction, explanation: Explanation) {
-        this.instruction = instruction;
+        this._instruction = instruction;
         this.explanation = explanation;
         this.filterFunction = filterFunction;
+    }
+
+    public get instruction(): string {
+        return this._instruction;
     }
 
     public explainFilterIndented(indent: string) {
