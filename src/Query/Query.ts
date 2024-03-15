@@ -65,7 +65,7 @@ export class Query implements IQuery {
             }
 
             try {
-                this.parseLine(line);
+                this.parseLine(line, statement);
             } catch (e) {
                 let message;
                 if (e instanceof Error) {
@@ -80,7 +80,7 @@ export class Query implements IQuery {
         });
     }
 
-    private parseLine(line: string) {
+    private parseLine(line: string, statement: Statement) {
         switch (true) {
             case this.shortModeRegexp.test(line):
                 this._queryLayoutOptions.shortMode = true;
@@ -107,7 +107,7 @@ export class Query implements IQuery {
             case this.commentRegexp.test(line):
                 // Comment lines are ignored
                 break;
-            case this.parseFilter(line):
+            case this.parseFilter(line, statement):
                 break;
             default:
                 this.setError('do not understand query', line);
@@ -328,10 +328,14 @@ Problem line: "${line}"`;
         }
     }
 
-    private parseFilter(line: string) {
+    private parseFilter(line: string, statement: Statement) {
         const filterOrError = FilterParser.parseFilter(line);
         if (filterOrError != null) {
             if (filterOrError.filter) {
+                // Overwrite the filter's statement, to preserve details of any
+                // continuation lines and placeholder expansions.
+                filterOrError.filter.setStatement(statement);
+
                 this._filters.push(filterOrError.filter);
             } else {
                 this.setError(filterOrError.error ?? 'Unknown error', line);
