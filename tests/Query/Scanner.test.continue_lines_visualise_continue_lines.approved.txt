@@ -34,6 +34,7 @@ description includes 15 hello world\
 description includes 16 hello world \ 
 description includes 17 hello world \\ 
 
+  description includes 17 hello world  
 
 -------------------------------------
 
@@ -102,5 +103,9 @@ result after calling continueLines():
 {
     "rawInstruction": "description includes 17 hello world \\\\ ",
     "instruction": "description includes 17 hello world \\\\ "
+}
+{
+    "rawInstruction": "  description includes 17 hello world  ",
+    "instruction": "  description includes 17 hello world  "
 }
 -------------------------------------
