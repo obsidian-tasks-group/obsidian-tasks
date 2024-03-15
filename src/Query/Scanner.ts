@@ -1,4 +1,4 @@
-import { Instruction } from './Instruction';
+import { Statement } from './Statement';
 
 function endsWith1Slash(inputLine: string) {
     return inputLine.endsWith('\\');
@@ -63,8 +63,8 @@ export function continueLinesFlattened(input: string): string {
  *
  * @see continueLinesFlattened
  */
-export function continueLines(input: string): Instruction[] {
-    const instructions: Instruction[] = [];
+export function continueLines(input: string): Statement[] {
+    const instructions: Statement[] = [];
     let continuePreviousLine = false;
 
     let currentStatementRaw = '';
@@ -87,7 +87,7 @@ export function continueLines(input: string): Instruction[] {
         }
         if (!continuePreviousLine) {
             if (currentStatementProcessed.trim() !== '') {
-                instructions.push(new Instruction(currentStatementRaw, currentStatementProcessed));
+                instructions.push(new Statement(currentStatementRaw, currentStatementProcessed));
             }
             currentStatementRaw = '';
             currentStatementProcessed = '';
@@ -106,5 +106,5 @@ export function continueLines(input: string): Instruction[] {
  * @returns List of statements
  */
 export function scan(input: string): string[] {
-    return continueLines(input).map((instruction: Instruction) => instruction.instruction.trim());
+    return continueLines(input).map((instruction: Statement) => instruction.instruction.trim());
 }
