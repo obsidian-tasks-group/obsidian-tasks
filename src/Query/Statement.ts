@@ -10,8 +10,13 @@ export class Statement {
     public readonly rawInstruction: string;
     public readonly instruction: string;
 
+    /**
+     *
+     * @param rawInstruction - If the query used continuation lines for this statement, rawInstruction represents the multi-line input.
+     * @param instruction - whitespace is trimmed
+     */
     constructor(rawInstruction: string, instruction: string) {
         this.rawInstruction = rawInstruction;
-        this.instruction = instruction;
+        this.instruction = instruction.trim();
     }
 }

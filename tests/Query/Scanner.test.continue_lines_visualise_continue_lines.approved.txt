@@ -42,11 +42,11 @@ result after calling continueLines():
 -------------------------------------
 {
     "rawInstruction": "description includes 1 hello world    ",
-    "instruction": "description includes 1 hello world    "
+    "instruction": "description includes 1 hello world"
 }
 {
     "rawInstruction": "description includes 2 hello   \\\n   world   ",
-    "instruction": "description includes 2 hello world   "
+    "instruction": "description includes 2 hello world"
 }
 {
     "rawInstruction": "description includes 3 hello \\\nworld",
@@ -66,7 +66,7 @@ result after calling continueLines():
 }
 {
     "rawInstruction": "description includes 7 hello world\\\n",
-    "instruction": "description includes 7 hello world "
+    "instruction": "description includes 7 hello world"
 }
 {
     "rawInstruction": "description includes 8 hello world\\\\",
@@ -94,18 +94,18 @@ result after calling continueLines():
 }
 {
     "rawInstruction": "description includes 15 hello world\\\n",
-    "instruction": "description includes 15 hello world "
+    "instruction": "description includes 15 hello world"
 }
 {
     "rawInstruction": "description includes 16 hello world \\ ",
-    "instruction": "description includes 16 hello world \\ "
+    "instruction": "description includes 16 hello world \\"
 }
 {
     "rawInstruction": "description includes 17 hello world \\\\ ",
-    "instruction": "description includes 17 hello world \\\\ "
+    "instruction": "description includes 17 hello world \\\\"
 }
 {
     "rawInstruction": "  description includes 17 hello world  ",
-    "instruction": "  description includes 17 hello world  "
+    "instruction": "description includes 17 hello world"
 }
 -------------------------------------
