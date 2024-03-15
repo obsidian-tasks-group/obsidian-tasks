@@ -6,10 +6,12 @@
  * - {@link anyContinuationLinesRemoved} is the statement after continuation lines have been applied.
  *                                       It may contain placeholders, however.
  * - If continuation lines were used, {@link rawInstruction} represents the multi-line input.
+ * - {@link anyPlaceholdersExpanded} will differ from {@link anyContinuationLinesRemoved} if there were any placeholders.
  */
 export class Statement {
     private readonly _rawInstruction: string;
     private readonly _anyContinuationLinesRemoved: string;
+    private _anyPlaceholdersExpanded: string; // May be updated in recordExpandedPlaceholders() after construction
 
     /**
      *
@@ -19,6 +21,11 @@ export class Statement {
     constructor(rawInstruction: string, instruction: string) {
         this._rawInstruction = rawInstruction;
         this._anyContinuationLinesRemoved = instruction.trim();
+        this._anyPlaceholdersExpanded = this._anyContinuationLinesRemoved;
+    }
+
+    public recordExpandedPlaceholders(line: string) {
+        this._anyPlaceholdersExpanded = line;
     }
 
     /**
@@ -37,5 +44,9 @@ export class Statement {
      */
     public get anyContinuationLinesRemoved(): string {
         return this._anyContinuationLinesRemoved;
+    }
+
+    public get anyPlaceholdersExpanded(): string {
+        return this._anyPlaceholdersExpanded;
     }
 }
