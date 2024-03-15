@@ -3,7 +3,7 @@
  *
  * This may represent multiple lines with continuation characters.
  *
- * {@link instruction} is the final line, after configuration lines and placeholders have been applied.
+ * {@link instruction} is the final line, after continuation lines have been applied.
  * If continuation lines were used, {@link rawInstruction} represents the multi-line input.
  */
 export class Statement {
