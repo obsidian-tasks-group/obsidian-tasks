@@ -14,12 +14,11 @@ export type FilterFunction = (task: Task, searchInfo: SearchInfo) => boolean;
 /**
  * A class that represents a parsed filtering instruction from a tasks code block.
  *
- * Currently it provides access to:
+ * It provides access to:
  *
- * - The original {@link _instruction}
+ * - The original {@link instruction}
+ * - An {@link explanation}, showing how the instruction was interpreted.
  * - The {@link filterFunction} - a {@link FilterFunction} which tests whether a task matches the filter
- *
- * Later, the plan is to add a human-readable explanation of the filter.
  */
 export class Filter {
     private readonly _instruction: string;
