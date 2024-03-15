@@ -13,10 +13,11 @@ import * as FilterParser from './FilterParser';
 import type { Grouper } from './Group/Grouper';
 import { TaskGroups } from './Group/TaskGroups';
 import { QueryResult } from './QueryResult';
-import { scan } from './Scanner';
+import { continueLines } from './Scanner';
 import { SearchInfo } from './SearchInfo';
 import { Sort } from './Sort/Sort';
 import type { Sorter } from './Sort/Sorter';
+import type { Statement } from './Statement';
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
@@ -56,8 +57,8 @@ export class Query implements IQuery {
 
         this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
-        scan(source).forEach((rawLine: string) => {
-            const line = this.expandPlaceholders(rawLine, path);
+        continueLines(source).forEach((statement: Statement) => {
+            const line = this.expandPlaceholders(statement.anyContinuationLinesRemoved, path);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
