@@ -3,12 +3,12 @@
  *
  * This may represent multiple lines with continuation characters.
  *
- * {@link instruction} is the final line, after continuation lines have been applied.
+ * {@link anyContinuationLinesRemoved} is the final line, after continuation lines have been applied.
  * If continuation lines were used, {@link rawInstruction} represents the multi-line input.
  */
 export class Statement {
     public readonly rawInstruction: string;
-    public readonly instruction: string;
+    public readonly anyContinuationLinesRemoved: string;
 
     /**
      *
@@ -17,6 +17,6 @@ export class Statement {
      */
     constructor(rawInstruction: string, instruction: string) {
         this.rawInstruction = rawInstruction;
-        this.instruction = instruction.trim();
+        this.anyContinuationLinesRemoved = instruction.trim();
     }
 }

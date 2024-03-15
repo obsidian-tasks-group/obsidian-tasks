@@ -47,7 +47,7 @@ function adjustLine(inputLine: string, continuePreviousLine: boolean) {
  */
 export function continueLinesFlattened(input: string): string {
     return continueLines(input)
-        .map((instruction) => instruction.instruction)
+        .map((instruction) => instruction.anyContinuationLinesRemoved)
         .join('\n');
 }
 
@@ -106,5 +106,5 @@ export function continueLines(input: string): Statement[] {
  * @returns List of statements
  */
 export function scan(input: string): string[] {
-    return continueLines(input).map((instruction: Statement) => instruction.instruction);
+    return continueLines(input).map((instruction: Statement) => instruction.anyContinuationLinesRemoved);
 }

@@ -7,6 +7,6 @@ world`;
         const final = 'hello world';
         const instruction = new Statement(raw, final);
         expect(instruction.rawInstruction).toEqual(raw);
-        expect(instruction.instruction).toEqual('hello world');
+        expect(instruction.anyContinuationLinesRemoved).toEqual('hello world');
     });
 });
