@@ -47,9 +47,24 @@ function saveLine(outputLines: string[], continuePreviousLine: boolean, adjusted
  * A trailing backslash at the end of a line can be escaped by doubling it.
  *
  * @param input input string
- * @returns modified input
+ * @returns modified input, as a string
+ *
+ * @see continueLines
  */
 export function continueLinesFlattened(input: string): string {
+    return continueLines(input).join('\n');
+}
+
+/**
+ * Removes newlines escaped by a backslash.
+ * A trailing backslash at the end of a line can be escaped by doubling it.
+ *
+ * @param input input string
+ * @returns modified input, as a list of strings
+ *
+ * @see continueLinesFlattened
+ */
+function continueLines(input: string) {
     const outputLines: string[] = [];
     let continuePreviousLine = false;
     for (const inputLine of input.split('\n')) {
@@ -63,7 +78,7 @@ export function continueLinesFlattened(input: string): string {
             continuePreviousLine = endsWith1Slash(inputLine);
         }
     }
-    return outputLines.join('\n');
+    return outputLines;
 }
 
 /**
@@ -76,8 +91,7 @@ export function continueLinesFlattened(input: string): string {
  * @returns List of statements
  */
 export function scan(input: string): string[] {
-    return continueLinesFlattened(input)
-        .split('\n')
+    return continueLines(input)
         .map((rawLine: string) => rawLine.trim())
         .filter((line) => line !== '');
 }
