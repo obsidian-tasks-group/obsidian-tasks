@@ -55,6 +55,9 @@ export function continueLinesFlattened(input: string): string {
  * Removes newlines escaped by a backslash.
  * A trailing backslash at the end of a line can be escaped by doubling it.
  *
+ * Instruction lines are not trimmed.
+ * But instructions that are empty or only contain whitespace are discarded.
+ *
  * @param input input string
  * @returns modified input, as a list of strings
  *
@@ -83,7 +86,9 @@ export function continueLines(input: string): Instruction[] {
             continuePreviousLine = endsWith1Slash(inputLine);
         }
         if (!continuePreviousLine) {
-            instructions.push(new Instruction(currentStatementRaw, currentStatementProcessed));
+            if (currentStatementProcessed.trim() !== '') {
+                instructions.push(new Instruction(currentStatementRaw, currentStatementProcessed));
+            }
             currentStatementRaw = '';
             currentStatementProcessed = '';
         }
@@ -101,7 +106,5 @@ export function continueLines(input: string): Instruction[] {
  * @returns List of statements
  */
 export function scan(input: string): string[] {
-    return continueLines(input)
-        .map((instruction: Instruction) => instruction.instruction.trim())
-        .filter((line) => line !== '');
+    return continueLines(input).map((instruction: Instruction) => instruction.instruction.trim());
 }
