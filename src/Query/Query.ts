@@ -58,7 +58,7 @@ export class Query implements IQuery {
         this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
         continueLines(source).forEach((statement: Statement) => {
-            const line = this.expandPlaceholders(statement.anyContinuationLinesRemoved, path);
+            const line = this.expandPlaceholders(statement, path);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
@@ -118,7 +118,8 @@ export class Query implements IQuery {
         return `[${this.source.split('\n').join(' ; ')}]`;
     }
 
-    private expandPlaceholders(source: string, path: string | undefined) {
+    private expandPlaceholders(statement: Statement, path: string | undefined) {
+        const source = statement.anyContinuationLinesRemoved;
         if (source.includes('{{') && source.includes('}}')) {
             if (this.filePath === undefined) {
                 this._error = `The query looks like it contains a placeholder, with "{{" and "}}"
@@ -146,6 +147,9 @@ ${source}`;
                 return source;
             }
         }
+
+        // Save any expanded text back in to the statement:
+        statement.recordExpandedPlaceholders(expandedSource);
         return expandedSource;
     }
 

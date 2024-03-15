@@ -164,7 +164,9 @@ ${continueLines(querySource)
         (statement) => `
 "${statement.rawInstruction}"
 =>
-"${statement.anyContinuationLinesRemoved}"`,
+"${statement.anyContinuationLinesRemoved}"
+=>
+"${statement.anyPlaceholdersExpanded}"`,
     )
     .join('\n')}
 -------------------------------------

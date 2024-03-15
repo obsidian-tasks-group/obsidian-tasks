@@ -18,6 +18,10 @@ describe('Filter', () => {
 
         expect(filter.statement.rawInstruction).toEqual(line);
         expect(filter.statement.anyContinuationLinesRemoved).toEqual(line);
+        expect(filter.statement.anyPlaceholdersExpanded).toEqual(line);
+
+        // Note: there is also a test in Query.test.ts that verifies correct populating
+        //       of filter.statement via the Query constructor.
     });
 
     it('should create a Filter object with different explanation', () => {
