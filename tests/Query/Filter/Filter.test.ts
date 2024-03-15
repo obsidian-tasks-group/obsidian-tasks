@@ -15,6 +15,9 @@ describe('Filter', () => {
         expect(filter.instruction).toEqual(line);
         expect(filter.explanation.asString()).toEqual(line);
         expect(filter.filterFunction).not.toBeUndefined();
+
+        expect(filter.statement.rawInstruction).toEqual(line);
+        expect(filter.statement.anyContinuationLinesRemoved).toEqual(line);
     });
 
     it('should create a Filter object with different explanation', () => {

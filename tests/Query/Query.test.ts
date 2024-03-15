@@ -1459,6 +1459,16 @@ describe('Query', () => {
     });
 
     describe('line continuations', () => {
+        it('should save the source correctly in a Statement object', () => {
+            const source = String.raw`(path includes A) OR \
+                (path includes B)`;
+            const query = new Query(source);
+
+            const filter = query.filters[0];
+            expect(filter.statement.rawInstruction).toEqual(source);
+            expect(filter.statement.anyContinuationLinesRemoved).toEqual('(path includes A) OR (path includes B)');
+        });
+
         it('should work in group by functions', () => {
             const source = String.raw`group by function \
                 const date = task.due.moment; \
@@ -1471,6 +1481,7 @@ describe('Query', () => {
             const query = new Query(source);
             expect(query.error).toBeUndefined();
         });
+
         it('should be explained correctly in boolean queries', () => {
             const source = String.raw`explain
 (description includes line 1) OR        \
