@@ -49,7 +49,7 @@ function saveLine(outputLines: string[], continuePreviousLine: boolean, adjusted
  * @param input input string
  * @returns modified input
  */
-export function continue_lines(input: string): string {
+export function continueLinesFlattened(input: string): string {
     const outputLines: string[] = [];
     let continuePreviousLine = false;
     for (const inputLine of input.split('\n')) {
@@ -76,7 +76,7 @@ export function continue_lines(input: string): string {
  * @returns List of statements
  */
 export function scan(input: string): string[] {
-    return continue_lines(input)
+    return continueLinesFlattened(input)
         .split('\n')
         .map((rawLine: string) => rawLine.trim())
         .filter((line) => line !== '');
