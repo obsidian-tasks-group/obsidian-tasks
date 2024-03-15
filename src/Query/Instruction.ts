@@ -1,12 +1,17 @@
 /**
  * A single logical input line in a Tasks Query block.
  *
- * If continuation lines were used, this may represent multiple lines in the query file.
+ * This may represent multiple lines with continuation characters.
+ *
+ * {@link instruction} is the final line, after configuration lines and placeholders have been applied.
+ * If continuation lines were used, {@link rawInstruction} represents the multi-line input.
  */
 export class Instruction {
+    public readonly rawInstruction: string;
     public readonly instruction: string;
 
-    constructor(instruction: string) {
+    constructor(rawInstruction: string, instruction: string) {
+        this.rawInstruction = rawInstruction;
         this.instruction = instruction;
     }
 }
