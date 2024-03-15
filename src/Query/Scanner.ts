@@ -1,3 +1,5 @@
+import { Instruction } from './Instruction';
+
 function endsWith1Slash(inputLine: string) {
     return inputLine.endsWith('\\');
 }
@@ -44,7 +46,9 @@ function adjustLine(inputLine: string, continuePreviousLine: boolean) {
  * @see continueLines
  */
 export function continueLinesFlattened(input: string): string {
-    return continueLines(input).join('\n');
+    return continueLines(input)
+        .map((instruction) => instruction.instruction)
+        .join('\n');
 }
 
 /**
@@ -56,16 +60,19 @@ export function continueLinesFlattened(input: string): string {
  *
  * @see continueLinesFlattened
  */
-function continueLines(input: string) {
-    const outputLines: string[] = [];
+export function continueLines(input: string): Instruction[] {
+    const instructions: Instruction[] = [];
     let continuePreviousLine = false;
 
+    let currentStatementRaw = '';
     let currentStatementProcessed = '';
     for (const inputLine of input.split('\n')) {
         const adjustedLine = adjustLine(inputLine, continuePreviousLine);
         if (continuePreviousLine) {
+            currentStatementRaw += '\n' + inputLine;
             currentStatementProcessed += ' ' + adjustedLine;
         } else {
+            currentStatementRaw = inputLine;
             currentStatementProcessed = adjustedLine;
         }
 
@@ -76,11 +83,12 @@ function continueLines(input: string) {
             continuePreviousLine = endsWith1Slash(inputLine);
         }
         if (!continuePreviousLine) {
-            outputLines.push(currentStatementProcessed);
+            instructions.push(new Instruction(currentStatementRaw, currentStatementProcessed));
+            currentStatementRaw = '';
             currentStatementProcessed = '';
         }
     }
-    return outputLines;
+    return instructions;
 }
 
 /**
@@ -94,6 +102,6 @@ function continueLines(input: string) {
  */
 export function scan(input: string): string[] {
     return continueLines(input)
-        .map((rawLine: string) => rawLine.trim())
+        .map((instruction: Instruction) => instruction.instruction.trim())
         .filter((line) => line !== '');
 }

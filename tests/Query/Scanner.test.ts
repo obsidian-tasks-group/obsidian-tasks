@@ -1,5 +1,5 @@
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { continueLinesFlattened, scan } from '../../src/Query/Scanner';
+import { continueLines, continueLinesFlattened, scan } from '../../src/Query/Scanner';
 
 // There is no way to have a literal \ at the end of a raw string.
 // In such cases, we use substitution instead.
@@ -163,7 +163,9 @@ ${querySource}
 
 result after calling continue_lines():
 -------------------------------------
-${continueLinesFlattened(querySource)}
+${continueLines(querySource)
+    .map((line) => JSON.stringify(line, null, 4))
+    .join('\n')}
 -------------------------------------
 `;
         verify(output);
