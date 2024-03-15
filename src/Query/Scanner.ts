@@ -106,5 +106,5 @@ export function continueLines(input: string): Statement[] {
  * @returns List of statements
  */
 export function scan(input: string): string[] {
-    return continueLines(input).map((instruction: Statement) => instruction.instruction.trim());
+    return continueLines(input).map((instruction: Statement) => instruction.instruction);
 }

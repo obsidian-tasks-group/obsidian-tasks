@@ -130,7 +130,7 @@ describe('continue_lines', () => {
         expect(continueLinesFlattened(text)).toEqual(
             [
                 // force linebreak
-                'line1 continued ',
+                'line1 continued',
                 'line2',
             ].join('\n'),
         );
