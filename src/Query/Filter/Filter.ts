@@ -1,6 +1,7 @@
 import type { Task } from '../../Task/Task';
 import type { Explanation } from '../Explain/Explanation';
 import type { SearchInfo } from '../SearchInfo';
+import { Statement } from '../Statement';
 
 /**
  * A filtering function, that takes a Task object and returns
@@ -14,22 +15,43 @@ export type FilterFunction = (task: Task, searchInfo: SearchInfo) => boolean;
 /**
  * A class that represents a parsed filtering instruction from a tasks code block.
  *
- * Currently it provides access to:
+ * It provides access to:
  *
- * - The original {@link instruction}
+ * - The original {@link instruction}, after processing of continuation lines and placeholders.
+ * - An {@link explanation}, showing how the instruction was interpreted.
+ * - A {@link statement}, which is a {@link Statement} object that gives access to the original text,
+ *   for filters that were created by a {@link Query}.
  * - The {@link filterFunction} - a {@link FilterFunction} which tests whether a task matches the filter
- *
- * Later, the plan is to add a human-readable explanation of the filter.
  */
 export class Filter {
-    readonly instruction: string;
+    /** _statement may be updated later with {@link setStatement} */
+    private _statement: Statement;
+
     readonly explanation: Explanation;
     public filterFunction: FilterFunction;
 
     public constructor(instruction: string, filterFunction: FilterFunction, explanation: Explanation) {
-        this.instruction = instruction;
+        this._statement = new Statement(instruction, instruction);
         this.explanation = explanation;
         this.filterFunction = filterFunction;
+    }
+
+    public get statement(): Statement {
+        return this._statement;
+    }
+
+    /**
+     * Optionally record more detail about the source statement.
+     *
+     * In tests, we only care about the actual instruction being parsed and executed.
+     * However, in {@link Query}, we want the ability to show user more information.
+     */
+    public setStatement(statement: Statement) {
+        this._statement = statement;
+    }
+
+    public get instruction(): string {
+        return this._statement.anyPlaceholdersExpanded;
     }
 
     public explainFilterIndented(indent: string) {

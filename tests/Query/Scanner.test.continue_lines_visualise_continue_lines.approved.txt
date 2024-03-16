@@ -34,37 +34,118 @@ description includes 15 hello world\
 description includes 16 hello world \ 
 description includes 17 hello world \\ 
 
+  description includes 17 hello world  
 
 -------------------------------------
 
-result after calling continue_lines():
+result after calling continueLines():
 -------------------------------------
 
-description includes 1 hello world    
+"description includes 1 hello world    "
+=>
+"description includes 1 hello world"
+=>
+"description includes 1 hello world"
 
-description includes 2 hello world   
+"description includes 2 hello   \
+   world   "
+=>
+"description includes 2 hello world"
+=>
+"description includes 2 hello world"
 
-description includes 3 hello world
+"description includes 3 hello \
+world"
+=>
+"description includes 3 hello world"
+=>
+"description includes 3 hello world"
 
-description includes 4 hello world
+"description includes 4 hello    \
+world"
+=>
+"description includes 4 hello world"
+=>
+"description includes 4 hello world"
 
-description includes 5 hello    \
-description includes 6 world
+"description includes 5 hello    \\"
+=>
+"description includes 5 hello    \"
+=>
+"description includes 5 hello    \"
 
-description includes 7 hello world 
-description includes 8 hello world\
+"description includes 6 world"
+=>
+"description includes 6 world"
+=>
+"description includes 6 world"
 
-description includes 9 hello world description includes 10 hello world\
+"description includes 7 hello world\
+"
+=>
+"description includes 7 hello world"
+=>
+"description includes 7 hello world"
 
-description includes 11 hello world\
-description includes 12 hello world
+"description includes 8 hello world\\"
+=>
+"description includes 8 hello world\"
+=>
+"description includes 8 hello world\"
 
-description includes 13 hello world\
-description includes 14 hello world\
+"description includes 9 hello world\
+description includes 10 hello world\\"
+=>
+"description includes 9 hello world description includes 10 hello world\"
+=>
+"description includes 9 hello world description includes 10 hello world\"
 
-description includes 15 hello world 
-description includes 16 hello world \ 
-description includes 17 hello world \\ 
+"description includes 11 hello world\\"
+=>
+"description includes 11 hello world\"
+=>
+"description includes 11 hello world\"
 
+"description includes 12 hello world"
+=>
+"description includes 12 hello world"
+=>
+"description includes 12 hello world"
 
+"description includes 13 hello world\\"
+=>
+"description includes 13 hello world\"
+=>
+"description includes 13 hello world\"
+
+"description includes 14 hello world\\"
+=>
+"description includes 14 hello world\"
+=>
+"description includes 14 hello world\"
+
+"description includes 15 hello world\
+"
+=>
+"description includes 15 hello world"
+=>
+"description includes 15 hello world"
+
+"description includes 16 hello world \ "
+=>
+"description includes 16 hello world \"
+=>
+"description includes 16 hello world \"
+
+"description includes 17 hello world \\ "
+=>
+"description includes 17 hello world \\"
+=>
+"description includes 17 hello world \\"
+
+"  description includes 17 hello world  "
+=>
+"description includes 17 hello world"
+=>
+"description includes 17 hello world"
 -------------------------------------

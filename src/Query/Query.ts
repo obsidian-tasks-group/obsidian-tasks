@@ -13,10 +13,11 @@ import * as FilterParser from './FilterParser';
 import type { Grouper } from './Group/Grouper';
 import { TaskGroups } from './Group/TaskGroups';
 import { QueryResult } from './QueryResult';
-import { scan } from './Scanner';
+import { continueLines } from './Scanner';
 import { SearchInfo } from './SearchInfo';
 import { Sort } from './Sort/Sort';
 import type { Sorter } from './Sort/Sorter';
+import type { Statement } from './Statement';
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
@@ -56,15 +57,15 @@ export class Query implements IQuery {
 
         this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
-        scan(source).forEach((rawLine: string) => {
-            const line = this.expandPlaceholders(rawLine, path);
+        continueLines(source).forEach((statement: Statement) => {
+            const line = this.expandPlaceholders(statement, path);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
             }
 
             try {
-                this.parseLine(line);
+                this.parseLine(line, statement);
             } catch (e) {
                 let message;
                 if (e instanceof Error) {
@@ -79,7 +80,7 @@ export class Query implements IQuery {
         });
     }
 
-    private parseLine(line: string) {
+    private parseLine(line: string, statement: Statement) {
         switch (true) {
             case this.shortModeRegexp.test(line):
                 this._queryLayoutOptions.shortMode = true;
@@ -106,7 +107,7 @@ export class Query implements IQuery {
             case this.commentRegexp.test(line):
                 // Comment lines are ignored
                 break;
-            case this.parseFilter(line):
+            case this.parseFilter(line, statement):
                 break;
             default:
                 this.setError('do not understand query', line);
@@ -117,7 +118,8 @@ export class Query implements IQuery {
         return `[${this.source.split('\n').join(' ; ')}]`;
     }
 
-    private expandPlaceholders(source: string, path: string | undefined) {
+    private expandPlaceholders(statement: Statement, path: string | undefined) {
+        const source = statement.anyContinuationLinesRemoved;
         if (source.includes('{{') && source.includes('}}')) {
             if (this.filePath === undefined) {
                 this._error = `The query looks like it contains a placeholder, with "{{" and "}}"
@@ -145,6 +147,9 @@ ${source}`;
                 return source;
             }
         }
+
+        // Save any expanded text back in to the statement:
+        statement.recordExpandedPlaceholders(expandedSource);
         return expandedSource;
     }
 
@@ -327,10 +332,14 @@ Problem line: "${line}"`;
         }
     }
 
-    private parseFilter(line: string) {
+    private parseFilter(line: string, statement: Statement) {
         const filterOrError = FilterParser.parseFilter(line);
         if (filterOrError != null) {
             if (filterOrError.filter) {
+                // Overwrite the filter's statement, to preserve details of any
+                // continuation lines and placeholder expansions.
+                filterOrError.filter.setStatement(statement);
+
                 this._filters.push(filterOrError.filter);
             } else {
                 this.setError(filterOrError.error ?? 'Unknown error', line);

@@ -6,7 +6,7 @@ import moment from 'moment';
 import { evaluateExpression, evaluateExpressionOrCatch, parseExpression } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
-import { continue_lines } from '../../src/Query/Scanner';
+import { continueLinesFlattened } from '../../src/Query/Scanner';
 import { constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { formatToRepresentType } from './ScriptingTestHelpers';
@@ -112,7 +112,7 @@ describe('Expression', () => {
         markdown +=
             expressions
                 .map((expression) => {
-                    const result = parseAndEvaluateExpression(task, continue_lines(expression), queryContext);
+                    const result = parseAndEvaluateExpression(task, continueLinesFlattened(expression), queryContext);
                     return `${expression}${resultSeparator}=> ${formatToRepresentType(result)}`;
                 })
                 .join(separator) + '\n';
