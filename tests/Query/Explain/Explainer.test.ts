@@ -198,6 +198,7 @@ describe('explain groupers', () => {
         ];
         const query = makeQueryFromContinuationLines(lines);
 
+        // TODO Make this also show the original instruction, including continuations. See #2349.
         expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
             "group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");
             "
@@ -227,6 +228,7 @@ describe('explain sorters', () => {
         ];
         const query = makeQueryFromContinuationLines(lines);
 
+        // TODO Make this also show the original instruction, including continuations. See #2349.
         expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
             "sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;
             "
