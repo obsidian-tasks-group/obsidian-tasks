@@ -1499,7 +1499,8 @@ with \ backslash)`;
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "(description includes line 1) OR        \\
                   (description includes line 1 continued\\
-                with \\ backslash) =>
+                with \\ backslash)
+                 =>
                 (description includes line 1) OR (description includes line 1 continued with \\ backslash) =>
                   OR (At least one of):
                     description includes line 1
@@ -1513,7 +1514,8 @@ with \ backslash)`;
             expect(queryUpperCase.explainQuery()).toMatchInlineSnapshot(`
                 "(description includes line 1) OR        \\
                   (description includes line 1 continued\\
-                with \\ backslash) =>
+                with \\ backslash)
+                 =>
                 (description includes line 1) OR (description includes line 1 continued with \\ backslash) =>
                   OR (At least one of):
                     description includes line 1
