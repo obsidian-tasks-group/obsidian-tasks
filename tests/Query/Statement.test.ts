@@ -8,5 +8,6 @@ world`;
         const instruction = new Statement(raw, final);
         expect(instruction.rawInstruction).toEqual(raw);
         expect(instruction.anyContinuationLinesRemoved).toEqual('hello world');
+        expect(instruction.anyPlaceholdersExpanded).toEqual('hello world');
     });
 });
