@@ -12,6 +12,15 @@ import { DebugSettings } from '../../../src/Config/DebugSettings';
 
 window.moment = moment;
 
+/**
+ * Join all the lines with continuation character, then create query
+ * @param lines
+ */
+function makeQueryFromContinuationLines(lines: string[]) {
+    const source = lines.join('\\\n');
+    return new Query(source);
+}
+
 afterEach(() => {
     GlobalFilter.getInstance().reset();
     resetSettings();
@@ -197,8 +206,7 @@ describe('explain sorters', () => {
             '    }                                                              ',
             '    return 999;',
         ];
-        const source = lines.join('\\\n');
-        const query = new Query(source);
+        const query = makeQueryFromContinuationLines(lines);
 
         expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
             "sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;
