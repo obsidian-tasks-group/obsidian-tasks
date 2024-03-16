@@ -61,7 +61,8 @@ ${indent}${nextLine}`;
             }
         }
 
-        let result = `${indent}${this._rawInstruction}`;
+        const raw = this._rawInstruction.split('\n').join('\n' + indent);
+        let result = `${indent}${raw}`;
         appendLineIfDifferent(this._rawInstruction, this._anyContinuationLinesRemoved);
         appendLineIfDifferent(this._anyContinuationLinesRemoved, this._anyPlaceholdersExpanded);
 
