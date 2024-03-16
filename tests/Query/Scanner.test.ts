@@ -1,5 +1,5 @@
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { continue_lines, scan } from '../../src/Query/Scanner';
+import { continueLines, continueLinesFlattened, scan } from '../../src/Query/Scanner';
 
 // There is no way to have a literal \ at the end of a raw string.
 // In such cases, we use substitution instead.
@@ -40,6 +40,7 @@ const querySource = [
     'description includes 16 hello world \\ ',
     'description includes 17 hello world \\\\ ',
     '',
+    '  description includes 17 hello world  ',
     '',
 ].join('\n');
 
@@ -50,7 +51,7 @@ describe('continue_lines', () => {
             'not done',
             'due this week',
         ].join('\n');
-        expect(continue_lines(text)).toEqual(text);
+        expect(continueLinesFlattened(text)).toEqual(text);
     });
 
     it('removes backslashed newlines', () => {
@@ -59,7 +60,7 @@ describe('continue_lines', () => {
             String.raw`line1 ${bs}`,
             'continued',
         ].join('\n');
-        expect(continue_lines(text)).toEqual('line1 continued');
+        expect(continueLinesFlattened(text)).toEqual('line1 continued');
     });
 
     it('only consumes one backslash', () => {
@@ -69,11 +70,10 @@ describe('continue_lines', () => {
             '',
             'line2',
         ].join('\n');
-        expect(continue_lines(text)).toEqual(
+        expect(continueLinesFlattened(text)).toEqual(
             [
                 // force linebreak
                 String.raw`line1 ${bs}`,
-                '',
                 'line2',
             ].join('\n'),
         );
@@ -84,14 +84,12 @@ describe('continue_lines', () => {
             // force linebreak
             String.raw`line\1 ${bs}`,
             `continued ${bs}${bs}${bs}`,
-            '',
             'line2',
         ].join('\n');
-        expect(continue_lines(text)).toEqual(
+        expect(continueLinesFlattened(text)).toEqual(
             [
                 // force linebreak
                 String.raw`line\1 continued \\`,
-                '',
                 'line2',
             ].join('\n'),
         );
@@ -101,14 +99,12 @@ describe('continue_lines', () => {
         const text = [
             // force linebreak
             String.raw`line1${bs}${bs}`,
-            '',
             'line2',
         ].join('\n');
-        expect(continue_lines(text)).toEqual(
+        expect(continueLinesFlattened(text)).toEqual(
             [
                 // force linebreak
                 String.raw`line1${bs}`,
-                '',
                 'line2',
             ].join('\n'),
         );
@@ -120,7 +116,7 @@ describe('continue_lines', () => {
             String.raw`line1    ${bs}`,
             'continued',
         ].join('\n');
-        expect(continue_lines(text)).toEqual(String.raw`line1 continued`);
+        expect(continueLinesFlattened(text)).toEqual(String.raw`line1 continued`);
     });
 
     it('compresses surrounding tabs', () => {
@@ -131,10 +127,10 @@ describe('continue_lines', () => {
             '',
             'line2',
         ].join('\n');
-        expect(continue_lines(text)).toEqual(
+        expect(continueLinesFlattened(text)).toEqual(
             [
                 // force linebreak
-                'line1 continued ',
+                'line1 continued',
                 'line2',
             ].join('\n'),
         );
@@ -151,7 +147,7 @@ describe('continue_lines', () => {
             '   five \\',
             '   six',
         ].join('\n');
-        expect(continue_lines(text)).toEqual('description includes one two three four five six');
+        expect(continueLinesFlattened(text)).toEqual('description includes one two three four five six');
     });
 
     it('visualise continue_lines', () => {
@@ -161,9 +157,18 @@ input:
 ${querySource}
 -------------------------------------
 
-result after calling continue_lines():
+result after calling continueLines():
 -------------------------------------
-${continue_lines(querySource)}
+${continueLines(querySource)
+    .map(
+        (statement) => `
+"${statement.rawInstruction}"
+=>
+"${statement.anyContinuationLinesRemoved}"
+=>
+"${statement.anyPlaceholdersExpanded}"`,
+    )
+    .join('\n')}
 -------------------------------------
 `;
         verify(output);
@@ -185,9 +190,6 @@ describe('scan', () => {
             // force line break
             ' not done   ',
             '        due this week',
-            '',
-            '        ',
-            '        ',
         ].join('\n');
         expect(scan(text)).toEqual(['not done', 'due this week']);
     });
