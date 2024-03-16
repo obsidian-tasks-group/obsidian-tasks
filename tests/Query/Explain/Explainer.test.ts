@@ -137,6 +137,31 @@ describe('explain filters', () => {
             "
         `);
     });
+
+    describe('white space around instruction', () => {
+        it('should not duplicate query line with extra space - 1-line explanation', () => {
+            const source = '            has done date    ';
+            const query = new Query(source);
+            // TODO This should not duplicate the source line:
+            expect(explainer.explainFilters(query)).toMatchInlineSnapshot(`
+                "            has done date     =>
+                has done date
+                "
+            `);
+        });
+
+        it('should not duplicate query line with extra space - multi-line explanation', () => {
+            const source = '            description regex matches /(buy|order)/i    ';
+            const query = new Query(source);
+            // TODO This should not duplicate the source line:
+            expect(explainer.explainFilters(query)).toMatchInlineSnapshot(`
+                "            description regex matches /(buy|order)/i     =>
+                description regex matches /(buy|order)/i =>
+                  using regex:            '(buy|order)' with flag 'i'
+                "
+            `);
+        });
+    });
 });
 
 describe('explain groupers', () => {
