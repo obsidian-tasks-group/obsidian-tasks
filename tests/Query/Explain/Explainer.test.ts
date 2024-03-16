@@ -18,7 +18,9 @@ window.moment = moment;
  */
 function makeQueryFromContinuationLines(lines: string[]) {
     const source = lines.join('\\\n');
-    return new Query(source);
+    const query = new Query(source, 'sample.md');
+    expect(query.error).toBeUndefined();
+    return query;
 }
 
 afterEach(() => {
@@ -181,6 +183,27 @@ describe('explain groupers', () => {
             "group by due
             group by status.name reverse
             group by function task.description.toUpperCase()
+            "
+        `);
+    });
+
+    it('should explain a multi-line "group by function"', () => {
+        const lines = [
+            'group by function                                   ',
+            '    const date = task.due;                          ',
+            '    if (!date.moment) {                             ',
+            '        return "Undated";                           ',
+            '    }                                               ',
+            '    if (date.moment.day() === 0) {                  ',
+            '        {{! Put the Sunday group last: }}           ',
+            '        return date.format("[%%][8][%%]dddd");      ',
+            '    }                                               ',
+            '    return date.format("[%%]d[%%]dddd");',
+        ];
+        const query = makeQueryFromContinuationLines(lines);
+
+        expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
+            "group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");
             "
         `);
     });
