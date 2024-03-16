@@ -187,6 +187,24 @@ describe('explain sorters', () => {
             "
         `);
     });
+
+    it('should explain a multi-line "sort by function"', () => {
+        const lines = [
+            'sort by function                                                   ',
+            '    const priorities = [..."🟥🟧🟨🟩🟦"];                        ',
+            '    for (let i = 0; i < priorities.length; i++) {                  ',
+            '        if (task.description.includes(priorities[i])) return i;    ',
+            '    }                                                              ',
+            '    return 999;',
+        ];
+        const source = lines.join('\\\n');
+        const query = new Query(source);
+
+        expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
+            "sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;
+            "
+        `);
+    });
 });
 
 describe('explain limits', () => {
