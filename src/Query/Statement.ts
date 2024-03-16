@@ -54,11 +54,16 @@ export class Statement {
     }
 
     public explainStatement(indent: string) {
-        let result = `${indent}${this._anyContinuationLinesRemoved}`;
-        if (this._anyPlaceholdersExpanded !== this.anyContinuationLinesRemoved) {
-            result += ` =>
-${indent}${this._anyPlaceholdersExpanded}`;
+        function appendLineIfDifferent(previousLine: string, nextLine: string) {
+            if (nextLine !== previousLine) {
+                result += ` =>
+${indent}${nextLine}`;
+            }
         }
+
+        let result = `${indent}${this._anyContinuationLinesRemoved}`;
+        appendLineIfDifferent(this._anyContinuationLinesRemoved, this._anyPlaceholdersExpanded);
+
         return result;
     }
 }
