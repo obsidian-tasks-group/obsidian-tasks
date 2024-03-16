@@ -19,6 +19,13 @@ world`;
             expect(statement.explainStatement('  ')).toEqual('  hello world');
         });
 
+        it('should explain statement with extra white space', () => {
+            const instruction = '   hello world   ';
+            const statement = new Statement(instruction, instruction);
+            expect(statement.explainStatement('')).toEqual('hello world');
+            expect(statement.explainStatement('  ')).toEqual('  hello world');
+        });
+
         it('should show unexpanded and expanded placeholders, if they differ', () => {
             const instruction = '{{fake placeholder}}';
             const statement = new Statement(instruction, instruction);
