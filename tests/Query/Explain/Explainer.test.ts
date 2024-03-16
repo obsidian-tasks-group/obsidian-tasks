@@ -12,6 +12,17 @@ import { DebugSettings } from '../../../src/Config/DebugSettings';
 
 window.moment = moment;
 
+/**
+ * Join all the lines with continuation character, then create query
+ * @param lines
+ */
+function makeQueryFromContinuationLines(lines: string[]) {
+    const source = lines.join('\\\n');
+    const query = new Query(source, 'sample.md');
+    expect(query.error).toBeUndefined();
+    return query;
+}
+
 afterEach(() => {
     GlobalFilter.getInstance().reset();
     resetSettings();
@@ -137,6 +148,27 @@ describe('explain filters', () => {
             "
         `);
     });
+
+    describe('white space around instruction', () => {
+        it('should not duplicate query line with extra space - 1-line explanation', () => {
+            const source = '            has done date    ';
+            const query = new Query(source);
+            expect(explainer.explainFilters(query)).toMatchInlineSnapshot(`
+                "has done date
+                "
+            `);
+        });
+
+        it('should not duplicate query line with extra space - multi-line explanation', () => {
+            const source = '            description regex matches /(buy|order)/i    ';
+            const query = new Query(source);
+            expect(explainer.explainFilters(query)).toMatchInlineSnapshot(`
+                "description regex matches /(buy|order)/i =>
+                  using regex:            '(buy|order)' with flag 'i'
+                "
+            `);
+        });
+    });
 });
 
 describe('explain groupers', () => {
@@ -150,6 +182,28 @@ describe('explain groupers', () => {
             "
         `);
     });
+
+    it('should explain a multi-line "group by function"', () => {
+        const lines = [
+            'group by function                                   ',
+            '    const date = task.due;                          ',
+            '    if (!date.moment) {                             ',
+            '        return "Undated";                           ',
+            '    }                                               ',
+            '    if (date.moment.day() === 0) {                  ',
+            '        {{! Put the Sunday group last: }}           ',
+            '        return date.format("[%%][8][%%]dddd");      ',
+            '    }                                               ',
+            '    return date.format("[%%]d[%%]dddd");',
+        ];
+        const query = makeQueryFromContinuationLines(lines);
+
+        // TODO Make this also show the original instruction, including continuations. See #2349.
+        expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
+            "group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");
+            "
+        `);
+    });
 });
 
 describe('explain sorters', () => {
@@ -159,6 +213,24 @@ describe('explain sorters', () => {
         expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
             "sort by due
             sort by priority
+            "
+        `);
+    });
+
+    it('should explain a multi-line "sort by function"', () => {
+        const lines = [
+            'sort by function                                                   ',
+            '    const priorities = [..."🟥🟧🟨🟩🟦"];                        ',
+            '    for (let i = 0; i < priorities.length; i++) {                  ',
+            '        if (task.description.includes(priorities[i])) return i;    ',
+            '    }                                                              ',
+            '    return 999;',
+        ];
+        const query = makeQueryFromContinuationLines(lines);
+
+        // TODO Make this also show the original instruction, including continuations. See #2349.
+        expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
+            "sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;
             "
         `);
     });

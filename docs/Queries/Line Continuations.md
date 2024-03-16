@@ -31,6 +31,9 @@ explain
 ```text
 Explanation of this Tasks code block query:
 
+  (priority is highest) OR       \
+      (priority is lowest)
+   =>
   (priority is highest) OR (priority is lowest) =>
     OR (At least one of):
       priority is highest
@@ -76,6 +79,7 @@ explain
 ```text
 Explanation of this Tasks code block query:
 
+  description includes \\ =>
   description includes \
 
   No grouping instructions supplied.
