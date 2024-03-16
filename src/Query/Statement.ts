@@ -54,6 +54,11 @@ export class Statement {
     }
 
     public explainStatement(indent: string) {
-        return `${indent}${this.anyPlaceholdersExpanded}`;
+        let result = `${indent}${this._anyContinuationLinesRemoved}`;
+        if (this._anyPlaceholdersExpanded !== this.anyContinuationLinesRemoved) {
+            result += ` =>
+${indent}${this._anyPlaceholdersExpanded}`;
+        }
+        return result;
     }
 }

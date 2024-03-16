@@ -16,6 +16,15 @@ world`;
             const instruction = 'hello world';
             const statement = new Statement(instruction, instruction);
             expect(statement.explainStatement('')).toEqual(instruction);
+            expect(statement.explainStatement('  ')).toEqual('  hello world');
+        });
+
+        it('should show unexpanded and expanded placeholders, if they differ', () => {
+            const instruction = '{{fake placeholder}}';
+            const statement = new Statement(instruction, instruction);
+            statement.recordExpandedPlaceholders('expanded placeholder');
+            expect(statement.explainStatement('  ')).toEqual(`  {{fake placeholder}} =>
+  expanded placeholder`);
         });
     });
 });

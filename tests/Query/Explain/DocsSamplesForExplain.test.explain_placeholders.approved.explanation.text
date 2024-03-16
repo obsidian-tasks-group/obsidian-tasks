@@ -1,13 +1,18 @@
 Explanation of this Tasks code block query:
 
+  path includes {{query.file.path}} =>
   path includes some/sample/file path.md
 
+  root includes {{query.file.root}} =>
   root includes some/
 
+  folder includes {{query.file.folder}} =>
   folder includes some/sample/
 
+  filename includes {{query.file.filename}} =>
   filename includes file path.md
 
+  description includes Some Cryptic String {{! Inline comments are removed before search }} =>
   description includes Some Cryptic String 
 
   No grouping instructions supplied.
