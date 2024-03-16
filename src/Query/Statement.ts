@@ -63,6 +63,9 @@ ${indent}${nextLine}`;
 
         const raw = this._rawInstruction.split('\n').join('\n' + indent);
         let result = `${indent}${raw}`;
+        if (this._rawInstruction.includes('\n')) {
+            result += '\n' + indent;
+        }
         appendLineIfDifferent(this._rawInstruction, this._anyContinuationLinesRemoved);
         appendLineIfDifferent(this._anyContinuationLinesRemoved, this._anyPlaceholdersExpanded);
 
