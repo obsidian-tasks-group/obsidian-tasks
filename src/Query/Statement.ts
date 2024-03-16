@@ -52,4 +52,8 @@ export class Statement {
     public get anyPlaceholdersExpanded(): string {
         return this._anyPlaceholdersExpanded;
     }
+
+    public explainStatement(indent: string) {
+        return `${indent}${this.anyPlaceholdersExpanded}`;
+    }
 }
