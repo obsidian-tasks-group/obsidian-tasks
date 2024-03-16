@@ -61,12 +61,22 @@ ${indent}${nextLine}`;
             }
         }
 
-        const raw = this._rawInstruction.split('\n').join('\n' + indent);
+        // The raw instruction is stored with any surrounding whitespace from the query line.
+        // However, this looks messy in explanations, and leads to complications when comparing
+        // whether the different fields in this class are identical.
+        // So for simplicity, we trim the raw instruction in 'explain' output.
+        const rawInstructionTrimmed = this._rawInstruction.trim();
+
+        const raw = rawInstructionTrimmed.split('\n').join('\n' + indent);
         let result = `${indent}${raw}`;
+
+        // If the raw instruction has more than one line, append text so that the
+        // subsequent '=>' string will appear at the start of the next line, for clarity:
         if (this._rawInstruction.includes('\n')) {
             result += '\n' + indent;
         }
-        appendLineIfDifferent(this._rawInstruction, this._anyContinuationLinesRemoved);
+
+        appendLineIfDifferent(rawInstructionTrimmed, this._anyContinuationLinesRemoved);
         appendLineIfDifferent(this._anyContinuationLinesRemoved, this._anyPlaceholdersExpanded);
 
         return result;
