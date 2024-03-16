@@ -17,7 +17,7 @@ export type FilterFunction = (task: Task, searchInfo: SearchInfo) => boolean;
  *
  * It provides access to:
  *
- * - The original {@link instruction}
+ * - The original {@link instruction}, after processing of continuation lines and placeholders.
  * - An {@link explanation}, showing how the instruction was interpreted.
  * - A {@link statement}, which is a {@link Statement} object that gives access to the original text,
  *   for filters that were created by a {@link Query}.
@@ -27,12 +27,10 @@ export class Filter {
     /** _statement may be updated later with {@link setStatement} */
     private _statement: Statement;
 
-    private readonly _instruction: string;
     readonly explanation: Explanation;
     public filterFunction: FilterFunction;
 
     public constructor(instruction: string, filterFunction: FilterFunction, explanation: Explanation) {
-        this._instruction = instruction;
         this._statement = new Statement(instruction, instruction);
         this.explanation = explanation;
         this.filterFunction = filterFunction;
@@ -53,7 +51,7 @@ export class Filter {
     }
 
     public get instruction(): string {
-        return this._instruction;
+        return this._statement.anyPlaceholdersExpanded;
     }
 
     public explainFilterIndented(indent: string) {
