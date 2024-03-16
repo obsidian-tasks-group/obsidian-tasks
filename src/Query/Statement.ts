@@ -61,7 +61,8 @@ ${indent}${nextLine}`;
             }
         }
 
-        let result = `${indent}${this._anyContinuationLinesRemoved}`;
+        let result = `${indent}${this._rawInstruction}`;
+        appendLineIfDifferent(this._rawInstruction, this._anyContinuationLinesRemoved);
         appendLineIfDifferent(this._anyContinuationLinesRemoved, this._anyPlaceholdersExpanded);
 
         return result;
