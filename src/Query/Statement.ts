@@ -7,6 +7,9 @@
  *                                       It may contain placeholders, however.
  * - If continuation lines were used, {@link rawInstruction} represents the multi-line input.
  * - {@link anyPlaceholdersExpanded} will differ from {@link anyContinuationLinesRemoved} if there were any placeholders.
+ *
+ * In tests, generally all 3 fields are identical, as the continuation characters and placeholders
+ * are only applied in {@link Query}.
  */
 export class Statement {
     private readonly _rawInstruction: string;
