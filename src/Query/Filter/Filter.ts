@@ -12,10 +12,6 @@ import { Statement } from '../Statement';
  */
 export type FilterFunction = (task: Task, searchInfo: SearchInfo) => boolean;
 
-function explainStatement(indent: string, statement: Statement) {
-    return statement.explainStatement(indent);
-}
-
 /**
  * A class that represents a parsed filtering instruction from a tasks code block.
  *
@@ -61,7 +57,7 @@ export class Filter {
     public explainFilterIndented(indent: string) {
         const explanation = this.explanation;
         const unindentedExplanation = explanation.asString();
-        const instruction = explainStatement(indent, this._statement);
+        const instruction = this._statement.explainStatement(indent);
         if (unindentedExplanation === this.instruction) {
             return `${instruction}\n`;
         } else {
