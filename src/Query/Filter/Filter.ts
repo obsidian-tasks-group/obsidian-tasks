@@ -13,7 +13,7 @@ import { Statement } from '../Statement';
 export type FilterFunction = (task: Task, searchInfo: SearchInfo) => boolean;
 
 function explainStatement(indent: string, statement: Statement) {
-    return `${indent}${statement.anyPlaceholdersExpanded}`;
+    return statement.explainStatement(indent);
 }
 
 /**
