@@ -149,6 +149,13 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
+  (                                                                                       \
+      (description includes 1) AND (description includes 2) AND (description includes 3)  \
+  ) OR (                                                                                  \
+      (description includes 5) AND (description includes 6) AND (description includes 7)  \
+  )                                                                                       \
+  AND NOT (description includes 7)
+   =>
   ( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7) =>
     OR (At least one of):
       AND (All of):
@@ -247,14 +254,19 @@ the results begin with the following:
 ```text
 Explanation of this Tasks code block query:
 
+  path includes {{query.file.path}} =>
   path includes some/sample/file path.md
 
+  root includes {{query.file.root}} =>
   root includes some/
 
+  folder includes {{query.file.folder}} =>
   folder includes some/sample/
 
+  filename includes {{query.file.filename}} =>
   filename includes file path.md
 
+  description includes Some Cryptic String {{! Inline comments are removed before search }} =>
   description includes Some Cryptic String 
 
   No grouping instructions supplied.

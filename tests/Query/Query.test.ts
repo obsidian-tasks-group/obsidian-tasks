@@ -1497,7 +1497,11 @@ with \ backslash)`;
             const query = new Query(source);
             const queryUpperCase = new Query(source);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "(description includes line 1) OR (description includes line 1 continued with \\ backslash) =>
+                "(description includes line 1) OR        \\
+                  (description includes line 1 continued\\
+                with \\ backslash)
+                 =>
+                (description includes line 1) OR (description includes line 1 continued with \\ backslash) =>
                   OR (At least one of):
                     description includes line 1
                     description includes line 1 continued with \\ backslash
@@ -1508,7 +1512,11 @@ with \ backslash)`;
                 "
             `);
             expect(queryUpperCase.explainQuery()).toMatchInlineSnapshot(`
-                "(description includes line 1) OR (description includes line 1 continued with \\ backslash) =>
+                "(description includes line 1) OR        \\
+                  (description includes line 1 continued\\
+                with \\ backslash)
+                 =>
+                (description includes line 1) OR (description includes line 1 continued with \\ backslash) =>
                   OR (At least one of):
                     description includes line 1
                     description includes line 1 continued with \\ backslash
