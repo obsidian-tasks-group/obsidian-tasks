@@ -1,0 +1,245 @@
+<div>
+  <div class="tasks-modal">
+    <form class="with-accesskeys">
+      <div class="tasks-modal-section">
+        <label for="description">
+          Descrip
+          <span class="accesskey">t</span>
+          ion
+        </label>
+        <textarea
+          id="description"
+          class="tasks-modal-description"
+          placeholder="Take out the trash"
+          accesskey="t"></textarea>
+      </div>
+      <div class="tasks-modal-section tasks-modal-priorities">
+        <label for="priority-none">Priority</label>
+        <span>
+          <input type="radio" id="priority-lowest" value="lowest" accesskey="o" />
+          <label for="priority-lowest">
+            <span>L</span>
+            <span class="accesskey">o</span>
+            <span>west</span>
+            <span>⏬</span>
+          </label>
+        </span>
+        <span>
+          <input type="radio" id="priority-low" value="low" accesskey="l" />
+          <label for="priority-low">
+            <span></span>
+            <span class="accesskey">L</span>
+            <span>ow</span>
+            <span>🔽</span>
+          </label>
+        </span>
+        <span>
+          <input type="radio" id="priority-none" value="none" accesskey="n" />
+          <label for="priority-none">
+            <span></span>
+            <span class="accesskey">N</span>
+            <span>ormal</span>
+          </label>
+        </span>
+        <span>
+          <input type="radio" id="priority-medium" value="medium" accesskey="m" />
+          <label for="priority-medium">
+            <span></span>
+            <span class="accesskey">M</span>
+            <span>edium</span>
+            <span>🔼</span>
+          </label>
+        </span>
+        <span>
+          <input type="radio" id="priority-high" value="high" accesskey="h" />
+          <label for="priority-high">
+            <span></span>
+            <span class="accesskey">H</span>
+            <span>igh</span>
+            <span>⏫</span>
+          </label>
+        </span>
+        <span>
+          <input type="radio" id="priority-highest" value="highest" accesskey="i" />
+          <label for="priority-highest">
+            <span>H</span>
+            <span class="accesskey">i</span>
+            <span>ghest</span>
+            <span>🔺</span>
+          </label>
+        </span>
+      </div>
+      <div class="tasks-modal-section tasks-modal-dates">
+        <label for="recurrence" class="accesskey-first">Recurs</label>
+        <input id="recurrence" type="text" class="input" placeholder="Try 'every 2 weeks on Thursday'." accesskey="r" />
+        <code class="results">
+          🔁
+          <i>not recurring</i>
+        </code>
+      </div>
+      <hr />
+      <div class="tasks-modal-section tasks-modal-dates">
+        <label for="due" class="accesskey-first">Due</label>
+        <input
+          id="due"
+          type="text"
+          class="input"
+          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space."
+          accesskey="d" />
+        <code class="results">
+          📅
+          <i>no due date</i>
+        </code>
+        <label for="scheduled" class="accesskey-first">Scheduled</label>
+        <input
+          id="scheduled"
+          type="text"
+          class="input"
+          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space."
+          accesskey="s" />
+        <code class="results">
+          ⏳
+          <i>no scheduled date</i>
+        </code>
+        <label for="start">
+          St
+          <span class="accesskey">a</span>
+          rt
+        </label>
+        <input
+          id="start"
+          type="text"
+          class="input"
+          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space."
+          accesskey="a" />
+        <code class="results">
+          🛫
+          <i>no start date</i>
+        </code>
+        <div>
+          <label for="forwardOnly">
+            Only
+            <span class="accesskey-first">future</span>
+            dates:
+          </label>
+          <input
+            id="forwardOnly"
+            type="checkbox"
+            class="input task-list-item-checkbox tasks-modal-checkbox"
+            accesskey="f" />
+        </div>
+      </div>
+      <hr />
+      <div class="tasks-modal-section tasks-modal-dates">
+        <label for="blockedBy" class="accesskey-first">Before this</label>
+        <span class="input">
+          <input
+            accesskey="b"
+            id="blockedBy"
+            class="input"
+            type="text"
+            placeholder="Search for tasks that the task being edited depends on..." />
+          <iframe
+            style="
+              display: block;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              overflow: hidden;
+              border: 0;
+              opacity: 0;
+              pointer-events: none;
+              z-index: -1;
+            "
+            aria-hidden="true"
+            tabindex="-1"
+            src="about:blank"></iframe>
+        </span>
+        <div class="task-dependencies-container results"></div>
+        <label for="blocking">
+          Aft
+          <span class="accesskey">e</span>
+          r this
+        </label>
+        <span class="input">
+          <input
+            accesskey="e"
+            id="blocking"
+            class="input"
+            type="text"
+            placeholder="Search for tasks that depend on this task being done..." />
+          <iframe
+            style="
+              display: block;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              overflow: hidden;
+              border: 0;
+              opacity: 0;
+              pointer-events: none;
+              z-index: -1;
+            "
+            aria-hidden="true"
+            tabindex="-1"
+            src="about:blank"></iframe>
+        </span>
+        <div class="task-dependencies-container results"></div>
+      </div>
+      <hr />
+      <div class="tasks-modal-section">
+        <label for="status">
+          Stat
+          <span class="accesskey">u</span>
+          s
+        </label>
+        <select id="status-type" class="dropdown" accesskey="u">
+          <option value=" ">Todo [ ]</option>
+          <option value="/">In Progress [/]</option>
+          <option value="x">Done [x]</option>
+          <option value="-">Cancelled [-]</option>
+        </select>
+      </div>
+      <div class="tasks-modal-section tasks-modal-dates">
+        <label for="created">Created</label>
+        <input
+          id="created"
+          type="text"
+          class="input"
+          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space." />
+        <code class="results">
+          ➕
+          <i>no created date</i>
+        </code>
+        <label for="done">Done</label>
+        <input
+          id="done"
+          type="text"
+          class="input"
+          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space." />
+        <code class="results">
+          ✅
+          <i>no done date</i>
+        </code>
+        <label for="cancelled">Cancelled</label>
+        <input
+          id="cancelled"
+          type="text"
+          class="input"
+          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space." />
+        <code class="results">
+          ❌
+          <i>no cancelled date</i>
+        </code>
+      </div>
+      <div class="tasks-modal-section tasks-modal-buttons">
+        <button type="submit" class="mod-cta">Apply</button>
+        <button type="button">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

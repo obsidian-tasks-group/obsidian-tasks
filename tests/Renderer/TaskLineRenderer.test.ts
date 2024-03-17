@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import * as prettier from 'prettier';
 
 import { DebugSettings } from '../../src/Config/DebugSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
@@ -15,6 +14,7 @@ import { TaskLineRenderer } from '../../src/Renderer/TaskLineRenderer';
 import type { Task } from '../../src/Task/Task';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 
@@ -544,13 +544,7 @@ describe('Visualise HTML', () => {
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
 -->\n\n`;
-        const taskAsHTML = listItem.outerHTML;
-        const prettyHTML = prettier.format(taskAsHTML, {
-            parser: 'html',
-            bracketSameLine: true,
-            htmlWhitespaceSensitivity: 'ignore',
-            printWidth: 120,
-        });
+        const prettyHTML = prettifyHTML(listItem.outerHTML);
 
         verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
     }
