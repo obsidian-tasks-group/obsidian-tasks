@@ -71,6 +71,7 @@
     "eventemitter2": "^6.4.5",
     "mustache": "^4.2.0",
     "mustache-validator": "^0.2.0",
-    "rrule": "^2.7.2"
+    "rrule": "^2.7.2",
+    "svelte-eslint-parser": "^0.33.1"
   }
 }
