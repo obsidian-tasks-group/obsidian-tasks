@@ -2,7 +2,7 @@
     import { doAutocomplete } from '../lib/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../lib/DateTools';
 
-    export let id: string;
+    export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
     export let dateSymbol: string;
     export let date: string;
     export let parsedDate: string;
