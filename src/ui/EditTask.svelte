@@ -548,7 +548,6 @@ Availability of access keys:
                 bind:isDateValid={isScheduledDateValid}
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey("s")}
-                placeholder={datePlaceholder}
             />
 
             <!-- --------------------------------------------------------------------------- -->
