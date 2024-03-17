@@ -1,12 +1,11 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { parseTypedDateForDisplayUsingFutureDate, parseTypedDateForSaving } from '../lib/DateTools';
+    import { parseTypedDateForSaving } from '../lib/DateTools';
     import { Recurrence } from '../Task/Recurrence';
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
     import { Status } from '../Statuses/Status';
     import { Task } from '../Task/Task';
-    import { doAutocomplete } from '../lib/DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../Task/TaskDependency";
     import { replaceTaskWithTasks } from "../Obsidian/File";
@@ -68,7 +67,6 @@
 
     let isDoneDateValid: boolean = true;
 
-    let parsedCancelledDate: string = '';
     let isCancelledDateValid: boolean = true;
 
     let addGlobalFilterOnSave: boolean = false;
@@ -78,10 +76,6 @@
     let originalBlocking: Task[] = [];
 
     let mountComplete = false;
-
-    // 'weekend' abbreviation omitted due to lack of space.
-    let datePlaceholder =
-        "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
     const priorityOptions: {
             value: typeof editableTask.priority,
@@ -165,12 +159,6 @@
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    $: {
-        editableTask.cancelledDate = doAutocomplete(editableTask.cancelledDate);
-        parsedCancelledDate = parseTypedDateForDisplayUsingFutureDate('cancelled', editableTask.cancelledDate, editableTask.forwardOnly);
-        isCancelledDateValid = !parsedCancelledDate.includes('invalid');
-    }
-
     $: {
         isRecurrenceValid = true;
         if (!editableTask.recurrenceRule) {
@@ -621,15 +609,14 @@ Availability of access keys:
             <!--  Cancelled Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="cancelled">Cancelled</label>
-            <input
-                bind:value={editableTask.cancelledDate}
-                id="cancelled"
-                type="text"
-                class:tasks-modal-error={!isCancelledDateValid}
-                class="input"
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='cancelled'
+                dateSymbol={cancelledDateSymbol}
+                bind:date={editableTask.cancelledDate}
+                bind:isDateValid={isCancelledDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={null}
             />
-            <code class="results">{cancelledDateSymbol} {@html parsedCancelledDate}</code>
         </div>
 
         <div class="tasks-modal-section tasks-modal-buttons">
