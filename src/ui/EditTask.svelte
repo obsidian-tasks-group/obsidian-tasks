@@ -61,7 +61,6 @@
     let parsedStartDate: string = '';
     let isStartDateValid: boolean = true;
 
-    let parsedScheduledDate: string = '';
     let isScheduledDateValid: boolean = true;
 
     let parsedDueDate: string = '';
@@ -546,7 +545,6 @@ Availability of access keys:
                 id='scheduled'
                 dateSymbol={scheduledDateSymbol}
                 bind:date={editableTask.scheduledDate}
-                bind:parsedDate={parsedScheduledDate}
                 bind:isDateValid={isScheduledDateValid}
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey("s")}

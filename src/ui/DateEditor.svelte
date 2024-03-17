@@ -5,11 +5,12 @@
     export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
     export let dateSymbol: string;
     export let date: string;
-    export let parsedDate: string;
     export let isDateValid: boolean;
     export let forwardOnly: boolean;
     export let accesskey: string | null;
     export let placeholder: string;
+
+    let parsedDate: string;
 
     $: {
         date = doAutocomplete(date);
