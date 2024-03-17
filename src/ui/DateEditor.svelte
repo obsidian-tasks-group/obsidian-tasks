@@ -2,6 +2,7 @@
     import { doAutocomplete } from '../lib/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../lib/DateTools';
 
+    export let id: string;
     export let dateSymbol: string;
     export let date: string;
     export let parsedDate: string;
@@ -12,7 +13,7 @@
 
     $: {
         date = doAutocomplete(date);
-        parsedDate = parseTypedDateForDisplayUsingFutureDate('scheduled', date, forwardOnly);
+        parsedDate = parseTypedDateForDisplayUsingFutureDate(id, date, forwardOnly);
         isDateValid = !parsedDate.includes('invalid');
     }
 </script>
@@ -20,7 +21,7 @@
 <!-- svelte-ignore a11y-accesskey -->
 <input
     bind:value={date}
-    id="scheduled"
+    id={id}
     type="text"
     class:tasks-modal-error={!isDateValid}
     class="input"

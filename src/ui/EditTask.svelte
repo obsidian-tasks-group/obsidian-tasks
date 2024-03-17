@@ -543,6 +543,7 @@ Availability of access keys:
             <label for="scheduled" class="accesskey-first">Scheduled</label>
             <!-- removing the bind in bind:parsedDate & bind:isDateValid is not changing behaviour or test results-->
             <DateEditor
+                id='scheduled'
                 dateSymbol={scheduledDateSymbol}
                 bind:date={editableTask.scheduledDate}
                 bind:parsedDate={parsedScheduledDate}
