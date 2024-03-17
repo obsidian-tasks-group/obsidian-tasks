@@ -66,7 +66,6 @@
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
 
-    let parsedDoneDate: string = '';
     let isDoneDateValid: boolean = true;
 
     let parsedCancelledDate: string = '';
@@ -166,12 +165,6 @@
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    $: {
-        editableTask.doneDate = doAutocomplete(editableTask.doneDate);
-        parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate, editableTask.forwardOnly);
-        isDoneDateValid = !parsedDoneDate.includes('invalid');
-    }
-
     $: {
         editableTask.cancelledDate = doAutocomplete(editableTask.cancelledDate);
         parsedCancelledDate = parseTypedDateForDisplayUsingFutureDate('cancelled', editableTask.cancelledDate, editableTask.forwardOnly);
@@ -615,15 +608,14 @@ Availability of access keys:
             <!--  Done Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="done">Done</label>
-            <input
-                bind:value={editableTask.doneDate}
-                id="done"
-                type="text"
-                class:tasks-modal-error={!isDoneDateValid}
-                class="input"
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='done'
+                dateSymbol={doneDateSymbol}
+                bind:date={editableTask.doneDate}
+                bind:isDateValid={isDoneDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={null}
             />
-            <code class="results">{doneDateSymbol} {@html parsedDoneDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Cancelled Date  -->
