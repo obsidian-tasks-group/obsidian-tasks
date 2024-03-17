@@ -3,6 +3,7 @@
     export let date: string;
     export let parsedDate: string;
     export let isDateValid: boolean;
+    export let forwardOnly: boolean;
     export let accesskey: string | null;
     export let placeholder: string;
 </script>
