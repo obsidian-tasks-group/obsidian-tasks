@@ -22,7 +22,7 @@ module.exports = {
             modules: true,
         },
     },
-    plugins: ['@typescript-eslint', 'import'],
+    plugins: ['@typescript-eslint', 'import', 'svelte3'],
     rules: {
         'linebreak-style': ['error', 'unix'],
         quotes: ['error', 'single', { avoidEscape: true }],
@@ -48,4 +48,16 @@ module.exports = {
             },
         ],
     },
+    overrides: [
+        {
+            files: ['*.svelte'],
+            parser: 'svelte-eslint-parser',
+            parserOptions: {
+                parser: '@typescript-eslint/parser',
+            },
+            rules: {
+                'no-inner-declarations': 0,
+            },
+        },
+    ],
 };
