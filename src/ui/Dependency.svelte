@@ -1,14 +1,14 @@
 <script lang="ts">
-    import type { Task } from "../Task/Task";
-    import { computePosition, flip, offset, shift, size } from "@floating-ui/dom";
-    import type { EditableTask } from "./EditableTask";
+    import { computePosition, flip, offset, shift, size } from '@floating-ui/dom';
+    import type { Task } from '../Task/Task';
+    import type { EditableTask } from './EditableTask';
     import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
 
     export let task: Task;
     export let editableTask: EditableTask;
     export let allTasks: Task[];
     export let _onDescriptionKeyDown: (e: KeyboardEvent) => void;
-    export let type: "blocking" | "blockedBy";
+    export let type: 'blocking' | 'blockedBy';
     export let accesskey: (key: string) => string | null;
     export let accesskeyLetter: string = '';
     export let placeholder: string = 'Type to search...';
@@ -30,14 +30,14 @@
     }
 
     function removeTask(task: Task) {
-        editableTask[type] = editableTask[type].filter(item => item !== task);
+        editableTask[type] = editableTask[type].filter((item) => item !== task);
     }
 
     function taskKeydown(e: KeyboardEvent) {
         if (searchResults === null) return;
 
-        switch(e.key) {
-            case "ArrowUp":
+        switch (e.key) {
+            case 'ArrowUp':
                 e.preventDefault();
                 if (!!searchIndex && searchIndex > 0) {
                     searchIndex -= 1;
@@ -45,7 +45,7 @@
                     searchIndex = searchResults.length - 1;
                 }
                 break;
-            case "ArrowDown":
+            case 'ArrowDown':
                 e.preventDefault();
                 if (!!searchIndex && searchIndex < searchResults.length - 1) {
                     searchIndex += 1;
@@ -53,12 +53,12 @@
                     searchIndex = 0;
                 }
                 break;
-            case "Enter":
+            case 'Enter':
                 if (searchIndex !== null) {
                     e.preventDefault();
                     addTask(searchResults[searchIndex]);
                     searchIndex = null;
-                    inputFocused = false
+                    inputFocused = false;
                 } else {
                     _onDescriptionKeyDown(e);
                 }
@@ -74,7 +74,13 @@
         if (!search && !showDropdown) return [];
 
         showDropdown = false;
-        return searchForCandidateTasksForDependency(search, allTasks, task, editableTask.blockedBy, editableTask.blocking);
+        return searchForCandidateTasksForDependency(
+            search,
+            allTasks,
+            task,
+            editableTask.blockedBy,
+            editableTask.blocking,
+        );
     }
 
     function onFocused() {
@@ -103,7 +109,7 @@
     }
 
     function displayPath(path: string) {
-        return path === task.taskLocation.path ? "" : path;
+        return path === task.taskLocation.path ? '' : path;
     }
 
     function descriptionTooltipText(task: Task) {
@@ -116,12 +122,9 @@
         tooltip.innerText = text;
 
         computePosition(element, tooltip, {
-            placement: "top",
-            middleware: [
-                offset(-18),
-                shift()
-            ]
-        }).then(({x, y}) => {
+            placement: 'top',
+            middleware: [offset(-18), shift()],
+        }).then(({ x, y }) => {
             tooltip.style.left = `${x}px`;
             tooltip.style.top = `${y}px`;
         });
@@ -145,31 +148,35 @@
         bind:value={search}
         on:keydown={(e) => taskKeydown(e)}
         on:focus={onFocused}
-        on:blur={() => inputFocused = false}
+        on:blur={() => (inputFocused = false)}
         accesskey={accesskey(accesskeyLetter)}
-        id="{type}"
+        id={type}
         class="input"
         type="text"
-        placeholder={placeholder}
+        {placeholder}
     />
 </span>
 {#if searchResults && searchResults.length !== 0}
-    <ul class="task-dependency-dropdown"
-        bind:this={dropdown}
-        on:mouseleave={() => searchIndex = null}>
+    <ul class="task-dependency-dropdown" bind:this={dropdown} on:mouseleave={() => (searchIndex = null)}>
         {#each searchResults as searchTask, index}
             {@const filepath = displayPath(searchTask.taskLocation.path)}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <li on:mousedown={() => addTask(searchTask)}
+            <li
+                on:mousedown={() => addTask(searchTask)}
                 class:selected={search !== null && index === searchIndex}
-                on:mouseenter={() => searchIndex = index}>
-                <div class="{filepath ? 'dependency-name-shared' : 'dependency-name'}"
-                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(searchTask))}>
+                on:mouseenter={() => (searchIndex = index)}
+            >
+                <div
+                    class={filepath ? 'dependency-name-shared' : 'dependency-name'}
+                    on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(searchTask))}
+                >
                     [{searchTask.status.symbol}] {descriptionAdjustedForDependencySearch(searchTask)}
                 </div>
                 {#if filepath}
-                    <div class="dependency-path"
-                         on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}>
+                    <div
+                        class="dependency-path"
+                        on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}
+                    >
                         {filepath}
                     </div>
                 {/if}
@@ -179,15 +186,28 @@
 {/if}
 <div class="task-dependencies-container results">
     {#each editableTask[type] as task}
-        <div class="task-dependency"
-             on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(task))}>
-            <span class="task-dependency-name">[{task.status.symbol}] {descriptionAdjustedForDependencySearch(task)}</span>
+        <div
+            class="task-dependency"
+            on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(task))}
+        >
+            <span class="task-dependency-name"
+                >[{task.status.symbol}] {descriptionAdjustedForDependencySearch(task)}</span
+            >
 
             <button on:click={() => removeTask(task)} type="button" class="task-dependency-delete">
-                <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12"
-                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"
-                     stroke-linejoin="round" class="lucide lucide-x">
-                    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                <svg
+                    style="display: block; margin: auto;"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-x"
+                >
+                    <path d="M18 6 6 18" /><path d="m6 6 12 12" />
                 </svg>
             </button>
         </div>
