@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
     import { doAutocomplete } from '../lib/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../lib/DateTools';
 
@@ -23,12 +23,12 @@
 <!-- svelte-ignore a11y-accesskey -->
 <input
     bind:value={date}
-    id={id}
+    {id}
     type="text"
     class:tasks-modal-error={!isDateValid}
     class="input"
     placeholder={datePlaceholder}
-    accesskey={accesskey}
+    {accesskey}
 />
 <code class="results">{dateSymbol} {@html parsedDate}</code>
 
