@@ -58,7 +58,6 @@
     let parsedCreatedDate: string = '';
     let isCreatedDateValid: boolean = true;
 
-    let parsedStartDate: string = '';
     let isStartDateValid: boolean = true;
 
     let isScheduledDateValid: boolean = true;
@@ -169,13 +168,6 @@
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    $: {
-        editableTask.startDate = doAutocomplete(editableTask.startDate);
-        parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate, editableTask.forwardOnly);
-        isStartDateValid = !parsedStartDate.includes('invalid');
-    }
-
-
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
         parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate, editableTask.forwardOnly);
@@ -554,17 +546,14 @@ Availability of access keys:
             <!--  Start Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="start">St<span class="accesskey">a</span>rt</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:value={editableTask.startDate}
-                id="start"
-                type="text"
-                class:tasks-modal-error={!isStartDateValid}
-                class="input"
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='start'
+                dateSymbol={startDateSymbol}
+                bind:date={editableTask.startDate}
+                bind:isDateValid={isStartDateValid}
+                forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey("a")}
             />
-            <code class="results">{startDateSymbol} {@html parsedStartDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Only future dates  -->
