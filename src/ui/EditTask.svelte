@@ -10,6 +10,7 @@
     import { TasksDate } from '../Scripting/TasksDate';
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../Task/TaskDependency";
     import { replaceTaskWithTasks } from "../Obsidian/File";
+    import DateEditor from './DateEditor.svelte';
     import type { EditableTask } from "./EditableTask";
     import Dependency from "./Dependency.svelte";
     import { Priority } from '../Task/Priority';
@@ -555,7 +556,7 @@ Availability of access keys:
                 placeholder={datePlaceholder}
                 accesskey={accesskey("s")}
             />
-            <code class="results">{scheduledDateSymbol} {@html parsedScheduledDate}</code>
+            <DateEditor dateSymbol={scheduledDateSymbol} parsedDate={parsedScheduledDate} />
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Start Date  -->
