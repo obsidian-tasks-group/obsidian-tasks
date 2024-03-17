@@ -556,7 +556,14 @@ Availability of access keys:
                 placeholder={datePlaceholder}
                 accesskey={accesskey("s")}
             />
-            <DateEditor dateSymbol={scheduledDateSymbol} parsedDate={parsedScheduledDate} />
+            <DateEditor
+                dateSymbol={scheduledDateSymbol}
+                date={editableTask.scheduledDate}
+                parsedDate={parsedScheduledDate}
+                isDateValid={isScheduledDateValid}
+                accesskey={accesskey("s")}
+                placeholder={datePlaceholder}
+            />
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Start Date  -->
