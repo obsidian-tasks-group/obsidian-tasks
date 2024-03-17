@@ -62,7 +62,6 @@
 
     let isScheduledDateValid: boolean = true;
 
-    let parsedDueDate: string = '';
     let isDueDateValid: boolean = true;
 
     let parsedRecurrence: string = '';
@@ -168,12 +167,6 @@
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    $: {
-        editableTask.dueDate = doAutocomplete(editableTask.dueDate);
-        parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate, editableTask.forwardOnly);
-        isDueDateValid = !parsedDueDate.includes('invalid');
-    }
-
     $: {
         editableTask.doneDate = doAutocomplete(editableTask.doneDate);
         parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate, editableTask.forwardOnly);
@@ -516,17 +509,14 @@ Availability of access keys:
             <!--  Due Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="due" class="accesskey-first">Due</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:value={editableTask.dueDate}
-                id="due"
-                type="text"
-                class="input"
-                class:tasks-modal-error={!isDueDateValid}
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='due'
+                dateSymbol={dueDateSymbol}
+                bind:date={editableTask.dueDate}
+                bind:isDateValid={isDueDateValid}
+                forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey("d")}
             />
-            <code class="results">{dueDateSymbol} {@html parsedDueDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Scheduled Date  -->
