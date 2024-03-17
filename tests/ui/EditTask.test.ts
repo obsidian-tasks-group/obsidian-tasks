@@ -11,6 +11,7 @@ import EditTask from '../../src/ui/EditTask.svelte';
 import { DateFallback } from '../../src/Task/DateFallback';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
@@ -536,6 +537,6 @@ describe('Edit Modal HTML snapshot tests', () => {
             htmlWhitespaceSensitivity: 'ignore',
             printWidth: 120,
         });
-        expect(prettyHTML).toMatchSnapshot();
+        verifyWithFileExtension(prettyHTML, 'html');
     });
 });
