@@ -558,9 +558,9 @@ Availability of access keys:
             />
             <DateEditor
                 dateSymbol={scheduledDateSymbol}
-                date={editableTask.scheduledDate}
-                parsedDate={parsedScheduledDate}
-                isDateValid={isScheduledDateValid}
+                bind:date={editableTask.scheduledDate}
+                bind:parsedDate={parsedScheduledDate}
+                bind:isDateValid={isScheduledDateValid}
                 accesskey={accesskey("s")}
                 placeholder={datePlaceholder}
             />
