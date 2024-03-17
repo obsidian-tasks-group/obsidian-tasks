@@ -176,11 +176,6 @@
         isStartDateValid = !parsedStartDate.includes('invalid');
     }
 
-    $: {
-        editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
-        parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate, editableTask.forwardOnly);
-        isScheduledDateValid = !parsedScheduledDate.includes('invalid');
-    }
 
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
@@ -546,16 +541,6 @@ Availability of access keys:
             <!--  Scheduled Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="scheduled" class="accesskey-first">Scheduled</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:value={editableTask.scheduledDate}
-                id="scheduled"
-                type="text"
-                class:tasks-modal-error={!isScheduledDateValid}
-                class="input"
-                placeholder={datePlaceholder}
-                accesskey={accesskey("s")}
-            />
             <DateEditor
                 dateSymbol={scheduledDateSymbol}
                 bind:date={editableTask.scheduledDate}
