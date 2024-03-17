@@ -540,7 +540,7 @@ Availability of access keys:
             <!--  Scheduled Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="scheduled" class="accesskey-first">Scheduled</label>
-            <!-- removing the bind in bind:parsedDate & bind:isDateValid is not changing behaviour or test results-->
+            <!-- removing the bind in bind:isDateValid is not changing behaviour or test results-->
             <DateEditor
                 id='scheduled'
                 dateSymbol={scheduledDateSymbol}
