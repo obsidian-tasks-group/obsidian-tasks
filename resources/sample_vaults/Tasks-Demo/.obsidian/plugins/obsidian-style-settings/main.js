@@ -5567,6 +5567,10 @@ class CSSSettingsTab extends obsidian.PluginSettingTab {
         super(app, plugin);
         this.plugin = plugin;
     }
+    rerender() {
+        var _a;
+        (_a = this.settingsMarkup) === null || _a === void 0 ? void 0 : _a.rerender();
+    }
     setSettings(settings, errorList) {
         this.settings = settings;
         this.errorList = errorList;
@@ -5591,6 +5595,10 @@ class SettingsView extends obsidian.ItemView {
     constructor(plugin, leaf) {
         super(leaf);
         this.plugin = plugin;
+    }
+    rerender() {
+        var _a;
+        (_a = this.settingsMarkup) === null || _a === void 0 ? void 0 : _a.rerender();
     }
     setSettings(settings, errorList) {
         this.settings = settings;
@@ -9814,9 +9822,9 @@ class CSSSettingsPlugin extends obsidian.Plugin {
             callback: () => {
                 const value = !this.settingsManager.getSetting(section.id, setting.id);
                 this.settingsManager.setSetting(section.id, setting.id, value);
-                this.settingsTab.settingsMarkup.rerender();
+                this.settingsTab.rerender();
                 for (const leaf of this.app.workspace.getLeavesOfType(viewType)) {
-                    leaf.view.settingsMarkup.rerender();
+                    leaf.view.rerender();
                 }
             },
         }));
