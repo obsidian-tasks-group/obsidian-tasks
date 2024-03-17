@@ -55,7 +55,6 @@
 
     let isDescriptionValid: boolean = true;
 
-    let parsedCreatedDate: string = '';
     let isCreatedDateValid: boolean = true;
 
     let isStartDateValid: boolean = true;
@@ -171,12 +170,6 @@
         editableTask.doneDate = doAutocomplete(editableTask.doneDate);
         parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate, editableTask.forwardOnly);
         isDoneDateValid = !parsedDoneDate.includes('invalid');
-    }
-
-    $: {
-        editableTask.createdDate = doAutocomplete(editableTask.createdDate);
-        parsedCreatedDate = parseTypedDateForDisplayUsingFutureDate('created', editableTask.createdDate, editableTask.forwardOnly);
-        isCreatedDateValid = !parsedCreatedDate.includes('invalid');
     }
 
     $: {
@@ -609,15 +602,14 @@ Availability of access keys:
             <!--  Created Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="created">Created</label>
-            <input
-                bind:value={editableTask.createdDate}
-                id="created"
-                type="text"
-                class:tasks-modal-error={!isCreatedDateValid}
-                class="input"
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='created'
+                dateSymbol={createdDateSymbol}
+                bind:date={editableTask.createdDate}
+                bind:isDateValid={isCreatedDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={null}
             />
-            <code class="results">{createdDateSymbol} {@html parsedCreatedDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done Date  -->
