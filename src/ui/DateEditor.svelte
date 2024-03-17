@@ -8,15 +8,16 @@
     export let isDateValid: boolean;
     export let forwardOnly: boolean;
     export let accesskey: string | null;
-    export let placeholder: string;
 
     let parsedDate: string;
-
     $: {
         date = doAutocomplete(date);
         parsedDate = parseTypedDateForDisplayUsingFutureDate(id, date, forwardOnly);
         isDateValid = !parsedDate.includes('invalid');
     }
+
+    // 'weekend' abbreviation omitted due to lack of space.
+    const datePlaceholder = "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 </script>
 
 <!-- svelte-ignore a11y-accesskey -->
@@ -26,7 +27,7 @@
     type="text"
     class:tasks-modal-error={!isDateValid}
     class="input"
-    placeholder={placeholder}
+    placeholder={datePlaceholder}
     accesskey={accesskey}
 />
 <code class="results">{dateSymbol} {@html parsedDate}</code>
