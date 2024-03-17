@@ -1,15 +1,15 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { parseTypedDateForDisplayUsingFutureDate, parseTypedDateForSaving } from '../lib/DateTools';
+    import { parseTypedDateForSaving } from '../lib/DateTools';
     import { Recurrence } from '../Task/Recurrence';
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
     import { Status } from '../Statuses/Status';
     import { Task } from '../Task/Task';
-    import { doAutocomplete } from '../lib/DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from "../Task/TaskDependency";
     import { replaceTaskWithTasks } from "../Obsidian/File";
+    import DateEditor from './DateEditor.svelte';
     import type { EditableTask } from "./EditableTask";
     import Dependency from "./Dependency.svelte";
     import { Priority } from '../Task/Priority';
@@ -54,26 +54,15 @@
 
     let isDescriptionValid: boolean = true;
 
-    let parsedCreatedDate: string = '';
+    let isCancelledDateValid: boolean = true;
     let isCreatedDateValid: boolean = true;
-
-    let parsedStartDate: string = '';
-    let isStartDateValid: boolean = true;
-
-    let parsedScheduledDate: string = '';
-    let isScheduledDateValid: boolean = true;
-
-    let parsedDueDate: string = '';
+    let isDoneDateValid: boolean = true;
     let isDueDateValid: boolean = true;
+    let isScheduledDateValid: boolean = true;
+    let isStartDateValid: boolean = true;
 
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
-
-    let parsedDoneDate: string = '';
-    let isDoneDateValid: boolean = true;
-
-    let parsedCancelledDate: string = '';
-    let isCancelledDateValid: boolean = true;
 
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
@@ -82,10 +71,6 @@
     let originalBlocking: Task[] = [];
 
     let mountComplete = false;
-
-    // 'weekend' abbreviation omitted due to lack of space.
-    let datePlaceholder =
-        "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
     const priorityOptions: {
             value: typeof editableTask.priority,
@@ -169,42 +154,6 @@
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    $: {
-        editableTask.startDate = doAutocomplete(editableTask.startDate);
-        parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate, editableTask.forwardOnly);
-        isStartDateValid = !parsedStartDate.includes('invalid');
-    }
-
-    $: {
-        editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
-        parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate, editableTask.forwardOnly);
-        isScheduledDateValid = !parsedScheduledDate.includes('invalid');
-    }
-
-    $: {
-        editableTask.dueDate = doAutocomplete(editableTask.dueDate);
-        parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate, editableTask.forwardOnly);
-        isDueDateValid = !parsedDueDate.includes('invalid');
-    }
-
-    $: {
-        editableTask.doneDate = doAutocomplete(editableTask.doneDate);
-        parsedDoneDate = parseTypedDateForDisplayUsingFutureDate('done', editableTask.doneDate, editableTask.forwardOnly);
-        isDoneDateValid = !parsedDoneDate.includes('invalid');
-    }
-
-    $: {
-        editableTask.createdDate = doAutocomplete(editableTask.createdDate);
-        parsedCreatedDate = parseTypedDateForDisplayUsingFutureDate('created', editableTask.createdDate, editableTask.forwardOnly);
-        isCreatedDateValid = !parsedCreatedDate.includes('invalid');
-    }
-
-    $: {
-        editableTask.cancelledDate = doAutocomplete(editableTask.cancelledDate);
-        parsedCancelledDate = parseTypedDateForDisplayUsingFutureDate('cancelled', editableTask.cancelledDate, editableTask.forwardOnly);
-        isCancelledDateValid = !parsedCancelledDate.includes('invalid');
-    }
-
     $: {
         isRecurrenceValid = true;
         if (!editableTask.recurrenceRule) {
@@ -529,49 +478,40 @@ Availability of access keys:
             <!--  Due Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="due" class="accesskey-first">Due</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:value={editableTask.dueDate}
-                id="due"
-                type="text"
-                class="input"
-                class:tasks-modal-error={!isDueDateValid}
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='due'
+                dateSymbol={dueDateSymbol}
+                bind:date={editableTask.dueDate}
+                bind:isDateValid={isDueDateValid}
+                forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey("d")}
             />
-            <code class="results">{dueDateSymbol} {@html parsedDueDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Scheduled Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="scheduled" class="accesskey-first">Scheduled</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:value={editableTask.scheduledDate}
-                id="scheduled"
-                type="text"
-                class:tasks-modal-error={!isScheduledDateValid}
-                class="input"
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='scheduled'
+                dateSymbol={scheduledDateSymbol}
+                bind:date={editableTask.scheduledDate}
+                bind:isDateValid={isScheduledDateValid}
+                forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey("s")}
             />
-            <code class="results">{scheduledDateSymbol} {@html parsedScheduledDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Start Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="start">St<span class="accesskey">a</span>rt</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:value={editableTask.startDate}
-                id="start"
-                type="text"
-                class:tasks-modal-error={!isStartDateValid}
-                class="input"
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='start'
+                dateSymbol={startDateSymbol}
+                bind:date={editableTask.startDate}
+                bind:isDateValid={isStartDateValid}
+                forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey("a")}
             />
-            <code class="results">{startDateSymbol} {@html parsedStartDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Only future dates  -->
@@ -637,43 +577,40 @@ Availability of access keys:
             <!--  Created Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="created">Created</label>
-            <input
-                bind:value={editableTask.createdDate}
-                id="created"
-                type="text"
-                class:tasks-modal-error={!isCreatedDateValid}
-                class="input"
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='created'
+                dateSymbol={createdDateSymbol}
+                bind:date={editableTask.createdDate}
+                bind:isDateValid={isCreatedDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={null}
             />
-            <code class="results">{createdDateSymbol} {@html parsedCreatedDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="done">Done</label>
-            <input
-                bind:value={editableTask.doneDate}
-                id="done"
-                type="text"
-                class:tasks-modal-error={!isDoneDateValid}
-                class="input"
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='done'
+                dateSymbol={doneDateSymbol}
+                bind:date={editableTask.doneDate}
+                bind:isDateValid={isDoneDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={null}
             />
-            <code class="results">{doneDateSymbol} {@html parsedDoneDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Cancelled Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="cancelled">Cancelled</label>
-            <input
-                bind:value={editableTask.cancelledDate}
-                id="cancelled"
-                type="text"
-                class:tasks-modal-error={!isCancelledDateValid}
-                class="input"
-                placeholder={datePlaceholder}
+            <DateEditor
+                id='cancelled'
+                dateSymbol={cancelledDateSymbol}
+                bind:date={editableTask.cancelledDate}
+                bind:isDateValid={isCancelledDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={null}
             />
-            <code class="results">{cancelledDateSymbol} {@html parsedCancelledDate}</code>
         </div>
 
         <div class="tasks-modal-section tasks-modal-buttons">
