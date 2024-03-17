@@ -55,6 +55,9 @@ module.exports = {
             parserOptions: {
                 parser: '@typescript-eslint/parser',
             },
+            rules: {
+                'no-inner-declarations': 0,
+            },
         },
     ],
 };
