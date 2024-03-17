@@ -54,20 +54,15 @@
 
     let isDescriptionValid: boolean = true;
 
+    let isCancelledDateValid: boolean = true;
     let isCreatedDateValid: boolean = true;
-
-    let isStartDateValid: boolean = true;
-
-    let isScheduledDateValid: boolean = true;
-
+    let isDoneDateValid: boolean = true;
     let isDueDateValid: boolean = true;
+    let isScheduledDateValid: boolean = true;
+    let isStartDateValid: boolean = true;
 
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
-
-    let isDoneDateValid: boolean = true;
-
-    let isCancelledDateValid: boolean = true;
 
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
