@@ -151,7 +151,7 @@ function appendToListWithinFile(initialContent: string, targetListHeading: strin
         result += targetListHeading + newLineChar + textToAppend + newLineChar;
     } else {
         linesArray[headingLine] += newLineChar + textToAppend;
-        result = linesArray.join(newLineChar);
+        return linesArray.join(newLineChar);
     }
     return result;
 }
