@@ -64,6 +64,17 @@ describe('FileWriter', () => {
 });
 
 describe('ListWriter', () => {
+    it('should not modify content if appending empty string', () => {
+        const initialContent = `
+## Another heading
+Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
+`;
+        const targetListHeading = '## COMPLETED TASKS';
+        const textToAppend = '';
+        const newFile = appendToListWithinFile(initialContent, targetListHeading, textToAppend);
+        expect(newFile).toEqual(initialContent);
+    });
+
     it('should be able to prepend to an existing list', () => {
         const initialContent = `
 ## Tasks ToBeDone
@@ -107,9 +118,9 @@ Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicab
 });
 
 function appendToListWithinFile(initialContent: string, targetListHeading: string, textToAppend: string) {
-    // if (textToAppend.length === 0) {
-    //     return initialContent;
-    // }
+    if (textToAppend.length === 0) {
+        return initialContent;
+    }
     let result = initialContent;
     if (result.length > 0 && !result.endsWith(newLineChar)) {
         result += newLineChar;
