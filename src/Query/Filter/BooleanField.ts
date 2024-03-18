@@ -184,9 +184,7 @@ export class BooleanField extends Field {
         const explanationStack: Explanation[] = [];
         for (const token of postfixExpression) {
             if (token.name === 'IDENTIFIER') {
-                if (token.value == null) throw Error('null token value'); // This should not happen
-                const filter = this.subFields[token.value.trim()];
-                explanationStack.push(filter.explanation);
+                this.explainExpression(token, explanationStack);
             } else if (token.name === 'OPERATOR') {
                 this.explainOperator(token, explanationStack);
             } else {
@@ -195,6 +193,12 @@ export class BooleanField extends Field {
         }
         // Eventually the Explanation is the only item left in the boolean stack
         return explanationStack[0];
+    }
+
+    private explainExpression(token: Token, explanationStack: Explanation[]) {
+        if (token.value == null) throw Error('null token value'); // This should not happen
+        const filter = this.subFields[token.value.trim()];
+        explanationStack.push(filter.explanation);
     }
 
     private explainOperator(token: Token, explanationStack: Explanation[]) {
