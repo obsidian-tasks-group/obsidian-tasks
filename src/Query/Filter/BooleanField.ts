@@ -196,7 +196,9 @@ export class BooleanField extends Field {
     }
 
     private explainExpression(token: Token, explanationStack: Explanation[]) {
-        if (token.value == null) throw Error('null token value'); // This should not happen
+        if (token.value == null) {
+            throw Error('null token value'); // This should not happen
+        }
         const filter = this.subFields[token.value.trim()];
         explanationStack.push(filter.explanation);
     }
