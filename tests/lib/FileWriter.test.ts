@@ -75,6 +75,20 @@ Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicab
         expect(newFile).toEqual(initialContent);
     });
 
+    it('should throw error if heading is empty string', () => {
+        const initialContent = `
+## Another heading
+Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
+`;
+        const targetListHeading = '';
+        const textToAppend = 'A NON-EMPTY LINE';
+        const t = () => {
+            appendToListWithinFile(initialContent, targetListHeading, textToAppend);
+        };
+        expect(t).toThrow(Error);
+        expect(t).toThrowError('Cannot move line to list as empty target list heading was supplied');
+    });
+
     it('should be able to prepend to an existing list', () => {
         const initialContent = `
 ## Tasks ToBeDone
@@ -120,6 +134,9 @@ Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicab
 function appendToListWithinFile(initialContent: string, targetListHeading: string, textToAppend: string) {
     if (textToAppend.length === 0) {
         return initialContent;
+    }
+    if (targetListHeading === '') {
+        throw Error('Cannot move line to list as empty target list heading was supplied');
     }
     let result = initialContent;
     if (result.length > 0 && !result.endsWith(newLineChar)) {
