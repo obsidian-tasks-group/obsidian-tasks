@@ -141,17 +141,18 @@ function appendToListWithinFile(initialContent: string, targetListHeading: strin
     if (targetListHeading === '') {
         throw Error('Cannot move line to list as empty target list heading was supplied');
     }
-    let result = initialContent;
-    if (result.length > 0 && !result.endsWith(newLineChar)) {
-        result += newLineChar;
-    }
     const linesArray = initialContent.split('\n');
     const headingLine = linesArray.indexOf(targetListHeading);
+
     if (headingLine === -1) {
+        let result = initialContent;
+        if (result.length > 0 && !result.endsWith(newLineChar)) {
+            result += newLineChar;
+        }
         result += targetListHeading + newLineChar + textToAppend + newLineChar;
+        return result;
     } else {
         linesArray[headingLine] += newLineChar + textToAppend;
         return linesArray.join(newLineChar);
     }
-    return result;
 }
