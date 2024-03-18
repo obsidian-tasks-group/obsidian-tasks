@@ -114,10 +114,9 @@ Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicab
     });
 
     it('it should create new heading (if one does not exist) at bottom of note and add line to list', () => {
-        const initialContent = `
+        const initialContentNoNewLine = `
 ## Another heading
-Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
-`;
+Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.`;
         const expectedContent = `
 ## Another heading
 Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
@@ -126,8 +125,12 @@ Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicab
 `;
         const targetListHeading = '## COMPLETED TASKS';
         const textToAppend = '- [-] A COMPLETED TASK TO MOVE TO NAMED LIST';
-        const newFile = appendToListWithinFile(initialContent, targetListHeading, textToAppend);
-        expect(newFile).toEqual(expectedContent);
+
+        const newFile1 = appendToListWithinFile(initialContentNoNewLine, targetListHeading, textToAppend);
+        expect(newFile1).toEqual(expectedContent);
+
+        const newFile2 = appendToListWithinFile(initialContentNoNewLine + newLineChar, targetListHeading, textToAppend);
+        expect(newFile2).toEqual(expectedContent);
     });
 });
 
