@@ -138,7 +138,7 @@ esbuild
             js: banner,
         },
         bundle: true,
-        entryPoints: ['main.ts'],
+        entryPoints: ['src/main.ts', 'src/styles.css'],
         external: [
             'obsidian',
             'electron',
@@ -162,7 +162,7 @@ esbuild
         format: 'cjs',
         logLevel: 'info',
         minify: prod ? true : false,
-        outfile: 'main.js',
+        outdir: '.',
         plugins: [
             esbuildSvelte({
                 preprocess: sveltePreprocess(),
