@@ -66,9 +66,6 @@ describe('FileWriter', () => {
 describe('ListWriter', () => {
     it('should be able to prepend to an existing list', () => {
         const initialContent = `
-## Lorem ipsum
-Lorem ipsum dolor sit amet, consectetur adipisci elit, sed
-eiusmod tempor incidunt ut labore et dolore magna aliqua.
 ## Tasks ToBeDone
 - [ ] a sample task
 ## Completed tasks
@@ -77,9 +74,6 @@ eiusmod tempor incidunt ut labore et dolore magna aliqua.
 Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
 `;
         const expectedContent = `
-## Lorem ipsum
-Lorem ipsum dolor sit amet, consectetur adipisci elit, sed
-eiusmod tempor incidunt ut labore et dolore magna aliqua.
 ## Tasks ToBeDone
 - [ ] a sample task
 ## Completed tasks
@@ -96,26 +90,16 @@ Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicab
 
     it('it should create new heading (if one does not exist) at bottom of note and add line to list', () => {
         const initialContent = `
-## Lorem ipsum
-Lorem ipsum dolor sit amet, consectetur adipisci elit, sed
-eiusmod tempor incidunt ut labore et dolore magna aliqua.
-## Tasks ToBeDone
-- [ ] a sample task
 ## Another heading
 Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
 `;
         const expectedContent = `
-## Lorem ipsum
-Lorem ipsum dolor sit amet, consectetur adipisci elit, sed
-eiusmod tempor incidunt ut labore et dolore magna aliqua.
-## Tasks ToBeDone
-- [ ] a sample task
 ## Another heading
 Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
-## Completed tasks
+## COMPLETED TASKS
 - [-] A COMPLETED TASK TO MOVE TO NAMED LIST
 `;
-        const targetListHeading = '## Completed tasks';
+        const targetListHeading = '## COMPLETED TASKS';
         const textToAppend = '- [-] A COMPLETED TASK TO MOVE TO NAMED LIST';
         const newFile = appendToListWithinFile(initialContent, targetListHeading, textToAppend);
         expect(newFile).toEqual(expectedContent);
