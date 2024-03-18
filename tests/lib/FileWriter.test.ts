@@ -123,9 +123,9 @@ Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicab
 });
 
 function appendToListWithinFile(initialContent: string, targetListHeading: string, textToAppend: string) {
-    if (textToAppend.length === 0) {
-        return initialContent;
-    }
+    // if (textToAppend.length === 0) {
+    //     return initialContent;
+    // }
     let result = initialContent;
     if (result.length > 0 && !result.endsWith(newLineChar)) {
         result += newLineChar;
@@ -135,10 +135,8 @@ function appendToListWithinFile(initialContent: string, targetListHeading: strin
     if (headingLine === -1) {
         result += targetListHeading + newLineChar + textToAppend + newLineChar;
     } else {
-        let newLines = linesArray.slice(0, headingLine + 1);
-        newLines.push(textToAppend);
-        newLines = newLines.concat(linesArray.slice(headingLine + 1, -1));
-        result = newLines.join(newLineChar) + newLineChar;
+        linesArray[headingLine] += newLineChar + textToAppend;
+        result = linesArray.join(newLineChar);
     }
     return result;
 }
