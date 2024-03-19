@@ -64,8 +64,7 @@ export class Filter {
     }
 
     public simulateExplainFilter() {
-        const needToShowInstruction = this.instruction !== this.explanation.asString();
-        if (needToShowInstruction) {
+        if (this.instruction !== this.explanation.asString()) {
             return new Explanation(this.instruction + ' =>', [this.explanation]);
         } else {
             return this.explanation;
