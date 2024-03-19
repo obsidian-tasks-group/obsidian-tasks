@@ -208,10 +208,7 @@ export class BooleanField extends Field {
         // In our caller, the explanationStack keeps the explanations but not the instruction lines.
         // So to replicate the logic in Filter.explainFilterIndented(), we may need to add the
         // instruction to the explanation.
-        const needToShowInstruction = filter.instruction !== filter.explanation.asString();
-        return needToShowInstruction
-            ? new Explanation(filter.instruction + ' =>', [filter.explanation])
-            : filter.explanation;
+        return filter.simulateExplainFilter(filter);
     }
 
     private explainOperator(token: Token, explanationStack: Explanation[]) {

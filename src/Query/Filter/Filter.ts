@@ -1,5 +1,5 @@
 import type { Task } from '../../Task/Task';
-import type { Explanation } from '../Explain/Explanation';
+import { Explanation } from '../Explain/Explanation';
 import type { SearchInfo } from '../SearchInfo';
 import { Statement } from '../Statement';
 
@@ -63,5 +63,12 @@ export class Filter {
         } else {
             return `${explainedStatement} =>\n${explanation.asString(indent + '  ')}\n`;
         }
+    }
+
+    public simulateExplainFilter(filter: Filter) {
+        const needToShowInstruction = filter.instruction !== filter.explanation.asString();
+        return needToShowInstruction
+            ? new Explanation(filter.instruction + ' =>', [filter.explanation])
+            : filter.explanation;
     }
 }
