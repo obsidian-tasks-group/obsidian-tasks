@@ -1,10 +1,5 @@
 @import './Renderer/Renderer';
 
-.tasks-setting-important {
-    color: red;
-    font-weight: bold;
-}
-
 /**------------------------------------------------------------------------
  **                            MODAL
  *------------------------------------------------------------------------**/
@@ -271,6 +266,11 @@
 /**------------------------------------------------------------------------
  **                            SETTINGS
  *------------------------------------------------------------------------**/
+
+.tasks-setting-important {
+    color: red;
+    font-weight: bold;
+}
 
 .tasks-settings-is-invalid {
     /* Dark red text on pale background*/
