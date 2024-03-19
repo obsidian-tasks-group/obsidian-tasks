@@ -8,6 +8,7 @@ yarn-error.log
 
 # build
 /main.js
+/styles.css
 *.js.map
 .log
 /generated/
