@@ -1,0 +1,81 @@
+.tasks-setting-important {
+    color: red;
+    font-weight: bold;
+}
+
+.tasks-settings-is-invalid {
+    /* Dark red text on pale background*/
+    color: var(--text-error) !important;
+    background-color: rgba(var(--background-modifier-error-rgb), 0.2) !important;
+}
+
+
+.tasks-settings .additional {
+    margin: 6px 12px;
+}
+.tasks-settings .additional > .setting-item {
+    border-top: 0;
+    padding-top: 9px;
+}
+
+
+.tasks-settings details > summary {
+    outline: none;
+    display: block !important;
+    list-style: none !important;
+    list-style-type: none !important;
+    min-height: 1rem;
+    border-top-left-radius: 0.1rem;
+    border-top-right-radius: 0.1rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.tasks-settings details > summary::-webkit-details-marker,
+.tasks-settings details > summary::marker {
+    display: none !important;
+}
+
+.tasks-settings details > summary > .collapser {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    content: "";
+}
+
+.tasks-settings details > summary > .collapser > .handle {
+    transform: rotate(0deg);
+    transition: transform 0.25s;
+    background-color: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-image: var(--tasks-details-icon);
+    mask-image: var(--tasks-details-icon);
+    width: 20px;
+    height: 20px;
+}
+
+.tasks-settings details[open] > summary > .collapser > .handle {
+    transform: rotate(90deg);
+}
+
+.tasks-nested-settings .setting-item {
+    border: 0px;
+    padding-bottom: 0;
+}
+.tasks-nested-settings {
+    padding-bottom: 18px;
+}
+.tasks-nested-settings[open] .setting-item-heading,
+.tasks-nested-settings:not(details) .setting-item-heading {
+    border-top: 0px;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.tasks-settings .row-for-status {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
