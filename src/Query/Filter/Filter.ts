@@ -64,10 +64,10 @@ export class Filter {
     }
 
     public simulateExplainFilter() {
-        if (this.explanation.asString() !== this.instruction) {
-            return new Explanation(this.instruction + ' =>', [this.explanation]);
-        } else {
+        if (this.explanation.asString() === this.instruction) {
             return this.explanation;
+        } else {
+            return new Explanation(this.instruction + ' =>', [this.explanation]);
         }
     }
 }
