@@ -220,7 +220,7 @@ describe('boolean query - explain', () => {
         return new Explainer(indentation).explainFilters(query1);
     }
 
-    it.failing('should make multi-line explanations consistent in and out of Boolean filter - issue #2707', () => {
+    it('should make multi-line explanations consistent in and out of Boolean filter - issue #2707', () => {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2707
         const filter = 'description regex matches /buy/i';
 
@@ -231,7 +231,6 @@ describe('boolean query - explain', () => {
         const filter2Explanation = explainFilters(0, filter2);
 
         // Ensure that the full standalone explanation of filter1 is present in its explanation in the Boolean query:
-        // TODO: Make this test pass:
         expect(filter2Explanation).toContain(filter1Explanation);
 
         // These inline snapshots are provided for ease of visualising the behaviour:
@@ -241,12 +240,12 @@ describe('boolean query - explain', () => {
             "
         `);
 
-        // TODO: Include the original regex source line in this string:
         expect(filter2Explanation).toMatchInlineSnapshot(`
             "( description regex matches /buy/i ) AND ( path includes {{query.file.path}} ) =>
             ( description regex matches /buy/i ) AND ( path includes some/sample/note.md ) =>
               AND (All of):
-                using regex:            'buy' with flag 'i'
+                description regex matches /buy/i =>
+                  using regex:            'buy' with flag 'i'
                 path includes some/sample/note.md
             "
         `);
