@@ -56,7 +56,7 @@ export class Filter {
 
     public explainFilterIndented(indent: string) {
         const explainedStatement = this._statement.explainStatement(indent);
-        if (this.explanation.asString('') === this.instruction) {
+        if (this.onlyNeedsOneLineExplanation()) {
             return `${explainedStatement}\n`;
         } else {
             return `${explainedStatement} =>\n${this.explanation.asString(indent + '  ')}\n`;
@@ -64,10 +64,14 @@ export class Filter {
     }
 
     public simulateExplainFilter() {
-        if (this.explanation.asString('') === this.instruction) {
+        if (this.onlyNeedsOneLineExplanation()) {
             return this.explanation;
         } else {
             return new Explanation(this.instruction + ' =>', [this.explanation]);
         }
+    }
+
+    private onlyNeedsOneLineExplanation() {
+        return this.explanation.asString('') === this.instruction;
     }
 }
