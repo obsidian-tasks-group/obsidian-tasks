@@ -64,7 +64,7 @@ export class Filter {
     }
 
     public simulateExplainFilter() {
-        if (this.instruction !== this.explanation.asString()) {
+        if (this.explanation.asString() !== this.instruction) {
             return new Explanation(this.instruction + ' =>', [this.explanation]);
         } else {
             return this.explanation;
