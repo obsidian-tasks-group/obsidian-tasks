@@ -4,7 +4,8 @@ Explanation of this Tasks code block query:
 
   (due before tomorrow) AND (is recurring) =>
     AND (All of):
-      due date is before 2022-10-22 (Saturday 22nd October 2022)
+      due before tomorrow =>
+        due date is before 2022-10-22 (Saturday 22nd October 2022)
       is recurring
 
   No grouping instructions supplied.

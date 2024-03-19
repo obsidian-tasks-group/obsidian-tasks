@@ -200,7 +200,15 @@ export class BooleanField extends Field {
             throw Error('null token value'); // This should not happen
         }
         const filter = this.subFields[token.value.trim()];
-        explanationStack.push(filter.explanation);
+        const explanation = this.simulateExplainFilter(filter);
+        explanationStack.push(explanation);
+    }
+
+    private simulateExplainFilter(filter: Filter) {
+        // In our caller, the explanationStack keeps the explanations but not the instruction lines.
+        // So to replicate the logic in Filter.explainFilterIndented(), we may need to add the
+        // instruction to the explanation.
+        return filter.simulateExplainFilter();
     }
 
     private explainOperator(token: Token, explanationStack: Explanation[]) {
