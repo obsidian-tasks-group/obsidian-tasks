@@ -55,9 +55,8 @@ export class Filter {
     }
 
     public explainFilterIndented(indent: string) {
-        const unindentedExplanation = this.explanation.asString();
         const explainedStatement = this._statement.explainStatement(indent);
-        if (unindentedExplanation === this.instruction) {
+        if (this.explanation.asString() === this.instruction) {
             return `${explainedStatement}\n`;
         } else {
             return `${explainedStatement} =>\n${this.explanation.asString(indent + '  ')}\n`;
