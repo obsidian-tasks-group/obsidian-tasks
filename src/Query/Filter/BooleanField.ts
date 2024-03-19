@@ -208,7 +208,7 @@ export class BooleanField extends Field {
         // In our caller, the explanationStack keeps the explanations but not the instruction lines.
         // So to replicate the logic in Filter.explainFilterIndented(), we may need to add the
         // instruction to the explanation.
-        return filter.simulateExplainFilter(filter);
+        return filter.simulateExplainFilter();
     }
 
     private explainOperator(token: Token, explanationStack: Explanation[]) {

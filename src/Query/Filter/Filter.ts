@@ -65,10 +65,8 @@ export class Filter {
         }
     }
 
-    public simulateExplainFilter(filter: Filter) {
-        const needToShowInstruction = filter.instruction !== filter.explanation.asString();
-        return needToShowInstruction
-            ? new Explanation(filter.instruction + ' =>', [filter.explanation])
-            : filter.explanation;
+    public simulateExplainFilter() {
+        const needToShowInstruction = this.instruction !== this.explanation.asString();
+        return needToShowInstruction ? new Explanation(this.instruction + ' =>', [this.explanation]) : this.explanation;
     }
 }
