@@ -1,3 +1,4 @@
+import { sassPlugin } from 'esbuild-sass-plugin';
 import process from 'process';
 import esbuild from 'esbuild';
 import builtins from 'builtin-modules';
@@ -138,7 +139,7 @@ esbuild
             js: banner,
         },
         bundle: true,
-        entryPoints: ['main.ts'],
+        entryPoints: ['main.ts', 'styles.scss'],
         external: [
             'obsidian',
             'electron',
@@ -162,10 +163,14 @@ esbuild
         format: 'cjs',
         logLevel: 'info',
         minify: prod ? true : false,
-        outfile: 'main.js',
+        outdir: '.',
         plugins: [
             esbuildSvelte({
                 preprocess: sveltePreprocess(),
+            }),
+            sassPlugin({
+                syntax: "scss",
+                style: "expanded",
             }),
         ],
         sourcemap: prod ? false : 'inline',
