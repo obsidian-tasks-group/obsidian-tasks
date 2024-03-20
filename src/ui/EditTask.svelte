@@ -162,25 +162,17 @@
         }
     };
 
-    $: accesskey = (key: string) => ((withAccessKeys ? key : null));
+    $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
-       
         isDueDateValid &&
-       
         isReminderDateValid &&
         
         isRecurrenceValid &&
-       
         isScheduledDateValid &&
-       
         isStartDateValid &&
-       
         isDescriptionValid &&
-       
         isCancelledDateValid &&
-       
         isCreatedDateValid &&
-       
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
@@ -201,7 +193,12 @@
             if (!recurrenceFromText) {
                 parsedRecurrence = '<i>invalid recurrence rule</i>';
                 isRecurrenceValid = false;
-            } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate && !editableTask.reminderDate) {
+            } else if (
+                !editableTask.startDate &&
+                !editableTask.scheduledDate &&
+                !editableTask.dueDate &&
+                !editableTask.reminderDate
+            ) {
                 parsedRecurrence = '<i>due, scheduled, reminder or start date required</i>';
                 isRecurrenceValid = false;
             } else {
