@@ -64,6 +64,9 @@
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
 
+    let parsedReminderDate: string = '';
+    let isReminderDateValid: boolean = true;
+
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
 
