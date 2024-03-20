@@ -2,12 +2,9 @@
 *.iml
 .idea
 
-.vault_plugin_dir
-
 # npm
 node_modules
 yarn-error.log
-.yarn
 
 # build
 /main.js
@@ -42,3 +39,6 @@ yarn-error.log
 
 # Backup files.
 *.bak
+
+# Yarn
+.yarn/
