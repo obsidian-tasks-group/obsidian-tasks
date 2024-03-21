@@ -231,7 +231,8 @@ Result:
   (description includes d1) AND (priority medium) =>
     AND (All of):
       description includes d1
-      priority is medium
+      priority medium =>
+        priority is medium
 
 
 --------------------------------------------------------
@@ -259,7 +260,8 @@ Result:
     AND (All of):
       description includes d1
       NOT:
-        priority is medium
+        priority medium =>
+          priority is medium
 
 
 --------------------------------------------------------
@@ -286,7 +288,8 @@ Result:
     OR (At least one of):
       description includes d1
       description includes d2
-      priority is medium
+      priority medium =>
+        priority is medium
 
 
 --------------------------------------------------------
@@ -299,7 +302,8 @@ Result:
   (description includes d1) OR (priority medium) =>
     OR (At least one of):
       description includes d1
-      priority is medium
+      priority medium =>
+        priority is medium
 
 
 --------------------------------------------------------
@@ -327,7 +331,8 @@ Result:
     OR (At least one of):
       description includes d1
       NOT:
-        priority is medium
+        priority medium =>
+          priority is medium
 
 
 --------------------------------------------------------
@@ -353,7 +358,8 @@ Result:
   (description includes d1) XOR (priority medium) =>
     XOR (Exactly one of):
       description includes d1
-      priority is medium
+      priority medium =>
+        priority is medium
 
 
 --------------------------------------------------------

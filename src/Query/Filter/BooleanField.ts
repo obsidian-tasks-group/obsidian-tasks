@@ -1,5 +1,6 @@
-import type { PostfixExpression } from 'boon-js';
 import { parse as boonParse } from 'boon-js';
+import type { PostfixExpression } from 'boon-js';
+import type { Token } from 'boon-js/lib/types';
 
 import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task/Task';
@@ -280,35 +281,53 @@ export class BooleanField extends Field {
         const explanationStack: Explanation[] = [];
         for (const token of postfixExpression) {
             if (token.name === 'IDENTIFIER') {
-                if (token.value == null) throw Error('null token value'); // This should not happen
-                const filter = this.subFields[token.value.trim()];
-                explanationStack.push(filter.explanation);
+                this.explainExpression(token, explanationStack);
             } else if (token.name === 'OPERATOR') {
-                // To evaluate an operator we need to pop the required number of items from the boolean stack,
-                // do the logical evaluation and push back the result
-                if (token.value === 'NOT') {
-                    const arg1 = explanationStack.pop();
-                    explanationStack.push(Explanation.booleanNot([arg1!]));
-                } else if (token.value === 'OR') {
-                    const arg2 = explanationStack.pop();
-                    const arg1 = explanationStack.pop();
-                    explanationStack.push(Explanation.booleanOr([arg1!, arg2!]));
-                } else if (token.value === 'AND') {
-                    const arg2 = explanationStack.pop();
-                    const arg1 = explanationStack.pop();
-                    explanationStack.push(Explanation.booleanAnd([arg1!, arg2!]));
-                } else if (token.value === 'XOR') {
-                    const arg2 = explanationStack.pop();
-                    const arg1 = explanationStack.pop();
-                    explanationStack.push(Explanation.booleanXor([arg1!, arg2!]));
-                } else {
-                    throw Error('Unsupported operator: ' + token.value);
-                }
+                this.explainOperator(token, explanationStack);
             } else {
                 throw Error('Unsupported token type: ' + token.name);
             }
         }
         // Eventually the Explanation is the only item left in the boolean stack
         return explanationStack[0];
+    }
+
+    private explainExpression(token: Token, explanationStack: Explanation[]) {
+        if (token.value == null) {
+            throw Error('null token value'); // This should not happen
+        }
+        const filter = this.subFields[token.value.trim()];
+        const explanation = this.simulateExplainFilter(filter);
+        explanationStack.push(explanation);
+    }
+
+    private simulateExplainFilter(filter: Filter) {
+        // In our caller, the explanationStack keeps the explanations but not the instruction lines.
+        // So to replicate the logic in Filter.explainFilterIndented(), we may need to add the
+        // instruction to the explanation.
+        return filter.simulateExplainFilter();
+    }
+
+    private explainOperator(token: Token, explanationStack: Explanation[]) {
+        // To evaluate an operator we need to pop the required number of items from the boolean stack,
+        // do the logical evaluation and push back the result
+        if (token.value === 'NOT') {
+            const arg1 = explanationStack.pop();
+            explanationStack.push(Explanation.booleanNot([arg1!]));
+        } else if (token.value === 'OR') {
+            const arg2 = explanationStack.pop();
+            const arg1 = explanationStack.pop();
+            explanationStack.push(Explanation.booleanOr([arg1!, arg2!]));
+        } else if (token.value === 'AND') {
+            const arg2 = explanationStack.pop();
+            const arg1 = explanationStack.pop();
+            explanationStack.push(Explanation.booleanAnd([arg1!, arg2!]));
+        } else if (token.value === 'XOR') {
+            const arg2 = explanationStack.pop();
+            const arg1 = explanationStack.pop();
+            explanationStack.push(Explanation.booleanXor([arg1!, arg2!]));
+        } else {
+            throw Error('Unsupported operator: ' + token.value);
+        }
     }
 }

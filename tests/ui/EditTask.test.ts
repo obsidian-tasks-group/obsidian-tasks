@@ -1,18 +1,20 @@
 /**
  * @jest-environment jsdom
  */
-import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import { describe, expect, it } from '@jest/globals';
+import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
-import type { Task } from '../../src/Task/Task';
-import EditTask from '../../src/ui/EditTask.svelte';
-import { DateFallback } from '../../src/Task/DateFallback';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
-import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
+import { DateFallback } from '../../src/Task/DateFallback';
+import type { Task } from '../../src/Task/Task';
+import EditTask from '../../src/ui/EditTask.svelte';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
+import { prettifyHTML } from '../TestingTools/HTMLHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 /**
@@ -518,5 +520,17 @@ describe('Exhaustive editing', () => {
             setCreatedDateValues,
             initialTaskLineValues,
         );
+    });
+});
+
+describe('Edit Modal HTML snapshot tests', () => {
+    it('should match snapshot', () => {
+        const task = taskFromLine({ line: '- [ ] absolutely to do', path: '' });
+        const onSubmit = () => {};
+        const allTasks = [task];
+        const { container } = renderAndCheckModal(task, onSubmit, allTasks);
+
+        const prettyHTML = prettifyHTML(container.innerHTML);
+        verifyWithFileExtension(prettyHTML, 'html');
     });
 });

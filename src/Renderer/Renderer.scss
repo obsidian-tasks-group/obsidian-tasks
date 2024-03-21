@@ -1,0 +1,115 @@
+:root {
+    --tasks-details-icon: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z'/></svg>");
+
+}
+
+/* Fix indentation of wrapped task lines in Tasks search results, when in Live Preview. */
+ul.contains-task-list .task-list-item-checkbox {
+    margin-inline-start: calc(var(--checkbox-size) * -1.5) !important;
+}
+
+.plugin-tasks-query-explanation{
+    /* Prevent long explanation lines wrapping, so they are more readable,
+       especially on small screens.
+
+       A horizontal scroll bar will be displayed, if the explanation
+       is too wide to fit.
+     */
+    --code-white-space: pre;
+}
+
+.tasks-count {
+    color: var(--text-faint);
+    padding-left: 20px;
+}
+
+/* Tooltip pop up above the description in short mode */
+.tooltip.pop-up {
+    animation: pop-up-animation 200ms forwards ease-in-out;
+}
+@keyframes pop-up-animation {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%) scale(1);
+    }
+    20% {
+        opacity: 0.7;
+        transform: translateY(-100%) scale(1.02);
+    }
+    40% {
+        opacity: 1;
+        transform: translateY(-100%) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(-100%) scale(1);
+    }
+}
+
+/* Edit and postpone */
+.tasks-edit, .tasks-postpone {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    margin-left: .33em;
+    cursor: pointer;
+    font-family: var(--font-interface);
+    color: var(--text-accent);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+a.tasks-edit, a.tasks-postpone {
+    text-decoration: none;
+}
+
+.tasks-edit::after {
+    content: '📝';
+}
+
+.tasks-postpone::after {
+    content: '⏩';
+}
+
+/* Urgency score */
+.tasks-urgency {
+    font-size: var(--font-ui-smaller);
+    font-family: var(--font-interface);
+    padding: 2px 6px;
+    border-radius: var(--radius-s);
+    color: var(--text-normal);
+    background-color: var(--background-secondary);
+    margin-left: 0.5em;
+    line-height: 1;
+}
+
+.internal-link.internal-link-short-mode {
+    text-decoration: none;
+}
+
+.tasks-list-text {
+    position: relative;
+}
+
+.tasks-list-text .tooltip {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    white-space: nowrap;
+}
+
+.task-list-item-checkbox {
+    cursor: pointer;
+}
+
+/* Hide tags that Obsidian recognises, if `hide tags` instruction was used. */
+.tasks-layout-hide-tags .task-description a.tag {
+    display: none;
+}
+
+/* Workaround for issue #2073: Enabling the plugin causes blockIds to be not hidden in reading view
+   https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2073 */
+.task-list-item .task-block-link{
+    display: none;
+}

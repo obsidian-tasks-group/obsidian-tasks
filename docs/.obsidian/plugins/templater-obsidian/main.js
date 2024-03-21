@@ -1743,6 +1743,12 @@ function arraymove(arr, fromIndex, toIndex) {
 function get_active_file(app2) {
   return app2.workspace.activeEditor?.file ?? app2.workspace.getActiveFile();
 }
+function get_folder_path_from_file_path(path) {
+  const path_separator = path.lastIndexOf("/");
+  if (path_separator !== -1)
+    return path.slice(0, path_separator);
+  return "";
+}
 
 // src/settings/suggesters/FileSuggester.ts
 var FileSuggestMode;
@@ -2663,7 +2669,10 @@ var InternalModuleHooks = class extends InternalModule {
   }
   generate_on_all_templates_executed() {
     return (callback_function) => {
-      const event_ref = app.workspace.on("templater:all-templates-executed", () => callback_function());
+      const event_ref = app.workspace.on("templater:all-templates-executed", async () => {
+        await delay(1);
+        callback_function();
+      });
       if (event_ref) {
         this.event_refs.push(event_ref);
       }
@@ -3582,7 +3591,11 @@ var Templater = class {
     }
     const extension = template instanceof import_obsidian12.TFile ? template.extension || "md" : "md";
     const created_note = await errorWrapper(async () => {
-      const path = app.vault.getAvailablePath((0, import_obsidian12.normalizePath)(`${folder?.path ?? ""}/${filename ?? "Untitled"}`), extension);
+      const path = app.vault.getAvailablePath((0, import_obsidian12.normalizePath)(`${folder?.path ?? ""}/${filename || "Untitled"}`), extension);
+      const folder_path = get_folder_path_from_file_path(path);
+      if (folder_path && !app.vault.getAbstractFileByPathInsensitive(folder_path)) {
+        await app.vault.createFolder(folder_path);
+      }
       return app.vault.create(path, "");
     }, `Couldn't create ${extension} file.`);
     if (created_note == null) {

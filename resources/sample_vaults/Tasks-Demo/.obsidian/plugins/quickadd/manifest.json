@@ -1,7 +1,7 @@
 {
 	"id": "quickadd",
 	"name": "QuickAdd",
-	"version": "1.7.0",
+	"version": "1.8.1",
 	"minAppVersion": "0.13.19",
 	"description": "Quickly add new pages or content to your vault.",
 	"author": "Christian B. B. Houmann",

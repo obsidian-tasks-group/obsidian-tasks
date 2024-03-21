@@ -6,6 +6,8 @@ import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
+import { Query } from '../../../src/Query/Query';
+import { Explainer } from '../../../src/Query/Explain/Explainer';
 import { verifyBooleanExpressionExplanation, verifyBooleanExpressionPreprocessing } from './BooleanFieldVerify';
 
 window.moment = moment;
@@ -22,7 +24,7 @@ function createValidFilter(instruction: string) {
     return new BooleanField().createFilterOrErrorMessage(instruction);
 }
 
-describe('boolean query', () => {
+describe('boolean query - filter', () => {
     // These tests are intended to be really simple, so it is easy to reason about the correct behaviour of the code.
     describe('basic operators', () => {
         it('AND', () => {
@@ -207,6 +209,46 @@ describe('boolean query', () => {
         // Have not managed to create instructions that trigger these errors:
         //      result.error = 'empty operator in boolean query';
         //      result.error = `unknown boolean operator '${token.value}'`;
+    });
+});
+
+describe('boolean query - explain', () => {
+    function explainFilters(indentationLevel: number, source: string) {
+        const indentation = ' '.repeat(indentationLevel);
+        const path = 'some/sample/note.md';
+        const query1 = new Query(source, path);
+        return new Explainer(indentation).explainFilters(query1);
+    }
+
+    it('should make multi-line explanations consistent in and out of Boolean filter - issue #2707', () => {
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2707
+        const filter = 'description regex matches /buy/i';
+
+        // A second filter, which contains filter1 embedded on a Boolean query:
+        const filter2 = `( ${filter} ) AND ( path includes {{query.file.path}} )`;
+
+        const filter1Explanation = explainFilters(4, filter);
+        const filter2Explanation = explainFilters(0, filter2);
+
+        // Ensure that the full standalone explanation of filter1 is present in its explanation in the Boolean query:
+        expect(filter2Explanation).toContain(filter1Explanation);
+
+        // These inline snapshots are provided for ease of visualising the behaviour:
+        expect(filter1Explanation).toMatchInlineSnapshot(`
+            "    description regex matches /buy/i =>
+                  using regex:            'buy' with flag 'i'
+            "
+        `);
+
+        expect(filter2Explanation).toMatchInlineSnapshot(`
+            "( description regex matches /buy/i ) AND ( path includes {{query.file.path}} ) =>
+            ( description regex matches /buy/i ) AND ( path includes some/sample/note.md ) =>
+              AND (All of):
+                description regex matches /buy/i =>
+                  using regex:            'buy' with flag 'i'
+                path includes some/sample/note.md
+            "
+        `);
     });
 });
 
