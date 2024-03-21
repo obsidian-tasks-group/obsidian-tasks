@@ -65,7 +65,7 @@ export class BooleanField extends Field {
      * @private
      */
     private parseLineV1(line: string) {
-        const preprocessed = BooleanField.preprocessExpression(line);
+        const preprocessed = BooleanField.preprocessExpressionV1(line);
         try {
             // Convert the (preprocessed) line into a postfix logical expression
             const postfixExpression = boonParse(preprocessed);
@@ -116,7 +116,7 @@ export class BooleanField extends Field {
         }
     }
 
-    public static preprocessExpression(line: string): string {
+    public static preprocessExpressionV1(line: string): string {
         // Prepare the query to be processed by boon-js.
         // Boon doesn't process expression with spaces unless they are surrounded by quotes, so replace
         // (due today) by ("due today").

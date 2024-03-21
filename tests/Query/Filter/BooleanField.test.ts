@@ -254,7 +254,7 @@ describe('boolean query - explain', () => {
 
 describe('boolean query - exhaustive tests', () => {
     it('preprocess', () => {
-        verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpression);
+        verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpressionV1);
     });
 
     it('explain', () => {
