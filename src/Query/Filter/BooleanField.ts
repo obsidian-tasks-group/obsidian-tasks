@@ -56,6 +56,15 @@ export class BooleanField extends Field {
         if (line.length === 0) {
             return FilterOrErrorMessage.fromError(line, 'empty line');
         }
+        return this.parseLineV1(line);
+    }
+
+    /**
+     * Legacy Boolean filter parser
+     * @param line
+     * @private
+     */
+    private parseLineV1(line: string) {
         const preprocessed = BooleanField.preprocessExpression(line);
         try {
             // Convert the (preprocessed) line into a postfix logical expression
