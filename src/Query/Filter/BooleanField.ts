@@ -64,22 +64,19 @@ export class BooleanField extends Field {
             // final token in the expression
             for (const token of postfixExpression) {
                 if (token.name === 'IDENTIFIER' && token.value) {
-                    const identifier = token.value.trim();
-                    if (!(identifier in this.subFields)) {
-                        const parsedField = parseFilter(identifier);
+                    const filter = token.value.trim();
+                    if (!(filter in this.subFields)) {
+                        const parsedField = parseFilter(filter);
                         if (parsedField === null) {
-                            return FilterOrErrorMessage.fromError(
-                                line,
-                                `couldn't parse sub-expression '${identifier}'`,
-                            );
+                            return FilterOrErrorMessage.fromError(line, `couldn't parse sub-expression '${filter}'`);
                         }
                         if (parsedField.error) {
                             return FilterOrErrorMessage.fromError(
                                 line,
-                                `couldn't parse sub-expression '${identifier}': ${parsedField.error}`,
+                                `couldn't parse sub-expression '${filter}': ${parsedField.error}`,
                             );
                         } else if (parsedField.filter) {
-                            this.subFields[identifier] = parsedField.filter;
+                            this.subFields[filter] = parsedField.filter;
                         }
                     }
                 } else if (token.name === 'OPERATOR') {
