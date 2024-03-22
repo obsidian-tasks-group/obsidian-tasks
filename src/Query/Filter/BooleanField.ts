@@ -191,7 +191,7 @@ export class BooleanField extends Field {
                 // It's a filter, replace it with a placeholder, and save it:
                 const placeholder = `f${currentIndex}`;
                 filters[placeholder] = part;
-                simplifiedLine += `(${placeholder})`;
+                simplifiedLine += placeholder;
                 currentIndex++;
             }
         });

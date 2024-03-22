@@ -8,7 +8,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)",
+    "simplifiedLine": "f1",
     "filters": {
         "f1": "\"description includes d1\" AND \"description includes d2\""
     }
@@ -22,7 +22,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( ((f1)) AND ((f2)) ) AND ((f3))",
+    "simplifiedLine": "( (f1) AND (f2) ) AND (f3)",
     "filters": {
         "f1": "description includes a",
         "f2": "description includes b",
@@ -38,7 +38,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( ((f1)) AND ((f2)) AND ((f3)) ) OR ( ((f4)) AND ((f5)) AND ((f6)) )",
+    "simplifiedLine": "( (f1) AND (f2) AND (f3) ) OR ( (f4) AND (f5) AND (f6) )",
     "filters": {
         "f1": "description includes a",
         "f2": "description includes b",
@@ -57,7 +57,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( ((f1)) OR ((f2)) ) OR ((f3))",
+    "simplifiedLine": "( (f1) OR (f2) ) OR (f3)",
     "filters": {
         "f1": "description includes a",
         "f2": "description includes b",
@@ -73,7 +73,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( ((f1)) OR ((f2)) OR ((f3)) ) AND ( ((f4)) OR ((f5)) OR ((f6)) )",
+    "simplifiedLine": "( (f1) OR (f2) OR (f3) ) AND ( (f4) OR (f5) OR (f6) )",
     "filters": {
         "f1": "description includes a",
         "f2": "description includes b",
@@ -92,7 +92,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( ((f1))) OR ((f2))) OR ((f3))) ) AND ( ((f4))) OR ((f5))) OR ((f6))) )",
+    "simplifiedLine": "( (f1)) OR (f2)) OR (f3)) ) AND ( (f4)) OR (f5)) OR (f6)) )",
     "filters": {
         "f1": "filter by function task.description.includes('a'",
         "f2": "filter by function task.description.includes('b'",
@@ -111,7 +111,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( (f1) )   AND ( ((f2))  AND ((f3)) )",
+    "simplifiedLine": "( f1 )   AND ( (f2)  AND (f3) )",
     "filters": {
         "f1": "description includes a",
         "f2": "description includes b",
@@ -127,7 +127,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( (f1) )   OR  ( ((f2))  OR  ((f3)) )",
+    "simplifiedLine": "( f1 )   OR  ( (f2)  OR  (f3) )",
     "filters": {
         "f1": "description includes a",
         "f2": "description includes b",
@@ -143,7 +143,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((((((f1))))))",
+    "simplifiedLine": "(((((f1)))))",
     "filters": {
         "f1": "description includes #context/location1"
     }
@@ -157,7 +157,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(((((NOT  ( (f1) ))))))",
+    "simplifiedLine": "(((((NOT  ( f1 ))))))",
     "filters": {
         "f1": "description includes d1"
     }
@@ -171,7 +171,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1))",
+    "simplifiedLine": "(f1)",
     "filters": {
         "f1": "description includes #context/location1"
     }
@@ -185,7 +185,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) OR ((f2) ) OR (  (f3) ) OR   (  (f4) )",
+    "simplifiedLine": "(f1) OR (f2 ) OR (  f3 ) OR   (  f4 )",
     "filters": {
         "f1": "description includes #context/location1",
         "f2": "description includes #context/location2",
@@ -202,7 +202,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) AND ((f2)) AND ((f3))",
+    "simplifiedLine": "(f1) AND (f2) AND (f3)",
     "filters": {
         "f1": "description includes 1",
         "f2": "description includes 2",
@@ -218,7 +218,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) AND ((f2)) AND ((f3)) AND ((f4)) AND ((f5)) AND ((f6)) AND ((f7)) AND ((f8)) AND ((f9))",
+    "simplifiedLine": "(f1) AND (f2) AND (f3) AND (f4) AND (f5) AND (f6) AND (f7) AND (f8) AND (f9)",
     "filters": {
         "f1": "description includes 1",
         "f2": "description includes 2",
@@ -240,7 +240,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1))   AND   ((f2))   AND   ((f3))   AND   ((f4))   AND   ((f5))   AND   ((f6))   AND   ((f7))   AND   ((f8))   AND   ((f9))",
+    "simplifiedLine": "(f1)   AND   (f2)   AND   (f3)   AND   (f4)   AND   (f5)   AND   (f6)   AND   (f7)   AND   (f8)   AND   (f9)",
     "filters": {
         "f1": "description includes 1",
         "f2": "description includes 2",
@@ -262,7 +262,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) AND ((f2))",
+    "simplifiedLine": "(f1) AND (f2)",
     "filters": {
         "f1": "description includes d1",
         "f2": "priority medium"
@@ -277,7 +277,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) AND NOT ((f2))",
+    "simplifiedLine": "(f1) AND NOT (f2)",
     "filters": {
         "f1": "description includes d1",
         "f2": "description includes d2"
@@ -292,7 +292,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) AND   NOT ((f2))",
+    "simplifiedLine": "(f1) AND   NOT (f2)",
     "filters": {
         "f1": "description includes d1",
         "f2": "priority medium"
@@ -307,7 +307,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) OR ((f2))",
+    "simplifiedLine": "(f1) OR (f2)",
     "filters": {
         "f1": "description includes d1",
         "f2": "description includes d2"
@@ -322,7 +322,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) OR ((f2)) OR ((f3))",
+    "simplifiedLine": "(f1) OR (f2) OR (f3)",
     "filters": {
         "f1": "description includes d1",
         "f2": "description includes d2",
@@ -338,7 +338,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) OR ((f2))",
+    "simplifiedLine": "(f1) OR (f2)",
     "filters": {
         "f1": "description includes d1",
         "f2": "priority medium"
@@ -353,7 +353,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) OR NOT ((f2))",
+    "simplifiedLine": "(f1) OR NOT (f2)",
     "filters": {
         "f1": "description includes d1",
         "f2": "description includes d2"
@@ -368,7 +368,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) OR   NOT ((f2))",
+    "simplifiedLine": "(f1) OR   NOT (f2)",
     "filters": {
         "f1": "description includes d1",
         "f2": "priority medium"
@@ -383,7 +383,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) XOR ((f2))",
+    "simplifiedLine": "(f1) XOR (f2)",
     "filters": {
         "f1": "description includes d1",
         "f2": "description includes d2"
@@ -398,7 +398,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) XOR ((f2))",
+    "simplifiedLine": "(f1) XOR (f2)",
     "filters": {
         "f1": "description includes d1",
         "f2": "priority medium"
@@ -414,7 +414,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1))",
+    "simplifiedLine": "f1)",
     "filters": {
         "f1": "AND (description includes d1"
     }
@@ -428,7 +428,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "NOT ((f1))",
+    "simplifiedLine": "NOT (f1)",
     "filters": {
         "f1": "description blahblah d1"
     }
@@ -442,7 +442,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "NOT  ( (f1) )",
+    "simplifiedLine": "NOT  ( f1 )",
     "filters": {
         "f1": "description includes d1"
     }
@@ -456,7 +456,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "NOT   (  (f1)  )",
+    "simplifiedLine": "NOT   (  f1  )",
     "filters": {
         "f1": "happens before blahblahblah"
     }
@@ -470,7 +470,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1))",
+    "simplifiedLine": "f1)",
     "filters": {
         "f1": "OR (description includes d1"
     }
@@ -484,7 +484,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1))",
+    "simplifiedLine": "(f1)",
     "filters": {
         "f1": "description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR"
     }
@@ -499,7 +499,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) OR ((f2))",
+    "simplifiedLine": "(f1) OR (f2)",
     "filters": {
         "f1": "path includes (some example",
         "f2": "path includes )some example("
@@ -514,7 +514,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1))) OR ((f2))",
+    "simplifiedLine": "(f1)) OR (f2)",
     "filters": {
         "f1": "path includes (some example",
         "f2": "path includes )some example("
@@ -529,7 +529,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1)) OR ((f2)))",
+    "simplifiedLine": "(f1) OR (f2))",
     "filters": {
         "f1": "path includes )some example(",
         "f2": "path includes (some example"
@@ -544,7 +544,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1))) OR ((f2))))",
+    "simplifiedLine": "(f1)) OR (f2)))",
     "filters": {
         "f1": "path includes ()some example(",
         "f2": "path includes ((some example"
@@ -560,7 +560,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( (f1) ) OR ( (f2) )",
+    "simplifiedLine": "( f1 ) OR ( f2 )",
     "filters": {
         "f1": "description regex matches /(buy|order|voucher|lakeland|purchase|\\spresent)/i",
         "f2": "path includes Home/Shopping"
@@ -575,7 +575,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( (f1)) ) OR ( (f2) ) OR ( (f3) ) OR ( (f4)) ) OR ( (f5)) ) OR ( (f6)) ) OR ( (f7) ) OR ( (f8) )",
+    "simplifiedLine": "( f1) ) OR ( f2 ) OR ( f3 ) OR ( f4) ) OR ( f5) ) OR ( f6) ) OR ( f7 ) OR ( f8 )",
     "filters": {
         "f1": "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type",
         "f2": "filter by function const date = task.due.moment; return date ? !date.isValid() : false;",
@@ -596,7 +596,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "( (f1) ) OR ( (f2) ) OR ( (f3) ) OR ( (f4) ) OR ( (f5) ) OR ( (f6) ) OR ( (f7) ) OR ( (f8) )",
+    "simplifiedLine": "( f1 ) OR ( f2 ) OR ( f3 ) OR ( f4 ) OR ( f5 ) OR ( f6 ) OR ( f7 ) OR ( f8 )",
     "filters": {
         "f1": "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type);",
         "f2": "filter by function const date = task.due.moment; return date ? !date.isValid() : false;",
