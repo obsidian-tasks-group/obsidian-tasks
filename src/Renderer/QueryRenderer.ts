@@ -19,6 +19,7 @@ import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { State } from '../Obsidian/Cache';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -188,22 +189,33 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
+        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
+        measureSearch.start();
+
         this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
         if (this.query.queryLayoutOptions.explainQuery) {
             this.createExplanation(content);
         }
 
-        return this.query.applyQueryToTasks(tasks);
+        const queryResult = this.query.applyQueryToTasks(tasks);
+
+        measureSearch.finish();
+        return queryResult;
     }
 
     private async renderSearchResults(queryResult: QueryResult, content: HTMLDivElement) {
+        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
+        measureRender.start();
+
         await this.addAllTaskGroups(queryResult.taskGroups, content);
 
         const totalTasksCount = queryResult.totalTasksCount;
         this.addTaskCount(content, queryResult);
 
         this.query.debug(`[render] ${totalTasksCount} tasks displayed`);
+
+        measureRender.finish();
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
