@@ -164,6 +164,7 @@ export const getSettings = (): Settings => {
     // Check to see if there are any new options that need to be added to the user's settings.
     addNewOptionsToUserSettings(Feature.settingsFlags, settings.features);
     addNewOptionsToUserSettings(defaultSettings.loggingOptions.minLevels, settings.loggingOptions.minLevels);
+    addNewOptionsToUserSettings(defaultSettings.debugSettings, settings.debugSettings);
 
     // In case saves pre-dated StatusConfiguration.type
     // TODO Special case for symbol 'X' or 'x' (just in case)

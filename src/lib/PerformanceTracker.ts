@@ -6,6 +6,7 @@
  *  // ... some slow code
  *  tracker.finish();
  */
+import { getSettings } from '../Config/Settings';
 
 export class PerformanceTracker {
     private readonly label: string;
@@ -16,10 +17,18 @@ export class PerformanceTracker {
     }
 
     public start() {
+        if (!this.recordTimings()) {
+            return;
+        }
+
         performance.mark(this.labelForStart());
     }
 
     public finish() {
+        if (!this.recordTimings()) {
+            return;
+        }
+
         performance.mark(this.labelForEnd());
 
         // Measure the time between the marks
@@ -48,5 +57,10 @@ export class PerformanceTracker {
 
     private labelForEnd() {
         return `${this.label} - end`;
+    }
+
+    private recordTimings() {
+        const { debugSettings } = getSettings();
+        return debugSettings.recordTimings;
     }
 }
