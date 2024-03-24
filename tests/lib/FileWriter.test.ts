@@ -125,10 +125,10 @@ Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicab
 `;
         const targetListHeading = '## COMPLETED TASKS';
         const textToAppend = '- [-] A COMPLETED TASK TO MOVE TO NAMED LIST';
-
+        // without newline
         const newFile1 = appendToListWithinFile(initialContentNoNewLine, targetListHeading, textToAppend);
         expect(newFile1).toEqual(expectedContent);
-
+        // with newline
         const newFile2 = appendToListWithinFile(initialContentNoNewLine + newLineChar, targetListHeading, textToAppend);
         expect(newFile2).toEqual(expectedContent);
     });
