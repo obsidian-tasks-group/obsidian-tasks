@@ -190,6 +190,10 @@ class QueryRenderChild extends MarkdownRenderChild {
             return;
         }
 
+        await this.renderSearchResults(queryResult, content);
+    }
+
+    private async renderSearchResults(queryResult: QueryResult, content: HTMLDivElement) {
         await this.addAllTaskGroups(queryResult.taskGroups, content);
 
         const totalTasksCount = queryResult.totalTasksCount;
