@@ -79,6 +79,11 @@ export interface IQuery {
     explainQuery: () => string;
 
     /**
+     * A probably unique identifier for this query, typically for use in debug logging
+     */
+    readonly queryId: string;
+
+    /**
      * Write a debug log message.
      *
      * This is provided to allow the query rendering code to log progress on the rendering,
