@@ -176,14 +176,8 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async renderQuerySearchResults(tasks: Task[], state: State.Warm, content: HTMLDivElement) {
-        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
-        this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
+        const queryResult = this.explainAndPerformSearch(state, tasks, content);
 
-        if (this.query.queryLayoutOptions.explainQuery) {
-            this.createExplanation(content);
-        }
-
-        const queryResult = this.query.applyQueryToTasks(tasks);
         if (queryResult.searchErrorMessage !== undefined) {
             // There was an error in the search, for example due to a problem custom function.
             this.renderErrorMessage(content, queryResult.searchErrorMessage);
@@ -191,6 +185,16 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         await this.renderSearchResults(queryResult, content);
+    }
+
+    private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
+        this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
+
+        if (this.query.queryLayoutOptions.explainQuery) {
+            this.createExplanation(content);
+        }
+
+        return this.query.applyQueryToTasks(tasks);
     }
 
     private async renderSearchResults(queryResult: QueryResult, content: HTMLDivElement) {
