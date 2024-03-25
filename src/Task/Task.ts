@@ -16,6 +16,7 @@ import type { Recurrence } from './Recurrence';
 import type { TaskLocation } from './TaskLocation';
 import type { Priority } from './Priority';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
+import { handleOnCompletion } from './OnCompletion';
 
 /**
  * Storage for the task line, broken down in to sections.
@@ -491,8 +492,9 @@ export class Task {
     }
 
     private putRecurrenceInUsersOrder(newTasks: Task[]) {
+        const potentiallyPrunedTasks = handleOnCompletion(this, newTasks);
         const { recurrenceOnNextLine } = getSettings();
-        return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
+        return recurrenceOnNextLine ? potentiallyPrunedTasks.reverse() : potentiallyPrunedTasks;
     }
 
     /**

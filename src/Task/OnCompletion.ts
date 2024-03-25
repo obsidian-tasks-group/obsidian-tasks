@@ -18,6 +18,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         return tasks;
     }
 
+    // experimentally copy completed task instance to archive.md in vault root
+
     if (taskString.includes('🏁 Delete')) {
         return tasks.filter((task) => task !== changedStatusTask);
     }

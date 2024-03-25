@@ -73,6 +73,15 @@ export const replaceTaskWithTasks = async ({
         workspace,
         previousTries: 0,
     });
+
+    const file = vault.getAbstractFileByPath('archive.md');
+    if (file instanceof TFile) {
+        await vault.process(file, (data) => {
+            return data + '\nHello World!';
+        });
+    } else {
+        console.log('Something went wrong...');
+    }
 };
 
 function errorAndNotice(message: string) {
