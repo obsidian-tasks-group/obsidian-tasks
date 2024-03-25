@@ -16,6 +16,7 @@ Final line in note file.`;
         const newFile = toTasklistEnd(initialContentNoNewLine, targetListHeading, textToAppend);
         expect(newFile).toEqual(expectedContent);
     });
+
     it('should insert line at end of list when list followed by regular text', () => {
         const initialContentNoNewLine = `Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
 ## MY TASK LIST
@@ -31,6 +32,7 @@ A line of regular text.`;
         const newFile = toTasklistEnd(initialContentNoNewLine, targetListHeading, textToAppend);
         expect(newFile).toEqual(expectedContent);
     });
+
     it('should insert line at end of list when list followed by a markdown heading', () => {
         const initialContentNoNewLine = `Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
 ## MY TASK LIST
@@ -46,6 +48,7 @@ A line of regular text.`;
         const newFile = toTasklistEnd(initialContentNoNewLine, targetListHeading, textToAppend);
         expect(newFile).toEqual(expectedContent);
     });
+
     it('should insert line at end of list when end of list is last line in note file', () => {
         const initialContentNoNewLine = `Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
 ## MY TASK LIST
@@ -53,6 +56,20 @@ A line of regular text.`;
         const expectedContent = `Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
 ## MY TASK LIST
 - [ ] An incomplete task
+- [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST`;
+        const targetListHeading = '## MY TASK LIST';
+        const textToAppend = '- [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST';
+        const newFile = toTasklistEnd(initialContentNoNewLine, targetListHeading, textToAppend);
+        expect(newFile).toEqual(expectedContent);
+    });
+
+    it('should recognize indented tasks as part of list', () => {
+        const initialContentNoNewLine = `Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
+## MY TASK LIST
+    - [ ] An INDENTED incomplete task`;
+        const expectedContent = `Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
+## MY TASK LIST
+    - [ ] An INDENTED incomplete task
 - [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST`;
         const targetListHeading = '## MY TASK LIST';
         const textToAppend = '- [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST';
