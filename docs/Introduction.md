@@ -13,6 +13,8 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- X.Y.Z:
+  - Add documentation page [[Resources]], with links to write-ups,  talks and sample vaults from users.
 - 6.1.0:
   - Add support for [[task dependencies]]:
     - First, [[Create or edit Task#Dependencies|use 'Create or edit Task']] to define the order in which you want to work on a set of tasks, using two new task emojis: 🆔  and ⛔.
