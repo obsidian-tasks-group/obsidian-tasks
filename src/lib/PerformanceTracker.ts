@@ -1,13 +1,21 @@
+import { getSettings } from '../Config/Settings';
+
 /**
  * Helper class for measuring performance of code, and adding labels for profiling.
+ *
+ * @summary
+ * When the user has **edited their Tasks plugin settings to set 'recordTimings' to true**,
+ * this class will:
+ *  - measure the elapsed time taken in sections of performance critical code,
+ *  - write the elapsed time to the console, similar to `console.time()` and `console.timeEnd()`,
+ *  - add markings to the Timing section of performance flame charts.
  * @example
+ *  // How to use PerformanceTracker:
  *  const tracker = new PerformanceTracker('some descriptive text');
  *  tracker.start();
  *  // ... some slow code
  *  tracker.finish();
  */
-import { getSettings } from '../Config/Settings';
-
 export class PerformanceTracker {
     private readonly label: string;
 
