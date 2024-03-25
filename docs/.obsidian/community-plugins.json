@@ -6,5 +6,6 @@
   "templater-obsidian",
   "tag-wrangler",
   "vault-name-status-bar",
-  "broken-links"
+  "broken-links",
+  "obsidian-auto-link-title"
 ]
