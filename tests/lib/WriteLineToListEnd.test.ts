@@ -79,8 +79,8 @@ A line of regular text.`;
 });
 
 const NEWLINE = '\n';
-const TASK_REGEX = new RegExp('^( *(- [.])).*');
 function writeLineToListEnd(initialContent: string, targetListHeading: string, textToAppend: string) {
+    const TASK_REGEX = new RegExp('^( *(- [.])).*');
     const linesArray = initialContent.split('\n');
     const headingLineNumber = linesArray.indexOf(targetListHeading);
     let thisLine = '';
