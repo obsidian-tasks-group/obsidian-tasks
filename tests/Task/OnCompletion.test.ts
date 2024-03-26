@@ -152,53 +152,6 @@ describe('OnCompletion', () => {
     });
 });
 
-describe('OnCompletion-Delete', () => {
-    // TODO is there a better way to handle the following?  does an 'empty' Task exist?
-    it('should return an empty Array for a non-recurring task with Delete Action', () => {
-        // Arrange
-        const dueDate = '2024-02-10';
-        const task = new TaskBuilder().description('A non-recurring task with 🏁 Delete').dueDate(dueDate).build();
-        expect(task.status.type).toEqual(StatusType.TODO);
-
-        // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
-
-        // Assert
-        expect(tasks).toEqual([]);
-    });
-
-    it('should return only the next instance of a recurring task with Delete action', () => {
-        // Arrange
-        const dueDate = '2024-02-10';
-        const recurrence = new RecurrenceBuilder().rule('every day').dueDate(dueDate).build();
-        const task = new TaskBuilder()
-            .description('A recurring task with 🏁 Delete')
-            .recurrence(recurrence)
-            .dueDate(dueDate)
-            .build();
-        expect(task.status.type).toEqual(StatusType.TODO);
-
-        // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
-
-        // Assert
-        expect(tasks.length).toEqual(1);
-        expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(
-            '"- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-11"',
-        );
-    });
-    it('should delete a simple task with flag on completion', () => {
-        // Arrange
-        const task = new TaskBuilder().description('A non-recurring task with 🏁 Delete').build();
-
-        // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
-
-        // Assert
-        expect(tasks.length).toEqual(0);
-    });
-});
-
 type ToggleCase = {
     // inputs:
     nextStatus: Status;
@@ -287,5 +240,52 @@ describe('visualise completion-behaviour', () => {
         // List of status and task
         const cases = getCases();
         verifyAll('checking on completion', cases, (toggleCase) => action(toggleCase));
+    });
+});
+
+describe('OnCompletion-Delete', () => {
+    // TODO is there a better way to handle the following?  does an 'empty' Task exist?
+    it('should return an empty Array for a non-recurring task with Delete Action', () => {
+        // Arrange
+        const dueDate = '2024-02-10';
+        const task = new TaskBuilder().description('A non-recurring task with 🏁 Delete').dueDate(dueDate).build();
+        expect(task.status.type).toEqual(StatusType.TODO);
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+
+        // Assert
+        expect(tasks).toEqual([]);
+    });
+
+    it('should return only the next instance of a recurring task with Delete action', () => {
+        // Arrange
+        const dueDate = '2024-02-10';
+        const recurrence = new RecurrenceBuilder().rule('every day').dueDate(dueDate).build();
+        const task = new TaskBuilder()
+            .description('A recurring task with 🏁 Delete')
+            .recurrence(recurrence)
+            .dueDate(dueDate)
+            .build();
+        expect(task.status.type).toEqual(StatusType.TODO);
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+        expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(
+            '"- [ ] A recurring task with 🏁 Delete 🔁 every day 📅 2024-02-11"',
+        );
+    });
+    it('should delete a simple task with flag on completion', () => {
+        // Arrange
+        const task = new TaskBuilder().description('A non-recurring task with 🏁 Delete').build();
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+
+        // Assert
+        expect(tasks.length).toEqual(0);
     });
 });
