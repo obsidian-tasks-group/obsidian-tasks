@@ -1,4 +1,4 @@
-describe('ToTasklistEnd', () => {
+describe('OnCompletion-EndOfList', () => {
     it('should insert line at end of list when list followed by blank line', () => {
         const initialContentNoNewLine = `Sed ipsam libero qui consequuntur quaerat non atque quia ab praesentium explicabo.
 ## MY TASK LIST
@@ -13,7 +13,7 @@ Final line in note file.`;
 Final line in note file.`;
         const targetListHeading = '## MY TASK LIST';
         const textToAppend = '- [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST';
-        const newFile = toTasklistEnd(initialContentNoNewLine, targetListHeading, textToAppend);
+        const newFile = writeLineToListEnd(initialContentNoNewLine, targetListHeading, textToAppend);
         expect(newFile).toEqual(expectedContent);
     });
 
@@ -29,7 +29,7 @@ A line of regular text.`;
 A line of regular text.`;
         const targetListHeading = '## MY TASK LIST';
         const textToAppend = '- [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST';
-        const newFile = toTasklistEnd(initialContentNoNewLine, targetListHeading, textToAppend);
+        const newFile = writeLineToListEnd(initialContentNoNewLine, targetListHeading, textToAppend);
         expect(newFile).toEqual(expectedContent);
     });
 
@@ -45,7 +45,7 @@ A line of regular text.`;
 ## Another list heading`;
         const targetListHeading = '## MY TASK LIST';
         const textToAppend = '- [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST';
-        const newFile = toTasklistEnd(initialContentNoNewLine, targetListHeading, textToAppend);
+        const newFile = writeLineToListEnd(initialContentNoNewLine, targetListHeading, textToAppend);
         expect(newFile).toEqual(expectedContent);
     });
 
@@ -59,7 +59,7 @@ A line of regular text.`;
 - [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST`;
         const targetListHeading = '## MY TASK LIST';
         const textToAppend = '- [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST';
-        const newFile = toTasklistEnd(initialContentNoNewLine, targetListHeading, textToAppend);
+        const newFile = writeLineToListEnd(initialContentNoNewLine, targetListHeading, textToAppend);
         expect(newFile).toEqual(expectedContent);
     });
 
@@ -73,15 +73,14 @@ A line of regular text.`;
 - [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST`;
         const targetListHeading = '## MY TASK LIST';
         const textToAppend = '- [-] A COMPLETED TASK TO INSERT AT END OF NAMED LIST';
-        const newFile = toTasklistEnd(initialContentNoNewLine, targetListHeading, textToAppend);
+        const newFile = writeLineToListEnd(initialContentNoNewLine, targetListHeading, textToAppend);
         expect(newFile).toEqual(expectedContent);
     });
 });
 
 const NEWLINE = '\n';
-// const NOT_TASK_REGEX = new RegExp('^(?! *(- [)).*$');
 const TASK_REGEX = new RegExp('^( *(- [.])).*');
-function toTasklistEnd(initialContent: string, targetListHeading: string, textToAppend: string) {
+function writeLineToListEnd(initialContent: string, targetListHeading: string, textToAppend: string) {
     const linesArray = initialContent.split('\n');
     const headingLineNumber = linesArray.indexOf(targetListHeading);
     let thisLine = '';
