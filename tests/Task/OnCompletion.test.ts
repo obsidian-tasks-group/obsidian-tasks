@@ -107,6 +107,52 @@ describe('OnCompletion', () => {
         `);
     });
 
+    it('should return the task when going from TODO to IN_PROGRESS', () => {
+        // Arrange
+        const dueDate = '2024-02-10';
+        const recurrence = new RecurrenceBuilder().rule('every day').dueDate(dueDate).build();
+        const task = new TaskBuilder()
+            .description('A recurring task with 🏁 Delete')
+            .recurrence(recurrence)
+            .dueDate(dueDate)
+            .build();
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeInProgress());
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+        expect(tasks[0].status.type).toEqual(StatusType.IN_PROGRESS);
+    });
+
+    it('should return the task when going from one DONE status to another DONE status', () => {
+        // Arrange
+        const done1 = new Status(new StatusConfiguration('x', 'done', ' ', true, StatusType.DONE));
+        const done2 = new Status(new StatusConfiguration('X', 'DONE', ' ', true, StatusType.DONE));
+        const task = new TaskBuilder().description('A simple done task with 🏁 Delete').status(done1).build();
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, done2);
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+        expect(tasks[0].status.symbol).toEqual('X');
+        expect(tasks[0].status.type).toEqual(StatusType.DONE);
+    });
+
+    it('should return a task featuring the On Completion flag trigger but an empty string Action', () => {
+        // Arrange
+        const task = new TaskBuilder().description('A non-recurring task with 🏁').build();
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+    });
+});
+
+describe('OnCompletion-Delete', () => {
     // TODO is there a better way to handle the following?  does an 'empty' Task exist?
     it('should return an empty Array for a non-recurring task with Delete Action', () => {
         // Arrange
@@ -150,50 +196,6 @@ describe('OnCompletion', () => {
 
         // Assert
         expect(tasks.length).toEqual(0);
-    });
-
-    it('should return the task when going from TODO to IN_PROGRESS', () => {
-        // Arrange
-        const dueDate = '2024-02-10';
-        const recurrence = new RecurrenceBuilder().rule('every day').dueDate(dueDate).build();
-        const task = new TaskBuilder()
-            .description('A recurring task with 🏁 Delete')
-            .recurrence(recurrence)
-            .dueDate(dueDate)
-            .build();
-
-        // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeInProgress());
-
-        // Assert
-        expect(tasks.length).toEqual(1);
-        expect(tasks[0].status.type).toEqual(StatusType.IN_PROGRESS);
-    });
-
-    it('should return the task when going from one DONE status to another DONE status', () => {
-        // Arrange
-        const done1 = new Status(new StatusConfiguration('x', 'done', ' ', true, StatusType.DONE));
-        const done2 = new Status(new StatusConfiguration('X', 'DONE', ' ', true, StatusType.DONE));
-        const task = new TaskBuilder().description('A simple done task with 🏁 Delete').status(done1).build();
-
-        // Act
-        const tasks = applyStatusAndOnCompletionAction(task, done2);
-
-        // Assert
-        expect(tasks.length).toEqual(1);
-        expect(tasks[0].status.symbol).toEqual('X');
-        expect(tasks[0].status.type).toEqual(StatusType.DONE);
-    });
-
-    it('should return a task featuring the On Completion flag trigger but an empty string Action', () => {
-        // Arrange
-        const task = new TaskBuilder().description('A non-recurring task with 🏁').build();
-
-        // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
-
-        // Assert
-        expect(tasks.length).toEqual(1);
     });
 });
 
