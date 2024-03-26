@@ -50,11 +50,6 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     // throw new Error('Something went wrong');
 }
 
-// your getting your current code finalised (such as moving the functions out of test files)
-// and put in to a new PR,
-// which I can then review,
-// and we can hopefully get merged before next week....
-
 export function writeLineToListEnd(initialContent: string, targetListHeading: string, textToAppend: string) {
     const NEWLINE = '\n';
     const TASK_REGEX = new RegExp('^( *(- [.])).*');
