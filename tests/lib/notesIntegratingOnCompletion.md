@@ -90,3 +90,16 @@ diff --git a/src/Task/Task.ts b/src/Task/Task.ts
      /**
 
 ```
+
+// your getting your current code finalised (such as moving the functions out of test files)
+// and put in to a new PR,
+// which I can then review,
+// and we can hopefully get merged before next week....
+
+call an  asynchronous function from a regular function:  https://javascript.info/task/async-from-regular
+
+- copy error handling from 'appendToListWithinFile' to 'writeLineToListEnd'
+- separate function to search for heading and return line# -- otherwise handle 'not found'
+- use task's own line number to start search for end of current list
+-
+
