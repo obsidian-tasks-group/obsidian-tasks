@@ -27,6 +27,18 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     if (taskString.includes('🏁 Delete')) {
         return returnWithoutCompletedInstance();
     }
+    if (taskString.includes('🏁 ToLogFile')) {
+        // pass;
+        // return writebackToOriginalLine();
+    }
+    if (taskString.includes('🏁 ToLogList')) {
+        // pass;
+        // return writebackToOriginalLine();
+    }
+    if (taskString.includes('🏁 EndOfList')) {
+        // pass;
+        // return writebackToOriginalLine();
+    }
     // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
     const errorMessage = 'Unknown "On Completion" action';
     console.log(errorMessage);
@@ -42,3 +54,22 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
 // and put in to a new PR,
 // which I can then review,
 // and we can hopefully get merged before next week....
+
+export function writeLineToListEnd(initialContent: string, targetListHeading: string, textToAppend: string) {
+    const NEWLINE = '\n';
+    const TASK_REGEX = new RegExp('^( *(- [.])).*');
+    const linesArray = initialContent.split('\n');
+    const headingLineNumber = linesArray.indexOf(targetListHeading);
+    let thisLine = '';
+    let insertionLine = headingLineNumber + 1;
+    for (thisLine in linesArray.slice(insertionLine)) {
+        if (thisLine.search(TASK_REGEX) > -1) {
+            insertionLine += 1;
+        } else break;
+    }
+    if (insertionLine > linesArray.length) {
+        insertionLine = -1;
+    }
+    linesArray[insertionLine] += NEWLINE + textToAppend;
+    return linesArray.join(NEWLINE);
+}
