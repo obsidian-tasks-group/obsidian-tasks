@@ -6,7 +6,7 @@
   "backlink": true,
   "outgoing-link": false,
   "tag-pane": true,
-  "page-preview": true,
+  "page-preview": false,
   "daily-notes": false,
   "templates": false,
   "note-composer": true,
