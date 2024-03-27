@@ -301,13 +301,6 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.addPostponeButton(extrasSpan, task, shortMode);
         }
 
-        // NEW
-        // if (!this.query.layoutOptions.hideSnoozeButton) {
-        //     this.addUnSnoozeButton(extrasSpan, task, shortMode);
-        //     this.addSnoozeButton1Day(extrasSpan, task, shortMode);
-        //     this.addSnoozeButton3Days(extrasSpan, task, shortMode);
-        // }
-
         taskList.appendChild(listItem);
     }
 
