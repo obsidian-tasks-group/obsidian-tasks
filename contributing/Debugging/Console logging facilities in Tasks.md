@@ -29,3 +29,7 @@ See a sample [data.json](https://github.com/obsidian-tasks-group/obsidian-tasks/
 New logging locations need to be added to `loggingOptions` in [src/Config/Settings.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Config/Settings.ts), so that developers/users can easily adjust the logging levels.
 
 For now, if you wish to add new logging, please search the source code for uses of `logging.getLogger()`.
+
+## Related pages
+
+- [[Console timing facilities in Tasks]]
