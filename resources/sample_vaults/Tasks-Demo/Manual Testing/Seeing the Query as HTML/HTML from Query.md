@@ -43,6 +43,12 @@ Repeat the above steps for the tasks code block in [[#Query - Short Mode]].
 
 Save the HTML in `HTML from Query - short mode.html`
 
+### Part 3 - Short Mode - Empty List
+
+Repeat the above steps for the tasks code block in [[#Query - Short Mode - Empty List]].
+
+Save the HTML in `HTML from Query - short mode - empty list.html`
+
 ## Task
 
 - [ ] #task Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
@@ -62,4 +68,14 @@ path includes {{query.file.path}}
 show urgency
 group by due
 short mode
+```
+
+## Query - Short Mode - Empty List
+
+```tasks
+path includes {{query.file.path}}
+show urgency
+group by due
+short mode
+limit 0
 ```
