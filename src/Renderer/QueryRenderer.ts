@@ -261,45 +261,54 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            const isFilenameUnique = this.isFilenameUnique({ task });
-            const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
-
-            // Remove all footnotes. They don't re-appear in another document.
-            const footnotes = listItem.querySelectorAll('[data-footnote-id]');
-            footnotes.forEach((footnote) => footnote.remove());
-
-            const extrasSpan = listItem.createSpan('task-extras');
-
-            if (!this.query.queryLayoutOptions.hideUrgency) {
-                this.addUrgency(extrasSpan, task);
-            }
-
-            const shortMode = this.query.queryLayoutOptions.shortMode;
-
-            if (!this.query.queryLayoutOptions.hideBacklinks) {
-                this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
-            }
-
-            if (!this.query.queryLayoutOptions.hideEditButton) {
-                // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
-                this.addEditButton(extrasSpan, task, this.plugin.getTasks()!);
-            }
-
-            if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
-                this.addPostponeButton(extrasSpan, task, shortMode);
-            }
-
-            // NEW
-            // if (!this.query.layoutOptions.hideSnoozeButton) {
-            //     this.addUnSnoozeButton(extrasSpan, task, shortMode);
-            //     this.addSnoozeButton1Day(extrasSpan, task, shortMode);
-            //     this.addSnoozeButton3Days(extrasSpan, task, shortMode);
-            // }
-
-            taskList.appendChild(listItem);
+            await this.addTask(taskList, taskLineRenderer, task, taskIndex);
         }
 
         content.appendChild(taskList);
+    }
+
+    private async addTask(
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        task: Task,
+        taskIndex: number,
+    ) {
+        const isFilenameUnique = this.isFilenameUnique({ task });
+        const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
+
+        // Remove all footnotes. They don't re-appear in another document.
+        const footnotes = listItem.querySelectorAll('[data-footnote-id]');
+        footnotes.forEach((footnote) => footnote.remove());
+
+        const extrasSpan = listItem.createSpan('task-extras');
+
+        if (!this.query.queryLayoutOptions.hideUrgency) {
+            this.addUrgency(extrasSpan, task);
+        }
+
+        const shortMode = this.query.queryLayoutOptions.shortMode;
+
+        if (!this.query.queryLayoutOptions.hideBacklinks) {
+            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
+        }
+
+        if (!this.query.queryLayoutOptions.hideEditButton) {
+            // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
+            this.addEditButton(extrasSpan, task, this.plugin.getTasks()!);
+        }
+
+        if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+            this.addPostponeButton(extrasSpan, task, shortMode);
+        }
+
+        // NEW
+        // if (!this.query.layoutOptions.hideSnoozeButton) {
+        //     this.addUnSnoozeButton(extrasSpan, task, shortMode);
+        //     this.addSnoozeButton1Day(extrasSpan, task, shortMode);
+        //     this.addSnoozeButton3Days(extrasSpan, task, shortMode);
+        // }
+
+        taskList.appendChild(listItem);
     }
 
     private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[]) {
