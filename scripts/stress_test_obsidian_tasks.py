@@ -3,10 +3,13 @@
 # Generate some files containing tasks, to stress-test the Tasks plugin.
 
 import os.path
+from datetime import datetime
 
 files_to_write = 50
 list_items_to_write = 100
 add_task_every_n_lines = 1 # 1 or higher
+
+today = datetime.today().strftime('%Y-%m-%d')
 
 def file_content(basename: str, file_index: int, number_of_list_items: int) -> str:
     content = ''
@@ -15,7 +18,7 @@ def file_content(basename: str, file_index: int, number_of_list_items: int) -> s
     for i in range(1, number_of_list_items + 1):
         line_text = f'#task Set {file_index} Task {i} of {number_of_list_items}'
         if i % add_task_every_n_lines == 0:
-            content += f'- [ ] {line_text}\n'
+            content += f'- [ ] {line_text} ➕ {today} 📅 {today}\n'
         else:
             content += f'- {line_text}\n'
     return content
@@ -34,5 +37,6 @@ def create_files(dir) -> None:
 
 if __name__ == '__main__':
     # Run from the root of the vault
-    create_files('resources/sample_vaults/Tasks-Demo/Stress Test')
-    print('Done')
+    output_dir = 'resources/sample_vaults/Tasks-Demo/Stress Test'
+    create_files(output_dir)
+    print(f"Done: files written to '{output_dir}'")
