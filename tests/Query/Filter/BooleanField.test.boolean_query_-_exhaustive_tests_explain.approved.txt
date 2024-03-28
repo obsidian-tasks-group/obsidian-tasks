@@ -4,6 +4,222 @@ Results of parsing and explaining boolean expressions
 
 
 Input:
+'(not done) AND (is recurring)'
+=>
+Result:
+  (not done) AND (is recurring) =>
+    AND (All of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'((not done)) AND ((is recurring))'
+=>
+Result:
+  ((not done)) AND ((is recurring)) =>
+    AND (All of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR (is recurring)'
+=>
+Result:
+  (not done) OR (is recurring) =>
+    OR (At least one of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) XOR (is recurring)'
+=>
+Result:
+  (not done) XOR (is recurring) =>
+    XOR (Exactly one of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) AND NOT (is recurring)'
+=>
+Result:
+  (not done) AND NOT (is recurring) =>
+    AND (All of):
+      not done
+      NOT:
+        is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR NOT (is recurring)'
+=>
+Result:
+  (not done) OR NOT (is recurring) =>
+    OR (At least one of):
+      not done
+      NOT:
+        is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT (not done)'
+=>
+Result:
+  NOT (not done) =>
+    NOT:
+      not done
+
+
+--------------------------------------------------------
+
+
+
+Input:
+'"not done" AND (is recurring)'
+=>
+Result:
+  "not done" AND (is recurring) =>
+    AND (All of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" OR (is recurring)'
+=>
+Result:
+  "not done" OR (is recurring) =>
+    OR (At least one of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" XOR (is recurring)'
+=>
+Result:
+  "not done" XOR (is recurring) =>
+    XOR (Exactly one of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" AND NOT (is recurring)'
+=>
+Result:
+  "not done" AND NOT (is recurring) =>
+    AND (All of):
+      not done
+      NOT:
+        is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" OR NOT (is recurring)'
+=>
+Result:
+  "not done" OR NOT (is recurring) =>
+    OR (At least one of):
+      not done
+      NOT:
+        is recurring
+
+
+--------------------------------------------------------
+
+
+
+Input:
+'(not done) AND "is recurring"'
+=>
+Result:
+malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+
+--------------------------------------------------------
+
+
+Input:
+'((not done)) AND "is recurring"'
+=>
+Result:
+malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR "is recurring"'
+=>
+Result:
+malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) XOR "is recurring"'
+=>
+Result:
+malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) AND NOT "is recurring"'
+=>
+Result:
+malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR NOT "is recurring"'
+=>
+Result:
+malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+
+--------------------------------------------------------
+
+
+
+Input:
 '"HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL)'
 =>
 Result:

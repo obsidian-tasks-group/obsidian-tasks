@@ -4,6 +4,171 @@ Results of preprocessing boolean expressions
 
 
 Input:
+'(not done) AND (is recurring)'
+=>
+Result:
+"(\"not done\") AND (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+Input:
+'((not done)) AND ((is recurring))'
+=>
+Result:
+"((\"not done\")) AND ((\"is recurring\"))"
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR (is recurring)'
+=>
+Result:
+"(\"not done\") OR (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) XOR (is recurring)'
+=>
+Result:
+"(\"not done\") XOR (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) AND NOT (is recurring)'
+=>
+Result:
+"(\"not done\") AND NOT (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR NOT (is recurring)'
+=>
+Result:
+"(\"not done\") OR NOT (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+Input:
+'NOT (not done)'
+=>
+Result:
+"NOT (\"not done\")"
+
+--------------------------------------------------------
+
+
+
+Input:
+'"not done" AND (is recurring)'
+=>
+Result:
+"\"not done\" AND (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" OR (is recurring)'
+=>
+Result:
+"\"not done\" OR (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" XOR (is recurring)'
+=>
+Result:
+"\"not done\" XOR (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" AND NOT (is recurring)'
+=>
+Result:
+"\"not done\" AND NOT (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" OR NOT (is recurring)'
+=>
+Result:
+"\"not done\" OR NOT (\"is recurring\")"
+
+--------------------------------------------------------
+
+
+
+Input:
+'(not done) AND "is recurring"'
+=>
+Result:
+"(\"not done\") AND \"is recurring\""
+
+--------------------------------------------------------
+
+
+Input:
+'((not done)) AND "is recurring"'
+=>
+Result:
+"((\"not done\")) AND \"is recurring\""
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR "is recurring"'
+=>
+Result:
+"(\"not done\") OR \"is recurring\""
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) XOR "is recurring"'
+=>
+Result:
+"(\"not done\") XOR \"is recurring\""
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) AND NOT "is recurring"'
+=>
+Result:
+"(\"not done\") AND NOT \"is recurring\""
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR NOT "is recurring"'
+=>
+Result:
+"(\"not done\") OR NOT \"is recurring\""
+
+--------------------------------------------------------
+
+
+
+Input:
 '"HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL)'
 =>
 Result:

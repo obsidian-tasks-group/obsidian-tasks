@@ -3,6 +3,27 @@ import { errorMessageForException } from '../../../src/lib/ExceptionTools';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 
 export const inputs = `
+(not done) AND (is recurring)
+((not done)) AND ((is recurring))
+(not done) OR (is recurring)
+(not done) XOR (is recurring)
+(not done) AND NOT (is recurring)
+(not done) OR NOT (is recurring)
+NOT (not done)
+
+"not done" AND (is recurring)
+"not done" OR (is recurring)
+"not done" XOR (is recurring)
+"not done" AND NOT (is recurring)
+"not done" OR NOT (is recurring)
+
+(not done) AND "is recurring"
+((not done)) AND "is recurring"
+(not done) OR "is recurring"
+(not done) XOR "is recurring"
+(not done) AND NOT "is recurring"
+(not done) OR NOT "is recurring"
+
 "HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL)
 "description includes d1" AND "description includes d2"
 "has due date" OR (description includes special)
