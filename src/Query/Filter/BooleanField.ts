@@ -63,6 +63,7 @@ export class BooleanField extends Field {
         }
         return this.parseLineV2(line);
     }
+
     /**
      * New Boolean filter parser
      * @param line
@@ -125,10 +126,9 @@ export class BooleanField extends Field {
     }
 
     public static preprocessExpressionV2(line: string): ParseResult {
-        // This code is currently one of a series of iterations, attempting to improve the
-        // handling of parentheses within Boolean filter lines.
+        // TODO Clarify that " can be a delimiter, as well as ()
 
-        // In this iteration, we split the input line in to separate operators-plus-adjacent-parentheses
+        // Here, we split the input line in to separate operators-plus-adjacent-parentheses
         // and the remaining filter text.
 
         // This will now correctly split up almost all valid Boolean instructions - many more cases than the
@@ -201,6 +201,8 @@ export class BooleanField extends Field {
 
     private static isAFilter(part: string) {
         // These *could* be inlined, but their variable names add meaning.
+        // TODO Simplify the expressions
+        // TODO Clarify the variable names
         const onlySpacesAndParentheses = /^[ ()"]+$/;
         const binaryOperatorAndParentheses = /^ *[)"] *(AND|OR|XOR) *[("] *$/;
         const unaryOperatorAndParentheses = /^(NOT|AND|OR|XOR) *[("]$/;
