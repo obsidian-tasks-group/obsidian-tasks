@@ -18,4 +18,4 @@
 ## Other links
 
 - Tasks On [Obsidian Plugins Directory](https://obsidian.md/plugins?search=obsidian-tasks-plugin)
-- Tasks in the [Obsidian Hub](https://github.com/obsidian-tasks-group/obsidian-tasks)
+- Tasks in the [Obsidian Hub](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Plugins/obsidian-tasks-plugin)
