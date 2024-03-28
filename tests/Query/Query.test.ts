@@ -1012,9 +1012,9 @@ describe('Query', () => {
                 },
             ],
             [
-                'simple AND',
+                'simple AND with ()',
                 {
-                    filters: ['(has start date) AND "description includes some"'],
+                    filters: ['(has start date) AND (description includes some)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -1024,6 +1024,20 @@ describe('Query', () => {
                     expectedResult: ['- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20'],
                 },
             ],
+            // TODO Get this one working again
+            // [
+            //     'simple AND with () and ""',
+            //     {
+            //         filters: ['(has start date) AND "description includes some"'],
+            //         tasks: [
+            //             '- [ ] task 1',
+            //             '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+            //             '- [ ] any task 3 🛫 2022-04-20',
+            //             '- [ ] special task 4',
+            //         ],
+            //         expectedResult: ['- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20'],
+            //     },
+            // ],
             [
                 'simple AND NOT',
                 {

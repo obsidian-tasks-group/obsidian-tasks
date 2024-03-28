@@ -61,7 +61,13 @@ export class BooleanField extends Field {
         if (line.length === 0) {
             return FilterOrErrorMessage.fromError(line, 'empty line');
         }
-        return this.parseLineV1(line);
+        // TODO This is over-simplistic, as the query may start with
+        //      a filter wrapped in () and end with a filter wrapped in "" - or the reverse:
+        if (line.trim()[0] === '"') {
+            return this.parseLineV1(line);
+        } else {
+            return this.parseLineV2(line);
+        }
     }
 
     /**
@@ -79,6 +85,67 @@ export class BooleanField extends Field {
             for (const token of postfixExpression) {
                 if (token.name === 'IDENTIFIER' && token.value) {
                     const filter = token.value.trim();
+                    if (!(filter in this.subFields)) {
+                        const parsedField = parseFilter(filter);
+                        if (parsedField === null) {
+                            return FilterOrErrorMessage.fromError(line, `couldn't parse sub-expression '${filter}'`);
+                        }
+                        if (parsedField.error) {
+                            return FilterOrErrorMessage.fromError(
+                                line,
+                                `couldn't parse sub-expression '${filter}': ${parsedField.error}`,
+                            );
+                        } else if (parsedField.filter) {
+                            this.subFields[filter] = parsedField.filter;
+                        }
+                    }
+                } else if (token.name === 'OPERATOR') {
+                    // While we're already iterating over the expression, although we don't need the operators at
+                    // this stage but only in filterTaskWithParsedQuery below, we're using the opportunity to verify
+                    // they are valid. If we won't, then an invalid operator will only be detected when the query is
+                    // run on a task
+                    if (token.value == undefined) {
+                        return FilterOrErrorMessage.fromError(line, 'empty operator in boolean query');
+                    }
+                    if (!this.supportedOperators.includes(token.value)) {
+                        return FilterOrErrorMessage.fromError(line, `unknown boolean operator '${token.value}'`);
+                    }
+                }
+            }
+            // Return the filter with filter function that can run the complete query
+            const filterFunction = (task: Task, searchInfo: SearchInfo) => {
+                return this.filterTaskWithParsedQuery(task, postfixExpression, searchInfo);
+            };
+            const explanation = this.constructExplanation(postfixExpression);
+            return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'unknown error type';
+            return FilterOrErrorMessage.fromError(
+                line,
+                `malformed boolean query -- ${message} (check the documentation for guidelines)`,
+            );
+        }
+    }
+
+    /**
+     * New Boolean filter parser
+     * @param line
+     * @private
+     */
+    private parseLineV2(line: string) {
+        const parseResult = BooleanField.preprocessExpressionV2(line);
+        const simplifiedLine = parseResult.simplifiedLine;
+        const filters = parseResult.filters;
+        try {
+            // Convert the (preprocessed) line into a postfix logical expression
+            const postfixExpression = boonParse(simplifiedLine);
+            // Construct sub-field map, i.e. have subFields include a filter function for every
+            // final token in the expression
+            for (const token of postfixExpression) {
+                if (token.name === 'IDENTIFIER' && token.value) {
+                    const placeholder = token.value.trim();
+                    const filter = filters[placeholder];
+                    token.value = filter;
                     if (!(filter in this.subFields)) {
                         const parsedField = parseFilter(filter);
                         if (parsedField === null) {
