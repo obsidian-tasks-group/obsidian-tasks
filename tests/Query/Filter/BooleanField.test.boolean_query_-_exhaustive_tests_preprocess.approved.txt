@@ -76,10 +76,28 @@ Result:
 
 
 Input:
-'(((((description includes #context/location1)))))'
+'( description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i ) OR ( path includes Home/Shopping )'
 =>
 Result:
-"(((((\"description includes #context/location1\")))))"
+"( description regex matches /(\"buy|order|voucher|lakeland|purchase|\\spresent\")/i ) OR (\" path includes Home/Shopping \")"
+
+--------------------------------------------------------
+
+
+Input:
+'( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )'
+=>
+Result:
+"( filter by function ! 'NON_TASK,CANCELLED'.includes(\"task.status.type\") ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ) OR ( filter by function task.urgency.toFixed(\"2\") === 1.95.toFixed(\"2\") ) OR ( filter by function (\"!task.isRecurring\") && task.originalMarkdown.includes(\"'🔁'\") ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(\"now, 'day'\") || ( !taskDate && task.heading?.includes(now.format(\"'YYYY-MM-DD'\")) ) || false ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(\"wanted\") || task.tags.find( (\"tag\") => tag === wanted ) && true || false; )"
+
+--------------------------------------------------------
+
+
+Input:
+'( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type); ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false; ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2); ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'); ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(); ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false; ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )'
+=>
+Result:
+"( filter by function ! 'NON_TASK,CANCELLED'.includes(\"task.status.type\"); ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false; ) OR ( filter by function task.urgency.toFixed(\"2\") === 1.95.toFixed(\"2\"); ) OR ( filter by function (\"!task.isRecurring\") && task.originalMarkdown.includes(\"'🔁'\"); ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(); ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(\"now, 'day'\") || ( !taskDate && task.heading?.includes(now.format(\"'YYYY-MM-DD'\")) ) || false; ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(\"wanted\") || task.tags.find( (\"tag\") => tag === wanted ) && true || false; )"
 
 --------------------------------------------------------
 
@@ -89,6 +107,15 @@ Input:
 =>
 Result:
 "(((((NOT  (\" description includes d1 \"))))))"
+
+--------------------------------------------------------
+
+
+Input:
+'(((((description includes #context/location1)))))'
+=>
+Result:
+"(((((\"description includes #context/location1\")))))"
 
 --------------------------------------------------------
 
@@ -112,6 +139,15 @@ Result:
 
 
 Input:
+'(description includes 1)   AND   (description includes 2)   AND   (description includes 3)   AND   (description includes 4)   AND   (description includes 5)   AND   (description includes 6)   AND   (description includes 7)   AND   (description includes 8)   AND   (description includes 9)'
+=>
+Result:
+"(\"description includes 1\")   AND   (\"description includes 2\")   AND   (\"description includes 3\")   AND   (\"description includes 4\")   AND   (\"description includes 5\")   AND   (\"description includes 6\")   AND   (\"description includes 7\")   AND   (\"description includes 8\")   AND   (\"description includes 9\")"
+
+--------------------------------------------------------
+
+
+Input:
 '(description includes 1) AND (description includes 2) AND (description includes 3)'
 =>
 Result:
@@ -130,10 +166,19 @@ Result:
 
 
 Input:
-'(description includes 1)   AND   (description includes 2)   AND   (description includes 3)   AND   (description includes 4)   AND   (description includes 5)   AND   (description includes 6)   AND   (description includes 7)   AND   (description includes 8)   AND   (description includes 9)'
+'(description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)'
 =>
 Result:
-"(\"description includes 1\")   AND   (\"description includes 2\")   AND   (\"description includes 3\")   AND   (\"description includes 4\")   AND   (\"description includes 5\")   AND   (\"description includes 6\")   AND   (\"description includes 7\")   AND   (\"description includes 8\")   AND   (\"description includes 9\")"
+"(\"description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN\")AND(\"description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR\")"
+
+--------------------------------------------------------
+
+
+Input:
+'(description includes d1) AND   NOT (priority medium)'
+=>
+Result:
+"(\"description includes d1\") AND   NOT (\"priority medium\")"
 
 --------------------------------------------------------
 
@@ -157,10 +202,10 @@ Result:
 
 
 Input:
-'(description includes d1) AND   NOT (priority medium)'
+'(description includes d1) OR   NOT (priority medium)'
 =>
 Result:
-"(\"description includes d1\") AND   NOT (\"priority medium\")"
+"(\"description includes d1\") OR   NOT (\"priority medium\")"
 
 --------------------------------------------------------
 
@@ -202,15 +247,6 @@ Result:
 
 
 Input:
-'(description includes d1) OR   NOT (priority medium)'
-=>
-Result:
-"(\"description includes d1\") OR   NOT (\"priority medium\")"
-
---------------------------------------------------------
-
-
-Input:
 '(description includes d1) XOR (description includes d2)'
 =>
 Result:
@@ -228,60 +264,13 @@ Result:
 --------------------------------------------------------
 
 
-
 Input:
-'AND (description includes d1)'
+'(path includes ()some example()) OR (path includes ((some example)))'
 =>
 Result:
-"AND (\"description includes d1\")"
+"(path includes ()some example()) OR (path includes ((\"some example\")))"
 
 --------------------------------------------------------
-
-
-Input:
-'NOT (description blahblah d1)'
-=>
-Result:
-"NOT (\"description blahblah d1\")"
-
---------------------------------------------------------
-
-
-Input:
-'NOT  ( description includes d1 )'
-=>
-Result:
-"NOT  (\" description includes d1 \")"
-
---------------------------------------------------------
-
-
-Input:
-'NOT   (  happens before blahblahblah  )'
-=>
-Result:
-"NOT   (\"  happens before blahblahblah  \")"
-
---------------------------------------------------------
-
-
-Input:
-'OR (description includes d1)'
-=>
-Result:
-"OR (\"description includes d1\")"
-
---------------------------------------------------------
-
-
-Input:
-'(description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)'
-=>
-Result:
-"(\"description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN\")AND(\"description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR\")"
-
---------------------------------------------------------
-
 
 
 Input:
@@ -312,38 +301,46 @@ Result:
 
 
 Input:
-'(path includes ()some example()) OR (path includes ((some example)))'
+'AND (description includes d1)'
 =>
 Result:
-"(path includes ()some example()) OR (path includes ((\"some example\")))"
-
---------------------------------------------------------
-
-
-
-Input:
-'( description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i ) OR ( path includes Home/Shopping )'
-=>
-Result:
-"( description regex matches /(\"buy|order|voucher|lakeland|purchase|\\spresent\")/i ) OR (\" path includes Home/Shopping \")"
+"AND (\"description includes d1\")"
 
 --------------------------------------------------------
 
 
 Input:
-'( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )'
+'NOT   (  happens before blahblahblah  )'
 =>
 Result:
-"( filter by function ! 'NON_TASK,CANCELLED'.includes(\"task.status.type\") ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ) OR ( filter by function task.urgency.toFixed(\"2\") === 1.95.toFixed(\"2\") ) OR ( filter by function (\"!task.isRecurring\") && task.originalMarkdown.includes(\"'🔁'\") ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(\"now, 'day'\") || ( !taskDate && task.heading?.includes(now.format(\"'YYYY-MM-DD'\")) ) || false ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(\"wanted\") || task.tags.find( (\"tag\") => tag === wanted ) && true || false; )"
+"NOT   (\"  happens before blahblahblah  \")"
 
 --------------------------------------------------------
 
 
 Input:
-'( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type); ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false; ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2); ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'); ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(); ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false; ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )'
+'NOT  ( description includes d1 )'
 =>
 Result:
-"( filter by function ! 'NON_TASK,CANCELLED'.includes(\"task.status.type\"); ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false; ) OR ( filter by function task.urgency.toFixed(\"2\") === 1.95.toFixed(\"2\"); ) OR ( filter by function (\"!task.isRecurring\") && task.originalMarkdown.includes(\"'🔁'\"); ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(); ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(\"now, 'day'\") || ( !taskDate && task.heading?.includes(now.format(\"'YYYY-MM-DD'\")) ) || false; ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(\"wanted\") || task.tags.find( (\"tag\") => tag === wanted ) && true || false; )"
+"NOT  (\" description includes d1 \")"
+
+--------------------------------------------------------
+
+
+Input:
+'NOT (description blahblah d1)'
+=>
+Result:
+"NOT (\"description blahblah d1\")"
+
+--------------------------------------------------------
+
+
+Input:
+'OR (description includes d1)'
+=>
+Result:
+"OR (\"description includes d1\")"
 
 --------------------------------------------------------
 
