@@ -484,9 +484,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)",
+    "simplifiedLine": "(f1)AND(f2)",
     "filters": {
-        "f1": "description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR"
+        "f1": "description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN",
+        "f2": "description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR"
     }
 }
 
