@@ -45,6 +45,7 @@ export function testTaskFilter(filter: FilterOrErrorMessage, task: Task, expecte
 export function testTaskFilterViaQuery(filter: string, task: Task, expected: boolean) {
     // Arrange
     const query = new Query(filter);
+    expect(query.error).toBeUndefined();
 
     const tasks = [task];
 
@@ -73,6 +74,7 @@ export function shouldSupportFiltering(
 ) {
     // Arrange
     const query = new Query(filters.join('\n'));
+    expect(query.error).toBeUndefined();
 
     const tasks = allTaskLines.map(
         (taskLine) =>
