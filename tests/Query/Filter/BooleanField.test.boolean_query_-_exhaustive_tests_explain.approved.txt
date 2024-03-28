@@ -168,7 +168,11 @@ Input:
 '(not done) AND "is recurring"'
 =>
 Result:
-malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+  (not done) AND "is recurring" =>
+    AND (All of):
+      not done
+      is recurring
+
 
 --------------------------------------------------------
 
@@ -177,7 +181,11 @@ Input:
 '((not done)) AND "is recurring"'
 =>
 Result:
-malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+  ((not done)) AND "is recurring" =>
+    AND (All of):
+      not done
+      is recurring
+
 
 --------------------------------------------------------
 
@@ -186,7 +194,11 @@ Input:
 '(not done) OR "is recurring"'
 =>
 Result:
-malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+  (not done) OR "is recurring" =>
+    OR (At least one of):
+      not done
+      is recurring
+
 
 --------------------------------------------------------
 
@@ -195,7 +207,11 @@ Input:
 '(not done) XOR "is recurring"'
 =>
 Result:
-malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+  (not done) XOR "is recurring" =>
+    XOR (Exactly one of):
+      not done
+      is recurring
+
 
 --------------------------------------------------------
 
@@ -204,7 +220,12 @@ Input:
 '(not done) AND NOT "is recurring"'
 =>
 Result:
-malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+  (not done) AND NOT "is recurring" =>
+    AND (All of):
+      not done
+      NOT:
+        is recurring
+
 
 --------------------------------------------------------
 
@@ -213,7 +234,12 @@ Input:
 '(not done) OR NOT "is recurring"'
 =>
 Result:
-malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+  (not done) OR NOT "is recurring" =>
+    OR (At least one of):
+      not done
+      NOT:
+        is recurring
+
 
 --------------------------------------------------------
 
@@ -519,7 +545,11 @@ Input:
 '(HAS START DATE) AND "DESCRIPTION INCLUDES SOME"'
 =>
 Result:
-malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+  (HAS START DATE) AND "DESCRIPTION INCLUDES SOME" =>
+    AND (All of):
+      HAS START DATE
+      DESCRIPTION INCLUDES SOME
+
 
 --------------------------------------------------------
 
@@ -1651,7 +1681,11 @@ Input:
 '(has start date) AND "description includes some"'
 =>
 Result:
-malformed boolean query -- Unexpected end of expression (check the documentation for guidelines)
+  (has start date) AND "description includes some" =>
+    AND (All of):
+      has start date
+      description includes some
+
 
 --------------------------------------------------------
 

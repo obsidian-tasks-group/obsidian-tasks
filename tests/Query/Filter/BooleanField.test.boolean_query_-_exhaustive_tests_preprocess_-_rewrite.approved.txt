@@ -113,9 +113,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "f1)",
+    "simplifiedLine": "\"f1\" AND (f2)",
     "filters": {
-        "f1": "\"not done\" AND (is recurring"
+        "f1": "not done",
+        "f2": "is recurring"
     }
 }
 
@@ -127,9 +128,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "f1)",
+    "simplifiedLine": "\"f1\" OR (f2)",
     "filters": {
-        "f1": "\"not done\" OR (is recurring"
+        "f1": "not done",
+        "f2": "is recurring"
     }
 }
 
@@ -141,9 +143,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "f1)",
+    "simplifiedLine": "\"f1\" XOR (f2)",
     "filters": {
-        "f1": "\"not done\" XOR (is recurring"
+        "f1": "not done",
+        "f2": "is recurring"
     }
 }
 
@@ -155,9 +158,9 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "f1 NOT (f2)",
+    "simplifiedLine": "\"f1\" AND NOT (f2)",
     "filters": {
-        "f1": "\"not done\" AND",
+        "f1": "not done",
         "f2": "is recurring"
     }
 }
@@ -170,9 +173,9 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "f1 NOT (f2)",
+    "simplifiedLine": "\"f1\" OR NOT (f2)",
     "filters": {
-        "f1": "\"not done\" OR",
+        "f1": "not done",
         "f2": "is recurring"
     }
 }
@@ -186,9 +189,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1",
+    "simplifiedLine": "(f1) AND \"f2\"",
     "filters": {
-        "f1": "not done) AND \"is recurring\""
+        "f1": "not done",
+        "f2": "is recurring"
     }
 }
 
@@ -200,9 +204,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "((f1",
+    "simplifiedLine": "((f1)) AND \"f2\"",
     "filters": {
-        "f1": "not done)) AND \"is recurring\""
+        "f1": "not done",
+        "f2": "is recurring"
     }
 }
 
@@ -214,9 +219,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1",
+    "simplifiedLine": "(f1) OR \"f2\"",
     "filters": {
-        "f1": "not done) OR \"is recurring\""
+        "f1": "not done",
+        "f2": "is recurring"
     }
 }
 
@@ -228,9 +234,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1",
+    "simplifiedLine": "(f1) XOR \"f2\"",
     "filters": {
-        "f1": "not done) XOR \"is recurring\""
+        "f1": "not done",
+        "f2": "is recurring"
     }
 }
 
@@ -242,9 +249,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1",
+    "simplifiedLine": "(f1) AND NOT \"f2\"",
     "filters": {
-        "f1": "not done) AND NOT \"is recurring\""
+        "f1": "not done",
+        "f2": "is recurring"
     }
 }
 
@@ -256,9 +264,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1",
+    "simplifiedLine": "(f1) OR NOT \"f2\"",
     "filters": {
-        "f1": "not done) OR NOT \"is recurring\""
+        "f1": "not done",
+        "f2": "is recurring"
     }
 }
 
@@ -271,9 +280,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "f1)",
+    "simplifiedLine": "\"f1\" OR (f2)",
     "filters": {
-        "f1": "\"HAS DUE DATE\" OR (DESCRIPTION INCLUDES SPECIAL"
+        "f1": "HAS DUE DATE",
+        "f2": "DESCRIPTION INCLUDES SPECIAL"
     }
 }
 
@@ -285,9 +295,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "f1",
+    "simplifiedLine": "\"f1\" AND \"f2\"",
     "filters": {
-        "f1": "\"description includes d1\" AND \"description includes d2\""
+        "f1": "description includes d1",
+        "f2": "description includes d2"
     }
 }
 
@@ -299,9 +310,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "f1)",
+    "simplifiedLine": "\"f1\" OR (f2)",
     "filters": {
-        "f1": "\"has due date\" OR (description includes special"
+        "f1": "has due date",
+        "f2": "description includes special"
     }
 }
 
@@ -601,9 +613,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1",
+    "simplifiedLine": "(f1) AND \"f2\"",
     "filters": {
-        "f1": "HAS START DATE) AND \"DESCRIPTION INCLUDES SOME\""
+        "f1": "HAS START DATE",
+        "f2": "DESCRIPTION INCLUDES SOME"
     }
 }
 
@@ -1730,9 +1743,10 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1",
+    "simplifiedLine": "(f1) AND \"f2\"",
     "filters": {
-        "f1": "has start date) AND \"description includes some\""
+        "f1": "has start date",
+        "f2": "description includes some"
     }
 }
 

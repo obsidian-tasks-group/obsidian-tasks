@@ -61,72 +61,8 @@ export class BooleanField extends Field {
         if (line.length === 0) {
             return FilterOrErrorMessage.fromError(line, 'empty line');
         }
-        // TODO This is over-simplistic, as the query may start with
-        //      a filter wrapped in () and end with a filter wrapped in "" - or the reverse:
-        if (line.trim()[0] === '"') {
-            return this.parseLineV1(line);
-        } else {
-            return this.parseLineV2(line);
-        }
+        return this.parseLineV2(line);
     }
-
-    /**
-     * Legacy Boolean filter parser
-     * @param line
-     * @private
-     */
-    private parseLineV1(line: string) {
-        const preprocessed = BooleanField.preprocessExpressionV1(line);
-        try {
-            // Convert the (preprocessed) line into a postfix logical expression
-            const postfixExpression = boonParse(preprocessed);
-            // Construct sub-field map, i.e. have subFields include a filter function for every
-            // final token in the expression
-            for (const token of postfixExpression) {
-                if (token.name === 'IDENTIFIER' && token.value) {
-                    const filter = token.value.trim();
-                    if (!(filter in this.subFields)) {
-                        const parsedField = parseFilter(filter);
-                        if (parsedField === null) {
-                            return FilterOrErrorMessage.fromError(line, `couldn't parse sub-expression '${filter}'`);
-                        }
-                        if (parsedField.error) {
-                            return FilterOrErrorMessage.fromError(
-                                line,
-                                `couldn't parse sub-expression '${filter}': ${parsedField.error}`,
-                            );
-                        } else if (parsedField.filter) {
-                            this.subFields[filter] = parsedField.filter;
-                        }
-                    }
-                } else if (token.name === 'OPERATOR') {
-                    // While we're already iterating over the expression, although we don't need the operators at
-                    // this stage but only in filterTaskWithParsedQuery below, we're using the opportunity to verify
-                    // they are valid. If we won't, then an invalid operator will only be detected when the query is
-                    // run on a task
-                    if (token.value == undefined) {
-                        return FilterOrErrorMessage.fromError(line, 'empty operator in boolean query');
-                    }
-                    if (!this.supportedOperators.includes(token.value)) {
-                        return FilterOrErrorMessage.fromError(line, `unknown boolean operator '${token.value}'`);
-                    }
-                }
-            }
-            // Return the filter with filter function that can run the complete query
-            const filterFunction = (task: Task, searchInfo: SearchInfo) => {
-                return this.filterTaskWithParsedQuery(task, postfixExpression, searchInfo);
-            };
-            const explanation = this.constructExplanation(postfixExpression);
-            return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
-        } catch (error) {
-            const message = error instanceof Error ? error.message : 'unknown error type';
-            return FilterOrErrorMessage.fromError(
-                line,
-                `malformed boolean query -- ${message} (check the documentation for guidelines)`,
-            );
-        }
-    }
-
     /**
      * New Boolean filter parser
      * @param line
@@ -215,7 +151,7 @@ export class BooleanField extends Field {
         //   ') AND ('
         //   ')AND  NOT('
         //   ')  AND  NOT  ('
-        const binaryOperatorsRegex = /(\)\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\s*\()/g;
+        const binaryOperatorsRegex = /([)"]\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\s*[("])/g;
 
         // Divide up line, split at binary operator boundaries
         const substrings = line.split(binaryOperatorsRegex);
@@ -227,7 +163,7 @@ export class BooleanField extends Field {
         //   'NOT ('
         //   'NOT  ('
         // TODO Ensure that NOT is at the start of a word - and perhaps is preceded by spaces.
-        const unaryOperatorsRegex = /(NOT\s*\()/g;
+        const unaryOperatorsRegex = /(NOT\s*[("])/g;
 
         // Divide up the divided components, this time splitting at unary operator boundaries.
         // flatMap() divides and then flattens the result.
@@ -239,8 +175,8 @@ export class BooleanField extends Field {
         // All that remains now is to separate:
         // - any spaces and opening parentheses at the start of filters
         // - any spaces and close   parentheses at the end of filters
-        const openingParensAndSpacesAtStartRegex = /(^[ (]*)/;
-        const closingParensAndSpacesAtEndRegex = /([ )]*$)/;
+        const openingParensAndSpacesAtStartRegex = /(^[ ("]*)/;
+        const closingParensAndSpacesAtEndRegex = /([ )"]*$)/;
 
         const parts = substringsSplitAtOperatorBoundaries
             .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
@@ -272,16 +208,18 @@ export class BooleanField extends Field {
 
     private static isAFilter(part: string) {
         // These *could* be inlined, but their variable names add meaning.
-        const onlySpacesAndParentheses = /^[ ()]+$/;
-        const binaryOperatorAndParentheses = /^ *\) *(AND|OR|XOR) *\( *$/;
-        const unaryOperatorAndParentheses = /^NOT *\($/;
-        const remnantsOfNot = /^\) *(AND|OR)$/;
+        const onlySpacesAndParentheses = /^[ ()"]+$/;
+        const binaryOperatorAndParentheses = /^ *[)"] *(AND|OR|XOR) *[("] *$/;
+        const unaryOperatorAndParentheses = /^(NOT|AND|OR|XOR) *[("]$/;
+        const remnantsOfNot = /^[)"] *(AND|OR|XOR)$/;
+        const justOperators = /^(AND|OR|XOR|NOT)$/;
 
         return ![
             onlySpacesAndParentheses,
             binaryOperatorAndParentheses,
             unaryOperatorAndParentheses,
             remnantsOfNot,
+            justOperators,
         ].some((regex) => RegExp(regex).exec(part));
     }
 
