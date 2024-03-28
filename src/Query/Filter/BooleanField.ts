@@ -124,13 +124,6 @@ export class BooleanField extends Field {
         }
     }
 
-    public static preprocessExpressionV1(line: string): string {
-        // Prepare the query to be processed by boon-js.
-        // Boon doesn't process expression with spaces unless they are surrounded by quotes, so replace
-        // (due today) by ("due today").
-        return line.replace(/\(([^()]+)\)/g, '("$1")');
-    }
-
     public static preprocessExpressionV2(line: string): ParseResult {
         // This code is currently one of a series of iterations, attempting to improve the
         // handling of parentheses within Boolean filter lines.
