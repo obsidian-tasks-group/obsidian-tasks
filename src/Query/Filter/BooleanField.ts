@@ -144,6 +144,7 @@ export class BooleanField extends Field {
         //   ') AND ('
         //   ')AND  NOT('
         //   ')  AND  NOT  ('
+        // TODO Review all uses of space character in these regular expressions, and use \s instead:
         const binaryOperatorsRegex = /([)"]\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\s*[("])/g;
 
         // Divide up line, split at binary operator boundaries
