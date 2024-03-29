@@ -546,6 +546,19 @@ Availability of access keys:
             />
 
             <!-- --------------------------------------------------------------------------- -->
+            <!--  Reminder Date  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="reminder" class="accesskey-first">Reminder</label>
+            <DateEditor
+                id="reminder"
+                dateSymbol={reminderDateSymbol}
+                bind:date={editableTask.reminderDate}
+                bind:isDateValid={isReminderDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('c')}
+            />
+
+            <!-- --------------------------------------------------------------------------- -->
             <!--  Scheduled Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="scheduled" class="accesskey-first">Scheduled</label>
