@@ -19,6 +19,7 @@ import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { State } from '../Obsidian/Cache';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -176,7 +177,21 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async renderQuerySearchResults(tasks: Task[], state: State.Warm, content: HTMLDivElement) {
-        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
+        const queryResult = this.explainAndPerformSearch(state, tasks, content);
+
+        if (queryResult.searchErrorMessage !== undefined) {
+            // There was an error in the search, for example due to a problem custom function.
+            this.renderErrorMessage(content, queryResult.searchErrorMessage);
+            return;
+        }
+
+        await this.renderSearchResults(queryResult, content);
+    }
+
+    private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
+        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
+        measureSearch.start();
+
         this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
         if (this.query.queryLayoutOptions.explainQuery) {
@@ -184,11 +199,14 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         const queryResult = this.query.applyQueryToTasks(tasks);
-        if (queryResult.searchErrorMessage !== undefined) {
-            // There was an error in the search, for example due to a problem custom function.
-            this.renderErrorMessage(content, queryResult.searchErrorMessage);
-            return;
-        }
+
+        measureSearch.finish();
+        return queryResult;
+    }
+
+    private async renderSearchResults(queryResult: QueryResult, content: HTMLDivElement) {
+        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
+        measureRender.start();
 
         await this.addAllTaskGroups(queryResult.taskGroups, content);
 
@@ -196,6 +214,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.addTaskCount(content, queryResult);
 
         this.query.debug(`[render] ${totalTasksCount} tasks displayed`);
+
+        measureRender.finish();
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
@@ -241,45 +261,47 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            const isFilenameUnique = this.isFilenameUnique({ task });
-            const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
-
-            // Remove all footnotes. They don't re-appear in another document.
-            const footnotes = listItem.querySelectorAll('[data-footnote-id]');
-            footnotes.forEach((footnote) => footnote.remove());
-
-            const extrasSpan = listItem.createSpan('task-extras');
-
-            if (!this.query.queryLayoutOptions.hideUrgency) {
-                this.addUrgency(extrasSpan, task);
-            }
-
-            const shortMode = this.query.queryLayoutOptions.shortMode;
-
-            if (!this.query.queryLayoutOptions.hideBacklinks) {
-                this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
-            }
-
-            if (!this.query.queryLayoutOptions.hideEditButton) {
-                // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
-                this.addEditButton(extrasSpan, task, this.plugin.getTasks()!);
-            }
-
-            if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
-                this.addPostponeButton(extrasSpan, task, shortMode);
-            }
-
-            // NEW
-            // if (!this.query.layoutOptions.hideSnoozeButton) {
-            //     this.addUnSnoozeButton(extrasSpan, task, shortMode);
-            //     this.addSnoozeButton1Day(extrasSpan, task, shortMode);
-            //     this.addSnoozeButton3Days(extrasSpan, task, shortMode);
-            // }
-
-            taskList.appendChild(listItem);
+            await this.addTask(taskList, taskLineRenderer, task, taskIndex);
         }
 
         content.appendChild(taskList);
+    }
+
+    private async addTask(
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        task: Task,
+        taskIndex: number,
+    ) {
+        const isFilenameUnique = this.isFilenameUnique({ task });
+        const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
+
+        // Remove all footnotes. They don't re-appear in another document.
+        const footnotes = listItem.querySelectorAll('[data-footnote-id]');
+        footnotes.forEach((footnote) => footnote.remove());
+
+        const extrasSpan = listItem.createSpan('task-extras');
+
+        if (!this.query.queryLayoutOptions.hideUrgency) {
+            this.addUrgency(extrasSpan, task);
+        }
+
+        const shortMode = this.query.queryLayoutOptions.shortMode;
+
+        if (!this.query.queryLayoutOptions.hideBacklinks) {
+            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
+        }
+
+        if (!this.query.queryLayoutOptions.hideEditButton) {
+            // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
+            this.addEditButton(extrasSpan, task, this.plugin.getTasks()!);
+        }
+
+        if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+            this.addPostponeButton(extrasSpan, task, shortMode);
+        }
+
+        taskList.appendChild(listItem);
     }
 
     private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[]) {

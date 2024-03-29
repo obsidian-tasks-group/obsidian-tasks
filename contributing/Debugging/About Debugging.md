@@ -1,6 +1,6 @@
 # Debugging
 
-<span class="related-pages">#debugging</span>
+<span class="related-pages">#debugging, #profiling</span>
 
 ## Future Plans
 
@@ -10,6 +10,8 @@ This section is intended to document how to place debugger breakpoints in the Ta
 
 - [[Console logging facilities in Tasks]]
   - About the Tasks plugin's logging mechanism.
+- [[Console timing facilities in Tasks]]
+  - A mechanism to enable timing of performance-critical sections of Tasks code.
 - [[How do I enable hidden debugging and visualisation facilities]]
   - Enabling some debug rendering options in Tasks.
 - [[Debugging and Performance tools]]

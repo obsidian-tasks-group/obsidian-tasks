@@ -80,6 +80,10 @@ export class Query implements IQuery {
         });
     }
 
+    public get queryId(): string {
+        return this._queryId;
+    }
+
     private parseLine(line: string, statement: Statement) {
         switch (true) {
             case this.shortModeRegexp.test(line):

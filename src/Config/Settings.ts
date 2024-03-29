@@ -161,11 +161,10 @@ function addNewOptionsToUserSettings<KeysAndValues>(defaultValues: KeysAndValues
  * @returns true if the feature is enabled.
  */
 export const getSettings = (): Settings => {
-    // Check to see if there is a new flag and if so add it to the users settings.
+    // Check to see if there are any new options that need to be added to the user's settings.
     addNewOptionsToUserSettings(Feature.settingsFlags, settings.features);
-
-    // Check to see if any new logging options need to be added to the user's settings.
     addNewOptionsToUserSettings(defaultSettings.loggingOptions.minLevels, settings.loggingOptions.minLevels);
+    addNewOptionsToUserSettings(defaultSettings.debugSettings, settings.debugSettings);
 
     // In case saves pre-dated StatusConfiguration.type
     // TODO Special case for symbol 'X' or 'x' (just in case)
