@@ -166,7 +166,6 @@
     $: formIsValid =
         isDueDateValid &&
         isReminderDateValid &&
-        
         isRecurrenceValid &&
         isScheduledDateValid &&
         isStartDateValid &&
