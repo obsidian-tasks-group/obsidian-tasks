@@ -9,7 +9,6 @@ function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) 
 }
 
 async function moveCompletedTaskToHeadingInFile(
-    _changedStatusTask: Task,
     filePath: string,
     fileContentUpdater: (data: string) => string,
 ): Promise<void> {
@@ -31,11 +30,10 @@ async function moveCompletedTaskToHeadingInFile(
 }
 
 function moveCompletedTaskToHeadingInFileEventually(
-    changedStatusTask: Task,
     filePath: string,
     fileContentUpdater: (data: string) => string,
 ): void {
-    moveCompletedTaskToHeadingInFile(changedStatusTask, filePath, fileContentUpdater).then(() => {});
+    moveCompletedTaskToHeadingInFile(filePath, fileContentUpdater).then(() => {});
 }
 
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
@@ -66,7 +64,7 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
     if (taskString.includes('🏁 ToLogList')) {
         const filePath = 'Manual Testing/On Completion/Archive.md';
-        moveCompletedTaskToHeadingInFileEventually(changedStatusTask, filePath, (data: string) => {
+        moveCompletedTaskToHeadingInFileEventually(filePath, (data: string) => {
             const textToWrite = changedStatusTask.toFileLineString();
             const fileHeading = '## Archived Tasks';
             return appendToListWithinFile(data, fileHeading, textToWrite);
