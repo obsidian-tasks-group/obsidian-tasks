@@ -44,8 +44,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         }
     }
 
-    function moveCompletedTaskToHeadingInFileEventually(): void {
-        moveCompletedTaskToHeadingInFile(changedStatusTask).then(() => {});
+    function moveCompletedTaskToHeadingInFileEventually(changedStatusTask1: Task): void {
+        moveCompletedTaskToHeadingInFile(changedStatusTask1).then(() => {});
     }
 
     if (taskString.includes('🏁 Delete')) {
@@ -56,7 +56,7 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         // return writebackToOriginalLine();
     }
     if (taskString.includes('🏁 ToLogList')) {
-        moveCompletedTaskToHeadingInFileEventually();
+        moveCompletedTaskToHeadingInFileEventually(changedStatusTask);
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
     if (taskString.includes('🏁 EndOfList')) {
