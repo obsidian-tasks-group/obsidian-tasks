@@ -63,12 +63,14 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         // pass;
         // return writebackToOriginalLine();
     }
+
     if (taskString.includes('🏁 ToLogList')) {
         moveCompletedTaskToHeadingInFileEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
             return appendToListWithinFile(data, '## Archived Tasks - Prepended', textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
+
     if (taskString.includes('🏁 EndOfList')) {
         moveCompletedTaskToHeadingInFileEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
             // TODO The function name says that it writes to the end of the list, but it writes to the start.
@@ -77,6 +79,7 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
+
     // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
     const errorMessage = 'Unknown "On Completion" action';
     console.log(errorMessage);
