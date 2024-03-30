@@ -8,10 +8,7 @@ function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) 
     return tasks.filter((task) => task !== changedStatusTask);
 }
 
-async function moveCompletedTaskToHeadingInFile(
-    filePath: string,
-    fileContentUpdater: (data: string) => string,
-): Promise<void> {
+async function updateFileContent(filePath: string, fileContentUpdater: (data: string) => string): Promise<void> {
     let file = app.vault.getAbstractFileByPath(filePath);
     if (file === null) {
         // Try creating the file.
@@ -33,7 +30,7 @@ function moveCompletedTaskToHeadingInFileEventually(
     filePath: string,
     fileContentUpdater: (data: string) => string,
 ): void {
-    moveCompletedTaskToHeadingInFile(filePath, fileContentUpdater).then(() => {});
+    updateFileContent(filePath, fileContentUpdater).then(() => {});
 }
 
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
