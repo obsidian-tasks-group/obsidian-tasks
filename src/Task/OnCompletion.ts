@@ -64,10 +64,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         // return writebackToOriginalLine();
     }
     if (taskString.includes('🏁 ToLogList')) {
-        const filePath = 'Manual Testing/On Completion/Archive.md';
-        const fileHeading = '## Archived Tasks';
-        moveCompletedTaskToHeadingInFileEventually(filePath, (data: string) => {
-            return appendToListWithinFile(data, fileHeading, textToWrite);
+        moveCompletedTaskToHeadingInFileEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
+            return appendToListWithinFile(data, '## Archived Tasks', textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
