@@ -16,11 +16,15 @@ async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task, filePat
         file = await app.vault.create(filePath, '');
     }
 
+    function fileContentUpdater(data: string) {
+        const textToWrite = changedStatusTask.toFileLineString();
+        const fileHeading = '## Archived Tasks';
+        return appendToListWithinFile(data, fileHeading, textToWrite);
+    }
+
     if (file instanceof TFile) {
         await app.vault.process(file, (data) => {
-            const textToWrite = changedStatusTask.toFileLineString();
-            const fileHeading = '## Archived Tasks';
-            return appendToListWithinFile(data, fileHeading, textToWrite);
+            return fileContentUpdater(data);
         });
     } else {
         // If we were not able to save the done task, retain everything.
