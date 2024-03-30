@@ -9,9 +9,7 @@ function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) 
 }
 
 async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task): Promise<void> {
-    const textToWrite = changedStatusTask.toFileLineString();
     const filePath = 'Manual Testing/On Completion/Archive.md';
-    const fileHeading = '## Archived Tasks';
 
     let file = app.vault.getAbstractFileByPath(filePath);
     if (file === null) {
@@ -22,6 +20,8 @@ async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task): Promis
 
     if (file instanceof TFile) {
         await app.vault.process(file, (data) => {
+            const textToWrite = changedStatusTask.toFileLineString();
+            const fileHeading = '## Archived Tasks';
             return appendToListWithinFile(data, fileHeading, textToWrite);
         });
     } else {
