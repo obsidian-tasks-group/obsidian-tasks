@@ -52,23 +52,24 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     const textToWrite = changedStatusTask.toFileLineString();
+    const filePath = 'Manual Testing/On Completion/Archive.md';
 
     if (taskString.includes('🏁 ToLogFile')) {
-        updateFileContentEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
+        updateFileContentEventually(filePath, (data: string) => {
             return appendToEndOfFile(data, textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
 
     if (taskString.includes('🏁 ToLogList')) {
-        updateFileContentEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
+        updateFileContentEventually(filePath, (data: string) => {
             return appendToListWithinFile(data, '## Archived Tasks - Prepended', textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
 
     if (taskString.includes('🏁 EndOfList')) {
-        updateFileContentEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
+        updateFileContentEventually(filePath, (data: string) => {
             // TODO The function name says that it writes to the end of the list, but it writes to the start.
             // TODO It does not create the heading if it was missing.
             return writeLineToListEnd(data, '## Archived Tasks - Appended', textToWrite);
