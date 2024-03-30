@@ -58,6 +58,9 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     if (taskString.includes('🏁 Delete')) {
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
+
+    const textToWrite = changedStatusTask.toFileLineString();
+
     if (taskString.includes('🏁 ToLogFile')) {
         // pass;
         // return writebackToOriginalLine();
@@ -66,7 +69,6 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         const filePath = 'Manual Testing/On Completion/Archive.md';
         const fileHeading = '## Archived Tasks';
         moveCompletedTaskToHeadingInFileEventually(filePath, (data: string) => {
-            const textToWrite = changedStatusTask.toFileLineString();
             return appendToListWithinFile(data, fileHeading, textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
