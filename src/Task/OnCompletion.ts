@@ -13,6 +13,7 @@ async function updateFileContent(filePath: string, fileContentUpdater: (data: st
     if (file === null) {
         // Try creating the file.
         // This probably depends on any parent directories already existing:
+        // TODO If filePath is not in root, if necessary, create intermediate directories.
         file = await app.vault.create(filePath, '');
     }
 
@@ -21,7 +22,9 @@ async function updateFileContent(filePath: string, fileContentUpdater: (data: st
             return fileContentUpdater(data);
         });
     } else {
-        // If we were not able to save the done task, retain everything.
+        // If we were not able to save the done task, we would like to be able to retain everything.
+        // TODO There is currently no way to communicate this failure back to callers,
+        //      and so if we reach here, the completed task gets unintentionally discarded.
         console.log(`Something went wrong - cannot read or create ${filePath}`);
     }
 }
