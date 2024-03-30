@@ -1,7 +1,7 @@
 import { TFile } from 'obsidian';
 
 import { StatusType } from '../Statuses/StatusConfiguration';
-import { appendToListWithinFile } from '../lib/FileWriter';
+import { appendToEndOfFile, appendToListWithinFile } from '../lib/FileWriter';
 import type { Task } from './Task';
 
 function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) {
@@ -54,8 +54,10 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const textToWrite = changedStatusTask.toFileLineString();
 
     if (taskString.includes('🏁 ToLogFile')) {
-        // pass;
-        // return writebackToOriginalLine();
+        updateFileContentEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
+            return appendToEndOfFile(data, textToWrite);
+        });
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
 
     if (taskString.includes('🏁 ToLogList')) {
