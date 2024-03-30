@@ -8,8 +8,8 @@ function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) 
     return tasks.filter((task) => task !== changedStatusTask);
 }
 
-async function moveCompletedTaskToHeadingInFile(changedStatusTask1: Task): Promise<void> {
-    const textToWrite = changedStatusTask1.toFileLineString();
+async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task): Promise<void> {
+    const textToWrite = changedStatusTask.toFileLineString();
     const filePath = 'Manual Testing/On Completion/Archive.md';
     const fileHeading = '## Archived Tasks';
 
@@ -25,8 +25,8 @@ async function moveCompletedTaskToHeadingInFile(changedStatusTask1: Task): Promi
     }
 }
 
-function moveCompletedTaskToHeadingInFileEventually(changedStatusTask1: Task): void {
-    moveCompletedTaskToHeadingInFile(changedStatusTask1).then(() => {});
+function moveCompletedTaskToHeadingInFileEventually(changedStatusTask: Task): void {
+    moveCompletedTaskToHeadingInFile(changedStatusTask).then(() => {});
 }
 
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
