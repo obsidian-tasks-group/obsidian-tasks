@@ -8,9 +8,7 @@ function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) 
     return tasks.filter((task) => task !== changedStatusTask);
 }
 
-async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task): Promise<void> {
-    const filePath = 'Manual Testing/On Completion/Archive.md';
-
+async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task, filePath: string): Promise<void> {
     let file = app.vault.getAbstractFileByPath(filePath);
     if (file === null) {
         // Try creating the file.
@@ -30,8 +28,8 @@ async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task): Promis
     }
 }
 
-function moveCompletedTaskToHeadingInFileEventually(changedStatusTask: Task): void {
-    moveCompletedTaskToHeadingInFile(changedStatusTask).then(() => {});
+function moveCompletedTaskToHeadingInFileEventually(changedStatusTask: Task, filePath: string): void {
+    moveCompletedTaskToHeadingInFile(changedStatusTask, filePath).then(() => {});
 }
 
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
@@ -61,7 +59,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         // return writebackToOriginalLine();
     }
     if (taskString.includes('🏁 ToLogList')) {
-        moveCompletedTaskToHeadingInFileEventually(changedStatusTask);
+        const filePath = 'Manual Testing/On Completion/Archive.md';
+        moveCompletedTaskToHeadingInFileEventually(changedStatusTask, filePath);
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
     if (taskString.includes('🏁 EndOfList')) {
