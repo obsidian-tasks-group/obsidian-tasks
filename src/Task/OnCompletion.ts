@@ -4,6 +4,10 @@ import { StatusType } from '../Statuses/StatusConfiguration';
 import { appendToListWithinFile } from '../lib/FileWriter';
 import type { Task } from './Task';
 
+function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) {
+    return tasks.filter((task) => task !== changedStatusTask);
+}
+
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const tasksArrayLength = tasks.length;
     if (tasksArrayLength === 0) {
@@ -22,10 +26,6 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     // experimentally copy completed task instance to archive.md in vault root
-
-    function returnWithoutCompletedInstance(tasks1: Task[], changedStatusTask1: Task) {
-        return tasks1.filter((task) => task !== changedStatusTask1);
-    }
 
     async function moveCompletedTaskToHeadingInFile(): Promise<void> {
         const textToWrite = changedStatusTask.toFileLineString();
