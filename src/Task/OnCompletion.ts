@@ -27,8 +27,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
 
     // experimentally copy completed task instance to archive.md in vault root
 
-    async function moveCompletedTaskToHeadingInFile(): Promise<void> {
-        const textToWrite = changedStatusTask.toFileLineString();
+    async function moveCompletedTaskToHeadingInFile(changedStatusTask1: Task): Promise<void> {
+        const textToWrite = changedStatusTask1.toFileLineString();
         const filePath = 'Manual Testing/On Completion/Archive.md';
         const fileHeading = '## Archived Tasks';
 
@@ -45,7 +45,7 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     function moveCompletedTaskToHeadingInFileEventually(): void {
-        moveCompletedTaskToHeadingInFile().then(() => {});
+        moveCompletedTaskToHeadingInFile(changedStatusTask).then(() => {});
     }
 
     if (taskString.includes('🏁 Delete')) {
