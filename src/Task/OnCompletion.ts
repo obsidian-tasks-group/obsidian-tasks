@@ -8,6 +8,23 @@ function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) 
     return tasks.filter((task) => task !== changedStatusTask);
 }
 
+async function moveCompletedTaskToHeadingInFile(changedStatusTask1: Task): Promise<void> {
+    const textToWrite = changedStatusTask1.toFileLineString();
+    const filePath = 'Manual Testing/On Completion/Archive.md';
+    const fileHeading = '## Archived Tasks';
+
+    const file = app.vault.getAbstractFileByPath(filePath);
+    // TODO What if there is no such file?
+    if (file instanceof TFile) {
+        await app.vault.process(file, (data) => {
+            return appendToListWithinFile(data, fileHeading, textToWrite);
+        });
+    } else {
+        // If we were not able to save the done task, retain everything.
+        console.log(`Something went wrong - cannot read ${filePath}`);
+    }
+}
+
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const tasksArrayLength = tasks.length;
     if (tasksArrayLength === 0) {
@@ -26,23 +43,6 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     // experimentally copy completed task instance to archive.md in vault root
-
-    async function moveCompletedTaskToHeadingInFile(changedStatusTask1: Task): Promise<void> {
-        const textToWrite = changedStatusTask1.toFileLineString();
-        const filePath = 'Manual Testing/On Completion/Archive.md';
-        const fileHeading = '## Archived Tasks';
-
-        const file = app.vault.getAbstractFileByPath(filePath);
-        // TODO What if there is no such file?
-        if (file instanceof TFile) {
-            await app.vault.process(file, (data) => {
-                return appendToListWithinFile(data, fileHeading, textToWrite);
-            });
-        } else {
-            // If we were not able to save the done task, retain everything.
-            console.log(`Something went wrong - cannot read ${filePath}`);
-        }
-    }
 
     function moveCompletedTaskToHeadingInFileEventually(changedStatusTask1: Task): void {
         moveCompletedTaskToHeadingInFile(changedStatusTask1).then(() => {});
