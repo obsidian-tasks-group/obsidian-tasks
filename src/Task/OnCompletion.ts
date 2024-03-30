@@ -1,4 +1,7 @@
+import { TFile } from 'obsidian';
+
 import { StatusType } from '../Statuses/StatusConfiguration';
+import { appendToListWithinFile } from '../lib/FileWriter';
 import type { Task } from './Task';
 
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
@@ -24,6 +27,27 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         return tasks.filter((task) => task !== changedStatusTask);
     }
 
+    async function moveCompletedTaskToHeadingInFile(): Promise<void> {
+        const textToWrite = changedStatusTask.toFileLineString();
+        const filePath = 'Manual Testing/On Completion/Archive.md';
+        const fileHeading = '## Archived Tasks';
+
+        const file = app.vault.getAbstractFileByPath(filePath);
+        // TODO What if there is no such file?
+        if (file instanceof TFile) {
+            await app.vault.process(file, (data) => {
+                return appendToListWithinFile(data, fileHeading, textToWrite);
+            });
+        } else {
+            // If we were not able to save the done task, retain everything.
+            console.log(`Something went wrong - cannot read ${filePath}`);
+        }
+    }
+
+    function moveCompletedTaskToHeadingInFileEventually(): void {
+        moveCompletedTaskToHeadingInFile().then(() => {});
+    }
+
     if (taskString.includes('🏁 Delete')) {
         return returnWithoutCompletedInstance();
     }
@@ -32,8 +56,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         // return writebackToOriginalLine();
     }
     if (taskString.includes('🏁 ToLogList')) {
-        // pass;
-        // return writebackToOriginalLine();
+        moveCompletedTaskToHeadingInFileEventually();
+        return returnWithoutCompletedInstance();
     }
     if (taskString.includes('🏁 EndOfList')) {
         // pass;
