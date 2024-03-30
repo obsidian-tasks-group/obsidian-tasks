@@ -26,10 +26,7 @@ async function updateFileContent(filePath: string, fileContentUpdater: (data: st
     }
 }
 
-function moveCompletedTaskToHeadingInFileEventually(
-    filePath: string,
-    fileContentUpdater: (data: string) => string,
-): void {
+function updateFileContentEventually(filePath: string, fileContentUpdater: (data: string) => string): void {
     updateFileContent(filePath, fileContentUpdater).then(() => {});
 }
 
@@ -62,14 +59,14 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     if (taskString.includes('🏁 ToLogList')) {
-        moveCompletedTaskToHeadingInFileEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
+        updateFileContentEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
             return appendToListWithinFile(data, '## Archived Tasks - Prepended', textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
 
     if (taskString.includes('🏁 EndOfList')) {
-        moveCompletedTaskToHeadingInFileEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
+        updateFileContentEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
             // TODO The function name says that it writes to the end of the list, but it writes to the start.
             // TODO It does not create the heading if it was missing.
             return writeLineToListEnd(data, '## Archived Tasks - Appended', textToWrite);
