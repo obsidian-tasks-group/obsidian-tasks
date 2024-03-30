@@ -13,15 +13,20 @@ async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task): Promis
     const filePath = 'Manual Testing/On Completion/Archive.md';
     const fileHeading = '## Archived Tasks';
 
-    const file = app.vault.getAbstractFileByPath(filePath);
-    // TODO What if there is no such file?
+    let file = app.vault.getAbstractFileByPath(filePath);
+    if (file === null) {
+        // Try creating the file.
+        // This probably depends on any parent directories already existing:
+        file = await app.vault.create(filePath, '');
+    }
+
     if (file instanceof TFile) {
         await app.vault.process(file, (data) => {
             return appendToListWithinFile(data, fileHeading, textToWrite);
         });
     } else {
         // If we were not able to save the done task, retain everything.
-        console.log(`Something went wrong - cannot read ${filePath}`);
+        console.log(`Something went wrong - cannot read or create ${filePath}`);
     }
 }
 
