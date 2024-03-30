@@ -8,19 +8,17 @@ function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) 
     return tasks.filter((task) => task !== changedStatusTask);
 }
 
-async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task, filePath: string): Promise<void> {
+async function moveCompletedTaskToHeadingInFile(
+    _changedStatusTask: Task,
+    filePath: string,
+    fileContentUpdater: (data: string) => string,
+): Promise<void> {
     let file = app.vault.getAbstractFileByPath(filePath);
     if (file === null) {
         // Try creating the file.
         // This probably depends on any parent directories already existing:
         file = await app.vault.create(filePath, '');
     }
-
-    const fileContentUpdater = (data: string) => {
-        const textToWrite = changedStatusTask.toFileLineString();
-        const fileHeading = '## Archived Tasks';
-        return appendToListWithinFile(data, fileHeading, textToWrite);
-    };
 
     if (file instanceof TFile) {
         await app.vault.process(file, (data) => {
@@ -32,8 +30,12 @@ async function moveCompletedTaskToHeadingInFile(changedStatusTask: Task, filePat
     }
 }
 
-function moveCompletedTaskToHeadingInFileEventually(changedStatusTask: Task, filePath: string): void {
-    moveCompletedTaskToHeadingInFile(changedStatusTask, filePath).then(() => {});
+function moveCompletedTaskToHeadingInFileEventually(
+    changedStatusTask: Task,
+    filePath: string,
+    fileContentUpdater: (data: string) => string,
+): void {
+    moveCompletedTaskToHeadingInFile(changedStatusTask, filePath, fileContentUpdater).then(() => {});
 }
 
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
@@ -64,7 +66,12 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
     if (taskString.includes('🏁 ToLogList')) {
         const filePath = 'Manual Testing/On Completion/Archive.md';
-        moveCompletedTaskToHeadingInFileEventually(changedStatusTask, filePath);
+        const fileContentUpdater = (data: string) => {
+            const textToWrite = changedStatusTask.toFileLineString();
+            const fileHeading = '## Archived Tasks';
+            return appendToListWithinFile(data, fileHeading, textToWrite);
+        };
+        moveCompletedTaskToHeadingInFileEventually(changedStatusTask, filePath, fileContentUpdater);
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
     if (taskString.includes('🏁 EndOfList')) {
