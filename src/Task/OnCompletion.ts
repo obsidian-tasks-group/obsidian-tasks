@@ -25,6 +25,10 @@ async function moveCompletedTaskToHeadingInFile(changedStatusTask1: Task): Promi
     }
 }
 
+function moveCompletedTaskToHeadingInFileEventually(changedStatusTask1: Task): void {
+    moveCompletedTaskToHeadingInFile(changedStatusTask1).then(() => {});
+}
+
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const tasksArrayLength = tasks.length;
     if (tasksArrayLength === 0) {
@@ -43,10 +47,6 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     // experimentally copy completed task instance to archive.md in vault root
-
-    function moveCompletedTaskToHeadingInFileEventually(changedStatusTask1: Task): void {
-        moveCompletedTaskToHeadingInFile(changedStatusTask1).then(() => {});
-    }
 
     if (taskString.includes('🏁 Delete')) {
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
