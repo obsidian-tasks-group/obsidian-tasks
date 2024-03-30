@@ -65,13 +65,17 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
     if (taskString.includes('🏁 ToLogList')) {
         moveCompletedTaskToHeadingInFileEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
-            return appendToListWithinFile(data, '## Archived Tasks', textToWrite);
+            return appendToListWithinFile(data, '## Archived Tasks - Prepended', textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
     if (taskString.includes('🏁 EndOfList')) {
-        // pass;
-        // return writebackToOriginalLine();
+        moveCompletedTaskToHeadingInFileEventually('Manual Testing/On Completion/Archive.md', (data: string) => {
+            // TODO The function name says that it writes to the end of the list, but it writes to the start.
+            // TODO It does not create the heading if it was missing.
+            return writeLineToListEnd(data, '## Archived Tasks - Appended', textToWrite);
+        });
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
     // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
     const errorMessage = 'Unknown "On Completion" action';
