@@ -23,8 +23,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
 
     // experimentally copy completed task instance to archive.md in vault root
 
-    function returnWithoutCompletedInstance() {
-        return tasks.filter((task) => task !== changedStatusTask);
+    function returnWithoutCompletedInstance(tasks1: Task[], changedStatusTask1: Task) {
+        return tasks1.filter((task) => task !== changedStatusTask1);
     }
 
     async function moveCompletedTaskToHeadingInFile(): Promise<void> {
@@ -49,7 +49,7 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     if (taskString.includes('🏁 Delete')) {
-        return returnWithoutCompletedInstance();
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
     if (taskString.includes('🏁 ToLogFile')) {
         // pass;
@@ -57,7 +57,7 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
     if (taskString.includes('🏁 ToLogList')) {
         moveCompletedTaskToHeadingInFileEventually();
-        return returnWithoutCompletedInstance();
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
     if (taskString.includes('🏁 EndOfList')) {
         // pass;
