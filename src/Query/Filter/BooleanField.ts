@@ -245,7 +245,7 @@ export class BooleanField extends Field {
         );
 
         const unaryOperatorAndParentheses = /^(AND|OR|XOR|NOT) *[("]$/;
-        const unaryOperatorAndParentheses2 = /^(AND|OR|XOR|NOT) *[("]$/;
+        const unaryOperatorAndParentheses2 = new RegExp('^' + '(AND|OR|XOR|NOT)' + ' *' + '[("]' + '$');
         checkRegExpIdentical(unaryOperatorAndParentheses, unaryOperatorAndParentheses2);
 
         const remnantsOfNot = /^[)"] *(AND|OR|XOR)$/;
