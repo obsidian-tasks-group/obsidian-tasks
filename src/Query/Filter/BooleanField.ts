@@ -15,15 +15,15 @@ export type ParseResult = {
     filters: { [key: string]: string };
 };
 
-function anyOfTheseChars(allowedChars: string) {
-    return new RegExp('[' + allowedChars + ']');
+function anyOfTheseChars(allowedChars: string): string {
+    return new RegExp('[' + allowedChars + ']').source;
 }
 
 const openFilterChars = '("';
-const openFilter = anyOfTheseChars(openFilterChars).source;
+const openFilter = anyOfTheseChars(openFilterChars);
 
 const closeFilterChars = ')"';
-const closeFilter = anyOfTheseChars(closeFilterChars).source;
+const closeFilter = anyOfTheseChars(closeFilterChars);
 
 const openAndCloseFilterChars = '()"';
 
@@ -189,13 +189,9 @@ export class BooleanField extends Field {
         // All that remains now is to separate:
         // - any spaces and opening parentheses at the start of filters
         // - any spaces and close   parentheses at the end of filters
-        const openingParensAndSpacesAtStartRegex = new RegExp(
-            '(^' + anyOfTheseChars(' ' + openFilterChars).source + '*)',
-        );
+        const openingParensAndSpacesAtStartRegex = new RegExp('(^' + anyOfTheseChars(' ' + openFilterChars) + '*)');
 
-        const closingParensAndSpacesAtEndRegex = new RegExp(
-            '(' + anyOfTheseChars(' ' + closeFilterChars).source + '*$)',
-        );
+        const closingParensAndSpacesAtEndRegex = new RegExp('(' + anyOfTheseChars(' ' + closeFilterChars) + '*$)');
 
         return substringsSplitAtOperatorBoundaries
             .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
@@ -231,7 +227,7 @@ export class BooleanField extends Field {
         // These *could* be inlined, but their variable names add meaning.
         // TODO Simplify the expressions
         // TODO Clarify the variable names
-        const onlySpacesAndParentheses = new RegExp('^' + anyOfTheseChars(' ' + openAndCloseFilterChars).source + '+$');
+        const onlySpacesAndParentheses = new RegExp('^' + anyOfTheseChars(' ' + openAndCloseFilterChars) + '+$');
 
         const binaryOperatorAndParentheses = new RegExp('^ *' + closeFilter + ' *(AND|OR|XOR) *' + openFilter + ' *$');
 
