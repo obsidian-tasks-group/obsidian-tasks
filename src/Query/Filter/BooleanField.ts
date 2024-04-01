@@ -177,11 +177,10 @@ export class BooleanField extends Field {
         const openingParensAndSpacesAtStartRegex = /(^[ ("]*)/;
         const closingParensAndSpacesAtEndRegex = /([ )"]*$)/;
 
-        const parts = substringsSplitAtOperatorBoundaries
+        return substringsSplitAtOperatorBoundaries
             .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
             .flatMap((substring) => substring.split(closingParensAndSpacesAtEndRegex))
             .filter((substring) => substring !== '');
-        return parts;
     }
 
     private static getFiltersAndSimplifiedLine(parts: string[]) {
