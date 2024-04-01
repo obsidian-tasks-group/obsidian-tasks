@@ -127,10 +127,7 @@ export class BooleanField extends Field {
 
     public static preprocessExpressionV2(line: string): ParseResult {
         const parts = BooleanField.splitLine(line);
-
-        const { simplifiedLine, filters } = BooleanField.getFiltersAndSimplifiedLine(parts);
-
-        return { simplifiedLine, filters };
+        return BooleanField.getFiltersAndSimplifiedLine(parts);
     }
 
     private static splitLine(line: string) {
