@@ -238,9 +238,10 @@ export class BooleanField extends Field {
         // TODO Clarify the variable names
         const onlySpacesAndParentheses = /^[ ()"]+$/;
 
+        const binaryOperator = '(AND|OR|XOR)';
         const binaryOperatorAndParentheses = /^ *[)"] *(AND|OR|XOR) *[("] *$/;
         const binaryOperatorAndParentheses2 = new RegExp(
-            '^ *' + '[)"]' + ' *' + '(AND|OR|XOR)' + ' *' + '[("]' + ' *$',
+            '^ *' + '[)"]' + ' *' + binaryOperator + ' *' + '[("]' + ' *$',
         );
         checkRegExpIdentical(binaryOperatorAndParentheses, binaryOperatorAndParentheses2);
 
