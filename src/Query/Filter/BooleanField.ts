@@ -33,6 +33,8 @@ const openFilterRegex = anyOfTheseChars(openFilterChars);
 const closeFilterChars = ')"';
 const closeFilterRegex = anyOfTheseChars(closeFilterChars);
 
+const openAndCloseFilterChars = '()"';
+
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
  * the format --
@@ -238,7 +240,7 @@ export class BooleanField extends Field {
         // TODO Simplify the expressions
         // TODO Clarify the variable names
         const onlySpacesAndParentheses = /^[ ()"]+$/;
-        const onlySpacesAndParentheses2 = /^[ ()"]+$/;
+        const onlySpacesAndParentheses2 = new RegExp('^' + '[ ' + openAndCloseFilterChars + ']' + '+$');
         checkRegExpIdentical(onlySpacesAndParentheses, onlySpacesAndParentheses2);
 
         const binaryOperatorAndParentheses = new RegExp(
