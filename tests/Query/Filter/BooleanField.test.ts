@@ -262,6 +262,10 @@ describe('boolean query - exhaustive tests', () => {
         jest.useRealTimers();
     });
 
+    it('preprocess - split line', () => {
+        verifyBooleanExpressionPreprocessing(BooleanField.splitLine);
+    });
+
     it('preprocess - rewrite', () => {
         verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpressionV2);
     });

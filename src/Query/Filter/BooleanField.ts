@@ -142,7 +142,7 @@ export class BooleanField extends Field {
         return BooleanField.getFiltersAndSimplifiedLine(parts);
     }
 
-    private static splitLine(line: string) {
+    public static splitLine(line: string) {
         // TODO Clarify that " can be a delimiter, as well as ()
 
         // Here, we split the input line in to separate operators-plus-adjacent-parentheses
