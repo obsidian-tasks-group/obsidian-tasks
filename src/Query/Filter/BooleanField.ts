@@ -189,7 +189,10 @@ export class BooleanField extends Field {
         const openingParensAndSpacesAtStartRegex = new RegExp(
             '(^' + anyOfTheseChars(' ' + openFilterChars).source + '*)',
         );
-        const closingParensAndSpacesAtEndRegex = /([ )"]*$)/;
+
+        const closingParensAndSpacesAtEndRegex = new RegExp(
+            '(' + anyOfTheseChars(' ' + closeFilterChars).source + '*$)',
+        );
 
         return substringsSplitAtOperatorBoundaries
             .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
