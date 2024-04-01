@@ -131,6 +131,8 @@ export class BooleanField extends Field {
     }
 
     private static splitLine(line: string) {
+        const openFilterRegex = /[("]/;
+        const closeFilterRegex = /[)"]/;
         // TODO Clarify that " can be a delimiter, as well as ()
 
         // Here, we split the input line in to separate operators-plus-adjacent-parentheses
@@ -150,7 +152,10 @@ export class BooleanField extends Field {
         //   ')AND  NOT('
         //   ')  AND  NOT  ('
         // TODO Review all uses of space character in these regular expressions, and use \s instead:
-        const binaryOperatorsRegex = /([)"]\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\s*[("])/g;
+        const binaryOperatorsRegex = new RegExp(
+            '(' + closeFilterRegex.source + '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' + openFilterRegex.source + ')',
+            'g',
+        );
 
         // Divide up line, split at binary operator boundaries
         const substrings = line.split(binaryOperatorsRegex);
