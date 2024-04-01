@@ -239,14 +239,11 @@ export class BooleanField extends Field {
         // TODO Clarify the variable names
         const onlySpacesAndParentheses = /^[ ()"]+$/;
 
-        const binaryOperator = '(AND|OR|XOR)';
-        const binaryOperatorOrNot = '(AND|OR|XOR|NOT)';
-
         const binaryOperatorAndParentheses = new RegExp(
-            '^ *' + closeFilterRegex.source + ' *' + binaryOperator + ' *' + openFilterRegex.source + ' *$',
+            '^ *' + closeFilterRegex.source + ' *(AND|OR|XOR) *' + openFilterRegex.source + ' *$',
         );
 
-        const unaryOperatorAndParentheses = new RegExp('^' + binaryOperatorOrNot + ' *' + openFilterRegex.source + '$');
+        const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + openFilterRegex.source + '$');
 
         const remnantsOfNot = /^[)"] *(AND|OR|XOR)$/;
         const remnantsOfNot2 = /^[)"] *(AND|OR|XOR)$/;
