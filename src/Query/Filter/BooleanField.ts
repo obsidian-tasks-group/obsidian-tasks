@@ -239,11 +239,7 @@ export class BooleanField extends Field {
         // These *could* be inlined, but their variable names add meaning.
         // TODO Simplify the expressions
         // TODO Clarify the variable names
-        const onlySpacesAndParentheses = /^[ ()"]+$/;
-        const onlySpacesAndParentheses2 = new RegExp(
-            '^' + anyOfTheseChars(' ' + openAndCloseFilterChars).source + '+$',
-        );
-        checkRegExpIdentical(onlySpacesAndParentheses, onlySpacesAndParentheses2);
+        const onlySpacesAndParentheses = new RegExp('^' + anyOfTheseChars(' ' + openAndCloseFilterChars).source + '+$');
 
         const binaryOperatorAndParentheses = new RegExp(
             '^ *' + closeFilterRegex.source + ' *(AND|OR|XOR) *' + openFilterRegex.source + ' *$',
