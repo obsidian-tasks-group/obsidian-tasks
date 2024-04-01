@@ -55,9 +55,10 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     const textToWrite = changedStatusTask.toFileLineString();
-    const filePath = 'Manual Testing/On Completion/Archive.md';
 
     if (taskString.includes('🏁 ToLogFile')) {
+        //  append completed task to end of list under specified heading of separate, specified note file
+        const filePath = 'Manual Testing/On Completion/Archive.md';
         updateFileContentEventually(filePath, (data: string) => {
             return appendToEndOfFile(data, textToWrite);
         });
@@ -65,6 +66,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     if (taskString.includes('🏁 ToLogList')) {
+        //  move completed task to end of list with specified heading within note in which it originated
+        const filePath = changedStatusTask.path;
         updateFileContentEventually(filePath, (data: string) => {
             return appendToListWithinFile(data, '## Archived Tasks - Prepended', textToWrite);
         });
@@ -72,6 +75,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     }
 
     if (taskString.includes('🏁 EndOfList')) {
+        //  move completed task to end of list in which it originated
+        const filePath = changedStatusTask.path;
         updateFileContentEventually(filePath, (data: string) => {
             // TODO The function name says that it writes to the end of the list, but it writes to the start.
             // TODO It does not create the heading if it was missing.
