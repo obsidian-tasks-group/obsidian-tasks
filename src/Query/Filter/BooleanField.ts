@@ -240,12 +240,14 @@ export class BooleanField extends Field {
         const onlySpacesAndParentheses = /^[ ()"]+$/;
 
         const binaryOperator = '(AND|OR|XOR)';
+        const binaryOperatorOrNot = '(AND|OR|XOR|NOT)';
+
         const binaryOperatorAndParentheses = new RegExp(
             '^ *' + closeFilterRegex.source + ' *' + binaryOperator + ' *' + openFilterRegex.source + ' *$',
         );
 
         const unaryOperatorAndParentheses = /^(AND|OR|XOR|NOT) *[("]$/;
-        const unaryOperatorAndParentheses2 = new RegExp('^' + '(AND|OR|XOR|NOT)' + ' *' + '[("]' + '$');
+        const unaryOperatorAndParentheses2 = new RegExp('^' + binaryOperatorOrNot + ' *' + '[("]' + '$');
         checkRegExpIdentical(unaryOperatorAndParentheses, unaryOperatorAndParentheses2);
 
         const remnantsOfNot = /^[)"] *(AND|OR|XOR)$/;
