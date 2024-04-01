@@ -189,9 +189,9 @@ export class BooleanField extends Field {
         // All that remains now is to separate:
         // - any spaces and opening parentheses at the start of filters
         // - any spaces and close   parentheses at the end of filters
-        const openingParensAndSpacesAtStartRegex = new RegExp('(^' + anyOfTheseChars(' ' + openFilterChars) + '*)');
+        const openingParensAndSpacesAtStartRegex = new RegExp('(^' + anyOfTheseChars(openFilterChars + ' ') + '*)');
 
-        const closingParensAndSpacesAtEndRegex = new RegExp('(' + anyOfTheseChars(' ' + closeFilterChars) + '*$)');
+        const closingParensAndSpacesAtEndRegex = new RegExp('(' + anyOfTheseChars(closeFilterChars + ' ') + '*$)');
 
         return substringsSplitAtOperatorBoundaries
             .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
