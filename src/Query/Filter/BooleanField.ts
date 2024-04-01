@@ -15,6 +15,16 @@ export type ParseResult = {
     filters: { [key: string]: string };
 };
 
+function anyOfTheseChars(allowedChars: string) {
+    return new RegExp('[' + allowedChars + ']');
+}
+
+const openFilterChars = '("';
+const openFilterRegex = anyOfTheseChars(openFilterChars);
+
+const closeFilterChars = ')"';
+const closeFilterRegex = anyOfTheseChars(closeFilterChars);
+
 function checkRegExpIdentical(unaryOperatorsRegex: RegExp, unaryOperatorsRegex2: RegExp) {
     if (unaryOperatorsRegex.toString() !== unaryOperatorsRegex2.toString()) {
         console.log(unaryOperatorsRegex.toString());
@@ -139,15 +149,6 @@ export class BooleanField extends Field {
     }
 
     private static splitLine(line: string) {
-        function anyOfTheseChars(allowedChars: string) {
-            return new RegExp('[' + allowedChars + ']');
-        }
-
-        const openFilterChars = '("';
-        const openFilterRegex = anyOfTheseChars(openFilterChars);
-
-        const closeFilterChars = ')"';
-        const closeFilterRegex = anyOfTheseChars(closeFilterChars);
         // TODO Clarify that " can be a delimiter, as well as ()
 
         // Here, we split the input line in to separate operators-plus-adjacent-parentheses
