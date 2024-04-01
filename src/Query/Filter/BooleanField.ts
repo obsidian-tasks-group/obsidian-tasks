@@ -242,7 +242,7 @@ export class BooleanField extends Field {
         const binaryOperator = '(AND|OR|XOR)';
         const binaryOperatorAndParentheses = /^ *[)"] *(AND|OR|XOR) *[("] *$/;
         const binaryOperatorAndParentheses2 = new RegExp(
-            '^ *' + closeFilterRegex.source + ' *' + binaryOperator + ' *' + '[("]' + ' *$',
+            '^ *' + closeFilterRegex.source + ' *' + binaryOperator + ' *' + openFilterRegex.source + ' *$',
         );
         checkRegExpIdentical(binaryOperatorAndParentheses, binaryOperatorAndParentheses2);
 
