@@ -15,6 +15,14 @@ export type ParseResult = {
     filters: { [key: string]: string };
 };
 
+function checkRegExpIdentical(unaryOperatorsRegex: RegExp, unaryOperatorsRegex2: RegExp) {
+    if (unaryOperatorsRegex.toString() !== unaryOperatorsRegex2.toString()) {
+        console.log(unaryOperatorsRegex.toString());
+        console.log(unaryOperatorsRegex2.toString());
+        throw new Error('mismatch');
+    }
+}
+
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
  * the format --
@@ -229,7 +237,13 @@ export class BooleanField extends Field {
         // TODO Simplify the expressions
         // TODO Clarify the variable names
         const onlySpacesAndParentheses = /^[ ()"]+$/;
+
         const binaryOperatorAndParentheses = /^ *[)"] *(AND|OR|XOR) *[("] *$/;
+        const binaryOperatorAndParentheses2 = new RegExp(
+            '^ *' + '[)"]' + ' *' + '(AND|OR|XOR)' + ' *' + '[("]' + ' *$',
+        );
+        checkRegExpIdentical(binaryOperatorAndParentheses, binaryOperatorAndParentheses2);
+
         const unaryOperatorAndParentheses = /^(NOT|AND|OR|XOR) *[("]$/;
         const remnantsOfNot = /^[)"] *(AND|OR|XOR)$/;
         const justOperators = /^(AND|OR|XOR|NOT)$/;
