@@ -176,7 +176,12 @@ export class BooleanField extends Field {
             .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
             .flatMap((substring) => substring.split(closingParensAndSpacesAtEndRegex))
             .filter((substring) => substring !== '');
+        const { simplifiedLine, filters } = BooleanField.getFiltersAndSimplifiedLine(parts);
 
+        return { simplifiedLine, filters };
+    }
+
+    private static getFiltersAndSimplifiedLine(parts: string[]) {
         // Holds the reconstructed expression with placeholders
         let simplifiedLine = '';
         let currentIndex = 1; // Placeholder index starts at 1
