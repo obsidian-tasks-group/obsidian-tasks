@@ -1,5 +1,37 @@
+import { TFile } from 'obsidian';
+
 import { StatusType } from '../Statuses/StatusConfiguration';
+import { appendToEndOfFile, appendToListWithinFile } from '../lib/FileWriter';
 import type { Task } from './Task';
+
+function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) {
+    return tasks.filter((task) => task !== changedStatusTask);
+}
+
+async function updateFileContent(filePath: string, fileContentUpdater: (data: string) => string): Promise<void> {
+    let file = app.vault.getAbstractFileByPath(filePath);
+    if (file === null) {
+        // Try creating the file.
+        // This probably depends on any parent directories already existing:
+        // TODO If filePath is not in root, if necessary, create intermediate directories.
+        file = await app.vault.create(filePath, '');
+    }
+
+    if (file instanceof TFile) {
+        await app.vault.process(file, (data) => {
+            return fileContentUpdater(data);
+        });
+    } else {
+        // If we were not able to save the done task, we would like to be able to retain everything.
+        // TODO There is currently no way to communicate this failure back to callers,
+        //      and so if we reach here, the completed task gets unintentionally discarded.
+        console.log(`Something went wrong - cannot read or create ${filePath}`);
+    }
+}
+
+function updateFileContentEventually(filePath: string, fileContentUpdater: (data: string) => string): void {
+    updateFileContent(filePath, fileContentUpdater).then(() => {});
+}
 
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const tasksArrayLength = tasks.length;
@@ -18,27 +50,36 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         return tasks;
     }
 
-    // experimentally copy completed task instance to archive.md in vault root
-
-    function returnWithoutCompletedInstance() {
-        return tasks.filter((task) => task !== changedStatusTask);
-    }
-
     if (taskString.includes('🏁 Delete')) {
-        return returnWithoutCompletedInstance();
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
+
+    const textToWrite = changedStatusTask.toFileLineString();
+    const filePath = 'Manual Testing/On Completion/Archive.md';
+
     if (taskString.includes('🏁 ToLogFile')) {
-        // pass;
-        // return writebackToOriginalLine();
+        updateFileContentEventually(filePath, (data: string) => {
+            return appendToEndOfFile(data, textToWrite);
+        });
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
+
     if (taskString.includes('🏁 ToLogList')) {
-        // pass;
-        // return writebackToOriginalLine();
+        updateFileContentEventually(filePath, (data: string) => {
+            return appendToListWithinFile(data, '## Archived Tasks - Prepended', textToWrite);
+        });
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
+
     if (taskString.includes('🏁 EndOfList')) {
-        // pass;
-        // return writebackToOriginalLine();
+        updateFileContentEventually(filePath, (data: string) => {
+            // TODO The function name says that it writes to the end of the list, but it writes to the start.
+            // TODO It does not create the heading if it was missing.
+            return writeLineToListEnd(data, '## Archived Tasks - Appended', textToWrite);
+        });
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
+
     // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
     const errorMessage = 'Unknown "On Completion" action';
     console.log(errorMessage);
