@@ -126,6 +126,14 @@ export class BooleanField extends Field {
     }
 
     public static preprocessExpressionV2(line: string): ParseResult {
+        const parts = BooleanField.splitLine(line);
+
+        const { simplifiedLine, filters } = BooleanField.getFiltersAndSimplifiedLine(parts);
+
+        return { simplifiedLine, filters };
+    }
+
+    private static splitLine(line: string) {
         // TODO Clarify that " can be a delimiter, as well as ()
 
         // Here, we split the input line in to separate operators-plus-adjacent-parentheses
@@ -176,9 +184,7 @@ export class BooleanField extends Field {
             .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
             .flatMap((substring) => substring.split(closingParensAndSpacesAtEndRegex))
             .filter((substring) => substring !== '');
-        const { simplifiedLine, filters } = BooleanField.getFiltersAndSimplifiedLine(parts);
-
-        return { simplifiedLine, filters };
+        return parts;
     }
 
     private static getFiltersAndSimplifiedLine(parts: string[]) {
