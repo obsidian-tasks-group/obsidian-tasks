@@ -15,14 +15,6 @@ export type ParseResult = {
     filters: { [key: string]: string };
 };
 
-function checkRegExpIdentical(unaryOperatorsRegex: RegExp, unaryOperatorsRegex2: RegExp) {
-    if (unaryOperatorsRegex.toString() !== unaryOperatorsRegex2.toString()) {
-        console.log(unaryOperatorsRegex.toString());
-        console.log(unaryOperatorsRegex2.toString());
-        throw new Error('mismatch');
-    }
-}
-
 function anyOfTheseChars(allowedChars: string) {
     return new RegExp('[' + allowedChars + ']');
 }
@@ -250,8 +242,6 @@ export class BooleanField extends Field {
         const remnantsOfNot = new RegExp('^' + closeFilterRegex.source + ' *(AND|OR|XOR)$');
 
         const justOperators = /^(AND|OR|XOR|NOT)$/;
-        const justOperators2 = /^(AND|OR|XOR|NOT)$/;
-        checkRegExpIdentical(justOperators, justOperators2);
 
         return ![
             onlySpacesAndParentheses,
