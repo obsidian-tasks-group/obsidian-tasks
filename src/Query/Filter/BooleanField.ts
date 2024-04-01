@@ -23,7 +23,7 @@ const openFilterChars = '("';
 const openFilter = anyOfTheseChars(openFilterChars).source;
 
 const closeFilterChars = ')"';
-const closeFilterRegex = anyOfTheseChars(closeFilterChars);
+const closeFilter = anyOfTheseChars(closeFilterChars).source;
 
 const openAndCloseFilterChars = '()"';
 
@@ -163,7 +163,7 @@ export class BooleanField extends Field {
         //   ')  AND  NOT  ('
         // TODO Review all uses of space character in these regular expressions, and use \s instead:
         const binaryOperatorsRegex = new RegExp(
-            '(' + closeFilterRegex.source + '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' + openFilter + ')',
+            '(' + closeFilter + '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' + openFilter + ')',
             'g',
         );
 
@@ -233,13 +233,11 @@ export class BooleanField extends Field {
         // TODO Clarify the variable names
         const onlySpacesAndParentheses = new RegExp('^' + anyOfTheseChars(' ' + openAndCloseFilterChars).source + '+$');
 
-        const binaryOperatorAndParentheses = new RegExp(
-            '^ *' + closeFilterRegex.source + ' *(AND|OR|XOR) *' + openFilter + ' *$',
-        );
+        const binaryOperatorAndParentheses = new RegExp('^ *' + closeFilter + ' *(AND|OR|XOR) *' + openFilter + ' *$');
 
         const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + openFilter + '$');
 
-        const remnantsOfNot = new RegExp('^' + closeFilterRegex.source + ' *(AND|OR|XOR)$');
+        const remnantsOfNot = new RegExp('^' + closeFilter + ' *(AND|OR|XOR)$');
 
         const justOperators = /^(AND|OR|XOR|NOT)$/;
 
