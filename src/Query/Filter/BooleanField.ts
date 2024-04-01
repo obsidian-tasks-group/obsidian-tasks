@@ -20,7 +20,7 @@ function anyOfTheseChars(allowedChars: string) {
 }
 
 const openFilterChars = '("';
-const openFilterRegex = anyOfTheseChars(openFilterChars);
+const openFilter = anyOfTheseChars(openFilterChars).source;
 
 const closeFilterChars = ')"';
 const closeFilterRegex = anyOfTheseChars(closeFilterChars);
@@ -163,7 +163,7 @@ export class BooleanField extends Field {
         //   ')  AND  NOT  ('
         // TODO Review all uses of space character in these regular expressions, and use \s instead:
         const binaryOperatorsRegex = new RegExp(
-            '(' + closeFilterRegex.source + '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' + openFilterRegex.source + ')',
+            '(' + closeFilterRegex.source + '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' + openFilter + ')',
             'g',
         );
 
@@ -177,7 +177,7 @@ export class BooleanField extends Field {
         //   'NOT ('
         //   'NOT  ('
         // TODO Ensure that NOT is at the start of a word - and perhaps is preceded by spaces.
-        const unaryOperatorsRegex = new RegExp('(NOT\\s*' + openFilterRegex.source + ')', 'g');
+        const unaryOperatorsRegex = new RegExp('(NOT\\s*' + openFilter + ')', 'g');
 
         // Divide up the divided components, this time splitting at unary operator boundaries.
         // flatMap() divides and then flattens the result.
@@ -234,10 +234,10 @@ export class BooleanField extends Field {
         const onlySpacesAndParentheses = new RegExp('^' + anyOfTheseChars(' ' + openAndCloseFilterChars).source + '+$');
 
         const binaryOperatorAndParentheses = new RegExp(
-            '^ *' + closeFilterRegex.source + ' *(AND|OR|XOR) *' + openFilterRegex.source + ' *$',
+            '^ *' + closeFilterRegex.source + ' *(AND|OR|XOR) *' + openFilter + ' *$',
         );
 
-        const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + openFilterRegex.source + '$');
+        const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + openFilter + '$');
 
         const remnantsOfNot = new RegExp('^' + closeFilterRegex.source + ' *(AND|OR|XOR)$');
 
