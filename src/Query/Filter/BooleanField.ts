@@ -244,8 +244,8 @@ export class BooleanField extends Field {
             '^ *' + closeFilterRegex.source + ' *' + binaryOperator + ' *' + openFilterRegex.source + ' *$',
         );
 
-        const unaryOperatorAndParentheses = /^(NOT|AND|OR|XOR) *[("]$/;
-        const unaryOperatorAndParentheses2 = /^(NOT|AND|OR|XOR) *[("]$/;
+        const unaryOperatorAndParentheses = /^(AND|OR|XOR|NOT) *[("]$/;
+        const unaryOperatorAndParentheses2 = /^(AND|OR|XOR|NOT) *[("]$/;
         checkRegExpIdentical(unaryOperatorAndParentheses, unaryOperatorAndParentheses2);
 
         const remnantsOfNot = /^[)"] *(AND|OR|XOR)$/;
