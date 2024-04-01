@@ -167,7 +167,7 @@ export class BooleanField extends Field {
         //   'NOT ('
         //   'NOT  ('
         // TODO Ensure that NOT is at the start of a word - and perhaps is preceded by spaces.
-        const unaryOperatorsRegex = /(NOT\s*[("])/g;
+        const unaryOperatorsRegex = new RegExp('(NOT\\s*' + openFilterRegex.source + ')', 'g');
 
         // Divide up the divided components, this time splitting at unary operator boundaries.
         // flatMap() divides and then flattens the result.
