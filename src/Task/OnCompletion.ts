@@ -54,7 +54,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
 
-    const textToWrite = changedStatusTask.toFileLineString();
+    // trim leading spaces to prevent misinterpretation of indented tasks moved to new contexts;
+    const textToWrite = changedStatusTask.toFileLineString().trimStart();
 
     if (taskString.includes('🏁 ToLogFile')) {
         //  append completed task to end of list under specified heading of separate, specified note file
