@@ -101,5 +101,10 @@ call an  asynchronous function from a regular function:  https://javascript.info
 - copy error handling from 'appendToListWithinFile' to 'writeLineToListEnd'
 - separate function to search for heading and return line# -- otherwise handle 'not found'
 - use task's own line number to start search for end of current list
--
 
+
+/🏁.(Delete|EndOfList|ToLogList|ToLogFile)./gmui
+
+https://publish.obsidian.md/tasks-contributing/Code/How+does+Tasks+handle+status+changes
+https://docs.obsidian.md/Reference/TypeScript+API/Vault/process
+https://docs.obsidian.md/Plugins/Vault#Modify+files
