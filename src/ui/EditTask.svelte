@@ -520,31 +520,7 @@ Availability of access keys:
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('d')}
             />
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Reminder Date  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <label for="reminder" class="accesskey-first">Reminder</label>
-            <DateEditor
-                id="reminder"
-                dateSymbol={reminderDateSymbol}
-                bind:date={editableTask.reminderDate}
-                bind:isDateValid={isReminderDateValid}
-                forwardOnly={editableTask.forwardOnly}
-                accesskey={accesskey('c')}
-            />
-            <!-- --------------------------------------------------------------------------- -->
-            <!--  Reminder Date  -->
-            <!-- --------------------------------------------------------------------------- -->
-            <label for="reminder" class="accesskey-first">Reminder</label>
-            <DateEditor
-                id="reminder"
-                dateSymbol={reminderDateSymbol}
-                bind:date={editableTask.reminderDate}
-                bind:isDateValid={isReminderDateValid}
-                forwardOnly={editableTask.forwardOnly}
-                accesskey={accesskey('c')}
-            />
-
+            
             <!-- --------------------------------------------------------------------------- -->
             <!--  Reminder Date  -->
             <!-- --------------------------------------------------------------------------- -->

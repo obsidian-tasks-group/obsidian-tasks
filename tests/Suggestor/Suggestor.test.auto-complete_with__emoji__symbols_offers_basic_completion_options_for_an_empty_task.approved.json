@@ -9,6 +9,10 @@
     "appendText": "📅 "
   },
   {
+    "displayText": "⏰ reminder date",
+    "appendText": "⏰ "
+  },
+  {
     "displayText": "🛫 start date",
     "appendText": "🛫 "
   },
@@ -19,9 +23,5 @@
   {
     "displayText": "⏫ high priority",
     "appendText": "⏫ "
-  },
-  {
-    "displayText": "🔼 medium priority",
-    "appendText": "🔼 "
   }
 ]

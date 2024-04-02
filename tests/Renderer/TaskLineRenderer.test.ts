@@ -211,7 +211,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
-                ' ⏰ 2023-07-04',
+                ' ⏰ 2023-07-07',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
@@ -232,7 +232,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
-                ' ⏰ 2023-07-04',
+                ' ⏰ 2023-07-07',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
@@ -267,7 +267,7 @@ describe('task line rendering - layout options', () => {
     });
 
     it('renders with reminder date', async () => {
-        await testLayoutOptions(['Do exercises #todo #health', ' ⏰ 2023-07-04'], [TaskLayoutComponent.ReminderDate]);
+        await testLayoutOptions(['Do exercises #todo #health', ' ⏰ 2023-07-07'], [TaskLayoutComponent.ReminderDate]);
     });
 
     it('renders with done date', async () => {

@@ -4,6 +4,10 @@
     "appendText": "due:: "
   },
   {
+    "displayText": "reminder:: reminder date",
+    "appendText": "reminder:: "
+  },
+  {
     "displayText": "start:: start date",
     "appendText": "start:: "
   },
@@ -19,11 +23,6 @@
   {
     "displayText": "priority:: medium priority",
     "appendText": "priority:: medium] ",
-    "insertSkip": 0
-  },
-  {
-    "displayText": "priority:: low priority",
-    "appendText": "priority:: low] ",
     "insertSkip": 0
   }
 ]
