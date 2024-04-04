@@ -1,5 +1,6 @@
 import { App, Editor, EditorSuggest, TFile } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
+import type TasksPlugin from 'main';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';
@@ -10,10 +11,12 @@ export type SuggestInfoWithContext = SuggestInfo & {
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private settings: Settings;
+    private plugin: TasksPlugin;
 
-    constructor(app: App, settings: Settings) {
+    constructor(app: App, settings: Settings, plugin: TasksPlugin) {
         super(app);
         this.settings = settings;
+        this.plugin = plugin;
 
         // EditorSuggestor swallows tabs while the suggestor popup is open
         // This is a hack to support indenting while popup is open

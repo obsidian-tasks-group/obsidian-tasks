@@ -1,9 +1,11 @@
+import type TasksPlugin from 'main';
 import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
 import { Recurrence } from '../Task/Recurrence';
 import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
 import { Task } from '../Task/Task';
+import { generateUniqueId } from '../Task/TaskDependency';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import type { SuggestInfo, SuggestionBuilder } from '.';
@@ -37,7 +39,12 @@ export function makeDefaultSuggestionBuilder(
             addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, dataviewMode),
         );
 
-        // Step 3: add task property suggestions ('due', 'recurrence' etc)
+        // Step 3: add dependecy suggestions
+        suggestions = suggestions.concat(
+            addBlockedBySuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, dataviewMode),
+        );
+
+        // Step 4: add task property suggestions ('due', 'recurrence' etc)
         suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
@@ -107,6 +114,22 @@ function addTaskPropertySuggestions(
             displayText: `${symbols.scheduledDateSymbol} scheduled date`,
             appendText: `${symbols.scheduledDateSymbol} `,
         });
+
+    if (!line.includes(symbols.idSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.idSymbol} Task ID`,
+            // Append UUID if Enter is Hit?
+            // Or Custom Option?
+            // Add Option for "Will Block?"
+            appendText: `${symbols.idSymbol} ${generateUniqueId(['TODO'])} `,
+        });
+
+    if (!line.includes(symbols.dependsOnSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.dependsOnSymbol} Task is Blocked by ID`,
+            appendText: `${symbols.dependsOnSymbol}`,
+        });
+
     if (!hasPriority(line)) {
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
         const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
@@ -375,6 +398,70 @@ function addRecurrenceSuggestions(
         }
     }
 
+    return results;
+}
+
+/*
+ * If the cursor is located in a section that is followed by a Blocked By Symbol, suggest options
+ * for what to enter as Depend on Option.
+ * It should contain suggestion of Possible Dependant Tasks
+ * of what the user is typing.
+ */
+function addBlockedBySuggestions(
+    line: string,
+    cursorPos: number,
+    settings: Settings,
+    recurrenceSymbol: string,
+    dataviewMode: boolean,
+    // pluginContext: TasksPlugin
+) {
+    const genericSuggestions = ['012345', '543210'];
+
+    //TODO: Figure out how to get all Tasks?
+    //const genericSuggestions = pluginContext.getTasks();
+
+    //Copied from addRecurenceSuggestion (Maybe can be Extracted too Function?)
+    const results: SuggestInfo[] = [];
+    const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
+    if (recurrenceMatch && recurrenceMatch.length >= 1) {
+        const recurrencePrefix = recurrenceMatch[1];
+        const recurrenceString = recurrenceMatch[2];
+
+        // Now to generic predefined suggestions.
+        // If we get a partial match with some of the suggestions (e.g. the user started typing "every d"),
+        // we use that for matches ("every day").
+        // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
+        // a max number.
+        // In the case of recurrence rules, the max number should be small enough to allow users to "escape"
+        // the mode of writing a recurrence rule, i.e. we should leave enough space for component suggestions
+        const minMatch = 1;
+        const maxGenericDateSuggestions = settings.autoSuggestMaxItems / 2;
+        let genericMatches = genericSuggestions
+            .filter(
+                (value) =>
+                    recurrenceString &&
+                    recurrenceString.length >= minMatch &&
+                    value.toLowerCase().includes(recurrenceString.toLowerCase()),
+            )
+            .slice(0, maxGenericDateSuggestions);
+
+        if (genericMatches.length === 0 && recurrenceString.trim().length === 0) {
+            // We have no actual match so do completely generic recurrence suggestions, but not if
+            // there *was* a text to match (because it means the user is actually typing something else)
+            genericMatches = genericSuggestions.slice(0, maxGenericDateSuggestions);
+        }
+
+        for (const match of genericMatches) {
+            results.push({
+                suggestionType: 'match',
+                displayText: `${match}`,
+                appendText: `${recurrencePrefix} ${match} `,
+                insertAt: recurrenceMatch.index,
+                insertSkip: recurrenceMatch[0].length,
+            });
+        }
+    }
     return results;
 }
 
