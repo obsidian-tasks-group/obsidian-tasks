@@ -1,4 +1,3 @@
-import type { Task } from '../Task/Task';
 /**
  * Tasks API v1 interface
  */
@@ -10,10 +9,4 @@ export interface TasksApiV1 {
      * an empty string, if data entry was cancelled.
      */
     createTaskLineModal(): Promise<string>;
-    /**
-     * @param task - task to toggle
-     *
-     * @returns {Promise<Task[]>} A promise that contains the Markdown string for the task entered
-     */
-    toggleTask(task: Task): Promise<Task[]>;
 }
