@@ -1058,6 +1058,22 @@ Result:
 
 
 Input:
+'(description includes "hello world") OR (description includes "42")'
+=>
+Result:
+[
+    "(",
+    "description includes \"hello world",
+    "\"",
+    ") OR (",
+    "description includes \"42",
+    "\")"
+]
+
+--------------------------------------------------------
+
+
+Input:
 '(description includes #context/location1)'
 =>
 Result:

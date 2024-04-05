@@ -844,6 +844,15 @@ Result:
 
 
 Input:
+'(description includes "hello world") OR (description includes "42")'
+=>
+Result:
+malformed boolean query -- Unexpected character: " (check the documentation for guidelines)
+
+--------------------------------------------------------
+
+
+Input:
 '(description includes #context/location1)'
 =>
 Result:
