@@ -147,10 +147,11 @@ export class BooleanField extends Field {
      */
     private helpMessage(line: string, errorMessage: string, parseResult: ParseResult) {
         const filters: { [key: string]: string } = parseResult.filters;
-        let expressions = '';
-        Object.entries(filters).forEach(([key, value]) => {
-            expressions += `    "${key}": "${value}"\n`;
-        });
+        const expressions = Object.entries(filters)
+            .map(([key, value]) => {
+                return `    "${key}": "${value}"`;
+            })
+            .join('\n');
 
         const fullMessage = `Could not interpret the following instruction as a Boolean combination:
     ${line}
@@ -159,7 +160,8 @@ The error message is:
 The instruction was converted to the following simplified line:
     ${parseResult.simplifiedLine}
 Where the sub-expressions in the simplified line are:
-${expressions}`;
+${expressions}
+`;
         return FilterOrErrorMessage.fromError(line, fullMessage);
     }
 
