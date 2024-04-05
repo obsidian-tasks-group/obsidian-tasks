@@ -185,6 +185,13 @@ describe('boolean query - filter', () => {
                             `);
             });
         });
+
+        describe('Mixed delimiters', () => {
+            it.failing('should now allow a mixture of () and "" delimiters any more - breaking change in 7.0.0', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage('(not done) AND "is recurring"');
+                expect(filter.error).toBeDefined();
+            });
+        });
     });
 
     describe('error cases - to show error messages', () => {
