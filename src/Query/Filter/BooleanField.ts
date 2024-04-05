@@ -90,7 +90,7 @@ export class BooleanField extends Field {
         const filters = parseResult.filters;
         try {
             // Convert the (preprocessed) line into a postfix logical expression
-            const postfixExpression = boonParse(simplifiedLine);
+            const postfixExpression: Token[] = boonParse(simplifiedLine);
             // Construct sub-field map, i.e. have subFields include a filter function for every
             // final token in the expression
             for (const token of postfixExpression) {
@@ -101,12 +101,13 @@ export class BooleanField extends Field {
                     if (!(filter in this.subFields)) {
                         const parsedField = parseFilter(filter);
                         if (parsedField === null) {
-                            return this.helpMessage(line, `couldn't parse sub-expression '${filter}'`);
+                            return this.helpMessage(line, `couldn't parse sub-expression '${filter}'`, parseResult);
                         }
                         if (parsedField.error) {
                             return this.helpMessage(
                                 line,
                                 `couldn't parse sub-expression '${filter}': ${parsedField.error}`,
+                                parseResult,
                             );
                         } else if (parsedField.filter) {
                             this.subFields[filter] = parsedField.filter;
@@ -118,10 +119,10 @@ export class BooleanField extends Field {
                     // they are valid. If we won't, then an invalid operator will only be detected when the query is
                     // run on a task
                     if (token.value == undefined) {
-                        return this.helpMessage(line, 'empty operator in boolean query');
+                        return this.helpMessage(line, 'empty operator in boolean query', parseResult);
                     }
                     if (!this.supportedOperators.includes(token.value)) {
-                        return this.helpMessage(line, `unknown boolean operator '${token.value}'`);
+                        return this.helpMessage(line, `unknown boolean operator '${token.value}'`, parseResult);
                     }
                 }
             }
@@ -136,6 +137,7 @@ export class BooleanField extends Field {
             return this.helpMessage(
                 line,
                 `malformed boolean query -- ${message} (check the documentation for guidelines)`,
+                parseResult,
             );
         }
     }
@@ -143,8 +145,22 @@ export class BooleanField extends Field {
     /**
      * Helper to provide useful information to users, when we fail to interpret a Boolean filter.
      */
-    private helpMessage(line: string, errorMessage: string) {
-        return FilterOrErrorMessage.fromError(line, errorMessage);
+    private helpMessage(line: string, errorMessage: string, parseResult: ParseResult) {
+        const filters: { [key: string]: string } = parseResult.filters;
+        let expressions = '';
+        Object.entries(filters).forEach(([key, value]) => {
+            expressions += `    "${key}": "${value}"\n`;
+        });
+
+        const fullMessage = `Could not interpret the following instruction as a Boolean combination:
+    ${line}
+The error message is:
+    ${errorMessage}
+The instruction was converted to the following simplified line:
+    ${parseResult.simplifiedLine}
+Where the sub-expressions in the simplified line are:
+${expressions}`;
+        return FilterOrErrorMessage.fromError(line, fullMessage);
     }
 
     public static preprocessExpressionV2(line: string): ParseResult {

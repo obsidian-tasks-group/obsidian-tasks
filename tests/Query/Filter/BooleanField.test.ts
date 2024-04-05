@@ -160,9 +160,18 @@ describe('boolean query - filter', () => {
                 // This searches for words surrounded by double-quotes:
                 const filter = createValidFilter('(description includes "hello world") OR (description includes "42")');
                 // TODO - Make this pass
-                expect(explanationOrError(filter)).toMatchInlineSnapshot(
-                    '"malformed boolean query -- Unexpected character: " (check the documentation for guidelines)"',
-                );
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                    "Could not interpret the following instruction as a Boolean combination:
+                        (description includes "hello world") OR (description includes "42")
+                    The error message is:
+                        malformed boolean query -- Unexpected character: " (check the documentation for guidelines)
+                    The instruction was converted to the following simplified line:
+                        (f1") OR (f2")
+                    Where the sub-expressions in the simplified line are:
+                        "f1": "description includes "hello world"
+                        "f2": "description includes "42"
+                    "
+                `);
             });
         });
 
@@ -276,7 +285,7 @@ describe('boolean query - filter', () => {
             'should report expected error message: on "%s" - expected "%s"',
             (instruction: string, expectedError: string) => {
                 const filter = new BooleanField().createFilterOrErrorMessage(instruction);
-                expect(filter.error).toStrictEqual(expectedError);
+                expect(filter.error).toContain(expectedError);
             },
         );
 
