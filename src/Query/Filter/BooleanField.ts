@@ -104,7 +104,7 @@ export class BooleanField extends Field {
                             return this.helpMessage(line, `couldn't parse sub-expression '${filter}'`);
                         }
                         if (parsedField.error) {
-                            return FilterOrErrorMessage.fromError(
+                            return this.helpMessage(
                                 line,
                                 `couldn't parse sub-expression '${filter}': ${parsedField.error}`,
                             );
@@ -118,10 +118,10 @@ export class BooleanField extends Field {
                     // they are valid. If we won't, then an invalid operator will only be detected when the query is
                     // run on a task
                     if (token.value == undefined) {
-                        return FilterOrErrorMessage.fromError(line, 'empty operator in boolean query');
+                        return this.helpMessage(line, 'empty operator in boolean query');
                     }
                     if (!this.supportedOperators.includes(token.value)) {
-                        return FilterOrErrorMessage.fromError(line, `unknown boolean operator '${token.value}'`);
+                        return this.helpMessage(line, `unknown boolean operator '${token.value}'`);
                     }
                 }
             }
@@ -133,7 +133,7 @@ export class BooleanField extends Field {
             return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
         } catch (error) {
             const message = error instanceof Error ? error.message : 'unknown error type';
-            return FilterOrErrorMessage.fromError(
+            return this.helpMessage(
                 line,
                 `malformed boolean query -- ${message} (check the documentation for guidelines)`,
             );
