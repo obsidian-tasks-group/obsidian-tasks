@@ -46,7 +46,7 @@ export class BooleanField extends Field {
     // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
     // private readonly basicBooleanRegexp = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
     private readonly basicBooleanRegexp = new RegExp(
-        '(.*(AND|OR|XOR|NOT)\\s*' + openFilter + '.*|' + '\\(' + '.+' + '\\)' + ')',
+        '(.*(AND|OR|XOR|NOT)\\s*' + openFilter + '.*|' + openFilter + '.+' + closeFilter + ')',
         'g',
     );
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
