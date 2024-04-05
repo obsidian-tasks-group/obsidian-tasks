@@ -124,6 +124,25 @@ describe('boolean query - filter', () => {
         });
     });
 
+    describe('delimiters', () => {
+        function explanationOrError(filter: FilterOrErrorMessage) {
+            if (filter.filter) {
+                return filter.filter.explainFilterIndented('');
+            } else {
+                return filter.error;
+            }
+        }
+
+        it('should allow ( and ) as delimiters', () => {
+            const filter = createValidFilter('(description includes #context/location1)');
+            expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                "(description includes #context/location1) =>
+                  description includes #context/location1
+                "
+            `);
+        });
+    });
+
     describe('error cases - to show error messages', () => {
         it.each([
             [
