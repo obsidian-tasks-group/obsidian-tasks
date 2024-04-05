@@ -520,7 +520,7 @@ Availability of access keys:
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('d')}
             />
-            
+
             <!-- --------------------------------------------------------------------------- -->
             <!--  Reminder Date  -->
             <!-- --------------------------------------------------------------------------- -->
