@@ -266,6 +266,10 @@ describe('task line rendering - layout options', () => {
         await testLayoutOptions(['Do exercises #todo #health', ' ⏳ 2023-07-03'], [TaskLayoutComponent.ScheduledDate]);
     });
 
+    it('renders with due date', async () => {
+        await testLayoutOptions(['Do exercises #todo #health', ' 📅 2023-07-04'], [TaskLayoutComponent.DueDate]);
+    });
+
     it('renders with reminder date', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' ⏰ 2023-07-07'], [TaskLayoutComponent.ReminderDate]);
     });
