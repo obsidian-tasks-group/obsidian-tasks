@@ -133,13 +133,48 @@ describe('boolean query - filter', () => {
             }
         }
 
-        it('should allow ( and ) as delimiters', () => {
-            const filter = createValidFilter('(description includes #context/location1)');
-            expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+        describe('( and )', () => {
+            it('should allow ( and ) as delimiters around 1 filter', () => {
+                const filter = createValidFilter('(description includes #context/location1)');
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
                 "(description includes #context/location1) =>
                   description includes #context/location1
                 "
             `);
+            });
+
+            it('should allow ( and ) as delimiters around 2 filters', () => {
+                const filter = createValidFilter(
+                    '(description includes #context/location1) OR (description includes #context/location2)',
+                );
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                "(description includes #context/location1) OR (description includes #context/location2) =>
+                  OR (At least one of):
+                    description includes #context/location1
+                    description includes #context/location2
+                "
+            `);
+            });
+        });
+
+        describe('" and "', () => {
+            it.failing('should allow " and " as delimiters around 1 filter', () => {
+                const filter = createValidFilter('"description includes #context/location1"');
+                expect(explanationOrError(filter)).toMatchInlineSnapshot();
+            });
+
+            it('should allow " and " as delimiters around 2 filters', () => {
+                const filter = createValidFilter(
+                    '"description includes #context/location1" OR "description includes #context/location2"',
+                );
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                ""description includes #context/location1" OR "description includes #context/location2" =>
+                  OR (At least one of):
+                    description includes #context/location1
+                    description includes #context/location2
+                "
+            `);
+            });
         });
     });
 
