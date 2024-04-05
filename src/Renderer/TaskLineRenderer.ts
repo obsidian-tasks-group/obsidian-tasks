@@ -13,7 +13,7 @@ import { StatusMenu } from '../ui/Menus/StatusMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 
 /**
- * The function used to render a Markdown task line into an existing HTML element
+ * The function used to render a Markdown task line into an existing HTML element.
  */
 export type TextRenderer = (
     text: string,
