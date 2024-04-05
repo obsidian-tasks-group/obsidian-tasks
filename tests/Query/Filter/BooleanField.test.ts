@@ -253,6 +253,15 @@ describe('boolean query - explain', () => {
 });
 
 describe('boolean query - exhaustive tests', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2024-03-28'));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     it('preprocess', () => {
         verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpressionV1);
     });
