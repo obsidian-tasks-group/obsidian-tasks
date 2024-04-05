@@ -101,7 +101,7 @@ export class BooleanField extends Field {
                     if (!(filter in this.subFields)) {
                         const parsedField = parseFilter(filter);
                         if (parsedField === null) {
-                            return FilterOrErrorMessage.fromError(line, `couldn't parse sub-expression '${filter}'`);
+                            return this.helpMessage(line, `couldn't parse sub-expression '${filter}'`);
                         }
                         if (parsedField.error) {
                             return FilterOrErrorMessage.fromError(
@@ -138,6 +138,13 @@ export class BooleanField extends Field {
                 `malformed boolean query -- ${message} (check the documentation for guidelines)`,
             );
         }
+    }
+
+    /**
+     * Helper to provide useful information to users, when we fail to interpret a Boolean filter.
+     */
+    private helpMessage(line: string, errorMessage: string) {
+        return FilterOrErrorMessage.fromError(line, errorMessage);
     }
 
     public static preprocessExpressionV2(line: string): ParseResult {
