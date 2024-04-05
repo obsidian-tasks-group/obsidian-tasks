@@ -99,7 +99,7 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
     });
 
-    it.failing('should recognize task details with reminder date time set', () => {
+    it('should recognize task details with reminder date time set', () => {
         const taskLine = '- [ ] reminder date time is set ⏰ 2024-12-10 10:17';
         const path = 'a/b/c.md';
 

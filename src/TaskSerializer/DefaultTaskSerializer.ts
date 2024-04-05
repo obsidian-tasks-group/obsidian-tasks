@@ -4,6 +4,7 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { isDateTime } from '../Scripting/TasksDate';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}
@@ -107,7 +108,11 @@ function symbolAndDateValue(shortMode: boolean, symbol: string, date: moment.Mom
     // We could call symbolAndStringValue() to remove a little code repetition,
     // but doing so would do some wasted date-formatting when in 'short mode',
     // so instead we repeat the check on shortMode value.
-    return shortMode ? ' ' + symbol : ` ${symbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
+    return shortMode
+        ? ' ' + symbol
+        : ` ${symbol} ${date.format(
+              isDateTime(date) ? TaskRegularExpressions.dateTimeFormat : TaskRegularExpressions.dateFormat,
+          )}`;
 }
 
 export function allTaskPluginEmojis() {
