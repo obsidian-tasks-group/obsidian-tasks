@@ -44,7 +44,6 @@ const openAndCloseFilterChars = '()"';
 export class BooleanField extends Field {
     // First pattern in this matches conventional (filter1) OR (filter2) and similar
     // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
-    // private readonly basicBooleanRegexp = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
     private readonly basicBooleanRegexp = new RegExp(
         '(.*(AND|OR|XOR|NOT)\\s*' + openFilter + '.*|' + openFilter + '.+' + closeFilter + ')',
         'g',
