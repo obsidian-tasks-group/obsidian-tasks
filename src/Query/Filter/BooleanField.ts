@@ -87,7 +87,7 @@ export class BooleanField extends Field {
      * @private
      */
     private parseLineV2(line: string) {
-        const delimiters = new BooleanDelimiters();
+        const delimiters = new BooleanDelimiters('("', ')"', '()"');
         const parseResult = BooleanField.preprocessExpressionV2(line, delimiters);
         const simplifiedLine = parseResult.simplifiedLine;
         const filters = parseResult.filters;

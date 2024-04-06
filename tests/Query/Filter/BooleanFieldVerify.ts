@@ -230,7 +230,7 @@ export function verifyBooleanExpressionPreprocessing(fn: (text: string, delimite
 
         let result: string = '';
         try {
-            result = JSON.stringify(fn(input, new BooleanDelimiters()), null, 4);
+            result = JSON.stringify(fn(input, new BooleanDelimiters('("', ')"', '()"')), null, 4);
         } catch (e) {
             result = errorMessageForException('Parsing expression', e);
         }
