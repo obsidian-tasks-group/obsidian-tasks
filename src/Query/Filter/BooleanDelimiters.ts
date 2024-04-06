@@ -3,15 +3,19 @@ export function anyOfTheseChars(allowedChars: string): string {
 }
 
 export class BooleanDelimiters {
-    public readonly openFilterChars = '("';
+    public readonly openFilterChars;
     public readonly openFilter;
 
-    public readonly closeFilterChars = ')"';
+    public readonly closeFilterChars;
     public readonly closeFilter;
 
-    public readonly openAndCloseFilterChars = '()"';
+    public readonly openAndCloseFilterChars;
 
     constructor() {
+        this.openFilterChars = '("';
+        this.closeFilterChars = ')"';
+        this.openAndCloseFilterChars = '()"';
+
         this.openFilter = anyOfTheseChars(this.openFilterChars);
         this.closeFilter = anyOfTheseChars(this.closeFilterChars);
     }
