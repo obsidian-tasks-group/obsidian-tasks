@@ -1,5 +1,5 @@
-import { parse as boonParse } from 'boon-js';
 import type { PostfixExpression } from 'boon-js';
+import { parse as boonParse } from 'boon-js';
 import type { Token } from 'boon-js/lib/types';
 
 import { parseFilter } from '../FilterParser';
@@ -9,25 +9,12 @@ import type { SearchInfo } from '../SearchInfo';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
+import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
 
 export type ParseResult = {
     simplifiedLine: string;
     filters: { [key: string]: string };
 };
-
-function anyOfTheseChars(allowedChars: string): string {
-    return new RegExp('[' + allowedChars + ']').source;
-}
-
-export class BooleanDelimiters {
-    public readonly openFilterChars = '("';
-    public readonly openFilter = anyOfTheseChars(this.openFilterChars);
-
-    public readonly closeFilterChars = ')"';
-    public readonly closeFilter = anyOfTheseChars(this.closeFilterChars);
-
-    public readonly openAndCloseFilterChars = '()"';
-}
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of

@@ -1,6 +1,7 @@
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { errorMessageForException } from '../../../src/lib/ExceptionTools';
-import { BooleanDelimiters, BooleanField } from '../../../src/Query/Filter/BooleanField';
+import { BooleanField } from '../../../src/Query/Filter/BooleanField';
+import { BooleanDelimiters } from '../../../src/Query/Filter/BooleanDelimiters';
 
 export const inputs = `
 (not done) AND (is recurring)
