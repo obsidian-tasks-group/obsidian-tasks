@@ -19,13 +19,13 @@ function anyOfTheseChars(allowedChars: string): string {
     return new RegExp('[' + allowedChars + ']').source;
 }
 
-const openFilterChars = '("';
-const openFilter = anyOfTheseChars(openFilterChars);
+const delimiters_dot_openFilterChars = '("';
+const delimiters_dot_openFilter = anyOfTheseChars(delimiters_dot_openFilterChars);
 
-const closeFilterChars = ')"';
-const closeFilter = anyOfTheseChars(closeFilterChars);
+const delimiters_dot_closeFilterChars = ')"';
+const delimiters_dot_closeFilter = anyOfTheseChars(delimiters_dot_closeFilterChars);
 
-const openAndCloseFilterChars = '()"';
+const delimiters_dot_openAndCloseFilterChars = '()"';
 
 class BooleanDelimiters {
     public readonly openFilterChars = '("';
@@ -209,7 +209,11 @@ ${expressions}
         //   ')  AND  NOT  ('
         // TODO Review all uses of space character in these regular expressions, and use \s instead:
         const binaryOperatorsRegex = new RegExp(
-            '(' + closeFilter + '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' + openFilter + ')',
+            '(' +
+                delimiters_dot_closeFilter +
+                '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' +
+                delimiters_dot_openFilter +
+                ')',
             'g',
         );
 
@@ -223,7 +227,7 @@ ${expressions}
         //   'NOT ('
         //   'NOT  ('
         // TODO Ensure that NOT is at the start of a word - and perhaps is preceded by spaces.
-        const unaryOperatorsRegex = new RegExp('(NOT\\s*' + openFilter + ')', 'g');
+        const unaryOperatorsRegex = new RegExp('(NOT\\s*' + delimiters_dot_openFilter + ')', 'g');
 
         // Divide up the divided components, this time splitting at unary operator boundaries.
         // flatMap() divides and then flattens the result.
@@ -235,9 +239,13 @@ ${expressions}
         // All that remains now is to separate:
         // - any spaces and opening parentheses at the start of filters
         // - any spaces and close   parentheses at the end of filters
-        const openingParensAndSpacesAtStartRegex = new RegExp('(^' + anyOfTheseChars(openFilterChars + ' ') + '*)');
+        const openingParensAndSpacesAtStartRegex = new RegExp(
+            '(^' + anyOfTheseChars(delimiters_dot_openFilterChars + ' ') + '*)',
+        );
 
-        const closingParensAndSpacesAtEndRegex = new RegExp('(' + anyOfTheseChars(closeFilterChars + ' ') + '*$)');
+        const closingParensAndSpacesAtEndRegex = new RegExp(
+            '(' + anyOfTheseChars(delimiters_dot_closeFilterChars + ' ') + '*$)',
+        );
 
         return substringsSplitAtOperatorBoundaries
             .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
@@ -273,13 +281,17 @@ ${expressions}
         // These *could* be inlined, but their variable names add meaning.
         // TODO Simplify the expressions
         // TODO Clarify the variable names
-        const onlySpacesAndParentheses = new RegExp('^' + anyOfTheseChars(' ' + openAndCloseFilterChars) + '+$');
+        const onlySpacesAndParentheses = new RegExp(
+            '^' + anyOfTheseChars(' ' + delimiters_dot_openAndCloseFilterChars) + '+$',
+        );
 
-        const binaryOperatorAndParentheses = new RegExp('^ *' + closeFilter + ' *(AND|OR|XOR) *' + openFilter + ' *$');
+        const binaryOperatorAndParentheses = new RegExp(
+            '^ *' + delimiters_dot_closeFilter + ' *(AND|OR|XOR) *' + delimiters_dot_openFilter + ' *$',
+        );
 
-        const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + openFilter + '$');
+        const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + delimiters_dot_openFilter + '$');
 
-        const remnantsOfNot = new RegExp('^' + closeFilter + ' *(AND|OR|XOR)$');
+        const remnantsOfNot = new RegExp('^' + delimiters_dot_closeFilter + ' *(AND|OR|XOR)$');
 
         const justOperators = /^(AND|OR|XOR|NOT)$/;
 
