@@ -1,4 +1,5 @@
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { Query } from '../../src/Query/Query';
 import { TaskLocation } from '../../src/Task/TaskLocation';
@@ -78,7 +79,7 @@ export function shouldSupportFiltering(
         (taskLine) =>
             Task.fromLine({
                 line: taskLine,
-                taskLocation: TaskLocation.fromUnknownPosition(''),
+                taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('')),
                 fallbackDate: null, // For tests scheduled date needs to be set explicitly
             }) as Task,
     );

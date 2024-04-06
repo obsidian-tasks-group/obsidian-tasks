@@ -33,7 +33,7 @@ describe('TaskLocation', () => {
         const path = 'a/b/c.md';
 
         // Act
-        const taskLocation = TaskLocation.fromUnknownPosition(path);
+        const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile(path));
 
         // Assert
         expect(taskLocation.path).toStrictEqual(path);
@@ -71,7 +71,7 @@ describe('TaskLocation', () => {
     });
 
     it('should recognise unknown paths', () => {
-        expect(TaskLocation.fromUnknownPosition('x.md').hasKnownPath).toBe(true);
-        expect(TaskLocation.fromUnknownPosition('').hasKnownPath).toBe(false);
+        expect(TaskLocation.fromUnknownPosition(new TasksFile('x.md')).hasKnownPath).toBe(true);
+        expect(TaskLocation.fromUnknownPosition(new TasksFile('')).hasKnownPath).toBe(false);
     });
 });

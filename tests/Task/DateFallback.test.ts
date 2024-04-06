@@ -3,6 +3,7 @@
  */
 import type { Moment } from 'moment';
 import moment from 'moment';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { DateFallback } from '../../src/Task/DateFallback';
@@ -185,7 +186,7 @@ describe('extract date from filename', () => {
 function constructTaskFromLine(line: string, fallbackDate: string | null) {
     return Task.fromLine({
         line,
-        taskLocation: TaskLocation.fromUnknownPosition('file.md'), // filename must be parsed before calling Task.fromLine, so irrelevant for these tests
+        taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('file.md')), // filename must be parsed before calling Task.fromLine, so irrelevant for these tests
         fallbackDate: date(fallbackDate),
     });
 }
