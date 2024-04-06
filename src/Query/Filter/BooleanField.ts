@@ -78,16 +78,16 @@ export class BooleanField extends Field {
         if (line.length === 0) {
             return FilterOrErrorMessage.fromError(line, 'empty line');
         }
-        return this.parseLineV2(line);
+        return this.parseLineV2(line, new BooleanDelimiters('("', ')"', '()"'));
     }
 
     /**
      * New Boolean filter parser
      * @param line
+     * @param delimiters
      * @private
      */
-    private parseLineV2(line: string) {
-        const delimiters = new BooleanDelimiters('("', ')"', '()"');
+    private parseLineV2(line: string, delimiters: BooleanDelimiters) {
         const parseResult = BooleanField.preprocessExpressionV2(line, delimiters);
         const simplifiedLine = parseResult.simplifiedLine;
         const filters = parseResult.filters;
