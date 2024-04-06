@@ -278,6 +278,7 @@ export class Cache {
         fileCache: CachedMetadata,
         file: TFile,
     ): Task[] {
+        const tasksFile = new TasksFile(file.path);
         const tasks: Task[] = [];
         const fileLines = fileContent.split('\n');
         const linesInFile = fileLines.length;
@@ -334,7 +335,7 @@ export class Cache {
                     task = Task.fromLine({
                         line,
                         taskLocation: new TaskLocation(
-                            new TasksFile(file.path),
+                            tasksFile,
                             lineNumber,
                             currentSection.position.start.line,
                             sectionIndex,
