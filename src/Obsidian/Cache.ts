@@ -2,6 +2,7 @@ import { MetadataCache, Notice, TAbstractFile, TFile, Vault } from 'obsidian';
 import type { CachedMetadata, EventRef } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
+import { TasksFile } from '../Scripting/TasksFile';
 
 import { Task } from '../Task/Task';
 import { DateFallback } from '../Task/DateFallback';
@@ -334,6 +335,7 @@ export class Cache {
                         line,
                         taskLocation: new TaskLocation(
                             file.path,
+                            new TasksFile(file.path),
                             lineNumber,
                             currentSection.position.start.line,
                             sectionIndex,

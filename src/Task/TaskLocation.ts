@@ -14,13 +14,14 @@ export class TaskLocation {
 
     public constructor(
         path: string,
+        tasksFile: TasksFile,
         lineNumber: number,
         sectionStart: number,
         sectionIndex: number,
         precedingHeader: string | null,
     ) {
         this._path = path;
-        this.tasksFile = new TasksFile(path);
+        this.tasksFile = tasksFile;
         this._lineNumber = lineNumber;
         this._sectionStart = sectionStart;
         this._sectionIndex = sectionIndex;
@@ -32,7 +33,7 @@ export class TaskLocation {
      * @param path
      */
     public static fromUnknownPosition(path: string): TaskLocation {
-        return new TaskLocation(path, 0, 0, 0, null);
+        return new TaskLocation(path, new TasksFile(path), 0, 0, 0, null);
     }
 
     /**
@@ -40,7 +41,14 @@ export class TaskLocation {
      * @param newPath
      */
     fromRenamedFile(newPath: string) {
-        return new TaskLocation(newPath, this.lineNumber, this.sectionStart, this.sectionIndex, this.precedingHeader);
+        return new TaskLocation(
+            newPath,
+            new TasksFile(newPath),
+            this.lineNumber,
+            this.sectionStart,
+            this.sectionIndex,
+            this.precedingHeader,
+        );
     }
 
     public get path(): string {
