@@ -26,7 +26,7 @@ export function makeDefaultSuggestionBuilder(
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
      */
-    return (line: string, cursorPos: number, settings: Settings): SuggestInfo[] => {
+    return (line: string, cursorPos: number, settings: Settings, pluginContext: TasksPlugin): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
 
         // Step 1: add date suggestions if relevant
@@ -41,7 +41,14 @@ export function makeDefaultSuggestionBuilder(
 
         // Step 3: add dependecy suggestions
         suggestions = suggestions.concat(
-            addBlockedBySuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, dataviewMode),
+            addBlockedBySuggestions(
+                line,
+                cursorPos,
+                settings,
+                symbols.dependsOnSymbol,
+                // dataviewMode,
+                pluginContext.getTasks()!,
+            ),
         );
 
         // Step 4: add task property suggestions ('due', 'recurrence' etc)
@@ -412,13 +419,11 @@ function addBlockedBySuggestions(
     cursorPos: number,
     settings: Settings,
     recurrenceSymbol: string,
-    dataviewMode: boolean,
-    // pluginContext: TasksPlugin
+    // dataviewMode: boolean,
+    allTasks: Task[],
 ) {
-    const genericSuggestions = ['012345', '543210'];
-
     //TODO: Figure out how to get all Tasks?
-    //const genericSuggestions = pluginContext.getTasks();
+    // genericSuggestions : Task[] = pluginContext.getTasks()!
 
     //Copied from addRecurenceSuggestion (Maybe can be Extracted too Function?)
     const results: SuggestInfo[] = [];
@@ -437,26 +442,26 @@ function addBlockedBySuggestions(
         // the mode of writing a recurrence rule, i.e. we should leave enough space for component suggestions
         const minMatch = 1;
         const maxGenericDateSuggestions = settings.autoSuggestMaxItems / 2;
-        let genericMatches = genericSuggestions
+        let genericMatches = allTasks
             .filter(
                 (value) =>
                     recurrenceString &&
                     recurrenceString.length >= minMatch &&
-                    value.toLowerCase().includes(recurrenceString.toLowerCase()),
+                    value.description.toLowerCase().includes(recurrenceString.toLowerCase()),
             )
             .slice(0, maxGenericDateSuggestions);
 
         if (genericMatches.length === 0 && recurrenceString.trim().length === 0) {
             // We have no actual match so do completely generic recurrence suggestions, but not if
             // there *was* a text to match (because it means the user is actually typing something else)
-            genericMatches = genericSuggestions.slice(0, maxGenericDateSuggestions);
+            genericMatches = allTasks.slice(0, maxGenericDateSuggestions);
         }
 
         for (const match of genericMatches) {
             results.push({
                 suggestionType: 'match',
-                displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match} `,
+                displayText: `${match.description}`,
+                appendText: `${recurrencePrefix} ${match.id} `,
                 insertAt: recurrenceMatch.index,
                 insertSkip: recurrenceMatch[0].length,
             });
@@ -570,11 +575,11 @@ export function lastOpenBracket(
  *   * {@link fn}`(line, cursorPos, settings)` otherwise
  */
 export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [string, string][]): SuggestionBuilder {
-    return (line, cursorPos, settings): SuggestInfo[] => {
+    return (line, cursorPos, settings, pluginContext): SuggestInfo[] => {
         if (!isAnyBracketOpen(line.slice(0, cursorPos), brackets)) {
             return [];
         }
-        return fn(line, cursorPos, settings);
+        return fn(line, cursorPos, settings, pluginContext);
     };
 }
 

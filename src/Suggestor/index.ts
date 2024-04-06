@@ -1,3 +1,4 @@
+import type TasksPlugin from 'main';
 import type { Settings } from '../Config/Settings';
 
 /*
@@ -20,4 +21,9 @@ export type SuggestInfo = {
 /*
  * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
  */
-export type SuggestionBuilder = (line: string, cursorPos: number, settings: Settings) => SuggestInfo[];
+export type SuggestionBuilder = (
+    line: string,
+    cursorPos: number,
+    settings: Settings,
+    pluginContext: TasksPlugin,
+) => SuggestInfo[];
