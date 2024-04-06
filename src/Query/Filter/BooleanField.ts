@@ -38,7 +38,7 @@ export class BooleanField extends Field {
     constructor() {
         super();
 
-        const delimiters = new BooleanDelimiters();
+        const delimiters = BooleanDelimiters.allSupportedDelimiters();
         // First pattern in this matches conventional (filter1) OR (filter2) and similar
         // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
         this.basicBooleanRegexp = new RegExp(
