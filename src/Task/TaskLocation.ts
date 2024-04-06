@@ -1,9 +1,12 @@
+import { TasksFile } from '../Scripting/TasksFile';
+
 /**
  * TaskLocation is the place where all information about a task line's location
  * in a markdown file is stored, so that testable algorithms can then be added here.
  */
 export class TaskLocation {
     private readonly _path: string;
+    public readonly tasksFile: TasksFile;
     private readonly _lineNumber: number;
     private readonly _sectionStart: number;
     private readonly _sectionIndex: number;
@@ -17,6 +20,7 @@ export class TaskLocation {
         precedingHeader: string | null,
     ) {
         this._path = path;
+        this.tasksFile = new TasksFile(path);
         this._lineNumber = lineNumber;
         this._sectionStart = sectionStart;
         this._sectionIndex = sectionIndex;

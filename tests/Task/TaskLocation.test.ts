@@ -14,6 +14,7 @@ describe('TaskLocation', () => {
 
         // Assert
         expect(taskLocation.path).toStrictEqual(path);
+        expect(taskLocation.tasksFile.path).toStrictEqual(path);
         expect(taskLocation.lineNumber).toStrictEqual(lineNumber);
         expect(taskLocation.sectionStart).toStrictEqual(sectionStart);
         expect(taskLocation.sectionIndex).toStrictEqual(sectionIndex);
