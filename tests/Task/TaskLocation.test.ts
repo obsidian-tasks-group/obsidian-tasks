@@ -1,3 +1,4 @@
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 
 describe('TaskLocation', () => {
@@ -10,7 +11,14 @@ describe('TaskLocation', () => {
         const precedingHeader = 'My Header';
 
         // Act
-        const taskLocation = new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const taskLocation = new TaskLocation(
+            path,
+            new TasksFile(path),
+            lineNumber,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        );
 
         // Assert
         expect(taskLocation.path).toStrictEqual(path);
@@ -43,7 +51,14 @@ describe('TaskLocation', () => {
         const sectionStart = 13;
         const sectionIndex = 10;
         const precedingHeader = 'My Previous Header';
-        const taskLocation = new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const taskLocation = new TaskLocation(
+            path,
+            new TasksFile(path),
+            lineNumber,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        );
 
         // Act
         const newPath = 'd/e/f.md';
