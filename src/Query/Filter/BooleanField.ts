@@ -156,16 +156,22 @@ export class BooleanField extends Field {
             })
             .join('\n');
 
-        const fullMessage = `Could not interpret the following instruction as a Boolean combination:
-    ${line}
-The error message is:
-    ${errorMessage}
+        const fullMessage =
+            this.helpMessageFromSimpleError(line, errorMessage) +
+            `
 The instruction was converted to the following simplified line:
     ${parseResult.simplifiedLine}
 Where the sub-expressions in the simplified line are:
 ${expressions}
 `;
         return FilterOrErrorMessage.fromError(line, fullMessage);
+    }
+
+    private helpMessageFromSimpleError(line: string, errorMessage: string) {
+        return `Could not interpret the following instruction as a Boolean combination:
+    ${line}
+The error message is:
+    ${errorMessage}`;
     }
 
     public static preprocessExpressionV2(line: string, delimiters: BooleanDelimiters): ParseResult {
