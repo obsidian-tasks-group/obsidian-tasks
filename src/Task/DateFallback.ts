@@ -115,7 +115,7 @@ export class DateFallback {
 
         return new Task({
             ...task,
-            taskLocation: task.taskLocation.fromRenamedFile(newPath, new TasksFile(newPath)),
+            taskLocation: task.taskLocation.fromRenamedFile(new TasksFile(newPath)),
             scheduledDate,
             scheduledDateIsInferred,
         });

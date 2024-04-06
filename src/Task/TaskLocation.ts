@@ -35,10 +35,9 @@ export class TaskLocation {
 
     /**
      * Constructor, for when the file has been renamed, and all other data remains the same.
-     * @param _newPath
      * @param tasksFile
      */
-    fromRenamedFile(_newPath: string, tasksFile: TasksFile) {
+    fromRenamedFile(tasksFile: TasksFile) {
         return new TaskLocation(tasksFile, this.lineNumber, this.sectionStart, this.sectionIndex, this.precedingHeader);
     }
 

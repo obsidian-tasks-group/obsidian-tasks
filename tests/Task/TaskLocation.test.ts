@@ -60,7 +60,7 @@ describe('TaskLocation', () => {
 
         // Act
         const newPath = 'd/e/f.md';
-        const newLocation = taskLocation.fromRenamedFile(newPath, new TasksFile(newPath));
+        const newLocation = taskLocation.fromRenamedFile(new TasksFile(newPath));
 
         // Assert
         expect(newLocation.path).toStrictEqual(newPath);
