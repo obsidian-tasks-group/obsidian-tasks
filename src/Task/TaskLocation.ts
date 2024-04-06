@@ -5,7 +5,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
  * in a markdown file is stored, so that testable algorithms can then be added here.
  */
 export class TaskLocation {
-    public readonly tasksFile: TasksFile;
+    private readonly _tasksFile: TasksFile;
     private readonly _lineNumber: number;
     private readonly _sectionStart: number;
     private readonly _sectionIndex: number;
@@ -18,7 +18,7 @@ export class TaskLocation {
         sectionIndex: number,
         precedingHeader: string | null,
     ) {
-        this.tasksFile = tasksFile;
+        this._tasksFile = tasksFile;
         this._lineNumber = lineNumber;
         this._sectionStart = sectionStart;
         this._sectionIndex = sectionIndex;
@@ -47,8 +47,12 @@ export class TaskLocation {
         );
     }
 
+    public get tasksFile(): TasksFile {
+        return this._tasksFile;
+    }
+
     public get path(): string {
-        return this.tasksFile.path;
+        return this._tasksFile.path;
     }
 
     public get lineNumber(): number {
