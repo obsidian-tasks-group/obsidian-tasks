@@ -262,7 +262,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             if (!this.query.queryLayoutOptions.hideEditButton) {
                 // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
-                this.addEditButton(extrasSpan, task, this.plugin.getTasks()!);
+                this.addEditButton(extrasSpan, task, this.plugin.getTasks());
             }
 
             if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {

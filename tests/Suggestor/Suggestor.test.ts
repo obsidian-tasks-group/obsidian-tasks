@@ -4,6 +4,7 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
+import type { Task } from 'Task/Task';
 import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
 import {
@@ -67,7 +68,7 @@ describe.each([
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] ';
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings);
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings, [] as Task[]);
         verifyAsJson(suggestions);
     });
 
@@ -75,7 +76,7 @@ describe.each([
         // Arrange
         const originalSettings = getSettings();
         const line = `- [ ] some task ${dueDateSymbol}`;
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 17, originalSettings);
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 17, originalSettings, [] as Task[]);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
         expect(suggestions.length).toEqual(6);
@@ -85,7 +86,7 @@ describe.each([
         // Arrange
         const originalSettings = getSettings();
         const line = `- [ ] some task ${dueDateSymbol} to`;
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 20, originalSettings);
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 20, originalSettings, [] as Task[]);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
     });
@@ -94,7 +95,7 @@ describe.each([
         // Arrange
         const originalSettings = getSettings();
         const line = `- [ ] some task ${recurrenceSymbol}`;
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 17, originalSettings);
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 17, originalSettings, [] as Task[]);
         expect(suggestions[0].displayText).toEqual('every');
         expect(suggestions[1].displayText).toEqual('every day');
         expect(suggestions[2].displayText).toEqual('every week');
@@ -104,7 +105,7 @@ describe.each([
         // Arrange
         const originalSettings = getSettings();
         const line = `- [ ] some task ${recurrenceSymbol} every w`;
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 25, originalSettings);
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 25, originalSettings, [] as Task[]);
         expect(suggestions[0].displayText).toEqual('every week');
         expect(suggestions[1].displayText).toEqual('every week on Sunday');
         expect(suggestions[2].displayText).toEqual('every week on Monday');
@@ -115,10 +116,10 @@ describe.each([
         const originalSettings = getSettings();
         originalSettings.autoSuggestMinMatch = 2;
         let line = `- [ ] some task ${recurrenceSymbol} e`;
-        let suggestions: SuggestInfo[] = buildSuggestions(line, 19, originalSettings);
+        let suggestions: SuggestInfo[] = buildSuggestions(line, 19, originalSettings, [] as Task[]);
         expect(suggestions.length).toEqual(0);
         line = `- [ ] some task ${recurrenceSymbol} ev`;
-        suggestions = buildSuggestions(line, 20, originalSettings);
+        suggestions = buildSuggestions(line, 20, originalSettings, [] as Task[]);
         expect(suggestions[0].displayText).toEqual('every');
         expect(suggestions[1].displayText).toEqual('every day');
     });
@@ -127,11 +128,11 @@ describe.each([
         // Arrange
         const originalSettings = getSettings();
         let line = '- [ ] some task cr';
-        let suggestions: SuggestInfo[] = buildSuggestions(line, 18, originalSettings);
+        let suggestions: SuggestInfo[] = buildSuggestions(line, 18, originalSettings, [] as Task[]);
         expect(suggestions[0].displayText).toEqual(`${createdDateSymbol} created today (2022-07-11)`);
 
         line = '- [ ] some task tod';
-        suggestions = buildSuggestions(line, 19, originalSettings);
+        suggestions = buildSuggestions(line, 19, originalSettings, [] as Task[]);
         if (name === 'emoji') {
             // The first suggestion is new line
             expect(suggestions[0].suggestionType).toEqual('empty');
@@ -159,7 +160,7 @@ describe.each([
         ];
         const markdownTable = new MarkdownTable(['Searchable Text', 'Text that is added']);
         for (const line of lines) {
-            const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings);
+            const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, [] as Task[]);
             for (const suggestion of suggestions) {
                 // The 'new line' replacement adds a trailing space at the end of a line,
                 // which causes auto-formatting to then make the test fail.
@@ -193,43 +194,43 @@ describe('onlySuggestIfBracketOpen', () => {
 
     it('should suggest if cursor at end of line with an open pair', () => {
         const settings = getSettings();
-        let suggestions = buildSuggestions(...cursorPosition('(hello world|'), settings);
+        let suggestions = buildSuggestions(...cursorPosition('(hello world|'), settings, [] as Task[]);
         expect(suggestions).not.toEqual(emptySuggestion);
 
-        suggestions = buildSuggestions(...cursorPosition('[hello world|'), settings);
+        suggestions = buildSuggestions(...cursorPosition('[hello world|'), settings, [] as Task[]);
         expect(suggestions).not.toEqual(emptySuggestion);
     });
 
     it('should suggest if cursor at end of line with an nested open pairs', () => {
         const settings = getSettings();
-        let suggestions = buildSuggestions(...cursorPosition('(((hello world))|'), settings);
+        let suggestions = buildSuggestions(...cursorPosition('(((hello world))|'), settings, [] as Task[]);
         expect(suggestions).not.toEqual(emptySuggestion);
 
-        suggestions = buildSuggestions(...cursorPosition('[[[hello world]]|'), settings);
+        suggestions = buildSuggestions(...cursorPosition('[[[hello world]]|'), settings, [] as Task[]);
         expect(suggestions).not.toEqual(emptySuggestion);
     });
 
     it('should suggest if cursor in middle of closed pair', () => {
         const settings = getSettings();
-        let suggestions = buildSuggestions(...cursorPosition('(hello world|)'), settings);
+        let suggestions = buildSuggestions(...cursorPosition('(hello world|)'), settings, [] as Task[]);
         expect(suggestions).not.toEqual(emptySuggestion);
 
-        suggestions = buildSuggestions(...cursorPosition('[hello world|]'), settings);
+        suggestions = buildSuggestions(...cursorPosition('[hello world|]'), settings, [] as Task[]);
         expect(suggestions).not.toEqual(emptySuggestion);
     });
 
     it('should suggest if there is an opening bracket after many closing brackets', () => {
-        const suggestions = buildSuggestions(...cursorPosition(']]]]]]](hello|'), getSettings());
+        const suggestions = buildSuggestions(...cursorPosition(']]]]]]](hello|'), getSettings(), [] as Task[]);
         expect(suggestions).not.toEqual(emptySuggestion);
     });
 
     it('should not suggest on an empty line', () => {
-        const suggestions = buildSuggestions(...cursorPosition('|'), getSettings());
+        const suggestions = buildSuggestions(...cursorPosition('|'), getSettings(), [] as Task[]);
         expect(suggestions).toEqual(emptySuggestion);
     });
 
     it("should not suggest if there's no open bracket at cursor position", () => {
-        const suggestions = buildSuggestions(...cursorPosition('(hello world)|'), getSettings());
+        const suggestions = buildSuggestions(...cursorPosition('(hello world)|'), getSettings(), [] as Task[]);
         expect(suggestions).toEqual(emptySuggestion);
     });
 });

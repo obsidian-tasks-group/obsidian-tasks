@@ -1,4 +1,3 @@
-import type TasksPlugin from 'main';
 import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
@@ -26,7 +25,7 @@ export function makeDefaultSuggestionBuilder(
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
      */
-    return (line: string, cursorPos: number, settings: Settings, pluginContext: TasksPlugin): SuggestInfo[] => {
+    return (line: string, cursorPos: number, settings: Settings, allTasks: Task[]): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
 
         // Step 1: add date suggestions if relevant
@@ -47,7 +46,7 @@ export function makeDefaultSuggestionBuilder(
                 settings,
                 symbols.dependsOnSymbol,
                 // dataviewMode,
-                pluginContext.getTasks()!,
+                allTasks!,
             ),
         );
 

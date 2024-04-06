@@ -1,4 +1,4 @@
-import type TasksPlugin from 'main';
+import type { Task } from 'Task/Task';
 import type { Settings } from '../Config/Settings';
 
 /*
@@ -25,5 +25,5 @@ export type SuggestionBuilder = (
     line: string,
     cursorPos: number,
     settings: Settings,
-    pluginContext: TasksPlugin,
+    allTasks: Task[],
 ) => SuggestInfo[];
