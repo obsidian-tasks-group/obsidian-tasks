@@ -19,14 +19,6 @@ function anyOfTheseChars(allowedChars: string): string {
     return new RegExp('[' + allowedChars + ']').source;
 }
 
-const delimiters_dot_openFilterChars = '("';
-const delimiters_dot_openFilter = anyOfTheseChars(delimiters_dot_openFilterChars);
-
-const delimiters_dot_closeFilterChars = ')"';
-const delimiters_dot_closeFilter = anyOfTheseChars(delimiters_dot_closeFilterChars);
-
-const delimiters_dot_openAndCloseFilterChars = '()"';
-
 export class BooleanDelimiters {
     public readonly openFilterChars = '("';
     public readonly openFilter = anyOfTheseChars(this.openFilterChars);
@@ -185,7 +177,7 @@ ${expressions}
 
     public static preprocessExpressionV2(line: string, delimiters: BooleanDelimiters): ParseResult {
         const parts = BooleanField.splitLine(line, delimiters);
-        return BooleanField.getFiltersAndSimplifiedLine(parts);
+        return BooleanField.getFiltersAndSimplifiedLine(parts, delimiters);
     }
 
     public static splitLine(line: string, delimiters: BooleanDelimiters) {
@@ -249,7 +241,7 @@ ${expressions}
             .filter((substring) => substring !== '');
     }
 
-    private static getFiltersAndSimplifiedLine(parts: string[]) {
+    private static getFiltersAndSimplifiedLine(parts: string[], delimiters: BooleanDelimiters) {
         // Holds the reconstructed expression with placeholders
         let simplifiedLine = '';
         let currentIndex = 1; // Placeholder index starts at 1
@@ -258,7 +250,7 @@ ${expressions}
         // Loop to add placeholders-for-filters or operators to the simplifiedLine
         parts.forEach((part, _index) => {
             // Check if the part is an operator by matching against the regex without surrounding parentheses
-            if (!BooleanField.isAFilter(part)) {
+            if (!BooleanField.isAFilter(part, delimiters)) {
                 // It's an operator, space or parenthesis, so add it directly to the simplifiedLine
                 simplifiedLine += `${part}`;
             } else {
@@ -273,21 +265,21 @@ ${expressions}
         return { simplifiedLine, filters };
     }
 
-    private static isAFilter(part: string) {
+    private static isAFilter(part: string, delimiters: BooleanDelimiters) {
         // These *could* be inlined, but their variable names add meaning.
         // TODO Simplify the expressions
         // TODO Clarify the variable names
         const onlySpacesAndParentheses = new RegExp(
-            '^' + anyOfTheseChars(' ' + delimiters_dot_openAndCloseFilterChars) + '+$',
+            '^' + anyOfTheseChars(' ' + delimiters.openAndCloseFilterChars) + '+$',
         );
 
         const binaryOperatorAndParentheses = new RegExp(
-            '^ *' + delimiters_dot_closeFilter + ' *(AND|OR|XOR) *' + delimiters_dot_openFilter + ' *$',
+            '^ *' + delimiters.closeFilter + ' *(AND|OR|XOR) *' + delimiters.openFilter + ' *$',
         );
 
-        const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + delimiters_dot_openFilter + '$');
+        const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + delimiters.openFilter + '$');
 
-        const remnantsOfNot = new RegExp('^' + delimiters_dot_closeFilter + ' *(AND|OR|XOR)$');
+        const remnantsOfNot = new RegExp('^' + delimiters.closeFilter + ' *(AND|OR|XOR)$');
 
         const justOperators = /^(AND|OR|XOR|NOT)$/;
 
