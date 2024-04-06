@@ -334,7 +334,6 @@ export class Cache {
                     task = Task.fromLine({
                         line,
                         taskLocation: new TaskLocation(
-                            file.path,
                             new TasksFile(file.path),
                             lineNumber,
                             currentSection.position.start.line,

@@ -12,7 +12,6 @@ describe('TaskLocation', () => {
 
         // Act
         const taskLocation = new TaskLocation(
-            path,
             new TasksFile(path),
             lineNumber,
             sectionStart,
@@ -52,7 +51,6 @@ describe('TaskLocation', () => {
         const sectionIndex = 10;
         const precedingHeader = 'My Previous Header';
         const taskLocation = new TaskLocation(
-            path,
             new TasksFile(path),
             lineNumber,
             sectionStart,

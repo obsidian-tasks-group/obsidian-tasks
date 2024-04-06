@@ -12,7 +12,6 @@ export class TaskLocation {
     private readonly _precedingHeader: string | null;
 
     public constructor(
-        _path: string,
         tasksFile: TasksFile,
         lineNumber: number,
         sectionStart: number,
@@ -31,7 +30,7 @@ export class TaskLocation {
      * @param path
      */
     public static fromUnknownPosition(path: string): TaskLocation {
-        return new TaskLocation(path, new TasksFile(path), 0, 0, 0, null);
+        return new TaskLocation(new TasksFile(path), 0, 0, 0, null);
     }
 
     /**
@@ -40,7 +39,6 @@ export class TaskLocation {
      */
     fromRenamedFile(newPath: string) {
         return new TaskLocation(
-            newPath,
             new TasksFile(newPath),
             this.lineNumber,
             this.sectionStart,
