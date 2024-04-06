@@ -2,6 +2,7 @@ import { MetadataCache, Notice, TAbstractFile, TFile, Vault } from 'obsidian';
 import type { CachedMetadata, EventRef } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
+import { TasksFile } from '../Scripting/TasksFile';
 
 import { Task } from '../Task/Task';
 import { DateFallback } from '../Task/DateFallback';
@@ -158,6 +159,7 @@ export class Cache {
             this.logger.debug(`Cache.subscribeToVault.renamedEventReference() ${file.path}`);
 
             this.tasksMutex.runExclusive(() => {
+                const tasksFile = new TasksFile(file.path);
                 const fallbackDate = new Lazy(() => DateFallback.fromPath(file.path));
 
                 this.tasks = this.tasks.map((task: Task): Task => {
@@ -165,7 +167,7 @@ export class Cache {
                         if (!useFilenameAsScheduledDate) {
                             return new Task({
                                 ...task,
-                                taskLocation: task.taskLocation.fromRenamedFile(file.path),
+                                taskLocation: task.taskLocation.fromRenamedFile(tasksFile),
                             });
                         } else {
                             return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
@@ -277,6 +279,7 @@ export class Cache {
         fileCache: CachedMetadata,
         file: TFile,
     ): Task[] {
+        const tasksFile = new TasksFile(file.path);
         const tasks: Task[] = [];
         const fileLines = fileContent.split('\n');
         const linesInFile = fileLines.length;
@@ -333,7 +336,7 @@ export class Cache {
                     task = Task.fromLine({
                         line,
                         taskLocation: new TaskLocation(
-                            file.path,
+                            tasksFile,
                             lineNumber,
                             currentSection.position.start.line,
                             sectionIndex,

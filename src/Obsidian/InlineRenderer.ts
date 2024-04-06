@@ -3,6 +3,7 @@ import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
+import { TasksFile } from '../Scripting/TasksFile';
 import { Task } from '../Task/Task';
 import { TaskLineRenderer } from '../Renderer/TaskLineRenderer';
 import { TaskLocation } from '../Task/TaskLocation';
@@ -79,7 +80,13 @@ export class InlineRenderer {
             const precedingHeader = null; // We don't need the preceding header for in-line rendering.
             const task = Task.fromLine({
                 line,
-                taskLocation: new TaskLocation(path, lineNumber, section.lineStart, sectionIndex, precedingHeader),
+                taskLocation: new TaskLocation(
+                    new TasksFile(path),
+                    lineNumber,
+                    section.lineStart,
+                    sectionIndex,
+                    precedingHeader,
+                ),
                 fallbackDate: null, // We don't need the fallback date for in-line rendering
             });
             if (task !== null) {

@@ -1,3 +1,4 @@
+import { TasksFile } from '../Scripting/TasksFile';
 import { Status } from '../Statuses/Status';
 import { Task } from '../Task/Task';
 import { DateFallback } from '../Task/DateFallback';
@@ -56,7 +57,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     // This helps users who, for some reason, have data in a task line without the Global Filter.
     const task = Task.parseTaskSignifiers(
         line,
-        TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
+        TaskLocation.fromUnknownPosition(new TasksFile(path)), // We don't need precise location to toggle it here in the editor.
         DateFallback.fromPath(path), // set the scheduled date from the filename, so it can be displayed in the dialog
     );
 
@@ -80,7 +81,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             status: Status.TODO,
             description: '',
             // We don't need the location fields except file to edit here in the editor.
-            taskLocation: TaskLocation.fromUnknownPosition(path),
+            taskLocation: TaskLocation.fromUnknownPosition(new TasksFile(path)),
             indentation: '',
             listMarker: '-',
             priority: Priority.None,
@@ -119,7 +120,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         status,
         description,
         // We don't need the location fields except file to edit here in the editor.
-        taskLocation: TaskLocation.fromUnknownPosition(path),
+        taskLocation: TaskLocation.fromUnknownPosition(new TasksFile(path)),
         indentation,
         listMarker,
         blockLink,

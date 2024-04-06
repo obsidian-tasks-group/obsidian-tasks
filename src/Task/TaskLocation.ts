@@ -1,22 +1,24 @@
+import type { TasksFile } from '../Scripting/TasksFile';
+
 /**
  * TaskLocation is the place where all information about a task line's location
  * in a markdown file is stored, so that testable algorithms can then be added here.
  */
 export class TaskLocation {
-    private readonly _path: string;
+    private readonly _tasksFile: TasksFile;
     private readonly _lineNumber: number;
     private readonly _sectionStart: number;
     private readonly _sectionIndex: number;
     private readonly _precedingHeader: string | null;
 
     public constructor(
-        path: string,
+        tasksFile: TasksFile,
         lineNumber: number,
         sectionStart: number,
         sectionIndex: number,
         precedingHeader: string | null,
     ) {
-        this._path = path;
+        this._tasksFile = tasksFile;
         this._lineNumber = lineNumber;
         this._sectionStart = sectionStart;
         this._sectionIndex = sectionIndex;
@@ -25,22 +27,32 @@ export class TaskLocation {
 
     /**
      * Constructor, for use when the Task's exact location in a file is either unknown, or not needed.
-     * @param path
+     * @param tasksFile
      */
-    public static fromUnknownPosition(path: string): TaskLocation {
-        return new TaskLocation(path, 0, 0, 0, null);
+    public static fromUnknownPosition(tasksFile: TasksFile): TaskLocation {
+        return new TaskLocation(tasksFile, 0, 0, 0, null);
     }
 
     /**
      * Constructor, for when the file has been renamed, and all other data remains the same.
-     * @param newPath
+     * @param newTasksFile
      */
-    fromRenamedFile(newPath: string) {
-        return new TaskLocation(newPath, this.lineNumber, this.sectionStart, this.sectionIndex, this.precedingHeader);
+    fromRenamedFile(newTasksFile: TasksFile) {
+        return new TaskLocation(
+            newTasksFile,
+            this.lineNumber,
+            this.sectionStart,
+            this.sectionIndex,
+            this.precedingHeader,
+        );
+    }
+
+    public get tasksFile(): TasksFile {
+        return this._tasksFile;
     }
 
     public get path(): string {
-        return this._path;
+        return this._tasksFile.path;
     }
 
     public get lineNumber(): number {

@@ -1,5 +1,6 @@
 // Builder
 import type { Moment } from 'moment';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
 import { Task } from '../../src/Task/Task';
 import { Recurrence } from '../../src/Task/Recurrence';
@@ -72,7 +73,7 @@ export class TaskBuilder {
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
-                this._path,
+                new TasksFile(this._path),
                 this._lineNumber,
                 this._sectionStart,
                 this._sectionIndex,

@@ -1,4 +1,5 @@
 import { Editor, type EditorPosition, type MarkdownFileInfo, MarkdownView } from 'obsidian';
+import { TasksFile } from '../Scripting/TasksFile';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 
 import { Task } from '../Task/Task';
@@ -69,7 +70,7 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
     const task = Task.fromLine({
         // Why are we using Task.fromLine instead of the Cache here?
         line,
-        taskLocation: TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
+        taskLocation: TaskLocation.fromUnknownPosition(new TasksFile(path)), // We don't need precise location to toggle it here in the editor.
         fallbackDate: null, // We don't need this to toggle it here in the editor.
     });
     if (task !== null) {
