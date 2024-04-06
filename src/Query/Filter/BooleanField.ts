@@ -46,20 +46,25 @@ export class BooleanDelimiters {
 export class BooleanField extends Field {
     private readonly delimiters = new BooleanDelimiters();
 
-    // First pattern in this matches conventional (filter1) OR (filter2) and similar
-    // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
-    private readonly basicBooleanRegexp = new RegExp(
-        '(.*(AND|OR|XOR|NOT)\\s*' +
-            this.delimiters.openFilter +
-            '.*|' +
-            this.delimiters.openFilter +
-            '.+' +
-            this.delimiters.closeFilter +
-            ')',
-        'g',
-    );
+    private readonly basicBooleanRegexp: RegExp;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
     private subFields: Record<string, Filter> = {};
+
+    constructor() {
+        super();
+        // First pattern in this matches conventional (filter1) OR (filter2) and similar
+        // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
+        this.basicBooleanRegexp = new RegExp(
+            '(.*(AND|OR|XOR|NOT)\\s*' +
+                this.delimiters.openFilter +
+                '.*|' +
+                this.delimiters.openFilter +
+                '.+' +
+                this.delimiters.closeFilter +
+                ')',
+            'g',
+        );
+    }
 
     protected filterRegExp(): RegExp {
         return this.basicBooleanRegexp;
