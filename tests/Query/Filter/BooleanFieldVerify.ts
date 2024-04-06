@@ -1,6 +1,6 @@
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { errorMessageForException } from '../../../src/lib/ExceptionTools';
-import { BooleanField } from '../../../src/Query/Filter/BooleanField';
+import { BooleanDelimiters, BooleanField } from '../../../src/Query/Filter/BooleanField';
 
 export const inputs = `
 (not done) AND (is recurring)
@@ -221,7 +221,7 @@ NOT(path includes b)
 OR (description includes d1)
 `;
 
-export function verifyBooleanExpressionPreprocessing(fn: (text: string) => any) {
+export function verifyBooleanExpressionPreprocessing(fn: (text: string, delimiters: BooleanDelimiters) => any) {
     verifyAll('Results of preprocessing boolean expressions', inputs.split('\n'), (input) => {
         if (input.trim() === '') {
             return '';
@@ -229,7 +229,7 @@ export function verifyBooleanExpressionPreprocessing(fn: (text: string) => any) 
 
         let result: string = '';
         try {
-            result = JSON.stringify(fn(input), null, 4);
+            result = JSON.stringify(fn(input, new BooleanDelimiters()), null, 4);
         } catch (e) {
             result = errorMessageForException('Parsing expression', e);
         }
