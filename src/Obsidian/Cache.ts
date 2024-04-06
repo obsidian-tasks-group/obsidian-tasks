@@ -159,6 +159,7 @@ export class Cache {
             this.logger.debug(`Cache.subscribeToVault.renamedEventReference() ${file.path}`);
 
             this.tasksMutex.runExclusive(() => {
+                const tasksFile = new TasksFile(file.path);
                 const fallbackDate = new Lazy(() => DateFallback.fromPath(file.path));
 
                 this.tasks = this.tasks.map((task: Task): Task => {
@@ -166,7 +167,7 @@ export class Cache {
                         if (!useFilenameAsScheduledDate) {
                             return new Task({
                                 ...task,
-                                taskLocation: task.taskLocation.fromRenamedFile(new TasksFile(file.path)),
+                                taskLocation: task.taskLocation.fromRenamedFile(tasksFile),
                             });
                         } else {
                             return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
