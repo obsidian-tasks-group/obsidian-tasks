@@ -6,7 +6,7 @@ import type { Status } from '../Statuses/Status';
 import { compareByDate } from '../lib/DateTools';
 import { TasksDate } from '../Scripting/TasksDate';
 import { StatusType } from '../Statuses/StatusConfiguration';
-import { TasksFile } from '../Scripting/TasksFile';
+import type { TasksFile } from '../Scripting/TasksFile';
 import { PriorityTools } from '../lib/PriorityTools';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
@@ -728,7 +728,7 @@ export class Task {
     }
 
     public get file(): TasksFile {
-        return new TasksFile(this.path);
+        return this.taskLocation.tasksFile;
     }
 
     /**
