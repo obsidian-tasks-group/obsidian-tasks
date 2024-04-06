@@ -27,6 +27,16 @@ const closeFilter = anyOfTheseChars(closeFilterChars);
 
 const openAndCloseFilterChars = '()"';
 
+class BooleanDelimiters {
+    public readonly openFilterChars = '("';
+    public readonly openFilter = anyOfTheseChars(this.openFilterChars);
+
+    public readonly closeFilterChars = ')"';
+    public readonly closeFilter = anyOfTheseChars(this.closeFilterChars);
+
+    public readonly openAndCloseFilterChars = '()"';
+}
+
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
  * the format --
@@ -42,10 +52,18 @@ const openAndCloseFilterChars = '()"';
  * the expression into a single boolean entity.
  */
 export class BooleanField extends Field {
+    private readonly delimiters = new BooleanDelimiters();
+
     // First pattern in this matches conventional (filter1) OR (filter2) and similar
     // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
     private readonly basicBooleanRegexp = new RegExp(
-        '(.*(AND|OR|XOR|NOT)\\s*' + openFilter + '.*|' + openFilter + '.+' + closeFilter + ')',
+        '(.*(AND|OR|XOR|NOT)\\s*' +
+            this.delimiters.openFilter +
+            '.*|' +
+            this.delimiters.openFilter +
+            '.+' +
+            this.delimiters.closeFilter +
+            ')',
         'g',
     );
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
