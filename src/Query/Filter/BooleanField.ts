@@ -156,9 +156,8 @@ export class BooleanField extends Field {
             })
             .join('\n');
 
-        const fullMessage =
-            this.helpMessageFromSimpleError(line, errorMessage) +
-            `
+        const simpleMessage = this.helpMessageFromSimpleError(line, errorMessage);
+        const fullMessage = `${simpleMessage}
 The instruction was converted to the following simplified line:
     ${parseResult.simplifiedLine}
 Where the sub-expressions in the simplified line are:
