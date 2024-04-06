@@ -1,4 +1,4 @@
-import { TasksFile } from '../Scripting/TasksFile';
+import type { TasksFile } from '../Scripting/TasksFile';
 
 /**
  * TaskLocation is the place where all information about a task line's location
@@ -27,10 +27,10 @@ export class TaskLocation {
 
     /**
      * Constructor, for use when the Task's exact location in a file is either unknown, or not needed.
-     * @param path
+     * @param tasksFile
      */
-    public static fromUnknownPosition(path: string): TaskLocation {
-        return new TaskLocation(new TasksFile(path), 0, 0, 0, null);
+    public static fromUnknownPosition(tasksFile: TasksFile): TaskLocation {
+        return new TaskLocation(tasksFile, 0, 0, 0, null);
     }
 
     /**
