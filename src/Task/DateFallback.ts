@@ -1,5 +1,6 @@
 import type { Moment } from 'moment';
 import { getSettings } from '../Config/Settings';
+import { TasksFile } from '../Scripting/TasksFile';
 import { Task } from './Task';
 
 /**
@@ -114,7 +115,7 @@ export class DateFallback {
 
         return new Task({
             ...task,
-            taskLocation: task.taskLocation.fromRenamedFile(newPath),
+            taskLocation: task.taskLocation.fromRenamedFile(new TasksFile(newPath)),
             scheduledDate,
             scheduledDateIsInferred,
         });

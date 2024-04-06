@@ -3,6 +3,7 @@
  */
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
@@ -672,7 +673,7 @@ describe('Query', () => {
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    taskLocation: TaskLocation.fromUnknownPosition('Ab/C D'),
+                    taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('Ab/C D')),
                     indentation: '',
                     listMarker: '-',
                     priority: Priority.None,
@@ -693,7 +694,7 @@ describe('Query', () => {
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    taskLocation: TaskLocation.fromUnknownPosition('FF/C D'),
+                    taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('FF/C D')),
                     indentation: '',
                     listMarker: '-',
                     priority: Priority.None,
