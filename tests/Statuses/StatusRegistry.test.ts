@@ -372,7 +372,6 @@ describe('StatusRegistry', () => {
         const sectionIndex = 1209;
         const precedingHeader = 'Eloquent Section';
         const taskLocation = new TaskLocation(
-            path,
             new TasksFile(path),
             lineNumber,
             sectionStart,

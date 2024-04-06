@@ -73,7 +73,6 @@ export class TaskBuilder {
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
-                this._path,
                 new TasksFile(this._path),
                 this._lineNumber,
                 this._sectionStart,

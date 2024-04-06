@@ -81,7 +81,6 @@ export class InlineRenderer {
             const task = Task.fromLine({
                 line,
                 taskLocation: new TaskLocation(
-                    path,
                     new TasksFile(path),
                     lineNumber,
                     section.lineStart,
