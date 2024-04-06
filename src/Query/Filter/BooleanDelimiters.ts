@@ -26,14 +26,15 @@ export class BooleanDelimiters {
 
     public static fromInstructionLine(instruction: string) {
         const trimmedInstruction = instruction.trim();
-        const firstChar = trimmedInstruction[0];
         const lastChar = trimmedInstruction.slice(-1);
 
-        if (firstChar === '(' && lastChar === ')') {
+        // We don't currently check the starting character, because of this case:
+        //    NOT (not done)
+        if (lastChar === ')') {
             return new BooleanDelimiters('(', ')', '()');
         }
 
-        if (firstChar === '"' && lastChar === '"') {
+        if (lastChar === '"') {
             return new BooleanDelimiters('"', '"', '"');
         }
 
