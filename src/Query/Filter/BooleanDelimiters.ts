@@ -10,4 +10,8 @@ export class BooleanDelimiters {
     public readonly closeFilter = anyOfTheseChars(this.closeFilterChars);
 
     public readonly openAndCloseFilterChars = '()"';
+
+    public static allSupportedDelimiters(): BooleanDelimiters {
+        return new BooleanDelimiters();
+    }
 }
