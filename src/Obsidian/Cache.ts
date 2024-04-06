@@ -166,7 +166,7 @@ export class Cache {
                         if (!useFilenameAsScheduledDate) {
                             return new Task({
                                 ...task,
-                                taskLocation: task.taskLocation.fromRenamedFile(file.path),
+                                taskLocation: task.taskLocation.fromRenamedFile(file.path, new TasksFile(file.path)),
                             });
                         } else {
                             return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
