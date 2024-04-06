@@ -4,12 +4,17 @@ export function anyOfTheseChars(allowedChars: string): string {
 
 export class BooleanDelimiters {
     public readonly openFilterChars = '("';
-    public readonly openFilter = anyOfTheseChars(this.openFilterChars);
+    public readonly openFilter;
 
     public readonly closeFilterChars = ')"';
-    public readonly closeFilter = anyOfTheseChars(this.closeFilterChars);
+    public readonly closeFilter;
 
     public readonly openAndCloseFilterChars = '()"';
+
+    constructor() {
+        this.openFilter = anyOfTheseChars(this.openFilterChars);
+        this.closeFilter = anyOfTheseChars(this.closeFilterChars);
+    }
 
     public static allSupportedDelimiters(): BooleanDelimiters {
         return new BooleanDelimiters();
