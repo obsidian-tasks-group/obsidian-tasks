@@ -40,37 +40,37 @@ describe('BooleanDelimiters', () => {
     });
 
     describe('construct from line with binary operators', () => {
-        it('from line with () delimiters', () => {
+        it('should recognise () delimiters', () => {
             shouldDelimitWithParentheses('(not done) OR (done)');
         });
 
-        it('from line with "" delimiters', () => {
+        it('should recognise "" delimiters', () => {
             shouldDelimitWithDoubleQuotes('"not done" OR "done"');
         });
 
-        it('from line with mixed delimiters', () => {
+        it('should reject line with mixed delimiters', () => {
             shouldThrow('(not done) OR "done"');
         });
 
-        it('from line with unknown delimiters', () => {
+        it('should reject line with unknown delimiters', () => {
             shouldThrow('{not done} OR {done}');
         });
     });
 
     describe('construct from line starting with NOT', () => {
-        it('from line with () delimiters', () => {
+        it('should recognise () delimiters', () => {
             shouldDelimitWithParentheses('NOT (not done)');
         });
 
-        it('from line with "" delimiters', () => {
+        it('should recognise "" delimiters', () => {
             shouldDelimitWithDoubleQuotes('NOT "not done"');
         });
 
-        it('from line with mixed delimiters', () => {
+        it('should reject line with mixed delimiters', () => {
             shouldThrow('NOT (not done"');
         });
 
-        it('from line with unknown delimiters', () => {
+        it('should reject line with unknown delimiters', () => {
             shouldThrow('NOT {not done}');
         });
     });
