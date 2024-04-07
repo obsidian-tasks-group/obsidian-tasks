@@ -30,7 +30,7 @@ export class BooleanDelimiters {
     }
 
     public static allSupportedDelimiters(): BooleanDelimiters {
-        return new BooleanDelimiters('(["', ')]"', '()[]"');
+        return new BooleanDelimiters('([{"', ')]}"', '()[]{}"');
     }
 
     public static fromInstructionLine(instruction: string) {
@@ -52,6 +52,10 @@ export class BooleanDelimiters {
 
             if (firstChar === '[' && lastChar === ']') {
                 return new BooleanDelimiters('[', ']', '[]');
+            }
+
+            if (firstChar === '{' && lastChar === '}') {
+                return new BooleanDelimiters('{', '}', '{}');
             }
 
             if (firstChar === '"' && lastChar === '"') {
