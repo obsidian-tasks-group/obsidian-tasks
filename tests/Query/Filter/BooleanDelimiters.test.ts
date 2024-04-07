@@ -1,5 +1,13 @@
 import { BooleanDelimiters } from '../../../src/Query/Filter/BooleanDelimiters';
 
+function shouldDelimitWithParentheses(line: string) {
+    const delimiters = BooleanDelimiters.fromInstructionLine(line);
+
+    expect(delimiters.openFilterChars).toEqual('(');
+    expect(delimiters.closeFilterChars).toEqual(')');
+    expect(delimiters.openAndCloseFilterChars).toEqual('()');
+}
+
 describe('BooleanDelimiters', () => {
     it('construction - all delimiters', () => {
         const delimiters = BooleanDelimiters.allSupportedDelimiters();
@@ -16,11 +24,7 @@ describe('BooleanDelimiters', () => {
     describe('construct from line with binary operators', () => {
         it('from line with () delimiters', () => {
             const line = '(not done) OR (done)';
-            const delimiters = BooleanDelimiters.fromInstructionLine(line);
-
-            expect(delimiters.openFilterChars).toEqual('(');
-            expect(delimiters.closeFilterChars).toEqual(')');
-            expect(delimiters.openAndCloseFilterChars).toEqual('()');
+            shouldDelimitWithParentheses(line);
         });
 
         it('from line with "" delimiters', () => {
@@ -58,11 +62,7 @@ describe('BooleanDelimiters', () => {
     describe('construct from line starting with NOT', () => {
         it('from line with () delimiters', () => {
             const line = 'NOT (not done)';
-            const delimiters = BooleanDelimiters.fromInstructionLine(line);
-
-            expect(delimiters.openFilterChars).toEqual('(');
-            expect(delimiters.closeFilterChars).toEqual(')');
-            expect(delimiters.openAndCloseFilterChars).toEqual('()');
+            shouldDelimitWithParentheses(line);
         });
 
         it('from line with "" delimiters', () => {
