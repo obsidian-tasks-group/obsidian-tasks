@@ -1,5 +1,10 @@
 import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
 
+export type ParseResult = {
+    simplifiedLine: string;
+    filters: { [key: string]: string };
+};
+
 export class BooleanPreprocessor {
     public static preprocessExpressionV2(line: string, delimiters: BooleanDelimiters): ParseResult {
         const parts = BooleanPreprocessor.splitLine(line, delimiters);
@@ -128,8 +133,3 @@ export class BooleanPreprocessor {
         ].some((regex) => RegExp(regex).exec(part));
     }
 }
-
-export type ParseResult = {
-    simplifiedLine: string;
-    filters: { [key: string]: string };
-};
