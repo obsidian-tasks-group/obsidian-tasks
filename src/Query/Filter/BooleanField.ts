@@ -6,10 +6,10 @@ import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task/Task';
 import { Explanation } from '../Explain/Explanation';
 import type { SearchInfo } from '../SearchInfo';
-import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
+import { BooleanPreprocessor } from './BooleanPreprocessor';
 
 export type ParseResult = {
     simplifiedLine: string;
@@ -30,7 +30,7 @@ export type ParseResult = {
  * evaluates the complete postfix expression by going through the individual filters and then resolving
  * the expression into a single boolean entity.
  */
-export class BooleanField extends Field {
+export class BooleanField extends BooleanPreprocessor {
     private readonly basicBooleanRegexp: RegExp;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
     private subFields: Record<string, Filter> = {};
