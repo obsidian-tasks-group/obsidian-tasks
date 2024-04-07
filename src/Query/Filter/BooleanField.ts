@@ -9,12 +9,7 @@ import type { SearchInfo } from '../SearchInfo';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
-import { BooleanPreprocessor } from './BooleanPreprocessor';
-
-export type ParseResult = {
-    simplifiedLine: string;
-    filters: { [key: string]: string };
-};
+import { BooleanPreprocessor, type ParseResult } from './BooleanPreprocessor';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
