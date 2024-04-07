@@ -37,7 +37,10 @@ export class BooleanDelimiters {
     }
 
     public static allSupportedDelimiters(): BooleanDelimiters {
-        return new BooleanDelimiters('([{"', ')]}"', '()[]{}"');
+        const opening = '([{"';
+        const closing = ')]}"';
+        const openingAndClosing = '()[]{}"';
+        return new BooleanDelimiters(opening, closing, openingAndClosing);
     }
 
     public static fromInstructionLine(instruction: string) {
