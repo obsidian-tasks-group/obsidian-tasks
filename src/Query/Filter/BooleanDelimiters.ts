@@ -2,6 +2,13 @@ export function anyOfTheseChars(allowedChars: string): string {
     return new RegExp('[' + allowedChars + ']').source;
 }
 
+/**
+ * A class to try to identify the type of delimiter used between Boolean operators.
+ *
+ * Note that this only checks the first and last non-operator characters on the line,
+ * so where there is more than one binary operator, it is still possible for the user
+ * to mix delimiters, and for the error to not be detected until later in the parsing process.
+ */
 export class BooleanDelimiters {
     public readonly openFilterChars;
     public readonly openFilter;
