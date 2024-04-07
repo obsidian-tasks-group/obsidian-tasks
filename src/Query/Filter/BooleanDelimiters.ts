@@ -31,16 +31,23 @@ export class BooleanDelimiters {
 
     public static fromInstructionLine(instruction: string) {
         const trimmedInstruction = instruction.trim();
-        const lastChar = trimmedInstruction.slice(-1);
 
-        // We don't currently check the starting character, because of this case:
-        //    NOT (not done)
-        if (lastChar === ')') {
-            return new BooleanDelimiters('(', ')', '()');
-        }
+        // We use a set of capitals and spaces as a short-cut to match AND, OR, NOT, AND NOT etc.
+        // The only valid initial operator is NOT, so this may be worth tightening up, if
+        // further tests show that it would be worthwhile.
+        const findAnyInitialUnaryOperator = /^[A-Z ]*\s*(.*)/;
+        const matches = findAnyInitialUnaryOperator.exec(trimmedInstruction);
+        if (matches) {
+            const instructionWithoutAnyLeadingOperators = matches[1];
+            const lastChar = instructionWithoutAnyLeadingOperators.slice(-1);
 
-        if (lastChar === '"') {
-            return new BooleanDelimiters('"', '"', '"');
+            if (lastChar === ')') {
+                return new BooleanDelimiters('(', ')', '()');
+            }
+
+            if (lastChar === '"') {
+                return new BooleanDelimiters('"', '"', '"');
+            }
         }
 
         throw new Error(
