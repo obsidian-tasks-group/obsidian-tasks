@@ -268,8 +268,11 @@ The error message is:
         });
 
         // convert non-standard delimiters to standard ones:
-        simplifiedLine = simplifiedLine.replace(/\[/g, '(');
-        simplifiedLine = simplifiedLine.replace(/]/g, ')');
+        const openChar = delimiters.openFilterChars;
+        if (openChar != '"' && openChar != '(') {
+            simplifiedLine = simplifiedLine.replace(/\[/g, '(');
+            simplifiedLine = simplifiedLine.replace(/]/g, ')');
+        }
         return { simplifiedLine, filters };
     }
 
