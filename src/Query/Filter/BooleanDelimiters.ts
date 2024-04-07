@@ -69,9 +69,9 @@ export class BooleanDelimiters {
             }
         }
 
-        throw new Error(
-            "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.",
-        );
+        const message =
+            "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.";
+        throw new Error(message);
     }
 
     private static openAndClosing(openingDelimiter: string, closingDelimiter: string) {
