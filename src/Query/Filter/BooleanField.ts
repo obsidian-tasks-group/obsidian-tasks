@@ -10,7 +10,7 @@ import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 import { BooleanDelimiters } from './BooleanDelimiters';
-import { BooleanPreprocessor, type ParseResult } from './BooleanPreprocessor';
+import { BooleanPreprocessor, type BooleanPreprocessorResult } from './BooleanPreprocessor';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -268,7 +268,7 @@ export class BooleanField extends Field {
     /**
      * Helper to provide useful information to users, when we fail to interpret a Boolean filter.
      */
-    private helpMessage(line: string, errorMessage: string, parseResult: ParseResult) {
+    private helpMessage(line: string, errorMessage: string, parseResult: BooleanPreprocessorResult) {
         const filters: { [key: string]: string } = parseResult.filters;
         const expressions = Object.entries(filters)
             .map(([key, value]) => {
