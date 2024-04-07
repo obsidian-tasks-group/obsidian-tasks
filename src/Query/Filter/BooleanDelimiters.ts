@@ -27,7 +27,7 @@ export class BooleanDelimiters {
 
     public readonly openAndCloseFilterChars;
 
-    constructor(openFilterChars: string, closeFilterChars: string, openAndCloseFilterChars: string) {
+    private constructor(openFilterChars: string, closeFilterChars: string, openAndCloseFilterChars: string) {
         this.openFilterChars = openFilterChars;
         this.closeFilterChars = closeFilterChars;
         this.openAndCloseFilterChars = openAndCloseFilterChars;
