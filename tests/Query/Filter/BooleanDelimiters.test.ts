@@ -6,5 +6,8 @@ describe('BooleanDelimiters', () => {
 
         expect(delimiters.openFilterChars).toEqual('("');
         expect(delimiters.openFilter).toEqual('[("]');
+
+        expect(delimiters.closeFilterChars).toEqual(')"');
+        expect(delimiters.closeFilter).toEqual('[)"]');
     });
 });

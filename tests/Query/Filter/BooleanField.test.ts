@@ -168,7 +168,7 @@ describe('boolean query - filter', () => {
         });
 
         describe('" and "', () => {
-            it.failing('should allow " and " as delimiters around 1 filter', () => {
+            it('should allow " and " as delimiters around 1 filter', () => {
                 const filter = createValidFilter('"description includes #context/location1"');
                 expect(explanationOrError(filter)).toMatchInlineSnapshot(`
                     ""description includes #context/location1" =>
