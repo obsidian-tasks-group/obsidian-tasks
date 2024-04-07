@@ -11,12 +11,18 @@ export class BooleanDelimiters {
     public readonly openFilterChars;
     public readonly openFilter;
 
-    private constructor(openFilterChars: string) {
+    public readonly closeFilterChars;
+    public readonly closeFilter;
+
+    public constructor(openFilterChars: string, closeFilterChars: string) {
         this.openFilterChars = openFilterChars;
+        this.closeFilterChars = closeFilterChars;
+
         this.openFilter = anyOfTheseChars(this.openFilterChars);
+        this.closeFilter = anyOfTheseChars(this.closeFilterChars);
     }
 
     public static allSupportedDelimiters(): BooleanDelimiters {
-        return new BooleanDelimiters('("');
+        return new BooleanDelimiters('("', ')"');
     }
 }
