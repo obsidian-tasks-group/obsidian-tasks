@@ -55,10 +55,7 @@ export class BooleanDelimiters {
 
             for (const [openingDelimiter, closingDelimiter] of delimiterPairs) {
                 if (firstChar === openingDelimiter && lastChar === closingDelimiter) {
-                    let openingAndClosingDelimiters = openingDelimiter;
-                    if (closingDelimiter != openingDelimiter) {
-                        openingAndClosingDelimiters += closingDelimiter;
-                    }
+                    const openingAndClosingDelimiters = this.openAndClosing(openingDelimiter, closingDelimiter);
                     return new BooleanDelimiters(openingDelimiter, closingDelimiter, openingAndClosingDelimiters);
                 }
             }
@@ -67,5 +64,13 @@ export class BooleanDelimiters {
         throw new Error(
             "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.",
         );
+    }
+
+    private static openAndClosing(openingDelimiter: string, closingDelimiter: string) {
+        let openingAndClosingDelimiters = openingDelimiter;
+        if (closingDelimiter != openingDelimiter) {
+            openingAndClosingDelimiters += closingDelimiter;
+        }
+        return openingAndClosingDelimiters;
     }
 }
