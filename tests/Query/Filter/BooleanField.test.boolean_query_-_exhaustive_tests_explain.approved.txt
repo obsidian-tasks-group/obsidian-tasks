@@ -3046,6 +3046,35 @@ Result:
 
 
 Input:
+'{due this week} AND {description includes I use square brackets}'
+=>
+Result:
+  {due this week} AND {description includes I use square brackets} =>
+    AND (All of):
+      due this week =>
+        due date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      description includes I use square brackets
+
+
+--------------------------------------------------------
+
+
+Input:
+'{filter by function task.description.includes('a')} AND {description includes "hello world"}'
+=>
+Result:
+  {filter by function task.description.includes('a')} AND {description includes "hello world"} =>
+    AND (All of):
+      filter by function task.description.includes('a')
+      description includes "hello world"
+
+
+--------------------------------------------------------
+
+
+Input:
 'AND (description includes d1)'
 =>
 Result:
