@@ -10,6 +10,7 @@ import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 import { BooleanDelimiters } from './BooleanDelimiters';
 import { BooleanPreprocessor, type ParseResult } from './BooleanPreprocessor';
+import { Field } from './Field';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -25,7 +26,7 @@ import { BooleanPreprocessor, type ParseResult } from './BooleanPreprocessor';
  * evaluates the complete postfix expression by going through the individual filters and then resolving
  * the expression into a single boolean entity.
  */
-export class BooleanField extends BooleanPreprocessor {
+export class BooleanField extends Field {
     private readonly basicBooleanRegexp: RegExp;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
     private subFields: Record<string, Filter> = {};
@@ -90,7 +91,7 @@ export class BooleanField extends BooleanPreprocessor {
             return FilterOrErrorMessage.fromError(line, this.helpMessageFromSimpleError(line, message));
         }
 
-        const parseResult = BooleanField.preprocessExpressionV2(line, delimiters);
+        const parseResult = BooleanPreprocessor.preprocessExpressionV2(line, delimiters);
         const simplifiedLine = parseResult.simplifiedLine;
         const filters = parseResult.filters;
         try {

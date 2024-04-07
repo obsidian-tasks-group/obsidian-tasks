@@ -1,11 +1,9 @@
-import { Field } from './Field';
 import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
-import { BooleanField } from './BooleanField';
 
-export abstract class BooleanPreprocessor extends Field {
+export class BooleanPreprocessor {
     public static preprocessExpressionV2(line: string, delimiters: BooleanDelimiters): ParseResult {
-        const parts = BooleanField.splitLine(line, delimiters);
-        return BooleanField.getFiltersAndSimplifiedLine(parts, delimiters);
+        const parts = BooleanPreprocessor.splitLine(line, delimiters);
+        return BooleanPreprocessor.getFiltersAndSimplifiedLine(parts, delimiters);
     }
 
     public static splitLine(line: string, delimiters: BooleanDelimiters) {
@@ -78,7 +76,7 @@ export abstract class BooleanPreprocessor extends Field {
         // Loop to add placeholders-for-filters or operators to the simplifiedLine
         parts.forEach((part, _index) => {
             // Check if the part is an operator by matching against the regex without surrounding parentheses
-            if (!BooleanField.isAFilter(part, delimiters)) {
+            if (!BooleanPreprocessor.isAFilter(part, delimiters)) {
                 // It's an operator, space or parenthesis, so add it directly to the simplifiedLine
                 simplifiedLine += `${part}`;
             } else {

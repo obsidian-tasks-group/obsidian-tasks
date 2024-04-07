@@ -8,6 +8,7 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { Query } from '../../../src/Query/Query';
 import { Explainer } from '../../../src/Query/Explain/Explainer';
+import { BooleanPreprocessor } from '../../../src/Query/Filter/BooleanPreprocessor';
 import { verifyBooleanExpressionExplanation, verifyBooleanExpressionPreprocessing } from './BooleanFieldVerify';
 
 window.moment = moment;
@@ -380,11 +381,11 @@ describe('boolean query - exhaustive tests', () => {
     });
 
     it('preprocess - split line', () => {
-        verifyBooleanExpressionPreprocessing(BooleanField.splitLine);
+        verifyBooleanExpressionPreprocessing(BooleanPreprocessor.splitLine);
     });
 
     it('preprocess - rewrite', () => {
-        verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpressionV2);
+        verifyBooleanExpressionPreprocessing(BooleanPreprocessor.preprocessExpressionV2);
     });
 
     it('explain', () => {
