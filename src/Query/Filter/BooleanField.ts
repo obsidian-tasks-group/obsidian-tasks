@@ -38,7 +38,7 @@ export class BooleanField extends Field {
         // This temporarily validates that I have not accidentally changed the expression used in
         // this.basicBooleanRegexp, by retaining the original hard-coded regular expression for comparison:
         const basicBooleanRegexp2 = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
-        this.basicBooleanRegexp = new RegExp('(.*(AND|OR|XOR|NOT)\\s*[("].*|\\(.+\\))', 'g');
+        this.basicBooleanRegexp = new RegExp('(.*(AND|OR|XOR|NOT)\\s*' + '[("]' + '.*|\\(.+\\))', 'g');
         checkRegExpsIdentical(basicBooleanRegexp2, this.basicBooleanRegexp);
     }
 
