@@ -16,6 +16,16 @@ function shouldDelimitWithDoubleQuotes(line: string) {
     expect(delimiters.openAndCloseFilterChars).toEqual('"');
 }
 
+function shouldThrow(line: string) {
+    const t = () => {
+        BooleanDelimiters.fromInstructionLine(line);
+    };
+    expect(t).toThrow(Error);
+    expect(t).toThrowError(
+        "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.",
+    );
+}
+
 describe('BooleanDelimiters', () => {
     it('construction - all delimiters', () => {
         const delimiters = BooleanDelimiters.allSupportedDelimiters();
@@ -42,24 +52,12 @@ describe('BooleanDelimiters', () => {
 
         it.failing('from line with mixed delimiters', () => {
             const line = '(not done) OR "done"';
-            const t = () => {
-                BooleanDelimiters.fromInstructionLine(line);
-            };
-            expect(t).toThrow(Error);
-            expect(t).toThrowError(
-                "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.",
-            );
+            shouldThrow(line);
         });
 
         it.failing('from line with unknown delimiters', () => {
             const line = '{not done} OR "done"';
-            const t = () => {
-                BooleanDelimiters.fromInstructionLine(line);
-            };
-            expect(t).toThrow(Error);
-            expect(t).toThrowError(
-                "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.",
-            );
+            shouldThrow(line);
         });
     });
 
@@ -76,24 +74,12 @@ describe('BooleanDelimiters', () => {
 
         it.failing('from line with mixed delimiters', () => {
             const line = 'NOT (not done"';
-            const t = () => {
-                BooleanDelimiters.fromInstructionLine(line);
-            };
-            expect(t).toThrow(Error);
-            expect(t).toThrowError(
-                "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.",
-            );
+            shouldThrow(line);
         });
 
         it('from line with unknown delimiters', () => {
             const line = 'NOT {not done}';
-            const t = () => {
-                BooleanDelimiters.fromInstructionLine(line);
-            };
-            expect(t).toThrow(Error);
-            expect(t).toThrowError(
-                "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.",
-            );
+            shouldThrow(line);
         });
     });
 });
