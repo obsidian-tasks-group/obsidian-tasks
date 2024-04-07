@@ -293,6 +293,15 @@ describe('boolean query - filter', () => {
 });
 
 describe('boolean query - explain', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2024-04-07'));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     function explainFilters(indentationLevel: number, source: string) {
         const indentation = ' '.repeat(indentationLevel);
         const path = 'some/sample/note.md';
