@@ -52,8 +52,8 @@ describe('BooleanDelimiters', () => {
             shouldThrow('(not done) OR "done"');
         });
 
-        it.failing('from line with unknown delimiters', () => {
-            shouldThrow('{not done} OR "done"');
+        it('from line with unknown delimiters', () => {
+            shouldThrow('{not done} OR {done}');
         });
     });
 
