@@ -29,6 +29,13 @@ describe('BooleanDelimiters', () => {
         expect(delimiters.openAndCloseFilterChars).toEqual('"');
     });
 
+    it.failing('from line with mixed delimiters', () => {
+        const t = () => {
+            BooleanDelimiters.fromInstructionLine('NOT (not done"');
+        };
+        expect(t).toThrow(Error);
+    });
+
     it('from line with unknown delimiters', () => {
         const t = () => {
             BooleanDelimiters.fromInstructionLine('NOT {not done}');
