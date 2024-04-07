@@ -4,6 +4,13 @@ export function anyOfTheseChars(allowedChars: string): string {
     return new RegExp('[' + escapeRegExp(allowedChars) + ']').source;
 }
 
+const delimiterPairs = [
+    ['(', ')'],
+    ['[', ']'],
+    ['{', '}'],
+    ['"', '"'],
+];
+
 /**
  * A class to try to identify the type of delimiter used between Boolean operators.
  *
@@ -46,20 +53,14 @@ export class BooleanDelimiters {
             const firstChar = instructionWithoutAnyLeadingOperators[0];
             const lastChar = instructionWithoutAnyLeadingOperators.slice(-1);
 
-            if (firstChar === '(' && lastChar === ')') {
-                return new BooleanDelimiters('(', ')', '()');
-            }
-
-            if (firstChar === '[' && lastChar === ']') {
-                return new BooleanDelimiters('[', ']', '[]');
-            }
-
-            if (firstChar === '{' && lastChar === '}') {
-                return new BooleanDelimiters('{', '}', '{}');
-            }
-
-            if (firstChar === '"' && lastChar === '"') {
-                return new BooleanDelimiters('"', '"', '"');
+            for (const [openingDelimiter, closingDelimiter] of delimiterPairs) {
+                if (firstChar === openingDelimiter && lastChar === closingDelimiter) {
+                    let openingAndClosingDelimiters = openingDelimiter;
+                    if (closingDelimiter != openingDelimiter) {
+                        openingAndClosingDelimiters += closingDelimiter;
+                    }
+                    return new BooleanDelimiters(openingDelimiter, closingDelimiter, openingAndClosingDelimiters);
+                }
             }
         }
 
