@@ -6,11 +6,11 @@ import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task/Task';
 import { Explanation } from '../Explain/Explanation';
 import type { SearchInfo } from '../SearchInfo';
+import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 import { BooleanDelimiters } from './BooleanDelimiters';
 import { BooleanPreprocessor, type ParseResult } from './BooleanPreprocessor';
-import { Field } from './Field';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
