@@ -152,34 +152,6 @@ export class BooleanField extends Field {
         }
     }
 
-    /**
-     * Helper to provide useful information to users, when we fail to interpret a Boolean filter.
-     */
-    private helpMessage(line: string, errorMessage: string, parseResult: ParseResult) {
-        const filters: { [key: string]: string } = parseResult.filters;
-        const expressions = Object.entries(filters)
-            .map(([key, value]) => {
-                return `    "${key}": "${value}"`;
-            })
-            .join('\n');
-
-        const simpleMessage = this.helpMessageFromSimpleError(line, errorMessage);
-        const fullMessage = `${simpleMessage}
-The instruction was converted to the following simplified line:
-    ${parseResult.simplifiedLine}
-Where the sub-expressions in the simplified line are:
-${expressions}
-`;
-        return FilterOrErrorMessage.fromError(line, fullMessage);
-    }
-
-    private helpMessageFromSimpleError(line: string, errorMessage: string) {
-        return `Could not interpret the following instruction as a Boolean combination:
-    ${line}
-The error message is:
-    ${errorMessage}`;
-    }
-
     public static preprocessExpressionV2(line: string, delimiters: BooleanDelimiters): ParseResult {
         const parts = BooleanField.splitLine(line, delimiters);
         return BooleanField.getFiltersAndSimplifiedLine(parts, delimiters);
@@ -422,5 +394,33 @@ The error message is:
         } else {
             throw Error('Unsupported operator: ' + token.value);
         }
+    }
+
+    /**
+     * Helper to provide useful information to users, when we fail to interpret a Boolean filter.
+     */
+    private helpMessage(line: string, errorMessage: string, parseResult: ParseResult) {
+        const filters: { [key: string]: string } = parseResult.filters;
+        const expressions = Object.entries(filters)
+            .map(([key, value]) => {
+                return `    "${key}": "${value}"`;
+            })
+            .join('\n');
+
+        const simpleMessage = this.helpMessageFromSimpleError(line, errorMessage);
+        const fullMessage = `${simpleMessage}
+The instruction was converted to the following simplified line:
+    ${parseResult.simplifiedLine}
+Where the sub-expressions in the simplified line are:
+${expressions}
+`;
+        return FilterOrErrorMessage.fromError(line, fullMessage);
+    }
+
+    private helpMessageFromSimpleError(line: string, errorMessage: string) {
+        return `Could not interpret the following instruction as a Boolean combination:
+    ${line}
+The error message is:
+    ${errorMessage}`;
     }
 }
