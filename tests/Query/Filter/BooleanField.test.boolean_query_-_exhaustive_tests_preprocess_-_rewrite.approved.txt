@@ -3002,6 +3002,36 @@ Result:
 
 
 Input:
+'[due this week] AND [description includes I use square brackets]'
+=>
+Result:
+{
+    "simplifiedLine": "(f1) AND (f2)",
+    "filters": {
+        "f1": "due this week",
+        "f2": "description includes I use square brackets"
+    }
+}
+
+--------------------------------------------------------
+
+
+Input:
+'[filter by function task.description.includes('a')] AND [description includes "hello world"]'
+=>
+Result:
+{
+    "simplifiedLine": "(f1) AND (f2)",
+    "filters": {
+        "f1": "filter by function task.description.includes('a')",
+        "f2": "description includes \"hello world\""
+    }
+}
+
+--------------------------------------------------------
+
+
+Input:
 'AND (description includes d1)'
 =>
 Result:

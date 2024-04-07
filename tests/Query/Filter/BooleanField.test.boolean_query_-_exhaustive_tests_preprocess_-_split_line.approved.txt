@@ -3386,6 +3386,36 @@ Result:
 
 
 Input:
+'[due this week] AND [description includes I use square brackets]'
+=>
+Result:
+[
+    "[",
+    "due this week",
+    "] AND [",
+    "description includes I use square brackets",
+    "]"
+]
+
+--------------------------------------------------------
+
+
+Input:
+'[filter by function task.description.includes('a')] AND [description includes "hello world"]'
+=>
+Result:
+[
+    "[",
+    "filter by function task.description.includes('a')",
+    "] AND [",
+    "description includes \"hello world\"",
+    "]"
+]
+
+--------------------------------------------------------
+
+
+Input:
 'AND (description includes d1)'
 =>
 Result:
