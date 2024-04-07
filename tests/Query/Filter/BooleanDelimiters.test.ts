@@ -74,4 +74,11 @@ describe('BooleanDelimiters', () => {
             shouldThrow('NOT {not done}');
         });
     });
+
+    describe('error cases', () => {
+        it('should throw if line is too short', () => {
+            shouldThrow('');
+            shouldThrow('x');
+        });
+    });
 });
