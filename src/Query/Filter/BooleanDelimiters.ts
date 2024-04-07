@@ -34,13 +34,14 @@ export class BooleanDelimiters {
         const matches = findAnyInitialUnaryOperator.exec(trimmedInstruction);
         if (matches) {
             const instructionWithoutAnyLeadingOperators = matches[1];
+            const firstChar = instructionWithoutAnyLeadingOperators[0];
             const lastChar = instructionWithoutAnyLeadingOperators.slice(-1);
 
-            if (lastChar === ')') {
+            if (firstChar === '(' && lastChar === ')') {
                 return new BooleanDelimiters('(', ')', '()');
             }
 
-            if (lastChar === '"') {
+            if (firstChar === '"' && lastChar === '"') {
                 return new BooleanDelimiters('"', '"', '"');
             }
         }
