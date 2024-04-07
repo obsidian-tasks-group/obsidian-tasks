@@ -48,7 +48,7 @@ describe('BooleanDelimiters', () => {
             shouldDelimitWithDoubleQuotes('"not done" OR "done"');
         });
 
-        it.failing('from line with mixed delimiters', () => {
+        it('from line with mixed delimiters', () => {
             shouldThrow('(not done) OR "done"');
         });
 
@@ -66,7 +66,7 @@ describe('BooleanDelimiters', () => {
             shouldDelimitWithDoubleQuotes('NOT "not done"');
         });
 
-        it.failing('from line with mixed delimiters', () => {
+        it('from line with mixed delimiters', () => {
             shouldThrow('NOT (not done"');
         });
 
