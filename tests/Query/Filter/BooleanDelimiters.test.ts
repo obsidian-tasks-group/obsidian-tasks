@@ -44,12 +44,12 @@ describe('BooleanDelimiters', () => {
             shouldDelimitWithParentheses('(not done) OR (done)');
         });
 
-        it('does not recognise inconsistent delimiters in middle of line', () => {
-            shouldDelimitWithParentheses('(not done) OR "done" OR (done)');
-        });
-
         it('should recognise "" delimiters', () => {
             shouldDelimitWithDoubleQuotes('"not done" OR "done"');
+        });
+
+        it('does not recognise inconsistent delimiters in middle of line', () => {
+            shouldDelimitWithParentheses('(not done) OR "done" OR (done)');
         });
 
         it('should reject line with mixed delimiters', () => {
