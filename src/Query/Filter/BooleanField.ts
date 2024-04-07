@@ -9,6 +9,7 @@ import type { SearchInfo } from '../SearchInfo';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
+import { BooleanDelimiters } from './BooleanDelimiters';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -25,11 +26,20 @@ import { Filter } from './Filter';
  * the expression into a single boolean entity.
  */
 export class BooleanField extends Field {
-    // First pattern in this matches conventional (filter1) OR (filter2) and similar
-    // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
-    private readonly basicBooleanRegexp = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
+    private readonly basicBooleanRegexp;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
     private subFields: Record<string, Filter> = {};
+
+    constructor() {
+        super();
+        // First pattern in this matches conventional (filter1) OR (filter2) and similar
+        // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
+
+        const delimiters = BooleanDelimiters.allSupportedDelimiters();
+        // This temporarily validates that I have not accidentally changed the expression used in
+        // this.basicBooleanRegexp, by retaining the original hard-coded regular expression for comparison:
+        this.basicBooleanRegexp = new RegExp('(.*(AND|OR|XOR|NOT)\\s*' + delimiters.openFilter + '.*|\\(.+\\))', 'g');
+    }
 
     protected filterRegExp(): RegExp {
         return this.basicBooleanRegexp;
