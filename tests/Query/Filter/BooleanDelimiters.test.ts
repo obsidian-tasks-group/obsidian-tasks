@@ -41,45 +41,37 @@ describe('BooleanDelimiters', () => {
 
     describe('construct from line with binary operators', () => {
         it('from line with () delimiters', () => {
-            const line = '(not done) OR (done)';
-            shouldDelimitWithParentheses(line);
+            shouldDelimitWithParentheses('(not done) OR (done)');
         });
 
         it('from line with "" delimiters', () => {
-            const line = '"not done" OR "done"';
-            shouldDelimitWithDoubleQuotes(line);
+            shouldDelimitWithDoubleQuotes('"not done" OR "done"');
         });
 
         it.failing('from line with mixed delimiters', () => {
-            const line = '(not done) OR "done"';
-            shouldThrow(line);
+            shouldThrow('(not done) OR "done"');
         });
 
         it.failing('from line with unknown delimiters', () => {
-            const line = '{not done} OR "done"';
-            shouldThrow(line);
+            shouldThrow('{not done} OR "done"');
         });
     });
 
     describe('construct from line starting with NOT', () => {
         it('from line with () delimiters', () => {
-            const line = 'NOT (not done)';
-            shouldDelimitWithParentheses(line);
+            shouldDelimitWithParentheses('NOT (not done)');
         });
 
         it('from line with "" delimiters', () => {
-            const line = 'NOT "not done"';
-            shouldDelimitWithDoubleQuotes(line);
+            shouldDelimitWithDoubleQuotes('NOT "not done"');
         });
 
         it.failing('from line with mixed delimiters', () => {
-            const line = 'NOT (not done"';
-            shouldThrow(line);
+            shouldThrow('NOT (not done"');
         });
 
         it('from line with unknown delimiters', () => {
-            const line = 'NOT {not done}';
-            shouldThrow(line);
+            shouldThrow('NOT {not done}');
         });
     });
 });
