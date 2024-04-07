@@ -6,6 +6,7 @@ import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task/Task';
 import { Explanation } from '../Explain/Explanation';
 import type { SearchInfo } from '../SearchInfo';
+import { checkRegExpsIdentical } from '../../lib/RegExpTools';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
@@ -33,7 +34,12 @@ export class BooleanField extends Field {
         super();
         // First pattern in this matches conventional (filter1) OR (filter2) and similar
         // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
-        this.basicBooleanRegexp = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
+
+        // This temporarily validates that I have not accidentally changed the expression used in
+        // this.basicBooleanRegexp, by retaining the original hard-coded regular expression for comparison:
+        const basicBooleanRegexp2 = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
+        this.basicBooleanRegexp = new RegExp('(.*(AND|OR|XOR|NOT)\\s*[("].*|\\(.+\\))', 'g');
+        checkRegExpsIdentical(basicBooleanRegexp2, this.basicBooleanRegexp);
     }
 
     protected filterRegExp(): RegExp {
