@@ -36,9 +36,16 @@ export class BooleanField extends Field {
         // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
 
         const delimiters = BooleanDelimiters.allSupportedDelimiters();
-        // This temporarily validates that I have not accidentally changed the expression used in
-        // this.basicBooleanRegexp, by retaining the original hard-coded regular expression for comparison:
-        this.basicBooleanRegexp = new RegExp('(.*(AND|OR|XOR|NOT)\\s*' + delimiters.openFilter + '.*|\\(.+\\))', 'g');
+        this.basicBooleanRegexp = new RegExp(
+            '(.*(AND|OR|XOR|NOT)\\s*' +
+                delimiters.openFilter +
+                '.*|' +
+                delimiters.openFilter +
+                '.+' +
+                delimiters.closeFilter +
+                ')',
+            'g',
+        );
     }
 
     protected filterRegExp(): RegExp {
