@@ -70,7 +70,13 @@ export class BooleanDelimiters {
         }
 
         const message =
-            "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.";
+            'All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: ' +
+            delimiterPairs
+                .map(([open, close]) => {
+                    return open + '...' + close;
+                })
+                .join(', ') +
+            '. Combinations of those delimiters are no longer supported.';
         throw new Error(message);
     }
 
