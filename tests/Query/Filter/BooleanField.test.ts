@@ -125,6 +125,73 @@ describe('boolean query - filter', () => {
         });
     });
 
+    describe('delimiters', () => {
+        function explanationOrError(filter: FilterOrErrorMessage) {
+            if (filter.filter) {
+                return filter.filter.explainFilterIndented('');
+            } else {
+                return filter.error;
+            }
+        }
+
+        describe('( and )', () => {
+            it('should allow ( and ) as delimiters around 1 filter', () => {
+                const filter = createValidFilter('(description includes #context/location1)');
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                                    "(description includes #context/location1) =>
+                                      description includes #context/location1
+                                    "
+                            `);
+            });
+
+            it('should allow ( and ) as delimiters around 2 filters', () => {
+                const filter = createValidFilter(
+                    '(description includes #context/location1) OR (description includes #context/location2)',
+                );
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                                    "(description includes #context/location1) OR (description includes #context/location2) =>
+                                      OR (At least one of):
+                                        description includes #context/location1
+                                        description includes #context/location2
+                                    "
+                            `);
+            });
+
+            it('should allow ( and ) as delimiters around 2 filters - with " inside', () => {
+                // This searches for words surrounded by double-quotes:
+                const filter = createValidFilter('(description includes "hello world") OR (description includes "42")');
+                // TODO Fix this:
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: h Expected ) character or separator (check the documentation for guidelines)"',
+                );
+            });
+        });
+
+        describe('" and "', () => {
+            it.failing('should allow " and " as delimiters around 1 filter', () => {
+                const filter = createValidFilter('"description includes #context/location1"');
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                    ""description includes #context/location1" =>
+                      description includes #context/location1
+                    "
+                `);
+            });
+
+            it('should allow " and " as delimiters around 2 filters', () => {
+                const filter = createValidFilter(
+                    '"description includes #context/location1" OR "description includes #context/location2"',
+                );
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                                    ""description includes #context/location1" OR "description includes #context/location2" =>
+                                      OR (At least one of):
+                                        description includes #context/location1
+                                        description includes #context/location2
+                                    "
+                            `);
+            });
+        });
+    });
+
     describe('error cases - to show error messages', () => {
         it.each([
             [
