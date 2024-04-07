@@ -29,6 +29,7 @@ describe('boolean query - filter', () => {
     describe('basic operators', () => {
         it.each([
             '(description includes d1) AND (description includes d2)',
+            '[description includes d1] AND [description includes d2]',
             '"description includes d1" AND "description includes d2"',
         ])('instruction: "%s"', (line: string) => {
             // Arrange

@@ -267,6 +267,9 @@ The error message is:
             }
         });
 
+        // convert non-standard delimiters to standard ones:
+        simplifiedLine = simplifiedLine.replace(/\[/g, '(');
+        simplifiedLine = simplifiedLine.replace(/]/g, ')');
         return { simplifiedLine, filters };
     }
 
