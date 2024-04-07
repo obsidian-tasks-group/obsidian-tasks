@@ -268,11 +268,13 @@ The error message is:
         });
 
         // convert non-standard delimiters to standard ones:
-        const openChar = delimiters.openFilterChars;
-        if (openChar != '"' && openChar != '(') {
-            const openDelimiter = /\[/g;
+        const openChars = delimiters.openFilterChars;
+        if (openChars != '"' && openChars != '(') {
+            const openDelimiter = new RegExp(anyOfTheseChars(openChars), 'g');
             simplifiedLine = simplifiedLine.replace(openDelimiter, '(');
-            const closeDelimiter = /]/g;
+
+            const closeChars = delimiters.closeFilterChars;
+            const closeDelimiter = new RegExp(anyOfTheseChars(closeChars), 'g');
             simplifiedLine = simplifiedLine.replace(closeDelimiter, ')');
         }
         return { simplifiedLine, filters };
