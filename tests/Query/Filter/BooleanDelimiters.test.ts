@@ -8,6 +8,14 @@ function shouldDelimitWithParentheses(line: string) {
     expect(delimiters.openAndCloseFilterChars).toEqual('()');
 }
 
+function shouldDelimitWithSquareBrackets(line: string) {
+    const delimiters = BooleanDelimiters.fromInstructionLine(line);
+
+    expect(delimiters.openFilterChars).toEqual('[');
+    expect(delimiters.closeFilterChars).toEqual(']');
+    expect(delimiters.openAndCloseFilterChars).toEqual('[]');
+}
+
 function shouldDelimitWithDoubleQuotes(line: string) {
     const delimiters = BooleanDelimiters.fromInstructionLine(line);
 
@@ -30,13 +38,13 @@ describe('BooleanDelimiters', () => {
     it('construction - all delimiters', () => {
         const delimiters = BooleanDelimiters.allSupportedDelimiters();
 
-        expect(delimiters.openFilterChars).toEqual('("');
-        expect(delimiters.openFilter).toEqual('[\\("]');
+        expect(delimiters.openFilterChars).toEqual('(["');
+        expect(delimiters.openFilter).toEqual('[\\(\\["]');
 
-        expect(delimiters.closeFilterChars).toEqual(')"');
-        expect(delimiters.closeFilter).toEqual('[\\)"]');
+        expect(delimiters.closeFilterChars).toEqual(')]"');
+        expect(delimiters.closeFilter).toEqual('[\\)\\]"]');
 
-        expect(delimiters.openAndCloseFilterChars).toEqual('()"');
+        expect(delimiters.openAndCloseFilterChars).toEqual('()[]"');
     });
 
     describe('construct from line with binary operators', () => {
@@ -46,6 +54,10 @@ describe('BooleanDelimiters', () => {
 
         it('should recognise "" delimiters', () => {
             shouldDelimitWithDoubleQuotes('"not done" OR "done"');
+        });
+
+        it('should recognise [] delimiters', () => {
+            shouldDelimitWithSquareBrackets('[not done] OR [done]');
         });
 
         it('does not recognise inconsistent delimiters in middle of line', () => {
