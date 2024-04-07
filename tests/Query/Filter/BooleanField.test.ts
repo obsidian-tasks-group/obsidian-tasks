@@ -27,11 +27,12 @@ function createValidFilter(instruction: string) {
 describe('boolean query - filter', () => {
     // These tests are intended to be really simple, so it is easy to reason about the correct behaviour of the code.
     describe('basic operators', () => {
-        it('AND', () => {
+        it.each([
+            '(description includes d1) AND (description includes d2)',
+            '"description includes d1" AND "description includes d2"',
+        ])('instruction: "%s"', (line: string) => {
             // Arrange
-            const filter = createValidFilter(
-                '"description includes d1" AND "description includes d2"', // Use "..." instead of (), for completeness
-            );
+            const filter = createValidFilter(line);
 
             // Act, Assert
             testWithDescription(filter, 'neither', false);
@@ -121,6 +122,73 @@ describe('boolean query - filter', () => {
 
             testWithDescription(filter, 'xxx #context/location1', true);
             testWithDescription(filter, 'xxx #context/location2', false);
+        });
+    });
+
+    describe('delimiters', () => {
+        function explanationOrError(filter: FilterOrErrorMessage) {
+            if (filter.filter) {
+                return filter.filter.explainFilterIndented('');
+            } else {
+                return filter.error;
+            }
+        }
+
+        describe('( and )', () => {
+            it('should allow ( and ) as delimiters around 1 filter', () => {
+                const filter = createValidFilter('(description includes #context/location1)');
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                                    "(description includes #context/location1) =>
+                                      description includes #context/location1
+                                    "
+                            `);
+            });
+
+            it('should allow ( and ) as delimiters around 2 filters', () => {
+                const filter = createValidFilter(
+                    '(description includes #context/location1) OR (description includes #context/location2)',
+                );
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                                    "(description includes #context/location1) OR (description includes #context/location2) =>
+                                      OR (At least one of):
+                                        description includes #context/location1
+                                        description includes #context/location2
+                                    "
+                            `);
+            });
+
+            it('should allow ( and ) as delimiters around 2 filters - with " inside', () => {
+                // This searches for words surrounded by double-quotes:
+                const filter = createValidFilter('(description includes "hello world") OR (description includes "42")');
+                // TODO Fix this:
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(
+                    '"malformed boolean query -- Unexpected character: h Expected ) character or separator (check the documentation for guidelines)"',
+                );
+            });
+        });
+
+        describe('" and "', () => {
+            it.failing('should allow " and " as delimiters around 1 filter', () => {
+                const filter = createValidFilter('"description includes #context/location1"');
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                    ""description includes #context/location1" =>
+                      description includes #context/location1
+                    "
+                `);
+            });
+
+            it('should allow " and " as delimiters around 2 filters', () => {
+                const filter = createValidFilter(
+                    '"description includes #context/location1" OR "description includes #context/location2"',
+                );
+                expect(explanationOrError(filter)).toMatchInlineSnapshot(`
+                                    ""description includes #context/location1" OR "description includes #context/location2" =>
+                                      OR (At least one of):
+                                        description includes #context/location1
+                                        description includes #context/location2
+                                    "
+                            `);
+            });
         });
     });
 
