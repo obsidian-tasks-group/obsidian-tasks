@@ -1,5 +1,7 @@
+import { escapeRegExp } from '../../lib/RegExpTools';
+
 export function anyOfTheseChars(allowedChars: string): string {
-    return new RegExp('[' + allowedChars + ']').source;
+    return new RegExp('[' + escapeRegExp(allowedChars) + ']').source;
 }
 
 /**
