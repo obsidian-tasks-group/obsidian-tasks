@@ -270,8 +270,10 @@ The error message is:
         // convert non-standard delimiters to standard ones:
         const openChar = delimiters.openFilterChars;
         if (openChar != '"' && openChar != '(') {
-            simplifiedLine = simplifiedLine.replace(/\[/g, '(');
-            simplifiedLine = simplifiedLine.replace(/]/g, ')');
+            const openDelimiter = /\[/g;
+            simplifiedLine = simplifiedLine.replace(openDelimiter, '(');
+            const closeDelimiter = /]/g;
+            simplifiedLine = simplifiedLine.replace(closeDelimiter, ')');
         }
         return { simplifiedLine, filters };
     }
