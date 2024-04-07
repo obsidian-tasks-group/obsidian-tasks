@@ -27,7 +27,10 @@ function createValidFilter(instruction: string) {
 describe('boolean query - filter', () => {
     // These tests are intended to be really simple, so it is easy to reason about the correct behaviour of the code.
     describe('basic operators', () => {
-        it.each(['"description includes d1" AND "description includes d2"'])('instruction: "%s"', (line: string) => {
+        it.each([
+            '(description includes d1) AND (description includes d2)',
+            '"description includes d1" AND "description includes d2"',
+        ])('instruction: "%s"', (line: string) => {
             // Arrange
             const filter = createValidFilter(line);
 
