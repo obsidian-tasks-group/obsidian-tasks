@@ -1,7 +1,8 @@
 import { BooleanPreprocessor } from '../../../src/Query/Filter/BooleanPreprocessor';
+import { BooleanDelimiters } from '../../../src/Query/Filter/BooleanDelimiters';
 
 function preprocess(line: string) {
-    return BooleanPreprocessor.preprocessExpression(line);
+    return BooleanPreprocessor.preprocessExpression(line, BooleanDelimiters.allSupportedDelimiters());
 }
 
 describe('BooleanPreprocessor', () => {
