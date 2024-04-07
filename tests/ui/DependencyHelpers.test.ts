@@ -1,5 +1,5 @@
 import { createTasksFromMarkdown } from '../TestingTools/TestHelpers';
-import { searchForCandidateTasksForDependency } from '../../src/ui/DependencyHelpers';
+import { searchForCandidateTasksForDependency } from '../../src/Suggestor/DependencyHelpers';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import type { Task } from '../../src/Task/Task';

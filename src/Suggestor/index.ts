@@ -16,6 +16,8 @@ export type SuggestInfo = {
     insertSkip?: number;
     /** Text to match with the user input if matching against the display text is not desirable */
     textToMatch?: string;
+    /** Task which needs too be Updated on Select */
+    taskItDependsOn?: Task;
 };
 
 /*
@@ -26,4 +28,5 @@ export type SuggestionBuilder = (
     cursorPos: number,
     settings: Settings,
     allTasks: Task[],
+    taskToSuggestFor?: Task,
 ) => SuggestInfo[];

@@ -7,6 +7,7 @@ import { Task } from '../Task/Task';
 import { generateUniqueId } from '../Task/TaskDependency';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { searchForCandidateTasksForDependency } from './DependencyHelpers';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 /**
@@ -25,7 +26,13 @@ export function makeDefaultSuggestionBuilder(
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
      */
-    return (line: string, cursorPos: number, settings: Settings, allTasks: Task[]): SuggestInfo[] => {
+    return (
+        line: string,
+        cursorPos: number,
+        settings: Settings,
+        allTasks: Task[],
+        taskToSuggestFor?: Task,
+    ): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
 
         // Step 1: add date suggestions if relevant
@@ -40,18 +47,13 @@ export function makeDefaultSuggestionBuilder(
 
         // Step 3: add dependecy suggestions
         suggestions = suggestions.concat(
-            addBlockedBySuggestions(
-                line,
-                cursorPos,
-                settings,
-                symbols.dependsOnSymbol,
-                // dataviewMode,
-                allTasks!,
-            ),
+            addBlockedBySuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
         );
 
         // Step 4: add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
+        suggestions = suggestions.concat(
+            addTaskPropertySuggestions(line, cursorPos, allTasks, settings, symbols, dataviewMode),
+        );
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
@@ -94,6 +96,7 @@ function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
 function addTaskPropertySuggestions(
     line: string,
     cursorPos: number,
+    allTasks: Task[],
     _settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
     dataviewMode: boolean,
@@ -124,10 +127,7 @@ function addTaskPropertySuggestions(
     if (!line.includes(symbols.idSymbol))
         genericSuggestions.push({
             displayText: `${symbols.idSymbol} Task ID`,
-            // Append UUID if Enter is Hit?
-            // Or Custom Option?
-            // Add Option for "Will Block?"
-            appendText: `${symbols.idSymbol} ${generateUniqueId(['TODO'])} `,
+            appendText: `${symbols.idSymbol} ${generateUniqueId(allTasks.map((task) => task.id))} `,
         });
 
     if (!line.includes(symbols.dependsOnSymbol))
@@ -417,53 +417,38 @@ function addBlockedBySuggestions(
     line: string,
     cursorPos: number,
     settings: Settings,
-    recurrenceSymbol: string,
-    // dataviewMode: boolean,
+    blockedBySymbol: string,
     allTasks: Task[],
+    taskToSuggestFor?: Task,
 ) {
-    //TODO: Figure out how to get all Tasks?
-    // genericSuggestions : Task[] = pluginContext.getTasks()!
-
-    //Copied from addRecurenceSuggestion (Maybe can be Extracted too Function?)
     const results: SuggestInfo[] = [];
-    const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
-    if (recurrenceMatch && recurrenceMatch.length >= 1) {
-        const recurrencePrefix = recurrenceMatch[1];
-        const recurrenceString = recurrenceMatch[2];
 
-        // Now to generic predefined suggestions.
-        // If we get a partial match with some of the suggestions (e.g. the user started typing "every d"),
-        // we use that for matches ("every day").
-        // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
-        // a max number.
-        // In the case of recurrence rules, the max number should be small enough to allow users to "escape"
-        // the mode of writing a recurrence rule, i.e. we should leave enough space for component suggestions
-        const minMatch = 1;
-        const maxGenericDateSuggestions = settings.autoSuggestMaxItems / 2;
-        let genericMatches = allTasks
-            .filter(
-                (value) =>
-                    recurrenceString &&
-                    recurrenceString.length >= minMatch &&
-                    value.description.toLowerCase().includes(recurrenceString.toLowerCase()),
-            )
-            .slice(0, maxGenericDateSuggestions);
+    const blockedByRegex = new RegExp(`(${blockedBySymbol})([0-9a-zA-Z ^,]*,)*([0-9a-zA-Z ^,]*)`, 'ug');
+    const blockedByMatch = matchByPosition(line, blockedByRegex, cursorPos);
+    if (blockedByMatch && blockedByMatch.length >= 1) {
+        // blockedByMatch[1] = Blocked By Symbol
+        const existingBlockedByIdStrings = blockedByMatch[2] || '';
+        const newTaskToAppend = blockedByMatch[3].trim();
 
-        if (genericMatches.length === 0 && recurrenceString.trim().length === 0) {
-            // We have no actual match so do completely generic recurrence suggestions, but not if
-            // there *was* a text to match (because it means the user is actually typing something else)
-            genericMatches = allTasks.slice(0, maxGenericDateSuggestions);
-        }
+        if (newTaskToAppend.length >= settings.autoSuggestMinMatch) {
+            const genericMatches = searchForCandidateTasksForDependency(
+                newTaskToAppend,
+                allTasks,
+                taskToSuggestFor,
+                [] as Task[],
+                [] as Task[],
+            );
 
-        for (const match of genericMatches) {
-            results.push({
-                suggestionType: 'match',
-                displayText: `${match.description}`,
-                appendText: `${recurrencePrefix} ${match.id} `,
-                insertAt: recurrenceMatch.index,
-                insertSkip: recurrenceMatch[0].length,
-            });
+            for (const task of genericMatches) {
+                results.push({
+                    suggestionType: 'match',
+                    displayText: `${task.descriptionWithoutTags}`,
+                    appendText: `${blockedBySymbol}${existingBlockedByIdStrings}`,
+                    insertAt: blockedByMatch.index,
+                    insertSkip: blockedBySymbol.length + existingBlockedByIdStrings.length + newTaskToAppend.length,
+                    taskItDependsOn: task,
+                });
+            }
         }
     }
     return results;
@@ -574,11 +559,11 @@ export function lastOpenBracket(
  *   * {@link fn}`(line, cursorPos, settings)` otherwise
  */
 export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [string, string][]): SuggestionBuilder {
-    return (line, cursorPos, settings, pluginContext): SuggestInfo[] => {
+    return (line, cursorPos, settings, taskToSuggestFor, allTasks): SuggestInfo[] => {
         if (!isAnyBracketOpen(line.slice(0, cursorPos), brackets)) {
             return [];
         }
-        return fn(line, cursorPos, settings, pluginContext);
+        return fn(line, cursorPos, settings, taskToSuggestFor, allTasks);
     };
 }
 

@@ -18,6 +18,7 @@ import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerialize
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -49,6 +50,21 @@ function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: 
     return [line_without_cursor, line.indexOf('|')];
 }
 
+/**
+ * IDs are randomly generated when a new Task is generated
+ * Too make acceptance Tests not fail Everytime, its masked with a, fixed ID Placeholder: "******"
+ * @param idSymbol - A string that contains the Definition of the ID Symbol
+ * @param suggestions - Suggestion that contain the ID Definition, which should be Replaced
+ * @returns the SuggestInfo, with all ID's Masked
+ */
+function maskIDSuggestionForTesting(idSymbol: string, suggestions: SuggestInfo[]): SuggestInfo[] {
+    const idRegex = new RegExp(`${idSymbol}( ?[0-9a-zA-Z]*)`, 'ug');
+    suggestions.forEach((element) => {
+        element.appendText = element.appendText.replace(idRegex, `${idSymbol} ******`);
+    });
+    return suggestions;
+}
+
 const MAX_GENERIC_SUGGESTIONS_FOR_TESTS = 50;
 
 // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -63,12 +79,21 @@ describe.each([
         name === 'dataview',
     );
 
-    const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, createdDateSymbol, recurrenceSymbol } = symbols;
+    const {
+        dueDateSymbol,
+        scheduledDateSymbol,
+        startDateSymbol,
+        createdDateSymbol,
+        recurrenceSymbol,
+        idSymbol,
+        dependsOnSymbol,
+    } = symbols;
     it('offers basic completion options for an empty task', () => {
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] ';
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings, [] as Task[]);
+        let suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings, [] as Task[]);
+        suggestions = maskIDSuggestionForTesting(idSymbol, suggestions);
         verifyAsJson(suggestions);
     });
 
@@ -89,6 +114,17 @@ describe.each([
         const suggestions: SuggestInfo[] = buildSuggestions(line, 20, originalSettings, [] as Task[]);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
+    });
+
+    it('offers task suggestions for tasks too possible depend on', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        const line = `- [ ] some task ${dependsOnSymbol} `;
+        const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
+
+        let suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, [taskToDependOn]);
+        suggestions = maskIDSuggestionForTesting(idSymbol, suggestions);
+        expect(suggestions[0].displayText).toContain(taskToDependOn.descriptionWithoutTags);
     });
 
     it('offers generic recurrence completions', () => {
@@ -157,10 +193,13 @@ describe.each([
             `- [ ] some task ${dueDateSymbol} `,
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
+            `- [ ] some task ${idSymbol} `,
+            `- [ ] some task ${dependsOnSymbol} `,
         ];
         const markdownTable = new MarkdownTable(['Searchable Text', 'Text that is added']);
         for (const line of lines) {
-            const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, [] as Task[]);
+            let suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, [] as Task[]);
+            suggestions = maskIDSuggestionForTesting(idSymbol, suggestions);
             for (const suggestion of suggestions) {
                 // The 'new line' replacement adds a trailing space at the end of a line,
                 // which causes auto-formatting to then make the test fail.

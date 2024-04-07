@@ -1,6 +1,8 @@
 import { App, Editor, EditorSuggest, TFile } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 import type TasksPlugin from 'main';
+import { ensureTaskHasId } from 'Task/TaskDependency';
+import { replaceTaskWithTasks } from 'Obsidian/File';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';
@@ -51,13 +53,19 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     getSuggestions(context: EditorSuggestContext): SuggestInfoWithContext[] {
         const line = context.query;
         const currentCursor = context.editor.getCursor();
+        const allTasks = this.plugin.getTasks();
+
+        const taskToSuggestFor = allTasks.find(
+            (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
+        );
 
         const suggestions: SuggestInfo[] =
             getUserSelectedTaskFormat().buildSuggestions?.(
                 line,
                 currentCursor.ch,
                 this.settings,
-                this.plugin.getTasks(),
+                allTasks,
+                taskToSuggestFor,
             ) ?? [];
 
         // Add the editor context to all the suggestions
@@ -81,6 +89,14 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             (editor as any)?.cm?.contentDOM?.dispatchEvent(eventClone);
             return;
         }
+
+        if (value.taskItDependsOn != null) {
+            const newTask = ensureTaskHasId(value.taskItDependsOn, ['TODO']);
+            value.appendText += ` ${newTask.id}`;
+
+            replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
+        }
+
         const currentCursor = value.context.editor.getCursor();
         const replaceFrom = {
             line: currentCursor.line,

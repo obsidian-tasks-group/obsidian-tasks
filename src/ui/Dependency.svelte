@@ -1,8 +1,11 @@
 <script lang="ts">
     import { computePosition, flip, offset, shift, size } from '@floating-ui/dom';
     import type { Task } from '../Task/Task';
+    import {
+        descriptionAdjustedForDependencySearch,
+        searchForCandidateTasksForDependency,
+    } from '../Suggestor/DependencyHelpers';
     import type { EditableTask } from './EditableTask';
-    import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
 
     export let task: Task;
     export let editableTask: EditableTask;
