@@ -45,17 +45,17 @@ export class BooleanPreprocessor {
         // All that remains now is to separate:
         // - any spaces and opening delimiters at the start of filters
         // - any spaces and close   delimiters at the end of filters
-        const openingParensAndSpacesAtStartRegex = new RegExp(
+        const openingDelimitersAndSpacesAtStartRegex = new RegExp(
             '(^' + anyOfTheseChars(delimiters.openFilterChars + ' ') + '*)',
         );
 
-        const closingParensAndSpacesAtEndRegex = new RegExp(
+        const closingDelimitersAndSpacesAtEndRegex = new RegExp(
             '(' + anyOfTheseChars(delimiters.closeFilterChars + ' ') + '*$)',
         );
 
         return substringsSplitAtOperatorBoundaries
-            .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
-            .flatMap((substring) => substring.split(closingParensAndSpacesAtEndRegex))
+            .flatMap((substring) => substring.split(openingDelimitersAndSpacesAtStartRegex))
+            .flatMap((substring) => substring.split(closingDelimitersAndSpacesAtEndRegex))
             .filter((substring) => substring !== '');
     }
 }
