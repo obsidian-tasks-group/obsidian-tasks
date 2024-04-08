@@ -10,7 +10,8 @@ describe('BooleanPreprocessor', () => {
             expect(split('(not done)')).toMatchInlineSnapshot(`
                 [
                   "(",
-                  "not done)",
+                  "not done",
+                  ")",
                 ]
             `);
         });
@@ -21,7 +22,8 @@ describe('BooleanPreprocessor', () => {
                   "(",
                   "done",
                   ") AND (",
-                  "has done date)",
+                  "has done date",
+                  ")",
                 ]
             `);
         });
@@ -31,9 +33,11 @@ describe('BooleanPreprocessor', () => {
                 [
                   "(",
                   "done",
-                  ") AND  ",
+                  ") AND",
+                  "  ",
                   "NOT (",
-                  "has done date)",
+                  "has done date",
+                  ")",
                 ]
             `);
         });
@@ -44,7 +48,8 @@ describe('BooleanPreprocessor', () => {
                   "(",
                   "done",
                   ") OR (",
-                  "has done date)",
+                  "has done date",
+                  ")",
                 ]
             `);
         });
@@ -54,9 +59,11 @@ describe('BooleanPreprocessor', () => {
                 [
                   "(",
                   "done",
-                  ") OR  ",
+                  ") OR",
+                  "  ",
                   "NOT (",
-                  "has done date)",
+                  "has done date",
+                  ")",
                 ]
             `);
         });
@@ -67,8 +74,10 @@ describe('BooleanPreprocessor', () => {
                   """,
                   "done",
                   "" ",
-                  "XOR "",
-                  "has done date"",
+                  "XOR",
+                  " "",
+                  "has done date",
+                  """,
                 ]
             `);
         });
@@ -77,7 +86,8 @@ describe('BooleanPreprocessor', () => {
             expect(split('NOT  (not done)')).toMatchInlineSnapshot(`
                 [
                   "NOT  (",
-                  "not done)",
+                  "not done",
+                  ")",
                 ]
             `);
         });
@@ -90,7 +100,8 @@ describe('BooleanPreprocessor', () => {
                   "(",
                   "done",
                   ")AND(",
-                  "has done date)",
+                  "has done date",
+                  ")",
                 ]
             `);
         });
@@ -99,7 +110,8 @@ describe('BooleanPreprocessor', () => {
             expect(split('NOT(not done)')).toMatchInlineSnapshot(`
                 [
                   "NOT(",
-                  "not done)",
+                  "not done",
+                  ")",
                 ]
             `);
         });
@@ -112,7 +124,8 @@ describe('BooleanPreprocessor', () => {
                   "(((((",
                   "NOT  (",
                   " ",
-                  "description includes d1 ))))))",
+                  "description includes d1",
+                  " ))))))",
                 ]
             `);
         });
@@ -121,9 +134,11 @@ describe('BooleanPreprocessor', () => {
             expect(split('"""""NOT  " description includes d1 """"""')).toMatchInlineSnapshot(`
                 [
                   """"""",
-                  "NOT  "",
+                  "NOT",
+                  "  "",
                   " ",
-                  "description includes d1 """"""",
+                  "description includes d1",
+                  " """"""",
                 ]
             `);
         });
