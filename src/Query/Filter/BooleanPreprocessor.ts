@@ -71,12 +71,35 @@ export class BooleanPreprocessor {
     }
 
     private static getFiltersAndSimplifiedLine(parts: string[]) {
+        const delimiters = BooleanDelimiters.allSupportedDelimiters();
+
         // Holds the reconstructed expression with placeholders
-        const simplifiedLine = '';
+        let simplifiedLine = '';
+        let currentIndex = 1; // Placeholder index starts at 1
         const filters: { [key: string]: string } = {}; // To store filter placeholders and their corresponding text
 
-        // TODO Loop to add placeholders-for-filters or operators to the simplifiedLine
+        // Loop to add placeholders-for-filters or operators to the simplifiedLine
+        parts.forEach((part) => {
+            // Check if the part is an operator by matching against the regex without surrounding parentheses
+            if (!BooleanPreprocessor.isAFilter(part, delimiters)) {
+                // It's an operator, space or parenthesis, so add it directly to the simplifiedLine
+                simplifiedLine += `${part}`;
+            } else {
+                // It's a filter, replace it with a placeholder, and save it:
+                const placeholder = `f${currentIndex}`;
+                filters[placeholder] = part;
+                simplifiedLine += placeholder;
+                currentIndex++;
+            }
+        });
 
         return { parts, simplifiedLine, filters };
+    }
+
+    private static isAFilter(part: string, _delimiters: BooleanDelimiters) {
+        // TODO Make this correctly identify only filters...
+
+        // Simplifying assumption for first attempt: it's only a filter if it contains a lower case letter:
+        return /[a-z]/.exec(part) !== null;
     }
 }
