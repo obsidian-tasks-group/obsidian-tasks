@@ -37,7 +37,9 @@ describe('BooleanPreprocessor', () => {
         expect(split('(done) AND  NOT (has done date)')).toMatchInlineSnapshot(`
             [
               "(done",
-              ") AND  NOT (",
+              ") AND  ",
+              "NOT (",
+              "",
               "has done date)",
             ]
         `);
@@ -57,7 +59,9 @@ describe('BooleanPreprocessor', () => {
         expect(split('(done) OR  NOT (has done date)')).toMatchInlineSnapshot(`
             [
               "(done",
-              ") OR  NOT (",
+              ") OR  ",
+              "NOT (",
+              "",
               "has done date)",
             ]
         `);
@@ -69,6 +73,16 @@ describe('BooleanPreprocessor', () => {
               ""done",
               "" XOR "",
               "has done date"",
+            ]
+        `);
+    });
+
+    it('simple unary NOT', () => {
+        expect(split('NOT (not done)')).toMatchInlineSnapshot(`
+            [
+              "",
+              "NOT (",
+              "not done)",
             ]
         `);
     });
