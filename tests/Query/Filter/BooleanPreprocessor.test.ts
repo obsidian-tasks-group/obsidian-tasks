@@ -32,4 +32,14 @@ describe('BooleanPreprocessor', () => {
             ]
         `);
     });
+
+    it('simple XOR', () => {
+        expect(split('"done" XOR "has done date"')).toMatchInlineSnapshot(`
+            [
+              ""done",
+              "" XOR "",
+              "has done date"",
+            ]
+        `);
+    });
 });
