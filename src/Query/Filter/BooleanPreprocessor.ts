@@ -22,7 +22,6 @@ export class BooleanPreprocessor {
         //   ')  AND  NOT  ('
         const binaryOperatorsRegex = new RegExp(
             '(' + delimiters.closeFilter + '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' + delimiters.openFilter + ')',
-            'g',
         );
 
         // Divide up line, split at binary operator boundaries
@@ -34,7 +33,7 @@ export class BooleanPreprocessor {
         //   'NOT('
         //   'NOT ('
         //   'NOT  ('
-        const unaryOperatorsRegex = new RegExp('(NOT\\s*' + delimiters.openFilter + ')', 'g');
+        const unaryOperatorsRegex = new RegExp('(NOT\\s*' + delimiters.openFilter + ')');
 
         // Divide up the divided components, this time splitting at unary operator boundaries.
         // flatMap() divides and then flattens the result.
