@@ -26,7 +26,9 @@ describe('BooleanPreprocessor', () => {
     it('simple OR', () => {
         expect(split('(done) OR (has done date)')).toMatchInlineSnapshot(`
             [
-              "(done) OR (has done date)",
+              "(done",
+              ") OR (",
+              "has done date)",
             ]
         `);
     });
