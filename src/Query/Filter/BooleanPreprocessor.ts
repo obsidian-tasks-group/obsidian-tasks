@@ -96,10 +96,30 @@ export class BooleanPreprocessor {
         return { parts, simplifiedLine, filters };
     }
 
-    private static isAFilter(part: string, _delimiters: BooleanDelimiters) {
-        // TODO Make this correctly identify only filters...
+    private static isAFilter(part: string, delimiters: BooleanDelimiters) {
+        // This set of regular expressions was built up empirically through a lot of iteration,
+        // over a very thorough set of sample Boolean filters, in order to detect all the outputs
+        // from splitLine() that were not actually Tasks filters.
+        const onlySpacesAndParentheses = new RegExp(
+            '^' + anyOfTheseChars(' ' + delimiters.openAndCloseFilterChars) + '+$',
+        );
 
-        // Simplifying assumption for first attempt: it's only a filter if it contains a lower case letter:
-        return /[a-z]/.exec(part) !== null;
+        const binaryOperatorAndParentheses = new RegExp(
+            '^ *' + delimiters.closeFilter + ' *(AND|OR|XOR) *' + delimiters.openFilter + ' *$',
+        );
+
+        const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + delimiters.openFilter + '$');
+
+        const remnantsOfNot = new RegExp('^' + delimiters.closeFilter + ' *(AND|OR|XOR)$');
+
+        const justOperators = /^(AND|OR|XOR|NOT)$/;
+
+        return ![
+            onlySpacesAndParentheses,
+            binaryOperatorAndParentheses,
+            unaryOperatorAndParentheses,
+            remnantsOfNot,
+            justOperators,
+        ].some((regex) => RegExp(regex).exec(part));
     }
 }
