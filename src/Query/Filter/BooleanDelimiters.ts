@@ -14,15 +14,18 @@ export class BooleanDelimiters {
     public readonly closeFilterChars;
     public readonly closeFilter;
 
-    public constructor(openFilterChars: string, closeFilterChars: string) {
+    public readonly openAndCloseFilterChars;
+
+    private constructor(openFilterChars: string, closeFilterChars: string, openAndCloseFilterChars: string) {
         this.openFilterChars = openFilterChars;
         this.closeFilterChars = closeFilterChars;
+        this.openAndCloseFilterChars = openAndCloseFilterChars;
 
         this.openFilter = anyOfTheseChars(this.openFilterChars);
         this.closeFilter = anyOfTheseChars(this.closeFilterChars);
     }
 
     public static allSupportedDelimiters(): BooleanDelimiters {
-        return new BooleanDelimiters('("', ')"');
+        return new BooleanDelimiters('("', ')"', '()"');
     }
 }
