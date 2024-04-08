@@ -39,7 +39,6 @@ describe('BooleanPreprocessor', () => {
               "(done",
               ") AND  ",
               "NOT (",
-              "",
               "has done date)",
             ]
         `);
@@ -61,7 +60,6 @@ describe('BooleanPreprocessor', () => {
               "(done",
               ") OR  ",
               "NOT (",
-              "",
               "has done date)",
             ]
         `);
@@ -80,7 +78,6 @@ describe('BooleanPreprocessor', () => {
     it('simple unary NOT', () => {
         expect(split('NOT (not done)')).toMatchInlineSnapshot(`
             [
-              "",
               "NOT (",
               "not done)",
             ]

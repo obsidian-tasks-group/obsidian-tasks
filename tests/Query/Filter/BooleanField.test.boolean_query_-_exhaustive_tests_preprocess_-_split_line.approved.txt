@@ -63,7 +63,6 @@ Result:
     "(not done",
     ") AND ",
     "NOT (",
-    "",
     "is recurring)"
 ]
 
@@ -78,7 +77,6 @@ Result:
     "(not done",
     ") OR ",
     "NOT (",
-    "",
     "is recurring)"
 ]
 
@@ -90,7 +88,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     "not done)"
 ]
@@ -146,7 +143,6 @@ Result:
     "\"not done",
     "\" AND ",
     "NOT (",
-    "",
     "is recurring)"
 ]
 
@@ -161,7 +157,6 @@ Result:
     "\"not done",
     "\" OR ",
     "NOT (",
-    "",
     "is recurring)"
 ]
 
@@ -229,7 +224,6 @@ Result:
     "(not done",
     ") AND ",
     "NOT \"",
-    "",
     "is recurring\""
 ]
 
@@ -244,7 +238,6 @@ Result:
     "(not done",
     ") OR ",
     "NOT \"",
-    "",
     "is recurring\""
 ]
 
@@ -309,7 +302,6 @@ Result:
     "description includes 7) ",
     ") AND ",
     "NOT (",
-    "",
     "description includes 7)"
 ]
 
@@ -547,7 +539,6 @@ Result:
     "description includes Hello World)",
     ") OR ",
     "NOT (",
-    "",
     "(due this week",
     ") AND (",
     "description includes Hello World))"
@@ -618,7 +609,6 @@ Result:
     "(HAS START DATE",
     ") AND ",
     "NOT (",
-    "",
     "DESCRIPTION INCLUDES SOME)"
 ]
 
@@ -648,7 +638,6 @@ Result:
     "(HAS START DATE",
     ") OR ",
     "NOT (",
-    "",
     "DESCRIPTION INCLUDES SPECIAL)"
 ]
 
@@ -676,7 +665,6 @@ Result:
     "(cancelled after 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "cancelled after 2021-12-27)"
 ]
 
@@ -691,7 +679,6 @@ Result:
     "(cancelled before 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "cancelled before 2021-12-27)"
 ]
 
@@ -706,7 +693,6 @@ Result:
     "(cancelled date is invalid",
     ") OR ",
     "NOT (",
-    "",
     "cancelled date is invalid)"
 ]
 
@@ -721,7 +707,6 @@ Result:
     "(cancelled in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
-    "",
     "cancelled in 2021-12-27 2021-12-29)"
 ]
 
@@ -736,7 +721,6 @@ Result:
     "(cancelled on 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "cancelled on 2021-12-27)"
 ]
 
@@ -751,7 +735,6 @@ Result:
     "(cancelled this week",
     ") OR ",
     "NOT (",
-    "",
     "cancelled this week)"
 ]
 
@@ -766,7 +749,6 @@ Result:
     "(created after 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "created after 2021-12-27)"
 ]
 
@@ -781,7 +763,6 @@ Result:
     "(created before 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "created before 2021-12-27)"
 ]
 
@@ -796,7 +777,6 @@ Result:
     "(created date is invalid",
     ") OR ",
     "NOT (",
-    "",
     "created date is invalid)"
 ]
 
@@ -811,7 +791,6 @@ Result:
     "(created in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
-    "",
     "created in 2021-12-27 2021-12-29)"
 ]
 
@@ -826,7 +805,6 @@ Result:
     "(created on 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "created on 2021-12-27)"
 ]
 
@@ -841,7 +819,6 @@ Result:
     "(created this week",
     ") OR ",
     "NOT (",
-    "",
     "created this week)"
 ]
 
@@ -856,7 +833,6 @@ Result:
     "(description does not include wibble",
     ") OR ",
     "NOT (",
-    "",
     "description does not include wibble)"
 ]
 
@@ -981,7 +957,6 @@ Result:
     "(description includes AND",
     ") OR ",
     "NOT (",
-    "",
     "description includes AND)"
 ]
 
@@ -1009,7 +984,6 @@ Result:
     "(description includes d1",
     ") AND   ",
     "NOT (",
-    "",
     "priority medium)"
 ]
 
@@ -1037,7 +1011,6 @@ Result:
     "(description includes d1",
     ") AND ",
     "NOT (",
-    "",
     "description includes d2)"
 ]
 
@@ -1052,7 +1025,6 @@ Result:
     "(description includes d1",
     ") OR   ",
     "NOT (",
-    "",
     "priority medium)"
 ]
 
@@ -1108,7 +1080,6 @@ Result:
     "(description includes d1",
     ") OR ",
     "NOT (",
-    "",
     "description includes d2)"
 ]
 
@@ -1162,7 +1133,6 @@ Result:
     "(description includes wibble",
     ") OR ",
     "NOT (",
-    "",
     "description includes wibble)"
 ]
 
@@ -1190,7 +1160,6 @@ Result:
     "(done after 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "done after 2021-12-27)"
 ]
 
@@ -1205,7 +1174,6 @@ Result:
     "(done before 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "done before 2021-12-27)"
 ]
 
@@ -1220,7 +1188,6 @@ Result:
     "(done date is invalid",
     ") OR ",
     "NOT (",
-    "",
     "done date is invalid)"
 ]
 
@@ -1235,7 +1202,6 @@ Result:
     "(done in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
-    "",
     "done in 2021-12-27 2021-12-29)"
 ]
 
@@ -1250,7 +1216,6 @@ Result:
     "(done on 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "done on 2021-12-27)"
 ]
 
@@ -1265,7 +1230,6 @@ Result:
     "(done this week",
     ") OR ",
     "NOT (",
-    "",
     "done this week)"
 ]
 
@@ -1280,7 +1244,6 @@ Result:
     "(done",
     ") OR ",
     "NOT (",
-    "",
     "done)"
 ]
 
@@ -1295,7 +1258,6 @@ Result:
     "(due after 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "due after 2021-12-27)"
 ]
 
@@ -1310,7 +1272,6 @@ Result:
     "(due before 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "due before 2021-12-27)"
 ]
 
@@ -1338,7 +1299,6 @@ Result:
     "(due date is invalid",
     ") OR ",
     "NOT (",
-    "",
     "due date is invalid)"
 ]
 
@@ -1353,7 +1313,6 @@ Result:
     "(due in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
-    "",
     "due in 2021-12-27 2021-12-29)"
 ]
 
@@ -1368,7 +1327,6 @@ Result:
     "(due on 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "due on 2021-12-27)"
 ]
 
@@ -1396,7 +1354,6 @@ Result:
     "(due this week",
     ") OR ",
     "NOT (",
-    "",
     "due this week)"
 ]
 
@@ -1411,7 +1368,6 @@ Result:
     "(exclude sub-items",
     ") OR ",
     "NOT (",
-    "",
     "exclude sub-items)"
 ]
 
@@ -1426,7 +1382,6 @@ Result:
     "(filename includes wibble",
     ") OR ",
     "NOT (",
-    "",
     "filename includes wibble)"
 ]
 
@@ -1441,7 +1396,6 @@ Result:
     "(filter by function task.isDone",
     ") OR ",
     "NOT (",
-    "",
     "filter by function task.isDone)"
 ]
 
@@ -1456,7 +1410,6 @@ Result:
     "(folder does not include some/path",
     ") OR ",
     "NOT (",
-    "",
     "folder does not include some/path)"
 ]
 
@@ -1471,7 +1424,6 @@ Result:
     "(folder includes AND",
     ") OR ",
     "NOT (",
-    "",
     "folder includes AND)"
 ]
 
@@ -1486,7 +1438,6 @@ Result:
     "(folder includes some/path",
     ") OR ",
     "NOT (",
-    "",
     "folder includes some/path)"
 ]
 
@@ -1501,7 +1452,6 @@ Result:
     "(happens after 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "happens after 2021-12-27)"
 ]
 
@@ -1516,7 +1466,6 @@ Result:
     "(happens before 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "happens before 2021-12-27)"
 ]
 
@@ -1531,7 +1480,6 @@ Result:
     "(happens in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
-    "",
     "happens in 2021-12-27 2021-12-29)"
 ]
 
@@ -1546,7 +1494,6 @@ Result:
     "(happens on 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "happens on 2021-12-27)"
 ]
 
@@ -1561,7 +1508,6 @@ Result:
     "(happens this week",
     ") OR ",
     "NOT (",
-    "",
     "happens this week)"
 ]
 
@@ -1576,7 +1522,6 @@ Result:
     "(has cancelled date",
     ") OR ",
     "NOT (",
-    "",
     "has cancelled date)"
 ]
 
@@ -1591,7 +1536,6 @@ Result:
     "(has created date",
     ") OR ",
     "NOT (",
-    "",
     "has created date)"
 ]
 
@@ -1606,7 +1550,6 @@ Result:
     "(has depends on",
     ") OR ",
     "NOT (",
-    "",
     "has depends on)"
 ]
 
@@ -1621,7 +1564,6 @@ Result:
     "(has done date",
     ") OR ",
     "NOT (",
-    "",
     "has done date)"
 ]
 
@@ -1651,7 +1593,6 @@ Result:
     "(has due date",
     ") OR ",
     "NOT (",
-    "",
     "has due date)"
 ]
 
@@ -1666,7 +1607,6 @@ Result:
     "(has happens date",
     ") OR ",
     "NOT (",
-    "",
     "has happens date)"
 ]
 
@@ -1681,7 +1621,6 @@ Result:
     "(has id",
     ") OR ",
     "NOT (",
-    "",
     "has id)"
 ]
 
@@ -1696,7 +1635,6 @@ Result:
     "(has scheduled date",
     ") OR ",
     "NOT (",
-    "",
     "has scheduled date)"
 ]
 
@@ -1752,7 +1690,6 @@ Result:
     "(has start date",
     ") AND ",
     "NOT (",
-    "",
     "description includes some)"
 ]
 
@@ -1782,7 +1719,6 @@ Result:
     "(has start date",
     ") OR ",
     "NOT (",
-    "",
     "description includes special)"
 ]
 
@@ -1797,7 +1733,6 @@ Result:
     "(has start date",
     ") OR ",
     "NOT (",
-    "",
     "has start date)"
 ]
 
@@ -1825,7 +1760,6 @@ Result:
     "(has tag",
     ") OR ",
     "NOT (",
-    "",
     "has tag)"
 ]
 
@@ -1840,7 +1774,6 @@ Result:
     "(has tags",
     ") OR ",
     "NOT (",
-    "",
     "has tags)"
 ]
 
@@ -1855,7 +1788,6 @@ Result:
     "(heading does not include wibble",
     ") OR ",
     "NOT (",
-    "",
     "heading does not include wibble)"
 ]
 
@@ -1870,7 +1802,6 @@ Result:
     "(heading includes AND",
     ") OR ",
     "NOT (",
-    "",
     "heading includes AND)"
 ]
 
@@ -1885,7 +1816,6 @@ Result:
     "(heading includes wibble",
     ") OR ",
     "NOT (",
-    "",
     "heading includes wibble)"
 ]
 
@@ -1900,7 +1830,6 @@ Result:
     "(id does not include abc123",
     ") OR ",
     "NOT (",
-    "",
     "id does not include abc123)"
 ]
 
@@ -1915,7 +1844,6 @@ Result:
     "(id includes AND",
     ") OR ",
     "NOT (",
-    "",
     "id includes AND)"
 ]
 
@@ -1930,7 +1858,6 @@ Result:
     "(id includes abc123",
     ") OR ",
     "NOT (",
-    "",
     "id includes abc123)"
 ]
 
@@ -1945,7 +1872,6 @@ Result:
     "(is blocked",
     ") OR ",
     "NOT (",
-    "",
     "is blocked)"
 ]
 
@@ -1960,7 +1886,6 @@ Result:
     "(is blocking",
     ") OR ",
     "NOT (",
-    "",
     "is blocking)"
 ]
 
@@ -1975,7 +1900,6 @@ Result:
     "(is not blocked",
     ") OR ",
     "NOT (",
-    "",
     "is not blocked)"
 ]
 
@@ -1990,7 +1914,6 @@ Result:
     "(is not blocking",
     ") OR ",
     "NOT (",
-    "",
     "is not blocking)"
 ]
 
@@ -2005,7 +1928,6 @@ Result:
     "(is not recurring",
     ") OR ",
     "NOT (",
-    "",
     "is not recurring)"
 ]
 
@@ -2035,7 +1957,6 @@ Result:
     "(is recurring",
     ") OR ",
     "NOT (",
-    "",
     "is recurring)"
 ]
 
@@ -2050,7 +1971,6 @@ Result:
     "(no cancelled date",
     ") OR ",
     "NOT (",
-    "",
     "no cancelled date)"
 ]
 
@@ -2065,7 +1985,6 @@ Result:
     "(no created date",
     ") OR ",
     "NOT (",
-    "",
     "no created date)"
 ]
 
@@ -2080,7 +1999,6 @@ Result:
     "(no depends on",
     ") OR ",
     "NOT (",
-    "",
     "no depends on)"
 ]
 
@@ -2095,7 +2013,6 @@ Result:
     "(no due date",
     ") OR ",
     "NOT (",
-    "",
     "no due date)"
 ]
 
@@ -2110,7 +2027,6 @@ Result:
     "(no happens date",
     ") OR ",
     "NOT (",
-    "",
     "no happens date)"
 ]
 
@@ -2125,7 +2041,6 @@ Result:
     "(no id",
     ") OR ",
     "NOT (",
-    "",
     "no id)"
 ]
 
@@ -2140,7 +2055,6 @@ Result:
     "(no scheduled date",
     ") OR ",
     "NOT (",
-    "",
     "no scheduled date)"
 ]
 
@@ -2155,7 +2069,6 @@ Result:
     "(no start date",
     ") OR ",
     "NOT (",
-    "",
     "no start date)"
 ]
 
@@ -2170,7 +2083,6 @@ Result:
     "(no tag",
     ") OR ",
     "NOT (",
-    "",
     "no tag)"
 ]
 
@@ -2185,7 +2097,6 @@ Result:
     "(no tags",
     ") OR ",
     "NOT (",
-    "",
     "no tags)"
 ]
 
@@ -2200,7 +2111,6 @@ Result:
     "(not done",
     ") OR ",
     "NOT (",
-    "",
     "not done)"
 ]
 
@@ -2215,7 +2125,6 @@ Result:
     "(path does not include some/path",
     ") OR ",
     "NOT (",
-    "",
     "path does not include some/path)"
 ]
 
@@ -2295,7 +2204,6 @@ Result:
     "(path includes AND",
     ") OR ",
     "NOT (",
-    "",
     "path includes AND)"
 ]
 
@@ -2414,7 +2322,6 @@ Result:
     "(path includes a",
     ")OR ",
     "NOT (",
-    "",
     "path includes b)"
 ]
 
@@ -2442,7 +2349,6 @@ Result:
     "(path includes some/path",
     ") OR ",
     "NOT (",
-    "",
     "path includes some/path)"
 ]
 
@@ -2457,7 +2363,6 @@ Result:
     "(priority is above none",
     ") OR ",
     "NOT (",
-    "",
     "priority is above none)"
 ]
 
@@ -2472,7 +2377,6 @@ Result:
     "(priority is below none",
     ") OR ",
     "NOT (",
-    "",
     "priority is below none)"
 ]
 
@@ -2487,7 +2391,6 @@ Result:
     "(priority is high",
     ") OR ",
     "NOT (",
-    "",
     "priority is high)"
 ]
 
@@ -2515,7 +2418,6 @@ Result:
     "(priority is low",
     ") OR ",
     "NOT (",
-    "",
     "priority is low)"
 ]
 
@@ -2530,7 +2432,6 @@ Result:
     "(priority is medium",
     ") OR ",
     "NOT (",
-    "",
     "priority is medium)"
 ]
 
@@ -2545,7 +2446,6 @@ Result:
     "(priority is none",
     ") OR ",
     "NOT (",
-    "",
     "priority is none)"
 ]
 
@@ -2560,7 +2460,6 @@ Result:
     "(recurrence does not include wednesday",
     ") OR ",
     "NOT (",
-    "",
     "recurrence does not include wednesday)"
 ]
 
@@ -2575,7 +2474,6 @@ Result:
     "(recurrence includes wednesday",
     ") OR ",
     "NOT (",
-    "",
     "recurrence includes wednesday)"
 ]
 
@@ -2590,7 +2488,6 @@ Result:
     "(root does not include some",
     ") OR ",
     "NOT (",
-    "",
     "root does not include some)"
 ]
 
@@ -2605,7 +2502,6 @@ Result:
     "(root includes AND",
     ") OR ",
     "NOT (",
-    "",
     "root includes AND)"
 ]
 
@@ -2620,7 +2516,6 @@ Result:
     "(root includes some",
     ") OR ",
     "NOT (",
-    "",
     "root includes some)"
 ]
 
@@ -2635,7 +2530,6 @@ Result:
     "(scheduled after 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "scheduled after 2021-12-27)"
 ]
 
@@ -2650,7 +2544,6 @@ Result:
     "(scheduled before 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "scheduled before 2021-12-27)"
 ]
 
@@ -2665,7 +2558,6 @@ Result:
     "(scheduled date is invalid",
     ") OR ",
     "NOT (",
-    "",
     "scheduled date is invalid)"
 ]
 
@@ -2680,7 +2572,6 @@ Result:
     "(scheduled in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
-    "",
     "scheduled in 2021-12-27 2021-12-29)"
 ]
 
@@ -2695,7 +2586,6 @@ Result:
     "(scheduled on 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "scheduled on 2021-12-27)"
 ]
 
@@ -2710,7 +2600,6 @@ Result:
     "(scheduled this week",
     ") OR ",
     "NOT (",
-    "",
     "scheduled this week)"
 ]
 
@@ -2725,7 +2614,6 @@ Result:
     "(start date is invalid",
     ") OR ",
     "NOT (",
-    "",
     "start date is invalid)"
 ]
 
@@ -2740,7 +2628,6 @@ Result:
     "(starts after 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "starts after 2021-12-27)"
 ]
 
@@ -2755,7 +2642,6 @@ Result:
     "(starts before 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "starts before 2021-12-27)"
 ]
 
@@ -2770,7 +2656,6 @@ Result:
     "(starts in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
-    "",
     "starts in 2021-12-27 2021-12-29)"
 ]
 
@@ -2785,7 +2670,6 @@ Result:
     "(starts on 2021-12-27",
     ") OR ",
     "NOT (",
-    "",
     "starts on 2021-12-27)"
 ]
 
@@ -2800,7 +2684,6 @@ Result:
     "(starts this week",
     ") OR ",
     "NOT (",
-    "",
     "starts this week)"
 ]
 
@@ -2815,7 +2698,6 @@ Result:
     "(status.name includes cancelled",
     ") OR ",
     "NOT (",
-    "",
     "status.name includes cancelled)"
 ]
 
@@ -2830,7 +2712,6 @@ Result:
     "(status.type is IN_PROGRESS",
     ") OR ",
     "NOT (",
-    "",
     "status.type is IN_PROGRESS)"
 ]
 
@@ -2845,7 +2726,6 @@ Result:
     "(tag does not include #sometag",
     ") OR ",
     "NOT (",
-    "",
     "tag does not include #sometag)"
 ]
 
@@ -2860,7 +2740,6 @@ Result:
     "(tag does not include sometag",
     ") OR ",
     "NOT (",
-    "",
     "tag does not include sometag)"
 ]
 
@@ -2875,7 +2754,6 @@ Result:
     "(tag includes #sometag",
     ") OR ",
     "NOT (",
-    "",
     "tag includes #sometag)"
 ]
 
@@ -2890,7 +2768,6 @@ Result:
     "(tag includes AND",
     ") OR ",
     "NOT (",
-    "",
     "tag includes AND)"
 ]
 
@@ -2905,7 +2782,6 @@ Result:
     "(tag includes sometag",
     ") OR ",
     "NOT (",
-    "",
     "tag includes sometag)"
 ]
 
@@ -2920,7 +2796,6 @@ Result:
     "(tags do not include #sometag",
     ") OR ",
     "NOT (",
-    "",
     "tags do not include #sometag)"
 ]
 
@@ -2935,7 +2810,6 @@ Result:
     "(tags do not include sometag",
     ") OR ",
     "NOT (",
-    "",
     "tags do not include sometag)"
 ]
 
@@ -2950,7 +2824,6 @@ Result:
     "(tags include #sometag",
     ") OR ",
     "NOT (",
-    "",
     "tags include #sometag)"
 ]
 
@@ -2965,7 +2838,6 @@ Result:
     "(tags include sometag",
     ") OR ",
     "NOT (",
-    "",
     "tags include sometag)"
 ]
 
@@ -3010,7 +2882,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     " ",
     "NOT (",
@@ -3025,7 +2896,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     "(HAS START DATE",
     ") OR (",
@@ -3040,7 +2910,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     "(has start date",
     ") OR (",
@@ -3055,7 +2924,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     "HAS START DATE)"
 ]
@@ -3068,7 +2936,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     "description blahblah d1)"
 ]
@@ -3081,7 +2948,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     "description includes d1)"
 ]
@@ -3094,7 +2960,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     "happens before blahblahblah)"
 ]
@@ -3107,7 +2972,6 @@ Input:
 =>
 Result:
 [
-    "",
     "NOT (",
     "has start date)"
 ]
