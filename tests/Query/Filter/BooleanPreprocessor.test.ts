@@ -23,6 +23,16 @@ describe('BooleanPreprocessor', () => {
         `);
     });
 
+    it('simple AND - but spaces missing around AND', () => {
+        expect(split('(done)AND(has done date)')).toMatchInlineSnapshot(`
+            [
+              "(done",
+              ")AND(",
+              "has done date)",
+            ]
+        `);
+    });
+
     it('simple AND NOT', () => {
         expect(split('(done) AND  NOT (has done date)')).toMatchInlineSnapshot(`
             [
