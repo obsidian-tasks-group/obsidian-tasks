@@ -43,6 +43,16 @@ describe('BooleanPreprocessor', () => {
         `);
     });
 
+    it('simple OR NOT', () => {
+        expect(split('(done) OR NOT (has done date)')).toMatchInlineSnapshot(`
+            [
+              "(done",
+              ") OR NOT (",
+              "has done date)",
+            ]
+        `);
+    });
+
     it('simple XOR', () => {
         expect(split('"done" XOR "has done date"')).toMatchInlineSnapshot(`
             [
