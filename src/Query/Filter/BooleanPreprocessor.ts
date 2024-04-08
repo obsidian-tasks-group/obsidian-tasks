@@ -7,7 +7,7 @@ export class BooleanPreprocessor {
         // Here, we split the input line in to separate operators-plus-adjacent-delimiters
         // and the remaining filter text.
         const binaryOperatorsRegex = new RegExp(
-            '(' + delimiters.closeFilter + ' (?:AND|OR|AND NOT|OR NOT|XOR) ' + delimiters.openFilter + ')',
+            '(' + delimiters.closeFilter + ' (?:AND|OR|AND +NOT|OR +NOT|XOR) ' + delimiters.openFilter + ')',
             'g',
         );
 

@@ -24,10 +24,10 @@ describe('BooleanPreprocessor', () => {
     });
 
     it('simple AND NOT', () => {
-        expect(split('(done) AND NOT (has done date)')).toMatchInlineSnapshot(`
+        expect(split('(done) AND  NOT (has done date)')).toMatchInlineSnapshot(`
             [
               "(done",
-              ") AND NOT (",
+              ") AND  NOT (",
               "has done date)",
             ]
         `);
@@ -44,10 +44,10 @@ describe('BooleanPreprocessor', () => {
     });
 
     it('simple OR NOT', () => {
-        expect(split('(done) OR NOT (has done date)')).toMatchInlineSnapshot(`
+        expect(split('(done) OR  NOT (has done date)')).toMatchInlineSnapshot(`
             [
               "(done",
-              ") OR NOT (",
+              ") OR  NOT (",
               "has done date)",
             ]
         `);
