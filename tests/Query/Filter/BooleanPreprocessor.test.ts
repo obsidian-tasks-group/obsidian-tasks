@@ -41,6 +41,22 @@ describe('BooleanPreprocessor', () => {
             `);
         });
 
+        it('simple AND - filters capitalised', () => {
+            expect(split('(DONE) AND (HAS DONE DATE)')).toMatchInlineSnapshot(`
+                {
+                  "filters": {},
+                  "parts": [
+                    "(",
+                    "DONE",
+                    ") AND (",
+                    "HAS DONE DATE",
+                    ")",
+                  ],
+                  "simplifiedLine": "(DONE) AND (HAS DONE DATE)",
+                }
+            `);
+        });
+
         it('simple AND NOT', () => {
             expect(split('(done) AND  NOT (has done date)')).toMatchInlineSnapshot(`
                 {
