@@ -44,7 +44,10 @@ describe('BooleanPreprocessor', () => {
         it('simple AND - filters capitalised', () => {
             expect(split('(DONE) AND (HAS DONE DATE)')).toMatchInlineSnapshot(`
                 {
-                  "filters": {},
+                  "filters": {
+                    "f1": "DONE",
+                    "f2": "HAS DONE DATE",
+                  },
                   "parts": [
                     "(",
                     "DONE",
@@ -52,7 +55,7 @@ describe('BooleanPreprocessor', () => {
                     "HAS DONE DATE",
                     ")",
                   ],
-                  "simplifiedLine": "(DONE) AND (HAS DONE DATE)",
+                  "simplifiedLine": "(f1) AND (f2)",
                 }
             `);
         });

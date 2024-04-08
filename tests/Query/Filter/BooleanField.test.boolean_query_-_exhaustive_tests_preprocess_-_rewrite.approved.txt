@@ -438,8 +438,11 @@ Result:
         "DESCRIPTION INCLUDES SPECIAL",
         ")"
     ],
-    "simplifiedLine": "\"HAS DUE DATE\" OR (DESCRIPTION INCLUDES SPECIAL)",
-    "filters": {}
+    "simplifiedLine": "\"f1\" OR (f2)",
+    "filters": {
+        "f1": "HAS DUE DATE",
+        "f2": "DESCRIPTION INCLUDES SPECIAL"
+    }
 }
 
 --------------------------------------------------------
@@ -1020,8 +1023,11 @@ Result:
         "DESCRIPTION INCLUDES HELLO WORLD",
         ")"
     ],
-    "simplifiedLine": "(DUE THIS WEEK) AND (DESCRIPTION INCLUDES HELLO WORLD)",
-    "filters": {}
+    "simplifiedLine": "(f1) AND (f2)",
+    "filters": {
+        "f1": "DUE THIS WEEK",
+        "f2": "DESCRIPTION INCLUDES HELLO WORLD"
+    }
 }
 
 --------------------------------------------------------
@@ -1040,8 +1046,11 @@ Result:
         "DESCRIPTION INCLUDES SOME",
         "\""
     ],
-    "simplifiedLine": "(HAS START DATE) AND \"DESCRIPTION INCLUDES SOME\"",
-    "filters": {}
+    "simplifiedLine": "(f1) AND \"f2\"",
+    "filters": {
+        "f1": "HAS START DATE",
+        "f2": "DESCRIPTION INCLUDES SOME"
+    }
 }
 
 --------------------------------------------------------
@@ -1062,8 +1071,12 @@ Result:
         "HAS DUE DATE",
         "))"
     ],
-    "simplifiedLine": "(HAS START DATE) AND ((DESCRIPTION INCLUDES SOME) OR (HAS DUE DATE))",
-    "filters": {}
+    "simplifiedLine": "(f1) AND ((f2) OR (f3))",
+    "filters": {
+        "f1": "HAS START DATE",
+        "f2": "DESCRIPTION INCLUDES SOME",
+        "f3": "HAS DUE DATE"
+    }
 }
 
 --------------------------------------------------------
@@ -1083,8 +1096,11 @@ Result:
         "DESCRIPTION INCLUDES SOME",
         ")"
     ],
-    "simplifiedLine": "(HAS START DATE) AND NOT (DESCRIPTION INCLUDES SOME)",
-    "filters": {}
+    "simplifiedLine": "(f1) AND NOT (f2)",
+    "filters": {
+        "f1": "HAS START DATE",
+        "f2": "DESCRIPTION INCLUDES SOME"
+    }
 }
 
 --------------------------------------------------------
@@ -1105,8 +1121,12 @@ Result:
         "HAS DUE DATE",
         "))"
     ],
-    "simplifiedLine": "(HAS START DATE) OR ((DESCRIPTION INCLUDES SPECIAL) AND (HAS DUE DATE))",
-    "filters": {}
+    "simplifiedLine": "(f1) OR ((f2) AND (f3))",
+    "filters": {
+        "f1": "HAS START DATE",
+        "f2": "DESCRIPTION INCLUDES SPECIAL",
+        "f3": "HAS DUE DATE"
+    }
 }
 
 --------------------------------------------------------
@@ -1126,8 +1146,11 @@ Result:
         "DESCRIPTION INCLUDES SPECIAL",
         ")"
     ],
-    "simplifiedLine": "(HAS START DATE) OR NOT (DESCRIPTION INCLUDES SPECIAL)",
-    "filters": {}
+    "simplifiedLine": "(f1) OR NOT (f2)",
+    "filters": {
+        "f1": "HAS START DATE",
+        "f2": "DESCRIPTION INCLUDES SPECIAL"
+    }
 }
 
 --------------------------------------------------------
@@ -1145,8 +1168,11 @@ Result:
         "DESCRIPTION INCLUDES SPECIAL",
         ")"
     ],
-    "simplifiedLine": "(HAS START DATE) XOR (DESCRIPTION INCLUDES SPECIAL)",
-    "filters": {}
+    "simplifiedLine": "(f1) XOR (f2)",
+    "filters": {
+        "f1": "HAS START DATE",
+        "f2": "DESCRIPTION INCLUDES SPECIAL"
+    }
 }
 
 --------------------------------------------------------
@@ -2725,10 +2751,11 @@ Result:
         "due after 2021-12-27",
         "))"
     ],
-    "simplifiedLine": "(f1) OR ((HAS START DATE) AND (f2))",
+    "simplifiedLine": "(f1) OR ((f2) AND (f3))",
     "filters": {
         "f1": "has due date",
-        "f2": "due after 2021-12-27"
+        "f2": "HAS START DATE",
+        "f3": "due after 2021-12-27"
     }
 }
 
@@ -4991,8 +5018,11 @@ Result:
         "DESCRIPTION INCLUDES SPECIAL",
         "))"
     ],
-    "simplifiedLine": "NOT ((HAS START DATE) OR (DESCRIPTION INCLUDES SPECIAL))",
-    "filters": {}
+    "simplifiedLine": "NOT ((f1) OR (f2))",
+    "filters": {
+        "f1": "HAS START DATE",
+        "f2": "DESCRIPTION INCLUDES SPECIAL"
+    }
 }
 
 --------------------------------------------------------
@@ -5031,8 +5061,10 @@ Result:
         "HAS START DATE",
         ")"
     ],
-    "simplifiedLine": "NOT (HAS START DATE)",
-    "filters": {}
+    "simplifiedLine": "NOT (f1)",
+    "filters": {
+        "f1": "HAS START DATE"
+    }
 }
 
 --------------------------------------------------------
