@@ -9,5 +9,7 @@ describe('BooleanDelimiters', () => {
 
         expect(delimiters.closeFilterChars).toEqual(')"');
         expect(delimiters.closeFilter).toEqual('[)"]');
+
+        expect(delimiters.openAndCloseFilterChars).toEqual('()"');
     });
 });
