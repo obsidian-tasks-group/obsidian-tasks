@@ -512,7 +512,9 @@ Input:
 =>
 Result:
 [
-    "(((((NOT  ( description includes d1 ))))))"
+    "(((((",
+    "NOT  (",
+    " description includes d1 ))))))"
 ]
 
 --------------------------------------------------------
@@ -2216,7 +2218,8 @@ Input:
 Result:
 [
     "(path includes a",
-    ") AND NOT(",
+    ") AND ",
+    "NOT(",
     "path includes b)"
 ]
 
@@ -2242,7 +2245,8 @@ Input:
 Result:
 [
     "(path includes a",
-    ") OR NOT(",
+    ") OR ",
+    "NOT(",
     "path includes b)"
 ]
 
@@ -2294,7 +2298,8 @@ Input:
 Result:
 [
     "(path includes a",
-    ")AND NOT(",
+    ")AND ",
+    "NOT(",
     "path includes b)"
 ]
 
@@ -2860,7 +2865,8 @@ Input:
 =>
 Result:
 [
-    "NOT   (  happens before blahblahblah  )"
+    "NOT   (",
+    "  happens before blahblahblah  )"
 ]
 
 --------------------------------------------------------
@@ -2871,7 +2877,8 @@ Input:
 =>
 Result:
 [
-    "NOT  ( description includes d1 )"
+    "NOT  (",
+    " description includes d1 )"
 ]
 
 --------------------------------------------------------
@@ -2984,7 +2991,8 @@ Input:
 =>
 Result:
 [
-    "NOT(path includes b)"
+    "NOT(",
+    "path includes b)"
 ]
 
 --------------------------------------------------------
