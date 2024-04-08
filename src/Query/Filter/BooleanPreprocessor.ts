@@ -1,6 +1,17 @@
 import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
 
+type BooleanPreprocessorResult = {
+    parts: string[];
+    simplifiedLine: string;
+    filters: { [key: string]: string };
+};
+
 export class BooleanPreprocessor {
+    public static preprocessExpressionV2(line: string): BooleanPreprocessorResult {
+        const parts = BooleanPreprocessor.splitLine(line);
+        return BooleanPreprocessor.getFiltersAndSimplifiedLine(parts);
+    }
+
     public static splitLine(line: string) {
         const delimiters = BooleanDelimiters.allSupportedDelimiters();
 
@@ -57,5 +68,15 @@ export class BooleanPreprocessor {
             .flatMap((substring) => substring.split(openingDelimitersAndSpacesAtStartRegex))
             .flatMap((substring) => substring.split(closingDelimitersAndSpacesAtEndRegex))
             .filter((substring) => substring !== '');
+    }
+
+    private static getFiltersAndSimplifiedLine(parts: string[]) {
+        // Holds the reconstructed expression with placeholders
+        const simplifiedLine = '';
+        const filters: { [key: string]: string } = {}; // To store filter placeholders and their corresponding text
+
+        // TODO Loop to add placeholders-for-filters or operators to the simplifiedLine
+
+        return { parts, simplifiedLine, filters };
     }
 }
