@@ -6,6 +6,20 @@ export class BooleanPreprocessor {
 
         // Here, we split the input line in to separate operators-plus-adjacent-delimiters
         // and the remaining filter text.
+
+        // This will now correctly split up almost all valid Boolean instructions - many more cases than the
+        // original preprocessExpression() method.
+        // The one current exception is that any Spaces and ) at the end of sub-expressions/filters are interpreted
+        // as part of the Boolean condition, not the filter.
+
+        // Escape special regex characters for Binary boolean operators and create a regex pattern to match
+        // operators and capture surrounding parentheses.
+        // To retain backwards compatibility, we match expressions that have missing spaces around AND, OR etc.
+        // This matches text such as:
+        //   ')AND('
+        //   ') AND ('
+        //   ')AND  NOT('
+        //   ')  AND  NOT  ('
         const binaryOperatorsRegex = new RegExp(
             '(' + delimiters.closeFilter + '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' + delimiters.openFilter + ')',
             'g',
