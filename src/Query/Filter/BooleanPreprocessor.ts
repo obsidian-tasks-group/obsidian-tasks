@@ -1,4 +1,4 @@
-import { BooleanDelimiters } from './BooleanDelimiters';
+import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
 
 export class BooleanPreprocessor {
     public static splitLine(line: string) {
@@ -38,8 +38,19 @@ export class BooleanPreprocessor {
         // Divide up the divided components, this time splitting at unary operator boundaries.
         // flatMap() divides and then flattens the result.
         // Then we filter out empty values.
-        return substrings
+        const substringsSplitAtOperatorBoundaries = substrings
             .flatMap((substring) => substring.split(unaryOperatorsRegex))
+            .filter((substring) => substring !== '');
+
+        // All that remains now is to separate:
+        // - any spaces and opening parentheses at the start of filters
+        // - any spaces and close   parentheses at the end of filters (TODO)
+        const openingParensAndSpacesAtStartRegex = new RegExp(
+            '(^' + anyOfTheseChars(delimiters.openFilterChars + ' ') + '*)',
+        );
+
+        return substringsSplitAtOperatorBoundaries
+            .flatMap((substring) => substring.split(openingParensAndSpacesAtStartRegex))
             .filter((substring) => substring !== '');
     }
 }

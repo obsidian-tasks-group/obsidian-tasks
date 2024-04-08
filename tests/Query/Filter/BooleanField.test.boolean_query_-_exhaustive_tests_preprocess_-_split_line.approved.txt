@@ -8,7 +8,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") AND (",
     "is recurring)"
 ]
@@ -21,9 +22,11 @@ Input:
 =>
 Result:
 [
-    "((not done)",
+    "((",
+    "not done)",
     ") AND (",
-    "(is recurring))"
+    "(",
+    "is recurring))"
 ]
 
 --------------------------------------------------------
@@ -34,7 +37,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") OR (",
     "is recurring)"
 ]
@@ -47,7 +51,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") XOR (",
     "is recurring)"
 ]
@@ -60,7 +65,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") AND ",
     "NOT (",
     "is recurring)"
@@ -74,7 +80,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") OR ",
     "NOT (",
     "is recurring)"
@@ -101,8 +108,10 @@ Input:
 =>
 Result:
 [
-    "\"not done",
-    "\" AND (",
+    "\"",
+    "not done",
+    "\" ",
+    "AND (",
     "is recurring)"
 ]
 
@@ -114,8 +123,10 @@ Input:
 =>
 Result:
 [
-    "\"not done",
-    "\" OR (",
+    "\"",
+    "not done",
+    "\" ",
+    "OR (",
     "is recurring)"
 ]
 
@@ -127,8 +138,10 @@ Input:
 =>
 Result:
 [
-    "\"not done",
-    "\" XOR (",
+    "\"",
+    "not done",
+    "\" ",
+    "XOR (",
     "is recurring)"
 ]
 
@@ -140,8 +153,10 @@ Input:
 =>
 Result:
 [
-    "\"not done",
-    "\" AND ",
+    "\"",
+    "not done",
+    "\" ",
+    "AND ",
     "NOT (",
     "is recurring)"
 ]
@@ -154,8 +169,10 @@ Input:
 =>
 Result:
 [
-    "\"not done",
-    "\" OR ",
+    "\"",
+    "not done",
+    "\" ",
+    "OR ",
     "NOT (",
     "is recurring)"
 ]
@@ -169,7 +186,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") AND \"",
     "is recurring\""
 ]
@@ -182,7 +200,8 @@ Input:
 =>
 Result:
 [
-    "((not done)",
+    "((",
+    "not done)",
     ") AND \"",
     "is recurring\""
 ]
@@ -195,7 +214,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") OR \"",
     "is recurring\""
 ]
@@ -208,7 +228,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") XOR \"",
     "is recurring\""
 ]
@@ -221,7 +242,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") AND ",
     "NOT \"",
     "is recurring\""
@@ -235,7 +257,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") OR ",
     "NOT \"",
     "is recurring\""
@@ -250,8 +273,10 @@ Input:
 =>
 Result:
 [
-    "\"HAS DUE DATE",
-    "\" OR (",
+    "\"",
+    "HAS DUE DATE",
+    "\" ",
+    "OR (",
     "DESCRIPTION INCLUDES SPECIAL)"
 ]
 
@@ -263,8 +288,10 @@ Input:
 =>
 Result:
 [
-    "\"description includes d1",
-    "\" AND \"",
+    "\"",
+    "description includes d1",
+    "\" ",
+    "AND \"",
     "description includes d2\""
 ]
 
@@ -276,8 +303,10 @@ Input:
 =>
 Result:
 [
-    "\"has due date",
-    "\" OR (",
+    "\"",
+    "has due date",
+    "\" ",
+    "OR (",
     "description includes special)"
 ]
 
@@ -289,13 +318,15 @@ Input:
 =>
 Result:
 [
-    "( (description includes 1",
+    "( (",
+    "description includes 1",
     ") AND (",
     "description includes 2",
     ") AND (",
     "description includes 3) ",
     ") OR (",
-    " (description includes 5",
+    " (",
+    "description includes 5",
     ") AND (",
     "description includes 6",
     ") AND (",
@@ -313,7 +344,8 @@ Input:
 =>
 Result:
 [
-    "( (description includes a",
+    "( (",
+    "description includes a",
     ") AND (",
     "description includes b) ",
     ") AND (",
@@ -328,13 +360,15 @@ Input:
 =>
 Result:
 [
-    "( (description includes a",
+    "( (",
+    "description includes a",
     ") AND (",
     "description includes b",
     ") AND (",
     "description includes c) ",
     ") OR (",
-    " (description includes d",
+    " (",
+    "description includes d",
     ") AND (",
     "description includes e",
     ") AND (",
@@ -349,7 +383,8 @@ Input:
 =>
 Result:
 [
-    "( (description includes a",
+    "( (",
+    "description includes a",
     ") OR (",
     "description includes b) ",
     ") OR (",
@@ -364,13 +399,15 @@ Input:
 =>
 Result:
 [
-    "( (description includes a",
+    "( (",
+    "description includes a",
     ") OR (",
     "description includes b",
     ") OR (",
     "description includes c) ",
     ") AND (",
-    " (description includes d",
+    " (",
+    "description includes d",
     ") OR (",
     "description includes e",
     ") OR (",
@@ -385,13 +422,15 @@ Input:
 =>
 Result:
 [
-    "( (filter by function task.description.includes('a')",
+    "( (",
+    "filter by function task.description.includes('a')",
     ") OR (",
     "filter by function task.description.includes('b')",
     ") OR (",
     "filter by function task.description.includes('c')) ",
     ") AND (",
-    " (filter by function task.description.includes('d')",
+    " (",
+    "filter by function task.description.includes('d')",
     ") OR (",
     "filter by function task.description.includes('e')",
     ") OR (",
@@ -406,9 +445,11 @@ Input:
 =>
 Result:
 [
-    "( description includes a ",
+    "( ",
+    "description includes a ",
     ")   AND (",
-    " (description includes b",
+    " (",
+    "description includes b",
     ")  AND (",
     "description includes c) )"
 ]
@@ -421,9 +462,11 @@ Input:
 =>
 Result:
 [
-    "( description includes a ",
+    "( ",
+    "description includes a ",
     ")   OR  (",
-    " (description includes b",
+    " (",
+    "description includes b",
     ")  OR  (",
     "description includes c) )"
 ]
@@ -436,9 +479,11 @@ Input:
 =>
 Result:
 [
-    "( description regex matches /(buy|order|voucher|lakeland|purchase|\\spresent)/i ",
+    "( ",
+    "description regex matches /(buy|order|voucher|lakeland|purchase|\\spresent)/i ",
     ") OR (",
-    " path includes Home/Shopping )"
+    " ",
+    "path includes Home/Shopping )"
 ]
 
 --------------------------------------------------------
@@ -449,9 +494,11 @@ Input:
 =>
 Result:
 [
-    "( description regex matches /buy/i ",
+    "( ",
+    "description regex matches /buy/i ",
     ") AND (",
-    " path includes some/sample/note.md )"
+    " ",
+    "path includes some/sample/note.md )"
 ]
 
 --------------------------------------------------------
@@ -462,21 +509,29 @@ Input:
 =>
 Result:
 [
-    "( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ",
+    "( ",
+    "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ",
     ") OR (",
-    " filter by function const date = task.due.moment; return date ? !date.isValid() : false; ",
+    " ",
+    "filter by function const date = task.due.moment; return date ? !date.isValid() : false; ",
     ") OR (",
-    " filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ",
+    " ",
+    "filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ",
     ") OR (",
-    " filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ",
+    " ",
+    "filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ",
     ") OR (",
-    " filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ",
+    " ",
+    "filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ",
     ") OR (",
-    " filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ",
+    " ",
+    "filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ",
     ") OR (",
-    " filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ",
+    " ",
+    "filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ",
     ") OR (",
-    " filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )"
+    " ",
+    "filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )"
 ]
 
 --------------------------------------------------------
@@ -487,21 +542,29 @@ Input:
 =>
 Result:
 [
-    "( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type); ",
+    "( ",
+    "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type); ",
     ") OR (",
-    " filter by function const date = task.due.moment; return date ? !date.isValid() : false; ",
+    " ",
+    "filter by function const date = task.due.moment; return date ? !date.isValid() : false; ",
     ") OR (",
-    " filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false; ",
+    " ",
+    "filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false; ",
     ") OR (",
-    " filter by function task.urgency.toFixed(2) === 1.95.toFixed(2); ",
+    " ",
+    "filter by function task.urgency.toFixed(2) === 1.95.toFixed(2); ",
     ") OR (",
-    " filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'); ",
+    " ",
+    "filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'); ",
     ") OR (",
-    " filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(); ",
+    " ",
+    "filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(); ",
     ") OR (",
-    " filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false; ",
+    " ",
+    "filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false; ",
     ") OR (",
-    " filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )"
+    " ",
+    "filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )"
 ]
 
 --------------------------------------------------------
@@ -514,7 +577,8 @@ Result:
 [
     "(((((",
     "NOT  (",
-    " description includes d1 ))))))"
+    " ",
+    "description includes d1 ))))))"
 ]
 
 --------------------------------------------------------
@@ -525,7 +589,8 @@ Input:
 =>
 Result:
 [
-    "(((((description includes #context/location1)))))"
+    "(((((",
+    "description includes #context/location1)))))"
 ]
 
 --------------------------------------------------------
@@ -536,12 +601,14 @@ Input:
 =>
 Result:
 [
-    "((due this week",
+    "((",
+    "due this week",
     ") AND (",
     "description includes Hello World)",
     ") OR ",
     "NOT (",
-    "(due this week",
+    "(",
+    "due this week",
     ") AND (",
     "description includes Hello World))"
 ]
@@ -554,7 +621,8 @@ Input:
 =>
 Result:
 [
-    "(DESCRIPTION INCLUDES wibble",
+    "(",
+    "DESCRIPTION INCLUDES wibble",
     ") OR (",
     "has due date)"
 ]
@@ -567,7 +635,8 @@ Input:
 =>
 Result:
 [
-    "(DUE THIS WEEK",
+    "(",
+    "DUE THIS WEEK",
     ") AND (",
     "DESCRIPTION INCLUDES HELLO WORLD)"
 ]
@@ -580,7 +649,8 @@ Input:
 =>
 Result:
 [
-    "(HAS START DATE",
+    "(",
+    "HAS START DATE",
     ") AND \"",
     "DESCRIPTION INCLUDES SOME\""
 ]
@@ -593,9 +663,11 @@ Input:
 =>
 Result:
 [
-    "(HAS START DATE",
+    "(",
+    "HAS START DATE",
     ") AND (",
-    "(DESCRIPTION INCLUDES SOME",
+    "(",
+    "DESCRIPTION INCLUDES SOME",
     ") OR (",
     "HAS DUE DATE))"
 ]
@@ -608,7 +680,8 @@ Input:
 =>
 Result:
 [
-    "(HAS START DATE",
+    "(",
+    "HAS START DATE",
     ") AND ",
     "NOT (",
     "DESCRIPTION INCLUDES SOME)"
@@ -622,9 +695,11 @@ Input:
 =>
 Result:
 [
-    "(HAS START DATE",
+    "(",
+    "HAS START DATE",
     ") OR (",
-    "(DESCRIPTION INCLUDES SPECIAL",
+    "(",
+    "DESCRIPTION INCLUDES SPECIAL",
     ") AND (",
     "HAS DUE DATE))"
 ]
@@ -637,7 +712,8 @@ Input:
 =>
 Result:
 [
-    "(HAS START DATE",
+    "(",
+    "HAS START DATE",
     ") OR ",
     "NOT (",
     "DESCRIPTION INCLUDES SPECIAL)"
@@ -651,7 +727,8 @@ Input:
 =>
 Result:
 [
-    "(HAS START DATE",
+    "(",
+    "HAS START DATE",
     ") XOR (",
     "DESCRIPTION INCLUDES SPECIAL)"
 ]
@@ -664,7 +741,8 @@ Input:
 =>
 Result:
 [
-    "(cancelled after 2021-12-27",
+    "(",
+    "cancelled after 2021-12-27",
     ") OR ",
     "NOT (",
     "cancelled after 2021-12-27)"
@@ -678,7 +756,8 @@ Input:
 =>
 Result:
 [
-    "(cancelled before 2021-12-27",
+    "(",
+    "cancelled before 2021-12-27",
     ") OR ",
     "NOT (",
     "cancelled before 2021-12-27)"
@@ -692,7 +771,8 @@ Input:
 =>
 Result:
 [
-    "(cancelled date is invalid",
+    "(",
+    "cancelled date is invalid",
     ") OR ",
     "NOT (",
     "cancelled date is invalid)"
@@ -706,7 +786,8 @@ Input:
 =>
 Result:
 [
-    "(cancelled in 2021-12-27 2021-12-29",
+    "(",
+    "cancelled in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
     "cancelled in 2021-12-27 2021-12-29)"
@@ -720,7 +801,8 @@ Input:
 =>
 Result:
 [
-    "(cancelled on 2021-12-27",
+    "(",
+    "cancelled on 2021-12-27",
     ") OR ",
     "NOT (",
     "cancelled on 2021-12-27)"
@@ -734,7 +816,8 @@ Input:
 =>
 Result:
 [
-    "(cancelled this week",
+    "(",
+    "cancelled this week",
     ") OR ",
     "NOT (",
     "cancelled this week)"
@@ -748,7 +831,8 @@ Input:
 =>
 Result:
 [
-    "(created after 2021-12-27",
+    "(",
+    "created after 2021-12-27",
     ") OR ",
     "NOT (",
     "created after 2021-12-27)"
@@ -762,7 +846,8 @@ Input:
 =>
 Result:
 [
-    "(created before 2021-12-27",
+    "(",
+    "created before 2021-12-27",
     ") OR ",
     "NOT (",
     "created before 2021-12-27)"
@@ -776,7 +861,8 @@ Input:
 =>
 Result:
 [
-    "(created date is invalid",
+    "(",
+    "created date is invalid",
     ") OR ",
     "NOT (",
     "created date is invalid)"
@@ -790,7 +876,8 @@ Input:
 =>
 Result:
 [
-    "(created in 2021-12-27 2021-12-29",
+    "(",
+    "created in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
     "created in 2021-12-27 2021-12-29)"
@@ -804,7 +891,8 @@ Input:
 =>
 Result:
 [
-    "(created on 2021-12-27",
+    "(",
+    "created on 2021-12-27",
     ") OR ",
     "NOT (",
     "created on 2021-12-27)"
@@ -818,7 +906,8 @@ Input:
 =>
 Result:
 [
-    "(created this week",
+    "(",
+    "created this week",
     ") OR ",
     "NOT (",
     "created this week)"
@@ -832,7 +921,8 @@ Input:
 =>
 Result:
 [
-    "(description does not include wibble",
+    "(",
+    "description does not include wibble",
     ") OR ",
     "NOT (",
     "description does not include wibble)"
@@ -846,7 +936,8 @@ Input:
 =>
 Result:
 [
-    "(description includes \"hello world\"",
+    "(",
+    "description includes \"hello world\"",
     ") OR (",
     "description includes \"42\")"
 ]
@@ -859,7 +950,8 @@ Input:
 =>
 Result:
 [
-    "(description includes #context/location1)"
+    "(",
+    "description includes #context/location1)"
 ]
 
 --------------------------------------------------------
@@ -870,13 +962,16 @@ Input:
 =>
 Result:
 [
-    "(description includes #context/location1",
+    "(",
+    "description includes #context/location1",
     ") OR (",
     "description includes #context/location2 ",
     ") OR (",
-    "  description includes #context/location3 ",
+    "  ",
+    "description includes #context/location3 ",
     ") OR   (",
-    "  description includes #context/location4 )"
+    "  ",
+    "description includes #context/location4 )"
 ]
 
 --------------------------------------------------------
@@ -887,7 +982,8 @@ Input:
 =>
 Result:
 [
-    "(description includes 1",
+    "(",
+    "description includes 1",
     ")   AND   (",
     "description includes 2",
     ")   AND   (",
@@ -914,7 +1010,8 @@ Input:
 =>
 Result:
 [
-    "(description includes 1",
+    "(",
+    "description includes 1",
     ") AND (",
     "description includes 2",
     ") AND (",
@@ -929,7 +1026,8 @@ Input:
 =>
 Result:
 [
-    "(description includes 1",
+    "(",
+    "description includes 1",
     ") AND (",
     "description includes 2",
     ") AND (",
@@ -956,7 +1054,8 @@ Input:
 =>
 Result:
 [
-    "(description includes AND",
+    "(",
+    "description includes AND",
     ") OR ",
     "NOT (",
     "description includes AND)"
@@ -970,7 +1069,8 @@ Input:
 =>
 Result:
 [
-    "(description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN",
+    "(",
+    "description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN",
     ")AND(",
     "description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)"
 ]
@@ -983,7 +1083,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") AND   ",
     "NOT (",
     "priority medium)"
@@ -997,7 +1098,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") AND (",
     "priority medium)"
 ]
@@ -1010,7 +1112,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") AND ",
     "NOT (",
     "description includes d2)"
@@ -1024,7 +1127,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") OR   ",
     "NOT (",
     "priority medium)"
@@ -1038,7 +1142,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") OR (",
     "description includes d2)"
 ]
@@ -1051,7 +1156,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") OR (",
     "description includes d2",
     ") OR (",
@@ -1066,7 +1172,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") OR (",
     "priority medium)"
 ]
@@ -1079,7 +1186,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") OR ",
     "NOT (",
     "description includes d2)"
@@ -1093,7 +1201,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") XOR (",
     "description includes d2)"
 ]
@@ -1106,7 +1215,8 @@ Input:
 =>
 Result:
 [
-    "(description includes d1",
+    "(",
+    "description includes d1",
     ") XOR (",
     "priority medium)"
 ]
@@ -1119,7 +1229,8 @@ Input:
 =>
 Result:
 [
-    "(description includes line 1",
+    "(",
+    "description includes line 1",
     ") OR (",
     "description includes line 1 continued with \\ backslash)"
 ]
@@ -1132,7 +1243,8 @@ Input:
 =>
 Result:
 [
-    "(description includes wibble",
+    "(",
+    "description includes wibble",
     ") OR ",
     "NOT (",
     "description includes wibble)"
@@ -1146,7 +1258,8 @@ Input:
 =>
 Result:
 [
-    "(description regex matches /#t\\s/i",
+    "(",
+    "description regex matches /#t\\s/i",
     ") OR (",
     "description regex matches /#t$/i)"
 ]
@@ -1159,7 +1272,8 @@ Input:
 =>
 Result:
 [
-    "(done after 2021-12-27",
+    "(",
+    "done after 2021-12-27",
     ") OR ",
     "NOT (",
     "done after 2021-12-27)"
@@ -1173,7 +1287,8 @@ Input:
 =>
 Result:
 [
-    "(done before 2021-12-27",
+    "(",
+    "done before 2021-12-27",
     ") OR ",
     "NOT (",
     "done before 2021-12-27)"
@@ -1187,7 +1302,8 @@ Input:
 =>
 Result:
 [
-    "(done date is invalid",
+    "(",
+    "done date is invalid",
     ") OR ",
     "NOT (",
     "done date is invalid)"
@@ -1201,7 +1317,8 @@ Input:
 =>
 Result:
 [
-    "(done in 2021-12-27 2021-12-29",
+    "(",
+    "done in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
     "done in 2021-12-27 2021-12-29)"
@@ -1215,7 +1332,8 @@ Input:
 =>
 Result:
 [
-    "(done on 2021-12-27",
+    "(",
+    "done on 2021-12-27",
     ") OR ",
     "NOT (",
     "done on 2021-12-27)"
@@ -1229,7 +1347,8 @@ Input:
 =>
 Result:
 [
-    "(done this week",
+    "(",
+    "done this week",
     ") OR ",
     "NOT (",
     "done this week)"
@@ -1243,7 +1362,8 @@ Input:
 =>
 Result:
 [
-    "(done",
+    "(",
+    "done",
     ") OR ",
     "NOT (",
     "done)"
@@ -1257,7 +1377,8 @@ Input:
 =>
 Result:
 [
-    "(due after 2021-12-27",
+    "(",
+    "due after 2021-12-27",
     ") OR ",
     "NOT (",
     "due after 2021-12-27)"
@@ -1271,7 +1392,8 @@ Input:
 =>
 Result:
 [
-    "(due before 2021-12-27",
+    "(",
+    "due before 2021-12-27",
     ") OR ",
     "NOT (",
     "due before 2021-12-27)"
@@ -1285,7 +1407,8 @@ Input:
 =>
 Result:
 [
-    "(due before tomorrow",
+    "(",
+    "due before tomorrow",
     ") AND (",
     "is recurring)"
 ]
@@ -1298,7 +1421,8 @@ Input:
 =>
 Result:
 [
-    "(due date is invalid",
+    "(",
+    "due date is invalid",
     ") OR ",
     "NOT (",
     "due date is invalid)"
@@ -1312,7 +1436,8 @@ Input:
 =>
 Result:
 [
-    "(due in 2021-12-27 2021-12-29",
+    "(",
+    "due in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
     "due in 2021-12-27 2021-12-29)"
@@ -1326,7 +1451,8 @@ Input:
 =>
 Result:
 [
-    "(due on 2021-12-27",
+    "(",
+    "due on 2021-12-27",
     ") OR ",
     "NOT (",
     "due on 2021-12-27)"
@@ -1340,7 +1466,8 @@ Input:
 =>
 Result:
 [
-    "(due this week",
+    "(",
+    "due this week",
     ") AND (",
     "description includes Hello World)"
 ]
@@ -1353,7 +1480,8 @@ Input:
 =>
 Result:
 [
-    "(due this week",
+    "(",
+    "due this week",
     ") OR ",
     "NOT (",
     "due this week)"
@@ -1367,7 +1495,8 @@ Input:
 =>
 Result:
 [
-    "(exclude sub-items",
+    "(",
+    "exclude sub-items",
     ") OR ",
     "NOT (",
     "exclude sub-items)"
@@ -1381,7 +1510,8 @@ Input:
 =>
 Result:
 [
-    "(filename includes wibble",
+    "(",
+    "filename includes wibble",
     ") OR ",
     "NOT (",
     "filename includes wibble)"
@@ -1395,7 +1525,8 @@ Input:
 =>
 Result:
 [
-    "(filter by function task.isDone",
+    "(",
+    "filter by function task.isDone",
     ") OR ",
     "NOT (",
     "filter by function task.isDone)"
@@ -1409,7 +1540,8 @@ Input:
 =>
 Result:
 [
-    "(folder does not include some/path",
+    "(",
+    "folder does not include some/path",
     ") OR ",
     "NOT (",
     "folder does not include some/path)"
@@ -1423,7 +1555,8 @@ Input:
 =>
 Result:
 [
-    "(folder includes AND",
+    "(",
+    "folder includes AND",
     ") OR ",
     "NOT (",
     "folder includes AND)"
@@ -1437,7 +1570,8 @@ Input:
 =>
 Result:
 [
-    "(folder includes some/path",
+    "(",
+    "folder includes some/path",
     ") OR ",
     "NOT (",
     "folder includes some/path)"
@@ -1451,7 +1585,8 @@ Input:
 =>
 Result:
 [
-    "(happens after 2021-12-27",
+    "(",
+    "happens after 2021-12-27",
     ") OR ",
     "NOT (",
     "happens after 2021-12-27)"
@@ -1465,7 +1600,8 @@ Input:
 =>
 Result:
 [
-    "(happens before 2021-12-27",
+    "(",
+    "happens before 2021-12-27",
     ") OR ",
     "NOT (",
     "happens before 2021-12-27)"
@@ -1479,7 +1615,8 @@ Input:
 =>
 Result:
 [
-    "(happens in 2021-12-27 2021-12-29",
+    "(",
+    "happens in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
     "happens in 2021-12-27 2021-12-29)"
@@ -1493,7 +1630,8 @@ Input:
 =>
 Result:
 [
-    "(happens on 2021-12-27",
+    "(",
+    "happens on 2021-12-27",
     ") OR ",
     "NOT (",
     "happens on 2021-12-27)"
@@ -1507,7 +1645,8 @@ Input:
 =>
 Result:
 [
-    "(happens this week",
+    "(",
+    "happens this week",
     ") OR ",
     "NOT (",
     "happens this week)"
@@ -1521,7 +1660,8 @@ Input:
 =>
 Result:
 [
-    "(has cancelled date",
+    "(",
+    "has cancelled date",
     ") OR ",
     "NOT (",
     "has cancelled date)"
@@ -1535,7 +1675,8 @@ Input:
 =>
 Result:
 [
-    "(has created date",
+    "(",
+    "has created date",
     ") OR ",
     "NOT (",
     "has created date)"
@@ -1549,7 +1690,8 @@ Input:
 =>
 Result:
 [
-    "(has depends on",
+    "(",
+    "has depends on",
     ") OR ",
     "NOT (",
     "has depends on)"
@@ -1563,7 +1705,8 @@ Input:
 =>
 Result:
 [
-    "(has done date",
+    "(",
+    "has done date",
     ") OR ",
     "NOT (",
     "has done date)"
@@ -1577,9 +1720,11 @@ Input:
 =>
 Result:
 [
-    "(has due date",
+    "(",
+    "has due date",
     ") OR (",
-    "(HAS START DATE",
+    "(",
+    "HAS START DATE",
     ") AND (",
     "due after 2021-12-27))"
 ]
@@ -1592,7 +1737,8 @@ Input:
 =>
 Result:
 [
-    "(has due date",
+    "(",
+    "has due date",
     ") OR ",
     "NOT (",
     "has due date)"
@@ -1606,7 +1752,8 @@ Input:
 =>
 Result:
 [
-    "(has happens date",
+    "(",
+    "has happens date",
     ") OR ",
     "NOT (",
     "has happens date)"
@@ -1620,7 +1767,8 @@ Input:
 =>
 Result:
 [
-    "(has id",
+    "(",
+    "has id",
     ") OR ",
     "NOT (",
     "has id)"
@@ -1634,7 +1782,8 @@ Input:
 =>
 Result:
 [
-    "(has scheduled date",
+    "(",
+    "has scheduled date",
     ") OR ",
     "NOT (",
     "has scheduled date)"
@@ -1648,7 +1797,8 @@ Input:
 =>
 Result:
 [
-    "(has start date",
+    "(",
+    "has start date",
     ") AND \"",
     "description includes some\""
 ]
@@ -1661,9 +1811,11 @@ Input:
 =>
 Result:
 [
-    "(has start date",
+    "(",
+    "has start date",
     ") AND (",
-    "(description includes some",
+    "(",
+    "description includes some",
     ") OR (",
     "has due date))"
 ]
@@ -1676,7 +1828,8 @@ Input:
 =>
 Result:
 [
-    "(has start date",
+    "(",
+    "has start date",
     ") AND (",
     "description includes some)"
 ]
@@ -1689,7 +1842,8 @@ Input:
 =>
 Result:
 [
-    "(has start date",
+    "(",
+    "has start date",
     ") AND ",
     "NOT (",
     "description includes some)"
@@ -1703,9 +1857,11 @@ Input:
 =>
 Result:
 [
-    "(has start date",
+    "(",
+    "has start date",
     ") OR (",
-    "(description includes special",
+    "(",
+    "description includes special",
     ") AND (",
     "has due date))"
 ]
@@ -1718,7 +1874,8 @@ Input:
 =>
 Result:
 [
-    "(has start date",
+    "(",
+    "has start date",
     ") OR ",
     "NOT (",
     "description includes special)"
@@ -1732,7 +1889,8 @@ Input:
 =>
 Result:
 [
-    "(has start date",
+    "(",
+    "has start date",
     ") OR ",
     "NOT (",
     "has start date)"
@@ -1746,7 +1904,8 @@ Input:
 =>
 Result:
 [
-    "(has start date",
+    "(",
+    "has start date",
     ") XOR (",
     "description includes special)"
 ]
@@ -1759,7 +1918,8 @@ Input:
 =>
 Result:
 [
-    "(has tag",
+    "(",
+    "has tag",
     ") OR ",
     "NOT (",
     "has tag)"
@@ -1773,7 +1933,8 @@ Input:
 =>
 Result:
 [
-    "(has tags",
+    "(",
+    "has tags",
     ") OR ",
     "NOT (",
     "has tags)"
@@ -1787,7 +1948,8 @@ Input:
 =>
 Result:
 [
-    "(heading does not include wibble",
+    "(",
+    "heading does not include wibble",
     ") OR ",
     "NOT (",
     "heading does not include wibble)"
@@ -1801,7 +1963,8 @@ Input:
 =>
 Result:
 [
-    "(heading includes AND",
+    "(",
+    "heading includes AND",
     ") OR ",
     "NOT (",
     "heading includes AND)"
@@ -1815,7 +1978,8 @@ Input:
 =>
 Result:
 [
-    "(heading includes wibble",
+    "(",
+    "heading includes wibble",
     ") OR ",
     "NOT (",
     "heading includes wibble)"
@@ -1829,7 +1993,8 @@ Input:
 =>
 Result:
 [
-    "(id does not include abc123",
+    "(",
+    "id does not include abc123",
     ") OR ",
     "NOT (",
     "id does not include abc123)"
@@ -1843,7 +2008,8 @@ Input:
 =>
 Result:
 [
-    "(id includes AND",
+    "(",
+    "id includes AND",
     ") OR ",
     "NOT (",
     "id includes AND)"
@@ -1857,7 +2023,8 @@ Input:
 =>
 Result:
 [
-    "(id includes abc123",
+    "(",
+    "id includes abc123",
     ") OR ",
     "NOT (",
     "id includes abc123)"
@@ -1871,7 +2038,8 @@ Input:
 =>
 Result:
 [
-    "(is blocked",
+    "(",
+    "is blocked",
     ") OR ",
     "NOT (",
     "is blocked)"
@@ -1885,7 +2053,8 @@ Input:
 =>
 Result:
 [
-    "(is blocking",
+    "(",
+    "is blocking",
     ") OR ",
     "NOT (",
     "is blocking)"
@@ -1899,7 +2068,8 @@ Input:
 =>
 Result:
 [
-    "(is not blocked",
+    "(",
+    "is not blocked",
     ") OR ",
     "NOT (",
     "is not blocked)"
@@ -1913,7 +2083,8 @@ Input:
 =>
 Result:
 [
-    "(is not blocking",
+    "(",
+    "is not blocking",
     ") OR ",
     "NOT (",
     "is not blocking)"
@@ -1927,7 +2098,8 @@ Input:
 =>
 Result:
 [
-    "(is not recurring",
+    "(",
+    "is not recurring",
     ") OR ",
     "NOT (",
     "is not recurring)"
@@ -1941,9 +2113,11 @@ Input:
 =>
 Result:
 [
-    "(is not recurring",
+    "(",
+    "is not recurring",
     ") XOR (",
-    "(path includes ab/c",
+    "(",
+    "path includes ab/c",
     ") OR (",
     "happens before 2021-12-27))"
 ]
@@ -1956,7 +2130,8 @@ Input:
 =>
 Result:
 [
-    "(is recurring",
+    "(",
+    "is recurring",
     ") OR ",
     "NOT (",
     "is recurring)"
@@ -1970,7 +2145,8 @@ Input:
 =>
 Result:
 [
-    "(no cancelled date",
+    "(",
+    "no cancelled date",
     ") OR ",
     "NOT (",
     "no cancelled date)"
@@ -1984,7 +2160,8 @@ Input:
 =>
 Result:
 [
-    "(no created date",
+    "(",
+    "no created date",
     ") OR ",
     "NOT (",
     "no created date)"
@@ -1998,7 +2175,8 @@ Input:
 =>
 Result:
 [
-    "(no depends on",
+    "(",
+    "no depends on",
     ") OR ",
     "NOT (",
     "no depends on)"
@@ -2012,7 +2190,8 @@ Input:
 =>
 Result:
 [
-    "(no due date",
+    "(",
+    "no due date",
     ") OR ",
     "NOT (",
     "no due date)"
@@ -2026,7 +2205,8 @@ Input:
 =>
 Result:
 [
-    "(no happens date",
+    "(",
+    "no happens date",
     ") OR ",
     "NOT (",
     "no happens date)"
@@ -2040,7 +2220,8 @@ Input:
 =>
 Result:
 [
-    "(no id",
+    "(",
+    "no id",
     ") OR ",
     "NOT (",
     "no id)"
@@ -2054,7 +2235,8 @@ Input:
 =>
 Result:
 [
-    "(no scheduled date",
+    "(",
+    "no scheduled date",
     ") OR ",
     "NOT (",
     "no scheduled date)"
@@ -2068,7 +2250,8 @@ Input:
 =>
 Result:
 [
-    "(no start date",
+    "(",
+    "no start date",
     ") OR ",
     "NOT (",
     "no start date)"
@@ -2082,7 +2265,8 @@ Input:
 =>
 Result:
 [
-    "(no tag",
+    "(",
+    "no tag",
     ") OR ",
     "NOT (",
     "no tag)"
@@ -2096,7 +2280,8 @@ Input:
 =>
 Result:
 [
-    "(no tags",
+    "(",
+    "no tags",
     ") OR ",
     "NOT (",
     "no tags)"
@@ -2110,7 +2295,8 @@ Input:
 =>
 Result:
 [
-    "(not done",
+    "(",
+    "not done",
     ") OR ",
     "NOT (",
     "not done)"
@@ -2124,7 +2310,8 @@ Input:
 =>
 Result:
 [
-    "(path does not include some/path",
+    "(",
+    "path does not include some/path",
     ") OR ",
     "NOT (",
     "path does not include some/path)"
@@ -2138,7 +2325,8 @@ Input:
 =>
 Result:
 [
-    "(path includes ()some example()",
+    "(",
+    "path includes ()some example()",
     ") OR (",
     "path includes ((some example)))"
 ]
@@ -2151,7 +2339,8 @@ Input:
 =>
 Result:
 [
-    "(path includes (some example",
+    "(",
+    "path includes (some example",
     ") OR (",
     "path includes )some example()"
 ]
@@ -2164,7 +2353,8 @@ Input:
 =>
 Result:
 [
-    "(path includes (some example)",
+    "(",
+    "path includes (some example)",
     ") OR (",
     "path includes )some example()"
 ]
@@ -2177,7 +2367,8 @@ Input:
 =>
 Result:
 [
-    "(path includes )some example(",
+    "(",
+    "path includes )some example(",
     ") OR (",
     "path includes (some example))"
 ]
@@ -2190,7 +2381,8 @@ Input:
 =>
 Result:
 [
-    "(path includes A",
+    "(",
+    "path includes A",
     ") OR (",
     "path includes Test.md)"
 ]
@@ -2203,7 +2395,8 @@ Input:
 =>
 Result:
 [
-    "(path includes AND",
+    "(",
+    "path includes AND",
     ") OR ",
     "NOT (",
     "path includes AND)"
@@ -2217,7 +2410,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ") AND ",
     "NOT(",
     "path includes b)"
@@ -2231,7 +2425,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ") AND(",
     "path includes b)"
 ]
@@ -2244,7 +2439,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ") OR ",
     "NOT(",
     "path includes b)"
@@ -2258,7 +2454,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ") OR(",
     "path includes b)"
 ]
@@ -2271,7 +2468,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ") XOR(",
     "path includes b)"
 ]
@@ -2284,7 +2482,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ")AND (",
     "path includes b)"
 ]
@@ -2297,7 +2496,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ")AND ",
     "NOT(",
     "path includes b)"
@@ -2311,7 +2511,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ")OR (",
     "path includes b)"
 ]
@@ -2324,7 +2525,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ")OR ",
     "NOT (",
     "path includes b)"
@@ -2338,7 +2540,8 @@ Input:
 =>
 Result:
 [
-    "(path includes a",
+    "(",
+    "path includes a",
     ")XOR (",
     "path includes b)"
 ]
@@ -2351,7 +2554,8 @@ Input:
 =>
 Result:
 [
-    "(path includes some/path",
+    "(",
+    "path includes some/path",
     ") OR ",
     "NOT (",
     "path includes some/path)"
@@ -2365,7 +2569,8 @@ Input:
 =>
 Result:
 [
-    "(priority is above none",
+    "(",
+    "priority is above none",
     ") OR ",
     "NOT (",
     "priority is above none)"
@@ -2379,7 +2584,8 @@ Input:
 =>
 Result:
 [
-    "(priority is below none",
+    "(",
+    "priority is below none",
     ") OR ",
     "NOT (",
     "priority is below none)"
@@ -2393,7 +2599,8 @@ Input:
 =>
 Result:
 [
-    "(priority is high",
+    "(",
+    "priority is high",
     ") OR ",
     "NOT (",
     "priority is high)"
@@ -2407,7 +2614,8 @@ Input:
 =>
 Result:
 [
-    "(priority is highest",
+    "(",
+    "priority is highest",
     ") OR (",
     "priority is lowest)"
 ]
@@ -2420,7 +2628,8 @@ Input:
 =>
 Result:
 [
-    "(priority is low",
+    "(",
+    "priority is low",
     ") OR ",
     "NOT (",
     "priority is low)"
@@ -2434,7 +2643,8 @@ Input:
 =>
 Result:
 [
-    "(priority is medium",
+    "(",
+    "priority is medium",
     ") OR ",
     "NOT (",
     "priority is medium)"
@@ -2448,7 +2658,8 @@ Input:
 =>
 Result:
 [
-    "(priority is none",
+    "(",
+    "priority is none",
     ") OR ",
     "NOT (",
     "priority is none)"
@@ -2462,7 +2673,8 @@ Input:
 =>
 Result:
 [
-    "(recurrence does not include wednesday",
+    "(",
+    "recurrence does not include wednesday",
     ") OR ",
     "NOT (",
     "recurrence does not include wednesday)"
@@ -2476,7 +2688,8 @@ Input:
 =>
 Result:
 [
-    "(recurrence includes wednesday",
+    "(",
+    "recurrence includes wednesday",
     ") OR ",
     "NOT (",
     "recurrence includes wednesday)"
@@ -2490,7 +2703,8 @@ Input:
 =>
 Result:
 [
-    "(root does not include some",
+    "(",
+    "root does not include some",
     ") OR ",
     "NOT (",
     "root does not include some)"
@@ -2504,7 +2718,8 @@ Input:
 =>
 Result:
 [
-    "(root includes AND",
+    "(",
+    "root includes AND",
     ") OR ",
     "NOT (",
     "root includes AND)"
@@ -2518,7 +2733,8 @@ Input:
 =>
 Result:
 [
-    "(root includes some",
+    "(",
+    "root includes some",
     ") OR ",
     "NOT (",
     "root includes some)"
@@ -2532,7 +2748,8 @@ Input:
 =>
 Result:
 [
-    "(scheduled after 2021-12-27",
+    "(",
+    "scheduled after 2021-12-27",
     ") OR ",
     "NOT (",
     "scheduled after 2021-12-27)"
@@ -2546,7 +2763,8 @@ Input:
 =>
 Result:
 [
-    "(scheduled before 2021-12-27",
+    "(",
+    "scheduled before 2021-12-27",
     ") OR ",
     "NOT (",
     "scheduled before 2021-12-27)"
@@ -2560,7 +2778,8 @@ Input:
 =>
 Result:
 [
-    "(scheduled date is invalid",
+    "(",
+    "scheduled date is invalid",
     ") OR ",
     "NOT (",
     "scheduled date is invalid)"
@@ -2574,7 +2793,8 @@ Input:
 =>
 Result:
 [
-    "(scheduled in 2021-12-27 2021-12-29",
+    "(",
+    "scheduled in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
     "scheduled in 2021-12-27 2021-12-29)"
@@ -2588,7 +2808,8 @@ Input:
 =>
 Result:
 [
-    "(scheduled on 2021-12-27",
+    "(",
+    "scheduled on 2021-12-27",
     ") OR ",
     "NOT (",
     "scheduled on 2021-12-27)"
@@ -2602,7 +2823,8 @@ Input:
 =>
 Result:
 [
-    "(scheduled this week",
+    "(",
+    "scheduled this week",
     ") OR ",
     "NOT (",
     "scheduled this week)"
@@ -2616,7 +2838,8 @@ Input:
 =>
 Result:
 [
-    "(start date is invalid",
+    "(",
+    "start date is invalid",
     ") OR ",
     "NOT (",
     "start date is invalid)"
@@ -2630,7 +2853,8 @@ Input:
 =>
 Result:
 [
-    "(starts after 2021-12-27",
+    "(",
+    "starts after 2021-12-27",
     ") OR ",
     "NOT (",
     "starts after 2021-12-27)"
@@ -2644,7 +2868,8 @@ Input:
 =>
 Result:
 [
-    "(starts before 2021-12-27",
+    "(",
+    "starts before 2021-12-27",
     ") OR ",
     "NOT (",
     "starts before 2021-12-27)"
@@ -2658,7 +2883,8 @@ Input:
 =>
 Result:
 [
-    "(starts in 2021-12-27 2021-12-29",
+    "(",
+    "starts in 2021-12-27 2021-12-29",
     ") OR ",
     "NOT (",
     "starts in 2021-12-27 2021-12-29)"
@@ -2672,7 +2898,8 @@ Input:
 =>
 Result:
 [
-    "(starts on 2021-12-27",
+    "(",
+    "starts on 2021-12-27",
     ") OR ",
     "NOT (",
     "starts on 2021-12-27)"
@@ -2686,7 +2913,8 @@ Input:
 =>
 Result:
 [
-    "(starts this week",
+    "(",
+    "starts this week",
     ") OR ",
     "NOT (",
     "starts this week)"
@@ -2700,7 +2928,8 @@ Input:
 =>
 Result:
 [
-    "(status.name includes cancelled",
+    "(",
+    "status.name includes cancelled",
     ") OR ",
     "NOT (",
     "status.name includes cancelled)"
@@ -2714,7 +2943,8 @@ Input:
 =>
 Result:
 [
-    "(status.type is IN_PROGRESS",
+    "(",
+    "status.type is IN_PROGRESS",
     ") OR ",
     "NOT (",
     "status.type is IN_PROGRESS)"
@@ -2728,7 +2958,8 @@ Input:
 =>
 Result:
 [
-    "(tag does not include #sometag",
+    "(",
+    "tag does not include #sometag",
     ") OR ",
     "NOT (",
     "tag does not include #sometag)"
@@ -2742,7 +2973,8 @@ Input:
 =>
 Result:
 [
-    "(tag does not include sometag",
+    "(",
+    "tag does not include sometag",
     ") OR ",
     "NOT (",
     "tag does not include sometag)"
@@ -2756,7 +2988,8 @@ Input:
 =>
 Result:
 [
-    "(tag includes #sometag",
+    "(",
+    "tag includes #sometag",
     ") OR ",
     "NOT (",
     "tag includes #sometag)"
@@ -2770,7 +3003,8 @@ Input:
 =>
 Result:
 [
-    "(tag includes AND",
+    "(",
+    "tag includes AND",
     ") OR ",
     "NOT (",
     "tag includes AND)"
@@ -2784,7 +3018,8 @@ Input:
 =>
 Result:
 [
-    "(tag includes sometag",
+    "(",
+    "tag includes sometag",
     ") OR ",
     "NOT (",
     "tag includes sometag)"
@@ -2798,7 +3033,8 @@ Input:
 =>
 Result:
 [
-    "(tags do not include #sometag",
+    "(",
+    "tags do not include #sometag",
     ") OR ",
     "NOT (",
     "tags do not include #sometag)"
@@ -2812,7 +3048,8 @@ Input:
 =>
 Result:
 [
-    "(tags do not include sometag",
+    "(",
+    "tags do not include sometag",
     ") OR ",
     "NOT (",
     "tags do not include sometag)"
@@ -2826,7 +3063,8 @@ Input:
 =>
 Result:
 [
-    "(tags include #sometag",
+    "(",
+    "tags include #sometag",
     ") OR ",
     "NOT (",
     "tags include #sometag)"
@@ -2840,7 +3078,8 @@ Input:
 =>
 Result:
 [
-    "(tags include sometag",
+    "(",
+    "tags include sometag",
     ") OR ",
     "NOT (",
     "tags include sometag)"
@@ -2866,7 +3105,8 @@ Input:
 Result:
 [
     "NOT   (",
-    "  happens before blahblahblah  )"
+    "  ",
+    "happens before blahblahblah  )"
 ]
 
 --------------------------------------------------------
@@ -2878,7 +3118,8 @@ Input:
 Result:
 [
     "NOT  (",
-    " description includes d1 )"
+    " ",
+    "description includes d1 )"
 ]
 
 --------------------------------------------------------
@@ -2892,7 +3133,8 @@ Result:
     "NOT (",
     " ",
     "NOT (",
-    " is blocking ) )"
+    " ",
+    "is blocking ) )"
 ]
 
 --------------------------------------------------------
@@ -2904,7 +3146,8 @@ Input:
 Result:
 [
     "NOT (",
-    "(HAS START DATE",
+    "(",
+    "HAS START DATE",
     ") OR (",
     "DESCRIPTION INCLUDES SPECIAL))"
 ]
@@ -2918,7 +3161,8 @@ Input:
 Result:
 [
     "NOT (",
-    "(has start date",
+    "(",
+    "has start date",
     ") OR (",
     "description includes special))"
 ]

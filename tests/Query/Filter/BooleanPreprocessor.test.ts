@@ -9,7 +9,8 @@ describe('BooleanPreprocessor', () => {
         it('single sub-expression', () => {
             expect(split('(not done)')).toMatchInlineSnapshot(`
                 [
-                  "(not done)",
+                  "(",
+                  "not done)",
                 ]
             `);
         });
@@ -17,7 +18,8 @@ describe('BooleanPreprocessor', () => {
         it('simple AND', () => {
             expect(split('(done) AND (has done date)')).toMatchInlineSnapshot(`
                 [
-                  "(done",
+                  "(",
+                  "done",
                   ") AND (",
                   "has done date)",
                 ]
@@ -27,7 +29,8 @@ describe('BooleanPreprocessor', () => {
         it('simple AND NOT', () => {
             expect(split('(done) AND  NOT (has done date)')).toMatchInlineSnapshot(`
                 [
-                  "(done",
+                  "(",
+                  "done",
                   ") AND  ",
                   "NOT (",
                   "has done date)",
@@ -38,7 +41,8 @@ describe('BooleanPreprocessor', () => {
         it('simple OR', () => {
             expect(split('(done) OR (has done date)')).toMatchInlineSnapshot(`
                 [
-                  "(done",
+                  "(",
+                  "done",
                   ") OR (",
                   "has done date)",
                 ]
@@ -48,7 +52,8 @@ describe('BooleanPreprocessor', () => {
         it('simple OR NOT', () => {
             expect(split('(done) OR  NOT (has done date)')).toMatchInlineSnapshot(`
                 [
-                  "(done",
+                  "(",
+                  "done",
                   ") OR  ",
                   "NOT (",
                   "has done date)",
@@ -59,8 +64,10 @@ describe('BooleanPreprocessor', () => {
         it('simple XOR', () => {
             expect(split('"done" XOR "has done date"')).toMatchInlineSnapshot(`
                 [
-                  ""done",
-                  "" XOR "",
+                  """,
+                  "done",
+                  "" ",
+                  "XOR "",
                   "has done date"",
                 ]
             `);
@@ -80,7 +87,8 @@ describe('BooleanPreprocessor', () => {
         it('simple AND - but spaces missing around AND', () => {
             expect(split('(done)AND(has done date)')).toMatchInlineSnapshot(`
                 [
-                  "(done",
+                  "(",
+                  "done",
                   ")AND(",
                   "has done date)",
                 ]
@@ -92,6 +100,30 @@ describe('BooleanPreprocessor', () => {
                 [
                   "NOT(",
                   "not done)",
+                ]
+            `);
+        });
+    });
+
+    describe('extra delimiters', () => {
+        it('redundant ( surrounding unary NOT', () => {
+            expect(split('(((((NOT  ( description includes d1 ))))))')).toMatchInlineSnapshot(`
+                [
+                  "(((((",
+                  "NOT  (",
+                  " ",
+                  "description includes d1 ))))))",
+                ]
+            `);
+        });
+
+        it('redundant " surrounding unary NOT', () => {
+            expect(split('"""""NOT  " description includes d1 """"""')).toMatchInlineSnapshot(`
+                [
+                  """"""",
+                  "NOT  "",
+                  " ",
+                  "description includes d1 """"""",
                 ]
             `);
         });
