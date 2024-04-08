@@ -13,7 +13,7 @@ export class BooleanPreprocessor {
         // as part of the Boolean condition, not the filter.
 
         // Escape special regex characters for Binary boolean operators and create a regex pattern to match
-        // operators and capture surrounding parentheses.
+        // operators and capture surrounding delimiters.
         // To retain backwards compatibility, we match expressions that have missing spaces around AND, OR etc.
         // This matches text such as:
         //   ')AND('
@@ -28,7 +28,7 @@ export class BooleanPreprocessor {
         const substrings = line.split(binaryOperatorsRegex);
 
         // Escape special regex characters for Unary boolean operators and create a regex pattern to match
-        // operators and capture surrounding parentheses.
+        // operators and capture surrounding delimiters.
         // This matches text such as:
         //   'NOT('
         //   'NOT ('
@@ -43,8 +43,8 @@ export class BooleanPreprocessor {
             .filter((substring) => substring !== '');
 
         // All that remains now is to separate:
-        // - any spaces and opening parentheses at the start of filters
-        // - any spaces and close   parentheses at the end of filters
+        // - any spaces and opening delimiters at the start of filters
+        // - any spaces and close   delimiters at the end of filters
         const openingParensAndSpacesAtStartRegex = new RegExp(
             '(^' + anyOfTheseChars(delimiters.openFilterChars + ' ') + '*)',
         );
