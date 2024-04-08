@@ -26,6 +26,16 @@ export class BooleanPreprocessor {
         );
 
         // Divide up line, split at binary operator boundaries
-        return line.split(binaryOperatorsRegex);
+        const substrings = line.split(binaryOperatorsRegex);
+
+        // Escape special regex characters for Unary boolean operators and create a regex pattern to match
+        // operators and capture surrounding parentheses.
+        // This matches:
+        //   'NOT ('
+        const unaryOperatorsRegex = new RegExp('(NOT ' + delimiters.openFilter + ')', 'g');
+
+        // Divide up the divided components, this time splitting at unary operator boundaries.
+        // flatMap() divides and then flattens the result.
+        return substrings.flatMap((substring) => substring.split(unaryOperatorsRegex));
     }
 }
