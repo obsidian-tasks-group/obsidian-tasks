@@ -67,9 +67,9 @@ describe('BooleanPreprocessor', () => {
         });
 
         it('simple unary NOT', () => {
-            expect(split('NOT (not done)')).toMatchInlineSnapshot(`
+            expect(split('NOT  (not done)')).toMatchInlineSnapshot(`
                 [
-                  "NOT (",
+                  "NOT  (",
                   "not done)",
                 ]
             `);
@@ -83,6 +83,15 @@ describe('BooleanPreprocessor', () => {
                   "(done",
                   ")AND(",
                   "has done date)",
+                ]
+            `);
+        });
+
+        it('simple unary NOT - but spaces missing after NOT', () => {
+            expect(split('NOT(not done)')).toMatchInlineSnapshot(`
+                [
+                  "NOT(",
+                  "not done)",
                 ]
             `);
         });

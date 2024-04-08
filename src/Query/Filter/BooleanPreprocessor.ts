@@ -30,9 +30,11 @@ export class BooleanPreprocessor {
 
         // Escape special regex characters for Unary boolean operators and create a regex pattern to match
         // operators and capture surrounding parentheses.
-        // This matches:
+        // This matches text such as:
+        //   'NOT('
         //   'NOT ('
-        const unaryOperatorsRegex = new RegExp('(NOT ' + delimiters.openFilter + ')', 'g');
+        //   'NOT  ('
+        const unaryOperatorsRegex = new RegExp('(NOT\\s*' + delimiters.openFilter + ')', 'g');
 
         // Divide up the divided components, this time splitting at unary operator boundaries.
         // flatMap() divides and then flattens the result.
