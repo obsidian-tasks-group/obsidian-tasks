@@ -36,8 +36,9 @@ describe('compareBy', () => {
 });
 
 describe('isDateTime', () => {
-    function checkIsDateTime(input: string, expected: boolean) {
-        expect(isDateTime(moment(input))).toBe(expected);
+    function checkIsDateTime(input: string | null, expected: boolean) {
+        const dateInput = input === null ? null : moment(input);
+        expect(isDateTime(dateInput)).toBe(expected);
     }
 
     it('should detect a date-only value', () => {
@@ -49,7 +50,7 @@ describe('isDateTime', () => {
     });
 
     it('should treat a null value as not a time', () => {
-        expect(isDateTime(null)).toBe(false);
+        checkIsDateTime(null, false);
     });
 
     it('should detect a date-time value', () => {
