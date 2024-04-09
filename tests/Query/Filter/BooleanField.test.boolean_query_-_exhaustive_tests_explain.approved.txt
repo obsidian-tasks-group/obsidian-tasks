@@ -380,6 +380,16 @@ Could not interpret the following instruction as a Boolean combination:
     ( (filter by function task.description.includes('a')) OR (filter by function task.description.includes('b')) OR (filter by function task.description.includes('c')) ) AND ( (filter by function task.description.includes('d')) OR (filter by function task.description.includes('e')) OR (filter by function task.description.includes('f')) )
 The error message is:
     malformed boolean query -- Invalid token (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    ( (f1)) OR (f2)) OR (f3)) ) AND ( (f4)) OR (f5)) OR (f6)) )
+Where the sub-expressions in the simplified line are:
+    'f1': 'filter by function task.description.includes('a''
+    'f2': 'filter by function task.description.includes('b''
+    'f3': 'filter by function task.description.includes('c''
+    'f4': 'filter by function task.description.includes('d''
+    'f5': 'filter by function task.description.includes('e''
+    'f6': 'filter by function task.description.includes('f''
+
 
 --------------------------------------------------------
 
@@ -450,6 +460,18 @@ Could not interpret the following instruction as a Boolean combination:
     ( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )
 The error message is:
     malformed boolean query -- Invalid token (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    ( f1) ) OR ( f2 ) OR ( f3 ) OR ( f4) ) OR ( f5) ) OR ( f6) ) OR ( f7 ) OR ( f8 )
+Where the sub-expressions in the simplified line are:
+    'f1': 'filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type'
+    'f2': 'filter by function const date = task.due.moment; return date ? !date.isValid() : false;'
+    'f3': 'filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false'
+    'f4': 'filter by function task.urgency.toFixed(2) === 1.95.toFixed(2'
+    'f5': 'filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁''
+    'f6': 'filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase('
+    'f7': 'filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false'
+    'f8': 'filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;'
+
 
 --------------------------------------------------------
 
@@ -857,6 +879,12 @@ Could not interpret the following instruction as a Boolean combination:
     (description includes "hello world") OR (description includes "42")
 The error message is:
     malformed boolean query -- Unexpected character: " (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1") OR (f2")
+Where the sub-expressions in the simplified line are:
+    'f1': 'description includes "hello world'
+    'f2': 'description includes "42'
+
 
 --------------------------------------------------------
 
@@ -963,6 +991,12 @@ Could not interpret the following instruction as a Boolean combination:
     (description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)
 The error message is:
     malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1)AND(f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN'
+    'f2': 'description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR'
+
 
 --------------------------------------------------------
 
@@ -2197,6 +2231,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes ()some example()) OR (path includes ((some example)))
 The error message is:
     malformed boolean query -- Invalid token (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2)))
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes ()some example('
+    'f2': 'path includes ((some example'
+
 
 --------------------------------------------------------
 
@@ -2222,6 +2262,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes (some example)) OR (path includes )some example()
 The error message is:
     malformed boolean query -- Invalid token (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes (some example'
+    'f2': 'path includes )some example('
+
 
 --------------------------------------------------------
 
@@ -2234,6 +2280,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes )some example() OR (path includes (some example))
 The error message is:
     malformed boolean query -- Invalid token (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1) OR (f2))
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes )some example('
+    'f2': 'path includes (some example'
+
 
 --------------------------------------------------------
 
@@ -2273,6 +2325,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a) AND NOT(path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1) AND NOT(f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2285,6 +2343,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a) AND(path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1) AND(f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2297,6 +2361,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a) OR NOT(path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1) OR NOT(f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2309,6 +2379,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a) OR(path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1) OR(f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2321,6 +2397,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a) XOR(path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1) XOR(f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2333,6 +2415,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a)AND (path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1)AND (f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2345,6 +2433,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a)AND NOT(path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1)AND NOT(f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2357,6 +2451,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a)OR (path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: O. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1)OR (f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2369,6 +2469,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a)OR NOT (path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: O. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1)OR NOT (f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2381,6 +2487,12 @@ Could not interpret the following instruction as a Boolean combination:
     (path includes a)XOR (path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: X. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    (f1)XOR (f2)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes a'
+    'f2': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -2936,6 +3048,11 @@ Could not interpret the following instruction as a Boolean combination:
     AND (description includes d1)
 The error message is:
     malformed boolean query -- Invalid token (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    f1)
+Where the sub-expressions in the simplified line are:
+    'f1': 'AND (description includes d1'
+
 
 --------------------------------------------------------
 
@@ -2948,6 +3065,11 @@ Could not interpret the following instruction as a Boolean combination:
     NOT   (  happens before blahblahblah  )
 The error message is:
     couldn't parse sub-expression 'happens before blahblahblah': do not understand happens date
+The instruction was converted to the following simplified line:
+    NOT   (  f1  )
+Where the sub-expressions in the simplified line are:
+    'f1': 'happens before blahblahblah'
+
 
 --------------------------------------------------------
 
@@ -3025,6 +3147,11 @@ Could not interpret the following instruction as a Boolean combination:
     NOT (description blahblah d1)
 The error message is:
     couldn't parse sub-expression 'description blahblah d1'
+The instruction was converted to the following simplified line:
+    NOT (f1)
+Where the sub-expressions in the simplified line are:
+    'f1': 'description blahblah d1'
+
 
 --------------------------------------------------------
 
@@ -3049,6 +3176,11 @@ Could not interpret the following instruction as a Boolean combination:
     NOT (happens before blahblahblah)
 The error message is:
     couldn't parse sub-expression 'happens before blahblahblah': do not understand happens date
+The instruction was converted to the following simplified line:
+    NOT (f1)
+Where the sub-expressions in the simplified line are:
+    'f1': 'happens before blahblahblah'
+
 
 --------------------------------------------------------
 
@@ -3073,6 +3205,11 @@ Could not interpret the following instruction as a Boolean combination:
     NOT(path includes b)
 The error message is:
     malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    NOT(f1)
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes b'
+
 
 --------------------------------------------------------
 
@@ -3085,6 +3222,11 @@ Could not interpret the following instruction as a Boolean combination:
     OR (description includes d1)
 The error message is:
     malformed boolean query -- Invalid token (check the documentation for guidelines)
+The instruction was converted to the following simplified line:
+    f1)
+Where the sub-expressions in the simplified line are:
+    'f1': 'OR (description includes d1'
+
 
 --------------------------------------------------------
 
