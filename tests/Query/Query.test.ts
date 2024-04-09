@@ -998,7 +998,7 @@ describe('Query', () => {
             [
                 'simple OR',
                 {
-                    filters: ['"has due date" OR (description includes special)'],
+                    filters: ['(has due date) OR (description includes special)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -1015,7 +1015,7 @@ describe('Query', () => {
             [
                 'simple AND',
                 {
-                    filters: ['(has start date) AND "description includes some"'],
+                    filters: ['(has start date) AND (description includes some)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',

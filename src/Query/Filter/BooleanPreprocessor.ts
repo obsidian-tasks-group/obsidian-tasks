@@ -6,14 +6,12 @@ export type BooleanPreprocessorResult = {
 };
 
 export class BooleanPreprocessor {
-    public static preprocessExpression(line: string): BooleanPreprocessorResult {
-        const parts = BooleanPreprocessor.splitLine(line);
-        return BooleanPreprocessor.getFiltersAndSimplifiedLine(parts);
+    public static preprocessExpression(line: string, delimiters: BooleanDelimiters): BooleanPreprocessorResult {
+        const parts = BooleanPreprocessor.splitLine(line, delimiters);
+        return BooleanPreprocessor.getFiltersAndSimplifiedLine(parts, delimiters);
     }
 
-    public static splitLine(line: string) {
-        const delimiters = BooleanDelimiters.allSupportedDelimiters();
-
+    public static splitLine(line: string, delimiters: BooleanDelimiters) {
         // Here, we split the input line in to separate operators-plus-adjacent-delimiters
         // and the remaining filter text.
 
@@ -69,9 +67,7 @@ export class BooleanPreprocessor {
             .filter((substring) => substring !== '');
     }
 
-    private static getFiltersAndSimplifiedLine(parts: string[]) {
-        const delimiters = BooleanDelimiters.allSupportedDelimiters();
-
+    private static getFiltersAndSimplifiedLine(parts: string[], delimiters: BooleanDelimiters) {
         // Holds the reconstructed expression with placeholders
         let simplifiedLine = '';
         let currentIndex = 1; // Placeholder index starts at 1

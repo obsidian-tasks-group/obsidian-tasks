@@ -100,11 +100,11 @@ Input:
 '"not done" AND (is recurring)'
 =>
 Result:
-  "not done" AND (is recurring) =>
-    AND (All of):
-      not done
-      is recurring
+Could not interpret the following instruction as a Boolean combination:
+    "not done" AND (is recurring)
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -113,11 +113,11 @@ Input:
 '"not done" OR (is recurring)'
 =>
 Result:
-  "not done" OR (is recurring) =>
-    OR (At least one of):
-      not done
-      is recurring
+Could not interpret the following instruction as a Boolean combination:
+    "not done" OR (is recurring)
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -126,11 +126,11 @@ Input:
 '"not done" XOR (is recurring)'
 =>
 Result:
-  "not done" XOR (is recurring) =>
-    XOR (Exactly one of):
-      not done
-      is recurring
+Could not interpret the following instruction as a Boolean combination:
+    "not done" XOR (is recurring)
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -139,12 +139,11 @@ Input:
 '"not done" AND NOT (is recurring)'
 =>
 Result:
-  "not done" AND NOT (is recurring) =>
-    AND (All of):
-      not done
-      NOT:
-        is recurring
+Could not interpret the following instruction as a Boolean combination:
+    "not done" AND NOT (is recurring)
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -153,12 +152,11 @@ Input:
 '"not done" OR NOT (is recurring)'
 =>
 Result:
-  "not done" OR NOT (is recurring) =>
-    OR (At least one of):
-      not done
-      NOT:
-        is recurring
+Could not interpret the following instruction as a Boolean combination:
+    "not done" OR NOT (is recurring)
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -168,11 +166,11 @@ Input:
 '(not done) AND "is recurring"'
 =>
 Result:
-  (not done) AND "is recurring" =>
-    AND (All of):
-      not done
-      is recurring
+Could not interpret the following instruction as a Boolean combination:
+    (not done) AND "is recurring"
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -181,11 +179,11 @@ Input:
 '((not done)) AND "is recurring"'
 =>
 Result:
-  ((not done)) AND "is recurring" =>
-    AND (All of):
-      not done
-      is recurring
+Could not interpret the following instruction as a Boolean combination:
+    ((not done)) AND "is recurring"
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -194,11 +192,11 @@ Input:
 '(not done) OR "is recurring"'
 =>
 Result:
-  (not done) OR "is recurring" =>
-    OR (At least one of):
-      not done
-      is recurring
+Could not interpret the following instruction as a Boolean combination:
+    (not done) OR "is recurring"
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -207,11 +205,11 @@ Input:
 '(not done) XOR "is recurring"'
 =>
 Result:
-  (not done) XOR "is recurring" =>
-    XOR (Exactly one of):
-      not done
-      is recurring
+Could not interpret the following instruction as a Boolean combination:
+    (not done) XOR "is recurring"
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -220,12 +218,11 @@ Input:
 '(not done) AND NOT "is recurring"'
 =>
 Result:
-  (not done) AND NOT "is recurring" =>
-    AND (All of):
-      not done
-      NOT:
-        is recurring
+Could not interpret the following instruction as a Boolean combination:
+    (not done) AND NOT "is recurring"
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -234,12 +231,11 @@ Input:
 '(not done) OR NOT "is recurring"'
 =>
 Result:
-  (not done) OR NOT "is recurring" =>
-    OR (At least one of):
-      not done
-      NOT:
-        is recurring
+Could not interpret the following instruction as a Boolean combination:
+    (not done) OR NOT "is recurring"
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -249,11 +245,11 @@ Input:
 '"HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL)'
 =>
 Result:
-  "HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL) =>
-    OR (At least one of):
-      HAS DUE DATE
-      DESCRIPTION INCLUDES SPECIAL
+Could not interpret the following instruction as a Boolean combination:
+    "HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL)
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -275,11 +271,11 @@ Input:
 '"has due date" OR (description includes special)'
 =>
 Result:
-  "has due date" OR (description includes special) =>
-    OR (At least one of):
-      has due date
-      description includes special
+Could not interpret the following instruction as a Boolean combination:
+    "has due date" OR (description includes special)
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -585,11 +581,11 @@ Input:
 '(HAS START DATE) AND "DESCRIPTION INCLUDES SOME"'
 =>
 Result:
-  (HAS START DATE) AND "DESCRIPTION INCLUDES SOME" =>
-    AND (All of):
-      HAS START DATE
-      DESCRIPTION INCLUDES SOME
+Could not interpret the following instruction as a Boolean combination:
+    (HAS START DATE) AND "DESCRIPTION INCLUDES SOME"
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -887,21 +883,10 @@ Input:
 '(description includes "hello world") OR (description includes "42")'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (description includes "hello world") OR (description includes "42")
-
-The error message is:
-    malformed boolean query -- Unexpected character: " (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1") OR (f2")
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'description includes "hello world'
-    'f2': 'description includes "42'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (description includes "hello world") OR (description includes "42") =>
+    OR (At least one of):
+      description includes "hello world"
+      description includes "42"
 
 
 --------------------------------------------------------
@@ -1760,11 +1745,11 @@ Input:
 '(has start date) AND "description includes some"'
 =>
 Result:
-  (has start date) AND "description includes some" =>
-    AND (All of):
-      has start date
-      description includes some
+Could not interpret the following instruction as a Boolean combination:
+    (has start date) AND "description includes some"
 
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
