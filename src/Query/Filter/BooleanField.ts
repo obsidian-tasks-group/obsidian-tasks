@@ -10,6 +10,7 @@ import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 import { BooleanDelimiters } from './BooleanDelimiters';
+import { BooleanPreprocessor } from './BooleanPreprocessor';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -82,15 +83,19 @@ export class BooleanField extends Field {
      * @private
      */
     private parseLineV1(line: string) {
-        const preprocessed = BooleanField.preprocessExpressionV1(line);
+        const parseResult = BooleanPreprocessor.preprocessExpression(line);
+        const simplifiedLine = parseResult.simplifiedLine;
+        const filters = parseResult.filters;
         try {
             // Convert the (preprocessed) line into a postfix logical expression
-            const postfixExpression = boonParse(preprocessed);
+            const postfixExpression: Token[] = boonParse(simplifiedLine);
             // Construct sub-field map, i.e. have subFields include a filter function for every
             // final token in the expression
             for (const token of postfixExpression) {
                 if (token.name === 'IDENTIFIER' && token.value) {
-                    const filter = token.value.trim();
+                    const placeholder = token.value.trim();
+                    const filter = filters[placeholder];
+                    token.value = filter;
                     if (!(filter in this.subFields)) {
                         const parsedField = parseFilter(filter);
                         if (parsedField === null) {
