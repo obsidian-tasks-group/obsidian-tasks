@@ -57,12 +57,11 @@ export class BooleanDelimiters {
             const firstChar = instructionWithoutAnyLeadingOperators[0];
             const lastChar = instructionWithoutAnyLeadingOperators.slice(-1);
 
-            if (firstChar === '(' && lastChar === ')') {
-                return new BooleanDelimiters('(', ')', '()');
-            }
-
-            if (firstChar === '"' && lastChar === '"') {
-                return new BooleanDelimiters('"', '"', '"');
+            for (const [openingDelimiter, closingDelimiter] of delimiterPairs) {
+                if (firstChar === openingDelimiter && lastChar === closingDelimiter) {
+                    const openingAndClosingDelimiters = this.openAndClosing(openingDelimiter, closingDelimiter);
+                    return new BooleanDelimiters(openingDelimiter, closingDelimiter, openingAndClosingDelimiters);
+                }
             }
         }
 
