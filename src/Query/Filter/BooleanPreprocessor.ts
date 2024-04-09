@@ -8,7 +8,7 @@ export type BooleanPreprocessorResult = {
 export class BooleanPreprocessor {
     public static preprocessExpression(line: string, delimiters: BooleanDelimiters): BooleanPreprocessorResult {
         const parts = BooleanPreprocessor.splitLine(line, delimiters);
-        return BooleanPreprocessor.getFiltersAndSimplifiedLine(parts);
+        return BooleanPreprocessor.getFiltersAndSimplifiedLine(parts, delimiters);
     }
 
     public static splitLine(line: string, delimiters: BooleanDelimiters) {
@@ -67,9 +67,7 @@ export class BooleanPreprocessor {
             .filter((substring) => substring !== '');
     }
 
-    private static getFiltersAndSimplifiedLine(parts: string[]) {
-        const delimiters = BooleanDelimiters.allSupportedDelimiters();
-
+    private static getFiltersAndSimplifiedLine(parts: string[], delimiters: BooleanDelimiters) {
         // Holds the reconstructed expression with placeholders
         let simplifiedLine = '';
         let currentIndex = 1; // Placeholder index starts at 1
