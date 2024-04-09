@@ -2,6 +2,11 @@ export function anyOfTheseChars(allowedChars: string): string {
     return new RegExp('[' + allowedChars + ']').source;
 }
 
+const delimiterPairs = [
+    ['(', ')'],
+    ['"', '"'],
+];
+
 /**
  * A class to try to identify the type of delimiter used between Boolean operators.
  *
@@ -28,7 +33,15 @@ export class BooleanDelimiters {
     }
 
     public static allSupportedDelimiters(): BooleanDelimiters {
-        return new BooleanDelimiters('("', ')"', '()"');
+        let opening = '';
+        let closing = '';
+        let openingAndClosing = '';
+        for (const [openingDelimiter, closingDelimiter] of delimiterPairs) {
+            opening += openingDelimiter;
+            closing += closingDelimiter;
+            openingAndClosing += BooleanDelimiters.openAndClosing(openingDelimiter, closingDelimiter);
+        }
+        return new BooleanDelimiters(opening, closing, openingAndClosing);
     }
 
     public static fromInstructionLine(instruction: string) {
@@ -56,5 +69,13 @@ export class BooleanDelimiters {
         throw new Error(
             'All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.',
         );
+    }
+
+    private static openAndClosing(openingDelimiter: string, closingDelimiter: string) {
+        let openingAndClosingDelimiters = openingDelimiter;
+        if (closingDelimiter != openingDelimiter) {
+            openingAndClosingDelimiters += closingDelimiter;
+        }
+        return openingAndClosingDelimiters;
     }
 }
