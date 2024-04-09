@@ -138,13 +138,6 @@ export class BooleanField extends Field {
         }
     }
 
-    public static preprocessExpressionV1(line: string): string {
-        // Prepare the query to be processed by boon-js.
-        // Boon doesn't process expression with spaces unless they are surrounded by quotes, so replace
-        // (due today) by ("due today").
-        return line.replace(/\(([^()]+)\)/g, '("$1")');
-    }
-
     /*
      * This run a Task object through a complete boolean expression.
      * It basically resolves the postfix expression until it is reduced into a single boolean value,
