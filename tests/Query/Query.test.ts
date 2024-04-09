@@ -43,7 +43,10 @@ describe('Query parsing', () => {
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
         // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED
+        '"due this week" AND "description includes Hello World"',
         '(due this week) AND (description includes Hello World)',
+        '[due this week] AND [description includes Hello World]',
+        '{due this week} AND {description includes Hello World}',
         'cancelled after 2021-12-27',
         'cancelled before 2021-12-27',
         'cancelled date is invalid',

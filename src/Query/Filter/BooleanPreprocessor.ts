@@ -88,6 +88,16 @@ export class BooleanPreprocessor {
             }
         });
 
+        // convert any non-standard delimiters to standard ones:
+        const openChars = delimiters.openFilterChars;
+        if (openChars != '"' && openChars != '(') {
+            const openDelimiter = new RegExp(anyOfTheseChars(openChars), 'g');
+            simplifiedLine = simplifiedLine.replace(openDelimiter, '(');
+
+            const closeChars = delimiters.closeFilterChars;
+            const closeDelimiter = new RegExp(anyOfTheseChars(closeChars), 'g');
+            simplifiedLine = simplifiedLine.replace(closeDelimiter, ')');
+        }
         return { simplifiedLine, filters };
     }
 
