@@ -119,7 +119,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -130,7 +130,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -141,7 +141,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -152,7 +152,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -163,7 +163,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -175,7 +175,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -186,7 +186,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -197,7 +197,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -208,7 +208,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -219,7 +219,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -230,7 +230,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -242,7 +242,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -270,7 +270,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -667,7 +667,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -1941,7 +1941,7 @@ Input:
 Result:
 Error: Parsing expression.
 The error message was:
-    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or "...". Combinations of those delimiters are no longer supported."
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -3410,6 +3410,36 @@ Result:
     "] AND [",
     "description includes \"hello world\"",
     "]"
+]
+
+--------------------------------------------------------
+
+
+Input:
+'{due this week} AND {description includes I use curly braces}'
+=>
+Result:
+[
+    "{",
+    "due this week",
+    "} AND {",
+    "description includes I use curly braces",
+    "}"
+]
+
+--------------------------------------------------------
+
+
+Input:
+'{filter by function task.description.includes('a')} AND {description includes "hello world"}'
+=>
+Result:
+[
+    "{",
+    "filter by function task.description.includes('a')",
+    "} AND {",
+    "description includes \"hello world\"",
+    "}"
 ]
 
 --------------------------------------------------------
