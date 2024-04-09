@@ -262,10 +262,13 @@ export class BooleanField extends Field {
 
         const simpleMessage = this.helpMessageFromSimpleError(line, errorMessage);
         const fullMessage = `${simpleMessage}
+
 The instruction was converted to the following simplified line:
     ${parseResult.simplifiedLine}
+
 Where the sub-expressions in the simplified line are:
 ${expressions}
+
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
 `;
@@ -275,6 +278,7 @@ For help, see:
     private helpMessageFromSimpleError(line: string, errorMessage: string) {
         return `Could not interpret the following instruction as a Boolean combination:
     ${line}
+
 The error message is:
     ${errorMessage}`;
     }

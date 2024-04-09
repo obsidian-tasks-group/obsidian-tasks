@@ -165,13 +165,17 @@ describe('boolean query - filter', () => {
                 expect(explanationOrError(filter)).toMatchInlineSnapshot(`
                     "Could not interpret the following instruction as a Boolean combination:
                         (description includes "hello world") OR (description includes "42")
+
                     The error message is:
                         malformed boolean query -- Unexpected character: " (check the documentation for guidelines)
+
                     The instruction was converted to the following simplified line:
                         (f1") OR (f2")
+
                     Where the sub-expressions in the simplified line are:
                         'f1': 'description includes "hello world'
                         'f2': 'description includes "42'
+
                     For help, see:
                         https://publish.obsidian.md/tasks/Queries/Combining+Filters
                     "
