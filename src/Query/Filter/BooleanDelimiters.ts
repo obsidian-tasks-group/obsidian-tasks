@@ -1,6 +1,15 @@
+import { escapeRegExp } from '../../lib/RegExpTools';
+
 export function anyOfTheseChars(allowedChars: string): string {
-    return new RegExp('[' + allowedChars + ']').source;
+    return new RegExp('[' + escapeRegExp(allowedChars) + ']').source;
 }
+
+const delimiterPairs = [
+    ['(', ')'],
+    ['[', ']'],
+    ['{', '}'],
+    ['"', '"'],
+];
 
 /**
  * A class to try to identify the type of delimiter used between Boolean operators.
@@ -28,7 +37,15 @@ export class BooleanDelimiters {
     }
 
     public static allSupportedDelimiters(): BooleanDelimiters {
-        return new BooleanDelimiters('("', ')"', '()"');
+        let opening = '';
+        let closing = '';
+        let openingAndClosing = '';
+        for (const [openingDelimiter, closingDelimiter] of delimiterPairs) {
+            opening += openingDelimiter;
+            closing += closingDelimiter;
+            openingAndClosing += BooleanDelimiters.openAndClosing(openingDelimiter, closingDelimiter);
+        }
+        return new BooleanDelimiters(opening, closing, openingAndClosing);
     }
 
     public static fromInstructionLine(instruction: string) {
@@ -44,17 +61,30 @@ export class BooleanDelimiters {
             const firstChar = instructionWithoutAnyLeadingOperators[0];
             const lastChar = instructionWithoutAnyLeadingOperators.slice(-1);
 
-            if (firstChar === '(' && lastChar === ')') {
-                return new BooleanDelimiters('(', ')', '()');
-            }
-
-            if (firstChar === '"' && lastChar === '"') {
-                return new BooleanDelimiters('"', '"', '"');
+            for (const [openingDelimiter, closingDelimiter] of delimiterPairs) {
+                if (firstChar === openingDelimiter && lastChar === closingDelimiter) {
+                    const openingAndClosingDelimiters = this.openAndClosing(openingDelimiter, closingDelimiter);
+                    return new BooleanDelimiters(openingDelimiter, closingDelimiter, openingAndClosingDelimiters);
+                }
             }
         }
 
-        throw new Error(
-            'All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.',
-        );
+        const message =
+            'All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: ' +
+            delimiterPairs
+                .map(([open, close]) => {
+                    return open + '...' + close;
+                })
+                .join(' or ') +
+            '. Combinations of those delimiters are no longer supported.';
+        throw new Error(message);
+    }
+
+    private static openAndClosing(openingDelimiter: string, closingDelimiter: string) {
+        let openingAndClosingDelimiters = openingDelimiter;
+        if (closingDelimiter != openingDelimiter) {
+            openingAndClosingDelimiters += closingDelimiter;
+        }
+        return openingAndClosingDelimiters;
     }
 }
