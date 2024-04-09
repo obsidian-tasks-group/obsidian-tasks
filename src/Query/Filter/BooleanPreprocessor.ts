@@ -1,6 +1,6 @@
 import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
 
-type BooleanPreprocessorResult = {
+export type BooleanPreprocessorResult = {
     simplifiedLine: string;
     filters: { [key: string]: string };
 };
