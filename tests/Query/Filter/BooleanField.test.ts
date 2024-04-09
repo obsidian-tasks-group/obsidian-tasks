@@ -163,7 +163,7 @@ describe('boolean query - filter', () => {
                 const filter = createValidFilter('(description includes "hello world") OR (description includes "42")');
                 // TODO Fix this:
                 expect(explanationOrError(filter)).toMatchInlineSnapshot(
-                    '"malformed boolean query -- Unexpected character: h Expected ) character or separator (check the documentation for guidelines)"',
+                    '"malformed boolean query -- Unexpected character: " (check the documentation for guidelines)"',
                 );
             });
         });
