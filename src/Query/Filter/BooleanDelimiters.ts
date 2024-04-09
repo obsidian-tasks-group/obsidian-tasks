@@ -54,7 +54,7 @@ export class BooleanDelimiters {
         }
 
         throw new Error(
-            "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.",
+            'All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.',
         );
     }
 }
