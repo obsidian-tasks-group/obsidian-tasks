@@ -15,7 +15,8 @@ describe('BooleanDelimiters', () => {
 
     describe('construct from line with binary operators', () => {
         it('from line with () delimiters', () => {
-            const delimiters = BooleanDelimiters.fromInstructionLine('(not done) OR (done)');
+            const line = '(not done) OR (done)';
+            const delimiters = BooleanDelimiters.fromInstructionLine(line);
 
             expect(delimiters.openFilterChars).toEqual('(');
             expect(delimiters.closeFilterChars).toEqual(')');
@@ -23,7 +24,8 @@ describe('BooleanDelimiters', () => {
         });
 
         it('from line with "" delimiters', () => {
-            const delimiters = BooleanDelimiters.fromInstructionLine('"not done" OR "done"');
+            const line = '"not done" OR "done"';
+            const delimiters = BooleanDelimiters.fromInstructionLine(line);
 
             expect(delimiters.openFilterChars).toEqual('"');
             expect(delimiters.closeFilterChars).toEqual('"');
@@ -31,8 +33,9 @@ describe('BooleanDelimiters', () => {
         });
 
         it.failing('from line with mixed delimiters', () => {
+            const line = '(not done) OR "done"';
             const t = () => {
-                BooleanDelimiters.fromInstructionLine('(not done) OR "done"');
+                BooleanDelimiters.fromInstructionLine(line);
             };
             expect(t).toThrow(Error);
             expect(t).toThrowError(
@@ -41,8 +44,9 @@ describe('BooleanDelimiters', () => {
         });
 
         it.failing('from line with unknown delimiters', () => {
+            const line = '{not done} OR "done"';
             const t = () => {
-                BooleanDelimiters.fromInstructionLine('{not done} OR "done"');
+                BooleanDelimiters.fromInstructionLine(line);
             };
             expect(t).toThrow(Error);
             expect(t).toThrowError(
@@ -53,7 +57,8 @@ describe('BooleanDelimiters', () => {
 
     describe('construct from line starting with NOT', () => {
         it('from line with () delimiters', () => {
-            const delimiters = BooleanDelimiters.fromInstructionLine('NOT (not done)');
+            const line = 'NOT (not done)';
+            const delimiters = BooleanDelimiters.fromInstructionLine(line);
 
             expect(delimiters.openFilterChars).toEqual('(');
             expect(delimiters.closeFilterChars).toEqual(')');
@@ -61,7 +66,8 @@ describe('BooleanDelimiters', () => {
         });
 
         it('from line with "" delimiters', () => {
-            const delimiters = BooleanDelimiters.fromInstructionLine('NOT "not done"');
+            const line = 'NOT "not done"';
+            const delimiters = BooleanDelimiters.fromInstructionLine(line);
 
             expect(delimiters.openFilterChars).toEqual('"');
             expect(delimiters.closeFilterChars).toEqual('"');
@@ -69,8 +75,9 @@ describe('BooleanDelimiters', () => {
         });
 
         it.failing('from line with mixed delimiters', () => {
+            const line = 'NOT (not done"';
             const t = () => {
-                BooleanDelimiters.fromInstructionLine('NOT (not done"');
+                BooleanDelimiters.fromInstructionLine(line);
             };
             expect(t).toThrow(Error);
             expect(t).toThrowError(
@@ -79,8 +86,9 @@ describe('BooleanDelimiters', () => {
         });
 
         it('from line with unknown delimiters', () => {
+            const line = 'NOT {not done}';
             const t = () => {
-                BooleanDelimiters.fromInstructionLine('NOT {not done}');
+                BooleanDelimiters.fromInstructionLine(line);
             };
             expect(t).toThrow(Error);
             expect(t).toThrowError(
