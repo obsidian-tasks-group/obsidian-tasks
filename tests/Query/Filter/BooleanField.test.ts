@@ -30,6 +30,7 @@ describe('boolean query - filter', () => {
     describe('basic operators', () => {
         it.each([
             '(description includes d1) AND (description includes d2)',
+            '[description includes d1] AND [description includes d2]',
             '"description includes d1" AND "description includes d2"',
         ])('instruction: "%s"', (line: string) => {
             // Arrange
@@ -292,12 +293,35 @@ describe('boolean query - filter', () => {
 });
 
 describe('boolean query - explain', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2024-04-07'));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     function explainFilters(indentationLevel: number, source: string) {
         const indentation = ' '.repeat(indentationLevel);
         const path = 'some/sample/note.md';
         const query1 = new Query(source, path);
         return new Explainer(indentation).explainFilters(query1);
     }
+
+    it('should explain [] delimiters', () => {
+        const line = '[due this week] AND [description includes I use square brackets]';
+        expect(explainFilters(0, line)).toMatchInlineSnapshot(`
+            "[due this week] AND [description includes I use square brackets] =>
+              AND (All of):
+                due this week =>
+                  due date is between:
+                    2024-04-01 (Monday 1st April 2024) and
+                    2024-04-07 (Sunday 7th April 2024) inclusive
+                description includes I use square brackets
+            "
+        `);
+    });
 
     it('should make multi-line explanations consistent in and out of Boolean filter - issue #2707', () => {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2707

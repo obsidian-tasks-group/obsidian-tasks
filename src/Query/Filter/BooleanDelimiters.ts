@@ -6,6 +6,7 @@ export function anyOfTheseChars(allowedChars: string): string {
 
 const delimiterPairs = [
     ['(', ')'],
+    ['[', ']'],
     ['"', '"'],
 ];
 

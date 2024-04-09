@@ -207,6 +207,8 @@ NOT (not done)
 (tags do not include sometag) OR NOT (tags do not include sometag)
 (tags include #sometag) OR NOT (tags include #sometag)
 (tags include sometag) OR NOT (tags include sometag)
+[due this week] AND [description includes I use square brackets]
+[filter by function task.description.includes('a')] AND [description includes "hello world"]
 AND (description includes d1)
 NOT   (  happens before blahblahblah  )
 NOT  ( description includes d1 )
