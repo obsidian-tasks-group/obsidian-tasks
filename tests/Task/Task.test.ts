@@ -1168,6 +1168,34 @@ describe('toggle done', () => {
         },
     );
 
+    it('should use reminder to create new recurrence', () => {
+        // Arrange
+        const line = '- [ ] this is a task 🔁 every day ⏰ 2021-09-12';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        const tasks = task!.toggle();
+        expect(tasks[0].toFileLineString()).toEqual('- [ ] this is a task 🔁 every day ⏰ 2021-09-13');
+    });
+
+    it.failing('should use reminder to create new recurrence - and preserve the time', () => {
+        // Arrange
+        const line = '- [ ] this is a task 🔁 every day ⏰ 2021-09-12 13:24';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        const tasks = task!.toggle();
+        expect(tasks[0].toFileLineString()).toEqual('- [ ] this is a task 🔁 every day ⏰ 2021-09-13 13:24');
+    });
+
     it('supports recurrence rule after a due date', () => {
         // Arrange
         const line = '- [ ] this is a task 🗓 2021-09-12 🔁 every day';
