@@ -161,23 +161,11 @@ describe('boolean query - filter', () => {
             it('should allow ( and ) as delimiters around 2 filters - with " inside', () => {
                 // This searches for words surrounded by double-quotes:
                 const filter = createValidFilter('(description includes "hello world") OR (description includes "42")');
-                // TODO Fix this:
                 expect(explanationOrError(filter)).toMatchInlineSnapshot(`
-                    "Could not interpret the following instruction as a Boolean combination:
-                        (description includes "hello world") OR (description includes "42")
-
-                    The error message is:
-                        malformed boolean query -- Unexpected character: " (check the documentation for guidelines)
-
-                    The instruction was converted to the following simplified line:
-                        (f1") OR (f2")
-
-                    Where the sub-expressions in the simplified line are:
-                        'f1': 'description includes "hello world'
-                        'f2': 'description includes "42'
-
-                    For help, see:
-                        https://publish.obsidian.md/tasks/Queries/Combining+Filters
+                    "(description includes "hello world") OR (description includes "42") =>
+                      OR (At least one of):
+                        description includes "hello world"
+                        description includes "42"
                     "
                 `);
             });
@@ -204,6 +192,13 @@ describe('boolean query - filter', () => {
                                         description includes #context/location2
                                     "
                             `);
+            });
+        });
+
+        describe('Mixed delimiters', () => {
+            it('should not allow a mixture of () and "" delimiters any more - breaking change in 7.0.0', () => {
+                const filter = new BooleanField().createFilterOrErrorMessage('(not done) AND "is recurring"');
+                expect(filter.error).toBeDefined();
             });
         });
     });
