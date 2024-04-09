@@ -1,7 +1,6 @@
 import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
 
 type BooleanPreprocessorResult = {
-    parts: string[];
     simplifiedLine: string;
     filters: { [key: string]: string };
 };
@@ -93,7 +92,7 @@ export class BooleanPreprocessor {
             }
         });
 
-        return { parts, simplifiedLine, filters };
+        return { simplifiedLine, filters };
     }
 
     private static isAFilter(part: string, delimiters: BooleanDelimiters) {

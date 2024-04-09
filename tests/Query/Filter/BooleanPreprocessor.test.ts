@@ -12,11 +12,6 @@ describe('BooleanPreprocessor', () => {
                   "filters": {
                     "f1": "not done",
                   },
-                  "parts": [
-                    "(",
-                    "not done",
-                    ")",
-                  ],
                   "simplifiedLine": "(f1)",
                 }
             `);
@@ -29,13 +24,6 @@ describe('BooleanPreprocessor', () => {
                     "f1": "done",
                     "f2": "has done date",
                   },
-                  "parts": [
-                    "(",
-                    "done",
-                    ") AND (",
-                    "has done date",
-                    ")",
-                  ],
                   "simplifiedLine": "(f1) AND (f2)",
                 }
             `);
@@ -48,13 +36,6 @@ describe('BooleanPreprocessor', () => {
                     "f1": "DONE",
                     "f2": "HAS DONE DATE",
                   },
-                  "parts": [
-                    "(",
-                    "DONE",
-                    ") AND (",
-                    "HAS DONE DATE",
-                    ")",
-                  ],
                   "simplifiedLine": "(f1) AND (f2)",
                 }
             `);
@@ -67,15 +48,6 @@ describe('BooleanPreprocessor', () => {
                     "f1": "done",
                     "f2": "has done date",
                   },
-                  "parts": [
-                    "(",
-                    "done",
-                    ") AND",
-                    "  ",
-                    "NOT (",
-                    "has done date",
-                    ")",
-                  ],
                   "simplifiedLine": "(f1) AND  NOT (f2)",
                 }
             `);
@@ -88,13 +60,6 @@ describe('BooleanPreprocessor', () => {
                     "f1": "done",
                     "f2": "has done date",
                   },
-                  "parts": [
-                    "(",
-                    "done",
-                    ") OR (",
-                    "has done date",
-                    ")",
-                  ],
                   "simplifiedLine": "(f1) OR (f2)",
                 }
             `);
@@ -107,15 +72,6 @@ describe('BooleanPreprocessor', () => {
                     "f1": "done",
                     "f2": "has done date",
                   },
-                  "parts": [
-                    "(",
-                    "done",
-                    ") OR",
-                    "  ",
-                    "NOT (",
-                    "has done date",
-                    ")",
-                  ],
                   "simplifiedLine": "(f1) OR  NOT (f2)",
                 }
             `);
@@ -128,15 +84,6 @@ describe('BooleanPreprocessor', () => {
                     "f1": "done",
                     "f2": "has done date",
                   },
-                  "parts": [
-                    """,
-                    "done",
-                    "" ",
-                    "XOR",
-                    " "",
-                    "has done date",
-                    """,
-                  ],
                   "simplifiedLine": ""f1" XOR "f2"",
                 }
             `);
@@ -148,11 +95,6 @@ describe('BooleanPreprocessor', () => {
                   "filters": {
                     "f1": "not done",
                   },
-                  "parts": [
-                    "NOT  (",
-                    "not done",
-                    ")",
-                  ],
                   "simplifiedLine": "NOT  (f1)",
                 }
             `);
@@ -167,13 +109,6 @@ describe('BooleanPreprocessor', () => {
                     "f1": "done",
                     "f2": "has done date",
                   },
-                  "parts": [
-                    "(",
-                    "done",
-                    ")AND(",
-                    "has done date",
-                    ")",
-                  ],
                   "simplifiedLine": "(f1)AND(f2)",
                 }
             `);
@@ -185,11 +120,6 @@ describe('BooleanPreprocessor', () => {
                   "filters": {
                     "f1": "not done",
                   },
-                  "parts": [
-                    "NOT(",
-                    "not done",
-                    ")",
-                  ],
                   "simplifiedLine": "NOT(f1)",
                 }
             `);
@@ -219,13 +149,6 @@ describe('BooleanPreprocessor', () => {
                   "filters": {
                     "f1": "description includes d1",
                   },
-                  "parts": [
-                    "(((((",
-                    "NOT  (",
-                    " ",
-                    "description includes d1",
-                    " ))))))",
-                  ],
                   "simplifiedLine": "(((((NOT  ( f1 ))))))",
                 }
             `);
@@ -237,14 +160,6 @@ describe('BooleanPreprocessor', () => {
                   "filters": {
                     "f1": "description includes d1",
                   },
-                  "parts": [
-                    """"""",
-                    "NOT",
-                    "  "",
-                    " ",
-                    "description includes d1",
-                    " """"""",
-                  ],
                   "simplifiedLine": """"""NOT  " f1 """"""",
                 }
             `);
