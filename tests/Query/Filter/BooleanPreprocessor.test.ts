@@ -2,7 +2,7 @@ import { BooleanPreprocessor } from '../../../src/Query/Filter/BooleanPreprocess
 import { BooleanDelimiters } from '../../../src/Query/Filter/BooleanDelimiters';
 
 function preprocess(line: string) {
-    return BooleanPreprocessor.preprocessExpression(line, BooleanDelimiters.allSupportedDelimiters());
+    return BooleanPreprocessor.preprocessExpression(line, BooleanDelimiters.fromInstructionLine(line));
 }
 
 describe('BooleanPreprocessor', () => {
@@ -130,16 +130,14 @@ describe('BooleanPreprocessor', () => {
     describe('filters ending with delimiters', () => {
         it('swallows last character if filter ends with closing delimiter character )', () => {
             const result = preprocess('"description includes (maybe)"');
-            // TODO Fix imbalanced delimiters by requiring the same delimiter set to be used in Boolean lines.
-            expect(result.simplifiedLine).toEqual('"f1)"');
-            expect(result.filters['f1']).toEqual('description includes (maybe');
+            expect(result.simplifiedLine).toEqual('"f1"');
+            expect(result.filters['f1']).toEqual('description includes (maybe)');
         });
 
         it('swallows last character if filter ends with closing delimiter character "', () => {
             const result = preprocess('(description includes "maybe")');
-            // TODO Fix imbalanced delimiters by requiring the same delimiter set to be used in Boolean lines.
-            expect(result.simplifiedLine).toEqual('(f1")');
-            expect(result.filters['f1']).toEqual('description includes "maybe');
+            expect(result.simplifiedLine).toEqual('(f1)');
+            expect(result.filters['f1']).toEqual('description includes "maybe"');
         });
     });
 
