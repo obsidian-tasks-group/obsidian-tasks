@@ -66,9 +66,15 @@ export class BooleanDelimiters {
             }
         }
 
-        throw new Error(
-            'All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.',
-        );
+        const message =
+            'All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: ' +
+            delimiterPairs
+                .map(([open, close]) => {
+                    return open + '...' + close;
+                })
+                .join(' or ') +
+            '. Combinations of those delimiters are no longer supported.';
+        throw new Error(message);
     }
 
     private static openAndClosing(openingDelimiter: string, closingDelimiter: string) {
