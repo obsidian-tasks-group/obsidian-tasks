@@ -172,6 +172,8 @@ describe('boolean query - filter', () => {
                     Where the sub-expressions in the simplified line are:
                         'f1': 'description includes "hello world'
                         'f2': 'description includes "42'
+                    For help, see:
+                        https://publish.obsidian.md/tasks/Queries/Combining+Filters
                     "
                 `);
             });

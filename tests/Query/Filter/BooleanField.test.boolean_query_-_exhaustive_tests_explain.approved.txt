@@ -389,6 +389,8 @@ Where the sub-expressions in the simplified line are:
     'f4': 'filter by function task.description.includes('d''
     'f5': 'filter by function task.description.includes('e''
     'f6': 'filter by function task.description.includes('f''
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -471,6 +473,8 @@ Where the sub-expressions in the simplified line are:
     'f6': 'filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase('
     'f7': 'filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false'
     'f8': 'filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -884,6 +888,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'description includes "hello world'
     'f2': 'description includes "42'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -996,6 +1002,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN'
     'f2': 'description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2236,6 +2244,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes ()some example('
     'f2': 'path includes ((some example'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2267,6 +2277,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes (some example'
     'f2': 'path includes )some example('
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2285,6 +2297,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes )some example('
     'f2': 'path includes (some example'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2330,6 +2344,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2348,6 +2364,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2366,6 +2384,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2384,6 +2404,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2402,6 +2424,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2420,6 +2444,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2438,6 +2464,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2456,6 +2484,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2474,6 +2504,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -2492,6 +2524,8 @@ The instruction was converted to the following simplified line:
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes a'
     'f2': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -3052,6 +3086,8 @@ The instruction was converted to the following simplified line:
     f1)
 Where the sub-expressions in the simplified line are:
     'f1': 'AND (description includes d1'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -3069,6 +3105,8 @@ The instruction was converted to the following simplified line:
     NOT   (  f1  )
 Where the sub-expressions in the simplified line are:
     'f1': 'happens before blahblahblah'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -3151,6 +3189,8 @@ The instruction was converted to the following simplified line:
     NOT (f1)
 Where the sub-expressions in the simplified line are:
     'f1': 'description blahblah d1'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -3180,6 +3220,8 @@ The instruction was converted to the following simplified line:
     NOT (f1)
 Where the sub-expressions in the simplified line are:
     'f1': 'happens before blahblahblah'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -3209,6 +3251,8 @@ The instruction was converted to the following simplified line:
     NOT(f1)
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes b'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
@@ -3226,6 +3270,8 @@ The instruction was converted to the following simplified line:
     f1)
 Where the sub-expressions in the simplified line are:
     'f1': 'OR (description includes d1'
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 
 --------------------------------------------------------
