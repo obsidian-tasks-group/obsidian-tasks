@@ -1,6 +1,16 @@
 import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
 
+type BooleanPreprocessorResult = {
+    simplifiedLine: string;
+    filters: { [key: string]: string };
+};
+
 export class BooleanPreprocessor {
+    public static preprocessExpression(line: string): BooleanPreprocessorResult {
+        const parts = BooleanPreprocessor.splitLine(line);
+        return BooleanPreprocessor.getFiltersAndSimplifiedLine(parts);
+    }
+
     public static splitLine(line: string) {
         const delimiters = BooleanDelimiters.allSupportedDelimiters();
 
@@ -57,5 +67,58 @@ export class BooleanPreprocessor {
             .flatMap((substring) => substring.split(openingDelimitersAndSpacesAtStartRegex))
             .flatMap((substring) => substring.split(closingDelimitersAndSpacesAtEndRegex))
             .filter((substring) => substring !== '');
+    }
+
+    private static getFiltersAndSimplifiedLine(parts: string[]) {
+        const delimiters = BooleanDelimiters.allSupportedDelimiters();
+
+        // Holds the reconstructed expression with placeholders
+        let simplifiedLine = '';
+        let currentIndex = 1; // Placeholder index starts at 1
+        const filters: { [key: string]: string } = {}; // To store filter placeholders and their corresponding text
+
+        // Loop to add placeholders-for-filters or operators to the simplifiedLine
+        parts.forEach((part) => {
+            // Check if the part is an operator by matching against the regex without surrounding parentheses
+            if (!BooleanPreprocessor.isAFilter(part, delimiters)) {
+                // It's an operator, space or parenthesis, so add it directly to the simplifiedLine
+                simplifiedLine += `${part}`;
+            } else {
+                // It's a filter, replace it with a placeholder, and save it:
+                const placeholder = `f${currentIndex}`;
+                filters[placeholder] = part;
+                simplifiedLine += placeholder;
+                currentIndex++;
+            }
+        });
+
+        return { simplifiedLine, filters };
+    }
+
+    private static isAFilter(part: string, delimiters: BooleanDelimiters) {
+        // This set of regular expressions was built up empirically through a lot of iteration,
+        // over a very thorough set of sample Boolean filters, in order to detect all the outputs
+        // from splitLine() that were not actually Tasks filters.
+        const onlySpacesAndParentheses = new RegExp(
+            '^' + anyOfTheseChars(' ' + delimiters.openAndCloseFilterChars) + '+$',
+        );
+
+        const binaryOperatorAndParentheses = new RegExp(
+            '^ *' + delimiters.closeFilter + ' *(AND|OR|XOR) *' + delimiters.openFilter + ' *$',
+        );
+
+        const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + delimiters.openFilter + '$');
+
+        const remnantsOfNot = new RegExp('^' + delimiters.closeFilter + ' *(AND|OR|XOR)$');
+
+        const justOperators = /^(AND|OR|XOR|NOT)$/;
+
+        return ![
+            onlySpacesAndParentheses,
+            binaryOperatorAndParentheses,
+            unaryOperatorAndParentheses,
+            remnantsOfNot,
+            justOperators,
+        ].some((regex) => RegExp(regex).exec(part));
     }
 }
