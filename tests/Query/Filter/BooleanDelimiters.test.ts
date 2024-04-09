@@ -31,10 +31,10 @@ describe('BooleanDelimiters', () => {
         const delimiters = BooleanDelimiters.allSupportedDelimiters();
 
         expect(delimiters.openFilterChars).toEqual('("');
-        expect(delimiters.openFilter).toEqual('[("]');
+        expect(delimiters.openFilter).toEqual('[\\("]');
 
         expect(delimiters.closeFilterChars).toEqual(')"');
-        expect(delimiters.closeFilter).toEqual('[)"]');
+        expect(delimiters.closeFilter).toEqual('[\\)"]');
 
         expect(delimiters.openAndCloseFilterChars).toEqual('()"');
     });
