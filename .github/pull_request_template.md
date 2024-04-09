@@ -55,5 +55,5 @@ By submitting this pull request, you must agree to follow our
 Put an x in the boxes to confirm you agree.
 -->
 
-- [ ] My contribution follow this project's [contributing guide](https://publish.obsidian.md/tasks-contributing)
+- [ ] My contribution follows this project's [contributing guide](https://publish.obsidian.md/tasks-contributing)
 - [ ] I agree to follow this project's [Code of Conduct](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CODE_OF_CONDUCT.md)
