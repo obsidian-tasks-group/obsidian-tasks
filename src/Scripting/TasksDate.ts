@@ -2,6 +2,7 @@ import type { DurationInputArg2, Moment, unitOfTime } from 'moment';
 import { Notice } from 'obsidian';
 import { PropertyCategory } from '../lib/PropertyCategory';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { isDateTime } from '../lib/DateTools';
 
 /**
  * TasksDate encapsulates a date, for simplifying the JavaScript expressions users need to
@@ -142,18 +143,4 @@ export class TasksDate {
 
         return this._date.clone().add(amount, unitOfTime);
     }
-}
-
-/**
- * Returns whether the moment object was initialized with a time. Used for reminders
- * returns false if task has no moment
- * @param dateObj
- */
-export function isDateTime(dateObj: Moment | null): boolean {
-    let hasTime = false;
-    if (dateObj != null) {
-        hasTime = dateObj.creationData().format === 'YYYY-MM-DD HH:mm';
-    }
-
-    return hasTime;
 }

@@ -1,11 +1,11 @@
 import { diff } from 'jest-diff';
 import type { MatcherFunction } from 'expect';
 import moment from 'moment';
-import { isDateTime } from '../../src/Scripting/TasksDate';
 import type { TaskDetails } from '../../src/TaskSerializer';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Priority } from '../../src/Task/Priority';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { isDateTime } from '../../src/lib/DateTools';
 
 declare global {
     namespace jest {

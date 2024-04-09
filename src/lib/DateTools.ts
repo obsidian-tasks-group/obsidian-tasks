@@ -1,4 +1,5 @@
 import * as chrono from 'chrono-node';
+import type { Moment } from 'moment/moment';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
@@ -92,4 +93,18 @@ export function parseTypedDateForSaving(typedDate: string, forwardDate: boolean)
         date = window.moment(parsedDate);
     }
     return date;
+}
+
+/**
+ * Returns whether the moment object was initialized with a time. Used for reminders
+ * returns false if task has no moment
+ * @param dateObj
+ */
+export function isDateTime(dateObj: Moment | null): boolean {
+    let hasTime = false;
+    if (dateObj != null) {
+        hasTime = dateObj.creationData().format === 'YYYY-MM-DD HH:mm';
+    }
+
+    return hasTime;
 }
