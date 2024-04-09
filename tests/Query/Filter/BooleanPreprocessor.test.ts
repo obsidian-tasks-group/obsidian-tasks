@@ -1,7 +1,7 @@
 import { BooleanPreprocessor } from '../../../src/Query/Filter/BooleanPreprocessor';
 
 function split(line: string) {
-    return BooleanPreprocessor.preprocessExpressionV2(line);
+    return BooleanPreprocessor.preprocessExpression(line);
 }
 
 describe('BooleanPreprocessor', () => {

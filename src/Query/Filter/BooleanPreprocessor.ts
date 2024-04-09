@@ -7,7 +7,7 @@ type BooleanPreprocessorResult = {
 };
 
 export class BooleanPreprocessor {
-    public static preprocessExpressionV2(line: string): BooleanPreprocessorResult {
+    public static preprocessExpression(line: string): BooleanPreprocessorResult {
         const parts = BooleanPreprocessor.splitLine(line);
         return BooleanPreprocessor.getFiltersAndSimplifiedLine(parts);
     }

@@ -340,7 +340,7 @@ describe('boolean query - exhaustive tests', () => {
     });
 
     it('preprocess - rewrite', () => {
-        verifyBooleanExpressionPreprocessing(BooleanPreprocessor.preprocessExpressionV2);
+        verifyBooleanExpressionPreprocessing(BooleanPreprocessor.preprocessExpression);
     });
 
     it('explain', () => {
