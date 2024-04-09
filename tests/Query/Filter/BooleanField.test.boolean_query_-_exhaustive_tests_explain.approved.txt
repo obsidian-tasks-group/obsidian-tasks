@@ -104,7 +104,7 @@ Could not interpret the following instruction as a Boolean combination:
     "not done" AND (is recurring)
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -117,7 +117,7 @@ Could not interpret the following instruction as a Boolean combination:
     "not done" OR (is recurring)
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -130,7 +130,7 @@ Could not interpret the following instruction as a Boolean combination:
     "not done" XOR (is recurring)
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -143,7 +143,7 @@ Could not interpret the following instruction as a Boolean combination:
     "not done" AND NOT (is recurring)
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -156,7 +156,7 @@ Could not interpret the following instruction as a Boolean combination:
     "not done" OR NOT (is recurring)
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -170,7 +170,7 @@ Could not interpret the following instruction as a Boolean combination:
     (not done) AND "is recurring"
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -183,7 +183,7 @@ Could not interpret the following instruction as a Boolean combination:
     ((not done)) AND "is recurring"
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -196,7 +196,7 @@ Could not interpret the following instruction as a Boolean combination:
     (not done) OR "is recurring"
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -209,7 +209,7 @@ Could not interpret the following instruction as a Boolean combination:
     (not done) XOR "is recurring"
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -222,7 +222,7 @@ Could not interpret the following instruction as a Boolean combination:
     (not done) AND NOT "is recurring"
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -235,7 +235,7 @@ Could not interpret the following instruction as a Boolean combination:
     (not done) OR NOT "is recurring"
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -249,7 +249,7 @@ Could not interpret the following instruction as a Boolean combination:
     "HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL)
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -275,7 +275,7 @@ Could not interpret the following instruction as a Boolean combination:
     "has due date" OR (description includes special)
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -585,7 +585,7 @@ Could not interpret the following instruction as a Boolean combination:
     (HAS START DATE) AND "DESCRIPTION INCLUDES SOME"
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 
@@ -1749,7 +1749,7 @@ Could not interpret the following instruction as a Boolean combination:
     (has start date) AND "description includes some"
 
 The error message is:
-    All filters in a Boolean instruction be surrounded with either '(' and ')' or '"'. Combinations of those delimiters are no longer supported.
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.
 
 --------------------------------------------------------
 

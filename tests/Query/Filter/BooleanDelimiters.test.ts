@@ -22,7 +22,7 @@ function shouldThrow(line: string) {
     };
     expect(t).toThrow(Error);
     expect(t).toThrowError(
-        "All filters in a Boolean instruction be surrounded with either '(' and ')' or '\"'. Combinations of those delimiters are no longer supported.",
+        'All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported.',
     );
 }
 
