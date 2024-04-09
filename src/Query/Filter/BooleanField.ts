@@ -266,6 +266,8 @@ The instruction was converted to the following simplified line:
     ${parseResult.simplifiedLine}
 Where the sub-expressions in the simplified line are:
 ${expressions}
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 `;
         return FilterOrErrorMessage.fromError(line, fullMessage);
     }
