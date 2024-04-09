@@ -10,7 +10,7 @@ import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 import { BooleanDelimiters } from './BooleanDelimiters';
-import { BooleanPreprocessor } from './BooleanPreprocessor';
+import { BooleanPreprocessor, type BooleanPreprocessorResult } from './BooleanPreprocessor';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -72,7 +72,7 @@ export class BooleanField extends Field {
      */
     private parseLine(line: string): FilterOrErrorMessage {
         if (line.length === 0) {
-            return this.helpMessage(line, 'empty line');
+            return FilterOrErrorMessage.fromError(line, 'empty line');
         }
 
         const parseResult = BooleanPreprocessor.preprocessExpression(line);
@@ -91,12 +91,13 @@ export class BooleanField extends Field {
                     if (!(filter in this.subFields)) {
                         const parsedField = parseFilter(filter);
                         if (parsedField === null) {
-                            return this.helpMessage(line, `couldn't parse sub-expression '${filter}'`);
+                            return this.helpMessage(line, `couldn't parse sub-expression '${filter}'`, parseResult);
                         }
                         if (parsedField.error) {
                             return this.helpMessage(
                                 line,
                                 `couldn't parse sub-expression '${filter}': ${parsedField.error}`,
+                                parseResult,
                             );
                         } else if (parsedField.filter) {
                             this.subFields[filter] = parsedField.filter;
@@ -108,10 +109,10 @@ export class BooleanField extends Field {
                     // they are valid. If we won't, then an invalid operator will only be detected when the query is
                     // run on a task
                     if (token.value == undefined) {
-                        return this.helpMessage(line, 'empty operator in boolean query');
+                        return this.helpMessage(line, 'empty operator in boolean query', parseResult);
                     }
                     if (!this.supportedOperators.includes(token.value)) {
-                        return this.helpMessage(line, `unknown boolean operator '${token.value}'`);
+                        return this.helpMessage(line, `unknown boolean operator '${token.value}'`, parseResult);
                     }
                 }
             }
@@ -126,6 +127,7 @@ export class BooleanField extends Field {
             return this.helpMessage(
                 line,
                 `malformed boolean query -- ${message} (check the documentation for guidelines)`,
+                parseResult,
             );
         }
     }
@@ -250,11 +252,28 @@ export class BooleanField extends Field {
     /**
      * Helper to provide useful information to users, when we fail to interpret a Boolean filter.
      */
-    private helpMessage(line: string, errorMessage: string) {
-        const message = `Could not interpret the following instruction as a Boolean combination:
+    private helpMessage(line: string, errorMessage: string, parseResult: BooleanPreprocessorResult) {
+        const filters: { [key: string]: string } = parseResult.filters;
+        const expressions = Object.entries(filters)
+            .map(([key, value]) => {
+                return `    '${key}': '${value}'`;
+            })
+            .join('\n');
+
+        const simpleMessage = this.helpMessageFromSimpleError(line, errorMessage);
+        const fullMessage = `${simpleMessage}
+The instruction was converted to the following simplified line:
+    ${parseResult.simplifiedLine}
+Where the sub-expressions in the simplified line are:
+${expressions}
+`;
+        return FilterOrErrorMessage.fromError(line, fullMessage);
+    }
+
+    private helpMessageFromSimpleError(line: string, errorMessage: string) {
+        return `Could not interpret the following instruction as a Boolean combination:
     ${line}
 The error message is:
     ${errorMessage}`;
-        return FilterOrErrorMessage.fromError(line, message);
     }
 }
