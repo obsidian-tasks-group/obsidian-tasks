@@ -196,6 +196,22 @@ describe('BooleanPreprocessor', () => {
         });
     });
 
+    describe('filters ending with delimiters', () => {
+        it('swallows last character if filter ends with closing delimiter character )', () => {
+            const result = split('"description includes (maybe)"');
+            // TODO Fix imbalanced delimiters by requiring the same delimiter set to be used in Boolean lines.
+            expect(result.simplifiedLine).toEqual('"f1)"');
+            expect(result.filters['f1']).toEqual('description includes (maybe');
+        });
+
+        it('swallows last character if filter ends with closing delimiter character "', () => {
+            const result = split('(description includes "maybe")');
+            // TODO Fix imbalanced delimiters by requiring the same delimiter set to be used in Boolean lines.
+            expect(result.simplifiedLine).toEqual('(f1")');
+            expect(result.filters['f1']).toEqual('description includes "maybe');
+        });
+    });
+
     describe('extra delimiters', () => {
         it('redundant ( surrounding unary NOT', () => {
             expect(split('(((((NOT  ( description includes d1 ))))))')).toMatchInlineSnapshot(`
