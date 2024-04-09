@@ -339,6 +339,10 @@ describe('boolean query - exhaustive tests', () => {
         verifyBooleanExpressionPreprocessing(BooleanField.preprocessExpressionV1);
     });
 
+    it('preprocess - rewrite', () => {
+        verifyBooleanExpressionPreprocessing(BooleanPreprocessor.preprocessExpression);
+    });
+
     it('explain', () => {
         verifyBooleanExpressionExplanation();
     });
