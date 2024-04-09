@@ -10,7 +10,7 @@ import { Field } from './Field';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 import { BooleanDelimiters } from './BooleanDelimiters';
-import { BooleanPreprocessor } from './BooleanPreprocessor';
+import { BooleanPreprocessor, type BooleanPreprocessorResult } from './BooleanPreprocessor';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -91,12 +91,13 @@ export class BooleanField extends Field {
                     if (!(filter in this.subFields)) {
                         const parsedField = parseFilter(filter);
                         if (parsedField === null) {
-                            return FilterOrErrorMessage.fromError(line, `couldn't parse sub-expression '${filter}'`);
+                            return this.helpMessage(line, `couldn't parse sub-expression '${filter}'`, parseResult);
                         }
                         if (parsedField.error) {
-                            return FilterOrErrorMessage.fromError(
+                            return this.helpMessage(
                                 line,
                                 `couldn't parse sub-expression '${filter}': ${parsedField.error}`,
+                                parseResult,
                             );
                         } else if (parsedField.filter) {
                             this.subFields[filter] = parsedField.filter;
@@ -108,10 +109,10 @@ export class BooleanField extends Field {
                     // they are valid. If we won't, then an invalid operator will only be detected when the query is
                     // run on a task
                     if (token.value == undefined) {
-                        return FilterOrErrorMessage.fromError(line, 'empty operator in boolean query');
+                        return this.helpMessage(line, 'empty operator in boolean query', parseResult);
                     }
                     if (!this.supportedOperators.includes(token.value)) {
-                        return FilterOrErrorMessage.fromError(line, `unknown boolean operator '${token.value}'`);
+                        return this.helpMessage(line, `unknown boolean operator '${token.value}'`, parseResult);
                     }
                 }
             }
@@ -123,9 +124,10 @@ export class BooleanField extends Field {
             return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
         } catch (error) {
             const message = error instanceof Error ? error.message : 'unknown error type';
-            return FilterOrErrorMessage.fromError(
+            return this.helpMessage(
                 line,
                 `malformed boolean query -- ${message} (check the documentation for guidelines)`,
+                parseResult,
             );
         }
     }
@@ -245,5 +247,39 @@ export class BooleanField extends Field {
         } else {
             throw Error('Unsupported operator: ' + token.value);
         }
+    }
+
+    /**
+     * Helper to provide useful information to users, when we fail to interpret a Boolean filter.
+     */
+    private helpMessage(line: string, errorMessage: string, parseResult: BooleanPreprocessorResult) {
+        const filters: { [key: string]: string } = parseResult.filters;
+        const expressions = Object.entries(filters)
+            .map(([key, value]) => {
+                return `    '${key}': '${value}'`;
+            })
+            .join('\n');
+
+        const simpleMessage = this.helpMessageFromSimpleError(line, errorMessage);
+        const fullMessage = `${simpleMessage}
+
+The instruction was converted to the following simplified line:
+    ${parseResult.simplifiedLine}
+
+Where the sub-expressions in the simplified line are:
+${expressions}
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+`;
+        return FilterOrErrorMessage.fromError(line, fullMessage);
+    }
+
+    private helpMessageFromSimpleError(line: string, errorMessage: string) {
+        return `Could not interpret the following instruction as a Boolean combination:
+    ${line}
+
+The error message is:
+    ${errorMessage}`;
     }
 }
