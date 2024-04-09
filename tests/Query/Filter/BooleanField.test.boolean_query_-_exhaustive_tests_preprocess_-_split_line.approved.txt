@@ -117,14 +117,9 @@ Input:
 '"not done" AND (is recurring)'
 =>
 Result:
-[
-    "\"",
-    "not done",
-    "\" ",
-    "AND (",
-    "is recurring",
-    ")"
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -133,14 +128,9 @@ Input:
 '"not done" OR (is recurring)'
 =>
 Result:
-[
-    "\"",
-    "not done",
-    "\" ",
-    "OR (",
-    "is recurring",
-    ")"
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -149,14 +139,9 @@ Input:
 '"not done" XOR (is recurring)'
 =>
 Result:
-[
-    "\"",
-    "not done",
-    "\" ",
-    "XOR (",
-    "is recurring",
-    ")"
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -165,16 +150,9 @@ Input:
 '"not done" AND NOT (is recurring)'
 =>
 Result:
-[
-    "\"",
-    "not done",
-    "\" ",
-    "AND",
-    " ",
-    "NOT (",
-    "is recurring",
-    ")"
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -183,16 +161,9 @@ Input:
 '"not done" OR NOT (is recurring)'
 =>
 Result:
-[
-    "\"",
-    "not done",
-    "\" ",
-    "OR",
-    " ",
-    "NOT (",
-    "is recurring",
-    ")"
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -202,14 +173,9 @@ Input:
 '(not done) AND "is recurring"'
 =>
 Result:
-[
-    "(",
-    "not done",
-    ") AND",
-    " \"",
-    "is recurring",
-    "\""
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -218,15 +184,9 @@ Input:
 '((not done)) AND "is recurring"'
 =>
 Result:
-[
-    "((",
-    "not done",
-    ")",
-    ") AND",
-    " \"",
-    "is recurring",
-    "\""
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -235,14 +195,9 @@ Input:
 '(not done) OR "is recurring"'
 =>
 Result:
-[
-    "(",
-    "not done",
-    ") OR",
-    " \"",
-    "is recurring",
-    "\""
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -251,14 +206,9 @@ Input:
 '(not done) XOR "is recurring"'
 =>
 Result:
-[
-    "(",
-    "not done",
-    ") XOR",
-    " \"",
-    "is recurring",
-    "\""
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -267,16 +217,9 @@ Input:
 '(not done) AND NOT "is recurring"'
 =>
 Result:
-[
-    "(",
-    "not done",
-    ") AND",
-    " ",
-    "NOT",
-    " \"",
-    "is recurring",
-    "\""
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -285,16 +228,9 @@ Input:
 '(not done) OR NOT "is recurring"'
 =>
 Result:
-[
-    "(",
-    "not done",
-    ") OR",
-    " ",
-    "NOT",
-    " \"",
-    "is recurring",
-    "\""
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -304,14 +240,9 @@ Input:
 '"HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL)'
 =>
 Result:
-[
-    "\"",
-    "HAS DUE DATE",
-    "\" ",
-    "OR (",
-    "DESCRIPTION INCLUDES SPECIAL",
-    ")"
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -337,14 +268,9 @@ Input:
 '"has due date" OR (description includes special)'
 =>
 Result:
-[
-    "\"",
-    "has due date",
-    "\" ",
-    "OR (",
-    "description includes special",
-    ")"
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -739,14 +665,9 @@ Input:
 '(HAS START DATE) AND "DESCRIPTION INCLUDES SOME"'
 =>
 Result:
-[
-    "(",
-    "HAS START DATE",
-    ") AND",
-    " \"",
-    "DESCRIPTION INCLUDES SOME",
-    "\""
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 
@@ -1063,11 +984,10 @@ Input:
 Result:
 [
     "(",
-    "description includes \"hello world",
-    "\"",
+    "description includes \"hello world\"",
     ") OR (",
-    "description includes \"42",
-    "\")"
+    "description includes \"42\"",
+    ")"
 ]
 
 --------------------------------------------------------
@@ -2019,14 +1939,9 @@ Input:
 '(has start date) AND "description includes some"'
 =>
 Result:
-[
-    "(",
-    "has start date",
-    ") AND",
-    " \"",
-    "description includes some",
-    "\""
-]
+Error: Parsing expression.
+The error message was:
+    "Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or "...". Combinations of those delimiters are no longer supported."
 
 --------------------------------------------------------
 

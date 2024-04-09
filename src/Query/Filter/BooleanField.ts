@@ -75,7 +75,15 @@ export class BooleanField extends Field {
             return FilterOrErrorMessage.fromError(line, 'empty line');
         }
 
-        const parseResult = BooleanPreprocessor.preprocessExpression(line);
+        let delimiters;
+        try {
+            delimiters = BooleanDelimiters.fromInstructionLine(line);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'unknown error type';
+            return FilterOrErrorMessage.fromError(line, this.helpMessageFromSimpleError(line, message));
+        }
+
+        const parseResult = BooleanPreprocessor.preprocessExpression(line, delimiters);
         const simplifiedLine = parseResult.simplifiedLine;
         const filters = parseResult.filters;
         try {
