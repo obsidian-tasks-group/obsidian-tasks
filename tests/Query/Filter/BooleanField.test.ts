@@ -31,6 +31,7 @@ describe('boolean query - filter', () => {
         it.each([
             '(description includes d1) AND (description includes d2)',
             '[description includes d1] AND [description includes d2]',
+            '{description includes d1} AND {description includes d2}',
             '"description includes d1" AND "description includes d2"',
         ])('instruction: "%s"', (line: string) => {
             // Arrange
@@ -319,6 +320,20 @@ describe('boolean query - explain', () => {
                     2024-04-01 (Monday 1st April 2024) and
                     2024-04-07 (Sunday 7th April 2024) inclusive
                 description includes I use square brackets
+            "
+        `);
+    });
+
+    it('should explain {} delimiters', () => {
+        const line = '{due this week} AND {description includes I use curly braces}';
+        expect(explainFilters(0, line)).toMatchInlineSnapshot(`
+            "{due this week} AND {description includes I use curly braces} =>
+              AND (All of):
+                due this week =>
+                  due date is between:
+                    2024-04-01 (Monday 1st April 2024) and
+                    2024-04-07 (Sunday 7th April 2024) inclusive
+                description includes I use curly braces
             "
         `);
     });
