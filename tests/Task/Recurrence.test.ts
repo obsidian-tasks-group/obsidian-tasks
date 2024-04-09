@@ -30,6 +30,26 @@ describe('Recurrence', () => {
         });
     });
 
+    it.failing('preserves the reminder time on new recurrence', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day',
+            startDate: null,
+            scheduledDate: null,
+            reminderDate: moment('2022-01-17 10:30'),
+            dueDate: null,
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(next!.startDate).toBeNull();
+        expect(next!.scheduledDate).toBeNull();
+        expect(next!.dueDate).toBeNull();
+        expect(next!.reminderDate).toEqualMoment(moment('2022-01-18 10:30'));
+    });
+
     it('creates a recurrence the next month, even on the 31st', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
