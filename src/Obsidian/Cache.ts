@@ -311,7 +311,7 @@ export class Cache {
                     this.logger.debug(
                         `${file.path} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
                     );
-                    return tasks;
+                    break;
                 }
                 if (currentSection === null || currentSection.position.end.line < lineNumber) {
                     // We went past the current section (or this is the first task).
@@ -355,8 +355,40 @@ export class Cache {
                 }
             }
         }
-
+        this.linkRelations(tasks);
         return tasks;
+    }
+
+    private linkRelations(tasks: Task[]) {
+        const stack: Task[] = [];
+        for (const currTask of tasks) {
+            let prevTask: Task | undefined = undefined;
+            // looking for previous task with same or lower indentation
+            while (
+                stack.length > 0 &&
+                (prevTask = stack.last()) !== undefined &&
+                prevTask.indentation > currTask.indentation
+            ) {
+                stack.pop();
+            }
+            stack.push(currTask);
+            if (prevTask === undefined) {
+                continue;
+            }
+            if (prevTask.indentation < currTask.indentation) {
+                prevTask.children.push(currTask);
+                currTask.parent = prevTask;
+                continue;
+            }
+            // prevTask and currTask have same indentation here, so they are siblings
+            prevTask.nextSibling = currTask;
+            currTask.previousSibling = prevTask;
+            if (prevTask.parent == null) {
+                continue;
+            }
+            currTask.parent = prevTask.parent;
+            prevTask.parent.children.push(currTask);
+        }
     }
 
     private reportTaskParsingErrorToUser(e: any, file: TFile, listItem: ListItemCache, line: string) {

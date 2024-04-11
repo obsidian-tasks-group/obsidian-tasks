@@ -74,6 +74,11 @@ export class Task {
 
     public readonly scheduledDateIsInferred: boolean;
 
+    public parent: Task | null = null;
+    public previousSibling: Task | null = null;
+    public nextSibling: Task | null = null;
+    public children: Task[] = [];
+
     private _urgency: number | null = null;
 
     constructor({
