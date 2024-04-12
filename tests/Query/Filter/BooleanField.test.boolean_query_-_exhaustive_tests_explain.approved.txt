@@ -990,21 +990,10 @@ Input:
 '(description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)
-
-The error message is:
-    malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1)AND(f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN'
-    'f2': 'description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR) =>
+    AND (All of):
+      description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN
+      description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR
 
 
 --------------------------------------------------------
@@ -2348,21 +2337,11 @@ Input:
 '(path includes a) AND NOT(path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a) AND NOT(path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1) AND NOT(f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a) AND NOT(path includes b) =>
+    AND (All of):
+      path includes a
+      NOT:
+        path includes b
 
 
 --------------------------------------------------------
@@ -2372,21 +2351,10 @@ Input:
 '(path includes a) AND(path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a) AND(path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1) AND(f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a) AND(path includes b) =>
+    AND (All of):
+      path includes a
+      path includes b
 
 
 --------------------------------------------------------
@@ -2396,21 +2364,11 @@ Input:
 '(path includes a) OR NOT(path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a) OR NOT(path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1) OR NOT(f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a) OR NOT(path includes b) =>
+    OR (At least one of):
+      path includes a
+      NOT:
+        path includes b
 
 
 --------------------------------------------------------
@@ -2420,21 +2378,10 @@ Input:
 '(path includes a) OR(path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a) OR(path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1) OR(f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a) OR(path includes b) =>
+    OR (At least one of):
+      path includes a
+      path includes b
 
 
 --------------------------------------------------------
@@ -2444,21 +2391,10 @@ Input:
 '(path includes a) XOR(path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a) XOR(path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1) XOR(f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a) XOR(path includes b) =>
+    XOR (Exactly one of):
+      path includes a
+      path includes b
 
 
 --------------------------------------------------------
@@ -2468,21 +2404,10 @@ Input:
 '(path includes a)AND (path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a)AND (path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1)AND (f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a)AND (path includes b) =>
+    AND (All of):
+      path includes a
+      path includes b
 
 
 --------------------------------------------------------
@@ -2492,21 +2417,11 @@ Input:
 '(path includes a)AND NOT(path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a)AND NOT(path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1)AND NOT(f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a)AND NOT(path includes b) =>
+    AND (All of):
+      path includes a
+      NOT:
+        path includes b
 
 
 --------------------------------------------------------
@@ -2516,21 +2431,10 @@ Input:
 '(path includes a)OR (path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a)OR (path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: O. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1)OR (f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a)OR (path includes b) =>
+    OR (At least one of):
+      path includes a
+      path includes b
 
 
 --------------------------------------------------------
@@ -2540,21 +2444,11 @@ Input:
 '(path includes a)OR NOT (path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a)OR NOT (path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: O. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1)OR NOT (f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a)OR NOT (path includes b) =>
+    OR (At least one of):
+      path includes a
+      NOT:
+        path includes b
 
 
 --------------------------------------------------------
@@ -2564,21 +2458,10 @@ Input:
 '(path includes a)XOR (path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    (path includes a)XOR (path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: X. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1)XOR (f2)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes a'
-    'f2': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  (path includes a)XOR (path includes b) =>
+    XOR (Exactly one of):
+      path includes a
+      path includes b
 
 
 --------------------------------------------------------
@@ -3370,20 +3253,9 @@ Input:
 'NOT(path includes b)'
 =>
 Result:
-Could not interpret the following instruction as a Boolean combination:
-    NOT(path includes b)
-
-The error message is:
-    malformed boolean query -- Unexpected character: (. Operators should be separated using whitespace (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    NOT(f1)
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'path includes b'
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+  NOT(path includes b) =>
+    NOT:
+      path includes b
 
 
 --------------------------------------------------------

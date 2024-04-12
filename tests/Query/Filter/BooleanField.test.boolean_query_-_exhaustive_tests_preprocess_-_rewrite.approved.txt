@@ -965,7 +965,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)AND(f2)",
+    "simplifiedLine": "(f1) AND (f2)",
     "filters": {
         "f1": "description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN",
         "f2": "description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR"
@@ -2316,7 +2316,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1) AND NOT(f2)",
+    "simplifiedLine": "(f1) AND NOT (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -2331,7 +2331,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1) AND(f2)",
+    "simplifiedLine": "(f1) AND (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -2346,7 +2346,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1) OR NOT(f2)",
+    "simplifiedLine": "(f1) OR NOT (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -2361,7 +2361,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1) OR(f2)",
+    "simplifiedLine": "(f1) OR (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -2376,7 +2376,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1) XOR(f2)",
+    "simplifiedLine": "(f1) XOR (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -2391,7 +2391,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)AND (f2)",
+    "simplifiedLine": "(f1) AND (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -2406,7 +2406,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)AND NOT(f2)",
+    "simplifiedLine": "(f1) AND NOT (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -2421,7 +2421,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)OR (f2)",
+    "simplifiedLine": "(f1) OR (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -2436,7 +2436,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)OR NOT (f2)",
+    "simplifiedLine": "(f1) OR NOT (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -2451,7 +2451,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "(f1)XOR (f2)",
+    "simplifiedLine": "(f1) XOR (f2)",
     "filters": {
         "f1": "path includes a",
         "f2": "path includes b"
@@ -3222,7 +3222,7 @@ Input:
 =>
 Result:
 {
-    "simplifiedLine": "NOT(f1)",
+    "simplifiedLine": "NOT (f1)",
     "filters": {
         "f1": "path includes b"
     }

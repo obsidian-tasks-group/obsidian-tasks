@@ -88,6 +88,14 @@ export class BooleanPreprocessor {
             }
         });
 
+        // boon-js requires at least one space around each operator.
+        // Be nice to the user and add any missing spaces around operators:
+        const operatorMissingPrecedingSpace = new RegExp(`(${delimiters.closeFilter})([A-Z])`, 'g');
+        simplifiedLine = simplifiedLine.replace(operatorMissingPrecedingSpace, '$1 $2');
+
+        const operatorMissingFollowingSpace = new RegExp(`([A-Z])(${delimiters.openFilter})`, 'g');
+        simplifiedLine = simplifiedLine.replace(operatorMissingFollowingSpace, '$1 $2');
+
         // convert any non-standard delimiters to standard ones:
         const openChars = delimiters.openFilterChars;
         if (openChars != '"' && openChars != '(') {
