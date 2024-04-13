@@ -202,3 +202,24 @@ hide backlinks
 (filter by function task.tags.join(',').toUpperCase().includes('#YY'); ) AND \
 (filter by function task.tags.join(',').toUpperCase().includes('#ZZ'); )
 ```
+
+#### Workaround 3: port the Boolean logic to JavaScript
+
+We can instead migrate the Boolean operators to JavaScript:
+
+- `AND` -> `&&`
+- `OR` -> `||`
+- `NOT` -> `!`
+
+Like this:
+
+```tasks
+ignore global query
+explain
+hide backlinks
+
+filter by function \
+    task.tags.join(',').toUpperCase().includes('#XX') && \
+    task.tags.join(',').toUpperCase().includes('#YY') && \
+    task.tags.join(',').toUpperCase().includes('#ZZ')
+```
