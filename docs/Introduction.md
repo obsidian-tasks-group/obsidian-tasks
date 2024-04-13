@@ -14,6 +14,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
 -->
 
 - X.Y.Z:
+  - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks X.Y.Z|the appendix]] for details.
   - Add documentation page [[Resources]], with links to write-ups,  talks and sample vaults from users.
 - 6.1.0:
   - Add support for [[task dependencies]]:
