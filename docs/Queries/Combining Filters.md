@@ -9,8 +9,10 @@ publish: true
 > [!released]
 Introduced in Tasks 1.9.0.
 
-The [[Filters|individual filters]] provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
-and then joining them with boolean operators such as `AND`, `OR` and `NOT`.
+The [[Filters|individual filters]] provided by Tasks can be combined together in powerful ways, by:
+
+1. wrapping each of them in delimiters such as `(` and `)`,
+2. then joining them with boolean operators such as `AND`, `OR` and `NOT`.
 
 For example:
 
@@ -18,7 +20,7 @@ For example:
 ```tasks
 not done
 (due after yesterday) AND (due before in two weeks)
-(tags include #inbox) OR (path includes Inbox) OR (heading includes Inbox)
+[tags include #inbox] OR [path includes Inbox] OR [heading includes Inbox]
 ```
 ````
 
@@ -29,20 +31,42 @@ will be displayed.
 
 One or more filters can be combined together in a line, via boolean operators, to create a new, powerful, flexible filter.
 
+Here's a diagram of the components of a simple Boolean instruction:
+
+```text
++--------------------------+       +--------------------------+
+|   ( tag includes #XX )   |  OR   |   ( tag includes #YY )   |
++--------------------------+       +--------------------------+
+    ^                  ^               ^                  ^
+    |                  |               |                  |
+    +- delimiters: () -+               +- delimiters: () -+
+      for left sub-expression             for right sub-expression
+              |                                  |
+              +--------- Operator: OR -----------+
+                   Connects both sub-expressions
+```
+
 The following rules apply:
 
-- Each individual filter must be surrounded by parentheses: `(` and `)`.
-- Operators supported are: `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR`.
-- The operators are case-sensitive: they must be capitalised.
-- The operators must be surrounded by spaces.
-- Use more `(` and `)` to nest further filters together.
-- A trailing backslash (`\`) may be used to break a long filter over several lines, as described in [[Line Continuations]].
+- Each individual filter must be surrounded by a pair of **delimiter characters**:
+  - The most commonly used delimiters in this guide are `(` and `)`.
+  - The complete list of available delimiters is:
+    - `(....)`  
+    - `[....]`  
+    - `{....}`  
+    - `"...."`
+  - The types of delimiter cannot be mixed within a Boolean instruction: you must pick an appropriate delimiter for the filters on the line.
+- **Operators** supported are: `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR`.
+  - The operators are case-sensitive: they must be capitalised.
+  - See [[#Boolean Operators]] below.
+- You can use more delimiters to nest further filters together.
+- A **trailing backslash** (`\`) may be used to break a long filter over several lines, as described in [[Line Continuations]].
 - There is no practical limit to the number of filters combined on each line, nor the level of nesting of parentheses.
 
 Recommendations:
 
-- It is possible to use double quotes `"` to surround filters, but this can sometimes give misleading results when nested in complex queries, so we recommend using only `(` and `)` to build up boolean combinations.
-- When combining more than two filters, use `(` and `)` liberally to ensure you get the intended logic. See 'Execution Priority' below.
+- When combining more than two filters, use `(` and `)` (or any other delimiter pair) liberally to ensure you get the intended logic. See [[#Execution Priority]] below.
+- See [[#Troubleshooting Boolean Filters]] for help selecting delimiters, especially if using `filter by function`.
 
 Technically speaking, lines continue to have an implicit `AND` relation (thus the full retention of backwards compatibility), but a line can now have multiple filters composed with `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR` with parentheses.
 
@@ -207,6 +231,72 @@ It will not give the result you expect.
 `(filter a) XOR (filter b) XOR (filter c)` matches tasks that match only one
 of the filters, **and also tasks that match all three of the filters**.
 
+## Delimiters
+
+The following delimiter characters are available:  
+  
+- `(....)`  
+- `[....]`  
+- `{....}`  
+- `"...."`
+
+> [!Important]
+> Each Boolean instruction line must use only one delimiter type.
+
+This is valid:
+
+```text
+(not done) AND (is recurring)
+```
+
+This is not valid:
+
+```text
+(not done) AND "is recurring"
+```
+
+## Caveat
+
+The one current caveat with this implementation is that it still does not work for filters the **end** with any of the characters `()"`, as they are swallowed up and treated as delimiters.
+
+So for example, this filter:
+
+```text
+(description includes "maybe")
+```
+
+is interpreted as this simplified line - note the stray `"`:
+
+```text
+(f1")
+```
+
+where `f1` is this - note the missing `"`:
+
+```text
+description includes "maybe
+```
+
+### Workarounds
+
+`filter by function` instructions are very likely to end with `)`, due to the expression often ending with a function call.
+
+Available workarounds:
+
+- Use a different delimiter
+- add a trailing `;` at the end of any `filter by function` that ends in `)` or `"`.
+- convert Boolean combinations of multiple `filter by function` to be a single `filter by function` that uses JavaScript `&&`, `||` and `!`.
+
+## Troubleshooting Boolean Filters
+
+==Show an example error message==
+
+==Show swallowing of delimiter at end of sub-expression==
+
+==Try a different delimiter==
+
+==Add ; after `filter by function`==
+
 ## Examples
 
 ### Managing tasks via file path and tag
@@ -296,3 +386,39 @@ The above is much easier to maintain than the other option of:
   (tags do not include #context/loc2) AND \
   (tags do not include #context/loc3)
 ````
+
+## Appendix: Changes to Boolean filters in Tasks X.Y.Z
+
+Tasks X.Y.Z involved a tremendous amount of work behind the scenes to improve the behaviour and usability of Boolean filters.
+
+This section describes the changes, for completeness.
+
+### Mixing of delimiter types is no longer allowed
+
+> [!Danger] Breaking change
+> This (undocumented) mixing of delimiter types used to be a valid query, prior to Tasks X.Y.Z:
+>
+> ```text
+> (not done) AND "is recurring"
+> ```
+
+It is no longer valid, as mixing of [[#Delimiters|delimiter types]] in a Boolean instruction is no longer allowed.
+
+It may be fixed by changing it to use consistent delimiters, for example with one of these:
+
+```text
+(not done) AND (is recurring)
+"not done" AND "is recurring"
+```
+
+### Spaces around Operators are now optional
+
+Spaces around Operators are now optional.
+
+For example, before Tasks X.Y.Z the following was invalid, as there were no spaces `AND`.
+
+`(path includes a)AND(path includes b)`
+
+Tasks now adds the missing spaces behind the scenes, so the above is now equivalent to:
+
+`(path includes a) AND (path includes b)`
