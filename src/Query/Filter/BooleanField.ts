@@ -286,7 +286,12 @@ For help, see:
                 const parsedField = parseFilter(value);
                 let filterStatus = parsedField?.error ? 'ERROR:' : 'OK';
                 if (parsedField?.error) {
-                    filterStatus += '\n' + parsedField?.error;
+                    const filterError = parsedField?.error ?? '';
+                    const formattedFilterStatus = filterError
+                        .split('\n')
+                        .map((line) => line.trim())
+                        .join('\n           ');
+                    filterStatus += `\n           ${formattedFilterStatus}`;
                 }
                 return `    '${key}': '${value}'
         => ${filterStatus}`;
