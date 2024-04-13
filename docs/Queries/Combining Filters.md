@@ -521,6 +521,24 @@ Tasks X.Y.Z involved a tremendous amount of work behind the scenes to improve th
 
 This section describes the changes, for completeness.
 
+### Mixing of delimiter types is no longer allowed
+
+> [!Danger] Breaking change
+> This (undocumented) mixing of delimiter types used to be a valid query, prior to Tasks X.Y.Z:
+>
+> ```text
+> (not done) AND "is recurring"
+> ```
+
+It is no longer valid, as mixing of [[#Delimiters|delimiter types]] in a Boolean instruction is no longer allowed.
+
+It may be fixed by changing it to use consistent delimiters, for example with one of these:
+
+```text
+(not done) AND (is recurring)
+"not done" AND "is recurring"
+```
+
 ### Sub-expressions can now contain parentheses and double-quotes
 
 Sub-expressions can now contain parentheses - `(` and `)` and double-quotes - `"`.
@@ -583,22 +601,4 @@ For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
 Problem line: "(description includes (maybe)) OR (description includes (perhaps))"
-```
-
-### Mixing of delimiter types is no longer allowed
-
-> [!Danger] Breaking change
-> This (undocumented) mixing of delimiter types used to be a valid query, prior to Tasks X.Y.Z:
->
-> ```text
-> (not done) AND "is recurring"
-> ```
-
-It is no longer valid, as mixing of [[#Delimiters|delimiter types]] in a Boolean instruction is no longer allowed.
-
-It may be fixed by changing it to use consistent delimiters, for example with one of these:
-
-```text
-(not done) AND (is recurring)
-"not done" AND "is recurring"
 ```
