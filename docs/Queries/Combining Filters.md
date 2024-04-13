@@ -252,7 +252,7 @@ This is valid:
 This is not valid:
 
 ```text
-(not done) AND "is recurring"
+(not done) AND {is recurring}
 ```
 
 ## Troubleshooting Boolean Filters
@@ -521,6 +521,70 @@ Tasks X.Y.Z involved a tremendous amount of work behind the scenes to improve th
 
 This section describes the changes, for completeness.
 
+### Sub-expressions can now contain parentheses and double-quotes
+
+Sub-expressions can now contain parentheses - `(` and `)` and double-quotes - `"`.
+
+See [[#Troubleshooting Boolean Filters]] for how to deal with sub-expressions that end with the closing delimiter character.
+
+### More options for delimiting sub-expressions
+
+The following delimiter characters are available:
+
+- `(....)`
+- `[....]`
+- `{....}`
+- `"...."`
+
+See [[#Delimiters]] above.
+
+### Spaces around Operators are now optional
+
+Spaces around Operators are now optional.
+
+For example, before Tasks X.Y.Z the following was invalid, as there were no spaces `AND`.
+
+`(path includes a)AND(path includes b)`
+
+Tasks now adds the missing spaces behind the scenes, so the above is now equivalent to:
+
+`(path includes a) AND (path includes b)`
+
+### Much better assistance with errors
+
+A lot of effort went in to giving useful information if a Boolean instruction is invalid.
+
+Before:
+
+```text
+Tasks query: malformed boolean query -- Invalid token (check the documentation for guidelines)
+Problem line: "(description includes (maybe)) OR (description includes (perhaps))"
+```
+
+After:
+
+```text
+Tasks query: Could not interpret the following instruction as a Boolean combination:
+    (description includes (maybe)) OR (description includes (perhaps))
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2))
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'description includes (maybe'
+        => OK
+    'f2': 'description includes (perhaps'
+        => OK
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+Problem line: "(description includes (maybe)) OR (description includes (perhaps))"
+```
+
 ### Mixing of delimiter types is no longer allowed
 
 > [!Danger] Breaking change
@@ -538,15 +602,3 @@ It may be fixed by changing it to use consistent delimiters, for example with on
 (not done) AND (is recurring)
 "not done" AND "is recurring"
 ```
-
-### Spaces around Operators are now optional
-
-Spaces around Operators are now optional.
-
-For example, before Tasks X.Y.Z the following was invalid, as there were no spaces `AND`.
-
-`(path includes a)AND(path includes b)`
-
-Tasks now adds the missing spaces behind the scenes, so the above is now equivalent to:
-
-`(path includes a) AND (path includes b)`
