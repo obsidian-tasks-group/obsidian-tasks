@@ -295,10 +295,10 @@ For help, see:
         if (!parsedField) {
             return 'ERROR:\n           do not understand query';
         }
-        if (parsedField?.error) {
+        if (parsedField.error) {
             // In case the error message has more than one line, we split it in to separate lines,
             // apply some standard/tidy indentation, and join the lines again:
-            const formattedFilterStatus = parsedField?.error
+            const formattedFilterStatus = parsedField.error
                 .split('\n')
                 .map((line) => line.trim())
                 .join('\n           ');
