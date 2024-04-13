@@ -1,0 +1,10 @@
+{
+	"id": "number-headings-obsidian",
+	"name": "Number Headings",
+	"version": "1.16.0",
+	"minAppVersion": "1.4.0",
+	"description": "Automatically number or re-number headings in an Obsidian document",
+	"author": "Kevin Albrecht (onlyafly@gmail.com)",
+	"authorUrl": "https://www.kevinalbrecht.com",
+	"isDesktopOnly": false
+}
