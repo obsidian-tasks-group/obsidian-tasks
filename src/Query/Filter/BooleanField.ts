@@ -298,8 +298,7 @@ For help, see:
         if (parsedField?.error) {
             let filterStatus;
             filterStatus = 'ERROR:';
-            const filterError = parsedField?.error;
-            const formattedFilterStatus = filterError
+            const formattedFilterStatus = parsedField?.error
                 .split('\n')
                 .map((line) => line.trim())
                 .join('\n           ');
