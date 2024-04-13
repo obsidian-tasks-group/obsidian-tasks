@@ -383,11 +383,17 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'filter by function task.description.includes('a''
+        => ERROR
     'f2': 'filter by function task.description.includes('b''
+        => ERROR
     'f3': 'filter by function task.description.includes('c''
+        => ERROR
     'f4': 'filter by function task.description.includes('d''
+        => ERROR
     'f5': 'filter by function task.description.includes('e''
+        => ERROR
     'f6': 'filter by function task.description.includes('f''
+        => ERROR
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -469,13 +475,21 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type'
+        => ERROR
     'f2': 'filter by function const date = task.due.moment; return date ? !date.isValid() : false;'
+        => OK
     'f3': 'filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false'
+        => OK
     'f4': 'filter by function task.urgency.toFixed(2) === 1.95.toFixed(2'
+        => ERROR
     'f5': 'filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁''
+        => ERROR
     'f6': 'filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase('
+        => ERROR
     'f7': 'filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false'
+        => OK
     'f8': 'filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;'
+        => OK
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -2236,7 +2250,9 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes ()some example('
+        => OK
     'f2': 'path includes ((some example'
+        => OK
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -2273,7 +2289,9 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes (some example'
+        => OK
     'f2': 'path includes )some example('
+        => OK
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -2297,7 +2315,9 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'path includes )some example('
+        => OK
     'f2': 'path includes (some example'
+        => OK
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -3083,6 +3103,7 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'AND (description includes d1'
+        => ERROR
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -3106,6 +3127,7 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'happens before blahblahblah'
+        => ERROR
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -3194,6 +3216,7 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'description blahblah d1'
+        => OK
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -3229,6 +3252,7 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'happens before blahblahblah'
+        => ERROR
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -3276,6 +3300,7 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'OR (description includes d1'
+        => ERROR
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters

@@ -282,7 +282,10 @@ For help, see:
     private stringifySubExpressionsForErrorMessage(filters: { [p: string]: string }) {
         return Object.entries(filters)
             .map(([key, value]) => {
-                return `    '${key}': '${value}'`;
+                const parsedField = parseFilter(value);
+                const filterStatus = parsedField?.error ? 'ERROR' : 'OK';
+                return `    '${key}': '${value}'
+        => ${filterStatus}`;
             })
             .join('\n');
     }
