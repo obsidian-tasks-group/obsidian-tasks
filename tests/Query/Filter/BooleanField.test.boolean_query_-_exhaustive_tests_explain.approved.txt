@@ -3252,7 +3252,8 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'description blahblah d1'
-        => OK
+        => ERROR:
+           do not understand query
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
