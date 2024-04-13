@@ -281,9 +281,9 @@ For help, see:
 
     private stringifySubExpressionsForErrorMessage(filters: { [p: string]: string }) {
         return Object.entries(filters)
-            .map(([key, value]) => {
+            .map(([placeholder, line]) => {
                 // Tell the user whether the sub-expression is valid, to work out which ones need fixing.
-                const parsedField = parseFilter(value);
+                const parsedField = parseFilter(line);
                 let filterStatus = 'OK';
                 if (!parsedField) {
                     filterStatus = 'ERROR:';
@@ -297,7 +297,7 @@ For help, see:
                         .join('\n           ');
                     filterStatus += `\n           ${formattedFilterStatus}`;
                 }
-                return `    '${key}': '${value}'
+                return `    '${placeholder}': '${line}'
         => ${filterStatus}`;
             })
             .join('\n');
