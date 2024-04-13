@@ -74,7 +74,7 @@ export class Query implements IQuery {
                     message = 'Unknown error';
                 }
 
-                this.setError(message, line, statement);
+                this.setError(message, statement);
                 return;
             }
         });
@@ -114,7 +114,7 @@ export class Query implements IQuery {
             case this.parseFilter(line, statement):
                 break;
             default:
-                this.setError('do not understand query', line, statement);
+                this.setError('do not understand query', statement);
         }
     }
 
@@ -240,7 +240,7 @@ ${source}`;
         return this._error;
     }
 
-    private setError(message: string, _line: string, statement: Statement) {
+    private setError(message: string, statement: Statement) {
         if (statement.allLinesIdentical()) {
             this._error = `${message}
 Problem line: "${statement.rawInstruction}"`;
@@ -338,7 +338,7 @@ ${statement.explainStatement('    ')}
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, !hide);
                     break;
                 default:
-                    this.setError('do not understand hide/show option', line, new Statement(line, line));
+                    this.setError('do not understand hide/show option', new Statement(line, line));
             }
         }
     }
@@ -353,7 +353,7 @@ ${statement.explainStatement('    ')}
 
                 this._filters.push(filterOrError.filter);
             } else {
-                this.setError(filterOrError.error ?? 'Unknown error', line, statement);
+                this.setError(filterOrError.error ?? 'Unknown error', statement);
             }
             return true;
         }
@@ -363,7 +363,7 @@ ${statement.explainStatement('    ')}
     private parseLimit(line: string): void {
         const limitMatch = line.match(this.limitRegexp);
         if (limitMatch === null) {
-            this.setError('do not understand query limit', line, new Statement(line, line));
+            this.setError('do not understand query limit', new Statement(line, line));
             return;
         }
 
