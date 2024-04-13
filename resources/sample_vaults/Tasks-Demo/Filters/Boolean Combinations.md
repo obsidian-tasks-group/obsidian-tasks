@@ -161,7 +161,6 @@ ignore global query
 explain
 hide backlinks
 
-limit 1
 (filter by function task.tags.join(',').toUpperCase().includes('#XX')) AND \
 (filter by function task.tags.join(',').toUpperCase().includes('#YY')) AND \
 (filter by function task.tags.join(',').toUpperCase().includes('#ZZ'))
@@ -185,7 +184,6 @@ ignore global query
 explain
 hide backlinks
 
-limit 1
 [filter by function task.tags.join(',').toUpperCase().includes('#XX')] AND \
 [filter by function task.tags.join(',').toUpperCase().includes('#YY')] AND \
 [filter by function task.tags.join(',').toUpperCase().includes('#ZZ')]
@@ -200,7 +198,6 @@ ignore global query
 explain
 hide backlinks
 
-limit 1
 (filter by function task.tags.join(',').toUpperCase().includes('#XX'); ) AND \
 (filter by function task.tags.join(',').toUpperCase().includes('#YY'); ) AND \
 (filter by function task.tags.join(',').toUpperCase().includes('#ZZ'); )
