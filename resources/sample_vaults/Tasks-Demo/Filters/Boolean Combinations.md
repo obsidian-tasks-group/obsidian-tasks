@@ -110,6 +110,12 @@ These examples demonstrate the error messages for various problem scenarios.
 
 ### Extra delimiter in user query
 
+The Boolean line ends with a stray extra `)`.
+
+This is just an invalid query, and the extra `)` needs to be removed.
+
+This can be spotted in the error output by looking at the delimiters on the `simplified line` in the output:
+
 ```tasks
 ignore global query
 explain
@@ -119,6 +125,12 @@ hide backlinks
 ```
 
 ### Missing delimiter at end of user query
+
+Here, the final `)` is missing from the end of the Boolean line.
+
+Tasks checks that first and last character on Boolean lines, to ensure that consistent delimiters are used.
+
+In this particular case, the error message is not overly helpful.
 
 ```tasks
 ignore global query
@@ -131,6 +143,18 @@ hide backlinks
 ### Delimiter swallowed by Tasks' parsing code
 
 #### The Problem
+
+In this example, each of the filters ends with a `)`, which is also the closing delimiter character in this Boolean line.
+
+Looking at the error message shows the error `SyntaxError: missing ) after argument list`.
+
+Basically, it was really hard to come up with an algorithm that allowed brackets inside filters, and allowed nested brackets in the Boolean logic.
+
+We have settled on an algorithm that greedily matches all delimeters just around the operators (`AND`, `OR` etc)
+
+This situation is most common with `filter by function`, as often JavaScript functions are then called.
+
+Read on for two different ways to fix this problem.
 
 ```tasks
 ignore global query
@@ -145,6 +169,17 @@ limit 1
 
 #### Workaround 1: use a different delimiter
 
+The following delimiter characters are available:
+
+- `(....)`
+- `[....]`
+- `{....}`
+- `"...."`
+
+We can choose any one of those delimiters sets, so long as we use the same delimiters for all sub-expressions on the line.
+
+Here, we adjust the expression to use `[....]` instead of `(....)`:
+
 ```tasks
 ignore global query
 explain
@@ -157,6 +192,8 @@ limit 1
 ```
 
 #### Workaround 2: add semicolons to filter by function
+
+Our other option for fixing the error is to add semicolons (`;`) at the end of each sub-expression, to put non-space character between the `)` in the `filter by function` expression and the `) AND`:
 
 ```tasks
 ignore global query
