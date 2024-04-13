@@ -7,7 +7,9 @@ publish: true
 ## Summary
 
 > [!released]
-Introduced in Tasks 1.9.0.
+>
+> - Introduced in Tasks 1.9.0.
+> - Major improvements in Tasks X.Y.Z: for details, see [[#Appendix Changes to Boolean filters in Tasks X.Y.Z]].
 
 The [[Filters|individual filters]] provided by Tasks can be combined together in powerful ways, by:
 
