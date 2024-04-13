@@ -283,24 +283,29 @@ For help, see:
         return Object.entries(filters)
             .map(([placeholder, line]) => {
                 // Tell the user whether the sub-expression is valid, to work out which ones need fixing.
-                const parsedField = parseFilter(line);
-                let filterStatus = 'OK';
-                if (!parsedField) {
-                    filterStatus = 'ERROR:';
-                    filterStatus += '\n           do not understand query';
-                } else if (parsedField?.error) {
-                    filterStatus = 'ERROR:';
-                    const filterError = parsedField?.error ?? '';
-                    const formattedFilterStatus = filterError
-                        .split('\n')
-                        .map((line) => line.trim())
-                        .join('\n           ');
-                    filterStatus += `\n           ${formattedFilterStatus}`;
-                }
+                const filterStatus = this.stringifySubExpressionStatus(line);
                 return `    '${placeholder}': '${line}'
         => ${filterStatus}`;
             })
             .join('\n');
+    }
+
+    private stringifySubExpressionStatus(line: string) {
+        const parsedField = parseFilter(line);
+        let filterStatus = 'OK';
+        if (!parsedField) {
+            filterStatus = 'ERROR:';
+            filterStatus += '\n           do not understand query';
+        } else if (parsedField?.error) {
+            filterStatus = 'ERROR:';
+            const filterError = parsedField?.error ?? '';
+            const formattedFilterStatus = filterError
+                .split('\n')
+                .map((line) => line.trim())
+                .join('\n           ');
+            filterStatus += `\n           ${formattedFilterStatus}`;
+        }
+        return filterStatus;
     }
 
     private helpMessageFromSimpleError(line: string, errorMessage: string) {
