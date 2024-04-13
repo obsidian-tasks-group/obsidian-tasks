@@ -1,5 +1,5 @@
-import { parse as boonParse } from 'boon-js';
 import type { PostfixExpression } from 'boon-js';
+import { parse as boonParse } from 'boon-js';
 import type { Token } from 'boon-js/lib/types';
 
 import { parseFilter } from '../FilterParser';
@@ -262,11 +262,7 @@ export class BooleanField extends Field {
      */
     private helpMessage(line: string, errorMessage: string, parseResult: BooleanPreprocessorResult) {
         const filters: { [key: string]: string } = parseResult.filters;
-        const expressions = Object.entries(filters)
-            .map(([key, value]) => {
-                return `    '${key}': '${value}'`;
-            })
-            .join('\n');
+        const expressions = this.stringifySubExpressionsForErrorMessage(filters);
 
         const simpleMessage = this.helpMessageFromSimpleError(line, errorMessage);
         const fullMessage = `${simpleMessage}
@@ -281,6 +277,14 @@ For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
 `;
         return FilterOrErrorMessage.fromError(line, fullMessage);
+    }
+
+    private stringifySubExpressionsForErrorMessage(filters: { [p: string]: string }) {
+        return Object.entries(filters)
+            .map(([key, value]) => {
+                return `    '${key}': '${value}'`;
+            })
+            .join('\n');
     }
 
     private helpMessageFromSimpleError(line: string, errorMessage: string) {
