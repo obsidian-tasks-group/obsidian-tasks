@@ -297,7 +297,8 @@ For help, see:
             filterStatus = 'ERROR:';
             filterStatus += '\n           do not understand query';
             return filterStatus;
-        } else if (parsedField?.error) {
+        }
+        if (parsedField?.error) {
             filterStatus = 'ERROR:';
             const filterError = parsedField?.error ?? '';
             const formattedFilterStatus = filterError
