@@ -283,9 +283,8 @@ For help, see:
         return Object.entries(filters)
             .map(([placeholder, line]) => {
                 // Tell the user whether the sub-expression is valid, to work out which ones need fixing.
-                const filterStatus = this.stringifySubExpressionStatus(line);
                 return `    '${placeholder}': '${line}'
-        => ${filterStatus}`;
+        => ${this.stringifySubExpressionStatus(line)}`;
             })
             .join('\n');
     }
