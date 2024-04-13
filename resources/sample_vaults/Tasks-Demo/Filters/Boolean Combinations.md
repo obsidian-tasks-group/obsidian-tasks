@@ -103,3 +103,68 @@ hide backlinks
 (tags includes #XX) XOR (tags includes #YY) XOR (tags includes #ZZ)
 NOT ( (tags includes #XX) AND (tags includes #YY) AND (tags includes #ZZ) )
 ```
+
+## Error Cases
+
+These examples demonstrate the error messages for various problem scenarios.
+
+### Extra delimiter in user query
+
+```tasks
+ignore global query
+explain
+hide backlinks
+
+(tags includes #XX) AND (tags includes #YY))
+```
+
+### Missing delimiter at end of user query
+
+```tasks
+ignore global query
+explain
+hide backlinks
+
+(tags includes #XX) AND (tags includes #YY
+```
+
+### Delimiter swallowed by Tasks' parsing code
+
+#### The Problem
+
+```tasks
+ignore global query
+explain
+hide backlinks
+
+limit 1
+(filter by function task.tags.join(',').toUpperCase().includes('#XX')) AND \
+(filter by function task.tags.join(',').toUpperCase().includes('#YY')) AND \
+(filter by function task.tags.join(',').toUpperCase().includes('#ZZ'))
+```
+
+#### Workaround 1: use a different delimiter
+
+```tasks
+ignore global query
+explain
+hide backlinks
+
+limit 1
+[filter by function task.tags.join(',').toUpperCase().includes('#XX')] AND \
+[filter by function task.tags.join(',').toUpperCase().includes('#YY')] AND \
+[filter by function task.tags.join(',').toUpperCase().includes('#ZZ')]
+```
+
+#### Workaround 2: add semicolons to filter by function
+
+```tasks
+ignore global query
+explain
+hide backlinks
+
+limit 1
+(filter by function task.tags.join(',').toUpperCase().includes('#XX'); ) AND \
+(filter by function task.tags.join(',').toUpperCase().includes('#YY'); ) AND \
+(filter by function task.tags.join(',').toUpperCase().includes('#ZZ'); )
+```
