@@ -292,13 +292,14 @@ For help, see:
 
     private stringifySubExpressionStatus(line: string) {
         const parsedField = parseFilter(line);
-        let filterStatus = 'OK';
         if (!parsedField) {
+            let filterStatus;
             filterStatus = 'ERROR:';
             filterStatus += '\n           do not understand query';
             return filterStatus;
         }
         if (parsedField?.error) {
+            let filterStatus;
             filterStatus = 'ERROR:';
             const filterError = parsedField?.error ?? '';
             const formattedFilterStatus = filterError
@@ -308,7 +309,7 @@ For help, see:
             filterStatus += `\n           ${formattedFilterStatus}`;
             return filterStatus;
         }
-        return filterStatus;
+        return 'OK';
     }
 
     private helpMessageFromSimpleError(line: string, errorMessage: string) {
