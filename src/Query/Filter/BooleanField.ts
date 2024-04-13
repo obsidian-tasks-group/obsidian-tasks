@@ -296,14 +296,11 @@ For help, see:
             return 'ERROR:\n           do not understand query';
         }
         if (parsedField?.error) {
-            let filterStatus;
-            filterStatus = 'ERROR:';
             const formattedFilterStatus = parsedField?.error
                 .split('\n')
                 .map((line) => line.trim())
                 .join('\n           ');
-            filterStatus += `\n           ${formattedFilterStatus}`;
-            return filterStatus;
+            return `ERROR:\n           ${formattedFilterStatus}`;
         }
         return 'OK';
     }
