@@ -25,14 +25,20 @@ Full documentation is available: see [Combining Filters](https://publish.obsidia
 ### AND - XX and YY
 
 ```tasks
-not done
+ignore global query
+explain
+hide backlinks
+
 (tags includes #XX) AND (tags includes #YY)
 ```
 
 ### AND - XX and YY and ZZ
 
 ```tasks
-not done
+ignore global query
+explain
+hide backlinks
+
 (tags includes #XX) AND (tags includes #YY) AND (tags includes #ZZ)
 ```
 
@@ -41,7 +47,10 @@ not done
 ### OR - XX OR YY
 
 ```tasks
-not done
+ignore global query
+explain
+hide backlinks
+
 (tags includes #XX) OR (tags includes #YY)
 ```
 
@@ -52,7 +61,10 @@ not done
 ### XOR
 
 ```tasks
-not done
+ignore global query
+explain
+hide backlinks
+
 (tags includes #XX) XOR (tags includes #YY)
 ```
 
@@ -62,7 +74,10 @@ Note the inclusion of 'task 7'. Combining multiple `XOR` does not give the expec
 See [this question and its answers](https://electronics.stackexchange.com/questions/93713/how-is-an-xor-with-more-than-2-inputs-supposed-to-work).
 
 ```tasks
-not done
+ignore global query
+explain
+hide backlinks
+
 (tags includes #XX) XOR (tags includes #YY) XOR (tags includes #ZZ)
 ```
 
@@ -71,14 +86,20 @@ not done
 Matching only one of 3 filters - version 1:
 
 ```tasks
-not done
+ignore global query
+explain
+hide backlinks
+
 ( (tags includes #XX) AND (tags does not include #YY) AND (tags does not include #ZZ) ) OR ( (tags includes #YY) AND (tags does not include #XX) AND (tags does not include #ZZ) ) OR ( (tags includes #ZZ) AND (tags does not include #XX) AND (tags does not include #YY) )
 ```
 
 Matching only one of 3 filters - version 2:
 
 ```tasks
-not done
+ignore global query
+explain
+hide backlinks
+
 (tags includes #XX) XOR (tags includes #YY) XOR (tags includes #ZZ)
 NOT ( (tags includes #XX) AND (tags includes #YY) AND (tags includes #ZZ) )
 ```
