@@ -535,7 +535,7 @@ describe('Query parsing', () => {
 
     describe('should include instruction in parsing error messages', () => {
         function getQueryError(source: string) {
-            return new Query(source).error;
+            return new Query(source, 'Example Path.md').error;
         }
 
         it('for invalid regular expression filter', () => {
@@ -608,6 +608,20 @@ Problem line: "${sourceUpperCase}"`);
 Problem line: "${source}"`);
             expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
 Problem line: "${sourceUpperCase}"`);
+        });
+
+        it('for instruction with continuation characters and placeholders', () => {
+            const source = `spaghetti includes \\
+    {{query.file.path}}`;
+
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem statement:
+    spaghetti includes \\
+        {{query.file.path}}
+     =>
+    spaghetti includes {{query.file.path}} =>
+    spaghetti includes Example Path.md
+`);
         });
     });
 
