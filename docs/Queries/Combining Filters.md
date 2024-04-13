@@ -289,6 +289,78 @@ Available workarounds:
 
 ## Troubleshooting Boolean Filters
 
+This section shows the typical solutions to a few error messages that may occur when using Boolean Filters.
+
+### Error: malformed boolean query -- Invalid token
+
+#### Cause: Sub-expression ends with closing delimiter
+
+The full error message is:
+
+`malformed boolean query -- Invalid token (check the documentation for guidelines)`
+
+> [!error] Broken query
+> `(description includes (maybe)) OR (description includes (perhaps))`
+
+How to fix the query:
+
+> [!Info] Use a different delimiter
+> `[description includes (maybe)] OR [description includes (perhaps)]`
+
+The full output includes:
+
+```text
+Tasks query: Could not interpret the following instruction as a Boolean combination:
+    (description includes (maybe)) OR (description includes (perhaps))
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2))
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'description includes (maybe'
+        => OK
+    'f2': 'description includes (perhaps'
+        => OK
+```
+
+Points to note in the above output:
+
+1. The mismatched brackets in the simplified line: `(f1)) OR (f2))`
+2. The missing closing `)` in the sub-expressions:
+
+- `'f1': 'description includes (maybe'`
+- `'f2': 'description includes (perhaps'`
+
+### Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters
+
+The full message is:
+
+`All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.`
+
+#### Cause: Mismatched delimiter types
+
+> [!error] Broken query
+> `"not done" AND (is recurring)`
+
+How to fix the query:
+
+> [!Info] Fix: Make the delimiters consistent
+> `(not done) AND (is recurring)`
+
+The full output includes:
+
+```text
+Tasks query: Could not interpret the following instruction as a Boolean combination:
+    "not done" AND (is recurring)
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+Problem line: ""not done" AND (is recurring)"
+```
+
 ### Fixing text sub-expressions that end with the delimiter
 
 #### The query
