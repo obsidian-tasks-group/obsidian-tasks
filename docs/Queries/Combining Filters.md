@@ -51,9 +51,9 @@ The following rules apply:
 - Each individual filter must be surrounded by a pair of **delimiter characters**:
   - The most commonly used delimiters in this guide are `(` and `)`.
   - The complete list of available delimiters is:
-    - `(....)`  
-    - `[....]`  
-    - `{....}`  
+    - `(....)`
+    - `[....]`
+    - `{....}`
     - `"...."`
   - The types of delimiter cannot be mixed within a Boolean instruction: you must pick an appropriate delimiter for the filters on the line.
 - **Operators** supported are: `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR`.
@@ -233,11 +233,11 @@ of the filters, **and also tasks that match all three of the filters**.
 
 ## Delimiters
 
-The following delimiter characters are available:  
-  
-- `(....)`  
-- `[....]`  
-- `{....}`  
+The following delimiter characters are available:
+
+- `(....)`
+- `[....]`
+- `{....}`
 - `"...."`
 
 > [!Important]
@@ -289,6 +289,73 @@ Available workarounds:
 
 ## Troubleshooting Boolean Filters
 
+### Fixing text sub-expressions that end with the delimiter
+
+#### The query
+
+Consider this instruction:
+
+```text
+(description includes (maybe)) OR (description includes (perhaps))
+```
+
+It starts with `(` and ends with `)`, so Tasks knows that the chosen delimiter pair is `(...)`.
+
+And so it looks for all the delimiter characters around the `OR`, meaning that it swallows up the last `)` that the user actually intended to be part of the sub-expression.
+
+#### Understanding the error message
+
+So Tasks generates this error message:
+
+```text
+Tasks query: Could not interpret the following instruction as a Boolean combination:
+    (description includes (maybe)) OR (description includes (perhaps))
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2))
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'description includes (maybe'
+        => OK
+    'f2': 'description includes (perhaps'
+        => OK
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+Problem line: "(description includes (maybe)) OR (description includes (perhaps))"
+```
+
+Notice how the `(` and `)` are not balanced in the  `simplified line`:
+
+```text
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2))
+```
+
+And the sub-expressions are missing their closing `)`:
+
+```text
+Where the sub-expressions in the simplified line are:
+    'f1': 'description includes (maybe'
+        => OK
+    'f2': 'description includes (perhaps'
+        => OK
+```
+
+#### The solution
+
+This is why Tasks offers a choice of [[#Delimiters|delimiters]] around sub-expressions.
+
+We can change our instruction to use `[...]`, for example, which just works:
+
+```text
+[description includes (maybe)] OR [description includes (perhaps)]
+```
+
 ==Show an example error message==
 
 ==Show swallowing of delimiter at end of sub-expression==
@@ -296,6 +363,10 @@ Available workarounds:
 ==Try a different delimiter==
 
 ==Add ; after `filter by function`==
+
+### Fixing custom sub-expressions that end with chosen delimiter
+
+==TODO==
 
 ## Examples
 
