@@ -293,10 +293,7 @@ For help, see:
     private stringifySubExpressionStatus(line: string) {
         const parsedField = parseFilter(line);
         if (!parsedField) {
-            let filterStatus;
-            filterStatus = 'ERROR:';
-            filterStatus += '\n           do not understand query';
-            return filterStatus;
+            return 'ERROR:\n           do not understand query';
         }
         if (parsedField?.error) {
             let filterStatus;
