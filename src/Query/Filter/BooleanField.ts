@@ -296,6 +296,7 @@ For help, see:
         if (!parsedField) {
             filterStatus = 'ERROR:';
             filterStatus += '\n           do not understand query';
+            return filterStatus;
         } else if (parsedField?.error) {
             filterStatus = 'ERROR:';
             const filterError = parsedField?.error ?? '';
@@ -304,6 +305,7 @@ For help, see:
                 .map((line) => line.trim())
                 .join('\n           ');
             filterStatus += `\n           ${formattedFilterStatus}`;
+            return filterStatus;
         }
         return filterStatus;
     }
