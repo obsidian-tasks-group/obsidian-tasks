@@ -383,17 +383,35 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'filter by function task.description.includes('a''
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "task.description.includes('a'".
+The error message was:
+    "SyntaxError: missing ) after argument list"
     'f2': 'filter by function task.description.includes('b''
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "task.description.includes('b'".
+The error message was:
+    "SyntaxError: missing ) after argument list"
     'f3': 'filter by function task.description.includes('c''
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "task.description.includes('c'".
+The error message was:
+    "SyntaxError: missing ) after argument list"
     'f4': 'filter by function task.description.includes('d''
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "task.description.includes('d'".
+The error message was:
+    "SyntaxError: missing ) after argument list"
     'f5': 'filter by function task.description.includes('e''
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "task.description.includes('e'".
+The error message was:
+    "SyntaxError: missing ) after argument list"
     'f6': 'filter by function task.description.includes('f''
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "task.description.includes('f'".
+The error message was:
+    "SyntaxError: missing ) after argument list"
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -475,17 +493,29 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type'
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "! 'NON_TASK,CANCELLED'.includes(task.status.type".
+The error message was:
+    "SyntaxError: missing ) after argument list"
     'f2': 'filter by function const date = task.due.moment; return date ? !date.isValid() : false;'
         => OK
     'f3': 'filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false'
         => OK
     'f4': 'filter by function task.urgency.toFixed(2) === 1.95.toFixed(2'
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "task.urgency.toFixed(2) === 1.95.toFixed(2".
+The error message was:
+    "SyntaxError: missing ) after argument list"
     'f5': 'filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁''
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "(!task.isRecurring) && task.originalMarkdown.includes('🔁'".
+The error message was:
+    "SyntaxError: missing ) after argument list"
     'f6': 'filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase('
-        => ERROR
+        => ERROR:
+Error: Failed parsing expression "task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(".
+The error message was:
+    "SyntaxError: Unexpected token '}'"
     'f7': 'filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false'
         => OK
     'f8': 'filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;'
@@ -3103,7 +3133,12 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'AND (description includes d1'
-        => ERROR
+        => ERROR:
+Could not interpret the following instruction as a Boolean combination:
+    AND (description includes d1
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -3127,7 +3162,8 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'happens before blahblahblah'
-        => ERROR
+        => ERROR:
+do not understand happens date
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -3252,7 +3288,8 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'happens before blahblahblah'
-        => ERROR
+        => ERROR:
+do not understand happens date
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
@@ -3300,7 +3337,12 @@ The instruction was converted to the following simplified line:
 
 Where the sub-expressions in the simplified line are:
     'f1': 'OR (description includes d1'
-        => ERROR
+        => ERROR:
+Could not interpret the following instruction as a Boolean combination:
+    OR (description includes d1
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
 
 For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters

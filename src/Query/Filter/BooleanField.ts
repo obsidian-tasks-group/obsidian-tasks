@@ -282,8 +282,12 @@ For help, see:
     private stringifySubExpressionsForErrorMessage(filters: { [p: string]: string }) {
         return Object.entries(filters)
             .map(([key, value]) => {
+                // Tell the user whether the sub-expression is valid, to work out which ones need fixing.
                 const parsedField = parseFilter(value);
-                const filterStatus = parsedField?.error ? 'ERROR' : 'OK';
+                let filterStatus = parsedField?.error ? 'ERROR:' : 'OK';
+                if (parsedField?.error) {
+                    filterStatus += '\n' + parsedField?.error;
+                }
                 return `    '${key}': '${value}'
         => ${filterStatus}`;
             })
