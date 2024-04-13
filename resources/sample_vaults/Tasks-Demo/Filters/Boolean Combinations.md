@@ -140,9 +140,31 @@ hide backlinks
 (tags includes #XX) AND (tags includes #YY
 ```
 
-### Delimiter swallowed by Tasks' parsing code
+### Delimiter swallowed by Tasks' parsing code - example 1
 
-#### The Problem
+#### The Problem - example 1
+
+```tasks
+ignore global query
+explain
+hide backlinks
+
+(description includes (maybe)) OR (description includes (perhaps))
+```
+
+#### Workaround - example 1
+
+```tasks
+ignore global query
+explain
+hide backlinks
+
+[description includes (maybe)] OR [description includes (perhaps)]
+```
+
+### Delimiter swallowed by Tasks' parsing code - example 2
+
+#### The Problem - example 2
 
 In this example, each of the filters ends with a `)`, which is also the closing delimiter character in this Boolean line.
 

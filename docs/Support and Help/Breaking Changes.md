@@ -16,6 +16,14 @@ In this case, as we use [semantic versioning](https://semver.org), we will alway
 
 To help users updating across multiple Tasks releases, we collect here links to the few Tasks breaking changes - most recent first.
 
+## Tasks X.Y.Z (14 April 2024)
+
+*Release notes: [Tasks X.Y.Z](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/X.Y.Z).*
+
+- **Boolean expressions**
+  - Significant improvements to [[Combining Filters]] with Boolean expressions.
+  - See [[Combining Filters#Appendix Changes to Boolean filters in Tasks X.Y.Z|the appendix]] for one small breaking change, and all the improvements.
+
 ## Tasks 6.0.0 (19 January 2024)
 
 *Release notes: [Tasks 6.0.0](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/6.0.0).*
