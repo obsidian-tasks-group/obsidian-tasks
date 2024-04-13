@@ -284,8 +284,12 @@ For help, see:
             .map(([key, value]) => {
                 // Tell the user whether the sub-expression is valid, to work out which ones need fixing.
                 const parsedField = parseFilter(value);
-                let filterStatus = parsedField?.error ? 'ERROR:' : 'OK';
-                if (parsedField?.error) {
+                let filterStatus = 'OK';
+                if (!parsedField) {
+                    filterStatus = 'ERROR:';
+                    filterStatus += '\n           do not understand query';
+                } else if (parsedField?.error) {
+                    filterStatus = 'ERROR:';
                     const filterError = parsedField?.error ?? '';
                     const formattedFilterStatus = filterError
                         .split('\n')

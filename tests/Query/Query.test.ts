@@ -650,7 +650,7 @@ Problem statement:
             `);
         });
 
-        it.skip('for boolean with unknown instruction', () => {
+        it('for boolean with unknown instruction', () => {
             const source = '( filename includesx {{query.file.filenameWithoutExtension}} )';
             expect(getQueryError(source)).toMatchInlineSnapshot(`
                 "Could not interpret the following instruction as a Boolean combination:
