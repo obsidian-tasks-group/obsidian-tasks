@@ -255,45 +255,13 @@ This is not valid:
 (not done) AND "is recurring"
 ```
 
-## Caveat
-
-The one current caveat with this implementation is that it still does not work for filters the **end** with any of the characters `()"`, as they are swallowed up and treated as delimiters.
-
-So for example, this filter:
-
-```text
-(description includes "maybe")
-```
-
-is interpreted as this simplified line - note the stray `"`:
-
-```text
-(f1")
-```
-
-where `f1` is this - note the missing `"`:
-
-```text
-description includes "maybe
-```
-
-### Workarounds
-
-`filter by function` instructions are very likely to end with `)`, due to the expression often ending with a function call.
-
-Available workarounds:
-
-- Use a different delimiter
-- add a trailing `;` at the end of any `filter by function` that ends in `)` or `"`.
-- convert Boolean combinations of multiple `filter by function` to be a single `filter by function` that uses JavaScript `&&`, `||` and `!`.
-
 ## Troubleshooting Boolean Filters
 
 This section shows the typical solutions to a few error messages that may occur when using Boolean Filters.
 
 ### Error: malformed boolean query -- Invalid token
 
-#### Cause: Sub-expression ends with closing delimiter
+#### Cause: Text filter sub-expression ends with closing delimiter
 
 The full error message is:
 
@@ -307,7 +275,11 @@ How to fix the query:
 > [!Info] Use a different delimiter
 > `[description includes (maybe)] OR [description includes (perhaps)]`
 
-The full output includes:
+This is why Tasks offers a choice of [[#Delimiters|delimiters]] around sub-expressions.
+
+#### Spotting malformed boolean query problems - with built-in filters
+
+Here is the bulk of the error text for the above broken query:
 
 ```text
 Tasks query: Could not interpret the following instruction as a Boolean combination:
@@ -326,13 +298,105 @@ Where the sub-expressions in the simplified line are:
         => OK
 ```
 
-Points to note in the above output:
+> [!tip] Points to note in the above output:
+>
+> 1. The mismatched brackets in the simplified line: `(f1)) OR (f2))`
+> 2. The missing closing `)` in the sub-expressions:
+>     - `'f1': 'description includes (maybe'`
+>     - `'f2': 'description includes (perhaps'`
 
-1. The mismatched brackets in the simplified line: `(f1)) OR (f2))`
-2. The missing closing `)` in the sub-expressions:
+#### Cause: 'filter by function' sub-expression ends with closing delimiter
 
-- `'f1': 'description includes (maybe'`
-- `'f2': 'description includes (perhaps'`
+> [!error] Broken query
+>
+> ```text
+> (filter by function task.tags.join(',').toUpperCase().includes('#XX')) AND \
+> (filter by function task.tags.join(',').toUpperCase().includes('#YY')) AND \
+> (filter by function task.tags.join(',').toUpperCase().includes('#ZZ'))
+> ```
+
+We have several options:
+
+> [!info] Option 1: use a different delimiter
+>
+> ```text
+> [filter by function task.tags.join(',').toUpperCase().includes('#XX')] AND \
+> [filter by function task.tags.join(',').toUpperCase().includes('#YY')] AND \
+> [filter by function task.tags.join(',').toUpperCase().includes('#ZZ')]
+> ```
+
+We can choose any one of the available [[#Delimiters|delimiter sets]], so long as we use the same delimiters for all sub-expressions on the line.
+
+Above, we adjusted the query to use `[....]` instead of `(....)`, as we know that none of our sub-expressions ends with a `]`.
+
+> [!info] Option 2: add semicolons to filter by function
+>
+> ```text
+> (filter by function task.tags.join(',').toUpperCase().includes('#XX'); ) AND \
+> (filter by function task.tags.join(',').toUpperCase().includes('#YY'); ) AND \
+> (filter by function task.tags.join(',').toUpperCase().includes('#ZZ'); )
+> ```
+
+Above, we added a semicolon (`;`) at the end of each sub-expression, to put non-space character between the `)` in the `filter by function` expression and the closing Boolean delimter `)`.
+
+> [!info] Option 3: port the Boolean logic to JavaScript
+>
+> ```text
+> filter by function \
+>     task.tags.join(',').toUpperCase().includes('#XX') && \
+>     task.tags.join(',').toUpperCase().includes('#YY') && \
+>     task.tags.join(',').toUpperCase().includes('#ZZ')
+> ```
+
+Above, we migrated the Boolean operators to JavaScript ones instead.
+
+| Task Operator | JavaScript operator |
+| ------------- | ------------------- |
+| `AND`         | `&&`                |
+| `OR`          | <code>\|\|</code>   |
+| `NOT`         | `!`                 |
+
+#### Spotting malformed boolean query problems - with 'filter by function'
+
+Here is the bulk of the error text for the above broken query:
+
+```text
+Tasks query: Could not interpret the following instruction as a Boolean combination:
+    (filter by function task.tags.join(',').toUpperCase().includes('#XX')) AND (filter by function task.tags.join(',').toUpperCase().includes('#YY')) AND (filter by function task.tags.join(',').toUpperCase().includes('#ZZ'))
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1)) AND (f2)) AND (f3))
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'filter by function task.tags.join(',').toUpperCase().includes('#XX''
+        => ERROR:
+           Error: Failed parsing expression "task.tags.join(',').toUpperCase().includes('#XX'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f2': 'filter by function task.tags.join(',').toUpperCase().includes('#YY''
+        => ERROR:
+           Error: Failed parsing expression "task.tags.join(',').toUpperCase().includes('#YY'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f3': 'filter by function task.tags.join(',').toUpperCase().includes('#ZZ''
+        => ERROR:
+           Error: Failed parsing expression "task.tags.join(',').toUpperCase().includes('#ZZ'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+```
+
+> [!tip] Points to note in the above output:
+>
+> 1. The mismatched brackets in the simplified line: `(f1)) AND (f2)) AND (f3))`
+> 2. The missing closing `)` in the sub-expressions:
+>     - `'f1': 'filter by function task.tags.join(',').toUpperCase().includes('#XX''`
+>     - `'f2': 'filter by function task.tags.join(',').toUpperCase().includes('#YY''`
+>     - `'f3': 'filter by function task.tags.join(',').toUpperCase().includes('#ZZ''`
+> 3. The error messages, including:
+>     - `"SyntaxError: missing ) after argument list"`
 
 ### Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters
 
@@ -360,85 +424,6 @@ The error message is:
     All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
 Problem line: ""not done" AND (is recurring)"
 ```
-
-### Fixing text sub-expressions that end with the delimiter
-
-#### The query
-
-Consider this instruction:
-
-```text
-(description includes (maybe)) OR (description includes (perhaps))
-```
-
-It starts with `(` and ends with `)`, so Tasks knows that the chosen delimiter pair is `(...)`.
-
-And so it looks for all the delimiter characters around the `OR`, meaning that it swallows up the last `)` that the user actually intended to be part of the sub-expression.
-
-#### Understanding the error message
-
-So Tasks generates this error message:
-
-```text
-Tasks query: Could not interpret the following instruction as a Boolean combination:
-    (description includes (maybe)) OR (description includes (perhaps))
-
-The error message is:
-    malformed boolean query -- Invalid token (check the documentation for guidelines)
-
-The instruction was converted to the following simplified line:
-    (f1)) OR (f2))
-
-Where the sub-expressions in the simplified line are:
-    'f1': 'description includes (maybe'
-        => OK
-    'f2': 'description includes (perhaps'
-        => OK
-
-For help, see:
-    https://publish.obsidian.md/tasks/Queries/Combining+Filters
-
-Problem line: "(description includes (maybe)) OR (description includes (perhaps))"
-```
-
-Notice how the `(` and `)` are not balanced in the  `simplified line`:
-
-```text
-The instruction was converted to the following simplified line:
-    (f1)) OR (f2))
-```
-
-And the sub-expressions are missing their closing `)`:
-
-```text
-Where the sub-expressions in the simplified line are:
-    'f1': 'description includes (maybe'
-        => OK
-    'f2': 'description includes (perhaps'
-        => OK
-```
-
-#### The solution
-
-This is why Tasks offers a choice of [[#Delimiters|delimiters]] around sub-expressions.
-
-We can change our instruction to use `[...]`, for example, which just works:
-
-```text
-[description includes (maybe)] OR [description includes (perhaps)]
-```
-
-==Show an example error message==
-
-==Show swallowing of delimiter at end of sub-expression==
-
-==Try a different delimiter==
-
-==Add ; after `filter by function`==
-
-### Fixing custom sub-expressions that end with chosen delimiter
-
-==TODO==
 
 ## Examples
 
