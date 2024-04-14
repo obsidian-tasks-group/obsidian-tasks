@@ -430,13 +430,19 @@ function addDependsOnSuggestions(
         const existingDependsOnIdStrings = dependsOnMatch[2] || '';
         const newTaskToAppend = dependsOnMatch[3].trim();
 
+        // Find all Tasks, Already Added
+        let blockingTasks = [] as Task[];
+        if (existingDependsOnIdStrings) {
+            blockingTasks = allTasks.filter((task) => task.id && existingDependsOnIdStrings.contains(task.id));
+        }
+
         if (newTaskToAppend.length >= settings.autoSuggestMinMatch) {
             const genericMatches = searchForCandidateTasksForDependency(
                 newTaskToAppend,
                 allTasks,
                 taskToSuggestFor,
                 [] as Task[],
-                allTasks.filter((task) => taskToSuggestFor?.dependsOn.contains(task.id)),
+                blockingTasks,
             );
 
             for (const task of genericMatches) {
