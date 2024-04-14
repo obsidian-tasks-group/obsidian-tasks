@@ -9,7 +9,7 @@ publish: true
 > [!released]
 >
 > - Introduced in Tasks 1.9.0.
-> - Major improvements in Tasks X.Y.Z: for details, see [[#Appendix Changes to Boolean filters in Tasks X.Y.Z]].
+> - Major improvements in Tasks 7.0.0: for details, see [[#Appendix Changes to Boolean filters in Tasks 7.0.0]].
 
 The [[Filters|individual filters]] provided by Tasks can be combined together in powerful ways, by:
 
@@ -517,16 +517,16 @@ The above is much easier to maintain than the other option of:
   (tags do not include #context/loc3)
 ````
 
-## Appendix: Changes to Boolean filters in Tasks X.Y.Z
+## Appendix: Changes to Boolean filters in Tasks 7.0.0
 
-Tasks X.Y.Z involved a tremendous amount of work behind the scenes to improve the behaviour and usability of Boolean filters.
+Tasks 7.0.0 involved a tremendous amount of work behind the scenes to improve the behaviour and usability of Boolean filters.
 
 This section describes the changes, for completeness.
 
 ### Mixing of delimiter types is no longer allowed
 
 > [!Danger] Breaking change
-> This (undocumented) mixing of delimiter types used to be a valid query, prior to Tasks X.Y.Z:
+> This (undocumented) mixing of delimiter types used to be a valid query, prior to Tasks 7.0.0:
 >
 > ```text
 > (not done) AND "is recurring"
@@ -562,7 +562,7 @@ See [[#Delimiters]] above.
 
 Spaces around Operators are now optional.
 
-For example, before Tasks X.Y.Z the following was invalid, as there were no spaces `AND`.
+For example, before Tasks 7.0.0 the following was invalid, as there were no spaces `AND`.
 
 `(path includes a)AND(path includes b)`
 
