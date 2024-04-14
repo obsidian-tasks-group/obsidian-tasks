@@ -91,7 +91,10 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         }
 
         if (value.taskItDependsOn != null) {
-            const newTask = ensureTaskHasId(value.taskItDependsOn, ['TODO']);
+            const newTask = ensureTaskHasId(
+                value.taskItDependsOn,
+                this.plugin.getTasks().map((task) => task.id),
+            );
             value.appendText += ` ${newTask.id}`;
 
             replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
