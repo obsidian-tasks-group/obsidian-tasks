@@ -21,7 +21,7 @@
     "appendText": "🆔 ****** "
   },
   {
-    "displayText": "⛔ Task is Blocked by ID",
+    "displayText": "⛔ Task depends on ID",
     "appendText": "⛔"
   }
 ]

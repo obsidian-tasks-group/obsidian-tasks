@@ -47,7 +47,7 @@ export function makeDefaultSuggestionBuilder(
 
         // Step 3: add dependecy suggestions
         suggestions = suggestions.concat(
-            addBlockedBySuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
+            addDependsOnSuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
         );
 
         // Step 4: add task property suggestions ('due', 'recurrence' etc)
@@ -132,7 +132,7 @@ function addTaskPropertySuggestions(
 
     if (!line.includes(symbols.dependsOnSymbol))
         genericSuggestions.push({
-            displayText: `${symbols.dependsOnSymbol} Task is Blocked by ID`,
+            displayText: `${symbols.dependsOnSymbol} Task depends on ID`,
             appendText: `${symbols.dependsOnSymbol}`,
         });
 
@@ -408,27 +408,27 @@ function addRecurrenceSuggestions(
 }
 
 /*
- * If the cursor is located in a section that is followed by a Blocked By Symbol, suggest options
+ * If the cursor is located in a section that is followed by a Depends On Symbol, suggest options
  * for what to enter as Depend on Option.
  * It should contain suggestion of Possible Dependant Tasks
  * of what the user is typing.
  */
-function addBlockedBySuggestions(
+function addDependsOnSuggestions(
     line: string,
     cursorPos: number,
     settings: Settings,
-    blockedBySymbol: string,
+    dependsOnSymbol: string,
     allTasks: Task[],
     taskToSuggestFor?: Task,
 ) {
     const results: SuggestInfo[] = [];
 
-    const blockedByRegex = new RegExp(`(${blockedBySymbol})([0-9a-zA-Z ^,]*,)*([0-9a-zA-Z ^,]*)`, 'ug');
-    const blockedByMatch = matchByPosition(line, blockedByRegex, cursorPos);
-    if (blockedByMatch && blockedByMatch.length >= 1) {
-        // blockedByMatch[1] = Blocked By Symbol
-        const existingBlockedByIdStrings = blockedByMatch[2] || '';
-        const newTaskToAppend = blockedByMatch[3].trim();
+    const dependsOnRegex = new RegExp(`(${dependsOnSymbol})([0-9a-zA-Z ^,]*,)*([0-9a-zA-Z ^,]*)`, 'ug');
+    const dependsOnMatch = matchByPosition(line, dependsOnRegex, cursorPos);
+    if (dependsOnMatch && dependsOnMatch.length >= 1) {
+        // dependsOnMatch[1] = Depends On Symbol
+        const existingDependsOnIdStrings = dependsOnMatch[2] || '';
+        const newTaskToAppend = dependsOnMatch[3].trim();
 
         if (newTaskToAppend.length >= settings.autoSuggestMinMatch) {
             const genericMatches = searchForCandidateTasksForDependency(
@@ -436,16 +436,16 @@ function addBlockedBySuggestions(
                 allTasks,
                 taskToSuggestFor,
                 [] as Task[],
-                [] as Task[],
+                allTasks.filter((task) => taskToSuggestFor?.dependsOn.contains(task.id)),
             );
 
             for (const task of genericMatches) {
                 results.push({
                     suggestionType: 'match',
                     displayText: `${task.descriptionWithoutTags}`,
-                    appendText: `${blockedBySymbol}${existingBlockedByIdStrings}`,
-                    insertAt: blockedByMatch.index,
-                    insertSkip: blockedBySymbol.length + existingBlockedByIdStrings.length + newTaskToAppend.length,
+                    appendText: `${dependsOnSymbol}${existingDependsOnIdStrings}`,
+                    insertAt: dependsOnMatch.index,
+                    insertSkip: dependsOnSymbol.length + existingDependsOnIdStrings.length + newTaskToAppend.length,
                     taskItDependsOn: task,
                 });
             }

@@ -16,7 +16,7 @@
     "appendText": "id:: ****** "
   },
   {
-    "displayText": "dependsOn:: Task is Blocked by ID",
+    "displayText": "dependsOn:: Task depends on ID",
     "appendText": "dependsOn::"
   },
   {

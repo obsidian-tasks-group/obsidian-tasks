@@ -1,7 +1,7 @@
 | Searchable Text | Text that is added |
 | ----- | ----- |
 | 🆔 Task ID | 🆔 ******  |
-| ⛔ Task is Blocked by ID | ⛔ |
+| ⛔ Task depends on ID | ⛔ |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
 | every week | 🔁 every week  |

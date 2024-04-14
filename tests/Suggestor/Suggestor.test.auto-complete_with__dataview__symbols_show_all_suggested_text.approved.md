@@ -1,7 +1,7 @@
 | Searchable Text | Text that is added |
 | ----- | ----- |
 | id:: Task ID | id:: ******  |
-| dependsOn:: Task is Blocked by ID | dependsOn:: |
+| dependsOn:: Task depends on ID | dependsOn:: |
 | every | repeat:: every  |
 | every day | repeat:: every day  |
 | every week | repeat:: every week  |
