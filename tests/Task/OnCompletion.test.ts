@@ -294,20 +294,20 @@ describe('OnCompletion-Delete', () => {
     });
 });
 
-// describe('OnCompletion-ToLogFile', () => {
-//     it.failing('should write completed instance of non-recurring task to empty log file', () => {
-//         // Arrange
-//         const dueDate = '2024-02-10';
-//         const task = new TaskBuilder().description('A non-recurring task with 🏁 ToLogFile').dueDate(dueDate).build();
-//         expect(task.status.type).toEqual(StatusType.TODO);
-//
-//         // Act
-//         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
-//
-//         // Assert
-//         expect(tasks).toEqual([]);
-//     });
-// });
+describe('OnCompletion-ToLogFile', () => {
+    it('should write completed instance of non-recurring task to empty log file', () => {
+        // Arrange
+        const dueDate = '2024-02-10';
+        const task = new TaskBuilder().description('A non-recurring task with 🏁 ToLogFile').dueDate(dueDate).build();
+        expect(task.status.type).toEqual(StatusType.TODO);
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+
+        // Assert
+        expect(tasks).toEqual([]);
+    });
+});
 
 describe('OnCompletion-EndOfList', () => {
     it('should insert line at end of list when list followed by blank line', () => {
