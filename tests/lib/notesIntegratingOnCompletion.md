@@ -98,9 +98,32 @@ diff --git a/src/Task/Task.ts b/src/Task/Task.ts
 
 call an  asynchronous function from a regular function:  https://javascript.info/task/async-from-regular
 
-- copy error handling from 'appendToListWithinFile' to 'writeLineToListEnd'
-- separate function to search for heading and return line# -- otherwise handle 'not found'
-- use task's own line number to start search for end of current list
+- [x] copy error handling from 'appendToListWithinFile' to 'writeLineToListEnd'
+- [ ] separate function to search for heading and return line# -- otherwise handle 'not found'
+- [ ] use task's own line number to start search for end of current list
+- [ ] modify code to handle tasks within call-out blocks
+- [ ]
+
+## Items from Clare
+- [x] Tasks being indented ✅ 2024-04-01
+- [ ] Tasks in callouts with various indentations
+- [ ] Tasks in block quotes with various indentations
+- [ ] Mixture of different list characters in destination file (add support for '*' and '+')
+
+Output file location
+
+- [ ] Add calls to `normalizePath()`
+- [ ] Invalid character in file path
+- [ ] Directory not existing
+- [ ] File being readonly
+
+Obsidian developer guidelines
+
+- [ ] Don't use `app.vault`
+
+
+## Known limitations to include in documentation
+
 
 
 /🏁.(Delete|EndOfList|ToLogList|ToLogFile)./gmui
@@ -108,3 +131,10 @@ call an  asynchronous function from a regular function:  https://javascript.info
 https://publish.obsidian.md/tasks-contributing/Code/How+does+Tasks+handle+status+changes
 https://docs.obsidian.md/Reference/TypeScript+API/Vault/process
 https://docs.obsidian.md/Plugins/Vault#Modify+files
+
+function removeCalloutPrefixes(lineOfText){
+while (lineOfText[:2] == '> ') {
+lineOfText = lineOfText[2:]
+}
+return lineOfText
+}
