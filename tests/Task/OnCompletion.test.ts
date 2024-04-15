@@ -9,7 +9,7 @@ import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfig
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine, toLines, toMarkdown } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
-import { handleOnCompletion, updateFileContentEventually } from '../../src/Task/OnCompletion';
+import { handleOnCompletion } from '../../src/Task/OnCompletion';
 import { writeLineToListEnd } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
@@ -26,7 +26,10 @@ afterEach(() => {
 
 export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
     const tasks = task.handleNewStatus(newStatus);
-    return handleOnCompletion(task, tasks, 'archive.md', updateFileContentEventually);
+    function testFileWriter(_filePath: string, _fileContentUpdater: (data: string) => string): void {
+        // updateFileContent(filePath, fileContentUpdater).then(() => {});
+    }
+    return handleOnCompletion(task, tasks, 'archive.md', testFileWriter);
 }
 
 describe('OnCompletion', () => {
