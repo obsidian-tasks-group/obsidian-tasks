@@ -4,6 +4,13 @@ import { StatusType } from '../Statuses/StatusConfiguration';
 import { appendToEndOfFile, appendToListWithinFile } from '../lib/FileWriter';
 import type { Task } from './Task';
 
+function removeCalloutPrefixes(lineOfText: string) {
+    while (lineOfText.substring(0, 2) === '> ') {
+        lineOfText = lineOfText.substring(2);
+    }
+    return lineOfText;
+}
+
 function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) {
     return tasks.filter((task) => task !== changedStatusTask);
 }
@@ -59,8 +66,9 @@ export function handleOnCompletion(
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
 
-    // trim leading spaces to prevent misinterpretation of indented tasks moved to new contexts;
-    const textToWrite = changedStatusTask.toFileLineString().trimStart();
+    // trim leading spaces and remove `> ` prefixes to prevent misinterpretation
+    //    of completed task instances s moved to new contexts
+    const textToWrite: string = removeCalloutPrefixes(changedStatusTask.toFileLineString().trimStart());
 
     if (taskString.includes('🏁 ToLogFile')) {
         //  append completed task to end of list under specified heading of separate, specified note file
