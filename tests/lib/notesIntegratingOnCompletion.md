@@ -106,9 +106,9 @@ call an  asynchronous function from a regular function:  https://javascript.info
 
 ## Items from Clare
 - [x] Tasks being indented ✅ 2024-04-01
-- [ ] Tasks in callouts with various indentations
-- [ ] Tasks in block quotes with various indentations
-- [ ] Mixture of different list characters in destination file (add support for '*' and '+')
+- [x] Tasks in callouts with various indentations
+- [x] Tasks in block quotes with various indentations
+- [x] Task prefixes '* ' and '+ ' -- already supported by ToLogFile and Delete actions
 
 Output file location
 
@@ -119,22 +119,20 @@ Output file location
 
 Obsidian developer guidelines
 
-- [ ] Don't use `app.vault`
+- [-] Don't use `app.vault`
 
 
 ## Known limitations to include in documentation
 
 
-
-/🏁.(Delete|EndOfList|ToLogList|ToLogFile)./gmui
+- RegEx to detect OnCompletion flag and supported Action
+`/🏁.(Delete|EndOfList|ToLogList|ToLogFile)./gmui`
 
 https://publish.obsidian.md/tasks-contributing/Code/How+does+Tasks+handle+status+changes
 https://docs.obsidian.md/Reference/TypeScript+API/Vault/process
 https://docs.obsidian.md/Plugins/Vault#Modify+files
 
-function removeCalloutPrefixes(lineOfText){
-while (lineOfText[:2] == '> ') {
-lineOfText = lineOfText[2:]
-}
-return lineOfText
-}
+
+https://chat.openai.com/share/adee76f8-df96-4ae8-b215-cd97ac7253ce
+
+https://www.youtube.com/watch?v=OuRtBe07T9A&t=936s  Emily Bache - Spy function/Mocking
