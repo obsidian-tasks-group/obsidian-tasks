@@ -1,7 +1,8 @@
 import { TFile } from 'obsidian';
 
 import { StatusType } from '../Statuses/StatusConfiguration';
-import { appendToEndOfFile, appendToListWithinFile } from '../lib/FileWriter';
+import { appendToEndOfFile } from '../lib/FileWriter';
+// import {appendToListWithinFile } from '../lib/FileWriter';
 import type { Task } from './Task';
 
 function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) {
@@ -70,7 +71,8 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         //  move completed task to end of list with specified heading within note in which it originated
         const filePath = changedStatusTask.path;
         updateFileContentEventually(filePath, (data: string) => {
-            return appendToListWithinFile(data, '## Archived Tasks - Prepended', textToWrite);
+            // return appendToListWithinFile(data, '## Archived Tasks - Prepended', textToWrite);
+            return writeLineToListEnd(data, '## Archived Tasks List - Appended', textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
