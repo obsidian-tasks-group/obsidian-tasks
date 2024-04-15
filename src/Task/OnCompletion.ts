@@ -33,7 +33,11 @@ function updateFileContentEventually(filePath: string, fileContentUpdater: (data
     updateFileContent(filePath, fileContentUpdater).then(() => {});
 }
 
-export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
+export function handleOnCompletion(
+    task: Task,
+    tasks: Task[],
+    toLogFilePath: string = 'Manual Testing/On Completion/Archive.md',
+): Task[] {
     const tasksArrayLength = tasks.length;
     if (tasksArrayLength === 0) {
         return tasks;
@@ -59,7 +63,7 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
 
     if (taskString.includes('🏁 ToLogFile')) {
         //  append completed task to end of list under specified heading of separate, specified note file
-        const filePath = 'Manual Testing/On Completion/Archive.md';
+        const filePath = toLogFilePath;
         updateFileContentEventually(filePath, (data: string) => {
             return appendToEndOfFile(data, textToWrite);
         });
