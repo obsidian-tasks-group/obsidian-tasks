@@ -29,7 +29,7 @@ async function updateFileContent(filePath: string, fileContentUpdater: (data: st
     }
 }
 
-function updateFileContentEventually(filePath: string, fileContentUpdater: (data: string) => string): void {
+export function updateFileContentEventually(filePath: string, fileContentUpdater: (data: string) => string): void {
     updateFileContent(filePath, fileContentUpdater).then(() => {});
 }
 
@@ -37,6 +37,7 @@ export function handleOnCompletion(
     task: Task,
     tasks: Task[],
     toLogFilePath: string = 'Manual Testing/On Completion/Archive.md',
+    fileWriter: (filePath: string, fileContentUpdater: (data: string) => string) => void = updateFileContentEventually,
 ): Task[] {
     const tasksArrayLength = tasks.length;
     if (tasksArrayLength === 0) {
@@ -64,7 +65,7 @@ export function handleOnCompletion(
     if (taskString.includes('🏁 ToLogFile')) {
         //  append completed task to end of list under specified heading of separate, specified note file
         const filePath = toLogFilePath;
-        updateFileContentEventually(filePath, (data: string) => {
+        fileWriter(filePath, (data: string) => {
             return appendToEndOfFile(data, textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
@@ -73,7 +74,7 @@ export function handleOnCompletion(
     if (taskString.includes('🏁 ToLogList')) {
         //  move completed task to end of list with specified heading within note in which it originated
         const filePath = changedStatusTask.path;
-        updateFileContentEventually(filePath, (data: string) => {
+        fileWriter(filePath, (data: string) => {
             return appendToListWithinFile(data, '## Archived Tasks - Prepended', textToWrite);
         });
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
@@ -82,7 +83,7 @@ export function handleOnCompletion(
     if (taskString.includes('🏁 EndOfList')) {
         //  move completed task to end of list in which it originated
         const filePath = changedStatusTask.path;
-        updateFileContentEventually(filePath, (data: string) => {
+        fileWriter(filePath, (data: string) => {
             // TODO The function name says that it writes to the end of the list, but it writes to the start.
             // TODO It does not create the heading if it was missing.
             return writeLineToListEnd(data, '## Archived Tasks - Appended', textToWrite);

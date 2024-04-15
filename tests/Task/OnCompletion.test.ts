@@ -9,7 +9,7 @@ import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfig
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine, toLines, toMarkdown } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
-import { handleOnCompletion } from '../../src/Task/OnCompletion';
+import { handleOnCompletion, updateFileContentEventually } from '../../src/Task/OnCompletion';
 import { writeLineToListEnd } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
@@ -26,7 +26,7 @@ afterEach(() => {
 
 export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
     const tasks = task.handleNewStatus(newStatus);
-    return handleOnCompletion(task, tasks);
+    return handleOnCompletion(task, tasks, 'archive.md', updateFileContentEventually);
 }
 
 describe('OnCompletion', () => {
