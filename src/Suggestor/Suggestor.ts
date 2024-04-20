@@ -428,7 +428,7 @@ function addDependsOnSuggestions(
     if (dependsOnMatch && dependsOnMatch.length >= 1) {
         // dependsOnMatch[1] = Depends On Symbol
         const existingDependsOnIdStrings = dependsOnMatch[2] || '';
-        const newTaskToAppend = dependsOnMatch[3].trim();
+        const newTaskToAppend = dependsOnMatch[3];
 
         // Find all Tasks, Already Added
         let blockingTasks = [] as Task[];
@@ -438,7 +438,7 @@ function addDependsOnSuggestions(
 
         if (newTaskToAppend.length >= settings.autoSuggestMinMatch) {
             const genericMatches = searchForCandidateTasksForDependency(
-                newTaskToAppend,
+                newTaskToAppend.trim(),
                 allTasks,
                 taskToSuggestFor,
                 [] as Task[],
