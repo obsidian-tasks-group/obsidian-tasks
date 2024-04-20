@@ -175,7 +175,7 @@ function addTaskPropertySuggestions(
     // something to match, we filter the suggestions accordingly, so the user can get more specific
     // results according to what she's typing.
     // If there's no good match, present the suggestions as they are
-    const wordMatch = matchByPosition(line, /([a-zA-Z'_-]*)/g, cursorPos);
+    const wordMatch = matchIfCursorInRegex(line, /([a-zA-Z'_-]*)/g, cursorPos);
     const matchingSuggestions: SuggestInfo[] = [];
     if (wordMatch && wordMatch.length > 0) {
         const wordUnderCursor = wordMatch[0];
@@ -242,7 +242,7 @@ function addDatesSuggestions(
 
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const dateMatch = matchByPosition(line, dateRegex, cursorPos);
+    const dateMatch = matchIfCursorInRegex(line, dateRegex, cursorPos);
     if (dateMatch && dateMatch.length >= 2) {
         const datePrefix = dateMatch[1];
         const dateString = dateMatch[2];
@@ -336,7 +336,7 @@ function addRecurrenceSuggestions(
 
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
+    const recurrenceMatch = matchIfCursorInRegex(line, recurrenceRegex, cursorPos);
     if (recurrenceMatch && recurrenceMatch.length >= 2) {
         const recurrencePrefix = recurrenceMatch[1];
         const recurrenceString = recurrenceMatch[2];
@@ -424,7 +424,7 @@ function addDependsOnSuggestions(
     const results: SuggestInfo[] = [];
 
     const dependsOnRegex = new RegExp(`(${dependsOnSymbol})([0-9a-zA-Z ^,]*,)*([0-9a-zA-Z ^,]*)`, 'ug');
-    const dependsOnMatch = matchByPosition(line, dependsOnRegex, cursorPos);
+    const dependsOnMatch = matchIfCursorInRegex(line, dependsOnRegex, cursorPos);
     if (dependsOnMatch && dependsOnMatch.length >= 1) {
         // dependsOnMatch[1] = Depends On Symbol
         const existingDependsOnIdStrings = dependsOnMatch[2] || '';
@@ -464,10 +464,10 @@ function addDependsOnSuggestions(
  * Matches a string with a regex according to a position (typically of a cursor).
  * Will return a result only if a match exists and the given position is part of it.
  */
-export function matchByPosition(s: string, r: RegExp, position: number): RegExpMatchArray | void {
+export function matchIfCursorInRegex(s: string, r: RegExp, position: number): RegExpMatchArray | void {
     const matches = s.matchAll(r);
     for (const match of matches) {
-        if (match?.index && match.index <= position && position <= match.index + match[0].length) return match;
+        if (match?.index && match.index < position && position <= match.index + match[0].length) return match;
     }
 }
 
