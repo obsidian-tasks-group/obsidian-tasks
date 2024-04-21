@@ -1,3 +1,4 @@
+import type { Editor, EditorPosition } from 'obsidian';
 import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
@@ -497,13 +498,28 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
  *
  * This checks for simple pre-conditions:
  *  - Is the global filter (if set) in the line?
- *  - Is the line a task line (with a checkbox)
+ *  - Is the line a task line (with a checkbox)?
+ *  - OR is the line the first line of a Kanban card?
  * @param line
- * @param cursorPosition - the cursor position, when 0 is presumed to mean 'at the start of the line'.
- *                          See 'ch' in https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition
+ * @param cursor - the cursor position, when ch is 0 it is presumed to mean 'at the start of the line'.
+ *                          See https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition
+ * @param editor - the editor instance to which the suggest belongs
  */
-export function canSuggestForLine(line: string, cursorPosition: number) {
-    return GlobalFilter.getInstance().includedIn(line) && cursorIsInTaskLineDescription(line, cursorPosition);
+export function canSuggestForLine(line: string, cursor: EditorPosition, editor: Editor) {
+    return (
+        GlobalFilter.getInstance().includedIn(line) &&
+        (cursorIsInTaskLineDescription(line, cursor.ch) || cursorIsInKanbanDescription(cursor, editor))
+    );
+}
+
+/**
+ * Return true if the cursor is on the first line of a Kanban card
+ *
+ * @param cursor - the cursor position
+ * @param editor - the editor instance to which the suggest belongs
+ */
+function cursorIsInKanbanDescription(cursor: EditorPosition, editor: Editor) {
+    return cursor.line === 0 && !!(editor as any)?.editorComponent?.isKanbanEditor;
 }
 
 /**
