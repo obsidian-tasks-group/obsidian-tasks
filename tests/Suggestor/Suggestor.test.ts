@@ -4,6 +4,7 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
+import type { Editor } from 'obsidian';
 import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
 import {
@@ -240,7 +241,8 @@ describe('canSuggestForLine', () => {
     });
 
     function canSuggestForLineWithCursor(line: string) {
-        return canSuggestForLine(...cursorPosition(line));
+        const [testLine, cursorIndex] = cursorPosition(line);
+        return canSuggestForLine(testLine, { line: 0, ch: cursorIndex }, {} as Editor);
     }
 
     it('should not suggest if there is no checkbox', () => {
