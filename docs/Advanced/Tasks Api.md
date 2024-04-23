@@ -32,6 +32,28 @@ export interface TasksApiV1 {
      * an empty string, if data entry was cancelled.
      */
     createTaskLineModal(): Promise<string>;
+
+    /**
+     * Toggles and updates a task line according to a user's preferences, accounting for recurrance
+     * rules and completed status.
+     *
+     * @param line The markdown string of the task line being toggled
+     * @param path The path to the file containing line
+     * @returns An {@link EditorInsertion} containing the information necessary to replace the toggled line
+     */
+    toggleLine: (line: string, path: string) => EditorInsertion;
+
+    /**
+     * Retrieves the Tasks Emoji Format task serializer
+     * @returns {DefaultTaskSerializer}
+     */
+    getDefaultTaskSerializer: () => DefaultTaskSerializer;
+
+    /**
+     * Retrieves the Dataview Format task serializer
+     * @returns {DataviewTaskSerializer}
+     */
+    getDataviewTaskSerializer: () => DataviewTaskSerializer;
 }
 ```
 
@@ -128,3 +150,150 @@ showTasksPluginAutoSuggest(
 ```
 
 This can be used, for example, to display the Auto-Suggest on non-task lines. [See the Kanban plugin for an example](https://github.com/mgmeyers/obsidian-kanban/blob/5fa792b9c2157390fe493f0feed6f0bc9be72910/src/components/Editor/MarkdownEditor.tsx#L100-L106).
+
+## `toggleLine: (line: string, path: string) => EditorInsertion;`
+
+> [!released]
+This method was introduced in Tasks 7.0.1.
+
+This method toggles and updates a task line according to a user's preferences, accounting for recurrance rules and completed status. It returns an object containing the text to be used to replace the input line, and the recommended position to move the cursor to.
+
+```typescript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+const sourceFile: TFile = file;
+const taskLine = '- [ ] This is a task 📅 2024-04-24';
+
+const result = tasksApi.toggleLine(taskLine, sourceFile.path);
+
+console.log(result);
+/*
+{
+    "text": "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23",
+    "moveTo": {
+        "line": 0
+    }
+}
+*/
+```
+
+## `getDefaultTaskSerializer: () => DefaultTaskSerializer;`
+
+> [!released]
+This method was introduced in Tasks 7.0.1.
+
+This method retrieves the Tasks Emoji Format task serializer used to serialize and deserialize emoji formatted tasks.
+
+Task serializers adhere to the TaskSerializer interface.
+
+```typescript
+/**
+ * An abstraction that manages how a {@link Task} is read from and written
+ * to a file.
+ *
+ * A {@link TaskSerializer} is only responsible for the single line of text that follows
+ * after the checkbox:
+ *
+ *        - [ ] This is a task description
+ *              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *
+ * {@link TaskSerializer} is not responsible for:
+ *
+ *        - Retrieving and setting a fallback scheduled date (done in {@link Task.fromLine})
+ *
+ * @exports
+ * @interface TaskSerializer
+ */
+export interface TaskSerializer {
+    /**
+     * Parses task details from the string representation of a task
+     *
+     * @param line The single line of text to parse
+     * @returns {TaskDetails} Details parsed from {@link line}
+     */
+    deserialize(line: string): TaskDetails;
+
+    /**
+     * Creates the string representation of a {@link Task}
+     *
+     * @param task The {@link Task} to stringify
+     * @returns {string}
+     */
+    serialize(task: Task): string;
+}
+```
+
+`TaskDetails` includes these fields from the `Task` class.
+
+```typescript
+'description'
+| 'priority'
+| 'startDate'
+| 'createdDate'
+| 'scheduledDate'
+| 'dueDate'
+| 'doneDate'
+| 'cancelledDate'
+| 'recurrence'
+| 'dependsOn'
+| 'id'
+| 'tags'
+```
+
+```typescript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+const defaultSerializer = tasksApi.getDefaultTaskSerializer();
+const taskStr = 'This is a task 📅 2024-04-24 ✅ 2024-04-23';
+
+console.log(defaultSerializer.deserialize(taskStr));
+/*
+
+{
+    "description": "This is a task",
+    "priority": "3",
+    "startDate": null,
+    "createdDate": null,
+    "scheduledDate": null,
+    "dueDate": moment("2024-04-24T07:00:00.000Z"),
+    "doneDate": moment("2024-04-23T07:00:00.000Z"),
+    "cancelledDate": null,
+    "recurrence": null,
+    "id": "",
+    "dependsOn": [],
+    "tags": []
+}
+
+*/
+```
+
+## `getDataviewTaskSerializer: () => DataviewTaskSerializer;`
+
+> [!released]
+This method was introduced in Tasks 7.0.1.
+
+This method retrieves the Dataview task serializer that can be used to serialize and deserialize dataview formatted tasks.
+
+```typescript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+const dataviewSerializer = tasksApi.getDataviewTaskSerializer();
+const taskStr = 'This is a task  [due:: 2024-04-24]  [completion:: 2024-04-23]';
+
+console.log(dataviewSerializer.deserialize(taskStr));
+/*
+
+{
+    "description": "This is a task",
+    "priority": "3",
+    "startDate": null,
+    "createdDate": null,
+    "scheduledDate": null,
+    "dueDate": moment("2024-04-24T07:00:00.000Z"),
+    "doneDate": moment("2024-04-23T07:00:00.000Z"),
+    "cancelledDate": null,
+    "recurrence": null,
+    "id": "",
+    "dependsOn": [],
+    "tags": []
+}
+
+*/
+```
