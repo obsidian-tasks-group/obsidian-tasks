@@ -61,7 +61,7 @@ export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView
  *
  * @interface EditorInsertion
  */
-interface EditorInsertion {
+export interface EditorInsertion {
     text: string;
     moveTo?: Partial<EditorPosition>;
 }
