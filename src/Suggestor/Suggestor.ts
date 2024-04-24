@@ -497,29 +497,37 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
  * and false value otherwise.
  *
  * This checks for simple pre-conditions:
+ *  - Does the parent editor explicitly request it?
  *  - Is the global filter (if set) in the line?
  *  - Is the line a task line (with a checkbox)?
- *  - OR is the line the first line of a Kanban card?
  * @param line
  * @param cursor - the cursor position, when ch is 0 it is presumed to mean 'at the start of the line'.
  *                          See https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition
  * @param editor - the editor instance to which the suggest belongs
  */
 export function canSuggestForLine(line: string, cursor: EditorPosition, editor: Editor) {
-    return (
-        GlobalFilter.getInstance().includedIn(line) &&
-        (cursorIsInTaskLineDescription(line, cursor.ch) || cursorIsInKanbanDescription(cursor, editor))
-    );
+    const lineHasGlobalFilter = GlobalFilter.getInstance().includedIn(line);
+    const didEditorRequest = editorIsRequestingSuggest(editor, cursor, lineHasGlobalFilter);
+
+    if (typeof didEditorRequest === 'boolean') return didEditorRequest;
+    return lineHasGlobalFilter && cursorIsInTaskLineDescription(line, cursor.ch);
 }
 
 /**
- * Return true if the cursor is on the first line of a Kanban card
+ * Return
+ * - true if the parent editor is explicitly requesting that the suggest be displayed
+ * - false if it is requesting that it be hidden
+ * - undefined if the parent editor wants to defer to the default behavior
  *
- * @param cursor - the cursor position
  * @param editor - the editor instance to which the suggest belongs
+ * @param cursor - the cursor position
  */
-function cursorIsInKanbanDescription(cursor: EditorPosition, editor: Editor) {
-    return cursor.line === 0 && !!(editor as any)?.editorComponent?.isKanbanEditor;
+function editorIsRequestingSuggest(
+    editor: Editor,
+    cursor: EditorPosition,
+    lineHasGlobalFilter: boolean,
+): boolean | undefined {
+    return (editor as any)?.editorComponent?.showTasksPluginAutoSuggest?.(cursor, editor, lineHasGlobalFilter);
 }
 
 /**

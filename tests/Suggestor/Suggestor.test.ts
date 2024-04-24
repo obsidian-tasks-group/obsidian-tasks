@@ -4,7 +4,6 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
-import type { Editor } from 'obsidian';
 import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
 import {
@@ -240,9 +239,9 @@ describe('canSuggestForLine', () => {
         GlobalFilter.getInstance().reset();
     });
 
-    function canSuggestForLineWithCursor(line: string) {
+    function canSuggestForLineWithCursor(line: string, editor: any = {}) {
         const [testLine, cursorIndex] = cursorPosition(line);
-        return canSuggestForLine(testLine, { line: 0, ch: cursorIndex }, {} as Editor);
+        return canSuggestForLine(testLine, { line: 0, ch: cursorIndex }, editor);
     }
 
     it('should not suggest if there is no checkbox', () => {
@@ -286,6 +285,24 @@ describe('canSuggestForLine', () => {
     it('should suggest correctly when task is indented', () => {
         expect(canSuggestForLineWithCursor('    - [ ]|')).toEqual(false);
         expect(canSuggestForLineWithCursor('    - [ ] |')).toEqual(true);
+    });
+
+    it('should display when the editor requests the suggest', () => {
+        GlobalFilter.getInstance().reset();
+
+        let shouldShow: boolean | undefined = true;
+        const mockEditor = {
+            editorComponent: {
+                showTasksPluginAutoSuggest: () => shouldShow,
+            },
+        };
+
+        shouldShow = true;
+        expect(canSuggestForLineWithCursor('- not a task line|', mockEditor)).toEqual(true);
+        shouldShow = false;
+        expect(canSuggestForLineWithCursor('- [ ] this *is* a task line|', mockEditor)).toEqual(false);
+        shouldShow = undefined;
+        expect(canSuggestForLineWithCursor('- [ ] this *is* a task line|', mockEditor)).toEqual(true);
     });
 });
 
