@@ -1,6 +1,4 @@
 import type { EditorInsertion } from 'Commands/ToggleDone';
-import type { DefaultTaskSerializer } from 'TaskSerializer';
-import type { DataviewTaskSerializer } from 'TaskSerializer/DataviewTaskSerializer';
 
 /**
  * Tasks API v1 interface
@@ -23,16 +21,4 @@ export interface TasksApiV1 {
      * @returns An {@link EditorInsertion} containing the information necessary to replace the toggled line
      */
     toggleLine: (line: string, path: string) => EditorInsertion;
-
-    /**
-     * Retrieves the Tasks Emoji Format task serializer
-     * @returns {DefaultTaskSerializer}
-     */
-    getDefaultTaskSerializer: () => DefaultTaskSerializer;
-
-    /**
-     * Retrieves the Dataview Format task serializer
-     * @returns {DataviewTaskSerializer}
-     */
-    getDataviewTaskSerializer: () => DataviewTaskSerializer;
 }
