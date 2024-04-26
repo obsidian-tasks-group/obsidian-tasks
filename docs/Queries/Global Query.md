@@ -58,6 +58,9 @@ Currently, any query that is allowed in a task block will also work as your Glob
 >     ```tasks
 >     short mode
 >     ```
+>
+> > [!info]
+> > You can override this in a task block using `full mode`
 
 > [!example]
 > **Hide priority**
