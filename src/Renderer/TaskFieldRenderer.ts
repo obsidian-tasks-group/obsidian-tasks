@@ -68,7 +68,8 @@ export class TaskFieldHTMLData {
             }
             if (diffDays === 0) {
                 return 'today';
-            } else if (diffDays > 0) {
+            }
+            if (diffDays > 0) {
                 result += 'past-';
             } else if (diffDays < 0) {
                 result += 'future-';
