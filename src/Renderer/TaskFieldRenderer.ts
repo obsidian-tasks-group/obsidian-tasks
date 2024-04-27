@@ -62,10 +62,18 @@ export class TaskFieldHTMLData {
             const today = window.moment().startOf('day');
             let result = '';
             const diffDays = today.diff(date, 'days');
-            if (isNaN(diffDays)) return null;
-            if (diffDays === 0) return 'today';
-            else if (diffDays > 0) result += 'past-';
-            else if (diffDays < 0) result += 'future-';
+
+            if (isNaN(diffDays)) {
+                return null;
+            }
+            if (diffDays === 0) {
+                return 'today';
+            } else if (diffDays > 0) {
+                result += 'past-';
+            } else if (diffDays < 0) {
+                result += 'future-';
+            }
+
             if (Math.abs(diffDays) <= MAX_DAY_VALUE_RANGE) {
                 result += Math.abs(diffDays).toString() + 'd';
             } else {
