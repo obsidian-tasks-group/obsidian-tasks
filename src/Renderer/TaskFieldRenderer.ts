@@ -60,7 +60,6 @@ export class TaskFieldHTMLData {
 
         function dateToAttribute(date: Moment) {
             const today = window.moment().startOf('day');
-            let result = '';
             const diffDays = today.diff(date, 'days');
 
             if (isNaN(diffDays)) {
@@ -69,6 +68,8 @@ export class TaskFieldHTMLData {
             if (diffDays === 0) {
                 return 'today';
             }
+
+            let result = '';
             if (diffDays > 0) {
                 result += 'past-';
             } else if (diffDays < 0) {
