@@ -44,11 +44,11 @@ export class TaskFieldHTMLData {
     private readonly attributeName: string;
     private readonly attributeValueCalculator: AttributeValueCalculator;
 
-    public static noAttributeName = '';
-    public static noAttributeValueCalculator: AttributeValueCalculator = () => {
+    public static readonly noAttributeName = '';
+    public static readonly noAttributeValueCalculator: AttributeValueCalculator = () => {
         return '';
     };
-    public static dateAttributeCalculator = (component: TaskLayoutComponent, task: Task) => {
+    public static readonly dateAttributeCalculator = (component: TaskLayoutComponent, task: Task) => {
         /**
          * Translate a relative date to a CSS class: 'today', 'future-1d' (for tomorrow), 'past-1d' (for yesterday)
          * etc.
