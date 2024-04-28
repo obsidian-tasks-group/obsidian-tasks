@@ -393,7 +393,7 @@
 Availability of access keys:
 - A: Start
 - B: Before this
-- C:
+- C: Created
 - D: Due
 - E: After this
 - F: Only future dates
@@ -414,9 +414,10 @@ Availability of access keys:
 - U: Status
 - V:
 - W:
-- X:
+- X: Done
 - Y:
 - Z:
+- -: Cancelled
 -->
 
 <div class="tasks-modal">
@@ -617,40 +618,40 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Created Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="created">Created</label>
+            <label for="created" class="accesskey-first">Created</label>
             <DateEditor
                 id="created"
                 dateSymbol={createdDateSymbol}
                 bind:date={editableTask.createdDate}
                 bind:isDateValid={isCreatedDateValid}
                 forwardOnly={editableTask.forwardOnly}
-                accesskey={null}
+                accesskey={accesskey('c')}
             />
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="done">Done</label>
+            <label for="done">Done (<span class="accesskey">x</span>)</label>
             <DateEditor
                 id="done"
                 dateSymbol={doneDateSymbol}
                 bind:date={editableTask.doneDate}
                 bind:isDateValid={isDoneDateValid}
                 forwardOnly={editableTask.forwardOnly}
-                accesskey={null}
+                accesskey={accesskey('x')}
             />
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Cancelled Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="cancelled">Cancelled</label>
+            <label for="cancelled">Cancelled (<span class="accesskey">-</span>)</label>
             <DateEditor
                 id="cancelled"
                 dateSymbol={cancelledDateSymbol}
                 bind:date={editableTask.cancelledDate}
                 bind:isDateValid={isCancelledDateValid}
                 forwardOnly={editableTask.forwardOnly}
-                accesskey={null}
+                accesskey={accesskey('-')}
             />
         </div>
 
