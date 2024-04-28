@@ -485,7 +485,7 @@ Availability of access keys:
                 type="text"
                 class:tasks-modal-error={!isRecurrenceValid}
                 class="input"
-                placeholder="Try 'every 2 weeks on Thursday'."
+                placeholder="Try 'every day when done'"
                 accesskey={accesskey('r')}
             />
             <code class="results">{recurrenceSymbol} {@html parsedRecurrence}</code>
