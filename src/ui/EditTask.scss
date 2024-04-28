@@ -83,6 +83,7 @@
 .tasks-modal-dates {
     display: grid;
     grid-template-columns: 6.0em auto;
+    grid-auto-columns: 1fr;
     column-gap: .5em;
     row-gap: 5px;
 
@@ -93,6 +94,10 @@
 
     .input {
         grid-column: 2;
+    }
+
+    .input[type=text] {
+        min-width: 15em;
     }
 
     .results {
