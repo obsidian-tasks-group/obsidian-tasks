@@ -205,32 +205,43 @@
         </select>
       </div>
       <div class="tasks-modal-section tasks-modal-dates">
-        <label for="created">Created</label>
+        <label for="created" class="accesskey-first">Created</label>
         <input
           id="created"
           type="text"
           class="input"
-          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space." />
+          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space."
+          accesskey="c" />
         <code class="results">
           ➕
           <i>no created date</i>
         </code>
-        <label for="done">Done</label>
+        <label for="done">
+          Done (
+          <span class="accesskey">x</span>
+          )
+        </label>
         <input
           id="done"
           type="text"
           class="input"
-          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space." />
+          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space."
+          accesskey="x" />
         <code class="results">
           ✅
           <i>no done date</i>
         </code>
-        <label for="cancelled">Cancelled</label>
+        <label for="cancelled">
+          Cancelled (
+          <span class="accesskey">-</span>
+          )
+        </label>
         <input
           id="cancelled"
           type="text"
           class="input"
-          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space." />
+          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space."
+          accesskey="-" />
         <code class="results">
           ❌
           <i>no cancelled date</i>
