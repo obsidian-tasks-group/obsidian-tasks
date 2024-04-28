@@ -538,7 +538,7 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Only future dates  -->
             <!-- --------------------------------------------------------------------------- -->
-            <div>
+            <div class="future-dates-only">
                 <label for="forwardOnly"
                     >Only
                     <span class="accesskey-first">future</span> dates:</label
