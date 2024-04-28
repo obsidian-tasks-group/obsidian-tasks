@@ -93,13 +93,11 @@
 
     .input {
         grid-column: 2;
-        align-items: stretch;
     }
 
     .results {
-        grid-column: 2;
-        margin-bottom: 5px;
-        align-items: stretch;
+        grid-column: 3;
+        margin-top: 6px;
     }
 
     .future-dates-only {
