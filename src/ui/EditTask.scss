@@ -85,11 +85,11 @@
     grid-template-columns: 6.0em auto;
     column-gap: .5em;
     row-gap: 5px;
-}
 
-.tasks-modal-dates > label {
-    grid-column: 1;
-    margin-top: 6px;
+    label {
+        grid-column: 1;
+        margin-top: 6px;
+    }
 }
 
 .tasks-modal-dates > .input, .tasks-modal-dates > .results {
