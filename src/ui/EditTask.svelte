@@ -414,7 +414,7 @@ Availability of access keys:
 - U: Status
 - V:
 - W:
-- X:
+- X: Done
 - Y:
 - Z:
 -->
@@ -630,14 +630,14 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="done">Done</label>
+            <label for="done">Done (<span class="accesskey">x</span>)</label>
             <DateEditor
                 id="done"
                 dateSymbol={doneDateSymbol}
                 bind:date={editableTask.doneDate}
                 bind:isDateValid={isDoneDateValid}
                 forwardOnly={editableTask.forwardOnly}
-                accesskey={null}
+                accesskey={accesskey('x')}
             />
 
             <!-- --------------------------------------------------------------------------- -->
