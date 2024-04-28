@@ -417,6 +417,7 @@ Availability of access keys:
 - X: Done
 - Y:
 - Z:
+- -: Cancelled
 -->
 
 <div class="tasks-modal">
@@ -643,14 +644,14 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Cancelled Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="cancelled">Cancelled</label>
+            <label for="cancelled">Cancelled (<span class="accesskey">-</span>)</label>
             <DateEditor
                 id="cancelled"
                 dateSymbol={cancelledDateSymbol}
                 bind:date={editableTask.cancelledDate}
                 bind:isDateValid={isCancelledDateValid}
                 forwardOnly={editableTask.forwardOnly}
-                accesskey={null}
+                accesskey={accesskey('-')}
             />
         </div>
 
