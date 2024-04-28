@@ -90,22 +90,22 @@
         grid-column: 1;
         margin-top: 6px;
     }
-}
 
-.tasks-modal-dates > .input {
-    grid-column: 2;
-    align-items: stretch;
-}
+    .input {
+        grid-column: 2;
+        align-items: stretch;
+    }
 
-.tasks-modal-dates > .results {
-    grid-column: 2;
-    margin-bottom: 5px;
-    align-items: stretch;
-}
+    .results {
+        grid-column: 2;
+        margin-bottom: 5px;
+        align-items: stretch;
+    }
 
-.tasks-modal-dates > div {
-    grid-column-start: 1;
-    grid-column-end: 3;
+    div {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
 }
 
 .tasks-modal-status {
