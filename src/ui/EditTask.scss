@@ -92,7 +92,12 @@
     }
 }
 
-.tasks-modal-dates > .input, .tasks-modal-dates > .results {
+.tasks-modal-dates > .input {
+    grid-column: 2;
+    align-items: stretch;
+}
+
+.tasks-modal-dates > .results {
     grid-column: 2;
     align-items: stretch;
 }
