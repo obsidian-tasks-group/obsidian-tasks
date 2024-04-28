@@ -113,6 +113,11 @@
         grid-column-start: 1;
         grid-column-end: 3;
     }
+
+    select {
+        grid-column: 2;
+        width: 15em;
+    }
 }
 
 .tasks-modal-status {
