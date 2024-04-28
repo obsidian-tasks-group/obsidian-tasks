@@ -100,6 +100,10 @@
         margin-top: 6px;
     }
 
+    .results-dependency {
+        grid-column: 2;
+    }
+
     .future-dates-only {
         grid-column-start: 1;
         grid-column-end: 3;
