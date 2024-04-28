@@ -598,7 +598,7 @@ Availability of access keys:
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
         <hr />
-        <div class="tasks-modal-section">
+        <div class="tasks-modal-section tasks-modal-dates">
             <label for="status">Stat<span class="accesskey">u</span>s</label>
             <!-- svelte-ignore a11y-accesskey -->
             <select
