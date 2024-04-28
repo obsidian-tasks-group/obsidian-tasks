@@ -393,7 +393,7 @@
 Availability of access keys:
 - A: Start
 - B: Before this
-- C:
+- C: Created
 - D: Due
 - E: After this
 - F: Only future dates
@@ -617,14 +617,14 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Created Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="created">Created</label>
+            <label for="created" class="accesskey-first">Created</label>
             <DateEditor
                 id="created"
                 dateSymbol={createdDateSymbol}
                 bind:date={editableTask.createdDate}
                 bind:isDateValid={isCreatedDateValid}
                 forwardOnly={editableTask.forwardOnly}
-                accesskey={null}
+                accesskey={accesskey('c')}
             />
 
             <!-- --------------------------------------------------------------------------- -->
