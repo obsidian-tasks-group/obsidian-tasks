@@ -294,6 +294,15 @@ describe('OnCompletion-Delete', () => {
     });
 });
 
+export function applyStatusAndOnCompletionAction2(
+    task: Task,
+    newStatus: Status,
+    fileWriter: (filePath: string, fileContentUpdater: (data: string) => string) => void,
+) {
+    const tasks = task.handleNewStatus(newStatus);
+    return handleOnCompletion(task, tasks, 'archive.md', fileWriter);
+}
+
 describe('OnCompletion-ToLogFile', () => {
     it('should write completed instance of non-recurring task to empty log file', () => {
         // Arrange
@@ -301,11 +310,17 @@ describe('OnCompletion-ToLogFile', () => {
         const task = new TaskBuilder().description('A non-recurring task with 🏁 ToLogFile').dueDate(dueDate).build();
         expect(task.status.type).toEqual(StatusType.TODO);
 
+        // Create a Jest spy for the file writer
+        const mockFileWriter = jest.fn((_filePath: string, _fileContentUpdater: (data: string) => string) => {});
+
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+        const tasks = applyStatusAndOnCompletionAction2(task, Status.makeDone(), mockFileWriter);
 
         // Assert
         expect(tasks).toEqual([]);
+
+        // Check that mockFileWriter was called with the correct arguments
+        expect(mockFileWriter).toHaveBeenCalledWith('archive.md', expect.any(Function));
     });
 });
 
