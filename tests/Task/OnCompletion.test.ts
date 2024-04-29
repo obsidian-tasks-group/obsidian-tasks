@@ -322,8 +322,7 @@ describe('OnCompletion-ToLogFile', () => {
         const line = '- [ ] A non-recurring task with 🏁 ToLogFile 📅 2024-02-10';
 
         const simulatedData = ''; // Example initial data
-        const newStatus = Status.makeDone();
-        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, newStatus, simulatedData);
+        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, Status.makeDone(), simulatedData);
 
         // Assert
         expect(tasks).toEqual([]);
@@ -336,8 +335,7 @@ describe('OnCompletion-ToLogFile', () => {
         const line = '- [x] A task that was DONE 🏁 ToLogFile';
 
         const simulatedData = ''; // Example initial data
-        const newStatus = Status.makeTodo();
-        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, newStatus, simulatedData);
+        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, Status.makeTodo(), simulatedData);
 
         // Assert
         expect(toMarkdown(tasks)).toEqual('- [ ] A task that was DONE 🏁 ToLogFile');
@@ -350,8 +348,7 @@ describe('OnCompletion-ToLogFile', () => {
         const line = '- [ ] Recurring task 🏁 ToLogFile 🔁 every day 📅 2024-02-11';
 
         const simulatedData = '# Existing heading - without end-of-line';
-        const newStatus = Status.makeDone();
-        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, newStatus, simulatedData);
+        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, Status.makeDone(), simulatedData);
 
         // Assert
         expect(toMarkdown(tasks)).toEqual('- [ ] Recurring task 🏁 ToLogFile 🔁 every day 📅 2024-02-12');
