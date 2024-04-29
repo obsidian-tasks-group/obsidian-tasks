@@ -320,8 +320,9 @@ describe('OnCompletion-ToLogFile', () => {
     it('should write completed instance of non-recurring task to empty log file', () => {
         // Arrange
         const line = '- [ ] A non-recurring task with 🏁 ToLogFile 📅 2024-02-10';
-
         const simulatedData = ''; // Example initial data
+
+        // Act
         const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, Status.makeDone(), simulatedData);
 
         // Assert
@@ -333,8 +334,9 @@ describe('OnCompletion-ToLogFile', () => {
     it('should not update any file if task is not completed', () => {
         // Arrange
         const line = '- [x] A task that was DONE 🏁 ToLogFile';
-
         const simulatedData = ''; // Example initial data
+
+        // Act
         const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, Status.makeTodo(), simulatedData);
 
         // Assert
@@ -346,8 +348,9 @@ describe('OnCompletion-ToLogFile', () => {
     it('should append a recurring task to end of an existing file', () => {
         // Arrange
         const line = '- [ ] Recurring task 🏁 ToLogFile 🔁 every day 📅 2024-02-11';
-
         const simulatedData = '# Existing heading - without end-of-line';
+
+        // Act
         const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, Status.makeDone(), simulatedData);
 
         // Assert
