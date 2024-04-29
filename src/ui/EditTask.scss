@@ -7,10 +7,10 @@
         display: inline-block;
         margin-bottom: 4px;
     }
-}
 
-.tasks-modal-section label > span {
-    display: inline-block;
+    label > span {
+        display: inline-block;
+    }
 }
 
 .tasks-modal .with-accesskeys .accesskey-first::first-letter,
