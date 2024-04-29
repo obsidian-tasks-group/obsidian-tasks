@@ -151,6 +151,9 @@
     .tasks-modal-priorities > label {
         grid-row: 1 / span 7;
     }
+}
+
+@media (max-width: 499px) {
     .tasks-modal-dates {
         grid-template-columns: 1fr;
         grid-auto-columns: auto;
