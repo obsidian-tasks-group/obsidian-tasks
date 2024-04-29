@@ -60,6 +60,7 @@
 }
 
 .tasks-modal-priorities label {
+    font-size: var(--font-ui-small);
     border-radius: var(--input-radius);
     padding: 2px 3px;
     grid-column: 1;
@@ -83,27 +84,42 @@
 .tasks-modal-dates {
     display: grid;
     grid-template-columns: 6.0em auto;
+    grid-auto-columns: 1fr;
     column-gap: .5em;
     row-gap: 5px;
-}
 
-.tasks-modal-dates > label {
-    grid-column: 1;
-    margin-top: 6px;
-}
+    label {
+        grid-column: 1;
+        margin-top: 6px;
+    }
 
-.tasks-modal-dates > .input, .tasks-modal-dates > .results {
-    grid-column: 2;
-    align-items: stretch;
-}
+    .input {
+        grid-column: 2;
+    }
 
-.tasks-modal-dates > .results {
-    margin-bottom: 5px;
-}
+    .input[type=text] {
+        min-width: 15em;
+    }
 
-.tasks-modal-dates > div {
-    grid-column-start: 1;
-    grid-column-end: 3;
+    .results {
+        grid-column: 3;
+        margin-top: 6px;
+        font-size: var(--font-ui-small);
+    }
+
+    .results-dependency {
+        grid-column: 2;
+    }
+
+    .future-dates-only {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    select {
+        grid-column: 2;
+        width: 15em;
+    }
 }
 
 .tasks-modal-status {
@@ -135,8 +151,16 @@
     .tasks-modal-priorities > label {
         grid-row: 1 / span 7;
     }
+}
+
+@media (max-width: 499px) {
     .tasks-modal-dates {
         grid-template-columns: 1fr;
+        grid-auto-columns: auto;
+
+        .results-dependency {
+            grid-column: 1;
+        }
     }
     .tasks-modal-dates > label {
         margin: 0;
@@ -153,6 +177,12 @@
 }
 
 @media (max-width: 399px) {
+    .tasks-modal-dates {
+        select {
+            grid-column: 1;
+            width: auto;
+        }
+    }
     .tasks-modal-priorities {
         grid-template-columns: 4em auto;
     }

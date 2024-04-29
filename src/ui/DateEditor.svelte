@@ -17,7 +17,7 @@
     }
 
     // 'weekend' abbreviation omitted due to lack of space.
-    const datePlaceholder = "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
+    const datePlaceholder = "Try 'Mon' or 'tm' then space";
 </script>
 
 <!-- svelte-ignore a11y-accesskey -->

@@ -14,6 +14,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
 -->
 
 - X.Y.Z:
+  - Much improved layout of the [[Create or edit Task]] modal, on desktop machines.
   - Add access keys for Created, Done and Cancelled dates in [[Create or edit Task]].
 - 7.0.0:
   - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks 7.0.0|the appendix]] for details.

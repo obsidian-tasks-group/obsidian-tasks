@@ -184,7 +184,7 @@
         {/each}
     </ul>
 {/if}
-<div class="task-dependencies-container results">
+<div class="task-dependencies-container results-dependency">
     {#each editableTask[type] as task}
         <div
             class="task-dependency"
