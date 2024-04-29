@@ -152,6 +152,10 @@
     .tasks-modal-dates {
         grid-template-columns: 1fr;
         grid-auto-columns: auto;
+
+        .results-dependency {
+            grid-column: 1;
+        }
     }
     .tasks-modal-dates > label {
         margin: 0;
