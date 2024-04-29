@@ -9,8 +9,7 @@ import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfig
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine, toLines, toMarkdown } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
-import { handleOnCompletion } from '../../src/Task/OnCompletion';
-import { writeLineToListEnd } from '../../src/Task/OnCompletion';
+import { handleOnCompletion, writeLineToListEnd } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
 
