@@ -14,7 +14,7 @@
 }
 
 .task-dependency-name {
-    font-size: 14px;
+    font-size: var(--font-ui-small);
     max-width: 160px;
     overflow: hidden;
     white-space: nowrap;
