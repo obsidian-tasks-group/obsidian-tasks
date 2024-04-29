@@ -321,6 +321,17 @@ describe('OnCompletion-ToLogFile', () => {
 
         // Check that mockFileWriter was called with the correct arguments
         expect(mockFileWriter).toHaveBeenCalledWith('archive.md', expect.any(Function));
+
+        // Check if mockFileWriter has been called
+        expect(mockFileWriter.mock.calls.length).toBe(1);
+        // Retrieve the fileContentUpdater function passed to mockFileWriter
+        const fileContentUpdater = mockFileWriter.mock.calls[0][1];
+
+        // Now simulate calling fileContentUpdater to check its behavior
+        const initiallyEmptyLogFile = '';
+        const updatedData = fileContentUpdater(initiallyEmptyLogFile);
+        expect(updatedData).toEqual(`- [x] A non-recurring task with 🏁 ToLogFile 📅 2024-02-10 ✅ 2024-02-11
+`);
     });
 });
 
