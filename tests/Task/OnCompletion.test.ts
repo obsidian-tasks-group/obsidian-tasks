@@ -319,8 +319,7 @@ function setupTestAndCaptureData(task: Task, newStatus: Status, simulatedData: s
 describe('OnCompletion-ToLogFile', () => {
     it('should write completed instance of non-recurring task to empty log file', () => {
         // Arrange
-        const dueDate = '2024-02-10';
-        const task = new TaskBuilder().description('A non-recurring task with 🏁 ToLogFile').dueDate(dueDate).build();
+        const task = fromLine({ line: '- [ ] A non-recurring task with 🏁 ToLogFile 📅 2024-02-10' });
 
         const simulatedData = ''; // Example initial data
         const newStatus = Status.makeDone();
