@@ -14,10 +14,11 @@
 }
 
 .tasks-modal {
-    .with-accesskeys .accesskey-first::first-letter,
-    .with-accesskeys .accesskey {
-        text-decoration: underline;
-        text-underline-offset: 1pt;
+    .with-accesskeys {
+        .accesskey-first::first-letter, .accesskey {
+            text-decoration: underline;
+            text-underline-offset: 1pt;
+        }
     }
 }
 
