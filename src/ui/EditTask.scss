@@ -172,6 +172,12 @@
 }
 
 @media (max-width: 399px) {
+    .tasks-modal-dates {
+        select {
+            grid-column: 1;
+            width: auto;
+        }
+    }
     .tasks-modal-priorities {
         grid-template-columns: 4em auto;
     }
