@@ -310,27 +310,22 @@ describe('OnCompletion-ToLogFile', () => {
         const task = new TaskBuilder().description('A non-recurring task with 🏁 ToLogFile').dueDate(dueDate).build();
         expect(task.status.type).toEqual(StatusType.TODO);
 
+        let capturedUpdatedData; // Variable to capture the updated data
+
         // Create a Jest spy for the file writer
-        const mockFileWriter = jest.fn((_filePath: string, _fileContentUpdater: (data: string) => string) => {});
+        const mockFileWriter = jest.fn((_filePath: string, fileContentUpdater: (data: string) => string) => {
+            const simulatedData = ''; // Example initial data
+            capturedUpdatedData = fileContentUpdater(simulatedData); // Execute updater function and capture the result
+        });
 
         // Act
         const tasks = applyStatusAndOnCompletionAction2(task, Status.makeDone(), mockFileWriter);
 
         // Assert
         expect(tasks).toEqual([]);
-
-        // Check that mockFileWriter was called with the correct arguments
+        expect(mockFileWriter).toHaveBeenCalledTimes(1);
         expect(mockFileWriter).toHaveBeenCalledWith('archive.md', expect.any(Function));
-
-        // Check if mockFileWriter has been called
-        expect(mockFileWriter.mock.calls.length).toBe(1);
-        // Retrieve the fileContentUpdater function passed to mockFileWriter
-        const fileContentUpdater = mockFileWriter.mock.calls[0][1];
-
-        // Now simulate calling fileContentUpdater to check its behavior
-        const initiallyEmptyLogFile = '';
-        const updatedData = fileContentUpdater(initiallyEmptyLogFile);
-        expect(updatedData).toEqual(`- [x] A non-recurring task with 🏁 ToLogFile 📅 2024-02-10 ✅ 2024-02-11
+        expect(capturedUpdatedData).toBe(`- [x] A non-recurring task with 🏁 ToLogFile 📅 2024-02-10 ✅ 2024-02-11
 `);
     });
 });
