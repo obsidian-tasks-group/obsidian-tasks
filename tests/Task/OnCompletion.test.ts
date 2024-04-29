@@ -310,11 +310,12 @@ describe('OnCompletion-ToLogFile', () => {
         const task = new TaskBuilder().description('A non-recurring task with 🏁 ToLogFile').dueDate(dueDate).build();
         expect(task.status.type).toEqual(StatusType.TODO);
 
+        const simulatedData = ''; // Example initial data
+
         let capturedUpdatedData; // Variable to capture the updated data
 
         // Create a Jest spy for the file writer
         const mockFileWriter = jest.fn((_filePath: string, fileContentUpdater: (data: string) => string) => {
-            const simulatedData = ''; // Example initial data
             capturedUpdatedData = fileContentUpdater(simulatedData); // Execute updater function and capture the result
         });
 
