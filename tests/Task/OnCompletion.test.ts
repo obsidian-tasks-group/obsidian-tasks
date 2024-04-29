@@ -345,6 +345,21 @@ describe('OnCompletion-ToLogFile', () => {
         // Because the updated task is not DONE, no file output should have been written:
         expect(capturedUpdatedData).toBeUndefined();
     });
+
+    it('should append a recurring task to end of an existing file', () => {
+        // Arrange
+        const line = '- [ ] Recurring task 🏁 ToLogFile 🔁 every day 📅 2024-02-11';
+
+        const simulatedData = '# Existing heading - without end-of-line';
+        const newStatus = Status.makeDone();
+        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, newStatus, simulatedData);
+
+        // Assert
+        expect(toMarkdown(tasks)).toEqual('- [ ] Recurring task 🏁 ToLogFile 🔁 every day 📅 2024-02-12');
+        expect(capturedUpdatedData).toBe(`# Existing heading - without end-of-line
+- [x] Recurring task 🏁 ToLogFile 🔁 every day 📅 2024-02-11 ✅ 2024-02-11
+`);
+    });
 });
 
 describe('OnCompletion-EndOfList', () => {
