@@ -33,24 +33,32 @@
     column-gap: .5em;
 }
 
-.tasks-modal label + input[type="checkbox"] {
-    margin-left: 0.67em;
-    top: 2px;
+.tasks-modal {
+    label + input[type="checkbox"] {
+        margin-left: 0.67em;
+        top: 2px;
+    }
 }
 
-.tasks-modal input[type="text"] {
-    width: 100%;
+.tasks-modal {
+    input[type="text"] {
+        width: 100%;
+    }
 }
 
-.tasks-modal textarea {
-    width: 100%;
-    min-height: calc(var(--input-height) * 2);
-    resize: vertical;
+.tasks-modal {
+    textarea {
+        width: 100%;
+        min-height: calc(var(--input-height) * 2);
+        resize: vertical;
+    }
 }
 
-.tasks-modal hr {
-    margin: 0.35rem 0;
-    padding-bottom: 0.5rem;
+.tasks-modal {
+    hr {
+        margin: 0.35rem 0;
+        padding-bottom: 0.5rem;
+    }
 }
 
 .tasks-modal-priorities {
