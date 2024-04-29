@@ -331,6 +331,20 @@ describe('OnCompletion-ToLogFile', () => {
         expect(capturedUpdatedData).toBe(`- [x] A non-recurring task with 🏁 ToLogFile 📅 2024-02-10 ✅ 2024-02-11
 `);
     });
+
+    it('should not update any file if task is not completed', () => {
+        // Arrange
+        const line = '- [x] A task that was DONE 🏁 ToLogFile';
+
+        const simulatedData = ''; // Example initial data
+        const newStatus = Status.makeTodo();
+        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, newStatus, simulatedData);
+
+        // Assert
+        expect(toMarkdown(tasks)).toEqual('- [ ] A task that was DONE 🏁 ToLogFile');
+        // Because the updated task is not DONE, no file output should have been written:
+        expect(capturedUpdatedData).toBeUndefined();
+    });
 });
 
 describe('OnCompletion-EndOfList', () => {
