@@ -303,6 +303,19 @@ export function applyStatusAndOnCompletionAction2(
     return handleOnCompletion(task, tasks, 'archive.md', fileWriter);
 }
 
+function setupTestAndCaptureData(task: Task, newStatus: Status, simulatedData: string) {
+    let capturedUpdatedData; // Variable to capture the updated data
+
+    // Create a Jest spy for the file writer
+    const mockFileWriter = jest.fn((_filePath: string, fileContentUpdater: (data: string) => string) => {
+        capturedUpdatedData = fileContentUpdater(simulatedData); // Execute updater function and capture the result
+    });
+
+    // Act
+    const tasks = applyStatusAndOnCompletionAction2(task, newStatus, mockFileWriter);
+    return { capturedUpdatedData, mockFileWriter, tasks };
+}
+
 describe('OnCompletion-ToLogFile', () => {
     it('should write completed instance of non-recurring task to empty log file', () => {
         // Arrange
@@ -312,16 +325,7 @@ describe('OnCompletion-ToLogFile', () => {
 
         const simulatedData = ''; // Example initial data
         const newStatus = Status.makeDone();
-
-        let capturedUpdatedData; // Variable to capture the updated data
-
-        // Create a Jest spy for the file writer
-        const mockFileWriter = jest.fn((_filePath: string, fileContentUpdater: (data: string) => string) => {
-            capturedUpdatedData = fileContentUpdater(simulatedData); // Execute updater function and capture the result
-        });
-
-        // Act
-        const tasks = applyStatusAndOnCompletionAction2(task, newStatus, mockFileWriter);
+        const { capturedUpdatedData, mockFileWriter, tasks } = setupTestAndCaptureData(task, newStatus, simulatedData);
 
         // Assert
         expect(tasks).toEqual([]);
