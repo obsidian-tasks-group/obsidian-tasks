@@ -1,8 +1,8 @@
-.tasks-modal-section + .tasks-modal-section {
-    margin-top: 8px;
-}
-
 .tasks-modal-section {
+    + .tasks-modal-section {
+        margin-top: 8px;
+    }
+
     label {
         display: inline-block;
         margin-bottom: 4px;
