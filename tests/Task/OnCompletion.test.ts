@@ -311,6 +311,7 @@ describe('OnCompletion-ToLogFile', () => {
         expect(task.status.type).toEqual(StatusType.TODO);
 
         const simulatedData = ''; // Example initial data
+        const newStatus = Status.makeDone();
 
         let capturedUpdatedData; // Variable to capture the updated data
 
@@ -320,7 +321,7 @@ describe('OnCompletion-ToLogFile', () => {
         });
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction2(task, Status.makeDone(), mockFileWriter);
+        const tasks = applyStatusAndOnCompletionAction2(task, newStatus, mockFileWriter);
 
         // Assert
         expect(tasks).toEqual([]);
