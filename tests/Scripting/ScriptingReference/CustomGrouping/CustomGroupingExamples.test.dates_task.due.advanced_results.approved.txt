@@ -6,6 +6,7 @@ group by function task.due.format("dddd")
 Group by day of the week (Monday, Tuesday, etc).
 The day names are sorted alphabetically.
 =>
+Friday
 Invalid date
 Thursday
 Tuesday
@@ -20,6 +21,7 @@ The day names are sorted in date order, starting with Sunday.
 %%2%%Tuesday
 %%3%%Wednesday
 %%4%%Thursday
+%%5%%Friday
 Invalid date
 ====================================================================================
 
@@ -44,6 +46,7 @@ To make the expression more readable, we put a `\` at the end of several lines, 
 %%2%%Tuesday
 %%3%%Wednesday
 %%4%%Thursday
+%%5%%Friday
 Invalid date
 Undated
 ====================================================================================

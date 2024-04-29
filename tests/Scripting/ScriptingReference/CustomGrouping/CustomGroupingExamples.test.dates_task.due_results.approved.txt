@@ -24,6 +24,7 @@ The values `task.due.fromNow.name` and `task.due.fromNow.sortOrder` are also ava
 %%120230529%% 2 days ago
 %%120230531%% 20 hours ago
 %%320230601%% in 4 hours
+%%320230601%% in a day
 ====================================================================================
 
 
@@ -33,6 +34,7 @@ Like "group by due", except it uses no heading, instead of a heading "No due dat
 2023-05-30 Tuesday
 2023-05-31 Wednesday
 2023-06-01 Thursday
+2023-06-02 Friday
 Invalid date
 ====================================================================================
 
@@ -43,6 +45,7 @@ Format date as YYYY-MM-DD or empty string (so no heading) if there is no due dat
 2023-05-30
 2023-05-31
 2023-06-01
+2023-06-02
 Invalid date
 ====================================================================================
 
@@ -57,6 +60,7 @@ Note:
 2023-05-30 00:00
 2023-05-31 00:00
 2023-06-01 00:00
+2023-06-02 00:00
 Invalid date
 ====================================================================================
 
