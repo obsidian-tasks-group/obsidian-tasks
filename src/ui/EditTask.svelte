@@ -485,7 +485,7 @@ Availability of access keys:
                 type="text"
                 class:tasks-modal-error={!isRecurrenceValid}
                 class="input"
-                placeholder="Try 'every 2 weeks on Thursday'."
+                placeholder="Try 'every day when done'"
                 accesskey={accesskey('r')}
             />
             <code class="results">{recurrenceSymbol} {@html parsedRecurrence}</code>
@@ -538,7 +538,7 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Only future dates  -->
             <!-- --------------------------------------------------------------------------- -->
-            <div>
+            <div class="future-dates-only">
                 <label for="forwardOnly"
                     >Only
                     <span class="accesskey-first">future</span> dates:</label
@@ -598,7 +598,7 @@ Availability of access keys:
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
         <hr />
-        <div class="tasks-modal-section">
+        <div class="tasks-modal-section tasks-modal-dates">
             <label for="status">Stat<span class="accesskey">u</span>s</label>
             <!-- svelte-ignore a11y-accesskey -->
             <select
