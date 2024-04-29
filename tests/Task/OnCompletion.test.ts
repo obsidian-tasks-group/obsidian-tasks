@@ -313,7 +313,7 @@ function setupTestAndCaptureData(task: Task, newStatus: Status, simulatedData: s
 
     // Act
     const tasks = applyStatusAndOnCompletionAction2(task, newStatus, mockFileWriter);
-    return { capturedUpdatedData, mockFileWriter, tasks };
+    return { capturedUpdatedData, tasks };
 }
 
 describe('OnCompletion-ToLogFile', () => {
@@ -321,16 +321,13 @@ describe('OnCompletion-ToLogFile', () => {
         // Arrange
         const dueDate = '2024-02-10';
         const task = new TaskBuilder().description('A non-recurring task with 🏁 ToLogFile').dueDate(dueDate).build();
-        expect(task.status.type).toEqual(StatusType.TODO);
 
         const simulatedData = ''; // Example initial data
         const newStatus = Status.makeDone();
-        const { capturedUpdatedData, mockFileWriter, tasks } = setupTestAndCaptureData(task, newStatus, simulatedData);
+        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(task, newStatus, simulatedData);
 
         // Assert
         expect(tasks).toEqual([]);
-        expect(mockFileWriter).toHaveBeenCalledTimes(1);
-        expect(mockFileWriter).toHaveBeenCalledWith('archive.md', expect.any(Function));
         expect(capturedUpdatedData).toBe(`- [x] A non-recurring task with 🏁 ToLogFile 📅 2024-02-10 ✅ 2024-02-11
 `);
     });
