@@ -303,7 +303,7 @@ export function applyStatusAndOnCompletionAction2(
     return handleOnCompletion(task, tasks, 'archive.md', fileWriter);
 }
 
-function setupTestAndCaptureData(line: string, _task: Task, newStatus: Status, simulatedData: string) {
+function setupTestAndCaptureData(line: string, newStatus: Status, simulatedData: string) {
     const task = fromLine({ line: line });
     let capturedUpdatedData; // Variable to capture the updated data
 
@@ -321,11 +321,10 @@ describe('OnCompletion-ToLogFile', () => {
     it('should write completed instance of non-recurring task to empty log file', () => {
         // Arrange
         const line = '- [ ] A non-recurring task with 🏁 ToLogFile 📅 2024-02-10';
-        const task = fromLine({ line: line });
 
         const simulatedData = ''; // Example initial data
         const newStatus = Status.makeDone();
-        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, task, newStatus, simulatedData);
+        const { capturedUpdatedData, tasks } = setupTestAndCaptureData(line, newStatus, simulatedData);
 
         // Assert
         expect(tasks).toEqual([]);
