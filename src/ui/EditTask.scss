@@ -1,3 +1,35 @@
+.tasks-modal {
+    .with-accesskeys {
+        .accesskey-first::first-letter, .accesskey {
+            text-decoration: underline;
+            text-underline-offset: 1pt;
+        }
+    }
+}
+
+.tasks-modal {
+    hr {
+        margin: 0.35rem 0;
+        padding-bottom: 0.5rem;
+    }
+}
+
+.tasks-modal {
+    .tasks-modal-error {
+        border: 1px solid red !important;
+    }
+
+    .tasks-modal-warning {
+        color: var(--text-warning) !important;
+        background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
+    }
+
+    button:disabled {
+        pointer-events: none !important;
+        opacity: 0.3 !important;
+    }
+}
+
 .tasks-modal-section {
     + .tasks-modal-section {
         margin-top: 8px;
@@ -10,15 +42,6 @@
 
     label > span {
         display: inline-block;
-    }
-}
-
-.tasks-modal {
-    .with-accesskeys {
-        .accesskey-first::first-letter, .accesskey {
-            text-decoration: underline;
-            text-underline-offset: 1pt;
-        }
     }
 }
 
@@ -47,13 +70,6 @@
         width: 100%;
         min-height: calc(var(--input-height) * 2);
         resize: vertical;
-    }
-}
-
-.tasks-modal {
-    hr {
-        margin: 0.35rem 0;
-        padding-bottom: 0.5rem;
     }
 }
 
@@ -139,22 +155,6 @@
     margin-bottom: -16px;
     display: flex;
     justify-content: space-between;
-}
-
-.tasks-modal {
-    .tasks-modal-error {
-        border: 1px solid red !important;
-    }
-
-    .tasks-modal-warning {
-        color: var(--text-warning) !important;
-        background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
-    }
-
-    button:disabled {
-        pointer-events: none !important;
-        opacity: 0.3 !important;
-    }
 }
 
 @media (max-width: 649px) {
