@@ -1,20 +1,25 @@
-.tasks-modal-section + .tasks-modal-section {
-    margin-top: 8px;
+.tasks-modal-section {
+    + .tasks-modal-section {
+        margin-top: 8px;
+    }
+
+    label {
+        display: inline-block;
+        margin-bottom: 4px;
+    }
+
+    label > span {
+        display: inline-block;
+    }
 }
 
-.tasks-modal-section label {
-    display: inline-block;
-    margin-bottom: 4px;
-}
-
-.tasks-modal-section label > span {
-    display: inline-block;
-}
-
-.tasks-modal .with-accesskeys .accesskey-first::first-letter,
-.tasks-modal .with-accesskeys .accesskey {
-    text-decoration: underline;
-    text-underline-offset: 1pt;
+.tasks-modal {
+    .with-accesskeys {
+        .accesskey-first::first-letter, .accesskey {
+            text-decoration: underline;
+            text-underline-offset: 1pt;
+        }
+    }
 }
 
 .tasks-modal-buttons {
@@ -28,61 +33,64 @@
     column-gap: .5em;
 }
 
-.tasks-modal label + input[type="checkbox"] {
-    margin-left: 0.67em;
-    top: 2px;
+.tasks-modal-section {
+    label + input[type="checkbox"] {
+        margin-left: 0.67em;
+        top: 2px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: calc(var(--input-height) * 2);
+        resize: vertical;
+    }
 }
 
-.tasks-modal input[type="text"] {
-    width: 100%;
-}
-
-.tasks-modal textarea {
-    width: 100%;
-    min-height: calc(var(--input-height) * 2);
-    resize: vertical;
-}
-
-.tasks-modal hr {
-    margin: 0.35rem 0;
-    padding-bottom: 0.5rem;
+.tasks-modal {
+    hr {
+        margin: 0.35rem 0;
+        padding-bottom: 0.5rem;
+    }
 }
 
 .tasks-modal-priorities {
     display: grid;
     grid-template-columns: 4em 8em 8em 8em;
     grid-column-gap: 1.33em;
-}
 
-.tasks-modal-priorities span {
-    line-height: 1.41;
-    white-space: nowrap;
-}
+    span {
+        line-height: 1.41;
+        white-space: nowrap;
+    }
 
-.tasks-modal-priorities label {
-    border-radius: var(--input-radius);
-    padding: 2px 3px;
-    grid-column: 1;
-    grid-row-start: 1;
-    grid-row-end: 7;
-}
+    label {
+        border-radius: var(--input-radius);
+        padding: 2px 3px;
+        grid-column: 1;
+        grid-row-start: 1;
+        grid-row-end: 7;
+    }
 
+    input + label {
+        font-size: var(--font-ui-small);
+    }
 
-.tasks-modal-priorities input + label {
-    font-size: var(--font-ui-small);
-}
+    input:focus + label {
+        box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+        border-color: var(--background-modifier-border-focus);
+    }
 
-.tasks-modal-priorities input:focus + label {
-    box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
-    border-color: var(--background-modifier-border-focus);
-}
+    input:checked + label > span {
+        font-weight: bold;
+    }
 
-.tasks-modal-priorities input:checked + label > span {
-    font-weight: bold;
-}
-
-.tasks-modal-priorities input:not(:checked) + label > span:nth-child(4) {
-    filter: grayscale(100%) opacity(60%);
+    input:not(:checked) + label > span:nth-child(4) {
+        filter: grayscale(100%) opacity(60%);
+    }
 }
 
 .tasks-modal-dates {
@@ -133,18 +141,20 @@
     justify-content: space-between;
 }
 
-.tasks-modal-error {
-    border: 1px solid red !important;
-}
+.tasks-modal {
+    .tasks-modal-error {
+        border: 1px solid red !important;
+    }
 
-.tasks-modal-warning {
-    color: var(--text-warning) !important;
-    background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
-}
+    .tasks-modal-warning {
+        color: var(--text-warning) !important;
+        background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
+    }
 
-.tasks-modal button:disabled {
-    pointer-events: none !important;
-    opacity: 0.3 !important;
+    button:disabled {
+        pointer-events: none !important;
+        opacity: 0.3 !important;
+    }
 }
 
 @media (max-width: 649px) {
@@ -152,6 +162,7 @@
         grid-template-columns: 4em 7.5em 5em;
         margin-bottom: -10px;
     }
+
     .tasks-modal-priorities > label {
         grid-row: 1 / span 7;
     }
@@ -166,15 +177,19 @@
             grid-column: 1;
         }
     }
+
     .tasks-modal-dates > label {
         margin: 0;
     }
+
     .tasks-modal-dates > .input, .tasks-modal-dates > .results {
         grid-column: 1;
     }
+
     .tasks-modal-dates > div {
         grid-column-end: 1;
     }
+
     .tasks-modal-status {
         display: block;
     }
@@ -187,9 +202,11 @@
             width: auto;
         }
     }
+
     .tasks-modal-priorities {
         grid-template-columns: 4em auto;
     }
+
     .tasks-modal-priorities > label {
         grid-row: 1 / span 7;
     }
@@ -200,6 +217,7 @@
         grid-template-columns: 1fr;
         margin-bottom: 0;
     }
+
     .tasks-modal-priorities > label {
         grid-row: 1;
     }
