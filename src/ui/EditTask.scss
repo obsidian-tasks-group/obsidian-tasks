@@ -61,16 +61,12 @@
     display: grid;
     grid-template-columns: 4em 8em 8em 8em;
     grid-column-gap: 1.33em;
-}
 
-.tasks-modal-priorities {
     span {
         line-height: 1.41;
         white-space: nowrap;
     }
-}
 
-.tasks-modal-priorities {
     label {
         border-radius: var(--input-radius);
         padding: 2px 3px;
@@ -78,28 +74,20 @@
         grid-row-start: 1;
         grid-row-end: 7;
     }
-}
 
-.tasks-modal-priorities {
     input + label {
         font-size: var(--font-ui-small);
     }
-}
 
-.tasks-modal-priorities {
     input:focus + label {
         box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
         border-color: var(--background-modifier-border-focus);
     }
-}
 
-.tasks-modal-priorities {
     input:checked + label > span {
         font-weight: bold;
     }
-}
 
-.tasks-modal-priorities {
     input:not(:checked) + label > span:nth-child(4) {
         filter: grayscale(100%) opacity(60%);
     }
