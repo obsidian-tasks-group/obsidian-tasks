@@ -160,6 +160,7 @@
         grid-template-columns: 4em 7.5em 5em;
         margin-bottom: -10px;
     }
+
     .tasks-modal-priorities > label {
         grid-row: 1 / span 7;
     }
@@ -174,15 +175,19 @@
             grid-column: 1;
         }
     }
+
     .tasks-modal-dates > label {
         margin: 0;
     }
+
     .tasks-modal-dates > .input, .tasks-modal-dates > .results {
         grid-column: 1;
     }
+
     .tasks-modal-dates > div {
         grid-column-end: 1;
     }
+
     .tasks-modal-status {
         display: block;
     }
@@ -195,9 +200,11 @@
             width: auto;
         }
     }
+
     .tasks-modal-priorities {
         grid-template-columns: 4em auto;
     }
+
     .tasks-modal-priorities > label {
         grid-row: 1 / span 7;
     }
@@ -208,6 +215,7 @@
         grid-template-columns: 1fr;
         margin-bottom: 0;
     }
+
     .tasks-modal-priorities > label {
         grid-row: 1;
     }
