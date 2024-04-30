@@ -56,17 +56,6 @@
     }
 }
 
-.tasks-modal-buttons {
-    position: sticky;
-    bottom: 0;
-    background-color: var(--modal-background);
-    padding-bottom: 16px;
-    padding-top: 16px;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    column-gap: .5em;
-}
-
 .tasks-modal-priorities {
     display: grid;
     grid-template-columns: 4em 8em 8em 8em;
@@ -149,6 +138,17 @@
     margin-bottom: -16px;
     display: flex;
     justify-content: space-between;
+}
+
+.tasks-modal-buttons {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--modal-background);
+    padding-bottom: 16px;
+    padding-top: 16px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    column-gap: .5em;
 }
 
 @media (max-width: 649px) {
