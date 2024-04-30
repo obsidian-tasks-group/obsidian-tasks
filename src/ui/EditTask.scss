@@ -41,17 +41,6 @@
     }
 }
 
-.tasks-modal-buttons {
-    position: sticky;
-    bottom: 0;
-    background-color: var(--modal-background);
-    padding-bottom: 16px;
-    padding-top: 16px;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    column-gap: .5em;
-}
-
 .tasks-modal-section {
     label + input[type="checkbox"] {
         margin-left: 0.67em;
@@ -67,6 +56,17 @@
         min-height: calc(var(--input-height) * 2);
         resize: vertical;
     }
+}
+
+.tasks-modal-buttons {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--modal-background);
+    padding-bottom: 16px;
+    padding-top: 16px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    column-gap: .5em;
 }
 
 .tasks-modal-priorities {
