@@ -19,11 +19,6 @@
         color: var(--text-warning) !important;
         background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
     }
-
-    button:disabled {
-        pointer-events: none !important;
-        opacity: 0.3 !important;
-    }
 }
 
 .tasks-modal-section {
@@ -149,6 +144,11 @@
     display: grid;
     grid-template-columns: 3fr 1fr;
     column-gap: .5em;
+
+    button:disabled {
+        pointer-events: none !important;
+        opacity: 0.3 !important;
+    }
 }
 
 @media (max-width: 649px) {
