@@ -172,7 +172,7 @@ When using those dependencies in searches, we define two more relationships: `bl
 >
 > You might wish to work on blocking tasks first, in order to un-block later tasks.
 
-A task is `blocking` is:
+A task is `blocking` if:
 
 - It is `TODO` or `IN_PROGRESS`.
 - And any of the tasks that **directly depend on it** are also `TODO` or `IN_PROGRESS`.
