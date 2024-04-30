@@ -13,7 +13,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
-- X.Y.Z:
+- 7.1.0:
   - Much improved layout of the [[Create or edit Task]] modal, on desktop machines.
   - Add access keys for Created, Done and Cancelled dates in [[Create or edit Task]].
 - 7.0.0:
