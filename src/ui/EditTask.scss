@@ -73,6 +73,10 @@
         font-size: var(--font-ui-small);
     }
 
+    input {
+        accent-color: var(--interactive-accent);
+    }
+
     input:focus + label {
         box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
         border-color: var(--background-modifier-border-focus);
