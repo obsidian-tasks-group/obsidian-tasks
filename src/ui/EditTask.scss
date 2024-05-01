@@ -53,8 +53,8 @@
 
 .tasks-modal-priorities {
     display: grid;
-    grid-template-columns: 4em 8em 8em 8em;
-    grid-column-gap: 1.33em;
+    grid-template-columns: 6em auto auto auto;
+    grid-column-gap: 0.5em;
 
     span {
         line-height: 1.41;
