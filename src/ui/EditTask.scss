@@ -1,3 +1,26 @@
+.tasks-modal {
+    .with-accesskeys {
+        .accesskey-first::first-letter, .accesskey {
+            text-decoration: underline;
+            text-underline-offset: 1pt;
+        }
+    }
+
+    hr {
+        margin: 0.35rem 0;
+        padding-bottom: 0.5rem;
+    }
+
+    .tasks-modal-error {
+        border: 1px solid red !important;
+    }
+
+    .tasks-modal-warning {
+        color: var(--text-warning) !important;
+        background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
+    }
+}
+
 .tasks-modal-section {
     + .tasks-modal-section {
         margin-top: 8px;
@@ -11,29 +34,7 @@
     label > span {
         display: inline-block;
     }
-}
 
-.tasks-modal {
-    .with-accesskeys {
-        .accesskey-first::first-letter, .accesskey {
-            text-decoration: underline;
-            text-underline-offset: 1pt;
-        }
-    }
-}
-
-.tasks-modal-buttons {
-    position: sticky;
-    bottom: 0;
-    background-color: var(--modal-background);
-    padding-bottom: 16px;
-    padding-top: 16px;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    column-gap: .5em;
-}
-
-.tasks-modal-section {
     label + input[type="checkbox"] {
         margin-left: 0.67em;
         top: 2px;
@@ -47,13 +48,6 @@
         width: 100%;
         min-height: calc(var(--input-height) * 2);
         resize: vertical;
-    }
-}
-
-.tasks-modal {
-    hr {
-        margin: 0.35rem 0;
-        padding-bottom: 0.5rem;
     }
 }
 
@@ -141,15 +135,15 @@
     justify-content: space-between;
 }
 
-.tasks-modal {
-    .tasks-modal-error {
-        border: 1px solid red !important;
-    }
-
-    .tasks-modal-warning {
-        color: var(--text-warning) !important;
-        background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
-    }
+.tasks-modal-buttons {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--modal-background);
+    padding-bottom: 16px;
+    padding-top: 16px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    column-gap: .5em;
 
     button:disabled {
         pointer-events: none !important;
