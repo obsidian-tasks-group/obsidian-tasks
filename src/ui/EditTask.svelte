@@ -631,7 +631,11 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="done">Done (<span class="accesskey">x</span>)</label>
+            {#if withAccessKeys}
+                <label for="done">Done (<span class="accesskey">x</span>)</label>
+            {:else}
+                <label for="done">Done</label>
+            {/if}
             <DateEditor
                 id="done"
                 dateSymbol={doneDateSymbol}
@@ -644,7 +648,11 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Cancelled Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="cancelled">Cancelled (<span class="accesskey">-</span>)</label>
+            {#if withAccessKeys}
+                <label for="cancelled">Cancelled (<span class="accesskey">-</span>)</label>
+            {:else}
+                <label for="cancelled">Cancelled</label>
+            {/if}
             <DateEditor
                 id="cancelled"
                 dateSymbol={cancelledDateSymbol}
