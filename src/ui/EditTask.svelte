@@ -449,7 +449,7 @@ Availability of access keys:
         <div class="tasks-modal-section tasks-modal-priority-section" on:keyup={_onPriorityKeyup}>
             <label for="priority-{editableTask.priority}">Priority</label>
             {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
-                <span>
+                <div class="task-modal-priority-option-container">
                     <!-- svelte-ignore a11y-accesskey -->
                     <input
                         type="radio"
@@ -466,7 +466,7 @@ Availability of access keys:
                             <span>{symbol}</span>
                         {/if}
                     </label>
-                </span>
+                </div>
             {/each}
         </div>
 
