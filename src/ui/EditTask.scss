@@ -81,10 +81,10 @@
     grid-auto-columns: 1fr;
     column-gap: .5em;
     row-gap: 5px;
+    align-items: center;
 
     label {
         grid-column: 1;
-        margin-top: 6px;
     }
 
     .input {
@@ -97,7 +97,6 @@
 
     .results {
         grid-column: 3;
-        margin-top: 6px;
         font-size: var(--font-ui-small);
     }
 
