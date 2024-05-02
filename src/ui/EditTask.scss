@@ -115,7 +115,16 @@
 }
 
 .tasks-modal-dependencies-section {
+    display: grid;
+    grid-template-columns: 6.0em auto;
+    grid-auto-columns: 1fr;
+
+    label {
+        margin-top: 6px;
+    }
+
     input[type="text"] {
+        grid-column: 2;
         width: 100%;
     }
 }
