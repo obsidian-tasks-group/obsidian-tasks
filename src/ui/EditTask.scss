@@ -19,10 +19,6 @@
     + .tasks-modal-section {
         margin-top: 8px;
     }
-
-    input[type="text"] {
-        width: 100%;
-    }
 }
 
 .tasks-modal-description-section {
@@ -115,6 +111,12 @@
     select {
         grid-column: 2;
         width: 15em;
+    }
+}
+
+.tasks-modal-dependencies-section {
+    input[type="text"] {
+        width: 100%;
     }
 }
 
