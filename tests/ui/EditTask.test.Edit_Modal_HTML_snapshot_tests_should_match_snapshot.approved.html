@@ -1,6 +1,6 @@
 <div>
   <form class="tasks-modal with-accesskeys">
-    <div class="tasks-modal-section tasks-modal-description-section">
+    <div class="tasks-modal-description-section">
       <label for="description">
         Descrip
         <span class="accesskey">t</span>
@@ -12,7 +12,7 @@
         placeholder="Take out the trash"
         accesskey="t"></textarea>
     </div>
-    <div class="tasks-modal-section tasks-modal-priority-section">
+    <div class="tasks-modal-priority-section">
       <label for="priority-none">Priority</label>
       <div class="task-modal-priority-option-container">
         <input type="radio" id="priority-lowest" value="lowest" accesskey="o" />
@@ -68,7 +68,7 @@
         </label>
       </div>
     </div>
-    <div class="tasks-modal-section tasks-modal-dates">
+    <div class="tasks-modal-dates">
       <label for="recurrence" class="accesskey-first">Recurs</label>
       <input id="recurrence" type="text" class="input" placeholder="Try 'every day when done'" accesskey="r" />
       <code class="results">
@@ -77,7 +77,7 @@
       </code>
     </div>
     <hr />
-    <div class="tasks-modal-section tasks-modal-dates">
+    <div class="tasks-modal-dates">
       <label for="due" class="accesskey-first">Due</label>
       <input id="due" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="d" />
       <code class="results">
@@ -114,7 +114,7 @@
       </div>
     </div>
     <hr />
-    <div class="tasks-modal-section tasks-modal-dependencies-section">
+    <div class="tasks-modal-dependencies-section">
       <label for="blockedBy" class="accesskey-first">Before this</label>
       <span class="input">
         <input
@@ -175,7 +175,7 @@
       <div class="task-dependencies-container results-dependency"></div>
     </div>
     <hr />
-    <div class="tasks-modal-section tasks-modal-dates">
+    <div class="tasks-modal-dates">
       <label for="status">
         Stat
         <span class="accesskey">u</span>
@@ -214,7 +214,7 @@
         <i>no cancelled date</i>
       </code>
     </div>
-    <div class="tasks-modal-section tasks-modal-buttons">
+    <div class="tasks-modal-buttons">
       <button type="submit" class="mod-cta">Apply</button>
       <button type="button">Cancel</button>
     </div>

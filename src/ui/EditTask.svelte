@@ -426,7 +426,7 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <!--  Description  -->
     <!-- --------------------------------------------------------------------------- -->
-    <div class="tasks-modal-section tasks-modal-description-section">
+    <div class="tasks-modal-description-section">
         <label for="description">Descrip<span class="accesskey">t</span>ion</label>
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
@@ -445,7 +445,7 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
-    <div class="tasks-modal-section tasks-modal-priority-section" on:keyup={_onPriorityKeyup}>
+    <div class="tasks-modal-priority-section" on:keyup={_onPriorityKeyup}>
         <label for="priority-{editableTask.priority}">Priority</label>
         {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
             <div class="task-modal-priority-option-container">
@@ -472,7 +472,7 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <!--  Recurrence  -->
     <!-- --------------------------------------------------------------------------- -->
-    <div class="tasks-modal-section tasks-modal-dates">
+    <div class="tasks-modal-dates">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
@@ -494,7 +494,7 @@ Availability of access keys:
     <!--  Dates  -->
     <!-- --------------------------------------------------------------------------- -->
     <hr />
-    <div class="tasks-modal-section tasks-modal-dates">
+    <div class="tasks-modal-dates">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
@@ -557,7 +557,7 @@ Availability of access keys:
     <!--  Dependencies  -->
     <!-- --------------------------------------------------------------------------- -->
     <hr />
-    <div class="tasks-modal-section tasks-modal-dependencies-section">
+    <div class="tasks-modal-dependencies-section">
         {#if allTasks.length > 0 && mountComplete}
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocked By Tasks  -->
@@ -594,7 +594,7 @@ Availability of access keys:
     </div>
 
     <hr />
-    <div class="tasks-modal-section tasks-modal-dates">
+    <div class="tasks-modal-dates">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
@@ -660,7 +660,7 @@ Availability of access keys:
         />
     </div>
 
-    <div class="tasks-modal-section tasks-modal-buttons">
+    <div class="tasks-modal-buttons">
         <button disabled={!formIsValid} type="submit" class="mod-cta">Apply </button>
         <button type="button" on:click={_onClose}>Cancel</button>
     </div>
