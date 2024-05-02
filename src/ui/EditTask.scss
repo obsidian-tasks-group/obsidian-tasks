@@ -1,9 +1,6 @@
 .tasks-modal {
-    .with-accesskeys {
-        .accesskey-first::first-letter, .accesskey {
-            text-decoration: underline;
-            text-underline-offset: 1pt;
-        }
+    > div {
+            margin-top: 8px;
     }
 
     hr {
@@ -15,9 +12,10 @@
     }
 }
 
-.tasks-modal-section {
-    + .tasks-modal-section {
-        margin-top: 8px;
+.with-accesskeys {
+    .accesskey-first::first-letter, .accesskey {
+        text-decoration: underline;
+        text-underline-offset: 1pt;
     }
 }
 
