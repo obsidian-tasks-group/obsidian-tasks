@@ -558,7 +558,7 @@ Availability of access keys:
         <!--  Dependencies  -->
         <!-- --------------------------------------------------------------------------- -->
         <hr />
-        <div class="tasks-modal-section tasks-modal-dates tasks-modal-dependencies-section">
+        <div class="tasks-modal-section tasks-modal-dependencies-section">
             {#if allTasks.length > 0 && mountComplete}
                 <!-- --------------------------------------------------------------------------- -->
                 <!--  Blocked By Tasks  -->
