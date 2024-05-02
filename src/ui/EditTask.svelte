@@ -446,7 +446,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Priority  -->
         <!-- --------------------------------------------------------------------------- -->
-        <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
+        <div class="tasks-modal-section tasks-modal-priority-section" on:keyup={_onPriorityKeyup}>
             <label for="priority-{editableTask.priority}">Priority</label>
             {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
                 <span>
