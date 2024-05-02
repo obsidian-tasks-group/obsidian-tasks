@@ -427,7 +427,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Description  -->
         <!-- --------------------------------------------------------------------------- -->
-        <div class="tasks-modal-section">
+        <div class="tasks-modal-section tasks-modal-description-section">
             <label for="description">Descrip<span class="accesskey">t</span>ion</label>
             <!-- svelte-ignore a11y-accesskey -->
             <textarea
