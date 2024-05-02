@@ -28,7 +28,9 @@
     input[type="text"] {
         width: 100%;
     }
+}
 
+.tasks-modal-description-section {
     textarea {
         width: 100%;
         min-height: calc(var(--input-height) * 2);
