@@ -20,11 +20,6 @@
         margin-top: 8px;
     }
 
-    label + input[type="checkbox"] {
-        margin-left: 0.67em;
-        top: 2px;
-    }
-
     input[type="text"] {
         width: 100%;
     }
@@ -110,6 +105,11 @@
     .future-dates-only {
         grid-column-start: 1;
         grid-column-end: 3;
+
+        label + input[type="checkbox"] {
+            margin-left: 0.67em;
+            top: 2px;
+        }
     }
 
     select {
