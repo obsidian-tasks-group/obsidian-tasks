@@ -40,9 +40,9 @@
     display: grid;
     grid-template-columns: 6em auto auto auto;
     grid-column-gap: 0.5em;
+    grid-row-gap: 0.15em;
 
     span {
-        line-height: 1.41;
         white-space: nowrap;
     }
 
@@ -51,7 +51,7 @@
         padding: 2px 3px;
         grid-column: 1;
         grid-row-start: 1;
-        grid-row-end: 7;
+        grid-row-end: 3;
     }
 
     input + label {
