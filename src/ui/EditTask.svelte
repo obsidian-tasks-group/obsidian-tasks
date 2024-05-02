@@ -594,11 +594,11 @@ Availability of access keys:
             {/if}
         </div>
 
-        <!-- --------------------------------------------------------------------------- -->
-        <!--  Status  -->
-        <!-- --------------------------------------------------------------------------- -->
         <hr />
         <div class="tasks-modal-section tasks-modal-dates">
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Status  -->
+            <!-- --------------------------------------------------------------------------- -->
             <label for="status">Stat<span class="accesskey">u</span>s</label>
             <!-- svelte-ignore a11y-accesskey -->
             <select
@@ -612,9 +612,7 @@ Availability of access keys:
                     <option value={status.symbol}>{status.name} [{status.symbol}]</option>
                 {/each}
             </select>
-        </div>
 
-        <div class="tasks-modal-section tasks-modal-dates">
             <!-- --------------------------------------------------------------------------- -->
             <!--  Created Date  -->
             <!-- --------------------------------------------------------------------------- -->
