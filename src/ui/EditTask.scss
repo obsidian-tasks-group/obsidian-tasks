@@ -39,7 +39,7 @@
     }
 }
 
-.tasks-modal-priorities {
+.tasks-modal-priority-section {
     display: grid;
     grid-template-columns: 6em auto auto auto;
     grid-column-gap: 0.5em;
@@ -135,12 +135,12 @@
 }
 
 @media (max-width: 649px) {
-    .tasks-modal-priorities {
+    .tasks-modal-priority-section {
         grid-template-columns: 4em 7.5em 5em;
         margin-bottom: -10px;
     }
 
-    .tasks-modal-priorities > label {
+    .tasks-modal-priority-section > label {
         grid-row: 1 / span 7;
     }
 }
@@ -176,22 +176,22 @@
         }
     }
 
-    .tasks-modal-priorities {
+    .tasks-modal-priority-section {
         grid-template-columns: 4em auto;
     }
 
-    .tasks-modal-priorities > label {
+    .tasks-modal-priority-section > label {
         grid-row: 1 / span 7;
     }
 }
 
 @media (max-width: 259px) {
-    .tasks-modal-priorities {
+    .tasks-modal-priority-section {
         grid-template-columns: 1fr;
         margin-bottom: 0;
     }
 
-    .tasks-modal-priorities > label {
+    .tasks-modal-priority-section > label {
         grid-row: 1;
     }
 }
