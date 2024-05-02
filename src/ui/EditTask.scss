@@ -94,10 +94,6 @@
         font-size: var(--font-ui-small);
     }
 
-    .results-dependency {
-        grid-column: 2;
-    }
-
     .future-dates-only {
         grid-column-start: 1;
         grid-column-end: 3;
@@ -126,6 +122,10 @@
     input[type="text"] {
         grid-column: 2;
         width: 100%;
+    }
+
+    .results-dependency {
+        grid-column: 2;
     }
 }
 
