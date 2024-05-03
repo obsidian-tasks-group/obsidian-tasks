@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
@@ -370,7 +371,13 @@ describe('StatusRegistry', () => {
         const sectionStart = 1337;
         const sectionIndex = 1209;
         const precedingHeader = 'Eloquent Section';
-        const taskLocation = new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const taskLocation = new TaskLocation(
+            new TasksFile(path),
+            lineNumber,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        );
         const fallbackDate = null;
 
         it('should allow task to toggle through standard transitions', () => {

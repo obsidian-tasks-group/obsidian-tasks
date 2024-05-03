@@ -120,13 +120,15 @@ To illustrate the concept of task dependencies, let's consider a scenario where 
 
 In this scenario, testing with users can only occur after the initial draft is completed. To establish this relationship, you can create a dependency between the two tasks using either of the following methods.
 
-**Via the Task Edit Modal:**
+1. **Either:**
+    - open the **'Build a first draft'** task in the Edit Task Modal
+    - and specify **'Test with users'** in **After this**.
+1. **Or:**
+    - open the **'Test with users'** task in the Edit Task Modal
+    - and add **'Build a first draft'** in **Before this**.
 
-1. Open the 'Build a first draft' task in the Edit Task Modal and specify 'Test with users' in **Before this**.
-2. Alternatively, open the 'Test with users' task in the Edit Task Modal and add 'Build a first draft' in **After this**.
-
-   ![Making the 'Test with users' task depend on the 'Build a first draft'](../images/task-dependencies-blocked-by-example.png)
-<span class="caption">Making the 'Test with users' task depend on the 'Build a first draft'.</span>
+![Making the 'Test with users' task depend on the 'Build a first draft'](../images/task-dependencies-blocked-by-example.png)
+<span class="caption">Making the **'Test with users'** task depend on the **'Build a first draft'** task.</span>
 
 **Via the Auto Suggest Feature:**
 
@@ -185,7 +187,7 @@ When using those dependencies in searches, we define two more relationships: `bl
 >
 > You might wish to work on blocking tasks first, in order to un-block later tasks.
 
-A task is `blocking` is:
+A task is `blocking` if:
 
 - It is `TODO` or `IN_PROGRESS`.
 - And any of the tasks that **directly depend on it** are also `TODO` or `IN_PROGRESS`.

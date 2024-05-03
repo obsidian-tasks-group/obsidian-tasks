@@ -18,7 +18,7 @@ The following elements exist:
 - `backlink`
 - `urgency`
 - `id`
-- `blocked by`
+- `depends on`
 - `priority`
 - `cancelled date`
 - `created date`
@@ -44,7 +44,7 @@ The following elements exist:
 > - `created date` was introduced in Tasks 2.0.0.
 > - `tags` was introduced in Tasks 4.1.0.
 > - `cancelled date` was introduced in Tasks 5.5.0.
-> - `id` and `blocked by` were introduced in Tasks 6.1.0.
+> - `id` and `depends on` were introduced in Tasks 6.1.0.
 
 All of these elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.

@@ -249,6 +249,20 @@ Since Tasks 5.0.0, this is enforced by the [[Create or edit Task]] modal:
 >
 > These tasks are not searchable by the usual Due, Schedule, Starts or Happens date searches: we believe the majority of Tasks users find their tasks by searching for dates.
 
+### Tasks in Daily Notes should not be recurring
+
+> [!Important]
+> Do not use `recurring` on tasks in daily notes, as it would create repeated copies of the task in _each_ daily note.
+
+This is less a limitation of Tasks and more pattern occasionally asked about by users.
+
+When entering repeating tasks into daily notes, the template will create the tasks for each appropriate date. In such cases, these tasks should not be set as recurring.
+
+Repeating tasks can be managed effectively in the following ways:
+
+- **Either** included in a daily note via a template and set as non-recurring (as each daily note will have its own copy of the task)
+- **Or** placed in a file other than the daily note and set as recurring.
+
 ### Next recurrence is on non-existent date
 
 > [!important]

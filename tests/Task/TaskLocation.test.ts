@@ -1,3 +1,4 @@
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 
 describe('TaskLocation', () => {
@@ -10,10 +11,17 @@ describe('TaskLocation', () => {
         const precedingHeader = 'My Header';
 
         // Act
-        const taskLocation = new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const taskLocation = new TaskLocation(
+            new TasksFile(path),
+            lineNumber,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        );
 
         // Assert
         expect(taskLocation.path).toStrictEqual(path);
+        expect(taskLocation.tasksFile.path).toStrictEqual(path);
         expect(taskLocation.lineNumber).toStrictEqual(lineNumber);
         expect(taskLocation.sectionStart).toStrictEqual(sectionStart);
         expect(taskLocation.sectionIndex).toStrictEqual(sectionIndex);
@@ -25,7 +33,7 @@ describe('TaskLocation', () => {
         const path = 'a/b/c.md';
 
         // Act
-        const taskLocation = TaskLocation.fromUnknownPosition(path);
+        const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile(path));
 
         // Assert
         expect(taskLocation.path).toStrictEqual(path);
@@ -42,11 +50,17 @@ describe('TaskLocation', () => {
         const sectionStart = 13;
         const sectionIndex = 10;
         const precedingHeader = 'My Previous Header';
-        const taskLocation = new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const taskLocation = new TaskLocation(
+            new TasksFile(path),
+            lineNumber,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        );
 
         // Act
         const newPath = 'd/e/f.md';
-        const newLocation = taskLocation.fromRenamedFile(newPath);
+        const newLocation = taskLocation.fromRenamedFile(new TasksFile(newPath));
 
         // Assert
         expect(newLocation.path).toStrictEqual(newPath);
@@ -57,7 +71,7 @@ describe('TaskLocation', () => {
     });
 
     it('should recognise unknown paths', () => {
-        expect(TaskLocation.fromUnknownPosition('x.md').hasKnownPath).toBe(true);
-        expect(TaskLocation.fromUnknownPosition('').hasKnownPath).toBe(false);
+        expect(TaskLocation.fromUnknownPosition(new TasksFile('x.md')).hasKnownPath).toBe(true);
+        expect(TaskLocation.fromUnknownPosition(new TasksFile('')).hasKnownPath).toBe(false);
     });
 });

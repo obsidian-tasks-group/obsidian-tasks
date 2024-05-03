@@ -17,7 +17,7 @@ import { continueLines } from './Scanner';
 import { SearchInfo } from './SearchInfo';
 import { Sort } from './Sort/Sort';
 import type { Sorter } from './Sort/Sorter';
-import type { Statement } from './Statement';
+import { Statement } from './Statement';
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
@@ -74,10 +74,14 @@ export class Query implements IQuery {
                     message = 'Unknown error';
                 }
 
-                this.setError(message, line);
+                this.setError(message, statement);
                 return;
             }
         });
+    }
+
+    public get queryId(): string {
+        return this._queryId;
     }
 
     private parseLine(line: string, statement: Statement) {
@@ -110,7 +114,7 @@ export class Query implements IQuery {
             case this.parseFilter(line, statement):
                 break;
             default:
-                this.setError('do not understand query', line);
+                this.setError('do not understand query', statement);
         }
     }
 
@@ -236,9 +240,16 @@ ${source}`;
         return this._error;
     }
 
-    private setError(message: string, line: string) {
-        this._error = `${message}
-Problem line: "${line}"`;
+    private setError(message: string, statement: Statement) {
+        if (statement.allLinesIdentical()) {
+            this._error = `${message}
+Problem line: "${statement.rawInstruction}"`;
+        } else {
+            this._error = `${message}
+Problem statement:
+${statement.explainStatement('    ')}
+`;
+        }
     }
 
     public get ignoreGlobalQuery(): boolean {
@@ -327,7 +338,7 @@ Problem line: "${line}"`;
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, !hide);
                     break;
                 default:
-                    this.setError('do not understand hide/show option', line);
+                    this.setError('do not understand hide/show option', new Statement(line, line));
             }
         }
     }
@@ -342,7 +353,7 @@ Problem line: "${line}"`;
 
                 this._filters.push(filterOrError.filter);
             } else {
-                this.setError(filterOrError.error ?? 'Unknown error', line);
+                this.setError(filterOrError.error ?? 'Unknown error', statement);
             }
             return true;
         }
@@ -352,7 +363,7 @@ Problem line: "${line}"`;
     private parseLimit(line: string): void {
         const limitMatch = line.match(this.limitRegexp);
         if (limitMatch === null) {
-            this.setError('do not understand query limit', line);
+            this.setError('do not understand query limit', new Statement(line, line));
             return;
         }
 

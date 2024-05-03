@@ -393,7 +393,7 @@
 Availability of access keys:
 - A: Start
 - B: Before this
-- C:
+- C: Created
 - D: Due
 - E: After this
 - F: Only future dates
@@ -414,9 +414,10 @@ Availability of access keys:
 - U: Status
 - V:
 - W:
-- X:
+- X: Done
 - Y:
 - Z:
+- -: Cancelled
 -->
 
 <div class="tasks-modal">
@@ -484,7 +485,7 @@ Availability of access keys:
                 type="text"
                 class:tasks-modal-error={!isRecurrenceValid}
                 class="input"
-                placeholder="Try 'every 2 weeks on Thursday'."
+                placeholder="Try 'every day when done'"
                 accesskey={accesskey('r')}
             />
             <code class="results">{recurrenceSymbol} {@html parsedRecurrence}</code>
@@ -537,7 +538,7 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Only future dates  -->
             <!-- --------------------------------------------------------------------------- -->
-            <div>
+            <div class="future-dates-only">
                 <label for="forwardOnly"
                     >Only
                     <span class="accesskey-first">future</span> dates:</label
@@ -597,7 +598,7 @@ Availability of access keys:
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
         <hr />
-        <div class="tasks-modal-section">
+        <div class="tasks-modal-section tasks-modal-dates">
             <label for="status">Stat<span class="accesskey">u</span>s</label>
             <!-- svelte-ignore a11y-accesskey -->
             <select
@@ -617,40 +618,48 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Created Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="created">Created</label>
+            <label for="created" class="accesskey-first">Created</label>
             <DateEditor
                 id="created"
                 dateSymbol={createdDateSymbol}
                 bind:date={editableTask.createdDate}
                 bind:isDateValid={isCreatedDateValid}
                 forwardOnly={editableTask.forwardOnly}
-                accesskey={null}
+                accesskey={accesskey('c')}
             />
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="done">Done</label>
+            {#if withAccessKeys}
+                <label for="done">Done (<span class="accesskey">x</span>)</label>
+            {:else}
+                <label for="done">Done</label>
+            {/if}
             <DateEditor
                 id="done"
                 dateSymbol={doneDateSymbol}
                 bind:date={editableTask.doneDate}
                 bind:isDateValid={isDoneDateValid}
                 forwardOnly={editableTask.forwardOnly}
-                accesskey={null}
+                accesskey={accesskey('x')}
             />
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Cancelled Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="cancelled">Cancelled</label>
+            {#if withAccessKeys}
+                <label for="cancelled">Cancelled (<span class="accesskey">-</span>)</label>
+            {:else}
+                <label for="cancelled">Cancelled</label>
+            {/if}
             <DateEditor
                 id="cancelled"
                 dateSymbol={cancelledDateSymbol}
                 bind:date={editableTask.cancelledDate}
                 bind:isDateValid={isCancelledDateValid}
                 forwardOnly={editableTask.forwardOnly}
-                accesskey={null}
+                accesskey={accesskey('-')}
             />
         </div>
 

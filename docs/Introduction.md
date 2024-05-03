@@ -13,6 +13,12 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- 7.1.0:
+  - Much improved layout of the [[Create or edit Task]] modal, on desktop machines.
+  - Add access keys for Created, Done and Cancelled dates in [[Create or edit Task]].
+- 7.0.0:
+  - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks 7.0.0|the appendix]] for details.
+  - Add documentation page [[Resources]], with links to write-ups,  talks and sample vaults from users.
 - 6.1.0:
   - Add support for [[task dependencies]]:
     - First, [[Create or edit Task#Dependencies|use 'Create or edit Task']] to define the order in which you want to work on a set of tasks, using two new task emojis: 🆔  and ⛔.
@@ -20,15 +26,15 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
   - `query.allTasks` is now available in custom searches: see [[Query Properties#Values for Query Search Properties|query search properties]].
   - The [[Create or edit Task]] modal now fully supports editing of statuses, updating done and cancelled dates, and creating new recurrences. See the [[Create or edit Task#Status|section on editing statuses]] for details and tips.
   - Add HTML samples in [[Styling#Sample HTML Full mode|full]] and [[Styling#Sample HTML Short mode|short]] modes to demonstrate custom styling.
-- 6.0.0:
-  - Add [[Custom Sorting|custom sorting]].
-  - Document the [[Sorting#Default sort order|default sort order]].
-  - **Warning**: This release contains some **bug-fixes** to **sorting** and to treatment of **invalid dates**.
-    - The changes are detailed in [[breaking changes#Tasks 6.0.0 (19 January 2024)|breaking changes]], even though they are all improvements to the previous behaviour.
-    - You may need to update any CSS snippets for the Edit or Postpone buttons: see [[How to style buttons]].
 
 > [!Released]- Earlier Releases
 >
+> - 6.0.0:
+>   - Add [[Custom Sorting|custom sorting]].
+>   - Document the [[Sorting#Default sort order|default sort order]].
+>   - **Warning**: This release contains some **bug-fixes** to **sorting** and to treatment of **invalid dates**.
+>     - The changes are detailed in [[breaking changes#Tasks 6.0.0 (19 January 2024)|breaking changes]], even though they are all improvements to the previous behaviour.
+>     - You may need to update any CSS snippets for the Edit or Postpone buttons: see [[How to style buttons]].
 > - 5.6.0:
 >   - The [[Postponing|postpone]] menu now offers `today` and `tomorrow`.
 > - 5.5.0:

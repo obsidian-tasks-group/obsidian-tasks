@@ -4,6 +4,257 @@ Results of parsing and explaining boolean expressions
 
 
 Input:
+'(not done) AND (is recurring)'
+=>
+Result:
+  (not done) AND (is recurring) =>
+    AND (All of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'((not done)) AND ((is recurring))'
+=>
+Result:
+  ((not done)) AND ((is recurring)) =>
+    AND (All of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR (is recurring)'
+=>
+Result:
+  (not done) OR (is recurring) =>
+    OR (At least one of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) XOR (is recurring)'
+=>
+Result:
+  (not done) XOR (is recurring) =>
+    XOR (Exactly one of):
+      not done
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) AND NOT (is recurring)'
+=>
+Result:
+  (not done) AND NOT (is recurring) =>
+    AND (All of):
+      not done
+      NOT:
+        is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR NOT (is recurring)'
+=>
+Result:
+  (not done) OR NOT (is recurring) =>
+    OR (At least one of):
+      not done
+      NOT:
+        is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT (not done)'
+=>
+Result:
+  NOT (not done) =>
+    NOT:
+      not done
+
+
+--------------------------------------------------------
+
+
+
+Input:
+'"not done" AND (is recurring)'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    "not done" AND (is recurring)
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" OR (is recurring)'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    "not done" OR (is recurring)
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" XOR (is recurring)'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    "not done" XOR (is recurring)
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" AND NOT (is recurring)'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    "not done" AND NOT (is recurring)
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'"not done" OR NOT (is recurring)'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    "not done" OR NOT (is recurring)
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+
+Input:
+'(not done) AND "is recurring"'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (not done) AND "is recurring"
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'((not done)) AND "is recurring"'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    ((not done)) AND "is recurring"
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR "is recurring"'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (not done) OR "is recurring"
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) XOR "is recurring"'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (not done) XOR "is recurring"
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) AND NOT "is recurring"'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (not done) AND NOT "is recurring"
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR NOT "is recurring"'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (not done) OR NOT "is recurring"
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+
+Input:
+'"HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL)'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    "HAS DUE DATE" OR (DESCRIPTION INCLUDES SPECIAL)
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
 '"description includes d1" AND "description includes d2"'
 =>
 Result:
@@ -11,6 +262,41 @@ Result:
     AND (All of):
       description includes d1
       description includes d2
+
+
+--------------------------------------------------------
+
+
+Input:
+'"has due date" OR (description includes special)'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    "has due date" OR (description includes special)
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7)'
+=>
+Result:
+  ( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7) =>
+    OR (At least one of):
+      AND (All of):
+        description includes 1
+        description includes 2
+        description includes 3
+      AND (All of):
+        AND (All of):
+          description includes 5
+          description includes 6
+          description includes 7
+        NOT:
+          description includes 7
 
 
 --------------------------------------------------------
@@ -86,16 +372,59 @@ Input:
 '( (filter by function task.description.includes('a')) OR (filter by function task.description.includes('b')) OR (filter by function task.description.includes('c')) ) AND ( (filter by function task.description.includes('d')) OR (filter by function task.description.includes('e')) OR (filter by function task.description.includes('f')) )'
 =>
 Result:
-malformed boolean query -- Invalid token (check the documentation for guidelines)
+Could not interpret the following instruction as a Boolean combination:
+    ( (filter by function task.description.includes('a')) OR (filter by function task.description.includes('b')) OR (filter by function task.description.includes('c')) ) AND ( (filter by function task.description.includes('d')) OR (filter by function task.description.includes('e')) OR (filter by function task.description.includes('f')) )
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    ( (f1)) OR (f2)) OR (f3)) ) AND ( (f4)) OR (f5)) OR (f6)) )
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'filter by function task.description.includes('a''
+        => ERROR:
+           Error: Failed parsing expression "task.description.includes('a'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f2': 'filter by function task.description.includes('b''
+        => ERROR:
+           Error: Failed parsing expression "task.description.includes('b'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f3': 'filter by function task.description.includes('c''
+        => ERROR:
+           Error: Failed parsing expression "task.description.includes('c'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f4': 'filter by function task.description.includes('d''
+        => ERROR:
+           Error: Failed parsing expression "task.description.includes('d'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f5': 'filter by function task.description.includes('e''
+        => ERROR:
+           Error: Failed parsing expression "task.description.includes('e'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f6': 'filter by function task.description.includes('f''
+        => ERROR:
+           Error: Failed parsing expression "task.description.includes('f'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
 
 --------------------------------------------------------
 
 
 Input:
-'( description includes a ) AND ( (description includes b) AND (description includes c) )'
+'( description includes a )   AND ( (description includes b)  AND (description includes c) )'
 =>
 Result:
-  ( description includes a ) AND ( (description includes b) AND (description includes c) ) =>
+  ( description includes a )   AND ( (description includes b)  AND (description includes c) ) =>
     AND (All of):
       description includes a
       AND (All of):
@@ -107,10 +436,10 @@ Result:
 
 
 Input:
-'( description includes a ) OR ( (description includes b) OR (description includes c) )'
+'( description includes a )   OR  ( (description includes b)  OR  (description includes c) )'
 =>
 Result:
-  ( description includes a ) OR ( (description includes b) OR (description includes c) ) =>
+  ( description includes a )   OR  ( (description includes b)  OR  (description includes c) ) =>
     OR (At least one of):
       description includes a
       OR (At least one of):
@@ -122,11 +451,486 @@ Result:
 
 
 Input:
+'( description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i ) OR ( path includes Home/Shopping )'
+=>
+Result:
+  ( description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i ) OR ( path includes Home/Shopping ) =>
+    OR (At least one of):
+      description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i =>
+        using regex:            '(buy|order|voucher|lakeland|purchase|\spresent)' with flag 'i'
+      path includes Home/Shopping
+
+
+--------------------------------------------------------
+
+
+Input:
+'( description regex matches /buy/i ) AND ( path includes some/sample/note.md )'
+=>
+Result:
+  ( description regex matches /buy/i ) AND ( path includes some/sample/note.md ) =>
+    AND (All of):
+      description regex matches /buy/i =>
+        using regex:            'buy' with flag 'i'
+      path includes some/sample/note.md
+
+
+--------------------------------------------------------
+
+
+Input:
+'( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    ( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    ( f1) ) OR ( f2 ) OR ( f3 ) OR ( f4) ) OR ( f5) ) OR ( f6) ) OR ( f7 ) OR ( f8 )
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type'
+        => ERROR:
+           Error: Failed parsing expression "! 'NON_TASK,CANCELLED'.includes(task.status.type".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f2': 'filter by function const date = task.due.moment; return date ? !date.isValid() : false;'
+        => OK
+    'f3': 'filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false'
+        => OK
+    'f4': 'filter by function task.urgency.toFixed(2) === 1.95.toFixed(2'
+        => ERROR:
+           Error: Failed parsing expression "task.urgency.toFixed(2) === 1.95.toFixed(2".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f5': 'filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁''
+        => ERROR:
+           Error: Failed parsing expression "(!task.isRecurring) && task.originalMarkdown.includes('🔁'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f6': 'filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase('
+        => ERROR:
+           Error: Failed parsing expression "task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(".
+           The error message was:
+           "SyntaxError: Unexpected token '}'"
+    'f7': 'filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false'
+        => OK
+    'f8': 'filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;'
+        => OK
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+
+--------------------------------------------------------
+
+
+Input:
+'( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type); ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false; ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2); ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'); ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(); ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false; ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )'
+=>
+Result:
+  ( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type); ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false; ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2); ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁'); ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase(); ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false; ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; ) =>
+    OR (At least one of):
+      filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type);
+      filter by function const date = task.due.moment; return date ? !date.isValid() : false;
+      filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false;
+      filter by function task.urgency.toFixed(2) === 1.95.toFixed(2);
+      filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁');
+      filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase();
+      filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false;
+      filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false;
+
+
+--------------------------------------------------------
+
+
+Input:
+'(((((NOT  ( description includes d1 ))))))'
+=>
+Result:
+  (((((NOT  ( description includes d1 )))))) =>
+    NOT:
+      description includes d1
+
+
+--------------------------------------------------------
+
+
+Input:
 '(((((description includes #context/location1)))))'
 =>
 Result:
   (((((description includes #context/location1))))) =>
     description includes #context/location1
+
+
+--------------------------------------------------------
+
+
+Input:
+'((due this week) AND (description includes Hello World)) OR NOT ((due this week) AND (description includes Hello World))'
+=>
+Result:
+  ((due this week) AND (description includes Hello World)) OR NOT ((due this week) AND (description includes Hello World)) =>
+    OR (At least one of):
+      AND (All of):
+        due this week =>
+          due date is between:
+            2024-03-25 (Monday 25th March 2024) and
+            2024-03-31 (Sunday 31st March 2024) inclusive
+        description includes Hello World
+      NOT:
+        AND (All of):
+          due this week =>
+            due date is between:
+              2024-03-25 (Monday 25th March 2024) and
+              2024-03-31 (Sunday 31st March 2024) inclusive
+          description includes Hello World
+
+
+--------------------------------------------------------
+
+
+Input:
+'(DESCRIPTION INCLUDES wibble) OR (has due date)'
+=>
+Result:
+  (DESCRIPTION INCLUDES wibble) OR (has due date) =>
+    OR (At least one of):
+      DESCRIPTION INCLUDES wibble
+      has due date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(DUE THIS WEEK) AND (DESCRIPTION INCLUDES HELLO WORLD)'
+=>
+Result:
+  (DUE THIS WEEK) AND (DESCRIPTION INCLUDES HELLO WORLD) =>
+    AND (All of):
+      DUE THIS WEEK =>
+        due date is on 2024-03-24 (Sunday 24th March 2024)
+      DESCRIPTION INCLUDES HELLO WORLD
+
+
+--------------------------------------------------------
+
+
+Input:
+'(HAS START DATE) AND "DESCRIPTION INCLUDES SOME"'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (HAS START DATE) AND "DESCRIPTION INCLUDES SOME"
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'(HAS START DATE) AND ((DESCRIPTION INCLUDES SOME) OR (HAS DUE DATE))'
+=>
+Result:
+  (HAS START DATE) AND ((DESCRIPTION INCLUDES SOME) OR (HAS DUE DATE)) =>
+    AND (All of):
+      HAS START DATE
+      OR (At least one of):
+        DESCRIPTION INCLUDES SOME
+        HAS DUE DATE
+
+
+--------------------------------------------------------
+
+
+Input:
+'(HAS START DATE) AND NOT (DESCRIPTION INCLUDES SOME)'
+=>
+Result:
+  (HAS START DATE) AND NOT (DESCRIPTION INCLUDES SOME) =>
+    AND (All of):
+      HAS START DATE
+      NOT:
+        DESCRIPTION INCLUDES SOME
+
+
+--------------------------------------------------------
+
+
+Input:
+'(HAS START DATE) OR ((DESCRIPTION INCLUDES SPECIAL) AND (HAS DUE DATE))'
+=>
+Result:
+  (HAS START DATE) OR ((DESCRIPTION INCLUDES SPECIAL) AND (HAS DUE DATE)) =>
+    OR (At least one of):
+      HAS START DATE
+      AND (All of):
+        DESCRIPTION INCLUDES SPECIAL
+        HAS DUE DATE
+
+
+--------------------------------------------------------
+
+
+Input:
+'(HAS START DATE) OR NOT (DESCRIPTION INCLUDES SPECIAL)'
+=>
+Result:
+  (HAS START DATE) OR NOT (DESCRIPTION INCLUDES SPECIAL) =>
+    OR (At least one of):
+      HAS START DATE
+      NOT:
+        DESCRIPTION INCLUDES SPECIAL
+
+
+--------------------------------------------------------
+
+
+Input:
+'(HAS START DATE) XOR (DESCRIPTION INCLUDES SPECIAL)'
+=>
+Result:
+  (HAS START DATE) XOR (DESCRIPTION INCLUDES SPECIAL) =>
+    XOR (Exactly one of):
+      HAS START DATE
+      DESCRIPTION INCLUDES SPECIAL
+
+
+--------------------------------------------------------
+
+
+Input:
+'(cancelled after 2021-12-27) OR NOT (cancelled after 2021-12-27)'
+=>
+Result:
+  (cancelled after 2021-12-27) OR NOT (cancelled after 2021-12-27) =>
+    OR (At least one of):
+      cancelled after 2021-12-27 =>
+        cancelled date is after 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        cancelled after 2021-12-27 =>
+          cancelled date is after 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(cancelled before 2021-12-27) OR NOT (cancelled before 2021-12-27)'
+=>
+Result:
+  (cancelled before 2021-12-27) OR NOT (cancelled before 2021-12-27) =>
+    OR (At least one of):
+      cancelled before 2021-12-27 =>
+        cancelled date is before 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        cancelled before 2021-12-27 =>
+          cancelled date is before 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(cancelled date is invalid) OR NOT (cancelled date is invalid)'
+=>
+Result:
+  (cancelled date is invalid) OR NOT (cancelled date is invalid) =>
+    OR (At least one of):
+      cancelled date is invalid
+      NOT:
+        cancelled date is invalid
+
+
+--------------------------------------------------------
+
+
+Input:
+'(cancelled in 2021-12-27 2021-12-29) OR NOT (cancelled in 2021-12-27 2021-12-29)'
+=>
+Result:
+  (cancelled in 2021-12-27 2021-12-29) OR NOT (cancelled in 2021-12-27 2021-12-29) =>
+    OR (At least one of):
+      cancelled in 2021-12-27 2021-12-29 =>
+        cancelled date is between:
+          2021-12-27 (Monday 27th December 2021) and
+          2021-12-29 (Wednesday 29th December 2021) inclusive
+      NOT:
+        cancelled in 2021-12-27 2021-12-29 =>
+          cancelled date is between:
+            2021-12-27 (Monday 27th December 2021) and
+            2021-12-29 (Wednesday 29th December 2021) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(cancelled on 2021-12-27) OR NOT (cancelled on 2021-12-27)'
+=>
+Result:
+  (cancelled on 2021-12-27) OR NOT (cancelled on 2021-12-27) =>
+    OR (At least one of):
+      cancelled on 2021-12-27 =>
+        cancelled date is on 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        cancelled on 2021-12-27 =>
+          cancelled date is on 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(cancelled this week) OR NOT (cancelled this week)'
+=>
+Result:
+  (cancelled this week) OR NOT (cancelled this week) =>
+    OR (At least one of):
+      cancelled this week =>
+        cancelled date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      NOT:
+        cancelled this week =>
+          cancelled date is between:
+            2024-03-25 (Monday 25th March 2024) and
+            2024-03-31 (Sunday 31st March 2024) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(created after 2021-12-27) OR NOT (created after 2021-12-27)'
+=>
+Result:
+  (created after 2021-12-27) OR NOT (created after 2021-12-27) =>
+    OR (At least one of):
+      created after 2021-12-27 =>
+        created date is after 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        created after 2021-12-27 =>
+          created date is after 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(created before 2021-12-27) OR NOT (created before 2021-12-27)'
+=>
+Result:
+  (created before 2021-12-27) OR NOT (created before 2021-12-27) =>
+    OR (At least one of):
+      created before 2021-12-27 =>
+        created date is before 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        created before 2021-12-27 =>
+          created date is before 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(created date is invalid) OR NOT (created date is invalid)'
+=>
+Result:
+  (created date is invalid) OR NOT (created date is invalid) =>
+    OR (At least one of):
+      created date is invalid
+      NOT:
+        created date is invalid
+
+
+--------------------------------------------------------
+
+
+Input:
+'(created in 2021-12-27 2021-12-29) OR NOT (created in 2021-12-27 2021-12-29)'
+=>
+Result:
+  (created in 2021-12-27 2021-12-29) OR NOT (created in 2021-12-27 2021-12-29) =>
+    OR (At least one of):
+      created in 2021-12-27 2021-12-29 =>
+        created date is between:
+          2021-12-27 (Monday 27th December 2021) and
+          2021-12-29 (Wednesday 29th December 2021) inclusive
+      NOT:
+        created in 2021-12-27 2021-12-29 =>
+          created date is between:
+            2021-12-27 (Monday 27th December 2021) and
+            2021-12-29 (Wednesday 29th December 2021) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(created on 2021-12-27) OR NOT (created on 2021-12-27)'
+=>
+Result:
+  (created on 2021-12-27) OR NOT (created on 2021-12-27) =>
+    OR (At least one of):
+      created on 2021-12-27 =>
+        created date is on 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        created on 2021-12-27 =>
+          created date is on 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(created this week) OR NOT (created this week)'
+=>
+Result:
+  (created this week) OR NOT (created this week) =>
+    OR (At least one of):
+      created this week =>
+        created date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      NOT:
+        created this week =>
+          created date is between:
+            2024-03-25 (Monday 25th March 2024) and
+            2024-03-31 (Sunday 31st March 2024) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(description does not include wibble) OR NOT (description does not include wibble)'
+=>
+Result:
+  (description does not include wibble) OR NOT (description does not include wibble) =>
+    OR (At least one of):
+      description does not include wibble
+      NOT:
+        description does not include wibble
+
+
+--------------------------------------------------------
+
+
+Input:
+'(description includes "hello world") OR (description includes "42")'
+=>
+Result:
+  (description includes "hello world") OR (description includes "42") =>
+    OR (At least one of):
+      description includes "hello world"
+      description includes "42"
 
 
 --------------------------------------------------------
@@ -153,6 +957,26 @@ Result:
       description includes #context/location2
       description includes #context/location3
       description includes #context/location4
+
+
+--------------------------------------------------------
+
+
+Input:
+'(description includes 1)   AND   (description includes 2)   AND   (description includes 3)   AND   (description includes 4)   AND   (description includes 5)   AND   (description includes 6)   AND   (description includes 7)   AND   (description includes 8)   AND   (description includes 9)'
+=>
+Result:
+  (description includes 1)   AND   (description includes 2)   AND   (description includes 3)   AND   (description includes 4)   AND   (description includes 5)   AND   (description includes 6)   AND   (description includes 7)   AND   (description includes 8)   AND   (description includes 9) =>
+    AND (All of):
+      description includes 1
+      description includes 2
+      description includes 3
+      description includes 4
+      description includes 5
+      description includes 6
+      description includes 7
+      description includes 8
+      description includes 9
 
 
 --------------------------------------------------------
@@ -193,20 +1017,42 @@ Result:
 
 
 Input:
-'(description includes 1)   AND   (description includes 2)   AND   (description includes 3)   AND   (description includes 4)   AND   (description includes 5)   AND   (description includes 6)   AND   (description includes 7)   AND   (description includes 8)   AND   (description includes 9)'
+'(description includes AND) OR NOT (description includes AND)'
 =>
 Result:
-  (description includes 1)   AND   (description includes 2)   AND   (description includes 3)   AND   (description includes 4)   AND   (description includes 5)   AND   (description includes 6)   AND   (description includes 7)   AND   (description includes 8)   AND   (description includes 9) =>
+  (description includes AND) OR NOT (description includes AND) =>
+    OR (At least one of):
+      description includes AND
+      NOT:
+        description includes AND
+
+
+--------------------------------------------------------
+
+
+Input:
+'(description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)'
+=>
+Result:
+  (description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR) =>
     AND (All of):
-      description includes 1
-      description includes 2
-      description includes 3
-      description includes 4
-      description includes 5
-      description includes 6
-      description includes 7
-      description includes 8
-      description includes 9
+      description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN
+      description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR
+
+
+--------------------------------------------------------
+
+
+Input:
+'(description includes d1) AND   NOT (priority medium)'
+=>
+Result:
+  (description includes d1) AND   NOT (priority medium) =>
+    AND (All of):
+      description includes d1
+      NOT:
+        priority medium =>
+          priority is medium
 
 
 --------------------------------------------------------
@@ -219,7 +1065,8 @@ Result:
   (description includes d1) AND (priority medium) =>
     AND (All of):
       description includes d1
-      priority is medium
+      priority medium =>
+        priority is medium
 
 
 --------------------------------------------------------
@@ -240,14 +1087,15 @@ Result:
 
 
 Input:
-'(description includes d1) AND NOT (priority medium)'
+'(description includes d1) OR   NOT (priority medium)'
 =>
 Result:
-  (description includes d1) AND NOT (priority medium) =>
-    AND (All of):
+  (description includes d1) OR   NOT (priority medium) =>
+    OR (At least one of):
       description includes d1
       NOT:
-        priority is medium
+        priority medium =>
+          priority is medium
 
 
 --------------------------------------------------------
@@ -274,7 +1122,8 @@ Result:
     OR (At least one of):
       description includes d1
       description includes d2
-      priority is medium
+      priority medium =>
+        priority is medium
 
 
 --------------------------------------------------------
@@ -287,7 +1136,8 @@ Result:
   (description includes d1) OR (priority medium) =>
     OR (At least one of):
       description includes d1
-      priority is medium
+      priority medium =>
+        priority is medium
 
 
 --------------------------------------------------------
@@ -302,20 +1152,6 @@ Result:
       description includes d1
       NOT:
         description includes d2
-
-
---------------------------------------------------------
-
-
-Input:
-'(description includes d1) OR NOT (priority medium)'
-=>
-Result:
-  (description includes d1) OR NOT (priority medium) =>
-    OR (At least one of):
-      description includes d1
-      NOT:
-        priority is medium
 
 
 --------------------------------------------------------
@@ -341,18 +1177,2062 @@ Result:
   (description includes d1) XOR (priority medium) =>
     XOR (Exactly one of):
       description includes d1
-      priority is medium
+      priority medium =>
+        priority is medium
 
 
 --------------------------------------------------------
 
+
+Input:
+'(description includes line 1) OR (description includes line 1 continued with \ backslash)'
+=>
+Result:
+  (description includes line 1) OR (description includes line 1 continued with \ backslash) =>
+    OR (At least one of):
+      description includes line 1
+      description includes line 1 continued with \ backslash
+
+
+--------------------------------------------------------
+
+
+Input:
+'(description includes wibble) OR NOT (description includes wibble)'
+=>
+Result:
+  (description includes wibble) OR NOT (description includes wibble) =>
+    OR (At least one of):
+      description includes wibble
+      NOT:
+        description includes wibble
+
+
+--------------------------------------------------------
+
+
+Input:
+'(description regex matches /#t\s/i) OR (description regex matches /#t$/i)'
+=>
+Result:
+  (description regex matches /#t\s/i) OR (description regex matches /#t$/i) =>
+    OR (At least one of):
+      description regex matches /#t\s/i =>
+        using regex:            '#t\s' with flag 'i'
+      description regex matches /#t$/i =>
+        using regex:            '#t$' with flag 'i'
+
+
+--------------------------------------------------------
+
+
+Input:
+'(done after 2021-12-27) OR NOT (done after 2021-12-27)'
+=>
+Result:
+  (done after 2021-12-27) OR NOT (done after 2021-12-27) =>
+    OR (At least one of):
+      done after 2021-12-27 =>
+        done date is after 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        done after 2021-12-27 =>
+          done date is after 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(done before 2021-12-27) OR NOT (done before 2021-12-27)'
+=>
+Result:
+  (done before 2021-12-27) OR NOT (done before 2021-12-27) =>
+    OR (At least one of):
+      done before 2021-12-27 =>
+        done date is before 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        done before 2021-12-27 =>
+          done date is before 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(done date is invalid) OR NOT (done date is invalid)'
+=>
+Result:
+  (done date is invalid) OR NOT (done date is invalid) =>
+    OR (At least one of):
+      done date is invalid
+      NOT:
+        done date is invalid
+
+
+--------------------------------------------------------
+
+
+Input:
+'(done in 2021-12-27 2021-12-29) OR NOT (done in 2021-12-27 2021-12-29)'
+=>
+Result:
+  (done in 2021-12-27 2021-12-29) OR NOT (done in 2021-12-27 2021-12-29) =>
+    OR (At least one of):
+      done in 2021-12-27 2021-12-29 =>
+        done date is between:
+          2021-12-27 (Monday 27th December 2021) and
+          2021-12-29 (Wednesday 29th December 2021) inclusive
+      NOT:
+        done in 2021-12-27 2021-12-29 =>
+          done date is between:
+            2021-12-27 (Monday 27th December 2021) and
+            2021-12-29 (Wednesday 29th December 2021) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(done on 2021-12-27) OR NOT (done on 2021-12-27)'
+=>
+Result:
+  (done on 2021-12-27) OR NOT (done on 2021-12-27) =>
+    OR (At least one of):
+      done on 2021-12-27 =>
+        done date is on 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        done on 2021-12-27 =>
+          done date is on 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(done this week) OR NOT (done this week)'
+=>
+Result:
+  (done this week) OR NOT (done this week) =>
+    OR (At least one of):
+      done this week =>
+        done date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      NOT:
+        done this week =>
+          done date is between:
+            2024-03-25 (Monday 25th March 2024) and
+            2024-03-31 (Sunday 31st March 2024) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(done) OR NOT (done)'
+=>
+Result:
+  (done) OR NOT (done) =>
+    OR (At least one of):
+      done
+      NOT:
+        done
+
+
+--------------------------------------------------------
+
+
+Input:
+'(due after 2021-12-27) OR NOT (due after 2021-12-27)'
+=>
+Result:
+  (due after 2021-12-27) OR NOT (due after 2021-12-27) =>
+    OR (At least one of):
+      due after 2021-12-27 =>
+        due date is after 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        due after 2021-12-27 =>
+          due date is after 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(due before 2021-12-27) OR NOT (due before 2021-12-27)'
+=>
+Result:
+  (due before 2021-12-27) OR NOT (due before 2021-12-27) =>
+    OR (At least one of):
+      due before 2021-12-27 =>
+        due date is before 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        due before 2021-12-27 =>
+          due date is before 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(due before tomorrow) AND (is recurring)'
+=>
+Result:
+  (due before tomorrow) AND (is recurring) =>
+    AND (All of):
+      due before tomorrow =>
+        due date is before 2024-03-29 (Friday 29th March 2024)
+      is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(due date is invalid) OR NOT (due date is invalid)'
+=>
+Result:
+  (due date is invalid) OR NOT (due date is invalid) =>
+    OR (At least one of):
+      due date is invalid
+      NOT:
+        due date is invalid
+
+
+--------------------------------------------------------
+
+
+Input:
+'(due in 2021-12-27 2021-12-29) OR NOT (due in 2021-12-27 2021-12-29)'
+=>
+Result:
+  (due in 2021-12-27 2021-12-29) OR NOT (due in 2021-12-27 2021-12-29) =>
+    OR (At least one of):
+      due in 2021-12-27 2021-12-29 =>
+        due date is between:
+          2021-12-27 (Monday 27th December 2021) and
+          2021-12-29 (Wednesday 29th December 2021) inclusive
+      NOT:
+        due in 2021-12-27 2021-12-29 =>
+          due date is between:
+            2021-12-27 (Monday 27th December 2021) and
+            2021-12-29 (Wednesday 29th December 2021) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(due on 2021-12-27) OR NOT (due on 2021-12-27)'
+=>
+Result:
+  (due on 2021-12-27) OR NOT (due on 2021-12-27) =>
+    OR (At least one of):
+      due on 2021-12-27 =>
+        due date is on 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        due on 2021-12-27 =>
+          due date is on 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(due this week) AND (description includes Hello World)'
+=>
+Result:
+  (due this week) AND (description includes Hello World) =>
+    AND (All of):
+      due this week =>
+        due date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      description includes Hello World
+
+
+--------------------------------------------------------
+
+
+Input:
+'(due this week) OR NOT (due this week)'
+=>
+Result:
+  (due this week) OR NOT (due this week) =>
+    OR (At least one of):
+      due this week =>
+        due date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      NOT:
+        due this week =>
+          due date is between:
+            2024-03-25 (Monday 25th March 2024) and
+            2024-03-31 (Sunday 31st March 2024) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(exclude sub-items) OR NOT (exclude sub-items)'
+=>
+Result:
+  (exclude sub-items) OR NOT (exclude sub-items) =>
+    OR (At least one of):
+      exclude sub-items
+      NOT:
+        exclude sub-items
+
+
+--------------------------------------------------------
+
+
+Input:
+'(filename includes wibble) OR NOT (filename includes wibble)'
+=>
+Result:
+  (filename includes wibble) OR NOT (filename includes wibble) =>
+    OR (At least one of):
+      filename includes wibble
+      NOT:
+        filename includes wibble
+
+
+--------------------------------------------------------
+
+
+Input:
+'(filter by function task.isDone) OR NOT (filter by function task.isDone)'
+=>
+Result:
+  (filter by function task.isDone) OR NOT (filter by function task.isDone) =>
+    OR (At least one of):
+      filter by function task.isDone
+      NOT:
+        filter by function task.isDone
+
+
+--------------------------------------------------------
+
+
+Input:
+'(folder does not include some/path) OR NOT (folder does not include some/path)'
+=>
+Result:
+  (folder does not include some/path) OR NOT (folder does not include some/path) =>
+    OR (At least one of):
+      folder does not include some/path
+      NOT:
+        folder does not include some/path
+
+
+--------------------------------------------------------
+
+
+Input:
+'(folder includes AND) OR NOT (folder includes AND)'
+=>
+Result:
+  (folder includes AND) OR NOT (folder includes AND) =>
+    OR (At least one of):
+      folder includes AND
+      NOT:
+        folder includes AND
+
+
+--------------------------------------------------------
+
+
+Input:
+'(folder includes some/path) OR NOT (folder includes some/path)'
+=>
+Result:
+  (folder includes some/path) OR NOT (folder includes some/path) =>
+    OR (At least one of):
+      folder includes some/path
+      NOT:
+        folder includes some/path
+
+
+--------------------------------------------------------
+
+
+Input:
+'(happens after 2021-12-27) OR NOT (happens after 2021-12-27)'
+=>
+Result:
+  (happens after 2021-12-27) OR NOT (happens after 2021-12-27) =>
+    OR (At least one of):
+      happens after 2021-12-27 =>
+        due, start or scheduled date is after 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        happens after 2021-12-27 =>
+          due, start or scheduled date is after 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(happens before 2021-12-27) OR NOT (happens before 2021-12-27)'
+=>
+Result:
+  (happens before 2021-12-27) OR NOT (happens before 2021-12-27) =>
+    OR (At least one of):
+      happens before 2021-12-27 =>
+        due, start or scheduled date is before 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        happens before 2021-12-27 =>
+          due, start or scheduled date is before 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(happens in 2021-12-27 2021-12-29) OR NOT (happens in 2021-12-27 2021-12-29)'
+=>
+Result:
+  (happens in 2021-12-27 2021-12-29) OR NOT (happens in 2021-12-27 2021-12-29) =>
+    OR (At least one of):
+      happens in 2021-12-27 2021-12-29 =>
+        due, start or scheduled date is between:
+          2021-12-27 (Monday 27th December 2021) and
+          2021-12-29 (Wednesday 29th December 2021) inclusive
+      NOT:
+        happens in 2021-12-27 2021-12-29 =>
+          due, start or scheduled date is between:
+            2021-12-27 (Monday 27th December 2021) and
+            2021-12-29 (Wednesday 29th December 2021) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(happens on 2021-12-27) OR NOT (happens on 2021-12-27)'
+=>
+Result:
+  (happens on 2021-12-27) OR NOT (happens on 2021-12-27) =>
+    OR (At least one of):
+      happens on 2021-12-27 =>
+        due, start or scheduled date is on 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        happens on 2021-12-27 =>
+          due, start or scheduled date is on 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(happens this week) OR NOT (happens this week)'
+=>
+Result:
+  (happens this week) OR NOT (happens this week) =>
+    OR (At least one of):
+      happens this week =>
+        due, start or scheduled date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      NOT:
+        happens this week =>
+          due, start or scheduled date is between:
+            2024-03-25 (Monday 25th March 2024) and
+            2024-03-31 (Sunday 31st March 2024) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has cancelled date) OR NOT (has cancelled date)'
+=>
+Result:
+  (has cancelled date) OR NOT (has cancelled date) =>
+    OR (At least one of):
+      has cancelled date
+      NOT:
+        has cancelled date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has created date) OR NOT (has created date)'
+=>
+Result:
+  (has created date) OR NOT (has created date) =>
+    OR (At least one of):
+      has created date
+      NOT:
+        has created date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has depends on) OR NOT (has depends on)'
+=>
+Result:
+  (has depends on) OR NOT (has depends on) =>
+    OR (At least one of):
+      has depends on
+      NOT:
+        has depends on
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has done date) OR NOT (has done date)'
+=>
+Result:
+  (has done date) OR NOT (has done date) =>
+    OR (At least one of):
+      has done date
+      NOT:
+        has done date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has due date) OR ((HAS START DATE) AND (due after 2021-12-27))'
+=>
+Result:
+  (has due date) OR ((HAS START DATE) AND (due after 2021-12-27)) =>
+    OR (At least one of):
+      has due date
+      AND (All of):
+        HAS START DATE
+        due after 2021-12-27 =>
+          due date is after 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has due date) OR NOT (has due date)'
+=>
+Result:
+  (has due date) OR NOT (has due date) =>
+    OR (At least one of):
+      has due date
+      NOT:
+        has due date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has happens date) OR NOT (has happens date)'
+=>
+Result:
+  (has happens date) OR NOT (has happens date) =>
+    OR (At least one of):
+      has happens date
+      NOT:
+        has happens date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has id) OR NOT (has id)'
+=>
+Result:
+  (has id) OR NOT (has id) =>
+    OR (At least one of):
+      has id
+      NOT:
+        has id
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has scheduled date) OR NOT (has scheduled date)'
+=>
+Result:
+  (has scheduled date) OR NOT (has scheduled date) =>
+    OR (At least one of):
+      has scheduled date
+      NOT:
+        has scheduled date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has start date) AND "description includes some"'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (has start date) AND "description includes some"
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+--------------------------------------------------------
+
+
+Input:
+'(has start date) AND ((description includes some) OR (has due date))'
+=>
+Result:
+  (has start date) AND ((description includes some) OR (has due date)) =>
+    AND (All of):
+      has start date
+      OR (At least one of):
+        description includes some
+        has due date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has start date) AND (description includes some)'
+=>
+Result:
+  (has start date) AND (description includes some) =>
+    AND (All of):
+      has start date
+      description includes some
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has start date) AND NOT (description includes some)'
+=>
+Result:
+  (has start date) AND NOT (description includes some) =>
+    AND (All of):
+      has start date
+      NOT:
+        description includes some
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has start date) OR ((description includes special) AND (has due date))'
+=>
+Result:
+  (has start date) OR ((description includes special) AND (has due date)) =>
+    OR (At least one of):
+      has start date
+      AND (All of):
+        description includes special
+        has due date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has start date) OR NOT (description includes special)'
+=>
+Result:
+  (has start date) OR NOT (description includes special) =>
+    OR (At least one of):
+      has start date
+      NOT:
+        description includes special
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has start date) OR NOT (has start date)'
+=>
+Result:
+  (has start date) OR NOT (has start date) =>
+    OR (At least one of):
+      has start date
+      NOT:
+        has start date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has start date) XOR (description includes special)'
+=>
+Result:
+  (has start date) XOR (description includes special) =>
+    XOR (Exactly one of):
+      has start date
+      description includes special
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has tag) OR NOT (has tag)'
+=>
+Result:
+  (has tag) OR NOT (has tag) =>
+    OR (At least one of):
+      has tag
+      NOT:
+        has tag
+
+
+--------------------------------------------------------
+
+
+Input:
+'(has tags) OR NOT (has tags)'
+=>
+Result:
+  (has tags) OR NOT (has tags) =>
+    OR (At least one of):
+      has tags
+      NOT:
+        has tags
+
+
+--------------------------------------------------------
+
+
+Input:
+'(heading does not include wibble) OR NOT (heading does not include wibble)'
+=>
+Result:
+  (heading does not include wibble) OR NOT (heading does not include wibble) =>
+    OR (At least one of):
+      heading does not include wibble
+      NOT:
+        heading does not include wibble
+
+
+--------------------------------------------------------
+
+
+Input:
+'(heading includes AND) OR NOT (heading includes AND)'
+=>
+Result:
+  (heading includes AND) OR NOT (heading includes AND) =>
+    OR (At least one of):
+      heading includes AND
+      NOT:
+        heading includes AND
+
+
+--------------------------------------------------------
+
+
+Input:
+'(heading includes wibble) OR NOT (heading includes wibble)'
+=>
+Result:
+  (heading includes wibble) OR NOT (heading includes wibble) =>
+    OR (At least one of):
+      heading includes wibble
+      NOT:
+        heading includes wibble
+
+
+--------------------------------------------------------
+
+
+Input:
+'(id does not include abc123) OR NOT (id does not include abc123)'
+=>
+Result:
+  (id does not include abc123) OR NOT (id does not include abc123) =>
+    OR (At least one of):
+      id does not include abc123
+      NOT:
+        id does not include abc123
+
+
+--------------------------------------------------------
+
+
+Input:
+'(id includes AND) OR NOT (id includes AND)'
+=>
+Result:
+  (id includes AND) OR NOT (id includes AND) =>
+    OR (At least one of):
+      id includes AND
+      NOT:
+        id includes AND
+
+
+--------------------------------------------------------
+
+
+Input:
+'(id includes abc123) OR NOT (id includes abc123)'
+=>
+Result:
+  (id includes abc123) OR NOT (id includes abc123) =>
+    OR (At least one of):
+      id includes abc123
+      NOT:
+        id includes abc123
+
+
+--------------------------------------------------------
+
+
+Input:
+'(is blocked) OR NOT (is blocked)'
+=>
+Result:
+  (is blocked) OR NOT (is blocked) =>
+    OR (At least one of):
+      is blocked
+      NOT:
+        is blocked
+
+
+--------------------------------------------------------
+
+
+Input:
+'(is blocking) OR NOT (is blocking)'
+=>
+Result:
+  (is blocking) OR NOT (is blocking) =>
+    OR (At least one of):
+      is blocking
+      NOT:
+        is blocking
+
+
+--------------------------------------------------------
+
+
+Input:
+'(is not blocked) OR NOT (is not blocked)'
+=>
+Result:
+  (is not blocked) OR NOT (is not blocked) =>
+    OR (At least one of):
+      is not blocked
+      NOT:
+        is not blocked
+
+
+--------------------------------------------------------
+
+
+Input:
+'(is not blocking) OR NOT (is not blocking)'
+=>
+Result:
+  (is not blocking) OR NOT (is not blocking) =>
+    OR (At least one of):
+      is not blocking
+      NOT:
+        is not blocking
+
+
+--------------------------------------------------------
+
+
+Input:
+'(is not recurring) OR NOT (is not recurring)'
+=>
+Result:
+  (is not recurring) OR NOT (is not recurring) =>
+    OR (At least one of):
+      is not recurring
+      NOT:
+        is not recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(is not recurring) XOR ((path includes ab/c) OR (happens before 2021-12-27))'
+=>
+Result:
+  (is not recurring) XOR ((path includes ab/c) OR (happens before 2021-12-27)) =>
+    XOR (Exactly one of):
+      is not recurring
+      OR (At least one of):
+        path includes ab/c
+        happens before 2021-12-27 =>
+          due, start or scheduled date is before 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(is recurring) OR NOT (is recurring)'
+=>
+Result:
+  (is recurring) OR NOT (is recurring) =>
+    OR (At least one of):
+      is recurring
+      NOT:
+        is recurring
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no cancelled date) OR NOT (no cancelled date)'
+=>
+Result:
+  (no cancelled date) OR NOT (no cancelled date) =>
+    OR (At least one of):
+      no cancelled date
+      NOT:
+        no cancelled date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no created date) OR NOT (no created date)'
+=>
+Result:
+  (no created date) OR NOT (no created date) =>
+    OR (At least one of):
+      no created date
+      NOT:
+        no created date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no depends on) OR NOT (no depends on)'
+=>
+Result:
+  (no depends on) OR NOT (no depends on) =>
+    OR (At least one of):
+      no depends on
+      NOT:
+        no depends on
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no due date) OR NOT (no due date)'
+=>
+Result:
+  (no due date) OR NOT (no due date) =>
+    OR (At least one of):
+      no due date
+      NOT:
+        no due date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no happens date) OR NOT (no happens date)'
+=>
+Result:
+  (no happens date) OR NOT (no happens date) =>
+    OR (At least one of):
+      no happens date
+      NOT:
+        no happens date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no id) OR NOT (no id)'
+=>
+Result:
+  (no id) OR NOT (no id) =>
+    OR (At least one of):
+      no id
+      NOT:
+        no id
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no scheduled date) OR NOT (no scheduled date)'
+=>
+Result:
+  (no scheduled date) OR NOT (no scheduled date) =>
+    OR (At least one of):
+      no scheduled date
+      NOT:
+        no scheduled date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no start date) OR NOT (no start date)'
+=>
+Result:
+  (no start date) OR NOT (no start date) =>
+    OR (At least one of):
+      no start date
+      NOT:
+        no start date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no tag) OR NOT (no tag)'
+=>
+Result:
+  (no tag) OR NOT (no tag) =>
+    OR (At least one of):
+      no tag
+      NOT:
+        no tag
+
+
+--------------------------------------------------------
+
+
+Input:
+'(no tags) OR NOT (no tags)'
+=>
+Result:
+  (no tags) OR NOT (no tags) =>
+    OR (At least one of):
+      no tags
+      NOT:
+        no tags
+
+
+--------------------------------------------------------
+
+
+Input:
+'(not done) OR NOT (not done)'
+=>
+Result:
+  (not done) OR NOT (not done) =>
+    OR (At least one of):
+      not done
+      NOT:
+        not done
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path does not include some/path) OR NOT (path does not include some/path)'
+=>
+Result:
+  (path does not include some/path) OR NOT (path does not include some/path) =>
+    OR (At least one of):
+      path does not include some/path
+      NOT:
+        path does not include some/path
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes ()some example()) OR (path includes ((some example)))'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (path includes ()some example()) OR (path includes ((some example)))
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2)))
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes ()some example('
+        => OK
+    'f2': 'path includes ((some example'
+        => OK
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes (some example) OR (path includes )some example()'
+=>
+Result:
+  (path includes (some example) OR (path includes )some example() =>
+    OR (At least one of):
+      path includes (some example
+      path includes )some example(
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes (some example)) OR (path includes )some example()'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (path includes (some example)) OR (path includes )some example()
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2)
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes (some example'
+        => OK
+    'f2': 'path includes )some example('
+        => OK
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes )some example() OR (path includes (some example))'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    (path includes )some example() OR (path includes (some example))
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1) OR (f2))
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'path includes )some example('
+        => OK
+    'f2': 'path includes (some example'
+        => OK
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes A) OR (path includes Test.md)'
+=>
+Result:
+  (path includes A) OR (path includes Test.md) =>
+    OR (At least one of):
+      path includes A
+      path includes Test.md
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes AND) OR NOT (path includes AND)'
+=>
+Result:
+  (path includes AND) OR NOT (path includes AND) =>
+    OR (At least one of):
+      path includes AND
+      NOT:
+        path includes AND
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a) AND NOT(path includes b)'
+=>
+Result:
+  (path includes a) AND NOT(path includes b) =>
+    AND (All of):
+      path includes a
+      NOT:
+        path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a) AND(path includes b)'
+=>
+Result:
+  (path includes a) AND(path includes b) =>
+    AND (All of):
+      path includes a
+      path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a) OR NOT(path includes b)'
+=>
+Result:
+  (path includes a) OR NOT(path includes b) =>
+    OR (At least one of):
+      path includes a
+      NOT:
+        path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a) OR(path includes b)'
+=>
+Result:
+  (path includes a) OR(path includes b) =>
+    OR (At least one of):
+      path includes a
+      path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a) XOR(path includes b)'
+=>
+Result:
+  (path includes a) XOR(path includes b) =>
+    XOR (Exactly one of):
+      path includes a
+      path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a)AND (path includes b)'
+=>
+Result:
+  (path includes a)AND (path includes b) =>
+    AND (All of):
+      path includes a
+      path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a)AND NOT(path includes b)'
+=>
+Result:
+  (path includes a)AND NOT(path includes b) =>
+    AND (All of):
+      path includes a
+      NOT:
+        path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a)OR (path includes b)'
+=>
+Result:
+  (path includes a)OR (path includes b) =>
+    OR (At least one of):
+      path includes a
+      path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a)OR NOT (path includes b)'
+=>
+Result:
+  (path includes a)OR NOT (path includes b) =>
+    OR (At least one of):
+      path includes a
+      NOT:
+        path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes a)XOR (path includes b)'
+=>
+Result:
+  (path includes a)XOR (path includes b) =>
+    XOR (Exactly one of):
+      path includes a
+      path includes b
+
+
+--------------------------------------------------------
+
+
+Input:
+'(path includes some/path) OR NOT (path includes some/path)'
+=>
+Result:
+  (path includes some/path) OR NOT (path includes some/path) =>
+    OR (At least one of):
+      path includes some/path
+      NOT:
+        path includes some/path
+
+
+--------------------------------------------------------
+
+
+Input:
+'(priority is above none) OR NOT (priority is above none)'
+=>
+Result:
+  (priority is above none) OR NOT (priority is above none) =>
+    OR (At least one of):
+      priority is above none
+      NOT:
+        priority is above none
+
+
+--------------------------------------------------------
+
+
+Input:
+'(priority is below none) OR NOT (priority is below none)'
+=>
+Result:
+  (priority is below none) OR NOT (priority is below none) =>
+    OR (At least one of):
+      priority is below none
+      NOT:
+        priority is below none
+
+
+--------------------------------------------------------
+
+
+Input:
+'(priority is high) OR NOT (priority is high)'
+=>
+Result:
+  (priority is high) OR NOT (priority is high) =>
+    OR (At least one of):
+      priority is high
+      NOT:
+        priority is high
+
+
+--------------------------------------------------------
+
+
+Input:
+'(priority is highest) OR (priority is lowest)'
+=>
+Result:
+  (priority is highest) OR (priority is lowest) =>
+    OR (At least one of):
+      priority is highest
+      priority is lowest
+
+
+--------------------------------------------------------
+
+
+Input:
+'(priority is low) OR NOT (priority is low)'
+=>
+Result:
+  (priority is low) OR NOT (priority is low) =>
+    OR (At least one of):
+      priority is low
+      NOT:
+        priority is low
+
+
+--------------------------------------------------------
+
+
+Input:
+'(priority is medium) OR NOT (priority is medium)'
+=>
+Result:
+  (priority is medium) OR NOT (priority is medium) =>
+    OR (At least one of):
+      priority is medium
+      NOT:
+        priority is medium
+
+
+--------------------------------------------------------
+
+
+Input:
+'(priority is none) OR NOT (priority is none)'
+=>
+Result:
+  (priority is none) OR NOT (priority is none) =>
+    OR (At least one of):
+      priority is none
+      NOT:
+        priority is none
+
+
+--------------------------------------------------------
+
+
+Input:
+'(recurrence does not include wednesday) OR NOT (recurrence does not include wednesday)'
+=>
+Result:
+  (recurrence does not include wednesday) OR NOT (recurrence does not include wednesday) =>
+    OR (At least one of):
+      recurrence does not include wednesday
+      NOT:
+        recurrence does not include wednesday
+
+
+--------------------------------------------------------
+
+
+Input:
+'(recurrence includes wednesday) OR NOT (recurrence includes wednesday)'
+=>
+Result:
+  (recurrence includes wednesday) OR NOT (recurrence includes wednesday) =>
+    OR (At least one of):
+      recurrence includes wednesday
+      NOT:
+        recurrence includes wednesday
+
+
+--------------------------------------------------------
+
+
+Input:
+'(root does not include some) OR NOT (root does not include some)'
+=>
+Result:
+  (root does not include some) OR NOT (root does not include some) =>
+    OR (At least one of):
+      root does not include some
+      NOT:
+        root does not include some
+
+
+--------------------------------------------------------
+
+
+Input:
+'(root includes AND) OR NOT (root includes AND)'
+=>
+Result:
+  (root includes AND) OR NOT (root includes AND) =>
+    OR (At least one of):
+      root includes AND
+      NOT:
+        root includes AND
+
+
+--------------------------------------------------------
+
+
+Input:
+'(root includes some) OR NOT (root includes some)'
+=>
+Result:
+  (root includes some) OR NOT (root includes some) =>
+    OR (At least one of):
+      root includes some
+      NOT:
+        root includes some
+
+
+--------------------------------------------------------
+
+
+Input:
+'(scheduled after 2021-12-27) OR NOT (scheduled after 2021-12-27)'
+=>
+Result:
+  (scheduled after 2021-12-27) OR NOT (scheduled after 2021-12-27) =>
+    OR (At least one of):
+      scheduled after 2021-12-27 =>
+        scheduled date is after 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        scheduled after 2021-12-27 =>
+          scheduled date is after 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(scheduled before 2021-12-27) OR NOT (scheduled before 2021-12-27)'
+=>
+Result:
+  (scheduled before 2021-12-27) OR NOT (scheduled before 2021-12-27) =>
+    OR (At least one of):
+      scheduled before 2021-12-27 =>
+        scheduled date is before 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        scheduled before 2021-12-27 =>
+          scheduled date is before 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(scheduled date is invalid) OR NOT (scheduled date is invalid)'
+=>
+Result:
+  (scheduled date is invalid) OR NOT (scheduled date is invalid) =>
+    OR (At least one of):
+      scheduled date is invalid
+      NOT:
+        scheduled date is invalid
+
+
+--------------------------------------------------------
+
+
+Input:
+'(scheduled in 2021-12-27 2021-12-29) OR NOT (scheduled in 2021-12-27 2021-12-29)'
+=>
+Result:
+  (scheduled in 2021-12-27 2021-12-29) OR NOT (scheduled in 2021-12-27 2021-12-29) =>
+    OR (At least one of):
+      scheduled in 2021-12-27 2021-12-29 =>
+        scheduled date is between:
+          2021-12-27 (Monday 27th December 2021) and
+          2021-12-29 (Wednesday 29th December 2021) inclusive
+      NOT:
+        scheduled in 2021-12-27 2021-12-29 =>
+          scheduled date is between:
+            2021-12-27 (Monday 27th December 2021) and
+            2021-12-29 (Wednesday 29th December 2021) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(scheduled on 2021-12-27) OR NOT (scheduled on 2021-12-27)'
+=>
+Result:
+  (scheduled on 2021-12-27) OR NOT (scheduled on 2021-12-27) =>
+    OR (At least one of):
+      scheduled on 2021-12-27 =>
+        scheduled date is on 2021-12-27 (Monday 27th December 2021)
+      NOT:
+        scheduled on 2021-12-27 =>
+          scheduled date is on 2021-12-27 (Monday 27th December 2021)
+
+
+--------------------------------------------------------
+
+
+Input:
+'(scheduled this week) OR NOT (scheduled this week)'
+=>
+Result:
+  (scheduled this week) OR NOT (scheduled this week) =>
+    OR (At least one of):
+      scheduled this week =>
+        scheduled date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      NOT:
+        scheduled this week =>
+          scheduled date is between:
+            2024-03-25 (Monday 25th March 2024) and
+            2024-03-31 (Sunday 31st March 2024) inclusive
+
+
+--------------------------------------------------------
+
+
+Input:
+'(start date is invalid) OR NOT (start date is invalid)'
+=>
+Result:
+  (start date is invalid) OR NOT (start date is invalid) =>
+    OR (At least one of):
+      start date is invalid
+      NOT:
+        start date is invalid
+
+
+--------------------------------------------------------
+
+
+Input:
+'(starts after 2021-12-27) OR NOT (starts after 2021-12-27)'
+=>
+Result:
+  (starts after 2021-12-27) OR NOT (starts after 2021-12-27) =>
+    OR (At least one of):
+      starts after 2021-12-27 =>
+        start date is after 2021-12-27 (Monday 27th December 2021) OR no start date
+      NOT:
+        starts after 2021-12-27 =>
+          start date is after 2021-12-27 (Monday 27th December 2021) OR no start date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(starts before 2021-12-27) OR NOT (starts before 2021-12-27)'
+=>
+Result:
+  (starts before 2021-12-27) OR NOT (starts before 2021-12-27) =>
+    OR (At least one of):
+      starts before 2021-12-27 =>
+        start date is before 2021-12-27 (Monday 27th December 2021) OR no start date
+      NOT:
+        starts before 2021-12-27 =>
+          start date is before 2021-12-27 (Monday 27th December 2021) OR no start date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(starts in 2021-12-27 2021-12-29) OR NOT (starts in 2021-12-27 2021-12-29)'
+=>
+Result:
+  (starts in 2021-12-27 2021-12-29) OR NOT (starts in 2021-12-27 2021-12-29) =>
+    OR (At least one of):
+      starts in 2021-12-27 2021-12-29 =>
+        start date is between:
+          2021-12-27 (Monday 27th December 2021) and
+          2021-12-29 (Wednesday 29th December 2021) inclusive
+          OR no start date
+      NOT:
+        starts in 2021-12-27 2021-12-29 =>
+          start date is between:
+            2021-12-27 (Monday 27th December 2021) and
+            2021-12-29 (Wednesday 29th December 2021) inclusive
+            OR no start date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(starts on 2021-12-27) OR NOT (starts on 2021-12-27)'
+=>
+Result:
+  (starts on 2021-12-27) OR NOT (starts on 2021-12-27) =>
+    OR (At least one of):
+      starts on 2021-12-27 =>
+        start date is on 2021-12-27 (Monday 27th December 2021) OR no start date
+      NOT:
+        starts on 2021-12-27 =>
+          start date is on 2021-12-27 (Monday 27th December 2021) OR no start date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(starts this week) OR NOT (starts this week)'
+=>
+Result:
+  (starts this week) OR NOT (starts this week) =>
+    OR (At least one of):
+      starts this week =>
+        start date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+          OR no start date
+      NOT:
+        starts this week =>
+          start date is between:
+            2024-03-25 (Monday 25th March 2024) and
+            2024-03-31 (Sunday 31st March 2024) inclusive
+            OR no start date
+
+
+--------------------------------------------------------
+
+
+Input:
+'(status.name includes cancelled) OR NOT (status.name includes cancelled)'
+=>
+Result:
+  (status.name includes cancelled) OR NOT (status.name includes cancelled) =>
+    OR (At least one of):
+      status.name includes cancelled
+      NOT:
+        status.name includes cancelled
+
+
+--------------------------------------------------------
+
+
+Input:
+'(status.type is IN_PROGRESS) OR NOT (status.type is IN_PROGRESS)'
+=>
+Result:
+  (status.type is IN_PROGRESS) OR NOT (status.type is IN_PROGRESS) =>
+    OR (At least one of):
+      status.type is IN_PROGRESS
+      NOT:
+        status.type is IN_PROGRESS
+
+
+--------------------------------------------------------
+
+
+Input:
+'(tag does not include #sometag) OR NOT (tag does not include #sometag)'
+=>
+Result:
+  (tag does not include #sometag) OR NOT (tag does not include #sometag) =>
+    OR (At least one of):
+      tag does not include #sometag
+      NOT:
+        tag does not include #sometag
+
+
+--------------------------------------------------------
+
+
+Input:
+'(tag does not include sometag) OR NOT (tag does not include sometag)'
+=>
+Result:
+  (tag does not include sometag) OR NOT (tag does not include sometag) =>
+    OR (At least one of):
+      tag does not include sometag
+      NOT:
+        tag does not include sometag
+
+
+--------------------------------------------------------
+
+
+Input:
+'(tag includes #sometag) OR NOT (tag includes #sometag)'
+=>
+Result:
+  (tag includes #sometag) OR NOT (tag includes #sometag) =>
+    OR (At least one of):
+      tag includes #sometag
+      NOT:
+        tag includes #sometag
+
+
+--------------------------------------------------------
+
+
+Input:
+'(tag includes AND) OR NOT (tag includes AND)'
+=>
+Result:
+  (tag includes AND) OR NOT (tag includes AND) =>
+    OR (At least one of):
+      tag includes AND
+      NOT:
+        tag includes AND
+
+
+--------------------------------------------------------
+
+
+Input:
+'(tag includes sometag) OR NOT (tag includes sometag)'
+=>
+Result:
+  (tag includes sometag) OR NOT (tag includes sometag) =>
+    OR (At least one of):
+      tag includes sometag
+      NOT:
+        tag includes sometag
+
+
+--------------------------------------------------------
+
+
+Input:
+'(tags do not include #sometag) OR NOT (tags do not include #sometag)'
+=>
+Result:
+  (tags do not include #sometag) OR NOT (tags do not include #sometag) =>
+    OR (At least one of):
+      tags do not include #sometag
+      NOT:
+        tags do not include #sometag
+
+
+--------------------------------------------------------
+
+
+Input:
+'(tags do not include sometag) OR NOT (tags do not include sometag)'
+=>
+Result:
+  (tags do not include sometag) OR NOT (tags do not include sometag) =>
+    OR (At least one of):
+      tags do not include sometag
+      NOT:
+        tags do not include sometag
+
+
+--------------------------------------------------------
+
+
+Input:
+'(tags include #sometag) OR NOT (tags include #sometag)'
+=>
+Result:
+  (tags include #sometag) OR NOT (tags include #sometag) =>
+    OR (At least one of):
+      tags include #sometag
+      NOT:
+        tags include #sometag
+
+
+--------------------------------------------------------
+
+
+Input:
+'(tags include sometag) OR NOT (tags include sometag)'
+=>
+Result:
+  (tags include sometag) OR NOT (tags include sometag) =>
+    OR (At least one of):
+      tags include sometag
+      NOT:
+        tags include sometag
+
+
+--------------------------------------------------------
+
+
+Input:
+'[due this week] AND [description includes I use square brackets]'
+=>
+Result:
+  [due this week] AND [description includes I use square brackets] =>
+    AND (All of):
+      due this week =>
+        due date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      description includes I use square brackets
+
+
+--------------------------------------------------------
+
+
+Input:
+'[filter by function task.description.includes('a')] AND [description includes "hello world"]'
+=>
+Result:
+  [filter by function task.description.includes('a')] AND [description includes "hello world"] =>
+    AND (All of):
+      filter by function task.description.includes('a')
+      description includes "hello world"
+
+
+--------------------------------------------------------
+
+
+Input:
+'{due this week} AND {description includes I use curly braces}'
+=>
+Result:
+  {due this week} AND {description includes I use curly braces} =>
+    AND (All of):
+      due this week =>
+        due date is between:
+          2024-03-25 (Monday 25th March 2024) and
+          2024-03-31 (Sunday 31st March 2024) inclusive
+      description includes I use curly braces
+
+
+--------------------------------------------------------
+
+
+Input:
+'{filter by function task.description.includes('a')} AND {description includes "hello world"}'
+=>
+Result:
+  {filter by function task.description.includes('a')} AND {description includes "hello world"} =>
+    AND (All of):
+      filter by function task.description.includes('a')
+      description includes "hello world"
+
+
+--------------------------------------------------------
 
 
 Input:
 'AND (description includes d1)'
 =>
 Result:
-malformed boolean query -- Invalid token (check the documentation for guidelines)
+Could not interpret the following instruction as a Boolean combination:
+    AND (description includes d1)
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    f1)
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'AND (description includes d1'
+        => ERROR:
+           Could not interpret the following instruction as a Boolean combination:
+           AND (description includes d1
+           
+           The error message is:
+           All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT   (  happens before blahblahblah  )'
+=>
+Result:
+Could not interpret the following instruction as a Boolean combination:
+    NOT   (  happens before blahblahblah  )
+
+The error message is:
+    couldn't parse sub-expression 'happens before blahblahblah': do not understand happens date
+
+The instruction was converted to the following simplified line:
+    NOT   (  f1  )
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'happens before blahblahblah'
+        => ERROR:
+           do not understand happens date
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT  ( description includes d1 )'
+=>
+Result:
+  NOT  ( description includes d1 ) =>
+    NOT:
+      description includes d1
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT ( NOT ( is blocking ) )'
+=>
+Result:
+  NOT ( NOT ( is blocking ) ) =>
+    NOT:
+      NOT:
+        is blocking
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT ((HAS START DATE) OR (DESCRIPTION INCLUDES SPECIAL))'
+=>
+Result:
+  NOT ((HAS START DATE) OR (DESCRIPTION INCLUDES SPECIAL)) =>
+    NOT:
+      OR (At least one of):
+        HAS START DATE
+        DESCRIPTION INCLUDES SPECIAL
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT ((has start date) OR (description includes special))'
+=>
+Result:
+  NOT ((has start date) OR (description includes special)) =>
+    NOT:
+      OR (At least one of):
+        has start date
+        description includes special
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT (HAS START DATE)'
+=>
+Result:
+  NOT (HAS START DATE) =>
+    NOT:
+      HAS START DATE
+
 
 --------------------------------------------------------
 
@@ -361,7 +3241,23 @@ Input:
 'NOT (description blahblah d1)'
 =>
 Result:
-couldn't parse sub-expression 'description blahblah d1'
+Could not interpret the following instruction as a Boolean combination:
+    NOT (description blahblah d1)
+
+The error message is:
+    couldn't parse sub-expression 'description blahblah d1'
+
+The instruction was converted to the following simplified line:
+    NOT (f1)
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'description blahblah d1'
+        => ERROR:
+           do not understand query
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
 
 --------------------------------------------------------
 
@@ -382,7 +3278,47 @@ Input:
 'NOT (happens before blahblahblah)'
 =>
 Result:
-couldn't parse sub-expression 'happens before blahblahblah': do not understand happens date
+Could not interpret the following instruction as a Boolean combination:
+    NOT (happens before blahblahblah)
+
+The error message is:
+    couldn't parse sub-expression 'happens before blahblahblah': do not understand happens date
+
+The instruction was converted to the following simplified line:
+    NOT (f1)
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'happens before blahblahblah'
+        => ERROR:
+           do not understand happens date
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT (has start date)'
+=>
+Result:
+  NOT (has start date) =>
+    NOT:
+      has start date
+
+
+--------------------------------------------------------
+
+
+Input:
+'NOT(path includes b)'
+=>
+Result:
+  NOT(path includes b) =>
+    NOT:
+      path includes b
+
 
 --------------------------------------------------------
 
@@ -391,72 +3327,27 @@ Input:
 'OR (description includes d1)'
 =>
 Result:
-malformed boolean query -- Invalid token (check the documentation for guidelines)
+Could not interpret the following instruction as a Boolean combination:
+    OR (description includes d1)
 
---------------------------------------------------------
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
 
+The instruction was converted to the following simplified line:
+    f1)
 
-Input:
-'(description includes SHOULD NOT BE RECOGNISED AS A BOOLEAN)AND(description includes BECAUSE THERE ARE NO SPACES AROUND THE 'AND' OPERATOR)'
-=>
-Result:
-malformed boolean query -- Unexpected character: A. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
+Where the sub-expressions in the simplified line are:
+    'f1': 'OR (description includes d1'
+        => ERROR:
+           Could not interpret the following instruction as a Boolean combination:
+           OR (description includes d1
+           
+           The error message is:
+           All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
 
---------------------------------------------------------
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
-
-
-Input:
-'(path includes (some example) OR (path includes )some example()'
-=>
-Result:
-malformed boolean query -- Invalid token (check the documentation for guidelines)
-
---------------------------------------------------------
-
-
-Input:
-'(path includes (some example)) OR (path includes )some example()'
-=>
-Result:
-malformed boolean query -- Invalid token (check the documentation for guidelines)
-
---------------------------------------------------------
-
-
-Input:
-'(path includes )some example() OR (path includes (some example))'
-=>
-Result:
-malformed boolean query -- Unexpected character: s. A closing parenthesis should be followed by another closing parenthesis or whitespace (check the documentation for guidelines)
-
---------------------------------------------------------
-
-
-Input:
-'(path includes ()some example()) OR (path includes ((some example)))'
-=>
-Result:
-malformed boolean query -- Invalid token (check the documentation for guidelines)
-
---------------------------------------------------------
-
-
-
-Input:
-'( description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i ) OR ( path includes Home/Shopping )'
-=>
-Result:
-malformed boolean query -- Invalid token (check the documentation for guidelines)
-
---------------------------------------------------------
-
-
-Input:
-'( filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type) ) OR ( filter by function const date = task.due.moment; return date ? !date.isValid() : false; ) OR ( filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false ) OR ( filter by function task.urgency.toFixed(2) === 1.95.toFixed(2) ) OR ( filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁') ) OR ( filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase() ) OR ( filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false ) OR ( filter by function const wanted = '#context/home'; return task.heading?.includes(wanted) || task.tags.find( (tag) => tag === wanted ) && true || false; )'
-=>
-Result:
-malformed boolean query -- Invalid token (check the documentation for guidelines)
 
 --------------------------------------------------------
 

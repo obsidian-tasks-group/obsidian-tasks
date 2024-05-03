@@ -1,5 +1,5 @@
 import type { Task } from '../../Task/Task';
-import type { Explanation } from '../Explain/Explanation';
+import { Explanation } from '../Explain/Explanation';
 import type { SearchInfo } from '../SearchInfo';
 import { Statement } from '../Statement';
 
@@ -55,13 +55,23 @@ export class Filter {
     }
 
     public explainFilterIndented(indent: string) {
-        const explanation = this.explanation;
-        const unindentedExplanation = explanation.asString();
         const explainedStatement = this._statement.explainStatement(indent);
-        if (unindentedExplanation === this.instruction) {
+        if (this.onlyNeedsOneLineExplanation()) {
             return `${explainedStatement}\n`;
         } else {
-            return `${explainedStatement} =>\n${explanation.asString(indent + '  ')}\n`;
+            return `${explainedStatement} =>\n${this.explanation.asString(indent + '  ')}\n`;
         }
+    }
+
+    public simulateExplainFilter() {
+        if (this.onlyNeedsOneLineExplanation()) {
+            return this.explanation;
+        } else {
+            return new Explanation(this.instruction + ' =>', [this.explanation]);
+        }
+    }
+
+    private onlyNeedsOneLineExplanation() {
+        return this.explanation.asString('') === this.instruction;
     }
 }

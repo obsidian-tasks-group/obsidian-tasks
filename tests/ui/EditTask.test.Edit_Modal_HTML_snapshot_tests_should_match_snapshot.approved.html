@@ -71,7 +71,7 @@
       </div>
       <div class="tasks-modal-section tasks-modal-dates">
         <label for="recurrence" class="accesskey-first">Recurs</label>
-        <input id="recurrence" type="text" class="input" placeholder="Try 'every 2 weeks on Thursday'." accesskey="r" />
+        <input id="recurrence" type="text" class="input" placeholder="Try 'every day when done'" accesskey="r" />
         <code class="results">
           🔁
           <i>not recurring</i>
@@ -80,23 +80,13 @@
       <hr />
       <div class="tasks-modal-section tasks-modal-dates">
         <label for="due" class="accesskey-first">Due</label>
-        <input
-          id="due"
-          type="text"
-          class="input"
-          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space."
-          accesskey="d" />
+        <input id="due" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="d" />
         <code class="results">
           📅
           <i>no due date</i>
         </code>
         <label for="scheduled" class="accesskey-first">Scheduled</label>
-        <input
-          id="scheduled"
-          type="text"
-          class="input"
-          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space."
-          accesskey="s" />
+        <input id="scheduled" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="s" />
         <code class="results">
           ⏳
           <i>no scheduled date</i>
@@ -106,17 +96,12 @@
           <span class="accesskey">a</span>
           rt
         </label>
-        <input
-          id="start"
-          type="text"
-          class="input"
-          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space."
-          accesskey="a" />
+        <input id="start" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="a" />
         <code class="results">
           🛫
           <i>no start date</i>
         </code>
-        <div>
+        <div class="future-dates-only">
           <label for="forwardOnly">
             Only
             <span class="accesskey-first">future</span>
@@ -157,7 +142,7 @@
             tabindex="-1"
             src="about:blank"></iframe>
         </span>
-        <div class="task-dependencies-container results"></div>
+        <div class="task-dependencies-container results-dependency"></div>
         <label for="blocking">
           Aft
           <span class="accesskey">e</span>
@@ -188,10 +173,10 @@
             tabindex="-1"
             src="about:blank"></iframe>
         </span>
-        <div class="task-dependencies-container results"></div>
+        <div class="task-dependencies-container results-dependency"></div>
       </div>
       <hr />
-      <div class="tasks-modal-section">
+      <div class="tasks-modal-section tasks-modal-dates">
         <label for="status">
           Stat
           <span class="accesskey">u</span>
@@ -205,32 +190,28 @@
         </select>
       </div>
       <div class="tasks-modal-section tasks-modal-dates">
-        <label for="created">Created</label>
-        <input
-          id="created"
-          type="text"
-          class="input"
-          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space." />
+        <label for="created" class="accesskey-first">Created</label>
+        <input id="created" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="c" />
         <code class="results">
           ➕
           <i>no created date</i>
         </code>
-        <label for="done">Done</label>
-        <input
-          id="done"
-          type="text"
-          class="input"
-          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space." />
+        <label for="done">
+          Done (
+          <span class="accesskey">x</span>
+          )
+        </label>
+        <input id="done" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="x" />
         <code class="results">
           ✅
           <i>no done date</i>
         </code>
-        <label for="cancelled">Cancelled</label>
-        <input
-          id="cancelled"
-          type="text"
-          class="input"
-          placeholder="Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space." />
+        <label for="cancelled">
+          Cancelled (
+          <span class="accesskey">-</span>
+          )
+        </label>
+        <input id="cancelled" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="-" />
         <code class="results">
           ❌
           <i>no cancelled date</i>
