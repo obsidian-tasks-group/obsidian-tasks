@@ -7,32 +7,17 @@
     }
 
     hr {
-        margin: 0.35rem 0;
-        padding-bottom: 0.5rem;
+        margin: 0.35rem 0 0.85rem 0;
     }
 
     .tasks-modal-error {
         border: 1px solid red !important;
-    }
-
-    .tasks-modal-warning {
-        color: var(--text-warning) !important;
-        background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
     }
 }
 
 .tasks-modal-section {
     + .tasks-modal-section {
         margin-top: 8px;
-    }
-
-    label {
-        display: inline-block;
-        margin-bottom: 4px;
-    }
-
-    label > span {
-        display: inline-block;
     }
 
     label + input[type="checkbox"] {
@@ -48,6 +33,7 @@
         width: 100%;
         min-height: calc(var(--input-height) * 2);
         resize: vertical;
+        margin-top: 8px;
     }
 }
 
@@ -55,22 +41,21 @@
     display: grid;
     grid-template-columns: 6em auto auto auto;
     grid-column-gap: 0.5em;
+    grid-row-gap: 0.15em;
 
     span {
-        line-height: 1.41;
         white-space: nowrap;
     }
 
-    label {
-        border-radius: var(--input-radius);
-        padding: 2px 3px;
-        grid-column: 1;
+    > label {
         grid-row-start: 1;
-        grid-row-end: 7;
+        grid-row-end: 3;
     }
 
     input + label {
         font-size: var(--font-ui-small);
+        border-radius: var(--input-radius);
+        padding: 2px 3px;
     }
 
     input {
@@ -82,7 +67,7 @@
         border-color: var(--background-modifier-border-focus);
     }
 
-    input:checked + label > span {
+    input:checked + label {
         font-weight: bold;
     }
 
@@ -97,10 +82,10 @@
     grid-auto-columns: 1fr;
     column-gap: .5em;
     row-gap: 5px;
+    align-items: center;
 
     label {
         grid-column: 1;
-        margin-top: 6px;
     }
 
     .input {
@@ -113,7 +98,6 @@
 
     .results {
         grid-column: 3;
-        margin-top: 6px;
         font-size: var(--font-ui-small);
     }
 
@@ -130,13 +114,6 @@
         grid-column: 2;
         width: 15em;
     }
-}
-
-.tasks-modal-status {
-    padding-bottom: 6px;
-    margin-bottom: -16px;
-    display: flex;
-    justify-content: space-between;
 }
 
 .tasks-modal-buttons {
@@ -186,10 +163,6 @@
 
     .tasks-modal-dates > div {
         grid-column-end: 1;
-    }
-
-    .tasks-modal-status {
-        display: block;
     }
 }
 
