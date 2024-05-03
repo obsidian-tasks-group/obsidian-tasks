@@ -4,7 +4,7 @@ This section stores information about the design and implementation of the plugi
 
 ## Structure of the code
 
-- [[Structure of the code]]
+- [[Structure of the code]] - the directory structure of the source code
 
 ## Comment processes
 
