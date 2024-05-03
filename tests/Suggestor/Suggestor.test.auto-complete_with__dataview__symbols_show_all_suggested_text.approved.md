@@ -1,6 +1,6 @@
 | Searchable Text | Text that is added |
 | ----- | ----- |
-| id:: Task ID | id:: ******  |
+| id:: Task ID | id:: |
 | dependsOn:: Task depends on ID | dependsOn:: |
 | every | repeat:: every  |
 | every day | repeat:: every day  |
@@ -61,3 +61,4 @@
 | next week (2022-07-18) | start:: 2022-07-18]  |
 | next month (2022-08-11) | start:: 2022-08-11]  |
 | next year (2023-07-11) | start:: 2023-07-11]  |
+| Auto Generate Unique ID | id:: ****** |

@@ -35,25 +35,26 @@ export function makeDefaultSuggestionBuilder(
     ): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
 
-        // Step 1: add date suggestions if relevant
+        // add date suggestions if relevant
         suggestions = suggestions.concat(
             addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions, dataviewMode),
         );
 
-        // Step 2: add recurrence suggestions if relevant
+        // add recurrence suggestions if relevant
         suggestions = suggestions.concat(
             addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, dataviewMode),
         );
 
-        // Step 3: add dependecy suggestions
+        // add Auto ID suggestions
+        suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
+
+        // add dependecy suggestions
         suggestions = suggestions.concat(
             addDependsOnSuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
         );
 
-        // Step 4: add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(
-            addTaskPropertySuggestions(line, cursorPos, allTasks, settings, symbols, dataviewMode),
-        );
+        // add task property suggestions ('due', 'recurrence' etc)
+        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
@@ -96,7 +97,6 @@ function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
 function addTaskPropertySuggestions(
     line: string,
     cursorPos: number,
-    allTasks: Task[],
     _settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
     dataviewMode: boolean,
@@ -127,7 +127,7 @@ function addTaskPropertySuggestions(
     if (!line.includes(symbols.idSymbol))
         genericSuggestions.push({
             displayText: `${symbols.idSymbol} Task ID`,
-            appendText: `${symbols.idSymbol} ${generateUniqueId(allTasks.map((task) => task.id))} `,
+            appendText: `${symbols.idSymbol}`,
         });
 
     if (!line.includes(symbols.dependsOnSymbol))
@@ -407,6 +407,25 @@ function addRecurrenceSuggestions(
     return results;
 }
 
+function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allTasks: Task[]) {
+    const results: SuggestInfo[] = [];
+    const idRegex = new RegExp(`(${idSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const idMatch = matchIfCursorInRegex(line, idRegex, cursorPos);
+
+    if (idMatch && idMatch[0].trim().length <= idSymbol.length) {
+        const ID = generateUniqueId(allTasks.map((task) => task.id));
+        results.push({
+            suggestionType: 'match',
+            displayText: 'Auto Generate Unique ID',
+            appendText: `${idSymbol} ${ID}`,
+            insertAt: idMatch.index,
+            insertSkip: idSymbol.length,
+        });
+    }
+
+    return results;
+}
+
 /*
  * If the cursor is located in a section that is followed by a Depends On Symbol, suggest options
  * for what to enter as Depend on Option.
@@ -448,7 +467,7 @@ function addDependsOnSuggestions(
             for (const task of genericMatches) {
                 results.push({
                     suggestionType: 'match',
-                    displayText: `${task.descriptionWithoutTags}`,
+                    displayText: `${task.descriptionWithoutTags} - From: ${task.filename}.md`,
                     appendText: `${dependsOnSymbol}${existingDependsOnIdStrings}`,
                     insertAt: dependsOnMatch.index,
                     insertSkip: dependsOnSymbol.length + existingDependsOnIdStrings.length + newTaskToAppend.length,

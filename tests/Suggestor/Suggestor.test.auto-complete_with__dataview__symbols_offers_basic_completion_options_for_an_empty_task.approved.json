@@ -13,7 +13,7 @@
   },
   {
     "displayText": "id:: Task ID",
-    "appendText": "id:: ****** "
+    "appendText": "id::"
   },
   {
     "displayText": "dependsOn:: Task depends on ID",

@@ -58,7 +58,7 @@ function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: 
  * @returns the SuggestInfo, with all ID's Masked
  */
 function maskIDSuggestionForTesting(idSymbol: string, suggestions: SuggestInfo[]): SuggestInfo[] {
-    const idRegex = new RegExp(`${idSymbol}( ?[0-9a-zA-Z]*)`, 'ug');
+    const idRegex = new RegExp(`${idSymbol}( [0-9a-zA-Z]*)`, 'ug');
     suggestions.forEach((element) => {
         element.appendText = element.appendText.replace(idRegex, `${idSymbol} ******`);
     });
@@ -92,8 +92,7 @@ describe.each([
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] ';
-        let suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings, [] as Task[]);
-        suggestions = maskIDSuggestionForTesting(idSymbol, suggestions);
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings, [] as Task[]);
         verifyAsJson(suggestions);
     });
 
@@ -122,8 +121,7 @@ describe.each([
         const line = `- [ ] some task ${dependsOnSymbol} `;
         const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
 
-        let suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, [taskToDependOn]);
-        suggestions = maskIDSuggestionForTesting(idSymbol, suggestions);
+        const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, [taskToDependOn]);
         expect(suggestions[0].displayText).toContain(taskToDependOn.descriptionWithoutTags);
     });
 

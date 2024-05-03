@@ -1,6 +1,6 @@
 | Searchable Text | Text that is added |
 | ----- | ----- |
-| 🆔 Task ID | 🆔 ******  |
+| 🆔 Task ID | 🆔 |
 | ⛔ Task depends on ID | ⛔ |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
@@ -61,4 +61,5 @@
 | next week (2022-07-18) | 🛫 2022-07-18  |
 | next month (2022-08-11) | 🛫 2022-08-11  |
 | next year (2023-07-11) | 🛫 2023-07-11  |
+| Auto Generate Unique ID | 🆔 ****** |
 | ⏎ | &lt;new line> |
