@@ -192,6 +192,8 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | 📅 due date | 📅  |
 | 🛫 start date | 🛫  |
 | ⏳ scheduled date | ⏳  |
+| 🆔 Task ID | 🆔 'Generated ID'  |
+| ⛔ Task depends on ID | ⛔ |
 | ⏫ high priority | ⏫  |
 | 🔼 medium priority | 🔼  |
 | 🔽 low priority | 🔽  |
@@ -288,7 +290,3 @@ at least the specified number of characters to find a match.
 How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).
 
 The default is 6, and you can select any value from 3 to 12.
-
-## Current Limitations
-
-- The Auto-Suggest mechanism does not yet support [[task dependencies]]. We are tracking this in [issue #2681](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2681).
