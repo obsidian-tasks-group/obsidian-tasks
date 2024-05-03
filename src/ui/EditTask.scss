@@ -48,14 +48,14 @@
     }
 
     label {
-        border-radius: var(--input-radius);
-        padding: 2px 3px;
         grid-row-start: 1;
         grid-row-end: 3;
     }
 
     input + label {
         font-size: var(--font-ui-small);
+        border-radius: var(--input-radius);
+        padding: 2px 3px;
     }
 
     input {
