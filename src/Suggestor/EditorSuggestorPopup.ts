@@ -76,7 +76,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         el.setText(value.displayText);
     }
 
-    selectSuggestion(value: SuggestInfoWithContext, _evt: MouseEvent | KeyboardEvent) {
+    async selectSuggestion(value: SuggestInfoWithContext, _evt: MouseEvent | KeyboardEvent) {
         const editor = value.context.editor;
 
         if (value.suggestionType === 'empty') {
@@ -97,7 +97,22 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             );
             value.appendText += ` ${newTask.id}`;
 
-            replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
+            if (value.context.file.basename == newTask.filename) {
+                // Avoid "Has Been Modifed Externally Error" and Replace Task in Editor Context
+                console.log(value.taskItDependsOn.toFileLineString());
+                const start = {
+                    line: value.taskItDependsOn.lineNumber,
+                    ch: 0,
+                };
+                const end = {
+                    line: value.taskItDependsOn.lineNumber,
+                    ch: value.taskItDependsOn.toFileLineString().length,
+                };
+                value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
+            } else {
+                // Replace Task in File Context
+                replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
+            }
         }
 
         const currentCursor = value.context.editor.getCursor();
