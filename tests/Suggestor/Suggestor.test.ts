@@ -88,6 +88,7 @@ describe.each([
         idSymbol,
         dependsOnSymbol,
     } = symbols;
+
     it('offers basic completion options for an empty task', () => {
         // Arrange
         const originalSettings = getSettings();
@@ -149,9 +150,11 @@ describe.each([
         // Arrange
         const originalSettings = getSettings();
         originalSettings.autoSuggestMinMatch = 2;
+
         let line = `- [ ] some task ${recurrenceSymbol} e`;
         let suggestions: SuggestInfo[] = buildSuggestions(line, 19, originalSettings, [] as Task[]);
         expect(suggestions.length).toEqual(0);
+
         line = `- [ ] some task ${recurrenceSymbol} ev`;
         suggestions = buildSuggestions(line, 20, originalSettings, [] as Task[]);
         expect(suggestions[0].displayText).toEqual('every');
