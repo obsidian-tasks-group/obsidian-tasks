@@ -7,7 +7,7 @@ import { Task } from '../Task/Task';
 import { generateUniqueId } from '../Task/TaskDependency';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import { searchForCandidateTasksForDependency } from './DependencyHelpers';
+import { searchForCandidateTasksForDependency } from '../ui/DependencyHelpers';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 /**
