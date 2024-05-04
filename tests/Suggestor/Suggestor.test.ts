@@ -79,6 +79,8 @@ describe.each([
         name === 'dataview',
     );
 
+    /** Build suggestions for the simple case where the cursor is at the very end of the line.
+     */
     function buildSuggestionsForEndOfLine(line: string, allTasks: Task[] = []) {
         const originalSettings = getSettings();
         return buildSuggestions(line, line.length - 1, originalSettings, allTasks);
