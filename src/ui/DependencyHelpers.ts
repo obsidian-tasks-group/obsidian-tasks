@@ -54,9 +54,9 @@ function searchDescriptionWithoutTags(query: string, allTasks: Task[]): Task[] {
 export function searchForCandidateTasksForDependency(
     search: string,
     allTasks: Task[],
-    task: Task,
-    blockedBy: Task[],
-    blocking: Task[],
+    task?: Task,
+    blockedBy?: Task[],
+    blocking?: Task[],
 ) {
     let results = searchDescriptionWithoutTags(search, allTasks);
 
@@ -71,36 +71,46 @@ export function searchForCandidateTasksForDependency(
             return false;
         }
 
-        // remove itself, and tasks this task already has a relationship with from results
-        // line number is unavailable for the task being edited
+        // remove itself from results
         // Known issue - filters out duplicate lines in task file
-        const sameFile =
-            item.description === task.description &&
-            item.taskLocation.path === task.taskLocation.path &&
-            item.originalMarkdown === task.originalMarkdown;
-
-        return ![...blockedBy, ...blocking].includes(item) && !sameFile;
-    });
-
-    // search results favour tasks from the same file as this task
-    results.sort((a, b) => {
-        const aInSamePath = a.taskLocation.path === task.taskLocation.path;
-        const bInSamePath = b.taskLocation.path === task.taskLocation.path;
-
-        // prioritise tasks close to this task in the same file
-        if (aInSamePath && bInSamePath) {
-            return (
-                Math.abs(a.taskLocation.lineNumber - task.taskLocation.lineNumber) -
-                Math.abs(b.taskLocation.lineNumber - task.taskLocation.lineNumber)
-            );
-        } else if (aInSamePath) {
-            return -1;
-        } else if (bInSamePath) {
-            return 1;
-        } else {
-            return 0;
+        const sameTask =
+            item.description === task?.description &&
+            item.taskLocation.path === task?.taskLocation.path &&
+            item.originalMarkdown === task?.originalMarkdown;
+        if (sameTask) {
+            return false;
         }
+
+        //remove tasks this task already has a relationship with from results
+        if (blockedBy?.includes(item) || blocking?.includes(item)) {
+            return false;
+        }
+
+        return true;
     });
+
+    // if a task is provided, show close Relations higher
+    if (task) {
+        // search results favour tasks from the same file as this task
+        results.sort((a, b) => {
+            const aInSamePath = a.taskLocation.path === task.taskLocation.path;
+            const bInSamePath = b.taskLocation.path === task.taskLocation.path;
+
+            // prioritise tasks close to this task in the same file
+            if (aInSamePath && bInSamePath) {
+                return (
+                    Math.abs(a.taskLocation.lineNumber - task.taskLocation.lineNumber) -
+                    Math.abs(b.taskLocation.lineNumber - task.taskLocation.lineNumber)
+                );
+            } else if (aInSamePath) {
+                return -1;
+            } else if (bInSamePath) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+    }
 
     return results.slice(0, MAX_SEARCH_RESULTS);
 }

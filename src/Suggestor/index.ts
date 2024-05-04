@@ -1,3 +1,4 @@
+import type { Task } from 'Task/Task';
 import type { Settings } from '../Config/Settings';
 
 /*
@@ -15,9 +16,17 @@ export type SuggestInfo = {
     insertSkip?: number;
     /** Text to match with the user input if matching against the display text is not desirable */
     textToMatch?: string;
+    /** Task which needs too be Updated on Select */
+    taskItDependsOn?: Task;
 };
 
 /*
  * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
  */
-export type SuggestionBuilder = (line: string, cursorPos: number, settings: Settings) => SuggestInfo[];
+export type SuggestionBuilder = (
+    line: string,
+    cursorPos: number,
+    settings: Settings,
+    allTasks: Task[],
+    taskToSuggestFor?: Task,
+) => SuggestInfo[];

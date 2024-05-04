@@ -1,16 +1,7 @@
 | Searchable Text | Text that is added |
 | ----- | ----- |
-| ⏎ | &lt;new line> |
-| 📅 due date | 📅  |
-| 🛫 start date | 🛫  |
-| ⏳ scheduled date | ⏳  |
-| ⏫ high priority | ⏫  |
-| 🔼 medium priority | 🔼  |
-| 🔽 low priority | 🔽  |
-| 🔺 highest priority | 🔺  |
-| ⏬ lowest priority | ⏬  |
-| 🔁 recurring (repeat) | 🔁  |
-| ➕ created today (2022-07-11) | ➕ 2022-07-11  |
+| 🆔 Task ID | 🆔 |
+| ⛔ Task depends on ID | ⛔ |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
 | every week | 🔁 every week  |
@@ -24,6 +15,15 @@
 | every week on Thursday | 🔁 every week on Thursday  |
 | every week on Friday | 🔁 every week on Friday  |
 | every week on Saturday | 🔁 every week on Saturday  |
+| 📅 due date | 📅  |
+| 🛫 start date | 🛫  |
+| ⏳ scheduled date | ⏳  |
+| ⏫ high priority | ⏫  |
+| 🔼 medium priority | 🔼  |
+| 🔽 low priority | 🔽  |
+| 🔺 highest priority | 🔺  |
+| ⏬ lowest priority | ⏬  |
+| ➕ created today (2022-07-11) | ➕ 2022-07-11  |
 | today (2022-07-11) | 📅 2022-07-11  |
 | tomorrow (2022-07-12) | 📅 2022-07-12  |
 | Sunday (2022-07-17) | 📅 2022-07-17  |
@@ -36,6 +36,7 @@
 | next week (2022-07-18) | 📅 2022-07-18  |
 | next month (2022-08-11) | 📅 2022-08-11  |
 | next year (2023-07-11) | 📅 2023-07-11  |
+| 🔁 recurring (repeat) | 🔁  |
 | today (2022-07-11) | ⏳ 2022-07-11  |
 | tomorrow (2022-07-12) | ⏳ 2022-07-12  |
 | Sunday (2022-07-17) | ⏳ 2022-07-17  |
@@ -60,3 +61,5 @@
 | next week (2022-07-18) | 🛫 2022-07-18  |
 | next month (2022-08-11) | 🛫 2022-08-11  |
 | next year (2023-07-11) | 🛫 2023-07-11  |
+| Auto Generate Unique ID | 🆔 ****** |
+| ⏎ | &lt;new line> |

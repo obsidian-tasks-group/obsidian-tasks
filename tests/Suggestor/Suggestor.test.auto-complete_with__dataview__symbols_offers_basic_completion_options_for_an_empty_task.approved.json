@@ -12,18 +12,16 @@
     "appendText": "scheduled:: "
   },
   {
+    "displayText": "id:: Task ID",
+    "appendText": "id::"
+  },
+  {
+    "displayText": "dependsOn:: Task depends on ID",
+    "appendText": "dependsOn::"
+  },
+  {
     "displayText": "priority:: high priority",
     "appendText": "priority:: high] ",
-    "insertSkip": 0
-  },
-  {
-    "displayText": "priority:: medium priority",
-    "appendText": "priority:: medium] ",
-    "insertSkip": 0
-  },
-  {
-    "displayText": "priority:: low priority",
-    "appendText": "priority:: low] ",
     "insertSkip": 0
   }
 ]
