@@ -176,13 +176,14 @@ describe.each([
     });
 
     describe('suggestions for dependency fields', () => {
-        it('offers task suggestions for tasks too possible depend on', () => {
+        it('should offer to depend on only task in vault, and include its filename in suggestion', () => {
             // Arrange
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
+            const descriptionPlusFileName = 'Do exercises - From: fileName.md';
 
             const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, [taskToDependOn]);
-            expect(suggestions[0].displayText).toContain(taskToDependOn.descriptionWithoutTags);
+            expect(suggestions[0].displayText).toEqual(descriptionPlusFileName);
         });
     });
 
