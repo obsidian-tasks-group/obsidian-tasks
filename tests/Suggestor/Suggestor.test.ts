@@ -116,16 +116,6 @@ describe.each([
         expect(suggestions[1].displayText).toContain('tomorrow');
     });
 
-    it('offers task suggestions for tasks too possible depend on', () => {
-        // Arrange
-        const originalSettings = getSettings();
-        const line = `- [ ] some task ${dependsOnSymbol} `;
-        const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
-
-        const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, [taskToDependOn]);
-        expect(suggestions[0].displayText).toContain(taskToDependOn.descriptionWithoutTags);
-    });
-
     it('offers generic recurrence completions', () => {
         // Arrange
         const originalSettings = getSettings();
@@ -182,6 +172,20 @@ describe.each([
             expect(1).toEqual(2);
         }
         expect(suggestions[0].displayText).not.toContain('created today');
+    });
+
+    describe('suggestions for dependency fields', () => {
+        it('offers task suggestions for tasks too possible depend on', () => {
+            // Arrange
+            const originalSettings = getSettings();
+            const line = `- [ ] some task ${dependsOnSymbol} `;
+            const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
+
+            const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, [
+                taskToDependOn,
+            ]);
+            expect(suggestions[0].displayText).toContain(taskToDependOn.descriptionWithoutTags);
+        });
     });
 
     it('show all suggested text', () => {
