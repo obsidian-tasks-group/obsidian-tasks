@@ -4,8 +4,10 @@ import { doAutocomplete } from '../lib/DateAbbreviations';
 import { Recurrence } from '../Task/Recurrence';
 import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
 import { Task } from '../Task/Task';
+import { generateUniqueId } from '../Task/TaskDependency';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { searchForCandidateTasksForDependency } from '../ui/DependencyHelpers';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 /**
@@ -24,20 +26,34 @@ export function makeDefaultSuggestionBuilder(
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
      */
-    return (line: string, cursorPos: number, settings: Settings): SuggestInfo[] => {
+    return (
+        line: string,
+        cursorPos: number,
+        settings: Settings,
+        allTasks: Task[],
+        taskToSuggestFor?: Task,
+    ): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
 
-        // Step 1: add date suggestions if relevant
+        // add date suggestions if relevant
         suggestions = suggestions.concat(
             addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions, dataviewMode),
         );
 
-        // Step 2: add recurrence suggestions if relevant
+        // add recurrence suggestions if relevant
         suggestions = suggestions.concat(
             addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, dataviewMode),
         );
 
-        // Step 3: add task property suggestions ('due', 'recurrence' etc)
+        // add Auto ID suggestions
+        suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
+
+        // add dependecy suggestions
+        suggestions = suggestions.concat(
+            addDependsOnSuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
+        );
+
+        // add task property suggestions ('due', 'recurrence' etc)
         suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
@@ -107,6 +123,19 @@ function addTaskPropertySuggestions(
             displayText: `${symbols.scheduledDateSymbol} scheduled date`,
             appendText: `${symbols.scheduledDateSymbol} `,
         });
+
+    if (!line.includes(symbols.idSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.idSymbol} Task ID`,
+            appendText: `${symbols.idSymbol}`,
+        });
+
+    if (!line.includes(symbols.dependsOnSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.dependsOnSymbol} Task depends on ID`,
+            appendText: `${symbols.dependsOnSymbol}`,
+        });
+
     if (!hasPriority(line)) {
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
         const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
@@ -146,7 +175,7 @@ function addTaskPropertySuggestions(
     // something to match, we filter the suggestions accordingly, so the user can get more specific
     // results according to what she's typing.
     // If there's no good match, present the suggestions as they are
-    const wordMatch = matchByPosition(line, /([a-zA-Z'_-]*)/g, cursorPos);
+    const wordMatch = matchIfCursorInRegex(line, /([a-zA-Z'_-]*)/g, cursorPos);
     const matchingSuggestions: SuggestInfo[] = [];
     if (wordMatch && wordMatch.length > 0) {
         const wordUnderCursor = wordMatch[0];
@@ -213,7 +242,7 @@ function addDatesSuggestions(
 
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const dateMatch = matchByPosition(line, dateRegex, cursorPos);
+    const dateMatch = matchIfCursorInRegex(line, dateRegex, cursorPos);
     if (dateMatch && dateMatch.length >= 2) {
         const datePrefix = dateMatch[1];
         const dateString = dateMatch[2];
@@ -307,7 +336,7 @@ function addRecurrenceSuggestions(
 
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
+    const recurrenceMatch = matchIfCursorInRegex(line, recurrenceRegex, cursorPos);
     if (recurrenceMatch && recurrenceMatch.length >= 2) {
         const recurrencePrefix = recurrenceMatch[1];
         const recurrenceString = recurrenceMatch[2];
@@ -378,14 +407,86 @@ function addRecurrenceSuggestions(
     return results;
 }
 
+function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allTasks: Task[]) {
+    const results: SuggestInfo[] = [];
+    const idRegex = new RegExp(`(${idSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const idMatch = matchIfCursorInRegex(line, idRegex, cursorPos);
+
+    if (idMatch && idMatch[0].trim().length <= idSymbol.length) {
+        const ID = generateUniqueId(allTasks.map((task) => task.id));
+        results.push({
+            suggestionType: 'match',
+            displayText: 'Auto Generate Unique ID',
+            appendText: `${idSymbol} ${ID}`,
+            insertAt: idMatch.index,
+            insertSkip: idSymbol.length,
+        });
+    }
+
+    return results;
+}
+
+/*
+ * If the cursor is located in a section that is followed by a Depends On Symbol, suggest options
+ * for what to enter as Depend on Option.
+ * It should contain suggestion of Possible Dependant Tasks
+ * of what the user is typing.
+ */
+function addDependsOnSuggestions(
+    line: string,
+    cursorPos: number,
+    settings: Settings,
+    dependsOnSymbol: string,
+    allTasks: Task[],
+    taskToSuggestFor?: Task,
+) {
+    const results: SuggestInfo[] = [];
+
+    const dependsOnRegex = new RegExp(`(${dependsOnSymbol})([0-9a-zA-Z ^,]*,)*([0-9a-zA-Z ^,]*)`, 'ug');
+    const dependsOnMatch = matchIfCursorInRegex(line, dependsOnRegex, cursorPos);
+    if (dependsOnMatch && dependsOnMatch.length >= 1) {
+        // dependsOnMatch[1] = Depends On Symbol
+        const existingDependsOnIdStrings = dependsOnMatch[2] || '';
+        const newTaskToAppend = dependsOnMatch[3];
+
+        // Find all Tasks, Already Added
+        let blockingTasks = [] as Task[];
+        if (existingDependsOnIdStrings) {
+            blockingTasks = allTasks.filter((task) => task.id && existingDependsOnIdStrings.contains(task.id));
+        }
+
+        if (newTaskToAppend.length >= settings.autoSuggestMinMatch) {
+            const genericMatches = searchForCandidateTasksForDependency(
+                newTaskToAppend.trim(),
+                allTasks,
+                taskToSuggestFor,
+                [] as Task[],
+                blockingTasks,
+            );
+
+            for (const task of genericMatches) {
+                results.push({
+                    suggestionType: 'match',
+                    displayText: `${task.descriptionWithoutTags} - From: ${task.filename}.md`,
+                    appendText: `${dependsOnSymbol}${existingDependsOnIdStrings}`,
+                    insertAt: dependsOnMatch.index,
+                    insertSkip: dependsOnSymbol.length + existingDependsOnIdStrings.length + newTaskToAppend.length,
+                    taskItDependsOn: task,
+                });
+            }
+        }
+    }
+    return results;
+}
+
 /**
  * Matches a string with a regex according to a position (typically of a cursor).
  * Will return a result only if a match exists and the given position is part of it.
  */
-export function matchByPosition(s: string, r: RegExp, position: number): RegExpMatchArray | void {
+export function matchIfCursorInRegex(s: string, r: RegExp, position: number): RegExpMatchArray | void {
     const matches = s.matchAll(r);
     for (const match of matches) {
-        if (match?.index && match.index <= position && position <= match.index + match[0].length) return match;
+        if (match?.index && match.index < position && position <= match.index + match[0].length) return match;
     }
 }
 
@@ -483,11 +584,11 @@ export function lastOpenBracket(
  *   * {@link fn}`(line, cursorPos, settings)` otherwise
  */
 export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [string, string][]): SuggestionBuilder {
-    return (line, cursorPos, settings): SuggestInfo[] => {
+    return (line, cursorPos, settings, taskToSuggestFor, allTasks): SuggestInfo[] => {
         if (!isAnyBracketOpen(line.slice(0, cursorPos), brackets)) {
             return [];
         }
-        return fn(line, cursorPos, settings);
+        return fn(line, cursorPos, settings, taskToSuggestFor, allTasks);
     };
 }
 

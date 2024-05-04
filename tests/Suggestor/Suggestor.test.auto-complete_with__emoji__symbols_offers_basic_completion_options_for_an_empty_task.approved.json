@@ -17,11 +17,11 @@
     "appendText": "⏳ "
   },
   {
-    "displayText": "⏫ high priority",
-    "appendText": "⏫ "
+    "displayText": "🆔 Task ID",
+    "appendText": "🆔"
   },
   {
-    "displayText": "🔼 medium priority",
-    "appendText": "🔼 "
+    "displayText": "⛔ Task depends on ID",
+    "appendText": "⛔"
   }
 ]

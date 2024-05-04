@@ -1,5 +1,8 @@
 import { App, Editor, EditorSuggest, TFile } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
+import type TasksPlugin from 'main';
+import { ensureTaskHasId } from 'Task/TaskDependency';
+import { replaceTaskWithTasks } from 'Obsidian/File';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';
@@ -10,10 +13,12 @@ export type SuggestInfoWithContext = SuggestInfo & {
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private settings: Settings;
+    private plugin: TasksPlugin;
 
-    constructor(app: App, settings: Settings) {
+    constructor(app: App, settings: Settings, plugin: TasksPlugin) {
         super(app);
         this.settings = settings;
+        this.plugin = plugin;
 
         // EditorSuggestor swallows tabs while the suggestor popup is open
         // This is a hack to support indenting while popup is open
@@ -48,9 +53,20 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     getSuggestions(context: EditorSuggestContext): SuggestInfoWithContext[] {
         const line = context.query;
         const currentCursor = context.editor.getCursor();
+        const allTasks = this.plugin.getTasks();
+
+        const taskToSuggestFor = allTasks.find(
+            (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
+        );
 
         const suggestions: SuggestInfo[] =
-            getUserSelectedTaskFormat().buildSuggestions?.(line, currentCursor.ch, this.settings) ?? [];
+            getUserSelectedTaskFormat().buildSuggestions?.(
+                line,
+                currentCursor.ch,
+                this.settings,
+                allTasks,
+                taskToSuggestFor,
+            ) ?? [];
 
         // Add the editor context to all the suggestions
         return suggestions.map((s) => ({ ...s, context }));
@@ -60,7 +76,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         el.setText(value.displayText);
     }
 
-    selectSuggestion(value: SuggestInfoWithContext, _evt: MouseEvent | KeyboardEvent) {
+    async selectSuggestion(value: SuggestInfoWithContext, _evt: MouseEvent | KeyboardEvent) {
         const editor = value.context.editor;
 
         if (value.suggestionType === 'empty') {
@@ -73,6 +89,32 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             (editor as any)?.cm?.contentDOM?.dispatchEvent(eventClone);
             return;
         }
+
+        if (value.taskItDependsOn != null) {
+            const newTask = ensureTaskHasId(
+                value.taskItDependsOn,
+                this.plugin.getTasks().map((task) => task.id),
+            );
+            value.appendText += ` ${newTask.id}`;
+
+            if (value.context.file.basename == newTask.filename) {
+                // Avoid "Has Been Modifed Externally Error" and Replace Task in Editor Context
+                console.log(value.taskItDependsOn.toFileLineString());
+                const start = {
+                    line: value.taskItDependsOn.lineNumber,
+                    ch: 0,
+                };
+                const end = {
+                    line: value.taskItDependsOn.lineNumber,
+                    ch: value.taskItDependsOn.toFileLineString().length,
+                };
+                value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
+            } else {
+                // Replace Task in File Context
+                replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
+            }
+        }
+
         const currentCursor = value.context.editor.getCursor();
         const replaceFrom = {
             line: currentCursor.line,
