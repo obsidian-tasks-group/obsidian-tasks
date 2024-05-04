@@ -184,7 +184,14 @@ describe.each([
             expect(suggestions[1].displayText).toEqual(`${dependsOnSymbol} Task depends on ID`);
         });
 
-        it('should offer to depend on only task in vault, and include its filename in suggestion', () => {
+        it('should offer to generate unique id if the id symbol is already present', () => {
+            const line = `- [ ] some task ${idSymbol}`;
+
+            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+            expect(suggestions[0].displayText).toEqual('Auto Generate Unique ID');
+        });
+
+        it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
             // Arrange
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
