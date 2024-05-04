@@ -185,8 +185,7 @@ describe.each([
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
 
-            const allTasks = [taskToDependOn];
-            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, allTasks);
+            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, [taskToDependOn]);
             expect(suggestions[0].displayText).toContain(taskToDependOn.descriptionWithoutTags);
         });
     });
