@@ -176,6 +176,14 @@ describe.each([
     });
 
     describe('suggestions for dependency fields', () => {
+        it('should offer "id" then "depends on" if user typed "id"', () => {
+            const line = '- [ ] some task id';
+
+            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+            expect(suggestions[0].displayText).toEqual(`${idSymbol} Task ID`);
+            expect(suggestions[1].displayText).toEqual(`${dependsOnSymbol} Task depends on ID`);
+        });
+
         it('should offer to depend on only task in vault, and include its filename in suggestion', () => {
             // Arrange
             const line = `- [ ] some task ${dependsOnSymbol} `;
