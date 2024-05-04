@@ -192,7 +192,6 @@ describe.each([
         });
 
         it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
-            // Arrange
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
             const descriptionPlusFileName = 'Do exercises - From: fileName.md';
@@ -200,6 +199,11 @@ describe.each([
             const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, [taskToDependOn]);
             expect(suggestions[0].displayText).toEqual(descriptionPlusFileName);
         });
+
+        // TODO should not offer to depend on self
+        // TODO should not offer to depend on a task it already depends on
+        // TODO should offer tasks in current file before those in other files
+        // TODO should offer addition of additional dependencies, if user adds comma and space after first 'depends on' value
     });
 
     it('show all suggested text', () => {
