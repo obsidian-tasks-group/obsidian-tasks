@@ -79,7 +79,8 @@ describe.each([
         name === 'dataview',
     );
 
-    function buildSuggestionsForEndOfLine(line: string, originalSettings: Settings, allTasks: Task[]) {
+    function buildSuggestionsForEndOfLine(line: string, _originalSettings: Settings, allTasks: Task[]) {
+        const originalSettings = getSettings();
         return buildSuggestions(line, line.length - 1, originalSettings, allTasks);
     }
 
