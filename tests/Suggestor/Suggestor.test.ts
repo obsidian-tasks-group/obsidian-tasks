@@ -5,7 +5,7 @@ import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
-import { type Settings, getSettings } from '../../src/Config/Settings';
+import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
 import {
     canSuggestForLine,
@@ -79,7 +79,7 @@ describe.each([
         name === 'dataview',
     );
 
-    function buildSuggestionsForEndOfLine(line: string, _originalSettings: Settings, allTasks: Task[]) {
+    function buildSuggestionsForEndOfLine(line: string, allTasks: Task[]) {
         const originalSettings = getSettings();
         return buildSuggestions(line, line.length - 1, originalSettings, allTasks);
     }
@@ -182,12 +182,11 @@ describe.each([
     describe('suggestions for dependency fields', () => {
         it('offers task suggestions for tasks too possible depend on', () => {
             // Arrange
-            const originalSettings = getSettings();
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
 
             const allTasks = [taskToDependOn];
-            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, originalSettings, allTasks);
+            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, allTasks);
             expect(suggestions[0].displayText).toContain(taskToDependOn.descriptionWithoutTags);
         });
     });
