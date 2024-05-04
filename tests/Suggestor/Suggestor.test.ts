@@ -5,7 +5,7 @@ import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
-import { getSettings } from '../../src/Config/Settings';
+import { type Settings, getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
 import {
     canSuggestForLine,
@@ -78,6 +78,10 @@ describe.each([
         MAX_GENERIC_SUGGESTIONS_FOR_TESTS,
         name === 'dataview',
     );
+
+    function buildSuggestionsForEndOfLine(line: string, originalSettings: Settings, allTasks: Task[]) {
+        return buildSuggestions(line, line.length - 1, originalSettings, allTasks);
+    }
 
     const {
         dueDateSymbol,
@@ -182,7 +186,7 @@ describe.each([
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
 
             const allTasks = [taskToDependOn];
-            const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, allTasks);
+            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, originalSettings, allTasks);
             expect(suggestions[0].displayText).toContain(taskToDependOn.descriptionWithoutTags);
         });
     });
