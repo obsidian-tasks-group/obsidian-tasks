@@ -96,17 +96,15 @@ describe.each([
 
     it('offers basic completion options for an empty task', () => {
         // Arrange
-        const originalSettings = getSettings();
         const line = '- [ ] ';
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings, [] as Task[]);
+        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
         verifyAsJson(suggestions);
     });
 
     it('offers generic due date completions', () => {
         // Arrange
-        const originalSettings = getSettings();
         const line = `- [ ] some task ${dueDateSymbol}`;
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 17, originalSettings, [] as Task[]);
+        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
         expect(suggestions.length).toEqual(6);
@@ -114,18 +112,16 @@ describe.each([
 
     it('offers specific due date completions', () => {
         // Arrange
-        const originalSettings = getSettings();
         const line = `- [ ] some task ${dueDateSymbol} to`;
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 20, originalSettings, [] as Task[]);
+        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
     });
 
     it('offers generic recurrence completions', () => {
         // Arrange
-        const originalSettings = getSettings();
         const line = `- [ ] some task ${recurrenceSymbol}`;
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 17, originalSettings, [] as Task[]);
+        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toEqual('every');
         expect(suggestions[1].displayText).toEqual('every day');
         expect(suggestions[2].displayText).toEqual('every week');
@@ -133,9 +129,8 @@ describe.each([
 
     it('offers specific recurrence completions', () => {
         // Arrange
-        const originalSettings = getSettings();
         const line = `- [ ] some task ${recurrenceSymbol} every w`;
-        const suggestions: SuggestInfo[] = buildSuggestions(line, 25, originalSettings, [] as Task[]);
+        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toEqual('every week');
         expect(suggestions[1].displayText).toEqual('every week on Sunday');
         expect(suggestions[2].displayText).toEqual('every week on Monday');
@@ -158,13 +153,12 @@ describe.each([
 
     it('matches created property suggestion when user types "created" but not "today"', () => {
         // Arrange
-        const originalSettings = getSettings();
         let line = '- [ ] some task cr';
-        let suggestions: SuggestInfo[] = buildSuggestions(line, 18, originalSettings, [] as Task[]);
+        let suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toEqual(`${createdDateSymbol} created today (2022-07-11)`);
 
         line = '- [ ] some task tod';
-        suggestions = buildSuggestions(line, 19, originalSettings, [] as Task[]);
+        suggestions = buildSuggestionsForEndOfLine(line);
         if (name === 'emoji') {
             // The first suggestion is new line
             expect(suggestions[0].suggestionType).toEqual('empty');
