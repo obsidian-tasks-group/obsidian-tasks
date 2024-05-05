@@ -427,14 +427,14 @@ Availability of access keys:
     <!--  Description  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-description-section">
-        <label for="description">Descrip<span class="accesskey">t</span>ion</label>
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
             bind:value={editableTask.description}
             bind:this={descriptionInput}
             id="description"
             class="tasks-modal-description"
-            placeholder="Take out the trash"
+            placeholder="Description - take out the trash"
+            aria-label="Description"
             accesskey={accesskey('t')}
             on:keydown={_onDescriptionKeyDown}
             on:paste={_removeLinebreaksFromDescription}
