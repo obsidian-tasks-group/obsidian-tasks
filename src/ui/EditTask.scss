@@ -141,12 +141,11 @@
 
 @media (max-width: 649px) {
     .tasks-modal-priority-section {
-        grid-template-columns: 4em 7.5em 5em;
-        margin-bottom: -10px;
+        grid-template-columns: 6em auto auto;
     }
 
     .tasks-modal-priority-section > label {
-        grid-row: 1 / span 7;
+        grid-row: 1 / span 3;
     }
 }
 
