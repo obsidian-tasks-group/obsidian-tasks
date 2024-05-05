@@ -86,11 +86,11 @@ describe.each([
         return buildSuggestions(line, line.length - 1, originalSettings, allTasks);
     }
 
-    function shouldStartWithSuggestionsEqualling(line: string, expectedSuggestions: string[]) {
+    function shouldStartWithSuggestionsEqualling(line: string, expectedSuggestions: string[], allTasks: Task[] = []) {
         // Validate the test itself:
         expect(expectedSuggestions).not.toHaveLength(0);
 
-        const suggestions = buildSuggestionsForEndOfLine(line);
+        const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
         expectedSuggestions.forEach((expectedSuggestion, index) => {
             expect(suggestions[index].displayText).toEqual(expectedSuggestion);
         });
