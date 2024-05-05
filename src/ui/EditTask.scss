@@ -155,12 +155,16 @@
         grid-auto-columns: auto;
     }
 
-    .tasks-modal-dates-section > .input {
-        grid-column: 1;
+    .tasks-modal-dates-section {
+        > .input {
+            grid-column: 1;
+        }
     }
 
-    .tasks-modal-dates-section > .results {
-        grid-column: 2;
+    .tasks-modal-dates-section {
+        > .results {
+            grid-column: 2;
+        }
     }
 
     .tasks-modal-dependencies-section {
