@@ -201,9 +201,47 @@ describe.each([
         });
 
         // TODO should not offer to depend on self
-        // TODO should not offer to depend on a task it already depends on
         // TODO should offer tasks in current file before those in other files
-        // TODO should offer addition of additional dependencies, if user adds comma and space after first 'depends on' value
+        // TODO should not offer id or dependsOn if cursor is in the middle of the line
+        // TODO test that it uses the same regex for Task IDs as the rest of the code
+        // TODO confirm it does not unnecessarily rewrite tasks that already have an ID
+
+        describe('suggesting additional dependencies', () => {
+            const taskBuilder = new TaskBuilder().path('root/dir 1/dir 2/file-name.md');
+            const allTasks = [
+                // force line break
+                taskBuilder.description('1').id('1234').build(),
+                taskBuilder.description('2').id('5678').build(),
+            ];
+
+            it('should suggest all tasks when there is no existing ID after dependsOn', () => {
+                const line = `- [ ] some task ${dependsOnSymbol} `;
+                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, allTasks);
+                expect(suggestions[0].displayText).toEqual('1 - From: file-name.md');
+                expect(suggestions[1].displayText).toEqual('2 - From: file-name.md');
+            });
+
+            it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
+                const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
+                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, Array.from(allTasks));
+                expect(suggestions[0].displayText).toEqual('2 - From: file-name.md');
+            });
+
+            it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
+                const line = `- [ ] some task ${dependsOnSymbol} 1234,5678,`;
+                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, Array.from(allTasks));
+
+                if (name === 'emoji') {
+                    expect(suggestions[0].displayText).toEqual('⏎');
+                } else if (name === 'dataview') {
+                    expect(suggestions[0].displayText).toEqual('due:: due date');
+                } else {
+                    // we should never reach here
+                    // add a new case above if adding a new format
+                    expect(1).toEqual(2);
+                }
+            });
+        });
     });
 
     it('show all suggested text', () => {
