@@ -237,18 +237,17 @@ describe.each([
                 taskBuilder.description('2').id('5678').build(),
             ];
 
+            const suggestTask0 = '1 - From: file-name.md';
+            const suggestTask1 = '2 - From: file-name.md';
+
             it('should suggest all tasks when there is no existing ID after dependsOn', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} `;
-                shouldStartWithSuggestionsEqualling(
-                    line,
-                    ['1 - From: file-name.md', '2 - From: file-name.md'],
-                    allTasks,
-                );
+                shouldStartWithSuggestionsEqualling(line, [suggestTask0, suggestTask1], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
-                shouldStartWithSuggestionsEqualling(line, ['2 - From: file-name.md'], allTasks);
+                shouldStartWithSuggestionsEqualling(line, [suggestTask1], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
