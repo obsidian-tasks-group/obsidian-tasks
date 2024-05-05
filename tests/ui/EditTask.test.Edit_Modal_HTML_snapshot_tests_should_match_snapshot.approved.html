@@ -1,6 +1,6 @@
 <div>
   <form class="tasks-modal with-accesskeys">
-    <div class="tasks-modal-description-section">
+    <section class="tasks-modal-description-section">
       <label for="description">
         Descrip
         <span class="accesskey">t</span>
@@ -11,8 +11,8 @@
         class="tasks-modal-description"
         placeholder="Take out the trash"
         accesskey="t"></textarea>
-    </div>
-    <div class="tasks-modal-priority-section">
+    </section>
+    <section class="tasks-modal-priority-section">
       <label for="priority-none">Priority</label>
       <div class="task-modal-priority-option-container">
         <input type="radio" id="priority-lowest" value="lowest" accesskey="o" />
@@ -67,17 +67,17 @@
           <span>🔺</span>
         </label>
       </div>
-    </div>
-    <div class="tasks-modal-dates-section">
+    </section>
+    <section class="tasks-modal-dates-section">
       <label for="recurrence" class="accesskey-first">Recurs</label>
       <input id="recurrence" type="text" class="input" placeholder="Try 'every day when done'" accesskey="r" />
       <code class="results">
         🔁
         <i>not recurring</i>
       </code>
-    </div>
+    </section>
     <hr />
-    <div class="tasks-modal-dates-section">
+    <section class="tasks-modal-dates-section">
       <label for="due" class="accesskey-first">Due</label>
       <input id="due" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="d" />
       <code class="results">
@@ -112,9 +112,9 @@
           class="input task-list-item-checkbox tasks-modal-checkbox"
           accesskey="f" />
       </div>
-    </div>
+    </section>
     <hr />
-    <div class="tasks-modal-dependencies-section">
+    <section class="tasks-modal-dependencies-section">
       <label for="blockedBy" class="accesskey-first">Before this</label>
       <span class="input">
         <input
@@ -173,9 +173,9 @@
           src="about:blank"></iframe>
       </span>
       <div class="task-dependencies-container results-dependency"></div>
-    </div>
+    </section>
     <hr />
-    <div class="tasks-modal-dates-section">
+    <section class="tasks-modal-dates-section">
       <label for="status">
         Stat
         <span class="accesskey">u</span>
@@ -213,10 +213,10 @@
         ❌
         <i>no cancelled date</i>
       </code>
-    </div>
-    <div class="tasks-modal-button-section">
+    </section>
+    <section class="tasks-modal-button-section">
       <button type="submit" class="mod-cta">Apply</button>
       <button type="button">Cancel</button>
-    </div>
+    </section>
   </form>
 </div>

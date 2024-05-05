@@ -426,7 +426,7 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <!--  Description  -->
     <!-- --------------------------------------------------------------------------- -->
-    <div class="tasks-modal-description-section">
+    <section class="tasks-modal-description-section">
         <label for="description">Descrip<span class="accesskey">t</span>ion</label>
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
@@ -440,12 +440,12 @@ Availability of access keys:
             on:paste={_removeLinebreaksFromDescription}
             on:drop={_removeLinebreaksFromDescription}
         />
-    </div>
+    </section>
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
-    <div class="tasks-modal-priority-section" on:keyup={_onPriorityKeyup}>
+    <section class="tasks-modal-priority-section" on:keyup={_onPriorityKeyup}>
         <label for="priority-{editableTask.priority}">Priority</label>
         {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
             <div class="task-modal-priority-option-container">
@@ -467,12 +467,12 @@ Availability of access keys:
                 </label>
             </div>
         {/each}
-    </div>
+    </section>
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Recurrence  -->
     <!-- --------------------------------------------------------------------------- -->
-    <div class="tasks-modal-dates-section">
+    <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
@@ -488,13 +488,13 @@ Availability of access keys:
             accesskey={accesskey('r')}
         />
         <code class="results">{recurrenceSymbol} {@html parsedRecurrence}</code>
-    </div>
+    </section>
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dates  -->
     <!-- --------------------------------------------------------------------------- -->
     <hr />
-    <div class="tasks-modal-dates-section">
+    <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
@@ -551,13 +551,13 @@ Availability of access keys:
                 accesskey={accesskey('f')}
             />
         </div>
-    </div>
+    </section>
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dependencies  -->
     <!-- --------------------------------------------------------------------------- -->
     <hr />
-    <div class="tasks-modal-dependencies-section">
+    <section class="tasks-modal-dependencies-section">
         {#if allTasks.length > 0 && mountComplete}
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocked By Tasks  -->
@@ -591,10 +591,10 @@ Availability of access keys:
         {:else}
             <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
         {/if}
-    </div>
+    </section>
 
     <hr />
-    <div class="tasks-modal-dates-section">
+    <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
@@ -658,10 +658,10 @@ Availability of access keys:
             forwardOnly={editableTask.forwardOnly}
             accesskey={accesskey('-')}
         />
-    </div>
+    </section>
 
-    <div class="tasks-modal-button-section">
+    <section class="tasks-modal-button-section">
         <button disabled={!formIsValid} type="submit" class="mod-cta">Apply </button>
         <button type="button" on:click={_onClose}>Cancel</button>
-    </div>
+    </section>
 </form>
