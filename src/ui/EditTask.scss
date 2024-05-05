@@ -67,7 +67,7 @@
     }
 }
 
-.tasks-modal-dates {
+.tasks-modal-dates-section {
     display: grid;
     grid-template-columns: 6.0em auto;
     grid-auto-columns: 1fr;
@@ -155,7 +155,7 @@
 }
 
 @media (max-width: 499px) {
-    .tasks-modal-dates {
+    .tasks-modal-dates-section {
         grid-template-columns: 1fr;
         grid-auto-columns: auto;
 
@@ -164,21 +164,21 @@
         }
     }
 
-    .tasks-modal-dates > label {
+    .tasks-modal-dates-section > label {
         margin: 0;
     }
 
-    .tasks-modal-dates > .input, .tasks-modal-dates > .results {
+    .tasks-modal-dates-section > .input, .tasks-modal-dates-section > .results {
         grid-column: 1;
     }
 
-    .tasks-modal-dates > div {
+    .tasks-modal-dates-section > div {
         grid-column-end: 1;
     }
 }
 
 @media (max-width: 399px) {
-    .tasks-modal-dates {
+    .tasks-modal-dates-section {
         select {
             grid-column: 1;
             width: auto;
