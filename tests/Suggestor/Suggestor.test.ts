@@ -235,13 +235,13 @@ describe.each([
 
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
-                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, Array.from(allTasks));
+                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, allTasks);
                 expect(suggestions[0].displayText).toEqual('2 - From: file-name.md');
             });
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,5678,`;
-                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, Array.from(allTasks));
+                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, allTasks);
 
                 shouldOnlyOfferDefaultSuggestions(suggestions);
             });
