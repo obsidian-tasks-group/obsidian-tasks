@@ -420,7 +420,7 @@ Availability of access keys:
 - -: Cancelled
 -->
 
-<form on:submit|preventDefault={_onSubmit} class="tasks-modal" class:with-accesskeys={withAccessKeys}>
+<form class="tasks-modal" class:with-accesskeys={withAccessKeys} on:submit|preventDefault={_onSubmit}>
     <!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
 
     <!-- --------------------------------------------------------------------------- -->
