@@ -111,14 +111,14 @@ describe.each([
     it('offers basic completion options for an empty task', () => {
         // Arrange
         const line = '- [ ] ';
-        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+        const suggestions = buildSuggestionsForEndOfLine(line);
         verifyAsJson(suggestions);
     });
 
     it('offers generic due date completions', () => {
         // Arrange
         const line = `- [ ] some task ${dueDateSymbol}`;
-        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+        const suggestions = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
         expect(suggestions.length).toEqual(6);
@@ -127,7 +127,7 @@ describe.each([
     it('offers specific due date completions', () => {
         // Arrange
         const line = `- [ ] some task ${dueDateSymbol} to`;
-        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+        const suggestions = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
     });
@@ -135,7 +135,7 @@ describe.each([
     it('offers generic recurrence completions', () => {
         // Arrange
         const line = `- [ ] some task ${recurrenceSymbol}`;
-        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+        const suggestions = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toEqual('every');
         expect(suggestions[1].displayText).toEqual('every day');
         expect(suggestions[2].displayText).toEqual('every week');
@@ -144,7 +144,7 @@ describe.each([
     it('offers specific recurrence completions', () => {
         // Arrange
         const line = `- [ ] some task ${recurrenceSymbol} every w`;
-        const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+        const suggestions = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toEqual('every week');
         expect(suggestions[1].displayText).toEqual('every week on Sunday');
         expect(suggestions[2].displayText).toEqual('every week on Monday');
@@ -156,7 +156,7 @@ describe.each([
         originalSettings.autoSuggestMinMatch = 2;
 
         let line = `- [ ] some task ${recurrenceSymbol} e`;
-        let suggestions: SuggestInfo[] = buildSuggestions(line, 19, originalSettings, [] as Task[]);
+        let suggestions = buildSuggestions(line, 19, originalSettings, [] as Task[]);
         expect(suggestions.length).toEqual(0);
 
         line = `- [ ] some task ${recurrenceSymbol} ev`;
@@ -168,7 +168,7 @@ describe.each([
     it('matches created property suggestion when user types "created" but not "today"', () => {
         // Arrange
         let line = '- [ ] some task cr';
-        let suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+        let suggestions = buildSuggestionsForEndOfLine(line);
         expect(suggestions[0].displayText).toEqual(`${createdDateSymbol} created today (2022-07-11)`);
 
         line = '- [ ] some task tod';
@@ -191,7 +191,7 @@ describe.each([
         it('should offer "id" then "depends on" if user typed "id"', () => {
             const line = '- [ ] some task id';
 
-            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+            const suggestions = buildSuggestionsForEndOfLine(line);
             expect(suggestions[0].displayText).toEqual(`${idSymbol} Task ID`);
             expect(suggestions[1].displayText).toEqual(`${dependsOnSymbol} Task depends on ID`);
         });
@@ -199,7 +199,7 @@ describe.each([
         it('should offer to generate unique id if the id symbol is already present', () => {
             const line = `- [ ] some task ${idSymbol}`;
 
-            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line);
+            const suggestions = buildSuggestionsForEndOfLine(line);
             expect(suggestions[0].displayText).toEqual('Auto Generate Unique ID');
         });
 
@@ -208,7 +208,7 @@ describe.each([
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
             const descriptionPlusFileName = 'Do exercises - From: fileName.md';
 
-            const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, [taskToDependOn]);
+            const suggestions = buildSuggestionsForEndOfLine(line, [taskToDependOn]);
             expect(suggestions[0].displayText).toEqual(descriptionPlusFileName);
         });
 
@@ -228,20 +228,20 @@ describe.each([
 
             it('should suggest all tasks when there is no existing ID after dependsOn', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} `;
-                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, allTasks);
+                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
                 expect(suggestions[0].displayText).toEqual('1 - From: file-name.md');
                 expect(suggestions[1].displayText).toEqual('2 - From: file-name.md');
             });
 
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
-                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, allTasks);
+                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
                 expect(suggestions[0].displayText).toEqual('2 - From: file-name.md');
             });
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,5678,`;
-                const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, allTasks);
+                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
 
                 shouldOnlyOfferDefaultSuggestions(suggestions);
             });
@@ -263,7 +263,7 @@ describe.each([
         ];
         const markdownTable = new MarkdownTable(['Searchable Text', 'Text that is added']);
         for (const line of lines) {
-            let suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings, [] as Task[]);
+            let suggestions = buildSuggestions(line, line.length - 1, originalSettings, [] as Task[]);
             suggestions = maskIDSuggestionForTesting(idSymbol, suggestions);
             for (const suggestion of suggestions) {
                 // The 'new line' replacement adds a trailing space at the end of a line,
