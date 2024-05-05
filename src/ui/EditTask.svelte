@@ -660,7 +660,7 @@ Availability of access keys:
         />
     </div>
 
-    <div class="tasks-modal-buttons">
+    <div class="tasks-modal-button-section">
         <button disabled={!formIsValid} type="submit" class="mod-cta">Apply </button>
         <button type="button" on:click={_onClose}>Cancel</button>
     </div>
