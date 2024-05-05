@@ -159,7 +159,11 @@
         margin: 0;
     }
 
-    .tasks-modal-dates-section > .input, .tasks-modal-dates-section > .results {
+    .tasks-modal-dates-section > .input {
+        grid-column: 1;
+    }
+
+    .tasks-modal-dates-section > .results {
         grid-column: 1;
     }
 
