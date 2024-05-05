@@ -147,10 +147,7 @@ describe.each([
     it('offers specific recurrence completions', () => {
         // Arrange
         const line = `- [ ] some task ${recurrenceSymbol} every w`;
-        const suggestions = buildSuggestionsForEndOfLine(line);
-        expect(suggestions[0].displayText).toEqual('every week');
-        expect(suggestions[1].displayText).toEqual('every week on Sunday');
-        expect(suggestions[2].displayText).toEqual('every week on Monday');
+        shouldStartWithSuggestionsEqualling(line, ['every week', 'every week on Sunday', 'every week on Monday']);
     });
 
     it('respects the minimal match setting', () => {
