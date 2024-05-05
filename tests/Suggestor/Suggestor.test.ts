@@ -87,6 +87,9 @@ describe.each([
     }
 
     function shouldStartWithSuggestionsEqualling(line: string, expectedSuggestions: string[]) {
+        // Validate the test itself:
+        expect(expectedSuggestions).not.toHaveLength(0);
+
         const suggestions = buildSuggestionsForEndOfLine(line);
         expectedSuggestions.forEach((expectedSuggestion, index) => {
             expect(suggestions[index].displayText).toEqual(expectedSuggestion);
@@ -168,11 +171,10 @@ describe.each([
     it('matches created property suggestion when user types "created" but not "today"', () => {
         // Arrange
         let line = '- [ ] some task cr';
-        let suggestions = buildSuggestionsForEndOfLine(line);
-        expect(suggestions[0].displayText).toEqual(`${createdDateSymbol} created today (2022-07-11)`);
+        shouldStartWithSuggestionsEqualling(line, [`${createdDateSymbol} created today (2022-07-11)`]);
 
         line = '- [ ] some task tod';
-        suggestions = buildSuggestionsForEndOfLine(line);
+        const suggestions = buildSuggestionsForEndOfLine(line);
         if (name === 'emoji') {
             // The first suggestion is new line
             expect(suggestions[0].suggestionType).toEqual('empty');
@@ -190,17 +192,12 @@ describe.each([
     describe('suggestions for dependency fields', () => {
         it('should offer "id" then "depends on" if user typed "id"', () => {
             const line = '- [ ] some task id';
-
-            const suggestions = buildSuggestionsForEndOfLine(line);
-            expect(suggestions[0].displayText).toEqual(`${idSymbol} Task ID`);
-            expect(suggestions[1].displayText).toEqual(`${dependsOnSymbol} Task depends on ID`);
+            shouldStartWithSuggestionsEqualling(line, [`${idSymbol} Task ID`, `${dependsOnSymbol} Task depends on ID`]);
         });
 
         it('should offer to generate unique id if the id symbol is already present', () => {
             const line = `- [ ] some task ${idSymbol}`;
-
-            const suggestions = buildSuggestionsForEndOfLine(line);
-            expect(suggestions[0].displayText).toEqual('Auto Generate Unique ID');
+            shouldStartWithSuggestionsEqualling(line, ['Auto Generate Unique ID']);
         });
 
         it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
