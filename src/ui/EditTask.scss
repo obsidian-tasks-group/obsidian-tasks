@@ -155,20 +155,12 @@
         grid-auto-columns: auto;
     }
 
-    .tasks-modal-dates-section > label {
-        margin: 0;
-    }
-
     .tasks-modal-dates-section > .input {
         grid-column: 1;
     }
 
     .tasks-modal-dates-section > .results {
         grid-column: 2;
-    }
-
-    .tasks-modal-dates-section > div {
-        grid-column-end: 1;
     }
 
     .tasks-modal-dependencies-section {
@@ -206,7 +198,6 @@
 @media (max-width: 259px) {
     .tasks-modal-priority-section {
         grid-template-columns: 1fr;
-        margin-bottom: 0;
     }
 
     .tasks-modal-priority-section > label {
