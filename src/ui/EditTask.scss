@@ -1,5 +1,5 @@
 .tasks-modal {
-    > section {
+    > section:not(:first-child) {
             margin-top: 8px;
     }
 
