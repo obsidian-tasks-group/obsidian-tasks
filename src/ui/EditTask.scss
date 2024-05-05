@@ -38,34 +38,34 @@
 
     .task-modal-priority-option-container {
         white-space: nowrap;
+
+        input + label {
+            font-size: var(--font-ui-small);
+            border-radius: var(--input-radius);
+            padding: 2px 3px;
+        }
+
+        input {
+            accent-color: var(--interactive-accent);
+        }
+
+        input:focus + label {
+            box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+            border-color: var(--background-modifier-border-focus);
+        }
+
+        input:checked + label {
+            font-weight: bold;
+        }
+
+        input:not(:checked) + label > span:nth-child(4) {
+            filter: grayscale(100%) opacity(60%);
+        }
     }
 
     > label {
         grid-row-start: 1;
         grid-row-end: 3;
-    }
-
-    input + label {
-        font-size: var(--font-ui-small);
-        border-radius: var(--input-radius);
-        padding: 2px 3px;
-    }
-
-    input {
-        accent-color: var(--interactive-accent);
-    }
-
-    input:focus + label {
-        box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
-        border-color: var(--background-modifier-border-focus);
-    }
-
-    input:checked + label {
-        font-weight: bold;
-    }
-
-    input:not(:checked) + label > span:nth-child(4) {
-        filter: grayscale(100%) opacity(60%);
     }
 }
 
