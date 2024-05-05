@@ -86,6 +86,16 @@ describe.each([
         return buildSuggestions(line, line.length - 1, originalSettings, allTasks);
     }
 
+    function shouldStartWithSuggestionsContaining(line: string, expectedSubstrings: string[], allTasks: Task[] = []) {
+        // Validate the test itself:
+        expect(expectedSubstrings).not.toHaveLength(0);
+
+        const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
+        expectedSubstrings.forEach((expectedSuggestion, index) => {
+            expect(suggestions[index].displayText).toContain(expectedSuggestion);
+        });
+    }
+
     function shouldStartWithSuggestionsEqualling(line: string, expectedSuggestions: string[], allTasks: Task[] = []) {
         // Validate the test itself:
         expect(expectedSuggestions).not.toHaveLength(0);
@@ -137,9 +147,7 @@ describe.each([
     it('offers specific due date completions', () => {
         // Arrange
         const line = `- [ ] some task ${dueDateSymbol} to`;
-        const suggestions = buildSuggestionsForEndOfLine(line);
-        expect(suggestions[0].displayText).toContain('today');
-        expect(suggestions[1].displayText).toContain('tomorrow');
+        shouldStartWithSuggestionsContaining(line, ['today', 'tomorrow']);
     });
 
     it('offers generic recurrence completions', () => {
