@@ -473,9 +473,6 @@ Availability of access keys:
     <!--  Recurrence  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-dates-section">
-        <!-- --------------------------------------------------------------------------- -->
-        <!--  Recurrence  -->
-        <!-- --------------------------------------------------------------------------- -->
         <label for="recurrence" class="accesskey-first">Recurs</label>
         <!-- svelte-ignore a11y-accesskey -->
         <input
