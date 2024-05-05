@@ -86,6 +86,13 @@ describe.each([
         return buildSuggestions(line, line.length - 1, originalSettings, allTasks);
     }
 
+    function shouldStartWithSuggestionsEqualling(line: string, expectedSuggestions: string[]) {
+        const suggestions = buildSuggestionsForEndOfLine(line);
+        expectedSuggestions.forEach((expectedSuggestion, index) => {
+            expect(suggestions[index].displayText).toEqual(expectedSuggestion);
+        });
+    }
+
     function shouldOnlyOfferDefaultSuggestions(suggestions: SuggestInfo[]) {
         if (name === 'emoji') {
             expect(suggestions[0].displayText).toEqual('⏎');
@@ -133,12 +140,8 @@ describe.each([
     });
 
     it('offers generic recurrence completions', () => {
-        // Arrange
         const line = `- [ ] some task ${recurrenceSymbol}`;
-        const suggestions = buildSuggestionsForEndOfLine(line);
-        expect(suggestions[0].displayText).toEqual('every');
-        expect(suggestions[1].displayText).toEqual('every day');
-        expect(suggestions[2].displayText).toEqual('every week');
+        shouldStartWithSuggestionsEqualling(line, ['every', 'every day', 'every week']);
     });
 
     it('offers specific recurrence completions', () => {
