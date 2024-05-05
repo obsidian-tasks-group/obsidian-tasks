@@ -212,9 +212,7 @@ describe.each([
         it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
-            const descriptionPlusFileName = 'Do exercises - From: fileName.md';
-
-            shouldStartWithSuggestionsEqualling(line, [descriptionPlusFileName], [taskToDependOn]);
+            shouldStartWithSuggestionsEqualling(line, ['Do exercises - From: fileName.md'], [taskToDependOn]);
         });
 
         // TODO should not offer to depend on self
