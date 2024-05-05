@@ -86,6 +86,18 @@ describe.each([
         return buildSuggestions(line, line.length - 1, originalSettings, allTasks);
     }
 
+    function shouldOnlyOfferDefaultSuggestions(suggestions: SuggestInfo[]) {
+        if (name === 'emoji') {
+            expect(suggestions[0].displayText).toEqual('⏎');
+        } else if (name === 'dataview') {
+            expect(suggestions[0].displayText).toEqual('due:: due date');
+        } else {
+            // we should never reach here
+            // add a new case above if adding a new format
+            expect(1).toEqual(2);
+        }
+    }
+
     const {
         dueDateSymbol,
         scheduledDateSymbol,
@@ -231,15 +243,7 @@ describe.each([
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,5678,`;
                 const suggestions: SuggestInfo[] = buildSuggestionsForEndOfLine(line, Array.from(allTasks));
 
-                if (name === 'emoji') {
-                    expect(suggestions[0].displayText).toEqual('⏎');
-                } else if (name === 'dataview') {
-                    expect(suggestions[0].displayText).toEqual('due:: due date');
-                } else {
-                    // we should never reach here
-                    // add a new case above if adding a new format
-                    expect(1).toEqual(2);
-                }
+                shouldOnlyOfferDefaultSuggestions(suggestions);
             });
         });
     });
