@@ -153,10 +153,6 @@
     .tasks-modal-dates-section {
         grid-template-columns: 1fr;
         grid-auto-columns: auto;
-
-        .results-dependency {
-            grid-column: 1;
-        }
     }
 
     .tasks-modal-dates-section > label {
@@ -169,6 +165,16 @@
 
     .tasks-modal-dates-section > div {
         grid-column-end: 1;
+    }
+
+    .tasks-modal-dependencies-section {
+        label {
+            grid-column: 1;
+        }
+
+        .results-dependency {
+            grid-column: 1;
+        }
     }
 }
 
