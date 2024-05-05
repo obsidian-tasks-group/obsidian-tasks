@@ -105,10 +105,11 @@ describe.each([
 
         const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
         expectedSuggestions.forEach((expectedSuggestion, index) => {
+            const displayText = suggestions[index].displayText;
             if (useEqual) {
-                expect(suggestions[index].displayText).toEqual(expectedSuggestion);
+                expect(displayText).toEqual(expectedSuggestion);
             } else {
-                expect(suggestions[index].displayText).toContain(expectedSuggestion);
+                expect(displayText).toContain(expectedSuggestion);
             }
         });
 
