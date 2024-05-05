@@ -205,8 +205,7 @@ describe.each([
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
             const descriptionPlusFileName = 'Do exercises - From: fileName.md';
 
-            const suggestions = buildSuggestionsForEndOfLine(line, [taskToDependOn]);
-            expect(suggestions[0].displayText).toEqual(descriptionPlusFileName);
+            shouldStartWithSuggestionsEqualling(line, [descriptionPlusFileName], [taskToDependOn]);
         });
 
         // TODO should not offer to depend on self
@@ -225,15 +224,16 @@ describe.each([
 
             it('should suggest all tasks when there is no existing ID after dependsOn', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} `;
-                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
-                expect(suggestions[0].displayText).toEqual('1 - From: file-name.md');
-                expect(suggestions[1].displayText).toEqual('2 - From: file-name.md');
+                shouldStartWithSuggestionsEqualling(
+                    line,
+                    ['1 - From: file-name.md', '2 - From: file-name.md'],
+                    allTasks,
+                );
             });
 
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
-                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
-                expect(suggestions[0].displayText).toEqual('2 - From: file-name.md');
+                shouldStartWithSuggestionsEqualling(line, ['2 - From: file-name.md'], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
