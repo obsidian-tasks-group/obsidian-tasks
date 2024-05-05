@@ -164,7 +164,7 @@
     }
 
     .tasks-modal-dates-section > .results {
-        grid-column: 1;
+        grid-column: 2;
     }
 
     .tasks-modal-dates-section > div {
@@ -188,6 +188,10 @@
             grid-column: 1;
             width: auto;
         }
+    }
+
+    .tasks-modal-dates-section > .results {
+        grid-column: 1;
     }
 
     .tasks-modal-priority-section {
