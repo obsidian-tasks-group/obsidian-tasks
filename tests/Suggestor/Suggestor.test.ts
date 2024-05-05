@@ -87,26 +87,33 @@ describe.each([
     }
 
     function shouldStartWithSuggestionsContaining(line: string, expectedSubstrings: string[], allTasks: Task[] = []) {
-        // Validate the test itself:
-        expect(expectedSubstrings).not.toHaveLength(0);
-
-        const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
-        expectedSubstrings.forEach((expectedSuggestion, index) => {
-            expect(suggestions[index].displayText).toContain(expectedSuggestion);
-        });
-
-        // return the suggestions, to allow for further validation
-        return suggestions;
+        return shouldStartWithSuggestions(line, expectedSubstrings, false, allTasks);
     }
 
     function shouldStartWithSuggestionsEqualling(line: string, expectedSuggestions: string[], allTasks: Task[] = []) {
+        return shouldStartWithSuggestions(line, expectedSuggestions, true, allTasks);
+    }
+
+    function shouldStartWithSuggestions(
+        line: string,
+        expectedSuggestions: string[],
+        useEqual: boolean,
+        allTasks: Task[] = [],
+    ) {
         // Validate the test itself:
         expect(expectedSuggestions).not.toHaveLength(0);
 
         const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
         expectedSuggestions.forEach((expectedSuggestion, index) => {
-            expect(suggestions[index].displayText).toEqual(expectedSuggestion);
+            if (useEqual) {
+                expect(suggestions[index].displayText).toEqual(expectedSuggestion);
+            } else {
+                expect(suggestions[index].displayText).toContain(expectedSuggestion);
+            }
         });
+
+        // return the suggestions, to allow for further validation
+        return suggestions;
     }
 
     function shouldOnlyOfferDefaultSuggestions(suggestions: SuggestInfo[]) {
