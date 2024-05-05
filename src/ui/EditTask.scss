@@ -36,6 +36,11 @@
     grid-column-gap: 0.5em;
     grid-row-gap: 0.15em;
 
+    > label {
+        grid-row-start: 1;
+        grid-row-end: 3;
+    }
+
     .task-modal-priority-option-container {
         white-space: nowrap;
 
@@ -61,11 +66,6 @@
         input:not(:checked) + label > span:nth-child(4) {
             filter: grayscale(100%) opacity(60%);
         }
-    }
-
-    > label {
-        grid-row-start: 1;
-        grid-row-end: 3;
     }
 }
 
