@@ -94,6 +94,9 @@ describe.each([
         expectedSubstrings.forEach((expectedSuggestion, index) => {
             expect(suggestions[index].displayText).toContain(expectedSuggestion);
         });
+
+        // return the suggestions, to allow for further validation
+        return suggestions;
     }
 
     function shouldStartWithSuggestionsEqualling(line: string, expectedSuggestions: string[], allTasks: Task[] = []) {
@@ -138,9 +141,7 @@ describe.each([
     it('offers generic due date completions', () => {
         // Arrange
         const line = `- [ ] some task ${dueDateSymbol}`;
-        const suggestions = buildSuggestionsForEndOfLine(line);
-        expect(suggestions[0].displayText).toContain('today');
-        expect(suggestions[1].displayText).toContain('tomorrow');
+        const suggestions = shouldStartWithSuggestionsContaining(line, ['today', 'tomorrow']);
         expect(suggestions.length).toEqual(6);
     });
 
