@@ -1,4 +1,4 @@
-import { caseInsensitiveSubstringSearch, prepareSimpleSearch } from '../__mocks__/obsidian';
+import { prepareSimpleSearch } from '../__mocks__/obsidian';
 
 describe('prepareSimpleSearch() fake', () => {
     it('should provide prepareSimpleSearch() function to do the search', () => {
@@ -24,21 +24,24 @@ describe('caseInsensitiveSubstringSearch', () => {
     it('should return null if search term is only spaces', () => {
         const searchTerm = ' ';
         const phrase = 'a b c';
-        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        const fn = prepareSimpleSearch(searchTerm);
+        const matches = fn(phrase);
         expect(matches).toBeNull();
     });
 
     it('should return null if no match', () => {
         const searchTerm = 'NOT PRESENT';
         const phrase = 'aaaaaaaaaaaaaaaaa';
-        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        const fn = prepareSimpleSearch(searchTerm);
+        const matches = fn(phrase);
         expect(matches).toBeNull();
     });
 
     it('should be case-insensitive', () => {
         const searchTerm = 'MixedCase';
         const phrase = 'mixedcase';
-        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        const fn = prepareSimpleSearch(searchTerm);
+        const matches = fn(phrase);
         expect(JSON.stringify(matches, null, 4)).toMatchInlineSnapshot(`
             "{
                 "score": 0,
@@ -55,7 +58,8 @@ describe('caseInsensitiveSubstringSearch', () => {
     it('should find two occurrences of one string', () => {
         const searchTerm = 'gues';
         const phrase = 'Guestimate the number of guests';
-        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        const fn = prepareSimpleSearch(searchTerm);
+        const matches = fn(phrase);
         expect(JSON.stringify(matches, null, 4)).toMatchInlineSnapshot(`
             "{
                 "score": 0,
@@ -76,7 +80,8 @@ describe('caseInsensitiveSubstringSearch', () => {
     it('should support search terms with multiple words', () => {
         const searchTerm = 'make foo';
         const phrase = 'Make the food - duplicate search words: FOOD MAKE';
-        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        const fn = prepareSimpleSearch(searchTerm);
+        const matches = fn(phrase);
         expect(JSON.stringify(matches, null, 4)).toMatchInlineSnapshot(`
             "{
                 "score": 0,
@@ -105,7 +110,8 @@ describe('caseInsensitiveSubstringSearch', () => {
     it('should require all words in query to be found', () => {
         const searchTerm = 'make ZZZ';
         const phrase = 'make aaaaaaa';
-        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        const fn = prepareSimpleSearch(searchTerm);
+        const matches = fn(phrase);
         expect(matches).toBeNull();
     });
 });
