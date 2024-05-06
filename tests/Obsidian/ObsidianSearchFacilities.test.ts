@@ -11,7 +11,7 @@ interface SearchResult {
  * @param searchTerm
  * @param phrase
  */
-function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): SearchResult {
+function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): SearchResult | null {
     // Support multi-word search terms:
     const searchTerms = searchTerm.split(/\s+/);
     let matches: number[][] = [];
@@ -32,13 +32,24 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
         return a[0] - b[0];
     });
 
-    return {
-        score: 0,
-        matches: matches,
-    };
+    if (matches.length > 0) {
+        return {
+            score: 0,
+            matches: matches,
+        };
+    } else {
+        return null;
+    }
 }
 
 describe('prepareSimpleSearch() mock', () => {
+    it('should return null if no match', () => {
+        const searchTerm = 'NOT PRESENT';
+        const phrase = 'aaaaaaaaaaaaaaaaa';
+        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        expect(matches).toBeNull();
+    });
+
     it('should be case-insensitive', () => {
         const searchTerm = 'MixedCase';
         const phrase = 'mixedcase';
