@@ -12,6 +12,10 @@ function simpleSearchResultAsJSON(searchTerm: string, phrase: string) {
     return JSON.stringify(matches, null, 4);
 }
 
+// Note: The matches values shown below were obtained by  adding console.log()
+//       calls in searchDescriptionWithoutTags() to inspect the results of Obsidian's own
+//       prepareSimpleSearch(), and then ensuring our fake version gave the same matches values.
+//       No attempt has been made to reproduce the Obsidian-generated score.
 describe('prepareSimpleSearch() fake', () => {
     it('should provide prepareSimpleSearch() function to do the search', () => {
         const searchTerm = 'hello';
