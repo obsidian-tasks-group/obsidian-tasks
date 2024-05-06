@@ -34,14 +34,13 @@ export interface TasksApiV1 {
     createTaskLineModal(): Promise<string>;
 
     /**
-     * Toggles and updates a task line according to a user's preferences, accounting for recurrance
-     * rules and completed status.
+     * Executes the 'Tasks: Toggle task done' command on the supplied line string
      *
      * @param line The markdown string of the task line being toggled
      * @param path The path to the file containing line
-     * @returns An {@link EditorInsertion} containing the information necessary to replace the toggled line
+     * @returns The updated line string
      */
-    toggleLine: (line: string, path: string) => EditorInsertion;
+    executeToggleTaskDoneCommand: (line: string, path: string) => string;
 }
 ```
 
@@ -114,6 +113,23 @@ Use these steps to make the following options appear (tested in QuickAdd 0.12.0)
 Screenshot of QuickAdd capture settings (example)
 ![Screenshot - Edit the QuickAdd Capture Configuration](../../images/api-create-taskline-modal-quickadd-capture-example.png)
 
+## `executeToggleTaskDoneCommand: (line: string, path: string) => string;`
+
+> [!released]
+This method was introduced in Tasks X.Y.Z.
+
+Executes the 'Tasks: Toggle task done' command on the supplied line string. It toggles and updates a task line according to a user's preferences, accounting for recurrance rules and completed status. It returns a string representing the toggled task.
+
+```typescript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+const sourceFile: TFile = file;
+const taskLine = '- [ ] This is a task 📅 2024-04-24';
+
+const result = tasksApi.toggleLine(taskLine, sourceFile.path);
+
+console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
+```
+
 ## Auto-Suggest Integration
 
 Plugins that [extend Obsidian's markdown editor](https://gist.github.com/Fevol/caa478ce303e69eabede7b12b2323838) can control if and when Tasks' [[Auto-Suggest]] displays by implementing a `showTasksPluginAutoSuggest` method on the extended editor class. This method must adhere the function definition below.
@@ -138,28 +154,3 @@ showTasksPluginAutoSuggest(
 ```
 
 This can be used, for example, to display the Auto-Suggest on non-task lines. [See the Kanban plugin for an example](https://github.com/mgmeyers/obsidian-kanban/blob/5fa792b9c2157390fe493f0feed6f0bc9be72910/src/components/Editor/MarkdownEditor.tsx#L100-L106).
-
-## `toggleLine: (line: string, path: string) => EditorInsertion;`
-
-> [!released]
-This method was introduced in Tasks 7.0.1.
-
-This method toggles and updates a task line according to a user's preferences, accounting for recurrance rules and completed status. It returns an object containing the text to be used to replace the input line, and the recommended position to move the cursor to.
-
-```typescript
-const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
-const sourceFile: TFile = file;
-const taskLine = '- [ ] This is a task 📅 2024-04-24';
-
-const result = tasksApi.toggleLine(taskLine, sourceFile.path);
-
-console.log(result);
-/*
-{
-    "text": "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23",
-    "moveTo": {
-        "line": 0
-    }
-}
-*/
-```
