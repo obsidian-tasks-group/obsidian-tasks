@@ -6,15 +6,16 @@ import moment from 'moment';
 import type { App } from 'obsidian';
 import { tasksApiV1 } from '../../src/Api';
 
+// This needs to be mocked because the API imports TaskModal which extends Obsidian's Modal
+// class which is not available during tests.
 jest.mock('obsidian', () => ({
     Modal: class Mock {},
 }));
 
 window.moment = moment;
 
-const app = {} as App;
 describe('APIv1 - executeToggleTaskDoneCommand', () => {
-    const api = tasksApiV1(app);
+    const api = tasksApiV1({} as App);
     const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment('2022-09-04').valueOf());
 
     // This is a simple smoke test to make sure executeToggleTaskDoneCommand is working. Its core
