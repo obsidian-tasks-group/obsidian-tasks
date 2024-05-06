@@ -12,6 +12,11 @@ interface SearchResult {
  * @param phrase
  */
 function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): SearchResult | null {
+    // Don't try and search for empty strings or just spaces:
+    if (!searchTerm.trim()) {
+        return null;
+    }
+
     // Support multi-word search terms:
     const searchTerms = searchTerm.split(/\s+/);
     let matches: number[][] = [];
@@ -48,6 +53,13 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
 }
 
 describe('prepareSimpleSearch() mock', () => {
+    it('should return null if search term is only spaces', () => {
+        const searchTerm = ' ';
+        const phrase = 'a b c';
+        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        expect(matches).toBeNull();
+    });
+
     it('should return null if no match', () => {
         const searchTerm = 'NOT PRESENT';
         const phrase = 'aaaaaaaaaaaaaaaaa';
