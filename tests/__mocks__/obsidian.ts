@@ -123,6 +123,14 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
         : null;
 }
 
+/**
+ * A fake implementation of prepareSimpleSearch(),
+ * so we can write tests of code that calls that function.
+ * Note that the returned score is always 0.
+ *
+ * See https://docs.obsidian.md/Reference/TypeScript+API/prepareSimpleSearch
+ * @param query - the search term
+ */
 export function prepareSimpleSearch(query: string): (text: string) => SearchResult | null {
     return function (text: string): SearchResult | null {
         return caseInsensitiveSubstringSearch(query, text);
