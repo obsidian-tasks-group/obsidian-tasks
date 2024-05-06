@@ -1,3 +1,8 @@
+/**
+ * @file This file tests our fake implementation of Obsidian's {@link prepareSimpleSearch}.
+ *       Additional fake search functions may be added in the future.
+ */
+
 import { prepareSimpleSearch } from '../__mocks__/obsidian';
 
 function simpleSearchShouldNotMatch(searchTerm: string, phrase: string) {

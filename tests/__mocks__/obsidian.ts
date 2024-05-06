@@ -75,8 +75,7 @@ interface SearchResult {
 }
 
 /**
- * A fake implementation of the function returned by prepareSimpleSearch(),
- * so we can write tests of code that calls that function.
+ * An implementation detail of our fail {@link prepareSimpleSearch} - see below.
  *
  * See https://docs.obsidian.md/Reference/TypeScript+API/prepareSimpleSearch
  * @param searchTerm
@@ -117,7 +116,7 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
 
     return matches.length > 0
         ? {
-              score: 0,
+              score: 0, // this fake implementation does not support calculating scores.
               matches: matches,
           }
         : null;
