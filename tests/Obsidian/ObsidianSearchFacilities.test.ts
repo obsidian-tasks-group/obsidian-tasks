@@ -52,7 +52,33 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
         : null;
 }
 
+export function prepareSimpleSearch(query: string): (text: string) => SearchResult | null {
+    return function (text: string): SearchResult | null {
+        return caseInsensitiveSubstringSearch(query, text);
+    };
+}
+
 describe('prepareSimpleSearch() mock', () => {
+    it('should provide prepareSimpleSearch() function to do the search', () => {
+        const searchTerm = 'hello';
+        const phrase = 'hello world';
+        const fn = prepareSimpleSearch(searchTerm);
+        const matches = fn(phrase);
+        expect(JSON.stringify(matches, null, 4)).toMatchInlineSnapshot(`
+            "{
+                "score": 0,
+                "matches": [
+                    [
+                        0,
+                        5
+                    ]
+                ]
+            }"
+        `);
+    });
+});
+
+describe('caseInsensitiveSubstringSearch', () => {
     it('should return null if search term is only spaces', () => {
         const searchTerm = ' ';
         const phrase = 'a b c';
