@@ -1,5 +1,11 @@
 import { prepareSimpleSearch } from '../__mocks__/obsidian';
 
+function simpleSearchShouldNotMatch(searchTerm: string, phrase: string) {
+    const fn = prepareSimpleSearch(searchTerm);
+    const matches = fn(phrase);
+    expect(matches).toBeNull();
+}
+
 describe('prepareSimpleSearch() fake', () => {
     it('should provide prepareSimpleSearch() function to do the search', () => {
         const searchTerm = 'hello';
@@ -22,9 +28,7 @@ describe('prepareSimpleSearch() fake', () => {
     it('should return null if search term is only spaces', () => {
         const searchTerm = ' ';
         const phrase = 'a b c';
-        const fn = prepareSimpleSearch(searchTerm);
-        const matches = fn(phrase);
-        expect(matches).toBeNull();
+        simpleSearchShouldNotMatch(searchTerm, phrase);
     });
 
     it('should return null if no match', () => {
