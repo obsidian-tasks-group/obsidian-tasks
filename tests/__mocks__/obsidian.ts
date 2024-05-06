@@ -75,7 +75,7 @@ interface SearchResult {
 }
 
 /**
- * An implementation detail of our fail {@link prepareSimpleSearch} - see below.
+ * An implementation detail of our fake {@link prepareSimpleSearch} - see below.
  *
  * See https://docs.obsidian.md/Reference/TypeScript+API/prepareSimpleSearch
  * @param searchTerm
