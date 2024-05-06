@@ -82,7 +82,7 @@ interface SearchResult {
  * @param searchTerm
  * @param phrase
  */
-export function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): SearchResult | null {
+function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): SearchResult | null {
     // Don't try and search for empty strings or just spaces:
     if (!searchTerm.trim()) {
         return null;
