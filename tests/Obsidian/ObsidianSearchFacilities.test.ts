@@ -34,9 +34,7 @@ describe('prepareSimpleSearch() fake', () => {
     it('should return null if no match', () => {
         const searchTerm = 'NOT PRESENT';
         const phrase = 'aaaaaaaaaaaaaaaaa';
-        const fn = prepareSimpleSearch(searchTerm);
-        const matches = fn(phrase);
-        expect(matches).toBeNull();
+        simpleSearchShouldNotMatch(searchTerm, phrase);
     });
 
     it('should be case-insensitive', () => {
@@ -112,8 +110,6 @@ describe('prepareSimpleSearch() fake', () => {
     it('should require all words in query to be found', () => {
         const searchTerm = 'make ZZZ';
         const phrase = 'make aaaaaaa';
-        const fn = prepareSimpleSearch(searchTerm);
-        const matches = fn(phrase);
-        expect(matches).toBeNull();
+        simpleSearchShouldNotMatch(searchTerm, phrase);
     });
 });
