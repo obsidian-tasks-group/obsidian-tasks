@@ -14,7 +14,7 @@ interface SearchResult {
 function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): SearchResult {
     // Support multi-word search terms:
     const searchTerms = searchTerm.split(/\s+/);
-    const matches: number[][] = [];
+    let matches: number[][] = [];
 
     for (const term of searchTerms) {
         const regex = new RegExp(term, 'gi');
@@ -23,6 +23,15 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
             matches.push([match.index, match.index + match[0].length]);
         }
     }
+
+    // Sort matches by start index and then by end index
+    matches = matches.sort((a, b) => {
+        if (a[0] === b[0]) {
+            return a[1] - b[1];
+        }
+        return a[0] - b[0];
+    });
+
     return {
         score: 0,
         matches: matches,
@@ -81,16 +90,16 @@ describe('prepareSimpleSearch() mock', () => {
                         4
                     ],
                     [
-                        45,
-                        49
-                    ],
-                    [
                         9,
                         12
                     ],
                     [
                         40,
                         43
+                    ],
+                    [
+                        45,
+                        49
                     ]
                 ]
             }"
