@@ -451,9 +451,9 @@ function addDependsOnSuggestions(
         const newTaskToAppend = dependsOnMatch[3];
 
         // Find all Tasks, Already Added
-        let blockingTasks = [] as Task[];
+        let blockingTasks: Task[] = [];
         if (existingDependsOnIdStrings) {
-            blockingTasks = allTasks.filter((task) => task.id && existingDependsOnIdStrings.contains(task.id));
+            blockingTasks = allTasks.filter((task) => task.id && existingDependsOnIdStrings.includes(task.id));
         }
 
         if (newTaskToAppend.length >= settings.autoSuggestMinMatch) {

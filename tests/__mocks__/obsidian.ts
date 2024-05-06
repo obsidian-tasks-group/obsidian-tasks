@@ -68,3 +68,70 @@ export class Notice {
      */
     hide(): void {}
 }
+
+interface SearchResult {
+    score: number;
+    matches: number[][];
+}
+
+/**
+ * An implementation detail of our fake {@link prepareSimpleSearch} - see below.
+ *
+ * See https://docs.obsidian.md/Reference/TypeScript+API/prepareSimpleSearch
+ * @param searchTerm
+ * @param phrase
+ */
+function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): SearchResult | null {
+    // Don't try and search for empty strings or just spaces:
+    if (!searchTerm.trim()) {
+        return null;
+    }
+
+    // Support multi-word search terms:
+    const searchTerms = searchTerm.split(/\s+/);
+    let matches: number[][] = [];
+
+    for (const term of searchTerms) {
+        const regex = new RegExp(term, 'gi');
+        let match;
+        let termFound = false;
+        while ((match = regex.exec(phrase)) !== null) {
+            matches.push([match.index, match.index + match[0].length]);
+            termFound = true;
+        }
+
+        // We require all search terms to be found.
+        if (!termFound) {
+            return null;
+        }
+    }
+
+    // Sort matches by start index and then by end index
+    matches = matches.sort((a, b) => {
+        if (a[0] === b[0]) {
+            return a[1] - b[1];
+        }
+        return a[0] - b[0];
+    });
+
+    return matches.length > 0
+        ? {
+              score: 0, // this fake implementation does not support calculating scores.
+              matches: matches,
+          }
+        : null;
+}
+
+/**
+ * A fake implementation of prepareSimpleSearch(),
+ * so we can write tests of code that calls that function.
+ * Note that the returned score is always 0.
+ *
+ * See https://docs.obsidian.md/Reference/TypeScript+API/prepareSimpleSearch
+ * @param query - the search term
+ */
+export function prepareSimpleSearch(query: string): (text: string) => SearchResult | null {
+    return function (text: string): SearchResult | null {
+        return caseInsensitiveSubstringSearch(query, text);
+    };
+}
