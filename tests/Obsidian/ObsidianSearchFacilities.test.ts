@@ -19,8 +19,15 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
     for (const term of searchTerms) {
         const regex = new RegExp(term, 'gi');
         let match;
+        let termFound = false;
         while ((match = regex.exec(phrase)) !== null) {
             matches.push([match.index, match.index + match[0].length]);
+            termFound = true;
+        }
+
+        // We require all search terms to be found.
+        if (!termFound) {
+            return null;
         }
     }
 
@@ -113,5 +120,12 @@ describe('prepareSimpleSearch() mock', () => {
                 ]
             }"
         `);
+    });
+
+    it('should require all words in query to be found', () => {
+        const searchTerm = 'make ZZZ';
+        const phrase = 'make aaaaaaa';
+        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        expect(matches).toBeNull();
     });
 });
