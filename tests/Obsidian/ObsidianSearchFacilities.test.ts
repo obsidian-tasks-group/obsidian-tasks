@@ -18,9 +18,7 @@ describe('prepareSimpleSearch() fake', () => {
             }"
         `);
     });
-});
 
-describe('caseInsensitiveSubstringSearch', () => {
     it('should return null if search term is only spaces', () => {
         const searchTerm = ' ';
         const phrase = 'a b c';
