@@ -237,29 +237,29 @@ describe.each([
                 taskBuilder.description('2').id('5678').build(),
             ];
 
-            const suggestTask0 = '1 - From: file-name.md';
-            const suggestTask1 = '2 - From: file-name.md';
+            const suggestTask1 = '1 - From: file-name.md';
+            const suggestTask2 = '2 - From: file-name.md';
 
             it('should suggest all tasks when there is no existing ID after dependsOn', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} `;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask0, suggestTask1], allTasks);
+                shouldStartWithSuggestionsEqualling(line, [suggestTask1, suggestTask2], allTasks);
             });
 
             it('should offer tasks containing the search string, if given a partial ID', () => {
                 // 1 does not match any of the existing IDs, so is presumed to be a substring to search for.
                 const line = `- [ ] some task ${dependsOnSymbol} 1`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask0], allTasks);
+                shouldStartWithSuggestionsEqualling(line, [suggestTask1], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask1], allTasks);
+                shouldStartWithSuggestionsEqualling(line, [suggestTask2], allTasks);
             });
 
             it.failing('should offer tasks when first existing dependency id has hyphen and underscore', () => {
                 // TODO hyphen and underscore are not currently recognised in this location by the auto-suggest code
                 const line = `- [ ] some task ${dependsOnSymbol} 1_2-3,`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask0, suggestTask1], allTasks);
+                shouldStartWithSuggestionsEqualling(line, [suggestTask1, suggestTask2], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
