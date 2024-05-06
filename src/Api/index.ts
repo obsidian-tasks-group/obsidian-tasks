@@ -14,6 +14,6 @@ export const tasksApiV1 = (app: App): TasksApiV1 => {
         createTaskLineModal: (): Promise<string> => {
             return createTaskLineModal(app, defaultTaskModalFactory);
         },
-        toggleLine,
+        executeToggleTaskDoneCommand: (line: string, path: string) => toggleLine(line, path).text,
     };
 };
