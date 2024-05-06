@@ -32,14 +32,12 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
         return a[0] - b[0];
     });
 
-    if (matches.length > 0) {
-        return {
-            score: 0,
-            matches: matches,
-        };
-    } else {
-        return null;
-    }
+    return matches.length > 0
+        ? {
+              score: 0,
+              matches: matches,
+          }
+        : null;
 }
 
 describe('prepareSimpleSearch() mock', () => {
