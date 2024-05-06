@@ -1,3 +1,4 @@
+import type { Editor, EditorPosition } from 'obsidian';
 import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
@@ -597,14 +598,37 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
  * and false value otherwise.
  *
  * This checks for simple pre-conditions:
+ *  - Does the parent editor explicitly request it?
  *  - Is the global filter (if set) in the line?
- *  - Is the line a task line (with a checkbox)
+ *  - Is the line a task line (with a checkbox)?
  * @param line
- * @param cursorPosition - the cursor position, when 0 is presumed to mean 'at the start of the line'.
- *                          See 'ch' in https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition
+ * @param cursor - the cursor position, when ch is 0 it is presumed to mean 'at the start of the line'.
+ *                          See https://docs.obsidian.md/Reference/TypeScript+API/EditorPosition
+ * @param editor - the editor instance to which the suggest belongs
  */
-export function canSuggestForLine(line: string, cursorPosition: number) {
-    return GlobalFilter.getInstance().includedIn(line) && cursorIsInTaskLineDescription(line, cursorPosition);
+export function canSuggestForLine(line: string, cursor: EditorPosition, editor: Editor) {
+    const lineHasGlobalFilter = GlobalFilter.getInstance().includedIn(line);
+    const didEditorRequest = editorIsRequestingSuggest(editor, cursor, lineHasGlobalFilter);
+
+    if (typeof didEditorRequest === 'boolean') return didEditorRequest;
+    return lineHasGlobalFilter && cursorIsInTaskLineDescription(line, cursor.ch);
+}
+
+/**
+ * Return
+ * - true if the parent editor is explicitly requesting that the suggest be displayed
+ * - false if it is requesting that it be hidden
+ * - undefined if the parent editor wants to defer to the default behavior
+ *
+ * @param editor - the editor instance to which the suggest belongs
+ * @param cursor - the cursor position
+ */
+function editorIsRequestingSuggest(
+    editor: Editor,
+    cursor: EditorPosition,
+    lineHasGlobalFilter: boolean,
+): boolean | undefined {
+    return (editor as any)?.editorComponent?.showTasksPluginAutoSuggest?.(cursor, editor, lineHasGlobalFilter);
 }
 
 /**
