@@ -6,13 +6,17 @@ function simpleSearchShouldNotMatch(searchTerm: string, phrase: string) {
     expect(matches).toBeNull();
 }
 
+function simpleSearchResultAsJSON(searchTerm: string, phrase: string) {
+    const fn = prepareSimpleSearch(searchTerm);
+    const matches = fn(phrase);
+    return JSON.stringify(matches, null, 4);
+}
+
 describe('prepareSimpleSearch() fake', () => {
     it('should provide prepareSimpleSearch() function to do the search', () => {
         const searchTerm = 'hello';
         const phrase = 'hello world';
-        const fn = prepareSimpleSearch(searchTerm);
-        const matches = fn(phrase);
-        expect(JSON.stringify(matches, null, 4)).toMatchInlineSnapshot(`
+        expect(simpleSearchResultAsJSON(searchTerm, phrase)).toMatchInlineSnapshot(`
             "{
                 "score": 0,
                 "matches": [
