@@ -262,30 +262,13 @@ describe.each([
                 shouldOnlyOfferDefaultSuggestions(suggestions);
             });
 
-            it.failing('should not offer any tasks if there is not a comma after existing depends IDs', () => {
-                // TODO It's not clear whether this is really a bug that is exposed to users,
-                //      or an error in the test.
-                // The documentation says:
-                //      'To depend on multiple tasks, type a comma after the last id in an existing 'depends on' value, and select another task'
-                // However, it currently offers to complete when there is no comma at the end.
-                // This then starts searching for tasks that match 5678,
-                // which eventually reaches a call to Obsidian's prepareSimpleSearch(),
-                // that is unavailable outside the plugin.
-                // So the current mode of failure is that this test gives a traceback starting at:
-                //      (0 , obsidian_1.prepareSimpleSearch) is not a function
-                //      TypeError: (0 , obsidian_1.prepareSimpleSearch) is not a function
-                //          at searchDescriptionWithoutTags (.../obsidian-tasks/src/ui/DependencyHelpers.ts:23:47)
-                // This sometimes manifests as a bug that when the user has selected
-                // a task and pressed return the selection menu does not go away.
+            it('should not offer any tasks if there is not a comma after existing depends IDs', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,5678`;
                 const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
                 shouldOnlyOfferDefaultSuggestions(suggestions);
             });
 
-            it.failing('should not offer tasks if "IDs" are separated by spaces', () => {
-                // IDs are separated by comma with optional space.
-                // Because there is no comma between these two values, the '5678' is not
-                // an ID, and so there should be no suggestion.
+            it('should not offer tasks if "IDs" are separated by spaces', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234 5678`;
                 const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
                 shouldOnlyOfferDefaultSuggestions(suggestions);
