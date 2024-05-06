@@ -125,7 +125,7 @@ const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
 const sourceFile: TFile = file;
 const taskLine = '- [ ] This is a task 📅 2024-04-24';
 
-const result = tasksApi.toggleLine(taskLine, sourceFile.path);
+const result = tasksApi.executeToggleTaskDoneCommand(taskLine, sourceFile.path);
 
 console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
 ```
