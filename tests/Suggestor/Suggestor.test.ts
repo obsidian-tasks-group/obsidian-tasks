@@ -245,6 +245,12 @@ describe.each([
                 shouldStartWithSuggestionsEqualling(line, [suggestTask0, suggestTask1], allTasks);
             });
 
+            it('should offer tasks containing the search string, if given a partial ID', () => {
+                // 1 does not match any of the existing IDs, so is presumed to be a substring to search for.
+                const line = `- [ ] some task ${dependsOnSymbol} 1`;
+                shouldStartWithSuggestionsEqualling(line, [suggestTask0], allTasks);
+            });
+
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
                 shouldStartWithSuggestionsEqualling(line, [suggestTask1], allTasks);
