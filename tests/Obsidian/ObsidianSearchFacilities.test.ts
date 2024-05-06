@@ -12,11 +12,16 @@ interface SearchResult {
  * @param phrase
  */
 function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): SearchResult {
-    const regex = new RegExp(searchTerm, 'gi');
+    // Support multi-word search terms:
+    const searchTerms = searchTerm.split(/\s+/);
     const matches: number[][] = [];
-    let match;
-    while ((match = regex.exec(phrase)) !== null) {
-        matches.push([match.index, match.index + match[0].length]);
+
+    for (const term of searchTerms) {
+        const regex = new RegExp(term, 'gi');
+        let match;
+        while ((match = regex.exec(phrase)) !== null) {
+            matches.push([match.index, match.index + match[0].length]);
+        }
     }
     return {
         score: 0,
@@ -57,6 +62,35 @@ describe('prepareSimpleSearch() mock', () => {
                     [
                         25,
                         29
+                    ]
+                ]
+            }"
+        `);
+    });
+
+    it('should support search terms with multiple words', () => {
+        const searchTerm = 'make foo';
+        const phrase = 'Make the food - duplicate search words: FOOD MAKE';
+        const matches = caseInsensitiveSubstringSearch(searchTerm, phrase);
+        expect(JSON.stringify(matches, null, 4)).toMatchInlineSnapshot(`
+            "{
+                "score": 0,
+                "matches": [
+                    [
+                        0,
+                        4
+                    ],
+                    [
+                        45,
+                        49
+                    ],
+                    [
+                        9,
+                        12
+                    ],
+                    [
+                        40,
+                        43
                     ]
                 ]
             }"
