@@ -23,27 +23,30 @@ publish: true
     - `src/TaskSerializer/`
     - `src/Renderer`
 - [Obsidian/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Obsidian)
-  - Code which is heavily dependent on Obsidian types such as App, Modal, Plugin, MarkdownPostProcessorContext.
-  - Has virtually no test coverage, unfortunately.
+  - Code which is heavily dependent on Obsidian types such as `App`, `Modal`, `Plugin`, `MarkdownPostProcessorContext`.
+  - Has virtually no test coverage, unfortunately, as much of the Obsidian API code requires a graphical environment and is not available outside a vault.
+  - However, we are very gradually increasing coverage by mocking little bits of Obsidian in [tests/\__mocks\__/obsidian.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/__mocks__/obsidian.ts).
 - [Query/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query)
   - Code for parsing queries.
   - The main class is [Query](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Query.ts).
   - [Explain/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Explain)
     - Implementation of the [explain](https://publish.obsidian.md/tasks/Queries/Explaining+Queries) instruction.
   - [Filter/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Filter)
-    - All the filter, sort and group instructions.
     - Contains abstract base class [Field](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/Field.ts)
-    - There is one derived Field class for each of the fields that can be searched.
+    - There is one derived `Field` class for each of the task properties that can be searched/filtered, sorted and grouped.
+    - Example: [PriorityField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/PriorityField.ts).
   - [Group/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Group)
-    - Implementation details of the grouping instructions.
+    - Implementation of the grouping mechanism.
+    - [TaskGroups](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Group/TaskGroups.ts) is the starting point for grouping tasks.
   - [Matchers/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Matchers)
     - Abstraction for the different types of [text filters](https://publish.obsidian.md/tasks/Queries/Filters#Text%20filters):
       - Substring search
       - Regular expression search
   - [Sort/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Sort)
-    - Implementation details of the sorting instructions.
+    - Implementation of the sorting mechanism.
+    - [Sort.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Sort/Sort.ts) is the starting point for sorting tasks.
 - [Renderer/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Renderer)
-  - Convert Query results and Task lines to HTML.
+  - Convert Query results and Task objects to HTML.
 - [Scripting/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Scripting)
   - Implementation of [Scripting](https://publish.obsidian.md/tasks/Scripting/About+Scripting) and [Placeholder](https://publish.obsidian.md/tasks/Scripting/Placeholders)code.
   - This is where the custom filters, sorters and groups are implemented.
