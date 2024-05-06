@@ -281,6 +281,15 @@ describe.each([
                 const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
                 shouldOnlyOfferDefaultSuggestions(suggestions);
             });
+
+            it.failing('should not offer tasks if "IDs" are separated by spaces', () => {
+                // IDs are separated by comma with optional space.
+                // Because there is no comma between these two values, the '5678' is not
+                // an ID, and so there should be no suggestion.
+                const line = `- [ ] some task ${dependsOnSymbol} 1234 5678`;
+                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
+                shouldOnlyOfferDefaultSuggestions(suggestions);
+            });
         });
     });
 
