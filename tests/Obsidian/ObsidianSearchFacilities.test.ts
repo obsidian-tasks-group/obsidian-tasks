@@ -44,9 +44,7 @@ describe('prepareSimpleSearch() fake', () => {
     it('should be case-insensitive', () => {
         const searchTerm = 'MixedCase';
         const phrase = 'mixedcase';
-        const fn = prepareSimpleSearch(searchTerm);
-        const matches = fn(phrase);
-        expect(JSON.stringify(matches, null, 4)).toMatchInlineSnapshot(`
+        expect(simpleSearchResultAsJSON(searchTerm, phrase)).toMatchInlineSnapshot(`
             "{
                 "score": 0,
                 "matches": [
@@ -62,9 +60,7 @@ describe('prepareSimpleSearch() fake', () => {
     it('should find two occurrences of one string', () => {
         const searchTerm = 'gues';
         const phrase = 'Guestimate the number of guests';
-        const fn = prepareSimpleSearch(searchTerm);
-        const matches = fn(phrase);
-        expect(JSON.stringify(matches, null, 4)).toMatchInlineSnapshot(`
+        expect(simpleSearchResultAsJSON(searchTerm, phrase)).toMatchInlineSnapshot(`
             "{
                 "score": 0,
                 "matches": [
@@ -84,9 +80,7 @@ describe('prepareSimpleSearch() fake', () => {
     it('should support search terms with multiple words', () => {
         const searchTerm = 'make foo';
         const phrase = 'Make the food - duplicate search words: FOOD MAKE';
-        const fn = prepareSimpleSearch(searchTerm);
-        const matches = fn(phrase);
-        expect(JSON.stringify(matches, null, 4)).toMatchInlineSnapshot(`
+        expect(simpleSearchResultAsJSON(searchTerm, phrase)).toMatchInlineSnapshot(`
             "{
                 "score": 0,
                 "matches": [
