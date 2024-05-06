@@ -86,14 +86,56 @@ describe.each([
         return buildSuggestions(line, line.length - 1, originalSettings, allTasks);
     }
 
-    function shouldStartWithSuggestionsContaining(line: string, expectedSubstrings: string[], allTasks: Task[] = []) {
-        return shouldStartWithSuggestions(line, expectedSubstrings, false, allTasks);
+    /**
+     * Assert that the suggestions generated from the given line **contain** substrings specified in the
+     * {@link expectedSubstrings} array.
+     *
+     * Each suggestion must contain the corresponding substring from the {@link expectedSubstrings} array.
+     *
+     * @note Additional suggestions are allowed. This only tests the initial suggestions, as defined
+     *       by the number of elements in {@link expectedSubstrings}.
+     *
+     * @param line - The line to generate suggestions from, when the cursor is at the end of the line.
+     * @param expectedSubstrings - The array of substrings that the suggestions should **contain**.
+     * @param allTasks - Optional array of tasks to consider while generating suggestions.
+     *
+     * @returns An array of {@link SuggestInfo} suggestions generated from the line, to allow for additional testing.
+     * @see shouldStartWithSuggestionsEqualling
+     */
+    function shouldStartWithSuggestionsContaining(
+        line: string,
+        expectedSubstrings: string[],
+        allTasks: Task[] = [],
+    ): SuggestInfo[] {
+        const useEqual = false;
+        return shouldStartWithSuggestions(line, expectedSubstrings, useEqual, allTasks);
     }
 
+    /**
+     * Assert that the suggestions generated from the given line **equal** the strings specified in the
+     * {@link expectedSuggestions} array.
+     *
+     * Each suggestion must equal the corresponding string from the {@link expectedSuggestions} array.
+     *
+     * @note Additional suggestions are allowed. This only tests the initial suggestions, as defined
+     *       by the number of elements in {@link expectedSuggestions}.
+     *
+     * @param line - The line to generate suggestions from, when the cursor is at the end of the line.
+     * @param expectedSuggestions - The array of strings that the suggestions should **equal**.
+     * @param allTasks - Optional array of tasks to consider while generating suggestions.
+     *
+     * @returns An array of {@link SuggestInfo} suggestions generated from the line, to allow for additional testing.
+     * @see shouldStartWithSuggestionsContaining
+     */
     function shouldStartWithSuggestionsEqualling(line: string, expectedSuggestions: string[], allTasks: Task[] = []) {
-        return shouldStartWithSuggestions(line, expectedSuggestions, true, allTasks);
+        const useEqual = true;
+        return shouldStartWithSuggestions(line, expectedSuggestions, useEqual, allTasks);
     }
 
+    /**
+     * @note This is in implementation detail of {@link shouldStartWithSuggestionsContaining}
+     *       and {@link shouldStartWithSuggestionsEqualling}. Use them instead.
+     */
     function shouldStartWithSuggestions(
         line: string,
         expectedSuggestions: string[],
