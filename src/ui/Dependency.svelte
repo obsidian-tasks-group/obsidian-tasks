@@ -142,7 +142,7 @@
 </script>
 
 <!-- svelte-ignore a11y-accesskey -->
-<span class="tasks-modal-text-input" bind:clientWidth={inputWidth}>
+<span bind:clientWidth={inputWidth}>
     <input
         bind:this={input}
         bind:value={search}
