@@ -83,6 +83,7 @@ describe('grouping by start date', () => {
             '2023-05-30 Tuesday',
             '2023-05-31 Wednesday',
             '2023-06-01 Thursday',
+            '2023-06-02 Friday',
             'No start date',
         ]);
     });

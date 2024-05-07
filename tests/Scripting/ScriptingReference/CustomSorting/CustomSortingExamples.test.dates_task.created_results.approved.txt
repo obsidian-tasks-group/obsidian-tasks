@@ -6,6 +6,7 @@ sort by function task.created.format("dddd")
 Sort by created date's day of the week, alphabetically.
 =>
 - [ ] my description
+- [ ] my description ➕ 2023-06-02
 - [ ] my description ➕ Invalid date
 - [ ] my description ➕ 2023-06-01
 - [ ] my description ➕ 2023-05-30
