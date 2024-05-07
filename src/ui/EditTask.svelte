@@ -433,7 +433,7 @@ Availability of access keys:
             bind:this={descriptionInput}
             id="description"
             class="tasks-modal-description"
-            placeholder="Description - take out the trash"
+            placeholder="Add a description, such as Take out the trash"
             aria-label="Description"
             accesskey={accesskey('t')}
             on:keydown={_onDescriptionKeyDown}
