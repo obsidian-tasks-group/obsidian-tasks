@@ -61,7 +61,11 @@ export function parseTypedDateForDisplay(
         forwardDate: forwardDate != undefined,
     });
     if (parsed !== null) {
-        return window.moment(parsed).format('YYYY-MM-DD');
+        let dateFormat = 'YYYY-MM-DD';
+        if (fieldName === 'reminder') {
+            dateFormat = 'YYYY-MM-DD HH:mm';
+        }
+        return window.moment(parsed).format(dateFormat);
     }
     return `<i>invalid ${fieldName} date</i>`;
 }
