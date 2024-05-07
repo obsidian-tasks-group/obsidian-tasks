@@ -81,6 +81,8 @@ describe('task', () => {
             `task.due.formatAsDate(${textToUseIfUndated})`,
             'task.due.formatAsDateAndTime()',
             `task.due.formatAsDateAndTime(${textToUseIfUndated})`,
+            'task.due.formatAsDateAndTimeOrDate()',
+            `task.due.formatAsDateAndTimeOrDate(${textToUseIfUndated})`,
             "task.due.format('dddd')",
             `task.due.format('dddd', ${textToUseIfUndated})`,
             'task.due.toISOString()',
