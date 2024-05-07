@@ -80,7 +80,7 @@
         grid-column: 1;
     }
 
-    .tasks-modal-text-input {
+    .tasks-modal-date-input {
         min-width: 15em;
     }
 
@@ -157,7 +157,7 @@
         grid-template-columns: 1fr;
         grid-auto-columns: auto;
 
-        .tasks-modal-text-input {
+        .tasks-modal-date-input {
             grid-column: 1;
         }
 

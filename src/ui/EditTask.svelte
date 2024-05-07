@@ -484,7 +484,7 @@ Availability of access keys:
             id="recurrence"
             type="text"
             class:tasks-modal-error={!isRecurrenceValid}
-            class="tasks-modal-text-input"
+            class="tasks-modal-date-input"
             placeholder="Try 'every day when done'"
             accesskey={accesskey('r')}
         />
