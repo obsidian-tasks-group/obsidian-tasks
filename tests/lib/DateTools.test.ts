@@ -12,7 +12,7 @@ import {
     expectDateComparesBefore,
     expectDateComparesEqual,
 } from '../CustomMatchers/CustomMatchersForSorting';
-import { isDateTime } from '../../src/lib/DateTools';
+import { isDateTime, parseTypedDateForDisplay, parseTypedDateForSaving } from '../../src/lib/DateTools';
 
 // These are lower-level tests that the Task-based ones above, for ease of test coverage.
 describe('compareBy', () => {
@@ -32,6 +32,29 @@ describe('compareBy', () => {
         expectDateComparesEqual(invalidDate, invalidDate);
         expectDateComparesBefore(invalidDate, earlierDate); // invalid dates sort before valid ones
         expectDateComparesAfter(laterDate, invalidDate); // invalid dates sort before valid ones
+    });
+});
+
+describe('parseTypedDateForDisplay', () => {
+    it('should discard a time on due', () => {
+        const dateForDisplay = parseTypedDateForDisplay('due', '2026-06-30 15:58');
+        expect(dateForDisplay).toEqual('2026-06-30');
+    });
+
+    it.failing('should retain a time on reminder', () => {
+        const dateForDisplay = parseTypedDateForDisplay('reminder', '2026-06-30 15:58');
+        expect(dateForDisplay).toEqual('2026-06-30 15:58');
+    });
+});
+
+describe('parseTypedDateForSaving', () => {
+    it('should retain time', () => {
+        const forwardDate = false;
+        const dateForSaving = parseTypedDateForSaving('2026-06-30 15:58', forwardDate);
+        // This repeats the use of moment(dateAndTime), which at the time of writing was how
+        // parseTypedDateForSaving() was implemented. But its purpose is to ensure that the
+        // time value is retained:
+        expect(dateForSaving).toEqualMoment(moment('2026-06-30 15:58'));
     });
 });
 

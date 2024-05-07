@@ -49,7 +49,7 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
  * @param forwardDate
  * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
  */
-function parseTypedDateForDisplay(
+export function parseTypedDateForDisplay(
     fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'reminder' | 'done' | 'cancelled',
     typedDate: string,
     forwardDate: Date | undefined = undefined,
