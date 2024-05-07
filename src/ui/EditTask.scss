@@ -112,7 +112,7 @@
     row-gap: 5px;
     align-items: center;
 
-    input[type="text"] {
+    .tasks-modal-text-input {
         grid-column: 2;
         width: 100%;
     }
