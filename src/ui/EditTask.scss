@@ -108,6 +108,7 @@
     display: grid;
     grid-template-columns: 6.0em auto;
     grid-auto-columns: 1fr;
+    row-gap: 5px;
     align-items: center;
 
     input[type="text"] {
