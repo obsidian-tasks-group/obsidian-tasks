@@ -108,10 +108,7 @@
     display: grid;
     grid-template-columns: 6.0em auto;
     grid-auto-columns: 1fr;
-
-    label {
-        margin-top: 6px;
-    }
+    align-items: center;
 
     input[type="text"] {
         grid-column: 2;
@@ -141,35 +138,44 @@
 
 @media (max-width: 649px) {
     .tasks-modal-priority-section {
-        grid-template-columns: 4em 7.5em 5em;
-        margin-bottom: -10px;
+        grid-template-columns: 6em auto auto;
     }
 
     .tasks-modal-priority-section > label {
-        grid-row: 1 / span 7;
+        grid-row: 1 / span 3;
     }
 }
 
 @media (max-width: 499px) {
+    .tasks-modal-priority-section {
+        grid-template-columns: 4em auto auto;
+    }
+
     .tasks-modal-dates-section {
         grid-template-columns: 1fr;
         grid-auto-columns: auto;
 
-        .results-dependency {
+        .input {
+            grid-column: 1;
+        }
+
+        .results {
+            grid-column: 2;
+        }
+
+        select {
             grid-column: 1;
         }
     }
 
-    .tasks-modal-dates-section > label {
-        margin: 0;
-    }
+    .tasks-modal-dependencies-section {
+        label {
+            grid-column: 1;
+        }
 
-    .tasks-modal-dates-section > .input, .tasks-modal-dates-section > .results {
-        grid-column: 1;
-    }
-
-    .tasks-modal-dates-section > div {
-        grid-column-end: 1;
+        .results-dependency {
+            grid-column: 1;
+        }
     }
 }
 
@@ -181,19 +187,27 @@
         }
     }
 
+    .tasks-modal-dates-section > .results {
+        grid-column: 1;
+    }
+
     .tasks-modal-priority-section {
         grid-template-columns: 4em auto;
     }
 
     .tasks-modal-priority-section > label {
-        grid-row: 1 / span 7;
+        grid-row: 1 / span 6;
+    }
+
+    .tasks-modal-dependencies-section {
+        grid-template-columns: 1fr;
+        grid-auto-columns: auto;
     }
 }
 
 @media (max-width: 259px) {
     .tasks-modal-priority-section {
         grid-template-columns: 1fr;
-        margin-bottom: 0;
     }
 
     .tasks-modal-priority-section > label {
