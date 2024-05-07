@@ -151,7 +151,7 @@
         on:blur={() => (inputFocused = false)}
         accesskey={accesskey(accesskeyLetter)}
         id={type}
-        class="tasks-modal-text-input"
+        class="tasks-modal-dependency-input"
         type="text"
         {placeholder}
     />
