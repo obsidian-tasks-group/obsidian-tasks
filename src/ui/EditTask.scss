@@ -143,8 +143,10 @@
         grid-template-columns: 6em auto auto;
     }
 
-    .tasks-modal-priority-section > label {
-        grid-row: 1 / span 3;
+    .tasks-modal-priority-section {
+        > label {
+            grid-row: 1 / span 3;
+        }
     }
 }
 
@@ -189,16 +191,20 @@
         }
     }
 
-    .tasks-modal-dates-section > .tasks-modal-parsed-date {
-        grid-column: 1;
+    .tasks-modal-dates-section {
+        > .tasks-modal-parsed-date {
+            grid-column: 1;
+        }
     }
 
     .tasks-modal-priority-section {
         grid-template-columns: 4em auto;
     }
 
-    .tasks-modal-priority-section > label {
-        grid-row: 1 / span 6;
+    .tasks-modal-priority-section {
+        > label {
+            grid-row: 1 / span 6;
+        }
     }
 
     .tasks-modal-dependencies-section {
@@ -212,7 +218,9 @@
         grid-template-columns: 1fr;
     }
 
-    .tasks-modal-priority-section > label {
-        grid-row: 1;
+    .tasks-modal-priority-section {
+        > label {
+            grid-row: 1;
+        }
     }
 }
