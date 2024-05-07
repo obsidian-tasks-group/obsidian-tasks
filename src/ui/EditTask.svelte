@@ -598,7 +598,7 @@ Availability of access keys:
             bind:value={statusSymbol}
             on:change={_onStatusChange}
             id="status-type"
-            class="dropdown"
+            class="tasks-modal-status-selector"
             accesskey={accesskey('u')}
         >
             {#each statusOptions as status}

@@ -99,7 +99,7 @@
         }
     }
 
-    select {
+    .tasks-modal-status-selector {
         grid-column: 2;
         width: 15em;
     }
@@ -165,7 +165,7 @@
             grid-column: 2;
         }
 
-        select {
+        .tasks-modal-status-selector {
             grid-column: 1;
         }
     }
@@ -183,7 +183,7 @@
 
 @media (max-width: 399px) {
     .tasks-modal-dates-section {
-        select {
+        .tasks-modal-status-selector {
             grid-column: 1;
             width: auto;
         }
