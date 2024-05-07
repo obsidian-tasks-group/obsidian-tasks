@@ -80,7 +80,7 @@
         grid-column: 1;
     }
 
-    .tasks-modal-text-input[type=text] {
+    .tasks-modal-text-input {
         min-width: 15em;
     }
 
@@ -93,7 +93,7 @@
         grid-column-start: 1;
         grid-column-end: 3;
 
-        input[type="checkbox"] {
+        input {
             margin-left: 0.67em;
             top: 2px;
         }
