@@ -161,6 +161,10 @@
         > .results {
             grid-column: 2;
         }
+
+        select {
+            grid-column: 1;
+        }
     }
 
     .tasks-modal-dependencies-section {
