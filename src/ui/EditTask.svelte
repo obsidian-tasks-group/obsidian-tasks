@@ -484,11 +484,11 @@ Availability of access keys:
             id="recurrence"
             type="text"
             class:tasks-modal-error={!isRecurrenceValid}
-            class="input"
+            class="tasks-modal-text-input"
             placeholder="Try 'every day when done'"
             accesskey={accesskey('r')}
         />
-        <code class="results">{recurrenceSymbol} {@html parsedRecurrence}</code>
+        <code class="tasks-modal-parsed-date">{recurrenceSymbol} {@html parsedRecurrence}</code>
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
@@ -541,7 +541,7 @@ Availability of access keys:
                 bind:checked={editableTask.forwardOnly}
                 id="forwardOnly"
                 type="checkbox"
-                class="input task-list-item-checkbox tasks-modal-checkbox"
+                class="tasks-modal-text-input task-list-item-checkbox tasks-modal-checkbox"
                 accesskey={accesskey('f')}
             />
         </div>
