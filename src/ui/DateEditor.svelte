@@ -26,7 +26,7 @@
     {id}
     type="text"
     class:tasks-modal-error={!isDateValid}
-    class="tasks-modal-text-input"
+    class="tasks-modal-date-input"
     placeholder={datePlaceholder}
     {accesskey}
 />
