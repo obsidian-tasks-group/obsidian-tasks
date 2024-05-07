@@ -141,9 +141,7 @@
 @media (max-width: 649px) {
     .tasks-modal-priority-section {
         grid-template-columns: 6em auto auto;
-    }
 
-    .tasks-modal-priority-section {
         > label {
             grid-row: 1 / span 3;
         }
@@ -189,9 +187,7 @@
             grid-column: 1;
             width: auto;
         }
-    }
 
-    .tasks-modal-dates-section {
         > .tasks-modal-parsed-date {
             grid-column: 1;
         }
@@ -199,9 +195,7 @@
 
     .tasks-modal-priority-section {
         grid-template-columns: 4em auto;
-    }
 
-    .tasks-modal-priority-section {
         > label {
             grid-row: 1 / span 6;
         }
@@ -216,9 +210,7 @@
 @media (max-width: 259px) {
     .tasks-modal-priority-section {
         grid-template-columns: 1fr;
-    }
 
-    .tasks-modal-priority-section {
         > label {
             grid-row: 1;
         }
