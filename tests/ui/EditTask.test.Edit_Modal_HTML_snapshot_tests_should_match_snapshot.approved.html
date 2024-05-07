@@ -71,20 +71,35 @@
     <hr />
     <section class="tasks-modal-dates-section">
       <label for="recurrence" class="accesskey-first">Recurs</label>
-      <input id="recurrence" type="text" class="input" placeholder="Try 'every day when done'" accesskey="r" />
-      <code class="results">
+      <input
+        id="recurrence"
+        type="text"
+        class="tasks-modal-text-input"
+        placeholder="Try 'every day when done'"
+        accesskey="r" />
+      <code class="tasks-modal-parsed-date">
         🔁
         <i>not recurring</i>
       </code>
       <label for="due" class="accesskey-first">Due</label>
-      <input id="due" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="d" />
-      <code class="results">
+      <input
+        id="due"
+        type="text"
+        class="tasks-modal-text-input"
+        placeholder="Try 'Mon' or 'tm' then space"
+        accesskey="d" />
+      <code class="tasks-modal-parsed-date">
         📅
         <i>no due date</i>
       </code>
       <label for="scheduled" class="accesskey-first">Scheduled</label>
-      <input id="scheduled" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="s" />
-      <code class="results">
+      <input
+        id="scheduled"
+        type="text"
+        class="tasks-modal-text-input"
+        placeholder="Try 'Mon' or 'tm' then space"
+        accesskey="s" />
+      <code class="tasks-modal-parsed-date">
         ⏳
         <i>no scheduled date</i>
       </code>
@@ -93,8 +108,13 @@
         <span class="accesskey">a</span>
         rt
       </label>
-      <input id="start" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="a" />
-      <code class="results">
+      <input
+        id="start"
+        type="text"
+        class="tasks-modal-text-input"
+        placeholder="Try 'Mon' or 'tm' then space"
+        accesskey="a" />
+      <code class="tasks-modal-parsed-date">
         🛫
         <i>no start date</i>
       </code>
@@ -107,18 +127,18 @@
         <input
           id="forwardOnly"
           type="checkbox"
-          class="input task-list-item-checkbox tasks-modal-checkbox"
+          class="tasks-modal-text-input task-list-item-checkbox tasks-modal-checkbox"
           accesskey="f" />
       </div>
     </section>
     <hr />
     <section class="tasks-modal-dependencies-section">
       <label for="blockedBy" class="accesskey-first">Before this</label>
-      <span class="input">
+      <span class="tasks-modal-text-input">
         <input
           accesskey="b"
           id="blockedBy"
-          class="input"
+          class="tasks-modal-text-input"
           type="text"
           placeholder="Search for tasks that the task being edited depends on..." />
         <iframe
@@ -144,11 +164,11 @@
         <span class="accesskey">e</span>
         r this
       </label>
-      <span class="input">
+      <span class="tasks-modal-text-input">
         <input
           accesskey="e"
           id="blocking"
-          class="input"
+          class="tasks-modal-text-input"
           type="text"
           placeholder="Search for tasks that depend on this task being done..." />
         <iframe
@@ -184,8 +204,13 @@
         <option value="-">Cancelled [-]</option>
       </select>
       <label for="created" class="accesskey-first">Created</label>
-      <input id="created" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="c" />
-      <code class="results">
+      <input
+        id="created"
+        type="text"
+        class="tasks-modal-text-input"
+        placeholder="Try 'Mon' or 'tm' then space"
+        accesskey="c" />
+      <code class="tasks-modal-parsed-date">
         ➕
         <i>no created date</i>
       </code>
@@ -194,8 +219,13 @@
         <span class="accesskey">x</span>
         )
       </label>
-      <input id="done" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="x" />
-      <code class="results">
+      <input
+        id="done"
+        type="text"
+        class="tasks-modal-text-input"
+        placeholder="Try 'Mon' or 'tm' then space"
+        accesskey="x" />
+      <code class="tasks-modal-parsed-date">
         ✅
         <i>no done date</i>
       </code>
@@ -204,8 +234,13 @@
         <span class="accesskey">-</span>
         )
       </label>
-      <input id="cancelled" type="text" class="input" placeholder="Try 'Mon' or 'tm' then space" accesskey="-" />
-      <code class="results">
+      <input
+        id="cancelled"
+        type="text"
+        class="tasks-modal-text-input"
+        placeholder="Try 'Mon' or 'tm' then space"
+        accesskey="-" />
+      <code class="tasks-modal-parsed-date">
         ❌
         <i>no cancelled date</i>
       </code>
