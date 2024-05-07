@@ -119,7 +119,7 @@ export class TaskBuilder {
             .startDate('2023-07-02')
             .scheduledDate('2023-07-03')
             .dueDate('2023-07-04')
-            .reminderDate('2023-07-07')
+            .reminderDate('2023-07-07') // TODO Add a time value here, once times are correctly parsed
             .doneDate('2023-07-05')
             .cancelledDate('2023-07-06')
             .dependsOn(['123456', 'abc123'])
