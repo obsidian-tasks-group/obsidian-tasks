@@ -1,88 +1,79 @@
-.tasks-modal-section + .tasks-modal-section {
-    margin-top: 8px;
+.tasks-modal {
+    .with-accesskeys {
+        .accesskey-first::first-letter, .accesskey {
+            text-decoration: underline;
+            text-underline-offset: 1pt;
+        }
+    }
+
+    hr {
+        margin: 0.35rem 0 0.85rem 0;
+    }
+
+    .tasks-modal-error {
+        border: 1px solid red !important;
+    }
 }
 
-.tasks-modal-section label {
-    display: inline-block;
-    margin-bottom: 4px;
-}
+.tasks-modal-section {
+    + .tasks-modal-section {
+        margin-top: 8px;
+    }
 
-.tasks-modal-section label > span {
-    display: inline-block;
-}
+    label + input[type="checkbox"] {
+        margin-left: 0.67em;
+        top: 2px;
+    }
 
-.tasks-modal .with-accesskeys .accesskey-first::first-letter,
-.tasks-modal .with-accesskeys .accesskey {
-    text-decoration: underline;
-    text-underline-offset: 1pt;
-}
+    input[type="text"] {
+        width: 100%;
+    }
 
-.tasks-modal-buttons {
-    position: sticky;
-    bottom: 0;
-    background-color: var(--modal-background);
-    padding-bottom: 16px;
-    padding-top: 16px;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    column-gap: .5em;
-}
-
-.tasks-modal label + input[type="checkbox"] {
-    margin-left: 0.67em;
-    top: 2px;
-}
-
-.tasks-modal input[type="text"] {
-    width: 100%;
-}
-
-.tasks-modal textarea {
-    width: 100%;
-    min-height: calc(var(--input-height) * 2);
-    resize: vertical;
-}
-
-.tasks-modal hr {
-    margin: 0.35rem 0;
-    padding-bottom: 0.5rem;
+    textarea {
+        width: 100%;
+        min-height: calc(var(--input-height) * 2);
+        resize: vertical;
+        margin-top: 8px;
+    }
 }
 
 .tasks-modal-priorities {
     display: grid;
-    grid-template-columns: 4em 8em 8em 8em;
-    grid-column-gap: 1.33em;
-}
+    grid-template-columns: 6em auto auto auto;
+    grid-column-gap: 0.5em;
+    grid-row-gap: 0.15em;
 
-.tasks-modal-priorities span {
-    line-height: 1.41;
-    white-space: nowrap;
-}
+    span {
+        white-space: nowrap;
+    }
 
-.tasks-modal-priorities label {
-    border-radius: var(--input-radius);
-    padding: 2px 3px;
-    grid-column: 1;
-    grid-row-start: 1;
-    grid-row-end: 7;
-}
+    > label {
+        grid-row-start: 1;
+        grid-row-end: 3;
+    }
 
+    input + label {
+        font-size: var(--font-ui-small);
+        border-radius: var(--input-radius);
+        padding: 2px 3px;
+    }
 
-.tasks-modal-priorities input + label {
-    font-size: var(--font-ui-small);
-}
+    input {
+        accent-color: var(--interactive-accent);
+    }
 
-.tasks-modal-priorities input:focus + label {
-    box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
-    border-color: var(--background-modifier-border-focus);
-}
+    input:focus + label {
+        box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+        border-color: var(--background-modifier-border-focus);
+    }
 
-.tasks-modal-priorities input:checked + label > span {
-    font-weight: bold;
-}
+    input:checked + label {
+        font-weight: bold;
+    }
 
-.tasks-modal-priorities input:not(:checked) + label > span:nth-child(4) {
-    filter: grayscale(100%) opacity(60%);
+    input:not(:checked) + label > span:nth-child(4) {
+        filter: grayscale(100%) opacity(60%);
+    }
 }
 
 .tasks-modal-dates {
@@ -91,10 +82,10 @@
     grid-auto-columns: 1fr;
     column-gap: .5em;
     row-gap: 5px;
+    align-items: center;
 
     label {
         grid-column: 1;
-        margin-top: 6px;
     }
 
     .input {
@@ -107,7 +98,6 @@
 
     .results {
         grid-column: 3;
-        margin-top: 6px;
         font-size: var(--font-ui-small);
     }
 
@@ -126,25 +116,20 @@
     }
 }
 
-.tasks-modal-status {
-    padding-bottom: 6px;
-    margin-bottom: -16px;
-    display: flex;
-    justify-content: space-between;
-}
+.tasks-modal-buttons {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--modal-background);
+    padding-bottom: 16px;
+    padding-top: 16px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    column-gap: .5em;
 
-.tasks-modal-error {
-    border: 1px solid red !important;
-}
-
-.tasks-modal-warning {
-    color: var(--text-warning) !important;
-    background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
-}
-
-.tasks-modal button:disabled {
-    pointer-events: none !important;
-    opacity: 0.3 !important;
+    button:disabled {
+        pointer-events: none !important;
+        opacity: 0.3 !important;
+    }
 }
 
 @media (max-width: 649px) {
@@ -152,6 +137,7 @@
         grid-template-columns: 4em 7.5em 5em;
         margin-bottom: -10px;
     }
+
     .tasks-modal-priorities > label {
         grid-row: 1 / span 7;
     }
@@ -166,17 +152,17 @@
             grid-column: 1;
         }
     }
+
     .tasks-modal-dates > label {
         margin: 0;
     }
+
     .tasks-modal-dates > .input, .tasks-modal-dates > .results {
         grid-column: 1;
     }
+
     .tasks-modal-dates > div {
         grid-column-end: 1;
-    }
-    .tasks-modal-status {
-        display: block;
     }
 }
 
@@ -187,9 +173,11 @@
             width: auto;
         }
     }
+
     .tasks-modal-priorities {
         grid-template-columns: 4em auto;
     }
+
     .tasks-modal-priorities > label {
         grid-row: 1 / span 7;
     }
@@ -200,6 +188,7 @@
         grid-template-columns: 1fr;
         margin-bottom: 0;
     }
+
     .tasks-modal-priorities > label {
         grid-row: 1;
     }
