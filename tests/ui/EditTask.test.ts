@@ -450,6 +450,16 @@ describe('Task editing', () => {
         it('should edit and save start date', async () => {
             expect(await editFieldAndSave(line, 'start', '2024-01-01')).toEqual('- [ ] simple 🛫 2024-01-01');
         });
+
+        it('should edit and save reminder date', async () => {
+            expect(await editFieldAndSave(line, 'reminder', '2024-01-01')).toEqual('- [ ] simple ⏰ 2024-01-01');
+        });
+
+        it.failing('should edit and save reminder date and time', async () => {
+            expect(await editFieldAndSave(line, 'reminder', '2024-01-01 12:34')).toEqual(
+                '- [ ] simple ⏰ 2024-01-01 12:34',
+            );
+        });
     });
 });
 
