@@ -108,10 +108,7 @@
     display: grid;
     grid-template-columns: 6.0em auto;
     grid-auto-columns: 1fr;
-
-    label {
-        margin-top: 6px;
-    }
+    align-items: center;
 
     input[type="text"] {
         grid-column: 2;
@@ -196,6 +193,11 @@
 
     .tasks-modal-priority-section > label {
         grid-row: 1 / span 6;
+    }
+
+    .tasks-modal-dependencies-section {
+        grid-template-columns: 1fr;
+        grid-auto-columns: auto;
     }
 }
 
