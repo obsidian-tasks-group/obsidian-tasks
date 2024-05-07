@@ -541,7 +541,7 @@ Availability of access keys:
                 bind:checked={editableTask.forwardOnly}
                 id="forwardOnly"
                 type="checkbox"
-                class="tasks-modal-text-input task-list-item-checkbox tasks-modal-checkbox"
+                class="task-list-item-checkbox tasks-modal-checkbox"
                 accesskey={accesskey('f')}
             />
         </div>
