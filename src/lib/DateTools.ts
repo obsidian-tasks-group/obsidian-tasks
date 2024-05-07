@@ -1,5 +1,6 @@
 import * as chrono from 'chrono-node';
 import type { Moment } from 'moment/moment';
+import { TasksDate } from '../../src/Scripting/TasksDate';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
@@ -57,15 +58,17 @@ export function parseTypedDateForDisplay(
     if (!typedDate) {
         return `<i>no ${fieldName} date</i>`;
     }
+
     const parsed = chrono.parseDate(typedDate, forwardDate, {
         forwardDate: forwardDate != undefined,
     });
+
     if (parsed !== null) {
-        let dateFormat = 'YYYY-MM-DD';
+        const parsedMoment = window.moment(parsed);
         if (fieldName === 'reminder') {
-            dateFormat = 'YYYY-MM-DD HH:mm';
+            return new TasksDate(parsedMoment).formatAsDateAndTimeOrDate();
         }
-        return window.moment(parsed).format(dateFormat);
+        return parsedMoment.format('YYYY-MM-DD');
     }
     return `<i>invalid ${fieldName} date</i>`;
 }

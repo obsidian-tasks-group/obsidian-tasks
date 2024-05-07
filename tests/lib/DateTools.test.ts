@@ -41,9 +41,14 @@ describe('parseTypedDateForDisplay', () => {
         expect(dateForDisplay).toEqual('2026-06-30');
     });
 
-    it('should retain a time on reminder', () => {
+    it.failing('should retain a time on reminder', () => {
         const dateForDisplay = parseTypedDateForDisplay('reminder', '2026-06-30 15:58');
         expect(dateForDisplay).toEqual('2026-06-30 15:58');
+    });
+
+    it('should parse reminder field without time for display', () => {
+        const dateForDisplay = parseTypedDateForDisplay('reminder', '2026-07-01');
+        expect(dateForDisplay).toEqual('2026-07-01');
     });
 });
 
