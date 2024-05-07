@@ -26,11 +26,11 @@
     {id}
     type="text"
     class:tasks-modal-error={!isDateValid}
-    class="input"
+    class="tasks-modal-date-input"
     placeholder={datePlaceholder}
     {accesskey}
 />
-<code class="results">{dateSymbol} {@html parsedDate}</code>
+<code class="tasks-modal-parsed-date">{dateSymbol} {@html parsedDate}</code>
 
 <style>
 </style>

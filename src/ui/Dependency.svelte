@@ -142,7 +142,7 @@
 </script>
 
 <!-- svelte-ignore a11y-accesskey -->
-<span class="input" bind:clientWidth={inputWidth}>
+<span bind:clientWidth={inputWidth}>
     <input
         bind:this={input}
         bind:value={search}
@@ -151,7 +151,7 @@
         on:blur={() => (inputFocused = false)}
         accesskey={accesskey(accesskeyLetter)}
         id={type}
-        class="input"
+        class="tasks-modal-dependency-input"
         type="text"
         {placeholder}
     />
