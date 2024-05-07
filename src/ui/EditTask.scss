@@ -80,11 +80,11 @@
         grid-column: 1;
     }
 
-    .input[type=text] {
+    .tasks-modal-date-input {
         min-width: 15em;
     }
 
-    .results {
+    .tasks-modal-parsed-date {
         grid-column: 3;
         font-size: var(--font-ui-small);
     }
@@ -93,13 +93,13 @@
         grid-column-start: 1;
         grid-column-end: 3;
 
-        input[type="checkbox"] {
+        input {
             margin-left: 0.67em;
             top: 2px;
         }
     }
 
-    select {
+    .tasks-modal-status-selector {
         grid-column: 2;
         width: 15em;
     }
@@ -112,7 +112,7 @@
     row-gap: 5px;
     align-items: center;
 
-    input[type="text"] {
+    .tasks-modal-dependency-input {
         grid-column: 2;
         width: 100%;
     }
@@ -141,10 +141,10 @@
 @media (max-width: 649px) {
     .tasks-modal-priority-section {
         grid-template-columns: 6em auto auto;
-    }
 
-    .tasks-modal-priority-section > label {
-        grid-row: 1 / span 3;
+        > label {
+            grid-row: 1 / span 3;
+        }
     }
 }
 
@@ -157,15 +157,15 @@
         grid-template-columns: 1fr;
         grid-auto-columns: auto;
 
-        .input {
+        .tasks-modal-date-input {
             grid-column: 1;
         }
 
-        .results {
+        .tasks-modal-parsed-date {
             grid-column: 2;
         }
 
-        select {
+        .tasks-modal-status-selector {
             grid-column: 1;
         }
     }
@@ -183,22 +183,22 @@
 
 @media (max-width: 399px) {
     .tasks-modal-dates-section {
-        select {
+        .tasks-modal-status-selector {
             grid-column: 1;
             width: auto;
         }
-    }
 
-    .tasks-modal-dates-section > .results {
-        grid-column: 1;
+        > .tasks-modal-parsed-date {
+            grid-column: 1;
+        }
     }
 
     .tasks-modal-priority-section {
         grid-template-columns: 4em auto;
-    }
 
-    .tasks-modal-priority-section > label {
-        grid-row: 1 / span 6;
+        > label {
+            grid-row: 1 / span 6;
+        }
     }
 
     .tasks-modal-dependencies-section {
@@ -210,9 +210,9 @@
 @media (max-width: 259px) {
     .tasks-modal-priority-section {
         grid-template-columns: 1fr;
-    }
 
-    .tasks-modal-priority-section > label {
-        grid-row: 1;
+        > label {
+            grid-row: 1;
+        }
     }
 }
