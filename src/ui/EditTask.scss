@@ -1,10 +1,11 @@
 .tasks-modal {
-    > section {
-            margin-top: 8px;
+    section + section {
+            // Put some space when sections are one next to another
+            margin-top: 6px;
     }
 
     hr {
-        margin: 0.35rem 0;
+        margin: 6px 0;
     }
 
     .tasks-modal-error {
