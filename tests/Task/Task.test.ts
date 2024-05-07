@@ -30,7 +30,7 @@ afterEach(() => {
 describe('parsing', () => {
     it('parses a task from a line starting with hyphen', () => {
         // Arrange
-        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20 ➕ 2023-03-07 ⏰ 2023-03-06';
+        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20 ➕ 2023-03-07';
 
         // Act
         const task = fromLine({
@@ -44,7 +44,6 @@ describe('parsing', () => {
         expect(task!.status).toStrictEqual(Status.DONE);
         expect(task!.createdDate).toEqualMoment(moment('2023-03-07'));
         expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
-        expect(task!.reminderDate).toEqualMoment(moment('2023-03-06'));
         expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
         expect(task!.originalMarkdown).toStrictEqual(line);
         expect(task!.lineNumber).toEqual(0);
@@ -125,6 +124,19 @@ describe('parsing', () => {
 
         // Assert
         expect(task).toBeNull();
+    });
+
+    it('parses a reminder with date and time', () => {
+        // Arrange
+        const line = '* [ ] this has a reminder ⏰ 2023-03-06 23:12';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task!.reminderDate).toEqualMoment(moment('2023-03-06 23:12'));
     });
 
     it('supports capitalised status characters', () => {
