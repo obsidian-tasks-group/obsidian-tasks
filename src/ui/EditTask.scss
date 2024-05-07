@@ -153,15 +153,11 @@
     .tasks-modal-dates-section {
         grid-template-columns: 1fr;
         grid-auto-columns: auto;
-    }
 
-    .tasks-modal-dates-section {
         > .input {
             grid-column: 1;
         }
-    }
 
-    .tasks-modal-dates-section {
         > .results {
             grid-column: 2;
         }
