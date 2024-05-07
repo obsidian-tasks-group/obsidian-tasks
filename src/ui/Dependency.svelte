@@ -184,32 +184,34 @@
         {/each}
     </ul>
 {/if}
-<div class="task-dependencies-container results-dependency">
-    {#each editableTask[type] as task}
-        <div
-            class="task-dependency"
-            on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(task))}
-        >
-            <span class="task-dependency-name"
-                >[{task.status.symbol}] {descriptionAdjustedForDependencySearch(task)}</span
+{#if editableTask[type].length !== 0}
+    <div class="task-dependencies-container results-dependency">
+        {#each editableTask[type] as task}
+            <div
+                class="task-dependency"
+                on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(task))}
             >
-
-            <button on:click={() => removeTask(task)} type="button" class="task-dependency-delete">
-                <svg
-                    style="display: block; margin: auto;"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-x"
+                <span class="task-dependency-name"
+                    >[{task.status.symbol}] {descriptionAdjustedForDependencySearch(task)}</span
                 >
-                    <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-                </svg>
-            </button>
-        </div>
-    {/each}
-</div>
+
+                <button on:click={() => removeTask(task)} type="button" class="task-dependency-delete">
+                    <svg
+                        style="display: block; margin: auto;"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="lucide lucide-x"
+                    >
+                        <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            </div>
+        {/each}
+    </div>
+{/if}
