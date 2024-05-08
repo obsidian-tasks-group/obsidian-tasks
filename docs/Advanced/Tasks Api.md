@@ -116,7 +116,7 @@ Screenshot of QuickAdd capture settings (example)
 ## `executeToggleTaskDoneCommand: (line: string, path: string) => string;`
 
 > [!released]
-This method was introduced in Tasks X.Y.Z.
+> Introduced in Tasks X.Y.Z.
 
 Executes the 'Tasks: Toggle task done' command on the supplied line string. It toggles and updates a task line according to a user's preferences, accounting for recurrance rules and completed status. It returns a string representing the toggled task.
 
