@@ -290,25 +290,41 @@ describe.each([
             const suggestTask1234 = '1 - From: file-name.md';
             const suggestTask5678 = '2 - From: file-name.md';
 
+            // Make tests more thorough by allowing tests to ensure that there are no more dependency suggestions
+            // after the ones we supply to shouldStartWithSuggestionsEqualling():
+            const defaultSuggestion = `${dueDateSymbol} due date`;
+
             it('should suggest all tasks when there is no existing ID after dependsOn', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} `;
-                shouldStartWithSuggestionsEqualling(line, [suggestTaskxy, suggestTask1234, suggestTask5678], allTasks);
+                shouldStartWithSuggestionsEqualling(
+                    line,
+                    [suggestTaskxy, suggestTask1234, suggestTask5678, defaultSuggestion],
+                    allTasks,
+                );
             });
 
             it('should offer tasks containing the search string, if given a partial ID', () => {
                 // 1 does not match any of the existing IDs, so is presumed to be a substring to search for.
                 const line = `- [ ] some task ${dependsOnSymbol} 1`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask1234], allTasks);
+                shouldStartWithSuggestionsEqualling(line, [suggestTask1234, defaultSuggestion], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTaskxy, suggestTask5678], allTasks);
+                shouldStartWithSuggestionsEqualling(
+                    line,
+                    [suggestTaskxy, suggestTask5678, defaultSuggestion],
+                    allTasks,
+                );
             });
 
             it('should offer tasks when first existing dependency id has hyphen and underscore', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1_2-3,`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTaskxy, suggestTask1234, suggestTask5678], allTasks);
+                shouldStartWithSuggestionsEqualling(
+                    line,
+                    [suggestTaskxy, suggestTask1234, suggestTask5678, defaultSuggestion],
+                    allTasks,
+                );
             });
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
