@@ -524,7 +524,23 @@ describe('Exhaustive editing', () => {
 });
 
 describe('Edit Modal HTML snapshot tests', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
     it('should match snapshot', () => {
+        updateSettings({ provideAccessKeys: true });
+        const task = taskFromLine({ line: '- [ ] absolutely to do', path: '' });
+        const onSubmit = () => {};
+        const allTasks = [task];
+        const { container } = renderAndCheckModal(task, onSubmit, allTasks);
+
+        const prettyHTML = prettifyHTML(container.innerHTML);
+        verifyWithFileExtension(prettyHTML, 'html');
+    });
+
+    it('should match snapshot - without access keys', () => {
+        updateSettings({ provideAccessKeys: false });
         const task = taskFromLine({ line: '- [ ] absolutely to do', path: '' });
         const onSubmit = () => {};
         const allTasks = [task];
