@@ -3,7 +3,7 @@ import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
 import { Recurrence } from '../Task/Recurrence';
-import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
+import { type DefaultTaskSerializerSymbols, taskIdRegex } from '../TaskSerializer/DefaultTaskSerializer';
 import { Task } from '../Task/Task';
 import { generateUniqueId } from '../Task/TaskDependency';
 import { GlobalFilter } from '../Config/GlobalFilter';
@@ -410,7 +410,7 @@ function addRecurrenceSuggestions(
 
 function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allTasks: Task[]) {
     const results: SuggestInfo[] = [];
-    const idRegex = new RegExp(`(${idSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})*`, 'ug');
     const idMatch = matchIfCursorInRegex(line, idRegex, cursorPos);
 
     if (idMatch && idMatch[0].trim().length <= idSymbol.length) {
