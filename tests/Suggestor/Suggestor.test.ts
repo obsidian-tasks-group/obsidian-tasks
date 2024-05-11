@@ -171,6 +171,11 @@ describe.each([
         }
     }
 
+    function shouldOnlyOfferDefaultSuggestionsForEndOfLine(line: string) {
+        const suggestions = buildSuggestionsForEndOfLine(line);
+        shouldOnlyOfferDefaultSuggestions(suggestions);
+    }
+
     const {
         dueDateSymbol,
         scheduledDateSymbol,
@@ -261,8 +266,7 @@ describe.each([
 
         it('should offer to generate unique id if the id symbol is already present', () => {
             const line = `- [ ] some task ${idSymbol} 1234`;
-            const suggestions = buildSuggestionsForEndOfLine(line);
-            shouldOnlyOfferDefaultSuggestions(suggestions);
+            shouldOnlyOfferDefaultSuggestionsForEndOfLine(line);
         });
     });
 
