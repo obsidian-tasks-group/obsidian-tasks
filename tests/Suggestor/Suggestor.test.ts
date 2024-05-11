@@ -317,6 +317,12 @@ describe.each([
                 shouldStartWithSuggestionsEqualling(line, [suggestTask1234, defaultSuggestion], allTasks);
             });
 
+            it('should offer tasks containing the search string, if given a partial ID even when no space between symbol and ID', () => {
+                // 1 does not match any of the existing IDs, so is presumed to be a substring to search for.
+                const line = `- [ ] some task ${dependsOnSymbol}1`;
+                shouldStartWithSuggestionsEqualling(line, [suggestTask1234, defaultSuggestion], allTasks);
+            });
+
             it('should offer tasks containing underscore in description, if given as partial ID', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} x_`;
                 shouldStartWithSuggestionsEqualling(line, [suggestTaskxy, defaultSuggestion], allTasks);
