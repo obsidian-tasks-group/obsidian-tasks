@@ -258,6 +258,12 @@ describe.each([
             const line = `- [ ] some task ${idSymbol}`;
             shouldStartWithSuggestionsEqualling(line, ['Auto Generate Unique ID']);
         });
+
+        it('should offer to generate unique id if the id symbol is already present', () => {
+            const line = `- [ ] some task ${idSymbol} 1234`;
+            const suggestions = buildSuggestionsForEndOfLine(line);
+            shouldOnlyOfferDefaultSuggestions(suggestions);
+        });
     });
 
     describe('suggestions for dependency field ', () => {
