@@ -443,7 +443,7 @@ function addDependsOnSuggestions(
 ) {
     const results: SuggestInfo[] = [];
 
-    const dependsOnRegex = new RegExp(`(${dependsOnSymbol})([0-9a-zA-Z ^,]*,)*([0-9a-zA-Z ^,]*)`, 'ug');
+    const dependsOnRegex = new RegExp(`(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([0-9a-zA-Z ^,]*)`, 'ug');
     const dependsOnMatch = matchIfCursorInRegex(line, dependsOnRegex, cursorPos);
     if (dependsOnMatch && dependsOnMatch.length >= 1) {
         // dependsOnMatch[1] = Depends On Symbol

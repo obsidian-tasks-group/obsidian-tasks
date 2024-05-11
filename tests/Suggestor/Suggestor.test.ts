@@ -298,8 +298,7 @@ describe.each([
                 shouldStartWithSuggestionsEqualling(line, [suggestTask2], allTasks);
             });
 
-            it.failing('should offer tasks when first existing dependency id has hyphen and underscore', () => {
-                // TODO hyphen and underscore are not currently recognised in this location by the auto-suggest code
+            it('should offer tasks when first existing dependency id has hyphen and underscore', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1_2-3,`;
                 shouldStartWithSuggestionsEqualling(line, [suggestTask1, suggestTask2], allTasks);
             });
