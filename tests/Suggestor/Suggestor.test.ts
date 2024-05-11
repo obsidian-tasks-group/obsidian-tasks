@@ -392,6 +392,21 @@ describe.each([
                 );
             });
 
+            it.failing('should allow punctuation in search strings', () => {
+                const peace1 = taskBuilder.description('World peace!').id('peace1').build();
+                const peace1Match = 'World peace! - From: file-name.md';
+
+                // Don't match a task that has peace present, but without the exclamation mark
+                const peace2 = taskBuilder.description('Peacefulness').id('peace2').build();
+
+                const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,peace!`;
+                shouldStartWithSuggestionsEqualling(
+                    line,
+                    [peace1Match, defaultSuggestion],
+                    [peace1, peace2, ...allTasks],
+                );
+            });
+
             it('should not offer any tasks if there is not a comma after existing depends IDs', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,5678`;
                 const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
