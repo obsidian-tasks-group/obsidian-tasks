@@ -273,18 +273,26 @@ describe.each([
 
         describe('suggesting additional dependencies', () => {
             const taskBuilder = new TaskBuilder().path('root/dir 1/dir 2/file-name.md');
+            // If adding new task lines here, add them before the end of the list,
+            // to ensure that existing shouldStartWithSuggestions...()-based tests really
+            // do exercise the new task line.
+            // If they are added at the end of the list, all existing tests will just
+            // silently pass.
             const allTasks = [
                 // force line break
+                taskBuilder.description('x_y').id('xy').build(),
                 taskBuilder.description('1').id('1234').build(),
                 taskBuilder.description('2').id('5678').build(),
             ];
 
+            // Variable names based on ID, not description:
+            const suggestTaskxy = 'x_y - From: file-name.md';
             const suggestTask1234 = '1 - From: file-name.md';
             const suggestTask5678 = '2 - From: file-name.md';
 
             it('should suggest all tasks when there is no existing ID after dependsOn', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} `;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask1234, suggestTask5678], allTasks);
+                shouldStartWithSuggestionsEqualling(line, [suggestTaskxy, suggestTask1234, suggestTask5678], allTasks);
             });
 
             it('should offer tasks containing the search string, if given a partial ID', () => {
@@ -295,16 +303,16 @@ describe.each([
 
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask5678], allTasks);
+                shouldStartWithSuggestionsEqualling(line, [suggestTaskxy, suggestTask5678], allTasks);
             });
 
             it('should offer tasks when first existing dependency id has hyphen and underscore', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1_2-3,`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask1234, suggestTask5678], allTasks);
+                shouldStartWithSuggestionsEqualling(line, [suggestTaskxy, suggestTask1234, suggestTask5678], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
-                const line = `- [ ] some task ${dependsOnSymbol} 1234,5678,`;
+                const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,`;
                 const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
                 shouldOnlyOfferDefaultSuggestions(suggestions);
             });
