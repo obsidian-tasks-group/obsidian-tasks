@@ -357,6 +357,22 @@ describe.each([
                 shouldOnlyOfferDefaultSuggestions(suggestions);
             });
 
+            it.failing('should use equality to check for existing IDs, not containment', () => {
+                const taskWithId123 = taskBuilder.description('3').id('123').build();
+                const suggestTask123 = '3 - From: file-name.md';
+
+                const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,`;
+
+                // 123 is only a substring of one of the ID 1234 which is already depended on, not an exat match.
+                // So it should not count as already matched.
+                // TODO Stop 123 being treated as already depended on, if ID 1234 is already depended on.
+                shouldStartWithSuggestionsEqualling(
+                    line,
+                    [suggestTask123, defaultSuggestion],
+                    [taskWithId123, ...allTasks],
+                );
+            });
+
             it('should not offer any tasks if there is not a comma after existing depends IDs', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,5678`;
                 const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
