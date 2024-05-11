@@ -364,7 +364,7 @@ describe.each([
                 shouldOnlyOfferDefaultSuggestions(suggestions);
             });
 
-            it.failing('should use equality to check for existing IDs, not containment', () => {
+            it('should use equality to check for existing IDs, not containment', () => {
                 const taskWithId123 = taskBuilder.description('3').id('123').build();
                 const suggestTask123 = '3 - From: file-name.md';
 
@@ -372,7 +372,6 @@ describe.each([
 
                 // 123 is only a substring of one of the ID 1234 which is already depended on, not an exat match.
                 // So it should not count as already matched.
-                // TODO Stop 123 being treated as already depended on, if ID 1234 is already depended on.
                 shouldStartWithSuggestionsEqualling(
                     line,
                     [suggestTask123, defaultSuggestion],
