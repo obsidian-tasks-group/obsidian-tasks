@@ -410,7 +410,7 @@ function addRecurrenceSuggestions(
 
 function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allTasks: Task[]) {
     const results: SuggestInfo[] = [];
-    const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})*`, 'ug');
+    const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})?`, 'ug');
     const idMatch = matchIfCursorInRegex(line, idRegex, cursorPos);
 
     if (idMatch && idMatch[0].trim().length <= idSymbol.length) {
