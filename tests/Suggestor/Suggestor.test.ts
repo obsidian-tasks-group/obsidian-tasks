@@ -353,6 +353,11 @@ describe.each([
                 );
             });
 
+            it('should only offer tasks not already depended upon - and allows spaces around commas', () => {
+                const line = `- [ ] some task ${dependsOnSymbol} xy , 5678 , `;
+                shouldStartWithSuggestionsEqualling(line, [suggestTask1234, defaultSuggestion], allTasks);
+            });
+
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,`;
                 const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
