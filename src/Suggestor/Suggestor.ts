@@ -453,7 +453,11 @@ function addDependsOnSuggestions(
         // Find all Tasks, Already Added
         let blockingTasks: Task[] = [];
         if (existingDependsOnIdStrings) {
-            blockingTasks = allTasks.filter((task) => task.id && existingDependsOnIdStrings.includes(task.id));
+            // Split the string into an array by commas, then map over it to trim whitespace from each element.
+            const idsArray = existingDependsOnIdStrings.split(',').map((id) => id.trim());
+
+            // Filter `allTasks` to only include tasks whose `id` is exactly in the `idsArray`.
+            blockingTasks = allTasks.filter((task) => task.id && idsArray.includes(task.id));
         }
 
         if (newTaskToAppend.length >= settings.autoSuggestMinMatch) {
