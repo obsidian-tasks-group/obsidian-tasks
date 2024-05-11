@@ -171,8 +171,8 @@ describe.each([
         }
     }
 
-    function shouldOnlyOfferDefaultSuggestionsForEndOfLine(line: string) {
-        const suggestions = buildSuggestionsForEndOfLine(line);
+    function shouldOnlyOfferDefaultSuggestionsForEndOfLine(line: string, allTasks: Task[] = []) {
+        const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
         shouldOnlyOfferDefaultSuggestions(suggestions);
     }
 
@@ -364,8 +364,7 @@ describe.each([
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,`;
-                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
-                shouldOnlyOfferDefaultSuggestions(suggestions);
+                shouldOnlyOfferDefaultSuggestionsForEndOfLine(line, allTasks);
             });
 
             it('should use equality to check for existing IDs, not containment', () => {
@@ -413,14 +412,12 @@ describe.each([
 
             it('should not offer any tasks if there is not a comma after existing depends IDs', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,5678`;
-                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
-                shouldOnlyOfferDefaultSuggestions(suggestions);
+                shouldOnlyOfferDefaultSuggestionsForEndOfLine(line, allTasks);
             });
 
             it('should not offer tasks if "IDs" are separated by spaces', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234 5678`;
-                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
-                shouldOnlyOfferDefaultSuggestions(suggestions);
+                shouldOnlyOfferDefaultSuggestionsForEndOfLine(line, allTasks);
             });
         });
     });
