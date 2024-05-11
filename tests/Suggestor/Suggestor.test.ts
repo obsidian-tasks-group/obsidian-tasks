@@ -248,7 +248,7 @@ describe.each([
         expect(suggestions[0].displayText).not.toContain('created today');
     });
 
-    describe('suggestions for dependency fields', () => {
+    describe('suggestions for dependency field ID', () => {
         it('should offer "id" then "depends on" if user typed "id"', () => {
             const line = '- [ ] some task id';
             shouldStartWithSuggestionsEqualling(line, [`${idSymbol} Task ID`, `${dependsOnSymbol} Task depends on ID`]);
@@ -258,7 +258,9 @@ describe.each([
             const line = `- [ ] some task ${idSymbol}`;
             shouldStartWithSuggestionsEqualling(line, ['Auto Generate Unique ID']);
         });
+    });
 
+    describe('suggestions for dependency field ', () => {
         it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
