@@ -49,7 +49,7 @@ export interface DefaultTaskSerializerSymbols {
 export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 
 // The allowed characters in a comma-separated sequence of task ids:
-const taskIdSequenceRegex = new RegExp('(' + taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*)');
+export const taskIdSequenceRegex = new RegExp('(' + taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*)');
 
 /**
  * A symbol map for obsidian-task's default task style.
