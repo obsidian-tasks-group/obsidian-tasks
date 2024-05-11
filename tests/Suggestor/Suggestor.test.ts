@@ -329,9 +329,9 @@ describe.each([
                 shouldStartWithSuggestionsEqualling(line, [suggestTaskxy, defaultSuggestion], allTasks);
             });
 
-            it.failing('should offer tasks containing underscore in description, if given as second partial ID', () => {
+            it('should offer tasks containing underscore in description, if given as second partial ID', () => {
                 // x_ does not match any of the existing IDs, so is presumed to be a substring to search for.
-                const line = `- [ ] some task ${dependsOnSymbol} 1234,x_,`;
+                const line = `- [ ] some task ${dependsOnSymbol} 1234,x_`;
                 shouldStartWithSuggestionsEqualling(line, [suggestTaskxy, defaultSuggestion], allTasks);
             });
 
