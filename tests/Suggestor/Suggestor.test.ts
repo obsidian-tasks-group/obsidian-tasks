@@ -379,6 +379,19 @@ describe.each([
                 );
             });
 
+            it('should find non-exact matches for multi-word search strings', () => {
+                const feedBaby = taskBuilder.description('Feed the baby').id('bby').build();
+                const feedCat = taskBuilder.description('Feed the cat').id('ct').build();
+
+                const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,feed baby`;
+                // Search string 'feed baby' should match only 'Feed the baby':
+                shouldStartWithSuggestionsEqualling(
+                    line,
+                    ['Feed the baby - From: file-name.md', defaultSuggestion],
+                    [feedBaby, feedCat, ...allTasks],
+                );
+            });
+
             it('should not offer any tasks if there is not a comma after existing depends IDs', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,5678`;
                 const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
