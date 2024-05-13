@@ -388,8 +388,8 @@
         onSubmit(newTasks);
     };
 
-    function dateEditorLabelContent(id: string, withAccessKey: boolean, accessKey: string | null) {
-        if (!withAccessKey || accessKey === null) {
+    function dateEditorLabelContent(id: string, accessKey: string | null) {
+        if (accessKey === null) {
             return capitalizeFirstLetter(id);
         }
 
@@ -533,7 +533,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="due">{@html dateEditorLabelContent('due', withAccessKeys, accesskey('d'))}</label>
+        <label for="due">{@html dateEditorLabelContent('due', accesskey('d'))}</label>
         <DateEditor
             id="due"
             dateSymbol={dueDateSymbol}
@@ -546,7 +546,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="scheduled">{@html dateEditorLabelContent('scheduled', withAccessKeys, accesskey('s'))}</label>
+        <label for="scheduled">{@html dateEditorLabelContent('scheduled', accesskey('s'))}</label>
         <DateEditor
             id="scheduled"
             dateSymbol={scheduledDateSymbol}
@@ -559,7 +559,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Start Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="start">{@html dateEditorLabelContent('start', withAccessKeys, accesskey('a'))}</label>
+        <label for="start">{@html dateEditorLabelContent('start', accesskey('a'))}</label>
         <DateEditor
             id="start"
             dateSymbol={startDateSymbol}
@@ -666,7 +666,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="created">{@html dateEditorLabelContent('created', withAccessKeys, accesskey('c'))}</label>
+        <label for="created">{@html dateEditorLabelContent('created', accesskey('c'))}</label>
         <DateEditor
             id="created"
             dateSymbol={createdDateSymbol}
@@ -679,7 +679,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Done Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="done">{@html dateEditorLabelContent('done', withAccessKeys, accesskey('x'))}</label>
+        <label for="done">{@html dateEditorLabelContent('done', accesskey('x'))}</label>
         <DateEditor
             id="done"
             dateSymbol={doneDateSymbol}
@@ -692,7 +692,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Cancelled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="cancelled">{@html dateEditorLabelContent('cancelled', withAccessKeys, accesskey('-'))}</label>
+        <label for="cancelled">{@html dateEditorLabelContent('cancelled', accesskey('-'))}</label>
         <DateEditor
             id="cancelled"
             dateSymbol={cancelledDateSymbol}
