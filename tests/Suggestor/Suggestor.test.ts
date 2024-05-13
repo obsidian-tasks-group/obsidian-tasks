@@ -367,8 +367,7 @@ describe.each([
 
             it('should offer tasks when first existing dependency id has hyphen and underscore', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1_2-3,`;
-                const selectedTasks = [taskxy, task1234, task5678];
-                shouldStartWithSuggestedTasks(line, selectedTasks, allTasks);
+                shouldStartWithSuggestedTasks(line, [taskxy, task1234, task5678], allTasks);
             });
 
             it('should only offer tasks not already depended upon - and allows spaces around commas', () => {
