@@ -1,3 +1,15 @@
+/**
+ * Returns contents for a `<label>` HTML element.
+ *
+ * If the {@link accessKey} is found in the label text (case-insensitive), it will be given `accesskey` class
+ * within a `<span>` HTML element. Else the access key will be added at the end of the label text,
+ * surrounded with round brackets.
+ *
+ * The first letter of the label will be capitalised.
+ *
+ * @param labelText to be displayed in the <label> HTML element.
+ * @param accessKey optional access key. Set to null if not needed.
+ */
 export function editTaskLabelContent(labelText: string, accessKey: string | null) {
     if (accessKey === null) {
         return capitalizeFirstLetter(labelText);
