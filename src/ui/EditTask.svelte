@@ -393,6 +393,14 @@
         if (withAccessKey) {
             if (!id.includes(accessKey)) {
                 labelContent += ` (<span class="accesskey">${accessKey}</span>)`;
+            } else {
+                const accessKeyIndex = id.indexOf(accessKey);
+                labelContent = id.substring(0, accessKeyIndex);
+                labelContent += `<span class="accesskey">${id
+                    .substring(accessKeyIndex, accessKeyIndex + 1)
+                    .toUpperCase()}</span>`;
+                labelContent += id.substring(accessKeyIndex + 1);
+                labelContent = capitalizeFirstLetter(labelContent);
             }
         }
 
@@ -664,11 +672,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="created"><span class="accesskey">C</span>reated</label>
-        {:else}
-            <label for="created">Created</label>
-        {/if}
+        {@html generateDateEditorLabel('created', withAccessKeys, 'c')}
         <DateEditor
             id="created"
             dateSymbol={createdDateSymbol}
