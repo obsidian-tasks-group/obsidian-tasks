@@ -3,12 +3,14 @@
     import type { Task } from '../Task/Task';
     import type { EditableTask } from './EditableTask';
     import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
+    import { editTaskLabelContent } from './EditTaskHelpers';
 
     export let task: Task;
     export let editableTask: EditableTask;
     export let allTasks: Task[];
     export let _onDescriptionKeyDown: (e: KeyboardEvent) => void;
     export let type: 'blocking' | 'blockedBy';
+    export let labelText: string;
     export let accesskey: (key: string) => string | null;
     export let accesskeyLetter: string = '';
     export let placeholder: string = 'Type to search...';
@@ -141,6 +143,7 @@
     }
 </script>
 
+<label for={type}>{@html editTaskLabelContent(labelText, accesskey(accesskeyLetter))}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <span bind:clientWidth={inputWidth}>
     <input
