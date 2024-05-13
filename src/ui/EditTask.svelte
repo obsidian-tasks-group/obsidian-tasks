@@ -396,15 +396,15 @@
         let labelContent = capitalizeFirstLetter(id);
         if (!id.includes(accessKey)) {
             return `${capitalizeFirstLetter(id)} (<span class="accesskey">${accessKey}</span>)`;
-        } else {
-            const accessKeyIndex = id.indexOf(accessKey);
-            labelContent = id.substring(0, accessKeyIndex);
-            labelContent += `<span class="accesskey">${id
-                .substring(accessKeyIndex, accessKeyIndex + 1)
-                .toUpperCase()}</span>`;
-            labelContent += id.substring(accessKeyIndex + 1);
-            labelContent = capitalizeFirstLetter(labelContent);
         }
+
+        const accessKeyIndex = id.indexOf(accessKey);
+        labelContent = id.substring(0, accessKeyIndex);
+        labelContent += `<span class="accesskey">${id
+            .substring(accessKeyIndex, accessKeyIndex + 1)
+            .toUpperCase()}</span>`;
+        labelContent += id.substring(accessKeyIndex + 1);
+        labelContent = capitalizeFirstLetter(labelContent);
         return labelContent;
     }
 
