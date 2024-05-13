@@ -430,7 +430,7 @@ Availability of access keys:
         {#if withAccessKeys}
             <label for="description">Descrip<span class="accesskey">t</span>ion</label>
         {:else}
-            <label for="description">Descrip<span class="accesskey">t</span>ion</label>
+            <label for="description">Description</label>
         {/if}
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
@@ -484,7 +484,7 @@ Availability of access keys:
         {#if withAccessKeys}
             <label for="recurrence" class="accesskey-first">Recurs</label>
         {:else}
-            <label for="recurrence" class="accesskey-first">Recurs</label>
+            <label for="recurrence">Recurs</label>
         {/if}
         <!-- svelte-ignore a11y-accesskey -->
         <input
@@ -503,7 +503,7 @@ Availability of access keys:
         {#if withAccessKeys}
             <label for="due" class="accesskey-first">Due</label>
         {:else}
-            <label for="due" class="accesskey-first">Due</label>
+            <label for="due">Due</label>
         {/if}
         <DateEditor
             id="due"
@@ -520,7 +520,7 @@ Availability of access keys:
         {#if withAccessKeys}
             <label for="scheduled" class="accesskey-first">Scheduled</label>
         {:else}
-            <label for="scheduled" class="accesskey-first">Scheduled</label>
+            <label for="scheduled">Scheduled</label>
         {/if}
         <DateEditor
             id="scheduled"
@@ -537,7 +537,7 @@ Availability of access keys:
         {#if withAccessKeys}
             <label for="start">St<span class="accesskey">a</span>rt</label>
         {:else}
-            <label for="start">St<span class="accesskey">a</span>rt</label>
+            <label for="start">Start</label>
         {/if}
         <DateEditor
             id="start"
@@ -558,10 +558,7 @@ Availability of access keys:
                     <span class="accesskey-first">future</span> dates:</label
                 >
             {:else}
-                <label for="forwardOnly"
-                    >Only
-                    <span class="accesskey-first">future</span> dates:</label
-                >
+                <label for="forwardOnly">Only future dates:</label>
             {/if}
             <!-- svelte-ignore a11y-accesskey -->
             <input
@@ -586,7 +583,7 @@ Availability of access keys:
             {#if withAccessKeys}
                 <label for="blockedBy" class="accesskey-first">Before this</label>
             {:else}
-                <label for="blockedBy" class="accesskey-first">Before this</label>
+                <label for="blockedBy">Before this</label>
             {/if}
             <Dependency
                 type="blockedBy"
@@ -605,7 +602,7 @@ Availability of access keys:
             {#if withAccessKeys}
                 <label for="blocking">Aft<span class="accesskey">e</span>r this</label>
             {:else}
-                <label for="blocking">Aft<span class="accesskey">e</span>r this</label>
+                <label for="blocking">After this</label>
             {/if}
             <Dependency
                 type="blocking"
@@ -630,7 +627,7 @@ Availability of access keys:
         {#if withAccessKeys}
             <label for="status">Stat<span class="accesskey">u</span>s</label>
         {:else}
-            <label for="status">Stat<span class="accesskey">u</span>s</label>
+            <label for="status">Status</label>
         {/if}
         <!-- svelte-ignore a11y-accesskey -->
         <select
@@ -651,7 +648,7 @@ Availability of access keys:
         {#if withAccessKeys}
             <label for="created" class="accesskey-first">Created</label>
         {:else}
-            <label for="created" class="accesskey-first">Created</label>
+            <label for="created">Created</label>
         {/if}
         <DateEditor
             id="created"
