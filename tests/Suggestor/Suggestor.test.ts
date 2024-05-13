@@ -370,17 +370,11 @@ describe.each([
 
             it('should use equality to check for existing IDs, not containment', () => {
                 const taskWithId123 = taskBuilder.description('3').id('123').build();
-                const suggestTask123 = suggestionLabel(taskWithId123);
-
                 const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,`;
 
                 // 123 is only a substring of one of the ID 1234 which is already depended on, not an exat match.
                 // So it should not count as already matched.
-                shouldStartWithSuggestionsEqualling(
-                    line,
-                    [suggestTask123, defaultSuggestion],
-                    [taskWithId123, ...allTasks],
-                );
+                shouldStartWithSuggestedTasks(line, [taskWithId123], [taskWithId123, ...allTasks]);
                 expect(allTasks.length).toBe(3);
             });
 
@@ -390,27 +384,18 @@ describe.each([
 
                 const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,feed baby`;
                 // Search string 'feed baby' should match only 'Feed the baby':
-                shouldStartWithSuggestionsEqualling(
-                    line,
-                    [suggestionLabel(feedBaby), defaultSuggestion],
-                    [feedBaby, feedCat, ...allTasks],
-                );
+                shouldStartWithSuggestedTasks(line, [feedBaby], [feedBaby, feedCat, ...allTasks]);
                 expect(allTasks.length).toBe(3);
             });
 
             it.failing('should allow punctuation in search strings', () => {
                 const peace1 = taskBuilder.description('World peace!').id('peace1').build();
-                const peace1Match = suggestionLabel(peace1);
 
                 // Don't match a task that has peace present, but without the exclamation mark
                 const peace2 = taskBuilder.description('Peacefulness').id('peace2').build();
 
                 const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,peace!`;
-                shouldStartWithSuggestionsEqualling(
-                    line,
-                    [peace1Match, defaultSuggestion],
-                    [peace1, peace2, ...allTasks],
-                );
+                shouldStartWithSuggestedTasks(line, [peace1], [peace1, peace2, ...allTasks]);
                 expect(allTasks.length).toBe(3);
             });
 
