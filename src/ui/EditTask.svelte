@@ -531,11 +531,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="due"><span class="accesskey">D</span>ue</label>
-        {:else}
-            <label for="due">Due</label>
-        {/if}
+        {@html generateDateEditorLabel('due', withAccessKeys, 'd')}
         <DateEditor
             id="due"
             dateSymbol={dueDateSymbol}
@@ -548,11 +544,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="scheduled"><span class="accesskey">S</span>cheduled</label>
-        {:else}
-            <label for="scheduled">Scheduled</label>
-        {/if}
+        {@html generateDateEditorLabel('scheduled', withAccessKeys, 's')}
         <DateEditor
             id="scheduled"
             dateSymbol={scheduledDateSymbol}
@@ -689,11 +681,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Done Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="done">Done (<span class="accesskey">x</span>)</label>
-        {:else}
-            <label for="done">Done</label>
-        {/if}
+        {@html generateDateEditorLabel('done', withAccessKeys, 'x')}
         <DateEditor
             id="done"
             dateSymbol={doneDateSymbol}
