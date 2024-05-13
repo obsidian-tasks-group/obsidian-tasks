@@ -387,6 +387,14 @@
         const newTasks = updatedTask.handleNewStatusWithRecurrenceInUsersOrder(editableTask.status, today);
         onSubmit(newTasks);
     };
+
+    function generateDateEditorLabel(withAccessKey: boolean): string {
+        if (withAccessKey) {
+            return '<label for="cancelled">Cancelled (<span class="accesskey">-</span>)</label>';
+        }
+
+        return '<label for="cancelled">Cancelled</label>';
+    }
 </script>
 
 <!--
@@ -683,11 +691,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Cancelled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="cancelled">Cancelled (<span class="accesskey">-</span>)</label>
-        {:else}
-            <label for="cancelled">Cancelled</label>
-        {/if}
+        {@html generateDateEditorLabel(withAccessKeys)}
         <DateEditor
             id="cancelled"
             dateSymbol={cancelledDateSymbol}
