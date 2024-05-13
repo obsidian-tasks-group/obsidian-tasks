@@ -462,9 +462,13 @@ Availability of access keys:
                     accesskey={accesskey(accessKey)}
                 />
                 <label for="priority-{value}">
-                    <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
-                        >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span
-                    ><span>{label.substring(accessKeyIndex + 1)}</span>
+                    {#if withAccessKeys}
+                        <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
+                            >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span
+                        ><span>{label.substring(accessKeyIndex + 1)}</span>
+                    {:else}
+                        <span>{label}</span>
+                    {/if}
                     {#if symbol && symbol.charCodeAt(0) >= 0x100}
                         <span>{symbol}</span>
                     {/if}
