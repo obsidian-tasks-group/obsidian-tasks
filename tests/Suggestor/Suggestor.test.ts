@@ -321,44 +321,36 @@ describe.each([
 
             it('should suggest all tasks when there is no existing ID after dependsOn', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} `;
-                shouldStartWithSuggestionsEqualling(
-                    line,
-                    [suggestionLabel(taskxy), suggestionLabel(task1234), suggestionLabel(task5678), defaultSuggestion],
-                    allTasks,
-                );
+                shouldStartWithSuggestedTasks(line, [taskxy, task1234, task5678], allTasks);
             });
 
             it('should offer tasks containing the search string, if given a partial ID', () => {
                 // 1 does not match any of the existing IDs, so is presumed to be a substring to search for.
                 const line = `- [ ] some task ${dependsOnSymbol} 1`;
-                shouldStartWithSuggestionsEqualling(line, [suggestionLabel(task1234), defaultSuggestion], allTasks);
+                shouldStartWithSuggestedTasks(line, [task1234], allTasks);
             });
 
             it('should offer tasks containing the search string, if given a partial ID even when no space between symbol and ID', () => {
                 // 1 does not match any of the existing IDs, so is presumed to be a substring to search for.
                 const line = `- [ ] some task ${dependsOnSymbol}1`;
-                shouldStartWithSuggestionsEqualling(line, [suggestionLabel(task1234), defaultSuggestion], allTasks);
+                shouldStartWithSuggestedTasks(line, [task1234], allTasks);
             });
 
             it('should offer tasks containing underscore in description, if given as partial ID', () => {
                 // x_ does not match any of the existing IDs, so is presumed to be a substring to search for.
                 const line = `- [ ] some task ${dependsOnSymbol} x_`;
-                shouldStartWithSuggestionsEqualling(line, [suggestionLabel(taskxy), defaultSuggestion], allTasks);
+                shouldStartWithSuggestedTasks(line, [taskxy], allTasks);
             });
 
             it('should offer tasks containing underscore in description, if given as second partial ID', () => {
                 // x_ does not match any of the existing IDs, so is presumed to be a substring to search for.
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,x_`;
-                shouldStartWithSuggestionsEqualling(line, [suggestionLabel(taskxy), defaultSuggestion], allTasks);
+                shouldStartWithSuggestedTasks(line, [taskxy], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
-                shouldStartWithSuggestionsEqualling(
-                    line,
-                    [suggestionLabel(taskxy), suggestionLabel(task5678), defaultSuggestion],
-                    allTasks,
-                );
+                shouldStartWithSuggestedTasks(line, [taskxy, task5678], allTasks);
             });
 
             it('should offer tasks when first existing dependency id has hyphen and underscore', () => {
@@ -368,7 +360,7 @@ describe.each([
 
             it('should only offer tasks not already depended upon - and allows spaces around commas', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} xy , 5678 , `;
-                shouldStartWithSuggestionsEqualling(line, [suggestionLabel(task1234), defaultSuggestion], allTasks);
+                shouldStartWithSuggestedTasks(line, [task1234], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
