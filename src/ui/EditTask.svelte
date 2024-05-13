@@ -389,11 +389,12 @@
     };
 
     function generateDateEditorLabel(id: string, withAccessKey: boolean): string {
+        let labelContent = 'Cancelled';
         if (withAccessKey) {
-            return `<label for=${id}>Cancelled (<span class="accesskey">-</span>)</label>`;
+            labelContent += ' (<span class="accesskey">-</span>)';
         }
 
-        return `<label for=${id}>Cancelled</label>`;
+        return `<label for=${id}>${labelContent}</label>`;
     }
 </script>
 
