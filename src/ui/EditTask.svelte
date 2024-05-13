@@ -389,12 +389,16 @@
     };
 
     function generateDateEditorLabel(id: string, withAccessKey: boolean): string {
-        let labelContent = 'Cancelled';
+        let labelContent = capitalizeFirstLetter(id);
         if (withAccessKey) {
             labelContent += ' (<span class="accesskey">-</span>)';
         }
 
         return `<label for=${id}>${labelContent}</label>`;
+    }
+
+    function capitalizeFirstLetter(id: string) {
+        return id.charAt(0).toUpperCase() + id.slice(1);
     }
 </script>
 
