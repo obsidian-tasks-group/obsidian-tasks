@@ -1,18 +1,18 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { parseTypedDateForSaving } from '../lib/DateTools';
-    import { Recurrence } from '../Task/Recurrence';
-    import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
-    import { Status } from '../Statuses/Status';
-    import { Task } from '../Task/Task';
-    import { TasksDate } from '../Scripting/TasksDate';
-    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
+    import { TASK_FORMATS, getSettings } from '../Config/Settings';
+    import { parseTypedDateForSaving } from '../lib/DateTools';
     import { replaceTaskWithTasks } from '../Obsidian/File';
+    import { TasksDate } from '../Scripting/TasksDate';
+    import { Status } from '../Statuses/Status';
     import { Priority } from '../Task/Priority';
+    import { Recurrence } from '../Task/Recurrence';
+    import { Task } from '../Task/Task';
+    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
     import DateEditor from './DateEditor.svelte';
-    import type { EditableTask } from './EditableTask';
     import Dependency from './Dependency.svelte';
+    import type { EditableTask } from './EditableTask';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -407,9 +407,7 @@
     }
 
     function generateDateEditorLabel(id: string, withAccessKey: boolean, accessKey: string): string {
-        let labelContent = dateEditorLabelContent(id, withAccessKey, accessKey);
-
-        return `<label for=${id}>${labelContent}</label>`;
+        return `<label for=${id}>${dateEditorLabelContent(id, withAccessKey, accessKey)}</label>`;
     }
 
     function capitalizeFirstLetter(id: string) {
