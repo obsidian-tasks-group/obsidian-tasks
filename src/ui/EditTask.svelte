@@ -399,9 +399,9 @@
 
         const accessKeyIndex = id.indexOf(accessKey);
         let labelContent = id.substring(0, accessKeyIndex);
-        labelContent += `<span class="accesskey">${id
-            .substring(accessKeyIndex, accessKeyIndex + 1)
-            .toUpperCase()}</span>`;
+        labelContent += '<span class="accesskey">';
+        labelContent += id.substring(accessKeyIndex, accessKeyIndex + 1).toUpperCase();
+        labelContent += '</span>';
         labelContent += id.substring(accessKeyIndex + 1);
         labelContent = capitalizeFirstLetter(labelContent);
         return labelContent;
