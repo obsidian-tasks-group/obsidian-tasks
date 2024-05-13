@@ -283,6 +283,10 @@ describe.each([
         // TODO test that it uses the same regex for Task IDs as the rest of the code
         // TODO confirm it does not unnecessarily rewrite tasks that already have an ID
 
+        function suggestionLabel(taskxy: Task) {
+            return `${taskxy.description} - From: ${taskxy.file.filename}`;
+        }
+
         describe('suggesting additional dependencies', () => {
             const taskBuilder = new TaskBuilder().path('root/dir 1/dir 2/file-name.md');
             // If adding new task lines here, add them before the end of the list,
@@ -300,7 +304,7 @@ describe.each([
             const taskxy = allTasks[0];
 
             // Variable names based on ID, not description:
-            const suggestTaskxy = `${taskxy.description} - From: ${taskxy.file.filename}`;
+            const suggestTaskxy = suggestionLabel(taskxy);
             const suggestTask1234 = '1 - From: file-name.md';
             const suggestTask5678 = '2 - From: file-name.md';
 
