@@ -542,14 +542,7 @@ Availability of access keys:
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
         <div class="future-dates-only">
-            {#if withAccessKeys}
-                <label for="forwardOnly"
-                    >Only
-                    <span class="accesskey">f</span>uture dates:</label
-                >
-            {:else}
-                <label for="forwardOnly">Only future dates:</label>
-            {/if}
+            <label for="forwardOnly">{@html editTaskLabelContent('Only future dates:', accesskey('f'))}</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:checked={editableTask.forwardOnly}
