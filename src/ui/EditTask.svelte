@@ -486,7 +486,7 @@ Availability of access keys:
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
         {#if withAccessKeys}
-            <label for="recurrence" class="accesskey-first">Recurs</label>
+            <label for="recurrence"><span class="accesskey">R</span>ecurs</label>
         {:else}
             <label for="recurrence">Recurs</label>
         {/if}
@@ -505,7 +505,7 @@ Availability of access keys:
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
         {#if withAccessKeys}
-            <label for="due" class="accesskey-first">Due</label>
+            <label for="due"><span class="accesskey">D</span>ue</label>
         {:else}
             <label for="due">Due</label>
         {/if}
@@ -522,7 +522,7 @@ Availability of access keys:
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
         {#if withAccessKeys}
-            <label for="scheduled" class="accesskey-first">Scheduled</label>
+            <label for="scheduled"><span class="accesskey">S</span>cheduled</label>
         {:else}
             <label for="scheduled">Scheduled</label>
         {/if}
@@ -559,7 +559,7 @@ Availability of access keys:
             {#if withAccessKeys}
                 <label for="forwardOnly"
                     >Only
-                    <span class="accesskey-first">future</span> dates:</label
+                    <span class="accesskey">f</span>uture dates:</label
                 >
             {:else}
                 <label for="forwardOnly">Only future dates:</label>
@@ -585,7 +585,7 @@ Availability of access keys:
             <!--  Blocked By Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
             {#if withAccessKeys}
-                <label for="blockedBy" class="accesskey-first">Before this</label>
+                <label for="blockedBy"><span class="accesskey">B</span>efore this</label>
             {:else}
                 <label for="blockedBy">Before this</label>
             {/if}
@@ -650,7 +650,7 @@ Availability of access keys:
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
         {#if withAccessKeys}
-            <label for="created" class="accesskey-first">Created</label>
+            <label for="created"><span class="accesskey">C</span>reated</label>
         {:else}
             <label for="created">Created</label>
         {/if}
