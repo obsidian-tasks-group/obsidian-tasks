@@ -1,9 +1,10 @@
 import { ListItem } from '../../src/Task/ListItem';
 
 describe('list item tests', () => {
-    it('should create list item', () => {
+    it('should create list item with empty children and absent parent', () => {
         const listItem = new ListItem([]);
         expect(listItem).toBeDefined();
+        expect(listItem.children).toEqual([]);
         expect(listItem.parent).toEqual(null);
     });
 
