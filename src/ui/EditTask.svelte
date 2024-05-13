@@ -388,8 +388,8 @@
         onSubmit(newTasks);
     };
 
-    function dateEditorLabelContent(id: string, withAccessKey: boolean, accessKey: string) {
-        if (!withAccessKey) {
+    function dateEditorLabelContent(id: string, withAccessKey: boolean, accessKey: string | null) {
+        if (!withAccessKey || accessKey === null) {
             return capitalizeFirstLetter(id);
         }
 
