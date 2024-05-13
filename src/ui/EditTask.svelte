@@ -428,11 +428,7 @@ Availability of access keys:
     <!--  Description  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-description-section">
-        {#if withAccessKeys}
-            <label for="description">Descrip<span class="accesskey">t</span>ion</label>
-        {:else}
-            <label for="description">Description</label>
-        {/if}
+        <label for="description">{@html editTaskLabelContent('Description', accesskey('t'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
             bind:value={editableTask.description}
