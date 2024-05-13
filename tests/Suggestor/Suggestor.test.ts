@@ -302,11 +302,13 @@ describe.each([
             ];
 
             const taskxy = allTasks[0];
+            const task1234 = allTasks[1];
+            const task5678 = allTasks[2];
 
             // Variable names based on ID, not description:
             const suggestTaskxy = suggestionLabel(taskxy);
-            const suggestTask1234 = '1 - From: file-name.md';
-            const suggestTask5678 = '2 - From: file-name.md';
+            const suggestTask1234 = suggestionLabel(task1234);
+            const suggestTask5678 = suggestionLabel(task5678);
 
             // Make tests more thorough by allowing tests to ensure that there are no more dependency suggestions
             // after the ones we supply to shouldStartWithSuggestionsEqualling():
