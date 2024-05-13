@@ -387,35 +387,6 @@
         const newTasks = updatedTask.handleNewStatusWithRecurrenceInUsersOrder(editableTask.status, today);
         onSubmit(newTasks);
     };
-
-    function dateEditorLabelContent(id: string, accessKey: string | null) {
-        if (accessKey === null) {
-            return capitalizeFirstLetter(id);
-        }
-
-        if (!id.includes(accessKey)) {
-            return `${capitalizeFirstLetter(id)} (<span class="accesskey">${accessKey}</span>)`;
-        }
-
-        const accessKeyIndex = id.indexOf(accessKey);
-        let labelContent = id.substring(0, accessKeyIndex);
-        labelContent += '<span class="accesskey">';
-
-        if (accessKeyIndex === 0) {
-            labelContent += id.substring(accessKeyIndex, accessKeyIndex + 1).toUpperCase();
-        } else {
-            labelContent += id.substring(accessKeyIndex, accessKeyIndex + 1);
-        }
-
-        labelContent += '</span>';
-        labelContent += id.substring(accessKeyIndex + 1);
-        labelContent = capitalizeFirstLetter(labelContent);
-        return labelContent;
-    }
-
-    function capitalizeFirstLetter(id: string) {
-        return id.charAt(0).toUpperCase() + id.slice(1);
-    }
 </script>
 
 <!--
@@ -533,7 +504,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="due">{@html dateEditorLabelContent('due', accesskey('d'))}</label>
         <DateEditor
             id="due"
             dateSymbol={dueDateSymbol}
@@ -546,7 +516,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="scheduled">{@html dateEditorLabelContent('scheduled', accesskey('s'))}</label>
         <DateEditor
             id="scheduled"
             dateSymbol={scheduledDateSymbol}
@@ -559,7 +528,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Start Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="start">{@html dateEditorLabelContent('start', accesskey('a'))}</label>
         <DateEditor
             id="start"
             dateSymbol={startDateSymbol}
@@ -666,7 +634,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="created">{@html dateEditorLabelContent('created', accesskey('c'))}</label>
         <DateEditor
             id="created"
             dateSymbol={createdDateSymbol}
@@ -679,7 +646,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Done Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="done">{@html dateEditorLabelContent('done', accesskey('x'))}</label>
         <DateEditor
             id="done"
             dateSymbol={doneDateSymbol}
@@ -692,7 +658,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Cancelled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="cancelled">{@html dateEditorLabelContent('cancelled', accesskey('-'))}</label>
         <DateEditor
             id="cancelled"
             dateSymbol={cancelledDateSymbol}
