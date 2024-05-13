@@ -388,10 +388,10 @@
         onSubmit(newTasks);
     };
 
-    function generateDateEditorLabel(id: string, withAccessKey: boolean): string {
+    function generateDateEditorLabel(id: string, withAccessKey: boolean, accessKey: string): string {
         let labelContent = capitalizeFirstLetter(id);
         if (withAccessKey) {
-            labelContent += ' (<span class="accesskey">-</span>)';
+            labelContent += ` (<span class="accesskey">${accessKey}</span>)`;
         }
 
         return `<label for=${id}>${labelContent}</label>`;
@@ -696,7 +696,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Cancelled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {@html generateDateEditorLabel('cancelled', withAccessKeys)}
+        {@html generateDateEditorLabel('cancelled', withAccessKeys, '-')}
         <DateEditor
             id="cancelled"
             dateSymbol={cancelledDateSymbol}
