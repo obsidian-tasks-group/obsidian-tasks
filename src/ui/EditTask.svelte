@@ -407,10 +407,6 @@
         return labelContent;
     }
 
-    function generateDateEditorLabel(id: string, withAccessKey: boolean, accessKey: string): string {
-        return `<label for=${id}>${dateEditorLabelContent(id, withAccessKey, accessKey)}</label>`;
-    }
-
     function capitalizeFirstLetter(id: string) {
         return id.charAt(0).toUpperCase() + id.slice(1);
     }
@@ -531,7 +527,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {@html generateDateEditorLabel('due', withAccessKeys, 'd')}
+        <label for="due">{@html dateEditorLabelContent('due', withAccessKeys, 'd')}</label>
         <DateEditor
             id="due"
             dateSymbol={dueDateSymbol}
@@ -544,7 +540,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {@html generateDateEditorLabel('scheduled', withAccessKeys, 's')}
+        <label for="scheduled">{@html dateEditorLabelContent('scheduled', withAccessKeys, 's')}</label>
         <DateEditor
             id="scheduled"
             dateSymbol={scheduledDateSymbol}
@@ -668,7 +664,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {@html generateDateEditorLabel('created', withAccessKeys, 'c')}
+        <label for="created">{@html dateEditorLabelContent('created', withAccessKeys, 'c')}</label>
         <DateEditor
             id="created"
             dateSymbol={createdDateSymbol}
@@ -681,7 +677,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Done Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {@html generateDateEditorLabel('done', withAccessKeys, 'x')}
+        <label for="done">{@html dateEditorLabelContent('done', withAccessKeys, 'x')}</label>
         <DateEditor
             id="done"
             dateSymbol={doneDateSymbol}
@@ -694,7 +690,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Cancelled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {@html generateDateEditorLabel('cancelled', withAccessKeys, '-')}
+        <label for="cancelled">{@html dateEditorLabelContent('cancelled', withAccessKeys, '-')}</label>
         <DateEditor
             id="cancelled"
             dateSymbol={cancelledDateSymbol}
