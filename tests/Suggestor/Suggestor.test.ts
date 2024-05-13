@@ -362,11 +362,8 @@ describe.each([
 
             it('should offer tasks when first existing dependency id has hyphen and underscore', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1_2-3,`;
-                shouldStartWithSuggestionsEqualling(
-                    line,
-                    [suggestTaskxy, suggestTask1234, suggestTask5678, defaultSuggestion],
-                    allTasks,
-                );
+                const selectedTaskLabels = [suggestTaskxy, suggestTask1234, suggestTask5678];
+                shouldStartWithSuggestionsEqualling(line, [...selectedTaskLabels, defaultSuggestion], allTasks);
             });
 
             it('should only offer tasks not already depended upon - and allows spaces around commas', () => {
