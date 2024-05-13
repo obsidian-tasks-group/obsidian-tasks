@@ -274,7 +274,7 @@ describe.each([
         it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
-            shouldStartWithSuggestionsEqualling(line, ['Do exercises - From: fileName.md'], [taskToDependOn]);
+            shouldStartWithSuggestionsEqualling(line, [suggestionLabel(taskToDependOn)], [taskToDependOn]);
         });
 
         // TODO should not offer to depend on self
@@ -284,7 +284,7 @@ describe.each([
         // TODO confirm it does not unnecessarily rewrite tasks that already have an ID
 
         function suggestionLabel(taskxy: Task) {
-            return `${taskxy.description} - From: ${taskxy.file.filename}`;
+            return `${taskxy.descriptionWithoutTags} - From: ${taskxy.file.filename}`;
         }
 
         describe('suggesting additional dependencies', () => {
