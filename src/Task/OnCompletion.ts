@@ -18,9 +18,10 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         return tasks;
     }
 
-    if (taskString.includes('🏁 Delete')) {
+    if (taskString.includes('🏁 delete')) {
         return tasks.filter((task) => task !== changedStatusTask);
     }
+
     // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
     const errorMessage = 'Unknown "On Completion" action';
     console.log(errorMessage);

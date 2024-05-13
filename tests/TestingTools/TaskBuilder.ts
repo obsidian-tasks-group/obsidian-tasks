@@ -45,6 +45,7 @@ export class TaskBuilder {
     private _cancelledDate: Moment | null = null;
 
     private _recurrence: Recurrence | null = null;
+    private _onCompletion: string = '';
     private _blockLink: string = '';
 
     private _scheduledDateIsInferred: boolean = false;
@@ -89,6 +90,7 @@ export class TaskBuilder {
             doneDate: this._doneDate,
             cancelledDate: this._cancelledDate,
             recurrence: this._recurrence,
+            onCompletion: this._onCompletion,
             dependsOn: this._dependsOn,
             id: this._id,
             blockLink: this._blockLink,
@@ -119,6 +121,7 @@ export class TaskBuilder {
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
             .cancelledDate('2023-07-06')
+            .onCompletion('delete')
             .dependsOn(['123456', 'abc123'])
             .id('abcdef')
             .blockLink(' ^dcf64c')
@@ -264,6 +267,11 @@ export class TaskBuilder {
      */
     public recurrence(recurrence: Recurrence | null): TaskBuilder {
         this._recurrence = recurrence;
+        return this;
+    }
+
+    public onCompletion(onCompletion: string): TaskBuilder {
+        this._onCompletion = onCompletion;
         return this;
     }
 

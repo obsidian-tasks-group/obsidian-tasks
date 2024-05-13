@@ -207,6 +207,7 @@ describe('task line rendering - layout options', () => {
                 ' ⛔ 123456,abc123',
                 ' 🔼',
                 ' 🔁 every day when done',
+                ' 🏁 delete',
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
@@ -227,6 +228,7 @@ describe('task line rendering - layout options', () => {
                 ' ⛔ 123456,abc123',
                 ' 🔼',
                 ' 🔁 every day when done',
+                ' 🏁 delete',
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
@@ -282,6 +284,10 @@ describe('task line rendering - layout options', () => {
 
     it('renders with depends on', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' ⛔ 123456,abc123'], [TaskLayoutComponent.DependsOn]);
+    });
+
+    it('renders with onCompletion', async () => {
+        await testLayoutOptions(['Do exercises #todo #health', ' 🏁 delete'], [TaskLayoutComponent.OnCompletion]);
     });
 });
 

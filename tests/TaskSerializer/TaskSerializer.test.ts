@@ -72,6 +72,7 @@ describe('TaskSerializer Example', () => {
                 doneDate: null,
                 cancelledDate: null,
                 recurrence: null,
+                onCompletion: '',
                 dependsOn: [],
                 id: '',
             };

@@ -92,6 +92,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             doneDate: null,
             cancelledDate: null,
             recurrence: null,
+            onCompletion: '',
             dependsOn: [],
             id: '',
             blockLink: '',
@@ -132,6 +133,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         doneDate: null,
         cancelledDate: null,
         recurrence: null,
+        onCompletion: '',
         tags: [],
         originalMarkdown: '',
         // Not needed since the inferred status is always re-computed after submitting.
