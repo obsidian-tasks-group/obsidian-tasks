@@ -389,11 +389,11 @@
     };
 
     function dateEditorLabelContent(id: string, withAccessKey: boolean, accessKey: string) {
-        let labelContent = capitalizeFirstLetter(id);
         if (!withAccessKey) {
-            return labelContent;
+            return capitalizeFirstLetter(id);
         }
 
+        let labelContent = capitalizeFirstLetter(id);
         if (!id.includes(accessKey)) {
             labelContent += ` (<span class="accesskey">${accessKey}</span>)`;
         } else {
