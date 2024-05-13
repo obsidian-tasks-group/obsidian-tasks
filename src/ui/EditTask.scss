@@ -14,7 +14,7 @@
 }
 
 .with-accesskeys {
-    .accesskey-first::first-letter, .accesskey {
+    .accesskey {
         text-decoration: underline;
         text-underline-offset: 1pt;
     }
