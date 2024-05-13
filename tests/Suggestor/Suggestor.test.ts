@@ -370,7 +370,7 @@ describe.each([
 
             it('should use equality to check for existing IDs, not containment', () => {
                 const taskWithId123 = taskBuilder.description('3').id('123').build();
-                const suggestTask123 = '3 - From: file-name.md';
+                const suggestTask123 = suggestionLabel(taskWithId123);
 
                 const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,`;
 
@@ -381,6 +381,7 @@ describe.each([
                     [suggestTask123, defaultSuggestion],
                     [taskWithId123, ...allTasks],
                 );
+                expect(allTasks.length).toBe(3);
             });
 
             it('should find non-exact matches for multi-word search strings', () => {
@@ -391,14 +392,15 @@ describe.each([
                 // Search string 'feed baby' should match only 'Feed the baby':
                 shouldStartWithSuggestionsEqualling(
                     line,
-                    ['Feed the baby - From: file-name.md', defaultSuggestion],
+                    [suggestionLabel(feedBaby), defaultSuggestion],
                     [feedBaby, feedCat, ...allTasks],
                 );
+                expect(allTasks.length).toBe(3);
             });
 
             it.failing('should allow punctuation in search strings', () => {
                 const peace1 = taskBuilder.description('World peace!').id('peace1').build();
-                const peace1Match = 'World peace! - From: file-name.md';
+                const peace1Match = suggestionLabel(peace1);
 
                 // Don't match a task that has peace present, but without the exclamation mark
                 const peace2 = taskBuilder.description('Peacefulness').id('peace2').build();
@@ -409,6 +411,7 @@ describe.each([
                     [peace1Match, defaultSuggestion],
                     [peace1, peace2, ...allTasks],
                 );
+                expect(allTasks.length).toBe(3);
             });
 
             it('should not offer any tasks if there is not a comma after existing depends IDs', () => {
