@@ -555,9 +555,9 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocked By Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="blockedBy">{@html editTaskLabelContent('Before this', accesskey('b'))}</label>
             <Dependency
                 type="blockedBy"
+                labelText="Before this"
                 {task}
                 {editableTask}
                 {allTasks}
@@ -570,9 +570,9 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocking Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="blocking">{@html editTaskLabelContent('After this', accesskey('e'))}</label>
             <Dependency
                 type="blocking"
+                labelText="After this"
                 {task}
                 {editableTask}
                 {allTasks}
