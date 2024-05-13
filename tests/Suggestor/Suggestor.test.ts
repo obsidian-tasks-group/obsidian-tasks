@@ -297,8 +297,10 @@ describe.each([
                 taskBuilder.description('2').id('5678').build(),
             ];
 
+            const taskxy = allTasks[0];
+
             // Variable names based on ID, not description:
-            const suggestTaskxy = 'x_y - From: file-name.md';
+            const suggestTaskxy = `${taskxy.description} - From: ${taskxy.file.filename}`;
             const suggestTask1234 = '1 - From: file-name.md';
             const suggestTask5678 = '2 - From: file-name.md';
 
