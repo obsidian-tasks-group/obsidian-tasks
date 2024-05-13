@@ -606,11 +606,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="status">Stat<span class="accesskey">u</span>s</label>
-        {:else}
-            <label for="status">Status</label>
-        {/if}
+        <label for="status">{@html editTaskLabelContent('Status', accesskey('u'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
         <select
             bind:value={statusSymbol}
