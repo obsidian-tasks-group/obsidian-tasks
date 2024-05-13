@@ -11,8 +11,7 @@
     export let _onDescriptionKeyDown: (e: KeyboardEvent) => void;
     export let type: 'blocking' | 'blockedBy';
     export let labelText: string;
-    export let accesskey: (key: string) => string | null;
-    export let accesskeyLetter: string = '';
+    export let accesskey: string | null;
     export let placeholder: string = 'Type to search...';
 
     let search: string = '';
@@ -143,7 +142,7 @@
     }
 </script>
 
-<label for={type}>{@html editTaskLabelContent(labelText, accesskey(accesskeyLetter))}</label>
+<label for={type}>{@html editTaskLabelContent(labelText, accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <span bind:clientWidth={inputWidth}>
     <input
@@ -152,7 +151,7 @@
         on:keydown={(e) => taskKeydown(e)}
         on:focus={onFocused}
         on:blur={() => (inputFocused = false)}
-        accesskey={accesskey(accesskeyLetter)}
+        {accesskey}
         id={type}
         class="tasks-modal-dependency-input"
         type="text"

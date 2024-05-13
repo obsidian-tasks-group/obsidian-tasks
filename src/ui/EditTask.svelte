@@ -562,8 +562,7 @@ Availability of access keys:
                 {editableTask}
                 {allTasks}
                 {_onDescriptionKeyDown}
-                {accesskey}
-                accesskeyLetter="b"
+                accesskey={accesskey('b')}
                 placeholder="Search for tasks that the task being edited depends on..."
             />
 
@@ -577,8 +576,7 @@ Availability of access keys:
                 {editableTask}
                 {allTasks}
                 {_onDescriptionKeyDown}
-                {accesskey}
-                accesskeyLetter="e"
+                accesskey={accesskey('e')}
                 placeholder="Search for tasks that depend on this task being done..."
             />
         {:else}
