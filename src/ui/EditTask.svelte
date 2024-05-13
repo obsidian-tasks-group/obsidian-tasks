@@ -486,11 +486,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="recurrence"><span class="accesskey">R</span>ecurs</label>
-        {:else}
-            <label for="recurrence">Recurs</label>
-        {/if}
+        <label for="recurrence">{@html editTaskLabelContent('Recurs', accesskey('r'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
         <input
             bind:value={editableTask.recurrenceRule}
