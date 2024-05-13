@@ -585,11 +585,7 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocking Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            {#if withAccessKeys}
-                <label for="blocking">Aft<span class="accesskey">e</span>r this</label>
-            {:else}
-                <label for="blocking">After this</label>
-            {/if}
+            <label for="blocking">{@html editTaskLabelContent('After this', accesskey('e'))}</label>
             <Dependency
                 type="blocking"
                 {task}
