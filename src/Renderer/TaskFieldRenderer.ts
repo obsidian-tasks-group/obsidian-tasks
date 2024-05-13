@@ -44,11 +44,11 @@ export class TaskFieldHTMLData {
     private readonly attributeName: string;
     private readonly attributeValueCalculator: AttributeValueCalculator;
 
-    public static noAttributeName = '';
-    public static noAttributeValueCalculator: AttributeValueCalculator = () => {
+    public static readonly noAttributeName = '';
+    public static readonly noAttributeValueCalculator: AttributeValueCalculator = () => {
         return '';
     };
-    public static dateAttributeCalculator = (component: TaskLayoutComponent, task: Task) => {
+    public static readonly dateAttributeCalculator = (component: TaskLayoutComponent, task: Task) => {
         /**
          * Translate a relative date to a CSS class: 'today', 'future-1d' (for tomorrow), 'past-1d' (for yesterday)
          * etc.
@@ -60,12 +60,22 @@ export class TaskFieldHTMLData {
 
         function dateToAttribute(date: Moment) {
             const today = window.moment().startOf('day');
-            let result = '';
             const diffDays = today.diff(date, 'days');
-            if (isNaN(diffDays)) return null;
-            if (diffDays === 0) return 'today';
-            else if (diffDays > 0) result += 'past-';
-            else if (diffDays < 0) result += 'future-';
+
+            if (isNaN(diffDays)) {
+                return null;
+            }
+            if (diffDays === 0) {
+                return 'today';
+            }
+
+            let result = '';
+            if (diffDays > 0) {
+                result += 'past-';
+            } else if (diffDays < 0) {
+                result += 'future-';
+            }
+
             if (Math.abs(diffDays) <= MAX_DAY_VALUE_RANGE) {
                 result += Math.abs(diffDays).toString() + 'd';
             } else {

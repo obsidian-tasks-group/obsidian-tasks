@@ -535,7 +535,7 @@ describe('Query parsing', () => {
 
     describe('should include instruction in parsing error messages', () => {
         function getQueryError(source: string) {
-            return new Query(source).error;
+            return new Query(source, 'Example Path.md').error;
         }
 
         it('for invalid regular expression filter', () => {
@@ -608,6 +608,73 @@ Problem line: "${sourceUpperCase}"`);
 Problem line: "${source}"`);
             expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
 Problem line: "${sourceUpperCase}"`);
+        });
+
+        it('for instruction with continuation characters and placeholders', () => {
+            const source = `spaghetti includes \\
+    {{query.file.path}}`;
+
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem statement:
+    spaghetti includes \\
+        {{query.file.path}}
+     =>
+    spaghetti includes {{query.file.path}} =>
+    spaghetti includes Example Path.md
+`);
+        });
+
+        it('for boolean with filter-by-function closing ) swallowed by Boolean parsing', () => {
+            const source = "( filter by function task.originalMarkdown.includes('hello') )";
+            expect(getQueryError(source)).toMatchInlineSnapshot(`
+                "Could not interpret the following instruction as a Boolean combination:
+                    ( filter by function task.originalMarkdown.includes('hello') )
+
+                The error message is:
+                    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+                The instruction was converted to the following simplified line:
+                    ( f1) )
+
+                Where the sub-expressions in the simplified line are:
+                    'f1': 'filter by function task.originalMarkdown.includes('hello''
+                        => ERROR:
+                           Error: Failed parsing expression "task.originalMarkdown.includes('hello'".
+                           The error message was:
+                           "SyntaxError: missing ) after argument list"
+
+                For help, see:
+                    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+                Problem line: "( filter by function task.originalMarkdown.includes('hello') )""
+            `);
+        });
+
+        it('for boolean with unknown instruction', () => {
+            const source = '( filename includesx {{query.file.filenameWithoutExtension}} )';
+            expect(getQueryError(source)).toMatchInlineSnapshot(`
+                "Could not interpret the following instruction as a Boolean combination:
+                    ( filename includesx Example Path )
+
+                The error message is:
+                    couldn't parse sub-expression 'filename includesx Example Path'
+
+                The instruction was converted to the following simplified line:
+                    ( f1 )
+
+                Where the sub-expressions in the simplified line are:
+                    'f1': 'filename includesx Example Path'
+                        => ERROR:
+                           do not understand query
+
+                For help, see:
+                    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+                Problem statement:
+                    ( filename includesx {{query.file.filenameWithoutExtension}} ) =>
+                    ( filename includesx Example Path )
+                "
+            `);
         });
     });
 

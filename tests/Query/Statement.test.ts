@@ -6,6 +6,8 @@ describe('Statement', () => {
 world`;
         const final = 'hello world';
         const instruction = new Statement(raw, final);
+        expect(instruction.allLinesIdentical()).toEqual(false);
+
         expect(instruction.rawInstruction).toEqual(raw);
         expect(instruction.anyContinuationLinesRemoved).toEqual('hello world');
         expect(instruction.anyPlaceholdersExpanded).toEqual('hello world');
@@ -15,6 +17,8 @@ world`;
         it('should explain simplest statement', () => {
             const instruction = 'hello world';
             const statement = new Statement(instruction, instruction);
+            expect(statement.allLinesIdentical()).toEqual(true);
+
             expect(statement.explainStatement('')).toEqual(instruction);
             expect(statement.explainStatement('  ')).toEqual('  hello world');
         });
@@ -29,7 +33,11 @@ world`;
         it('should show unexpanded and expanded placeholders, if they differ', () => {
             const instruction = '{{fake placeholder}}';
             const statement = new Statement(instruction, instruction);
+            expect(statement.allLinesIdentical()).toEqual(true);
+
             statement.recordExpandedPlaceholders('expanded placeholder');
+            expect(statement.allLinesIdentical()).toEqual(false);
+
             expect(statement.explainStatement('  ')).toEqual(`  {{fake placeholder}} =>
   expanded placeholder`);
         });

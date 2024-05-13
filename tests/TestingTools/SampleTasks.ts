@@ -7,7 +7,7 @@ import { PriorityTools } from '../../src/lib/PriorityTools';
 import { TaskBuilder } from './TaskBuilder';
 import { fromLine, fromLines } from './TestHelpers';
 
-const representativeDates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
+const representativeDates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-06-02', '2023-02-32', null];
 
 export class SampleTasks {
     public static withRepresentativeTags(): Task[] {

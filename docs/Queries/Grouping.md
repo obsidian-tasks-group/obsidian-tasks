@@ -376,6 +376,22 @@ group by function \
 
 - As above, but using a local function, and `if` statements.
 
+```javascript
+group by function \
+    const date = task.due.moment; \
+    const tomorrow  = moment().add(1,'days'); \
+    const now = moment(); \
+    const label = (order, name) => `%%${order}%% ==${name}==`; \
+    if (!date)                           return label(5, 'Undated'); \
+    if (!date.isValid())                 return label(0, 'Invalid date'); \
+    if (date.isBefore(now, 'day'))       return label(1, 'Overdue'); \
+    if (date.isSame(now, 'day'))         return label(2, 'Today'); \
+    if (date.isSame(tomorrow, 'day'))    return label(3, 'Tomorrow'); \
+    return label(4, 'Future');
+```
+
+- As above, but adds a heading for Tomorrow.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ![Tasks grouped by due date category, and then by due date|600](../images/tasks_custom_groups_categorise_dates.png)

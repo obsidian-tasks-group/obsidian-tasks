@@ -7,10 +7,14 @@ publish: true
 ## Summary
 
 > [!released]
-Introduced in Tasks 1.9.0.
+>
+> - Introduced in Tasks 1.9.0.
+> - Major improvements in Tasks 7.0.0: for details, see [[#Appendix Changes to Boolean filters in Tasks 7.0.0]].
 
-The [[Filters|individual filters]] provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
-and then joining them with boolean operators such as `AND`, `OR` and `NOT`.
+The [[Filters|individual filters]] provided by Tasks can be combined together in powerful ways, by:
+
+1. wrapping each of them in delimiters such as `(` and `)`,
+2. then joining them with boolean operators such as `AND`, `OR` and `NOT`.
 
 For example:
 
@@ -18,7 +22,7 @@ For example:
 ```tasks
 not done
 (due after yesterday) AND (due before in two weeks)
-(tags include #inbox) OR (path includes Inbox) OR (heading includes Inbox)
+[tags include #inbox] OR [path includes Inbox] OR [heading includes Inbox]
 ```
 ````
 
@@ -29,20 +33,42 @@ will be displayed.
 
 One or more filters can be combined together in a line, via boolean operators, to create a new, powerful, flexible filter.
 
+Here's a diagram of the components of a simple Boolean instruction:
+
+```text
++--------------------------+       +--------------------------+
+|   ( tag includes #XX )   |  OR   |   ( tag includes #YY )   |
++--------------------------+       +--------------------------+
+    ^                  ^               ^                  ^
+    |                  |               |                  |
+    +- delimiters: () -+               +- delimiters: () -+
+      for left sub-expression             for right sub-expression
+              |                                  |
+              +--------- Operator: OR -----------+
+                   Connects both sub-expressions
+```
+
 The following rules apply:
 
-- Each individual filter must be surrounded by parentheses: `(` and `)`.
-- Operators supported are: `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR`.
-- The operators are case-sensitive: they must be capitalised.
-- The operators must be surrounded by spaces.
-- Use more `(` and `)` to nest further filters together.
-- A trailing backslash (`\`) may be used to break a long filter over several lines, as described in [[Line Continuations]].
+- Each individual filter must be surrounded by a pair of **delimiter characters**:
+  - The most commonly used delimiters in this guide are `(` and `)`.
+  - The complete list of available delimiters is:
+    - `(....)`
+    - `[....]`
+    - `{....}`
+    - `"...."`
+  - The types of delimiter cannot be mixed within a Boolean instruction: you must pick an appropriate delimiter for the filters on the line.
+- **Operators** supported are: `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR`.
+  - The operators are case-sensitive: they must be capitalised.
+  - See [[#Boolean Operators]] below.
+- You can use more delimiters to nest further filters together.
+- A **trailing backslash** (`\`) may be used to break a long filter over several lines, as described in [[Line Continuations]].
 - There is no practical limit to the number of filters combined on each line, nor the level of nesting of parentheses.
 
 Recommendations:
 
-- It is possible to use double quotes `"` to surround filters, but this can sometimes give misleading results when nested in complex queries, so we recommend using only `(` and `)` to build up boolean combinations.
-- When combining more than two filters, use `(` and `)` liberally to ensure you get the intended logic. See 'Execution Priority' below.
+- When combining more than two filters, use `(` and `)` (or any other delimiter pair) liberally to ensure you get the intended logic. See [[#Execution Priority]] below.
+- See [[#Troubleshooting Boolean Filters]] for help selecting delimiters, especially if using `filter by function`.
 
 Technically speaking, lines continue to have an implicit `AND` relation (thus the full retention of backwards compatibility), but a line can now have multiple filters composed with `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR` with parentheses.
 
@@ -207,6 +233,200 @@ It will not give the result you expect.
 `(filter a) XOR (filter b) XOR (filter c)` matches tasks that match only one
 of the filters, **and also tasks that match all three of the filters**.
 
+## Delimiters
+
+The following delimiter characters are available:
+
+- `(....)`
+- `[....]`
+- `{....}`
+- `"...."`
+
+> [!Important]
+> Each Boolean instruction line must use only one delimiter type.
+
+This is valid:
+
+```text
+(not done) AND (is recurring)
+```
+
+This is not valid:
+
+```text
+(not done) AND {is recurring}
+```
+
+## Troubleshooting Boolean Filters
+
+This section shows the typical solutions to a few error messages that may occur when using Boolean Filters.
+
+### Error: malformed boolean query -- Invalid token
+
+#### Cause: Text filter sub-expression ends with closing delimiter
+
+The full error message is:
+
+`malformed boolean query -- Invalid token (check the documentation for guidelines)`
+
+> [!error] Broken query
+> `(description includes (maybe)) OR (description includes (perhaps))`
+
+How to fix the query:
+
+> [!Info] Use a different delimiter
+> `[description includes (maybe)] OR [description includes (perhaps)]`
+
+This is why Tasks offers a choice of [[#Delimiters|delimiters]] around sub-expressions.
+
+#### Spotting malformed boolean query problems - with built-in filters
+
+Here is the bulk of the error text for the above broken query:
+
+```text
+Tasks query: Could not interpret the following instruction as a Boolean combination:
+    (description includes (maybe)) OR (description includes (perhaps))
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2))
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'description includes (maybe'
+        => OK
+    'f2': 'description includes (perhaps'
+        => OK
+```
+
+> [!tip] Points to note in the above output:
+>
+> 1. The mismatched brackets in the simplified line: `(f1)) OR (f2))`
+> 2. The missing closing `)` in the sub-expressions:
+>     - `'f1': 'description includes (maybe'`
+>     - `'f2': 'description includes (perhaps'`
+
+#### Cause: 'filter by function' sub-expression ends with closing delimiter
+
+> [!error] Broken query
+>
+> ```text
+> (filter by function task.tags.join(',').toUpperCase().includes('#XX')) AND \
+> (filter by function task.tags.join(',').toUpperCase().includes('#YY')) AND \
+> (filter by function task.tags.join(',').toUpperCase().includes('#ZZ'))
+> ```
+
+We have several options:
+
+> [!info] Option 1: use a different delimiter
+>
+> ```text
+> [filter by function task.tags.join(',').toUpperCase().includes('#XX')] AND \
+> [filter by function task.tags.join(',').toUpperCase().includes('#YY')] AND \
+> [filter by function task.tags.join(',').toUpperCase().includes('#ZZ')]
+> ```
+
+We can choose any one of the available [[#Delimiters|delimiter sets]], so long as we use the same delimiters for all sub-expressions on the line.
+
+Above, we adjusted the query to use `[....]` instead of `(....)`, as we know that none of our sub-expressions ends with a `]`.
+
+> [!info] Option 2: add semicolons to filter by function
+>
+> ```text
+> (filter by function task.tags.join(',').toUpperCase().includes('#XX'); ) AND \
+> (filter by function task.tags.join(',').toUpperCase().includes('#YY'); ) AND \
+> (filter by function task.tags.join(',').toUpperCase().includes('#ZZ'); )
+> ```
+
+Above, we added a semicolon (`;`) at the end of each sub-expression, to put non-space character between the `)` in the `filter by function` expression and the closing Boolean delimter `)`.
+
+> [!info] Option 3: port the Boolean logic to JavaScript
+>
+> ```text
+> filter by function \
+>     task.tags.join(',').toUpperCase().includes('#XX') && \
+>     task.tags.join(',').toUpperCase().includes('#YY') && \
+>     task.tags.join(',').toUpperCase().includes('#ZZ')
+> ```
+
+Above, we migrated the Boolean operators to JavaScript ones instead.
+
+| Task Operator | JavaScript operator |
+| ------------- | ------------------- |
+| `AND`         | `&&`                |
+| `OR`          | <code>\|\|</code>   |
+| `NOT`         | `!`                 |
+
+#### Spotting malformed boolean query problems - with 'filter by function'
+
+Here is the bulk of the error text for the above broken query:
+
+```text
+Tasks query: Could not interpret the following instruction as a Boolean combination:
+    (filter by function task.tags.join(',').toUpperCase().includes('#XX')) AND (filter by function task.tags.join(',').toUpperCase().includes('#YY')) AND (filter by function task.tags.join(',').toUpperCase().includes('#ZZ'))
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1)) AND (f2)) AND (f3))
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'filter by function task.tags.join(',').toUpperCase().includes('#XX''
+        => ERROR:
+           Error: Failed parsing expression "task.tags.join(',').toUpperCase().includes('#XX'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f2': 'filter by function task.tags.join(',').toUpperCase().includes('#YY''
+        => ERROR:
+           Error: Failed parsing expression "task.tags.join(',').toUpperCase().includes('#YY'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+    'f3': 'filter by function task.tags.join(',').toUpperCase().includes('#ZZ''
+        => ERROR:
+           Error: Failed parsing expression "task.tags.join(',').toUpperCase().includes('#ZZ'".
+           The error message was:
+           "SyntaxError: missing ) after argument list"
+```
+
+> [!tip] Points to note in the above output:
+>
+> 1. The mismatched brackets in the simplified line: `(f1)) AND (f2)) AND (f3))`
+> 2. The missing closing `)` in the sub-expressions:
+>     - `'f1': 'filter by function task.tags.join(',').toUpperCase().includes('#XX''`
+>     - `'f2': 'filter by function task.tags.join(',').toUpperCase().includes('#YY''`
+>     - `'f3': 'filter by function task.tags.join(',').toUpperCase().includes('#ZZ''`
+> 3. The error messages, including:
+>     - `"SyntaxError: missing ) after argument list"`
+
+### Error: All filters in a Boolean instruction must be inside one of these pairs of delimiter characters
+
+The full message is:
+
+`All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.`
+
+#### Cause: Mismatched delimiter types
+
+> [!error] Broken query
+> `"not done" AND (is recurring)`
+
+How to fix the query:
+
+> [!Info] Fix: Make the delimiters consistent
+> `(not done) AND (is recurring)`
+
+The full output includes:
+
+```text
+Tasks query: Could not interpret the following instruction as a Boolean combination:
+    "not done" AND (is recurring)
+
+The error message is:
+    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+Problem line: ""not done" AND (is recurring)"
+```
+
 ## Examples
 
 ### Managing tasks via file path and tag
@@ -296,3 +516,91 @@ The above is much easier to maintain than the other option of:
   (tags do not include #context/loc2) AND \
   (tags do not include #context/loc3)
 ````
+
+## Appendix: Changes to Boolean filters in Tasks 7.0.0
+
+Tasks 7.0.0 involved a tremendous amount of work behind the scenes to improve the behaviour and usability of Boolean filters.
+
+This section describes the changes, for completeness.
+
+### Mixing of delimiter types is no longer allowed
+
+> [!Danger] Breaking change
+> This (undocumented) mixing of delimiter types used to be a valid query, prior to Tasks 7.0.0:
+>
+> ```text
+> (not done) AND "is recurring"
+> ```
+
+It is no longer valid, as mixing of [[#Delimiters|delimiter types]] in a Boolean instruction is no longer allowed.
+
+It may be fixed by changing it to use consistent delimiters, for example with one of these:
+
+```text
+(not done) AND (is recurring)
+"not done" AND "is recurring"
+```
+
+### Sub-expressions can now contain parentheses and double-quotes
+
+Sub-expressions can now contain parentheses - `(` and `)` and double-quotes - `"`.
+
+See [[#Troubleshooting Boolean Filters]] for how to deal with sub-expressions that end with the closing delimiter character.
+
+### More options for delimiting sub-expressions
+
+The following delimiter characters are available:
+
+- `(....)`
+- `[....]`
+- `{....}`
+- `"...."`
+
+See [[#Delimiters]] above.
+
+### Spaces around Operators are now optional
+
+Spaces around Operators are now optional.
+
+For example, before Tasks 7.0.0 the following was invalid, as there were no spaces `AND`.
+
+`(path includes a)AND(path includes b)`
+
+Tasks now adds the missing spaces behind the scenes, so the above is now equivalent to:
+
+`(path includes a) AND (path includes b)`
+
+### Much better assistance with errors
+
+A lot of effort went in to giving useful information if a Boolean instruction is invalid.
+
+Before:
+
+```text
+Tasks query: malformed boolean query -- Invalid token (check the documentation for guidelines)
+Problem line: "(description includes (maybe)) OR (description includes (perhaps))"
+```
+
+After:
+
+```text
+Tasks query: Could not interpret the following instruction as a Boolean combination:
+    (description includes (maybe)) OR (description includes (perhaps))
+
+The error message is:
+    malformed boolean query -- Invalid token (check the documentation for guidelines)
+
+The instruction was converted to the following simplified line:
+    (f1)) OR (f2))
+
+Where the sub-expressions in the simplified line are:
+    'f1': 'description includes (maybe'
+        => OK
+    'f2': 'description includes (perhaps'
+        => OK
+
+For help, see:
+    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+Problem line: "(description includes (maybe)) OR (description includes (perhaps))"
+```

@@ -110,7 +110,7 @@ describe('BooleanPreprocessor', () => {
                     "f1": "done",
                     "f2": "has done date",
                   },
-                  "simplifiedLine": "(f1)AND(f2)",
+                  "simplifiedLine": "(f1) AND (f2)",
                 }
             `);
         });
@@ -121,7 +121,37 @@ describe('BooleanPreprocessor', () => {
                   "filters": {
                     "f1": "not done",
                   },
-                  "simplifiedLine": "NOT(f1)",
+                  "simplifiedLine": "NOT (f1)",
+                }
+            `);
+        });
+
+        it('AND NOT missing surrounding spaces', () => {
+            expect(preprocess('(path includes a)AND NOT(path includes b)')).toMatchInlineSnapshot(`
+                {
+                  "filters": {
+                    "f1": "path includes a",
+                    "f2": "path includes b",
+                  },
+                  "simplifiedLine": "(f1) AND NOT (f2)",
+                }
+            `);
+        });
+
+        it('one of each operator, missing surrounding spaces', () => {
+            expect(preprocess('(done)XOR(done)AND(done)OR(done)NOT(done)AND NOT(done)OR NOT(done)'))
+                .toMatchInlineSnapshot(`
+                {
+                  "filters": {
+                    "f1": "done",
+                    "f2": "done",
+                    "f3": "done",
+                    "f4": "done",
+                    "f5": "done",
+                    "f6": "done",
+                    "f7": "done",
+                  },
+                  "simplifiedLine": "(f1) XOR (f2) AND (f3) OR (f4) NOT (f5) AND NOT (f6) OR NOT (f7)",
                 }
             `);
         });
@@ -159,7 +189,7 @@ describe('BooleanPreprocessor', () => {
                   "filters": {
                     "f1": "description includes d1",
                   },
-                  "simplifiedLine": """"""NOT  " f1 """"""",
+                  "simplifiedLine": """""" NOT  " f1 """"""",
                 }
             `);
         });

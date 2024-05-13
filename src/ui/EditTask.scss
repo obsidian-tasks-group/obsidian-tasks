@@ -1,23 +1,128 @@
-.tasks-modal-section + .tasks-modal-section {
-    margin-top: 8px;
+.tasks-modal {
+    section + section {
+            // Put some space when sections are one next to another
+            margin-top: 6px;
+    }
+
+    hr {
+        margin: 6px 0;
+    }
+
+    .tasks-modal-error {
+        border: 1px solid red !important;
+    }
 }
 
-.tasks-modal-section label {
-    display: inline-block;
-    margin-bottom: 4px;
+.with-accesskeys {
+    .accesskey-first::first-letter, .accesskey {
+        text-decoration: underline;
+        text-underline-offset: 1pt;
+    }
 }
 
-.tasks-modal-section label > span {
-    display: inline-block;
+.tasks-modal-description-section {
+    textarea {
+        width: 100%;
+        min-height: calc(var(--input-height) * 2);
+        resize: vertical;
+        margin-top: 8px;
+    }
 }
 
-.tasks-modal .with-accesskeys .accesskey-first::first-letter,
-.tasks-modal .with-accesskeys .accesskey {
-    text-decoration: underline;
-    text-underline-offset: 1pt;
+.tasks-modal-priority-section {
+    display: grid;
+    grid-template-columns: 6em auto auto auto;
+    grid-column-gap: 0.5em;
+    grid-row-gap: 0.15em;
+
+    > label {
+        grid-row-start: 1;
+        grid-row-end: 3;
+    }
+
+    .task-modal-priority-option-container {
+        white-space: nowrap;
+
+        input + label {
+            font-size: var(--font-ui-small);
+            border-radius: var(--input-radius);
+            padding: 2px 3px;
+        }
+
+        input {
+            accent-color: var(--interactive-accent);
+        }
+
+        input:focus + label {
+            box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+            border-color: var(--background-modifier-border-focus);
+        }
+
+        input:checked + label {
+            font-weight: bold;
+        }
+
+        input:not(:checked) + label > span:nth-child(4) {
+            filter: grayscale(100%) opacity(60%);
+        }
+    }
 }
 
-.tasks-modal-buttons {
+.tasks-modal-dates-section {
+    display: grid;
+    grid-template-columns: 6.0em auto;
+    grid-auto-columns: 1fr;
+    column-gap: .5em;
+    row-gap: 5px;
+    align-items: center;
+
+    label {
+        grid-column: 1;
+    }
+
+    .tasks-modal-date-input {
+        min-width: 15em;
+    }
+
+    .tasks-modal-parsed-date {
+        grid-column: 3;
+        font-size: var(--font-ui-small);
+    }
+
+    .future-dates-only {
+        grid-column-start: 1;
+        grid-column-end: 3;
+
+        input {
+            margin-left: 0.67em;
+            top: 2px;
+        }
+    }
+
+    .tasks-modal-status-selector {
+        grid-column: 2;
+        width: 15em;
+    }
+}
+
+.tasks-modal-dependencies-section {
+    display: grid;
+    grid-template-columns: 6.0em auto;
+    grid-auto-columns: 1fr;
+    row-gap: 5px;
+    align-items: center;
+
+    .tasks-modal-dependency-input {
+        grid-column: 2;
+        width: 100%;
+    }
+
+    .results-dependency {
+        grid-column: 2;
+    }
+}
+
+.tasks-modal-button-section {
     position: sticky;
     bottom: 0;
     background-color: var(--modal-background);
@@ -26,147 +131,88 @@
     display: grid;
     grid-template-columns: 3fr 1fr;
     column-gap: .5em;
-}
 
-.tasks-modal label + input[type="checkbox"] {
-    margin-left: 0.67em;
-    top: 2px;
-}
-
-.tasks-modal input[type="text"] {
-    width: 100%;
-}
-
-.tasks-modal textarea {
-    width: 100%;
-    min-height: calc(var(--input-height) * 2);
-    resize: vertical;
-}
-
-.tasks-modal hr {
-    margin: 0.35rem 0;
-    padding-bottom: 0.5rem;
-}
-
-.tasks-modal-priorities {
-    display: grid;
-    grid-template-columns: 4em 8em 8em 8em;
-    grid-column-gap: 1.33em;
-}
-
-.tasks-modal-priorities span {
-    line-height: 1.41;
-    white-space: nowrap;
-}
-
-.tasks-modal-priorities label {
-    border-radius: var(--input-radius);
-    padding: 2px 3px;
-    grid-column: 1;
-    grid-row-start: 1;
-    grid-row-end: 7;
-}
-
-.tasks-modal-priorities input:focus + label {
-    box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
-    border-color: var(--background-modifier-border-focus);
-}
-
-.tasks-modal-priorities input:checked + label > span {
-    font-weight: bold;
-}
-
-.tasks-modal-priorities input:not(:checked) + label > span:nth-child(4) {
-    filter: grayscale(100%) opacity(60%);
-}
-
-.tasks-modal-dates {
-    display: grid;
-    grid-template-columns: 5.5em auto;
-    column-gap: .5em;
-    row-gap: 5px;
-}
-
-.tasks-modal-dates > label {
-    grid-column: 1;
-    margin-top: 6px;
-}
-
-.tasks-modal-dates > .input, .tasks-modal-dates > .results {
-    grid-column: 2;
-    align-items: stretch;
-}
-
-.tasks-modal-dates > .results {
-    margin-bottom: 5px;
-}
-
-.tasks-modal-dates > div {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.tasks-modal-status {
-    padding-bottom: 6px;
-    margin-bottom: -16px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.tasks-modal-error {
-    border: 1px solid red !important;
-}
-
-.tasks-modal-warning {
-    color: var(--text-warning) !important;
-    background-color: rgba(var(--background-modifier-warning-rgb), 0.2) !important;
-}
-
-.tasks-modal button:disabled {
-    pointer-events: none !important;
-    opacity: 0.3 !important;
+    button:disabled {
+        pointer-events: none !important;
+        opacity: 0.3 !important;
+    }
 }
 
 @media (max-width: 649px) {
-    .tasks-modal-priorities {
-        grid-template-columns: 4em 7.5em 5em;
-        margin-bottom: -10px;
+    .tasks-modal-priority-section {
+        grid-template-columns: 6em auto auto;
+
+        > label {
+            grid-row: 1 / span 3;
+        }
     }
-    .tasks-modal-priorities > label {
-        grid-row: 1 / span 7;
+}
+
+@media (max-width: 499px) {
+    .tasks-modal-priority-section {
+        grid-template-columns: 4em auto auto;
     }
-    .tasks-modal-dates {
+
+    .tasks-modal-dates-section {
         grid-template-columns: 1fr;
+        grid-auto-columns: auto;
+
+        .tasks-modal-date-input {
+            grid-column: 1;
+        }
+
+        .tasks-modal-parsed-date {
+            grid-column: 2;
+        }
+
+        .tasks-modal-status-selector {
+            grid-column: 1;
+        }
     }
-    .tasks-modal-dates > label {
-        margin: 0;
-    }
-    .tasks-modal-dates > .input, .tasks-modal-dates > .results {
-        grid-column: 1;
-    }
-    .tasks-modal-dates > div {
-        grid-column-end: 1;
-    }
-    .tasks-modal-status {
-        display: block;
+
+    .tasks-modal-dependencies-section {
+        label {
+            grid-column: 1;
+        }
+
+        .results-dependency {
+            grid-column: 1;
+        }
     }
 }
 
 @media (max-width: 399px) {
-    .tasks-modal-priorities {
-        grid-template-columns: 4em auto;
+    .tasks-modal-dates-section {
+        .tasks-modal-status-selector {
+            grid-column: 1;
+            width: auto;
+        }
+
+        > .tasks-modal-parsed-date {
+            grid-column: 1;
+        }
     }
-    .tasks-modal-priorities > label {
-        grid-row: 1 / span 7;
+
+    .tasks-modal-priority-section {
+        grid-template-columns: 4em auto;
+
+        > label {
+            grid-row: 1 / span 6;
+        }
+    }
+
+    .tasks-modal-dependencies-section {
+        grid-template-columns: 1fr;
+        grid-auto-columns: auto;
     }
 }
 
 @media (max-width: 259px) {
-    .tasks-modal-priorities {
+    .tasks-modal-priority-section {
         grid-template-columns: 1fr;
-        margin-bottom: 0;
-    }
-    .tasks-modal-priorities > label {
-        grid-row: 1;
+
+        > label {
+            grid-row: 1;
+        }
     }
 }

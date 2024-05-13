@@ -32,6 +32,15 @@ export interface TasksApiV1 {
      * an empty string, if data entry was cancelled.
      */
     createTaskLineModal(): Promise<string>;
+
+    /**
+     * Executes the 'Tasks: Toggle task done' command on the supplied line string
+     *
+     * @param line The markdown string of the task line being toggled
+     * @param path The path to the file containing line
+     * @returns The updated line string
+     */
+    executeToggleTaskDoneCommand: (line: string, path: string) => string;
 }
 ```
 
@@ -103,3 +112,45 @@ Use these steps to make the following options appear (tested in QuickAdd 0.12.0)
 
 Screenshot of QuickAdd capture settings (example)
 ![Screenshot - Edit the QuickAdd Capture Configuration](../../images/api-create-taskline-modal-quickadd-capture-example.png)
+
+## `executeToggleTaskDoneCommand: (line: string, path: string) => string;`
+
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
+Executes the 'Tasks: Toggle task done' command on the supplied line string. It toggles and updates a task line according to a user's preferences, accounting for recurrance rules and completed status. It returns a string representing the toggled task.
+
+```typescript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+const sourceFile: TFile = file;
+const taskLine = '- [ ] This is a task 📅 2024-04-24';
+
+const result = tasksApi.executeToggleTaskDoneCommand(taskLine, sourceFile.path);
+
+console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
+```
+
+## Auto-Suggest Integration
+
+Plugins that [extend Obsidian's markdown editor](https://gist.github.com/Fevol/caa478ce303e69eabede7b12b2323838) can control if and when Tasks' [[Auto-Suggest]] displays by implementing a `showTasksPluginAutoSuggest` method on the extended editor class. This method must adhere the function definition below.
+
+```typescript
+/**
+ * Returns
+ * - true to explicitly request that the suggest be displayed
+ * - false to request that it be hidden
+ * - undefined to defer to Tasks' default behavior
+ *
+ * @param cursor The current cursor position in the editor
+ * @param editor The editor instance
+ * @param lineHasGlobalFilter True if the line the cursor is in matches the
+ *        global filter or if no global filter is set
+ */
+showTasksPluginAutoSuggest(
+  cursor: EditorPosition,
+  editor: Editor,
+  lineHasGlobalFilter: boolean
+): boolean | undefined
+```
+
+This can be used, for example, to display the Auto-Suggest on non-task lines. [See the Kanban plugin for an example](https://github.com/mgmeyers/obsidian-kanban/blob/5fa792b9c2157390fe493f0feed6f0bc9be72910/src/components/Editor/MarkdownEditor.tsx#L100-L106).

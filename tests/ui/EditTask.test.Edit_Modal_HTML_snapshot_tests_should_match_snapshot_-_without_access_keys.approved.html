@@ -1,0 +1,200 @@
+<div>
+  <form class="tasks-modal">
+    <section class="tasks-modal-description-section">
+      <label for="description">
+        Descrip
+        <span class="accesskey">t</span>
+        ion
+      </label>
+      <textarea id="description" class="tasks-modal-description" placeholder="Take out the trash"></textarea>
+    </section>
+    <section class="tasks-modal-priority-section">
+      <label for="priority-none">Priority</label>
+      <div class="task-modal-priority-option-container">
+        <input type="radio" id="priority-lowest" value="lowest" />
+        <label for="priority-lowest">
+          <span>L</span>
+          <span class="accesskey">o</span>
+          <span>west</span>
+          <span>⏬</span>
+        </label>
+      </div>
+      <div class="task-modal-priority-option-container">
+        <input type="radio" id="priority-low" value="low" />
+        <label for="priority-low">
+          <span></span>
+          <span class="accesskey">L</span>
+          <span>ow</span>
+          <span>🔽</span>
+        </label>
+      </div>
+      <div class="task-modal-priority-option-container">
+        <input type="radio" id="priority-none" value="none" />
+        <label for="priority-none">
+          <span></span>
+          <span class="accesskey">N</span>
+          <span>ormal</span>
+        </label>
+      </div>
+      <div class="task-modal-priority-option-container">
+        <input type="radio" id="priority-medium" value="medium" />
+        <label for="priority-medium">
+          <span></span>
+          <span class="accesskey">M</span>
+          <span>edium</span>
+          <span>🔼</span>
+        </label>
+      </div>
+      <div class="task-modal-priority-option-container">
+        <input type="radio" id="priority-high" value="high" />
+        <label for="priority-high">
+          <span></span>
+          <span class="accesskey">H</span>
+          <span>igh</span>
+          <span>⏫</span>
+        </label>
+      </div>
+      <div class="task-modal-priority-option-container">
+        <input type="radio" id="priority-highest" value="highest" />
+        <label for="priority-highest">
+          <span>H</span>
+          <span class="accesskey">i</span>
+          <span>ghest</span>
+          <span>🔺</span>
+        </label>
+      </div>
+    </section>
+    <hr />
+    <section class="tasks-modal-dates-section">
+      <label for="recurrence" class="accesskey-first">Recurs</label>
+      <input id="recurrence" type="text" class="tasks-modal-date-input" placeholder="Try 'every day when done'" />
+      <code class="tasks-modal-parsed-date">
+        🔁
+        <i>not recurring</i>
+      </code>
+      <label for="due" class="accesskey-first">Due</label>
+      <input id="due" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
+      <code class="tasks-modal-parsed-date">
+        📅
+        <i>no due date</i>
+      </code>
+      <label for="scheduled" class="accesskey-first">Scheduled</label>
+      <input id="scheduled" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
+      <code class="tasks-modal-parsed-date">
+        ⏳
+        <i>no scheduled date</i>
+      </code>
+      <label for="start">
+        St
+        <span class="accesskey">a</span>
+        rt
+      </label>
+      <input id="start" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
+      <code class="tasks-modal-parsed-date">
+        🛫
+        <i>no start date</i>
+      </code>
+      <div class="future-dates-only">
+        <label for="forwardOnly">
+          Only
+          <span class="accesskey-first">future</span>
+          dates:
+        </label>
+        <input id="forwardOnly" type="checkbox" class="task-list-item-checkbox tasks-modal-checkbox" />
+      </div>
+    </section>
+    <hr />
+    <section class="tasks-modal-dependencies-section">
+      <label for="blockedBy" class="accesskey-first">Before this</label>
+      <span>
+        <input
+          id="blockedBy"
+          class="tasks-modal-dependency-input"
+          type="text"
+          placeholder="Search for tasks that the task being edited depends on..." />
+        <iframe
+          style="
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border: 0;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+          "
+          aria-hidden="true"
+          tabindex="-1"
+          src="about:blank"></iframe>
+      </span>
+      <label for="blocking">
+        Aft
+        <span class="accesskey">e</span>
+        r this
+      </label>
+      <span>
+        <input
+          id="blocking"
+          class="tasks-modal-dependency-input"
+          type="text"
+          placeholder="Search for tasks that depend on this task being done..." />
+        <iframe
+          style="
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border: 0;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+          "
+          aria-hidden="true"
+          tabindex="-1"
+          src="about:blank"></iframe>
+      </span>
+    </section>
+    <hr />
+    <section class="tasks-modal-dates-section">
+      <label for="status">
+        Stat
+        <span class="accesskey">u</span>
+        s
+      </label>
+      <select id="status-type" class="tasks-modal-status-selector">
+        <option value=" ">Todo [ ]</option>
+        <option value="/">In Progress [/]</option>
+        <option value="x">Done [x]</option>
+        <option value="-">Cancelled [-]</option>
+      </select>
+      <label for="created" class="accesskey-first">Created</label>
+      <input id="created" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
+      <code class="tasks-modal-parsed-date">
+        ➕
+        <i>no created date</i>
+      </code>
+      <label for="done">Done</label>
+      <input id="done" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
+      <code class="tasks-modal-parsed-date">
+        ✅
+        <i>no done date</i>
+      </code>
+      <label for="cancelled">Cancelled</label>
+      <input id="cancelled" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
+      <code class="tasks-modal-parsed-date">
+        ❌
+        <i>no cancelled date</i>
+      </code>
+    </section>
+    <section class="tasks-modal-button-section">
+      <button type="submit" class="mod-cta">Apply</button>
+      <button type="button">Cancel</button>
+    </section>
+  </form>
+</div>

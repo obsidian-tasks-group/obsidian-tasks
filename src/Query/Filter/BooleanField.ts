@@ -1,5 +1,5 @@
-import { parse as boonParse } from 'boon-js';
 import type { PostfixExpression } from 'boon-js';
+import { parse as boonParse } from 'boon-js';
 import type { Token } from 'boon-js/lib/types';
 
 import { parseFilter } from '../FilterParser';
@@ -262,11 +262,7 @@ export class BooleanField extends Field {
      */
     private helpMessage(line: string, errorMessage: string, parseResult: BooleanPreprocessorResult) {
         const filters: { [key: string]: string } = parseResult.filters;
-        const expressions = Object.entries(filters)
-            .map(([key, value]) => {
-                return `    '${key}': '${value}'`;
-            })
-            .join('\n');
+        const expressions = this.stringifySubExpressionsForErrorMessage(filters);
 
         const simpleMessage = this.helpMessageFromSimpleError(line, errorMessage);
         const fullMessage = `${simpleMessage}
@@ -281,6 +277,33 @@ For help, see:
     https://publish.obsidian.md/tasks/Queries/Combining+Filters
 `;
         return FilterOrErrorMessage.fromError(line, fullMessage);
+    }
+
+    private stringifySubExpressionsForErrorMessage(filters: { [p: string]: string }) {
+        return Object.entries(filters)
+            .map(([placeholder, line]) => {
+                // Tell the user whether the sub-expression is valid, to work out which ones need fixing.
+                return `    '${placeholder}': '${line}'
+        => ${this.stringifySubExpressionStatus(line)}`;
+            })
+            .join('\n');
+    }
+
+    private stringifySubExpressionStatus(line: string) {
+        const parsedField = parseFilter(line);
+        if (!parsedField) {
+            return 'ERROR:\n           do not understand query';
+        }
+        if (parsedField.error) {
+            // In case the error message has more than one line, we split it in to separate lines,
+            // apply some standard/tidy indentation, and join the lines again:
+            const formattedFilterStatus = parsedField.error
+                .split('\n')
+                .map((line) => line.trim())
+                .join('\n           ');
+            return `ERROR:\n           ${formattedFilterStatus}`;
+        }
+        return 'OK';
     }
 
     private helpMessageFromSimpleError(line: string, errorMessage: string) {

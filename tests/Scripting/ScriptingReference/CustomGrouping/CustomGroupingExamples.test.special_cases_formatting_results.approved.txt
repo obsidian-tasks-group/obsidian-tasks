@@ -18,6 +18,7 @@ Show the day of the week, then the date in paler text.
 %%2023-05-30%%Tuesday <mark style='background: var(--color-base-00); color: var(--color-base-40);'>(2023-05-30)</mark>
 %%2023-05-31%%Wednesday <mark style='background: var(--color-base-00); color: var(--color-base-40);'>(2023-05-31)</mark>
 %%2023-06-01%%Thursday <mark style='background: var(--color-base-00); color: var(--color-base-40);'>(2023-06-01)</mark>
+%%2023-06-02%%Friday <mark style='background: var(--color-base-00); color: var(--color-base-40);'>(2023-06-02)</mark>
 Invalid date
 ====================================================================================
 
