@@ -400,7 +400,13 @@
         const accessKeyIndex = id.indexOf(accessKey);
         let labelContent = id.substring(0, accessKeyIndex);
         labelContent += '<span class="accesskey">';
-        labelContent += id.substring(accessKeyIndex, accessKeyIndex + 1).toUpperCase();
+
+        if (accessKeyIndex === 0) {
+            labelContent += id.substring(accessKeyIndex, accessKeyIndex + 1).toUpperCase();
+        } else {
+            labelContent += id.substring(accessKeyIndex, accessKeyIndex + 1);
+        }
+
         labelContent += '</span>';
         labelContent += id.substring(accessKeyIndex + 1);
         labelContent = capitalizeFirstLetter(labelContent);
@@ -553,11 +559,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Start Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="start">St<span class="accesskey">a</span>rt</label>
-        {:else}
-            <label for="start">Start</label>
-        {/if}
+        <label for="start">{@html dateEditorLabelContent('start', withAccessKeys, 'a')}</label>
         <DateEditor
             id="start"
             dateSymbol={startDateSymbol}
