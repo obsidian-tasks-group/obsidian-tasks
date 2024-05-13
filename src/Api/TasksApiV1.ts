@@ -9,4 +9,13 @@ export interface TasksApiV1 {
      * an empty string, if data entry was cancelled.
      */
     createTaskLineModal(): Promise<string>;
+
+    /**
+     * Executes the 'Tasks: Toggle task done' command on the supplied line string
+     *
+     * @param line The markdown string of the task line being toggled
+     * @param path The path to the file containing line
+     * @returns The updated line string
+     */
+    executeToggleTaskDoneCommand: (line: string, path: string) => string;
 }

@@ -5,6 +5,7 @@
 - [ ] my description 📅 2023-05-30
 - [ ] my description 📅 2023-05-31
 - [ ] my description 📅 2023-06-01
+- [ ] my description 📅 2023-06-02
 - [ ] #task Medium priority 🔼
 - [ ] my description 📅 Invalid date
 - [ ] my description
@@ -13,6 +14,7 @@
 - [ ] my description ⏳ 2023-05-30
 - [ ] my description ⏳ 2023-05-31
 - [ ] my description ⏳ 2023-06-01
+- [ ] my description ⏳ 2023-06-02
 - [ ] my description ⏳ Invalid date
 - [ ] my description
 - [ ] #task Normal priority
@@ -31,6 +33,7 @@
 - [ ] my description 🛫 2023-05-30
 - [ ] my description 🛫 2023-05-31
 - [ ] my description 🛫 2023-06-01
+- [ ] my description 🛫 2023-06-02
 - [ ] #task Lowest priority ⏬
 - [x] #task Done 🔺 📅 1970-01-02
 - [x] Done

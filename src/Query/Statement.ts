@@ -81,4 +81,11 @@ ${indent}${nextLine}`;
 
         return result;
     }
+
+    public allLinesIdentical() {
+        return (
+            this._rawInstruction === this._anyContinuationLinesRemoved &&
+            this._rawInstruction === this._anyPlaceholdersExpanded
+        );
+    }
 }

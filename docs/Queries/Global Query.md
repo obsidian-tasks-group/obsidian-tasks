@@ -48,7 +48,7 @@ The `ignore global query` instruction was added in Tasks 4.6.0.
 Currently, any query that is allowed in a task block will also work as your Global Query. This feature is especially useful for applying [filters](Filters) or [layout options](Layout) by default for all your queries.
 
 > [!warning]
-> It isn't always possible to override a filter set in the Global Query. We're tracking this in [issue #1619](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1619).
+> It isn't always possible to override a filter set in the Global Query. We are tracking this in [issue #2074](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2074).
 
 ### [[Layout]]
 
@@ -58,6 +58,9 @@ Currently, any query that is allowed in a task block will also work as your Glob
 >     ```tasks
 >     short mode
 >     ```
+>
+> > [!info]
+> > You can override this in a task block using `full mode`
 
 > [!example]
 > **Hide priority**

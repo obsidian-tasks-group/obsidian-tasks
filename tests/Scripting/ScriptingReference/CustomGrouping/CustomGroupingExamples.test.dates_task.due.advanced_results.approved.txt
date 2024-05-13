@@ -6,6 +6,7 @@ group by function task.due.format("dddd")
 Group by day of the week (Monday, Tuesday, etc).
 The day names are sorted alphabetically.
 =>
+Friday
 Invalid date
 Thursday
 Tuesday
@@ -20,6 +21,7 @@ The day names are sorted in date order, starting with Sunday.
 %%2%%Tuesday
 %%3%%Wednesday
 %%4%%Thursday
+%%5%%Friday
 Invalid date
 ====================================================================================
 
@@ -44,6 +46,7 @@ To make the expression more readable, we put a `\` at the end of several lines, 
 %%2%%Tuesday
 %%3%%Wednesday
 %%4%%Thursday
+%%5%%Friday
 Invalid date
 Undated
 ====================================================================================
@@ -105,5 +108,27 @@ As above, but using a local function, and `if` statements.
 %%2%% ==Today==
 %%3%% ==Future==
 %%4%% ==Undated==
+====================================================================================
+
+
+group by function \
+    const date = task.due.moment; \
+    const tomorrow  = moment().add(1,'days'); \
+    const now = moment(); \
+    const label = (order, name) => `%%${order}%% ==${name}==`; \
+    if (!date)                           return label(5, 'Undated'); \
+    if (!date.isValid())                 return label(0, 'Invalid date'); \
+    if (date.isBefore(now, 'day'))       return label(1, 'Overdue'); \
+    if (date.isSame(now, 'day'))         return label(2, 'Today'); \
+    if (date.isSame(tomorrow, 'day'))    return label(3, 'Tomorrow'); \
+    return label(4, 'Future');
+As above, but adds a heading for Tomorrow.
+=>
+%%0%% ==Invalid date==
+%%1%% ==Overdue==
+%%2%% ==Today==
+%%3%% ==Tomorrow==
+%%4%% ==Future==
+%%5%% ==Undated==
 ====================================================================================
 
