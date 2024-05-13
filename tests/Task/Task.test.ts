@@ -47,6 +47,8 @@ describe('parsing', () => {
         expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
         expect(task!.originalMarkdown).toStrictEqual(line);
         expect(task!.lineNumber).toEqual(0);
+        expect(task.parent).toBeNull();
+        expect(task.children).toEqual([]);
     });
 
     it('parses a task from a line starting with asterisk', () => {
