@@ -294,11 +294,8 @@ describe.each([
             // do exercise the new task line.
             // If they are added at the end of the list, all existing tests will just
             // silently pass.
-            const allTasks = [
-                // force line break
-                taskBuilder.description('x_y').id('xy').build(),
-                taskBuilder.description('1').id('1234').build(),
-            ];
+
+            const allTasks: Task[] = [];
 
             // Function to create a task and append it to the allTasks array
             function createAndAddTask(description: string, id: string): Task {
@@ -307,8 +304,9 @@ describe.each([
                 return task;
             }
 
-            const taskxy = allTasks[0];
-            const task1234 = allTasks[1];
+            // Create tasks and add them to allTasks
+            const taskxy = createAndAddTask('x_y', 'xy');
+            const task1234 = createAndAddTask('1', '1234');
             const task5678 = createAndAddTask('2', '5678');
 
             // Variable names based on ID, not description:
