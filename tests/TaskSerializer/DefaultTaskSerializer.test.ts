@@ -51,6 +51,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         startDateSymbol,
         createdDateSymbol,
         recurrenceSymbol,
+        onCompletionSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
         doneDateSymbol,
@@ -127,6 +128,14 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const taskDetails = deserialize(`${recurrenceSymbol} every day`);
             expect(taskDetails).toMatchTaskDetails({
                 recurrence: new RecurrenceBuilder().rule('every day').build(),
+            });
+        });
+
+        describe('should parse onCompletion', () => {
+            it('should parse delete Action', () => {
+                const onCompletion = `${onCompletionSymbol} delete`;
+                const taskDetails = deserialize(onCompletion);
+                expect(taskDetails).toMatchTaskDetails({ onCompletion: 'delete' });
             });
         });
 
