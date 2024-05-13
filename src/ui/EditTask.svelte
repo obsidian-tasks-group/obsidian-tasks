@@ -388,7 +388,7 @@
         onSubmit(newTasks);
     };
 
-    function generateDateEditorLabel(id: string, withAccessKey: boolean, accessKey: string): string {
+    function dateEditorLabelContent(id: string, withAccessKey: boolean, accessKey: string) {
         let labelContent = capitalizeFirstLetter(id);
         if (withAccessKey) {
             if (!id.includes(accessKey)) {
@@ -403,6 +403,11 @@
                 labelContent = capitalizeFirstLetter(labelContent);
             }
         }
+        return labelContent;
+    }
+
+    function generateDateEditorLabel(id: string, withAccessKey: boolean, accessKey: string): string {
+        let labelContent = dateEditorLabelContent(id, withAccessKey, accessKey);
 
         return `<label for=${id}>${labelContent}</label>`;
     }
