@@ -395,7 +395,7 @@
 
         let labelContent = capitalizeFirstLetter(id);
         if (!id.includes(accessKey)) {
-            labelContent += ` (<span class="accesskey">${accessKey}</span>)`;
+            return `${capitalizeFirstLetter(id)} (<span class="accesskey">${accessKey}</span>)`;
         } else {
             const accessKeyIndex = id.indexOf(accessKey);
             labelContent = id.substring(0, accessKeyIndex);
