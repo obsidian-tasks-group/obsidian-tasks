@@ -7,9 +7,10 @@ describe('list item tests', () => {
     });
 
     it('should create list item with a child', () => {
-        const childItem = new ListItem([]);
-        const listItem = new ListItem([childItem]);
+        const childItem1 = new ListItem([]);
+        const childItem2 = new ListItem([]);
+        const listItem = new ListItem([childItem1, childItem2]);
         expect(listItem).toBeDefined();
-        expect(listItem.children).toEqual([childItem]);
+        expect(listItem.children).toEqual([childItem1, childItem2]);
     });
 });
