@@ -3,11 +3,11 @@ export function editTaskLabelContent(id: string, accessKey: string | null) {
         return capitalizeFirstLetter(id);
     }
 
-    if (!id.includes(accessKey)) {
+    if (!id.toLowerCase().includes(accessKey)) {
         return `${capitalizeFirstLetter(id)} (<span class="accesskey">${accessKey}</span>)`;
     }
 
-    const accessKeyIndex = id.indexOf(accessKey);
+    const accessKeyIndex = id.toLowerCase().indexOf(accessKey);
     let labelContent = id.substring(0, accessKeyIndex);
     labelContent += '<span class="accesskey">';
 
