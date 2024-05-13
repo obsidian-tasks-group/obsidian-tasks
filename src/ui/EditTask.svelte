@@ -13,6 +13,7 @@
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
     import type { EditableTask } from './EditableTask';
+    import { editTaskLabelContent } from './EditTaskHelpers';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -569,11 +570,7 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocked By Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            {#if withAccessKeys}
-                <label for="blockedBy"><span class="accesskey">B</span>efore this</label>
-            {:else}
-                <label for="blockedBy">Before this</label>
-            {/if}
+            <label for="blockedBy">{@html editTaskLabelContent('Before this', accesskey('b'))}</label>
             <Dependency
                 type="blockedBy"
                 {task}
