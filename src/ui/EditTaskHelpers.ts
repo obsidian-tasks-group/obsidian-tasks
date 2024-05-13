@@ -15,11 +15,11 @@ export function editTaskLabelContent(labelText: string, accessKey: string | null
         return capitalizeFirstLetter(labelText);
     }
 
-    if (!labelText.toLowerCase().includes(accessKey)) {
+    const accessKeyIndex = labelText.toLowerCase().indexOf(accessKey);
+    if (accessKeyIndex === -1) {
         return `${capitalizeFirstLetter(labelText)} (<span class="accesskey">${accessKey}</span>)`;
     }
 
-    const accessKeyIndex = labelText.toLowerCase().indexOf(accessKey);
     let labelContent = labelText.substring(0, accessKeyIndex);
     labelContent += '<span class="accesskey">';
 
