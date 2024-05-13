@@ -304,6 +304,11 @@ describe.each([
                 return task;
             }
 
+            function shouldStartWithSuggestedTasks(line: string, selectedTasks: Task[], allTasks: Task[]) {
+                const selectedTaskLabels = selectedTasks.map((task) => suggestionLabel(task));
+                shouldStartWithSuggestionsEqualling(line, [...selectedTaskLabels, defaultSuggestion], allTasks);
+            }
+
             // Create tasks and add them to allTasks
             const taskxy = createAndAddTask('x_y', 'xy');
             const task1234 = createAndAddTask('1', '1234');
@@ -363,8 +368,7 @@ describe.each([
             it('should offer tasks when first existing dependency id has hyphen and underscore', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1_2-3,`;
                 const selectedTasks = [taskxy, task1234, task5678];
-                const selectedTaskLabels = selectedTasks.map((task) => suggestionLabel(task));
-                shouldStartWithSuggestionsEqualling(line, [...selectedTaskLabels, defaultSuggestion], allTasks);
+                shouldStartWithSuggestedTasks(line, selectedTasks, allTasks);
             });
 
             it('should only offer tasks not already depended upon - and allows spaces around commas', () => {
