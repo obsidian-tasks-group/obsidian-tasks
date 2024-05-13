@@ -391,7 +391,9 @@
     function generateDateEditorLabel(id: string, withAccessKey: boolean, accessKey: string): string {
         let labelContent = capitalizeFirstLetter(id);
         if (withAccessKey) {
-            labelContent += ` (<span class="accesskey">${accessKey}</span>)`;
+            if (!id.includes(accessKey)) {
+                labelContent += ` (<span class="accesskey">${accessKey}</span>)`;
+            }
         }
 
         return `<label for=${id}>${labelContent}</label>`;
