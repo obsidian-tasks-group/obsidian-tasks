@@ -1,6 +1,10 @@
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { Task } from './Task';
 
+function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) {
+    return tasks.filter((task) => task !== changedStatusTask);
+}
+
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const tasksArrayLength = tasks.length;
     if (tasksArrayLength === 0) {
@@ -11,15 +15,12 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const changedStatusTask = tasks[tasksArrayLength - 1];
     const endStatus = changedStatusTask.status;
 
-    const ocTrigger = ' 🏁 ';
-    const taskString = changedStatusTask.description;
-
-    if (!taskString.includes(ocTrigger) || endStatus.type !== StatusType.DONE || endStatus.type === startStatus.type) {
+    if (!task.onCompletion || endStatus.type !== StatusType.DONE || endStatus.type === startStatus.type) {
         return tasks;
     }
 
-    if (taskString.includes('🏁 delete')) {
-        return tasks.filter((task) => task !== changedStatusTask);
+    if ('delete' === task.onCompletion.toLowerCase()) {
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
 
     // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
@@ -29,6 +30,4 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     // const hint = '\nClick here to clear';
     // const noticeMessage = errorMessage + hint;
     // new Notice(noticeMessage, 0);
-    // console.log('Uh-oh -- we should never actually get here...  :( ');
-    // throw new Error('Something went wrong');
 }
