@@ -375,7 +375,6 @@ describe.each([
                 // 123 is only a substring of one of the ID 1234 which is already depended on, not an exat match.
                 // So it should not count as already matched.
                 shouldStartWithSuggestedTasks(line, [taskWithId123], [taskWithId123, ...allTasks]);
-                expect(allTasks.length).toBe(3);
             });
 
             it('should find non-exact matches for multi-word search strings', () => {
@@ -385,7 +384,6 @@ describe.each([
                 const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,feed baby`;
                 // Search string 'feed baby' should match only 'Feed the baby':
                 shouldStartWithSuggestedTasks(line, [feedBaby], [feedBaby, feedCat, ...allTasks]);
-                expect(allTasks.length).toBe(3);
             });
 
             it.failing('should allow punctuation in search strings', () => {
@@ -396,7 +394,6 @@ describe.each([
 
                 const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,peace!`;
                 shouldStartWithSuggestedTasks(line, [peace1], [peace1, peace2, ...allTasks]);
-                expect(allTasks.length).toBe(3);
             });
 
             it('should not offer any tasks if there is not a comma after existing depends IDs', () => {
