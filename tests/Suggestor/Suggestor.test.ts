@@ -298,12 +298,18 @@ describe.each([
                 // force line break
                 taskBuilder.description('x_y').id('xy').build(),
                 taskBuilder.description('1').id('1234').build(),
-                taskBuilder.description('2').id('5678').build(),
             ];
+
+            // Function to create a task and append it to the allTasks array
+            function createAndAddTask(description: string, id: string): Task {
+                const task = taskBuilder.description(description).id(id).build();
+                allTasks.push(task);
+                return task;
+            }
 
             const taskxy = allTasks[0];
             const task1234 = allTasks[1];
-            const task5678 = allTasks[2];
+            const task5678 = createAndAddTask('2', '5678');
 
             // Variable names based on ID, not description:
             const suggestTaskxy = suggestionLabel(taskxy);
