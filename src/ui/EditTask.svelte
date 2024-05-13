@@ -427,7 +427,11 @@ Availability of access keys:
     <!--  Description  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-description-section">
-        <label for="description">Descrip<span class="accesskey">t</span>ion</label>
+        {#if withAccessKeys}
+            <label for="description">Descrip<span class="accesskey">t</span>ion</label>
+        {:else}
+            <label for="description">Descrip<span class="accesskey">t</span>ion</label>
+        {/if}
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
             bind:value={editableTask.description}
@@ -477,7 +481,11 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="recurrence" class="accesskey-first">Recurs</label>
+        {#if withAccessKeys}
+            <label for="recurrence" class="accesskey-first">Recurs</label>
+        {:else}
+            <label for="recurrence" class="accesskey-first">Recurs</label>
+        {/if}
         <!-- svelte-ignore a11y-accesskey -->
         <input
             bind:value={editableTask.recurrenceRule}
@@ -492,7 +500,11 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="due" class="accesskey-first">Due</label>
+        {#if withAccessKeys}
+            <label for="due" class="accesskey-first">Due</label>
+        {:else}
+            <label for="due" class="accesskey-first">Due</label>
+        {/if}
         <DateEditor
             id="due"
             dateSymbol={dueDateSymbol}
@@ -505,7 +517,11 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="scheduled" class="accesskey-first">Scheduled</label>
+        {#if withAccessKeys}
+            <label for="scheduled" class="accesskey-first">Scheduled</label>
+        {:else}
+            <label for="scheduled" class="accesskey-first">Scheduled</label>
+        {/if}
         <DateEditor
             id="scheduled"
             dateSymbol={scheduledDateSymbol}
@@ -518,7 +534,11 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Start Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="start">St<span class="accesskey">a</span>rt</label>
+        {#if withAccessKeys}
+            <label for="start">St<span class="accesskey">a</span>rt</label>
+        {:else}
+            <label for="start">St<span class="accesskey">a</span>rt</label>
+        {/if}
         <DateEditor
             id="start"
             dateSymbol={startDateSymbol}
@@ -532,10 +552,17 @@ Availability of access keys:
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
         <div class="future-dates-only">
-            <label for="forwardOnly"
-                >Only
-                <span class="accesskey-first">future</span> dates:</label
-            >
+            {#if withAccessKeys}
+                <label for="forwardOnly"
+                    >Only
+                    <span class="accesskey-first">future</span> dates:</label
+                >
+            {:else}
+                <label for="forwardOnly"
+                    >Only
+                    <span class="accesskey-first">future</span> dates:</label
+                >
+            {/if}
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:checked={editableTask.forwardOnly}
@@ -556,7 +583,11 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocked By Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="blockedBy" class="accesskey-first">Before this</label>
+            {#if withAccessKeys}
+                <label for="blockedBy" class="accesskey-first">Before this</label>
+            {:else}
+                <label for="blockedBy" class="accesskey-first">Before this</label>
+            {/if}
             <Dependency
                 type="blockedBy"
                 {task}
@@ -571,7 +602,11 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocking Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="blocking">Aft<span class="accesskey">e</span>r this</label>
+            {#if withAccessKeys}
+                <label for="blocking">Aft<span class="accesskey">e</span>r this</label>
+            {:else}
+                <label for="blocking">Aft<span class="accesskey">e</span>r this</label>
+            {/if}
             <Dependency
                 type="blocking"
                 {task}
@@ -592,7 +627,11 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="status">Stat<span class="accesskey">u</span>s</label>
+        {#if withAccessKeys}
+            <label for="status">Stat<span class="accesskey">u</span>s</label>
+        {:else}
+            <label for="status">Stat<span class="accesskey">u</span>s</label>
+        {/if}
         <!-- svelte-ignore a11y-accesskey -->
         <select
             bind:value={statusSymbol}
@@ -609,7 +648,11 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="created" class="accesskey-first">Created</label>
+        {#if withAccessKeys}
+            <label for="created" class="accesskey-first">Created</label>
+        {:else}
+            <label for="created" class="accesskey-first">Created</label>
+        {/if}
         <DateEditor
             id="created"
             dateSymbol={createdDateSymbol}
