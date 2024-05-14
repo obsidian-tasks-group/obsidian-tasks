@@ -1,3 +1,5 @@
+import { capitalizeFirstLetter } from '../lib/StringHelpers';
+
 /**
  * Returns contents for a `<label>` HTML element.
  *
@@ -33,8 +35,4 @@ export function labelContentWithAccessKey(labelText: string, accessKey: string |
     labelContent += labelText.substring(accessKeyIndex + 1);
     labelContent = capitalizeFirstLetter(labelContent);
     return labelContent;
-}
-
-function capitalizeFirstLetter(id: string) {
-    return id.charAt(0).toUpperCase() + id.slice(1);
 }
