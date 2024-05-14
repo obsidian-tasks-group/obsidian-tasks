@@ -13,7 +13,7 @@
     import DateEditor from './DateEditor.svelte';
     import type { EditableTask } from './EditableTask';
     import Dependency from './Dependency.svelte';
-    import { editTaskLabelContent } from './EditTaskHelpers';
+    import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -428,7 +428,7 @@ Availability of access keys:
     <!--  Description  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-description-section">
-        <label for="description">{@html editTaskLabelContent('Description', accesskey('t'))}</label>
+        <label for="description">{@html labelContentWithAccessKey('Description', accesskey('t'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
             bind:value={editableTask.description}
@@ -482,7 +482,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="recurrence">{@html editTaskLabelContent('Recurs', accesskey('r'))}</label>
+        <label for="recurrence">{@html labelContentWithAccessKey('Recurs', accesskey('r'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
         <input
             bind:value={editableTask.recurrenceRule}
@@ -534,7 +534,7 @@ Availability of access keys:
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
         <div class="future-dates-only">
-            <label for="forwardOnly">{@html editTaskLabelContent('Only future dates:', accesskey('f'))}</label>
+            <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:checked={editableTask.forwardOnly}
@@ -589,7 +589,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="status">{@html editTaskLabelContent('Status', accesskey('u'))}</label>
+        <label for="status">{@html labelContentWithAccessKey('Status', accesskey('u'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
         <select
             bind:value={statusSymbol}

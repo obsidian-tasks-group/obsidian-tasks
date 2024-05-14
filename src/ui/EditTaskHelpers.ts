@@ -10,7 +10,7 @@
  * @param labelText to be displayed in the <label> HTML element.
  * @param accessKey optional access key. Set to null if not needed.
  */
-export function editTaskLabelContent(labelText: string, accessKey: string | null) {
+export function labelContentWithAccessKey(labelText: string, accessKey: string | null) {
     if (accessKey === null) {
         return capitalizeFirstLetter(labelText);
     }
