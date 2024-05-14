@@ -15,7 +15,7 @@ export function labelContentWithAccessKey(labelText: string, accessKey: string |
         return capitalizeFirstLetter(labelText);
     }
 
-    const accessKeyIndex = labelText.toLowerCase().indexOf(accessKey);
+    const accessKeyIndex = labelText.toLowerCase().indexOf(accessKey.toLowerCase());
     if (accessKeyIndex === -1) {
         return `${capitalizeFirstLetter(labelText)} (<span class="accesskey">${accessKey.toLowerCase()}</span>)`;
     }
