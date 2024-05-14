@@ -11,10 +11,8 @@
     .tasks-modal-error {
         border: 1px solid red !important;
     }
-}
 
-.with-accesskeys {
-    .accesskey-first::first-letter, .accesskey {
+    .accesskey {
         text-decoration: underline;
         text-underline-offset: 1pt;
     }
