@@ -3,14 +3,15 @@
     import type { Task } from '../Task/Task';
     import type { EditableTask } from './EditableTask';
     import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
+    import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     export let task: Task;
     export let editableTask: EditableTask;
     export let allTasks: Task[];
     export let _onDescriptionKeyDown: (e: KeyboardEvent) => void;
     export let type: 'blocking' | 'blockedBy';
-    export let accesskey: (key: string) => string | null;
-    export let accesskeyLetter: string = '';
+    export let labelText: string;
+    export let accesskey: string | null;
     export let placeholder: string = 'Type to search...';
 
     let search: string = '';
@@ -141,6 +142,7 @@
     }
 </script>
 
+<label for={type}>{@html labelContentWithAccessKey(labelText, accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <span bind:clientWidth={inputWidth}>
     <input
@@ -149,7 +151,7 @@
         on:keydown={(e) => taskKeydown(e)}
         on:focus={onFocused}
         on:blur={() => (inputFocused = false)}
-        accesskey={accesskey(accesskeyLetter)}
+        {accesskey}
         id={type}
         class="tasks-modal-dependency-input"
         type="text"

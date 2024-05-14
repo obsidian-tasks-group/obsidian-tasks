@@ -1,6 +1,7 @@
 <script lang="ts">
     import { doAutocomplete } from '../lib/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../lib/DateTools';
+    import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
     export let dateSymbol: string;
@@ -20,6 +21,7 @@
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
 </script>
 
+<label for={id}>{@html labelContentWithAccessKey(id, accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <input
     bind:value={date}
