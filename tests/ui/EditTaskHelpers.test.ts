@@ -22,6 +22,11 @@ describe('labelContentWithAccessKey() tests', () => {
             'z',
             'The last letter of the alphabet is absent here (<span class="accesskey">z</span>)',
         ],
+        [
+            'the last letter of the alphabet is absent here even if the parameter is capital',
+            'Z',
+            'The last letter of the alphabet is absent here even if the parameter is capital (<span class="accesskey">z</span>)',
+        ],
         ['access key is null', null, 'Access key is null'],
     ])("label text '%s' with access key '%s' should have label content '%s'", (labelText, accessKey, labelContent) => {
         expect(labelContentWithAccessKey(labelText, accessKey)).toEqual(labelContent);
