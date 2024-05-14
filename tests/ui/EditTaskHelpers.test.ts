@@ -2,9 +2,21 @@ import { labelContentWithAccessKey } from '../../src/ui/EditTaskHelpers';
 
 describe('labelContentWithAccessKey() tests', () => {
     it.each([
-        ['first letter', 'f', '<span class="accesskey">F</span>irst letter'],
-        ['make this x the access key', 'x', 'Make this <span class="accesskey">x</span> the access key'],
-        ['make this u the access key too', 'U', 'Make this u the access key too (<span class="accesskey">u</span>)'],
+        [
+            'first letter is the access key f, not the second',
+            'f',
+            '<span class="accesskey">F</span>irst letter is the access key f, not the second',
+        ],
+        [
+            'make this x the access key even if it is in the middle',
+            'x',
+            'Make this <span class="accesskey">x</span> the access key even if it is in the middle',
+        ],
+        [
+            'make this u the access key too even if the parameter is a capital U',
+            'U',
+            'Make this u the access key too even if the parameter is a capital U (<span class="accesskey">u</span>)',
+        ],
         [
             'the last letter of the alphabet is absent here',
             'z',
