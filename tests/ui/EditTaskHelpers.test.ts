@@ -1,10 +1,12 @@
 import { labelContentWithAccessKey } from '../../src/ui/EditTaskHelpers';
 
 describe('labelContentWithAccessKey() tests', () => {
-    it('should add access key span if it matches the first letter and capitalise it', () => {
-        const labelContent = labelContentWithAccessKey('first letter', 'f');
-        expect(labelContent).toMatchInlineSnapshot('"<span class="accesskey">F</span>irst letter"');
-    });
+    it.each([['first letter', 'f', '<span class="accesskey">F</span>irst letter']])(
+        "label text '%s' with access key '%s' should have label content '%s'",
+        (labelText, accessKey, labelContent) => {
+            expect(labelContentWithAccessKey(labelText, accessKey)).toEqual(labelContent);
+        },
+    );
 
     it('should add access key span if it matches not the first letter', () => {
         const labelContent = labelContentWithAccessKey('make this x the access key', 'x');
