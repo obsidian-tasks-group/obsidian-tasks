@@ -1,18 +1,18 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { GlobalFilter } from '../Config/GlobalFilter';
-    import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import { parseTypedDateForSaving } from '../lib/DateTools';
-    import { replaceTaskWithTasks } from '../Obsidian/File';
-    import { TasksDate } from '../Scripting/TasksDate';
-    import { Status } from '../Statuses/Status';
-    import { Priority } from '../Task/Priority';
     import { Recurrence } from '../Task/Recurrence';
+    import { TASK_FORMATS, getSettings } from '../Config/Settings';
+    import { GlobalFilter } from '../Config/GlobalFilter';
+    import { Status } from '../Statuses/Status';
     import { Task } from '../Task/Task';
+    import { TasksDate } from '../Scripting/TasksDate';
     import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
+    import { replaceTaskWithTasks } from '../Obsidian/File';
+    import { Priority } from '../Task/Priority';
     import DateEditor from './DateEditor.svelte';
-    import Dependency from './Dependency.svelte';
     import type { EditableTask } from './EditableTask';
+    import Dependency from './Dependency.svelte';
     import { editTaskLabelContent } from './EditTaskHelpers';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
