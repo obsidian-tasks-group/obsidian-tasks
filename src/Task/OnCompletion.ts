@@ -1,3 +1,4 @@
+import { Notice } from 'obsidian';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { Task } from './Task';
 
@@ -19,15 +20,15 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
         return tasks;
     }
 
-    if ('delete' === task.onCompletion.toLowerCase()) {
+    const ocAction = task.onCompletion.toLowerCase();
+
+    if ('delete' === ocAction) {
         return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
 
-    // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
-    const errorMessage = 'Unknown "On Completion" action';
-    console.log(errorMessage);
+    const errorText = 'Unknown "On Completion" action: ' + task.onCompletion;
+    const hintText = '\nClick here to clear';
+    const noticeText = errorText + hintText;
+    new Notice(noticeText, 0);
     return tasks;
-    // const hint = '\nClick here to clear';
-    // const noticeMessage = errorMessage + hint;
-    // new Notice(noticeMessage, 0);
 }
