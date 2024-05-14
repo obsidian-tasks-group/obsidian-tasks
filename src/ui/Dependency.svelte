@@ -3,7 +3,7 @@
     import type { Task } from '../Task/Task';
     import type { EditableTask } from './EditableTask';
     import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
-    import { editTaskLabelContent } from './EditTaskHelpers';
+    import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     export let task: Task;
     export let editableTask: EditableTask;
@@ -142,7 +142,7 @@
     }
 </script>
 
-<label for={type}>{@html editTaskLabelContent(labelText, accesskey)}</label>
+<label for={type}>{@html labelContentWithAccessKey(labelText, accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <span bind:clientWidth={inputWidth}>
     <input
