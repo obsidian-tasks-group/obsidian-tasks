@@ -1,4 +1,5 @@
 import type { Moment, unitOfTime } from 'moment';
+import { capitalizeFirstLetter } from '../lib/StringHelpers';
 import { DateFallback } from '../Task/DateFallback';
 import { Task } from '../Task/Task';
 import { TasksDate } from './TasksDate';
@@ -109,10 +110,6 @@ export function postponementSuccessMessage(postponedDate: Moment, dateFieldToPos
 export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
     const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
     return `ℹ️ ${buttonText} (right-click for more options)`;
-}
-
-function capitalizeFirstLetter(word: string) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
 /**
