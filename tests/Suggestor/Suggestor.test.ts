@@ -289,11 +289,6 @@ describe.each([
 
         describe('suggesting additional dependencies', () => {
             const taskBuilder = new TaskBuilder().path('root/dir 1/dir 2/file-name.md');
-            // If adding new task lines here, add them before the end of the list,
-            // to ensure that existing shouldStartWithSuggestions...()-based tests really
-            // do exercise the new task line.
-            // If they are added at the end of the list, all existing tests will just
-            // silently pass.
 
             const allTasks: Task[] = [];
 
