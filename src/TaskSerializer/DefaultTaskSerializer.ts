@@ -48,6 +48,9 @@ export interface DefaultTaskSerializerSymbols {
 // The allowed characters in a single task id:
 export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 
+// The allowed characters in a comma-separated sequence of task ids:
+export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
+
 /**
  * A symbol map for obsidian-task's default task style.
  * Uses emojis to concisely convey meaning
@@ -83,10 +86,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        dependsOnRegex: new RegExp(
-            '⛔\uFE0F? *(' + taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*)$',
-            'iu',
-        ),
+        dependsOnRegex: new RegExp('⛔\uFE0F? *(' + taskIdSequenceRegex.source + ')$', 'iu'),
         idRegex: new RegExp('🆔 *(' + taskIdRegex.source + ')$', 'iu'),
     },
 } as const;
