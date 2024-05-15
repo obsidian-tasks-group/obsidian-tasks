@@ -12,6 +12,7 @@ import {
     lastOpenBracket,
     makeDefaultSuggestionBuilder,
     onlySuggestIfBracketOpen,
+    showDependencySuggestionsDefault,
 } from '../../src/Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
@@ -78,6 +79,15 @@ describe.each([
         MAX_GENERIC_SUGGESTIONS_FOR_TESTS,
         name === 'dataview',
     );
+    beforeEach(() => {
+        // Note: Dependency suggestions are temporarily turned off in the released plugin,
+        //       but turned on in tests so that we continue to check the behaviour.
+        global.SHOW_DEPENDENCY_SUGGESTIONS = true;
+    });
+
+    afterEach(() => {
+        global.SHOW_DEPENDENCY_SUGGESTIONS = false;
+    });
 
     /** Build suggestions for the simple case where the cursor is at the very end of the line.
      */
@@ -403,6 +413,11 @@ describe.each([
     });
 
     it('show all suggested text', () => {
+        // Turn off dependency suggestions for now, as per default value,
+        // as the outputs of this test are embedded in the documentation,
+        // and I wish to hide ID and dependsOn there.
+        global.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
+
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
 
@@ -412,9 +427,11 @@ describe.each([
             `- [ ] some task ${dueDateSymbol} `,
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
-            `- [ ] some task ${idSymbol} `,
-            `- [ ] some task ${dependsOnSymbol} `,
         ];
+        if (global.SHOW_DEPENDENCY_SUGGESTIONS) {
+            lines.push(`- [ ] some task ${idSymbol} `);
+            lines.push(`- [ ] some task ${dependsOnSymbol} `);
+        }
         const markdownTable = new MarkdownTable(['Searchable Text', 'Text that is added']);
         for (const line of lines) {
             let suggestions = buildSuggestions(line, line.length - 1, originalSettings, []);

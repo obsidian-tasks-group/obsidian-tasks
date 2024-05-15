@@ -55,6 +55,10 @@ This page gathers together all the documentation on known limitations of the plu
 
 ![[Create or edit Task#Known limitations]]
 
+## Editing Tasks: Auto-Suggest
+
+![[Auto-Suggest#Current Limitations]]
+
 ## Editing Tasks: Postponing
 
 ![[Postponing#Current Limitations]]

@@ -188,8 +188,17 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 <!-- include: Suggestor.test.auto-complete_with__emoji__symbols_show_all_suggested_text.approved.md -->
 | Searchable Text | Text that is added |
 | ----- | ----- |
-| 🆔 Task ID | 🆔 |
-| ⛔ Task depends on ID | ⛔ |
+| ⏎ | &lt;new line> |
+| 📅 due date | 📅  |
+| 🛫 start date | 🛫  |
+| ⏳ scheduled date | ⏳  |
+| ⏫ high priority | ⏫  |
+| 🔼 medium priority | 🔼  |
+| 🔽 low priority | 🔽  |
+| 🔺 highest priority | 🔺  |
+| ⏬ lowest priority | ⏬  |
+| 🔁 recurring (repeat) | 🔁  |
+| ➕ created today (2022-07-11) | ➕ 2022-07-11  |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
 | every week | 🔁 every week  |
@@ -203,15 +212,6 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | every week on Thursday | 🔁 every week on Thursday  |
 | every week on Friday | 🔁 every week on Friday  |
 | every week on Saturday | 🔁 every week on Saturday  |
-| 📅 due date | 📅  |
-| 🛫 start date | 🛫  |
-| ⏳ scheduled date | ⏳  |
-| ⏫ high priority | ⏫  |
-| 🔼 medium priority | 🔼  |
-| 🔽 low priority | 🔽  |
-| 🔺 highest priority | 🔺  |
-| ⏬ lowest priority | ⏬  |
-| ➕ created today (2022-07-11) | ➕ 2022-07-11  |
 | today (2022-07-11) | 📅 2022-07-11  |
 | tomorrow (2022-07-12) | 📅 2022-07-12  |
 | Sunday (2022-07-17) | 📅 2022-07-17  |
@@ -224,7 +224,6 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | next week (2022-07-18) | 📅 2022-07-18  |
 | next month (2022-08-11) | 📅 2022-08-11  |
 | next year (2023-07-11) | 📅 2023-07-11  |
-| 🔁 recurring (repeat) | 🔁  |
 | today (2022-07-11) | ⏳ 2022-07-11  |
 | tomorrow (2022-07-12) | ⏳ 2022-07-12  |
 | Sunday (2022-07-17) | ⏳ 2022-07-17  |
@@ -249,8 +248,6 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | next week (2022-07-18) | 🛫 2022-07-18  |
 | next month (2022-08-11) | 🛫 2022-08-11  |
 | next year (2023-07-11) | 🛫 2023-07-11  |
-| Auto Generate Unique ID | 🆔 ****** |
-| ⏎ | &lt;new line> |
 <!-- endInclude -->
 
 ### How can I use auto-suggest features from other plugins together with the Tasks auto-suggest?
@@ -291,3 +288,7 @@ at least the specified number of characters to find a match.
 How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).
 
 The default is 6, and you can select any value from 3 to 12.
+
+## Current Limitations
+
+- The Auto-Suggest mechanism does not yet support [[task dependencies]]. We are tracking this in [issue #2681](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2681).
