@@ -280,6 +280,10 @@ describe.each([
             shouldStartWithSuggestionsEqualling(line, [...selectedTaskLabels, defaultSuggestion], allTasks);
         }
 
+        function suggestionLabel(taskxy: Task) {
+            return `${taskxy.descriptionWithoutTags} - From: ${taskxy.file.filename}`;
+        }
+
         it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
@@ -291,10 +295,6 @@ describe.each([
         // TODO should not offer id or dependsOn if cursor is in the middle of the line
         // TODO test that it uses the same regex for Task IDs as the rest of the code
         // TODO confirm it does not unnecessarily rewrite tasks that already have an ID
-
-        function suggestionLabel(taskxy: Task) {
-            return `${taskxy.descriptionWithoutTags} - From: ${taskxy.file.filename}`;
-        }
 
         describe('suggesting additional dependencies', () => {
             const taskBuilder = new TaskBuilder().path('root/dir 1/dir 2/file-name.md');
