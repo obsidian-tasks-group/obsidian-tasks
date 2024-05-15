@@ -17,6 +17,15 @@ import type { SuggestInfo, SuggestionBuilder } from '.';
  */
 export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
 
+declare global {
+    // eslint-disable-next-line no-var
+    var SHOW_DEPENDENCY_SUGGESTIONS: boolean;
+}
+
+// Set default value for production to off, temporarily. It will be turned on in tests.
+export const showDependencySuggestionsDefault = false;
+globalThis.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
+
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
     maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
@@ -47,12 +56,14 @@ export function makeDefaultSuggestionBuilder(
         );
 
         // add Auto ID suggestions
-        suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
+        if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+            suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
 
-        // add dependecy suggestions
-        suggestions = suggestions.concat(
-            addDependsOnSuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
-        );
+            // add dependecy suggestions
+            suggestions = suggestions.concat(
+                addDependsOnSuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
+            );
+        }
 
         // add task property suggestions ('due', 'recurrence' etc)
         suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
@@ -125,17 +136,19 @@ function addTaskPropertySuggestions(
             appendText: `${symbols.scheduledDateSymbol} `,
         });
 
-    if (!line.includes(symbols.idSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.idSymbol} Task ID`,
-            appendText: `${symbols.idSymbol}`,
-        });
+    if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+        if (!line.includes(symbols.idSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.idSymbol} Task ID`,
+                appendText: `${symbols.idSymbol}`,
+            });
 
-    if (!line.includes(symbols.dependsOnSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.dependsOnSymbol} Task depends on ID`,
-            appendText: `${symbols.dependsOnSymbol}`,
-        });
+        if (!line.includes(symbols.dependsOnSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.dependsOnSymbol} Task depends on ID`,
+                appendText: `${symbols.dependsOnSymbol}`,
+            });
+    }
 
     if (!hasPriority(line)) {
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
