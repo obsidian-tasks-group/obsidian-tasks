@@ -171,6 +171,11 @@ describe.each([
         }
     }
 
+    function shouldOnlyOfferDefaultSuggestionsForEndOfLine(line: string, allTasks: Task[] = []) {
+        const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
+        shouldOnlyOfferDefaultSuggestions(suggestions);
+    }
+
     const {
         dueDateSymbol,
         scheduledDateSymbol,
@@ -248,7 +253,7 @@ describe.each([
         expect(suggestions[0].displayText).not.toContain('created today');
     });
 
-    describe('suggestions for dependency fields', () => {
+    describe('suggestions for dependency field ID', () => {
         it('should offer "id" then "depends on" if user typed "id"', () => {
             const line = '- [ ] some task id';
             shouldStartWithSuggestionsEqualling(line, [`${idSymbol} Task ID`, `${dependsOnSymbol} Task depends on ID`]);
@@ -259,10 +264,30 @@ describe.each([
             shouldStartWithSuggestionsEqualling(line, ['Auto Generate Unique ID']);
         });
 
+        it('should offer to generate unique id if the id symbol is already present', () => {
+            const line = `- [ ] some task ${idSymbol} 1234`;
+            shouldOnlyOfferDefaultSuggestionsForEndOfLine(line);
+        });
+    });
+
+    describe('suggestions for dependency field ', () => {
+        // Make tests more thorough by allowing tests to ensure that there are no more dependency suggestions
+        // after the ones we supply to shouldStartWithSuggestionsEqualling():
+        const defaultSuggestion = `${dueDateSymbol} due date`;
+
+        function shouldStartWithSuggestedTasks(line: string, selectedTasks: Task[], allTasks: Task[]) {
+            const selectedTaskLabels = selectedTasks.map((task) => suggestionLabel(task));
+            shouldStartWithSuggestionsEqualling(line, [...selectedTaskLabels, defaultSuggestion], allTasks);
+        }
+
+        function suggestionLabel(taskxy: Task) {
+            return `${taskxy.descriptionWithoutTags} - From: ${taskxy.file.filename}`;
+        }
+
         it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
-            shouldStartWithSuggestionsEqualling(line, ['Do exercises - From: fileName.md'], [taskToDependOn]);
+            shouldStartWithSuggestionsEqualling(line, [suggestionLabel(taskToDependOn)], [taskToDependOn]);
         });
 
         // TODO should not offer to depend on self
@@ -273,52 +298,106 @@ describe.each([
 
         describe('suggesting additional dependencies', () => {
             const taskBuilder = new TaskBuilder().path('root/dir 1/dir 2/file-name.md');
-            const allTasks = [
-                // force line break
-                taskBuilder.description('1').id('1234').build(),
-                taskBuilder.description('2').id('5678').build(),
-            ];
+            const allTasks: Task[] = [];
 
-            const suggestTask1 = '1 - From: file-name.md';
-            const suggestTask2 = '2 - From: file-name.md';
+            // Function to create a task and append it to the allTasks array
+            function createAndAddTask(description: string, id: string): Task {
+                const task = taskBuilder.description(description).id(id).build();
+                allTasks.push(task);
+                return task;
+            }
+
+            // Create tasks and add them to allTasks
+            // Variable names based on ID, not description:
+            const taskxy = createAndAddTask('x_y', 'xy');
+            const task1234 = createAndAddTask('1', '1234');
+            const task5678 = createAndAddTask('2', '5678');
 
             it('should suggest all tasks when there is no existing ID after dependsOn', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} `;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask1, suggestTask2], allTasks);
+                shouldStartWithSuggestedTasks(line, [taskxy, task1234, task5678], allTasks);
             });
 
             it('should offer tasks containing the search string, if given a partial ID', () => {
                 // 1 does not match any of the existing IDs, so is presumed to be a substring to search for.
                 const line = `- [ ] some task ${dependsOnSymbol} 1`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask1], allTasks);
+                shouldStartWithSuggestedTasks(line, [task1234], allTasks);
+            });
+
+            it('should offer tasks containing the search string, if given a partial ID even when no space between symbol and ID', () => {
+                // 1 does not match any of the existing IDs, so is presumed to be a substring to search for.
+                const line = `- [ ] some task ${dependsOnSymbol}1`;
+                shouldStartWithSuggestedTasks(line, [task1234], allTasks);
+            });
+
+            it('should offer tasks containing underscore in description, if given as partial ID', () => {
+                // x_ does not match any of the existing IDs, so is presumed to be a substring to search for.
+                const line = `- [ ] some task ${dependsOnSymbol} x_`;
+                shouldStartWithSuggestedTasks(line, [taskxy], allTasks);
+            });
+
+            it('should offer tasks containing underscore in description, if given as second partial ID', () => {
+                // x_ does not match any of the existing IDs, so is presumed to be a substring to search for.
+                const line = `- [ ] some task ${dependsOnSymbol} 1234,x_`;
+                shouldStartWithSuggestedTasks(line, [taskxy], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with 1 existing dependency', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask2], allTasks);
+                shouldStartWithSuggestedTasks(line, [taskxy, task5678], allTasks);
             });
 
             it('should offer tasks when first existing dependency id has hyphen and underscore', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1_2-3,`;
-                shouldStartWithSuggestionsEqualling(line, [suggestTask1, suggestTask2], allTasks);
+                shouldStartWithSuggestedTasks(line, [taskxy, task1234, task5678], allTasks);
+            });
+
+            it('should only offer tasks not already depended upon - and allows spaces around commas', () => {
+                const line = `- [ ] some task ${dependsOnSymbol} xy , 5678 , `;
+                shouldStartWithSuggestedTasks(line, [task1234], allTasks);
             });
 
             it('should only offer tasks not already depended upon - with all tasks already depended on', () => {
-                const line = `- [ ] some task ${dependsOnSymbol} 1234,5678,`;
-                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
-                shouldOnlyOfferDefaultSuggestions(suggestions);
+                const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,`;
+                shouldOnlyOfferDefaultSuggestionsForEndOfLine(line, allTasks);
+            });
+
+            it('should use equality to check for existing IDs, not containment', () => {
+                const taskWithId123 = taskBuilder.description('3').id('123').build();
+                const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,`;
+
+                // 123 is only a substring of one of the ID 1234 which is already depended on, not an exat match.
+                // So it should not count as already matched.
+                shouldStartWithSuggestedTasks(line, [taskWithId123], [taskWithId123, ...allTasks]);
+            });
+
+            it('should find non-exact matches for multi-word search strings', () => {
+                const feedBaby = taskBuilder.description('Feed the baby').id('bby').build();
+                const feedCat = taskBuilder.description('Feed the cat').id('ct').build();
+
+                const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,feed baby`;
+                // Search string 'feed baby' should match only 'Feed the baby':
+                shouldStartWithSuggestedTasks(line, [feedBaby], [feedBaby, feedCat, ...allTasks]);
+            });
+
+            it.failing('should allow punctuation in search strings', () => {
+                const peace1 = taskBuilder.description('World peace!').id('peace1').build();
+
+                // Don't match a task that has peace present, but without the exclamation mark
+                const peace2 = taskBuilder.description('Peacefulness').id('peace2').build();
+
+                const line = `- [ ] some task ${dependsOnSymbol} xy,1234,5678,peace!`;
+                shouldStartWithSuggestedTasks(line, [peace1], [peace1, peace2, ...allTasks]);
             });
 
             it('should not offer any tasks if there is not a comma after existing depends IDs', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234,5678`;
-                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
-                shouldOnlyOfferDefaultSuggestions(suggestions);
+                shouldOnlyOfferDefaultSuggestionsForEndOfLine(line, allTasks);
             });
 
             it('should not offer tasks if "IDs" are separated by spaces', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} 1234 5678`;
-                const suggestions = buildSuggestionsForEndOfLine(line, allTasks);
-                shouldOnlyOfferDefaultSuggestions(suggestions);
+                shouldOnlyOfferDefaultSuggestionsForEndOfLine(line, allTasks);
             });
         });
     });
