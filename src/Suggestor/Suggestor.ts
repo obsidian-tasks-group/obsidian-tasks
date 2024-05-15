@@ -23,7 +23,8 @@ declare global {
 }
 
 // Set default value for production to off, temporarily. It will be turned on in tests.
-globalThis.SHOW_DEPENDENCY_SUGGESTIONS = false;
+export const showDependencySuggestionsDefault = false;
+globalThis.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
 
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
