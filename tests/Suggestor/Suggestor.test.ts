@@ -412,6 +412,11 @@ describe.each([
     });
 
     it('show all suggested text', () => {
+        // TODO Turn off dependency suggestions for now, as per default value,
+        // as the outputs of this test are embedded in the documentation,
+        // and I wish to hide ID and dependsOn there.
+        global.SHOW_DEPENDENCY_SUGGESTIONS = true;
+
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
 
@@ -421,9 +426,11 @@ describe.each([
             `- [ ] some task ${dueDateSymbol} `,
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
-            `- [ ] some task ${idSymbol} `,
-            `- [ ] some task ${dependsOnSymbol} `,
         ];
+        if (global.SHOW_DEPENDENCY_SUGGESTIONS) {
+            lines.push(`- [ ] some task ${idSymbol} `);
+            lines.push(`- [ ] some task ${dependsOnSymbol} `);
+        }
         const markdownTable = new MarkdownTable(['Searchable Text', 'Text that is added']);
         for (const line of lines) {
             let suggestions = buildSuggestions(line, line.length - 1, originalSettings, []);
