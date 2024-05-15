@@ -271,6 +271,15 @@ describe.each([
     });
 
     describe('suggestions for dependency field ', () => {
+        // Make tests more thorough by allowing tests to ensure that there are no more dependency suggestions
+        // after the ones we supply to shouldStartWithSuggestionsEqualling():
+        const defaultSuggestion = `${dueDateSymbol} due date`;
+
+        function shouldStartWithSuggestedTasks(line: string, selectedTasks: Task[], allTasks: Task[]) {
+            const selectedTaskLabels = selectedTasks.map((task) => suggestionLabel(task));
+            shouldStartWithSuggestionsEqualling(line, [...selectedTaskLabels, defaultSuggestion], allTasks);
+        }
+
         it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
             const line = `- [ ] some task ${dependsOnSymbol} `;
             const taskToDependOn = TaskBuilder.createFullyPopulatedTask();
@@ -289,7 +298,6 @@ describe.each([
 
         describe('suggesting additional dependencies', () => {
             const taskBuilder = new TaskBuilder().path('root/dir 1/dir 2/file-name.md');
-
             const allTasks: Task[] = [];
 
             // Function to create a task and append it to the allTasks array
@@ -299,20 +307,11 @@ describe.each([
                 return task;
             }
 
-            function shouldStartWithSuggestedTasks(line: string, selectedTasks: Task[], allTasks: Task[]) {
-                const selectedTaskLabels = selectedTasks.map((task) => suggestionLabel(task));
-                shouldStartWithSuggestionsEqualling(line, [...selectedTaskLabels, defaultSuggestion], allTasks);
-            }
-
             // Create tasks and add them to allTasks
             // Variable names based on ID, not description:
             const taskxy = createAndAddTask('x_y', 'xy');
             const task1234 = createAndAddTask('1', '1234');
             const task5678 = createAndAddTask('2', '5678');
-
-            // Make tests more thorough by allowing tests to ensure that there are no more dependency suggestions
-            // after the ones we supply to shouldStartWithSuggestionsEqualling():
-            const defaultSuggestion = `${dueDateSymbol} due date`;
 
             it('should suggest all tasks when there is no existing ID after dependsOn', () => {
                 const line = `- [ ] some task ${dependsOnSymbol} `;
