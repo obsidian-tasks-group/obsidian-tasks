@@ -14,14 +14,13 @@
     import type { EditableTask } from './EditableTask';
     import Dependency from './Dependency.svelte';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import StatusEditor from './StatusEditor.svelte';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
     export let allTasks: Task[];
-
-    let statusSymbol = task.status.symbol;
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -138,27 +137,6 @@
 
         return updatedTask;
     }
-
-    const _onStatusChange = () => {
-        // Use statusSymbol to find the status to save to editableTask.status
-        const selectedStatus: Status | undefined = statusOptions.find((s) => s.symbol === statusSymbol);
-        if (selectedStatus) {
-            editableTask.status = selectedStatus;
-        } else {
-            console.log(`Error in EditTask: cannot find status with symbol ${statusSymbol}`);
-            return;
-        }
-
-        // Obtain a temporary task with the new status applied, to see what would
-        // happen to the done date:
-        const taskWithEditedStatusApplied = task.handleNewStatus(selectedStatus).pop();
-
-        if (taskWithEditedStatusApplied) {
-            // Update the doneDate field, in case changing the status changed the value:
-            editableTask.doneDate = taskWithEditedStatusApplied.done.formatAsDate();
-            editableTask.cancelledDate = taskWithEditedStatusApplied.cancelled.formatAsDate();
-        }
-    };
 
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
@@ -592,19 +570,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="status">{@html labelContentWithAccessKey('Status', accesskey('u'))}</label>
-        <!-- svelte-ignore a11y-accesskey -->
-        <select
-            bind:value={statusSymbol}
-            on:change={_onStatusChange}
-            id="status-type"
-            class="tasks-modal-status-selector"
-            accesskey={accesskey('u')}
-        >
-            {#each statusOptions as status}
-                <option value={status.symbol}>{status.name} [{status.symbol}]</option>
-            {/each}
-        </select>
+        <StatusEditor {task} bind:editableTask {statusOptions} accesskey={accesskey('u')} />
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
