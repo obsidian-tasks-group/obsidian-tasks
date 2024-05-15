@@ -78,6 +78,15 @@ describe.each([
         MAX_GENERIC_SUGGESTIONS_FOR_TESTS,
         name === 'dataview',
     );
+    beforeEach(() => {
+        // Note: Dependency suggestions are temporarily turned off in the released plugin,
+        //       but turned on in tests so that we continue to check the behaviour.
+        global.SHOW_DEPENDENCY_SUGGESTIONS = true;
+    });
+
+    afterEach(() => {
+        global.SHOW_DEPENDENCY_SUGGESTIONS = false;
+    });
 
     /** Build suggestions for the simple case where the cursor is at the very end of the line.
      */
