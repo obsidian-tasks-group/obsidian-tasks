@@ -528,8 +528,7 @@ describe('Edit Modal HTML snapshot tests', () => {
         resetSettings();
     });
 
-    it('should match snapshot', () => {
-        updateSettings({ provideAccessKeys: true });
+    function verifyModalHTML() {
         const task = taskFromLine({ line: '- [ ] absolutely to do', path: '' });
         const onSubmit = () => {};
         const allTasks = [task];
@@ -537,16 +536,15 @@ describe('Edit Modal HTML snapshot tests', () => {
 
         const prettyHTML = prettifyHTML(container.innerHTML);
         verifyWithFileExtension(prettyHTML, 'html');
+    }
+
+    it('should match snapshot', () => {
+        updateSettings({ provideAccessKeys: true });
+        verifyModalHTML();
     });
 
     it('should match snapshot - without access keys', () => {
         updateSettings({ provideAccessKeys: false });
-        const task = taskFromLine({ line: '- [ ] absolutely to do', path: '' });
-        const onSubmit = () => {};
-        const allTasks = [task];
-        const { container } = renderAndCheckModal(task, onSubmit, allTasks);
-
-        const prettyHTML = prettifyHTML(container.innerHTML);
-        verifyWithFileExtension(prettyHTML, 'html');
+        verifyModalHTML();
     });
 });
