@@ -150,31 +150,6 @@
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    $: {
-        isRecurrenceValid = true;
-        if (!editableTask.recurrenceRule) {
-            parsedRecurrence = '<i>not recurring</>';
-        } else {
-            const recurrenceFromText = Recurrence.fromText({
-                recurrenceRuleText: editableTask.recurrenceRule,
-                // Only for representation in the modal, no dates required.
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            })?.toText();
-            if (!recurrenceFromText) {
-                parsedRecurrence = '<i>invalid recurrence rule</i>';
-                isRecurrenceValid = false;
-            } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
-                parsedRecurrence = '<i>due, scheduled or start date required</i>';
-                isRecurrenceValid = false;
-            } else {
-                parsedRecurrence = recurrenceFromText;
-            }
-        }
-    }
-
     onMount(() => {
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
