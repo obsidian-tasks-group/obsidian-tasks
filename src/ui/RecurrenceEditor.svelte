@@ -14,6 +14,7 @@
         isRecurrenceValid = true;
         if (!editableTask.recurrenceRule) {
             parsedRecurrence = '<i>not recurring</>';
+            return;
         } else {
             const recurrenceFromText = Recurrence.fromText({
                 recurrenceRuleText: editableTask.recurrenceRule,
@@ -25,11 +26,14 @@
             if (!recurrenceFromText) {
                 parsedRecurrence = '<i>invalid recurrence rule</i>';
                 isRecurrenceValid = false;
+                return;
             } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
                 parsedRecurrence = '<i>due, scheduled or start date required</i>';
                 isRecurrenceValid = false;
+                return;
             } else {
                 parsedRecurrence = recurrenceFromText;
+                return;
             }
         }
     }
