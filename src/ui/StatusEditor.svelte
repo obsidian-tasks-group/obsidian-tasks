@@ -4,10 +4,10 @@
     import type { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
-    export let accesskey: string | null;
+    export let task: Task;
     export let editableTask: EditableTask;
     export let statusOptions: Status[];
-    export let task: Task;
+    export let accesskey: string | null;
 
     let statusSymbol = task.status.symbol;
 
