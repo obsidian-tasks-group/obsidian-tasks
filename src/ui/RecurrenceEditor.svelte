@@ -11,8 +11,8 @@
     let parsedRecurrence: string = '';
 
     function parseAndValidateRecurrence(editableTask: EditableTask) {
-        isRecurrenceValid = true;
         if (!editableTask.recurrenceRule) {
+            isRecurrenceValid = true;
             return { parsedRecurrence: '<i>not recurring</>' };
         }
 
@@ -30,6 +30,7 @@
         }
 
         if (editableTask.startDate || editableTask.scheduledDate || editableTask.dueDate) {
+            isRecurrenceValid = true;
             return { parsedRecurrence: recurrenceFromText };
         }
 
