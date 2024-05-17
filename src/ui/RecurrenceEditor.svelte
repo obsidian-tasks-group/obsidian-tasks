@@ -15,26 +15,26 @@
         if (!editableTask.recurrenceRule) {
             parsedRecurrence = '<i>not recurring</>';
             return;
+        }
+
+        const recurrenceFromText = Recurrence.fromText({
+            recurrenceRuleText: editableTask.recurrenceRule,
+            // Only for representation in the modal, no dates required.
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+        })?.toText();
+        if (!recurrenceFromText) {
+            parsedRecurrence = '<i>invalid recurrence rule</i>';
+            isRecurrenceValid = false;
+            return;
+        } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
+            parsedRecurrence = '<i>due, scheduled or start date required</i>';
+            isRecurrenceValid = false;
+            return;
         } else {
-            const recurrenceFromText = Recurrence.fromText({
-                recurrenceRuleText: editableTask.recurrenceRule,
-                // Only for representation in the modal, no dates required.
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            })?.toText();
-            if (!recurrenceFromText) {
-                parsedRecurrence = '<i>invalid recurrence rule</i>';
-                isRecurrenceValid = false;
-                return;
-            } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
-                parsedRecurrence = '<i>due, scheduled or start date required</i>';
-                isRecurrenceValid = false;
-                return;
-            } else {
-                parsedRecurrence = recurrenceFromText;
-                return;
-            }
+            parsedRecurrence = recurrenceFromText;
+            return;
         }
     }
 
