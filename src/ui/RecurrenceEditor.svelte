@@ -24,11 +24,14 @@
             scheduledDate: null,
             dueDate: null,
         })?.toText();
+
         if (!recurrenceFromText) {
             parsedRecurrence = '<i>invalid recurrence rule</i>';
             isRecurrenceValid = false;
             return;
-        } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
+        }
+
+        if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
             parsedRecurrence = '<i>due, scheduled or start date required</i>';
             isRecurrenceValid = false;
             return;
