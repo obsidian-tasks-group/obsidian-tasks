@@ -10,7 +10,7 @@
 
     let parsedRecurrence: string = '';
 
-    function parseAndValidateRecurrence() {
+    function parseAndValidateRecurrence(editableTask: EditableTask) {
         isRecurrenceValid = true;
         if (!editableTask.recurrenceRule) {
             parsedRecurrence = '<i>not recurring</>';
@@ -36,7 +36,7 @@
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     $: {
-        parseAndValidateRecurrence();
+        parseAndValidateRecurrence(editableTask);
     }
 
     const { recurrenceSymbol } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
