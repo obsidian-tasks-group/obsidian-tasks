@@ -12,8 +12,7 @@
 
     function parseAndValidateRecurrence(editableTask: EditableTask) {
         if (!editableTask.recurrenceRule) {
-            isRecurrenceValid = true;
-            return { parsedRecurrence: '<i>not recurring</>' };
+            return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
         }
 
         const recurrenceFromText = Recurrence.fromText({
@@ -25,22 +24,19 @@
         })?.toText();
 
         if (!recurrenceFromText) {
-            isRecurrenceValid = false;
-            return { parsedRecurrence: '<i>invalid recurrence rule</i>' };
+            return { parsedRecurrence: '<i>invalid recurrence rule</i>', isRecurrenceValid: false };
         }
 
         if (editableTask.startDate || editableTask.scheduledDate || editableTask.dueDate) {
-            isRecurrenceValid = true;
-            return { parsedRecurrence: recurrenceFromText };
+            return { parsedRecurrence: recurrenceFromText, isRecurrenceValid: true };
         }
 
-        isRecurrenceValid = false;
-        return { parsedRecurrence: '<i>due, scheduled or start date required</i>' };
+        return { parsedRecurrence: '<i>due, scheduled or start date required</i>', isRecurrenceValid: false };
     }
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     $: {
-        ({ parsedRecurrence } = parseAndValidateRecurrence(editableTask));
+        ({ parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editableTask));
     }
 
     const { recurrenceSymbol } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
