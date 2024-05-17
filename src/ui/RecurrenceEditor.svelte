@@ -11,6 +11,7 @@
     let parsedRecurrence: string = '';
 
     function parseAndValidateRecurrence(editableTask: EditableTask) {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         if (!editableTask.recurrenceRule) {
             return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
         }
@@ -34,7 +35,6 @@
         return { parsedRecurrence: '<i>due, scheduled or start date required</i>', isRecurrenceValid: false };
     }
 
-    // NEW_TASK_FIELD_EDIT_REQUIRED
     $: {
         ({ parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editableTask));
     }
