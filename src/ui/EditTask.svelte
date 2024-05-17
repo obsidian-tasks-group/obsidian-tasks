@@ -26,7 +26,6 @@
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         prioritySymbols,
-        recurrenceSymbol,
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
@@ -464,13 +463,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <RecurrenceEditor
-            {editableTask}
-            bind:isRecurrenceValid
-            accesskey={accesskey('r')}
-            {parsedRecurrence}
-            {recurrenceSymbol}
-        />
+        <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} {parsedRecurrence} />
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
