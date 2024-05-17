@@ -117,7 +117,7 @@ Screenshot of QuickAdd capture settings (example)
 ## `executeToggleTaskDoneCommand: (line: string, path: string) => string;`
 
 > [!released]
-> This method was introduced in Tasks X.Y.Z.
+> This method was introduced in Tasks 7.2.0.
 
 Executes the 'Tasks: Toggle task done' command on the supplied line string. It toggles and updates a task line according to a user's preferences, accounting for recurrence rules and completed status. It returns a string representing the toggled task.
 
@@ -134,7 +134,7 @@ console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
 ## Auto-Suggest Integration
 
 > [!released]
-> This integration was introduced in Tasks X.Y.Z.
+> This integration was introduced in Tasks 7.2.0.
 
 Plugins that [extend Obsidian's markdown editor](https://gist.github.com/Fevol/caa478ce303e69eabede7b12b2323838) can control if and when Tasks' [[Auto-Suggest]] displays by implementing a `showTasksPluginAutoSuggest` method on the extended editor class. This method must adhere the function definition below.
 
