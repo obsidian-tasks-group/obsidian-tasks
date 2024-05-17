@@ -14,6 +14,7 @@
     import type { EditableTask } from './EditableTask';
     import Dependency from './Dependency.svelte';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -463,18 +464,13 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="recurrence">{@html labelContentWithAccessKey('Recurs', accesskey('r'))}</label>
-        <!-- svelte-ignore a11y-accesskey -->
-        <input
-            bind:value={editableTask.recurrenceRule}
-            id="recurrence"
-            type="text"
-            class:tasks-modal-error={!isRecurrenceValid}
-            class="tasks-modal-date-input"
-            placeholder="Try 'every day when done'"
+        <RecurrenceEditor
+            {editableTask}
+            bind:isRecurrenceValid
             accesskey={accesskey('r')}
+            {parsedRecurrence}
+            {recurrenceSymbol}
         />
-        <code class="tasks-modal-parsed-date">{recurrenceSymbol} {@html parsedRecurrence}</code>
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->

@@ -1,0 +1,24 @@
+<script lang="ts">
+    import type { EditableTask } from './EditableTask';
+    import { labelContentWithAccessKey } from './EditTaskHelpers';
+
+    export let editableTask: EditableTask;
+    export let isRecurrenceValid: boolean;
+    export let accesskey: string | null;
+
+    export let parsedRecurrence: string;
+    export let recurrenceSymbol: string;
+</script>
+
+<label for="recurrence">{@html labelContentWithAccessKey('Recurs', accesskey)}</label>
+<!-- svelte-ignore a11y-accesskey -->
+<input
+    bind:value={editableTask.recurrenceRule}
+    id="recurrence"
+    type="text"
+    class:tasks-modal-error={!isRecurrenceValid}
+    class="tasks-modal-date-input"
+    placeholder="Try 'every day when done'"
+    {accesskey}
+/>
+<code class="tasks-modal-parsed-date">{recurrenceSymbol} {@html parsedRecurrence}</code>
