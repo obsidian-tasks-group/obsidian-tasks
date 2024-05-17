@@ -31,7 +31,7 @@
             return;
         }
 
-        if (!(!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate)) {
+        if (editableTask.startDate || editableTask.scheduledDate || editableTask.dueDate) {
             parsedRecurrence = recurrenceFromText;
             return;
         } else {
