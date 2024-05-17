@@ -10,8 +10,7 @@
 
     let parsedRecurrence: string = '';
 
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    $: {
+    function parseAndValidateRecurrence() {
         isRecurrenceValid = true;
         if (!editableTask.recurrenceRule) {
             parsedRecurrence = '<i>not recurring</>';
@@ -33,6 +32,11 @@
                 parsedRecurrence = recurrenceFromText;
             }
         }
+    }
+
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+    $: {
+        parseAndValidateRecurrence();
     }
 
     const { recurrenceSymbol } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
