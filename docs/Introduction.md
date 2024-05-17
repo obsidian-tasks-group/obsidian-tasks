@@ -9,26 +9,30 @@ publish: true
 _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)..._
 
 <!--
-    Keep to around 2 to 4 lines, so that 'Navigation around this site' is visible.
+    Keep to around 2 to 3 releases, so that 'Navigation around this site' is visible.
     Move the older ones down to the top of the comment block below...
 -->
 
+- 7.2.0:
+  - Much improved layout of the [[Create or edit Task]] modal, on mobile devices.
+  - Add [[Tasks Api#`executeToggleTaskDoneCommand (line string, path string) => string;`|executeToggleTaskDoneCommand()]] to the Tasks API.
+  - Add [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]], to enable other plugins to use Tasks' [[Auto-Suggest]] facility.
 - 7.1.0:
   - Much improved layout of the [[Create or edit Task]] modal, on desktop machines.
   - Add access keys for Created, Done and Cancelled dates in [[Create or edit Task]].
 - 7.0.0:
   - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks 7.0.0|the appendix]] for details.
   - Add documentation page [[Resources]], with links to write-ups,  talks and sample vaults from users.
-- 6.1.0:
-  - Add support for [[task dependencies]]:
-    - First, [[Create or edit Task#Dependencies|use 'Create or edit Task']] to define the order in which you want to work on a set of tasks, using two new task emojis: 🆔  and ⛔.
-    - Then adjust your searches, perhaps to see tasks that are [[Filters#Blocking Tasks|blocking others]], or hide ones that are [[Filters#Blocked Tasks|blocked]] and cannot yet be done.
-  - `query.allTasks` is now available in custom searches: see [[Query Properties#Values for Query Search Properties|query search properties]].
-  - The [[Create or edit Task]] modal now fully supports editing of statuses, updating done and cancelled dates, and creating new recurrences. See the [[Create or edit Task#Status|section on editing statuses]] for details and tips.
-  - Add HTML samples in [[Styling#Sample HTML Full mode|full]] and [[Styling#Sample HTML Short mode|short]] modes to demonstrate custom styling.
 
 > [!Released]- Earlier Releases
 >
+> - 6.1.0:
+>   - Add support for [[task dependencies]]:
+>     - First, [[Create or edit Task#Dependencies|use 'Create or edit Task']] to define the order in which you want to work on a set of tasks, using two new task emojis: 🆔  and ⛔.
+>     - Then adjust your searches, perhaps to see tasks that are [[Filters#Blocking Tasks|blocking others]], or hide ones that are [[Filters#Blocked Tasks|blocked]] and cannot yet be done.
+>   - `query.allTasks` is now available in custom searches: see [[Query Properties#Values for Query Search Properties|query search properties]].
+>   - The [[Create or edit Task]] modal now fully supports editing of statuses, updating done and cancelled dates, and creating new recurrences. See the [[Create or edit Task#Status|section on editing statuses]] for details and tips.
+>   - Add HTML samples in [[Styling#Sample HTML Full mode|full]] and [[Styling#Sample HTML Short mode|short]] modes to demonstrate custom styling.
 > - 6.0.0:
 >   - Add [[Custom Sorting|custom sorting]].
 >   - Document the [[Sorting#Default sort order|default sort order]].
