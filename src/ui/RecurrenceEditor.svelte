@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { TASK_FORMATS } from '../Config/Settings';
     import type { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
@@ -7,7 +8,8 @@
     export let accesskey: string | null;
 
     export let parsedRecurrence: string;
-    export let recurrenceSymbol: string;
+
+    const { recurrenceSymbol } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 </script>
 
 <label for="recurrence">{@html labelContentWithAccessKey('Recurs', accesskey)}</label>
