@@ -26,8 +26,8 @@
         })?.toText();
 
         if (!recurrenceFromText) {
-            parsedRecurrence = '<i>invalid recurrence rule</i>';
             isRecurrenceValid = false;
+            parsedRecurrence = '<i>invalid recurrence rule</i>';
             return;
         }
 
@@ -36,8 +36,8 @@
             return;
         }
 
-        parsedRecurrence = '<i>due, scheduled or start date required</i>';
         isRecurrenceValid = false;
+        parsedRecurrence = '<i>due, scheduled or start date required</i>';
         return;
     }
 
