@@ -8,7 +8,7 @@
     export let isRecurrenceValid: boolean;
     export let accesskey: string | null;
 
-    let parsedRecurrence: string = '';
+    let parsedRecurrence: string;
 
     function parseAndValidateRecurrence(editableTask: EditableTask) {
         // NEW_TASK_FIELD_EDIT_REQUIRED
