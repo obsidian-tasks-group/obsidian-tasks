@@ -34,11 +34,11 @@
         if (editableTask.startDate || editableTask.scheduledDate || editableTask.dueDate) {
             parsedRecurrence = recurrenceFromText;
             return;
-        } else {
-            parsedRecurrence = '<i>due, scheduled or start date required</i>';
-            isRecurrenceValid = false;
-            return;
         }
+
+        parsedRecurrence = '<i>due, scheduled or start date required</i>';
+        isRecurrenceValid = false;
+        return;
     }
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
