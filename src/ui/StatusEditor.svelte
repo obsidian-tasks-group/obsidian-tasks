@@ -39,7 +39,7 @@
     bind:value={statusSymbol}
     on:change={_onStatusChange}
     id="status-type"
-    class="tasks-modal-status-selector"
+    class="status-editor-status-selector"
     {accesskey}
 >
     {#each statusOptions as status}
