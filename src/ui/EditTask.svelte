@@ -61,7 +61,6 @@
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
 
-    let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
 
     let addGlobalFilterOnSave: boolean = false;
@@ -438,7 +437,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} {parsedRecurrence} />
+        <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
