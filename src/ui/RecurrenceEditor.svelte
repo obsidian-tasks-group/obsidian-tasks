@@ -31,12 +31,12 @@
             return;
         }
 
-        if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
-            parsedRecurrence = '<i>due, scheduled or start date required</i>';
-            isRecurrenceValid = false;
+        if (!(!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate)) {
+            parsedRecurrence = recurrenceFromText;
             return;
         } else {
-            parsedRecurrence = recurrenceFromText;
+            parsedRecurrence = '<i>due, scheduled or start date required</i>';
+            isRecurrenceValid = false;
             return;
         }
     }
