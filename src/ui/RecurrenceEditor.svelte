@@ -35,9 +35,7 @@
         return { parsedRecurrence: '<i>due, scheduled or start date required</i>', isRecurrenceValid: false };
     }
 
-    $: {
-        ({ parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editableTask));
-    }
+    $: ({ parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editableTask));
 
     const { recurrenceSymbol } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 </script>
