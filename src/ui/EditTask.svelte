@@ -14,6 +14,7 @@
     import type { EditableTask } from './EditableTask';
     import Dependency from './Dependency.svelte';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -25,7 +26,6 @@
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         prioritySymbols,
-        recurrenceSymbol,
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
@@ -61,7 +61,6 @@
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
 
-    let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
 
     let addGlobalFilterOnSave: boolean = false;
@@ -149,31 +148,6 @@
         isCreatedDateValid &&
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
-
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    $: {
-        isRecurrenceValid = true;
-        if (!editableTask.recurrenceRule) {
-            parsedRecurrence = '<i>not recurring</>';
-        } else {
-            const recurrenceFromText = Recurrence.fromText({
-                recurrenceRuleText: editableTask.recurrenceRule,
-                // Only for representation in the modal, no dates required.
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            })?.toText();
-            if (!recurrenceFromText) {
-                parsedRecurrence = '<i>invalid recurrence rule</i>';
-                isRecurrenceValid = false;
-            } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
-                parsedRecurrence = '<i>due, scheduled or start date required</i>';
-                isRecurrenceValid = false;
-            } else {
-                parsedRecurrence = recurrenceFromText;
-            }
-        }
-    }
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
@@ -463,18 +437,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="recurrence">{@html labelContentWithAccessKey('Recurs', accesskey('r'))}</label>
-        <!-- svelte-ignore a11y-accesskey -->
-        <input
-            bind:value={editableTask.recurrenceRule}
-            id="recurrence"
-            type="text"
-            class:tasks-modal-error={!isRecurrenceValid}
-            class="tasks-modal-date-input"
-            placeholder="Try 'every day when done'"
-            accesskey={accesskey('r')}
-        />
-        <code class="tasks-modal-parsed-date">{recurrenceSymbol} {@html parsedRecurrence}</code>
+        <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
