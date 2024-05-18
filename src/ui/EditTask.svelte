@@ -11,7 +11,7 @@
     import { replaceTaskWithTasks } from '../Obsidian/File';
     import { Priority } from '../Task/Priority';
     import DateEditor from './DateEditor.svelte';
-    import type { EditableTask } from './EditableTask';
+    import { AppleSauceTask, type EditableTask } from './EditableTask';
     import Dependency from './Dependency.svelte';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
@@ -35,7 +35,7 @@
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
-    let editableTask: EditableTask = {
+    const editableTask: EditableTask = {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
         status: Status.TODO,
@@ -51,6 +51,8 @@
         blockedBy: [],
         blocking: [],
     };
+
+    let appleSauceTask = new AppleSauceTask(editableTask);
 
     let isDescriptionValid: boolean = true;
 
@@ -184,7 +186,7 @@
 
         originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
-        editableTask = {
+        appleSauceTask = new AppleSauceTask({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             description,
             status: task.status,
@@ -199,7 +201,7 @@
             forwardOnly: true,
             blockedBy: blockedBy,
             blocking: originalBlocking,
-        };
+        });
 
         mountComplete = true;
 
@@ -524,7 +526,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        <StatusEditor {task} bind:editableTask {statusOptions} accesskey={accesskey('u')} />
+        <StatusEditor {task} bind:editableTask={appleSauceTask} {statusOptions} accesskey={accesskey('u')} />
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
