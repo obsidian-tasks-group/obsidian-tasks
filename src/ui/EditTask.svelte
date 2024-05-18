@@ -228,7 +228,12 @@
         }, 0);
     };
 
-    async function applyEdits(editableTask: EditableTask, task: Task, originalBlocking: Task[]) {
+    async function applyEdits(
+        editableTask: EditableTask,
+        task: Task,
+        originalBlocking: Task[],
+        addGlobalFilterOnSave: boolean,
+    ) {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
@@ -332,7 +337,7 @@
     }
 
     const _onSubmit = async () => {
-        const newTasks = await applyEdits(editableTask, task, originalBlocking);
+        const newTasks = await applyEdits(editableTask, task, originalBlocking, addGlobalFilterOnSave);
         onSubmit(newTasks);
     };
 </script>
