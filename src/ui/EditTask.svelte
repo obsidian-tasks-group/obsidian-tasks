@@ -185,8 +185,7 @@
     onMount(() => {
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
-        const appleSauce = fromTask();
-        editableTask = appleSauce;
+        editableTask = fromTask();
 
         mountComplete = true;
 
