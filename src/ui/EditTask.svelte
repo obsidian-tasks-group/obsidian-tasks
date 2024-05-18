@@ -28,6 +28,8 @@
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
+    let addGlobalFilterOnSave: boolean = false;
+    let originalBlocking: Task[] = [];
     let editableTask = new EditableTask({
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
@@ -44,6 +46,7 @@
         blockedBy: [],
         blocking: [],
     });
+    ({ editableTask, addGlobalFilterOnSave, originalBlocking } = editableTask.fromTask(task, allTasks));
 
     let isDescriptionValid: boolean = true;
 
@@ -56,11 +59,8 @@
 
     let isRecurrenceValid: boolean = true;
 
-    let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
     let formIsValid: boolean = true;
-
-    let originalBlocking: Task[] = [];
 
     let mountComplete = false;
 
@@ -130,7 +130,6 @@
     onMount(() => {
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
-        ({ editableTask, addGlobalFilterOnSave, originalBlocking } = editableTask.fromTask(task, allTasks));
 
         mountComplete = true;
 
