@@ -17,3 +17,36 @@ export type EditableTask = {
     blockedBy: Task[];
     blocking: Task[];
 };
+
+export class AppleSauceTask {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+    description: string;
+    status: Status;
+    priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
+    recurrenceRule: string;
+    createdDate: string;
+    startDate: string;
+    scheduledDate: string;
+    dueDate: string;
+    doneDate: string;
+    cancelledDate: string;
+    forwardOnly: boolean;
+    blockedBy: Task[];
+    blocking: Task[];
+
+    constructor(editableTask: EditableTask) {
+        this.description = editableTask.description;
+        this.status = editableTask.status;
+        this.priority = editableTask.priority;
+        this.recurrenceRule = editableTask.recurrenceRule;
+        this.createdDate = editableTask.createdDate;
+        this.startDate = editableTask.startDate;
+        this.scheduledDate = editableTask.scheduledDate;
+        this.dueDate = editableTask.dueDate;
+        this.doneDate = editableTask.doneDate;
+        this.cancelledDate = editableTask.cancelledDate;
+        this.forwardOnly = editableTask.forwardOnly;
+        this.blockedBy = editableTask.blockedBy;
+        this.blocking = editableTask.blocking;
+    }
+}
