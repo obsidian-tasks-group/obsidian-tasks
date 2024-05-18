@@ -135,6 +135,7 @@
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
         // when saving the task.
+        let addGlobalFilterOnSave = false;
         if (description != task.description || !GlobalFilter.getInstance().includedIn(task.description)) {
             addGlobalFilterOnSave = true;
         }
@@ -163,28 +164,31 @@
 
         originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
-        return new EditableTask({
-            // NEW_TASK_FIELD_EDIT_REQUIRED
-            description,
-            status: task.status,
-            priority,
-            recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
-            createdDate: new TasksDate(task.createdDate).formatAsDate(),
-            startDate: new TasksDate(task.startDate).formatAsDate(),
-            scheduledDate: new TasksDate(task.scheduledDate).formatAsDate(),
-            dueDate: new TasksDate(task.dueDate).formatAsDate(),
-            doneDate: new TasksDate(task.doneDate).formatAsDate(),
-            cancelledDate: new TasksDate(task.cancelledDate).formatAsDate(),
-            forwardOnly: true,
-            blockedBy: blockedBy,
-            blocking: originalBlocking,
-        });
+        return {
+            editableTask: new EditableTask({
+                // NEW_TASK_FIELD_EDIT_REQUIRED
+                description,
+                status: task.status,
+                priority,
+                recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
+                createdDate: new TasksDate(task.createdDate).formatAsDate(),
+                startDate: new TasksDate(task.startDate).formatAsDate(),
+                scheduledDate: new TasksDate(task.scheduledDate).formatAsDate(),
+                dueDate: new TasksDate(task.dueDate).formatAsDate(),
+                doneDate: new TasksDate(task.doneDate).formatAsDate(),
+                cancelledDate: new TasksDate(task.cancelledDate).formatAsDate(),
+                forwardOnly: true,
+                blockedBy: blockedBy,
+                blocking: originalBlocking,
+            }),
+            addGlobalFilterOnSave,
+        };
     }
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
-        editableTask = fromTask(task, allTasks);
+        ({ editableTask, addGlobalFilterOnSave } = fromTask(task, allTasks));
 
         mountComplete = true;
 
