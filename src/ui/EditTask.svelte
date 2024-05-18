@@ -208,15 +208,6 @@
         }, 10);
     });
 
-    const _onPriorityKeyup = (event: KeyboardEvent) => {
-        if (event.key && !event.altKey && !event.ctrlKey) {
-            const priorityOption = priorityOptions.find((option) => option.label.charAt(0).toLowerCase() == event.key);
-            if (priorityOption) {
-                editableTask.priority = priorityOption.value;
-            }
-        }
-    };
-
     const _onClose = () => {
         onSubmit([]);
     };
@@ -398,7 +389,7 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
-    <section class="tasks-modal-priority-section" on:keyup={_onPriorityKeyup}>
+    <section class="tasks-modal-priority-section">
         <label for="priority-{editableTask.priority}">Priority</label>
         {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
             <div class="task-modal-priority-option-container">
