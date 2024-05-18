@@ -122,7 +122,7 @@
         },
     ];
 
-    async function serialiseTaskId(task: Task) {
+    async function serialiseTaskId(task: Task, allTasks: Task[]) {
         if (task.id !== '') return task;
 
         const tasksWithId = allTasks.filter((task) => task.id !== '');
@@ -282,7 +282,7 @@
         let blockedByWithIds = [];
 
         for (const depTask of editableTask.blockedBy) {
-            const newDep = await serialiseTaskId(depTask);
+            const newDep = await serialiseTaskId(depTask, allTasks);
             blockedByWithIds.push(newDep);
         }
 
