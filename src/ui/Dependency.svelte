@@ -1,12 +1,12 @@
 <script lang="ts">
     import { computePosition, flip, offset, shift, size } from '@floating-ui/dom';
     import type { Task } from '../Task/Task';
-    import type { AppleSauceTask } from './EditableTask';
+    import type { EditableTask } from './EditableTask';
     import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     export let task: Task;
-    export let editableTask: AppleSauceTask;
+    export let editableTask: EditableTask;
     export let allTasks: Task[];
     export let _onDescriptionKeyDown: (e: KeyboardEvent) => void;
     export let type: 'blocking' | 'blockedBy';

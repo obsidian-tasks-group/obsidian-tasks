@@ -1,10 +1,10 @@
 <script lang="ts">
     import { TASK_FORMATS } from '../Config/Settings';
     import { Recurrence } from '../Task/Recurrence';
-    import type { AppleSauceTask } from './EditableTask';
+    import type { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
-    export let editableTask: AppleSauceTask;
+    export let editableTask: EditableTask;
     export let isRecurrenceValid: boolean;
     export let accesskey: string | null;
 

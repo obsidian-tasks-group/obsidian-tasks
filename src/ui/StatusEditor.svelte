@@ -1,11 +1,11 @@
 <script lang="ts">
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
-    import type { AppleSauceTask } from './EditableTask';
+    import type { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     export let task: Task;
-    export let editableTask: AppleSauceTask;
+    export let editableTask: EditableTask;
     export let statusOptions: Status[];
     export let accesskey: string | null;
 

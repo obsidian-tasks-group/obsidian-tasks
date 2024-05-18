@@ -1,7 +1,7 @@
 import type { Status } from '../Statuses/Status';
 import type { Task } from '../Task/Task';
 
-export class AppleSauceTask {
+export class EditableTask {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     description: string;
     status: Status;
