@@ -74,7 +74,7 @@
     let mountComplete = false;
 
     const priorityOptions: {
-        value: typeof editableTask.priority;
+        value: typeof appleSauceTask.priority;
         label: string;
         symbol: string;
         accessKey: string;
@@ -149,7 +149,7 @@
         isCancelledDateValid &&
         isCreatedDateValid &&
         isDoneDateValid;
-    $: isDescriptionValid = editableTask.description.trim() !== '';
+    $: isDescriptionValid = appleSauceTask.description.trim() !== '';
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
@@ -161,7 +161,7 @@
         if (description != task.description || !GlobalFilter.getInstance().includedIn(task.description)) {
             addGlobalFilterOnSave = true;
         }
-        let priority: typeof editableTask.priority = 'none';
+        let priority: typeof appleSauceTask.priority = 'none';
         if (task.priority === Priority.Lowest) {
             priority = 'lowest';
         } else if (task.priority === Priority.Low) {
@@ -226,29 +226,29 @@
     const _removeLinebreaksFromDescription = () => {
         // wrapped into a timer to run after the paste/drop event
         setTimeout(() => {
-            editableTask.description = editableTask.description.replace(/[\r\n]+/g, ' ');
+            appleSauceTask.description = appleSauceTask.description.replace(/[\r\n]+/g, ' ');
         }, 0);
     };
 
     const _onSubmit = async () => {
         // NEW_TASK_FIELD_EDIT_REQUIRED
-        let description = editableTask.description.trim();
+        let description = appleSauceTask.description.trim();
         if (addGlobalFilterOnSave) {
             description = GlobalFilter.getInstance().prependTo(description);
         }
 
-        const startDate = parseTypedDateForSaving(editableTask.startDate, editableTask.forwardOnly);
-        const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate, editableTask.forwardOnly);
-        const dueDate = parseTypedDateForSaving(editableTask.dueDate, editableTask.forwardOnly);
+        const startDate = parseTypedDateForSaving(appleSauceTask.startDate, appleSauceTask.forwardOnly);
+        const scheduledDate = parseTypedDateForSaving(appleSauceTask.scheduledDate, appleSauceTask.forwardOnly);
+        const dueDate = parseTypedDateForSaving(appleSauceTask.dueDate, appleSauceTask.forwardOnly);
 
-        const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate, editableTask.forwardOnly);
-        const createdDate = parseTypedDateForSaving(editableTask.createdDate, editableTask.forwardOnly);
-        const doneDate = parseTypedDateForSaving(editableTask.doneDate, editableTask.forwardOnly);
+        const cancelledDate = parseTypedDateForSaving(appleSauceTask.cancelledDate, appleSauceTask.forwardOnly);
+        const createdDate = parseTypedDateForSaving(appleSauceTask.createdDate, appleSauceTask.forwardOnly);
+        const doneDate = parseTypedDateForSaving(appleSauceTask.doneDate, appleSauceTask.forwardOnly);
 
         let recurrence: Recurrence | null = null;
-        if (editableTask.recurrenceRule) {
+        if (appleSauceTask.recurrenceRule) {
             recurrence = Recurrence.fromText({
-                recurrenceRuleText: editableTask.recurrenceRule,
+                recurrenceRuleText: appleSauceTask.recurrenceRule,
                 startDate,
                 scheduledDate,
                 dueDate,
@@ -256,7 +256,7 @@
         }
 
         let parsedPriority: Priority;
-        switch (editableTask.priority) {
+        switch (appleSauceTask.priority) {
             case 'lowest':
                 parsedPriority = Priority.Lowest;
                 break;
@@ -278,7 +278,7 @@
 
         let blockedByWithIds = [];
 
-        for (const depTask of editableTask.blockedBy) {
+        for (const depTask of appleSauceTask.blockedBy) {
             const newDep = await serialiseTaskId(depTask);
             blockedByWithIds.push(newDep);
         }
@@ -287,14 +287,17 @@
         let removedBlocking: Task[] = [];
         let addedBlocking: Task[] = [];
 
-        if (editableTask.blocking.toString() !== originalBlocking.toString() || editableTask.blocking.length !== 0) {
+        if (
+            appleSauceTask.blocking.toString() !== originalBlocking.toString() ||
+            appleSauceTask.blocking.length !== 0
+        ) {
             if (task.id === '') {
                 id = generateUniqueId(allTasks.filter((task) => task.id !== '').map((task) => task.id));
             }
 
-            removedBlocking = originalBlocking.filter((task) => !editableTask.blocking.includes(task));
+            removedBlocking = originalBlocking.filter((task) => !appleSauceTask.blocking.includes(task));
 
-            addedBlocking = editableTask.blocking.filter((task) => !originalBlocking.includes(task));
+            addedBlocking = appleSauceTask.blocking.filter((task) => !originalBlocking.includes(task));
         }
 
         // First create an updated task, with all edits except Status:
@@ -330,7 +333,7 @@
         // If there is a 'done' date, use that for today's date for recurrence calculations.
         // Otherwise, use the current date.
         const today = doneDate ? doneDate : window.moment();
-        const newTasks = updatedTask.handleNewStatusWithRecurrenceInUsersOrder(editableTask.status, today);
+        const newTasks = updatedTask.handleNewStatusWithRecurrenceInUsersOrder(appleSauceTask.status, today);
         onSubmit(newTasks);
     };
 </script>
@@ -376,7 +379,7 @@ Availability of access keys:
         <label for="description">{@html labelContentWithAccessKey('Description', accesskey('t'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
-            bind:value={editableTask.description}
+            bind:value={appleSauceTask.description}
             bind:this={descriptionInput}
             id="description"
             class="tasks-modal-description"
@@ -392,7 +395,7 @@ Availability of access keys:
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-priority-section">
-        <label for="priority-{editableTask.priority}">Priority</label>
+        <label for="priority-{appleSauceTask.priority}">Priority</label>
         {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
             <div class="task-modal-priority-option-container">
                 <!-- svelte-ignore a11y-accesskey -->
@@ -400,7 +403,7 @@ Availability of access keys:
                     type="radio"
                     id="priority-{value}"
                     {value}
-                    bind:group={editableTask.priority}
+                    bind:group={appleSauceTask.priority}
                     accesskey={accesskey(accessKey)}
                 />
                 <label for="priority-{value}">
@@ -430,16 +433,16 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
+        <RecurrenceEditor editableTask={appleSauceTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
         <DateEditor
             id="due"
             dateSymbol={dueDateSymbol}
-            bind:date={editableTask.dueDate}
+            bind:date={appleSauceTask.dueDate}
             bind:isDateValid={isDueDateValid}
-            forwardOnly={editableTask.forwardOnly}
+            forwardOnly={appleSauceTask.forwardOnly}
             accesskey={accesskey('d')}
         />
 
@@ -449,9 +452,9 @@ Availability of access keys:
         <DateEditor
             id="scheduled"
             dateSymbol={scheduledDateSymbol}
-            bind:date={editableTask.scheduledDate}
+            bind:date={appleSauceTask.scheduledDate}
             bind:isDateValid={isScheduledDateValid}
-            forwardOnly={editableTask.forwardOnly}
+            forwardOnly={appleSauceTask.forwardOnly}
             accesskey={accesskey('s')}
         />
 
@@ -461,9 +464,9 @@ Availability of access keys:
         <DateEditor
             id="start"
             dateSymbol={startDateSymbol}
-            bind:date={editableTask.startDate}
+            bind:date={appleSauceTask.startDate}
             bind:isDateValid={isStartDateValid}
-            forwardOnly={editableTask.forwardOnly}
+            forwardOnly={appleSauceTask.forwardOnly}
             accesskey={accesskey('a')}
         />
 
@@ -474,7 +477,7 @@ Availability of access keys:
             <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
-                bind:checked={editableTask.forwardOnly}
+                bind:checked={appleSauceTask.forwardOnly}
                 id="forwardOnly"
                 type="checkbox"
                 class="task-list-item-checkbox tasks-modal-checkbox"
@@ -496,7 +499,7 @@ Availability of access keys:
                 type="blockedBy"
                 labelText="Before this"
                 {task}
-                {editableTask}
+                editableTask={appleSauceTask}
                 {allTasks}
                 {_onDescriptionKeyDown}
                 accesskey={accesskey('b')}
@@ -510,7 +513,7 @@ Availability of access keys:
                 type="blocking"
                 labelText="After this"
                 {task}
-                {editableTask}
+                editableTask={appleSauceTask}
                 {allTasks}
                 {_onDescriptionKeyDown}
                 accesskey={accesskey('e')}
@@ -534,9 +537,9 @@ Availability of access keys:
         <DateEditor
             id="created"
             dateSymbol={createdDateSymbol}
-            bind:date={editableTask.createdDate}
+            bind:date={appleSauceTask.createdDate}
             bind:isDateValid={isCreatedDateValid}
-            forwardOnly={editableTask.forwardOnly}
+            forwardOnly={appleSauceTask.forwardOnly}
             accesskey={accesskey('c')}
         />
 
@@ -546,9 +549,9 @@ Availability of access keys:
         <DateEditor
             id="done"
             dateSymbol={doneDateSymbol}
-            bind:date={editableTask.doneDate}
+            bind:date={appleSauceTask.doneDate}
             bind:isDateValid={isDoneDateValid}
-            forwardOnly={editableTask.forwardOnly}
+            forwardOnly={appleSauceTask.forwardOnly}
             accesskey={accesskey('x')}
         />
 
@@ -558,9 +561,9 @@ Availability of access keys:
         <DateEditor
             id="cancelled"
             dateSymbol={cancelledDateSymbol}
-            bind:date={editableTask.cancelledDate}
+            bind:date={appleSauceTask.cancelledDate}
             bind:isDateValid={isCancelledDateValid}
-            forwardOnly={editableTask.forwardOnly}
+            forwardOnly={appleSauceTask.forwardOnly}
             accesskey={accesskey('-')}
         />
     </section>
