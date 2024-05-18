@@ -55,6 +55,10 @@ export class EditableTask {
         this.blocking = editableTask.blocking;
     }
 
+    public fromTask(task: Task, allTasks: Task[]) {
+        return fromTask(task, allTasks, this);
+    }
+
     public async applyEdits(task: Task, originalBlocking: Task[], addGlobalFilterOnSave: boolean, allTasks: Task[]) {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = this.description.trim();

@@ -5,7 +5,7 @@
     import type { Task } from '../Task/Task';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
-    import { EditableTask, fromTask } from './EditableTask';
+    import { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
@@ -130,7 +130,7 @@
     onMount(() => {
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
-        ({ editableTask, addGlobalFilterOnSave, originalBlocking } = fromTask(task, allTasks, editableTask));
+        ({ editableTask, addGlobalFilterOnSave, originalBlocking } = editableTask.fromTask(task, allTasks));
 
         mountComplete = true;
 
