@@ -163,7 +163,7 @@
 
         originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
-        const appleSauce = new EditableTask({
+        return new EditableTask({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             description,
             status: task.status,
@@ -179,7 +179,6 @@
             blockedBy: blockedBy,
             blocking: originalBlocking,
         });
-        return appleSauce;
     }
 
     onMount(() => {
