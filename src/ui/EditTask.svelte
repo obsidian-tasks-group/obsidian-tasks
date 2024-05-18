@@ -162,7 +162,7 @@
             blockedBy.push(depTask);
         }
 
-        originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
+        const originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
         return {
             editableTask: new EditableTask({
@@ -182,13 +182,14 @@
                 blocking: originalBlocking,
             }),
             addGlobalFilterOnSave,
+            originalBlocking,
         };
     }
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
-        ({ editableTask, addGlobalFilterOnSave } = fromTask(task, allTasks));
+        ({ editableTask, addGlobalFilterOnSave, originalBlocking } = fromTask(task, allTasks));
 
         mountComplete = true;
 
