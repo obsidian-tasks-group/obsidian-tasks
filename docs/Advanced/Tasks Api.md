@@ -20,7 +20,8 @@ however, this depends on the context of the executing script.
 
 This is the interface the API exposes:
 
-```typescript
+<!-- snippet: TasksApiV1.ts -->
+```ts
 /**
  * Tasks API v1 interface
  */
@@ -44,6 +45,7 @@ export interface TasksApiV1 {
     executeToggleTaskDoneCommand: (line: string, path: string) => string;
 }
 ```
+<!-- endSnippet -->
 
 ## `createTaskLineModal(): Promise<string>;`
 
