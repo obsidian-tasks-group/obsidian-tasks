@@ -10,7 +10,7 @@
     background-color: var(--interactive-normal);
     box-shadow: var(--input-shadow);
     border-radius: 28px;
-    padding: 4px 8px;
+    padding: 4px 4px 4px 8px;
 }
 
 .task-dependency-name {
@@ -26,7 +26,7 @@
     cursor: pointer;
     height: inherit;
     box-shadow: none !important;
-    background-color: var(--background-primary) !important;
+    border-radius: 50%;
 }
 
 .task-dependency-dropdown {
