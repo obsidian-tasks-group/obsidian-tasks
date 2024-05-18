@@ -8,7 +8,7 @@
     import type { Task } from '../Task/Task';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
-    import { EditableTask, applyEdits } from './EditableTask';
+    import { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
@@ -210,7 +210,7 @@
     };
 
     const _onSubmit = async () => {
-        const newTasks = await applyEdits(editableTask, task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        const newTasks = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
         onSubmit(newTasks);
     };
 </script>

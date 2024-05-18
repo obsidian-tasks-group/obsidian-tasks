@@ -53,6 +53,10 @@ export class EditableTask {
         this.blockedBy = editableTask.blockedBy;
         this.blocking = editableTask.blocking;
     }
+
+    public applyEdits(task: Task, originalBlocking: Task[], addGlobalFilterOnSave: boolean, allTasks: Task[]) {
+        return applyEdits(this, task, originalBlocking, addGlobalFilterOnSave, allTasks);
+    }
 }
 
 export async function applyEdits(
