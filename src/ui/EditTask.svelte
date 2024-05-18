@@ -233,6 +233,7 @@
         task: Task,
         originalBlocking: Task[],
         addGlobalFilterOnSave: boolean,
+        allTasks: Task[],
     ) {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = editableTask.description.trim();
@@ -337,7 +338,7 @@
     }
 
     const _onSubmit = async () => {
-        const newTasks = await applyEdits(editableTask, task, originalBlocking, addGlobalFilterOnSave);
+        const newTasks = await applyEdits(editableTask, task, originalBlocking, addGlobalFilterOnSave, allTasks);
         onSubmit(newTasks);
     };
 </script>
