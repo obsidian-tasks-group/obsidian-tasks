@@ -165,7 +165,7 @@
 
         originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
-        editableTask = new EditableTask({
+        const appleSauce = new EditableTask({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             description,
             status: task.status,
@@ -181,6 +181,7 @@
             blockedBy: blockedBy,
             blocking: originalBlocking,
         });
+        editableTask = appleSauce;
 
         mountComplete = true;
 
