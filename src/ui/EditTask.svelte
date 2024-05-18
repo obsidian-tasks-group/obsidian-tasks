@@ -1,14 +1,11 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { GlobalFilter } from '../Config/GlobalFilter';
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
-    import { TasksDate } from '../Scripting/TasksDate';
     import { Status } from '../Statuses/Status';
-    import { Priority } from '../Task/Priority';
     import type { Task } from '../Task/Task';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
-    import { EditableTask } from './EditableTask';
+    import { EditableTask, fromTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
@@ -129,62 +126,6 @@
         isCreatedDateValid &&
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
-
-    function fromTask(task: Task, allTasks: Task[], editableTask: EditableTask) {
-        const description = GlobalFilter.getInstance().removeAsWordFrom(task.description);
-        // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
-        // above), or if the description did not include a global filter in the first place, we'll add the global filter
-        // when saving the task.
-        let addGlobalFilterOnSave = false;
-        if (description != task.description || !GlobalFilter.getInstance().includedIn(task.description)) {
-            addGlobalFilterOnSave = true;
-        }
-        let priority: typeof editableTask.priority = 'none';
-        if (task.priority === Priority.Lowest) {
-            priority = 'lowest';
-        } else if (task.priority === Priority.Low) {
-            priority = 'low';
-        } else if (task.priority === Priority.Medium) {
-            priority = 'medium';
-        } else if (task.priority === Priority.High) {
-            priority = 'high';
-        } else if (task.priority === Priority.Highest) {
-            priority = 'highest';
-        }
-
-        const blockedBy: Task[] = [];
-
-        for (const taskId of task.dependsOn) {
-            const depTask = allTasks.find((cacheTask) => cacheTask.id === taskId);
-
-            if (!depTask) continue;
-
-            blockedBy.push(depTask);
-        }
-
-        const originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
-
-        return {
-            editableTask: new EditableTask({
-                // NEW_TASK_FIELD_EDIT_REQUIRED
-                description,
-                status: task.status,
-                priority,
-                recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
-                createdDate: new TasksDate(task.createdDate).formatAsDate(),
-                startDate: new TasksDate(task.startDate).formatAsDate(),
-                scheduledDate: new TasksDate(task.scheduledDate).formatAsDate(),
-                dueDate: new TasksDate(task.dueDate).formatAsDate(),
-                doneDate: new TasksDate(task.doneDate).formatAsDate(),
-                cancelledDate: new TasksDate(task.cancelledDate).formatAsDate(),
-                forwardOnly: true,
-                blockedBy: blockedBy,
-                blocking: originalBlocking,
-            }),
-            addGlobalFilterOnSave,
-            originalBlocking,
-        };
-    }
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
