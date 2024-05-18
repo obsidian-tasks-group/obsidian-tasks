@@ -130,9 +130,7 @@
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
-    onMount(() => {
-        const { provideAccessKeys } = getSettings();
-        withAccessKeys = provideAccessKeys;
+    function fromTask() {
         const description = GlobalFilter.getInstance().removeAsWordFrom(task.description);
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
@@ -181,6 +179,13 @@
             blockedBy: blockedBy,
             blocking: originalBlocking,
         });
+        return appleSauce;
+    }
+
+    onMount(() => {
+        const { provideAccessKeys } = getSettings();
+        withAccessKeys = provideAccessKeys;
+        const appleSauce = fromTask();
         editableTask = appleSauce;
 
         mountComplete = true;
