@@ -11,7 +11,7 @@
     import { replaceTaskWithTasks } from '../Obsidian/File';
     import { Priority } from '../Task/Priority';
     import DateEditor from './DateEditor.svelte';
-    import { AppleSauceTask } from './EditableTask';
+    import { EditableTask } from './EditableTask';
     import Dependency from './Dependency.svelte';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
@@ -35,7 +35,7 @@
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
-    let appleSauceTask = new AppleSauceTask({
+    let appleSauceTask = new EditableTask({
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
         status: Status.TODO,
@@ -184,7 +184,7 @@
 
         originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
-        appleSauceTask = new AppleSauceTask({
+        appleSauceTask = new EditableTask({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             description,
             status: task.status,
