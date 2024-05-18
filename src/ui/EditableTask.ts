@@ -54,118 +54,108 @@ export class EditableTask {
         this.blocking = editableTask.blocking;
     }
 
-    public applyEdits(task: Task, originalBlocking: Task[], addGlobalFilterOnSave: boolean, allTasks: Task[]) {
-        return applyEdits(this, task, originalBlocking, addGlobalFilterOnSave, allTasks);
-    }
-}
+    public async applyEdits(task: Task, originalBlocking: Task[], addGlobalFilterOnSave: boolean, allTasks: Task[]) {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
+        let description = this.description.trim();
+        if (addGlobalFilterOnSave) {
+            description = GlobalFilter.getInstance().prependTo(description);
+        }
 
-export async function applyEdits(
-    editableTask: EditableTask,
-    task: Task,
-    originalBlocking: Task[],
-    addGlobalFilterOnSave: boolean,
-    allTasks: Task[],
-) {
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    let description = editableTask.description.trim();
-    if (addGlobalFilterOnSave) {
-        description = GlobalFilter.getInstance().prependTo(description);
-    }
+        const startDate = parseTypedDateForSaving(this.startDate, this.forwardOnly);
+        const scheduledDate = parseTypedDateForSaving(this.scheduledDate, this.forwardOnly);
+        const dueDate = parseTypedDateForSaving(this.dueDate, this.forwardOnly);
 
-    const startDate = parseTypedDateForSaving(editableTask.startDate, editableTask.forwardOnly);
-    const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate, editableTask.forwardOnly);
-    const dueDate = parseTypedDateForSaving(editableTask.dueDate, editableTask.forwardOnly);
+        const cancelledDate = parseTypedDateForSaving(this.cancelledDate, this.forwardOnly);
+        const createdDate = parseTypedDateForSaving(this.createdDate, this.forwardOnly);
+        const doneDate = parseTypedDateForSaving(this.doneDate, this.forwardOnly);
 
-    const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate, editableTask.forwardOnly);
-    const createdDate = parseTypedDateForSaving(editableTask.createdDate, editableTask.forwardOnly);
-    const doneDate = parseTypedDateForSaving(editableTask.doneDate, editableTask.forwardOnly);
+        let recurrence: Recurrence | null = null;
+        if (this.recurrenceRule) {
+            recurrence = Recurrence.fromText({
+                recurrenceRuleText: this.recurrenceRule,
+                startDate,
+                scheduledDate,
+                dueDate,
+            });
+        }
 
-    let recurrence: Recurrence | null = null;
-    if (editableTask.recurrenceRule) {
-        recurrence = Recurrence.fromText({
-            recurrenceRuleText: editableTask.recurrenceRule,
+        let parsedPriority: Priority;
+        switch (this.priority) {
+            case 'lowest':
+                parsedPriority = Priority.Lowest;
+                break;
+            case 'low':
+                parsedPriority = Priority.Low;
+                break;
+            case 'medium':
+                parsedPriority = Priority.Medium;
+                break;
+            case 'high':
+                parsedPriority = Priority.High;
+                break;
+            case 'highest':
+                parsedPriority = Priority.Highest;
+                break;
+            default:
+                parsedPriority = Priority.None;
+        }
+
+        const blockedByWithIds = [];
+
+        for (const depTask of this.blockedBy) {
+            const newDep = await serialiseTaskId(depTask, allTasks);
+            blockedByWithIds.push(newDep);
+        }
+
+        let id = task.id;
+        let removedBlocking: Task[] = [];
+        let addedBlocking: Task[] = [];
+
+        if (this.blocking.toString() !== originalBlocking.toString() || this.blocking.length !== 0) {
+            if (task.id === '') {
+                id = generateUniqueId(allTasks.filter((task) => task.id !== '').map((task) => task.id));
+            }
+
+            removedBlocking = originalBlocking.filter((task) => !this.blocking.includes(task));
+
+            addedBlocking = this.blocking.filter((task) => !originalBlocking.includes(task));
+        }
+
+        // First create an updated task, with all edits except Status:
+        const updatedTask = new Task({
+            // NEW_TASK_FIELD_EDIT_REQUIRED
+            ...task,
+            description,
+            status: task.status,
+            priority: parsedPriority,
+            recurrence,
             startDate,
             scheduledDate,
             dueDate,
+            doneDate,
+            createdDate,
+            cancelledDate,
+            dependsOn: blockedByWithIds.map((task) => task.id),
+            id,
         });
-    }
 
-    let parsedPriority: Priority;
-    switch (editableTask.priority) {
-        case 'lowest':
-            parsedPriority = Priority.Lowest;
-            break;
-        case 'low':
-            parsedPriority = Priority.Low;
-            break;
-        case 'medium':
-            parsedPriority = Priority.Medium;
-            break;
-        case 'high':
-            parsedPriority = Priority.High;
-            break;
-        case 'highest':
-            parsedPriority = Priority.Highest;
-            break;
-        default:
-            parsedPriority = Priority.None;
-    }
-
-    const blockedByWithIds = [];
-
-    for (const depTask of editableTask.blockedBy) {
-        const newDep = await serialiseTaskId(depTask, allTasks);
-        blockedByWithIds.push(newDep);
-    }
-
-    let id = task.id;
-    let removedBlocking: Task[] = [];
-    let addedBlocking: Task[] = [];
-
-    if (editableTask.blocking.toString() !== originalBlocking.toString() || editableTask.blocking.length !== 0) {
-        if (task.id === '') {
-            id = generateUniqueId(allTasks.filter((task) => task.id !== '').map((task) => task.id));
+        for (const blocking of removedBlocking) {
+            const newParent = removeDependency(blocking, updatedTask);
+            await replaceTaskWithTasks({ originalTask: blocking, newTasks: newParent });
         }
 
-        removedBlocking = originalBlocking.filter((task) => !editableTask.blocking.includes(task));
+        for (const blocking of addedBlocking) {
+            const newParent = addDependencyToParent(blocking, updatedTask);
+            await replaceTaskWithTasks({ originalTask: blocking, newTasks: newParent });
+        }
 
-        addedBlocking = editableTask.blocking.filter((task) => !originalBlocking.includes(task));
+        // Then apply the new status to the updated task, in case a new recurrence
+        // needs to be created.
+        // If there is a 'done' date, use that for today's date for recurrence calculations.
+        // Otherwise, use the current date.
+        const today = doneDate ? doneDate : window.moment();
+        return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(this.status, today);
     }
-
-    // First create an updated task, with all edits except Status:
-    const updatedTask = new Task({
-        // NEW_TASK_FIELD_EDIT_REQUIRED
-        ...task,
-        description,
-        status: task.status,
-        priority: parsedPriority,
-        recurrence,
-        startDate,
-        scheduledDate,
-        dueDate,
-        doneDate,
-        createdDate,
-        cancelledDate,
-        dependsOn: blockedByWithIds.map((task) => task.id),
-        id,
-    });
-
-    for (const blocking of removedBlocking) {
-        const newParent = removeDependency(blocking, updatedTask);
-        await replaceTaskWithTasks({ originalTask: blocking, newTasks: newParent });
-    }
-
-    for (const blocking of addedBlocking) {
-        const newParent = addDependencyToParent(blocking, updatedTask);
-        await replaceTaskWithTasks({ originalTask: blocking, newTasks: newParent });
-    }
-
-    // Then apply the new status to the updated task, in case a new recurrence
-    // needs to be created.
-    // If there is a 'done' date, use that for today's date for recurrence calculations.
-    // Otherwise, use the current date.
-    const today = doneDate ? doneDate : window.moment();
-    return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(editableTask.status, today);
 }
 
 async function serialiseTaskId(task: Task, allTasks: Task[]) {
