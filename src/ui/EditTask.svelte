@@ -1,18 +1,18 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { parseTypedDateForSaving } from '../lib/DateTools';
-    import { Recurrence } from '../Task/Recurrence';
-    import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
-    import { Status } from '../Statuses/Status';
-    import { Task } from '../Task/Task';
-    import { TasksDate } from '../Scripting/TasksDate';
-    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
+    import { TASK_FORMATS, getSettings } from '../Config/Settings';
+    import { parseTypedDateForSaving } from '../lib/DateTools';
     import { replaceTaskWithTasks } from '../Obsidian/File';
+    import { TasksDate } from '../Scripting/TasksDate';
+    import { Status } from '../Statuses/Status';
     import { Priority } from '../Task/Priority';
+    import { Recurrence } from '../Task/Recurrence';
+    import { Task } from '../Task/Task';
+    import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
     import DateEditor from './DateEditor.svelte';
-    import { EditableTask } from './EditableTask';
     import Dependency from './Dependency.svelte';
+    import { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
@@ -228,7 +228,7 @@
         }, 0);
     };
 
-    const _onSubmit = async () => {
+    async function applyEdits() {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
@@ -328,7 +328,11 @@
         // If there is a 'done' date, use that for today's date for recurrence calculations.
         // Otherwise, use the current date.
         const today = doneDate ? doneDate : window.moment();
-        const newTasks = updatedTask.handleNewStatusWithRecurrenceInUsersOrder(editableTask.status, today);
+        return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(editableTask.status, today);
+    }
+
+    const _onSubmit = async () => {
+        const newTasks = await applyEdits();
         onSubmit(newTasks);
     };
 </script>
