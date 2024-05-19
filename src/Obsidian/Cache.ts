@@ -9,7 +9,7 @@ import { DateFallback } from '../Task/DateFallback';
 import { getSettings } from '../Config/Settings';
 import { Lazy } from '../lib/Lazy';
 import { TaskLocation } from '../Task/TaskLocation';
-import { logging } from '../lib/logging';
+import { Logger, logging } from '../lib/logging';
 import type { TasksEvents } from './TasksEvents';
 
 export enum State {
@@ -242,6 +242,7 @@ export class Cache {
                 fileCache,
                 file.path,
                 this.reportTaskParsingErrorToUser,
+                this.logger,
             );
         }
 
@@ -285,6 +286,7 @@ export class Cache {
         fileCache: CachedMetadata,
         filePath: string,
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+        logger: Logger,
     ): Task[] {
         const tasksFile = new TasksFile(filePath);
         const tasks: Task[] = [];
@@ -315,7 +317,7 @@ export class Cache {
                         when Obsidian started up, it got the new file content, but still had the old cached
                         data about locations of list items in the file.
                      */
-                    this.logger.debug(
+                    logger.debug(
                         `${filePath} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
                     );
                     return tasks;
@@ -334,7 +336,7 @@ export class Cache {
 
                 const line = fileLines[lineNumber];
                 if (line === undefined) {
-                    this.logger.debug(`${filePath}: line ${lineNumber} - ignoring 'undefined' line.`);
+                    logger.debug(`${filePath}: line ${lineNumber} - ignoring 'undefined' line.`);
                     continue;
                 }
 
