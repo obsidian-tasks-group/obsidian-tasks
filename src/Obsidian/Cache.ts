@@ -236,7 +236,7 @@ export class Cache {
         if (listItems !== undefined) {
             // Only read the file and process for tasks if there are list items.
             const fileContent = await this.vault.cachedRead(file);
-            newTasks = this.getTasksFromFileContent(fileContent, listItems, fileCache, file, file.path);
+            newTasks = this.getTasksFromFileContent(fileContent, listItems, fileCache, file.path);
         }
 
         // If there are no changes in any of the tasks, there's
@@ -277,7 +277,6 @@ export class Cache {
         fileContent: string,
         listItems: ListItemCache[],
         fileCache: CachedMetadata,
-        _file: TFile,
         filePath: string,
     ): Task[] {
         const tasksFile = new TasksFile(filePath);
