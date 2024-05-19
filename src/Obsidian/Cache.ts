@@ -345,7 +345,7 @@ export class Cache {
                         fallbackDate: dateFromFileName.value,
                     });
                 } catch (e) {
-                    this.reportTaskParsingErrorToUser(e, file, listItem, line, file.path);
+                    this.reportTaskParsingErrorToUser(e, file.path, listItem, line);
                     continue;
                 }
 
@@ -359,13 +359,7 @@ export class Cache {
         return tasks;
     }
 
-    private reportTaskParsingErrorToUser(
-        e: any,
-        _file: TFile,
-        listItem: ListItemCache,
-        line: string,
-        filePath: string,
-    ) {
+    private reportTaskParsingErrorToUser(e: any, filePath: string, listItem: ListItemCache, line: string) {
         const msg = `There was an error reading one of the tasks in this vault.
 The following task has been ignored, to prevent Tasks queries getting stuck with 'Loading Tasks ...'
 Error: ${e}
