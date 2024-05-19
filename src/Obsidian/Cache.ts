@@ -397,7 +397,7 @@ session.
         }
     }
 
-    private static getSection(lineNumberTask: number, sections: SectionCache[] | undefined): SectionCache | null {
+    public static getSection(lineNumberTask: number, sections: SectionCache[] | undefined): SectionCache | null {
         if (sections === undefined) {
             return null;
         }
@@ -411,7 +411,7 @@ session.
         return null;
     }
 
-    private static getPrecedingHeader(lineNumberTask: number, headings: HeadingCache[] | undefined): string | null {
+    public static getPrecedingHeader(lineNumberTask: number, headings: HeadingCache[] | undefined): string | null {
         if (headings === undefined) {
             return null;
         }
