@@ -236,7 +236,7 @@ export class Cache {
         if (listItems !== undefined) {
             // Only read the file and process for tasks if there are list items.
             const fileContent = await this.vault.cachedRead(file);
-            newTasks = this.getTasksFromFileContent(fileContent, listItems, fileCache, file);
+            newTasks = this.getTasksFromFileContent(fileContent, listItems, fileCache, file, file.path);
         }
 
         // If there are no changes in any of the tasks, there's
@@ -277,16 +277,17 @@ export class Cache {
         fileContent: string,
         listItems: ListItemCache[],
         fileCache: CachedMetadata,
-        file: TFile,
+        _file: TFile,
+        filePath: string,
     ): Task[] {
-        const tasksFile = new TasksFile(file.path);
+        const tasksFile = new TasksFile(filePath);
         const tasks: Task[] = [];
         const fileLines = fileContent.split('\n');
         const linesInFile = fileLines.length;
 
         // Lazily store date extracted from filename to avoid parsing more than needed
         // this.logger.debug(`getTasksFromFileContent() reading ${file.path}`);
-        const dateFromFileName = new Lazy(() => DateFallback.fromPath(file.path));
+        const dateFromFileName = new Lazy(() => DateFallback.fromPath(filePath));
 
         // We want to store section information with every task so
         // that we can use that when we post process the markdown
@@ -309,7 +310,7 @@ export class Cache {
                         data about locations of list items in the file.
                      */
                     this.logger.debug(
-                        `${file.path} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
+                        `${filePath} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
                     );
                     return tasks;
                 }
@@ -327,7 +328,7 @@ export class Cache {
 
                 const line = fileLines[lineNumber];
                 if (line === undefined) {
-                    this.logger.debug(`${file.path}: line ${lineNumber} - ignoring 'undefined' line.`);
+                    this.logger.debug(`${filePath}: line ${lineNumber} - ignoring 'undefined' line.`);
                     continue;
                 }
 
@@ -345,7 +346,7 @@ export class Cache {
                         fallbackDate: dateFromFileName.value,
                     });
                 } catch (e) {
-                    this.reportTaskParsingErrorToUser(e, file.path, listItem, line);
+                    this.reportTaskParsingErrorToUser(e, filePath, listItem, line);
                     continue;
                 }
 
