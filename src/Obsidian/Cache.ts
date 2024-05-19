@@ -18,7 +18,7 @@ export enum State {
     Warm = 'Warm',
 }
 
-function getTasksFromFileContent2(
+export function getTasksFromFileContent2(
     filePath: string,
     fileContent: string,
     listItems: ListItemCache[],
