@@ -236,7 +236,13 @@ export class Cache {
         if (listItems !== undefined) {
             // Only read the file and process for tasks if there are list items.
             const fileContent = await this.vault.cachedRead(file);
-            newTasks = this.getTasksFromFileContent(fileContent, listItems, fileCache, file.path);
+            newTasks = this.getTasksFromFileContent(
+                fileContent,
+                listItems,
+                fileCache,
+                file.path,
+                this.reportTaskParsingErrorToUser,
+            );
         }
 
         // If there are no changes in any of the tasks, there's
@@ -278,6 +284,7 @@ export class Cache {
         listItems: ListItemCache[],
         fileCache: CachedMetadata,
         filePath: string,
+        errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ): Task[] {
         const tasksFile = new TasksFile(filePath);
         const tasks: Task[] = [];
@@ -345,7 +352,7 @@ export class Cache {
                         fallbackDate: dateFromFileName.value,
                     });
                 } catch (e) {
-                    this.reportTaskParsingErrorToUser(e, filePath, listItem, line);
+                    errorReporter(e, filePath, listItem, line);
                     continue;
                 }
 
