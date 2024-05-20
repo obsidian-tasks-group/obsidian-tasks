@@ -6,4 +6,4 @@ tags:
 
 # yaml_tags_has_multiple_values
 
-- [ ] Task in 'yaml_tags_has_multiple_values'
+- [ ] #task Task in 'yaml_tags_has_multiple_values'

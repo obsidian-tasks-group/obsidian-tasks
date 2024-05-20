@@ -4,4 +4,4 @@
 
 ### Level 3 heading
 
-- [ ] Task in 'multiple_headings'
+- [ ] #task Task in 'multiple_headings'

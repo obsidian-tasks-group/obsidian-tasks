@@ -2,4 +2,4 @@
 
 ## I link to [[multiple_headings]]
 
-- [ ] Task in 'link_in_heading'
+- [ ] #task Task in 'link_in_heading'

@@ -6,7 +6,7 @@ kanban-plugin: basic
 
 ## Backlog
 
-- [ ] Task in 'example_kanban'
+- [ ] #task Task in 'example_kanban'
 
 
 %% kanban:settings
