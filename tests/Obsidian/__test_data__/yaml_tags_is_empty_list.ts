@@ -5,31 +5,29 @@ export const yaml_tags_is_empty_list = {
         'tags: []\n' +
         '---\n' +
         '\n' +
-        '# tags is empty list\n' +
+        '# yaml_tags_is_empty_list\n' +
         '\n' +
-        "- [ ] #task Task in 'tags_is_empty_list'\n",
+        "- [ ] #task Task in 'yaml_tags_is_empty_list'\n",
     cachedMetadata: {
         tags: [
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 6,
                         col: 6,
-                        offset: 46,
+                        offset: 51,
                     },
                     end: {
                         line: 6,
                         col: 11,
-                        offset: 51,
+                        offset: 56,
                     },
                 },
+                tag: '#task',
             },
         ],
         headings: [
             {
-                heading: 'tags is empty list',
-                level: 1,
                 position: {
                     start: {
                         line: 4,
@@ -38,10 +36,12 @@ export const yaml_tags_is_empty_list = {
                     },
                     end: {
                         line: 4,
-                        col: 20,
-                        offset: 38,
+                        col: 25,
+                        offset: 43,
                     },
                 },
+                heading: 'yaml_tags_is_empty_list',
+                level: 1,
             },
         ],
         sections: [
@@ -70,8 +70,8 @@ export const yaml_tags_is_empty_list = {
                     },
                     end: {
                         line: 4,
-                        col: 20,
-                        offset: 38,
+                        col: 25,
+                        offset: 43,
                     },
                 },
             },
@@ -81,38 +81,37 @@ export const yaml_tags_is_empty_list = {
                     start: {
                         line: 6,
                         col: 0,
-                        offset: 40,
+                        offset: 45,
                     },
                     end: {
                         line: 6,
-                        col: 40,
-                        offset: 80,
+                        col: 45,
+                        offset: 90,
                     },
                 },
             },
         ],
         listItems: [
             {
-                parent: -6,
-                task: ' ',
                 position: {
                     start: {
                         line: 6,
                         col: 0,
-                        offset: 40,
+                        offset: 45,
                     },
                     end: {
                         line: 6,
-                        col: 40,
-                        offset: 80,
+                        col: 45,
+                        offset: 90,
                     },
                 },
+                parent: -6,
+                task: ' ',
             },
         ],
         frontmatter: {
             tags: [],
         },
-        frontmatterLinks: [],
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -125,5 +124,6 @@ export const yaml_tags_is_empty_list = {
                 offset: 16,
             },
         },
+        frontmatterLinks: [],
     },
 };
