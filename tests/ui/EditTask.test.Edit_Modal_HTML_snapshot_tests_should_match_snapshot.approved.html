@@ -1,5 +1,5 @@
 <div>
-  <form class="tasks-modal with-accesskeys">
+  <form class="tasks-modal">
     <section class="tasks-modal-description-section">
       <label for="description">
         Descrip
@@ -70,7 +70,10 @@
     </section>
     <hr />
     <section class="tasks-modal-dates-section">
-      <label for="recurrence" class="accesskey-first">Recurs</label>
+      <label for="recurrence">
+        <span class="accesskey">R</span>
+        ecurs
+      </label>
       <input
         id="recurrence"
         type="text"
@@ -81,7 +84,10 @@
         🔁
         <i>not recurring</i>
       </code>
-      <label for="due" class="accesskey-first">Due</label>
+      <label for="due">
+        <span class="accesskey">D</span>
+        ue
+      </label>
       <input
         id="due"
         type="text"
@@ -92,7 +98,10 @@
         📅
         <i>no due date</i>
       </code>
-      <label for="scheduled" class="accesskey-first">Scheduled</label>
+      <label for="scheduled">
+        <span class="accesskey">S</span>
+        cheduled
+      </label>
       <input
         id="scheduled"
         type="text"
@@ -121,15 +130,18 @@
       <div class="future-dates-only">
         <label for="forwardOnly">
           Only
-          <span class="accesskey-first">future</span>
-          dates:
+          <span class="accesskey">f</span>
+          uture dates:
         </label>
         <input id="forwardOnly" type="checkbox" class="task-list-item-checkbox tasks-modal-checkbox" accesskey="f" />
       </div>
     </section>
     <hr />
     <section class="tasks-modal-dependencies-section">
-      <label for="blockedBy" class="accesskey-first">Before this</label>
+      <label for="blockedBy">
+        <span class="accesskey">B</span>
+        efore this
+      </label>
       <span>
         <input
           accesskey="b"
@@ -193,13 +205,16 @@
         <span class="accesskey">u</span>
         s
       </label>
-      <select id="status-type" class="tasks-modal-status-selector" accesskey="u">
+      <select id="status-type" class="status-editor-status-selector" accesskey="u">
         <option value=" ">Todo [ ]</option>
         <option value="/">In Progress [/]</option>
         <option value="x">Done [x]</option>
         <option value="-">Cancelled [-]</option>
       </select>
-      <label for="created" class="accesskey-first">Created</label>
+      <label for="created">
+        <span class="accesskey">C</span>
+        reated
+      </label>
       <input
         id="created"
         type="text"

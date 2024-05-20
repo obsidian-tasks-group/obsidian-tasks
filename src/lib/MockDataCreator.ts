@@ -1,6 +1,8 @@
 import type { ListItemCache, Pos } from 'obsidian';
 import type { Task } from '../Task/Task';
 
+// See File.test.ts for how to use this.
+
 type MockTaskLocation = {
     path: string;
     lineNumber: number;

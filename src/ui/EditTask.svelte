@@ -13,6 +13,9 @@
     import DateEditor from './DateEditor.svelte';
     import type { EditableTask } from './EditableTask';
     import Dependency from './Dependency.svelte';
+    import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import RecurrenceEditor from './RecurrenceEditor.svelte';
+    import StatusEditor from './StatusEditor.svelte';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -20,12 +23,9 @@
     export let statusOptions: Status[];
     export let allTasks: Task[];
 
-    let statusSymbol = task.status.symbol;
-
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         prioritySymbols,
-        recurrenceSymbol,
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
@@ -61,7 +61,6 @@
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
 
-    let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
 
     let addGlobalFilterOnSave: boolean = false;
@@ -138,27 +137,6 @@
         return updatedTask;
     }
 
-    const _onStatusChange = () => {
-        // Use statusSymbol to find the status to save to editableTask.status
-        const selectedStatus: Status | undefined = statusOptions.find((s) => s.symbol === statusSymbol);
-        if (selectedStatus) {
-            editableTask.status = selectedStatus;
-        } else {
-            console.log(`Error in EditTask: cannot find status with symbol ${statusSymbol}`);
-            return;
-        }
-
-        // Obtain a temporary task with the new status applied, to see what would
-        // happen to the done date:
-        const taskWithEditedStatusApplied = task.handleNewStatus(selectedStatus).pop();
-
-        if (taskWithEditedStatusApplied) {
-            // Update the doneDate field, in case changing the status changed the value:
-            editableTask.doneDate = taskWithEditedStatusApplied.done.formatAsDate();
-            editableTask.cancelledDate = taskWithEditedStatusApplied.cancelled.formatAsDate();
-        }
-    };
-
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
         isDueDateValid &&
@@ -170,31 +148,6 @@
         isCreatedDateValid &&
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
-
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    $: {
-        isRecurrenceValid = true;
-        if (!editableTask.recurrenceRule) {
-            parsedRecurrence = '<i>not recurring</>';
-        } else {
-            const recurrenceFromText = Recurrence.fromText({
-                recurrenceRuleText: editableTask.recurrenceRule,
-                // Only for representation in the modal, no dates required.
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            })?.toText();
-            if (!recurrenceFromText) {
-                parsedRecurrence = '<i>invalid recurrence rule</i>';
-                isRecurrenceValid = false;
-            } else if (!editableTask.startDate && !editableTask.scheduledDate && !editableTask.dueDate) {
-                parsedRecurrence = '<i>due, scheduled or start date required</i>';
-                isRecurrenceValid = false;
-            } else {
-                parsedRecurrence = recurrenceFromText;
-            }
-        }
-    }
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
@@ -254,15 +207,6 @@
             descriptionInput.focus();
         }, 10);
     });
-
-    const _onPriorityKeyup = (event: KeyboardEvent) => {
-        if (event.key && !event.altKey && !event.ctrlKey) {
-            const priorityOption = priorityOptions.find((option) => option.label.charAt(0).toLowerCase() == event.key);
-            if (priorityOption) {
-                editableTask.priority = priorityOption.value;
-            }
-        }
-    };
 
     const _onClose = () => {
         onSubmit([]);
@@ -420,14 +364,14 @@ Availability of access keys:
 - -: Cancelled
 -->
 
-<form class="tasks-modal" class:with-accesskeys={withAccessKeys} on:submit|preventDefault={_onSubmit}>
+<form class="tasks-modal" on:submit|preventDefault={_onSubmit}>
     <!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Description  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-description-section">
-        <label for="description">Descrip<span class="accesskey">t</span>ion</label>
+        <label for="description">{@html labelContentWithAccessKey('Description', accesskey('t'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
             bind:value={editableTask.description}
@@ -445,7 +389,7 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
-    <section class="tasks-modal-priority-section" on:keyup={_onPriorityKeyup}>
+    <section class="tasks-modal-priority-section">
         <label for="priority-{editableTask.priority}">Priority</label>
         {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
             <div class="task-modal-priority-option-container">
@@ -458,9 +402,16 @@ Availability of access keys:
                     accesskey={accesskey(accessKey)}
                 />
                 <label for="priority-{value}">
-                    <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
-                        >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span
-                    ><span>{label.substring(accessKeyIndex + 1)}</span>
+                    <!-- These is no need to extract this behaviour to something like labelContentWithAccessKey(),
+                    since this whole section will just go in a separate Svelte component and
+                    will not be reused elsewhere like labelContentWithAccessKey(). -->
+                    {#if withAccessKeys}
+                        <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
+                            >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span
+                        ><span>{label.substring(accessKeyIndex + 1)}</span>
+                    {:else}
+                        <span>{label}</span>
+                    {/if}
                     {#if symbol && symbol.charCodeAt(0) >= 0x100}
                         <span>{symbol}</span>
                     {/if}
@@ -477,22 +428,10 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="recurrence" class="accesskey-first">Recurs</label>
-        <!-- svelte-ignore a11y-accesskey -->
-        <input
-            bind:value={editableTask.recurrenceRule}
-            id="recurrence"
-            type="text"
-            class:tasks-modal-error={!isRecurrenceValid}
-            class="tasks-modal-date-input"
-            placeholder="Try 'every day when done'"
-            accesskey={accesskey('r')}
-        />
-        <code class="tasks-modal-parsed-date">{recurrenceSymbol} {@html parsedRecurrence}</code>
+        <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="due" class="accesskey-first">Due</label>
         <DateEditor
             id="due"
             dateSymbol={dueDateSymbol}
@@ -505,7 +444,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="scheduled" class="accesskey-first">Scheduled</label>
         <DateEditor
             id="scheduled"
             dateSymbol={scheduledDateSymbol}
@@ -518,7 +456,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Start Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="start">St<span class="accesskey">a</span>rt</label>
         <DateEditor
             id="start"
             dateSymbol={startDateSymbol}
@@ -532,10 +469,7 @@ Availability of access keys:
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
         <div class="future-dates-only">
-            <label for="forwardOnly"
-                >Only
-                <span class="accesskey-first">future</span> dates:</label
-            >
+            <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:checked={editableTask.forwardOnly}
@@ -556,30 +490,28 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocked By Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="blockedBy" class="accesskey-first">Before this</label>
             <Dependency
                 type="blockedBy"
+                labelText="Before this"
                 {task}
                 {editableTask}
                 {allTasks}
                 {_onDescriptionKeyDown}
-                {accesskey}
-                accesskeyLetter="b"
+                accesskey={accesskey('b')}
                 placeholder="Search for tasks that the task being edited depends on..."
             />
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocking Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="blocking">Aft<span class="accesskey">e</span>r this</label>
             <Dependency
                 type="blocking"
+                labelText="After this"
                 {task}
                 {editableTask}
                 {allTasks}
                 {_onDescriptionKeyDown}
-                {accesskey}
-                accesskeyLetter="e"
+                accesskey={accesskey('e')}
                 placeholder="Search for tasks that depend on this task being done..."
             />
         {:else}
@@ -592,24 +524,11 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="status">Stat<span class="accesskey">u</span>s</label>
-        <!-- svelte-ignore a11y-accesskey -->
-        <select
-            bind:value={statusSymbol}
-            on:change={_onStatusChange}
-            id="status-type"
-            class="tasks-modal-status-selector"
-            accesskey={accesskey('u')}
-        >
-            {#each statusOptions as status}
-                <option value={status.symbol}>{status.name} [{status.symbol}]</option>
-            {/each}
-        </select>
+        <StatusEditor {task} bind:editableTask {statusOptions} accesskey={accesskey('u')} />
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <label for="created" class="accesskey-first">Created</label>
         <DateEditor
             id="created"
             dateSymbol={createdDateSymbol}
@@ -622,11 +541,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Done Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="done">Done (<span class="accesskey">x</span>)</label>
-        {:else}
-            <label for="done">Done</label>
-        {/if}
         <DateEditor
             id="done"
             dateSymbol={doneDateSymbol}
@@ -639,11 +553,6 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Cancelled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if withAccessKeys}
-            <label for="cancelled">Cancelled (<span class="accesskey">-</span>)</label>
-        {:else}
-            <label for="cancelled">Cancelled</label>
-        {/if}
         <DateEditor
             id="cancelled"
             dateSymbol={cancelledDateSymbol}

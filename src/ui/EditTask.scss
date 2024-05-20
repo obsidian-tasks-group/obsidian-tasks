@@ -11,10 +11,8 @@
     .tasks-modal-error {
         border: 1px solid red !important;
     }
-}
 
-.with-accesskeys {
-    .accesskey-first::first-letter, .accesskey {
+    .accesskey {
         text-decoration: underline;
         text-underline-offset: 1pt;
     }
@@ -99,7 +97,7 @@
         }
     }
 
-    .tasks-modal-status-selector {
+    .status-editor-status-selector {
         grid-column: 2;
         width: 15em;
     }
@@ -165,7 +163,7 @@
             grid-column: 2;
         }
 
-        .tasks-modal-status-selector {
+        .status-editor-status-selector {
             grid-column: 1;
         }
     }
@@ -183,7 +181,7 @@
 
 @media (max-width: 399px) {
     .tasks-modal-dates-section {
-        .tasks-modal-status-selector {
+        .status-editor-status-selector {
             grid-column: 1;
             width: auto;
         }

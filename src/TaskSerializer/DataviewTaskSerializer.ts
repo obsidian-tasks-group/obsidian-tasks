@@ -1,7 +1,7 @@
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { Priority } from '../Task/Priority';
 import type { Task } from '../Task/Task';
-import { DefaultTaskSerializer, taskIdRegex } from './DefaultTaskSerializer';
+import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from './DefaultTaskSerializer';
 
 /**
  * Takes a regex of the form 'key:: value' and turns it into a regex that can parse
@@ -88,9 +88,7 @@ export const DATAVIEW_SYMBOLS = {
         cancelledDateRegex: toInlineFieldRegex(/cancelled:: *(\d{4}-\d{2}-\d{2})/),
         recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
         onCompletionRegex: toInlineFieldRegex(/onCompletion:: *([a-zA-Z]+)/),
-        dependsOnRegex: toInlineFieldRegex(
-            new RegExp('dependsOn:: *(' + taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*)'),
-        ),
+        dependsOnRegex: toInlineFieldRegex(new RegExp('dependsOn:: *(' + taskIdSequenceRegex.source + ')')),
         idRegex: toInlineFieldRegex(new RegExp('id:: *(' + taskIdRegex.source + ')')),
     },
 } as const;

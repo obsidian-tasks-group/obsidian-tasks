@@ -1,8 +1,8 @@
 import { App, Editor, EditorSuggest, TFile } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 import type TasksPlugin from 'main';
-import { ensureTaskHasId } from 'Task/TaskDependency';
-import { replaceTaskWithTasks } from 'Obsidian/File';
+import { ensureTaskHasId } from '../Task/TaskDependency';
+import { replaceTaskWithTasks } from '../Obsidian/File';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';

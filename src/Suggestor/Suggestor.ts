@@ -3,7 +3,7 @@ import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
 import { Recurrence } from '../Task/Recurrence';
-import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
+import { type DefaultTaskSerializerSymbols, taskIdRegex } from '../TaskSerializer/DefaultTaskSerializer';
 import { Task } from '../Task/Task';
 import { generateUniqueId } from '../Task/TaskDependency';
 import { GlobalFilter } from '../Config/GlobalFilter';
@@ -16,6 +16,15 @@ import type { SuggestInfo, SuggestionBuilder } from '.';
  * for production code.
  */
 export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
+
+declare global {
+    // eslint-disable-next-line no-var
+    var SHOW_DEPENDENCY_SUGGESTIONS: boolean;
+}
+
+// Set default value for production to off, temporarily. It will be turned on in tests.
+export const showDependencySuggestionsDefault = false;
+globalThis.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
 
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
@@ -47,12 +56,14 @@ export function makeDefaultSuggestionBuilder(
         );
 
         // add Auto ID suggestions
-        suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
+        if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+            suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
 
-        // add dependecy suggestions
-        suggestions = suggestions.concat(
-            addDependsOnSuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
-        );
+            // add dependecy suggestions
+            suggestions = suggestions.concat(
+                addDependsOnSuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
+            );
+        }
 
         // add task property suggestions ('due', 'recurrence' etc)
         suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
@@ -125,17 +136,19 @@ function addTaskPropertySuggestions(
             appendText: `${symbols.scheduledDateSymbol} `,
         });
 
-    if (!line.includes(symbols.idSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.idSymbol} Task ID`,
-            appendText: `${symbols.idSymbol}`,
-        });
+    if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+        if (!line.includes(symbols.idSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.idSymbol} Task ID`,
+                appendText: `${symbols.idSymbol}`,
+            });
 
-    if (!line.includes(symbols.dependsOnSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.dependsOnSymbol} Task depends on ID`,
-            appendText: `${symbols.dependsOnSymbol}`,
-        });
+        if (!line.includes(symbols.dependsOnSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.dependsOnSymbol} Task depends on ID`,
+                appendText: `${symbols.dependsOnSymbol}`,
+            });
+    }
 
     if (!hasPriority(line)) {
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
@@ -410,7 +423,7 @@ function addRecurrenceSuggestions(
 
 function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allTasks: Task[]) {
     const results: SuggestInfo[] = [];
-    const idRegex = new RegExp(`(${idSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})?`, 'ug');
     const idMatch = matchIfCursorInRegex(line, idRegex, cursorPos);
 
     if (idMatch && idMatch[0].trim().length <= idSymbol.length) {
@@ -453,7 +466,11 @@ function addDependsOnSuggestions(
         // Find all Tasks, Already Added
         let blockingTasks: Task[] = [];
         if (existingDependsOnIdStrings) {
-            blockingTasks = allTasks.filter((task) => task.id && existingDependsOnIdStrings.includes(task.id));
+            // Split the string into an array by commas, then map over it to trim whitespace from each element.
+            const idsArray = existingDependsOnIdStrings.split(',').map((id) => id.trim());
+
+            // Filter `allTasks` to only include tasks whose `id` is exactly in the `idsArray`.
+            blockingTasks = allTasks.filter((task) => task.id && idsArray.includes(task.id));
         }
 
         if (newTaskToAppend.length >= settings.autoSuggestMinMatch) {

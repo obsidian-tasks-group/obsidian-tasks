@@ -20,7 +20,8 @@ however, this depends on the context of the executing script.
 
 This is the interface the API exposes:
 
-```typescript
+<!-- snippet: TasksApiV1.ts -->
+```ts
 /**
  * Tasks API v1 interface
  */
@@ -38,11 +39,13 @@ export interface TasksApiV1 {
      *
      * @param line The markdown string of the task line being toggled
      * @param path The path to the file containing line
-     * @returns The updated line string
+     * @returns The updated line string, which will contain two lines
+     *          if a recurring task was completed.
      */
     executeToggleTaskDoneCommand: (line: string, path: string) => string;
 }
 ```
+<!-- endSnippet -->
 
 ## `createTaskLineModal(): Promise<string>;`
 
@@ -116,9 +119,9 @@ Screenshot of QuickAdd capture settings (example)
 ## `executeToggleTaskDoneCommand: (line: string, path: string) => string;`
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> This method was introduced in Tasks 7.2.0.
 
-Executes the 'Tasks: Toggle task done' command on the supplied line string. It toggles and updates a task line according to a user's preferences, accounting for recurrance rules and completed status. It returns a string representing the toggled task.
+Executes the 'Tasks: Toggle task done' command on the supplied line string. It toggles and updates a task line according to a user's preferences, accounting for recurrence rules and completed status. It returns a string representing the toggled task.
 
 ```typescript
 const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
@@ -131,6 +134,9 @@ console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
 ```
 
 ## Auto-Suggest Integration
+
+> [!released]
+> This integration was introduced in Tasks 7.2.0.
 
 Plugins that [extend Obsidian's markdown editor](https://gist.github.com/Fevol/caa478ce303e69eabede7b12b2323838) can control if and when Tasks' [[Auto-Suggest]] displays by implementing a `showTasksPluginAutoSuggest` method on the extended editor class. This method must adhere the function definition below.
 
