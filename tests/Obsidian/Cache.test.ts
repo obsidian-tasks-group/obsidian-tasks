@@ -12,6 +12,9 @@ function errorReporter() {
 - Create a sample markdown file in Tasks demo vault (root/Test Data/) with the simplest content
 to represent your test case. Choose a meaningful file name in snake case. See example in 'Test Data/one_task.md'.
 
+    - There is a Templater template that may help with creating a new file, for single-tasks cases:
+      `resources/sample_vaults/Tasks-Demo/_meta/templates/Test Data file.md`
+
 - Open any other note in Source or 'Live Preview' modes
 
 - Run the command 'Templater: Insert _meta/templates/convert_test_data_markdown_to_js.md'
