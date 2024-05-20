@@ -22,7 +22,7 @@
   "syntax_highlighting": true,
   "syntax_highlighting_mobile": false,
   "enabled_templates_hotkeys": [
-    ""
+    "_meta/templates/convert_test_data_markdown_to_js.md"
   ],
   "startup_templates": [
     ""
