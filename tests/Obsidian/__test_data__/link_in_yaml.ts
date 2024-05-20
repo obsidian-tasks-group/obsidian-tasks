@@ -1,10 +1,17 @@
 export const link_in_yaml = {
     filePath: 'Test Data/link_in_yaml.md',
     fileContents:
-        '---\ntest-link: "[[yaml_tags_is_empty]]"\n---\n\n# link_in_yaml\n\n- [ ] #task Task in \'link_in_yaml\'\n',
+        '---\n' +
+        'test-link: "[[yaml_tags_is_empty]]"\n' +
+        '---\n' +
+        '\n' +
+        '# link_in_yaml\n' +
+        '\n' +
+        "- [ ] #task Task in 'link_in_yaml'\n",
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 6,
@@ -17,11 +24,12 @@ export const link_in_yaml = {
                         offset: 72,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'link_in_yaml',
+                level: 1,
                 position: {
                     start: {
                         line: 4,
@@ -34,8 +42,6 @@ export const link_in_yaml = {
                         offset: 59,
                     },
                 },
-                heading: 'link_in_yaml',
-                level: 1,
             },
         ],
         sections: [
@@ -87,6 +93,8 @@ export const link_in_yaml = {
         ],
         listItems: [
             {
+                parent: -6,
+                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -99,13 +107,19 @@ export const link_in_yaml = {
                         offset: 95,
                     },
                 },
-                parent: -6,
-                task: ' ',
             },
         ],
         frontmatter: {
             'test-link': '[[yaml_tags_is_empty]]',
         },
+        frontmatterLinks: [
+            {
+                key: 'test-link',
+                link: 'yaml_tags_is_empty',
+                original: '[[yaml_tags_is_empty]]',
+                displayText: 'yaml_tags_is_empty',
+            },
+        ],
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -118,13 +132,5 @@ export const link_in_yaml = {
                 offset: 43,
             },
         },
-        frontmatterLinks: [
-            {
-                key: 'test-link',
-                link: 'yaml_tags_is_empty',
-                original: '[[yaml_tags_is_empty]]',
-                displayText: 'yaml_tags_is_empty',
-            },
-        ],
     },
 };

@@ -1,10 +1,19 @@
 export const yaml_tags_has_multiple_values = {
     filePath: 'Test Data/yaml_tags_has_multiple_values.md',
     fileContents:
-        "---\ntags:\n  - multiple1\n  - multiple2\n---\n\n# yaml_tags_has_multiple_values\n\n- [ ] #task Task in 'yaml_tags_has_multiple_values'\n",
+        '---\n' +
+        'tags:\n' +
+        '  - multiple1\n' +
+        '  - multiple2\n' +
+        '---\n' +
+        '\n' +
+        '# yaml_tags_has_multiple_values\n' +
+        '\n' +
+        "- [ ] #task Task in 'yaml_tags_has_multiple_values'\n",
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 8,
@@ -17,11 +26,12 @@ export const yaml_tags_has_multiple_values = {
                         offset: 87,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_tags_has_multiple_values',
+                level: 1,
                 position: {
                     start: {
                         line: 6,
@@ -34,8 +44,6 @@ export const yaml_tags_has_multiple_values = {
                         offset: 74,
                     },
                 },
-                heading: 'yaml_tags_has_multiple_values',
-                level: 1,
             },
         ],
         sections: [
@@ -87,6 +95,8 @@ export const yaml_tags_has_multiple_values = {
         ],
         listItems: [
             {
+                parent: -8,
+                task: ' ',
                 position: {
                     start: {
                         line: 8,
@@ -99,13 +109,12 @@ export const yaml_tags_has_multiple_values = {
                         offset: 127,
                     },
                 },
-                parent: -8,
-                task: ' ',
             },
         ],
         frontmatter: {
             tags: ['multiple1', 'multiple2'],
         },
+        frontmatterLinks: [],
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -118,6 +127,5 @@ export const yaml_tags_has_multiple_values = {
                 offset: 41,
             },
         },
-        frontmatterLinks: [],
     },
 };

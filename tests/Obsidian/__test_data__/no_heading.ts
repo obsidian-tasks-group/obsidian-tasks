@@ -4,6 +4,7 @@ export const no_heading = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 0,
@@ -16,7 +17,6 @@ export const no_heading = {
                         offset: 11,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -38,6 +38,8 @@ export const no_heading = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -50,8 +52,6 @@ export const no_heading = {
                         offset: 32,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
         ],
     },

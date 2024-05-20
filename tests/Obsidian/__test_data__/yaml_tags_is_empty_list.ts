@@ -1,9 +1,17 @@
 export const yaml_tags_is_empty_list = {
     filePath: 'Test Data/yaml_tags_is_empty_list.md',
-    fileContents: "---\ntags: []\n---\n\n# tags is empty list\n\n- [ ] #task Task in 'tags_is_empty_list'\n",
+    fileContents:
+        '---\n' +
+        'tags: []\n' +
+        '---\n' +
+        '\n' +
+        '# tags is empty list\n' +
+        '\n' +
+        "- [ ] #task Task in 'tags_is_empty_list'\n",
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 6,
@@ -16,11 +24,12 @@ export const yaml_tags_is_empty_list = {
                         offset: 51,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'tags is empty list',
+                level: 1,
                 position: {
                     start: {
                         line: 4,
@@ -33,8 +42,6 @@ export const yaml_tags_is_empty_list = {
                         offset: 38,
                     },
                 },
-                heading: 'tags is empty list',
-                level: 1,
             },
         ],
         sections: [
@@ -86,6 +93,8 @@ export const yaml_tags_is_empty_list = {
         ],
         listItems: [
             {
+                parent: -6,
+                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -98,13 +107,12 @@ export const yaml_tags_is_empty_list = {
                         offset: 80,
                     },
                 },
-                parent: -6,
-                task: ' ',
             },
         ],
         frontmatter: {
             tags: [],
         },
+        frontmatterLinks: [],
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -117,6 +125,5 @@ export const yaml_tags_is_empty_list = {
                 offset: 16,
             },
         },
-        frontmatterLinks: [],
     },
 };

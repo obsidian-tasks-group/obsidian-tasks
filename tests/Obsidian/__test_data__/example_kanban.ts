@@ -1,10 +1,26 @@
 export const example_kanban = {
     filePath: 'Test Data/example_kanban.md',
     fileContents:
-        '---\n\nkanban-plugin: basic\n\n---\n\n## Backlog\n\n- [ ] #task Task in \'example_kanban\'\n\n\n%% kanban:settings\n```\n{"kanban-plugin":"basic"}\n```\n%%\n',
+        '---\n' +
+        '\n' +
+        'kanban-plugin: basic\n' +
+        '\n' +
+        '---\n' +
+        '\n' +
+        '## Backlog\n' +
+        '\n' +
+        "- [ ] #task Task in 'example_kanban'\n" +
+        '\n' +
+        '\n' +
+        '%% kanban:settings\n' +
+        '```\n' +
+        '{"kanban-plugin":"basic"}\n' +
+        '```\n' +
+        '%%\n',
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 8,
@@ -17,11 +33,12 @@ export const example_kanban = {
                         offset: 55,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'Backlog',
+                level: 2,
                 position: {
                     start: {
                         line: 6,
@@ -34,8 +51,6 @@ export const example_kanban = {
                         offset: 42,
                     },
                 },
-                heading: 'Backlog',
-                level: 2,
             },
         ],
         sections: [
@@ -102,6 +117,8 @@ export const example_kanban = {
         ],
         listItems: [
             {
+                parent: -8,
+                task: ' ',
                 position: {
                     start: {
                         line: 8,
@@ -114,13 +131,12 @@ export const example_kanban = {
                         offset: 80,
                     },
                 },
-                parent: -8,
-                task: ' ',
             },
         ],
         frontmatter: {
             'kanban-plugin': 'basic',
         },
+        frontmatterLinks: [],
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -133,6 +149,5 @@ export const example_kanban = {
                 offset: 30,
             },
         },
-        frontmatterLinks: [],
     },
 };

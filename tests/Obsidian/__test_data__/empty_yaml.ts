@@ -4,6 +4,7 @@ export const empty_yaml = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 5,
@@ -16,11 +17,12 @@ export const empty_yaml = {
                         offset: 34,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'empty_yaml',
+                level: 1,
                 position: {
                     start: {
                         line: 3,
@@ -33,8 +35,6 @@ export const empty_yaml = {
                         offset: 21,
                     },
                 },
-                heading: 'empty_yaml',
-                level: 1,
             },
         ],
         sections: [
@@ -86,6 +86,8 @@ export const empty_yaml = {
         ],
         listItems: [
             {
+                parent: -5,
+                task: ' ',
                 position: {
                     start: {
                         line: 5,
@@ -98,8 +100,6 @@ export const empty_yaml = {
                         offset: 55,
                     },
                 },
-                parent: -5,
-                task: ' ',
             },
         ],
     },

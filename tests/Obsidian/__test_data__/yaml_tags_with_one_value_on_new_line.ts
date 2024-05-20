@@ -1,10 +1,19 @@
 export const yaml_tags_with_one_value_on_new_line = {
     filePath: 'Test Data/yaml_tags_with_one_value_on_new_line.md',
     fileContents:
-        "---\ntags:\n  - single-value-new-line\n---\n\n\n# yaml_tags_with_one_value_on_new_line\n\n- [ ] #task Task in 'yaml_tags_with_one_value_on_new_line'\n",
+        '---\n' +
+        'tags:\n' +
+        '  - single-value-new-line\n' +
+        '---\n' +
+        '\n' +
+        '\n' +
+        '# yaml_tags_with_one_value_on_new_line\n' +
+        '\n' +
+        "- [ ] #task Task in 'yaml_tags_with_one_value_on_new_line'\n",
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 8,
@@ -17,11 +26,12 @@ export const yaml_tags_with_one_value_on_new_line = {
                         offset: 93,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_tags_with_one_value_on_new_line',
+                level: 1,
                 position: {
                     start: {
                         line: 6,
@@ -34,8 +44,6 @@ export const yaml_tags_with_one_value_on_new_line = {
                         offset: 80,
                     },
                 },
-                heading: 'yaml_tags_with_one_value_on_new_line',
-                level: 1,
             },
         ],
         sections: [
@@ -87,6 +95,8 @@ export const yaml_tags_with_one_value_on_new_line = {
         ],
         listItems: [
             {
+                parent: -8,
+                task: ' ',
                 position: {
                     start: {
                         line: 8,
@@ -99,13 +109,12 @@ export const yaml_tags_with_one_value_on_new_line = {
                         offset: 140,
                     },
                 },
-                parent: -8,
-                task: ' ',
             },
         ],
         frontmatter: {
             tags: ['single-value-new-line'],
         },
+        frontmatterLinks: [],
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -118,6 +127,5 @@ export const yaml_tags_with_one_value_on_new_line = {
                 offset: 39,
             },
         },
-        frontmatterLinks: [],
     },
 };

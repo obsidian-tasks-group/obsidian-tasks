@@ -1,10 +1,17 @@
 export const link_in_file_body_with_custom_display_text = {
     filePath: 'Test Data/link_in_file_body_with_custom_display_text.md',
     fileContents:
-        "# link_in_file_body_with_custom_display_text\n\nI link to [[yaml_tags_is_empty|a file and use custom display text]],\n\n- [ ] #task Task in 'link_in_file_body_with_custom_display_text'\n",
+        '# link_in_file_body_with_custom_display_text\n' +
+        '\n' +
+        'I link to [[yaml_tags_is_empty|a file and use custom display text]]\n' +
+        '\n' +
+        "- [ ] #task Task in 'link_in_file_body_with_custom_display_text'\n",
     cachedMetadata: {
         links: [
             {
+                link: 'yaml_tags_is_empty',
+                original: '[[yaml_tags_is_empty|a file and use custom display text]]',
+                displayText: 'a file and use custom display text',
                 position: {
                     start: {
                         line: 2,
@@ -17,30 +24,29 @@ export const link_in_file_body_with_custom_display_text = {
                         offset: 113,
                     },
                 },
-                link: 'yaml_tags_is_empty',
-                original: '[[yaml_tags_is_empty|a file and use custom display text]]',
-                displayText: 'a file and use custom display text',
             },
         ],
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
                         col: 6,
-                        offset: 122,
+                        offset: 121,
                     },
                     end: {
                         line: 4,
                         col: 11,
-                        offset: 127,
+                        offset: 126,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'link_in_file_body_with_custom_display_text',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -53,8 +59,6 @@ export const link_in_file_body_with_custom_display_text = {
                         offset: 44,
                     },
                 },
-                heading: 'link_in_file_body_with_custom_display_text',
-                level: 1,
             },
         ],
         sections: [
@@ -83,8 +87,8 @@ export const link_in_file_body_with_custom_display_text = {
                     },
                     end: {
                         line: 2,
-                        col: 68,
-                        offset: 114,
+                        col: 67,
+                        offset: 113,
                     },
                 },
             },
@@ -94,32 +98,32 @@ export const link_in_file_body_with_custom_display_text = {
                     start: {
                         line: 4,
                         col: 0,
-                        offset: 116,
+                        offset: 115,
                     },
                     end: {
                         line: 4,
                         col: 64,
-                        offset: 180,
+                        offset: 179,
                     },
                 },
             },
         ],
         listItems: [
             {
+                parent: -4,
+                task: ' ',
                 position: {
                     start: {
                         line: 4,
                         col: 0,
-                        offset: 116,
+                        offset: 115,
                     },
                     end: {
                         line: 4,
                         col: 64,
-                        offset: 180,
+                        offset: 179,
                     },
                 },
-                parent: -4,
-                task: ' ',
             },
         ],
     },

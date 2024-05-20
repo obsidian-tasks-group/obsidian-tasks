@@ -1,9 +1,17 @@
 export const link_in_heading = {
     filePath: 'Test Data/link_in_heading.md',
-    fileContents: "# link_in_heading\n\n## I link to [[multiple_headings]]\n\n- [ ] #task Task in 'link_in_heading'\n",
+    fileContents:
+        '# link_in_heading\n' +
+        '\n' +
+        '## I link to [[multiple_headings]]\n' +
+        '\n' +
+        "- [ ] #task Task in 'link_in_heading'\n",
     cachedMetadata: {
         links: [
             {
+                link: 'multiple_headings',
+                original: '[[multiple_headings]]',
+                displayText: 'multiple_headings',
                 position: {
                     start: {
                         line: 2,
@@ -16,13 +24,11 @@ export const link_in_heading = {
                         offset: 53,
                     },
                 },
-                link: 'multiple_headings',
-                original: '[[multiple_headings]]',
-                displayText: 'multiple_headings',
             },
         ],
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -35,11 +41,12 @@ export const link_in_heading = {
                         offset: 66,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'link_in_heading',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -52,10 +59,10 @@ export const link_in_heading = {
                         offset: 17,
                     },
                 },
-                heading: 'link_in_heading',
-                level: 1,
             },
             {
+                heading: 'I link to [[multiple_headings]]',
+                level: 2,
                 position: {
                     start: {
                         line: 2,
@@ -68,8 +75,6 @@ export const link_in_heading = {
                         offset: 53,
                     },
                 },
-                heading: 'I link to [[multiple_headings]]',
-                level: 2,
             },
         ],
         sections: [
@@ -121,6 +126,8 @@ export const link_in_heading = {
         ],
         listItems: [
             {
+                parent: -4,
+                task: ' ',
                 position: {
                     start: {
                         line: 4,
@@ -133,8 +140,6 @@ export const link_in_heading = {
                         offset: 92,
                     },
                 },
-                parent: -4,
-                task: ' ',
             },
         ],
     },
