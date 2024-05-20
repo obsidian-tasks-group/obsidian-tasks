@@ -27,6 +27,8 @@ publish: true
   - Indicate the importance of your tasks.
 - [[Recurring Tasks]]
   - Use recurring tasks to easily track actions you must do regularly.
+- [[On Completion]]
+  - Specify an automatic action to perform on a task when it is completed.
 - [[Statuses]]
   - Also known as Custom Checkboxes.
   - In vanilla Obsidian tasks are either 'TODO' or 'DONE'.

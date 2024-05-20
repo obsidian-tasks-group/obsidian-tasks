@@ -131,6 +131,15 @@ For more information, see [[Priority]].
 
 For more information, see [[Recurring Tasks]].
 
+### Dataview Format for OnCompletion
+
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_dataview-snippet.approved.md -->
+```md
+- [ ] #task Remove this task when done [onCompletion:: delete]
+- [ ] #task Remove completed instance of this recurring task when done [repeat:: every day when done] [onCompletion:: delete]
+```
+<!-- endSnippet -->
+
 ### Dataview Format for Dependencies
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_dataview-snippet.approved.md -->
