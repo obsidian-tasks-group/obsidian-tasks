@@ -325,6 +325,12 @@ describe('DataviewTaskSerializer', () => {
             expect(serialized).toEqual('  [repeat:: every day]');
         });
 
+        it('should serialize onCompletion', () => {
+            const task = new TaskBuilder().onCompletion('delete').description('').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual('  [onCompletion:: delete]');
+        });
+
         it('should serialize tags', () => {
             const task = new TaskBuilder().description('').tags(['#hello', '#world', '#task']).build();
             const serialized = serialize(task);

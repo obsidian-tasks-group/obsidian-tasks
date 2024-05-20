@@ -256,6 +256,12 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             expect(serialized).toEqual(` ${recurrenceSymbol} every day`);
         });
 
+        it('should serialize onCompletion', () => {
+            const task = new TaskBuilder().onCompletion('delete').description('').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(` ${onCompletionSymbol} delete`);
+        });
+
         it('should serialize depends on', () => {
             const task = new TaskBuilder().description('').dependsOn(['123456', 'abc123']).build();
             const serialized = serialize(task);
