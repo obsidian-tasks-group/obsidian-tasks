@@ -7,6 +7,6 @@ aliases:
 
 # heading contains a link
 
-## I link to [[multiple headings]]
+## I link to [[multiple_headings]]
 
 - [ ] Task in 'heading_contains_a_link'
