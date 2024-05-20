@@ -5,7 +5,7 @@ aliases:
   -
 ---
 
-# multiple headings
+# multiple_headings
 
 ## Level 2 heading
 

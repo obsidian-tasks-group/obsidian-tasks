@@ -5,7 +5,7 @@ aliases:
   -
 ---
 
-# heading contains a link
+# heading_contains_a_link
 
 ## I link to [[multiple_headings]]
 

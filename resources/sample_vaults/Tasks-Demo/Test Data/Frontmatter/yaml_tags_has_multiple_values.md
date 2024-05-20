@@ -4,6 +4,6 @@ tags:
   - multiple2
 ---
 
-# tags has multiple values
+# yaml_tags_has_multiple_values
 
-- [ ] Task in 'tags_has_multiple_values'
+- [ ] Task in 'yaml_tags_has_multiple_values'

@@ -2,6 +2,6 @@
 tags: single-value-single-line
 ---
 
-# tags with one value on single line
+# yaml_tags_with_one_value_on_single_line
 
-- [ ] Task in 'tags_with_one_value_on_single_line'
+- [ ] Task in 'yaml_tags_with_one_value_on_single_line'
