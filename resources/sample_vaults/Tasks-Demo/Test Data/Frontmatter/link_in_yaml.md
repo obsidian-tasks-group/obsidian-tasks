@@ -6,6 +6,6 @@ aliases:
 test-link: "[[tags_is_empty]]"
 ---
 
-# link in metadata
+# link in yaml
 
-- [ ] Task in 'link_in_metadata'
+- [ ] Task in 'link_in_yaml'
