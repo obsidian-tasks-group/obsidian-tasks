@@ -1,5 +1,5 @@
 ---
-test-link: "[[tags_is_empty]]"
+test-link: "[[yaml_tags_is_empty]]"
 ---
 
 # link_in_yaml
