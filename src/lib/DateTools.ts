@@ -98,11 +98,35 @@ export function parseTypedDateForDisplayUsingFutureDate(
  * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
  * @param forwardDate
  */
+// HERE!
 export function parseTypedDateForSaving(typedDate: string, forwardDate: boolean): moment.Moment | null {
     let date: moment.Moment | null = null;
     const parsedDate = chrono.parseDate(typedDate, new Date(), { forwardDate });
     if (parsedDate !== null) {
         date = window.moment(parsedDate);
+    }
+    return date;
+}
+
+/**
+ * Read the entered value for a date field, and return the value to be saved in the edited task.
+ * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+ * @param forwardDate
+ */
+// HERE!
+export function parseTypedDateorDateTimeForSavingReminder(
+    typedDate: string,
+    forwardDate: boolean,
+): moment.Moment | null {
+    let date: moment.Moment | null = null;
+    const parsedDate = chrono.parseDate(typedDate, new Date(), { forwardDate });
+    if (parsedDate !== null) {
+        date = window.moment(parsedDate);
+        const dateString = isDateTime(window.moment(typedDate))
+            ? date.format('YYYY-MM-DD HH:mm')
+            : date.format('YYYY-MM-DD');
+
+        date = window.moment(dateString);
     }
     return date;
 }

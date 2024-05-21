@@ -455,7 +455,7 @@ describe('Task editing', () => {
             expect(await editFieldAndSave(line, 'reminder', '2024-01-01')).toEqual('- [ ] simple ⏰ 2024-01-01');
         });
 
-        it.failing('should edit and save reminder date and time', async () => {
+        it('should edit and save reminder date and time', async () => {
             expect(await editFieldAndSave(line, 'reminder', '2024-01-01 12:34')).toEqual(
                 '- [ ] simple ⏰ 2024-01-01 12:34',
             );

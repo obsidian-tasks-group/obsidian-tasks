@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { parseTypedDateForSaving } from '../lib/DateTools';
+    import { parseTypedDateForSaving, parseTypedDateorDateTimeForSavingReminder } from '../lib/DateTools';
     import { Recurrence } from '../Task/Recurrence';
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
@@ -306,7 +306,7 @@
         const startDate = parseTypedDateForSaving(editableTask.startDate, editableTask.forwardOnly);
         const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate, editableTask.forwardOnly);
         const dueDate = parseTypedDateForSaving(editableTask.dueDate, editableTask.forwardOnly);
-        const reminderDate = parseTypedDateForSaving(editableTask.reminderDate, editableTask.forwardOnly);
+        const reminderDate = parseTypedDateorDateTimeForSavingReminder(editableTask.reminderDate, editableTask.forwardOnly);
         const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate, editableTask.forwardOnly);
         const createdDate = parseTypedDateForSaving(editableTask.createdDate, editableTask.forwardOnly);
         const doneDate = parseTypedDateForSaving(editableTask.doneDate, editableTask.forwardOnly);
