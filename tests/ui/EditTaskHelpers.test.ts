@@ -72,7 +72,7 @@ describe('parseAndValidateRecurrence() tests', () => {
         recurrenceRule: 'every day',
     };
     const withRecurrenceRuleAndHappensDate: Partial<EditableTask> = {
-        recurrenceRule: 'every month when done',
+        recurrenceRule: 'every 1 months when done', // confirm that recurrence text is standardised
         startDate: '2024-05-20',
     };
 
