@@ -12,26 +12,20 @@ function errorReporter() {
 - Create a sample markdown file in Tasks demo vault (root/Test Data/) with the simplest content
 to represent your test case. Choose a meaningful file name in snake case. See example in 'Test Data/one_task.md'.
 
-- Copy-paste the function below in the Obsidian developer console:
+    - There is a Templater template that may help with creating a new file, for single-tasks cases:
+      `resources/sample_vaults/Tasks-Demo/_meta/templates/Test Data file.md`
 
-async function getData(filePath) {
-    const tFile = app.vault.getAbstractFileByPath(filePath);
+- Open any other note in the vault, just so that Templater will run.
 
-    const fileContents = await app.vault.read(tFile);
-    const cachedMetadata = app.metadataCache.getFileCache(tFile);
-    console.log({ filePath, fileContents, cachedMetadata });
-}
+    - The Templater plugin requires a note to be open. The script won't edit the file, so it
+      doesn't matter which file you have open.
 
-- Call it with your file path in the console:
+- Run the command 'Templater: Insert _meta/templates/convert_test_data_markdown_to_js.md'
+    - Or type the short-cut 'Ctrl + Cmd + Alt + T' / 'Ctrl + Ctrl + Alt + T'
 
-await getData('Test Data/one_task.md')
+- This will convert all the files 'root/Test Data/*.md' to test functions in 'tests/Obsidian/__test_data__/*.ts'
 
-- Right-click on the object in the console and select 'Copy object'.
-
-- Paste that data in a .ts file for your test as a constant with
-a meaningful name (See example in test/Obsidian/__test_data__/one_task.ts). Set file name same as
-the markdown file in the demo vault. The data will be in JSON format, so reformat the data as a destructured object
-with your IDE.
+- Run 'yarn lint' to standardise the formatting in the generated TypeScript files.
 
 - Use the data in the test with `readTasksFromSimulatedFile()`, the argument is the constant you
 created in the previous step.
