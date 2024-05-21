@@ -1,6 +1,6 @@
-export const one_task = {
-    filePath: 'Test Data/one_task.md',
-    fileContents: '- [ ] #task the only task here\n\n',
+export const no_heading = {
+    filePath: 'Test Data/no_heading.md',
+    fileContents: "- [ ] #task Task in 'no_heading'\n",
     cachedMetadata: {
         tags: [
             {
@@ -30,8 +30,8 @@ export const one_task = {
                     },
                     end: {
                         line: 0,
-                        col: 30,
-                        offset: 30,
+                        col: 32,
+                        offset: 32,
                     },
                 },
             },
@@ -48,8 +48,8 @@ export const one_task = {
                     },
                     end: {
                         line: 0,
-                        col: 30,
-                        offset: 30,
+                        col: 32,
+                        offset: 32,
                     },
                 },
             },

@@ -1,0 +1,111 @@
+.broken-links-settings .setting-item-control input {
+    min-width: 250px;
+}
+.broken-links-settings-folder {
+    display: flex;
+    align-items: center;
+    justify-items: left;
+    gap: 5px;
+    padding: var(--size-4-1) 0;
+}
+.broken-links-settings-folder-icon {
+    margin-top: var(--size-4-1);
+}
+
+div.broken-links .hidden {
+    display: none;
+}
+div.broken-links .tree-item-children .tree-item-icon + .tree-item-icon {
+    margin-left: 0;
+}
+div.broken-links .tree-item-children .tree-item-icon + .tree-item-icon + .tree-item-inner {
+    margin-left: var(--size-4-5);
+}
+div.broken-links > .nav-files-container {
+    padding: 0 var(--size-4-3) var(--size-4-9) var(--size-4-3);
+}
+div.broken-links .nav-folder.mod-root > .nav-folder-title {
+    font-size: var(--font-ui-medium);
+}
+div.broken-links .nav-folder.mod-root > .nav-folder-children .nav-folder .nav-folder-title-content {
+    font-weight: var(--font-semibold);
+}
+div.broken-links .nav-folder-children .nav-folder-title > .tree-item-icon + .tree-item-icon {
+    margin-left: 0;
+}
+div.broken-links .nav-folder-children .nav-folder-title > .nav-folder-title-content {
+    flex-grow: 1;
+}
+div.broken-links .nav-link-title,
+div.broken-links .nav-link-title.is-clickable:hover,
+div.broken-links .nav-link-title .tree-item-icon {
+    color: var(--link-color);
+}
+
+div.broken-links .filter-row {
+    display: flex;
+    margin: var(--size-4-2) var(--size-4-2) 0;
+    gap: var(--size-4-1);
+}
+div.broken-links .filter-input-container {
+    flex-grow: 1;
+    position: relative;
+}
+div.broken-links .filter-input-container::before {
+    top: calc((var(--input-height) - var(--search-icon-size)) / 2);
+    left: 8px;
+    position: absolute;
+    content: "";
+    height: var(--search-icon-size);
+    width: var(--search-icon-size);
+    display: block;
+    background-color: var(--search-icon-color);
+    -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>');
+    -webkit-mask-repeat: no-repeat;
+}
+div.broken-links .filter-input-container input {
+    display: block;
+    width: 100%;
+    padding-left: 36px;
+    padding-right: 56px;
+}
+div.broken-links .filter-input-clear-button {
+    position: absolute;
+    background: transparent;
+    border-radius: 50%;
+    color: var(--search-clear-button-color);
+    cursor: var(--cursor);
+    top: 0px;
+    right: 2px;
+    bottom: 0px;
+    line-height: 0;
+    height: var(--input-height);
+    width: 28px;
+    margin: auto;
+    padding: 0 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: color 0.15s ease-in-out;
+}
+div.broken-links .filter-input-clear-button::after {
+    content: "";
+    height: var(--search-clear-button-size);
+    width: var(--search-clear-button-size);
+    display: block;
+    background-color: currentColor;
+    -webkit-mask-image: url("data:image/svg+xml,<svg viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M6 12C9.31371 12 12 9.31371 12 6C12 2.68629 9.31371 0 6 0C2.68629 0 0 2.68629 0 6C0 9.31371 2.68629 12 6 12ZM3.8705 3.09766L6.00003 5.22718L8.12955 3.09766L8.9024 3.8705L6.77287 6.00003L8.9024 8.12955L8.12955 8.9024L6.00003 6.77287L3.8705 8.9024L3.09766 8.12955L5.22718 6.00003L3.09766 3.8705L3.8705 3.09766Z' fill='currentColor'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+}
+div.broken-links .filter-input-clear-button:active,
+div.broken-links .filter-input-clear-button:hover {
+    color: var(--text-normal);
+    transition: color 0.15s ease-in-out;
+}
+div.broken-links .filter-input-container input:placeholder-shown ~ .filter-input-clear-button {
+    display: none;
+}
+div.broken-links .filter-input-container input:not(:placeholder-shown) ~ .input-right-decorator {
+    right: calc(var(--size-4-1) + 28px);
+}

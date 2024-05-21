@@ -25,5 +25,15 @@
       "key": "Enter"
     }
   ],
-  "editor:toggle-checklist-status": []
+  "editor:toggle-checklist-status": [],
+  "templater-obsidian:_meta/templates/convert_test_data_markdown_to_js.md": [
+    {
+      "modifiers": [
+        "Alt",
+        "Ctrl",
+        "Mod"
+      ],
+      "key": "T"
+    }
+  ]
 }
