@@ -15,7 +15,10 @@ to represent your test case. Choose a meaningful file name in snake case. See ex
     - There is a Templater template that may help with creating a new file, for single-tasks cases:
       `resources/sample_vaults/Tasks-Demo/_meta/templates/Test Data file.md`
 
-- Open any other note in Source or 'Live Preview' modes
+- Open any other note in the vault, just so that Templater will run.
+
+    - The Templater plugin requires a note to be open. The script won't edit the file, so it
+      doesn't matter which file you have open.
 
 - Run the command 'Templater: Insert _meta/templates/convert_test_data_markdown_to_js.md'
     - Or type the short-cut 'Ctrl + Cmd + Alt + T' / 'Ctrl + Ctrl + Alt + T'
