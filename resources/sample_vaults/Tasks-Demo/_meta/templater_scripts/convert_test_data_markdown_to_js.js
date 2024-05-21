@@ -36,7 +36,9 @@ async function export_files(msg) {
         await convertMarkdownFileToTestFunction(file);
     }
 
-    return 'Success - now run "yarn lint" to format the generated files.';
+    const message = 'Success - now run "yarn lint" to format the generated files.';
+    new Notice(message);
+    return '';
 }
 
 module.exports = export_files;
