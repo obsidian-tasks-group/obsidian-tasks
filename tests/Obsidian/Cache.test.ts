@@ -65,5 +65,6 @@ describe('cache', () => {
         expect(tasks.length).toEqual(3);
         expect(tasks[0].children).toEqual([]);
         expect(tasks[1].parent).toEqual(tasks[0]);
+        expect(tasks[2].parent).toEqual(tasks[0]);
     });
 });

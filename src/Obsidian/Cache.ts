@@ -99,7 +99,9 @@ export function getTasksFromFileContent2(
                         parent: parentTask,
                     });
 
-                    parentTask = task;
+                    if (parentTask === null) {
+                        parentTask = task;
+                    }
                 }
             } catch (e) {
                 errorReporter(e, filePath, listItem, line);
