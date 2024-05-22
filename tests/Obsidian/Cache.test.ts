@@ -62,11 +62,13 @@ describe('cache', () => {
 
     it('should read parent and child tasks', () => {
         const tasks = readTasksFromSimulatedFile(tasks_with_inheritance);
-        expect(tasks.length).toEqual(3);
+        expect(tasks.length).toEqual(4);
         expect(tasks[0].children).toEqual([]);
-        expect(tasks[1].parent).toEqual(tasks[0]);
         expect(tasks[1].parent?.originalMarkdown).toEqual('- [ ] #task parent task');
-        expect(tasks[2].parent).toEqual(tasks[0]);
+        expect(tasks[1].parent).toEqual(tasks[0]);
         expect(tasks[2].parent?.originalMarkdown).toEqual('- [ ] #task parent task');
+        expect(tasks[2].parent).toEqual(tasks[0]);
+        expect(tasks[3].parent?.originalMarkdown).toEqual('    - [ ] #task child task 2');
+        expect(tasks[3].parent).toEqual(tasks[2]);
     });
 });
