@@ -98,6 +98,7 @@ export class Task extends ListItem {
         tags,
         originalMarkdown,
         scheduledDateIsInferred,
+        parent = null,
     }: {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         status: Status;
@@ -119,8 +120,9 @@ export class Task extends ListItem {
         tags: string[] | [];
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
+        parent?: ListItem | null;
     }) {
-        super(null, []);
+        super(parent, []);
         // NEW_TASK_FIELD_EDIT_REQUIRED
         this.status = status;
         this.description = description;
