@@ -2,6 +2,7 @@ import type { CachedMetadata } from 'obsidian';
 import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
 import { one_task } from './__test_data__/one_task';
+import { two_tasks_with_inheritance } from './__test_data__/two_tasks_with_inheritance';
 
 function errorReporter() {
     return;
@@ -57,5 +58,12 @@ describe('cache', () => {
         const tasks = readTasksFromSimulatedFile(one_task);
         expect(tasks.length).toEqual(1);
         expect(tasks[0].description).toEqual('#task the only task here');
+    });
+
+    it('should read parent and child tasks', () => {
+        const tasks = readTasksFromSimulatedFile(two_tasks_with_inheritance);
+        expect(tasks.length).toEqual(2);
+        expect(tasks[0].children).toEqual([]);
+        expect(tasks[1].parent).toEqual(null);
     });
 });
