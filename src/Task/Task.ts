@@ -1,22 +1,22 @@
 import type { Moment } from 'moment';
-import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import type { Status } from '../Statuses/Status';
+import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { compareByDate } from '../lib/DateTools';
-import { TasksDate } from '../Scripting/TasksDate';
-import { StatusType } from '../Statuses/StatusConfiguration';
-import type { TasksFile } from '../Scripting/TasksFile';
-import { PriorityTools } from '../lib/PriorityTools';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
+import { PriorityTools } from '../lib/PriorityTools';
+import { TasksDate } from '../Scripting/TasksDate';
+import type { TasksFile } from '../Scripting/TasksFile';
+import type { Status } from '../Statuses/Status';
+import { StatusType } from '../Statuses/StatusConfiguration';
+import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { DateFallback } from './DateFallback';
 import { ListItem } from './ListItem';
-import { Urgency } from './Urgency';
+import type { Priority } from './Priority';
 import type { Recurrence } from './Recurrence';
 import type { TaskLocation } from './TaskLocation';
-import type { Priority } from './Priority';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
+import { Urgency } from './Urgency';
 
 /**
  * Storage for the task line, broken down in to sections.
@@ -67,12 +67,6 @@ export class Task extends ListItem {
      * Any non-empty value must begin with ' ^'. */
     public readonly blockLink: string;
 
-    /** The original line read from file.
-     *
-     * Will be empty if Task was created programmatically
-     * (for example, by Create or Edit Task, or in tests, including via {@link TaskBuilder}). */
-    public readonly originalMarkdown: string;
-
     public readonly scheduledDateIsInferred: boolean;
 
     private _urgency: number | null = null;
@@ -122,7 +116,7 @@ export class Task extends ListItem {
         scheduledDateIsInferred: boolean;
         parent?: ListItem | null;
     }) {
-        super(parent, []);
+        super(originalMarkdown, parent, []);
         // NEW_TASK_FIELD_EDIT_REQUIRED
         this.status = status;
         this.description = description;
@@ -147,7 +141,6 @@ export class Task extends ListItem {
         this.id = id;
 
         this.blockLink = blockLink;
-        this.originalMarkdown = originalMarkdown;
 
         this.scheduledDateIsInferred = scheduledDateIsInferred;
     }
