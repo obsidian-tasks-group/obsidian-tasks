@@ -41,6 +41,9 @@ export function getTasksFromFileContent2(
     let currentSection: SectionCache | null = null;
     let sectionIndex = 0;
     let parentTask: Task | null = null;
+    let previousTask: Task | null = null;
+    // read this as previousTask.listItem.parent
+    let previousTaskListItemParent: number | null = null;
     for (const listItem of listItems) {
         if (listItem.task !== undefined) {
             const lineNumber = listItem.position.start.line;
@@ -94,6 +97,10 @@ export function getTasksFromFileContent2(
                 });
 
                 if (task !== null) {
+                    if (previousTaskListItemParent !== listItem.parent) {
+                        parentTask = previousTask;
+                    }
+
                     task = new Task({
                         ...task!!,
                         parent: parentTask,
@@ -102,6 +109,9 @@ export function getTasksFromFileContent2(
                     if (parentTask === null) {
                         parentTask = task;
                     }
+
+                    previousTask = task;
+                    previousTaskListItemParent = listItem.parent;
                 }
             } catch (e) {
                 errorReporter(e, filePath, listItem, line);

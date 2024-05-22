@@ -1,6 +1,10 @@
 export const tasks_with_inheritance = {
     filePath: 'Test Data/tasks_with_inheritance.md',
-    fileContents: '- [ ] #task parent task\n' + '    - [ ] #task child task 1\n' + '    - [ ] #task child task 2\n',
+    fileContents:
+        '- [ ] #task parent task\n' +
+        '    - [ ] #task child task 1\n' +
+        '    - [ ] #task child task 2\n' +
+        '        - [ ] #task grandchild 1\n',
     cachedMetadata: {
         tags: [
             {
@@ -48,6 +52,21 @@ export const tasks_with_inheritance = {
                 },
                 tag: '#task',
             },
+            {
+                position: {
+                    start: {
+                        line: 3,
+                        col: 14,
+                        offset: 96,
+                    },
+                    end: {
+                        line: 3,
+                        col: 19,
+                        offset: 101,
+                    },
+                },
+                tag: '#task',
+            },
         ],
         sections: [
             {
@@ -59,9 +78,9 @@ export const tasks_with_inheritance = {
                         offset: 0,
                     },
                     end: {
-                        line: 2,
-                        col: 28,
-                        offset: 81,
+                        line: 3,
+                        col: 32,
+                        offset: 114,
                     },
                 },
             },
@@ -113,6 +132,22 @@ export const tasks_with_inheritance = {
                     },
                 },
                 parent: 0,
+                task: ' ',
+            },
+            {
+                position: {
+                    start: {
+                        line: 3,
+                        col: 6,
+                        offset: 88,
+                    },
+                    end: {
+                        line: 3,
+                        col: 32,
+                        offset: 114,
+                    },
+                },
+                parent: 2,
                 task: ' ',
             },
         ],
