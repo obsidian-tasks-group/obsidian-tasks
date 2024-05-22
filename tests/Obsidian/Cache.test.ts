@@ -64,6 +64,6 @@ describe('cache', () => {
         const tasks = readTasksFromSimulatedFile(two_tasks_with_inheritance);
         expect(tasks.length).toEqual(2);
         expect(tasks[0].children).toEqual([]);
-        expect(tasks[1].parent).toEqual(null);
+        expect(tasks[1].parent).toEqual(tasks[0]);
     });
 });

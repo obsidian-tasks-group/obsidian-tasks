@@ -40,6 +40,7 @@ export function getTasksFromFileContent2(
     // rendered lists.
     let currentSection: SectionCache | null = null;
     let sectionIndex = 0;
+    let parentTask: Task | null = null;
     for (const listItem of listItems) {
         if (listItem.task !== undefined) {
             const lineNumber = listItem.position.start.line;
@@ -91,6 +92,15 @@ export function getTasksFromFileContent2(
                     ),
                     fallbackDate: dateFromFileName.value,
                 });
+
+                if (task !== null) {
+                    task = new Task({
+                        ...task!!,
+                        parent: parentTask,
+                    });
+
+                    parentTask = task;
+                }
             } catch (e) {
                 errorReporter(e, filePath, listItem, line);
                 continue;
