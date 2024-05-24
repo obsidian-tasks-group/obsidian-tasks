@@ -5,10 +5,12 @@ import {
     type HappensDate,
     createFixedDateTask,
     createPostponedTask,
+    createTaskWithDateRemoved,
     fixedDateMenuItemTitle,
     getDateFieldToPostpone,
     postponeMenuItemTitle,
     postponementSuccessMessage,
+    removeDateMenuItemTitle,
 } from '../../Scripting/Postponer';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
@@ -64,6 +66,12 @@ export class PostponeMenu extends TaskEditingMenu {
         this.addItem((item) => postponeMenuItemCallback(button, item, 'weeks', 2, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'weeks', 3, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'month', 1, titlingFunction, postponingFunction));
+
+        this.addSeparator();
+
+        this.addItem((item) =>
+            postponeMenuItemCallback(button, item, 'days', 2, removeDateMenuItemTitle, createTaskWithDateRemoved),
+        );
     }
 
     public static async postponeOnClickCallback(
