@@ -282,4 +282,9 @@ describe('postpone - postponement success message', () => {
         const message = postponementSuccessMessage(moment(invalidDate), 'dueDate');
         expect(message).toEqual("Task's dueDate changed to Invalid date");
     });
+
+    it('should generate a message for a removed date', () => {
+        const message = postponementSuccessMessage(null, 'dueDate');
+        expect(message).toEqual("Task's dueDate removed");
+    });
 });
