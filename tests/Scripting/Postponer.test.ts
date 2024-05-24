@@ -7,6 +7,7 @@ import {
     type HappensDate,
     createFixedDateTask,
     createPostponedTask,
+    createTaskWithDateRemoved,
     fixedDateMenuItemTitle,
     getDateFieldToPostpone,
     postponeButtonTitle,
@@ -234,8 +235,14 @@ describe('postpone - new task creation', () => {
         postponingFunction: PostponingFunction,
     ) {
         const { postponedDate, postponedTask } = postponingFunction(task, expectedDateField, 'day', 1);
-        expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
-        expect(postponedTask[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+        if (expectedPostponedDate.length > 0) {
+            expect(postponedDate).not.toBeNull();
+            expect(postponedDate!.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+            expect(postponedTask[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+        } else {
+            expect(postponedDate).toBeNull();
+            expect(postponedTask[expectedDateField]).toBeNull();
+        }
 
         // If the scheduled date was inferred from the filename, and it is the scheduledDate that was postponed,
         // we must ensure that the 'inferred' flag has been reset to false.
@@ -269,6 +276,11 @@ describe('postpone - new task creation', () => {
     it('should postpone a task that starts in the future to tomorrow, if using fixed date', () => {
         const task = new TaskBuilder().startDate('2024-03-05').build();
         testPostponedTaskAndDate(task, 'startDate', '2023-12-04', createFixedDateTask);
+    });
+
+    it('should remove a date', () => {
+        const task = new TaskBuilder().startDate('2024-03-05').build();
+        testPostponedTaskAndDate(task, 'startDate', '', createTaskWithDateRemoved);
     });
 });
 

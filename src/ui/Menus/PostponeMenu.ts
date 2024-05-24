@@ -20,7 +20,7 @@ export type PostponingFunction = (
     timeUnit: unitOfTime.DurationConstructor,
     amount: number,
 ) => {
-    postponedDate: moment.Moment;
+    postponedDate: moment.Moment | null;
     postponedTask: Task;
 };
 
@@ -89,7 +89,7 @@ export class PostponeMenu extends TaskEditingMenu {
     private static postponeSuccessCallback(
         button: HTMLAnchorElement,
         updatedDateType: HappensDate,
-        postponedDate: Moment,
+        postponedDate: Moment | null,
     ) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.style.pointerEvents = 'none';
