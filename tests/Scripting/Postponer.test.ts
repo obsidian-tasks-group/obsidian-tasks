@@ -12,6 +12,7 @@ import {
     postponeButtonTitle,
     postponeMenuItemTitle,
     postponementSuccessMessage,
+    removeDateMenuItemTitle,
     shouldShowPostponeButton,
 } from '../../src/Scripting/Postponer';
 import { Status } from '../../src/Statuses/Status';
@@ -209,6 +210,18 @@ describe('postpone - UI text', () => {
         expect(fixedDateMenuItemTitle(task, 0, 'days')).toEqual('Due today, on Sun 3rd Dec');
         expect(fixedDateMenuItemTitle(task, 1, 'day')).toEqual('Due tomorrow, on Mon 4th Dec');
         expect(fixedDateMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
+    });
+
+    it('should include date type when removing value', () => {
+        const task = new TaskBuilder().dueDate(yesterday).build();
+        // TODO Include the current date?
+        // TODO Convert to friendly name
+        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Remove dueDate');
+    });
+
+    it('should not offer to remove an inferred scheduled date', () => {
+        const task = new TaskBuilder().scheduledDate(today).scheduledDateIsInferred(true).build();
+        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Cannot remove inferred scheduled date');
     });
 });
 
