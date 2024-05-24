@@ -170,10 +170,10 @@ export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: uni
 }
 
 /**
- * Get the menu text to use when changing a task date relative to today's date.
+ * Get the menu text to use when removing a date.
  * @param task
- * @param _amount - the number of timeUnits to increment by.
- * @param _timeUnit - the increment to postpone by (day, week, month....)
+ * @param _amount - unused.
+ * @param _timeUnit - unused
  *
  * @see postponeMenuItemTitle
  */
