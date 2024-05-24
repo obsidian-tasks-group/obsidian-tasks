@@ -217,12 +217,12 @@ describe('postpone - UI text', () => {
     it('should include date type when removing value', () => {
         const task = new TaskBuilder().dueDate(yesterday).build();
         // TODO Include the current date?
-        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Remove Due date');
+        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Remove due date');
     });
 
     it('should not offer to remove an inferred scheduled date', () => {
         const task = new TaskBuilder().scheduledDate(today).scheduledDateIsInferred(true).build();
-        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Cannot remove inferred Scheduled date');
+        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Cannot remove inferred scheduled date');
     });
 });
 

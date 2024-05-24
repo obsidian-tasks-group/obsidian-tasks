@@ -180,14 +180,18 @@ export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: uni
 export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     if (updatedDateType === 'scheduledDate' && task.scheduledDateIsInferred) {
-        return 'Cannot remove inferred Scheduled date';
+        return 'Cannot remove inferred scheduled date';
     } else {
-        return `Remove ${prettyPrintDateFieldName(updatedDateType)} date`;
+        return `Remove ${splitDateText(updatedDateType)}`;
     }
 }
 
-function prettyPrintDateFieldName(updatedDateType: 'startDate' | 'scheduledDate' | 'dueDate') {
+function prettyPrintDateFieldName(updatedDateType: HappensDate) {
     return capitalizeFirstLetter(updatedDateType.replace('Date', ''));
+}
+
+function splitDateText(updatedDateType: HappensDate) {
+    return updatedDateType.replace('Date', ' date');
 }
 
 function postponeMenuItemTitleFromDate(
@@ -206,7 +210,7 @@ function postponeMenuItemTitleFromDate(
             .replace(' in 0 days', ' today')
             .replace('in a day', 'tomorrow');
     } else {
-        const updatedDateDisplayText = updatedDateType.replace('Date', ' date');
+        const updatedDateDisplayText = splitDateText(updatedDateType);
         return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
     }
 }
