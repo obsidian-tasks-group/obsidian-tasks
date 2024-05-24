@@ -180,9 +180,9 @@ export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: uni
 export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     if (updatedDateType === 'scheduledDate' && task.scheduledDateIsInferred) {
-        return 'Cannot remove inferred scheduled date';
+        return 'Cannot remove inferred Scheduled date';
     } else {
-        return `Remove ${updatedDateType}`;
+        return `Remove ${prettyPrintDateFieldName(updatedDateType)} date`;
     }
 }
 
