@@ -17,6 +17,7 @@ import {
 } from '../../src/Scripting/Postponer';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import type { PostponingFunction } from '../../src/ui/Menus/PostponeMenu';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -230,15 +231,7 @@ describe('postpone - new task creation', () => {
         task: Task,
         expectedDateField: HappensDate,
         expectedPostponedDate: string,
-        postponingFunction: (
-            task: Task,
-            dateFieldToPostpone: HappensDate,
-            timeUnit: moment.unitOfTime.DurationConstructor,
-            amount: number,
-        ) => {
-            postponedDate: moment.Moment;
-            postponedTask: Task;
-        },
+        postponingFunction: PostponingFunction,
     ) {
         const { postponedDate, postponedTask } = postponingFunction(task, expectedDateField, 'day', 1);
         expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
