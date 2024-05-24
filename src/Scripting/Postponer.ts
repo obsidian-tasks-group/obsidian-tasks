@@ -186,6 +186,10 @@ export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: 
     }
 }
 
+function prettyPrintDateFieldName(updatedDateType: 'startDate' | 'scheduledDate' | 'dueDate') {
+    return capitalizeFirstLetter(updatedDateType.replace('Date', ''));
+}
+
 function postponeMenuItemTitleFromDate(
     updatedDateType: HappensDate,
     dateToUpdate: moment.Moment,
@@ -197,7 +201,7 @@ function postponeMenuItemTitleFromDate(
 
     const amountOrArticle = amount != 1 ? amount : 'a';
     if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
-        const updatedDateDisplayText = capitalizeFirstLetter(updatedDateType.replace('Date', ''));
+        const updatedDateDisplayText = prettyPrintDateFieldName(updatedDateType);
         return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`
             .replace(' in 0 days', ' today')
             .replace('in a day', 'tomorrow');
