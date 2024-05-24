@@ -140,6 +140,23 @@ export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: uni
     return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
 }
 
+/**
+ * Get the menu text to use when changing a task date relative to today's date.
+ * @param task
+ * @param _amount - the number of timeUnits to increment by.
+ * @param _timeUnit - the increment to postpone by (day, week, month....)
+ *
+ * @see postponeMenuItemTitle
+ */
+export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: unitOfTime.DurationConstructor) {
+    const updatedDateType = getDateFieldToPostpone(task)!;
+    if (updatedDateType === 'scheduledDate' && task.scheduledDateIsInferred) {
+        return 'Cannot remove inferred scheduled date';
+    } else {
+        return `Remove ${updatedDateType}`;
+    }
+}
+
 function postponeMenuItemTitleFromDate(
     updatedDateType: HappensDate,
     dateToUpdate: moment.Moment,
