@@ -14,7 +14,7 @@ import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditing
 
 type NamingFunction = (task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) => string;
 
-type PostponingFunction = (
+export type PostponingFunction = (
     task: Task,
     dateFieldToPostpone: HappensDate,
     timeUnit: unitOfTime.DurationConstructor,
