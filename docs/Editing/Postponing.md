@@ -21,7 +21,7 @@ The ⏩ button in Tasks Search results allows you to quickly postpone (or "snooz
 > [!released]
 >
 > - Postpone was introduced in Tasks 5.3.0.
-> - The ability to remove the existing date was introduced in Tasks X.Y.Z.
+> - The ability to remove the existing date was introduced in Tasks 7.3.0.
 
 ### Click and Context Menu
 
