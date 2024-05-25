@@ -55,7 +55,9 @@ describe('PostponeMenu', () => {
               Scheduled in a week, on Sun 10th Dec
               Scheduled in 2 weeks, on Sun 17th Dec
               Scheduled in 3 weeks, on Sun 24th Dec
-              Scheduled in a month, on Wed 3rd Jan"
+              Scheduled in a month, on Wed 3rd Jan
+              ---
+              Remove scheduled date"
         `);
     });
 
@@ -75,7 +77,9 @@ describe('PostponeMenu', () => {
               Due in a week, on Sun 10th Dec
               Due in 2 weeks, on Sun 17th Dec
               Due in 3 weeks, on Sun 24th Dec
-              Due in a month, on Wed 3rd Jan"
+              Due in a month, on Wed 3rd Jan
+              ---
+              Remove due date"
         `);
     });
 
@@ -96,13 +100,17 @@ describe('PostponeMenu', () => {
               Start in a week, on Sun 10th Dec
               Start in 2 weeks, on Sun 17th Dec
               Start in 3 weeks, on Sun 24th Dec
-              Start in a month, on Wed 3rd Jan"
+              Start in a month, on Wed 3rd Jan
+              ---
+              Remove start date"
         `);
     });
 
-    it('should populate the menu for task scheduled tomorrow', () => {
+    it('should populate the menu for task scheduled tomorrow, with inferred scheduled date', () => {
         // Arrange
-        const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(tomorrow));
+        const itemsAsText = contentsOfPostponeMenuForTask(
+            new TaskBuilder().scheduledDate(tomorrow).scheduledDateIsInferred(true),
+        );
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
               Scheduled today, on Sun 3rd Dec
@@ -117,7 +125,9 @@ describe('PostponeMenu', () => {
               Postpone scheduled date by a week, to Mon 11th Dec
               Postpone scheduled date by 2 weeks, to Mon 18th Dec
               Postpone scheduled date by 3 weeks, to Mon 25th Dec
-              Postpone scheduled date by a month, to Thu 4th Jan"
+              Postpone scheduled date by a month, to Thu 4th Jan
+              ---
+              Cannot remove inferred scheduled date"
         `);
     });
     it('should populate the menu for task due far ahead', () => {
@@ -138,7 +148,9 @@ describe('PostponeMenu', () => {
               Due in a week, on Sun 10th Dec
               Due in 2 weeks, on Sun 17th Dec
               Due in 3 weeks, on Sun 24th Dec
-              Due in a month, on Wed 3rd Jan"
+              Due in a month, on Wed 3rd Jan
+              ---
+              Remove due date"
         `);
     });
 
