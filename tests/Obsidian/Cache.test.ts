@@ -25,7 +25,7 @@ to represent your test case. Choose a meaningful file name in snake case. See ex
 
 - This will convert all the files 'root/Test Data/*.md' to test functions in 'tests/Obsidian/__test_data__/*.ts'
 
-- Run 'yarn lint' to standardise the formatting in the generated TypeScript files.
+- Run 'yarn lint:test-data' to standardise the formatting in the generated TypeScript files.
 
 - Use the data in the test with `readTasksFromSimulatedFile()`, the argument is the constant you
 created in the previous step.
