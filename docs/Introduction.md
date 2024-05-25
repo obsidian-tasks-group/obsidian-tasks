@@ -13,6 +13,8 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- X.Y.Z:
+  - Add 'Remove date' option to the [[Postponing|postpone]] right-click menu in search results.
 - 7.2.0:
   - Much improved layout of the [[Create or edit Task]] modal, on mobile devices.
   - Add [[Tasks Api#`executeToggleTaskDoneCommand (line string, path string) => string;`|executeToggleTaskDoneCommand()]] to the Tasks API.
