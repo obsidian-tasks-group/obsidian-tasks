@@ -7,15 +7,18 @@ import {
     type HappensDate,
     createFixedDateTask,
     createPostponedTask,
+    createTaskWithDateRemoved,
     fixedDateMenuItemTitle,
     getDateFieldToPostpone,
     postponeButtonTitle,
     postponeMenuItemTitle,
     postponementSuccessMessage,
+    removeDateMenuItemTitle,
     shouldShowPostponeButton,
 } from '../../src/Scripting/Postponer';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import type { PostponingFunction } from '../../src/ui/Menus/PostponeMenu';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -210,6 +213,17 @@ describe('postpone - UI text', () => {
         expect(fixedDateMenuItemTitle(task, 1, 'day')).toEqual('Due tomorrow, on Mon 4th Dec');
         expect(fixedDateMenuItemTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec');
     });
+
+    it('should include date type when removing value', () => {
+        const task = new TaskBuilder().dueDate(yesterday).build();
+        // TODO Include the current date?
+        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Remove due date');
+    });
+
+    it('should not offer to remove an inferred scheduled date', () => {
+        const task = new TaskBuilder().scheduledDate(today).scheduledDateIsInferred(true).build();
+        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Cannot remove inferred scheduled date');
+    });
 });
 
 describe('postpone - new task creation', () => {
@@ -217,19 +231,17 @@ describe('postpone - new task creation', () => {
         task: Task,
         expectedDateField: HappensDate,
         expectedPostponedDate: string,
-        postponingFunction: (
-            task: Task,
-            dateFieldToPostpone: HappensDate,
-            timeUnit: moment.unitOfTime.DurationConstructor,
-            amount: number,
-        ) => {
-            postponedDate: moment.Moment;
-            postponedTask: Task;
-        },
+        postponingFunction: PostponingFunction,
     ) {
         const { postponedDate, postponedTask } = postponingFunction(task, expectedDateField, 'day', 1);
-        expect(postponedDate.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
-        expect(postponedTask[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+        if (expectedPostponedDate.length > 0) {
+            expect(postponedDate).not.toBeNull();
+            expect(postponedDate!.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+            expect(postponedTask[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+        } else {
+            expect(postponedDate).toBeNull();
+            expect(postponedTask[expectedDateField]).toBeNull();
+        }
 
         // If the scheduled date was inferred from the filename, and it is the scheduledDate that was postponed,
         // we must ensure that the 'inferred' flag has been reset to false.
@@ -264,6 +276,11 @@ describe('postpone - new task creation', () => {
         const task = new TaskBuilder().startDate('2024-03-05').build();
         testPostponedTaskAndDate(task, 'startDate', '2023-12-04', createFixedDateTask);
     });
+
+    it('should remove a date', () => {
+        const task = new TaskBuilder().startDate('2024-03-05').build();
+        testPostponedTaskAndDate(task, 'startDate', '', createTaskWithDateRemoved);
+    });
 });
 
 describe('postpone - postponement success message', () => {
@@ -275,5 +292,10 @@ describe('postpone - postponement success message', () => {
     it('should generate a message for an invalid date', () => {
         const message = postponementSuccessMessage(moment(invalidDate), 'dueDate');
         expect(message).toEqual("Task's dueDate changed to Invalid date");
+    });
+
+    it('should generate a message for a removed date', () => {
+        const message = postponementSuccessMessage(null, 'dueDate');
+        expect(message).toEqual("Task's dueDate removed");
     });
 });
