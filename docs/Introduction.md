@@ -22,12 +22,12 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
 - 7.1.0:
   - Much improved layout of the [[Create or edit Task]] modal, on desktop machines.
   - Add access keys for Created, Done and Cancelled dates in [[Create or edit Task]].
-- 7.0.0:
-  - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks 7.0.0|the appendix]] for details.
-  - Add documentation page [[Resources]], with links to write-ups,  talks and sample vaults from users.
 
 > [!Released]- Earlier Releases
 >
+> - 7.0.0:
+>   - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks 7.0.0|the appendix]] for details.
+>   - Add documentation page [[Resources]], with links to write-ups,  talks and sample vaults from users.
 > - 6.1.0:
 >   - Add support for [[task dependencies]]:
 >     - First, [[Create or edit Task#Dependencies|use 'Create or edit Task']] to define the order in which you want to work on a set of tasks, using two new task emojis: 🆔  and ⛔.
