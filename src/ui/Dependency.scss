@@ -1,6 +1,6 @@
 .task-dependencies-container {
-    padding-bottom: 4px;
-    padding-top: 4px;
+    grid-column: 2;
+
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -10,7 +10,7 @@
     background-color: var(--interactive-normal);
     box-shadow: var(--input-shadow);
     border-radius: 28px;
-    padding: 6px 8px 6px 12px;
+    padding: 4px 4px 4px 8px;
 }
 
 .task-dependency-name {
@@ -23,12 +23,10 @@
 
 .task-dependency-delete {
     padding: 3px;
-    border-radius: 50%;
-    margin-left: 6px;
     cursor: pointer;
     height: inherit;
     box-shadow: none !important;
-    background-color: var(--background-primary) !important;
+    border-radius: 50%;
 }
 
 .task-dependency-dropdown {

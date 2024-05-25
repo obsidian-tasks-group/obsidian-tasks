@@ -1,34 +1,24 @@
 .tasks-modal {
-    .with-accesskeys {
-        .accesskey-first::first-letter, .accesskey {
-            text-decoration: underline;
-            text-underline-offset: 1pt;
-        }
+    section + section {
+            // Put some space when sections are one next to another
+            margin-top: 6px;
     }
 
     hr {
-        margin: 0.35rem 0 0.85rem 0;
+        margin: 6px 0;
     }
 
     .tasks-modal-error {
         border: 1px solid red !important;
     }
+
+    .accesskey {
+        text-decoration: underline;
+        text-underline-offset: 1pt;
+    }
 }
 
-.tasks-modal-section {
-    + .tasks-modal-section {
-        margin-top: 8px;
-    }
-
-    label + input[type="checkbox"] {
-        margin-left: 0.67em;
-        top: 2px;
-    }
-
-    input[type="text"] {
-        width: 100%;
-    }
-
+.tasks-modal-description-section {
     textarea {
         width: 100%;
         min-height: calc(var(--input-height) * 2);
@@ -37,46 +27,46 @@
     }
 }
 
-.tasks-modal-priorities {
+.tasks-modal-priority-section {
     display: grid;
     grid-template-columns: 6em auto auto auto;
     grid-column-gap: 0.5em;
     grid-row-gap: 0.15em;
-
-    span {
-        white-space: nowrap;
-    }
 
     > label {
         grid-row-start: 1;
         grid-row-end: 3;
     }
 
-    input + label {
-        font-size: var(--font-ui-small);
-        border-radius: var(--input-radius);
-        padding: 2px 3px;
-    }
+    .task-modal-priority-option-container {
+        white-space: nowrap;
 
-    input {
-        accent-color: var(--interactive-accent);
-    }
+        input + label {
+            font-size: var(--font-ui-small);
+            border-radius: var(--input-radius);
+            padding: 2px 3px;
+        }
 
-    input:focus + label {
-        box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
-        border-color: var(--background-modifier-border-focus);
-    }
+        input {
+            accent-color: var(--interactive-accent);
+        }
 
-    input:checked + label {
-        font-weight: bold;
-    }
+        input:focus + label {
+            box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+            border-color: var(--background-modifier-border-focus);
+        }
 
-    input:not(:checked) + label > span:nth-child(4) {
-        filter: grayscale(100%) opacity(60%);
+        input:checked + label {
+            font-weight: bold;
+        }
+
+        input:not(:checked) + label > span:nth-child(4) {
+            filter: grayscale(100%) opacity(60%);
+        }
     }
 }
 
-.tasks-modal-dates {
+.tasks-modal-dates-section {
     display: grid;
     grid-template-columns: 6.0em auto;
     grid-auto-columns: 1fr;
@@ -88,35 +78,49 @@
         grid-column: 1;
     }
 
-    .input {
-        grid-column: 2;
-    }
-
-    .input[type=text] {
+    .tasks-modal-date-input {
         min-width: 15em;
     }
 
-    .results {
+    .tasks-modal-parsed-date {
         grid-column: 3;
         font-size: var(--font-ui-small);
-    }
-
-    .results-dependency {
-        grid-column: 2;
     }
 
     .future-dates-only {
         grid-column-start: 1;
         grid-column-end: 3;
+
+        input {
+            margin-left: 0.67em;
+            top: 2px;
+        }
     }
 
-    select {
+    .status-editor-status-selector {
         grid-column: 2;
         width: 15em;
     }
 }
 
-.tasks-modal-buttons {
+.tasks-modal-dependencies-section {
+    display: grid;
+    grid-template-columns: 6.0em auto;
+    grid-auto-columns: 1fr;
+    row-gap: 5px;
+    align-items: center;
+
+    .tasks-modal-dependency-input {
+        grid-column: 2;
+        width: 100%;
+    }
+
+    .results-dependency {
+        grid-column: 2;
+    }
+}
+
+.tasks-modal-button-section {
     position: sticky;
     bottom: 0;
     background-color: var(--modal-background);
@@ -133,63 +137,80 @@
 }
 
 @media (max-width: 649px) {
-    .tasks-modal-priorities {
-        grid-template-columns: 4em 7.5em 5em;
-        margin-bottom: -10px;
-    }
+    .tasks-modal-priority-section {
+        grid-template-columns: 6em auto auto;
 
-    .tasks-modal-priorities > label {
-        grid-row: 1 / span 7;
+        > label {
+            grid-row: 1 / span 3;
+        }
     }
 }
 
 @media (max-width: 499px) {
-    .tasks-modal-dates {
+    .tasks-modal-priority-section {
+        grid-template-columns: 4em auto auto;
+    }
+
+    .tasks-modal-dates-section {
         grid-template-columns: 1fr;
         grid-auto-columns: auto;
+
+        .tasks-modal-date-input {
+            grid-column: 1;
+        }
+
+        .tasks-modal-parsed-date {
+            grid-column: 2;
+        }
+
+        .status-editor-status-selector {
+            grid-column: 1;
+        }
+    }
+
+    .tasks-modal-dependencies-section {
+        label {
+            grid-column: 1;
+        }
 
         .results-dependency {
             grid-column: 1;
         }
     }
-
-    .tasks-modal-dates > label {
-        margin: 0;
-    }
-
-    .tasks-modal-dates > .input, .tasks-modal-dates > .results {
-        grid-column: 1;
-    }
-
-    .tasks-modal-dates > div {
-        grid-column-end: 1;
-    }
 }
 
 @media (max-width: 399px) {
-    .tasks-modal-dates {
-        select {
+    .tasks-modal-dates-section {
+        .status-editor-status-selector {
             grid-column: 1;
             width: auto;
         }
+
+        > .tasks-modal-parsed-date {
+            grid-column: 1;
+        }
     }
 
-    .tasks-modal-priorities {
+    .tasks-modal-priority-section {
         grid-template-columns: 4em auto;
+
+        > label {
+            grid-row: 1 / span 6;
+        }
     }
 
-    .tasks-modal-priorities > label {
-        grid-row: 1 / span 7;
+    .tasks-modal-dependencies-section {
+        grid-template-columns: 1fr;
+        grid-auto-columns: auto;
     }
 }
 
 @media (max-width: 259px) {
-    .tasks-modal-priorities {
+    .tasks-modal-priority-section {
         grid-template-columns: 1fr;
-        margin-bottom: 0;
-    }
 
-    .tasks-modal-priorities > label {
-        grid-row: 1;
+        > label {
+            grid-row: 1;
+        }
     }
 }

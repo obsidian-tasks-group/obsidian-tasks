@@ -79,6 +79,8 @@ Obsidian allows you to assign a [hotkey](https://help.obsidian.md/Customization/
 | In Tasks query search results | Live Preview | ❌     |
 | In Tasks query search results | Reading mode | ❌     |
 
+Since Tasks 7.2.0, this command can also be triggered programmatically via the [[Tasks Api#`executeToggleTaskDoneCommand (line string, path string) => string;`|Tasks API]].
+
 ## Edit task modal
 
 The [[Create or edit Task]] modal also allows editing of task statuses.

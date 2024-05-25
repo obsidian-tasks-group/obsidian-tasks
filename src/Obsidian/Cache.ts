@@ -9,13 +9,101 @@ import { DateFallback } from '../Task/DateFallback';
 import { getSettings } from '../Config/Settings';
 import { Lazy } from '../lib/Lazy';
 import { TaskLocation } from '../Task/TaskLocation';
-import { logging } from '../lib/logging';
+import { Logger, logging } from '../lib/logging';
 import type { TasksEvents } from './TasksEvents';
 
 export enum State {
     Cold = 'Cold',
     Initializing = 'Initializing',
     Warm = 'Warm',
+}
+
+export function getTasksFromFileContent2(
+    filePath: string,
+    fileContent: string,
+    listItems: ListItemCache[],
+    logger: Logger,
+    fileCache: CachedMetadata,
+    errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+) {
+    const tasksFile = new TasksFile(filePath);
+    const tasks: Task[] = [];
+    const fileLines = fileContent.split('\n');
+    const linesInFile = fileLines.length;
+
+    // Lazily store date extracted from filename to avoid parsing more than needed
+    // this.logger.debug(`getTasksFromFileContent() reading ${file.path}`);
+    const dateFromFileName = new Lazy(() => DateFallback.fromPath(filePath));
+
+    // We want to store section information with every task so
+    // that we can use that when we post process the markdown
+    // rendered lists.
+    let currentSection: SectionCache | null = null;
+    let sectionIndex = 0;
+    for (const listItem of listItems) {
+        if (listItem.task !== undefined) {
+            const lineNumber = listItem.position.start.line;
+            if (lineNumber >= linesInFile) {
+                /*
+                    Obsidian CachedMetadata has told us that there is a task on lineNumber, but there are
+                    not that many lines in the file.
+
+                    This was the underlying cause of all the 'Stuck on "Loading Tasks..."' messages,
+                    as it resulted in the line 'undefined' being parsed.
+
+                    Somehow the file had been shortened whilst Obsidian was closed, meaning that
+                    when Obsidian started up, it got the new file content, but still had the old cached
+                    data about locations of list items in the file.
+                 */
+                logger.debug(
+                    `${filePath} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
+                );
+                return tasks;
+            }
+            if (currentSection === null || currentSection.position.end.line < lineNumber) {
+                // We went past the current section (or this is the first task).
+                // Find the section that is relevant for this task and the following of the same section.
+                currentSection = Cache.getSection(lineNumber, fileCache.sections);
+                sectionIndex = 0;
+            }
+
+            if (currentSection === null) {
+                // Cannot process a task without a section.
+                continue;
+            }
+
+            const line = fileLines[lineNumber];
+            if (line === undefined) {
+                logger.debug(`${filePath}: line ${lineNumber} - ignoring 'undefined' line.`);
+                continue;
+            }
+
+            let task;
+            try {
+                task = Task.fromLine({
+                    line,
+                    taskLocation: new TaskLocation(
+                        tasksFile,
+                        lineNumber,
+                        currentSection.position.start.line,
+                        sectionIndex,
+                        Cache.getPrecedingHeader(lineNumber, fileCache.headings),
+                    ),
+                    fallbackDate: dateFromFileName.value,
+                });
+            } catch (e) {
+                errorReporter(e, filePath, listItem, line);
+                continue;
+            }
+
+            if (task !== null) {
+                sectionIndex++;
+                tasks.push(task);
+            }
+        }
+    }
+
+    return tasks;
 }
 
 export class Cache {
@@ -236,7 +324,14 @@ export class Cache {
         if (listItems !== undefined) {
             // Only read the file and process for tasks if there are list items.
             const fileContent = await this.vault.cachedRead(file);
-            newTasks = this.getTasksFromFileContent(fileContent, listItems, fileCache, file);
+            newTasks = this.getTasksFromFileContent(
+                fileContent,
+                listItems,
+                fileCache,
+                file.path,
+                this.reportTaskParsingErrorToUser,
+                this.logger,
+            );
         }
 
         // If there are no changes in any of the tasks, there's
@@ -277,93 +372,18 @@ export class Cache {
         fileContent: string,
         listItems: ListItemCache[],
         fileCache: CachedMetadata,
-        file: TFile,
+        filePath: string,
+        errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+        logger: Logger,
     ): Task[] {
-        const tasksFile = new TasksFile(file.path);
-        const tasks: Task[] = [];
-        const fileLines = fileContent.split('\n');
-        const linesInFile = fileLines.length;
-
-        // Lazily store date extracted from filename to avoid parsing more than needed
-        // this.logger.debug(`getTasksFromFileContent() reading ${file.path}`);
-        const dateFromFileName = new Lazy(() => DateFallback.fromPath(file.path));
-
-        // We want to store section information with every task so
-        // that we can use that when we post process the markdown
-        // rendered lists.
-        let currentSection: SectionCache | null = null;
-        let sectionIndex = 0;
-        for (const listItem of listItems) {
-            if (listItem.task !== undefined) {
-                const lineNumber = listItem.position.start.line;
-                if (lineNumber >= linesInFile) {
-                    /*
-                        Obsidian CachedMetadata has told us that there is a task on lineNumber, but there are
-                        not that many lines in the file.
-
-                        This was the underlying cause of all the 'Stuck on "Loading Tasks..."' messages,
-                        as it resulted in the line 'undefined' being parsed.
-
-                        Somehow the file had been shortened whilst Obsidian was closed, meaning that
-                        when Obsidian started up, it got the new file content, but still had the old cached
-                        data about locations of list items in the file.
-                     */
-                    this.logger.debug(
-                        `${file.path} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
-                    );
-                    return tasks;
-                }
-                if (currentSection === null || currentSection.position.end.line < lineNumber) {
-                    // We went past the current section (or this is the first task).
-                    // Find the section that is relevant for this task and the following of the same section.
-                    currentSection = Cache.getSection(lineNumber, fileCache.sections);
-                    sectionIndex = 0;
-                }
-
-                if (currentSection === null) {
-                    // Cannot process a task without a section.
-                    continue;
-                }
-
-                const line = fileLines[lineNumber];
-                if (line === undefined) {
-                    this.logger.debug(`${file.path}: line ${lineNumber} - ignoring 'undefined' line.`);
-                    continue;
-                }
-
-                let task;
-                try {
-                    task = Task.fromLine({
-                        line,
-                        taskLocation: new TaskLocation(
-                            tasksFile,
-                            lineNumber,
-                            currentSection.position.start.line,
-                            sectionIndex,
-                            Cache.getPrecedingHeader(lineNumber, fileCache.headings),
-                        ),
-                        fallbackDate: dateFromFileName.value,
-                    });
-                } catch (e) {
-                    this.reportTaskParsingErrorToUser(e, file, listItem, line);
-                    continue;
-                }
-
-                if (task !== null) {
-                    sectionIndex++;
-                    tasks.push(task);
-                }
-            }
-        }
-
-        return tasks;
+        return getTasksFromFileContent2(filePath, fileContent, listItems, logger, fileCache, errorReporter);
     }
 
-    private reportTaskParsingErrorToUser(e: any, file: TFile, listItem: ListItemCache, line: string) {
+    private reportTaskParsingErrorToUser(e: any, filePath: string, listItem: ListItemCache, line: string) {
         const msg = `There was an error reading one of the tasks in this vault.
 The following task has been ignored, to prevent Tasks queries getting stuck with 'Loading Tasks ...'
 Error: ${e}
-File: ${file.path}
+File: ${filePath}
 Line number: ${listItem.position.start.line}
 Task line: ${line}
 
@@ -388,7 +408,7 @@ session.
         }
     }
 
-    private static getSection(lineNumberTask: number, sections: SectionCache[] | undefined): SectionCache | null {
+    public static getSection(lineNumberTask: number, sections: SectionCache[] | undefined): SectionCache | null {
         if (sections === undefined) {
             return null;
         }
@@ -402,7 +422,7 @@ session.
         return null;
     }
 
-    private static getPrecedingHeader(lineNumberTask: number, headings: HeadingCache[] | undefined): string | null {
+    public static getPrecedingHeader(lineNumberTask: number, headings: HeadingCache[] | undefined): string | null {
         if (headings === undefined) {
             return null;
         }
