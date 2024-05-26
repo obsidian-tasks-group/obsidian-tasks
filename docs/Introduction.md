@@ -13,6 +13,8 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
+- 7.3.0:
+  - Add 'Remove date' option to the [[Postponing|postpone]] right-click menu in search results.
 - 7.2.0:
   - Much improved layout of the [[Create or edit Task]] modal, on mobile devices.
   - Add [[Tasks Api#`executeToggleTaskDoneCommand (line string, path string) => string;`|executeToggleTaskDoneCommand()]] to the Tasks API.
@@ -20,12 +22,12 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
 - 7.1.0:
   - Much improved layout of the [[Create or edit Task]] modal, on desktop machines.
   - Add access keys for Created, Done and Cancelled dates in [[Create or edit Task]].
-- 7.0.0:
-  - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks 7.0.0|the appendix]] for details.
-  - Add documentation page [[Resources]], with links to write-ups,  talks and sample vaults from users.
 
 > [!Released]- Earlier Releases
 >
+> - 7.0.0:
+>   - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks 7.0.0|the appendix]] for details.
+>   - Add documentation page [[Resources]], with links to write-ups,  talks and sample vaults from users.
 > - 6.1.0:
 >   - Add support for [[task dependencies]]:
 >     - First, [[Create or edit Task#Dependencies|use 'Create or edit Task']] to define the order in which you want to work on a set of tasks, using two new task emojis: 🆔  and ⛔.
