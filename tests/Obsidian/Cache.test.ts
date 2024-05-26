@@ -78,12 +78,17 @@ describe('cache', () => {
         const grandchild1 = tasks[3];
 
         expect(parent.parent).toEqual(null);
-        expect(parent.children).toEqual([]);
+
         expect(child1.parent?.originalMarkdown).toEqual('- [ ] #task parent task');
         expect(child1.parent).toEqual(parent);
+
         expect(child2.parent?.originalMarkdown).toEqual('- [ ] #task parent task');
         expect(child2.parent).toEqual(parent);
+
         expect(grandchild1.parent?.originalMarkdown).toEqual('    - [ ] #task child task 2');
         expect(grandchild1.parent).toEqual(child2);
+
+        // children are not implemented yet
+        expect(parent.children).toEqual([]);
     });
 });
