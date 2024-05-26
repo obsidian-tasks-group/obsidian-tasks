@@ -5,22 +5,24 @@ import {
     type HappensDate,
     createFixedDateTask,
     createPostponedTask,
+    createTaskWithDateRemoved,
     fixedDateMenuItemTitle,
     getDateFieldToPostpone,
     postponeMenuItemTitle,
     postponementSuccessMessage,
+    removeDateMenuItemTitle,
 } from '../../Scripting/Postponer';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 type NamingFunction = (task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) => string;
 
-type PostponingFunction = (
+export type PostponingFunction = (
     task: Task,
     dateFieldToPostpone: HappensDate,
     timeUnit: unitOfTime.DurationConstructor,
     amount: number,
 ) => {
-    postponedDate: moment.Moment;
+    postponedDate: moment.Moment | null;
     postponedTask: Task;
 };
 
@@ -64,6 +66,12 @@ export class PostponeMenu extends TaskEditingMenu {
         this.addItem((item) => postponeMenuItemCallback(button, item, 'weeks', 2, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'weeks', 3, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'month', 1, titlingFunction, postponingFunction));
+
+        this.addSeparator();
+
+        this.addItem((item) =>
+            postponeMenuItemCallback(button, item, 'days', 2, removeDateMenuItemTitle, createTaskWithDateRemoved),
+        );
     }
 
     public static async postponeOnClickCallback(
@@ -89,7 +97,7 @@ export class PostponeMenu extends TaskEditingMenu {
     private static postponeSuccessCallback(
         button: HTMLAnchorElement,
         updatedDateType: HappensDate,
-        postponedDate: Moment,
+        postponedDate: Moment | null,
     ) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
         button.style.pointerEvents = 'none';
