@@ -94,13 +94,7 @@ export function getTasksFromFileContent2(
                 });
 
                 if (task !== null) {
-                    let parentTask: Task | null = null;
-                    if (listItem.parent < 0) {
-                        parentTask = null;
-                    } else {
-                        parentTask = line2Task.get(listItem.parent)!!;
-                    }
-
+                    const parentTask: Task | null = line2Task.get(listItem.parent) ?? null;
                     task = new Task({
                         ...task!!,
                         parent: parentTask,
