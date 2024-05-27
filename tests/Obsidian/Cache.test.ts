@@ -73,6 +73,7 @@ function testRootAndChildren(root: Task, children: Task[]) {
 }
 
 function testChildren(parent: Task, childList: Task[]) {
+    expect(parent.children).toEqual(childList);
     for (const child of childList) {
         expect(child.parent?.originalMarkdown).toEqual(parent.originalMarkdown);
         expect(child.parent).toEqual(parent);
@@ -146,9 +147,6 @@ describe('cache', () => {
 
         testRootAndChildren(parent, [child1, child2]);
         testChildren(child2, [grandchild1]);
-
-        // children are not implemented yet
-        expect(parent.children).toEqual([]);
     });
 
     it('should read one parent, two children and two grandchildren', () => {
@@ -169,9 +167,6 @@ describe('cache', () => {
         testRootAndChildren(parent, [child1, child2]);
         testChildren(child1, [grandchild1]);
         testChildren(child2, [grandchild2]);
-
-        // children are not implemented yet
-        expect(parent.children).toEqual([]);
     });
 
     it('should read one parent, two children, two grandchildren and one sibling', () => {
@@ -194,9 +189,6 @@ describe('cache', () => {
         testChildren(child2, [grandchild2]);
 
         testRootAndChildren(sibling, []);
-
-        // children are not implemented yet
-        expect(parent.children).toEqual([]);
     });
 
     it('should read one parent, 2 children and a sibling', () => {
