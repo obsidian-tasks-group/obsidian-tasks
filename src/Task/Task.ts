@@ -1,22 +1,22 @@
 import type { Moment } from 'moment';
-import { GlobalFilter } from '../Config/GlobalFilter';
 import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
+import { GlobalFilter } from '../Config/GlobalFilter';
+import { StatusRegistry } from '../Statuses/StatusRegistry';
+import type { Status } from '../Statuses/Status';
 import { compareByDate } from '../lib/DateTools';
+import { TasksDate } from '../Scripting/TasksDate';
+import { StatusType } from '../Statuses/StatusConfiguration';
+import type { TasksFile } from '../Scripting/TasksFile';
+import { PriorityTools } from '../lib/PriorityTools';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
-import { PriorityTools } from '../lib/PriorityTools';
-import { TasksDate } from '../Scripting/TasksDate';
-import type { TasksFile } from '../Scripting/TasksFile';
-import type { Status } from '../Statuses/Status';
-import { StatusType } from '../Statuses/StatusConfiguration';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { DateFallback } from './DateFallback';
 import { ListItem } from './ListItem';
-import type { Priority } from './Priority';
+import { Urgency } from './Urgency';
 import type { Recurrence } from './Recurrence';
 import type { TaskLocation } from './TaskLocation';
+import type { Priority } from './Priority';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
-import { Urgency } from './Urgency';
 
 /**
  * Storage for the task line, broken down in to sections.
