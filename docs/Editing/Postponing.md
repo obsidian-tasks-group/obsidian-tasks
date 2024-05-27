@@ -11,14 +11,17 @@ publish: true
 > [!Tip]
 > Do you ever find that your Task list is full of overdue tasks that you scheduled with the best of intentions?
 >
-> And now you want to postpone many of them, so you can focus on the immediate priorities?
+> - And now you want to postpone many of them, so you can focus on the immediate priorities?
+> - Or perhaps you want to remove the date instead?
 >
 > Then the ⏩ Postpone button is for you!
 
 The ⏩ button in Tasks Search results allows you to quickly postpone (or "snooze") a task until tomorrow or later.
 
 > [!released]
-> Introduced in Tasks 5.3.0.
+>
+> - Postpone was introduced in Tasks 5.3.0.
+> - The ability to remove the existing date was introduced in Tasks 7.3.0.
 
 ### Click and Context Menu
 
@@ -34,7 +37,8 @@ The ⏩ button provides two choices:
 
 2. **Right-click** or **press-and-hold** the button to select from a context menu with:
     - future dates in the next 6 days
-    - more future dates, further ahead:
+    - more future dates, further ahead
+    - an option to remove the date instead:
     ![Context menu on the Postpone button shows options for dates before or on today](../images/postpone-overdue-task-context-menu.png)
     <span class="caption">**Context menu** on the Postpone button shows options for dates **before or on today**</span>
     ![Context menu on the Postpone button shows options for future dates.](../images/postpone-future-task-context-menu.png)
