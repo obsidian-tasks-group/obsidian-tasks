@@ -93,9 +93,7 @@ describe('cache', () => {
         const [sibling1, sibling2] = tasks;
 
         testRootAndChildren(sibling1, []);
-
-        testRootTask(sibling2);
-        expect(sibling2.children).toEqual([]);
+        testRootAndChildren(sibling2, []);
     });
 
     it('should read one parent and one child task', () => {
