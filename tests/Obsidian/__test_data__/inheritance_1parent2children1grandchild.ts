@@ -1,5 +1,5 @@
-export const tasks_with_inheritance = {
-    filePath: 'Test Data/tasks_with_inheritance.md',
+export const inheritance_1parent2children1grandchild = {
+    filePath: 'Test Data/inheritance_1parent2children1grandchild.md',
     fileContents:
         '- [ ] #task parent task\n' +
         '    - [ ] #task child task 1\n' +
@@ -8,6 +8,7 @@ export const tasks_with_inheritance = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 0,
@@ -20,9 +21,9 @@ export const tasks_with_inheritance = {
                         offset: 11,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 1,
@@ -35,9 +36,9 @@ export const tasks_with_inheritance = {
                         offset: 39,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 2,
@@ -50,9 +51,9 @@ export const tasks_with_inheritance = {
                         offset: 68,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -65,7 +66,6 @@ export const tasks_with_inheritance = {
                         offset: 101,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -87,6 +87,8 @@ export const tasks_with_inheritance = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -99,10 +101,10 @@ export const tasks_with_inheritance = {
                         offset: 23,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 1,
@@ -115,10 +117,10 @@ export const tasks_with_inheritance = {
                         offset: 52,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -131,10 +133,10 @@ export const tasks_with_inheritance = {
                         offset: 81,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
             {
+                parent: 2,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -147,8 +149,6 @@ export const tasks_with_inheritance = {
                         offset: 114,
                     },
                 },
-                parent: 2,
-                task: ' ',
             },
         ],
     },
