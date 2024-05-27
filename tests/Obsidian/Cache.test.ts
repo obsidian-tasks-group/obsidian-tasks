@@ -7,6 +7,7 @@ import type { Task } from 'Task/Task';
 import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
 import { inheritance_1parent1child } from './__test_data__/inheritance_1parent1child';
+import { inheritance_1parent1child1sibling_emptystring } from './__test_data__/inheritance_1parent1child1sibling_emptystring';
 import { inheritance_1parent2children } from './__test_data__/inheritance_1parent2children';
 import { inheritance_1parent2children1grandchild } from './__test_data__/inheritance_1parent2children1grandchild';
 import { inheritance_1parent2children1sibling } from './__test_data__/inheritance_1parent2children1sibling';
@@ -205,6 +206,26 @@ describe('cache', () => {
         const [parent, child1, child2, sibling] = tasks;
 
         testRootAndChildren(parent, [child1, child2]);
+        testRootAndChildren(sibling, []);
+    });
+
+    it('should read sibling separated by empty line', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_1parent1child1sibling_emptystring);
+        expect(inheritance_1parent1child1sibling_emptystring.fileContents).toMatchInlineSnapshot(`
+            "- [ ] #task parent task
+                - [ ] #task child task 1
+
+             - [ ] #task sibling
+            "
+        `);
+
+        expect(tasks.length).toEqual(3);
+
+        const [parent, child, sibling] = tasks;
+
+        testRootAndChildren(parent, [child]);
+        testChildren(child, []);
+
         testRootAndChildren(sibling, []);
     });
 });
