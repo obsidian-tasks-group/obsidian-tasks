@@ -131,10 +131,7 @@ describe('cache', () => {
 
         const [parent, child1, child2] = tasks;
 
-        testRootTask(parent);
-
-        testChildToHaveParent(child1, parent);
-        testChildToHaveParent(child2, parent);
+        testRootAndChildren(parent, [child1, child2]);
     });
 
     it('should read one parent, two children and one grandchild', () => {
@@ -151,10 +148,7 @@ describe('cache', () => {
 
         const [parent, child1, child2, grandchild1] = tasks;
 
-        testRootTask(parent);
-
-        testChildToHaveParent(child1, parent);
-        testChildToHaveParent(child2, parent);
+        testRootAndChildren(parent, [child1, child2]);
         testChildToHaveParent(grandchild1, child2);
 
         // children are not implemented yet
@@ -176,11 +170,8 @@ describe('cache', () => {
 
         const [parent, child1, grandchild1, child2, grandchild2] = tasks;
 
-        testRootTask(parent);
-
-        testChildToHaveParent(child1, parent);
+        testRootAndChildren(parent, [child1, child2]);
         testChildToHaveParent(grandchild1, child1);
-        testChildToHaveParent(child2, parent);
         testChildToHaveParent(grandchild2, child2);
 
         // children are not implemented yet
@@ -202,14 +193,11 @@ describe('cache', () => {
 
         const [parent, child1, grandchild1, child2, grandchild2, sibling] = tasks;
 
-        testRootTask(parent);
-
-        testChildToHaveParent(child1, parent);
+        testRootAndChildren(parent, [child1, child2]);
         testChildToHaveParent(grandchild1, child1);
-        testChildToHaveParent(child2, parent);
         testChildToHaveParent(grandchild2, child2);
 
-        testRootTask(sibling);
+        testRootAndChildren(sibling, []);
 
         // children are not implemented yet
         expect(parent.children).toEqual([]);
@@ -228,11 +216,7 @@ describe('cache', () => {
 
         const [parent, child1, child2, sibling] = tasks;
 
-        testRootTask(parent);
-
-        testChildToHaveParent(child1, parent);
-        testChildToHaveParent(child2, parent);
-
-        testRootTask(sibling);
+        testRootAndChildren(parent, [child1, child2]);
+        testRootAndChildren(sibling, []);
     });
 });
