@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+import moment from 'moment/moment';
 import type { CachedMetadata } from 'obsidian';
 import type { Task } from 'Task/Task';
 import { logging } from '../../src/lib/logging';
@@ -10,6 +14,8 @@ import { inheritance_1parent2children2grandchildren } from './__test_data__/inhe
 import { inheritance_1parent2children2grandchildren1sibling } from './__test_data__/inheritance_1parent2children2grandchildren1sibling';
 import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
 import { one_task } from './__test_data__/one_task';
+
+window.moment = moment;
 
 function errorReporter() {
     return;
@@ -71,7 +77,10 @@ function testChildToHaveParent(child1: Task, parent: Task) {
 
 function testRootAndChildren(root: Task, children: Task[]) {
     testRootTask(root);
-    expect(root.children).toEqual(children);
+
+    for (const child of children) {
+        testChildToHaveParent(child, root);
+    }
 }
 
 describe('cache', () => {
@@ -107,9 +116,7 @@ describe('cache', () => {
 
         const [parent, child] = tasks;
 
-        testRootTask(parent);
-
-        testChildToHaveParent(child, parent);
+        testRootAndChildren(parent, [child]);
     });
 
     it('should read one parent and two children task', () => {
