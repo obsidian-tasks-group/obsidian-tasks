@@ -85,8 +85,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(2);
 
-        const sibling1 = tasks[0];
-        const sibling2 = tasks[1];
+        const [sibling1, sibling2] = tasks;
 
         testRootTask(sibling1);
         testRootTask(sibling2);
@@ -104,8 +103,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(2);
 
-        const parent = tasks[0];
-        const child = tasks[1];
+        const [parent, child] = tasks;
 
         testRootTask(parent);
 
@@ -122,9 +120,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(3);
 
-        const parent = tasks[0];
-        const child1 = tasks[1];
-        const child2 = tasks[2];
+        const [parent, child1, child2] = tasks;
 
         testRootTask(parent);
 
@@ -144,10 +140,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(4);
 
-        const parent = tasks[0];
-        const child1 = tasks[1];
-        const child2 = tasks[2];
-        const grandchild1 = tasks[3];
+        const [parent, child1, child2, grandchild1] = tasks;
 
         testRootTask(parent);
 
@@ -172,11 +165,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(5);
 
-        const parent = tasks[0];
-        const child1 = tasks[1];
-        const grandchild1 = tasks[2];
-        const child2 = tasks[3];
-        const grandchild2 = tasks[4];
+        const [parent, child1, grandchild1, child2, grandchild2] = tasks;
 
         testRootTask(parent);
 
@@ -202,12 +191,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(6);
 
-        const parent = tasks[0];
-        const child1 = tasks[1];
-        const grandchild1 = tasks[2];
-        const child2 = tasks[3];
-        const grandchild2 = tasks[4];
-        const sibling = tasks[5];
+        const [parent, child1, grandchild1, child2, grandchild2, sibling] = tasks;
 
         testRootTask(parent);
 
@@ -233,10 +217,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(4);
 
-        const parent = tasks[0];
-        const child1 = tasks[1];
-        const child2 = tasks[2];
-        const sibling = tasks[3];
+        const [parent, child1, child2, sibling] = tasks;
 
         testRootTask(parent);
 
