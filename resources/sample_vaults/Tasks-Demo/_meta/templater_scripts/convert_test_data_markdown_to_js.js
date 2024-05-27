@@ -9,6 +9,13 @@ async function convertMarkdownFileToTestFunction(filePath) {
     const data = { filePath, fileContents, cachedMetadata };
 
     const filename = filePath.split('/')[1].replace('.md', '');
+    if (filename.includes(' ')) {
+        // The file name is used to create a TypeScript variable, so disallow spaces:
+        const message = `ERROR - spaces not allowed in filenames: "${filename}"`;
+        new Notice(message);
+        return '';
+    }
+
     const rootOfVault = app.vault.adapter.getBasePath();
     const testSourceFile = rootOfVault + '/../../../tests/Obsidian/__test_data__/' + filename + '.ts';
 
@@ -36,7 +43,7 @@ async function export_files(msg) {
         await convertMarkdownFileToTestFunction(file);
     }
 
-    const message = 'Success - now run "yarn lint" to format the generated files.';
+    const message = 'Success - now run "yarn lint:test-data" to format the generated files.';
     new Notice(message);
     return '';
 }
