@@ -99,7 +99,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
             if (value.context.file.basename == newTask.filename) {
                 // Avoid "Has Been Modified Externally Error" and Replace Task in Editor Context
-                const originalLine = value.taskItDependsOn.toFileLineString();
+                const originalLine = value.taskItDependsOn.originalMarkdown;
                 console.log(originalLine);
                 const start = {
                     line: value.taskItDependsOn.lineNumber,
