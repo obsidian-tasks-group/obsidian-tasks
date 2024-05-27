@@ -88,9 +88,9 @@ describe('cache', () => {
         const [sibling1, sibling2] = tasks;
 
         testRootTask(sibling1);
-        testRootTask(sibling2);
-
         expect(sibling1.children).toEqual([]);
+
+        testRootTask(sibling2);
         expect(sibling2.children).toEqual([]);
     });
 
