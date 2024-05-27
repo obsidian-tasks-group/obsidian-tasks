@@ -66,11 +66,6 @@ function readTasksFromSimulatedFile(testData: SimulatedFile) {
     );
 }
 
-function testChildToHaveParent(child: Task, parent: Task) {
-    expect(child.parent?.originalMarkdown).toEqual(parent.originalMarkdown);
-    expect(child.parent).toEqual(parent);
-}
-
 function testRootAndChildren(root: Task, children: Task[]) {
     expect(root.parent).toEqual(null);
 
@@ -79,7 +74,8 @@ function testRootAndChildren(root: Task, children: Task[]) {
 
 function testChildren(parent: Task, childList: Task[]) {
     for (const child of childList) {
-        testChildToHaveParent(child, parent);
+        expect(child.parent?.originalMarkdown).toEqual(parent.originalMarkdown);
+        expect(child.parent).toEqual(parent);
     }
 }
 
