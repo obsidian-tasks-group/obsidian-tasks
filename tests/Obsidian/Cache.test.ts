@@ -79,6 +79,12 @@ function testRootAndChildren(root: Task, children: Task[]) {
     }
 }
 
+function testChildren(parent: Task, childList: Task[]) {
+    for (const child of childList) {
+        testChildToHaveParent(child, parent);
+    }
+}
+
 describe('cache', () => {
     it('should read one task', () => {
         const tasks = readTasksFromSimulatedFile(one_task);
@@ -147,9 +153,7 @@ describe('cache', () => {
         testRootAndChildren(parent, [child1, child2]);
         const parentToTest = child2;
         const childList = [grandchild1];
-        for (const child of childList) {
-            testChildToHaveParent(child, parentToTest);
-        }
+        testChildren(parentToTest, childList);
 
         // children are not implemented yet
         expect(parent.children).toEqual([]);
