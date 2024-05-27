@@ -1,4 +1,5 @@
 import type { CachedMetadata } from 'obsidian';
+import type { Task } from 'Task/Task';
 import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
 import { one_task } from './__test_data__/one_task';
@@ -53,6 +54,10 @@ function readTasksFromSimulatedFile(testData: SimulatedFile) {
     );
 }
 
+function testRootTask(parent: Task) {
+    expect(parent.parent).toEqual(null);
+}
+
 describe('cache', () => {
     it('should read one task', () => {
         const tasks = readTasksFromSimulatedFile(one_task);
@@ -77,7 +82,7 @@ describe('cache', () => {
         const child2 = tasks[2];
         const grandchild1 = tasks[3];
 
-        expect(parent.parent).toEqual(null);
+        testRootTask(parent);
 
         expect(child1.parent?.originalMarkdown).toEqual('- [ ] #task parent task');
         expect(child1.parent).toEqual(parent);
