@@ -2,6 +2,7 @@ import type { CachedMetadata } from 'obsidian';
 import type { Task } from 'Task/Task';
 import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
+import { inheritance_1parent1child } from './__test_data__/inheritance_1parent1child';
 import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
 import { one_task } from './__test_data__/one_task';
 import { tasks_with_inheritance } from './__test_data__/tasks_with_inheritance';
@@ -88,6 +89,23 @@ describe('cache', () => {
 
         expect(sibling1.children).toEqual([]);
         expect(sibling2.children).toEqual([]);
+    });
+
+    it('should read one parent and one child task', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_1parent1child);
+        expect(inheritance_1parent1child.fileContents).toMatchInlineSnapshot(`
+            "- [ ] #task parent
+                - [ ] #task child"
+        `);
+
+        expect(tasks.length).toEqual(2);
+
+        const parent = tasks[0];
+        const child = tasks[1];
+
+        testRootTask(parent);
+
+        testChildToHaveParent(child, parent);
     });
 
     it('should read parent and child tasks', () => {
