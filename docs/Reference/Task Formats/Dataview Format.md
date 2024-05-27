@@ -135,8 +135,8 @@ For more information, see [[Recurring Tasks]].
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_dataview-snippet.approved.md -->
 ```md
-- [ ] #task Remove this task when done [onCompletion:: delete]
-- [ ] #task Remove completed instance of this recurring task when done [repeat:: every day when done] [onCompletion:: delete]
+- [ ] #task Remove this task when done  [onCompletion:: delete]
+- [ ] #task Remove completed instance of this recurring task when done  [repeat:: every day when done]  [onCompletion:: delete]
 ```
 <!-- endSnippet -->
 
