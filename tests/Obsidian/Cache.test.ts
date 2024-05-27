@@ -7,6 +7,7 @@ import { inheritance_1parent2children } from './__test_data__/inheritance_1paren
 import { inheritance_1parent2children1grandchild } from './__test_data__/inheritance_1parent2children1grandchild';
 import { inheritance_1parent2children1sibling } from './__test_data__/inheritance_1parent2children1sibling';
 import { inheritance_1parent2children2grandchildren } from './__test_data__/inheritance_1parent2children2grandchildren';
+import { inheritance_1parent2children2grandchildren1sibling } from './__test_data__/inheritance_1parent2children2grandchildren1sibling';
 import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
 import { one_task } from './__test_data__/one_task';
 
@@ -183,6 +184,39 @@ describe('cache', () => {
         testChildToHaveParent(grandchild1, child1);
         testChildToHaveParent(child2, parent);
         testChildToHaveParent(grandchild2, child2);
+
+        // children are not implemented yet
+        expect(parent.children).toEqual([]);
+    });
+
+    it.failing('should read one parent, two children, two grandchildren and one sibling', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_1parent2children2grandchildren1sibling);
+        expect(inheritance_1parent2children2grandchildren1sibling.fileContents).toMatchInlineSnapshot(`
+            "- [ ] #task parent task
+                - [ ] #task child task 1
+                    - [ ] #task grandchild 1
+                - [ ] #task child task 2
+                    - [ ] #task grandchild 2
+            - [ ] #task sibling"
+        `);
+
+        expect(tasks.length).toEqual(6);
+
+        const parent = tasks[0];
+        const child1 = tasks[1];
+        const grandchild1 = tasks[2];
+        const child2 = tasks[3];
+        const grandchild2 = tasks[4];
+        const sibling = tasks[5];
+
+        testRootTask(parent);
+
+        testChildToHaveParent(child1, parent);
+        testChildToHaveParent(grandchild1, child1);
+        testChildToHaveParent(child2, parent);
+        testChildToHaveParent(grandchild2, child2);
+
+        testRootTask(sibling);
 
         // children are not implemented yet
         expect(parent.children).toEqual([]);
