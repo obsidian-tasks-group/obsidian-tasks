@@ -40,6 +40,7 @@ export function getTasksFromFileContent2(
     // rendered lists.
     let currentSection: SectionCache | null = null;
     let sectionIndex = 0;
+    const line2Task: Map<number, Task> = new Map();
     for (const listItem of listItems) {
         if (listItem.task !== undefined) {
             const lineNumber = listItem.position.start.line;
@@ -91,6 +92,22 @@ export function getTasksFromFileContent2(
                     ),
                     fallbackDate: dateFromFileName.value,
                 });
+
+                if (task !== null) {
+                    // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
+                    // That is not a problem, as we never put a negative number in line2Task map, so parent will be null.
+                    const parentTask: Task | null = line2Task.get(listItem.parent) ?? null;
+                    if (parentTask !== null) {
+                        task = new Task({
+                            ...task,
+                            parent: parentTask,
+                        });
+
+                        parentTask.children.push(task);
+                    }
+
+                    line2Task.set(lineNumber, task);
+                }
             } catch (e) {
                 errorReporter(e, filePath, listItem, line);
                 continue;
