@@ -94,6 +94,8 @@ export function getTasksFromFileContent2(
                 });
 
                 if (task !== null) {
+                    // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
+                    // That is not a problem, as we never put a negative number in line2Task map, so parent will be null.
                     const parentTask: Task | null = line2Task.get(listItem.parent) ?? null;
                     if (parentTask !== null) {
                         task = new Task({
