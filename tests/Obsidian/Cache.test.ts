@@ -151,7 +151,7 @@ describe('cache', () => {
         expect(parent.children).toEqual([]);
     });
 
-    it.failing('should read one parent, two children and two grandchildren', () => {
+    it('should read one parent, two children and two grandchildren', () => {
         const tasks = readTasksFromSimulatedFile(inheritance_1parent2children2grandchildren);
         expect(inheritance_1parent2children2grandchildren.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
@@ -174,7 +174,7 @@ describe('cache', () => {
         expect(parent.children).toEqual([]);
     });
 
-    it.failing('should read one parent, two children, two grandchildren and one sibling', () => {
+    it('should read one parent, two children, two grandchildren and one sibling', () => {
         const tasks = readTasksFromSimulatedFile(inheritance_1parent2children2grandchildren1sibling);
         expect(inheritance_1parent2children2grandchildren1sibling.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
