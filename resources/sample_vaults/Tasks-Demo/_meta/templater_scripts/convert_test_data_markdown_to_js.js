@@ -16,6 +16,12 @@ async function convertMarkdownFileToTestFunction(filePath) {
         return '';
     }
 
+    if (!fileContents.endsWith('\n')) {
+        const message = `ERROR - missing newline character at end of: "${filename}"`;
+        new Notice(message);
+        return '';
+    }
+
     const rootOfVault = app.vault.adapter.getBasePath();
     const testSourceFile = rootOfVault + '/../../../tests/Obsidian/__test_data__/' + filename + '.ts';
 
