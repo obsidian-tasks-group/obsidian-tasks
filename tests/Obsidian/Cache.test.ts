@@ -4,10 +4,10 @@ import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
 import { inheritance_1parent1child } from './__test_data__/inheritance_1parent1child';
 import { inheritance_1parent2children } from './__test_data__/inheritance_1parent2children';
+import { inheritance_1parent2children1grandchild } from './__test_data__/inheritance_1parent2children1grandchild';
 import { inheritance_1parent2children1sibling } from './__test_data__/inheritance_1parent2children1sibling';
 import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
 import { one_task } from './__test_data__/one_task';
-import { tasks_with_inheritance } from './__test_data__/tasks_with_inheritance';
 
 function errorReporter() {
     return;
@@ -130,9 +130,9 @@ describe('cache', () => {
         testChildToHaveParent(child2, parent);
     });
 
-    it('should read parent and child tasks', () => {
-        const tasks = readTasksFromSimulatedFile(tasks_with_inheritance);
-        expect(tasks_with_inheritance.fileContents).toMatchInlineSnapshot(`
+    it('should read one parent, two children and one grandchild', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_1parent2children1grandchild);
+        expect(inheritance_1parent2children1grandchild.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
                 - [ ] #task child task 1
                 - [ ] #task child task 2
