@@ -52,6 +52,14 @@ describe('DataviewTaskSerializer', () => {
             });
         });
 
+        describe('should parse onCompletion', () => {
+            it('should parse delete action', () => {
+                const onCompletion = '[onCompletion:: delete]';
+                const taskDetails = deserialize(onCompletion);
+                expect(taskDetails).toMatchTaskDetails({ onCompletion: 'delete' });
+            });
+        });
+
         describe('should parse depends on', () => {
             it('should parse depends on one task', () => {
                 const id = '[dependsOn:: F12345]';
@@ -75,14 +83,6 @@ describe('DataviewTaskSerializer', () => {
                 const id = '[dependson:: F12345]';
                 const taskDetails = deserialize(id);
                 expect(taskDetails).toMatchTaskDetails({ description: id, dependsOn: [] });
-            });
-        });
-
-        describe('should parse onCompletion', () => {
-            it('should parse delete action', () => {
-                const onCompletion = '[onCompletion:: delete]';
-                const taskDetails = deserialize(onCompletion);
-                expect(taskDetails).toMatchTaskDetails({ onCompletion: 'delete' });
             });
         });
 
