@@ -6,7 +6,7 @@ export const inheritance_1parent2children2grandchildren1sibling = {
         '        - [ ] #task grandchild 1\n' +
         '    - [ ] #task child task 2\n' +
         '        - [ ] #task grandchild 2\n' +
-        '- [ ] #task sibling',
+        '- [ ] #task sibling\n',
     cachedMetadata: {
         tags: [
             {

@@ -1,6 +1,6 @@
 export const inheritance_2siblings = {
     filePath: 'Test Data/inheritance_2siblings.md',
-    fileContents: '- [ ] #task sibling 1\n- [ ] #task sibling 2',
+    fileContents: '- [ ] #task sibling 1\n- [ ] #task sibling 2\n',
     cachedMetadata: {
         tags: [
             {
