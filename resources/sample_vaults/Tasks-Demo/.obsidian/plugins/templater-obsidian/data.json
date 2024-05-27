@@ -11,7 +11,7 @@
   "auto_jump_to_cursor": false,
   "enable_system_commands": false,
   "shell_path": "",
-  "user_scripts_folder": "",
+  "user_scripts_folder": "_meta/templater_scripts",
   "enable_folder_templates": true,
   "folder_templates": [
     {
@@ -22,7 +22,7 @@
   "syntax_highlighting": true,
   "syntax_highlighting_mobile": false,
   "enabled_templates_hotkeys": [
-    ""
+    "_meta/templates/convert_test_data_markdown_to_js.md"
   ],
   "startup_templates": [
     ""
