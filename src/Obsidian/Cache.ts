@@ -100,6 +100,10 @@ export function getTasksFromFileContent2(
                         parent: parentTask,
                     });
 
+                    if (parentTask !== null) {
+                        parentTask.children.push(task);
+                    }
+
                     line2Task.set(lineNumber, task);
                 }
             } catch (e) {
