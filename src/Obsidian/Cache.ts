@@ -101,6 +101,10 @@ export function getTasksFromFileContent2(
                         parentTask = previousTask;
                     }
 
+                    if (listItem.parent < 0) {
+                        parentTask = null;
+                    }
+
                     task = new Task({
                         ...task!!,
                         parent: parentTask,
