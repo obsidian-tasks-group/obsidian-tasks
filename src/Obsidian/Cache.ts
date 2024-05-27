@@ -44,6 +44,7 @@ export function getTasksFromFileContent2(
     let previousTask: Task | null = null;
     // read this as previousTask.listItem.parent
     let previousTaskListItemParent: number | null = null;
+    const line2Task: Map<number, Task> = new Map();
     for (const listItem of listItems) {
         if (listItem.task !== undefined) {
             const lineNumber = listItem.position.start.line;
@@ -103,12 +104,16 @@ export function getTasksFromFileContent2(
 
                     if (listItem.parent < 0) {
                         parentTask = null;
+                    } else {
+                        parentTask = line2Task.get(listItem.parent)!!;
                     }
 
                     task = new Task({
                         ...task!!,
                         parent: parentTask,
                     });
+
+                    line2Task.set(lineNumber, task);
 
                     if (parentTask === null) {
                         parentTask = task;
