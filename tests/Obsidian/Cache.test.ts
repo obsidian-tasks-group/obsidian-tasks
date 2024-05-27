@@ -90,12 +90,8 @@ describe('cache', () => {
         testRootTask(parent);
 
         testChildToHaveParent(child1, parent);
-
-        expect(child2.parent?.originalMarkdown).toEqual(parent.originalMarkdown);
-        expect(child2.parent).toEqual(parent);
-
-        expect(grandchild1.parent?.originalMarkdown).toEqual(child2.originalMarkdown);
-        expect(grandchild1.parent).toEqual(child2);
+        testChildToHaveParent(child2, parent);
+        testChildToHaveParent(grandchild1, child2);
 
         // children are not implemented yet
         expect(parent.children).toEqual([]);
