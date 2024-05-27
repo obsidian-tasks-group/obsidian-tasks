@@ -98,15 +98,16 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             value.appendText += ` ${newTask.id}`;
 
             if (value.context.file.basename == newTask.filename) {
-                // Avoid "Has Been Modifed Externally Error" and Replace Task in Editor Context
-                console.log(value.taskItDependsOn.toFileLineString());
+                // Avoid "Has Been Modified Externally Error" and Replace Task in Editor Context
+                const originalLine = value.taskItDependsOn.toFileLineString();
+                console.log(originalLine);
                 const start = {
                     line: value.taskItDependsOn.lineNumber,
                     ch: 0,
                 };
                 const end = {
                     line: value.taskItDependsOn.lineNumber,
-                    ch: value.taskItDependsOn.toFileLineString().length,
+                    ch: originalLine.length,
                 };
                 value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
             } else {
