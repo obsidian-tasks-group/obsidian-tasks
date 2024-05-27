@@ -69,6 +69,11 @@ function testChildToHaveParent(child1: Task, parent: Task) {
     expect(child1.parent).toEqual(parent);
 }
 
+function testRootAndChildren(root: Task, children: Task[]) {
+    testRootTask(root);
+    expect(root.children).toEqual(children);
+}
+
 describe('cache', () => {
     it('should read one task', () => {
         const tasks = readTasksFromSimulatedFile(one_task);
@@ -87,8 +92,7 @@ describe('cache', () => {
 
         const [sibling1, sibling2] = tasks;
 
-        testRootTask(sibling1);
-        expect(sibling1.children).toEqual([]);
+        testRootAndChildren(sibling1, []);
 
         testRootTask(sibling2);
         expect(sibling2.children).toEqual([]);
