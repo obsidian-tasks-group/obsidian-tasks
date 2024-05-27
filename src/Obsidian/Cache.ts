@@ -40,10 +40,6 @@ export function getTasksFromFileContent2(
     // rendered lists.
     let currentSection: SectionCache | null = null;
     let sectionIndex = 0;
-    let parentTask: Task | null = null;
-    let previousTask: Task | null = null;
-    // read this as previousTask.listItem.parent
-    let previousTaskListItemParent: number | null = null;
     const line2Task: Map<number, Task> = new Map();
     for (const listItem of listItems) {
         if (listItem.task !== undefined) {
@@ -98,10 +94,7 @@ export function getTasksFromFileContent2(
                 });
 
                 if (task !== null) {
-                    if (previousTaskListItemParent !== listItem.parent) {
-                        parentTask = previousTask;
-                    }
-
+                    let parentTask: Task | null = null;
                     if (listItem.parent < 0) {
                         parentTask = null;
                     } else {
@@ -114,13 +107,6 @@ export function getTasksFromFileContent2(
                     });
 
                     line2Task.set(lineNumber, task);
-
-                    if (parentTask === null) {
-                        parentTask = task;
-                    }
-
-                    previousTask = task;
-                    previousTaskListItemParent = listItem.parent;
                 }
             } catch (e) {
                 errorReporter(e, filePath, listItem, line);
