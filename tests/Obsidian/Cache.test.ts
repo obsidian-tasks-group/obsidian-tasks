@@ -58,6 +58,11 @@ function testRootTask(parent: Task) {
     expect(parent.parent).toEqual(null);
 }
 
+function testChildToHaveParent(child1: Task, parent: Task) {
+    expect(child1.parent?.originalMarkdown).toEqual(parent.originalMarkdown);
+    expect(child1.parent).toEqual(parent);
+}
+
 describe('cache', () => {
     it('should read one task', () => {
         const tasks = readTasksFromSimulatedFile(one_task);
@@ -84,8 +89,7 @@ describe('cache', () => {
 
         testRootTask(parent);
 
-        expect(child1.parent?.originalMarkdown).toEqual(parent.originalMarkdown);
-        expect(child1.parent).toEqual(parent);
+        testChildToHaveParent(child1, parent);
 
         expect(child2.parent?.originalMarkdown).toEqual(parent.originalMarkdown);
         expect(child2.parent).toEqual(parent);
