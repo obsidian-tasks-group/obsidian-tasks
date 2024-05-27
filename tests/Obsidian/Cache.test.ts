@@ -7,6 +7,7 @@ import type { Task } from 'Task/Task';
 import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
 import { inheritance_1parent1child } from './__test_data__/inheritance_1parent1child';
+import { inheritance_1parent1child1newroot_after_header } from './__test_data__/inheritance_1parent1child1newroot_after_header';
 import { inheritance_1parent1child1sibling_emptystring } from './__test_data__/inheritance_1parent1child1sibling_emptystring';
 import { inheritance_1parent2children } from './__test_data__/inheritance_1parent2children';
 import { inheritance_1parent2children1grandchild } from './__test_data__/inheritance_1parent2children1grandchild';
@@ -227,5 +228,29 @@ describe('cache', () => {
         testChildren(child, []);
 
         testRootAndChildren(sibling, []);
+    });
+
+    it('should read new root task after header', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_1parent1child1newroot_after_header);
+        expect(inheritance_1parent1child1newroot_after_header.fileContents).toMatchInlineSnapshot(`
+            "# first header
+
+            - [ ] #task parent task
+                - [ ] #task child task 1
+
+            ## second header
+
+            - [ ] #task root task
+            "
+        `);
+
+        expect(tasks.length).toEqual(3);
+
+        const [parent, child, newRoot] = tasks;
+
+        testRootAndChildren(parent, [child]);
+        testChildren(child, []);
+
+        testRootAndChildren(newRoot, []);
     });
 });
