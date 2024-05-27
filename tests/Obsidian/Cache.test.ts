@@ -145,7 +145,11 @@ describe('cache', () => {
         const [parent, child1, child2, grandchild1] = tasks;
 
         testRootAndChildren(parent, [child1, child2]);
-        testChildToHaveParent(grandchild1, child2);
+        const parentToTest = child2;
+        const childList = [grandchild1];
+        for (const child of childList) {
+            testChildToHaveParent(child, parentToTest);
+        }
 
         // children are not implemented yet
         expect(parent.children).toEqual([]);
