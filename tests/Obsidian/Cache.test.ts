@@ -156,28 +156,28 @@ describe('cache', () => {
         // children are not implemented yet
         expect(parent.children).toEqual([]);
     });
-});
 
-it.failing('should read one parent, 2 children and a sibling', () => {
-    const tasks = readTasksFromSimulatedFile(inheritance_1parent2children1sibling);
-    expect(inheritance_1parent2children1sibling.fileContents).toMatchInlineSnapshot(`
+    it.failing('should read one parent, 2 children and a sibling', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_1parent2children1sibling);
+        expect(inheritance_1parent2children1sibling.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent
                 - [ ] #task child 1
                 - [ ] #task child 2
             - [ ] #task sibling"
         `);
 
-    expect(tasks.length).toEqual(4);
+        expect(tasks.length).toEqual(4);
 
-    const parent = tasks[0];
-    const child1 = tasks[1];
-    const child2 = tasks[2];
-    const sibling = tasks[3];
+        const parent = tasks[0];
+        const child1 = tasks[1];
+        const child2 = tasks[2];
+        const sibling = tasks[3];
 
-    testRootTask(parent);
+        testRootTask(parent);
 
-    testChildToHaveParent(child1, parent);
-    testChildToHaveParent(child2, parent);
+        testChildToHaveParent(child1, parent);
+        testChildToHaveParent(child2, parent);
 
-    testRootTask(sibling);
+        testRootTask(sibling);
+    });
 });
