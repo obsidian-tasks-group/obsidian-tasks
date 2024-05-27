@@ -94,7 +94,8 @@ describe('cache', () => {
         const tasks = readTasksFromSimulatedFile(inheritance_2siblings);
         expect(inheritance_2siblings.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task sibling 1
-            - [ ] #task sibling 2"
+            - [ ] #task sibling 2
+            "
         `);
 
         expect(tasks.length).toEqual(2);
@@ -109,7 +110,8 @@ describe('cache', () => {
         const tasks = readTasksFromSimulatedFile(inheritance_1parent1child);
         expect(inheritance_1parent1child.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent
-                - [ ] #task child"
+                - [ ] #task child
+            "
         `);
 
         expect(tasks.length).toEqual(2);
@@ -124,7 +126,8 @@ describe('cache', () => {
         expect(inheritance_1parent2children.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent
                 - [ ] #task child 1
-                - [ ] #task child 2"
+                - [ ] #task child 2
+            "
         `);
 
         expect(tasks.length).toEqual(3);
@@ -180,7 +183,8 @@ describe('cache', () => {
                     - [ ] #task grandchild 1
                 - [ ] #task child task 2
                     - [ ] #task grandchild 2
-            - [ ] #task sibling"
+            - [ ] #task sibling
+            "
         `);
 
         expect(tasks.length).toEqual(6);
@@ -200,7 +204,8 @@ describe('cache', () => {
             "- [ ] #task parent
                 - [ ] #task child 1
                 - [ ] #task child 2
-            - [ ] #task sibling"
+            - [ ] #task sibling
+            "
         `);
 
         expect(tasks.length).toEqual(4);
@@ -266,7 +271,8 @@ describe('cache', () => {
                     - [ ] #task grandchild 1
                 - [ ] #task child task 2
                     - [ ] #task grandchild 2
-            - [ ] #task sibling"
+            - [ ] #task sibling
+            "
         `);
 
         expect(tasks.length).toEqual(6);
