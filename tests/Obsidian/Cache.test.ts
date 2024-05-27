@@ -74,9 +74,7 @@ function testChildToHaveParent(child: Task, parent: Task) {
 function testRootAndChildren(root: Task, children: Task[]) {
     expect(root.parent).toEqual(null);
 
-    for (const child of children) {
-        testChildToHaveParent(child, root);
-    }
+    testChildren(root, children);
 }
 
 function testChildren(parent: Task, childList: Task[]) {
