@@ -99,7 +99,6 @@
 
     .status-editor-status-selector {
         grid-column: 2;
-        width: 15em;
     }
 }
 
@@ -183,7 +182,6 @@
     .tasks-modal-dates-section {
         .status-editor-status-selector {
             grid-column: 1;
-            width: auto;
         }
 
         > .tasks-modal-parsed-date {
