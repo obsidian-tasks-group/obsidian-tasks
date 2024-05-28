@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
-    import { Status } from '../Statuses/Status';
+    import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
@@ -28,25 +28,8 @@
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
-    let addGlobalFilterOnSave: boolean = false;
-    let originalBlocking: Task[] = [];
-    let editableTask = new EditableTask({
-        // NEW_TASK_FIELD_EDIT_REQUIRED
-        description: '',
-        status: Status.TODO,
-        priority: 'none',
-        recurrenceRule: '',
-        createdDate: '',
-        startDate: '',
-        scheduledDate: '',
-        dueDate: '',
-        doneDate: '',
-        cancelledDate: '',
-        forwardOnly: true,
-        blockedBy: [],
-        blocking: [],
-    });
-    ({ editableTask, addGlobalFilterOnSave, originalBlocking } = EditableTask.fromTask(task, allTasks));
+
+    let { editableTask, addGlobalFilterOnSave, originalBlocking } = EditableTask.fromTask(task, allTasks);
 
     let isDescriptionValid: boolean = true;
 
