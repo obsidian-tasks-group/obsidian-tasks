@@ -1,4 +1,4 @@
-import { App, Editor, EditorSuggest, TFile } from 'obsidian';
+import { App, Editor, EditorSuggest, Notice, TFile } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 import type TasksPlugin from 'main';
 import { ensureTaskHasId } from '../Task/TaskDependency';
@@ -111,6 +111,25 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
                         line: value.taskItDependsOn.lineNumber,
                         ch: originalLine.length,
                     };
+
+                    // Safety check: before we overwrite content in the editor, make sure
+                    //               it has the expected content.
+                    // This might happen, for example, if the file had been edited and the
+                    // file not yet saved, so that the Tasks Cache is temporarily out-of-date.
+                    const markdownInEditor: string = value.context.editor.getRange(start, end);
+                    if (markdownInEditor !== originalLine + '!') {
+                        const message = `Error adding new ID, due to mismatched data in Tasks memory and the editor:
+task line in memory: '${value.taskItDependsOn.originalMarkdown}'
+
+task line in editor: '${markdownInEditor}'
+
+file: '${newTask.path}'
+`;
+                        console.error(message);
+                        new Notice(message + '\n\nThis message has been written to the console.\n', 10000);
+                        return;
+                    }
+
                     value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
                 } else {
                     // Replace Task in File Context
