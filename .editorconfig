@@ -19,15 +19,14 @@ insert_final_newline = false
 [*.{yml,yaml}]
 indent_size = 2
 
-[*.{md,mdx}]
-trim_trailing_whitespace = true
+#[*.{md,mdx}]
+#trim_trailing_whitespace = true
 
-[*.{htm,html,js,jsm,ts,tsx,mjs}]
-indent_size = 4
+#[*.{htm,html,js,jsm,ts,tsx,mjs}]
+#indent_size = 4
 
 [*.{cmd,bat,ps1}]
 end_of_line = crlf
 
-[*.sh]
+[*.{sh,svelte}]
 end_of_line = lf
-
