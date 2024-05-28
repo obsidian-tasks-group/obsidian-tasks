@@ -30,7 +30,6 @@
 .tasks-modal-priority-section {
     display: grid;
     grid-template-columns: 6em auto auto auto;
-    grid-column-gap: 0.5em;
     grid-row-gap: 0.15em;
 
     > label {
@@ -69,7 +68,6 @@
 .tasks-modal-dates-section {
     display: grid;
     grid-template-columns: 6.0em auto;
-    grid-auto-columns: 1fr;
     column-gap: .5em;
     row-gap: 5px;
     align-items: center;
@@ -105,7 +103,7 @@
 .tasks-modal-dependencies-section {
     display: grid;
     grid-template-columns: 6.0em auto;
-    grid-auto-columns: 1fr;
+    column-gap: 0.5em;
     row-gap: 5px;
     align-items: center;
 
