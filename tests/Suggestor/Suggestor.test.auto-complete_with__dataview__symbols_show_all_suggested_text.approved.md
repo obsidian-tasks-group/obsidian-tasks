@@ -1,6 +1,7 @@
 | Searchable Text | Text that is added |
 | ----- | ----- |
 | due:: due date | due::  |
+| reminder:: reminder date | reminder::  |
 | start:: start date | start::  |
 | scheduled:: scheduled date | scheduled::  |
 | priority:: high priority | priority:: high]  |
@@ -35,6 +36,18 @@
 | next week (2022-07-18) | due:: 2022-07-18]  |
 | next month (2022-08-11) | due:: 2022-08-11]  |
 | next year (2023-07-11) | due:: 2023-07-11]  |
+| today (2022-07-11) | reminder:: 2022-07-11]  |
+| tomorrow (2022-07-12) | reminder:: 2022-07-12]  |
+| Sunday (2022-07-17) | reminder:: 2022-07-17]  |
+| Monday (2022-07-18) | reminder:: 2022-07-18]  |
+| Tuesday (2022-07-12) | reminder:: 2022-07-12]  |
+| Wednesday (2022-07-13) | reminder:: 2022-07-13]  |
+| Thursday (2022-07-14) | reminder:: 2022-07-14]  |
+| Friday (2022-07-15) | reminder:: 2022-07-15]  |
+| Saturday (2022-07-16) | reminder:: 2022-07-16]  |
+| next week (2022-07-18) | reminder:: 2022-07-18]  |
+| next month (2022-08-11) | reminder:: 2022-08-11]  |
+| next year (2023-07-11) | reminder:: 2023-07-11]  |
 | today (2022-07-11) | scheduled:: 2022-07-11]  |
 | tomorrow (2022-07-12) | scheduled:: 2022-07-12]  |
 | Sunday (2022-07-17) | scheduled:: 2022-07-17]  |

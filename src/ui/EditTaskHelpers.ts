@@ -51,15 +51,16 @@ export function parseAndValidateRecurrence(editableTask: EditableTask) {
         startDate: null,
         scheduledDate: null,
         dueDate: null,
+        reminderDate: null,
     })?.toText();
 
     if (!recurrenceFromText) {
         return { parsedRecurrence: '<i>invalid recurrence rule</i>', isRecurrenceValid: false };
     }
 
-    if (editableTask.startDate || editableTask.scheduledDate || editableTask.dueDate) {
+    if (editableTask.startDate || editableTask.scheduledDate || editableTask.dueDate || editableTask.reminderDate) {
         return { parsedRecurrence: recurrenceFromText, isRecurrenceValid: true };
     }
 
-    return { parsedRecurrence: '<i>due, scheduled or start date required</i>', isRecurrenceValid: false };
+    return { parsedRecurrence: '<i>due, scheduled, reminder or start date required</i>', isRecurrenceValid: false };
 }

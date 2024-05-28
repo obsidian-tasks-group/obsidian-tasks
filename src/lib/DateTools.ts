@@ -1,4 +1,5 @@
 import * as chrono from 'chrono-node';
+import type { Moment } from 'moment/moment';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
@@ -48,19 +49,31 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
  * @param forwardDate
  * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
  */
-function parseTypedDateForDisplay(
-    fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done' | 'cancelled',
+export function parseTypedDateForDisplay(
+    fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'reminder' | 'done' | 'cancelled',
     typedDate: string,
     forwardDate: Date | undefined = undefined,
 ): string {
     if (!typedDate) {
         return `<i>no ${fieldName} date</i>`;
     }
+
+    // chrono.parseDate here loses potential formatting of typedDate string
     const parsed = chrono.parseDate(typedDate, forwardDate, {
         forwardDate: forwardDate != undefined,
     });
+
     if (parsed !== null) {
-        return window.moment(parsed).format('YYYY-MM-DD');
+        const parsedMoment = window.moment(parsed);
+
+        if (fieldName === 'reminder') {
+            // check whether original typed date string is formatted as date time
+            const typedDateFormatIsDateTime = isDateTime(window.moment(typedDate));
+            return typedDateFormatIsDateTime
+                ? parsedMoment.format('YYYY-MM-DD HH:mm')
+                : parsedMoment.format('YYYY-MM-DD');
+        }
+        return parsedMoment.format('YYYY-MM-DD');
     }
     return `<i>invalid ${fieldName} date</i>`;
 }
@@ -73,7 +86,7 @@ function parseTypedDateForDisplay(
  * @param forwardOnly
  */
 export function parseTypedDateForDisplayUsingFutureDate(
-    fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled',
+    fieldName: 'start' | 'scheduled' | 'due' | 'reminder' | 'done' | 'created' | 'cancelled',
     typedDate: string,
     forwardOnly: boolean,
 ): string {
@@ -85,6 +98,7 @@ export function parseTypedDateForDisplayUsingFutureDate(
  * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
  * @param forwardDate
  */
+// HERE!
 export function parseTypedDateForSaving(typedDate: string, forwardDate: boolean): moment.Moment | null {
     let date: moment.Moment | null = null;
     const parsedDate = chrono.parseDate(typedDate, new Date(), { forwardDate });
@@ -92,4 +106,41 @@ export function parseTypedDateForSaving(typedDate: string, forwardDate: boolean)
         date = window.moment(parsedDate);
     }
     return date;
+}
+
+/**
+ * Read the entered value for a date field, and return the value to be saved in the edited task.
+ * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+ * @param forwardDate
+ */
+// HERE!
+export function parseTypedDateorDateTimeForSavingReminder(
+    typedDate: string,
+    forwardDate: boolean,
+): moment.Moment | null {
+    let date: moment.Moment | null = null;
+    const parsedDate = chrono.parseDate(typedDate, new Date(), { forwardDate });
+    if (parsedDate !== null) {
+        date = window.moment(parsedDate);
+        const dateString = isDateTime(window.moment(typedDate))
+            ? date.format('YYYY-MM-DD HH:mm')
+            : date.format('YYYY-MM-DD');
+
+        date = window.moment(dateString);
+    }
+    return date;
+}
+
+/**
+ * Returns whether the moment object was initialized with a time. Used for reminders
+ * returns false if task has no moment
+ * @param dateObj
+ */
+export function isDateTime(dateObj: Moment | null): boolean {
+    let hasTime = false;
+    if (dateObj != null) {
+        hasTime = dateObj.creationData().format === 'YYYY-MM-DD HH:mm';
+    }
+
+    return hasTime;
 }

@@ -4,6 +4,7 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { isDateTime } from '../lib/DateTools';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}
@@ -26,6 +27,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly createdDateSymbol: string;
     readonly scheduledDateSymbol: string;
     readonly dueDateSymbol: string;
+    readonly reminderDateSymbol: string;
     readonly doneDateSymbol: string;
     readonly cancelledDateSymbol: string;
     readonly recurrenceSymbol: string;
@@ -37,6 +39,8 @@ export interface DefaultTaskSerializerSymbols {
         createdDateRegex: RegExp;
         scheduledDateRegex: RegExp;
         dueDateRegex: RegExp;
+        reminderDateRegex: RegExp;
+        reminderDateTimeRegex: RegExp;
         doneDateRegex: RegExp;
         cancelledDateRegex: RegExp;
         recurrenceRegex: RegExp;
@@ -69,6 +73,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     createdDateSymbol: '➕',
     scheduledDateSymbol: '⏳',
     dueDateSymbol: '📅',
+    reminderDateSymbol: '⏰',
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
     recurrenceSymbol: '🔁',
@@ -83,6 +88,8 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         createdDateRegex: /➕ *(\d{4}-\d{2}-\d{2})$/u,
         scheduledDateRegex: /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u,
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
+        reminderDateRegex: /[⏰] *(\d{4}-\d{2}-\d{2})$/u,
+        reminderDateTimeRegex: /[⏰] *(\d{4}-\d{2}-\d{2} \d{2}:\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
@@ -101,7 +108,11 @@ function symbolAndDateValue(shortMode: boolean, symbol: string, date: moment.Mom
     // We could call symbolAndStringValue() to remove a little code repetition,
     // but doing so would do some wasted date-formatting when in 'short mode',
     // so instead we repeat the check on shortMode value.
-    return shortMode ? ' ' + symbol : ` ${symbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
+    return shortMode
+        ? ' ' + symbol
+        : ` ${symbol} ${date.format(
+              isDateTime(date) ? TaskRegularExpressions.dateTimeFormat : TaskRegularExpressions.dateFormat,
+          )}`;
 }
 
 export function allTaskPluginEmojis() {
@@ -156,6 +167,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             cancelledDateSymbol,
             recurrenceSymbol,
             dueDateSymbol,
+            reminderDateSymbol,
             dependsOnSymbol,
             idSymbol,
         } = this.symbols;
@@ -193,6 +205,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return symbolAndDateValue(shortMode, cancelledDateSymbol, task.cancelledDate);
             case TaskLayoutComponent.DueDate:
                 return symbolAndDateValue(shortMode, dueDateSymbol, task.dueDate);
+            case TaskLayoutComponent.ReminderDate:
+                return symbolAndDateValue(shortMode, reminderDateSymbol, task.reminderDate);
             case TaskLayoutComponent.RecurrenceRule:
                 if (!task.recurrence) return '';
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
@@ -253,6 +267,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
+        let reminderDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let cancelledDate: Moment | null = null;
         let createdDate: Moment | null = null;
@@ -296,6 +311,18 @@ export class DefaultTaskSerializer implements TaskSerializer {
             if (dueDateMatch !== null) {
                 dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
                 line = line.replace(TaskFormatRegularExpressions.dueDateRegex, '').trim();
+                matched = true;
+            }
+
+            const reminderDateTimeMatch = line.match(TaskFormatRegularExpressions.reminderDateTimeRegex);
+            const reminderDateMatch = line.match(TaskFormatRegularExpressions.reminderDateRegex);
+            if (reminderDateTimeMatch !== null) {
+                reminderDate = window.moment(reminderDateTimeMatch[1], TaskRegularExpressions.dateTimeFormat);
+                line = line.replace(TaskFormatRegularExpressions.reminderDateTimeRegex, '').trim();
+                matched = true;
+            } else if (reminderDateMatch !== null) {
+                reminderDate = window.moment(reminderDateMatch[1], TaskRegularExpressions.dateFormat);
+                line = line.replace(TaskFormatRegularExpressions.reminderDateRegex, '').trim();
                 matched = true;
             }
 
@@ -370,6 +397,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 startDate,
                 scheduledDate,
                 dueDate,
+                reminderDate,
             });
         }
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
@@ -386,6 +414,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             createdDate,
             scheduledDate,
             dueDate,
+            reminderDate,
             doneDate,
             cancelledDate,
             recurrence,

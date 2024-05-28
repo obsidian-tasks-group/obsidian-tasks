@@ -191,6 +191,7 @@ describe.each([
         scheduledDateSymbol,
         startDateSymbol,
         createdDateSymbol,
+        reminderDateSymbol,
         recurrenceSymbol,
         idSymbol,
         dependsOnSymbol,
@@ -425,6 +426,7 @@ describe.each([
             '- [ ] some task',
             `- [ ] some task ${recurrenceSymbol} `,
             `- [ ] some task ${dueDateSymbol} `,
+            `- [ ] some task ${reminderDateSymbol} `,
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
         ];

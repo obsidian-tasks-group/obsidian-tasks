@@ -4,6 +4,10 @@
     "appendText": "due:: "
   },
   {
+    "displayText": "reminder:: reminder date",
+    "appendText": "reminder:: "
+  },
+  {
     "displayText": "start:: start date",
     "appendText": "start:: "
   },
@@ -18,10 +22,5 @@
   {
     "displayText": "dependsOn:: Task depends on ID",
     "appendText": "dependsOn::"
-  },
-  {
-    "displayText": "priority:: high priority",
-    "appendText": "priority:: high] ",
-    "insertSkip": 0
   }
 ]

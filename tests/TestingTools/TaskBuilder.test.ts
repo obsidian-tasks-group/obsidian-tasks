@@ -23,6 +23,13 @@ describe('TaskBuilder', () => {
         expect(task.originalMarkdown).toEqual('- [ ] hello');
     });
 
+    it.failing('should retain a time on reminder field', () => {
+        const builder = new TaskBuilder();
+        const dateTime = '2013-09-01 23:58';
+        const task = builder.reminderDate(dateTime).build();
+        expect(task.reminder.formatAsDateAndTime()).toEqual(dateTime);
+    });
+
     function hasValue<Type>(value: Type[keyof Type]): boolean {
         if (typeof value === 'boolean') {
             // false is valid for booleans...
@@ -58,7 +65,7 @@ describe('TaskBuilder', () => {
         expect(getNullOrUnsetFields(task.taskLocation)).toEqual([]);
 
         expect(task.originalMarkdown).toEqual(
-            '  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c',
+            '  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ⏰ 2023-07-07 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c',
         );
     });
 });

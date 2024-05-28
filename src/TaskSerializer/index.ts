@@ -18,6 +18,7 @@ export type TaskDetails = Writeable<
         | 'createdDate'
         | 'scheduledDate'
         | 'dueDate'
+        | 'reminderDate'
         | 'doneDate'
         | 'cancelledDate'
         | 'recurrence'

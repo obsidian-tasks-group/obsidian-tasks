@@ -80,7 +80,7 @@ describe('CreateOrEditTaskParser - task recognition', () => {
     it('should recognize task details without global filter', () => {
         GlobalFilter.getInstance().set('#task');
         const taskLine =
-            '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-10 ✅ 2023-06-22';
+            '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-10 ⏰ 2024-12-10 ✅ 2023-06-22';
         const path = 'a/b/c.md';
 
         const task = taskFromLine({ line: taskLine, path });
@@ -95,7 +95,19 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.startDate).toEqualMoment(moment('2022-01-31'));
         expect(task.scheduledDate).toEqualMoment(moment('2023-06-13'));
         expect(task.dueDate).toEqualMoment(moment('2024-12-10'));
+        expect(task.reminderDate).toEqualMoment(moment('2024-12-10'));
         expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
+    });
+
+    it('should recognize task details with reminder date time set', () => {
+        const taskLine = '- [ ] reminder date time is set ⏰ 2024-12-10 10:17';
+        const path = 'a/b/c.md';
+
+        const task = taskFromLine({ line: taskLine, path });
+
+        expect(task.toFileLineString()).toStrictEqual(taskLine);
+        expect(task.path).toStrictEqual('a/b/c.md');
+        expect(task.reminderDate).toEqualMoment(moment('2024-12-10 10:17'));
     });
 });
 

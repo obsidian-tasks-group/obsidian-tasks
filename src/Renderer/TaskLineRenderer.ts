@@ -9,6 +9,7 @@ import { StatusRegistry } from '../Statuses/StatusRegistry';
 import type { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
+import { isDateTime } from '../lib/DateTools';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 
 /**
@@ -314,6 +315,7 @@ export class TaskLineRenderer {
             createdDateSymbol,
             scheduledDateSymbol,
             dueDateSymbol,
+            reminderDateSymbol,
             cancelledDateSymbol,
             doneDateSymbol,
         } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
@@ -332,9 +334,10 @@ export class TaskLineRenderer {
             }
 
             function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-                return `${signifier} ${date.format(TaskRegularExpressions.dateFormat)} (${date.from(
-                    window.moment().startOf('day'),
-                )})`;
+                const format = isDateTime(date)
+                    ? TaskRegularExpressions.dateTimeFormat
+                    : TaskRegularExpressions.dateFormat;
+                return `${signifier} ${date.format(format)} (${date.from(window.moment().startOf('day'))})`;
             }
 
             const tooltip = element.createDiv();
@@ -350,6 +353,7 @@ export class TaskLineRenderer {
             addDateToTooltip(tooltip, task.startDate, startDateSymbol);
             addDateToTooltip(tooltip, task.scheduledDate, scheduledDateSymbol);
             addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
+            addDateToTooltip(tooltip, task.reminderDate, reminderDateSymbol);
             addDateToTooltip(tooltip, task.cancelledDate, cancelledDateSymbol);
             addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
 

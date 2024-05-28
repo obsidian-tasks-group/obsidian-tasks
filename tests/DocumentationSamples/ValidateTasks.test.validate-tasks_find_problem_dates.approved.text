@@ -2,7 +2,7 @@
 ````text
 ```tasks
 # These instructions need to be all on one line:
-(cancelled date is invalid) OR (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
+(cancelled date is invalid) OR (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (reminder date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
 
 # Optionally, uncomment this line and exclude your templates location
 # path does not include _templates

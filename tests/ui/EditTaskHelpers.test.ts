@@ -58,6 +58,7 @@ describe('parseAndValidateRecurrence() tests', () => {
         startDate: '',
         scheduledDate: '',
         dueDate: '',
+        reminderDate: '',
         doneDate: '',
         cancelledDate: '',
         forwardOnly: true,
@@ -80,7 +81,7 @@ describe('parseAndValidateRecurrence() tests', () => {
         // editable task, expected parsed recurrence, expected recurrence validity
         [noRecurrenceRule, '<i>not recurring</>', true],
         [invalidRecurrenceRule, '<i>invalid recurrence rule</i>', false],
-        [withRecurrenceRuleButNoHappensDate, '<i>due, scheduled or start date required</i>', false],
+        [withRecurrenceRuleButNoHappensDate, '<i>due, scheduled, reminder or start date required</i>', false],
         [withRecurrenceRuleAndHappensDate, 'every month when done', true],
     ])(
         "editable task with '%s' fields should have '%s' parsed recurrence and its validity is %s",

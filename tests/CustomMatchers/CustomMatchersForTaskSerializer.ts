@@ -5,6 +5,7 @@ import type { TaskDetails } from '../../src/TaskSerializer';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Priority } from '../../src/Task/Priority';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { isDateTime } from '../../src/lib/DateTools';
 
 declare global {
     namespace jest {
@@ -41,6 +42,7 @@ function isTaskDetails(val: any): val is TaskDetails {
         'createdDate',
         'scheduledDate',
         'dueDate',
+        'reminderDate',
         'doneDate',
         'cancelledDate',
     ] as const;
@@ -75,6 +77,7 @@ type SummarizedTaskDetails = { [K in keyof TaskDetails]: AsString<TaskDetails[K]
  */
 function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | null {
     if (t === null) return null;
+
     return {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         ...t,
@@ -83,6 +86,10 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         scheduledDate: t.scheduledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
+        reminderDate:
+            t.reminderDate?.format(
+                isDateTime(t.reminderDate) ? TaskRegularExpressions.dateTimeFormat : TaskRegularExpressions.dateFormat,
+            ) ?? null,
         cancelledDate: t.cancelledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
         id: t.id?.valueOf().toString() ?? null,
@@ -107,6 +114,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         createdDate: null,
         scheduledDate: null,
         dueDate: null,
+        reminderDate: null,
         doneDate: null,
         cancelledDate: null,
         recurrence: null,

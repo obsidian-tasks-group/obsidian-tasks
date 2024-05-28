@@ -128,6 +128,19 @@ describe('parsing', () => {
         expect(task).toBeNull();
     });
 
+    it('parses a reminder with date and time', () => {
+        // Arrange
+        const line = '* [ ] this has a reminder ⏰ 2023-03-06 23:12';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task!.reminderDate).toEqualMoment(moment('2023-03-06 23:12'));
+    });
+
     it('supports capitalised status characters', () => {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/520
         // "In combination with SlrVb's S-Checkbox CSS, Task Plugin breaks that style"
@@ -1169,6 +1182,34 @@ describe('toggle done', () => {
             }
         },
     );
+
+    it('should use reminder to create new recurrence', () => {
+        // Arrange
+        const line = '- [ ] this is a task 🔁 every day ⏰ 2021-09-12';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        const tasks = task!.toggle();
+        expect(tasks[0].toFileLineString()).toEqual('- [ ] this is a task 🔁 every day ⏰ 2021-09-13');
+    });
+
+    it.failing('should use reminder to create new recurrence - and preserve the time', () => {
+        // Arrange
+        const line = '- [ ] this is a task 🔁 every day ⏰ 2021-09-12 13:24';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        const tasks = task!.toggle();
+        expect(tasks[0].toFileLineString()).toEqual('- [ ] this is a task 🔁 every day ⏰ 2021-09-13 13:24');
+    });
 
     it('supports recurrence rule after a due date', () => {
         // Arrange

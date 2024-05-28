@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { parseTypedDateForSaving } from '../lib/DateTools';
+    import { parseTypedDateForSaving, parseTypedDateorDateTimeForSavingReminder } from '../lib/DateTools';
     import { Recurrence } from '../Task/Recurrence';
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
@@ -29,12 +29,14 @@
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
+        reminderDateSymbol,
         cancelledDateSymbol,
         createdDateSymbol,
         doneDateSymbol,
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
+
     let editableTask: EditableTask = {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
@@ -45,6 +47,7 @@
         startDate: '',
         scheduledDate: '',
         dueDate: '',
+        reminderDate: '',
         doneDate: '',
         cancelledDate: '',
         forwardOnly: true,
@@ -58,6 +61,7 @@
     let isCreatedDateValid: boolean = true;
     let isDoneDateValid: boolean = true;
     let isDueDateValid: boolean = true;
+    let isReminderDateValid: boolean = true;
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
 
@@ -140,6 +144,7 @@
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
         isDueDateValid &&
+        isReminderDateValid &&
         isRecurrenceValid &&
         isScheduledDateValid &&
         isStartDateValid &&
@@ -194,6 +199,7 @@
             startDate: new TasksDate(task.startDate).formatAsDate(),
             scheduledDate: new TasksDate(task.scheduledDate).formatAsDate(),
             dueDate: new TasksDate(task.dueDate).formatAsDate(),
+            reminderDate: new TasksDate(task.reminderDate).formatAsDateAndTimeOrDate(),
             doneDate: new TasksDate(task.doneDate).formatAsDate(),
             cancelledDate: new TasksDate(task.cancelledDate).formatAsDate(),
             forwardOnly: true,
@@ -238,7 +244,10 @@
         const startDate = parseTypedDateForSaving(editableTask.startDate, editableTask.forwardOnly);
         const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate, editableTask.forwardOnly);
         const dueDate = parseTypedDateForSaving(editableTask.dueDate, editableTask.forwardOnly);
-
+        const reminderDate = parseTypedDateorDateTimeForSavingReminder(
+            editableTask.reminderDate,
+            editableTask.forwardOnly,
+        );
         const cancelledDate = parseTypedDateForSaving(editableTask.cancelledDate, editableTask.forwardOnly);
         const createdDate = parseTypedDateForSaving(editableTask.createdDate, editableTask.forwardOnly);
         const doneDate = parseTypedDateForSaving(editableTask.doneDate, editableTask.forwardOnly);
@@ -250,6 +259,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
+                reminderDate,
             });
         }
 
@@ -306,6 +316,7 @@
             startDate,
             scheduledDate,
             dueDate,
+            reminderDate,
             doneDate,
             createdDate,
             cancelledDate,
@@ -439,6 +450,18 @@ Availability of access keys:
             bind:isDateValid={isDueDateValid}
             forwardOnly={editableTask.forwardOnly}
             accesskey={accesskey('d')}
+        />
+
+        <!-- --------------------------------------------------------------------------- -->
+        <!--  Reminder Date  -->
+        <!-- --------------------------------------------------------------------------- -->
+        <DateEditor
+            id="reminder"
+            dateSymbol={reminderDateSymbol}
+            bind:date={editableTask.reminderDate}
+            bind:isDateValid={isReminderDateValid}
+            forwardOnly={editableTask.forwardOnly}
+            accesskey={null}
         />
 
         <!-- --------------------------------------------------------------------------- -->

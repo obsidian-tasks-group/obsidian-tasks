@@ -15,6 +15,7 @@ describe('TaskLayoutOptions', () => {
             startDate
             scheduledDate
             dueDate
+            reminderDate
             cancelledDate
             doneDate
             blockLink"
@@ -70,12 +71,14 @@ describe('TaskLayoutOptions', () => {
             startDate
             scheduledDate
             dueDate
+            reminderDate
             cancelledDate
             doneDate
             blockLink"
         `);
 
         options.setVisibility(TaskLayoutComponent.DueDate, false);
+        options.setVisibility(TaskLayoutComponent.ReminderDate, false);
         options.setVisibility(TaskLayoutComponent.BlockLink, false);
 
         expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
@@ -142,6 +145,7 @@ describe('TaskLayoutOptions', () => {
             startDate
             scheduledDate
             dueDate
+            reminderDate
             cancelledDate
             doneDate"
         `);

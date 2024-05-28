@@ -1,6 +1,7 @@
 import type { Task } from '../../Task/Task';
 import { StatusTypeField } from '../Filter/StatusTypeField';
 import { DueDateField } from '../Filter/DueDateField';
+import { ReminderDateField } from '../Filter/ReminderDateField';
 import { PriorityField } from '../Filter/PriorityField';
 import { PathField } from '../Filter/PathField';
 import { UrgencyField } from '../Filter/UrgencyField';
@@ -27,6 +28,7 @@ export class Sort {
             new StatusTypeField().createNormalSorter(),
             new UrgencyField().createNormalSorter(),
             new DueDateField().createNormalSorter(),
+            new ReminderDateField().createNormalSorter(),
             new PriorityField().createNormalSorter(),
             new PathField().createNormalSorter(),
         ];

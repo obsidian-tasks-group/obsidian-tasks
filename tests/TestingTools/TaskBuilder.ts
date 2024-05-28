@@ -41,6 +41,7 @@ export class TaskBuilder {
     private _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
+    private _reminderDate: Moment | null = null;
     private _doneDate: Moment | null = null;
     private _cancelledDate: Moment | null = null;
 
@@ -86,6 +87,7 @@ export class TaskBuilder {
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
             dueDate: this._dueDate,
+            reminderDate: this._reminderDate,
             doneDate: this._doneDate,
             cancelledDate: this._cancelledDate,
             recurrence: this._recurrence,
@@ -117,6 +119,7 @@ export class TaskBuilder {
             .startDate('2023-07-02')
             .scheduledDate('2023-07-03')
             .dueDate('2023-07-04')
+            .reminderDate('2023-07-07') // TODO Add a time value here, once times are correctly parsed
             .doneDate('2023-07-05')
             .cancelledDate('2023-07-06')
             .dependsOn(['123456', 'abc123'])
@@ -135,6 +138,7 @@ export class TaskBuilder {
                 startDate: taskBuilder._startDate,
                 scheduledDate: taskBuilder._scheduledDate,
                 dueDate: taskBuilder._dueDate,
+                reminderDate: taskBuilder._reminderDate,
             }),
         );
 
@@ -245,6 +249,11 @@ export class TaskBuilder {
 
     public dueDate(dueDate: string | null): TaskBuilder {
         this._dueDate = TaskBuilder.parseDate(dueDate);
+        return this;
+    }
+
+    public reminderDate(reminderDate: string | null): TaskBuilder {
+        this._reminderDate = TaskBuilder.parseDate(reminderDate);
         return this;
     }
 

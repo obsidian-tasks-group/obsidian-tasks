@@ -166,6 +166,7 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     createdDate: createDateField('task-created', 'taskCreated'),
     dueDate: createDateField('task-due', 'taskDue'),
+    reminderDate: createDateField('task-reminder', 'taskReminder'),
     startDate: createDateField('task-start', 'taskStart'),
     scheduledDate: createDateField('task-scheduled', 'taskScheduled'),
     doneDate: createDateField('task-done', 'taskDone'),

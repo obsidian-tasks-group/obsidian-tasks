@@ -19,7 +19,15 @@ describe('DataviewTaskSerializer', () => {
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
 
-    const dateFields = ['startDate', 'dueDate', 'doneDate', 'createdDate', 'scheduledDate', 'cancelledDate'] as const;
+    const dateFields = [
+        'startDate',
+        'dueDate',
+        'reminderDate',
+        'doneDate',
+        'createdDate',
+        'scheduledDate',
+        'cancelledDate',
+    ] as const;
 
     describe('deserialize', () => {
         it('should parse an empty string', () => {
@@ -112,12 +120,13 @@ describe('DataviewTaskSerializer', () => {
 
         it('should parse a task with multiple fields and tags', () => {
             const taskDetails = deserialize(
-                'Wobble [priority::high] #tag1 [completion:: 2024-09-04] #tag2  [due::2025-10-05] #tag3 [scheduled::2022-07-02] #tag4 [start::2023-08-03] #tag5  [repeat::every day]  #tag6 #tag7 #tag8 #tag9 #tag10',
+                'Wobble [priority::high] #tag1 [completion:: 2024-09-04] #tag2  [due::2025-10-05] #tag3 [scheduled::2022-07-02] #tag4 [reminder::2023-03-03] [start::2023-08-03] #tag5 [repeat::every day]  #tag6 #tag7 #tag8 #tag9 #tag10',
             );
 
             expect(taskDetails).toMatchTaskDetails({
                 description: 'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10',
                 dueDate: moment('2025-10-05', 'YYYY-MM-DD'),
+                reminderDate: moment('2023-03-03', 'YYYY-MM-DD'),
                 doneDate: moment('2024-09-04', 'YYYY-MM-DD'),
                 startDate: moment('2023-08-03', 'YYYY-MM-DD'),
                 scheduledDate: moment('2022-07-02', 'YYYY-MM-DD'),
@@ -125,6 +134,7 @@ describe('DataviewTaskSerializer', () => {
                 recurrence: new RecurrenceBuilder()
                     .rule('every day')
                     .dueDate('2025-10-05')
+                    .reminderDate('2023-03-03')
                     .scheduledDate('2022-07-02')
                     .startDate('2023-08-03')
                     .build(),
@@ -221,10 +231,13 @@ describe('DataviewTaskSerializer', () => {
         });
 
         it('should recognize inline fields surrounded by square brackets', () => {
-            const taskDetails = deserialize('Some task that is [due::2021-08-22] [priority:: high]');
+            const taskDetails = deserialize(
+                'Some task that is [due::2021-08-22] [priority:: high] [reminder::2021-08-22 23:00]',
+            );
             expect(taskDetails).toMatchTaskDetails({
                 priority: Priority.High,
                 dueDate: moment('2021-08-22', 'YYYY-MM-DD'),
+                reminderDate: moment('2021-08-22 23:00', 'YYYY-MM-DD HH:mm'),
                 description: 'Some task that is',
             });
         });
@@ -339,7 +352,7 @@ describe('DataviewTaskSerializer', () => {
             const task = TaskBuilder.createFullyPopulatedTask();
             const serialized = serialize(task);
             expect(serialized).toMatchInlineSnapshot(
-                '"Do exercises #todo #health  [id:: abcdef]  [dependsOn:: 123456,abc123]  [priority:: medium]  [repeat:: every day when done]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [due:: 2023-07-04]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
+                '"Do exercises #todo #health  [id:: abcdef]  [dependsOn:: 123456,abc123]  [priority:: medium]  [repeat:: every day when done]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [due:: 2023-07-04]  [reminder:: 2023-07-07]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
             );
         });
     });

@@ -15,6 +15,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: null,
+            reminderDate: null,
         });
 
         // Act
@@ -25,7 +26,28 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: null,
+            reminderDate: null,
         });
+    });
+
+    it.failing('preserves the reminder time on new recurrence', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day',
+            startDate: null,
+            scheduledDate: null,
+            reminderDate: moment('2022-01-17 10:30'),
+            dueDate: null,
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(next!.startDate).toBeNull();
+        expect(next!.scheduledDate).toBeNull();
+        expect(next!.dueDate).toBeNull();
+        expect(next!.reminderDate).toEqualMoment(moment('2022-01-18 10:30'));
     });
 
     it('creates a recurrence the next month, even on the 31st', () => {
@@ -34,6 +56,7 @@ describe('Recurrence', () => {
             recurrenceRuleText: 'every month',
             startDate: null,
             scheduledDate: null,
+            reminderDate: null,
             dueDate: moment('2022-01-31').startOf('day'),
         });
 
@@ -52,6 +75,7 @@ describe('Recurrence', () => {
             recurrenceRuleText: 'every 3 months',
             startDate: null,
             scheduledDate: null,
+            reminderDate: null,
             dueDate: moment('2022-01-31').startOf('day'),
         });
 
@@ -70,6 +94,7 @@ describe('Recurrence', () => {
             recurrenceRuleText: 'every 2 months',
             startDate: null,
             scheduledDate: null,
+            reminderDate: null,
             dueDate: moment('2023-12-31').startOf('day'),
         });
 
@@ -79,6 +104,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
+        expect(next!.reminderDate).toBeNull();
         expect(next!.dueDate).toEqualMoment(moment('2024-02-29'));
     });
 
@@ -88,6 +114,7 @@ describe('Recurrence', () => {
             recurrenceRuleText: 'every 2 years',
             startDate: null,
             scheduledDate: null,
+            reminderDate: null,
             dueDate: moment('2024-02-29').startOf('day'),
         });
 
@@ -97,6 +124,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
+        expect(next!.reminderDate).toBeNull();
         expect(next!.dueDate).toEqualMoment(moment('2026-02-28'));
     });
 
@@ -106,6 +134,7 @@ describe('Recurrence', () => {
             recurrenceRuleText: 'every 11 months',
             startDate: null,
             scheduledDate: null,
+            reminderDate: null,
             dueDate: moment('2020-03-31').startOf('day'),
         });
 
@@ -115,6 +144,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
+        expect(next!.reminderDate).toBeNull();
         expect(next!.dueDate).toEqualMoment(moment('2021-02-28'));
     });
 
@@ -124,6 +154,7 @@ describe('Recurrence', () => {
             recurrenceRuleText: 'every 13 months',
             startDate: null,
             scheduledDate: null,
+            reminderDate: null,
             dueDate: moment('2020-01-31').startOf('day'),
         });
 
@@ -146,6 +177,7 @@ describe('Recurrence - with invalid dates in tasks', () => {
             recurrenceRuleText: 'every day',
             startDate: null,
             scheduledDate: null,
+            reminderDate: null,
             dueDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
         });
 
@@ -165,6 +197,7 @@ describe('Recurrence - with invalid dates in tasks', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day',
             startDate: null,
+            reminderDate: null,
             scheduledDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
             dueDate: moment('2022-02-27').startOf('day'),
         });

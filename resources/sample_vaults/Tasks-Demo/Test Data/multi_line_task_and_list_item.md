@@ -1,6 +1,7 @@
 # multi_line_task_and_list_item
 
 - [ ] #task Task in 'multi_line_task_and_list_item'
+    1. asdfasdfa
     task line 1
     task line 2
 - muli-line list item in 'multi_line_task_and_list_item'

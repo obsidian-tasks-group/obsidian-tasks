@@ -3,7 +3,7 @@
     import { parseTypedDateForDisplayUsingFutureDate } from '../lib/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
-    export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
+    export let id: 'start' | 'scheduled' | 'due' | 'reminder' | 'done' | 'created' | 'cancelled';
     export let dateSymbol: string;
     export let date: string;
     export let isDateValid: boolean;

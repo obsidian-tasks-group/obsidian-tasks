@@ -211,6 +211,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ⏰ 2023-07-07',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
@@ -231,6 +232,7 @@ describe('task line rendering - layout options', () => {
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
                 ' 📅 2023-07-04',
+                ' ⏰ 2023-07-07',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
                 ' ^dcf64c',
@@ -266,6 +268,10 @@ describe('task line rendering - layout options', () => {
 
     it('renders with due date', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' 📅 2023-07-04'], [TaskLayoutComponent.DueDate]);
+    });
+
+    it('renders with reminder date', async () => {
+        await testLayoutOptions(['Do exercises #todo #health', ' ⏰ 2023-07-07'], [TaskLayoutComponent.ReminderDate]);
     });
 
     it('renders with done date', async () => {
@@ -375,6 +381,7 @@ describe('task line rendering - classes and data attributes', () => {
         // This test ensures that all date fields are handled correctly.
         await testComponentClasses(`- [ ] Full task ⏫ ➕ ${today}`, 'task-created', 'taskCreated: today');
         await testComponentClasses(`- [ ] Full task ⏫ 📅 ${today}`, 'task-due', 'taskDue: today');
+        await testComponentClasses(`- [ ] Full task ⏫ ⏰ ${today}`, 'task-reminder', 'taskReminder: today');
         await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${today}`, 'task-scheduled', 'taskScheduled: today');
         await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${today}`, 'task-start', 'taskStart: today');
         await testComponentClasses(`- [x] Done task ✅ ${today}`, 'task-done', 'taskDone: today');
@@ -421,6 +428,7 @@ describe('task line rendering - classes and data attributes', () => {
         ['task-priority', 'taskPriority: medium', 'priority'],
         ['task-createdDate', 'taskCreated: past-far', 'createdDate'],
         ['task-dueDate', 'taskDue: past-far', 'dueDate'],
+        ['task-reminderDate', 'taskReminder: past-far', 'reminderDate'],
         ['task-scheduledDate', 'taskScheduled: past-far', 'scheduledDate'],
         ['task-startDate', 'taskStart: past-far', 'startDate'],
         ['task-doneDate', 'taskDone: past-far', 'doneDate'],

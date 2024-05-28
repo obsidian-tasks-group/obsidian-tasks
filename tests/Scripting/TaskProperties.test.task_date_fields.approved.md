@@ -8,6 +8,8 @@
 | `task.due.formatAsDate('no date')` | `string` | `'2023-07-04'` | `string` | `'no date'` |
 | `task.due.formatAsDateAndTime()` | `string` | `'2023-07-04 00:00'` | `string` | `''` |
 | `task.due.formatAsDateAndTime('no date')` | `string` | `'2023-07-04 00:00'` | `string` | `'no date'` |
+| `task.due.formatAsDateAndTimeOrDate()` | `string` | `'2023-07-04'` | `string` | `''` |
+| `task.due.formatAsDateAndTimeOrDate('no date')` | `string` | `'2023-07-04'` | `string` | `'no date'` |
 | `task.due.format('dddd')` | `string` | `'Tuesday'` | `string` | `''` |
 | `task.due.format('dddd', 'no date')` | `string` | `'Tuesday'` | `string` | `'no date'` |
 | `task.due.toISOString()` | `string` | `'2023-07-04T00:00:00.000Z'` | `string` | `''` |

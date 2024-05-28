@@ -66,6 +66,7 @@ describe('TaskSerializer Example', () => {
                 tags: Task.extractHashtags(description),
                 dueDate,
                 priority,
+                reminderDate: null,
                 startDate: null,
                 createdDate: null,
                 scheduledDate: null,
