@@ -97,21 +97,25 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             );
             value.appendText += ` ${newTask.id}`;
 
-            if (value.context.file.basename == newTask.filename) {
-                // Avoid "Has Been Modifed Externally Error" and Replace Task in Editor Context
-                console.log(value.taskItDependsOn.toFileLineString());
-                const start = {
-                    line: value.taskItDependsOn.lineNumber,
-                    ch: 0,
-                };
-                const end = {
-                    line: value.taskItDependsOn.lineNumber,
-                    ch: value.taskItDependsOn.toFileLineString().length,
-                };
-                value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
-            } else {
-                // Replace Task in File Context
-                replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
+            if (value.taskItDependsOn !== newTask) {
+                // The task being depended on must not have had an ID previously,
+                // so we have to save its new ID field:
+                if (value.context.file.basename == newTask.filename) {
+                    // Avoid "Has Been Modified Externally Error" and Replace Task in Editor Context
+                    const originalLine = value.taskItDependsOn.originalMarkdown;
+                    const start = {
+                        line: value.taskItDependsOn.lineNumber,
+                        ch: 0,
+                    };
+                    const end = {
+                        line: value.taskItDependsOn.lineNumber,
+                        ch: originalLine.length,
+                    };
+                    value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
+                } else {
+                    // Replace Task in File Context
+                    replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
+                }
             }
         }
 
