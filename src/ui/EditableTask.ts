@@ -66,7 +66,7 @@ export class EditableTask {
         if (description != task.description || !GlobalFilter.getInstance().includedIn(task.description)) {
             addGlobalFilterOnSave = true;
         }
-        let priority: typeof this.priority = 'none';
+        let priority: EditableTaskPriority = 'none';
         if (task.priority === Priority.Lowest) {
             priority = 'lowest';
         } else if (task.priority === Priority.Low) {
