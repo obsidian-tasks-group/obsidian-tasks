@@ -2,6 +2,11 @@ import { Notice } from 'obsidian';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { Task } from './Task';
 
+export enum OnCompletion {
+    Ignore = 'ignore',
+    Delete = 'delete',
+}
+
 function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) {
     return tasks.filter((task) => task !== changedStatusTask);
 }
