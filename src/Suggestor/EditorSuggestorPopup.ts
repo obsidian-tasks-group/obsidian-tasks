@@ -100,7 +100,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             if (value.taskItDependsOn !== newTask) {
                 // The task being depended on must not have had an ID previously,
                 // so we have to save its new ID field:
-                if (value.context.file.basename == newTask.filename) {
+                if (value.context.file.path == newTask.path) {
                     // Avoid "Has Been Modified Externally Error" and Replace Task in Editor Context
                     const originalLine = value.taskItDependsOn.originalMarkdown;
                     const start = {
