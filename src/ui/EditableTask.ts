@@ -8,6 +8,8 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 
+type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
+
 export class EditableTask {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     description: string;
@@ -28,7 +30,7 @@ export class EditableTask {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: string;
         status: Status;
-        priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
+        priority: EditableTaskPriority;
         recurrenceRule: string;
         createdDate: string;
         startDate: string;
