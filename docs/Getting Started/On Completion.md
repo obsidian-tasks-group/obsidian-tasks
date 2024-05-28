@@ -12,39 +12,51 @@ Obsidian Tasks can automatically perform an action upon a task when it is marked
 
 This feature is enabled by adding (*after* the description within a task) a field consisting of:
 
-- the *checkered flag* signifier 🏁, followed by
-- a string identifying the desired ***Action*** to take when the item is completed.
+- the *checkered flag* 🏁 emoji ***signifier***, followed by
+- a string identifying the desired ***action*** to take when the item is completed.
 
-At present, the following "On Completion" action is supported:
+> [!info]
+> If you are using [[Dataview Format]] for Tasks,  instead of the 🏁 emoji the desired ***action*** would follow the double colons in `[onCompletion:: ]`.)
 
-1. **Delete** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the completed instance of the task
+At present, two "On Completion" ***actions*** are supported:
 
-(Two additional actions -- to move completed tasks to either a separate "completed tasks archive" note or to a "completed tasks list" within the original host note -- are under development.)
+1. **Ignore** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nothing will be done with the just-completed task.  (This is the default action.)
+2. **Delete** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the completed instance of the task.
 
-## Example "On Completion" operations
+> [!tip]
+> Two additional ***actions*** -- moving a just-completed task to either a separate "completed tasks archive" note or to a "completed tasks list" within the original host note -- are being considered for implementation.  
+>
+> We are tracking requests for this additional functionality in [issue #2855](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2855) and [issue #2856](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2856), respectively.  If you would like having one or both of these available as optional automatic actions, feel free to register your support there.
 
-> [!note]
-> To keep it simple, the following assumes that **Tasks** is configured to not use a [[Global Filter]] and not to add a [[Dates#Done date]] when you complete a task
+> [!info]
+> In order to keep it simple, the following assumes that **Tasks** is configured so as not to use a [[Global Filter]] nor  add a [[Dates#Done date]] when you complete a task.
 
-Imagine that your vault consists of a single note file `My Project.md`, with these contents:
+> [!example] Imagine that your vault consists of a single note file `My Project.md`, with these contents:
 
 ```text
 # My Project Tasks
 - [ ] Leave me alone
+- [ ] Leave me alone too! 🏁 ignore
 - [ ] Delete me upon completion 🏁 delete
 - [ ] Delete my completed instance, leave my next instance 📅 2021-05-20 🔁 every day when done 🏁 delete
 ```
 
-Using the plugin's default settings, after *using Tasks* to mark each task as "done", your `My Project` note file will contain:
+> [!success] Using the plugin's default settings, after *using Tasks* to mark each task as "done", your `My Project` note file will contain:
 
 ```text
 # My Project Tasks
 - [x] Leave me alone
+- [x] Leave me alone too! 🏁 ignore
 - [ ] Delete my completed instance, leave my next instance 📅 2021-05-21 🔁 every day when done 🏁 delete
 ```
 
-Note that the incomplete next instance has replaced the original recurring task.
+> [!note] Note that
+>
+> - The task assigned the `ignore` action is treated the same as one that has no onCompletion field at all, and
+> - The next instance of the recurring task has replaced the original, completed instance.
 
 ## Assigning and changing a given task's "On Completion" action
 
-Although the "On Completion" signifier and desired **Action** identifier *can* be added to a task manually, doing so might be both tedious and error-prone -- you can also set or change each task's "On Completion" **Action** using the plugin's [[Create or edit Task|'Create or Edit Task' modal dialog]].
+At present, the "On Completion" signifier and desired **Action** identifier have to be added to a task manually.
+
+In recognition that that could be both tedious and error-prone, we're working on adding the ability to set or change each task's "On Completion" **Action** using the plugin's [[Create or edit Task|'Create or Edit Task' modal dialog]].
