@@ -46,7 +46,7 @@
         blockedBy: [],
         blocking: [],
     });
-    ({ editableTask, addGlobalFilterOnSave, originalBlocking } = editableTask.fromTask(task, allTasks));
+    ({ editableTask, addGlobalFilterOnSave, originalBlocking } = EditableTask.fromTask(task, allTasks));
 
     let isDescriptionValid: boolean = true;
 

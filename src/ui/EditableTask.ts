@@ -57,7 +57,7 @@ export class EditableTask {
         this.blocking = editableTask.blocking;
     }
 
-    public fromTask(task: Task, allTasks: Task[]) {
+    public static fromTask(task: Task, allTasks: Task[]) {
         const description = GlobalFilter.getInstance().removeAsWordFrom(task.description);
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
