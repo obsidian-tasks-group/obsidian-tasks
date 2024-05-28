@@ -1,6 +1,28 @@
-<!--- Provide a general summary of your changes in the Title above -->
+# Types of changes
 
-# Description
+<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
+
+Changes visible to users:
+
+- [ ] **New feature** (prefix: `feat` - non-breaking change which adds functionality)
+  - Issue/discussion: <!-- Link to the issue or discussion where this has been agreed with a maintainer -->
+  - **WARNING: If the link is absent, the PR may be closed without review**, due to the workload that such reviews usually require.
+- [ ] **Breaking change** (prefix: `feat!!` or `fix!!` - fix or feature that would cause existing functionality to not work as expected)
+  - Issue/discussion: <!-- Link to the issue or discussion where this has been agreed with a maintainer -->
+- [ ] **Bug fix** (prefix: `fix` - non-breaking change which fixes an issue)
+- [ ] **Documentation** (prefix: `docs` - improvements to any documentation content **for users**)
+- [ ] **Sample vault** (prefix: `vault` - improvements to the [Tasks-Demo sample vault](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo))
+- [ ] **Contributing Guidelines** (prefix: `contrib` - any improvements to documentation content **for contributors** - see [Contributing to Tasks](https://publish.obsidian.md/tasks-contributing/))
+
+Internal changes:
+
+- [ ] **Refactor** (prefix: `refactor` - non-breaking change which only improves the design or structure of existing code, and making no changes to its external behaviour)
+- [ ] **Tests** (prefix: `test` - additions and improvements to unit tests and the smoke tests)
+- [ ] **Infrastructure** (prefix: `chore` - examples include GitHub Actions, issue templates)
+
+## Description
+
+<!--- Remember to provide a general summary of your changes in the Title above -->
 
 <!--- Describe your changes in detail -->
 
@@ -16,25 +38,6 @@
 <!--- your change affects other areas of the code, etc. -->
 
 ## Screenshots (if appropriate)
-
-## Types of changes
-
-<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
-
-Changes visible to users:
-
-- [ ] **Bug fix** (prefix: `fix` - non-breaking change which fixes an issue)
-- [ ] **New feature** (prefix: `feat` - non-breaking change which adds functionality)
-- [ ] **Breaking change** (prefix: `feat!!` or `fix!!` - fix or feature that would cause existing functionality to not work as expected)
-- [ ] **Documentation** (prefix: `docs` - improvements to any documentation content **for users**)
-- [ ] **Sample vault** (prefix: `vault` - improvements to the [Tasks-Demo sample vault](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo))
-- [ ] **Contributing Guidelines** (prefix: `contrib` - any improvements to documentation content **for contributors** - see [Contributing to Tasks](https://publish.obsidian.md/tasks-contributing/))
-
-Internal changes:
-
-- [ ] **Refactor** (prefix: `refactor` - non-breaking change which only improves the design or structure of existing code, and making no changes to its external behaviour)
-- [ ] **Tests** (prefix: `test` - additions and improvements to unit tests and the smoke tests)
-- [ ] **Infrastructure** (prefix: `chore` - examples include GitHub Actions, issue templates)
 
 ## Checklist
 

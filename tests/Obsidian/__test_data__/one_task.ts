@@ -1,11 +1,10 @@
-// test data from one_task.md
-
 export const one_task = {
     filePath: 'Test Data/one_task.md',
     fileContents: '- [ ] #task the only task here\n\n',
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 0,
@@ -18,7 +17,6 @@ export const one_task = {
                         offset: 11,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -40,6 +38,8 @@ export const one_task = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -52,8 +52,6 @@ export const one_task = {
                         offset: 30,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
         ],
     },

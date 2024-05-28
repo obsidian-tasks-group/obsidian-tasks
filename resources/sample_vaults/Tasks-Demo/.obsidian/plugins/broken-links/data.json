@@ -1,0 +1,25 @@
+{
+  "version": "1.2.2",
+  "previousVersion": "1.0.0",
+  "groupBy": 0,
+  "expandedFolderItems": [
+    "Test Data",
+    "Test Data/Frontmatter",
+    "Test Data/Frontmatter/heading_contains_a_link.md",
+    "Test Data/Frontmatter/link_in_file_body.md",
+    "Test Data/Frontmatter/link_in_metadata.md"
+  ],
+  "expandedFileItems": [],
+  "expandedLinkItems": [],
+  "folderSort": 0,
+  "fileSort": 3,
+  "linkSort": 3,
+  "linkFilter": {
+    "filterString": "",
+    "matchCase": false
+  },
+  "ignoredFolders": [
+    "_meta"
+  ],
+  "consolidateLinks": false
+}
