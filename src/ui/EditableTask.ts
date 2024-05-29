@@ -78,7 +78,6 @@ export class EditableTask {
         task: Task,
         allTasks: Task[],
     ): {
-        originalBlocking: Task[];
         editableTask: EditableTask;
     } {
         const description = GlobalFilter.getInstance().removeAsWordFrom(task.description);
@@ -132,7 +131,6 @@ export class EditableTask {
                 addGlobalFilterOnSave,
                 originalBlocking,
             }),
-            originalBlocking,
         };
     }
 
