@@ -3,12 +3,17 @@
  */
 import { expect } from '@jest/globals';
 import moment from 'moment';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { EditableTask } from '../../src/ui/EditableTask';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
 describe('EditableTask tests', () => {
+    beforeEach(() => {
+        GlobalFilter.getInstance().reset();
+    });
+
     it('should create an editable task without dependencies', () => {
         const taskToEdit = TaskBuilder.createFullyPopulatedTask();
 
@@ -59,5 +64,31 @@ describe('EditableTask tests', () => {
         expect(blockingTasks).toEqual([blockedTask]);
         expect(blockedByTasks).toEqual([blockingTask]);
         expect(originalBlocking).toEqual([blockedTask]);
+    });
+
+    it('should remember to add global filter when it is absent in task description', () => {
+        GlobalFilter.getInstance().set('#todo');
+        const taskWithoutGlobalFilter = new TaskBuilder().description('global filter is absent').build();
+
+        const { addGlobalFilterOnSave } = EditableTask.fromTask(taskWithoutGlobalFilter, [taskWithoutGlobalFilter]);
+
+        expect(addGlobalFilterOnSave).toEqual(true);
+    });
+
+    it('should remember to add global filter when it is present in task description', () => {
+        GlobalFilter.getInstance().set('#important');
+        const taskWithGlobalFilter = new TaskBuilder().description('#important is the global filter').build();
+
+        const { addGlobalFilterOnSave } = EditableTask.fromTask(taskWithGlobalFilter, [taskWithGlobalFilter]);
+
+        expect(addGlobalFilterOnSave).toEqual(true);
+    });
+
+    it('should not add global filter by default (global filter was not set)', () => {
+        const task = new TaskBuilder().description('global filter has not been set').build();
+
+        const { addGlobalFilterOnSave } = EditableTask.fromTask(task, [task]);
+
+        expect(addGlobalFilterOnSave).toEqual(false);
     });
 });
