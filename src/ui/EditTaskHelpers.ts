@@ -1,5 +1,4 @@
 import { capitalizeFirstLetter } from '../lib/StringHelpers';
-import type { EditableTask } from './EditableTask';
 
 /**
  * Returns contents for a `<label>` HTML element.
@@ -36,8 +35,4 @@ export function labelContentWithAccessKey(labelText: string, accessKey: string |
     labelContent += labelText.substring(accessKeyIndex + 1);
     labelContent = capitalizeFirstLetter(labelContent);
     return labelContent;
-}
-
-export function parseAndValidateRecurrence(editableTask: EditableTask) {
-    return editableTask.parseAndValidateRecurrence();
 }
