@@ -57,7 +57,14 @@ export class EditableTask {
         this.blocking = editableTask.blocking;
     }
 
-    public static fromTask(task: Task, allTasks: Task[]) {
+    public static fromTask(
+        task: Task,
+        allTasks: Task[],
+    ): {
+        addGlobalFilterOnSave: boolean;
+        originalBlocking: Task[];
+        editableTask: EditableTask;
+    } {
         const description = GlobalFilter.getInstance().removeAsWordFrom(task.description);
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
@@ -113,7 +120,12 @@ export class EditableTask {
         };
     }
 
-    public async applyEdits(task: Task, originalBlocking: Task[], addGlobalFilterOnSave: boolean, allTasks: Task[]) {
+    public async applyEdits(
+        task: Task,
+        originalBlocking: Task[],
+        addGlobalFilterOnSave: boolean,
+        allTasks: Task[],
+    ): Promise<Task[]> {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = this.description.trim();
         if (addGlobalFilterOnSave) {
