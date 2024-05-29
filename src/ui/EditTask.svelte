@@ -29,7 +29,7 @@
 
     let descriptionInput: HTMLTextAreaElement;
 
-    let { editableTask, addGlobalFilterOnSave, originalBlocking } = EditableTask.fromTask(task, allTasks);
+    let { editableTask, originalBlocking } = EditableTask.fromTask(task, allTasks);
 
     let isDescriptionValid: boolean = true;
 
@@ -142,7 +142,7 @@
     };
 
     const _onSubmit = async () => {
-        const newTasks = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        const newTasks = await editableTask.applyEdits(task, originalBlocking, allTasks);
         onSubmit(newTasks);
     };
 </script>
