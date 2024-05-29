@@ -6,7 +6,6 @@ import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
-import { appleSauce } from './EditTaskHelpers';
 
 type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
@@ -243,7 +242,28 @@ export class EditableTask {
     }
 
     parseAndValidateRecurrence() {
-        return appleSauce(this);
+        // NEW_TASK_FIELD_EDIT_REQUIRED
+        if (!this.recurrenceRule) {
+            return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
+        }
+
+        const recurrenceFromText = Recurrence.fromText({
+            recurrenceRuleText: this.recurrenceRule,
+            // Only for representation in the modal, no dates required.
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+        })?.toText();
+
+        if (!recurrenceFromText) {
+            return { parsedRecurrence: '<i>invalid recurrence rule</i>', isRecurrenceValid: false };
+        }
+
+        if (this.startDate || this.scheduledDate || this.dueDate) {
+            return { parsedRecurrence: recurrenceFromText, isRecurrenceValid: true };
+        }
+
+        return { parsedRecurrence: '<i>due, scheduled or start date required</i>', isRecurrenceValid: false };
     }
 }
 
