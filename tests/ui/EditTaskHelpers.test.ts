@@ -83,9 +83,9 @@ describe('parseAndValidateRecurrence() tests', () => {
             expectedParsedRecurrence: string,
             expectedRecurrenceValidity: boolean,
         ) => {
-            const editableTask = editableTaskFields(emptyTask);
+            const editedTask = editableTaskFields(emptyTask);
 
-            const { parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editableTask);
+            const { parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editedTask);
             expect(parsedRecurrence).toEqual(expectedParsedRecurrence);
             expect(isRecurrenceValid).toEqual(expectedRecurrenceValidity);
         },
