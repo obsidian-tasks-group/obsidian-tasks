@@ -9,12 +9,17 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
-function testEditableTaskDescriptionAndGlobalFilterOnSave(
-    globalFilter: string,
-    taskDescription: string,
-    expectedEditableTaskDescription: string,
-    expectedAddGlobalFilterOnSave: boolean,
-) {
+function testEditableTaskDescriptionAndGlobalFilterOnSave({
+    globalFilter,
+    taskDescription,
+    expectedEditableTaskDescription,
+    expectedAddGlobalFilterOnSave,
+}: {
+    globalFilter: string;
+    taskDescription: string;
+    expectedEditableTaskDescription: string;
+    expectedAddGlobalFilterOnSave: boolean;
+}) {
     GlobalFilter.getInstance().set(globalFilter);
     const taskWithoutGlobalFilter = new TaskBuilder().description(taskDescription).build();
 
@@ -89,12 +94,12 @@ describe('EditableTask tests', () => {
         const expectedEditableTaskDescription = 'global filter is absent';
         const expectedAddGlobalFilterOnSave = true;
 
-        testEditableTaskDescriptionAndGlobalFilterOnSave(
-            globalFilter,
-            taskDescription,
-            expectedEditableTaskDescription,
-            expectedAddGlobalFilterOnSave,
-        );
+        testEditableTaskDescriptionAndGlobalFilterOnSave({
+            globalFilter: globalFilter,
+            taskDescription: taskDescription,
+            expectedEditableTaskDescription: expectedEditableTaskDescription,
+            expectedAddGlobalFilterOnSave: expectedAddGlobalFilterOnSave,
+        });
     });
 
     it('should remember to add global filter when it is present in task description and remove it from the description', () => {
