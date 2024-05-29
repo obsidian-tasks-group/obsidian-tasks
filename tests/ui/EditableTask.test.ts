@@ -41,7 +41,7 @@ describe('EditableTask tests', () => {
     it('should create an editable task without dependencies', () => {
         const taskToEdit = TaskBuilder.createFullyPopulatedTask();
 
-        const { editableTask, originalBlocking } = EditableTask.fromTask(taskToEdit, [taskToEdit]);
+        const { editableTask } = EditableTask.fromTask(taskToEdit, [taskToEdit]);
 
         expect(editableTask).toMatchInlineSnapshot(`
             EditableTask {
@@ -70,7 +70,6 @@ describe('EditableTask tests', () => {
               },
             }
         `);
-        expect(originalBlocking).toEqual([]);
     });
 
     it('should create an editable task with dependencies', () => {
@@ -82,11 +81,10 @@ describe('EditableTask tests', () => {
             .build();
         const allTasks = [taskToEdit, blockingTask, blockedTask];
 
-        const { editableTask, originalBlocking } = EditableTask.fromTask(taskToEdit, allTasks);
+        const { editableTask } = EditableTask.fromTask(taskToEdit, allTasks);
 
         expect(editableTask.blocking).toEqual([blockedTask]);
         expect(editableTask.blockedBy).toEqual([blockingTask]);
-        expect(originalBlocking).toEqual([blockedTask]);
     });
 
     it('should remember to add global filter when it is absent in task description', () => {
@@ -206,11 +204,11 @@ describe('EditableTask tests', () => {
     it('should set a date in YYYY-MM-DD format', async () => {
         const task = new TaskBuilder().build();
         const allTasks: Task[] = [];
-        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+        const { editableTask } = EditableTask.fromTask(task, allTasks);
 
         editableTask.dueDate = '2024-07-13';
 
-        const editedTasks = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        const editedTasks = await editableTask.applyEdits(task, allTasks);
         // TODO Why does this have the time 12:00?
         //      When I edit a task in the plugin, in the modal, and then group by the following, the time is midnight,
         //      so where is the time dropped in production code?
@@ -224,7 +222,7 @@ describe('EditableTask tests', () => {
     it('should honour the forwardOnly value', async () => {
         const task = new TaskBuilder().build();
         const allTasks: Task[] = [];
-        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+        const { editableTask } = EditableTask.fromTask(task, allTasks);
 
         jest.setSystemTime(new Date('2024-05-22')); // Wednesday 22nd May
 
@@ -233,11 +231,11 @@ describe('EditableTask tests', () => {
         const tuesdayAfter = moment('2024-05-21T12:00:00.000Z');
 
         editableTask.forwardOnly = true;
-        const tasksFutureDay = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        const tasksFutureDay = await editableTask.applyEdits(task, allTasks);
         expect(tasksFutureDay[0].dueDate).toEqualMoment(tuesdayBefore);
 
         editableTask.forwardOnly = false;
-        const tasksClosestDay = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        const tasksClosestDay = await editableTask.applyEdits(task, allTasks);
         expect(tasksClosestDay[0].dueDate).toEqualMoment(tuesdayAfter);
     });
 });
