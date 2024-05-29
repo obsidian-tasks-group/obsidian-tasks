@@ -10,6 +10,11 @@ import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDepende
 
 type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
+/**
+ * {@link Task} objects are immutable. This class allows to create a mutable object from a {@link Task}, apply the edits,
+ * and get the resulting task(s).
+ *
+ */
 export class EditableTask {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     description: string;
@@ -57,6 +62,12 @@ export class EditableTask {
         this.blocking = editableTask.blocking;
     }
 
+    /**
+     * Use this factory to create an editable task from a {@link Task} object.
+     *
+     * @param task
+     * @param allTasks
+     */
     public static fromTask(
         task: Task,
         allTasks: Task[],
@@ -120,6 +131,16 @@ export class EditableTask {
         };
     }
 
+    /**
+     * Generates a {@link Task} object from the current {@link EditableTask}. Use this to output the new tasks after the edits.
+     *
+     * There are cases where the output of the edits is more than one task, for example, completing a {@link Task} with {@link Recurrence}.
+     *
+     * @param task
+     * @param originalBlocking
+     * @param addGlobalFilterOnSave
+     * @param allTasks
+     */
     public async applyEdits(
         task: Task,
         originalBlocking: Task[],
