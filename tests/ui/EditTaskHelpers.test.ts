@@ -4,7 +4,7 @@
 
 import moment from 'moment/moment';
 import { EditableTask } from '../../src/ui/EditableTask';
-import { labelContentWithAccessKey, parseAndValidateRecurrence } from '../../src/ui/EditTaskHelpers';
+import { labelContentWithAccessKey } from '../../src/ui/EditTaskHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -85,7 +85,7 @@ describe('parseAndValidateRecurrence() tests', () => {
         ) => {
             const editedTask = taskEditor(editableTask);
 
-            const { parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editedTask);
+            const { parsedRecurrence, isRecurrenceValid } = editedTask.parseAndValidateRecurrence();
             expect(parsedRecurrence).toEqual(expectedParsedRecurrence);
             expect(isRecurrenceValid).toEqual(expectedRecurrenceValidity);
         },
