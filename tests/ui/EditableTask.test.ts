@@ -14,22 +14,17 @@ function testEditableTaskDescriptionAndGlobalFilterOnSave({
     globalFilter,
     taskDescription,
     expectedEditableTaskDescription,
-    expectedAddGlobalFilterOnSave,
 }: {
     globalFilter: string;
     taskDescription: string;
     expectedEditableTaskDescription: string;
-    expectedAddGlobalFilterOnSave: boolean;
 }) {
     GlobalFilter.getInstance().set(globalFilter);
     const taskWithoutGlobalFilter = new TaskBuilder().description(taskDescription).build();
 
-    const { editableTask, addGlobalFilterOnSave } = EditableTask.fromTask(taskWithoutGlobalFilter, [
-        taskWithoutGlobalFilter,
-    ]);
+    const { editableTask } = EditableTask.fromTask(taskWithoutGlobalFilter, [taskWithoutGlobalFilter]);
 
     expect(editableTask.description).toEqual(expectedEditableTaskDescription);
-    expect(addGlobalFilterOnSave).toEqual(expectedAddGlobalFilterOnSave);
 }
 
 describe('EditableTask tests', () => {
@@ -98,7 +93,6 @@ describe('EditableTask tests', () => {
             globalFilter: '#todo',
             taskDescription: 'global filter is absent',
             expectedEditableTaskDescription: 'global filter is absent',
-            expectedAddGlobalFilterOnSave: true,
         });
     });
 
@@ -107,7 +101,6 @@ describe('EditableTask tests', () => {
             globalFilter: '#important',
             taskDescription: '#important is the global filter',
             expectedEditableTaskDescription: 'is the global filter',
-            expectedAddGlobalFilterOnSave: true,
         });
     });
 
@@ -116,7 +109,6 @@ describe('EditableTask tests', () => {
             globalFilter: GlobalFilter.empty,
             taskDescription: 'global filter has not been set',
             expectedEditableTaskDescription: 'global filter has not been set',
-            expectedAddGlobalFilterOnSave: false,
         });
     });
 
