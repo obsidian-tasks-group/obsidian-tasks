@@ -39,7 +39,7 @@ export function labelContentWithAccessKey(labelText: string, accessKey: string |
     return labelContent;
 }
 
-export function parseAndValidateRecurrence(editableTask: EditableTask) {
+function appleSauce(editableTask: EditableTask) {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     if (!editableTask.recurrenceRule) {
         return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
@@ -62,4 +62,8 @@ export function parseAndValidateRecurrence(editableTask: EditableTask) {
     }
 
     return { parsedRecurrence: '<i>due, scheduled or start date required</i>', isRecurrenceValid: false };
+}
+
+export function parseAndValidateRecurrence(editableTask: EditableTask) {
+    return appleSauce(editableTask);
 }
