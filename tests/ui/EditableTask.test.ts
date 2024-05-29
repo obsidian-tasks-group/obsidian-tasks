@@ -12,7 +12,7 @@ describe('EditableTask tests', () => {
     it('should create an editable task without dependencies', () => {
         const taskToEdit = TaskBuilder.createFullyPopulatedTask();
 
-        const { editableTask } = EditableTask.fromTask(taskToEdit, [taskToEdit]);
+        const { editableTask, originalBlocking } = EditableTask.fromTask(taskToEdit, [taskToEdit]);
 
         expect(editableTask).toMatchInlineSnapshot(`
             EditableTask {
@@ -39,6 +39,7 @@ describe('EditableTask tests', () => {
               },
             }
         `);
+        expect(originalBlocking).toEqual([]);
     });
 
     it('should create an editable task with dependencies', () => {
