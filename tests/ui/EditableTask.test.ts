@@ -89,16 +89,11 @@ describe('EditableTask tests', () => {
     });
 
     it('should remember to add global filter when it is absent in task description', () => {
-        const globalFilter = '#todo';
-        const taskDescription = 'global filter is absent';
-        const expectedEditableTaskDescription = 'global filter is absent';
-        const expectedAddGlobalFilterOnSave = true;
-
         testEditableTaskDescriptionAndGlobalFilterOnSave({
-            globalFilter: globalFilter,
-            taskDescription: taskDescription,
-            expectedEditableTaskDescription: expectedEditableTaskDescription,
-            expectedAddGlobalFilterOnSave: expectedAddGlobalFilterOnSave,
+            globalFilter: '#todo',
+            taskDescription: 'global filter is absent',
+            expectedEditableTaskDescription: 'global filter is absent',
+            expectedAddGlobalFilterOnSave: true,
         });
     });
 
