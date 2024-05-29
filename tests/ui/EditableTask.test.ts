@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-import { expect } from '@jest/globals';
 import moment from 'moment';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { Status } from '../../src/Statuses/Status';
