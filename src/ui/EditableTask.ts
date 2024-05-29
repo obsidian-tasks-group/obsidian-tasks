@@ -75,7 +75,6 @@ export class EditableTask {
         task: Task,
         allTasks: Task[],
     ): {
-        addGlobalFilterOnSave: boolean;
         originalBlocking: Task[];
         editableTask: EditableTask;
     } {
@@ -130,7 +129,6 @@ export class EditableTask {
                 blocking: originalBlocking,
                 addGlobalFilterOnSave,
             }),
-            addGlobalFilterOnSave,
             originalBlocking,
         };
     }
