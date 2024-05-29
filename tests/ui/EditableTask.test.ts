@@ -4,6 +4,7 @@
 import { expect } from '@jest/globals';
 import moment from 'moment';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { Status } from '../../src/Statuses/Status';
 import { EditableTask } from '../../src/ui/EditableTask';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
@@ -123,5 +124,81 @@ describe('EditableTask tests', () => {
         const appliedEdits = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, [task]);
 
         expect(appliedEdits).toEqual([task]);
+    });
+
+    it('should apply edit all fields in a fully populated task', async () => {
+        const task = TaskBuilder.createFullyPopulatedTask();
+        const allTasks = [task];
+
+        const { originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+
+        const removeAllTaskFields = new EditableTask({
+            description: '',
+            status: Status.TODO,
+            priority: 'none',
+            recurrenceRule: '',
+            createdDate: '',
+            startDate: '',
+            scheduledDate: '',
+            dueDate: '',
+            doneDate: '',
+            cancelledDate: '',
+            forwardOnly: true,
+            blockedBy: [],
+            blocking: [],
+        });
+        const appliedEdits = await removeAllTaskFields.applyEdits(
+            task,
+            originalBlocking,
+            addGlobalFilterOnSave,
+            allTasks,
+        );
+
+        expect(appliedEdits.length).toEqual(1);
+        expect(appliedEdits[0]).toMatchInlineSnapshot(`
+            Task {
+              "_urgency": null,
+              "blockLink": " ^dcf64c",
+              "cancelledDate": null,
+              "children": [],
+              "createdDate": null,
+              "dependsOn": [],
+              "description": "",
+              "doneDate": null,
+              "dueDate": null,
+              "id": "abcdef",
+              "indentation": "  ",
+              "listMarker": "-",
+              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
+              "parent": null,
+              "priority": "3",
+              "recurrence": null,
+              "scheduledDate": null,
+              "scheduledDateIsInferred": false,
+              "startDate": null,
+              "status": Status {
+                "configuration": StatusConfiguration {
+                  "availableAsCommand": true,
+                  "name": "Todo",
+                  "nextStatusSymbol": "x",
+                  "symbol": " ",
+                  "type": "TODO",
+                },
+              },
+              "tags": [
+                "#todo",
+                "#health",
+              ],
+              "taskLocation": TaskLocation {
+                "_lineNumber": 17,
+                "_precedingHeader": "My Header",
+                "_sectionIndex": 3,
+                "_sectionStart": 5,
+                "_tasksFile": TasksFile {
+                  "_path": "some/folder/fileName.md",
+                },
+              },
+            }
+        `);
     });
 });
