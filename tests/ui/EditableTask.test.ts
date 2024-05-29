@@ -114,4 +114,14 @@ describe('EditableTask tests', () => {
             expectedAddGlobalFilterOnSave: false,
         });
     });
+
+    it.failing('should apply no edits to a fully populated task', async () => {
+        const task = TaskBuilder.createFullyPopulatedTask();
+        const allTasks = [task];
+
+        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+        const appliedEdits = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, [task]);
+
+        expect(appliedEdits).toEqual([task]);
+    });
 });
