@@ -74,12 +74,7 @@ export class EditableTask {
      * @param task
      * @param allTasks
      */
-    public static fromTask(
-        task: Task,
-        allTasks: Task[],
-    ): {
-        editableTask: EditableTask;
-    } {
+    public static fromTask(task: Task, allTasks: Task[]): EditableTask {
         const description = GlobalFilter.getInstance().removeAsWordFrom(task.description);
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
@@ -112,26 +107,24 @@ export class EditableTask {
 
         const originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
-        return {
-            editableTask: new EditableTask({
-                // NEW_TASK_FIELD_EDIT_REQUIRED
-                description,
-                status: task.status,
-                priority,
-                recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
-                createdDate: task.created.formatAsDate(),
-                startDate: task.start.formatAsDate(),
-                scheduledDate: task.scheduled.formatAsDate(),
-                dueDate: task.due.formatAsDate(),
-                doneDate: task.done.formatAsDate(),
-                cancelledDate: task.cancelled.formatAsDate(),
-                forwardOnly: true,
-                blockedBy: blockedBy,
-                blocking: originalBlocking,
-                addGlobalFilterOnSave,
-                originalBlocking,
-            }),
-        };
+        return new EditableTask({
+            // NEW_TASK_FIELD_EDIT_REQUIRED
+            description,
+            status: task.status,
+            priority,
+            recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
+            createdDate: task.created.formatAsDate(),
+            startDate: task.start.formatAsDate(),
+            scheduledDate: task.scheduled.formatAsDate(),
+            dueDate: task.due.formatAsDate(),
+            doneDate: task.done.formatAsDate(),
+            cancelledDate: task.cancelled.formatAsDate(),
+            forwardOnly: true,
+            blockedBy: blockedBy,
+            blocking: originalBlocking,
+            addGlobalFilterOnSave,
+            originalBlocking,
+        });
     }
 
     /**

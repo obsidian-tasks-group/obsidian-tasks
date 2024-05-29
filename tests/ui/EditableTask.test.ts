@@ -22,7 +22,7 @@ function testEditableTaskDescriptionAndGlobalFilterOnSave({
     GlobalFilter.getInstance().set(globalFilter);
     const taskWithoutGlobalFilter = new TaskBuilder().description(taskDescription).build();
 
-    const { editableTask } = EditableTask.fromTask(taskWithoutGlobalFilter, [taskWithoutGlobalFilter]);
+    const editableTask = EditableTask.fromTask(taskWithoutGlobalFilter, [taskWithoutGlobalFilter]);
 
     expect(editableTask.description).toEqual(expectedEditableTaskDescription);
 }
@@ -41,7 +41,7 @@ describe('EditableTask tests', () => {
     it('should create an editable task without dependencies', () => {
         const taskToEdit = TaskBuilder.createFullyPopulatedTask();
 
-        const { editableTask } = EditableTask.fromTask(taskToEdit, [taskToEdit]);
+        const editableTask = EditableTask.fromTask(taskToEdit, [taskToEdit]);
 
         expect(editableTask).toMatchInlineSnapshot(`
             EditableTask {
@@ -81,7 +81,7 @@ describe('EditableTask tests', () => {
             .build();
         const allTasks = [taskToEdit, blockingTask, blockedTask];
 
-        const { editableTask } = EditableTask.fromTask(taskToEdit, allTasks);
+        const editableTask = EditableTask.fromTask(taskToEdit, allTasks);
 
         expect(editableTask.blocking).toEqual([blockedTask]);
         expect(editableTask.blockedBy).toEqual([blockingTask]);
@@ -115,7 +115,7 @@ describe('EditableTask tests', () => {
         const task = new TaskBuilder().build();
         const allTasks = [task];
 
-        const { editableTask } = EditableTask.fromTask(task, allTasks);
+        const editableTask = EditableTask.fromTask(task, allTasks);
         const appliedEdits = await editableTask.applyEdits(task, [task]);
 
         expect(appliedEdits).toEqual([task]);
@@ -125,7 +125,7 @@ describe('EditableTask tests', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const allTasks = [task];
 
-        const { editableTask } = EditableTask.fromTask(task, allTasks);
+        const editableTask = EditableTask.fromTask(task, allTasks);
         const appliedEdits = await editableTask.applyEdits(task, [task]);
 
         expect(appliedEdits).toEqual([task]);
@@ -135,7 +135,7 @@ describe('EditableTask tests', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const allTasks = [task];
 
-        const { editableTask } = EditableTask.fromTask(task, allTasks);
+        const editableTask = EditableTask.fromTask(task, allTasks);
 
         editableTask.description = '';
         editableTask.status = Status.TODO;
@@ -204,7 +204,7 @@ describe('EditableTask tests', () => {
     it('should set a date in YYYY-MM-DD format', async () => {
         const task = new TaskBuilder().build();
         const allTasks: Task[] = [];
-        const { editableTask } = EditableTask.fromTask(task, allTasks);
+        const editableTask = EditableTask.fromTask(task, allTasks);
 
         editableTask.dueDate = '2024-07-13';
 
@@ -222,7 +222,7 @@ describe('EditableTask tests', () => {
     it('should honour the forwardOnly value', async () => {
         const task = new TaskBuilder().build();
         const allTasks: Task[] = [];
-        const { editableTask } = EditableTask.fromTask(task, allTasks);
+        const editableTask = EditableTask.fromTask(task, allTasks);
 
         jest.setSystemTime(new Date('2024-05-22')); // Wednesday 22nd May
 
