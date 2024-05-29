@@ -142,15 +142,9 @@ export class EditableTask {
      *
      * @param task
      * @param originalBlocking
-     * @param _addGlobalFilterOnSave
      * @param allTasks
      */
-    public async applyEdits(
-        task: Task,
-        originalBlocking: Task[],
-        _addGlobalFilterOnSave: boolean,
-        allTasks: Task[],
-    ): Promise<Task[]> {
+    public async applyEdits(task: Task, originalBlocking: Task[], allTasks: Task[]): Promise<Task[]> {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = this.description.trim();
         if (this.addGlobalFilterOnSave) {
