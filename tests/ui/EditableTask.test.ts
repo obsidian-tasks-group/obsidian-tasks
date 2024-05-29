@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { expect } from '@jest/globals';
 import moment from 'moment';
 import { EditableTask } from '../../src/ui/EditableTask';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -49,12 +50,13 @@ describe('EditableTask tests', () => {
             .build();
         const allTasks = [taskToEdit, blockingTask, blockedTask];
 
-        const { editableTask } = EditableTask.fromTask(taskToEdit, allTasks);
+        const { editableTask, originalBlocking } = EditableTask.fromTask(taskToEdit, allTasks);
 
         const blockingTasks = editableTask.blocking;
         const blockedByTasks = editableTask.blockedBy;
 
         expect(blockingTasks).toEqual([blockedTask]);
         expect(blockedByTasks).toEqual([blockingTask]);
+        expect(originalBlocking).toEqual([blockedTask]);
     });
 });
