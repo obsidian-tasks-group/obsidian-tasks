@@ -3,9 +3,9 @@
  */
 
 import moment from 'moment/moment';
-import { Status } from '../../src/Statuses/Status';
 import { EditableTask } from '../../src/ui/EditableTask';
 import { labelContentWithAccessKey, parseAndValidateRecurrence } from '../../src/ui/EditTaskHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -49,21 +49,9 @@ describe('labelContentWithAccessKey() tests', () => {
 });
 
 describe('parseAndValidateRecurrence() tests', () => {
-    const emptyTask = new EditableTask({
-        description: '',
-        status: Status.TODO,
-        priority: 'none',
-        recurrenceRule: '',
-        createdDate: '',
-        startDate: '',
-        scheduledDate: '',
-        dueDate: '',
-        doneDate: '',
-        cancelledDate: '',
-        forwardOnly: true,
-        blockedBy: [],
-        blocking: [],
-    });
+    const emptyTask1 = new TaskBuilder().build();
+    const { editableTask: emptyTask } = EditableTask.fromTask(emptyTask1, [emptyTask1]);
+
     const noRecurrenceRule = (editableTask: EditableTask) => {
         editableTask.recurrenceRule = '';
         return editableTask;
