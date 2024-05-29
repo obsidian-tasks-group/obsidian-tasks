@@ -15,6 +15,8 @@ type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'hig
  *
  */
 export class EditableTask {
+    private readonly addGlobalFilterOnSave: boolean;
+
     // NEW_TASK_FIELD_EDIT_REQUIRED
     description: string;
     status: Status;
@@ -45,6 +47,7 @@ export class EditableTask {
         forwardOnly: boolean;
         blockedBy: Task[];
         blocking: Task[];
+        addGlobalFilterOnSave: boolean;
     }) {
         this.description = editableTask.description;
         this.status = editableTask.status;
@@ -59,6 +62,7 @@ export class EditableTask {
         this.forwardOnly = editableTask.forwardOnly;
         this.blockedBy = editableTask.blockedBy;
         this.blocking = editableTask.blocking;
+        this.addGlobalFilterOnSave = editableTask.addGlobalFilterOnSave;
     }
 
     /**
@@ -124,6 +128,7 @@ export class EditableTask {
                 forwardOnly: true,
                 blockedBy: blockedBy,
                 blocking: originalBlocking,
+                addGlobalFilterOnSave,
             }),
             addGlobalFilterOnSave,
             originalBlocking,
@@ -137,18 +142,18 @@ export class EditableTask {
      *
      * @param task
      * @param originalBlocking
-     * @param addGlobalFilterOnSave
+     * @param _addGlobalFilterOnSave
      * @param allTasks
      */
     public async applyEdits(
         task: Task,
         originalBlocking: Task[],
-        addGlobalFilterOnSave: boolean,
+        _addGlobalFilterOnSave: boolean,
         allTasks: Task[],
     ): Promise<Task[]> {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = this.description.trim();
-        if (addGlobalFilterOnSave) {
+        if (this.addGlobalFilterOnSave) {
             description = GlobalFilter.getInstance().prependTo(description);
         }
 

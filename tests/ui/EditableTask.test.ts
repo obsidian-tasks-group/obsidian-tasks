@@ -50,6 +50,7 @@ describe('EditableTask tests', () => {
 
         expect(editableTask).toMatchInlineSnapshot(`
             EditableTask {
+              "addGlobalFilterOnSave": false,
               "blockedBy": [],
               "blocking": [],
               "cancelledDate": "2023-07-06",
