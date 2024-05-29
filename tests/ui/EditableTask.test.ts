@@ -9,6 +9,23 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
+function testEditableTaskDescriptionAndGlobalFilterOnSave(
+    globalFilter: string,
+    taskDescription: string,
+    expectedEditableTaskDescription: string,
+    expectedAddGlobalFilterOnSave: boolean,
+) {
+    GlobalFilter.getInstance().set(globalFilter);
+    const taskWithoutGlobalFilter = new TaskBuilder().description(taskDescription).build();
+
+    const { editableTask, addGlobalFilterOnSave } = EditableTask.fromTask(taskWithoutGlobalFilter, [
+        taskWithoutGlobalFilter,
+    ]);
+
+    expect(editableTask.description).toEqual(expectedEditableTaskDescription);
+    expect(addGlobalFilterOnSave).toEqual(expectedAddGlobalFilterOnSave);
+}
+
 describe('EditableTask tests', () => {
     beforeEach(() => {
         GlobalFilter.getInstance().reset();
@@ -72,15 +89,12 @@ describe('EditableTask tests', () => {
         const expectedEditableTaskDescription = 'global filter is absent';
         const expectedAddGlobalFilterOnSave = true;
 
-        GlobalFilter.getInstance().set(globalFilter);
-        const taskWithoutGlobalFilter = new TaskBuilder().description(taskDescription).build();
-
-        const { editableTask, addGlobalFilterOnSave } = EditableTask.fromTask(taskWithoutGlobalFilter, [
-            taskWithoutGlobalFilter,
-        ]);
-
-        expect(editableTask.description).toEqual(expectedEditableTaskDescription);
-        expect(addGlobalFilterOnSave).toEqual(expectedAddGlobalFilterOnSave);
+        testEditableTaskDescriptionAndGlobalFilterOnSave(
+            globalFilter,
+            taskDescription,
+            expectedEditableTaskDescription,
+            expectedAddGlobalFilterOnSave,
+        );
     });
 
     it('should remember to add global filter when it is present in task description and remove it from the description', () => {
