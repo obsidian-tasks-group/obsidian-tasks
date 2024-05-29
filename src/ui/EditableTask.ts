@@ -241,7 +241,7 @@ export class EditableTask {
         return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(this.status, today);
     }
 
-    parseAndValidateRecurrence() {
+    public parseAndValidateRecurrence() {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         if (!this.recurrenceRule) {
             return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
