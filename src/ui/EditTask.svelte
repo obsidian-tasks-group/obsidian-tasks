@@ -29,7 +29,7 @@
 
     let descriptionInput: HTMLTextAreaElement;
 
-    let { editableTask } = EditableTask.fromTask(task, allTasks);
+    let editableTask = EditableTask.fromTask(task, allTasks);
 
     let isDescriptionValid: boolean = true;
 
