@@ -6,6 +6,7 @@ import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
+import { appleSauce } from './EditTaskHelpers';
 
 type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
@@ -239,6 +240,10 @@ export class EditableTask {
         // Otherwise, use the current date.
         const today = doneDate ? doneDate : window.moment();
         return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(this.status, today);
+    }
+
+    parseAndValidateRecurrence() {
+        return appleSauce(this);
     }
 }
 

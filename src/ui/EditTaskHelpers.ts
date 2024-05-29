@@ -39,7 +39,7 @@ export function labelContentWithAccessKey(labelText: string, accessKey: string |
     return labelContent;
 }
 
-function appleSauce(editableTask: EditableTask) {
+export function appleSauce(editableTask: EditableTask) {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     if (!editableTask.recurrenceRule) {
         return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
@@ -65,5 +65,5 @@ function appleSauce(editableTask: EditableTask) {
 }
 
 export function parseAndValidateRecurrence(editableTask: EditableTask) {
-    return appleSauce(editableTask);
+    return editableTask.parseAndValidateRecurrence();
 }
