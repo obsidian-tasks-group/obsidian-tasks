@@ -54,6 +54,7 @@ describe('EditableTask tests', () => {
               "doneDate": "2023-07-05",
               "dueDate": "2023-07-04",
               "forwardOnly": true,
+              "originalBlocking": [],
               "priority": "medium",
               "recurrenceRule": "every day when done",
               "scheduledDate": "2023-07-03",
