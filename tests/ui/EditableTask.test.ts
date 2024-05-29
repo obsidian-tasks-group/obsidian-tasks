@@ -98,15 +98,12 @@ describe('EditableTask tests', () => {
     });
 
     it('should remember to add global filter when it is present in task description and remove it from the description', () => {
-        GlobalFilter.getInstance().set('#important');
-        const taskWithGlobalFilter = new TaskBuilder().description('#important is the global filter').build();
-
-        const { editableTask, addGlobalFilterOnSave } = EditableTask.fromTask(taskWithGlobalFilter, [
-            taskWithGlobalFilter,
-        ]);
-
-        expect(editableTask.description).toEqual('is the global filter');
-        expect(addGlobalFilterOnSave).toEqual(true);
+        testEditableTaskDescriptionAndGlobalFilterOnSave({
+            globalFilter: '#important',
+            taskDescription: '#important is the global filter',
+            expectedEditableTaskDescription: 'is the global filter',
+            expectedAddGlobalFilterOnSave: true,
+        });
     });
 
     it('should not add global filter by default (global filter was not set)', () => {
