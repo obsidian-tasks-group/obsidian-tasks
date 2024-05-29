@@ -139,29 +139,23 @@ describe('EditableTask tests', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const allTasks = [task];
 
-        const { originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
 
-        const removeAllTaskFields = new EditableTask({
-            description: '',
-            status: Status.TODO,
-            priority: 'none',
-            recurrenceRule: '',
-            createdDate: '',
-            startDate: '',
-            scheduledDate: '',
-            dueDate: '',
-            doneDate: '',
-            cancelledDate: '',
-            forwardOnly: true,
-            blockedBy: [],
-            blocking: [],
-        });
-        const appliedEdits = await removeAllTaskFields.applyEdits(
-            task,
-            originalBlocking,
-            addGlobalFilterOnSave,
-            allTasks,
-        );
+        editableTask.description = '';
+        editableTask.status = Status.TODO;
+        editableTask.priority = 'none';
+        editableTask.recurrenceRule = '';
+        editableTask.createdDate = '';
+        editableTask.startDate = '';
+        editableTask.scheduledDate = '';
+        editableTask.dueDate = '';
+        editableTask.doneDate = '';
+        editableTask.cancelledDate = '';
+        editableTask.forwardOnly = true;
+        editableTask.blockedBy = [];
+        editableTask.blocking = [];
+
+        const appliedEdits = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
 
         expect(appliedEdits.length).toEqual(1);
         expect(appliedEdits[0]).toMatchInlineSnapshot(`
