@@ -117,8 +117,8 @@ describe('EditableTask tests', () => {
         const task = new TaskBuilder().build();
         const allTasks = [task];
 
-        const { editableTask, originalBlocking } = EditableTask.fromTask(task, allTasks);
-        const appliedEdits = await editableTask.applyEdits(task, originalBlocking, [task]);
+        const { editableTask } = EditableTask.fromTask(task, allTasks);
+        const appliedEdits = await editableTask.applyEdits(task, [task]);
 
         expect(appliedEdits).toEqual([task]);
     });
@@ -127,8 +127,8 @@ describe('EditableTask tests', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const allTasks = [task];
 
-        const { editableTask, originalBlocking } = EditableTask.fromTask(task, allTasks);
-        const appliedEdits = await editableTask.applyEdits(task, originalBlocking, [task]);
+        const { editableTask } = EditableTask.fromTask(task, allTasks);
+        const appliedEdits = await editableTask.applyEdits(task, [task]);
 
         expect(appliedEdits).toEqual([task]);
     });
@@ -137,7 +137,7 @@ describe('EditableTask tests', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const allTasks = [task];
 
-        const { editableTask, originalBlocking } = EditableTask.fromTask(task, allTasks);
+        const { editableTask } = EditableTask.fromTask(task, allTasks);
 
         editableTask.description = '';
         editableTask.status = Status.TODO;
@@ -153,7 +153,7 @@ describe('EditableTask tests', () => {
         editableTask.blockedBy = [];
         editableTask.blocking = [];
 
-        const appliedEdits = await editableTask.applyEdits(task, originalBlocking, allTasks);
+        const appliedEdits = await editableTask.applyEdits(task, allTasks);
 
         expect(appliedEdits.length).toEqual(1);
         expect(appliedEdits[0]).toMatchInlineSnapshot(`

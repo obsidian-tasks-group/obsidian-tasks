@@ -142,10 +142,9 @@ export class EditableTask {
      * There are cases where the output of the edits is more than one task, for example, completing a {@link Task} with {@link Recurrence}.
      *
      * @param task
-     * @param _originalBlocking
      * @param allTasks
      */
-    public async applyEdits(task: Task, _originalBlocking: Task[], allTasks: Task[]): Promise<Task[]> {
+    public async applyEdits(task: Task, allTasks: Task[]): Promise<Task[]> {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = this.description.trim();
         if (this.addGlobalFilterOnSave) {
