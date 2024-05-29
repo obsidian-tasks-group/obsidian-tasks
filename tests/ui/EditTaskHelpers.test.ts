@@ -64,16 +64,22 @@ describe('parseAndValidateRecurrence() tests', () => {
         blockedBy: [],
         blocking: [],
     });
-    const noRecurrenceRule: Partial<EditableTask> = emptyTask;
-    const invalidRecurrenceRule: Partial<EditableTask> = {
-        recurrenceRule: 'thisIsWrong',
+    const noRecurrenceRule = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = '';
+        return editableTask;
     };
-    const withRecurrenceRuleButNoHappensDate: Partial<EditableTask> = {
-        recurrenceRule: 'every day',
+    const invalidRecurrenceRule = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = 'thisIsWrong';
+        return editableTask;
     };
-    const withRecurrenceRuleAndHappensDate: Partial<EditableTask> = {
-        recurrenceRule: 'every 1 months when done', // confirm that recurrence text is standardised
-        startDate: '2024-05-20',
+    const withRecurrenceRuleButNoHappensDate = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = 'every day';
+        return editableTask;
+    };
+    const withRecurrenceRuleAndHappensDate = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = 'every 1 months when done'; // confirm that recurrence text is standardised
+        editableTask.startDate = '2024-05-20';
+        return editableTask;
     };
 
     it.each([
@@ -85,11 +91,11 @@ describe('parseAndValidateRecurrence() tests', () => {
     ])(
         "editable task with '%s' fields should have '%s' parsed recurrence and its validity is %s",
         (
-            editableTaskFields: Partial<EditableTask>,
+            editableTaskFields: (editableTask: EditableTask) => EditableTask,
             expectedParsedRecurrence: string,
             expectedRecurrenceValidity: boolean,
         ) => {
-            const editableTask = new EditableTask({ ...emptyTask, ...editableTaskFields });
+            const editableTask = editableTaskFields(emptyTask);
 
             const { parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editableTask);
             expect(parsedRecurrence).toEqual(expectedParsedRecurrence);
