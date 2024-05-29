@@ -50,7 +50,7 @@ describe('labelContentWithAccessKey() tests', () => {
 
 describe('parseAndValidateRecurrence() tests', () => {
     const emptyTask1 = new TaskBuilder().build();
-    const { editableTask: emptyTask } = EditableTask.fromTask(emptyTask1, [emptyTask1]);
+    const { editableTask } = EditableTask.fromTask(emptyTask1, [emptyTask1]);
 
     const noRecurrenceRule = (editableTask: EditableTask) => {
         editableTask.recurrenceRule = '';
@@ -83,7 +83,7 @@ describe('parseAndValidateRecurrence() tests', () => {
             expectedParsedRecurrence: string,
             expectedRecurrenceValidity: boolean,
         ) => {
-            const editedTask = editableTaskFields(emptyTask);
+            const editedTask = editableTaskFields(editableTask);
 
             const { parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editedTask);
             expect(parsedRecurrence).toEqual(expectedParsedRecurrence);
