@@ -16,6 +16,7 @@ type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'hig
  */
 export class EditableTask {
     private readonly addGlobalFilterOnSave: boolean;
+    private readonly originalBlocking: Task[];
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     description: string;
@@ -48,6 +49,7 @@ export class EditableTask {
         blockedBy: Task[];
         blocking: Task[];
         addGlobalFilterOnSave: boolean;
+        originalBlocking: Task[];
     }) {
         this.description = editableTask.description;
         this.status = editableTask.status;
@@ -63,6 +65,7 @@ export class EditableTask {
         this.blockedBy = editableTask.blockedBy;
         this.blocking = editableTask.blocking;
         this.addGlobalFilterOnSave = editableTask.addGlobalFilterOnSave;
+        this.originalBlocking = editableTask.originalBlocking;
     }
 
     /**
@@ -127,6 +130,7 @@ export class EditableTask {
                 blockedBy: blockedBy,
                 blocking: originalBlocking,
                 addGlobalFilterOnSave,
+                originalBlocking,
             }),
             originalBlocking,
         };
@@ -138,10 +142,10 @@ export class EditableTask {
      * There are cases where the output of the edits is more than one task, for example, completing a {@link Task} with {@link Recurrence}.
      *
      * @param task
-     * @param originalBlocking
+     * @param _originalBlocking
      * @param allTasks
      */
-    public async applyEdits(task: Task, originalBlocking: Task[], allTasks: Task[]): Promise<Task[]> {
+    public async applyEdits(task: Task, _originalBlocking: Task[], allTasks: Task[]): Promise<Task[]> {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         let description = this.description.trim();
         if (this.addGlobalFilterOnSave) {
@@ -198,14 +202,14 @@ export class EditableTask {
         let removedBlocking: Task[] = [];
         let addedBlocking: Task[] = [];
 
-        if (this.blocking.toString() !== originalBlocking.toString() || this.blocking.length !== 0) {
+        if (this.blocking.toString() !== this.originalBlocking.toString() || this.blocking.length !== 0) {
             if (task.id === '') {
                 id = generateUniqueId(allTasks.filter((task) => task.id !== '').map((task) => task.id));
             }
 
-            removedBlocking = originalBlocking.filter((task) => !this.blocking.includes(task));
+            removedBlocking = this.originalBlocking.filter((task) => !this.blocking.includes(task));
 
-            addedBlocking = this.blocking.filter((task) => !originalBlocking.includes(task));
+            addedBlocking = this.blocking.filter((task) => !this.originalBlocking.includes(task));
         }
 
         // First create an updated task, with all edits except Status:
