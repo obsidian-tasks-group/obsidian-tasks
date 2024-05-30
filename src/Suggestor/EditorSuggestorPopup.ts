@@ -117,7 +117,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
                     // This might happen, for example, if the file had been edited and the
                     // file not yet saved, so that the Tasks Cache is temporarily out-of-date.
                     const markdownInEditor: string = value.context.editor.getRange(start, end);
-                    if (markdownInEditor !== originalLine + '!') {
+                    if (markdownInEditor !== originalLine) {
                         const message = `Error adding new ID, due to mismatched data in Tasks memory and the editor:
 task line in memory: '${value.taskItDependsOn.originalMarkdown}'
 
