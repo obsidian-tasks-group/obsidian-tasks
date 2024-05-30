@@ -80,11 +80,8 @@ describe('EditableTask tests', () => {
 
         const { editableTask, originalBlocking } = EditableTask.fromTask(taskToEdit, allTasks);
 
-        const blockingTasks = editableTask.blocking;
-        const blockedByTasks = editableTask.blockedBy;
-
-        expect(blockingTasks).toEqual([blockedTask]);
-        expect(blockedByTasks).toEqual([blockingTask]);
+        expect(editableTask.blocking).toEqual([blockedTask]);
+        expect(editableTask.blockedBy).toEqual([blockingTask]);
         expect(originalBlocking).toEqual([blockedTask]);
     });
 
