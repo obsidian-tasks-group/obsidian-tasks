@@ -4,7 +4,7 @@
 
 import moment from 'moment/moment';
 import { Status } from '../../src/Statuses/Status';
-import type { EditableTask } from '../../src/ui/EditableTask';
+import { EditableTask } from '../../src/ui/EditableTask';
 import { labelContentWithAccessKey, parseAndValidateRecurrence } from '../../src/ui/EditTaskHelpers';
 
 window.moment = moment;
@@ -49,7 +49,7 @@ describe('labelContentWithAccessKey() tests', () => {
 });
 
 describe('parseAndValidateRecurrence() tests', () => {
-    const emptyTask: EditableTask = {
+    const emptyTask = new EditableTask({
         description: '',
         status: Status.TODO,
         priority: 'none',
@@ -63,7 +63,7 @@ describe('parseAndValidateRecurrence() tests', () => {
         forwardOnly: true,
         blockedBy: [],
         blocking: [],
-    };
+    });
     const noRecurrenceRule: Partial<EditableTask> = emptyTask;
     const invalidRecurrenceRule: Partial<EditableTask> = {
         recurrenceRule: 'thisIsWrong',
@@ -89,7 +89,7 @@ describe('parseAndValidateRecurrence() tests', () => {
             expectedParsedRecurrence: string,
             expectedRecurrenceValidity: boolean,
         ) => {
-            const editableTask = { ...emptyTask, ...editableTaskFields };
+            const editableTask = new EditableTask({ ...emptyTask, ...editableTaskFields });
 
             const { parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editableTask);
             expect(parsedRecurrence).toEqual(expectedParsedRecurrence);
