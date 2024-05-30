@@ -1,7 +1,6 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { parseTypedDateForSaving } from '../lib/DateTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
-import { TasksDate } from '../Scripting/TasksDate';
 import type { Status } from '../Statuses/Status';
 import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
@@ -116,12 +115,12 @@ export class EditableTask {
                 status: task.status,
                 priority,
                 recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
-                createdDate: new TasksDate(task.createdDate).formatAsDate(),
-                startDate: new TasksDate(task.startDate).formatAsDate(),
-                scheduledDate: new TasksDate(task.scheduledDate).formatAsDate(),
-                dueDate: new TasksDate(task.dueDate).formatAsDate(),
-                doneDate: new TasksDate(task.doneDate).formatAsDate(),
-                cancelledDate: new TasksDate(task.cancelledDate).formatAsDate(),
+                createdDate: task.created.formatAsDate(),
+                startDate: task.start.formatAsDate(),
+                scheduledDate: task.scheduled.formatAsDate(),
+                dueDate: task.due.formatAsDate(),
+                doneDate: task.done.formatAsDate(),
+                cancelledDate: task.cancelled.formatAsDate(),
                 forwardOnly: true,
                 blockedBy: blockedBy,
                 blocking: originalBlocking,
