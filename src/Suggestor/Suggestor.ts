@@ -3,7 +3,11 @@ import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
 import { Recurrence } from '../Task/Recurrence';
-import { type DefaultTaskSerializerSymbols, taskIdRegex } from '../TaskSerializer/DefaultTaskSerializer';
+import {
+    type DefaultTaskSerializerSymbols,
+    allTaskPluginEmojis,
+    taskIdRegex,
+} from '../TaskSerializer/DefaultTaskSerializer';
 import { Task } from '../Task/Task';
 import { generateUniqueId } from '../Task/TaskDependency';
 import { GlobalFilter } from '../Config/GlobalFilter';
@@ -61,7 +65,15 @@ export function makeDefaultSuggestionBuilder(
 
             // add dependecy suggestions
             suggestions = suggestions.concat(
-                addDependsOnSuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
+                addDependsOnSuggestions(
+                    line,
+                    cursorPos,
+                    settings,
+                    symbols.dependsOnSymbol,
+                    allTasks,
+                    dataviewMode,
+                    taskToSuggestFor,
+                ),
             );
         }
 
@@ -452,11 +464,16 @@ function addDependsOnSuggestions(
     settings: Settings,
     dependsOnSymbol: string,
     allTasks: Task[],
+    dataviewMode: boolean,
     taskToSuggestFor?: Task,
 ) {
     const results: SuggestInfo[] = [];
 
-    const dependsOnRegex = new RegExp(`(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([0-9a-zA-Z ^,]*)`, 'ug');
+    const charactersExcludedFromDescriptionSearch = dataviewMode ? '\\(\\)\\[\\]' : allTaskPluginEmojis();
+    const dependsOnRegex = new RegExp(
+        `(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([^,${charactersExcludedFromDescriptionSearch}]*)`,
+        'ug',
+    );
     const dependsOnMatch = matchIfCursorInRegex(line, dependsOnRegex, cursorPos);
     if (dependsOnMatch && dependsOnMatch.length >= 1) {
         // dependsOnMatch[1] = Depends On Symbol
