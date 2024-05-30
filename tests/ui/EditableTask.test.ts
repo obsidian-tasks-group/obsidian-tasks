@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { Status } from '../../src/Statuses/Status';
 import { EditableTask } from '../../src/ui/EditableTask';
@@ -34,6 +35,12 @@ function testEditableTaskDescriptionAndGlobalFilterOnSave({
 describe('EditableTask tests', () => {
     beforeEach(() => {
         GlobalFilter.getInstance().reset();
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2024-05-01'));
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
     });
 
     it('should create an editable task without dependencies', () => {
@@ -200,5 +207,43 @@ describe('EditableTask tests', () => {
               },
             }
         `);
+    });
+
+    it('should set a date in YYYY-MM-DD format', async () => {
+        const task = new TaskBuilder().build();
+        const allTasks: Task[] = [];
+        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+
+        editableTask.dueDate = '2024-07-13';
+
+        const editedTasks = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        // TODO Why does this have the time 12:00?
+        //      When I edit a task in the plugin, in the modal, and then group by the following, the time is midnight,
+        //      so where is the time dropped in production code?
+        //          group by function task.due.formatAsDateAndTime()
+        //      Or have I misunderstood something?
+        //      For now, I would just like assurance that this is the same behaviour as
+        //      the code before this PR.... (I expect it is)
+        expect(editedTasks[0].dueDate).toEqualMoment(moment('2024-07-13T12:00:00.000Z'));
+    });
+
+    it('should honour the forwardOnly value', async () => {
+        const task = new TaskBuilder().build();
+        const allTasks: Task[] = [];
+        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+
+        jest.setSystemTime(new Date('2024-05-22')); // Wednesday 22nd May
+
+        editableTask.dueDate = 'tuesday';
+        const tuesdayBefore = moment('2024-05-28T12:00:00.000Z');
+        const tuesdayAfter = moment('2024-05-21T12:00:00.000Z');
+
+        editableTask.forwardOnly = true;
+        const tasksFutureDay = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        expect(tasksFutureDay[0].dueDate).toEqualMoment(tuesdayBefore);
+
+        editableTask.forwardOnly = false;
+        const tasksClosestDay = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        expect(tasksClosestDay[0].dueDate).toEqualMoment(tuesdayAfter);
     });
 });
