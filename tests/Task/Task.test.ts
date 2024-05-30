@@ -18,6 +18,7 @@ import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { SampleTasks } from '../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../TestingTools/FilterTestHelpers';
+import type { TasksDate } from '../../src/Scripting/TasksDate';
 
 window.moment = moment;
 
@@ -25,6 +26,41 @@ afterEach(() => {
     jest.useRealTimers();
     resetSettings();
     GlobalFilter.getInstance().reset();
+});
+
+describe('immutability', () => {
+    it.failing('should not be possible to edit a date Moment after Task creation', () => {
+        // TODO Make Task's use of Moment immutable - always return a clone of the stored Moment.
+        //      https://momentjscom.readthedocs.io/en/latest/moment/01-parsing/12-moment-clone/
+
+        const inputDate = '2024-02-28 12:34';
+        const task = new Task({ ...new TaskBuilder().build(), dueDate: moment(inputDate) });
+
+        const parsedDate = '2024-02-28T12:34:00.000Z';
+        expect(task.dueDate).toEqualMoment(moment(parsedDate));
+
+        task.dueDate?.startOf('day');
+        // TODO This fails, giving '2024-02-28T00:00:00.000Z', as the startOf call edits the stored date.
+        //      See https://www.geeksforgeeks.org/moment-js-moment-startof-method/.
+        expect(task.dueDate).toEqualMoment(moment(parsedDate));
+    });
+
+    it.failing('should not be possible to edit a date TasksDate after Task creation', () => {
+        // TODO Make TasksDate objects immutable - always return a clone of the stored Moment.
+        //      https://momentjscom.readthedocs.io/en/latest/moment/01-parsing/12-moment-clone/
+
+        const inputDate = '2024-02-28 12:34';
+        const task = new Task({ ...new TaskBuilder().build(), dueDate: moment(inputDate) });
+
+        const due: TasksDate = task.due;
+        const parsedDate = '2024-02-28T12:34:00.000Z';
+        expect(due.moment).toEqualMoment(moment(parsedDate));
+
+        due.moment?.startOf('day');
+        // TODO This fails, giving '2024-02-28T00:00:00.000Z', as the startOf call edits the stored date.
+        //      See https://www.geeksforgeeks.org/moment-js-moment-startof-method/.
+        expect(due.moment).toEqualMoment(moment(parsedDate));
+    });
 });
 
 describe('parsing', () => {
