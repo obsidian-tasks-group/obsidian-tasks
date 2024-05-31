@@ -3,9 +3,9 @@
  */
 
 import moment from 'moment/moment';
-import { Status } from '../../src/Statuses/Status';
 import { EditableTask } from '../../src/ui/EditableTask';
 import { labelContentWithAccessKey, parseAndValidateRecurrence } from '../../src/ui/EditTaskHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -49,31 +49,25 @@ describe('labelContentWithAccessKey() tests', () => {
 });
 
 describe('parseAndValidateRecurrence() tests', () => {
-    const emptyTask = new EditableTask({
-        description: '',
-        status: Status.TODO,
-        priority: 'none',
-        recurrenceRule: '',
-        createdDate: '',
-        startDate: '',
-        scheduledDate: '',
-        dueDate: '',
-        doneDate: '',
-        cancelledDate: '',
-        forwardOnly: true,
-        blockedBy: [],
-        blocking: [],
-    });
-    const noRecurrenceRule: Partial<EditableTask> = emptyTask;
-    const invalidRecurrenceRule: Partial<EditableTask> = {
-        recurrenceRule: 'thisIsWrong',
+    const emptyTask = new TaskBuilder().description('').build();
+    const { editableTask } = EditableTask.fromTask(emptyTask, [emptyTask]);
+
+    const noRecurrenceRule = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = '';
+        return editableTask;
     };
-    const withRecurrenceRuleButNoHappensDate: Partial<EditableTask> = {
-        recurrenceRule: 'every day',
+    const invalidRecurrenceRule = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = 'thisIsWrong';
+        return editableTask;
     };
-    const withRecurrenceRuleAndHappensDate: Partial<EditableTask> = {
-        recurrenceRule: 'every 1 months when done', // confirm that recurrence text is standardised
-        startDate: '2024-05-20',
+    const withRecurrenceRuleButNoHappensDate = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = 'every day';
+        return editableTask;
+    };
+    const withRecurrenceRuleAndHappensDate = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = 'every 1 months when done'; // confirm that recurrence text is standardised
+        editableTask.startDate = '2024-05-20';
+        return editableTask;
     };
 
     it.each([
@@ -85,13 +79,13 @@ describe('parseAndValidateRecurrence() tests', () => {
     ])(
         "editable task with '%s' fields should have '%s' parsed recurrence and its validity is %s",
         (
-            editableTaskFields: Partial<EditableTask>,
+            taskEditor: (editableTask: EditableTask) => EditableTask,
             expectedParsedRecurrence: string,
             expectedRecurrenceValidity: boolean,
         ) => {
-            const editableTask = new EditableTask({ ...emptyTask, ...editableTaskFields });
+            const editedTask = taskEditor(editableTask);
 
-            const { parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editableTask);
+            const { parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editedTask);
             expect(parsedRecurrence).toEqual(expectedParsedRecurrence);
             expect(isRecurrenceValid).toEqual(expectedRecurrenceValidity);
         },
