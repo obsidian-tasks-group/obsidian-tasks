@@ -30,7 +30,7 @@ export class EditableTask {
     blockedBy: Task[];
     blocking: Task[];
 
-    constructor(editableTask: {
+    private constructor(editableTask: {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: string;
         status: Status;
