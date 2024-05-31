@@ -49,7 +49,7 @@ describe('labelContentWithAccessKey() tests', () => {
 });
 
 describe('parseAndValidateRecurrence() tests', () => {
-    const emptyTask = new TaskBuilder().build();
+    const emptyTask = new TaskBuilder().description('').build();
     const { editableTask } = EditableTask.fromTask(emptyTask, [emptyTask]);
 
     const noRecurrenceRule = (editableTask: EditableTask) => {
