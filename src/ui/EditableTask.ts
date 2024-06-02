@@ -34,6 +34,9 @@ export class EditableTask {
     blocking: Task[];
 
     private constructor(editableTask: {
+        addGlobalFilterOnSave: boolean;
+        originalBlocking: Task[];
+
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: string;
         status: Status;
@@ -48,9 +51,10 @@ export class EditableTask {
         forwardOnly: boolean;
         blockedBy: Task[];
         blocking: Task[];
-        addGlobalFilterOnSave: boolean;
-        originalBlocking: Task[];
     }) {
+        this.addGlobalFilterOnSave = editableTask.addGlobalFilterOnSave;
+        this.originalBlocking = editableTask.originalBlocking;
+
         this.description = editableTask.description;
         this.status = editableTask.status;
         this.priority = editableTask.priority;
@@ -64,8 +68,6 @@ export class EditableTask {
         this.forwardOnly = editableTask.forwardOnly;
         this.blockedBy = editableTask.blockedBy;
         this.blocking = editableTask.blocking;
-        this.addGlobalFilterOnSave = editableTask.addGlobalFilterOnSave;
-        this.originalBlocking = editableTask.originalBlocking;
     }
 
     /**
@@ -108,6 +110,9 @@ export class EditableTask {
         const originalBlocking = allTasks.filter((cacheTask) => cacheTask.dependsOn.includes(task.id));
 
         return new EditableTask({
+            addGlobalFilterOnSave,
+            originalBlocking,
+
             // NEW_TASK_FIELD_EDIT_REQUIRED
             description,
             status: task.status,
@@ -122,8 +127,6 @@ export class EditableTask {
             forwardOnly: true,
             blockedBy: blockedBy,
             blocking: originalBlocking,
-            addGlobalFilterOnSave,
-            originalBlocking,
         });
     }
 
