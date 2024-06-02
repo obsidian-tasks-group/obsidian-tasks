@@ -14,22 +14,17 @@ function testEditableTaskDescriptionAndGlobalFilterOnSave({
     globalFilter,
     taskDescription,
     expectedEditableTaskDescription,
-    expectedAddGlobalFilterOnSave,
 }: {
     globalFilter: string;
     taskDescription: string;
     expectedEditableTaskDescription: string;
-    expectedAddGlobalFilterOnSave: boolean;
 }) {
     GlobalFilter.getInstance().set(globalFilter);
     const taskWithoutGlobalFilter = new TaskBuilder().description(taskDescription).build();
 
-    const { editableTask, addGlobalFilterOnSave } = EditableTask.fromTask(taskWithoutGlobalFilter, [
-        taskWithoutGlobalFilter,
-    ]);
+    const editableTask = EditableTask.fromTask(taskWithoutGlobalFilter, [taskWithoutGlobalFilter]);
 
     expect(editableTask.description).toEqual(expectedEditableTaskDescription);
-    expect(addGlobalFilterOnSave).toEqual(expectedAddGlobalFilterOnSave);
 }
 
 describe('EditableTask tests', () => {
@@ -46,10 +41,11 @@ describe('EditableTask tests', () => {
     it('should create an editable task without dependencies', () => {
         const taskToEdit = TaskBuilder.createFullyPopulatedTask();
 
-        const { editableTask, originalBlocking } = EditableTask.fromTask(taskToEdit, [taskToEdit]);
+        const editableTask = EditableTask.fromTask(taskToEdit, [taskToEdit]);
 
         expect(editableTask).toMatchInlineSnapshot(`
             EditableTask {
+              "addGlobalFilterOnSave": false,
               "blockedBy": [],
               "blocking": [],
               "cancelledDate": "2023-07-06",
@@ -58,6 +54,7 @@ describe('EditableTask tests', () => {
               "doneDate": "2023-07-05",
               "dueDate": "2023-07-04",
               "forwardOnly": true,
+              "originalBlocking": [],
               "priority": "medium",
               "recurrenceRule": "every day when done",
               "scheduledDate": "2023-07-03",
@@ -73,7 +70,6 @@ describe('EditableTask tests', () => {
               },
             }
         `);
-        expect(originalBlocking).toEqual([]);
     });
 
     it('should create an editable task with dependencies', () => {
@@ -85,11 +81,10 @@ describe('EditableTask tests', () => {
             .build();
         const allTasks = [taskToEdit, blockingTask, blockedTask];
 
-        const { editableTask, originalBlocking } = EditableTask.fromTask(taskToEdit, allTasks);
+        const editableTask = EditableTask.fromTask(taskToEdit, allTasks);
 
         expect(editableTask.blocking).toEqual([blockedTask]);
         expect(editableTask.blockedBy).toEqual([blockingTask]);
-        expect(originalBlocking).toEqual([blockedTask]);
     });
 
     it('should remember to add global filter when it is absent in task description', () => {
@@ -97,7 +92,6 @@ describe('EditableTask tests', () => {
             globalFilter: '#todo',
             taskDescription: 'global filter is absent',
             expectedEditableTaskDescription: 'global filter is absent',
-            expectedAddGlobalFilterOnSave: true,
         });
     });
 
@@ -106,7 +100,6 @@ describe('EditableTask tests', () => {
             globalFilter: '#important',
             taskDescription: '#important is the global filter',
             expectedEditableTaskDescription: 'is the global filter',
-            expectedAddGlobalFilterOnSave: true,
         });
     });
 
@@ -115,7 +108,6 @@ describe('EditableTask tests', () => {
             globalFilter: GlobalFilter.empty,
             taskDescription: 'global filter has not been set',
             expectedEditableTaskDescription: 'global filter has not been set',
-            expectedAddGlobalFilterOnSave: false,
         });
     });
 
@@ -123,8 +115,8 @@ describe('EditableTask tests', () => {
         const task = new TaskBuilder().build();
         const allTasks = [task];
 
-        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
-        const appliedEdits = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, [task]);
+        const editableTask = EditableTask.fromTask(task, allTasks);
+        const appliedEdits = await editableTask.applyEdits(task, [task]);
 
         expect(appliedEdits).toEqual([task]);
     });
@@ -133,8 +125,8 @@ describe('EditableTask tests', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const allTasks = [task];
 
-        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
-        const appliedEdits = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, [task]);
+        const editableTask = EditableTask.fromTask(task, allTasks);
+        const appliedEdits = await editableTask.applyEdits(task, [task]);
 
         expect(appliedEdits).toEqual([task]);
     });
@@ -143,7 +135,7 @@ describe('EditableTask tests', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const allTasks = [task];
 
-        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+        const editableTask = EditableTask.fromTask(task, allTasks);
 
         editableTask.description = '';
         editableTask.status = Status.TODO;
@@ -159,7 +151,7 @@ describe('EditableTask tests', () => {
         editableTask.blockedBy = [];
         editableTask.blocking = [];
 
-        const appliedEdits = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        const appliedEdits = await editableTask.applyEdits(task, allTasks);
 
         expect(appliedEdits.length).toEqual(1);
         expect(appliedEdits[0]).toMatchInlineSnapshot(`
@@ -212,11 +204,11 @@ describe('EditableTask tests', () => {
     it('should set a date in YYYY-MM-DD format', async () => {
         const task = new TaskBuilder().build();
         const allTasks: Task[] = [];
-        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+        const editableTask = EditableTask.fromTask(task, allTasks);
 
         editableTask.dueDate = '2024-07-13';
 
-        const editedTasks = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        const editedTasks = await editableTask.applyEdits(task, allTasks);
         // TODO Why does this have the time 12:00?
         //      When I edit a task in the plugin, in the modal, and then group by the following, the time is midnight,
         //      so where is the time dropped in production code?
@@ -230,7 +222,7 @@ describe('EditableTask tests', () => {
     it('should honour the forwardOnly value', async () => {
         const task = new TaskBuilder().build();
         const allTasks: Task[] = [];
-        const { editableTask, originalBlocking, addGlobalFilterOnSave } = EditableTask.fromTask(task, allTasks);
+        const editableTask = EditableTask.fromTask(task, allTasks);
 
         jest.setSystemTime(new Date('2024-05-22')); // Wednesday 22nd May
 
@@ -239,11 +231,11 @@ describe('EditableTask tests', () => {
         const tuesdayAfter = moment('2024-05-21T12:00:00.000Z');
 
         editableTask.forwardOnly = true;
-        const tasksFutureDay = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        const tasksFutureDay = await editableTask.applyEdits(task, allTasks);
         expect(tasksFutureDay[0].dueDate).toEqualMoment(tuesdayBefore);
 
         editableTask.forwardOnly = false;
-        const tasksClosestDay = await editableTask.applyEdits(task, originalBlocking, addGlobalFilterOnSave, allTasks);
+        const tasksClosestDay = await editableTask.applyEdits(task, allTasks);
         expect(tasksClosestDay[0].dueDate).toEqualMoment(tuesdayAfter);
     });
 });
