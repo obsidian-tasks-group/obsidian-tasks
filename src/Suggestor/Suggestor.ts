@@ -13,6 +13,7 @@ import { generateUniqueId } from '../Task/TaskDependency';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { searchForCandidateTasksForDependency } from '../ui/DependencyHelpers';
+import { escapeRegExp } from '../lib/RegExpTools';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 /**
@@ -469,7 +470,7 @@ function addDependsOnSuggestions(
 ) {
     const results: SuggestInfo[] = [];
 
-    const charactersExcludedFromDescriptionSearch = dataviewMode ? '\\(\\)\\[\\]' : allTaskPluginEmojis();
+    const charactersExcludedFromDescriptionSearch = dataviewMode ? escapeRegExp('()[]') : allTaskPluginEmojis();
     const dependsOnRegex = new RegExp(
         `(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([^,${charactersExcludedFromDescriptionSearch}]*)`,
         'ug',
