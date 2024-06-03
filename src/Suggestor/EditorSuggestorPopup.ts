@@ -11,6 +11,15 @@ export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;
 };
 
+/**
+ * @todo Unify this with {@link errorAndNotice} in File.ts
+ * @param message
+ */
+function showError(message: string) {
+    console.error(message);
+    new Notice(message + '\n\nThis message has been written to the console.\n', 10000);
+}
+
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private settings: Settings;
     private plugin: TasksPlugin;
@@ -125,8 +134,7 @@ task line in editor: '${markdownInEditor}'
 
 file: '${newTask.path}'
 `;
-                        console.error(message);
-                        new Notice(message + '\n\nThis message has been written to the console.\n', 10000);
+                        showError(message);
                         return;
                     }
 
