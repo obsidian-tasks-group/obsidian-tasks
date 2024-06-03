@@ -49,4 +49,16 @@ describe('list item tests', () => {
         expect(finalTask.parent).toBe(parentListItem);
         expect(parentListItem.children).toEqual([finalTask]);
     });
+
+    it('should create a list item child for a task parent', () => {
+        const parentTask = Task.fromLine({
+            line: '    - [ ] parent task',
+            taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('x.md')),
+            fallbackDate: null,
+        });
+        const childListItem = new ListItem('', parentTask);
+
+        expect(parentTask!.children).toEqual([childListItem]);
+        expect(childListItem.parent).toBe(parentTask);
+    });
 });
