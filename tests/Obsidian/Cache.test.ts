@@ -13,6 +13,7 @@ import { inheritance_1parent2children1sibling } from './__test_data__/inheritanc
 import { inheritance_1parent2children2grandchildren } from './__test_data__/inheritance_1parent2children2grandchildren';
 import { inheritance_1parent2children2grandchildren1sibling } from './__test_data__/inheritance_1parent2children2grandchildren1sibling';
 import { inheritance_1parent2children2grandchildren1sibling_start_with_heading } from './__test_data__/inheritance_1parent2children2grandchildren1sibling_start_with_heading';
+import { inheritance_2roots_listitem_listitem_task } from './__test_data__/inheritance_2roots_listitem_listitem_task';
 import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
 import { inheritance_listitem_listitem_task } from './__test_data__/inheritance_listitem_listitem_task';
 import { inheritance_listitem_task } from './__test_data__/inheritance_listitem_task';
@@ -333,6 +334,24 @@ describe('cache', () => {
         `);
 
         expect(tasks.length).toEqual(1);
+
+        expect(printRoots(tasks)).toMatchInlineSnapshot('""');
+    });
+
+    it('should read 2 roots with grandchild task under parent and child listItem', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_2roots_listitem_listitem_task);
+        expect(inheritance_2roots_listitem_listitem_task.fileContents).toMatchInlineSnapshot(`
+            "- parent list item 1
+                - child list item 1
+                    - [ ] grandchild task 1
+
+            - parent list item 2
+                - child list item 2
+                    - [ ] grandchild task 2
+            "
+        `);
+
+        expect(tasks.length).toEqual(2);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot('""');
     });
