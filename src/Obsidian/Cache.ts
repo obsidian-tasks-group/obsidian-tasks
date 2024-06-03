@@ -41,7 +41,7 @@ export function getTasksFromFileContent2(
     // rendered lists.
     let currentSection: SectionCache | null = null;
     let sectionIndex = 0;
-    const line2Task: Map<number, ListItem> = new Map();
+    const line2ListItem: Map<number, ListItem> = new Map();
     for (const listItem of listItems) {
         if (listItem.task !== undefined) {
             const lineNumber = listItem.position.start.line;
@@ -96,8 +96,8 @@ export function getTasksFromFileContent2(
 
                 if (task !== null) {
                     // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
-                    // That is not a problem, as we never put a negative number in line2Task map, so parent will be null.
-                    const parentListItem: ListItem | null = line2Task.get(listItem.parent) ?? null;
+                    // That is not a problem, as we never put a negative number in line2ListItem map, so parent will be null.
+                    const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
                     if (parentListItem !== null) {
                         task = new Task({
                             ...task,
@@ -105,7 +105,7 @@ export function getTasksFromFileContent2(
                         });
                     }
 
-                    line2Task.set(lineNumber, task);
+                    line2ListItem.set(lineNumber, task);
                 }
             } catch (e) {
                 errorReporter(e, filePath, listItem, line);
@@ -119,9 +119,9 @@ export function getTasksFromFileContent2(
         } else {
             const lineNumber = listItem.position.start.line;
 
-            const parentListItem: ListItem | null = line2Task.get(listItem.parent) ?? null;
+            const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
 
-            line2Task.set(lineNumber, new ListItem(fileLines[lineNumber], parentListItem));
+            line2ListItem.set(lineNumber, new ListItem(fileLines[lineNumber], parentListItem));
         }
     }
 
