@@ -90,6 +90,22 @@ function testChildren(parent: ListItem, childList: ListItem[]) {
     }
 }
 
+/**
+ * Print a snapshot of a {@link ListItem} hierarchy based on parent-child relationships. To achieve this,
+ * any indentation in {@link ListItem.originalMarkdown} will be trimmed and new indentation based
+ * on parent-child relationships will be added to the snapshot.
+ *
+ * @param listItem
+ * @param depth of the starting tree. Omit this parameter for root {@link ListItem}
+ */
+function printHierarchy(listItem: ListItem, depth: number = 0): string {
+    const indentation = ' '.repeat(depth * 4);
+    const listItemLine = indentation + listItem.originalMarkdown.trim() + '\n';
+    const childrenLines = listItem.children.map((child) => printHierarchy(child, depth + 1)).join('');
+
+    return listItemLine + childrenLines;
+}
+
 describe('cache', () => {
     it('should read one task', () => {
         const tasks = readTasksFromSimulatedFile(one_task);
@@ -318,9 +334,10 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(1);
 
-        const [task] = tasks;
-
-        testRootAndChildren(task, []);
+        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+            "- [ ] child task
+            "
+        `);
     });
 
     it('should read parent task and child listItem', () => {
@@ -333,17 +350,11 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(1);
 
-        const [task] = tasks;
-
-        expect(task.parent).toEqual(null);
-
-        expect(task.children.length).toEqual(1);
-
-        const listItem = task.children[0];
-
-        expect(listItem.parent).toEqual(task);
-        expect(listItem.children.length).toEqual(0);
-        expect(listItem.originalMarkdown).toEqual('    - child list item');
+        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+            "- [ ] parent task
+                - child list item
+            "
+        `);
     });
 
     it('should read parent task, child listItem and grandchild task', () => {
@@ -357,20 +368,12 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(2);
 
-        const [parentTask, grandChildTask] = tasks;
-
-        expect(parentTask.parent).toEqual(null);
-
-        expect(parentTask.children.length).toEqual(1);
-
-        const childListItem = parentTask.children[0];
-
-        expect(childListItem.parent).toEqual(parentTask);
-        expect(childListItem.children).toEqual([grandChildTask]);
-        expect(childListItem.originalMarkdown).toEqual('    - child list item');
-
-        expect(grandChildTask.parent).toEqual(childListItem);
-        expect(grandChildTask.children).toEqual([]);
+        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+            "- [ ] parent task
+                - child list item
+                    - [ ] grandchild task
+            "
+        `);
     });
 
     it('should read parent task, two child listItems and 3 grandchild tasks', () => {
@@ -387,30 +390,15 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(4);
 
-        const [parentTask, grandChildTask1, grandChildTask2, grandChildTask3] = tasks;
-
-        expect(parentTask.parent).toEqual(null);
-
-        expect(parentTask.children.length).toEqual(2);
-
-        const [childListItem1, childListItem2] = parentTask.children;
-
-        expect(childListItem1.parent).toEqual(parentTask);
-        expect(childListItem1.children).toEqual([grandChildTask1, grandChildTask2]);
-        expect(childListItem1.originalMarkdown).toEqual('    - child list item 1');
-
-        expect(grandChildTask1.parent).toEqual(childListItem1);
-        expect(grandChildTask1.children).toEqual([]);
-
-        expect(grandChildTask2.parent).toEqual(childListItem1);
-        expect(grandChildTask2.children).toEqual([]);
-
-        expect(childListItem2.parent).toEqual(parentTask);
-        expect(childListItem2.children).toEqual([grandChildTask3]);
-        expect(childListItem2.originalMarkdown).toEqual('    - child list item 2');
-
-        expect(grandChildTask3.parent).toEqual(childListItem2);
-        expect(grandChildTask3.children).toEqual([]);
+        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+            "- [ ] parent task
+                - child list item 1
+                    - [ ] grandchild task 1
+                    - [ ] grandchild task 2
+                - child list item 2
+                    - [ ] grandchild task 3
+            "
+        `);
     });
 
     it('should read parent task with mixed children', () => {
@@ -425,16 +413,13 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(3);
 
-        const [parentTask, childTask1, childTask2] = tasks;
-
-        expect(childTask1.originalMarkdown).toEqual('    - [ ] child task 1');
-        expect(childTask2.originalMarkdown).toEqual('    - [ ] child task 2');
-
-        const childListItem1 = parentTask.children[1];
-
-        expect(childListItem1.originalMarkdown).toEqual('    - child list item 1');
-
-        testRootAndChildren(parentTask, [childTask1, childListItem1, childTask2]);
+        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+            "- [ ] parent task
+                - [ ] child task 1
+                - child list item 1
+                - [ ] child task 2
+            "
+        `);
     });
 
     it('should read parent task and child list item with mixed children', () => {
@@ -450,20 +435,13 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(2);
 
-        const [parentTask, grandchildTask] = tasks;
-
-        const childListItem = parentTask.children[0];
-
-        expect(childListItem.originalMarkdown).toEqual('    - child list item');
-
-        testRootAndChildren(parentTask, [childListItem]);
-
-        const [grandchildListItem1, _, grandchildListItem2] = childListItem.children;
-
-        expect(grandchildListItem1.originalMarkdown).toEqual('        - grandchild list item 1');
-        expect(grandchildTask.originalMarkdown).toEqual('        - [ ] grandchild task');
-        expect(grandchildListItem2.originalMarkdown).toEqual('        - grandchild list item 2');
-
-        testChildren(childListItem, [grandchildListItem1, grandchildTask, grandchildListItem2]);
+        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+            "- [ ] parent task
+                - child list item
+                    - grandchild list item 1
+                    - [ ] grandchild task
+                    - grandchild list item 2
+            "
+        `);
     });
 });
