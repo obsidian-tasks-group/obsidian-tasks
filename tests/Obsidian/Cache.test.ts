@@ -19,6 +19,7 @@ import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
 import { inheritance_listitem_task } from './__test_data__/inheritance_listitem_task';
 import { inheritance_listitem_task_siblings } from './__test_data__/inheritance_listitem_task_siblings';
 import { inheritance_task_listitem } from './__test_data__/inheritance_task_listitem';
+import { inheritance_task_listitem_task } from './__test_data__/inheritance_task_listitem_task';
 import { one_task } from './__test_data__/one_task';
 
 window.moment = moment;
@@ -340,5 +341,32 @@ describe('cache', () => {
         expect(listItem.parent).toEqual(task);
         expect(listItem.children.length).toEqual(0);
         expect(listItem.originalMarkdown).toEqual('    - child list item');
+    });
+
+    it('should read parent task, child listItem and grandchild task', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_task_listitem_task);
+        expect(inheritance_task_listitem_task.fileContents).toMatchInlineSnapshot(`
+            "- [ ] parent task
+                - child list item
+                    - [ ] grandchild task
+            "
+        `);
+
+        expect(tasks.length).toEqual(2);
+
+        const [parentTask, grandChildTask] = tasks;
+
+        expect(parentTask.parent).toEqual(null);
+
+        expect(parentTask.children.length).toEqual(1);
+
+        const childListItem = parentTask.children[0];
+
+        expect(childListItem.parent).toEqual(parentTask);
+        expect(childListItem.children).toEqual([grandChildTask]);
+        expect(childListItem.originalMarkdown).toEqual('    - child list item');
+
+        expect(grandChildTask.parent).toEqual(childListItem);
+        expect(grandChildTask.children).toEqual([]);
     });
 });
