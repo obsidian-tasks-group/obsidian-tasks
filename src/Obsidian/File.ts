@@ -75,6 +75,10 @@ export const replaceTaskWithTasks = async ({
     });
 };
 
+/**
+ * @todo Unify this with {@link showError} in EditorSuggestorPopup.ts
+ * @param message
+ */
 function errorAndNotice(message: string) {
     console.error(message);
     new Notice(message, 15000);
