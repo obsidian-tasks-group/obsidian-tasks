@@ -443,7 +443,7 @@ function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allT
         const ID = generateUniqueId(allTasks.map((task) => task.id));
         results.push({
             suggestionType: 'match',
-            displayText: 'auto generate unique id',
+            displayText: 'generate unique id',
             appendText: `${idSymbol} ${ID}`,
             insertAt: idMatch.index,
             insertSkip: idSymbol.length,
