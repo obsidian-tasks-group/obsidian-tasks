@@ -17,11 +17,11 @@
     "appendText": "⏳ "
   },
   {
-    "displayText": "🆔 task id",
+    "displayText": "🆔 id",
     "appendText": "🆔"
   },
   {
-    "displayText": "⛔ task depends on id",
+    "displayText": "⛔ depends on id",
     "appendText": "⛔"
   }
 ]
