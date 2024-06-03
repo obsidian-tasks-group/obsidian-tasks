@@ -152,13 +152,13 @@ function addTaskPropertySuggestions(
     if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
         if (!line.includes(symbols.idSymbol))
             genericSuggestions.push({
-                displayText: `${symbols.idSymbol} Task ID`,
+                displayText: `${symbols.idSymbol} id`,
                 appendText: `${symbols.idSymbol}`,
             });
 
         if (!line.includes(symbols.dependsOnSymbol))
             genericSuggestions.push({
-                displayText: `${symbols.dependsOnSymbol} Task depends on ID`,
+                displayText: `${symbols.dependsOnSymbol} depends on id`,
                 appendText: `${symbols.dependsOnSymbol}`,
             });
     }
@@ -443,7 +443,7 @@ function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allT
         const ID = generateUniqueId(allTasks.map((task) => task.id));
         results.push({
             suggestionType: 'match',
-            displayText: 'Auto Generate Unique ID',
+            displayText: 'generate unique id',
             appendText: `${idSymbol} ${ID}`,
             insertAt: idMatch.index,
             insertSkip: idSymbol.length,

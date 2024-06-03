@@ -12,11 +12,11 @@
     "appendText": "scheduled:: "
   },
   {
-    "displayText": "id:: Task ID",
+    "displayText": "id:: id",
     "appendText": "id::"
   },
   {
-    "displayText": "dependsOn:: Task depends on ID",
+    "displayText": "dependsOn:: depends on id",
     "appendText": "dependsOn::"
   },
   {

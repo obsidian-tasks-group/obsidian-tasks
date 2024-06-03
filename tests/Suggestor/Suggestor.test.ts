@@ -266,12 +266,12 @@ describe.each([
     describe('suggestions for dependency field ID', () => {
         it('should offer "id" then "depends on" if user typed "id"', () => {
             const line = '- [ ] some task id';
-            shouldStartWithSuggestionsEqualling(line, [`${idSymbol} Task ID`, `${dependsOnSymbol} Task depends on ID`]);
+            shouldStartWithSuggestionsEqualling(line, [`${idSymbol} id`, `${dependsOnSymbol} depends on id`]);
         });
 
         it('should offer to generate unique id if the id symbol is already present', () => {
             const line = `- [ ] some task ${idSymbol}`;
-            shouldStartWithSuggestionsEqualling(line, ['Auto Generate Unique ID']);
+            shouldStartWithSuggestionsEqualling(line, ['generate unique id']);
         });
 
         it('should offer to generate unique id if the id symbol is already present', () => {
