@@ -41,10 +41,20 @@ export class DateFallback {
     }
 
     private static extractDateFromPath(path: string): Moment | null {
+        const { filenameAsScheduledDateFormat } = getSettings();
         const firstPos = Math.max(0, path.lastIndexOf('/') + 1);
         const lastPos = path.lastIndexOf('.');
 
         const basename = path.substring(firstPos, lastPos);
+
+        if (filenameAsScheduledDateFormat !== '') {
+            const date = window.moment(basename, filenameAsScheduledDateFormat, true);
+            if (date.isValid()) {
+                return date;
+            }
+
+            return null;
+        }
 
         let dateMatch = /(\d{4})-(\d{2})-(\d{2})/.exec(basename);
         if (!dateMatch) dateMatch = /(\d{4})(\d{2})(\d{2})/.exec(basename);
