@@ -52,8 +52,6 @@ export class DateFallback {
             if (date.isValid()) {
                 return date;
             }
-
-            return null;
         }
 
         let dateMatch = /(\d{4})-(\d{2})-(\d{2})/.exec(basename);
