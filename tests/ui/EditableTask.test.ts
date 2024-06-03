@@ -239,3 +239,47 @@ describe('EditableTask tests', () => {
         expect(tasksClosestDay[0].dueDate).toEqualMoment(tuesdayAfter);
     });
 });
+
+describe('parseAndValidateRecurrence() tests', () => {
+    const emptyTask = new TaskBuilder().description('').build();
+
+    const noRecurrenceRule = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = '';
+        return editableTask;
+    };
+    const invalidRecurrenceRule = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = 'thisIsWrong';
+        return editableTask;
+    };
+    const withRecurrenceRuleButNoHappensDate = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = 'every day';
+        return editableTask;
+    };
+    const withRecurrenceRuleAndHappensDate = (editableTask: EditableTask) => {
+        editableTask.recurrenceRule = 'every 1 months when done'; // confirm that recurrence text is standardised
+        editableTask.startDate = '2024-05-20';
+        return editableTask;
+    };
+
+    it.each([
+        // editable task, expected parsed recurrence, expected recurrence validity
+        [noRecurrenceRule, '<i>not recurring</>', true],
+        [invalidRecurrenceRule, '<i>invalid recurrence rule</i>', false],
+        [withRecurrenceRuleButNoHappensDate, '<i>due, scheduled or start date required</i>', false],
+        [withRecurrenceRuleAndHappensDate, 'every month when done', true],
+    ])(
+        "editable task with '%s' fields should have '%s' parsed recurrence and its validity is %s",
+        (
+            taskEditor: (editableTask: EditableTask) => EditableTask,
+            expectedParsedRecurrence: string,
+            expectedRecurrenceValidity: boolean,
+        ) => {
+            const editableTask = EditableTask.fromTask(emptyTask, [emptyTask]);
+            const editedTask = taskEditor(editableTask);
+
+            const { parsedRecurrence, isRecurrenceValid } = editedTask.parseAndValidateRecurrence();
+            expect(parsedRecurrence).toEqual(expectedParsedRecurrence);
+            expect(isRecurrenceValid).toEqual(expectedRecurrenceValidity);
+        },
+    );
+});

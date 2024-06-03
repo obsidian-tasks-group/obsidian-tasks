@@ -240,6 +240,31 @@ export class EditableTask {
         const today = doneDate ? doneDate : window.moment();
         return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(this.status, today);
     }
+
+    public parseAndValidateRecurrence() {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
+        if (!this.recurrenceRule) {
+            return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
+        }
+
+        const recurrenceFromText = Recurrence.fromText({
+            recurrenceRuleText: this.recurrenceRule,
+            // Only for representation in the modal, no dates required.
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+        })?.toText();
+
+        if (!recurrenceFromText) {
+            return { parsedRecurrence: '<i>invalid recurrence rule</i>', isRecurrenceValid: false };
+        }
+
+        if (this.startDate || this.scheduledDate || this.dueDate) {
+            return { parsedRecurrence: recurrenceFromText, isRecurrenceValid: true };
+        }
+
+        return { parsedRecurrence: '<i>due, scheduled or start date required</i>', isRecurrenceValid: false };
+    }
 }
 
 async function serialiseTaskId(task: Task, allTasks: Task[]) {
