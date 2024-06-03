@@ -470,6 +470,16 @@ function addDependsOnSuggestions(
 ) {
     const results: SuggestInfo[] = [];
 
+    // When working out what the user wants to depend on, we wish to allow all sorts of punctuation,
+    // accented characters and so on.
+    // Bit it's possible that the new dependsOn field is followed by other fields later in the line,
+    // and we do not want those fields to be included in our task search, and that detection depends on
+    // the current task format.
+    // In dataview format:
+    //    - Our dependOn field will be finished with ] or ) - and the next field will begin [ or (.
+    // In Tasks format:
+    //    - Any following field will begin with an emoji.
+    // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2827
     const charactersExcludedFromDescriptionSearch = dataviewMode ? escapeRegExp('()[]') : allTaskPluginEmojis();
     const dependsOnRegex = new RegExp(
         `(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([^,${charactersExcludedFromDescriptionSearch}]*)`,
