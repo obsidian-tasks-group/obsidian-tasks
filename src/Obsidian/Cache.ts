@@ -3,6 +3,7 @@ import type { CachedMetadata, EventRef } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 import { TasksFile } from '../Scripting/TasksFile';
+import type { ListItem } from '../Task/ListItem';
 
 import { Task } from '../Task/Task';
 import { DateFallback } from '../Task/DateFallback';
@@ -40,7 +41,7 @@ export function getTasksFromFileContent2(
     // rendered lists.
     let currentSection: SectionCache | null = null;
     let sectionIndex = 0;
-    const line2Task: Map<number, Task> = new Map();
+    const line2Task: Map<number, ListItem> = new Map();
     for (const listItem of listItems) {
         if (listItem.task !== undefined) {
             const lineNumber = listItem.position.start.line;
@@ -96,11 +97,11 @@ export function getTasksFromFileContent2(
                 if (task !== null) {
                     // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
                     // That is not a problem, as we never put a negative number in line2Task map, so parent will be null.
-                    const parentTask: Task | null = line2Task.get(listItem.parent) ?? null;
-                    if (parentTask !== null) {
+                    const parentListItem: ListItem | null = line2Task.get(listItem.parent) ?? null;
+                    if (parentListItem !== null) {
                         task = new Task({
                             ...task,
-                            parent: parentTask,
+                            parent: parentListItem,
                         });
                     }
 
