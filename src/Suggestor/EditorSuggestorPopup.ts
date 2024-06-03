@@ -165,7 +165,7 @@ file: '${newTask.path}'
 
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
         // We need to save the file being edited, in case a Task.id was just added
-        // to a Task in that.
+        // to another Task in this same file.
         // Otherwise, if the user types a comma to add another dependency,
         // the same task can be offered again, and if done in rapid succession,
         // multiple ID fields can be added to individual task lines.
