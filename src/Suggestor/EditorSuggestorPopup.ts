@@ -1,4 +1,4 @@
-import { App, Editor, EditorSuggest, Notice, TFile } from 'obsidian';
+import { App, Editor, EditorSuggest, MarkdownView, Notice, TFile, editorInfoField } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 import type TasksPlugin from 'main';
 import { ensureTaskHasId } from '../Task/TaskDependency';
@@ -10,6 +10,15 @@ import type { SuggestInfo } from '.';
 export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;
 };
+
+/**
+ * @todo Unify this with {@link errorAndNotice} in File.ts
+ * @param message
+ */
+function showError(message: string) {
+    console.error(message);
+    new Notice(message + '\n\nThis message has been written to the console.\n', 10000);
+}
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private settings: Settings;
@@ -125,8 +134,7 @@ task line in editor: '${markdownInEditor}'
 
 file: '${newTask.path}'
 `;
-                        console.error(message);
-                        new Notice(message + '\n\nThis message has been written to the console.\n', 10000);
+                        showError(message);
                         return;
                     }
 
@@ -154,5 +162,22 @@ file: '${newTask.path}'
             line: currentCursor.line,
             ch: replaceFrom.ch + value.appendText.length,
         });
+
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
+        // We need to save the file being edited, in case a Task.id was just added
+        // to another Task in this same file.
+        // Otherwise, if the user types a comma to add another dependency,
+        // the same task can be offered again, and if done in rapid succession,
+        // multiple ID fields can be added to individual task lines.
+
+        // @ts-expect-error: TS2339: Property cm does not exist on type Editor
+        const markdownFileInfo = value.context.editor.cm.state.field(editorInfoField);
+        if (markdownFileInfo instanceof MarkdownView) {
+            await markdownFileInfo.save();
+        } else {
+            const message = `Failed to save "${value.context.file.path}" automatically.
+Please save the file to ensure edits are retained.`;
+            showError(message);
+        }
     }
 }
