@@ -242,7 +242,6 @@ describe('EditableTask tests', () => {
 
 describe('parseAndValidateRecurrence() tests', () => {
     const emptyTask = new TaskBuilder().description('').build();
-    const editableTask = EditableTask.fromTask(emptyTask, [emptyTask]);
 
     const noRecurrenceRule = (editableTask: EditableTask) => {
         editableTask.recurrenceRule = '';
@@ -275,6 +274,7 @@ describe('parseAndValidateRecurrence() tests', () => {
             expectedParsedRecurrence: string,
             expectedRecurrenceValidity: boolean,
         ) => {
+            const editableTask = EditableTask.fromTask(emptyTask, [emptyTask]);
             const editedTask = taskEditor(editableTask);
 
             const { parsedRecurrence, isRecurrenceValid } = editedTask.parseAndValidateRecurrence();
