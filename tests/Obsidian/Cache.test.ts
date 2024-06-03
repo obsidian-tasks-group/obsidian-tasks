@@ -16,6 +16,7 @@ import { inheritance_1parent2children2grandchildren } from './__test_data__/inhe
 import { inheritance_1parent2children2grandchildren1sibling } from './__test_data__/inheritance_1parent2children2grandchildren1sibling';
 import { inheritance_1parent2children2grandchildren1sibling_start_with_heading } from './__test_data__/inheritance_1parent2children2grandchildren1sibling_start_with_heading';
 import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
+import { inheritance_listitem_task } from './__test_data__/inheritance_listitem_task';
 import { inheritance_listitem_task_siblings } from './__test_data__/inheritance_listitem_task_siblings';
 import { one_task } from './__test_data__/one_task';
 
@@ -292,6 +293,21 @@ describe('cache', () => {
         expect(inheritance_listitem_task_siblings.fileContents).toMatchInlineSnapshot(`
             "- list item
             - [ ] task
+            "
+        `);
+
+        expect(tasks.length).toEqual(1);
+
+        const [task] = tasks;
+
+        testRootAndChildren(task, []);
+    });
+
+    it('should read child task and parent listItem', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_listitem_task);
+        expect(inheritance_listitem_task.fileContents).toMatchInlineSnapshot(`
+            "- parent list item
+                - [ ] child task
             "
         `);
 
