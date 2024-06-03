@@ -107,7 +107,7 @@ The following are valid `dependsOn` values:
 
 Below is a worked example, walking through adding one dependency.
 
-For a more detailed explanation of how to add and edit dependencies between tasks, see [[Create or edit Task#Dependencies]].
+For more detailed explanations of how to add and edit dependencies between tasks, see [[Create or edit Task#Dependencies]] and [[Auto-Suggest#Details]].
 
 ### Worked example
 
