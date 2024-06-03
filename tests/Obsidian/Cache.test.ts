@@ -106,6 +106,26 @@ function printHierarchy(listItem: ListItem, depth: number = 0): string {
     return listItemLine + childrenLines;
 }
 
+/**
+ * Print hierarchies from root {@link ListItem}s found in a {@link ListItem} array. A {@link ListItem} is considered
+ * a root if it has no parent:
+ * @example
+ * ListItem.parent === null
+ *
+ * @param listItems
+ */
+function printRoots(listItems: ListItem[]) {
+    let rootHierarchies = '';
+
+    for (const listItem of listItems) {
+        if (listItem.parent === null) {
+            rootHierarchies += printHierarchy(listItem);
+        }
+    }
+
+    return rootHierarchies;
+}
+
 describe('cache', () => {
     it('should read one task', () => {
         const tasks = readTasksFromSimulatedFile(one_task);
@@ -334,7 +354,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(1);
 
-        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
             "- [ ] child task
             "
         `);
@@ -350,7 +370,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(1);
 
-        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
             "- [ ] parent task
                 - child list item
             "
@@ -368,7 +388,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(2);
 
-        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
             "- [ ] parent task
                 - child list item
                     - [ ] grandchild task
@@ -390,7 +410,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(4);
 
-        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
             "- [ ] parent task
                 - child list item 1
                     - [ ] grandchild task 1
@@ -413,7 +433,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(3);
 
-        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
             "- [ ] parent task
                 - [ ] child task 1
                 - child list item 1
@@ -435,7 +455,7 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(2);
 
-        expect(printHierarchy(tasks[0])).toMatchInlineSnapshot(`
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
             "- [ ] parent task
                 - child list item
                     - grandchild list item 1
