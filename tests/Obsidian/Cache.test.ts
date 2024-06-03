@@ -96,9 +96,9 @@ function testChildren(parent: ListItem, childList: ListItem[]) {
  * on parent-child relationships will be added to the snapshot.
  *
  * @param listItem
- * @param depth of the starting tree. Omit this parameter for root {@link ListItem}
+ * @param depth of the starting tree. Set to 0 for root {@link ListItem}.
  */
-function printHierarchy(listItem: ListItem, depth: number = 0): string {
+function printHierarchy(listItem: ListItem, depth: number): string {
     const indentation = ' '.repeat(depth * 4);
     const listItemLine = indentation + listItem.originalMarkdown.trim() + '\n';
     const childrenLines = listItem.children.map((child) => printHierarchy(child, depth + 1)).join('');
@@ -119,7 +119,7 @@ function printRoots(listItems: ListItem[]) {
 
     for (const listItem of listItems) {
         if (listItem.parent === null) {
-            rootHierarchies += printHierarchy(listItem);
+            rootHierarchies += printHierarchy(listItem, 0);
         }
     }
 
