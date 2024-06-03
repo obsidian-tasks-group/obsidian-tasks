@@ -1,5 +1,13 @@
-import { expect } from '@jest/globals';
+/**
+ * @jest-environment jsdom
+ */
+import moment from 'moment/moment';
+import { TasksFile } from '../../src/Scripting/TasksFile';
+import { Task } from '../../src/Task/Task';
+import { TaskLocation } from '../../src/Task/TaskLocation';
 import { ListItem } from '../../src/Task/ListItem';
+
+window.moment = moment;
 
 describe('list item tests', () => {
     it('should create list item with empty children and absent parent', () => {
@@ -25,5 +33,20 @@ describe('list item tests', () => {
         expect(listItem).toBeDefined();
         expect(listItem.parent).toEqual(parentItem);
         expect(parentItem.children).toEqual([listItem]);
+    });
+
+    it('should create a task child for a list item parent', () => {
+        const parentListItem = new ListItem('', null);
+        const firstReadTask = Task.fromLine({
+            line: '    - [ ] child task',
+            taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('x.md')),
+            fallbackDate: null,
+        });
+
+        // ListItem.parent is immutable, so we have to create a new task
+        const finalTask = new Task({ ...firstReadTask!, parent: parentListItem });
+
+        expect(finalTask.parent).toBe(parentListItem);
+        expect(parentListItem.children).toEqual([finalTask]);
     });
 });
