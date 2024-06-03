@@ -20,6 +20,7 @@ import { inheritance_listitem_task } from './__test_data__/inheritance_listitem_
 import { inheritance_listitem_task_siblings } from './__test_data__/inheritance_listitem_task_siblings';
 import { inheritance_task_2listitem_3task } from './__test_data__/inheritance_task_2listitem_3task';
 import { inheritance_task_listitem } from './__test_data__/inheritance_task_listitem';
+import { inheritance_task_listitem_mixed_grandchildren } from './__test_data__/inheritance_task_listitem_mixed_grandchildren';
 import { inheritance_task_listitem_task } from './__test_data__/inheritance_task_listitem_task';
 import { inheritance_task_mixed_children } from './__test_data__/inheritance_task_mixed_children';
 import { one_task } from './__test_data__/one_task';
@@ -434,5 +435,35 @@ describe('cache', () => {
         expect(childListItem1.originalMarkdown).toEqual('    - child list item 1');
 
         testRootAndChildren(parentTask, [childTask1, childListItem1, childTask2]);
+    });
+
+    it('should read parent task and child list item with mixed children', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_task_listitem_mixed_grandchildren);
+        expect(inheritance_task_listitem_mixed_grandchildren.fileContents).toMatchInlineSnapshot(`
+            "- [ ] parent task
+                - child list item
+                    - grandchild list item 1
+                    - [ ] grandchild task
+                    - grandchild list item 2
+            "
+        `);
+
+        expect(tasks.length).toEqual(2);
+
+        const [parentTask, grandchildTask] = tasks;
+
+        const childListItem = parentTask.children[0];
+
+        expect(childListItem.originalMarkdown).toEqual('    - child list item');
+
+        testRootAndChildren(parentTask, [childListItem]);
+
+        const [grandchildListItem1, _, grandchildListItem2] = childListItem.children;
+
+        expect(grandchildListItem1.originalMarkdown).toEqual('        - grandchild list item 1');
+        expect(grandchildTask.originalMarkdown).toEqual('        - [ ] grandchild task');
+        expect(grandchildListItem2.originalMarkdown).toEqual('        - grandchild list item 2');
+
+        testChildren(childListItem, [grandchildListItem1, grandchildTask, grandchildListItem2]);
     });
 });
