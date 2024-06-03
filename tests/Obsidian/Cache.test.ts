@@ -18,6 +18,7 @@ import { inheritance_1parent2children2grandchildren1sibling_start_with_heading }
 import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
 import { inheritance_listitem_task } from './__test_data__/inheritance_listitem_task';
 import { inheritance_listitem_task_siblings } from './__test_data__/inheritance_listitem_task_siblings';
+import { inheritance_task_2listitem_3task } from './__test_data__/inheritance_task_2listitem_3task';
 import { inheritance_task_listitem } from './__test_data__/inheritance_task_listitem';
 import { inheritance_task_listitem_task } from './__test_data__/inheritance_task_listitem_task';
 import { one_task } from './__test_data__/one_task';
@@ -368,5 +369,45 @@ describe('cache', () => {
 
         expect(grandChildTask.parent).toEqual(childListItem);
         expect(grandChildTask.children).toEqual([]);
+    });
+
+    it('should read parent task, two child listItems and 3 grandchild tasks', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_task_2listitem_3task);
+        expect(inheritance_task_2listitem_3task.fileContents).toMatchInlineSnapshot(`
+            "- [ ] parent task
+                - child list item 1
+                    - [ ] grandchild task 1
+                    - [ ] grandchild task 2
+                - child list item 2
+                    - [ ] grandchild task 3
+            "
+        `);
+
+        expect(tasks.length).toEqual(4);
+
+        const [parentTask, grandChildTask1, grandChildTask2, grandChildTask3] = tasks;
+
+        expect(parentTask.parent).toEqual(null);
+
+        expect(parentTask.children.length).toEqual(2);
+
+        const [childListItem1, childListItem2] = parentTask.children;
+
+        expect(childListItem1.parent).toEqual(parentTask);
+        expect(childListItem1.children).toEqual([grandChildTask1, grandChildTask2]);
+        expect(childListItem1.originalMarkdown).toEqual('    - child list item 1');
+
+        expect(grandChildTask1.parent).toEqual(childListItem1);
+        expect(grandChildTask1.children).toEqual([]);
+
+        expect(grandChildTask2.parent).toEqual(childListItem1);
+        expect(grandChildTask2.children).toEqual([]);
+
+        expect(childListItem2.parent).toEqual(parentTask);
+        expect(childListItem2.children).toEqual([grandChildTask3]);
+        expect(childListItem2.originalMarkdown).toEqual('    - child list item 2');
+
+        expect(grandChildTask3.parent).toEqual(childListItem2);
+        expect(grandChildTask3.children).toEqual([]);
     });
 });
