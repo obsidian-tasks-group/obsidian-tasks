@@ -61,4 +61,4 @@
 | next week (2022-07-18) | start:: 2022-07-18]  |
 | next month (2022-08-11) | start:: 2022-08-11]  |
 | next year (2023-07-11) | start:: 2023-07-11]  |
-| auto generate unique id | id:: ****** |
+| generate unique id | id:: ****** |

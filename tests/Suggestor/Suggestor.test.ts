@@ -271,7 +271,7 @@ describe.each([
 
         it('should offer to generate unique id if the id symbol is already present', () => {
             const line = `- [ ] some task ${idSymbol}`;
-            shouldStartWithSuggestionsEqualling(line, ['auto generate unique id']);
+            shouldStartWithSuggestionsEqualling(line, ['generate unique id']);
         });
 
         it('should offer to generate unique id if the id symbol is already present', () => {
