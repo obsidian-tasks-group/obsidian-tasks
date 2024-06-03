@@ -116,7 +116,7 @@ export class Task extends ListItem {
         scheduledDateIsInferred: boolean;
         parent?: ListItem | null;
     }) {
-        super(originalMarkdown, parent, []);
+        super(originalMarkdown, parent);
         // NEW_TASK_FIELD_EDIT_REQUIRED
         this.status = status;
         this.description = description;
@@ -148,6 +148,11 @@ export class Task extends ListItem {
     /**
      * Takes the given line from an Obsidian note and returns a Task object.
      * Will check if Global Filter is present in the line.
+     *
+     * If you want to specify a parent ListItem or Task after a fromLine call,
+     * you have to do the following:
+     * @example
+     *  const finalTask = new Task({ ...firstReadTask!, parent: parentListItem });
      *
      * @static
      * @param {string} line - The full line in the note to parse.
