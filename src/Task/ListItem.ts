@@ -12,5 +12,9 @@ export class ListItem {
         this.originalMarkdown = originalMarkdown;
         this.parent = parent;
         this.children = children;
+
+        if (parent !== null) {
+            parent.children.push(this);
+        }
     }
 }
