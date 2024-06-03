@@ -95,12 +95,15 @@ function testChildren(parent: ListItem, childList: ListItem[]) {
  * any indentation in {@link ListItem.originalMarkdown} will be trimmed and new indentation based
  * on parent-child relationships will be added to the snapshot.
  *
+ * The type of the {@link ListItem} will be printed as well to avoid type mismatch with {@link Task}
+ * since {@link Task} extends {@link ListItem}.
+ *
  * @param listItem
  * @param depth of the starting tree. Set to 0 for root {@link ListItem}.
  */
 function printHierarchy(listItem: ListItem, depth: number): string {
     const indentation = ' '.repeat(depth * 4);
-    const listItemLine = indentation + listItem.originalMarkdown.trim() + '\n';
+    const listItemLine = indentation + listItem.originalMarkdown.trim() + ' : ' + listItem.constructor.name + '\n';
     const childrenLines = listItem.children.map((child) => printHierarchy(child, depth + 1)).join('');
 
     return listItemLine + childrenLines;
@@ -355,7 +358,7 @@ describe('cache', () => {
         expect(tasks.length).toEqual(1);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- [ ] child task
+            "- [ ] child task : Task
             "
         `);
     });
@@ -371,8 +374,8 @@ describe('cache', () => {
         expect(tasks.length).toEqual(1);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- [ ] parent task
-                - child list item
+            "- [ ] parent task : Task
+                - child list item : ListItem
             "
         `);
     });
@@ -389,9 +392,9 @@ describe('cache', () => {
         expect(tasks.length).toEqual(2);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- [ ] parent task
-                - child list item
-                    - [ ] grandchild task
+            "- [ ] parent task : Task
+                - child list item : ListItem
+                    - [ ] grandchild task : Task
             "
         `);
     });
@@ -411,12 +414,12 @@ describe('cache', () => {
         expect(tasks.length).toEqual(4);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- [ ] parent task
-                - child list item 1
-                    - [ ] grandchild task 1
-                    - [ ] grandchild task 2
-                - child list item 2
-                    - [ ] grandchild task 3
+            "- [ ] parent task : Task
+                - child list item 1 : ListItem
+                    - [ ] grandchild task 1 : Task
+                    - [ ] grandchild task 2 : Task
+                - child list item 2 : ListItem
+                    - [ ] grandchild task 3 : Task
             "
         `);
     });
@@ -434,10 +437,10 @@ describe('cache', () => {
         expect(tasks.length).toEqual(3);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- [ ] parent task
-                - [ ] child task 1
-                - child list item 1
-                - [ ] child task 2
+            "- [ ] parent task : Task
+                - [ ] child task 1 : Task
+                - child list item 1 : ListItem
+                - [ ] child task 2 : Task
             "
         `);
     });
@@ -456,11 +459,11 @@ describe('cache', () => {
         expect(tasks.length).toEqual(2);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- [ ] parent task
-                - child list item
-                    - grandchild list item 1
-                    - [ ] grandchild task
-                    - grandchild list item 2
+            "- [ ] parent task : Task
+                - child list item : ListItem
+                    - grandchild list item 1 : ListItem
+                    - [ ] grandchild task : Task
+                    - grandchild list item 2 : ListItem
             "
         `);
     });
