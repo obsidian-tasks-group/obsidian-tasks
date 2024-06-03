@@ -19,7 +19,9 @@ lot of the typing of emojis and dates for you.
 It is particularly powerful when creating and editing tasks on mobile phones.
 
 > [!released]
-`➕ created today` was introduced in Tasks 3.2.0.
+>
+> - `➕ created today` was introduced in Tasks 3.2.0.
+> - `🆔 id`  and `⛔ depends on id` were introduced in Tasks X.Y.Z.
 
 ### Video Demo
 
@@ -87,6 +89,17 @@ The menu is smart: it will only offer valid options:
 - For example, if you have already added a due date, that option will be removed from the menu.
 - When the `⏎` item is shown at the top of the menu, it is given as a default option to enter a new line instead of choosing a suggestion. It is only shown when there is no concrete match.
 - There are many more recognized options than are showing in the menus, including many more dates, such as `2 months`, `15 days`.
+
+Since Tasks X.Y.Z, the menu supports easy creation of [[Task Dependencies]].
+
+- Type `id` to filter show the options for dependencies.
+- `⛔ depends on id` searches the descriptions of all not-done tasks.
+  - Select a task from the menu to add a dependency, and automatically add an `id` value the selected task, if need be.
+  - Having added a dependency, such as `⛔ dcf64c`, you can type a comma (`,`) to add another dependency - as many times as you wish.
+- `🆔 id` allows you to add an `id` to a task.
+  - You can accept its offer to `generate unique id`.
+  - Or you can type your own more meaningful `id` if you wish, such as `🆔 suggester-update-docs`.
+  - Be sure to stick to the allowed [[Task Dependencies#`id`|allowed `id` characters]], and do not create duplicate `id` values.
 
 The auto-suggest menu supports powerful keyboard control:
 
@@ -188,8 +201,19 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 <!-- include: Suggestor.test.auto-complete_with__emoji__symbols_show_all_suggested_text.approved.md -->
 | Searchable Text | Text that is added |
 | ----- | ----- |
-| 🆔 Task ID | 🆔 |
-| ⛔ Task depends on ID | ⛔ |
+| ⏎ | &lt;new line> |
+| 📅 due date | 📅  |
+| 🛫 start date | 🛫  |
+| ⏳ scheduled date | ⏳  |
+| 🆔 id | 🆔 |
+| ⛔ depends on id | ⛔ |
+| ⏫ high priority | ⏫  |
+| 🔼 medium priority | 🔼  |
+| 🔽 low priority | 🔽  |
+| 🔺 highest priority | 🔺  |
+| ⏬ lowest priority | ⏬  |
+| 🔁 recurring (repeat) | 🔁  |
+| ➕ created today (2022-07-11) | ➕ 2022-07-11  |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
 | every week | 🔁 every week  |
@@ -203,15 +227,6 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | every week on Thursday | 🔁 every week on Thursday  |
 | every week on Friday | 🔁 every week on Friday  |
 | every week on Saturday | 🔁 every week on Saturday  |
-| 📅 due date | 📅  |
-| 🛫 start date | 🛫  |
-| ⏳ scheduled date | ⏳  |
-| ⏫ high priority | ⏫  |
-| 🔼 medium priority | 🔼  |
-| 🔽 low priority | 🔽  |
-| 🔺 highest priority | 🔺  |
-| ⏬ lowest priority | ⏬  |
-| ➕ created today (2022-07-11) | ➕ 2022-07-11  |
 | today (2022-07-11) | 📅 2022-07-11  |
 | tomorrow (2022-07-12) | 📅 2022-07-12  |
 | Sunday (2022-07-17) | 📅 2022-07-17  |
@@ -224,7 +239,6 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | next week (2022-07-18) | 📅 2022-07-18  |
 | next month (2022-08-11) | 📅 2022-08-11  |
 | next year (2023-07-11) | 📅 2023-07-11  |
-| 🔁 recurring (repeat) | 🔁  |
 | today (2022-07-11) | ⏳ 2022-07-11  |
 | tomorrow (2022-07-12) | ⏳ 2022-07-12  |
 | Sunday (2022-07-17) | ⏳ 2022-07-17  |
@@ -249,8 +263,7 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | next week (2022-07-18) | 🛫 2022-07-18  |
 | next month (2022-08-11) | 🛫 2022-08-11  |
 | next year (2023-07-11) | 🛫 2023-07-11  |
-| Auto Generate Unique ID | 🆔 ****** |
-| ⏎ | &lt;new line> |
+| generate unique id | 🆔 ****** |
 <!-- endInclude -->
 
 ### How can I use auto-suggest features from other plugins together with the Tasks auto-suggest?
@@ -291,7 +304,3 @@ at least the specified number of characters to find a match.
 How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).
 
 The default is 6, and you can select any value from 3 to 12.
-
-## Current Limitations
-
-- The Auto-Suggest mechanism does not yet support [[task dependencies]]. We are tracking this in [issue #2681](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2681).

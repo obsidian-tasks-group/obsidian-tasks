@@ -107,7 +107,7 @@ The following are valid `dependsOn` values:
 
 Below is a worked example, walking through adding one dependency.
 
-For a more detailed explanation of how to add and edit dependencies between tasks, see [[Create or edit Task#Dependencies]].
+For more detailed explanations of how to add and edit dependencies between tasks, see [[Create or edit Task#Dependencies]] and [[Auto-Suggest#Details]].
 
 ### Worked example
 
@@ -120,6 +120,10 @@ To illustrate the concept of task dependencies, let's consider a scenario where 
 
 In this scenario, testing with users can only occur after the initial draft is completed. To establish this relationship, you can create a dependency between the two tasks using either of the following methods.
 
+#### Option 1: Use the Edit Task Modal
+
+Using the [[Create or edit Task]] modal, you can:
+
 1. **Either:**
     - open the **'Build a first draft'** task in the Edit Task Modal
     - and specify **'Test with users'** in **After this**.
@@ -130,24 +134,38 @@ In this scenario, testing with users can only occur after the initial draft is c
 ![Making the 'Test with users' task depend on the 'Build a first draft'](../images/task-dependencies-blocked-by-example.png)
 <span class="caption">Making the **'Test with users'** task depend on the **'Build a first draft'** task.</span>
 
-<!--
-**Via the Auto Suggest Feature:**
+#### Option 2: Use the Auto-Suggest feature
 
-1. (Optional) On the 'Build a frist draft' You can select the ID symbol via the Automatic suggestion dialog box. An ID can be generated automatically via Auto Suggestions. Or you can Specify your own.
-2. select the "Task depends on ID" icon in the "Test with users" task via the Automatic suggestion dialog box.
-3. start entering the task on which it should depend ("Create a first draft")
-4. Press the enter key. If no ID has been entered, an ID is generated for the task.
+Using the [[Auto-Suggest]] feature, when in **Source mode** or **Live Preview** you can add the dependency without leaving the editor:
+
+> [!Tip]
+> This is an optional first step, if you want to control the `id` used:
+>
+> 1. Click at the end of the `Build a first draft`.
+> 1. Start typing `id` and select `🆔 id`.
+> 1. There are then two options:
+>     - You can select `generate unique id` to generate an ID automatically.
+>     - Or you can specify your own.
+
+To create the dependency:
+
+1. Click at the end of the `Test with users` line.
+1. Start typing `id` or `dep`, and select `⛔ depends on id`.
+1. Start typing the task on which it should depend (`Build a first draft`)
+1. Click on the `Build a first draft` task, to add the dependency.
+1. Press the enter key. If no ID has been entered, an ID is generated for the task.
 
 > [!info]
-> When selecting Task depends on ID:
+> When selecting `⛔ depends on id`:
 >
-> - To depend on multiple tasks, type a comma after the last id in an existing 'depends on' value, and select another task.
-> - it only searche/shows descriptions of not-done tasks.
+> - To depend on multiple tasks, type a comma after the last id in an existing `depends on` value, and select another task.
+> - It only searches/shows descriptions of not-done tasks.
 > - It initially filters to show tasks in the same file ('closer' to the Task), but if you type more text, it will search all non-done tasks in the vault.
-> - Circular Dependecy, should not be created
--->
+> - Do not create Circular Dependencies between tasks.
 
-By implementing either of these methods, the task list is updated to reflect the dependency relationship:
+#### The Result
+
+By implementing any of these methods, the task list is updated to reflect the dependency relationship:
 
 ```text
 - [ ] Build a first draft 🆔 4ijuhy
