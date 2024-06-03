@@ -117,7 +117,8 @@ export function getTasksFromFileContent2(
                 tasks.push(task);
             }
         } else {
-            // We do not want root listItems to keep same behavior as DataView plugin
+            // Root ListItems should not be parents of anything.
+            // This behavior was introduced in DataView plugin, so we want keep it for consistency reasons.
             if (listItem.parent < 0) {
                 continue;
             }
