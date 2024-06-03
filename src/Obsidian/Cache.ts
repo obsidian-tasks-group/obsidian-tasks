@@ -3,7 +3,7 @@ import type { CachedMetadata, EventRef } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 import { TasksFile } from '../Scripting/TasksFile';
-import type { ListItem } from '../Task/ListItem';
+import { ListItem } from '../Task/ListItem';
 
 import { Task } from '../Task/Task';
 import { DateFallback } from '../Task/DateFallback';
@@ -116,6 +116,12 @@ export function getTasksFromFileContent2(
                 sectionIndex++;
                 tasks.push(task);
             }
+        } else {
+            const lineNumber = listItem.position.start.line;
+
+            const parentListItem: ListItem | null = line2Task.get(listItem.parent) ?? null;
+
+            line2Task.set(lineNumber, new ListItem(fileLines[lineNumber], parentListItem));
         }
     }
 

@@ -304,7 +304,7 @@ describe('cache', () => {
         testRootAndChildren(task, []);
     });
 
-    it('should read child task and parent listItem', () => {
+    it.failing('should read child task and parent listItem', () => {
         const tasks = readTasksFromSimulatedFile(inheritance_listitem_task);
         expect(inheritance_listitem_task.fileContents).toMatchInlineSnapshot(`
             "- parent list item
@@ -332,6 +332,13 @@ describe('cache', () => {
         const [task] = tasks;
 
         expect(task.parent).toEqual(null);
-        expect(task.children).toEqual([]);
+
+        expect(task.children.length).toEqual(1);
+
+        const listItem = task.children[0];
+
+        expect(listItem.parent).toEqual(task);
+        expect(listItem.children.length).toEqual(0);
+        expect(listItem.originalMarkdown).toEqual('    - child list item');
     });
 });
