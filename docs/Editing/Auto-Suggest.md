@@ -93,12 +93,12 @@ The menu is smart: it will only offer valid options:
 Since Tasks X.Y.Z, the menu supports easy creation of [[Task Dependencies]].
 
 - Type `id` to filter show the options for dependencies.
-- `depends on id` searches the descriptions of all not-done tasks.
+- `⛔ depends on id` searches the descriptions of all not-done tasks.
   - Select a task from the menu to add a dependency, and automatically add an `id` value the selected task, if need be.
   - Having added a dependency, such as `⛔ dcf64c`, you can type a comma (`,`) to add another dependency - as many times as you wish.
-- `id` allows you to add an `id` to a task.
+- `🆔 id` allows you to add an `id` to a task.
   - You can accept its offer to `generate unique id`.
-  - Or you can type your own more more meaningful `id` if you wish, such as `🆔 suggester-update-docs`.
+  - Or you can type your own more meaningful `id` if you wish, such as `🆔 suggester-update-docs`.
   - Be sure to stick to the allowed [[Task Dependencies#`id`|allowed `id` characters]], and do not create duplicate `id` values.
 
 The auto-suggest menu supports powerful keyboard control:
