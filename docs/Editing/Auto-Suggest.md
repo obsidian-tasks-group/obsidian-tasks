@@ -19,7 +19,9 @@ lot of the typing of emojis and dates for you.
 It is particularly powerful when creating and editing tasks on mobile phones.
 
 > [!released]
-`➕ created today` was introduced in Tasks 3.2.0.
+>
+> - `➕ created today` was introduced in Tasks 3.2.0.
+> - `🆔 id`  and `⛔ depends on id` were introduced in Tasks X.Y.Z.
 
 ### Video Demo
 
@@ -87,6 +89,17 @@ The menu is smart: it will only offer valid options:
 - For example, if you have already added a due date, that option will be removed from the menu.
 - When the `⏎` item is shown at the top of the menu, it is given as a default option to enter a new line instead of choosing a suggestion. It is only shown when there is no concrete match.
 - There are many more recognized options than are showing in the menus, including many more dates, such as `2 months`, `15 days`.
+
+Since Tasks X.Y.Z, the menu supports easy creation of [[Task Dependencies]].
+
+- Type `id` to filter show the options for dependencies.
+- `depends on id` searches the descriptions of all not-done tasks.
+  - Select a task from the menu to add a dependency, and automatically add an `id` value the selected task, if need be.
+  - Having added a dependency, such as `⛔ dcf64c`, you can type a comma (`,`) to add another dependency - as many times as you wish.
+- `id` allows you to add an `id` to a task.
+  - You can accept its offer to `generate unique id`.
+  - Or you can type your own more more meaningful `id` if you wish, such as `🆔 suggester-update-docs`.
+  - Be sure to stick to the allowed [[Task Dependencies#`id`|allowed `id` characters]], and do not create duplicate `id` values.
 
 The auto-suggest menu supports powerful keyboard control:
 
