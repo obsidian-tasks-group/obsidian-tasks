@@ -17,7 +17,7 @@ describe('list item tests', () => {
         expect(listItem.parent).toEqual(null);
     });
 
-    it('should create list item with a child', () => {
+    it('should create a list item with 2 children', () => {
         const listItem = new ListItem('', null);
         const childItem1 = new ListItem('', listItem);
         const childItem2 = new ListItem('', listItem);
@@ -27,7 +27,7 @@ describe('list item tests', () => {
         expect(listItem.children).toEqual([childItem1, childItem2]);
     });
 
-    it('should create list item with a parent', () => {
+    it('should create a list item with a parent', () => {
         const parentItem = new ListItem('', null);
         const listItem = new ListItem('', parentItem);
         expect(listItem).toBeDefined();
