@@ -3,9 +3,9 @@
  */
 import moment from 'moment/moment';
 import type { CachedMetadata } from 'obsidian';
-import type { Task } from 'Task/Task';
 import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
+import type { ListItem } from '../../src/Task/ListItem';
 import { inheritance_1parent1child } from './__test_data__/inheritance_1parent1child';
 import { inheritance_1parent1child1newroot_after_header } from './__test_data__/inheritance_1parent1child1newroot_after_header';
 import { inheritance_1parent1child1sibling_emptystring } from './__test_data__/inheritance_1parent1child1sibling_emptystring';
@@ -21,6 +21,7 @@ import { inheritance_listitem_task_siblings } from './__test_data__/inheritance_
 import { inheritance_task_2listitem_3task } from './__test_data__/inheritance_task_2listitem_3task';
 import { inheritance_task_listitem } from './__test_data__/inheritance_task_listitem';
 import { inheritance_task_listitem_task } from './__test_data__/inheritance_task_listitem_task';
+import { inheritance_task_mixed_children } from './__test_data__/inheritance_task_mixed_children';
 import { one_task } from './__test_data__/one_task';
 
 window.moment = moment;
@@ -74,13 +75,13 @@ function readTasksFromSimulatedFile(testData: SimulatedFile) {
     );
 }
 
-function testRootAndChildren(root: Task, children: Task[]) {
+function testRootAndChildren(root: ListItem, children: ListItem[]) {
     expect(root.parent).toEqual(null);
 
     testChildren(root, children);
 }
 
-function testChildren(parent: Task, childList: Task[]) {
+function testChildren(parent: ListItem, childList: ListItem[]) {
     expect(parent.children).toEqual(childList);
     for (const child of childList) {
         expect(child.parent?.originalMarkdown).toEqual(parent.originalMarkdown);
@@ -409,5 +410,29 @@ describe('cache', () => {
 
         expect(grandChildTask3.parent).toEqual(childListItem2);
         expect(grandChildTask3.children).toEqual([]);
+    });
+
+    it('should read parent task with mixed children', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_task_mixed_children);
+        expect(inheritance_task_mixed_children.fileContents).toMatchInlineSnapshot(`
+            "- [ ] parent task
+                - [ ] child task 1
+                - child list item 1
+                - [ ] child task 2
+            "
+        `);
+
+        expect(tasks.length).toEqual(3);
+
+        const [parentTask, childTask1, childTask2] = tasks;
+
+        expect(childTask1.originalMarkdown).toEqual('    - [ ] child task 1');
+        expect(childTask2.originalMarkdown).toEqual('    - [ ] child task 2');
+
+        const childListItem1 = parentTask.children[1];
+
+        expect(childListItem1.originalMarkdown).toEqual('    - child list item 1');
+
+        testRootAndChildren(parentTask, [childTask1, childListItem1, childTask2]);
     });
 });
