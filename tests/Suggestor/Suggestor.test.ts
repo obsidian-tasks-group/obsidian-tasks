@@ -290,8 +290,8 @@ describe.each([
             shouldStartWithSuggestionsEqualling(line, [...selectedTaskLabels, defaultSuggestion], allTasks);
         }
 
-        function suggestionLabel(taskxy: Task) {
-            return `${taskxy.descriptionWithoutTags} - From: ${taskxy.file.filename}`;
+        function suggestionLabel(task: Task) {
+            return `${task.descriptionWithoutTags} - From: ${task.file.filename}`;
         }
 
         it('should offer to depend on only task in vault, and include its filename in suggestion if user typed "id"', () => {
@@ -390,7 +390,7 @@ describe.each([
                 shouldStartWithSuggestedTasks(line, [feedBaby], [feedBaby, feedCat, ...allTasks]);
             });
 
-            it.failing('should allow punctuation in search strings', () => {
+            it('should allow punctuation in search strings', () => {
                 const peace1 = taskBuilder.description('World peace!').id('peace1').build();
 
                 // Don't match a task that has peace present, but without the exclamation mark

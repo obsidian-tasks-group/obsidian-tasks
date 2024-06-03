@@ -1,6 +1,4 @@
 import { capitalizeFirstLetter } from '../lib/StringHelpers';
-import { Recurrence } from '../Task/Recurrence';
-import type { EditableTask } from './EditableTask';
 
 /**
  * Returns contents for a `<label>` HTML element.
@@ -37,29 +35,4 @@ export function labelContentWithAccessKey(labelText: string, accessKey: string |
     labelContent += labelText.substring(accessKeyIndex + 1);
     labelContent = capitalizeFirstLetter(labelContent);
     return labelContent;
-}
-
-export function parseAndValidateRecurrence(editableTask: EditableTask) {
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    if (!editableTask.recurrenceRule) {
-        return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
-    }
-
-    const recurrenceFromText = Recurrence.fromText({
-        recurrenceRuleText: editableTask.recurrenceRule,
-        // Only for representation in the modal, no dates required.
-        startDate: null,
-        scheduledDate: null,
-        dueDate: null,
-    })?.toText();
-
-    if (!recurrenceFromText) {
-        return { parsedRecurrence: '<i>invalid recurrence rule</i>', isRecurrenceValid: false };
-    }
-
-    if (editableTask.startDate || editableTask.scheduledDate || editableTask.dueDate) {
-        return { parsedRecurrence: recurrenceFromText, isRecurrenceValid: true };
-    }
-
-    return { parsedRecurrence: '<i>due, scheduled or start date required</i>', isRecurrenceValid: false };
 }

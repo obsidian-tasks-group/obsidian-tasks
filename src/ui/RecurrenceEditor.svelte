@@ -1,7 +1,7 @@
 <script lang="ts">
     import { TASK_FORMATS } from '../Config/Settings';
     import type { EditableTask } from './EditableTask';
-    import { labelContentWithAccessKey, parseAndValidateRecurrence } from './EditTaskHelpers';
+    import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     export let editableTask: EditableTask;
     export let isRecurrenceValid: boolean;
@@ -9,7 +9,7 @@
 
     let parsedRecurrence: string;
 
-    $: ({ parsedRecurrence, isRecurrenceValid } = parseAndValidateRecurrence(editableTask));
+    $: ({ parsedRecurrence, isRecurrenceValid } = editableTask.parseAndValidateRecurrence());
 
     const { recurrenceSymbol } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 </script>

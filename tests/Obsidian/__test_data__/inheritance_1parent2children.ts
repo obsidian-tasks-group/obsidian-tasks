@@ -1,6 +1,6 @@
 export const inheritance_1parent2children = {
     filePath: 'Test Data/inheritance_1parent2children.md',
-    fileContents: '- [ ] #task parent\n    - [ ] #task child 1\n    - [ ] #task child 2',
+    fileContents: '- [ ] #task parent\n    - [ ] #task child 1\n    - [ ] #task child 2\n',
     cachedMetadata: {
         tags: [
             {

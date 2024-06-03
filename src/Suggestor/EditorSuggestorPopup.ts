@@ -1,4 +1,4 @@
-import { App, Editor, EditorSuggest, TFile } from 'obsidian';
+import { App, Editor, EditorSuggest, MarkdownView, Notice, TFile, editorInfoField } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 import type TasksPlugin from 'main';
 import { ensureTaskHasId } from '../Task/TaskDependency';
@@ -10,6 +10,15 @@ import type { SuggestInfo } from '.';
 export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;
 };
+
+/**
+ * @todo Unify this with {@link errorAndNotice} in File.ts
+ * @param message
+ */
+function showError(message: string) {
+    console.error(message);
+    new Notice(message + '\n\nThis message has been written to the console.\n', 10000);
+}
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private settings: Settings;
@@ -97,21 +106,43 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             );
             value.appendText += ` ${newTask.id}`;
 
-            if (value.context.file.basename == newTask.filename) {
-                // Avoid "Has Been Modifed Externally Error" and Replace Task in Editor Context
-                console.log(value.taskItDependsOn.toFileLineString());
-                const start = {
-                    line: value.taskItDependsOn.lineNumber,
-                    ch: 0,
-                };
-                const end = {
-                    line: value.taskItDependsOn.lineNumber,
-                    ch: value.taskItDependsOn.toFileLineString().length,
-                };
-                value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
-            } else {
-                // Replace Task in File Context
-                replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
+            if (value.taskItDependsOn !== newTask) {
+                // The task being depended on must not have had an ID previously,
+                // so we have to save its new ID field:
+                if (value.context.file.path == newTask.path) {
+                    // Avoid "Has Been Modified Externally Error" and Replace Task in Editor Context
+                    const originalLine = value.taskItDependsOn.originalMarkdown;
+                    const start = {
+                        line: value.taskItDependsOn.lineNumber,
+                        ch: 0,
+                    };
+                    const end = {
+                        line: value.taskItDependsOn.lineNumber,
+                        ch: originalLine.length,
+                    };
+
+                    // Safety check: before we overwrite content in the editor, make sure
+                    //               it has the expected content.
+                    // This might happen, for example, if the file had been edited and the
+                    // file not yet saved, so that the Tasks Cache is temporarily out-of-date.
+                    const markdownInEditor: string = value.context.editor.getRange(start, end);
+                    if (markdownInEditor !== originalLine) {
+                        const message = `Error adding new ID, due to mismatched data in Tasks memory and the editor:
+task line in memory: '${value.taskItDependsOn.originalMarkdown}'
+
+task line in editor: '${markdownInEditor}'
+
+file: '${newTask.path}'
+`;
+                        showError(message);
+                        return;
+                    }
+
+                    value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
+                } else {
+                    // Replace Task in File Context
+                    replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
+                }
             }
         }
 
@@ -131,5 +162,22 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             line: currentCursor.line,
             ch: replaceFrom.ch + value.appendText.length,
         });
+
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
+        // We need to save the file being edited, in case a Task.id was just added
+        // to another Task in this same file.
+        // Otherwise, if the user types a comma to add another dependency,
+        // the same task can be offered again, and if done in rapid succession,
+        // multiple ID fields can be added to individual task lines.
+
+        // @ts-expect-error: TS2339: Property cm does not exist on type Editor
+        const markdownFileInfo = value.context.editor.cm.state.field(editorInfoField);
+        if (markdownFileInfo instanceof MarkdownView) {
+            await markdownFileInfo.save();
+        } else {
+            const message = `Failed to save "${value.context.file.path}" automatically.
+Please save the file to ensure edits are retained.`;
+            showError(message);
+        }
     }
 }

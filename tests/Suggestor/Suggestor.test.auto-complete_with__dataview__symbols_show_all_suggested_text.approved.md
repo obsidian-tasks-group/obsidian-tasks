@@ -1,15 +1,7 @@
 | Searchable Text | Text that is added |
 | ----- | ----- |
-| due:: due date | due::  |
-| start:: start date | start::  |
-| scheduled:: scheduled date | scheduled::  |
-| priority:: high priority | priority:: high]  |
-| priority:: medium priority | priority:: medium]  |
-| priority:: low priority | priority:: low]  |
-| priority:: highest priority | priority:: highest]  |
-| priority:: lowest priority | priority:: lowest]  |
-| repeat:: recurring (repeat) | repeat::  |
-| created:: created today (2022-07-11) | created:: 2022-07-11]  |
+| id:: Task ID | id:: |
+| dependsOn:: Task depends on ID | dependsOn:: |
 | every | repeat:: every  |
 | every day | repeat:: every day  |
 | every week | repeat:: every week  |
@@ -23,6 +15,15 @@
 | every week on Thursday | repeat:: every week on Thursday  |
 | every week on Friday | repeat:: every week on Friday  |
 | every week on Saturday | repeat:: every week on Saturday  |
+| due:: due date | due::  |
+| start:: start date | start::  |
+| scheduled:: scheduled date | scheduled::  |
+| priority:: high priority | priority:: high]  |
+| priority:: medium priority | priority:: medium]  |
+| priority:: low priority | priority:: low]  |
+| priority:: highest priority | priority:: highest]  |
+| priority:: lowest priority | priority:: lowest]  |
+| created:: created today (2022-07-11) | created:: 2022-07-11]  |
 | today (2022-07-11) | due:: 2022-07-11]  |
 | tomorrow (2022-07-12) | due:: 2022-07-12]  |
 | Sunday (2022-07-17) | due:: 2022-07-17]  |
@@ -35,6 +36,7 @@
 | next week (2022-07-18) | due:: 2022-07-18]  |
 | next month (2022-08-11) | due:: 2022-08-11]  |
 | next year (2023-07-11) | due:: 2023-07-11]  |
+| repeat:: recurring (repeat) | repeat::  |
 | today (2022-07-11) | scheduled:: 2022-07-11]  |
 | tomorrow (2022-07-12) | scheduled:: 2022-07-12]  |
 | Sunday (2022-07-17) | scheduled:: 2022-07-17]  |
@@ -59,3 +61,4 @@
 | next week (2022-07-18) | start:: 2022-07-18]  |
 | next month (2022-08-11) | start:: 2022-08-11]  |
 | next year (2023-07-11) | start:: 2023-07-11]  |
+| Auto Generate Unique ID | id:: ****** |
