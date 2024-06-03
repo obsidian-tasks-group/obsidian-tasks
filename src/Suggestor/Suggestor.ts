@@ -3,12 +3,17 @@ import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
 import { Recurrence } from '../Task/Recurrence';
-import { type DefaultTaskSerializerSymbols, taskIdRegex } from '../TaskSerializer/DefaultTaskSerializer';
+import {
+    type DefaultTaskSerializerSymbols,
+    allTaskPluginEmojis,
+    taskIdRegex,
+} from '../TaskSerializer/DefaultTaskSerializer';
 import { Task } from '../Task/Task';
 import { generateUniqueId } from '../Task/TaskDependency';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { searchForCandidateTasksForDependency } from '../ui/DependencyHelpers';
+import { escapeRegExp } from '../lib/RegExpTools';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 /**
@@ -61,7 +66,15 @@ export function makeDefaultSuggestionBuilder(
 
             // add dependecy suggestions
             suggestions = suggestions.concat(
-                addDependsOnSuggestions(line, cursorPos, settings, symbols.dependsOnSymbol, allTasks, taskToSuggestFor),
+                addDependsOnSuggestions(
+                    line,
+                    cursorPos,
+                    settings,
+                    symbols.dependsOnSymbol,
+                    allTasks,
+                    dataviewMode,
+                    taskToSuggestFor,
+                ),
             );
         }
 
@@ -452,11 +465,26 @@ function addDependsOnSuggestions(
     settings: Settings,
     dependsOnSymbol: string,
     allTasks: Task[],
+    dataviewMode: boolean,
     taskToSuggestFor?: Task,
 ) {
     const results: SuggestInfo[] = [];
 
-    const dependsOnRegex = new RegExp(`(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([0-9a-zA-Z ^,]*)`, 'ug');
+    // When working out what the user wants to depend on, we wish to allow all sorts of punctuation,
+    // accented characters and so on.
+    // Bit it's possible that the new dependsOn field is followed by other fields later in the line,
+    // and we do not want those fields to be included in our task search, and that detection depends on
+    // the current task format.
+    // In dataview format:
+    //    - Our dependOn field will be finished with ] or ) - and the next field will begin [ or (.
+    // In Tasks format:
+    //    - Any following field will begin with an emoji.
+    // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2827
+    const charactersExcludedFromDescriptionSearch = dataviewMode ? escapeRegExp('()[]') : allTaskPluginEmojis();
+    const dependsOnRegex = new RegExp(
+        `(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([^,${charactersExcludedFromDescriptionSearch}]*)`,
+        'ug',
+    );
     const dependsOnMatch = matchIfCursorInRegex(line, dependsOnRegex, cursorPos);
     if (dependsOnMatch && dependsOnMatch.length >= 1) {
         // dependsOnMatch[1] = Depends On Symbol
