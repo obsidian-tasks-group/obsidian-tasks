@@ -7,6 +7,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from '../../src/TaskSerializer/DataviewTaskSerializer';
 import type { Task } from '../../src/Task/Task';
 import type { TaskDetails } from '../../src/TaskSerializer';
+import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
 
 jest.mock('obsidian');
@@ -56,7 +57,7 @@ describe('DataviewTaskSerializer', () => {
             it('should parse delete action', () => {
                 const onCompletion = '[onCompletion:: delete]';
                 const taskDetails = deserialize(onCompletion);
-                expect(taskDetails).toMatchTaskDetails({ onCompletion: 'delete' });
+                expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Delete });
             });
         });
 

@@ -29,26 +29,6 @@ export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) 
 }
 
 describe('OnCompletion feature', () => {
-    it('should just return task if OnCompletion _Action_ is not recognized', () => {
-        // Arrange
-        const dueDate = '2024-02-10';
-        const task = new TaskBuilder()
-            .description('A non-recurring task with invalid OC trigger')
-            .dueDate(dueDate)
-            .onCompletion('INVALID_ACTION')
-            .build();
-        expect(task.status.type).toEqual(StatusType.TODO);
-
-        // Act
-        const returnedTasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
-
-        // Assert
-        expect(returnedTasks.length).toEqual(1);
-        expect(toLines(returnedTasks).join('\n')).toMatchInlineSnapshot(
-            '"- [x] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10 ✅ 2024-02-11"',
-        );
-    });
-
     it('should just return task if StatusType has not changed', () => {
         // Arrange
         const dueDate = '2024-02-10';

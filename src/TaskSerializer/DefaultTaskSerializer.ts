@@ -1,8 +1,9 @@
 import type { Moment } from 'moment';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
+import { OnCompletion } from '../Task/OnCompletion';
+import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
-import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import type { TaskDetails, TaskSerializer } from '.';
 
@@ -266,7 +267,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
-        let onCompletion: string = '';
+        let onCompletion: OnCompletion = OnCompletion.Ignore;
         let id: string = '';
         let dependsOn: string[] | [] = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
@@ -340,10 +341,14 @@ export class DefaultTaskSerializer implements TaskSerializer {
             }
 
             const onCompletionMatch = line.match(TaskFormatRegularExpressions.onCompletionRegex);
-
             if (onCompletionMatch != null) {
                 line = line.replace(TaskFormatRegularExpressions.onCompletionRegex, '').trim();
-                onCompletion = onCompletionMatch[1].trim();
+                const onCompletionString = onCompletionMatch[1].trim().toLowerCase();
+                if (onCompletionString === 'delete') {
+                    onCompletion = OnCompletion.Delete;
+                } else {
+                    onCompletion = OnCompletion.Ignore;
+                }
                 matched = true;
             }
 

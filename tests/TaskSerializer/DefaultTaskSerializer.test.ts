@@ -11,6 +11,7 @@ import {
     allTaskPluginEmojis,
 } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
 
 jest.mock('obsidian');
@@ -135,7 +136,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             it('should parse delete action', () => {
                 const onCompletion = `${onCompletionSymbol} delete`;
                 const taskDetails = deserialize(onCompletion);
-                expect(taskDetails).toMatchTaskDetails({ onCompletion: 'delete' });
+                expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Delete });
             });
         });
 

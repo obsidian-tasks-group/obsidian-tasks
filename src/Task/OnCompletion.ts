@@ -3,7 +3,7 @@ import { StatusType } from '../Statuses/StatusConfiguration';
 import type { Task } from './Task';
 
 export enum OnCompletion {
-    Ignore = 'ignore',
+    Ignore = '',
     Delete = 'delete',
 }
 

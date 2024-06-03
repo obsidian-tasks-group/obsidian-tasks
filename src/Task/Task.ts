@@ -17,7 +17,7 @@ import type { Recurrence } from './Recurrence';
 import type { TaskLocation } from './TaskLocation';
 import type { Priority } from './Priority';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
-import { handleOnCompletion } from './OnCompletion';
+import { OnCompletion, handleOnCompletion } from './OnCompletion';
 
 /**
  * Storage for the task line, broken down in to sections.
@@ -60,7 +60,7 @@ export class Task extends ListItem {
     public readonly cancelledDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
-    public readonly onCompletion: string;
+    public readonly onCompletion: OnCompletion;
 
     public readonly dependsOn: string[];
     public readonly id: string;
@@ -111,7 +111,7 @@ export class Task extends ListItem {
         doneDate: moment.Moment | null;
         cancelledDate: moment.Moment | null;
         recurrence: Recurrence | null;
-        onCompletion: string;
+        onCompletion: OnCompletion;
         dependsOn: string[] | [];
         id: string;
         blockLink: string;

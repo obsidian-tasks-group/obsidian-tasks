@@ -2,6 +2,7 @@
 import type { Moment } from 'moment';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
+import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Task } from '../../src/Task/Task';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
@@ -45,7 +46,7 @@ export class TaskBuilder {
     private _cancelledDate: Moment | null = null;
 
     private _recurrence: Recurrence | null = null;
-    private _onCompletion: string = '';
+    private _onCompletion: OnCompletion = OnCompletion.Ignore;
     private _blockLink: string = '';
 
     private _scheduledDateIsInferred: boolean = false;
@@ -271,7 +272,11 @@ export class TaskBuilder {
     }
 
     public onCompletion(onCompletion: string): TaskBuilder {
-        this._onCompletion = onCompletion;
+        if (onCompletion === 'delete') {
+            this._onCompletion = OnCompletion.Delete;
+        } else {
+            this._onCompletion = OnCompletion.Ignore;
+        }
         return this;
     }
 
