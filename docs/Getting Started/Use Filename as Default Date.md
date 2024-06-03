@@ -38,7 +38,6 @@ For the scheduled date to be automatically set from the file name, the following
 
 - the setting 'Use filename as Scheduled date for undated tasks' must be enabled, and Obsidian restarted,
 - the task must have no existing scheduled date, due date or start date,
-- the file name must contain a date in the format `YYYY-MM-DD` or `YYYYMMDD`,
 - the file must be in one of the configured folders or its sub-folders if that setting is enabled.
 
 Examples of file names :
@@ -47,13 +46,23 @@ Examples of file names :
 daily/2022-10-12 Wednesday.md
 meetings/rd. 2022-09-07.md
 20220612 - random thoughts.md
+daily/Jun 20 2024.md
 ```
 
 ## Settings
 
-The following image shows the two settings relating to this feature:
-
+The following image shows the three settings relating to this feature:
 ![Use filename as Scheduled date for undated tasks settings](../images/settings-use-filename-for-date.png)
+
+### Additional date format
+> [!released]
+Introduced in tasks ?.?.??
+
+By default, only the date formats `YYYY-MM-DD` and `YYYYMMDD` will be matched.
+
+This setting allows you to specify an additional date format to be matched for this feature. For example, if you have a daily note in `daily/Jun 20 2024`, then you could use the date format `MMM DD YYYY` to automatically set tasks within that file as scheduled on that date.
+
+Note that unlike the `YYYY-MM-DD` and `YYYYMMDD` date formats, this setting does not support prefixes or suffixes in file names at this time. The custom additional date format must be an exact match to the file.
 
 ### Folders setting
 
@@ -75,12 +84,10 @@ Examples:
 
 ## Limitations
 
-### Recognised date formats
-
-It is not possible to change the format of dates recognised by [[Use Filename as Default Date]]: only `YYYY-MM-DD` or `YYYYMMDD` are recognised.
-
-We are tracking this in [issue #1369](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1369).
-
 ### Apply setting to selected folders
 
 Folders with a comma (`,`) in their name are not supported.
+
+### Exact matching for additional date format
+
+Unlike the `YYYY-MM-DD` and `YYYYMMDD` date formats, if an additional custom date format is provided, it will not support prefixes or suffixes and will only match files following the exact format provided.
