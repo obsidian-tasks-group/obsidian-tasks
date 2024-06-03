@@ -56,7 +56,7 @@ The following image shows the three settings relating to this feature:
 
 ### Additional date format
 > [!released]
-Introduced in tasks ?.?.??
+Introduced in tasks X.Y.Z.
 
 By default, only the date formats `YYYY-MM-DD` and `YYYYMMDD` will be matched.
 
