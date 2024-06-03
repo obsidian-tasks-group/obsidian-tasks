@@ -36,7 +36,7 @@ describe('list item tests', () => {
     });
 
     it('should create a task child for a list item parent', () => {
-        const parentListItem = new ListItem('', null);
+        const parentListItem = new ListItem('- parent item', null);
         const firstReadTask = Task.fromLine({
             line: '    - [ ] child task',
             taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('x.md')),
@@ -46,17 +46,17 @@ describe('list item tests', () => {
         // ListItem.parent is immutable, so we have to create a new task
         const finalTask = new Task({ ...firstReadTask!, parent: parentListItem });
 
-        expect(finalTask.parent).toBe(parentListItem);
         expect(parentListItem.children).toEqual([finalTask]);
+        expect(finalTask.parent).toBe(parentListItem);
     });
 
     it('should create a list item child for a task parent', () => {
         const parentTask = Task.fromLine({
-            line: '    - [ ] parent task',
+            line: '- [ ] parent task',
             taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('x.md')),
             fallbackDate: null,
         });
-        const childListItem = new ListItem('', parentTask);
+        const childListItem = new ListItem('    - child item', parentTask);
 
         expect(parentTask!.children).toEqual([childListItem]);
         expect(childListItem.parent).toBe(parentTask);
