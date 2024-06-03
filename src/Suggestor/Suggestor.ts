@@ -152,13 +152,13 @@ function addTaskPropertySuggestions(
     if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
         if (!line.includes(symbols.idSymbol))
             genericSuggestions.push({
-                displayText: `${symbols.idSymbol} task id`,
+                displayText: `${symbols.idSymbol} id`,
                 appendText: `${symbols.idSymbol}`,
             });
 
         if (!line.includes(symbols.dependsOnSymbol))
             genericSuggestions.push({
-                displayText: `${symbols.dependsOnSymbol} task depends on id`,
+                displayText: `${symbols.dependsOnSymbol} depends on id`,
                 appendText: `${symbols.dependsOnSymbol}`,
             });
     }
