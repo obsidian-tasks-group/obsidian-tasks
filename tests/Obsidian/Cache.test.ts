@@ -304,7 +304,7 @@ describe('cache', () => {
         testRootAndChildren(task, []);
     });
 
-    it.failing('should read child task and parent listItem', () => {
+    it('should read child task and parent listItem', () => {
         const tasks = readTasksFromSimulatedFile(inheritance_listitem_task);
         expect(inheritance_listitem_task.fileContents).toMatchInlineSnapshot(`
             "- parent list item

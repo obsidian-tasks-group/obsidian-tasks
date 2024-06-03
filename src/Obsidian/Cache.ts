@@ -117,6 +117,11 @@ export function getTasksFromFileContent2(
                 tasks.push(task);
             }
         } else {
+            // We do not want root listItems to keep same behavior as DataView plugin
+            if (listItem.parent < 0) {
+                continue;
+            }
+
             const lineNumber = listItem.position.start.line;
 
             const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
