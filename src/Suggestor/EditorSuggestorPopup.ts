@@ -1,4 +1,4 @@
-import { App, Editor, EditorSuggest, Notice, TFile } from 'obsidian';
+import { App, Editor, EditorSuggest, MarkdownView, Notice, TFile, editorInfoField } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 import type TasksPlugin from 'main';
 import { ensureTaskHasId } from '../Task/TaskDependency';
@@ -162,5 +162,22 @@ file: '${newTask.path}'
             line: currentCursor.line,
             ch: replaceFrom.ch + value.appendText.length,
         });
+
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
+        // We need to save the file being edited, in case a Task.id was just added
+        // to a Task in that.
+        // Otherwise, if the user types a comma to add another dependency,
+        // the same task can be offered again, and if done in rapid succession,
+        // multiple ID fields can be added to individual task lines.
+
+        // @ts-expect-error: TS2339: Property cm does not exist on type Editor
+        const markdownFileInfo = value.context.editor.cm.state.field(editorInfoField);
+        if (markdownFileInfo instanceof MarkdownView) {
+            await markdownFileInfo.save();
+        } else {
+            const message = `Failed to save "${value.context.file.path}" automatically.
+Please save the file to ensure edits are retained.`;
+            showError(message);
+        }
     }
 }
