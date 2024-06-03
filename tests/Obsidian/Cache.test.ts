@@ -103,7 +103,10 @@ function testChildren(parent: ListItem, childList: ListItem[]) {
  */
 function printHierarchy(listItem: ListItem, depth: number): string {
     const indentation = ' '.repeat(depth * 4);
-    const listItemLine = `${indentation}${listItem.originalMarkdown.trim()} : ${listItem.constructor.name}`;
+    const trimmedMarkdown = listItem.originalMarkdown.trim();
+    const type = listItem.constructor.name;
+
+    const listItemLine = `${indentation}${trimmedMarkdown} : ${type}`;
     const childrenLines = listItem.children.map((child) => printHierarchy(child, depth + 1)).join('');
 
     return [listItemLine, childrenLines].join('\n');
