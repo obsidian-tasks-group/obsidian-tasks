@@ -21,7 +21,7 @@ It is particularly powerful when creating and editing tasks on mobile phones.
 > [!released]
 >
 > - `➕ created today` was introduced in Tasks 3.2.0.
-> - `🆔 id`  and `⛔ depends on id` were introduced in Tasks X.Y.Z.
+> - `🆔 id`  and `⛔ depends on id` were introduced in Tasks 7.4.0.
 
 ### Video Demo
 
@@ -90,7 +90,7 @@ The menu is smart: it will only offer valid options:
 - When the `⏎` item is shown at the top of the menu, it is given as a default option to enter a new line instead of choosing a suggestion. It is only shown when there is no concrete match.
 - There are many more recognized options than are showing in the menus, including many more dates, such as `2 months`, `15 days`.
 
-Since Tasks X.Y.Z, the menu supports easy creation of [[Task Dependencies]].
+Since Tasks 7.4.0, the menu supports easy creation of [[Task Dependencies]].
 
 - Type `id` to filter show the options for dependencies.
 - `⛔ depends on id` searches the descriptions of all not-done tasks.

@@ -13,7 +13,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
-- X.Y.Z:
+- 7.4.0:
   - [[Auto-Suggest#Details|Auto-suggest]] now supports [[Task Dependencies#Option 2 Use the Auto-Suggest feature|task dependencies]].
 - 7.3.0:
   - Add 'Remove date' option to the [[Postponing|postpone]] right-click menu in search results.
