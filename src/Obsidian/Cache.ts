@@ -3,6 +3,7 @@ import type { CachedMetadata, EventRef } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 import { TasksFile } from '../Scripting/TasksFile';
+import { ListItem } from '../Task/ListItem';
 
 import { Task } from '../Task/Task';
 import { DateFallback } from '../Task/DateFallback';
@@ -40,7 +41,7 @@ export function getTasksFromFileContent2(
     // rendered lists.
     let currentSection: SectionCache | null = null;
     let sectionIndex = 0;
-    const line2Task: Map<number, Task> = new Map();
+    const line2ListItem: Map<number, ListItem> = new Map();
     for (const listItem of listItems) {
         if (listItem.task !== undefined) {
             const lineNumber = listItem.position.start.line;
@@ -95,16 +96,16 @@ export function getTasksFromFileContent2(
 
                 if (task !== null) {
                     // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
-                    // That is not a problem, as we never put a negative number in line2Task map, so parent will be null.
-                    const parentTask: Task | null = line2Task.get(listItem.parent) ?? null;
-                    if (parentTask !== null) {
+                    // That is not a problem, as we never put a negative number in line2ListItem map, so parent will be null.
+                    const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
+                    if (parentListItem !== null) {
                         task = new Task({
                             ...task,
-                            parent: parentTask,
+                            parent: parentListItem,
                         });
                     }
 
-                    line2Task.set(lineNumber, task);
+                    line2ListItem.set(lineNumber, task);
                 }
             } catch (e) {
                 errorReporter(e, filePath, listItem, line);
@@ -115,6 +116,21 @@ export function getTasksFromFileContent2(
                 sectionIndex++;
                 tasks.push(task);
             }
+        } else {
+            // 1st:
+            // Root ListItems should not be parents of anything.
+            // This behavior was introduced in DataView plugin, so we want keep it for consistency reasons.
+            // 2nd:
+            // Usually, root listItem has parent = -lineNumber, but for listItems on the top of the file (on 0 line), it is -1.
+            if (listItem.parent < 0) {
+                continue;
+            }
+
+            const lineNumber = listItem.position.start.line;
+
+            const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
+
+            line2ListItem.set(lineNumber, new ListItem(fileLines[lineNumber], parentListItem));
         }
     }
 
