@@ -255,6 +255,18 @@ function getCases(): ToggleCase[] {
             nextStatus: new Status(new StatusConfiguration('X', 'new status', ' ', false, StatusType.DONE)),
             line: '- [x] An already-DONE task, changing to Different DONE status 🏁 delete 📅 2024-02-10 ✅ 2024-02-10',
         },
+
+        // Indented, within callout/code block
+
+        {
+            nextStatus: Status.makeDone(),
+            line: '    - [ ] An indented task with 🏁 delete',
+        },
+
+        {
+            nextStatus: Status.makeDone(),
+            line: '> - [ ] A task within a block quote or callout and 🏁 delete',
+        },
     ];
 }
 
