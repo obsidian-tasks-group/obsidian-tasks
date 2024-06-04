@@ -1,7 +1,7 @@
 {
   "id": "obsidian-tasks-plugin",
   "name": "Tasks",
-  "version": "7.3.0",
+  "version": "7.4.0",
   "minAppVersion": "1.1.1",
   "description": "Task management for Obsidian",
   "helpUrl": "https://publish.obsidian.md/tasks/",
