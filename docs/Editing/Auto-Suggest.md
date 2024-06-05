@@ -113,14 +113,21 @@ Things to be aware of, to make sure your Tasks searches work as you intend:
 - You can mix tags in between the emojis (as of Tasks 1.9.0), but you must not mix description text amongst the tags and signifier emojis.
   - See 'What do I need to know about the order of items in a task?' below.
 
-There are some things that might be improved in future releases:
+## Limitations of Auto-Suggest
+
+There are some Auto-Suggest behaviours that might be improved in future releases:
 
 - The following are not yet supported:
-  - It does not yet support Done Date.
+  - It does not yet support Done and Cancelled dates.
     - Done Date can be added either with the 'Tasks: Toggle task done' command or by clicking the task's checkbox when in Live Preview or Reading views.
+    - Both Done and Cancelled dates can be edited in the [[Create or edit Task]] modal.
+    - We are tracking this in [issue #2863](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2863).
   - It does not yet offer `when done`.
     - This phrase still needs to be typed manually.
+    - We are tracking this in [issue #2066](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2066).
 - It currently pops up when editing completed tasks. This may be changed in future.
+- It currently pops up when editing NON_TASK tasks. This may be changed in future.
+  - We are tracking this in [issue #1509](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1509).
 
 ## Common Questions
 
