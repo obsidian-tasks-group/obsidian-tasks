@@ -365,5 +365,4 @@ See [[Task Properties#Values for Task Dependencies|Task property values for Task
 - It's not yet possible to directly navigate from a task to the tasks it depends on.
 - Outside of the edit task modal, it is not possible to see the descriptions of the blocking tasks.
 - It is not yet possible to visualise the relationships in any kind of graphical view.
-- The [[Auto-Suggest]] mechanism does not yet support task dependencies. We are tracking this in [issue #2681](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2681).
 - The [[Urgency]] score does not account for task dependencies. We are tracking this in [issue #2655](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2655).
