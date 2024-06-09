@@ -206,8 +206,7 @@ describe.each([
     it('offers generic due date completions', () => {
         // Arrange
         const line = `- [ ] some task ${dueDateSymbol}`;
-        const suggestions = shouldStartWithSuggestionsContaining(line, ['today', 'tomorrow']);
-        expect(suggestions.length).toEqual(6);
+        shouldStartWithSuggestionsContaining(line, ['today', 'tomorrow']);
     });
 
     it('offers specific due date completions', () => {

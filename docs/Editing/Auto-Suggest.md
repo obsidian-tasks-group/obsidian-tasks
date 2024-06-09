@@ -182,11 +182,17 @@ Our second task looks like this. Note that the due date is shown in the Descript
 
 ![auto-suggest-edit-incorrect-task](../images/auto-suggest-edit-incorrect-task.png)
 
-### How do I see more suggestions?
+### How do I see less/more suggestions?
 
-Increase the 'Maximum number of auto-suggestions to show' value in settings (and re-start Obsidian) so that the menu will contain more options.
+In the Obsidian Settings, Navigate too Community Plugins.
+There find the Tasks Plugin, and go too Options via the Cog.
 
-There are many more suggestions available than are first shown in the popup menu. As you type more characters, the suggestions shown will be more specific to what you typed.
+Increase the 'Maximum number of auto-suggestions to show' Settings Slider too the Value you want (and re-start Obsidian).
+
+Now the Auto Suggest should only Suggest, as much at once as you have Specified.
+
+If there are suggestions Hidden by the Value in the popup menu that where there before, they are not gone.
+Only the best Matches are Shown, the rest is Cutoff at the Value. As you type more characters, the suggestions shown will be more specific to what you typed.
 
 ### How do I make the menu pop up less?
 
