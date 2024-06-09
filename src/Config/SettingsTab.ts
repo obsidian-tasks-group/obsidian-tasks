@@ -315,7 +315,7 @@ export class SettingsTab extends PluginSettingTab {
             .addSlider((slider) => {
                 const settings = getSettings();
                 slider
-                    .setLimits(3, 12, 1)
+                    .setLimits(3, 20, 1)
                     .setValue(settings.autoSuggestMaxItems)
                     .setDynamicTooltip()
                     .onChange(async (value) => {

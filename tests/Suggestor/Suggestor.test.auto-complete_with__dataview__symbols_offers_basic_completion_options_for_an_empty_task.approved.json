@@ -23,5 +23,35 @@
     "displayText": "priority:: high priority",
     "appendText": "priority:: high] ",
     "insertSkip": 0
+  },
+  {
+    "displayText": "priority:: medium priority",
+    "appendText": "priority:: medium] ",
+    "insertSkip": 0
+  },
+  {
+    "displayText": "priority:: low priority",
+    "appendText": "priority:: low] ",
+    "insertSkip": 0
+  },
+  {
+    "displayText": "priority:: highest priority",
+    "appendText": "priority:: highest] ",
+    "insertSkip": 0
+  },
+  {
+    "displayText": "priority:: lowest priority",
+    "appendText": "priority:: lowest] ",
+    "insertSkip": 0
+  },
+  {
+    "displayText": "repeat:: recurring (repeat)",
+    "appendText": "repeat:: "
+  },
+  {
+    "textToMatch": "created:: created",
+    "displayText": "created:: created today (2022-07-11)",
+    "appendText": "created:: 2022-07-11] ",
+    "insertSkip": 0
   }
 ]
