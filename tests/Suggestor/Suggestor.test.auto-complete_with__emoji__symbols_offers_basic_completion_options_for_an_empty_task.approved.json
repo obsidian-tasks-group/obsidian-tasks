@@ -17,11 +17,11 @@
     "appendText": "⏳ "
   },
   {
-    "displayText": "🆔 id",
-    "appendText": "🆔"
+    "displayText": "⏫ high priority",
+    "appendText": "⏫ "
   },
   {
-    "displayText": "⛔ depends on id",
-    "appendText": "⛔"
+    "displayText": "🔼 medium priority",
+    "appendText": "🔼 "
   }
 ]
