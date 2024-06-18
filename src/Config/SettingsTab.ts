@@ -233,17 +233,25 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
+        const settings = getSettings();
+        const dateFormat = settings.filenameAsScheduledDateFormat;
+        const syntaxExample = window.moment().format(dateFormat);
+
         new Setting(containerEl)
             .setName('Additional filename date format as Scheduled date for undated tasks')
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.',
+                    '<a href="https://momentjs.com/docs/#/displaying/format/">Syntax Reference</a>' +
+                        'Your current syntax looks like this: <b class="u-pop">' +
+                        syntaxExample +
+                        '</b></br>' +
+                        'An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.',
                 ),
             )
             .addText((text) => {
                 const settings = getSettings();
 
-                text.setPlaceholder('YYYY-MM-DD')
+                text.setPlaceholder('example: MMM DD YYYY')
                     .setValue(settings.filenameAsScheduledDateFormat)
                     .onChange(async (value) => {
                         updateSettings({ filenameAsScheduledDateFormat: value });

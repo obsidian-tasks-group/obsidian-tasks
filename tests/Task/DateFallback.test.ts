@@ -186,6 +186,11 @@ describe('extract date from filename', () => {
             filenameAsScheduledDateFormat: 'MMM D YYYY',
             expectedDate: '2024-06-02',
         },
+        {
+            path: 'prefix - Jan 04 2024 - suffix.md',
+            filenameAsScheduledDateFormat: 'MMM D YYYY',
+            expectedDate: null,
+        },
     ])('%s', (testCase: TestCase) => {
         // Arrange
         const options = { ...testDefaults, ...testCase };

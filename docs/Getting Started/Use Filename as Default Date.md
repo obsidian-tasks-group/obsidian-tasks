@@ -38,6 +38,7 @@ For the scheduled date to be automatically set from the file name, the following
 
 - the setting 'Use filename as Scheduled date for undated tasks' must be enabled, and Obsidian restarted,
 - the task must have no existing scheduled date, due date or start date,
+- the file name must contain a date in the format `YYYY-MM-DD` or `YYYYMMDD` (exception: an additional date format may be added using the [[Use Filename as Default Date#Additional date format|additional date format setting]]),
 - the file must be in one of the configured folders or its sub-folders if that setting is enabled.
 
 Examples of file names :
@@ -46,7 +47,6 @@ Examples of file names :
 daily/2022-10-12 Wednesday.md
 meetings/rd. 2022-09-07.md
 20220612 - random thoughts.md
-daily/Jun 20 2024.md
 ```
 
 ## Settings
@@ -56,13 +56,14 @@ The following image shows the three settings relating to this feature:
 
 ### Additional date format
 > [!released]
-Introduced in tasks X.Y.Z.
+> Introduced in tasks X.Y.Z.
 
 By default, only the date formats `YYYY-MM-DD` and `YYYYMMDD` will be matched.
 
 This setting allows you to specify an additional date format to be matched for this feature. For example, if you have a daily note in `daily/Jun 20 2024`, then you could use the date format `MMM DD YYYY` to automatically set tasks within that file as scheduled on that date.
 
-Note that unlike the `YYYY-MM-DD` and `YYYYMMDD` date formats, this setting does not support prefixes or suffixes in file names at this time. The custom additional date format must be an exact match to the file.
+> [!warning]
+> Note that unlike the `YYYY-MM-DD` and `YYYYMMDD` date formats, this setting does not support prefixes or suffixes in file names at this time. The custom additional date format must be an exact match to the file.
 
 ### Folders setting
 
