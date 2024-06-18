@@ -60,7 +60,21 @@ The following image shows the three settings relating to this feature:
 
 By default, only the date formats `YYYY-MM-DD` and `YYYYMMDD` will be matched.
 
-This setting allows you to specify an additional date format to be matched for this feature. For example, if you have a daily note in `daily/Jun 20 2024`, then you could use the date format `MMM DD YYYY` to automatically set tasks within that file as scheduled on that date.
+This setting allows you to specify an additional date format to be matched for this feature. For example, if you have a daily note in `daily/Jun 20 2024`, then you could use the date format `MMMM Do YYYY` to automatically set tasks within that file as scheduled on that date.
+
+For example, if your Daily Notes core plugin settings specifies a Date format with folders:
+
+```text
+YYYY/MM/dddd, MMMM Do YYYY
+```
+
+Then you would want to put this text in as the additional filename date format:
+
+```text
+dddd, MMMM Do YYYY
+```
+
+See the [syntax reference](https://momentjs.com/docs/#/displaying/format/) for supported date formats.
 
 > [!warning]
 > Note that unlike the `YYYY-MM-DD` and `YYYYMMDD` date formats, this setting does not support prefixes or suffixes in file names at this time. The custom additional date format must be an exact match to the file.

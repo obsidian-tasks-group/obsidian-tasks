@@ -161,9 +161,9 @@ describe('extract date from filename', () => {
             expectedDate: '2022-10-22',
         },
         {
-            path: 'Jun 23 2024.md',
-            filenameAsScheduledDateFormat: 'MMM DD YYYY',
-            expectedDate: '2024-06-23',
+            path: '2024, 6-13.md',
+            filenameAsScheduledDateFormat: 'YYYY, M-D',
+            expectedDate: '2024-06-13',
         },
         {
             path: 'January 22 2024.md',
@@ -171,8 +171,8 @@ describe('extract date from filename', () => {
             expectedDate: '2024-01-22',
         },
         {
-            path: 'folder/Jun 3 2024.md',
-            filenameAsScheduledDateFormat: 'MMM D YYYY',
+            path: 'folder/Jun 03, 2024.md',
+            filenameAsScheduledDateFormat: 'MMM DD, YYYY',
             expectedDate: '2024-06-03',
         },
         {
@@ -190,6 +190,11 @@ describe('extract date from filename', () => {
             path: 'prefix - Jan 04 2024 - suffix.md',
             filenameAsScheduledDateFormat: 'MMM D YYYY',
             expectedDate: null,
+        },
+        {
+            path: '2024/06/Monday, June 17th 2024.md',
+            filenameAsScheduledDateFormat: 'dddd, MMMM Do YYYY',
+            expectedDate: '2024-06-17',
         },
     ])('%s', (testCase: TestCase) => {
         // Arrange
