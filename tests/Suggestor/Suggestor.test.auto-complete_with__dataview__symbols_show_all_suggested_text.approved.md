@@ -3,8 +3,6 @@
 | due:: due date | due::  |
 | start:: start date | start::  |
 | scheduled:: scheduled date | scheduled::  |
-| id:: id | id:: |
-| dependsOn:: depends on id | dependsOn:: |
 | priority:: high priority | priority:: high]  |
 | priority:: medium priority | priority:: medium]  |
 | priority:: low priority | priority:: low]  |
@@ -12,6 +10,8 @@
 | priority:: lowest priority | priority:: lowest]  |
 | repeat:: recurring (repeat) | repeat::  |
 | created:: created today (2022-07-11) | created:: 2022-07-11]  |
+| id:: id | id:: |
+| dependsOn:: depends on id | dependsOn:: |
 | every | repeat:: every  |
 | every day | repeat:: every day  |
 | every week | repeat:: every week  |
