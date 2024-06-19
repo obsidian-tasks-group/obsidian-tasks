@@ -17,14 +17,6 @@
     "appendText": "⏳ "
   },
   {
-    "displayText": "🆔 id",
-    "appendText": "🆔"
-  },
-  {
-    "displayText": "⛔ depends on id",
-    "appendText": "⛔"
-  },
-  {
     "displayText": "⏫ high priority",
     "appendText": "⏫ "
   },
@@ -52,5 +44,13 @@
     "textToMatch": "➕ created",
     "displayText": "➕ created today (2022-07-11)",
     "appendText": "➕ 2022-07-11 "
+  },
+  {
+    "displayText": "🆔 id",
+    "appendText": "🆔"
+  },
+  {
+    "displayText": "⛔ depends on id",
+    "appendText": "⛔"
   }
 ]
