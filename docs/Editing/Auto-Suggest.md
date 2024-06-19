@@ -182,7 +182,7 @@ Our second task looks like this. Note that the due date is shown in the Descript
 
 ![auto-suggest-edit-incorrect-task](../images/auto-suggest-edit-incorrect-task.png)
 
-### How do I see less/more suggestions?
+### How do I see fewer or more suggestions?
 
 In the Obsidian Settings, Navigate too Community Plugins.
 There find the Tasks Plugin, and go too Options via the Cog.
