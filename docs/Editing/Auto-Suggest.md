@@ -184,9 +184,6 @@ Our second task looks like this. Note that the due date is shown in the Descript
 
 ### How do I see fewer or more suggestions?
 
-In the Obsidian Settings, Navigate too Community Plugins.
-There find the Tasks Plugin, and go too Options via the Cog.
-
 Increase the 'Maximum number of auto-suggestions to show' Settings Slider too the Value you want (and re-start Obsidian).
 
 Now the Auto Suggest should only Suggest, as much at once as you have Specified.
