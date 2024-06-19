@@ -192,6 +192,12 @@ Any other options are just hidden and not removed. As you type more characters, 
 
 For more on filtering, and some examples, see [[#What keywords may I type to make auto-suggest write the emoji for me?]] below.
 
+> [!released]
+>
+> - The default value for 'Maximum number of auto-suggestions to show' was changed from 6 to 20 in Tasks X.Y.Z.
+>   - This new value only takes effect in new Tasks installations: the value in existing vaults will not be updated.
+>   - We recommend increasing the value in your vault, for a better experience with auto-suggest.
+
 ### How do I make the menu pop up less?
 
 Increase the 'Minimum match length for auto-suggest' value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
