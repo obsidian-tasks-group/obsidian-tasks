@@ -212,8 +212,6 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | 📅 due date | 📅  |
 | 🛫 start date | 🛫  |
 | ⏳ scheduled date | ⏳  |
-| 🆔 id | 🆔 |
-| ⛔ depends on id | ⛔ |
 | ⏫ high priority | ⏫  |
 | 🔼 medium priority | 🔼  |
 | 🔽 low priority | 🔽  |
@@ -221,6 +219,8 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | ⏬ lowest priority | ⏬  |
 | 🔁 recurring (repeat) | 🔁  |
 | ➕ created today (2022-07-11) | ➕ 2022-07-11  |
+| 🆔 id | 🆔 |
+| ⛔ depends on id | ⛔ |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
 | every week | 🔁 every week  |
