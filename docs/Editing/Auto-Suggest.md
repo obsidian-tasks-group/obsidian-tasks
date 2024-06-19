@@ -184,12 +184,13 @@ Our second task looks like this. Note that the due date is shown in the Descript
 
 ### How do I see fewer or more suggestions?
 
-Change the 'Maximum number of auto-suggestions to show' settings slider to the value you want (and re-start Obsidian).
+In the Tasks settings, change the 'Maximum number of auto-suggestions to show' slider to the value you want (and re-start Obsidian).
 
-Now the auto-suggest should only suggest, as much at once as you have specified.
+Now the auto-suggest menu will show at most the number of options that you have specified.
 
-If there are suggestions hidden by the value in the popup menu that where there before, they are not gone.
-Only the best matches are shown, the rest is cutoff at the value. As you type more characters, the suggestions shown will be more specific to what you typed.
+Any other options are just hidden and not removed. As you type more characters, the suggestions shown will be filtered to show only suggestions containing the text you typed.
+
+For more on filtering, and some examples, see [[#What keywords may I type to make auto-suggest write the emoji for me?]] below.
 
 ### How do I make the menu pop up less?
 
