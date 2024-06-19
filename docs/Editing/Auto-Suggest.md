@@ -182,11 +182,15 @@ Our second task looks like this. Note that the due date is shown in the Descript
 
 ![auto-suggest-edit-incorrect-task](../images/auto-suggest-edit-incorrect-task.png)
 
-### How do I see more suggestions?
+### How do I see fewer or more suggestions?
 
-Increase the 'Maximum number of auto-suggestions to show' value in settings (and re-start Obsidian) so that the menu will contain more options.
+In the Tasks settings, change the 'Maximum number of auto-suggestions to show' slider to the value you want (and re-start Obsidian).
 
-There are many more suggestions available than are first shown in the popup menu. As you type more characters, the suggestions shown will be more specific to what you typed.
+Now the auto-suggest menu will show at most the number of options that you have specified.
+
+Any other options are just hidden and not removed. As you type more characters, the suggestions shown will be filtered to show only suggestions containing the text you typed.
+
+For more on filtering, and some examples, see [[#What keywords may I type to make auto-suggest write the emoji for me?]] below.
 
 ### How do I make the menu pop up less?
 
