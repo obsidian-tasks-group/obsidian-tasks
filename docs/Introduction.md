@@ -17,16 +17,16 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
   - [[Auto-Suggest#Details|Auto-suggest]] now supports [[Task Dependencies#Option 2 Use the Auto-Suggest feature|task dependencies]].
 - 7.3.0:
   - Add 'Remove date' option to the [[Postponing|postpone]] right-click menu in search results.
-- 7.2.0:
-  - Much improved layout of the [[Create or edit Task]] modal, on mobile devices.
-  - Add [[Tasks Api#`executeToggleTaskDoneCommand (line string, path string) => string;`|executeToggleTaskDoneCommand()]] to the Tasks API.
-  - Add [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]], to enable other plugins to use Tasks' [[Auto-Suggest]] facility.
-- 7.1.0:
-  - Much improved layout of the [[Create or edit Task]] modal, on desktop machines.
-  - Add access keys for Created, Done and Cancelled dates in [[Create or edit Task]].
 
 > [!Released]- Earlier Releases
 >
+> - 7.2.0:
+>   - Much improved layout of the [[Create or edit Task]] modal, on mobile devices.
+>   - Add [[Tasks Api#`executeToggleTaskDoneCommand (line string, path string) => string;`|executeToggleTaskDoneCommand()]] to the Tasks API.
+>   - Add [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]], to enable other plugins to use Tasks' [[Auto-Suggest]] facility.
+> - 7.1.0:
+>   - Much improved layout of the [[Create or edit Task]] modal, on desktop machines.
+>   - Add access keys for Created, Done and Cancelled dates in [[Create or edit Task]].
 > - 7.0.0:
 >   - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks 7.0.0|the appendix]] for details.
 >   - Add documentation page [[Resources]], with links to write-ups,  talks and sample vaults from users.
