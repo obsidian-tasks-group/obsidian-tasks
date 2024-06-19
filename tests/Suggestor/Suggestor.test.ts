@@ -5,7 +5,7 @@ import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
-import { getSettings } from '../../src/Config/Settings';
+import { getSettings, resetSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
 import {
     canSuggestForLine,
@@ -67,6 +67,16 @@ function maskIDSuggestionForTesting(idSymbol: string, suggestions: SuggestInfo[]
 }
 
 const MAX_GENERIC_SUGGESTIONS_FOR_TESTS = 50;
+
+describe('default auto-complete settings', () => {
+    it('should offer correct default values', () => {
+        resetSettings();
+        const settings = getSettings();
+        expect(settings.autoSuggestInEditor).toEqual(true);
+        expect(settings.autoSuggestMinMatch).toEqual(0);
+        expect(settings.autoSuggestMaxItems).toEqual(20);
+    });
+});
 
 // NEW_TASK_FIELD_EDIT_REQUIRED
 
