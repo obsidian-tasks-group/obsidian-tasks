@@ -149,20 +149,6 @@ function addTaskPropertySuggestions(
             appendText: `${symbols.scheduledDateSymbol} `,
         });
 
-    if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
-        if (!line.includes(symbols.idSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.idSymbol} id`,
-                appendText: `${symbols.idSymbol}`,
-            });
-
-        if (!line.includes(symbols.dependsOnSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.dependsOnSymbol} depends on id`,
-                appendText: `${symbols.dependsOnSymbol}`,
-            });
-    }
-
     if (!hasPriority(line)) {
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
         const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
@@ -196,6 +182,20 @@ function addTaskPropertySuggestions(
             appendText: `${symbols.createdDateSymbol} ${formattedDate}` + postfix,
             insertSkip: dataviewMode ? insertSkip : undefined,
         });
+    }
+
+    if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+        if (!line.includes(symbols.idSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.idSymbol} id`,
+                appendText: `${symbols.idSymbol}`,
+            });
+
+        if (!line.includes(symbols.dependsOnSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.dependsOnSymbol} depends on id`,
+                appendText: `${symbols.dependsOnSymbol}`,
+            });
     }
 
     // We now filter the general suggestions according to the word at the cursor. If there's

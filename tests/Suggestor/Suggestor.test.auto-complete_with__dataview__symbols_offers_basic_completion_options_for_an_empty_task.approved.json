@@ -12,14 +12,6 @@
     "appendText": "scheduled:: "
   },
   {
-    "displayText": "id:: id",
-    "appendText": "id::"
-  },
-  {
-    "displayText": "dependsOn:: depends on id",
-    "appendText": "dependsOn::"
-  },
-  {
     "displayText": "priority:: high priority",
     "appendText": "priority:: high] ",
     "insertSkip": 0
@@ -53,5 +45,13 @@
     "displayText": "created:: created today (2022-07-11)",
     "appendText": "created:: 2022-07-11] ",
     "insertSkip": 0
+  },
+  {
+    "displayText": "id:: id",
+    "appendText": "id::"
+  },
+  {
+    "displayText": "dependsOn:: depends on id",
+    "appendText": "dependsOn::"
   }
 ]
