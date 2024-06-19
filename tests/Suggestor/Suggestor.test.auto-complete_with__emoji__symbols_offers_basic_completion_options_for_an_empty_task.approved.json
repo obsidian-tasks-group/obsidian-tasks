@@ -23,5 +23,34 @@
   {
     "displayText": "🔼 medium priority",
     "appendText": "🔼 "
+  },
+  {
+    "displayText": "🔽 low priority",
+    "appendText": "🔽 "
+  },
+  {
+    "displayText": "🔺 highest priority",
+    "appendText": "🔺 "
+  },
+  {
+    "displayText": "⏬ lowest priority",
+    "appendText": "⏬ "
+  },
+  {
+    "displayText": "🔁 recurring (repeat)",
+    "appendText": "🔁 "
+  },
+  {
+    "textToMatch": "➕ created",
+    "displayText": "➕ created today (2022-07-11)",
+    "appendText": "➕ 2022-07-11 "
+  },
+  {
+    "displayText": "🆔 id",
+    "appendText": "🆔"
+  },
+  {
+    "displayText": "⛔ depends on id",
+    "appendText": "⛔"
   }
 ]
