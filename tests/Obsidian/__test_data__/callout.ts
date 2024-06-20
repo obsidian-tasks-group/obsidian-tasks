@@ -5,7 +5,12 @@ export const callout = {
         '\n' +
         '> [!todo]\n' +
         "> - [ ] #task Task in 'callout'\n" +
-        ">     - [ ] #task Task indented in 'callout'\n",
+        ">     - [ ] #task Task indented in 'callout'\n" +
+        '\n' +
+        '```tasks\n' +
+        'not done\n' +
+        'path includes {{query.file.path}}\n' +
+        '```\n',
     cachedMetadata: {
         tags: [
             {
@@ -85,6 +90,21 @@ export const callout = {
                         line: 4,
                         col: 44,
                         offset: 97,
+                    },
+                },
+            },
+            {
+                type: 'code',
+                position: {
+                    start: {
+                        line: 6,
+                        col: 0,
+                        offset: 99,
+                    },
+                    end: {
+                        line: 9,
+                        col: 3,
+                        offset: 154,
                     },
                 },
             },
