@@ -127,4 +127,5 @@ export const link_in_file_body_with_custom_display_text = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

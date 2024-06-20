@@ -184,4 +184,5 @@ export const inheritance_1parent2children2grandchildren = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

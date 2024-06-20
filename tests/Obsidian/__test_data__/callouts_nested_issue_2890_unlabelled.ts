@@ -176,4 +176,5 @@ export const callouts_nested_issue_2890_unlabelled = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

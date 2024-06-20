@@ -86,4 +86,5 @@ export const inheritance_2siblings = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

@@ -16,14 +16,14 @@ export const callout_labelled = {
             {
                 position: {
                     start: {
-                        line: 4,
+                        line: 3,
                         col: 8,
-                        offset: 96,
+                        offset: 55,
                     },
                     end: {
-                        line: 4,
+                        line: 3,
                         col: 13,
-                        offset: 101,
+                        offset: 60,
                     },
                 },
                 tag: '#task',
@@ -31,14 +31,14 @@ export const callout_labelled = {
             {
                 position: {
                     start: {
-                        line: 5,
-                        col: 10,
-                        offset: 152,
+                        line: 4,
+                        col: 12,
+                        offset: 100,
                     },
                     end: {
-                        line: 5,
-                        col: 15,
-                        offset: 157,
+                        line: 4,
+                        col: 17,
+                        offset: 105,
                     },
                 },
                 tag: '#task',
@@ -113,35 +113,36 @@ export const callout_labelled = {
             {
                 position: {
                     start: {
-                        line: 4,
+                        line: 3,
                         col: 2,
-                        offset: 90,
+                        offset: 49,
                     },
                     end: {
-                        line: 4,
+                        line: 3,
                         col: 40,
-                        offset: 128,
+                        offset: 87,
                     },
                 },
-                parent: -4,
+                parent: -3,
                 task: ' ',
             },
             {
                 position: {
                     start: {
-                        line: 5,
-                        col: 2,
-                        offset: 144,
+                        line: 4,
+                        col: 4,
+                        offset: 92,
                     },
                     end: {
-                        line: 5,
-                        col: 51,
-                        offset: 193,
+                        line: 4,
+                        col: 53,
+                        offset: 141,
                     },
                 },
-                parent: 4,
+                parent: 3,
                 task: ' ',
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

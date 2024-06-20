@@ -129,4 +129,5 @@ export const multi_line_task_and_list_item = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

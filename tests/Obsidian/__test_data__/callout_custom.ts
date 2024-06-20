@@ -144,4 +144,5 @@ export const callout_custom = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

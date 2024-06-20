@@ -126,4 +126,5 @@ export const yaml_tags_with_one_value_on_single_line = {
             },
         },
     },
+    obsidianApiVersion: '1.6.4',
 };
