@@ -127,4 +127,5 @@ export const link_in_file_body = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

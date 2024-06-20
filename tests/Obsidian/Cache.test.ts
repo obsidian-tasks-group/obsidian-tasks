@@ -522,7 +522,7 @@ describe('cache', () => {
         expect(tasks.length).toEqual(2);
     });
 
-    it.failing('callout_labelled', () => {
+    it('callout_labelled', () => {
         const tasks = readTasksFromSimulatedFile(callout_labelled);
         expect(callout_labelled.fileContents).toMatchInlineSnapshot(`
             "# callout_labelled
@@ -538,7 +538,8 @@ describe('cache', () => {
             "
         `);
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            ">     - [ ] #task Task indented in 'callout_labelled' : Task
+            "> - [ ] #task Task in 'callout_labelled' : Task
+                >     - [ ] #task Task indented in 'callout_labelled' : Task
             "
         `);
         expect(tasks.length).toEqual(2);
@@ -572,7 +573,7 @@ describe('cache', () => {
         expect(tasks.length).toEqual(4);
     });
 
-    it.failing('callouts_nested_issue_2890_labelled', () => {
+    it('callouts_nested_issue_2890_labelled', () => {
         const tasks = readTasksFromSimulatedFile(callouts_nested_issue_2890_labelled);
         expect(callouts_nested_issue_2890_labelled.fileContents).toMatchInlineSnapshot(`
             " > [!Calendar]+ MONTH
@@ -591,7 +592,10 @@ describe('cache', () => {
             "
         `);
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            ">>> - [ ] #task Correction4 : Task
+            ">>> - [ ] #task Correction1 : Task
+            >>> - [ ] #task Correction2 : Task
+            >>> - [ ] #task Correction3 : Task
+            >>> - [ ] #task Correction4 : Task
             "
         `);
         expect(tasks.length).toEqual(4);

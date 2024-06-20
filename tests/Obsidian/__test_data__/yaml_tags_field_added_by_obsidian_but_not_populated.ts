@@ -126,4 +126,5 @@ export const yaml_tags_field_added_by_obsidian_but_not_populated = {
             },
         },
     },
+    obsidianApiVersion: '1.6.4',
 };

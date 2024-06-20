@@ -1,12 +1,13 @@
 const fs = require('node:fs');
 const util = require('util');
 
-async function convertMarkdownFileToTestFunction(filePath) {
+async function convertMarkdownFileToTestFunction(filePath, tp) {
     const tFile = app.vault.getAbstractFileByPath(filePath);
 
     const fileContents = await app.vault.read(tFile);
     const cachedMetadata = app.metadataCache.getFileCache(tFile);
-    const data = { filePath, fileContents, cachedMetadata };
+    const obsidianApiVersion = tp.obsidian.apiVersion;
+    const data = { filePath, fileContents, cachedMetadata, obsidianApiVersion };
 
     const filename = filePath.split('/')[1].replace('.md', '');
     if (filename.includes(' ')) {
@@ -38,7 +39,7 @@ async function convertMarkdownFileToTestFunction(filePath) {
     });
 }
 
-async function export_files(msg) {
+async function export_files(tp) {
     // Get all files from Test Data/ directory
     const { files } = await app.vault.adapter.list('Test Data/');
     for (let i = 0; i < files.length; i++) {
@@ -46,7 +47,7 @@ async function export_files(msg) {
         if (!file.endsWith('.md')) {
             continue;
         }
-        await convertMarkdownFileToTestFunction(file);
+        await convertMarkdownFileToTestFunction(file, tp);
     }
 
     const message = 'Success - now run "yarn lint:test-data" to format the generated files.';

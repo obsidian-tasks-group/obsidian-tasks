@@ -127,4 +127,5 @@ export const yaml_1_alias = {
             },
         },
     },
+    obsidianApiVersion: '1.6.4',
 };

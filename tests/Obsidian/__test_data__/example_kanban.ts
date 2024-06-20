@@ -150,4 +150,5 @@ export const example_kanban = {
             },
         },
     },
+    obsidianApiVersion: '1.6.4',
 };

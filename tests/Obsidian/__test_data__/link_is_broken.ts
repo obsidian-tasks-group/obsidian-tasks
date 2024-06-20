@@ -108,4 +108,5 @@ export const link_is_broken = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

@@ -19,6 +19,51 @@ export const callouts_nested_issue_2890_labelled = {
             {
                 position: {
                     start: {
+                        line: 4,
+                        col: 11,
+                        offset: 115,
+                    },
+                    end: {
+                        line: 4,
+                        col: 16,
+                        offset: 120,
+                    },
+                },
+                tag: '#task',
+            },
+            {
+                position: {
+                    start: {
+                        line: 5,
+                        col: 11,
+                        offset: 144,
+                    },
+                    end: {
+                        line: 5,
+                        col: 16,
+                        offset: 149,
+                    },
+                },
+                tag: '#task',
+            },
+            {
+                position: {
+                    start: {
+                        line: 6,
+                        col: 11,
+                        offset: 173,
+                    },
+                    end: {
+                        line: 6,
+                        col: 16,
+                        offset: 178,
+                    },
+                },
+                tag: '#task',
+            },
+            {
+                position: {
+                    start: {
                         line: 7,
                         col: 11,
                         offset: 202,
@@ -27,51 +72,6 @@ export const callouts_nested_issue_2890_labelled = {
                         line: 7,
                         col: 16,
                         offset: 207,
-                    },
-                },
-                tag: '#task',
-            },
-            {
-                position: {
-                    start: {
-                        line: 8,
-                        col: 9,
-                        offset: 229,
-                    },
-                    end: {
-                        line: 8,
-                        col: 14,
-                        offset: 234,
-                    },
-                },
-                tag: '#task',
-            },
-            {
-                position: {
-                    start: {
-                        line: 9,
-                        col: 8,
-                        offset: 229,
-                    },
-                    end: {
-                        line: 9,
-                        col: 13,
-                        offset: 234,
-                    },
-                },
-                tag: '#task',
-            },
-            {
-                position: {
-                    start: {
-                        line: 10,
-                        col: 6,
-                        offset: 236,
-                    },
-                    end: {
-                        line: 10,
-                        col: 11,
-                        offset: 241,
                     },
                 },
                 tag: '#task',
@@ -98,8 +98,8 @@ export const callouts_nested_issue_2890_labelled = {
                 position: {
                     start: {
                         line: 9,
-                        col: 8,
-                        offset: 229,
+                        col: 0,
+                        offset: 221,
                     },
                     end: {
                         line: 12,
@@ -113,6 +113,54 @@ export const callouts_nested_issue_2890_labelled = {
             {
                 position: {
                     start: {
+                        line: 4,
+                        col: 5,
+                        offset: 109,
+                    },
+                    end: {
+                        line: 4,
+                        col: 28,
+                        offset: 132,
+                    },
+                },
+                parent: -4,
+                task: ' ',
+            },
+            {
+                position: {
+                    start: {
+                        line: 5,
+                        col: 5,
+                        offset: 138,
+                    },
+                    end: {
+                        line: 5,
+                        col: 28,
+                        offset: 161,
+                    },
+                },
+                parent: -4,
+                task: ' ',
+            },
+            {
+                position: {
+                    start: {
+                        line: 6,
+                        col: 5,
+                        offset: 167,
+                    },
+                    end: {
+                        line: 6,
+                        col: 28,
+                        offset: 190,
+                    },
+                },
+                parent: -4,
+                task: ' ',
+            },
+            {
+                position: {
+                    start: {
                         line: 7,
                         col: 5,
                         offset: 196,
@@ -123,57 +171,10 @@ export const callouts_nested_issue_2890_labelled = {
                         offset: 219,
                     },
                 },
-                parent: -7,
-                task: ' ',
-            },
-            {
-                position: {
-                    start: {
-                        line: 8,
-                        col: 3,
-                        offset: 223,
-                    },
-                    end: {
-                        line: 8,
-                        col: 26,
-                        offset: 246,
-                    },
-                },
-                parent: -7,
-                task: ' ',
-            },
-            {
-                position: {
-                    start: {
-                        line: 9,
-                        col: 2,
-                        offset: 223,
-                    },
-                    end: {
-                        line: 9,
-                        col: 25,
-                        offset: 246,
-                    },
-                },
-                parent: -7,
-                task: ' ',
-            },
-            {
-                position: {
-                    start: {
-                        line: 10,
-                        col: 0,
-                        offset: 230,
-                    },
-                    end: {
-                        line: 10,
-                        col: 23,
-                        offset: 253,
-                    },
-                },
-                parent: -7,
+                parent: -4,
                 task: ' ',
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

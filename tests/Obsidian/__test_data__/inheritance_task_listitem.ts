@@ -53,4 +53,5 @@ export const inheritance_task_listitem = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

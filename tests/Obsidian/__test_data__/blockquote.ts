@@ -123,4 +123,5 @@ export const blockquote = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };
