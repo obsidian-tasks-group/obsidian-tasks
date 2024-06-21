@@ -263,6 +263,25 @@ Repeating tasks can be managed effectively in the following ways:
 - **Either** included in a daily note via a template and set as non-recurring (as each daily note will have its own copy of the task)
 - **Or** placed in a file other than the daily note and set as recurring.
 
+### Next recurrence has any dependency fields removed
+
+Some users have reported what appears at first glance to be a bug, that when a recurring task is completed, the next instance has any [[Task Dependencies#`id`|id]] and [[Task Dependencies#`dependsOn`|dependsOn]] fields removed.
+
+This is intentional, but has confused some users, so we explain the reason here.
+
+#### Recurrence removing `id`
+
+When initially testing the [[Task Dependencies]] facility, we found that tasks that were 'blocked by' a recurring task were blocked forever, due to creating a new task with a duplicate `id` that is not `DONE`.
+
+We quickly realised that in order for the dependencies mechanism to work, and not create duplicate `id` values, we needed to remove both `id` and `dependsOn`.
+
+#### Recurrence removing `dependsOn`
+
+One way to explain the removal of `dependsOn` in next recurrence is this scenario:
+
+> [!Example]
+> Suppose that every Monday you have to go and buy bread. One day you need to go to the bank to get cash first, so you add a dependency, which will naturally apply to just that one week's task.
+
 ### Next recurrence is on non-existent date
 
 > [!important]

@@ -366,3 +366,5 @@ See [[Task Properties#Values for Task Dependencies|Task property values for Task
 - Outside of the edit task modal, it is not possible to see the descriptions of the blocking tasks.
 - It is not yet possible to visualise the relationships in any kind of graphical view.
 - The [[Urgency]] score does not account for task dependencies. We are tracking this in [issue #2655](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2655).
+- When [[recurring tasks]] are completed, the next recurrence will intentionally have any `id` and `dependsOn` values removed.
+  - See [[Recurring Tasks#Next recurrence has any dependency fields removed|Next recurrence has any dependency fields removed]]
