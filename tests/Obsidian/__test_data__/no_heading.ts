@@ -55,4 +55,5 @@ export const no_heading = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

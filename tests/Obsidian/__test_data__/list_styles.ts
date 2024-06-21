@@ -328,4 +328,5 @@ export const list_styles = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

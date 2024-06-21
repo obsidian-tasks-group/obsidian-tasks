@@ -133,4 +133,5 @@ export const link_in_yaml = {
             },
         },
     },
+    obsidianApiVersion: '1.6.4',
 };
