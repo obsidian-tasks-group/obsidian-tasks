@@ -122,4 +122,5 @@ export const inheritance_task_2listitem_3task = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };

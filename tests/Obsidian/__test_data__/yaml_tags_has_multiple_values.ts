@@ -128,4 +128,5 @@ export const yaml_tags_has_multiple_values = {
             },
         },
     },
+    obsidianApiVersion: '1.6.4',
 };

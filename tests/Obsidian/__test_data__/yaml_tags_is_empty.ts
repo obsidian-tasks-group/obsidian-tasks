@@ -126,4 +126,5 @@ export const yaml_tags_is_empty = {
             },
         },
     },
+    obsidianApiVersion: '1.6.4',
 };

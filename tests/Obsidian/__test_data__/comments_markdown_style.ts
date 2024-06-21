@@ -207,4 +207,5 @@ export const comments_markdown_style = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.4',
 };
