@@ -282,11 +282,9 @@ describe.each([
 
         it('should not offer "id" then "depends on" if user typed "id" if cannot save the file', () => {
             const line = '- [ ] some task id';
-            const originalSettings = getSettings();
-            const allTasks: Task[] = [];
             const canSaveEdits = false;
 
-            const suggestions = buildSuggestions(line, line.length - 1, originalSettings, allTasks, canSaveEdits);
+            const suggestions = buildSuggestions(line, line.length - 1, getSettings(), [], canSaveEdits);
             shouldOnlyOfferDefaultSuggestions(suggestions);
         });
 
