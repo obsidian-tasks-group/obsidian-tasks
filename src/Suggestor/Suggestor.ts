@@ -46,6 +46,7 @@ export function makeDefaultSuggestionBuilder(
         cursorPos: number,
         settings: Settings,
         allTasks: Task[],
+        suggestDependencies: boolean,
         taskToSuggestFor?: Task,
     ): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
@@ -61,7 +62,7 @@ export function makeDefaultSuggestionBuilder(
         );
 
         // add Auto ID suggestions
-        if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+        if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS && suggestDependencies) {
             suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
 
             // add dependecy suggestions
@@ -79,7 +80,9 @@ export function makeDefaultSuggestionBuilder(
         }
 
         // add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
+        suggestions = suggestions.concat(
+            addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode, suggestDependencies),
+        );
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
@@ -125,6 +128,7 @@ function addTaskPropertySuggestions(
     _settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
     dataviewMode: boolean,
+    suggestDependencies: boolean,
 ): SuggestInfo[] {
     const hasPriority = (line: string) =>
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
@@ -184,7 +188,7 @@ function addTaskPropertySuggestions(
         });
     }
 
-    if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+    if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS && suggestDependencies) {
         if (!line.includes(symbols.idSymbol))
             genericSuggestions.push({
                 displayText: `${symbols.idSymbol} id`,
