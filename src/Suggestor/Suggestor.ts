@@ -31,6 +31,10 @@ declare global {
 export const showDependencySuggestionsDefault = true;
 globalThis.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
 
+function includeDependencySuggestions(canSaveEdits: boolean) {
+    return globalThis.SHOW_DEPENDENCY_SUGGESTIONS && canSaveEdits;
+}
+
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
     maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
@@ -46,6 +50,7 @@ export function makeDefaultSuggestionBuilder(
         cursorPos: number,
         settings: Settings,
         allTasks: Task[],
+        canSaveEdits: boolean,
         taskToSuggestFor?: Task,
     ): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
@@ -61,7 +66,7 @@ export function makeDefaultSuggestionBuilder(
         );
 
         // add Auto ID suggestions
-        if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+        if (includeDependencySuggestions(canSaveEdits)) {
             suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
 
             // add dependecy suggestions
@@ -79,7 +84,9 @@ export function makeDefaultSuggestionBuilder(
         }
 
         // add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
+        suggestions = suggestions.concat(
+            addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode, canSaveEdits),
+        );
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
@@ -125,6 +132,7 @@ function addTaskPropertySuggestions(
     _settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
     dataviewMode: boolean,
+    canSaveEdits: boolean,
 ): SuggestInfo[] {
     const hasPriority = (line: string) =>
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
@@ -184,7 +192,7 @@ function addTaskPropertySuggestions(
         });
     }
 
-    if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+    if (includeDependencySuggestions(canSaveEdits)) {
         if (!line.includes(symbols.idSymbol))
             genericSuggestions.push({
                 displayText: `${symbols.idSymbol} id`,
