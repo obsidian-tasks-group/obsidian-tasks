@@ -182,10 +182,6 @@ file: '${newTask.path}'
         const markdownFileInfo = value.context.editor.cm.state.field(editorInfoField);
         if (markdownFileInfo instanceof MarkdownView) {
             await markdownFileInfo.save();
-        } else {
-            const message = `Failed to save "${value.context.file.path}" automatically.
-Please save the file to ensure edits are retained.`;
-            showError(message);
         }
     }
 }
