@@ -73,7 +73,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
         // If we can't save the file, we should not allow users to choose dependencies.
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
-        const suggestDependencies = markdownFileInfo instanceof MarkdownView;
+        const canSaveEdits = markdownFileInfo instanceof MarkdownView;
 
         const suggestions: SuggestInfo[] =
             getUserSelectedTaskFormat().buildSuggestions?.(
@@ -81,7 +81,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
                 currentCursor.ch,
                 this.settings,
                 allTasks,
-                suggestDependencies,
+                canSaveEdits,
                 taskToSuggestFor,
             ) ?? [];
 
