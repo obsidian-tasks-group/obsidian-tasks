@@ -68,8 +68,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
         );
 
-        // @ts-expect-error: TS2339: Property cm does not exist on type Editor
-        const markdownFileInfo = context.editor.cm.state.field(editorInfoField);
+        const markdownFileInfo = this.getMarkdownFileInfo(context);
 
         // If we can't save the file, we should not allow users to choose dependencies.
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
@@ -87,6 +86,11 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
         // Add the editor context to all the suggestions
         return suggestions.map((s) => ({ ...s, context }));
+    }
+
+    private getMarkdownFileInfo(context: EditorSuggestContext) {
+        // @ts-expect-error: TS2339: Property cm does not exist on type Editor
+        return context.editor.cm.state.field(editorInfoField);
     }
 
     renderSuggestion(value: SuggestInfoWithContext, el: HTMLElement) {
@@ -178,8 +182,7 @@ file: '${newTask.path}'
         // the same task can be offered again, and if done in rapid succession,
         // multiple ID fields can be added to individual task lines.
 
-        // @ts-expect-error: TS2339: Property cm does not exist on type Editor
-        const markdownFileInfo = value.context.editor.cm.state.field(editorInfoField);
+        const markdownFileInfo = this.getMarkdownFileInfo(value.context);
         if (markdownFileInfo instanceof MarkdownView) {
             await markdownFileInfo.save();
         }
