@@ -31,6 +31,10 @@ declare global {
 export const showDependencySuggestionsDefault = true;
 globalThis.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
 
+function includeDependencySuggestions(suggestDependencies: boolean) {
+    return globalThis.SHOW_DEPENDENCY_SUGGESTIONS && suggestDependencies;
+}
+
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
     maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
@@ -62,7 +66,7 @@ export function makeDefaultSuggestionBuilder(
         );
 
         // add Auto ID suggestions
-        if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS && suggestDependencies) {
+        if (includeDependencySuggestions(suggestDependencies)) {
             suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
 
             // add dependecy suggestions
@@ -188,7 +192,7 @@ function addTaskPropertySuggestions(
         });
     }
 
-    if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS && suggestDependencies) {
+    if (includeDependencySuggestions(suggestDependencies)) {
         if (!line.includes(symbols.idSymbol))
             genericSuggestions.push({
                 displayText: `${symbols.idSymbol} id`,
