@@ -280,12 +280,13 @@ describe.each([
             shouldStartWithSuggestionsEqualling(line, [`${idSymbol} id`, `${dependsOnSymbol} depends on id`]);
         });
 
-        it.failing('should not offer "id" then "depends on" if user typed "id" if cannot save the file', () => {
+        it('should not offer "id" then "depends on" if user typed "id" if cannot save the file', () => {
             const line = '- [ ] some task id';
-            // TODO Figure out how to pass canSaveEdits=false in to the suggestion builder.
             const originalSettings = getSettings();
             const allTasks: Task[] = [];
-            const suggestions = buildSuggestions(line, line.length - 1, originalSettings, allTasks, CAN_SAVE_EDITS);
+            const canSaveEdits = false;
+
+            const suggestions = buildSuggestions(line, line.length - 1, originalSettings, allTasks, canSaveEdits);
             shouldOnlyOfferDefaultSuggestions(suggestions);
         });
 
