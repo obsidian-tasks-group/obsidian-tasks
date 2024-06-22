@@ -23,6 +23,8 @@ It is particularly powerful when creating and editing tasks on mobile phones.
 > - `➕ created today` was introduced in Tasks 3.2.0.
 > - `🆔 id`  and `⛔ depends on id` were introduced in Tasks 7.4.0.
 
+Developers of other task plugins may offer this Auto-Suggest facility to their users: see [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]].
+
 ### Video Demo
 
 It is perhaps best understood by watching a [video of it in action](https://user-images.githubusercontent.com/10722656/175102574-78b0f851-cc48-4255-a40e-d3036bec5bb6.gif).
@@ -100,6 +102,11 @@ Since Tasks 7.4.0, the menu supports easy creation of [[Task Dependencies]].
   - You can accept its offer to `generate unique id`.
   - Or you can type your own more meaningful `id` if you wish, such as `🆔 suggester-update-docs`.
   - Be sure to stick to the allowed [[Task Dependencies#`id`|allowed `id` characters]], and do not create duplicate `id` values.
+
+> [!Warning]
+>
+> - The Kanban plugin uses this Auto-Suggest mechanism, for easy editing of tasks.
+> - However, **these dependency fields are excluded from suggestions in Kanban**, because its editor isn't markdown-based, and does not enable Tasks to save new `id` values.
 
 The auto-suggest menu supports powerful keyboard control:
 

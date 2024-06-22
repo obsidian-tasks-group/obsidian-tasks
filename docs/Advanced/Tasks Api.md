@@ -160,3 +160,7 @@ showTasksPluginAutoSuggest(
 ```
 
 This can be used, for example, to display the Auto-Suggest on non-task lines. [See the Kanban plugin for an example](https://github.com/mgmeyers/obsidian-kanban/blob/5fa792b9c2157390fe493f0feed6f0bc9be72910/src/components/Editor/MarkdownEditor.tsx#L100-L106).
+
+> [!warning]
+> If the `Editor` is not a `MarkdownView`, the functionality is slightly limited.
+> It won't be possible to create [[Task Dependencies]] fields `id` and `dependsOn`.
