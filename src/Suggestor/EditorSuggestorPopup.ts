@@ -68,13 +68,20 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
         );
 
+        // @ts-expect-error: TS2339: Property cm does not exist on type Editor
+        const markdownFileInfo = context.editor.cm.state.field(editorInfoField);
+
+        // If we can't save the file, we should not allow users to choose dependencies.
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
+        const suggestDependencies = markdownFileInfo instanceof MarkdownView;
+
         const suggestions: SuggestInfo[] =
             getUserSelectedTaskFormat().buildSuggestions?.(
                 line,
                 currentCursor.ch,
                 this.settings,
                 allTasks,
-                true,
+                suggestDependencies,
                 taskToSuggestFor,
             ) ?? [];
 
