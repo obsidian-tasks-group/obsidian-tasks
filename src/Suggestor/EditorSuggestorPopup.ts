@@ -74,6 +74,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
                 currentCursor.ch,
                 this.settings,
                 allTasks,
+                true,
                 taskToSuggestFor,
             ) ?? [];
 
