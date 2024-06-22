@@ -283,7 +283,8 @@ describe.each([
         it.failing('should not offer "id" then "depends on" if user typed "id" if cannot save the file', () => {
             const line = '- [ ] some task id';
             // TODO Figure out how to pass canSaveEdits=false in to the suggestion builder.
-            shouldOnlyOfferDefaultSuggestionsForEndOfLine(line);
+            const suggestions = buildSuggestionsForEndOfLine(line, []);
+            shouldOnlyOfferDefaultSuggestions(suggestions);
         });
 
         it('should offer to generate unique id if the id symbol is already present', () => {
