@@ -11,7 +11,7 @@
     "build": "node esbuild.config.mjs production",
     "build:dev": "node esbuild.config.mjs development",
     "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
-    "lint:markdown": "markdownlint-cli2-fix \"**/*.md\" \"#contributing/_meta\" \"#docs/_meta\" \"#docs-snippets\" \"#node_modules\"  \"#tests\"  \"#resources/sample_vaults/Tasks-Demo/_meta/templates\"  \"#resources/sample_vaults/Tasks-Demo/Test Data\"",
+    "lint:markdown": "markdownlint-cli2-fix \"**/*.md\" \"#contributing/_meta\" \"#docs/_meta\" \"#docs-snippets\" \"#node_modules\"  \"#tests\"  \"#resources/sample_vaults/Tasks-Demo/_meta/templates\"  \"#resources/sample_vaults/Tasks-Demo/Test Data\"  \"#resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke test Kanban Integration.md\" ",
     "lint:test-data": "eslint ./tests/Obsidian/__test_data__ --fix",
     "test": "jest --ci",
     "test:dev": "jest --watch",
