@@ -201,7 +201,7 @@ For more on filtering, and some examples, see [[#What keywords may I type to mak
 
 > [!released]
 >
-> - The default value for 'Maximum number of auto-suggestions to show' was changed from 6 to 20 in Tasks X.Y.Z.
+> - The default value for 'Maximum number of auto-suggestions to show' was changed from 6 to 20 in Tasks 7.5.0.
 >   - This new value only takes effect in new Tasks installations: the value in existing vaults will not be updated.
 >   - We recommend increasing the value in your vault, for a better experience with auto-suggest.
 
