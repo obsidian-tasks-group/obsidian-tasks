@@ -36,6 +36,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 - X.Y.Z:
+  - Add page [[Missing tasks in callouts with some Obsidian 1.6.x versions]].
   - [[Auto-Suggest#How do I see fewer or more suggestions?|Auto-suggest]] now defaults to at most 20 suggestions in new vaults. This is useful when adding dependencies.
 - 7.4.0:
   - [[Auto-Suggest#Details|Auto-suggest]] now supports [[Task Dependencies#Option 2 Use the Auto-Suggest feature|task dependencies]].
