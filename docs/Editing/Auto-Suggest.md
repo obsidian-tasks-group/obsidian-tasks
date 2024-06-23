@@ -11,7 +11,7 @@ aliases:
 > [!released]
 Introduced in Tasks 1.9.0.
 
-The [[Priority|Priorities]], [[Dates]] and [[Recurring Tasks]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
+The [[Priority|Priorities]], [[Dates]], [[Recurring Tasks]] and [[Task Dependencies]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
 
 If you prefer to type your tasks, instead of using a dialog, there is now an intelligent auto-suggest completion mechanism that does a
 lot of the typing of emojis and dates for you.
@@ -82,9 +82,10 @@ The auto-suggest menu works in both Source mode and Live Preview.
 
 It triggers only on lines that will be recognised as tasks by the Tasks plugin:
 
-- If you use a global task filter, for example `#task`, you will need to provide `- [ ] #task` before the menu pops up.
+- If you use a [[Global Filter|global task filter]], for example `#task`, you will need to provide `- [ ] #task` before the menu pops up.
 - If you don't use a global task filter, you will only need to provide `- [ ]` before the menu pops up.
 - It also recognises lists starting with asterisk (`*`) and plus (`+`) characters.
+- When using the [[Dataview Format#Bracketed inline fields|Dataview Task Format]], suggestions will only appear when the cursor is within square brackets `[]` or parentheses `()`.
 
 The menu is smart: it will only offer valid options:
 
@@ -111,14 +112,15 @@ Since Tasks 7.4.0, the menu supports easy creation of [[Task Dependencies]].
 The auto-suggest menu supports powerful keyboard control:
 
 - Example: type some fraction of the word `start` and you will get a suggestion to turn it into the start emoji. Pressing `<enter>` then immediately adds the start emoji: 🛫.
+- You can use the [[Create or edit Task#Date abbreviations|date abbreviations offered by "Create or edit task"]], followed by a space character.
 - The filtering matches anywhere. For example, if you haven't yet added any dates to the task, typing `du` would then offer `📅 due date` and `⏳ scheduled date`.
 - You can use the up/down arrow keys on your keyboard, then press `<enter>` to select from the menu.
-- The menu is controlled by the 'Minimum match length for auto-suggest' setting. The higher its value, the more you have to type before the menu pops up.
+- The menu is controlled by the [[#Minimum match length for auto-suggest]] setting. The higher its value, the more you have to type before the menu pops up.
 
 Things to be aware of, to make sure your Tasks searches work as you intend:
 
 - You can mix tags in between the emojis (as of Tasks 1.9.0), but you must not mix description text amongst the tags and signifier emojis.
-  - See 'What do I need to know about the order of items in a task?' below.
+  - See [[#What do I need to know about the order of items in a task?]] below.
 
 ## Limitations of Auto-Suggest
 
@@ -135,6 +137,7 @@ There are some Auto-Suggest behaviours that might be improved in future releases
 - It currently pops up when editing completed tasks. This may be changed in future.
 - It currently pops up when editing NON_TASK tasks. This may be changed in future.
   - We are tracking this in [issue #1509](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1509).
+- The [[Create or edit Task#Date abbreviations|date abbreviations offered by "Create or edit task"]] only work after a space is typed.
 
 ## Common Questions
 
@@ -156,7 +159,8 @@ As soon as it finds any unrecognised text, it stops reading, and ignores any emo
 
 We are tracking this ordering limitation in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).
 
-See the next two sections for how to check your tasks, as you start using this powerful feature.
+> [!important]
+> See [[#How can I find all tasks that may be formatted incorrectly?]] and [[#How can I check that a particular Task is formatted correctly?]] below for how to check your tasks, as you start using this powerful feature.
 
 ### How can I find all tasks that may be formatted incorrectly?
 
@@ -191,7 +195,7 @@ Our second task looks like this. Note that the due date is shown in the Descript
 
 ### How do I see fewer or more suggestions?
 
-In the Tasks settings, change the 'Maximum number of auto-suggestions to show' slider to the value you want (and re-start Obsidian).
+In the Tasks settings, change the [[#Maximum number of auto-suggestions to show]] slider to the value you want (and re-start Obsidian).
 
 Now the auto-suggest menu will show at most the number of options that you have specified.
 
@@ -201,13 +205,13 @@ For more on filtering, and some examples, see [[#What keywords may I type to mak
 
 > [!released]
 >
-> - The default value for 'Maximum number of auto-suggestions to show' was changed from 6 to 20 in Tasks 7.5.0.
+> - The default value for [[#Maximum number of auto-suggestions to show]] was changed from 6 to 20 in Tasks 7.5.0.
 >   - This new value only takes effect in new Tasks installations: the value in existing vaults will not be updated.
 >   - We recommend increasing the value in your vault, for a better experience with auto-suggest.
 
 ### How do I make the menu pop up less?
 
-Increase the 'Minimum match length for auto-suggest' value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
+Increase the [[#Minimum match length for auto-suggest]] value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
 
 For example, if you set the `Minimum match length for auto-suggest` to 3, you would need to type in your task "pri" or "hig" or "med" or "low" to get auto-suggest for the priority emoji(s).
 
@@ -293,12 +297,12 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 ### How can I use auto-suggest features from other plugins together with the Tasks auto-suggest?
 
 Obsidian plugins such as Tasks cannot tell if you have auto-suggest features from other plugins enabled.
-Therefore it is user responsibility to manage conflicts between auto-suggest features.
+Therefore it is the user's responsibility to manage conflicts between auto-suggest features.
 
 The Tasks auto-suggest will only appear on lines that start `- [ ]` and contain the global filter (if one is set).
 If you want to use auto-suggest features from another plugin on such lines, make sure that plugin's settings for auto-suggest
 appearance do not overlap with the keywords listed above,
-then increase the 'Minimum match length for auto-suggest' value in the Tasks settings to more characters than used to activate the other plugin's auto-suggest,
+then increase the [[#Minimum match length for auto-suggest]] value in the Tasks settings to more characters than used to activate the other plugin's auto-suggest,
 and re-start Obsidian.
 
 ## Settings
@@ -327,4 +331,4 @@ at least the specified number of characters to find a match.
 
 How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).
 
-The default is 6, and you can select any value from 3 to 12.
+The default is 20, and you can select any value from 3 to 20.
