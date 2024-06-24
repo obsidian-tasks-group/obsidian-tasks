@@ -53,7 +53,7 @@ export class PerformanceTracker {
 
         // Log the duration to the console
         if (lastEntry) {
-            console.log(this.label + ':', lastEntry.duration, 'milliseconds');
+            console.log(this.label + ':', lastEntry.duration.toFixed(2), 'milliseconds');
         } else {
             console.log(`Measurement for ${this.label} not found`);
         }
