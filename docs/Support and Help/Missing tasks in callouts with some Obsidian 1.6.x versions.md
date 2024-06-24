@@ -111,7 +111,7 @@ At the time of writing (23 June 2024), the newest public version of Obsidian is 
 > We are aware of these options when using 1.6.3:
 >
 > 1. Do nothing, and await a full fix from Obsidian.
->     - This may be acceptable if you don't track critical or important tasks in Obsidian.
+>     - This may be acceptable if you don't track critical or important tasks in Obsidian callouts with titles.
 > 1. Consider purchasing an [Insider tier Catalyst licence](https://help.obsidian.md/Licenses+and+payment/Catalyst+license) for early access to the partial fix.
 >     - ==Note [the warning about risks with beta releases](https://help.obsidian.md/Obsidian/Early+access+versions) in the Obsidian documentation==.
 >     - Upgrade to the beta Obsidian 1.6.4, then follow [[#Users with Catalyst licences]] above.
