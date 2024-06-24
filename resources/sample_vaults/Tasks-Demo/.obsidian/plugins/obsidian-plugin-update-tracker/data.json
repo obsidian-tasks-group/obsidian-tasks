@@ -3,7 +3,7 @@
   "dismissedVersionsByPluginId": {},
   "showIconOnMobile": true,
   "excludeBetaVersions": true,
-  "excludeDisabledPlugins": false,
+  "excludeDisabledPlugins": true,
   "minUpdateCountToShowIcon": 1,
   "hoursBetweenCheckingForUpdates": 1.5
 }
