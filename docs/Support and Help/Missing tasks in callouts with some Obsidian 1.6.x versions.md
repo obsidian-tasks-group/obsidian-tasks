@@ -23,7 +23,7 @@ publish: true
 >   - **Obsidian 1.6.3** has a bug that ==Tasks, dataview and likely other plugins *will* fail to find some of your tasks==.
 >   - **Obsidian 1.6.4** fixes the bug when files are edited, but ==still requires manual edits to existing files, to apply the fix==.
 > - This page:
->   - Explains the problems with Obsidian [[#Obsidian 1.6.3 fails to find tasks in some callouts|1.6.3]] and [[#Obsidian 1.6.4 partially fixes the bug (for Catalyst users)|1.6.4]].
+>   - Explains the problems with Obsidian [[#Obsidian 1.6.3 failed to find tasks in some callouts|1.6.3]] and [[#Obsidian 1.6.4 partially fixed the bug (for Catalyst users)|1.6.4]].
 >   - Gives options for [[#users with Catalyst licences]] and [[#non-Catalyst users]].
 >   - Links to the [[#related bug reports]].
 
