@@ -13778,7 +13778,7 @@ var CaptureChoiceBuilder = class extends ChoiceBuilder {
         this.contentEl
       );
       considerSubsectionsSetting.setName("Consider subsections").setDesc(
-        "Enabling this will insert the text at the end of the section & its subsections, rather than just at the end of the target section.A section is defined by a heading, and its subsections are all the headings inside that section."
+        "Enabling this will insert the text at the end of the section & its subsections, rather than just at the end of the target section. A section is defined by a heading, and its subsections are all the headings inside that section."
       ).addToggle(
         (toggle) => toggle.setValue(this.choice.insertAfter?.considerSubsections).onChange((value) => {
           if (!value) {
@@ -17716,7 +17716,7 @@ var QuickAddSettingsTab = class extends import_obsidian34.PluginSettingTab {
   }
   addDisableOnlineFeaturesSetting() {
     new import_obsidian34.Setting(this.containerEl).setName("Disable AI & Online features").setDesc(
-      "This prevents the plugin from making requests to external providers like OpenAI. You can still use User Scripts to execute arbitrary code, inclulding contacting external providers. However, this setting disables plugin features like the AI Assistant from doing so. You need to disable this setting to use the AI Assistant."
+      "This prevents the plugin from making requests to external providers like OpenAI. You can still use User Scripts to execute arbitrary code, including contacting external providers. However, this setting disables plugin features like the AI Assistant from doing so. You need to disable this setting to use the AI Assistant."
     ).addToggle(
       (toggle) => toggle.setValue(settingsStore.getState().disableOnlineFeatures).onChange((value) => {
         settingsStore.setState({
