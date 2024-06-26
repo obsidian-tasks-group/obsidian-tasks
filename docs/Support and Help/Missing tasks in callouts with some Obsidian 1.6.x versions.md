@@ -27,7 +27,6 @@ publish: true
 >     - ==on every device==.
 > - This page:
 >   - Explains [[#The cause Incorrect Obsidian metadata cache|the cause]] and the [[#The solution Regenerate the Obsidian metadata cache|the solution]].
->   - Gives options for [[#users with Catalyst licences]] and [[#non-Catalyst users]].
 >   - Links to the [[#related bug reports]].
 >   - Explains the problems with Obsidian [[#Obsidian 1.6.3 failed to find tasks in some callouts|1.6.3]] and [[#Obsidian 1.6.4 partially fixed the bug (for Catalyst users)|1.6.4]].
 
@@ -67,57 +66,6 @@ Obsidian 1.6.5 was released to all users on 25 June 2024. It provides the follow
 >
 > - This needs to be done for ==each affected vault==.
 > - And for vaults that are synchronised across devices, it will need to be done ==on every device==.
-
-## Options for users of Tasks, dataview and similar plugins
-
-### Users with Catalyst licences
-
-At the time of writing (23 June 2024), the newest version of Obsidian available to holders of [Catalyst licences](https://help.obsidian.md/Licenses+and+payment/Catalyst+license) is 1.6.4.
-
-> [!Warning]
-> 1.6.4 is a beta version of Obsidian: [do note the warning about risks with beta releases](https://help.obsidian.md/Obsidian/Early+access+versions) in the Obsidian documentation.
-
-It partially fixes the problem, but user intervention is still required to activate the fix in each affected file.
-
-> [!Tip]
-> To ensure Obsidian 1.6.4 finds all your tasks in titled callouts, the Obsidian team has advised:
->
-> - An ==edit needs to be made anywhere in a file containing any callout with titles==, to make Obsidian re-read the file and generate correct line numbers for callout content.
-> - After a couple of seconds of inactivity, Obsidian's cached data will be updated, and missing checkboxes in that file will be found correctly.
-> - ==Don't undo the edit==, as apparently the cached data would then be reverted.
->
-> You will need to do this in all your files that have tasks in titled callouts.
-
-The good news is that doing this will then ensure that Obsidian 1.6.4 does now report the correct locations of things inside titled callouts.
-
-### Non-Catalyst users
-
-At the time of writing (23 June 2024), the newest public version of Obsidian is the broken 1.6.3.
-
-> [!tip]
-> We are aware of these options when using 1.6.3:
->
-> 1. Do nothing, and await a full fix from Obsidian.
->     - This may be acceptable if you don't track critical or important tasks in Obsidian callouts with titles.
-> 1. Consider purchasing an [Insider tier Catalyst licence](https://help.obsidian.md/Licenses+and+payment/Catalyst+license) for early access to the partial fix.
->     - ==Note [the warning about risks with beta releases](https://help.obsidian.md/Obsidian/Early+access+versions) in the Obsidian documentation==.
->     - Upgrade to the beta Obsidian 1.6.4, then follow [[#Users with Catalyst licences]] above.
-> 1. Remove all titles from callouts containing tasks, by changing things like this:
->
->     ```text
->     > [!NOTE] My lovely callout
->     > - [ ] Task in callout
->     ```
->
->     to things like this:
->
->     ```text
->     > [!NOTE]
->     > - [ ] Task in callout
->     ```
->
-> 1. Perhaps downgrade to a 1.5 Obsidian release?
->     - We cannot advise how or whether to do this.
 
 ## Obsidian problems - in earlier releases
 
