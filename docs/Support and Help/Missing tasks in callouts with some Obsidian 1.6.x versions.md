@@ -138,8 +138,21 @@ It's possible the issue was also present in earlier 1.6.x versions: we don't kno
 
 Obsidian 1.6.4 beta/insider version was released to those with [Catalyst licences](https://help.obsidian.md/Licenses+and+payment/Catalyst+license) on 20 June 2024.
 
-The [Obsidian 1.6.4 changelog](https://obsidian.md/changelog/2024-06-20-desktop-v1.6.4/) reports some fixes to checkboxes and callouts.
+The [Obsidian 1.6.4 changelog](https://obsidian.md/changelog/2024-06-20-desktop-v1.6.4/) reported some fixes to checkboxes and callouts.
 
-However, on initial testing we found that ==the missing tasks are still not found in many cases==.
+However, on initial testing we found that the missing tasks were still not found in many cases.
 
-The Obsidian team have since kindly provided a manual workaround, which we give in [[#Users with Catalyst licences]] below.
+So it partially fixed the problem, but user intervention was still required to activate the fix in each affected file.
+
+> [!Quote]- Laborious manual fix, if using Obsidian 1.6.4 and you cannot update to 1.6.5
+> To ensure Obsidian 1.6.4 finds all your tasks in titled callouts, the Obsidian team has advised:
+>
+> - An ==edit needs to be made anywhere in a file containing any callout with titles==, to make Obsidian re-read the file and generate correct line numbers for callout content.
+> - After a couple of seconds of inactivity, Obsidian's cached data will be updated, and missing checkboxes in that file will be found correctly.
+> - ==Don't undo the edit==, as apparently the cached data would then be reverted.
+>
+> You will need to do this in all your files that have tasks in titled callouts.
+>
+> And if the vault is synchronised across multiple devices, you will need to ==do the above on every device==.
+>
+> The good news is that doing this will then ensure that Obsidian 1.6.4 does now report the correct locations of things inside titled callouts.
