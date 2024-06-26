@@ -41,46 +41,6 @@ Which displays like this:
 > [!tip] Callouts can have custom titles
 > Like this one.
 
-## Obsidian problems - in earlier releases
-
-### Obsidian 1.6.3 failed to find tasks in some callouts
-
-The following task in a callout ==will **not be found** by Tasks in Obsidian 1.6.3==:
-
-```text
-> [!NOTE] Some Title - Remove me to make the task be found
-> - [ ] Task in callout
-```
-
-The underlying cause is that Obsidian 1.6.3 reports incorrect (too large) line numbers in its [cache](https://docs.obsidian.md/Reference/TypeScript+API/CachedMetadata) for tasks (and other content) inside callouts with titles. Plugins use that cache to locate tasks and other data.
-
-Each nested callout seems to increase the discrepancy in line numbers. So in the following, only `Correction4` would be found:
-
-````text
- > [!Calendar]+ MONTH
- >> [!Check]+ GROUP
- >>> [!Attention]+ Correction TITLE
- >>> Some stuff goes here
- >>> - [ ] Correction1
- >>> - [ ] Correction2
- >>> - [ ] Correction3
- >>> - [ ] Correction4
-````
-
-We wrote up the underlying Obsidian issue in: [Tasks inside callouts have incorrect positions in the cache](https://forum.obsidian.md/t/tasks-inside-callouts-have-incorrect-positions-in-the-cache/84057/1).
-
-It's possible the issue was also present in earlier 1.6.x versions: we don't know.
-
-### Obsidian 1.6.4 partially fixed the bug (for Catalyst users)
-
-Obsidian 1.6.4 beta/insider version was released to those with [Catalyst licences](https://help.obsidian.md/Licenses+and+payment/Catalyst+license) on 20 June 2024.
-
-The [Obsidian 1.6.4 changelog](https://obsidian.md/changelog/2024-06-20-desktop-v1.6.4/) reports some fixes to checkboxes and callouts.
-
-However, on initial testing we found that ==the missing tasks are still not found in many cases==.
-
-The Obsidian team have since kindly provided a manual workaround, which we give in [[#Users with Catalyst licences]] below.
-
 ## Options for users of Tasks, dataview and similar plugins
 
 ### Users with Catalyst licences
@@ -143,3 +103,43 @@ At the time of writing (23 June 2024), the newest public version of Obsidian is 
 - **Obsidian**:
   - 1.6.3: [Checkbox tasks in a callout can't be clicked or checks the wrong item](https://forum.obsidian.md/t/last-checkbox-in-a-callout-cant-be-clicked/82742)
   - 1.6.4: [Tasks inside callouts have incorrect positions in the cache](https://forum.obsidian.md/t/tasks-inside-callouts-have-incorrect-positions-in-the-cache/84057)
+
+## Obsidian problems - in earlier releases
+
+### Obsidian 1.6.3 failed to find tasks in some callouts
+
+The following task in a callout ==will **not be found** by Tasks in Obsidian 1.6.3==:
+
+```text
+> [!NOTE] Some Title - Remove me to make the task be found
+> - [ ] Task in callout
+```
+
+The underlying cause is that Obsidian 1.6.3 reports incorrect (too large) line numbers in its [cache](https://docs.obsidian.md/Reference/TypeScript+API/CachedMetadata) for tasks (and other content) inside callouts with titles. Plugins use that cache to locate tasks and other data.
+
+Each nested callout seems to increase the discrepancy in line numbers. So in the following, only `Correction4` would be found:
+
+````text
+ > [!Calendar]+ MONTH
+ >> [!Check]+ GROUP
+ >>> [!Attention]+ Correction TITLE
+ >>> Some stuff goes here
+ >>> - [ ] Correction1
+ >>> - [ ] Correction2
+ >>> - [ ] Correction3
+ >>> - [ ] Correction4
+````
+
+We wrote up the underlying Obsidian issue in: [Tasks inside callouts have incorrect positions in the cache](https://forum.obsidian.md/t/tasks-inside-callouts-have-incorrect-positions-in-the-cache/84057/1).
+
+It's possible the issue was also present in earlier 1.6.x versions: we don't know.
+
+### Obsidian 1.6.4 partially fixed the bug (for Catalyst users)
+
+Obsidian 1.6.4 beta/insider version was released to those with [Catalyst licences](https://help.obsidian.md/Licenses+and+payment/Catalyst+license) on 20 June 2024.
+
+The [Obsidian 1.6.4 changelog](https://obsidian.md/changelog/2024-06-20-desktop-v1.6.4/) reports some fixes to checkboxes and callouts.
+
+However, on initial testing we found that ==the missing tasks are still not found in many cases==.
+
+The Obsidian team have since kindly provided a manual workaround, which we give in [[#Users with Catalyst licences]] below.
