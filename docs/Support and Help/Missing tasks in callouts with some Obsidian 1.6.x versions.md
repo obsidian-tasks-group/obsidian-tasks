@@ -41,7 +41,7 @@ Which displays like this:
 > [!tip] Callouts can have custom titles
 > Like this one.
 
-## Obsidian problems
+## Obsidian problems - in earlier releases
 
 ### Obsidian 1.6.3 failed to find tasks in some callouts
 
