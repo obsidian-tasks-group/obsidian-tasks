@@ -43,7 +43,7 @@ Which displays like this:
 
 ## Obsidian problems
 
-### Obsidian 1.6.3 fails to find tasks in some callouts
+### Obsidian 1.6.3 failed to find tasks in some callouts
 
 The following task in a callout ==will **not be found** by Tasks in Obsidian 1.6.3==:
 
@@ -71,7 +71,7 @@ We wrote up the underlying Obsidian issue in: [Tasks inside callouts have incorr
 
 It's possible the issue was also present in earlier 1.6.x versions: we don't know.
 
-### Obsidian 1.6.4 partially fixes the bug (for Catalyst users)
+### Obsidian 1.6.4 partially fixed the bug (for Catalyst users)
 
 Obsidian 1.6.4 beta/insider version was released to those with [Catalyst licences](https://help.obsidian.md/Licenses+and+payment/Catalyst+license) on 20 June 2024.
 
