@@ -92,18 +92,6 @@ At the time of writing (23 June 2024), the newest public version of Obsidian is 
 > 1. Perhaps downgrade to a 1.5 Obsidian release?
 >     - We cannot advise how or whether to do this.
 
-## Related bug reports
-
-- **Tasks plugin**:
-  - [Error with Tasks in Titled Callouts – Obsidian v1.6.3 (and v1.6.4 until file with callout is edited) · Issue #2890](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2890)
-  - [Tasks with nested structures cannot be searched or are searched sporadically. · Issue #2904](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2904)
-- **dataview plugin**:
-  - [DQL Task Query: Titled callouts cause a shift of results by one · Issue #2365](https://github.com/blacksmithgu/obsidian-dataview/issues/2365)
-  - [Issue with the First Task Item in Callout Losing Data · Issue #2359](https://github.com/blacksmithgu/obsidian-dataview/issues/2359)
-- **Obsidian**:
-  - 1.6.3: [Checkbox tasks in a callout can't be clicked or checks the wrong item](https://forum.obsidian.md/t/last-checkbox-in-a-callout-cant-be-clicked/82742)
-  - 1.6.4: [Tasks inside callouts have incorrect positions in the cache](https://forum.obsidian.md/t/tasks-inside-callouts-have-incorrect-positions-in-the-cache/84057)
-
 ## Obsidian problems - in earlier releases
 
 ### Obsidian 1.6.3 failed to find tasks in some callouts
@@ -156,3 +144,15 @@ So it partially fixed the problem, but user intervention was still required to a
 > And if the vault is synchronised across multiple devices, you will need to ==do the above on every device==.
 >
 > The good news is that doing this will then ensure that Obsidian 1.6.4 does now report the correct locations of things inside titled callouts.
+
+## Related bug reports
+
+- **Tasks plugin**:
+  - [Error with Tasks in Titled Callouts – Obsidian v1.6.3 (and v1.6.4 until file with callout is edited) · Issue #2890](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2890)
+  - [Tasks with nested structures cannot be searched or are searched sporadically. · Issue #2904](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2904)
+- **dataview plugin**:
+  - [DQL Task Query: Titled callouts cause a shift of results by one · Issue #2365](https://github.com/blacksmithgu/obsidian-dataview/issues/2365)
+  - [Issue with the First Task Item in Callout Losing Data · Issue #2359](https://github.com/blacksmithgu/obsidian-dataview/issues/2359)
+- **Obsidian**:
+  - 1.6.3: [Checkbox tasks in a callout can't be clicked or checks the wrong item](https://forum.obsidian.md/t/last-checkbox-in-a-callout-cant-be-clicked/82742)
+  - 1.6.4: [Tasks inside callouts have incorrect positions in the cache](https://forum.obsidian.md/t/tasks-inside-callouts-have-incorrect-positions-in-the-cache/84057)
