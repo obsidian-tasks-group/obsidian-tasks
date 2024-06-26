@@ -38,6 +38,9 @@ function errorReporter() {
 
 /* Test creation sequence:
 
+If using this on an Obsidian version newer than the one in saved tests/Obsidian/__test_data__/*.ts
+go to Settings → Files and links → Advanced → Rebuild vault cache.
+
 - Create a sample markdown file in Tasks demo vault (root/Test Data/) with the simplest content
 to represent your test case. Choose a meaningful file name in snake case. See example in 'Test Data/one_task.md'.
 
@@ -61,6 +64,7 @@ created in the previous step.
 
 - Remember to commit the markdown file in the demo vault and the file with the simulated data.
 
+TODO: Make the order of values in the generated code stable.
  */
 
 interface SimulatedFile {
