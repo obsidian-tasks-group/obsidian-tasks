@@ -19,6 +19,11 @@ group by path
 }
 
 describe('validate-tasks', () => {
+    it('all-emojis-emojis', () => {
+        const allEmojis = allTaskPluginEmojis();
+        verifyWithFileExtension(allEmojis.join(''), 'text');
+    });
+
     it('find-unread-emojis', () => {
         const allEmojis = allTaskPluginEmojis();
 
