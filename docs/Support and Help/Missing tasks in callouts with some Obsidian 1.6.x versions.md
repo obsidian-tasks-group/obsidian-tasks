@@ -14,14 +14,17 @@ publish: true
 >   - *...and...*
 > - you have any task lines inside those callouts,
 >   - *...and...*
-> - you are using Obsidian 1.6.3 or 1.6.4
->   - (We don't know if 1.6.0, 1.6.1 or 1.6.2 were also affected).
+> - you have **ever** used the current vault on the current computer/device in **any** of the following Obsidian versions:
+>   - Obsidian 1.6.0, 1.6.1 or 1.6.2, or 1.6.3
 
 > [!bug] Missing tasks
 >
 > - If the above are all true:
->   - **Obsidian 1.6.3** has a bug that ==Tasks, dataview and likely other plugins *will* fail to find some of your tasks==.
->   - **Obsidian 1.6.4** fixes the bug when files are edited, but ==still requires manual edits to existing files, to apply the fix==.
+>   - **Obsidian 1.6.3** - and likely also 1.6.0, 1.6.1 and 1.6.2 -  had a bug that ==Tasks, dataview and likely other plugins *will* fail to find some of your tasks==.
+>   - **Obsidian 1.6.4** fixed the bug when files are edited, but ==still requires manual edits to existing files, to apply the fix==.
+>   - **Obsidian 1.6.5** provides an efficient way to fix a vault's cache for all files: this needs to be done for:
+>     - ==every affected vault==,
+>     - ==on every device==.
 > - This page:
 >   - Explains the problems with Obsidian [[#Obsidian 1.6.3 failed to find tasks in some callouts|1.6.3]] and [[#Obsidian 1.6.4 partially fixed the bug (for Catalyst users)|1.6.4]].
 >   - Gives options for [[#users with Catalyst licences]] and [[#non-Catalyst users]].
