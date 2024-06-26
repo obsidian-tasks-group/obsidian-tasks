@@ -1,10 +1,12 @@
 # Report a Bug
 
+See also [[Request a Feature]].
+
 ## Summary
 
 If you require support with a bug, you can help us to help you.
 
-Please understand that Tasks is mostly maintained by a single person in their free time, and:
+Please understand that Tasks is mostly maintained by two people in their free time, and:
 
 - our spending **time dealing with incomplete bug reports means** ...
 - ... us spending **less time improving the plugin**.
