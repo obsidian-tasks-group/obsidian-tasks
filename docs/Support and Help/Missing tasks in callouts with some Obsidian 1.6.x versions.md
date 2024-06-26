@@ -15,7 +15,7 @@ publish: true
 > - you have any task lines inside those callouts,
 >   - *...and...*
 > - you have **ever** used the current vault on the current computer/device in **any** of the following Obsidian versions:
->   - Obsidian 1.6.0, 1.6.1 or 1.6.2, or 1.6.3
+>   - Obsidian 1.6.0, 1.6.1, 1.6.2, or 1.6.3
 
 > [!bug] Missing tasks
 >
