@@ -26,9 +26,9 @@ publish: true
 >     - ==every affected vault==,
 >     - ==on every device==.
 > - This page:
->   - Explains [[#The cause Incorrect Obsidian metadata cache|the cause]] and the [[#The solution Regenerate the Obsidian metadata cache|the solution]].
->   - Links to the [[#related bug reports]].
+>   - Explains [[#The cause Incorrect Obsidian metadata cache|the cause]] and [[#The solution Regenerate the Obsidian metadata cache|the solution]].
 >   - Explains the problems with Obsidian [[#Obsidian 1.6.3 failed to find tasks in some callouts|1.6.3]] and [[#Obsidian 1.6.4 partially fixed the bug (for Catalyst users)|1.6.4]].
+>   - Links to the [[#related bug reports]].
 
 ### What is a callout with a title?
 
@@ -64,7 +64,9 @@ Obsidian 1.6.5 was released to all users on 25 June 2024. It provides the follow
 > ![Rebuild the vault metadata cache](../images/rebuild-vault-metadata.png)
 > <span class="caption">Rebuild the vault metadata cache</span>
 >
-> - This needs to be done for ==each affected vault==.
+> The metadata is stored locally, and there is effectively a separate cache for each vault. This means that:
+>
+> - This rebuilding needs to be done in ==each affected vault==.
 > - And for vaults that are synchronised across devices, it will need to be done ==on every device==.
 
 ## Obsidian problems - in earlier releases
@@ -95,7 +97,8 @@ Each nested callout seems to increase the discrepancy in line numbers. So in the
 
 We wrote up the underlying Obsidian issue in: [Tasks inside callouts have incorrect positions in the cache](https://forum.obsidian.md/t/tasks-inside-callouts-have-incorrect-positions-in-the-cache/84057/1).
 
-It's possible the issue was also present in earlier 1.6.x versions: we don't know.
+> [!Note]
+> We think it's likely the issue was also present in earlier 1.6.x versions, but we don't know for sure.
 
 ### Obsidian 1.6.4 partially fixed the bug (for Catalyst users)
 
