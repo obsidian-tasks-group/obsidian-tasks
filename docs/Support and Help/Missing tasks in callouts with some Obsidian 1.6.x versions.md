@@ -26,9 +26,10 @@ publish: true
 >     - ==every affected vault==,
 >     - ==on every device==.
 > - This page:
->   - Explains the problems with Obsidian [[#Obsidian 1.6.3 failed to find tasks in some callouts|1.6.3]] and [[#Obsidian 1.6.4 partially fixed the bug (for Catalyst users)|1.6.4]].
+>   - Explains [[#The cause Incorrect Obsidian metadata cache|the cause]] and the [[#The solution Regenerate the Obsidian metadata cache|the solution]].
 >   - Gives options for [[#users with Catalyst licences]] and [[#non-Catalyst users]].
 >   - Links to the [[#related bug reports]].
+>   - Explains the problems with Obsidian [[#Obsidian 1.6.3 failed to find tasks in some callouts|1.6.3]] and [[#Obsidian 1.6.4 partially fixed the bug (for Catalyst users)|1.6.4]].
 
 ### What is a callout with a title?
 
@@ -43,6 +44,29 @@ Which displays like this:
 
 > [!tip] Callouts can have custom titles
 > Like this one.
+
+## The cause: Incorrect Obsidian metadata cache
+
+The underlying cause, confirmed in Obsidian 1.6.3, is that Obsidian reported incorrect (too large) line numbers in its [Metadata cache](https://help.obsidian.md/Files+and+folders/How+Obsidian+stores+data#Metadata+cache) for tasks (and other content) inside callouts with titles. Plugins use that cache to locate tasks and other data.
+
+> [!quote] Metadata cache
+> In order to provide a fast experience while using the app, Obsidian maintains a local record of metadata about the files in your vault called the **metadata cache**. This metadata powers many things across the app, from the Graph view to the Outline view.
+>
+> Obsidian keeps this cache in sync with the files in your vault, but it is possible for the data to get out of sync with the underlying files. In the event that this happens to your vault, you can rebuild your metadata cache from the app settings in the *Files and links* section.
+>
+> *Source: [Obsidian help](https://help.obsidian.md/Files+and+folders/How+Obsidian+stores+data#Metadata+cache)*
+
+## The solution: Regenerate the Obsidian metadata cache
+
+Obsidian 1.6.5 was released to all users on 25 June 2024. It provides the following mechanism to rebuild to the vault cache.
+
+> [!Tip]
+> Go to the Obsidian settings, then Files and links. In the Advanced section, then ==rebuild the vault cache==.
+> ![Rebuild the vault metadata cache](../images/rebuild-vault-metadata.png)
+> <span class="caption">Rebuild the vault metadata cache</span>
+>
+> - This needs to be done for ==each affected vault==.
+> - And for vaults that are synchronised across devices, it will need to be done ==on every device==.
 
 ## Options for users of Tasks, dataview and similar plugins
 
