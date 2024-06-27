@@ -1099,12 +1099,14 @@ describe('toggle done', () => {
             scheduled: '1999-01-23',
             today: '2021-08-31',
             nextScheduled: '2021-09-30',
+            expectedDone: '2021-08-30', // TODO Wrong - see #2867
         },
         {
             interval: 'every 2 years when done',
             start: '1999-01-23',
             today: '2020-02-29', // is a leap year
             nextStart: '2022-02-28',
+            expectedDone: '2020-02-28', // TODO Wrong - see #2867
         },
         // ==================================
         // Test toggling with custom statuses.
@@ -1185,12 +1187,19 @@ describe('toggle done', () => {
         const nextTask: Task = tasks[0];
 
         expect(doneTask.status.symbol).toEqual(doneSymbol ?? 'x');
-        if (expectedDone) {
+
+        function checkDoneDone(doneTask: Task, expectedDone: string) {
             expect({
                 doneDate: doneTask.doneDate?.format('YYYY-MM-DD'),
             }).toMatchObject({
                 doneDate: expectedDone,
             });
+        }
+
+        if (expectedDone) {
+            checkDoneDone(doneTask, expectedDone);
+        } else if (today) {
+            checkDoneDone(doneTask, today);
         }
 
         expect(nextTask.status.symbol).toEqual(nextSymbol ?? ' ');
