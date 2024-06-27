@@ -1134,24 +1134,24 @@ describe('toggle done', () => {
     // This was calling test.concurrent.each() to run the tests in parallel, but I couldn't
     // get it to run beforeAll() before running the tests.
     // https://github.com/facebook/jest/issues/7997#issuecomment-796965078
-    test.each<RecurrenceCase>(recurrenceCases)(
-        'recurs correctly (%j)',
-        ({
-            // inputs:
-            interval,
-            symbol,
-            due,
-            scheduled,
-            start,
-            today,
-            // results:
-            doneSymbol,
-            nextSymbol,
-            nextDue,
-            nextScheduled,
-            nextStart,
-            nextInterval,
-        }) => {
+    test.each<RecurrenceCase>(recurrenceCases)('recurs correctly (%j)', (recurrenceCase) => {
+        {
+            const {
+                // inputs:
+                interval,
+                symbol,
+                due,
+                scheduled,
+                start,
+                today,
+                // results:
+                doneSymbol,
+                nextSymbol,
+                nextDue,
+                nextScheduled,
+                nextStart,
+                nextInterval,
+            } = recurrenceCase;
             if (today) {
                 jest.useFakeTimers();
                 jest.setSystemTime(new Date(today));
@@ -1203,8 +1203,8 @@ describe('toggle done', () => {
             } else {
                 expect(nextTask.recurrence?.toText()).toBe(interval);
             }
-        },
-    );
+        }
+    });
 
     it('supports recurrence rule after a due date', () => {
         // Arrange
