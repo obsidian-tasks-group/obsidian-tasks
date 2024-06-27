@@ -1185,17 +1185,12 @@ describe('toggle done', () => {
         const nextTask: Task = tasks[0];
 
         expect(doneTask.status.symbol).toEqual(doneSymbol ?? 'x');
-
-        function checkDoneDone(doneTask: Task, expectedDone: string) {
+        if (today) {
             expect({
                 doneDate: doneTask.doneDate?.format('YYYY-MM-DD'),
             }).toMatchObject({
-                doneDate: expectedDone,
+                doneDate: today,
             });
-        }
-
-        if (today) {
-            checkDoneDone(doneTask, today);
         }
 
         expect(nextTask.status.symbol).toEqual(nextSymbol ?? ' ');
