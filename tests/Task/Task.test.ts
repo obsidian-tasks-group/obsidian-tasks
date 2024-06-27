@@ -1094,12 +1094,14 @@ describe('toggle done', () => {
 
         // Testing 'when done' does not skip when next occurrence is a non-existent date
         {
+            // This also showed the existence of #2867 - which caused the done date to be '2021-08-30'
             interval: 'every month when done',
             scheduled: '1999-01-23',
             today: '2021-08-31',
             nextScheduled: '2021-09-30',
         },
         {
+            // This also showed the existence of #2867 - which caused the done date to be '2020-02-28'
             interval: 'every 2 years when done',
             start: '1999-01-23',
             today: '2020-02-29', // is a leap year
@@ -1183,6 +1185,14 @@ describe('toggle done', () => {
         const nextTask: Task = tasks[0];
 
         expect(doneTask.status.symbol).toEqual(doneSymbol ?? 'x');
+        if (today) {
+            expect({
+                doneDate: doneTask.doneDate?.format('YYYY-MM-DD'),
+            }).toMatchObject({
+                doneDate: today,
+            });
+        }
+
         expect(nextTask.status.symbol).toEqual(nextSymbol ?? ' ');
         expect({
             nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
