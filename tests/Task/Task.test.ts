@@ -1132,74 +1132,72 @@ describe('toggle done', () => {
     ];
 
     function testRecurrenceCase(recurrenceCase: RecurrenceCase) {
-        {
-            const {
-                // inputs:
-                interval,
-                symbol,
-                due,
-                scheduled,
-                start,
-                today,
-                // results:
-                doneSymbol,
-                nextSymbol,
-                nextDue,
-                nextScheduled,
-                nextStart,
-                nextInterval,
-            } = recurrenceCase;
-            if (today) {
-                jest.useFakeTimers();
-                jest.setSystemTime(new Date(today));
-            }
+        const {
+            // inputs:
+            interval,
+            symbol,
+            due,
+            scheduled,
+            start,
+            today,
+            // results:
+            doneSymbol,
+            nextSymbol,
+            nextDue,
+            nextScheduled,
+            nextStart,
+            nextInterval,
+        } = recurrenceCase;
+        if (today) {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date(today));
+        }
 
-            // If this test fails, the RecurrenceCase had no expected new dates set, and so
-            // is accidentally not doing any testing.
-            const atLeaseOneExpectationSupplied =
-                nextStart !== undefined ||
-                nextDue !== undefined ||
-                nextScheduled !== undefined ||
-                nextSymbol !== undefined ||
-                doneSymbol !== undefined;
-            expect(atLeaseOneExpectationSupplied).toStrictEqual(true);
+        // If this test fails, the RecurrenceCase had no expected new dates set, and so
+        // is accidentally not doing any testing.
+        const atLeaseOneExpectationSupplied =
+            nextStart !== undefined ||
+            nextDue !== undefined ||
+            nextScheduled !== undefined ||
+            nextSymbol !== undefined ||
+            doneSymbol !== undefined;
+        expect(atLeaseOneExpectationSupplied).toStrictEqual(true);
 
-            const line = [
-                `- [${symbol ?? ' '}] I am task`,
-                `🔁 ${interval}`,
-                !!scheduled && `⏳ ${scheduled}`,
-                !!due && `📅 ${due}`,
-                !!start && `🛫 ${start}`,
-            ]
-                .filter(Boolean)
-                .join(' ');
+        const line = [
+            `- [${symbol ?? ' '}] I am task`,
+            `🔁 ${interval}`,
+            !!scheduled && `⏳ ${scheduled}`,
+            !!due && `📅 ${due}`,
+            !!start && `🛫 ${start}`,
+        ]
+            .filter(Boolean)
+            .join(' ');
 
-            const task = fromLine({
-                line,
-            });
+        const task = fromLine({
+            line,
+        });
 
-            const tasks = task!.toggle();
-            expect(tasks.length).toEqual(2);
-            const doneTask: Task = tasks[1];
-            const nextTask: Task = tasks[0];
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const doneTask: Task = tasks[1];
+        const nextTask: Task = tasks[0];
 
-            expect(doneTask.status.symbol).toEqual(doneSymbol ?? 'x');
-            expect(nextTask.status.symbol).toEqual(nextSymbol ?? ' ');
-            expect({
-                nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
-                nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),
-                nextStart: nextTask.startDate?.format('YYYY-MM-DD'),
-            }).toMatchObject({
-                nextDue,
-                nextScheduled,
-                nextStart,
-            });
+        expect(doneTask.status.symbol).toEqual(doneSymbol ?? 'x');
+        expect(nextTask.status.symbol).toEqual(nextSymbol ?? ' ');
+        expect({
+            nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
+            nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),
+            nextStart: nextTask.startDate?.format('YYYY-MM-DD'),
+        }).toMatchObject({
+            nextDue,
+            nextScheduled,
+            nextStart,
+        });
 
-            if (nextInterval) {
-                expect(nextTask.recurrence?.toText()).toBe(nextInterval);
-            } else {
-                expect(nextTask.recurrence?.toText()).toBe(interval);
-            }
+        if (nextInterval) {
+            expect(nextTask.recurrence?.toText()).toBe(nextInterval);
+        } else {
+            expect(nextTask.recurrence?.toText()).toBe(interval);
         }
     }
 
