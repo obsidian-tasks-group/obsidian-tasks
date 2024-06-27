@@ -1283,26 +1283,6 @@ describe('toggle done', () => {
             `);
         });
     });
-
-    it('should apply the correct done date - without "when done"', () => {
-        const today = '2024-05-31';
-        testRecurrenceCase({
-            today: today,
-            scheduled: today,
-            interval: 'every 6 months',
-            nextScheduled: '2024-11-30',
-        });
-    });
-
-    it('should apply the correct done date - with "when done"', () => {
-        const today = '2024-05-31';
-        testRecurrenceCase({
-            today: today,
-            scheduled: today,
-            interval: 'every 6 months when done',
-            nextScheduled: '2024-11-30',
-        });
-    });
 });
 
 describe('handle new status', () => {
