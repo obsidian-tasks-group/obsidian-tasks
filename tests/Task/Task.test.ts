@@ -842,7 +842,6 @@ describe('toggle done', () => {
         start?: string;
         today?: string;
         // results:
-        expectedDone?: string; // TODO Remove this and use today as expected done date, when #2867 is fixed
         doneSymbol?: string; // the symbol of the completed task
         nextSymbol?: string; // the symbol of the recurrence
         nextDue?: string;
@@ -1095,18 +1094,18 @@ describe('toggle done', () => {
 
         // Testing 'when done' does not skip when next occurrence is a non-existent date
         {
+            // This also showed the existence of #2867 - which caused the done date to be '2021-08-30'
             interval: 'every month when done',
             scheduled: '1999-01-23',
             today: '2021-08-31',
             nextScheduled: '2021-09-30',
-            expectedDone: '2021-08-31',
         },
         {
+            // This also showed the existence of #2867 - which caused the done date to be '2020-02-28'
             interval: 'every 2 years when done',
             start: '1999-01-23',
             today: '2020-02-29', // is a leap year
             nextStart: '2022-02-28',
-            expectedDone: '2020-02-29',
         },
         // ==================================
         // Test toggling with custom statuses.
@@ -1144,7 +1143,6 @@ describe('toggle done', () => {
             start,
             today,
             // results:
-            expectedDone,
             doneSymbol,
             nextSymbol,
             nextDue,
@@ -1196,9 +1194,7 @@ describe('toggle done', () => {
             });
         }
 
-        if (expectedDone) {
-            checkDoneDone(doneTask, expectedDone);
-        } else if (today) {
+        if (today) {
             checkDoneDone(doneTask, today);
         }
 
@@ -1295,7 +1291,6 @@ describe('toggle done', () => {
             scheduled: today,
             interval: 'every 6 months',
             nextScheduled: '2024-11-30',
-            expectedDone: today,
         });
     });
 
@@ -1306,7 +1301,6 @@ describe('toggle done', () => {
             scheduled: today,
             interval: 'every 6 months when done',
             nextScheduled: '2024-11-30',
-            expectedDone: today, // fails - gives '2024-05-30'
         });
     });
 });
