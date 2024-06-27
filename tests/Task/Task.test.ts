@@ -1131,10 +1131,7 @@ describe('toggle done', () => {
         },
     ];
 
-    // This was calling test.concurrent.each() to run the tests in parallel, but I couldn't
-    // get it to run beforeAll() before running the tests.
-    // https://github.com/facebook/jest/issues/7997#issuecomment-796965078
-    test.each<RecurrenceCase>(recurrenceCases)('recurs correctly (%j)', (recurrenceCase) => {
+    function testRecurrenceCase(recurrenceCase: RecurrenceCase) {
         {
             const {
                 // inputs:
@@ -1203,6 +1200,15 @@ describe('toggle done', () => {
             } else {
                 expect(nextTask.recurrence?.toText()).toBe(interval);
             }
+        }
+    }
+
+    // This was calling test.concurrent.each() to run the tests in parallel, but I couldn't
+    // get it to run beforeAll() before running the tests.
+    // https://github.com/facebook/jest/issues/7997#issuecomment-796965078
+    test.each<RecurrenceCase>(recurrenceCases)('recurs correctly (%j)', (recurrenceCase) => {
+        {
+            testRecurrenceCase(recurrenceCase);
         }
     });
 
