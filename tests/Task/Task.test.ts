@@ -842,6 +842,7 @@ describe('toggle done', () => {
         start?: string;
         today?: string;
         // results:
+        expectedDone?: string; // TODO Remove this and use today as expected done date, when #2867 is fixed
         doneSymbol?: string; // the symbol of the completed task
         nextSymbol?: string; // the symbol of the recurrence
         nextDue?: string;
@@ -1141,6 +1142,7 @@ describe('toggle done', () => {
             start,
             today,
             // results:
+            expectedDone,
             doneSymbol,
             nextSymbol,
             nextDue,
@@ -1183,6 +1185,14 @@ describe('toggle done', () => {
         const nextTask: Task = tasks[0];
 
         expect(doneTask.status.symbol).toEqual(doneSymbol ?? 'x');
+        if (expectedDone) {
+            expect({
+                doneDate: doneTask.doneDate?.format('YYYY-MM-DD'),
+            }).toMatchObject({
+                doneDate: expectedDone,
+            });
+        }
+
         expect(nextTask.status.symbol).toEqual(nextSymbol ?? ' ');
         expect({
             nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
@@ -1266,6 +1276,28 @@ describe('toggle done', () => {
                 "- [ ] should remove *id* and *dependsOn* in next recurrence 🔁 every day 📅 2024-02-14
                 - [x] should remove *id* and *dependsOn* in next recurrence 🆔 id2 ⛔ id1 🔁 every day 📅 2024-02-13"
             `);
+        });
+    });
+
+    it('should apply the correct done date - without "when done"', () => {
+        const today = '2024-05-31';
+        testRecurrenceCase({
+            today: today,
+            scheduled: today,
+            interval: 'every 6 months',
+            nextScheduled: '2024-11-30',
+            expectedDone: today,
+        });
+    });
+
+    it.failing('should apply the correct done date - with "when done"', () => {
+        const today = '2024-05-31';
+        testRecurrenceCase({
+            today: today,
+            scheduled: today,
+            interval: 'every 6 months when done',
+            nextScheduled: '2024-11-30',
+            expectedDone: today, // fails - gives '2024-05-30'
         });
     });
 });
