@@ -668,13 +668,20 @@ export function canSuggestForLine(line: string, cursor: EditorPosition, editor: 
 }
 
 /**
+ * This function is to specifically allow other plugins to offer Tasks auto suggest.
+ *
+ * Plugins that have a showTasksPluginAutoSuggest() method on their Editor can
+ * allow their users to use the Tasks auto-suggest menu if they wish.
+ * See more details in https://publish.obsidian.md/tasks/Advanced/Tasks+Api#Auto-Suggest+Integration
+ *
  * Return
  * - true if the parent editor is explicitly requesting that the suggest be displayed
  * - false if it is requesting that it be hidden
  * - undefined if the parent editor wants to defer to the default behavior
  *
- * @param editor - the editor instance to which the suggest belongs
+ * @param editor - the editor instance from the other plugin which would want to use Tasks' auto suggest
  * @param cursor - the cursor position
+ * @param lineHasGlobalFilter
  */
 function editorIsRequestingSuggest(
     editor: Editor,
