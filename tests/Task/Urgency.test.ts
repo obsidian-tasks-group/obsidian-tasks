@@ -23,12 +23,9 @@ function testUrgency(builder: TaskBuilder, expectedScore: number) {
  * @param expectedScore
  */
 function testUrgencyOnDate(today: string, builder: TaskBuilder, expectedScore: number) {
-    // TODO Remove this duplication from Task.test.ts
-    const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
+    jest.setSystemTime(new Date(today));
 
     testUrgency(builder, expectedScore);
-
-    todaySpy.mockClear();
 }
 
 /**
@@ -99,6 +96,14 @@ function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
 
     testUrgencyOnDate(today, lowPriorityBuilder().dueDate(dueAsString), expectedScore);
 }
+
+beforeEach(() => {
+    jest.useFakeTimers();
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
 
 describe('urgency - due date component', () => {
     it('More than 7 days overdue: 12.0', () => {
