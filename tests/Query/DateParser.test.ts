@@ -78,7 +78,7 @@ describe('DateParser - date ranges', () => {
 describe('DateParser - relative date ranges', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2021, 9, 6)); // 2021-10-06
+        jest.setSystemTime(new Date('2021-10-06'));
     });
 
     afterAll(() => {
