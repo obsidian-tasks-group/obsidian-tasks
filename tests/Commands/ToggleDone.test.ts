@@ -77,11 +77,15 @@ function testToggleLineForOutOfRangeCursorPositions(
 }
 
 describe('ToggleDone', () => {
-    afterEach(() => {
-        GlobalFilter.getInstance().reset();
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2022-09-04'));
     });
 
-    const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment('2022-09-04').valueOf());
+    afterEach(() => {
+        jest.useRealTimers();
+        GlobalFilter.getInstance().reset();
+    });
 
     // The | (pipe) indicates the calculated position where the cursor should be displayed.
     // Note that prior to the #1103 fix, this position was sometimes ignored.
@@ -260,6 +264,4 @@ describe('ToggleDone', () => {
             );
         });
     });
-
-    todaySpy.mockClear();
 });
