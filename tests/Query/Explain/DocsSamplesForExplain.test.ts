@@ -16,7 +16,7 @@ function checkExplainPresentAndVerify(blockQuery: string) {
 describe('explain', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2022, 9, 21)); // 2022-10-21
+        jest.setSystemTime(new Date('2022-10-21'));
     });
 
     afterAll(() => {

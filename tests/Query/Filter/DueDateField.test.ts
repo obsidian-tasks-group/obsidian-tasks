@@ -148,7 +148,7 @@ describe('due date', () => {
 
     it('due in two weeks', () => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2023, 3 - 1, 6));
+        jest.setSystemTime(new Date('2023-03-06'));
 
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in two weeks');
         expect(filterOrMessage).toHaveExplanation('due date is on 2023-03-20 (Monday 20th March 2023)');
@@ -294,7 +294,7 @@ describe('due date (error & corner cases)', () => {
 describe('due date before relative date range (Today is 2022-05-25)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
+        jest.setSystemTime(new Date('2022-05-25'));
     });
 
     afterAll(() => {
@@ -350,7 +350,7 @@ describe('due date before relative date range (Today is 2022-05-25)', () => {
 describe('due date in relative date range (Today is 2023-02-28)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2023, 1, 28)); // 2023-02-28
+        jest.setSystemTime(new Date('2023-02-28'));
     });
 
     afterAll(() => {
@@ -429,7 +429,7 @@ describe('due date in relative date range (Today is 2023-02-28)', () => {
 describe('due date after relative date range (Today is 2021-11-01)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2021, 10, 1)); // 2021-11-01
+        jest.setSystemTime(new Date('2021-11-01'));
     });
 
     afterAll(() => {
@@ -556,7 +556,7 @@ describe('sorting by due', () => {
 describe('due date', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2023, 1, 10)); // 2023-02-10
+        jest.setSystemTime(new Date('2023-02-10'));
     });
 
     afterAll(() => {

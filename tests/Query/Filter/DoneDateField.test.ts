@@ -39,7 +39,7 @@ describe('done date', () => {
 describe('explain done date queries', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+        jest.setSystemTime(new Date('2022-01-15'));
     });
 
     afterAll(() => {
