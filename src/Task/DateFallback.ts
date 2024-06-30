@@ -46,6 +46,14 @@ export class DateFallback {
 
         const basename = path.substring(firstPos, lastPos);
 
+        const { filenameAsScheduledDateFormat } = getSettings();
+        if (filenameAsScheduledDateFormat !== '') {
+            const date = window.moment(basename, filenameAsScheduledDateFormat, true);
+            if (date.isValid()) {
+                return date;
+            }
+        }
+
         let dateMatch = /(\d{4})-(\d{2})-(\d{2})/.exec(basename);
         if (!dateMatch) dateMatch = /(\d{4})(\d{2})(\d{2})/.exec(basename);
 

@@ -220,7 +220,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     'Save time entering Scheduled (⏳) dates.</br>' +
                         'If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.</br>' +
-                        'The date in the file name must be in one of <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code> formats.</br>' +
+                        'By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats.</br>' +
                         'Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.</br>' +
                         '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date">documentation</a>.</p>',
                 ),
@@ -231,6 +231,25 @@ export class SettingsTab extends PluginSettingTab {
                     updateSettings({ useFilenameAsScheduledDate: value });
                     await this.plugin.saveSettings();
                 });
+            });
+
+        new Setting(containerEl)
+            .setName('Additional filename date format as Scheduled date for undated tasks')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    'An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.</br>' +
+                        '<p><a href="https://momentjs.com/docs/#/displaying/format/">Syntax Reference</a></p>',
+                ),
+            )
+            .addText((text) => {
+                const settings = getSettings();
+
+                text.setPlaceholder('example: MMM DD YYYY')
+                    .setValue(settings.filenameAsScheduledDateFormat)
+                    .onChange(async (value) => {
+                        updateSettings({ filenameAsScheduledDateFormat: value });
+                        await this.plugin.saveSettings();
+                    });
             });
 
         new Setting(containerEl)
