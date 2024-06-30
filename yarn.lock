@@ -1607,10 +1607,10 @@ bl@^4.1.0:
     inherits "^2.0.4"
     readable-stream "^3.4.0"
 
-boon-js@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/boon-js/-/boon-js-2.0.4.tgz#5e8feda3363d9e72ca98597e8f6374fb03be23e2"
-  integrity sha512-STAfDwFteYLGyVfzGMaBwWpTjPnaGDT2K5GqwPlgnTgHAnvPIpJuRspuqMcsQznwtRywm9v991Qz3DRGGw1qrg==
+boon-js@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/boon-js/-/boon-js-2.0.5.tgz#d65d1fc1a43c20ab1a8b33d6d172ed20abd2d2f4"
+  integrity sha512-Ck9YXckVbbIjpZPxtKXJ5TcT+ptU4E9lJy2X6hBKsR2nZqg026eHf9aw3KGXoFbfO4coRLaW9ql0tWrBrqJt1A==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
