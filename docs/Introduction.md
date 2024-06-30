@@ -19,16 +19,20 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Keep to around 2 to 3 releases, so that 'Navigation around this site' is visible.
     Move the older ones down to the top of the comment block below...
 -->
+
+- X.Y.Z:
+  - New setting to [[Use Filename as Default Date#Additional date format|recognise extra date format]] in file name as default date.
+  - Add page [[Request a Feature]].
 - 7.5.0:
   - Add page [[Missing tasks in callouts with some Obsidian 1.6.x versions]].
   - [[Auto-Suggest#How do I see fewer or more suggestions?|Auto-suggest]] now defaults to at most 20 suggestions in new vaults. This is useful when adding dependencies.
 - 7.4.0:
   - [[Auto-Suggest#Details|Auto-suggest]] now supports [[Task Dependencies#Option 2 Use the Auto-Suggest feature|task dependencies]].
-- 7.3.0:
-  - Add 'Remove date' option to the [[Postponing|postpone]] right-click menu in search results.
 
 > [!Released]- Earlier Releases
 >
+> - 7.3.0:
+>   - Add 'Remove date' option to the [[Postponing|postpone]] right-click menu in search results.
 > - 7.2.0:
 >   - Much improved layout of the [[Create or edit Task]] modal, on mobile devices.
 >   - Add [[Tasks Api#`executeToggleTaskDoneCommand (line string, path string) => string;`|executeToggleTaskDoneCommand()]] to the Tasks API.
