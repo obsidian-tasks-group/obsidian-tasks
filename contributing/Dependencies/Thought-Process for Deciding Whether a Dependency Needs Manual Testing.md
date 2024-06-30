@@ -9,9 +9,9 @@ Look at the `package.json` entry for a package and search for which files import
 
 Anything that is involved in producing the built output to users. For example:
 
-- everything in the "dependencies" (rather than "devDependencies") list in `package.json`
+- everything in the "dependencies" (rather than "devDependencies") list in [`package.json`](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json)
 - `esbuild` (the build system)
-- anything imported by the esbuild config file `esbuild.config.mjs` (for example, `builtin-modules`, `svelte-preprocess`)
+- anything imported by the esbuild config file [`esbuild.config.mjs`](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/esbuild.config.mjs) (for example, `builtin-modules`, `svelte-preprocess`)
 - `obsidian` (also see [[Notes and Special Cases]])
 - all `@codemirror/*`
 - `moment`
