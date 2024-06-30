@@ -72,6 +72,7 @@ export interface Settings {
     autoSuggestMaxItems: number;
     provideAccessKeys: boolean;
     useFilenameAsScheduledDate: boolean;
+    filenameAsScheduledDateFormat: string;
     filenameAsDateFolders: string[];
     recurrenceOnNextLine: boolean;
 
@@ -105,6 +106,7 @@ const defaultSettings: Settings = {
     autoSuggestMaxItems: 20,
     provideAccessKeys: true,
     useFilenameAsScheduledDate: false,
+    filenameAsScheduledDateFormat: '',
     filenameAsDateFolders: [],
     recurrenceOnNextLine: false,
     statusSettings: new StatusSettings(),

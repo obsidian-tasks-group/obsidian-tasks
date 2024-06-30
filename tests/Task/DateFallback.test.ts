@@ -24,11 +24,13 @@ describe('extract date from filename', () => {
         path: string;
         expectedDate: string | null;
         useFilenameAsScheduledDate?: boolean;
+        filenameAsScheduledDateFormat?: string;
         filenameAsDateFolders?: string[];
     };
 
     const testDefaults: Partial<TestCase> = {
         useFilenameAsScheduledDate: true,
+        filenameAsScheduledDateFormat: '',
         filenameAsDateFolders: ANY_FOLDER,
     };
 
@@ -158,12 +160,49 @@ describe('extract date from filename', () => {
             filenameAsDateFolders: ['folder', 'folder/subfolder'],
             expectedDate: '2022-10-22',
         },
+        {
+            path: '2024, 6-13.md',
+            filenameAsScheduledDateFormat: 'YYYY, M-D',
+            expectedDate: '2024-06-13',
+        },
+        {
+            path: 'January 22 2024.md',
+            filenameAsScheduledDateFormat: 'MMMM DD YYYY',
+            expectedDate: '2024-01-22',
+        },
+        {
+            path: 'folder/Jun 03, 2024.md',
+            filenameAsScheduledDateFormat: 'MMM DD, YYYY',
+            expectedDate: '2024-06-03',
+        },
+        {
+            path: 'folder/Jun 3 2024.md',
+            useFilenameAsScheduledDate: false,
+            filenameAsScheduledDateFormat: 'MMM D YYYY',
+            expectedDate: null,
+        },
+        {
+            path: '2024-06-02.md',
+            filenameAsScheduledDateFormat: 'MMM D YYYY',
+            expectedDate: '2024-06-02',
+        },
+        {
+            path: 'prefix - Jan 04 2024 - suffix.md',
+            filenameAsScheduledDateFormat: 'MMM D YYYY',
+            expectedDate: null,
+        },
+        {
+            path: '2024/06/Monday, June 17th 2024.md',
+            filenameAsScheduledDateFormat: 'dddd, MMMM Do YYYY',
+            expectedDate: '2024-06-17',
+        },
     ])('%s', (testCase: TestCase) => {
         // Arrange
         const options = { ...testDefaults, ...testCase };
 
         updateSettings({
             useFilenameAsScheduledDate: options.useFilenameAsScheduledDate,
+            filenameAsScheduledDateFormat: options.filenameAsScheduledDateFormat,
             filenameAsDateFolders: options.filenameAsDateFolders,
         });
 
