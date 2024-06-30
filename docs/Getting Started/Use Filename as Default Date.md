@@ -9,7 +9,7 @@ publish: true
 > [!released]
 >
 > - Introduced in Tasks 1.18.0.
-> - Support for filenames exactly matching a custom format added in X.Y.Z.
+> - Support for filenames exactly matching a custom format added in 7.6.0.
 
 You can automatically set a scheduled date for tasks based on the name of their files. This feature can be enabled in the
 settings, via the option `Use filename as Scheduled date for undated tasks`. Changing this requires a restart of Obsidian.
@@ -59,7 +59,7 @@ The following image shows the settings relating to this feature:
 
 ### Additional date format
 > [!released]
-> Introduced in tasks X.Y.Z.
+> Introduced in tasks 7.6.0.
 
 By default, only the date formats `YYYY-MM-DD` and `YYYYMMDD` will be matched.
 

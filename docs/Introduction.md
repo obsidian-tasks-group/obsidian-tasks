@@ -20,7 +20,7 @@ _In recent [releases](https://github.com/obsidian-tasks-group/obsidian-tasks/rel
     Move the older ones down to the top of the comment block below...
 -->
 
-- X.Y.Z:
+- 7.6.0:
   - New setting to [[Use Filename as Default Date#Additional date format|recognise extra date format]] in file name as default date.
   - Add page [[Request a Feature]].
 - 7.5.0:
