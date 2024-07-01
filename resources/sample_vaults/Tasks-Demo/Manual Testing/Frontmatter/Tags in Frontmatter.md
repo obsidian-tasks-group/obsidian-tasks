@@ -48,26 +48,19 @@ markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatter
 markdownBuilder.createParagraph('`parseFrontMatterTags()`:');
 markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterTags(frontmatter), null, 4));
 
-markdownBuilder.createParagraph('`parseFrontMatterEntry(custom_list)`:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'custom_list'), null, 4));
-
-markdownBuilder.createParagraph('`parseFrontMatterEntry(custom_list_2)`:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'custom_list_2'), null, 4));
-
-markdownBuilder.createParagraph('`parseFrontMatterEntry(custom_number_prop)`:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'custom_number_prop'), null, 4));
-
-markdownBuilder.createParagraph('`parseFrontMatterEntry(unknown_property)`:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'unknown_property'), null, 4));
-
-markdownBuilder.createParagraph('`parseFrontMatterEntry(unknown_property_2)`:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'unknown_property_2'), null, 4));
-
-markdownBuilder.createParagraph('`parseFrontMatterEntry(unknown_number_property)`:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'unknown_number_property'), null, 4));
-
-markdownBuilder.createParagraph('`parseFrontMatterEntry(unknown_empty_property)`:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'unknown_empty_property'), null, 4));
+function showParseFrontMatterEntry(entryName) {  
+    markdownBuilder.createParagraph('`parseFrontMatterEntry(' + entryName + ')`:');  
+    markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, entryName), null, 4));  
+}  
+  
+showParseFrontMatterEntry('custom_list');
+showParseFrontMatterEntry('custom_list');  
+showParseFrontMatterEntry('custom_list_2');  
+showParseFrontMatterEntry('custom_number_prop');  
+showParseFrontMatterEntry('unknown_property');  
+showParseFrontMatterEntry('unknown_property_2');  
+showParseFrontMatterEntry('unknown_number_property');  
+showParseFrontMatterEntry('unknown_empty_property');
 
 return markdownBuilder;
 ```
