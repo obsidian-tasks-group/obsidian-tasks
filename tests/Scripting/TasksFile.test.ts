@@ -57,7 +57,7 @@ describe('TasksFile - reading frontmatter', () => {
         const tasksFile = new TasksFile('some path.md', {});
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontMatter).toEqual({});
+        expect(tasksFile.frontmatter).toEqual({});
     });
 
     it('should read file with no yaml metadata', () => {
@@ -66,7 +66,7 @@ describe('TasksFile - reading frontmatter', () => {
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontMatter).toEqual({});
+        expect(tasksFile.frontmatter).toEqual({});
     });
 
     it('should read file with empty yaml metadata', () => {
@@ -75,7 +75,7 @@ describe('TasksFile - reading frontmatter', () => {
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontMatter).toEqual({});
+        expect(tasksFile.frontmatter).toEqual({});
     });
 
     it('should read file with multiple tags in yaml metadata', () => {
@@ -84,7 +84,7 @@ describe('TasksFile - reading frontmatter', () => {
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
-        expect(tasksFile.frontMatter.tags).toEqual(['multiple1', 'multiple2']);
+        expect(tasksFile.frontmatter.tags).toEqual(['multiple1', 'multiple2']);
     });
 
     // See property types: https://help.obsidian.md/Editing+and+formatting/Properties#Property+types
@@ -100,6 +100,6 @@ describe('TasksFile - reading frontmatter', () => {
         const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
-        expect(tasksFile.frontMatter?.custom_number_prop).toEqual(42);
+        expect(tasksFile.frontmatter?.custom_number_prop).toEqual(42);
     });
 });

@@ -1,11 +1,14 @@
 # Access properties in frontmatter
 
+> [!warning]
+> Tasks does not currently sanitise tags from frontmatter, such as adding a  `#` prefix.
+>
 ## Accessing a custom property
 
 ```tasks
 folder includes Test Data
 group by function \
-    const prop = task.file.frontMatter.custom_number_prop; \
+    const prop = task.file.frontmatter.custom_number_prop; \
     return prop ? prop : 'not set'
 ```
 
@@ -14,6 +17,6 @@ group by function \
 ```tasks
 folder includes Test Data
 group by function \
-    const prop = task.file.frontMatter.tags; \
+    const prop = task.file.frontmatter.tags; \
     return prop ? prop : ''
 ```

@@ -40,7 +40,7 @@ export class TasksFile {
      *       And it is an empty object, {}, if the {@link cachedMetadata} has not been populated
      *       or if the markdown file has no frontmatter or empty frontmatter.
      */
-    public get frontMatter(): FrontMatterCache {
+    public get frontmatter(): FrontMatterCache {
         return this._cachedMetadata.frontmatter ?? ({} as any as FrontMatterCache);
     }
 
