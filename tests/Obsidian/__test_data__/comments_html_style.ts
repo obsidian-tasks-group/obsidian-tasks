@@ -158,5 +158,5 @@ export const comments_html_style = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.4',
+    obsidianApiVersion: '1.6.5',
 };

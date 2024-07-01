@@ -104,5 +104,5 @@ export const inheritance_task_listitem_mixed_grandchildren = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.4',
+    obsidianApiVersion: '1.6.5',
 };

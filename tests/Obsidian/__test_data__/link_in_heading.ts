@@ -143,5 +143,5 @@ export const link_in_heading = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.4',
+    obsidianApiVersion: '1.6.5',
 };
