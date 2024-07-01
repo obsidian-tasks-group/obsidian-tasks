@@ -44,6 +44,12 @@ let frontmatter = cache.frontmatter;
 let markdownBuilder = engine.markdown.createBuilder();
 jsonCodeBlock(frontmatter);
 
+// Get the keys of the JSON object
+const keys = Object.keys(frontmatter);
+jsonCodeBlock(keys)
+
+// TODO Iterate over the keys and construct a tidied-up frontmatter object.
+
 markdownBuilder.createParagraph('`parseFrontMatterAliases(frontmatter)`:');
 jsonCodeBlock(obsidian.parseFrontMatterAliases(frontmatter));
 
