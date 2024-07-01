@@ -42,18 +42,21 @@ let content = await app.vault.read(tfile);
 let frontmatter = cache.frontmatter;
 
 let markdownBuilder = engine.markdown.createBuilder();
-markdownBuilder.createParagraph('raw frontmatter:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(frontmatter, null, 4));
+jsonCodeBlock(frontmatter);
 
 markdownBuilder.createParagraph('`parseFrontMatterAliases(frontmatter)`:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterAliases(frontmatter), null, 4));
+jsonCodeBlock(obsidian.parseFrontMatterAliases(frontmatter));
 
 markdownBuilder.createParagraph('`parseFrontMatterTags(frontmatter)`:');
-markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterTags(frontmatter), null, 4));
+jsonCodeBlock(obsidian.parseFrontMatterTags(frontmatter));
+
+function jsonCodeBlock(value) {
+    markdownBuilder.createCodeBlock('json', JSON.stringify(value, null, 4));
+}
 
 function showParseFrontMatterEntry(entryName) {
     markdownBuilder.createParagraph('`parseFrontMatterEntry(frontmatter, "' + entryName + '")`:');
-    markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, entryName), null, 4));
+    jsonCodeBlock(obsidian.parseFrontMatterEntry(frontmatter, entryName));
 }
 
 showParseFrontMatterEntry('custom_list');
