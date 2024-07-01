@@ -6,6 +6,7 @@ import type { CachedMetadata } from 'obsidian';
 import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
 import type { ListItem } from '../../src/Task/ListItem';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { inheritance_1parent1child } from './__test_data__/inheritance_1parent1child';
 import { inheritance_1parent1child1newroot_after_header } from './__test_data__/inheritance_1parent1child1newroot_after_header';
 import { inheritance_1parent1child1sibling_emptystring } from './__test_data__/inheritance_1parent1child1sibling_emptystring';
@@ -29,6 +30,9 @@ import { callout } from './__test_data__/callout';
 import { callout_labelled } from './__test_data__/callout_labelled';
 import { callout_custom } from './__test_data__/callout_custom';
 import { callouts_nested_issue_2890_unlabelled } from './__test_data__/callouts_nested_issue_2890_unlabelled';
+import { no_yaml } from './__test_data__/no_yaml';
+import { empty_yaml } from './__test_data__/empty_yaml';
+import { yaml_tags_has_multiple_values } from './__test_data__/yaml_tags_has_multiple_values';
 
 window.moment = moment;
 
@@ -141,7 +145,7 @@ function printRoots(listItems: ListItem[]) {
     return rootHierarchies;
 }
 
-describe('cache', () => {
+describe('cache - reading tasks', () => {
     it('should read one task', () => {
         const tasks = readTasksFromSimulatedFile(one_task);
         expect(tasks.length).toEqual(1);
@@ -603,5 +607,31 @@ describe('cache', () => {
             "
         `);
         expect(tasks.length).toEqual(4);
+    });
+});
+
+describe('cache - reading frontmatter', () => {
+    it('should read file with no yaml metadata', () => {
+        const data = no_yaml;
+        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+
+        expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
+    });
+
+    it('should read file with empty yaml metadata', () => {
+        const data = empty_yaml;
+        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+
+        expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
+    });
+
+    it('should read file with multiple tags in yaml metadata', () => {
+        const data = yaml_tags_has_multiple_values;
+        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+
+        expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
     });
 });
