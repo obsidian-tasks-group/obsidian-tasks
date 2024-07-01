@@ -1,11 +1,15 @@
+import type { CachedMetadata } from 'obsidian';
+
 /**
  * A simple class to provide access to file information via 'task.file' in scripting code.
  */
 export class TasksFile {
     private readonly _path: string;
+    private readonly _cachedMetadata: CachedMetadata;
 
-    constructor(path: string) {
+    constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
+        this._cachedMetadata = cachedMetadata;
     }
 
     /**
@@ -13,6 +17,17 @@ export class TasksFile {
      */
     get path(): string {
         return this._path;
+    }
+
+    /**
+     * Return Obsidian's [CachedMetadata](https://docs.obsidian.md/Reference/TypeScript+API/CachedMetadata)
+     * for this file, if available.
+     *
+     * @note This is currently only populated for Task objects when read in the Obsidian plugin.
+     *       It's not populated for queries in the plugin, nor in most unit tests.
+     */
+    public get cachedMetadata(): CachedMetadata {
+        return this._cachedMetadata;
     }
 
     /**
