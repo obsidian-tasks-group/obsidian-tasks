@@ -46,7 +46,9 @@ TAG: value1, value2
 --- column-break ---
 
 ```json
-tag: Two values - single line, unquoted
+{
+    "TAG": "value1, value2"
+}
 ```
 
 --- end-multi-column
