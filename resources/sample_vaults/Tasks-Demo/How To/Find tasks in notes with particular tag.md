@@ -31,8 +31,14 @@ Credit: jonlemon in [this Obsidian Forum thread](https://forum.obsidian.md/t/how
 
 ## Tasks experimental approach
 
+> [!warning]
+> Tasks does not currently sanitise tags from frontmatter, such as adding a  `#` prefix.
+
 ```tasks
 filter by function \
-    let tags = task.file.frontMatter.tags; \
+    let tags = task.file.frontmatter.tags; \
     return tags?.includes('examples') || false;
+
+# you can add any number of extra Tasks instructions, for example:
+group by path
 ```
