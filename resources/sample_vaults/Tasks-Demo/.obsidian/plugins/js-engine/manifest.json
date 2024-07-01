@@ -1,0 +1,10 @@
+{
+	"id": "js-engine",
+	"name": "JS Engine",
+	"version": "0.1.6",
+	"minAppVersion": "1.4.0",
+	"description": "Run JavaScript from within your notes.",
+	"author": "Moritz Jung",
+	"authorUrl": "https://mprojectscode.github.io/",
+	"isDesktopOnly": false
+}
