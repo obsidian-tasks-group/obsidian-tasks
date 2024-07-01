@@ -1,5 +1,23 @@
 ---
-TAG: value1, value2
+tags:
+  - value1
+  - value2
+aliases:
+  - test 1
+  - test 2
+custom_list:
+  - value 1
+  - value 2
+custom_list_2:
+  - x
+custom_number_prop: 42
+unknown_property:
+  - hello
+  - world
+unknown_property_2:
+  - 1
+  - 2
+unknown_number_property: 13
 ---
 
 # Tags in Frontmatter
@@ -20,7 +38,33 @@ let content = await app.vault.read(tfile);
 let frontmatter = cache.frontmatter;
 
 let markdownBuilder = engine.markdown.createBuilder();
+markdownBuilder.createParagraph('raw frontmatter:');
 markdownBuilder.createCodeBlock('json', JSON.stringify(frontmatter, null, 4));
+
+markdownBuilder.createParagraph('`parseFrontMatterAliases()`:');
+markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterAliases(frontmatter), null, 4));
+
+markdownBuilder.createParagraph('`parseFrontMatterTags()`:');
+markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterTags(frontmatter), null, 4));
+
+markdownBuilder.createParagraph('`parseFrontMatterEntry(custom_list)`:');
+markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'custom_list'), null, 4));
+
+markdownBuilder.createParagraph('`parseFrontMatterEntry(custom_list_2)`:');
+markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'custom_list_2'), null, 4));
+
+markdownBuilder.createParagraph('`parseFrontMatterEntry(custom_number_prop)`:');
+markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'custom_number_prop'), null, 4));
+
+markdownBuilder.createParagraph('`parseFrontMatterEntry(unknown_property)`:');
+markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'unknown_property'), null, 4));
+
+markdownBuilder.createParagraph('`parseFrontMatterEntry(unknown_property_2)`:');
+markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'unknown_property_2'), null, 4));
+
+markdownBuilder.createParagraph('`parseFrontMatterEntry(unknown_number_property)`:');
+markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'unknown_number_property'), null, 4));
+
 return markdownBuilder;
 ```
 
