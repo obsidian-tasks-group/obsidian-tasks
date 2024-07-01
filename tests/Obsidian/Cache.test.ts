@@ -33,6 +33,7 @@ import { callouts_nested_issue_2890_unlabelled } from './__test_data__/callouts_
 import { no_yaml } from './__test_data__/no_yaml';
 import { empty_yaml } from './__test_data__/empty_yaml';
 import { yaml_tags_has_multiple_values } from './__test_data__/yaml_tags_has_multiple_values';
+import { yaml_custom_number_property } from './__test_data__/yaml_custom_number_property';
 
 window.moment = moment;
 
@@ -617,6 +618,7 @@ describe('cache - reading frontmatter', () => {
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
+        expect(tasksFile.frontMatter).toBeUndefined();
     });
 
     it('should read file with empty yaml metadata', () => {
@@ -625,6 +627,7 @@ describe('cache - reading frontmatter', () => {
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
+        expect(tasksFile.frontMatter).toBeUndefined();
     });
 
     it('should read file with multiple tags in yaml metadata', () => {
@@ -633,5 +636,22 @@ describe('cache - reading frontmatter', () => {
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
+        expect(tasksFile.frontMatter?.tags).toEqual(['multiple1', 'multiple2']);
+    });
+
+    // See property types: https://help.obsidian.md/Editing+and+formatting/Properties#Property+types
+    // Obsidian supports the following property types:
+    //  Text
+    //  List
+    //  Number
+    //  Checkbox
+    //  Date
+    //  Date & time
+    it('should read file with custom number property', () => {
+        const data = yaml_custom_number_property;
+        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+
+        expect(tasksFile.frontMatter?.custom_number_prop).toEqual(42);
     });
 });

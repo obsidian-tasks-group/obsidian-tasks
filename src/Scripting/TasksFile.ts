@@ -1,4 +1,4 @@
-import type { CachedMetadata } from 'obsidian';
+import type { CachedMetadata, FrontMatterCache } from 'obsidian';
 
 /**
  * A simple class to provide access to file information via 'task.file' in scripting code.
@@ -28,6 +28,19 @@ export class TasksFile {
      */
     public get cachedMetadata(): CachedMetadata {
         return this._cachedMetadata;
+    }
+
+    /**
+     * Return Obsidian's [FrontMatterCache](https://docs.obsidian.md/Reference/TypeScript+API/FrontMatterCache)
+     * for this file, if available.
+     *
+     * @note This is currently only populated for Task objects when read in the Obsidian plugin.
+     *       It's not populated for queries in the plugin, nor in most unit tests.
+     *       And it is undefined if {@link cachedMetadata} has not been populated
+     *       or if the markdown file has no frontmatter or empty frontmatter.
+     */
+    public get frontMatter(): FrontMatterCache | undefined {
+        return this._cachedMetadata.frontmatter;
     }
 
     /**
