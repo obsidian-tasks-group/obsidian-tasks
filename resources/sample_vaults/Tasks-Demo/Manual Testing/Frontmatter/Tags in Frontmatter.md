@@ -18,6 +18,7 @@ unknown_property_2:
   - 1
   - 2
 unknown_number_property: 13
+unknown_empty_property:
 ---
 
 # Tags in Frontmatter
@@ -64,6 +65,9 @@ markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatter
 
 markdownBuilder.createParagraph('`parseFrontMatterEntry(unknown_number_property)`:');
 markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'unknown_number_property'), null, 4));
+
+markdownBuilder.createParagraph('`parseFrontMatterEntry(unknown_empty_property)`:');
+markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, 'unknown_empty_property'), null, 4));
 
 return markdownBuilder;
 ```
