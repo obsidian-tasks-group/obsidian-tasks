@@ -25,6 +25,7 @@ export class TasksFile {
      *
      * @note This is currently only populated for Task objects when read in the Obsidian plugin.
      *       It's not populated for queries in the plugin, nor in most unit tests.
+     *       If not available, it returns an empty object, {}.
      */
     public get cachedMetadata(): CachedMetadata {
         return this._cachedMetadata;
@@ -36,11 +37,11 @@ export class TasksFile {
      *
      * @note This is currently only populated for Task objects when read in the Obsidian plugin.
      *       It's not populated for queries in the plugin, nor in most unit tests.
-     *       And it is undefined if {@link cachedMetadata} has not been populated
+     *       And it is an empty object, {}, if the {@link cachedMetadata} has not been populated
      *       or if the markdown file has no frontmatter or empty frontmatter.
      */
-    public get frontMatter(): FrontMatterCache | undefined {
-        return this._cachedMetadata.frontmatter;
+    public get frontMatter(): FrontMatterCache {
+        return this._cachedMetadata.frontmatter ?? ({} as any as FrontMatterCache);
     }
 
     /**

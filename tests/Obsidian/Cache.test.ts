@@ -612,13 +612,20 @@ describe('cache - reading tasks', () => {
 });
 
 describe('cache - reading frontmatter', () => {
+    it('should read file if not given CachedMetadata', () => {
+        const tasksFile = new TasksFile('some path.md', {});
+
+        expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
+        expect(tasksFile.frontMatter).toEqual({});
+    });
+
     it('should read file with no yaml metadata', () => {
         const data = no_yaml;
         const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontMatter).toBeUndefined();
+        expect(tasksFile.frontMatter).toEqual({});
     });
 
     it('should read file with empty yaml metadata', () => {
@@ -627,7 +634,7 @@ describe('cache - reading frontmatter', () => {
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontMatter).toBeUndefined();
+        expect(tasksFile.frontMatter).toEqual({});
     });
 
     it('should read file with multiple tags in yaml metadata', () => {
@@ -636,7 +643,7 @@ describe('cache - reading frontmatter', () => {
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
-        expect(tasksFile.frontMatter?.tags).toEqual(['multiple1', 'multiple2']);
+        expect(tasksFile.frontMatter.tags).toEqual(['multiple1', 'multiple2']);
     });
 
     // See property types: https://help.obsidian.md/Editing+and+formatting/Properties#Property+types
