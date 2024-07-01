@@ -117,5 +117,5 @@ export const inheritance_1parent1child1sibling_emptystring = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.4',
+    obsidianApiVersion: '1.6.5',
 };

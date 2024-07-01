@@ -128,5 +128,5 @@ export const yaml_tags_with_one_value_on_new_line = {
             },
         },
     },
-    obsidianApiVersion: '1.6.4',
+    obsidianApiVersion: '1.6.5',
 };
