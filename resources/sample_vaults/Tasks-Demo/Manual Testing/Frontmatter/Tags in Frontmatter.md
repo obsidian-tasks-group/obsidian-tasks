@@ -1,8 +1,8 @@
 ---
-tags:
+TAG:
   - value1
   - value2
-aliases:
+ALIAS:
   - test 1
   - test 2
 custom_list:
@@ -19,6 +19,9 @@ unknown_property_2:
   - 2
 unknown_number_property: 13
 unknown_empty_property:
+unknown_list:
+  -
+  -
 ---
 
 # Tags in Frontmatter
@@ -42,25 +45,26 @@ let markdownBuilder = engine.markdown.createBuilder();
 markdownBuilder.createParagraph('raw frontmatter:');
 markdownBuilder.createCodeBlock('json', JSON.stringify(frontmatter, null, 4));
 
-markdownBuilder.createParagraph('`parseFrontMatterAliases()`:');
+markdownBuilder.createParagraph('`parseFrontMatterAliases(frontmatter)`:');
 markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterAliases(frontmatter), null, 4));
 
-markdownBuilder.createParagraph('`parseFrontMatterTags()`:');
+markdownBuilder.createParagraph('`parseFrontMatterTags(frontmatter)`:');
 markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterTags(frontmatter), null, 4));
 
-function showParseFrontMatterEntry(entryName) {  
-    markdownBuilder.createParagraph('`parseFrontMatterEntry(' + entryName + ')`:');  
-    markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, entryName), null, 4));  
-}  
-  
+function showParseFrontMatterEntry(entryName) {
+    markdownBuilder.createParagraph('`parseFrontMatterEntry(frontmatter, "' + entryName + '")`:');
+    markdownBuilder.createCodeBlock('json', JSON.stringify(obsidian.parseFrontMatterEntry(frontmatter, entryName), null, 4));
+}
+
 showParseFrontMatterEntry('custom_list');
-showParseFrontMatterEntry('custom_list');  
-showParseFrontMatterEntry('custom_list_2');  
-showParseFrontMatterEntry('custom_number_prop');  
-showParseFrontMatterEntry('unknown_property');  
-showParseFrontMatterEntry('unknown_property_2');  
-showParseFrontMatterEntry('unknown_number_property');  
+showParseFrontMatterEntry('custom_list');
+showParseFrontMatterEntry('custom_list_2');
+showParseFrontMatterEntry('custom_number_prop');
+showParseFrontMatterEntry('unknown_property');
+showParseFrontMatterEntry('unknown_property_2');
+showParseFrontMatterEntry('unknown_number_property');
 showParseFrontMatterEntry('unknown_empty_property');
+showParseFrontMatterEntry('unknown_list');
 
 return markdownBuilder;
 ```
