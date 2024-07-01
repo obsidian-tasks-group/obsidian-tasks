@@ -30,19 +30,35 @@ return markdownBuilder;
 
 ### TAG: Two values - single line, unquoted
 
+--- start-multi-column: ID_ipb8
+
+```column-settings
+Number of Columns: 2
+Largest Column: standard
+```
+
 ```yaml
 ---
 TAG: value1, value2
 ---
 ```
 
-=>
+--- column-break ---
 
 ```json
 tag: Two values - single line, unquoted
 ```
 
+--- end-multi-column
+
 ### tag: Two values - single line, unquoted
+
+--- start-multi-column: ID_0r8n
+
+```column-settings
+Number of Columns: 2
+Largest Column: standard
+```
 
 ```yaml
 ---
@@ -50,7 +66,7 @@ tag: value1, value2
 ---
 ```
 
-=>
+--- column-break ---
 
 ```json
 {
@@ -58,9 +74,18 @@ tag: value1, value2
 }
 ```
 
+--- end-multi-column
+
 ## tags
 
 ### tags: Two values - single line, unquoted
+
+--- start-multi-column: ID_u689
+
+```column-settings
+Number of Columns: 2
+Largest Column: standard
+```
 
 ```yaml
 ---
@@ -68,7 +93,7 @@ tags: value1, value2
 ---
 ```
 
-=>
+--- column-break ---
 
 ```json
 {
@@ -76,7 +101,16 @@ tags: value1, value2
 }
 ```
 
+--- end-multi-column
+
 ### tags: Two values - separate lines
+
+--- start-multi-column: ID_lenc
+
+```column-settings
+Number of Columns: 2
+Largest Column: standard
+```
 
 ```yaml
 ---
@@ -86,7 +120,7 @@ tags:
 ---
 ```
 
-=>
+--- column-break ---
 
 ```json
 {
@@ -97,7 +131,16 @@ tags:
 }
 ```
 
+--- end-multi-column
+
 ### tags: Single value - sample line
+
+--- start-multi-column: ID_8de1
+
+```column-settings
+Number of Columns: 2
+Largest Column: standard
+```
 
 ```yaml
 ---
@@ -105,7 +148,7 @@ tags: some-value
 ---
 ```
 
-=>
+--- column-break ---
 
 ```json
 {
@@ -113,7 +156,16 @@ tags: some-value
 }
 ```
 
+--- end-multi-column
+
 ### tags: Single value - separate line
+
+--- start-multi-column: ID_w0ie
+
+```column-settings
+Number of Columns: 2
+Largest Column: standard
+```
 
 ```yaml
 ---
@@ -122,7 +174,7 @@ tags:
 ---
 ```
 
-=>
+--- column-break ---
 
 ```json
 {
@@ -132,7 +184,16 @@ tags:
 }
 ```
 
+--- end-multi-column
+
 ### tags: Empty tags line
+
+--- start-multi-column: ID_y99h
+
+```column-settings
+Number of Columns: 2
+Largest Column: standard
+```
 
 ```yaml
 ---
@@ -140,7 +201,7 @@ tags:
 ---
 ```
 
-=>
+--- column-break ---
 
 ```json
 {
@@ -148,42 +209,48 @@ tags:
 }
 ```
 
+--- end-multi-column
+
 ## no frontmatter
 
 ### Empty YAML
 
+--- start-multi-column: ID_hb38
+
+```column-settings
+Number of Columns: 2
+Largest Column: standard
+```
+
 ```yaml
 ---
 ---
 ```
 
-=>
+--- column-break ---
 
 ```json
 undefined
 ```
+
+--- end-multi-column
 
 ### No YAML
 
+--- start-multi-column: ID_vgpw
+
+```column-settings
+Number of Columns: 2
+Largest Column: standard
+```
+
 ```yaml
 ```
 
-=>
+--- column-break ---
 
 ```json
 undefined
 ```
 
----
-
-==Template:==
-
-### Template
-
-```yaml
-```
-
-=>
-
-```json
-```
+--- end-multi-column
