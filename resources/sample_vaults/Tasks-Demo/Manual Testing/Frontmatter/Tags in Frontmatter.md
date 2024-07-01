@@ -22,6 +22,13 @@ unknown_empty_property:
 unknown_list:
   -
   -
+parent:
+  - child1:
+    - grandchild1: 1
+    - grandchild2: 2
+  - child2:
+    - grandchild3: 3
+    - grandchild4: 4
 ---
 
 # Tags in Frontmatter
@@ -74,6 +81,7 @@ showParseFrontMatterEntry('unknown_property_2');
 showParseFrontMatterEntry('unknown_number_property');
 showParseFrontMatterEntry('unknown_empty_property');
 showParseFrontMatterEntry('unknown_list');
+showParseFrontMatterEntry('parent');
 
 return markdownBuilder;
 ```
