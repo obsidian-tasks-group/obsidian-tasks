@@ -276,4 +276,20 @@ export class SampleTasks {
             return new TaskBuilder().blockLink(blockLink).build();
         });
     }
+
+    public static withSampleOnCompletionValues() {
+        const everyDayWhenDone = Recurrence.fromText({
+            recurrenceRuleText: 'every day when done',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+        });
+        const task1 = new TaskBuilder().description('#task Remove this task when done').onCompletion('delete').build();
+        const task2 = new TaskBuilder()
+            .description('#task Remove completed instance of this recurring task when done')
+            .onCompletion('delete')
+            .recurrence(everyDayWhenDone)
+            .build();
+        return [task1, task2];
+    }
 }

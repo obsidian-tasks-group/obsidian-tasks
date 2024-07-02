@@ -2,6 +2,7 @@
 import type { Moment } from 'moment';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
+import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Task } from '../../src/Task/Task';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
@@ -45,6 +46,7 @@ export class TaskBuilder {
     private _cancelledDate: Moment | null = null;
 
     private _recurrence: Recurrence | null = null;
+    private _onCompletion: OnCompletion = OnCompletion.Ignore;
     private _blockLink: string = '';
 
     private _scheduledDateIsInferred: boolean = false;
@@ -89,6 +91,7 @@ export class TaskBuilder {
             doneDate: this._doneDate,
             cancelledDate: this._cancelledDate,
             recurrence: this._recurrence,
+            onCompletion: this._onCompletion,
             dependsOn: this._dependsOn,
             id: this._id,
             blockLink: this._blockLink,
@@ -119,6 +122,7 @@ export class TaskBuilder {
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
             .cancelledDate('2023-07-06')
+            .onCompletion('delete')
             .dependsOn(['123456', 'abc123'])
             .id('abcdef')
             .blockLink(' ^dcf64c')
@@ -264,6 +268,15 @@ export class TaskBuilder {
      */
     public recurrence(recurrence: Recurrence | null): TaskBuilder {
         this._recurrence = recurrence;
+        return this;
+    }
+
+    public onCompletion(onCompletion: string): TaskBuilder {
+        if (onCompletion === 'delete') {
+            this._onCompletion = OnCompletion.Delete;
+        } else {
+            this._onCompletion = OnCompletion.Ignore;
+        }
         return this;
     }
 

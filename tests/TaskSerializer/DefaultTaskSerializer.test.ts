@@ -11,6 +11,7 @@ import {
     allTaskPluginEmojis,
 } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
 
 jest.mock('obsidian');
@@ -51,6 +52,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         startDateSymbol,
         createdDateSymbol,
         recurrenceSymbol,
+        onCompletionSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
         doneDateSymbol,
@@ -127,6 +129,14 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const taskDetails = deserialize(`${recurrenceSymbol} every day`);
             expect(taskDetails).toMatchTaskDetails({
                 recurrence: new RecurrenceBuilder().rule('every day').build(),
+            });
+        });
+
+        describe('should parse onCompletion', () => {
+            it('should parse delete action', () => {
+                const onCompletion = `${onCompletionSymbol} delete`;
+                const taskDetails = deserialize(onCompletion);
+                expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Delete });
             });
         });
 
@@ -245,6 +255,12 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 .build();
             const serialized = serialize(task);
             expect(serialized).toEqual(` ${recurrenceSymbol} every day`);
+        });
+
+        it('should serialize onCompletion', () => {
+            const task = new TaskBuilder().onCompletion('delete').description('').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(` ${onCompletionSymbol} delete`);
         });
 
         it('should serialize depends on', () => {

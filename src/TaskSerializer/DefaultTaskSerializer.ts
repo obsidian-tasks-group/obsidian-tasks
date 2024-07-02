@@ -1,8 +1,9 @@
 import type { Moment } from 'moment';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
+import { OnCompletion } from '../Task/OnCompletion';
+import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
-import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import type { TaskDetails, TaskSerializer } from '.';
 
@@ -29,6 +30,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly doneDateSymbol: string;
     readonly cancelledDateSymbol: string;
     readonly recurrenceSymbol: string;
+    readonly onCompletionSymbol: string;
     readonly idSymbol: string;
     readonly dependsOnSymbol: string;
     readonly TaskFormatRegularExpressions: {
@@ -40,6 +42,7 @@ export interface DefaultTaskSerializerSymbols {
         doneDateRegex: RegExp;
         cancelledDateRegex: RegExp;
         recurrenceRegex: RegExp;
+        onCompletionRegex: RegExp;
         idRegex: RegExp;
         dependsOnRegex: RegExp;
     };
@@ -72,6 +75,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
     recurrenceSymbol: '🔁',
+    onCompletionSymbol: '🏁',
     dependsOnSymbol: '⛔',
     idSymbol: '🆔',
     TaskFormatRegularExpressions: {
@@ -86,6 +90,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
+        onCompletionRegex: /🏁 ?([a-zA-Z]+)$/iu,
         dependsOnRegex: new RegExp('⛔\uFE0F? *(' + taskIdSequenceRegex.source + ')$', 'iu'),
         idRegex: new RegExp('🆔 *(' + taskIdRegex.source + ')$', 'iu'),
     },
@@ -155,6 +160,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDateSymbol,
             cancelledDateSymbol,
             recurrenceSymbol,
+            onCompletionSymbol,
             dueDateSymbol,
             dependsOnSymbol,
             idSymbol,
@@ -196,6 +202,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
             case TaskLayoutComponent.RecurrenceRule:
                 if (!task.recurrence) return '';
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
+            case TaskLayoutComponent.OnCompletion:
+                if (!task.onCompletion) return '';
+                return symbolAndStringValue(shortMode, onCompletionSymbol, task.onCompletion);
             case TaskLayoutComponent.DependsOn: {
                 if (task.dependsOn.length === 0) return '';
                 return symbolAndStringValue(shortMode, dependsOnSymbol, task.dependsOn.join(','));
@@ -258,6 +267,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
+        let onCompletion: OnCompletion = OnCompletion.Ignore;
         let id: string = '';
         let dependsOn: string[] | [] = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
@@ -330,6 +340,18 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 matched = true;
             }
 
+            const onCompletionMatch = line.match(TaskFormatRegularExpressions.onCompletionRegex);
+            if (onCompletionMatch != null) {
+                line = line.replace(TaskFormatRegularExpressions.onCompletionRegex, '').trim();
+                const onCompletionString = onCompletionMatch[1].trim().toLowerCase();
+                if (onCompletionString === 'delete') {
+                    onCompletion = OnCompletion.Delete;
+                } else {
+                    onCompletion = OnCompletion.Ignore;
+                }
+                matched = true;
+            }
+
             // Match tags from the end to allow users to mix the various task components with
             // tags. These tags will be added back to the description below
             const tagsMatch = line.match(TaskRegularExpressions.hashTagsFromEnd);
@@ -389,6 +411,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDate,
             cancelledDate,
             recurrence,
+            onCompletion,
             id,
             dependsOn,
             tags: Task.extractHashtags(line),
