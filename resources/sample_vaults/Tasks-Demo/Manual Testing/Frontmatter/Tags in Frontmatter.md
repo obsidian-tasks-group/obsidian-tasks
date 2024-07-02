@@ -33,6 +33,9 @@ parent:
 
 # Tags in Frontmatter
 
+- #tag-in-body
+- #another-tag
+
 ## See the frontmatter in YAML
 
 The code-block below is a [js-engine](https://www.moritzjung.dev/obsidian-js-engine-plugin-docs/) script that displays the Obsidian's frontmatter - in JSON - currently in this file.
@@ -47,6 +50,10 @@ const path = 'Manual Testing/Frontmatter/Tags in Frontmatter.md';
 let tfile = app.vault.getAbstractFileByPath(path);
 let cache = app.metadataCache.getFileCache(tfile);
 let content = await app.vault.read(tfile);
+
+// -------------------------------------------------------------------------
+markdownBuilder.createHeading(3, '`CachedMetadata`');
+jsonCodeBlock(cache)
 
 // -------------------------------------------------------------------------
 markdownBuilder.createHeading(3, 'get frontmatter text via `getFrontMatterInfo()`');
@@ -81,6 +88,12 @@ jsonCodeBlock(manualMetadataContentStripped);
 let parseYamlSays2 = obsidian.parseYaml(manualMetadataContentStripped);
 markdownBuilder.createParagraph('`parseYaml(manualMetadataContentStripped)`:');
 jsonCodeBlock(parseYamlSays2)
+
+// -------------------------------------------------------------------------
+markdownBuilder.createHeading(3, 'get all tags');
+let allTags = obsidian.getAllTags(cache);
+markdownBuilder.createParagraph('`getAllTags(cache)`:');
+jsonCodeBlock(allTags)
 
 // -------------------------------------------------------------------------
 markdownBuilder.createHeading(3, 'get frontmatter manually');
