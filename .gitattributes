@@ -13,5 +13,6 @@
 *.ts text eol=lf
 *.txt text eol=lf
 *.yml text eol=lf
+*.svelte text eol=lf
 LICENSE text eol=lf
 
