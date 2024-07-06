@@ -9,7 +9,7 @@
 folder includes Test Data
 group by function \
     const prop = task.file.frontmatter.custom_number_prop; \
-    return prop ? prop : 'not set'
+    return prop ?? 'not set'
 ```
 
 ## Accessing tags
@@ -18,5 +18,5 @@ group by function \
 folder includes Test Data
 group by function \
     const prop = task.file.frontmatter.tags; \
-    return prop ? prop : ''
+    return prop ?? ''
 ```
