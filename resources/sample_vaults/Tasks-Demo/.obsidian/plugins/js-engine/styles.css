@@ -1,0 +1,118 @@
+/*
+
+This CSS file will be included with your plugin, and
+available in the app when your plugin is enabled.
+
+If your plugin does not need CSS, delete this file.
+
+*/
+
+.js-engine-message-counter {
+	margin-left: var(--size-4-1);
+}
+
+.js-engine-message-indicator-mod-info {
+}
+
+.js-engine-message-indicator-mod-tip {
+	color: var(--color-cyan);
+}
+
+.js-engine-message-indicator-mod-success {
+	color: var(--color-green);
+}
+
+.js-engine-message-indicator-mod-warning {
+	color: var(--color-yellow);
+}
+
+.js-engine-message-indicator-mod-error {
+	color: var(--color-red);
+}
+
+.js-engine-message {
+}
+
+.js-engine-message-header {
+}
+
+.js-engine-message-title {
+	flex: 1;
+}
+
+.js-engine-message-icon {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+}
+
+.js-engine-message-delete-icon svg.svg-icon {
+	color: var(--text-muted);
+}
+
+.js-engine-message-delete-icon:hover svg.svg-icon {
+	color: var(--text-normal);
+}
+
+.js-engine-message-detail {
+	margin-top: var(--size-4-8);
+}
+
+.js-engine-message-detail-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: var(--size-4-2);
+	color: var(--text-muted);
+}
+
+.js-engine-message-detail-row:hover {
+	color: var(--text-normal);
+}
+
+.js-engine-message-detail-content {
+	color: var(--text-muted);
+}
+
+.js-engine-message-content pre,
+.js-engine-execution-stats-modal pre {
+	padding: var(--size-4-2) var(--size-4-4);
+	border-radius: var(--radius-s);
+	white-space: pre;
+	overflow-x: auto;
+}
+
+.js-engine-execution-render-child {
+	position: relative;
+}
+
+.js-engine-execution-stats-button {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: var(--text-muted);
+	margin: var(--size-4-2);
+	padding: var(--size-4-2);
+	border-radius: var(--radius-s);
+	width: calc(18px + var(--size-4-2) * 2);
+	height: calc(18px + var(--size-4-2) * 2);
+	z-index: 100;
+}
+
+.js-engine-execution-stats-button:hover {
+	background: var(--background-modifier-hover);
+}
+
+.js-engine-execution-render-child:hover .js-engine-execution-stats-button {
+	display: revert;
+}
+
+.js-engine-execution-stats-modal {
+}
+
+.modal:has(> .js-engine-execution-stats-modal) {
+	width: unset;
+	min-width: 80%;
+	max-width: 100%;
+}
