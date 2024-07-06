@@ -1,0 +1,7 @@
+/* Make JS Engine code blocks stand out visually */
+:not(.callout-content) > .block-language-js-engine {
+    padding: 5px 15px;
+    border: 2px solid var(--color-red);
+    border-radius: 5px;
+    margin: 1em 0;
+}

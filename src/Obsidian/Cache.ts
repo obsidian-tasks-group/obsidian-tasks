@@ -27,7 +27,7 @@ export function getTasksFromFileContent2(
     fileCache: CachedMetadata,
     errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
 ) {
-    const tasksFile = new TasksFile(filePath);
+    const tasksFile = new TasksFile(filePath, fileCache);
     const tasks: Task[] = [];
     const fileLines = fileContent.split('\n');
     const linesInFile = fileLines.length;
@@ -278,7 +278,9 @@ export class Cache {
             this.logger.debug(`Cache.subscribeToVault.renamedEventReference() ${file.path}`);
 
             this.tasksMutex.runExclusive(() => {
-                const tasksFile = new TasksFile(file.path);
+                const fileCache = this.metadataCache.getFileCache(file);
+                // TODO What if the file has been renamed but the cache not yet updated?
+                const tasksFile = new TasksFile(file.path, fileCache ?? undefined);
                 const fallbackDate = new Lazy(() => DateFallback.fromPath(file.path));
 
                 this.tasks = this.tasks.map((task: Task): Task => {

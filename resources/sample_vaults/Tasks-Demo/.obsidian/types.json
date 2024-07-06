@@ -1,0 +1,10 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "cssclasses": "multitext",
+    "tags": "tags",
+    "custom_number_prop": "number",
+    "custom_list": "multitext",
+    "custom_list_2": "multitext"
+  }
+}

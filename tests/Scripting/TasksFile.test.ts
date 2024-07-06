@@ -1,4 +1,9 @@
+import type { CachedMetadata } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { no_yaml } from '../Obsidian/__test_data__/no_yaml';
+import { empty_yaml } from '../Obsidian/__test_data__/empty_yaml';
+import { yaml_tags_has_multiple_values } from '../Obsidian/__test_data__/yaml_tags_has_multiple_values';
+import { yaml_custom_number_property } from '../Obsidian/__test_data__/yaml_custom_number_property';
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
@@ -44,5 +49,57 @@ describe('TasksFile', () => {
 
         // Check it escapes the '.' in the file extension
         expect(new TasksFile('1.md.only-replace.2,md').filenameWithoutExtension).toEqual('1.md.only-replace.2,md');
+    });
+});
+
+describe('TasksFile - reading frontmatter', () => {
+    it('should read file if not given CachedMetadata', () => {
+        const tasksFile = new TasksFile('some path.md', {});
+
+        expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
+        expect(tasksFile.frontmatter).toEqual({});
+    });
+
+    it('should read file with no yaml metadata', () => {
+        const data = no_yaml;
+        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+
+        expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
+        expect(tasksFile.frontmatter).toEqual({});
+    });
+
+    it('should read file with empty yaml metadata', () => {
+        const data = empty_yaml;
+        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+
+        expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
+        expect(tasksFile.frontmatter).toEqual({});
+    });
+
+    it('should read file with multiple tags in yaml metadata', () => {
+        const data = yaml_tags_has_multiple_values;
+        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+
+        expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
+        expect(tasksFile.frontmatter.tags).toEqual(['multiple1', 'multiple2']);
+    });
+
+    // See property types: https://help.obsidian.md/Editing+and+formatting/Properties#Property+types
+    // Obsidian supports the following property types:
+    //  Text
+    //  List
+    //  Number
+    //  Checkbox
+    //  Date
+    //  Date & time
+    it('should read file with custom number property', () => {
+        const data = yaml_custom_number_property;
+        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+
+        expect(tasksFile.frontmatter?.custom_number_prop).toEqual(42);
     });
 });

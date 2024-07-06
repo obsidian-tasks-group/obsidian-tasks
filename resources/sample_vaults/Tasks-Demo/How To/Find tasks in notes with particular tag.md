@@ -2,6 +2,8 @@
 
 Suppose we wanted to find all tasks in notes that had a particular tag in the frontmatter.
 
+## Dataview approach
+
 This is not currently possible in Tasks directly, but we could get dataview to do the search for us and create a Tasks query.
 
 Note that the following finds all tasks where the tag is present anywhere in the file, not just in the frontmatter.
@@ -26,3 +28,17 @@ if ( matching_files.length > 0 ) {
 ```
 
 Credit: jonlemon in [this Obsidian Forum thread](https://forum.obsidian.md/t/how-can-i-list-tasks-from-all-notes-with-a-certain-tag-using-the-tasks-plugin/44634).
+
+## Tasks experimental approach
+
+> [!warning]
+> Tasks does not currently sanitise tags from frontmatter, such as adding a  `#` prefix.
+
+```tasks
+filter by function \
+    let tags = task.file.frontmatter.tags; \
+    return tags?.includes('examples') || false;
+
+# you can add any number of extra Tasks instructions, for example:
+group by path
+```
