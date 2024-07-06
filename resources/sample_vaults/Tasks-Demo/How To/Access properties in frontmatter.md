@@ -7,16 +7,12 @@
 
 ```tasks
 folder includes Test Data
-group by function \
-    const prop = task.file.frontmatter.custom_number_prop; \
-    return prop ?? 'not set'
+group by function task.file.frontmatter.custom_number_prop ?? 'not set'
 ```
 
 ## Accessing tags
 
 ```tasks
 folder includes Test Data
-group by function \
-    const prop = task.file.frontmatter.tags; \
-    return prop ?? ''
+group by function task.file.frontmatter.tags ?? ''
 ```
