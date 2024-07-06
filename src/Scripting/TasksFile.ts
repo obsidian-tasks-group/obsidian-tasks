@@ -41,7 +41,7 @@ export class TasksFile {
      *       or if the markdown file has no frontmatter or empty frontmatter.
      */
     public get frontmatter(): FrontMatterCache {
-        return this._cachedMetadata.frontmatter ?? ({} as any as FrontMatterCache);
+        return this._cachedMetadata.frontmatter ?? ({} as FrontMatterCache);
     }
 
     /**
