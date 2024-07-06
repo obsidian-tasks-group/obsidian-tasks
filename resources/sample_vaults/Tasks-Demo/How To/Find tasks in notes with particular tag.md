@@ -36,8 +36,7 @@ Credit: jonlemon in [this Obsidian Forum thread](https://forum.obsidian.md/t/how
 
 ```tasks
 filter by function \
-    let tags = task.file.frontmatter.tags; \
-    return tags?.includes('examples') || false;
+    task.file.frontmatter.tags?.includes('examples') ?? false
 
 # you can add any number of extra Tasks instructions, for example:
 group by path
