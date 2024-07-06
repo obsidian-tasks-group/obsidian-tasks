@@ -121,22 +121,5 @@ function jsonCodeBlock(value) {
     markdownBuilder.createCodeBlock('json', JSON.stringify(value, null, 4));
 }
 
-function showParseFrontMatterEntry(entryName) {
-    // v0.9.16 parseFrontMatterEntry()
-    markdownBuilder.createParagraph('`parseFrontMatterEntry(frontmatter, "' + entryName + '")`:');
-    jsonCodeBlock(obsidian.parseFrontMatterEntry(frontmatter, entryName));
-}
-
-showParseFrontMatterEntry('custom_list');
-showParseFrontMatterEntry('custom_list');
-showParseFrontMatterEntry('custom_list_2');
-showParseFrontMatterEntry('custom_number_prop');
-showParseFrontMatterEntry('unknown_property');
-showParseFrontMatterEntry('unknown_property_2');
-showParseFrontMatterEntry('unknown_number_property');
-showParseFrontMatterEntry('unknown_empty_property');
-showParseFrontMatterEntry('unknown_list');
-showParseFrontMatterEntry('parent');
-
 return markdownBuilder;
 ```
