@@ -48,3 +48,8 @@ The following instructions use the priority signifiers in tasks.
   - [[Grouping#Priority|Documentation]]
 - `hide priority`
   - [[Layout|Documentation]]
+
+- Accessible as [[Task Properties#Values for Other Task Properties|task properties]]:
+  - `task.priorityNumber`
+  - `task.priorityName`
+  - `task.priorityNameGroupText`
