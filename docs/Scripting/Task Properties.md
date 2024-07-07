@@ -152,6 +152,13 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. `task.description` has spaces at the start and end stripped off.
 1. `task.description` includes any tags.
+1. `task.priorityName` and `task.priorityNumber` values are:
+    - 'Highest': 0
+    - 'High': 1
+    - 'Medium': 2
+    - 'Normal': 3
+    - 'Low': 4
+    - 'Lowest': 5
 1. `task.priorityNameGroupText` (added in Tasks 4.9.0) is a convenient way to sort priority names in to a natural order in custom grouping functions.
 1. `task.isRecurring` is:
     - `true` if the Task has a **valid** recurrence rule,
