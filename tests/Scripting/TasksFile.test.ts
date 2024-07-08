@@ -58,6 +58,7 @@ describe('TasksFile - reading frontmatter', () => {
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
         expect(tasksFile.frontmatter).toEqual({});
+        expect(tasksFile.tags).toEqual([]);
     });
 
     it('should read file with no yaml metadata', () => {
