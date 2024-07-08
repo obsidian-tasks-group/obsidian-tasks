@@ -20,6 +20,13 @@ export class TasksFile {
     }
 
     /**
+     * Return all the tags in the file, both from frontmatter and the body of the file.
+     */
+    get tags(): string[] {
+        return [];
+    }
+
+    /**
      * Return Obsidian's [CachedMetadata](https://docs.obsidian.md/Reference/TypeScript+API/CachedMetadata)
      * for this file, if available.
      *
