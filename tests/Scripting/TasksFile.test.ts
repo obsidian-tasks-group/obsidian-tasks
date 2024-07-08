@@ -4,6 +4,7 @@ import { no_yaml } from '../Obsidian/__test_data__/no_yaml';
 import { empty_yaml } from '../Obsidian/__test_data__/empty_yaml';
 import { yaml_tags_has_multiple_values } from '../Obsidian/__test_data__/yaml_tags_has_multiple_values';
 import { yaml_custom_number_property } from '../Obsidian/__test_data__/yaml_custom_number_property';
+import { yaml_tags_with_one_value_on_new_line } from '../Obsidian/__test_data__/yaml_tags_with_one_value_on_new_line';
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
@@ -58,7 +59,6 @@ describe('TasksFile - reading frontmatter', () => {
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
         expect(tasksFile.frontmatter).toEqual({});
-        expect(tasksFile.tags).toEqual([]);
     });
 
     it('should read file with no yaml metadata', () => {
@@ -102,5 +102,17 @@ describe('TasksFile - reading frontmatter', () => {
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
         expect(tasksFile.frontmatter?.custom_number_prop).toEqual(42);
+    });
+});
+
+describe('TasksFile - reading tags', () => {
+    it.failing('should read a tag from the frontmatter', () => {
+        // Fails with 'TypeError: (0 , obsidian_1.getAllTags) is not a function'
+        // It looks like Obsidian's getAllTags() cannot be called outside of a vault.
+        const data = yaml_tags_with_one_value_on_new_line;
+        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+
+        expect(tasksFile.tags).toEqual(['#single-value-new-line']);
     });
 });
