@@ -1,4 +1,4 @@
-import type { CachedMetadata, FrontMatterCache } from 'obsidian';
+import { type CachedMetadata, type FrontMatterCache, getAllTags } from 'obsidian';
 
 /**
  * A simple class to provide access to file information via 'task.file' in scripting code.
@@ -21,9 +21,15 @@ export class TasksFile {
 
     /**
      * Return all the tags in the file, both from frontmatter and the body of the file.
+     *
+     * It adds the `#` prefix to tags in the frontmatter.
+     * For now, it includes any global filter that is a tag, if there are any tasks in the file
+     * that have the global filter. This decision will be reviewed later.
+     *
+     * @todo Review presence of global filter tag in the results.
      */
     get tags(): string[] {
-        return [];
+        return getAllTags(this.cachedMetadata) ?? [];
     }
 
     /**
