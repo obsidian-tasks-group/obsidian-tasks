@@ -1,5 +1,6 @@
 import type { CachedMetadata } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import { no_yaml } from '../Obsidian/__test_data__/no_yaml';
 import { empty_yaml } from '../Obsidian/__test_data__/empty_yaml';
 import { yaml_tags_has_multiple_values } from '../Obsidian/__test_data__/yaml_tags_has_multiple_values';
@@ -107,8 +108,7 @@ describe('TasksFile - reading frontmatter', () => {
 
 describe('TasksFile - reading tags', () => {
     it('should read a tag from the frontmatter', () => {
-        // Fails with 'TypeError: (0 , obsidian_1.getAllTags) is not a function'
-        // It looks like Obsidian's getAllTags() cannot be called outside of a vault.
+        setCurrentCacheFile(yaml_tags_with_one_value_on_new_line);
         const data = yaml_tags_with_one_value_on_new_line;
         const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
