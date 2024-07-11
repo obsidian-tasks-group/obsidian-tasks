@@ -11,9 +11,13 @@ export class TasksFile {
     constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
         this._cachedMetadata = cachedMetadata;
-        this._frontmatter = cachedMetadata.frontmatter
-            ? JSON.parse(JSON.stringify(cachedMetadata.frontmatter))
-            : ({} as FrontMatterCache);
+        this._frontmatter = {} as FrontMatterCache;
+        if (cachedMetadata.frontmatter) {
+            this._frontmatter = cachedMetadata.frontmatter
+                ? JSON.parse(JSON.stringify(cachedMetadata.frontmatter))
+                : ({} as FrontMatterCache);
+            this._frontmatter.tags = parseFrontMatterTags(this._cachedMetadata.frontmatter);
+        }
     }
 
     /**

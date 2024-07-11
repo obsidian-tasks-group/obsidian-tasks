@@ -127,11 +127,15 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
 export let mockGetAllTagsData: any = {};
 
 export function setCurrentCacheFile(mockData: any) {
-    mockGetAllTagsData = mockData.getAllTags;
+    mockGetAllTagsData = mockData;
 }
 
 export function getAllTags(_cachedMetadata: CachedMetadata): string[] {
-    return mockGetAllTagsData;
+    return mockGetAllTagsData.getAllTags;
+}
+
+export function parseFrontMatterTags(_frontmatter: any | null): string[] | null {
+    return mockGetAllTagsData.parseFrontMatterTags;
 }
 
 /**
