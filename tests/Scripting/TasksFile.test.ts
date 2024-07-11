@@ -106,13 +106,13 @@ describe('TasksFile - reading frontmatter', () => {
 });
 
 describe('TasksFile - reading tags', () => {
-    it.failing('should read a tag from the frontmatter', () => {
+    it('should read a tag from the frontmatter', () => {
         // Fails with 'TypeError: (0 , obsidian_1.getAllTags) is not a function'
         // It looks like Obsidian's getAllTags() cannot be called outside of a vault.
         const data = yaml_tags_with_one_value_on_new_line;
         const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
         const tasksFile = new TasksFile(data.filePath, cachedMetadata);
 
-        expect(tasksFile.tags).toEqual(['#single-value-new-line']);
+        expect(tasksFile.tags).toEqual(['#single-value-new-line', '#task']);
     });
 });

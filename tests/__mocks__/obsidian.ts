@@ -1,3 +1,6 @@
+import type { CachedMetadata } from 'obsidian';
+import { yaml_tags_with_one_value_on_new_line } from '../Obsidian/__test_data__/yaml_tags_with_one_value_on_new_line';
+
 export {};
 
 export class MenuItem {
@@ -120,6 +123,10 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
               matches: matches,
           }
         : null;
+}
+
+export function getAllTags(_cachedMetadata: CachedMetadata): string[] {
+    return yaml_tags_with_one_value_on_new_line.getAllTags;
 }
 
 /**
