@@ -7,7 +7,9 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     const fileContents = await app.vault.read(tFile);
     const cachedMetadata = app.metadataCache.getFileCache(tFile);
     const obsidianApiVersion = tp.obsidian.apiVersion;
-    const data = { filePath, fileContents, cachedMetadata, obsidianApiVersion };
+    const getAllTags = tp.obsidian.getAllTags(cachedMetadata);
+    const parseFrontMatterTags = tp.obsidian.parseFrontMatterTags(cachedMetadata.frontmatter);
+    const data = { filePath, fileContents, cachedMetadata, obsidianApiVersion, getAllTags, parseFrontMatterTags };
 
     const filename = filePath.split('/')[1].replace('.md', '');
     if (filename.includes(' ')) {

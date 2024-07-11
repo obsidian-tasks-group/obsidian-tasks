@@ -118,4 +118,6 @@ export const inheritance_1parent2children = {
         ],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task', '#task', '#task'],
+    parseFrontMatterTags: null,
 };

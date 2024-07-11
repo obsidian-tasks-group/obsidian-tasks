@@ -329,4 +329,6 @@ export const list_styles = {
         ],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task', '#task', '#task', '#task', '#task', '#task', '#task', '#task'],
+    parseFrontMatterTags: null,
 };
