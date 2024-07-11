@@ -43,24 +43,6 @@ export class TasksFile {
     }
 
     /**
-     * Return the sanitised tags from the frontmatter.
-     *
-     * It recognises both frontmatter.tags and frontmatter.tag (and various capitalisation combinations too)
-     * It adds the `#` prefix, and removes any null tags.
-     * We would like to make it accessible via task.frontmatter.tags eventually.
-     *
-     * For now, it includes any global filter that is a tag, if there are any tasks in the file
-     * that have the global filter. This decision will be reviewed later.
-     *
-     * @todo Review presence of global filter tag in the results.
-     *       Or should that not be relevant for tags in the frontmatter?
-     */
-    get frontmatterTags(): string[] {
-        // TODO Remove this - merge its JSdocs in to the this.frontmatter JSDocs.
-        return parseFrontMatterTags(this.cachedMetadata.frontmatter) ?? [];
-    }
-
-    /**
      * Return Obsidian's [CachedMetadata](https://docs.obsidian.md/Reference/TypeScript+API/CachedMetadata)
      * for this file, if available.
      *
