@@ -88,4 +88,6 @@ export const yaml_custom_number_property = {
         frontmatterLinks: [],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task'],
+    parseFrontMatterTags: null,
 };

@@ -1,5 +1,7 @@
 import type { CachedMetadata } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { setCurrentCacheFile } from '../__mocks__/obsidian';
+import { callouts_nested_issue_2890_unlabelled } from '../Obsidian/__test_data__/callouts_nested_issue_2890_unlabelled';
 import { no_yaml } from '../Obsidian/__test_data__/no_yaml';
 import { empty_yaml } from '../Obsidian/__test_data__/empty_yaml';
 import { yaml_tags_has_multiple_values } from '../Obsidian/__test_data__/yaml_tags_has_multiple_values';
@@ -53,6 +55,12 @@ describe('TasksFile', () => {
     });
 });
 
+function getTasksFileFromMockData(data: any) {
+    setCurrentCacheFile(data);
+    const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+    return new TasksFile(data.filePath, cachedMetadata);
+}
+
 describe('TasksFile - reading frontmatter', () => {
     it('should read file if not given CachedMetadata', () => {
         const tasksFile = new TasksFile('some path.md', {});
@@ -62,30 +70,33 @@ describe('TasksFile - reading frontmatter', () => {
     });
 
     it('should read file with no yaml metadata', () => {
-        const data = no_yaml;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
-
+        const tasksFile = getTasksFileFromMockData(no_yaml);
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
         expect(tasksFile.frontmatter).toEqual({});
     });
 
     it('should read file with empty yaml metadata', () => {
-        const data = empty_yaml;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
-
+        const tasksFile = getTasksFileFromMockData(empty_yaml);
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
         expect(tasksFile.frontmatter).toEqual({});
     });
 
-    it('should read file with multiple tags in yaml metadata', () => {
-        const data = yaml_tags_has_multiple_values;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+    it('should provide an independent copy of frontmatter', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_tags_has_multiple_values);
+
+        expect(tasksFile.frontmatter).not.toBe(tasksFile.cachedMetadata.frontmatter);
 
         expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
-        expect(tasksFile.frontmatter.tags).toEqual(['multiple1', 'multiple2']);
+        expect(tasksFile.frontmatter.tags).toEqual(['#multiple1', '#multiple2']);
+
+        tasksFile.frontmatter.tags.push('newTag');
+        expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
+        expect(tasksFile.frontmatter.tags).toEqual(['#multiple1', '#multiple2', 'newTag']);
+    });
+
+    it('should read file with multiple tags in yaml metadata', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_tags_has_multiple_values);
+        expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
     });
 
     // See property types: https://help.obsidian.md/Editing+and+formatting/Properties#Property+types
@@ -97,22 +108,20 @@ describe('TasksFile - reading frontmatter', () => {
     //  Date
     //  Date & time
     it('should read file with custom number property', () => {
-        const data = yaml_custom_number_property;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
-
+        const tasksFile = getTasksFileFromMockData(yaml_custom_number_property);
         expect(tasksFile.frontmatter?.custom_number_prop).toEqual(42);
     });
 });
 
 describe('TasksFile - reading tags', () => {
-    it.failing('should read a tag from the frontmatter', () => {
-        // Fails with 'TypeError: (0 , obsidian_1.getAllTags) is not a function'
-        // It looks like Obsidian's getAllTags() cannot be called outside of a vault.
-        const data = yaml_tags_with_one_value_on_new_line;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+    it('should read a tag from body and the frontmatter', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_tags_with_one_value_on_new_line);
+        expect(tasksFile.tags).toEqual(['#single-value-new-line', '#task']);
+        expect(tasksFile.frontmatter.tags).toEqual(['#single-value-new-line']);
+    });
 
-        expect(tasksFile.tags).toEqual(['#single-value-new-line']);
+    it('should read tags from body of file without duplication', () => {
+        const tasksFile = getTasksFileFromMockData(callouts_nested_issue_2890_unlabelled);
+        expect(tasksFile.tags).toEqual(['#task']);
     });
 });

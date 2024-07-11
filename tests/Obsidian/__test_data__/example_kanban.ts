@@ -20,7 +20,6 @@ export const example_kanban = {
     cachedMetadata: {
         tags: [
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 8,
@@ -33,12 +32,11 @@ export const example_kanban = {
                         offset: 55,
                     },
                 },
+                tag: '#task',
             },
         ],
         headings: [
             {
-                heading: 'Backlog',
-                level: 2,
                 position: {
                     start: {
                         line: 6,
@@ -51,6 +49,8 @@ export const example_kanban = {
                         offset: 42,
                     },
                 },
+                heading: 'Backlog',
+                level: 2,
             },
         ],
         sections: [
@@ -117,8 +117,6 @@ export const example_kanban = {
         ],
         listItems: [
             {
-                parent: -8,
-                task: ' ',
                 position: {
                     start: {
                         line: 8,
@@ -131,12 +129,13 @@ export const example_kanban = {
                         offset: 80,
                     },
                 },
+                parent: -8,
+                task: ' ',
             },
         ],
         frontmatter: {
             'kanban-plugin': 'basic',
         },
-        frontmatterLinks: [],
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -149,6 +148,9 @@ export const example_kanban = {
                 offset: 30,
             },
         },
+        frontmatterLinks: [],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task'],
+    parseFrontMatterTags: null,
 };

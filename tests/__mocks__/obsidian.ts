@@ -1,3 +1,5 @@
+import type { CachedMetadata } from 'obsidian';
+
 export {};
 
 export class MenuItem {
@@ -120,6 +122,20 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
               matches: matches,
           }
         : null;
+}
+
+let mockedFileData: any = {};
+
+export function setCurrentCacheFile(mockData: any) {
+    mockedFileData = mockData;
+}
+
+export function getAllTags(_cachedMetadata: CachedMetadata): string[] {
+    return mockedFileData.getAllTags;
+}
+
+export function parseFrontMatterTags(_frontmatter: any | null): string[] | null {
+    return mockedFileData.parseFrontMatterTags;
 }
 
 /**

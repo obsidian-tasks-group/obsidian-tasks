@@ -12,7 +12,6 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
     cachedMetadata: {
         tags: [
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 2,
@@ -25,9 +24,9 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 27,
                     },
                 },
+                tag: '#task',
             },
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -40,9 +39,9 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 55,
                     },
                 },
+                tag: '#task',
             },
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -55,9 +54,9 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 88,
                     },
                 },
+                tag: '#task',
             },
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 5,
@@ -70,9 +69,9 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 117,
                     },
                 },
+                tag: '#task',
             },
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 6,
@@ -85,9 +84,9 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 150,
                     },
                 },
+                tag: '#task',
             },
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 7,
@@ -100,12 +99,11 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 175,
                     },
                 },
+                tag: '#task',
             },
         ],
         headings: [
             {
-                heading: 'Test heading',
-                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -118,6 +116,8 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 14,
                     },
                 },
+                heading: 'Test heading',
+                level: 1,
             },
         ],
         sections: [
@@ -154,8 +154,6 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
         ],
         listItems: [
             {
-                parent: -2,
-                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -168,10 +166,10 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 39,
                     },
                 },
+                parent: -2,
+                task: ' ',
             },
             {
-                parent: 2,
-                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -184,10 +182,10 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 68,
                     },
                 },
+                parent: 2,
+                task: ' ',
             },
             {
-                parent: 3,
-                task: ' ',
                 position: {
                     start: {
                         line: 4,
@@ -200,10 +198,10 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 101,
                     },
                 },
+                parent: 3,
+                task: ' ',
             },
             {
-                parent: 2,
-                task: ' ',
                 position: {
                     start: {
                         line: 5,
@@ -216,10 +214,10 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 130,
                     },
                 },
+                parent: 2,
+                task: ' ',
             },
             {
-                parent: 5,
-                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -232,10 +230,10 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 163,
                     },
                 },
+                parent: 5,
+                task: ' ',
             },
             {
-                parent: -2,
-                task: ' ',
                 position: {
                     start: {
                         line: 7,
@@ -248,8 +246,12 @@ export const inheritance_1parent2children2grandchildren1sibling_start_with_headi
                         offset: 183,
                     },
                 },
+                parent: -2,
+                task: ' ',
             },
         ],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task', '#task', '#task', '#task', '#task', '#task'],
+    parseFrontMatterTags: null,
 };
