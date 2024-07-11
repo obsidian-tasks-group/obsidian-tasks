@@ -46,8 +46,9 @@ export class TasksFile {
      * Return Obsidian's [CachedMetadata](https://docs.obsidian.md/Reference/TypeScript+API/CachedMetadata)
      * for this file, if available.
      *
-     * The raw frontmatter, available, is accessed via `cachedMetadata.frontmatter`.
+     * Any raw frontmatter may be accessed via `cachedMetadata.frontmatter`.
      * See [FrontMatterCache](https://docs.obsidian.md/Reference/TypeScript+API/FrontMatterCache).
+     * But prefer using {@link frontmatter} where possible.
      *
      * @note This is currently only populated for Task objects when read in the Obsidian plugin.
      *       It's not populated for queries in the plugin, nor in most unit tests.
