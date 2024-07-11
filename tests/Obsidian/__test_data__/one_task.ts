@@ -4,7 +4,6 @@ export const one_task = {
     cachedMetadata: {
         tags: [
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 0,
@@ -17,6 +16,7 @@ export const one_task = {
                         offset: 11,
                     },
                 },
+                tag: '#task',
             },
         ],
         sections: [
@@ -38,8 +38,6 @@ export const one_task = {
         ],
         listItems: [
             {
-                parent: -1,
-                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -52,8 +50,12 @@ export const one_task = {
                         offset: 30,
                     },
                 },
+                parent: -1,
+                task: ' ',
             },
         ],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task'],
+    parseFrontMatterTags: null,
 };

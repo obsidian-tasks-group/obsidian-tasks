@@ -124,4 +124,6 @@ export const blockquote = {
         ],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task', '#task'],
+    parseFrontMatterTags: null,
 };

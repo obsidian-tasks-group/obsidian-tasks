@@ -177,4 +177,6 @@ export const callouts_nested_issue_2890_unlabelled = {
         ],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task', '#task', '#task', '#task'],
+    parseFrontMatterTags: null,
 };

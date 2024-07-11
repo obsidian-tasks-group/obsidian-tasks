@@ -54,4 +54,6 @@ export const inheritance_listitem_task_siblings = {
         ],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: [],
+    parseFrontMatterTags: null,
 };
