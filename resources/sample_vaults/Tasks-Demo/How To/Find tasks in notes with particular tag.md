@@ -36,7 +36,7 @@ Credit: jonlemon in [this Obsidian Forum thread](https://forum.obsidian.md/t/how
 #### Presence of tag - in frontmatter
 
 ```tasks
-filter by function task.file.frontmatterTags.includes('#examples')
+filter by function task.file.frontmatter.tags?.includes('#examples') ?? false
 ```
 
 ### Tasks in files that have a Tag anywhere - in frontmatter or body
