@@ -87,4 +87,6 @@ export const inheritance_2siblings = {
         ],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task', '#task'],
+    parseFrontMatterTags: null,
 };

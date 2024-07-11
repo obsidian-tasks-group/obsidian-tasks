@@ -6,10 +6,17 @@ import { type CachedMetadata, type FrontMatterCache, getAllTags, parseFrontMatte
 export class TasksFile {
     private readonly _path: string;
     private readonly _cachedMetadata: CachedMetadata;
+    private readonly _frontmatter: FrontMatterCache = {} as FrontMatterCache;
 
     constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
         this._cachedMetadata = cachedMetadata;
+
+        const rawFrontmatter = cachedMetadata.frontmatter;
+        if (rawFrontmatter !== undefined) {
+            this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
+            this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter);
+        }
     }
 
     /**
@@ -29,7 +36,8 @@ export class TasksFile {
      * @todo Review presence of global filter tag in the results.
      */
     get tags(): string[] {
-        return getAllTags(this.cachedMetadata) ?? [];
+        const tags = getAllTags(this.cachedMetadata) ?? [];
+        return [...new Set(tags)];
     }
 
     /**
@@ -71,7 +79,7 @@ export class TasksFile {
      *       or if the markdown file has no frontmatter or empty frontmatter.
      */
     public get frontmatter(): FrontMatterCache {
-        return this._cachedMetadata.frontmatter ?? ({} as FrontMatterCache);
+        return this._frontmatter;
     }
 
     /**

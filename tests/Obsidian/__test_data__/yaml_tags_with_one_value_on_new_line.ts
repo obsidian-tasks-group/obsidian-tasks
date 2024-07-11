@@ -13,7 +13,6 @@ export const yaml_tags_with_one_value_on_new_line = {
     cachedMetadata: {
         tags: [
             {
-                tag: '#task',
                 position: {
                     start: {
                         line: 8,
@@ -26,12 +25,11 @@ export const yaml_tags_with_one_value_on_new_line = {
                         offset: 93,
                     },
                 },
+                tag: '#task',
             },
         ],
         headings: [
             {
-                heading: 'yaml_tags_with_one_value_on_new_line',
-                level: 1,
                 position: {
                     start: {
                         line: 6,
@@ -44,6 +42,8 @@ export const yaml_tags_with_one_value_on_new_line = {
                         offset: 80,
                     },
                 },
+                heading: 'yaml_tags_with_one_value_on_new_line',
+                level: 1,
             },
         ],
         sections: [
@@ -95,8 +95,6 @@ export const yaml_tags_with_one_value_on_new_line = {
         ],
         listItems: [
             {
-                parent: -8,
-                task: ' ',
                 position: {
                     start: {
                         line: 8,
@@ -109,12 +107,13 @@ export const yaml_tags_with_one_value_on_new_line = {
                         offset: 140,
                     },
                 },
+                parent: -8,
+                task: ' ',
             },
         ],
         frontmatter: {
             tags: ['single-value-new-line'],
         },
-        frontmatterLinks: [],
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -127,6 +126,9 @@ export const yaml_tags_with_one_value_on_new_line = {
                 offset: 39,
             },
         },
+        frontmatterLinks: [],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#single-value-new-line', '#task'],
+    parseFrontMatterTags: ['#single-value-new-line'],
 };

@@ -187,4 +187,6 @@ export const yaml_complex_example = {
         frontmatterLinks: [],
     },
     obsidianApiVersion: '1.6.5',
+    getAllTags: ['#value1', '#value2', '#task'],
+    parseFrontMatterTags: ['#value1', '#value2'],
 };
