@@ -12,11 +12,10 @@ export class TasksFile {
         this._path = path;
         this._cachedMetadata = cachedMetadata;
         this._frontmatter = {} as FrontMatterCache;
-        if (cachedMetadata.frontmatter) {
-            this._frontmatter = cachedMetadata.frontmatter
-                ? JSON.parse(JSON.stringify(cachedMetadata.frontmatter))
-                : ({} as FrontMatterCache);
-            this._frontmatter.tags = parseFrontMatterTags(this._cachedMetadata.frontmatter);
+        const rawFrontmatter = cachedMetadata.frontmatter;
+        if (rawFrontmatter !== undefined) {
+            this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
+            this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter);
         }
     }
 
