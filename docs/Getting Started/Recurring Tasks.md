@@ -232,7 +232,7 @@ Since Tasks 5.0.0, this is enforced by the [[Create or edit Task]] modal:
 
 ![The 'Create or edit Task', with error message saying a date must be set on a recurring task.](../images/modal-showing-date-needed-on-recurring-task.png)
 
-*Above: The 'Create or edit Task', with an error message saying a date must be set on a recurring task.*
+_Above: The 'Create or edit Task', with an error message saying a date must be set on a recurring task._
 
 > [!info] Detail
 > Technically, you _can_ add a recurrence rule to a task without any dates, and there is nothing stopping anyone editing a task like to give it a recurrence rule but no date.

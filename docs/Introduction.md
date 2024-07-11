@@ -175,8 +175,8 @@ For changes in each release, please check the [releases page](https://github.com
 
 ## Screenshots
 
-- *All screenshots assume the global filter `#task` which is not set by default (see also "Getting Started").*
-- *The theme is default Obsidian theme.*
+- _All screenshots assume the global filter `#task` which is not set by default (see also "Getting Started")._
+- _The theme is default Obsidian theme._
 
 ![ACME Tasks](images/acme.png)
 The `ACME` note has some tasks.
