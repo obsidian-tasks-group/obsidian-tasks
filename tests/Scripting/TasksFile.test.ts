@@ -114,9 +114,10 @@ describe('TasksFile - reading frontmatter', () => {
 });
 
 describe('TasksFile - reading tags', () => {
-    it('should read a tag from the frontmatter', () => {
+    it('should read a tag from body and the frontmatter', () => {
         const tasksFile = getTasksFileFromMockData(yaml_tags_with_one_value_on_new_line);
         expect(tasksFile.tags).toEqual(['#single-value-new-line', '#task']);
+        expect(tasksFile.frontmatter.tags).toEqual(['#single-value-new-line']);
     });
 
     it('should read tags from body of file without duplication', () => {
