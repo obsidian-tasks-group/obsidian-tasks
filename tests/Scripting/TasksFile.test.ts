@@ -54,6 +54,12 @@ describe('TasksFile', () => {
     });
 });
 
+function getTasksFileFromMockData(data: any) {
+    setCurrentCacheFile(data);
+    const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+    return new TasksFile(data.filePath, cachedMetadata);
+}
+
 describe('TasksFile - reading frontmatter', () => {
     it('should read file if not given CachedMetadata', () => {
         const tasksFile = new TasksFile('some path.md', {});
@@ -108,10 +114,7 @@ describe('TasksFile - reading frontmatter', () => {
 
 describe('TasksFile - reading tags', () => {
     it('should read a tag from the frontmatter', () => {
-        setCurrentCacheFile(yaml_tags_with_one_value_on_new_line);
-        const data = yaml_tags_with_one_value_on_new_line;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
+        const tasksFile = getTasksFileFromMockData(yaml_tags_with_one_value_on_new_line);
 
         expect(tasksFile.tags).toEqual(['#single-value-new-line', '#task']);
     });
