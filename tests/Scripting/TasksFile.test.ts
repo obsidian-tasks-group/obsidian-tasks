@@ -69,28 +69,19 @@ describe('TasksFile - reading frontmatter', () => {
     });
 
     it('should read file with no yaml metadata', () => {
-        const data = no_yaml;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
-
+        const tasksFile = getTasksFileFromMockData(no_yaml);
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
         expect(tasksFile.frontmatter).toEqual({});
     });
 
     it('should read file with empty yaml metadata', () => {
-        const data = empty_yaml;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
-
+        const tasksFile = getTasksFileFromMockData(empty_yaml);
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
         expect(tasksFile.frontmatter).toEqual({});
     });
 
     it('should read file with multiple tags in yaml metadata', () => {
-        const data = yaml_tags_has_multiple_values;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
-
+        const tasksFile = getTasksFileFromMockData(yaml_tags_has_multiple_values);
         expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
         expect(tasksFile.frontmatter.tags).toEqual(['multiple1', 'multiple2']);
     });
@@ -104,10 +95,7 @@ describe('TasksFile - reading frontmatter', () => {
     //  Date
     //  Date & time
     it('should read file with custom number property', () => {
-        const data = yaml_custom_number_property;
-        const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-        const tasksFile = new TasksFile(data.filePath, cachedMetadata);
-
+        const tasksFile = getTasksFileFromMockData(yaml_custom_number_property);
         expect(tasksFile.frontmatter?.custom_number_prop).toEqual(42);
     });
 });
@@ -115,7 +103,6 @@ describe('TasksFile - reading frontmatter', () => {
 describe('TasksFile - reading tags', () => {
     it('should read a tag from the frontmatter', () => {
         const tasksFile = getTasksFileFromMockData(yaml_tags_with_one_value_on_new_line);
-
         expect(tasksFile.tags).toEqual(['#single-value-new-line', '#task']);
     });
 });
