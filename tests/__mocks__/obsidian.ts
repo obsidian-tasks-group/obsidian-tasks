@@ -124,18 +124,18 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
         : null;
 }
 
-export let mockGetAllTagsData: any = {};
+let mockedFileData: any = {};
 
 export function setCurrentCacheFile(mockData: any) {
-    mockGetAllTagsData = mockData;
+    mockedFileData = mockData;
 }
 
 export function getAllTags(_cachedMetadata: CachedMetadata): string[] {
-    return mockGetAllTagsData.getAllTags;
+    return mockedFileData.getAllTags;
 }
 
 export function parseFrontMatterTags(_frontmatter: any | null): string[] | null {
-    return mockGetAllTagsData.parseFrontMatterTags;
+    return mockedFileData.parseFrontMatterTags;
 }
 
 /**
