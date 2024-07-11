@@ -16,16 +16,20 @@ You can set a global query in the settings that Tasks will add to the start of a
 > [!example]
 > With a global query set to `path includes /tasks`, the following task block:
 >
->     ```tasks
->     tags include work
->     ```
+> ````text
+> ```tasks
+> tags include work
+> ```
+> ````
 >
 > will run as if it were:
 >
->     ```tasks
->     path includes /tasks
->     tags include work
->     ```
+> ````text
+> ```tasks
+> path includes /tasks
+> tags include work
+> ```
+> ````
 
 ## Ignoring the global query
 
@@ -35,7 +39,7 @@ For example, this allows you to have your task seaches ignore certain folders by
 
 > [!example]
 >
-> ```tasks
+> ```text
 > tags include work
 > ignore global query
 > ```
@@ -55,9 +59,11 @@ Currently, any query that is allowed in a task block will also work as your Glob
 > [!example]
 > **Turn on short mode**
 >
->     ```tasks
->     short mode
->     ```
+> ````text
+> ```tasks
+> short mode
+> ```
+> ````
 >
 > > [!info]
 > > You can override this in a task block using `full mode`
@@ -65,9 +71,11 @@ Currently, any query that is allowed in a task block will also work as your Glob
 > [!example]
 > **Hide priority**
 >
->     ```tasks
->     hide priority
->     ```
+> ````text
+> ```tasks
+> hide priority
+> ```
+> ````
 >
 > > [!info]
 > > You can override this in a task block using `show priority`
@@ -76,9 +84,11 @@ Currently, any query that is allowed in a task block will also work as your Glob
 > **Show up to 50 tasks**
 >
 >
->     ```tasks
->     limit 50
->     ```
+> ````text
+> ```tasks
+> limit 50
+> ```
+> ````
 >
 > > [!info]
 > > You can override this in a task block by specifying a new limit in that task block
@@ -88,16 +98,20 @@ Currently, any query that is allowed in a task block will also work as your Glob
 > [!example]
 > **Only show tasks under specific headings**
 >
->     ```tasks
->     heading includes Task
->     ```
+> ````text
+> ```tasks
+> heading includes Task
+> ```
+> ````
 
 > [!example]
 > **Exclude tasks from a specific path**
 >
->     ```tasks
->     path regex does not match /^_templates/
->     ```
+> ````text
+> ```tasks
+> path regex does not match /^_templates/
+> ```
+> ````
 
 ## Settings
 
