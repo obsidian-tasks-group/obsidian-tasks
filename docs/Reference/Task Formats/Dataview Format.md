@@ -61,18 +61,18 @@ The brackets `[]` and `()` differ in how [Dataview displays them](https://blacks
 > - Separating each field with at least 2 spaces.
 >
 > > [!example]
->   >
->   > ```text
->   >  - [ ] This is a task [priority:: high]  [start:: 2023-04-24]  [due:: 2023-05-01]
->   >  ```
+> >
+> > ```text
+> >  - [ ] This is a task [priority:: high]  [start:: 2023-04-24]  [due:: 2023-05-01]
+> >  ```
 >
 > - Separating each field with commas.
 >
 > > [!example]
->   >
->   > ```text
->   >  - [ ] This is a task [priority:: high], [start:: 2023-04-24], [due:: 2023-05-01]
->   > ```
+> >
+> > ```text
+> >  - [ ] This is a task [priority:: high], [start:: 2023-04-24], [due:: 2023-05-01]
+> > ```
 
 ## Supported dataview fields
 
