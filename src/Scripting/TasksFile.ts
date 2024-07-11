@@ -6,12 +6,12 @@ import { type CachedMetadata, type FrontMatterCache, getAllTags, parseFrontMatte
 export class TasksFile {
     private readonly _path: string;
     private readonly _cachedMetadata: CachedMetadata;
-    private readonly _frontmatter: FrontMatterCache;
+    private readonly _frontmatter: FrontMatterCache = {} as FrontMatterCache;
 
     constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
         this._cachedMetadata = cachedMetadata;
-        this._frontmatter = {} as FrontMatterCache;
+
         const rawFrontmatter = cachedMetadata.frontmatter;
         if (rawFrontmatter !== undefined) {
             this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
