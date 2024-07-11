@@ -65,6 +65,11 @@ function getTasksFileFromMockData(data: any) {
     return new TasksFile(data.filePath, cachedMetadata);
 }
 
+function listPathAndData(inputs: any[]) {
+    // We use map() to extract the path, to use it as a test name in it.each()
+    return inputs.map((data) => [data.filePath, data]);
+}
+
 describe('TasksFile - reading frontmatter', () => {
     it('should read file if not given CachedMetadata', () => {
         const tasksFile = new TasksFile('some path.md', {});
@@ -130,12 +135,12 @@ describe('TasksFile - reading tags', () => {
     });
 
     it.each(
-        [
+        listPathAndData([
             yaml_tags_field_added_by_obsidian_but_not_populated,
             yaml_tags_had_value_then_was_emptied_by_obsidian,
             yaml_tags_is_empty_list,
             yaml_tags_is_empty,
-        ].map((data) => [data.filePath, data]), // We use map() to extract the path, to use as the test name.
+        ]),
     )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, data: any) => {
         const tasksFile = getTasksFileFromMockData(data);
         const frontmatterTags = tasksFile.frontmatter.tags;
