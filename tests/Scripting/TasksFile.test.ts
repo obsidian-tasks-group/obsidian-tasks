@@ -80,10 +80,23 @@ describe('TasksFile - reading frontmatter', () => {
         expect(tasksFile.frontmatter).toEqual({});
     });
 
+    it('should provide an independent copy of frontmatter', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_tags_has_multiple_values);
+
+        expect(tasksFile.frontmatter).not.toBe(tasksFile.cachedMetadata.frontmatter);
+        expect(tasksFile.frontmatter).toEqual(tasksFile.cachedMetadata.frontmatter);
+
+        expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
+        expect(tasksFile.frontmatter.tags).toEqual(['multiple1', 'multiple2']);
+
+        tasksFile.frontmatter.tags.push('newTag');
+        expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
+        expect(tasksFile.frontmatter.tags).toEqual(['multiple1', 'multiple2', 'newTag']);
+    });
+
     it('should read file with multiple tags in yaml metadata', () => {
         const tasksFile = getTasksFileFromMockData(yaml_tags_has_multiple_values);
         expect(tasksFile.cachedMetadata.frontmatter?.tags).toEqual(['multiple1', 'multiple2']);
-        expect(tasksFile.frontmatter.tags).toEqual(['multiple1', 'multiple2']);
     });
 
     // See property types: https://help.obsidian.md/Editing+and+formatting/Properties#Property+types

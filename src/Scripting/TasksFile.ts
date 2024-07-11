@@ -6,10 +6,14 @@ import { type CachedMetadata, type FrontMatterCache, getAllTags, parseFrontMatte
 export class TasksFile {
     private readonly _path: string;
     private readonly _cachedMetadata: CachedMetadata;
+    private readonly _frontmatter: FrontMatterCache;
 
     constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
         this._cachedMetadata = cachedMetadata;
+        this._frontmatter = cachedMetadata.frontmatter
+            ? JSON.parse(JSON.stringify(cachedMetadata.frontmatter))
+            : ({} as FrontMatterCache);
     }
 
     /**
@@ -71,7 +75,7 @@ export class TasksFile {
      *       or if the markdown file has no frontmatter or empty frontmatter.
      */
     public get frontmatter(): FrontMatterCache {
-        return this._cachedMetadata.frontmatter ?? ({} as FrontMatterCache);
+        return this._frontmatter;
     }
 
     /**
