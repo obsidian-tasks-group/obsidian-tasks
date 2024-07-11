@@ -138,6 +138,7 @@ describe('TasksFile - reading tags', () => {
 
     it.each(
         listPathAndData([
+            yaml_custom_number_property, // no tags value in frontmatter
             yaml_tags_field_added_by_obsidian_but_not_populated,
             yaml_tags_had_value_then_was_emptied_by_obsidian,
             yaml_tags_is_empty_list,
