@@ -11,7 +11,7 @@ The simplest way to create a new task is to create a new checklist item.
 The markdown syntax for checklist items is a list item that starts with spaced brackets:
 
 ```text
-- [ ] take out the trash`
+- [ ] take out the trash
 ```
 
 Now Tasks tracks that you need to take out the trash!
