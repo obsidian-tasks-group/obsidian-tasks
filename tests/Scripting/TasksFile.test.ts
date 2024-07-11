@@ -1,6 +1,7 @@
 import type { CachedMetadata } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
+import { callouts_nested_issue_2890_unlabelled } from '../Obsidian/__test_data__/callouts_nested_issue_2890_unlabelled';
 import { no_yaml } from '../Obsidian/__test_data__/no_yaml';
 import { empty_yaml } from '../Obsidian/__test_data__/empty_yaml';
 import { yaml_tags_has_multiple_values } from '../Obsidian/__test_data__/yaml_tags_has_multiple_values';
@@ -116,5 +117,10 @@ describe('TasksFile - reading tags', () => {
     it('should read a tag from the frontmatter', () => {
         const tasksFile = getTasksFileFromMockData(yaml_tags_with_one_value_on_new_line);
         expect(tasksFile.tags).toEqual(['#single-value-new-line', '#task']);
+    });
+
+    it('should read tags from body of file without duplication', () => {
+        const tasksFile = getTasksFileFromMockData(callouts_nested_issue_2890_unlabelled);
+        expect(tasksFile.tags).toEqual(['#task']);
     });
 });

@@ -36,7 +36,8 @@ export class TasksFile {
      * @todo Review presence of global filter tag in the results.
      */
     get tags(): string[] {
-        return getAllTags(this.cachedMetadata) ?? [];
+        const strings = getAllTags(this.cachedMetadata) ?? [];
+        return [...new Set(strings)];
     }
 
     /**
