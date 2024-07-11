@@ -146,8 +146,6 @@ describe('TasksFile - reading tags', () => {
         ]),
     )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, data: any) => {
         const tasksFile = getTasksFileFromMockData(data);
-        const frontmatterTags = tasksFile.frontmatter.tags;
-        expect(frontmatterTags).toEqual([]);
-        expect(frontmatterTags.includes('#task')).toEqual(false);
+        expect(tasksFile.frontmatter.tags).toEqual([]);
     });
 });
