@@ -52,7 +52,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.5.0",
     "madge": "^6.1.0",
-    "markdownlint-cli2": "^0.8.1",
+    "markdownlint-cli2": "^0.13.0",
     "moment": "^2.29.4",
     "obsidian": "^1.1.1",
     "prettier": "^2.8.8",
