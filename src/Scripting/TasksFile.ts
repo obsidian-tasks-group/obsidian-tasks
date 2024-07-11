@@ -15,7 +15,7 @@ export class TasksFile {
         const rawFrontmatter = cachedMetadata.frontmatter;
         if (rawFrontmatter !== undefined) {
             this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
-            this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter);
+            this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter) ?? [];
         }
     }
 

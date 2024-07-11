@@ -7,6 +7,10 @@ import { empty_yaml } from '../Obsidian/__test_data__/empty_yaml';
 import { yaml_tags_has_multiple_values } from '../Obsidian/__test_data__/yaml_tags_has_multiple_values';
 import { yaml_custom_number_property } from '../Obsidian/__test_data__/yaml_custom_number_property';
 import { yaml_tags_with_one_value_on_new_line } from '../Obsidian/__test_data__/yaml_tags_with_one_value_on_new_line';
+import { yaml_tags_field_added_by_obsidian_but_not_populated } from '../Obsidian/__test_data__/yaml_tags_field_added_by_obsidian_but_not_populated';
+import { yaml_tags_had_value_then_was_emptied_by_obsidian } from '../Obsidian/__test_data__/yaml_tags_had_value_then_was_emptied_by_obsidian';
+import { yaml_tags_is_empty_list } from '../Obsidian/__test_data__/yaml_tags_is_empty_list';
+import { yaml_tags_is_empty } from '../Obsidian/__test_data__/yaml_tags_is_empty';
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
@@ -123,5 +127,18 @@ describe('TasksFile - reading tags', () => {
     it('should read tags from body of file without duplication', () => {
         const tasksFile = getTasksFileFromMockData(callouts_nested_issue_2890_unlabelled);
         expect(tasksFile.tags).toEqual(['#task']);
+    });
+
+    // TODO Give these tests readable names, instead of dumping whole object
+    it.each([
+        yaml_tags_field_added_by_obsidian_but_not_populated,
+        yaml_tags_had_value_then_was_emptied_by_obsidian,
+        yaml_tags_is_empty_list,
+        yaml_tags_is_empty,
+    ])('should provide empty list if no tags in frontmatter: "%s"', (data: any) => {
+        const tasksFile = getTasksFileFromMockData(data);
+        const frontmatterTags = tasksFile.frontmatter.tags;
+        expect(frontmatterTags).toEqual([]);
+        expect(frontmatterTags.includes('#task')).toEqual(false);
     });
 });
