@@ -295,7 +295,10 @@ describe('file properties', () => {
             'task.file.path',
             [
                 // comment to force line break
-                ['group by function task.file.path', "Like 'group by path' but includes the file extension"],
+                [
+                    'group by function task.file.path',
+                    "Like 'group by path' but includes the file extension, and does not escape any Markdown formatting characters in the path",
+                ],
                 [
                     "group by function task.file.path.replace(query.file.folder, '')",
                     "Group by the task's file path, but remove the query's folder from the group.",
@@ -310,7 +313,10 @@ describe('file properties', () => {
             'task.file.root',
             [
                 // comment to force line break
-                ['group by function task.file.root', "Same as 'group by root'"],
+                [
+                    'group by function task.file.root',
+                    "Like 'group by root' except that it does not escape any Markdown formatting characters in the root",
+                ],
             ],
             SampleTasks.withAllRootsPathsHeadings(),
         ],
@@ -319,7 +325,10 @@ describe('file properties', () => {
             'task.file.folder',
             [
                 // comment to force line break
-                ['group by function task.file.folder', "Same as 'group by folder'"],
+                [
+                    'group by function task.file.folder',
+                    "Like 'group by folder', except that it does not escape any Markdown formatting characters in the folder",
+                ],
                 [
                     "group by function task.file.folder.slice(0, -1).split('/').pop() + '/'",
                     'Group by the immediate parent folder of the file containing task.',

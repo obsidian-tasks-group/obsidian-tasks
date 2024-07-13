@@ -5,7 +5,7 @@
 group by function task.file.root
 ```
 
-- Same as 'group by root'.
+- Like 'group by root' except that it does not escape any Markdown formatting characters in the root.
 
 
 <!-- placeholder to force blank line after included text -->
