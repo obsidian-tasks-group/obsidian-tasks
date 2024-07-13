@@ -3,7 +3,7 @@ Results of custom groupers
 
 
 group by function task.file.path
-Like 'group by path' but includes the file extension.
+Like 'group by path' but includes the file extension, and does not escape any Markdown formatting characters in the path.
 =>
 a_b_c.md
 a/b.md

@@ -5,7 +5,7 @@
 group by function task.file.folder
 ```
 
-- Same as 'group by folder'.
+- Like 'group by folder', except that it does not escape any Markdown formatting characters in the folder.
 
 ```javascript
 group by function task.file.folder.slice(0, -1).split('/').pop() + '/'

@@ -842,7 +842,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file path** is now p
 group by function task.file.path
 ```
 
-- Like 'group by path' but includes the file extension.
+- Like 'group by path' but includes the file extension, and does not escape any Markdown formatting characters in the path.
 
 ```javascript
 group by function task.file.path.replace(query.file.folder, '')
@@ -875,7 +875,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by root folder** is now
 group by function task.file.root
 ```
 
-- Same as 'group by root'.
+- Like 'group by root' except that it does not escape any Markdown formatting characters in the root.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -896,7 +896,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by folder** is now poss
 group by function task.file.folder
 ```
 
-- Same as 'group by folder'.
+- Like 'group by folder', except that it does not escape any Markdown formatting characters in the folder.
 
 ```javascript
 group by function task.file.folder.slice(0, -1).split('/').pop() + '/'
