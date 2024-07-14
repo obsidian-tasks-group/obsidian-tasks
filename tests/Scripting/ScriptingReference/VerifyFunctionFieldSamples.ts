@@ -9,7 +9,7 @@ import { scan } from '../../../src/Query/Scanner';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { Sort } from '../../../src/Query/Sort/Sort';
 import { toLines } from '../../TestingTools/TestHelpers';
-import { type FilePath, TasksFile } from '../../../src/Scripting/TasksFile';
+import { TasksFile } from '../../../src/Scripting/TasksFile';
 
 /** For example, 'task.due' */
 type TaskPropertyName = string;
@@ -20,7 +20,7 @@ export type CustomPropertyDocsTestData = [TaskPropertyName, QueryInstructionLine
 // Helper functions
 // -----------------------------------------------------------------------------------------------------------------
 
-function preprocessSingleInstruction(instruction: string, path: FilePath) {
+function preprocessSingleInstruction(instruction: string, path: TasksFile) {
     const instructions = scan(instruction);
     expect(instructions.length).toEqual(1);
     return expandPlaceholders(instructions[0], makeQueryContext(path));

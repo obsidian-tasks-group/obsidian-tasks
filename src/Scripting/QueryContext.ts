@@ -1,5 +1,5 @@
 import type { Task } from '../Task/Task';
-import type { FilePath, TasksFile } from './TasksFile';
+import type { TasksFile } from './TasksFile';
 
 /**
  * This interface is part of the implementation of placeholders and scripting.
@@ -30,11 +30,11 @@ export interface QueryContext {
  * @see SearchInfo.queryContext
  * @see makeQueryContextWithTasks
  */
-export function makeQueryContext(path: FilePath): QueryContext {
+export function makeQueryContext(path: TasksFile): QueryContext {
     return makeQueryContextWithTasks(path, []);
 }
 
-export function makeQueryContextWithTasks(tasksFile: FilePath, allTasks: Readonly<Task[]>): QueryContext {
+export function makeQueryContextWithTasks(tasksFile: TasksFile, allTasks: Readonly<Task[]>): QueryContext {
     return {
         query: {
             file: tasksFile,
