@@ -1351,8 +1351,9 @@ describe('Query', () => {
             const source = 'group by function query.file.path';
             const sourceUpper = 'GROUP BY FUNCTION query.file.path';
 
-            const query = new Query(source, 'hello.md');
-            const queryUpper = new Query(sourceUpper, 'hello.md');
+            const path = 'hello.md';
+            const query = new Query(source, path);
+            const queryUpper = new Query(sourceUpper, path);
 
             // Act
             const results = query.applyQueryToTasks([new TaskBuilder().build()]);
@@ -1365,8 +1366,8 @@ describe('Query', () => {
             expect(groups.groups.length).toEqual(1);
             expect(groupsUpper.groups.length).toEqual(1);
 
-            expect(groups.groups[0].groups).toEqual(['hello.md']);
-            expect(groupsUpper.groups[0].groups).toEqual(['hello.md']);
+            expect(groups.groups[0].groups).toEqual([path]);
+            expect(groupsUpper.groups[0].groups).toEqual([path]);
         });
 
         it('should log meaningful error for supported group type', () => {
