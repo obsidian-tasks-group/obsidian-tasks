@@ -1,6 +1,6 @@
 import { type CachedMetadata, type FrontMatterCache, getAllTags, parseFrontMatterTags } from 'obsidian';
 
-export type OptionalFilePath = TasksFile | undefined;
+export type OptionalTasksFile = TasksFile | undefined;
 
 /**
  * A simple class to provide access to file information via 'task.file' in scripting code.

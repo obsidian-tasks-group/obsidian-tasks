@@ -1,6 +1,6 @@
 import type { Task } from '../Task/Task';
 import { type QueryContext, makeQueryContextWithTasks } from '../Scripting/QueryContext';
-import type { OptionalFilePath } from '../Scripting/TasksFile';
+import type { OptionalTasksFile } from '../Scripting/TasksFile';
 
 /**
  * SearchInfo contains selected data passed in from the {@link Query} being executed.
@@ -13,9 +13,9 @@ export class SearchInfo {
     /** The list of tasks being searched.
      */
     public readonly allTasks: Readonly<Task[]>;
-    public readonly queryPath: OptionalFilePath;
+    public readonly queryPath: OptionalTasksFile;
 
-    public constructor(queryPath: OptionalFilePath, allTasks: Task[]) {
+    public constructor(queryPath: OptionalTasksFile, allTasks: Task[]) {
         this.queryPath = queryPath;
         this.allTasks = [...allTasks];
     }

@@ -7,7 +7,7 @@ import { logging } from '../lib/logging';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
 import type { Task } from '../Task/Task';
-import type { OptionalFilePath } from '../Scripting/TasksFile';
+import type { OptionalTasksFile } from '../Scripting/TasksFile';
 import { Explainer } from './Explain/Explainer';
 import type { Filter } from './Filter/Filter';
 import * as FilterParser from './FilterParser';
@@ -23,7 +23,7 @@ import { Statement } from './Statement';
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
-    public readonly filePath: OptionalFilePath;
+    public readonly filePath: OptionalTasksFile;
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
@@ -50,7 +50,7 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor(source: string, path: OptionalFilePath = undefined) {
+    constructor(source: string, path: OptionalTasksFile = undefined) {
         this._queryId = this.generateQueryId(10);
 
         this.source = source;
@@ -123,7 +123,7 @@ export class Query implements IQuery {
         return `[${this.source.split('\n').join(' ; ')}]`;
     }
 
-    private expandPlaceholders(statement: Statement, path: OptionalFilePath) {
+    private expandPlaceholders(statement: Statement, path: OptionalTasksFile) {
         const source = statement.anyContinuationLinesRemoved;
         if (source.includes('{{') && source.includes('}}')) {
             if (this.filePath === undefined) {
