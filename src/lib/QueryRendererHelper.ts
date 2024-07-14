@@ -2,6 +2,7 @@ import type { GlobalFilter } from '../Config/GlobalFilter';
 import type { GlobalQuery } from '../Config/GlobalQuery';
 import { Query } from '../Query/Query';
 import { Explainer } from '../Query/Explain/Explainer';
+import type { OptionalFilePath } from '../Scripting/TasksFile';
 
 /**
  * @summary
@@ -22,14 +23,14 @@ import { Explainer } from '../Query/Explain/Explainer';
  * @param {string} source The source of the task block to explain
  * @param {GlobalFilter} globalFilter The global filter. In `src/`, generally pass in {@link GlobalFilter.getInstance}
  * @param {GlobalQuery} globalQuery The global query. In `src/`, generally pass in {@link GlobalQuery.getInstance}
- * @param {string} path The location of the task block, if known
+ * @param {OptionalFilePath} path The location of the task block, if known
  * @returns {string}
  */
 export function explainResults(
     source: string,
     globalFilter: GlobalFilter,
     globalQuery: GlobalQuery,
-    path: string | undefined = undefined,
+    path: OptionalFilePath = undefined,
 ): string {
     let result = '';
 
@@ -59,10 +60,10 @@ export function explainResults(
  *
  * @param {string} source The query source from the task block
  * @param globalQuery
- * @param {string | undefined} path The path to the file containing the query, if available.
+ * @param {OptionalFilePath} path The path to the file containing the query, if available.
  * @returns {Query} The query to execute
  */
-export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuery, path: string | undefined): Query {
+export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuery, path: OptionalFilePath): Query {
     const tasksBlockQuery = new Query(source, path);
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
