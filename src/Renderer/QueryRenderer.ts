@@ -20,7 +20,7 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { State } from '../Obsidian/Cache';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
-import type { FilePath } from '../Scripting/TasksFile';
+import { type FilePath, TasksFile } from '../Scripting/TasksFile';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -45,7 +45,7 @@ export class QueryRenderer {
             events: this.events,
             container: element,
             source,
-            filePath: context.sourcePath,
+            filePath: new TasksFile(context.sourcePath),
         });
         context.addChild(queryRenderChild);
         queryRenderChild.load();
@@ -371,7 +371,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const headerEl = createAndAppendElement(header, content);
         headerEl.addClass('tasks-group-heading');
-        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.filePath, this);
+        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.filePath.path, this);
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {

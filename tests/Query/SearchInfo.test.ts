@@ -1,5 +1,6 @@
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 
 describe('SearchInfo', () => {
     it('should not be able to modify SearchInfo.allTasks directly', () => {
@@ -24,20 +25,20 @@ describe('SearchInfo', () => {
     });
 
     it('should provide access to query search path', () => {
-        const path = 'a/b/c.md';
+        const path = new TasksFile('a/b/c.md');
         const searchInfo = new SearchInfo(path, []);
 
         expect(searchInfo.queryPath).toEqual(path);
     });
 
     it('should create a QueryContext from a known path', () => {
-        const path = 'a/b/c.md';
+        const path = new TasksFile('a/b/c.md');
         const searchInfo = new SearchInfo(path, []);
 
         const queryContext = searchInfo.queryContext();
 
         expect(queryContext).not.toBeUndefined();
-        expect(queryContext!.query.file.path).toEqual(path);
+        expect(queryContext!.query.file.path).toEqual(path.path);
     });
 
     it('should not create a QueryContext from unknown path', () => {

@@ -15,6 +15,7 @@ import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { TasksFile } from '../../../src/Scripting/TasksFile';
 
 window.moment = moment;
 
@@ -103,11 +104,11 @@ describe('Grouping tasks', () => {
     it('should provide access to SearchInfo', () => {
         // Arrange
         const groupByQueryPath: GrouperFunction = (_task: Task, searchInfo: SearchInfo) => {
-            return [searchInfo.queryPath ? searchInfo.queryPath : 'No SearchInfo'];
+            return [searchInfo.queryPath ? searchInfo.queryPath.path : 'No SearchInfo'];
         };
         const grouper: Grouper = new Grouper('group by test', 'test', groupByQueryPath, false);
 
-        const filename = 'somewhere/anything.md';
+        const filename = new TasksFile('somewhere/anything.md');
         const tasks = [new TaskBuilder().build()];
         const searchInfo = new SearchInfo(filename, tasks);
 
@@ -116,7 +117,7 @@ describe('Grouping tasks', () => {
 
         // Assert
         expect(groups.groups.length).toEqual(1);
-        expect(groups.groups[0].groups).toEqual([filename]);
+        expect(groups.groups[0].groups).toEqual([filename.path]);
     });
 
     it('sorts group names correctly', () => {

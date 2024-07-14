@@ -1,7 +1,7 @@
 import { type CachedMetadata, type FrontMatterCache, getAllTags, parseFrontMatterTags } from 'obsidian';
 
-/** Potentially temporary alias, preparing to migrate more path storage to use {@link TasksFile} instead */
-export type FilePath = string;
+/** Potentially temporary alias, from preparing to migrate more path storage to use {@link TasksFile} instead */
+export type FilePath = TasksFile;
 
 export type OptionalFilePath = FilePath | undefined;
 

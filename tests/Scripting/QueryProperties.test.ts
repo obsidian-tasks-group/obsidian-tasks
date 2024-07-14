@@ -4,12 +4,13 @@ import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('query', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const markdownTable = new MarkdownTable(['Field', 'Type', 'Example']);
-        const path = 'root/sub-folder/file containing query.md';
+        const path = new TasksFile('root/sub-folder/file containing query.md');
         const task = new TaskBuilder()
             .description('... an array with all the Tasks-tracked tasks in the vault ...')
             .build();

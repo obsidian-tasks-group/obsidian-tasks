@@ -1,8 +1,9 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 
 describe('ExpandTemplate', () => {
-    const path = 'a/b/path with space.md';
+    const path = new TasksFile('a/b/path with space.md');
 
     it('hard-coded call', () => {
         const view = {
@@ -51,7 +52,7 @@ The problem is in:
     });
 
     it('should throw an error if unknown template nested field used', () => {
-        const queryContext = makeQueryContext('stuff.md');
+        const queryContext = makeQueryContext(new TasksFile('stuff.md'));
         const source = '{{ query.file.nonsense }}';
 
         expect(() => expandPlaceholders(source, queryContext)).toThrow(
