@@ -3,7 +3,7 @@ import { type CachedMetadata, type FrontMatterCache, getAllTags, parseFrontMatte
 /** Potentially temporary alias, preparing to migrate more path storage to use {@link TasksFile} instead */
 export type FilePath = string;
 
-export type OptionalFilePath = string | undefined;
+export type OptionalFilePath = FilePath | undefined;
 
 /**
  * A simple class to provide access to file information via 'task.file' in scripting code.
