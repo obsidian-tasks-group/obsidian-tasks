@@ -20,6 +20,7 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { State } from '../Obsidian/Cache';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
+import type { FilePath } from '../Scripting/TasksFile';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -69,7 +70,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private readonly source: string;
 
     /// The path of the file that contains the instruction block.
-    private readonly filePath: string;
+    private readonly filePath: FilePath;
 
     private query: IQuery;
     // @ts-expect-error: TS6133: 'queryType' is declared but its value is never read
@@ -91,7 +92,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         events: TasksEvents;
         container: HTMLElement;
         source: string;
-        filePath: string;
+        filePath: FilePath;
     }) {
         super(container);
 
