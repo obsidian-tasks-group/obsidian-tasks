@@ -6,6 +6,7 @@ import { Query } from '../../src/Query/Query';
 import { explainResults, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 
 window.moment = moment;
 
@@ -127,7 +128,7 @@ describe('query used for QueryRenderer', () => {
         // Arrange
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
-        const filePath = 'a/b/c.md';
+        const filePath = new TasksFile('a/b/c.md');
 
         // Act
         const globalQuery = new GlobalQuery(globalQuerySource);
@@ -141,7 +142,7 @@ describe('query used for QueryRenderer', () => {
     it('should ignore the global query if "ignore global query" is set', () => {
         // Arrange
         const globalQuery = new GlobalQuery('path includes from_global_query');
-        const filePath = 'a/b/c.md';
+        const filePath = new TasksFile('a/b/c.md');
 
         // Act
         const query = getQueryForQueryRenderer(

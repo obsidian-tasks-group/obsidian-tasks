@@ -9,7 +9,7 @@ import { scan } from '../../../src/Query/Scanner';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { Sort } from '../../../src/Query/Sort/Sort';
 import { toLines } from '../../TestingTools/TestHelpers';
-import type { FilePath } from '../../../src/Scripting/TasksFile';
+import { type FilePath, TasksFile } from '../../../src/Scripting/TasksFile';
 
 /** For example, 'task.due' */
 type TaskPropertyName = string;
@@ -88,7 +88,7 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
         const instruction = filter[0];
         const comment = filter.slice(1);
 
-        const path = 'a/b.md';
+        const path = new TasksFile('a/b.md');
         const expandedInstruction = preprocessSingleInstruction(instruction, path);
         const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(expandedInstruction);
         expect(filterOrErrorMessage).toBeValid();
@@ -126,7 +126,7 @@ export function verifyFunctionFieldSortSamplesOnTasks(
         const instruction = filter[0];
         const comment = filter.slice(1);
 
-        const path = 'a/b.md';
+        const path = new TasksFile('a/b.md');
         const expandedInstruction = preprocessSingleInstruction(instruction, path);
         const sorter = new FunctionField().createSorterFromLine(expandedInstruction);
         expect(sorter).not.toBeNull();
@@ -158,7 +158,7 @@ export function verifyFunctionFieldGrouperSamplesOnTasks(
         const instruction = group[0];
         const comment = group.slice(1);
 
-        const path = 'a/b.md';
+        const path = new TasksFile('a/b.md');
         const expandedInstruction = preprocessSingleInstruction(instruction, path);
         const grouper = new FunctionField().createGrouperFromLine(expandedInstruction);
         expect(grouper).not.toBeNull();

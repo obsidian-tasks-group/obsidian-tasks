@@ -535,7 +535,7 @@ describe('Query parsing', () => {
 
     describe('should include instruction in parsing error messages', () => {
         function getQueryError(source: string) {
-            return new Query(source, 'Example Path.md').error;
+            return new Query(source, new TasksFile('Example Path.md')).error;
         }
 
         it('for invalid regular expression filter', () => {
@@ -682,7 +682,7 @@ Problem statement:
         it('should expand placeholder values in filters, but not source', () => {
             // Arrange
             const rawQuery = 'path includes {{query.file.path}}';
-            const path = 'a/b/path with space.md';
+            const path = new TasksFile('a/b/path with space.md');
 
             // Act
             const query = new Query(rawQuery, path);
@@ -714,7 +714,7 @@ Problem statement:
         it('should report error if non-existent placeholder used', () => {
             // Arrange
             const source = 'path includes {{query.file.noSuchProperty}}';
-            const path = 'a/b/path with space.md';
+            const path = new TasksFile('a/b/path with space.md');
 
             // Act
             const query = new Query(source, path);
@@ -1251,7 +1251,7 @@ describe('Query', () => {
 
         it('should pass the query path through to filter functions', () => {
             // Arrange
-            const queryPath = 'this/was/passed/in/correctly.md';
+            const queryPath = new TasksFile('this/was/passed/in/correctly.md');
             const query = new Query('', queryPath);
 
             const matchesIfSearchInfoHasCorrectPath = (_task: Task, searchInfo: SearchInfo) => {
@@ -1351,7 +1351,7 @@ describe('Query', () => {
             const source = 'group by function query.file.path';
             const sourceUpper = 'GROUP BY FUNCTION query.file.path';
 
-            const path = 'hello.md';
+            const path = new TasksFile('hello.md');
             const query = new Query(source, path);
             const queryUpper = new Query(sourceUpper, path);
 
@@ -1366,8 +1366,8 @@ describe('Query', () => {
             expect(groups.groups.length).toEqual(1);
             expect(groupsUpper.groups.length).toEqual(1);
 
-            expect(groups.groups[0].groups).toEqual([path]);
-            expect(groupsUpper.groups[0].groups).toEqual([path]);
+            expect(groups.groups[0].groups).toEqual([path.path]);
+            expect(groupsUpper.groups[0].groups).toEqual([path.path]);
         });
 
         it('should log meaningful error for supported group type', () => {
@@ -1534,7 +1534,7 @@ describe('Query', () => {
         it('should save the source correctly in a Statement object', () => {
             const source = String.raw`(path includes A) OR \
                 (path includes {{query.file.path}})`;
-            const query = new Query(source, 'Test.md');
+            const query = new Query(source, new TasksFile('Test.md'));
 
             expect(query.error).toBeUndefined();
             const filter = query.filters[0];
