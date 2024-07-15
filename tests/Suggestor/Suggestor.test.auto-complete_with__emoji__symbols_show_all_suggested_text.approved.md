@@ -26,6 +26,7 @@
 | every week on Thursday | 🔁 every week on Thursday  |
 | every week on Friday | 🔁 every week on Friday  |
 | every week on Saturday | 🔁 every week on Saturday  |
+| spaced | 🔁 spaced  |
 | today (2022-07-11) | 📅 2022-07-11  |
 | tomorrow (2022-07-12) | 📅 2022-07-12  |
 | Sunday (2022-07-17) | 📅 2022-07-17  |

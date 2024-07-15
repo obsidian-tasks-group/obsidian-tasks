@@ -25,6 +25,7 @@
 | every week on Thursday | repeat:: every week on Thursday  |
 | every week on Friday | repeat:: every week on Friday  |
 | every week on Saturday | repeat:: every week on Saturday  |
+| spaced | repeat:: spaced  |
 | today (2022-07-11) | due:: 2022-07-11]  |
 | tomorrow (2022-07-12) | due:: 2022-07-12]  |
 | Sunday (2022-07-17) | due:: 2022-07-17]  |
