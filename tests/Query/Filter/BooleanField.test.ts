@@ -9,6 +9,7 @@ import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { Query } from '../../../src/Query/Query';
 import { Explainer } from '../../../src/Query/Explain/Explainer';
 import { BooleanPreprocessor } from '../../../src/Query/Filter/BooleanPreprocessor';
+import { TasksFile } from '../../../src/Scripting/TasksFile';
 import { verifyBooleanExpressionExplanation, verifyBooleanExpressionPreprocessing } from './BooleanFieldVerify';
 
 window.moment = moment;
@@ -283,8 +284,8 @@ describe('boolean query - explain', () => {
 
     function explainFilters(indentationLevel: number, source: string) {
         const indentation = ' '.repeat(indentationLevel);
-        const path = 'some/sample/note.md';
-        const query1 = new Query(source, path);
+        const tasksFile = new TasksFile('some/sample/note.md');
+        const query1 = new Query(source, tasksFile);
         return new Explainer(indentation).explainFilters(query1);
     }
 

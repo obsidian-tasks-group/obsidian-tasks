@@ -9,6 +9,7 @@ import { Query } from '../../../src/Query/Query';
 import { Explainer } from '../../../src/Query/Explain/Explainer';
 import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { DebugSettings } from '../../../src/Config/DebugSettings';
+import { TasksFile } from '../../../src/Scripting/TasksFile';
 
 window.moment = moment;
 
@@ -18,7 +19,7 @@ window.moment = moment;
  */
 function makeQueryFromContinuationLines(lines: string[]) {
     const source = lines.join('\\\n');
-    const query = new Query(source, 'sample.md');
+    const query = new Query(source, new TasksFile('sample.md'));
     expect(query.error).toBeUndefined();
     return query;
 }

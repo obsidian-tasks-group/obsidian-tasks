@@ -9,6 +9,7 @@ import { scan } from '../../../src/Query/Scanner';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { Sort } from '../../../src/Query/Sort/Sort';
 import { toLines } from '../../TestingTools/TestHelpers';
+import { TasksFile } from '../../../src/Scripting/TasksFile';
 
 /** For example, 'task.due' */
 type TaskPropertyName = string;
@@ -19,10 +20,10 @@ export type CustomPropertyDocsTestData = [TaskPropertyName, QueryInstructionLine
 // Helper functions
 // -----------------------------------------------------------------------------------------------------------------
 
-function preprocessSingleInstruction(instruction: string, path: string) {
+function preprocessSingleInstruction(instruction: string, tasksFile: TasksFile) {
     const instructions = scan(instruction);
     expect(instructions.length).toEqual(1);
-    return expandPlaceholders(instructions[0], makeQueryContext(path));
+    return expandPlaceholders(instructions[0], makeQueryContext(tasksFile));
 }
 
 function punctuateComments(comments: string[]) {
@@ -87,14 +88,14 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
         const instruction = filter[0];
         const comment = filter.slice(1);
 
-        const path = 'a/b.md';
-        const expandedInstruction = preprocessSingleInstruction(instruction, path);
+        const tasksFile = new TasksFile('a/b.md');
+        const expandedInstruction = preprocessSingleInstruction(instruction, tasksFile);
         const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(expandedInstruction);
         expect(filterOrErrorMessage).toBeValid();
 
         const filterFunction = filterOrErrorMessage.filterFunction!;
         const matchingTasks: string[] = [];
-        const searchInfo = new SearchInfo(path, tasks);
+        const searchInfo = new SearchInfo(tasksFile, tasks);
         for (const task of tasks) {
             const matches = filterFunction(task, searchInfo);
             if (matches) {
@@ -125,12 +126,12 @@ export function verifyFunctionFieldSortSamplesOnTasks(
         const instruction = filter[0];
         const comment = filter.slice(1);
 
-        const path = 'a/b.md';
-        const expandedInstruction = preprocessSingleInstruction(instruction, path);
+        const tasksFile = new TasksFile('a/b.md');
+        const expandedInstruction = preprocessSingleInstruction(instruction, tasksFile);
         const sorter = new FunctionField().createSorterFromLine(expandedInstruction);
         expect(sorter).not.toBeNull();
 
-        const tasksSorted = Sort.by([sorter!], tasks, new SearchInfo(path, tasks));
+        const tasksSorted = Sort.by([sorter!], tasks, new SearchInfo(tasksFile, tasks));
         return formatQueryAndResultsForApproving(instruction, comment, toLines(tasksSorted));
     });
 }
@@ -157,12 +158,12 @@ export function verifyFunctionFieldGrouperSamplesOnTasks(
         const instruction = group[0];
         const comment = group.slice(1);
 
-        const path = 'a/b.md';
-        const expandedInstruction = preprocessSingleInstruction(instruction, path);
+        const tasksFile = new TasksFile('a/b.md');
+        const expandedInstruction = preprocessSingleInstruction(instruction, tasksFile);
         const grouper = new FunctionField().createGrouperFromLine(expandedInstruction);
         expect(grouper).not.toBeNull();
 
-        const headings = groupHeadingsForTask(grouper!, tasks, new SearchInfo(path, tasks));
+        const headings = groupHeadingsForTask(grouper!, tasks, new SearchInfo(tasksFile, tasks));
         return formatQueryAndResultsForApproving(instruction, comment, headings);
     });
 }
