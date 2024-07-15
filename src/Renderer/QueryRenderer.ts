@@ -137,6 +137,10 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
     }
 
+    public get filePath(): string | undefined {
+        return this.tasksFile?.path ?? undefined;
+    }
+
     /**
      * Reloads the query after midnight to update results from relative date queries.
      *
@@ -190,7 +194,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
-        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.tasksFile}`);
+        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
 
         this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
@@ -206,7 +210,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async renderSearchResults(queryResult: QueryResult, content: HTMLDivElement) {
-        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.tasksFile}`);
+        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
         await this.addAllTaskGroups(queryResult.taskGroups, content);
