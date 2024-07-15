@@ -24,7 +24,7 @@ export interface QueryContext {
 }
 
 /**
- * Create a {@link QueryContext} to represent a query in note at the give path.
+ * Create a {@link QueryContext} to represent a query in note at the given path in the {@link TasksFile}.
  * @param tasksFile
  *
  * @see SearchInfo.queryContext
