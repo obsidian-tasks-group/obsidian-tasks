@@ -24,6 +24,10 @@ export class SearchInfo {
         return new SearchInfo(undefined, tasks);
     }
 
+    public get queryPath(): string | undefined {
+        return this.tasksFile?.path ?? undefined;
+    }
+
     /**
      * Construct a {@link QueryContext} from this, for use in the placeholder
      * facility and scripting code.

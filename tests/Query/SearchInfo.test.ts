@@ -25,10 +25,12 @@ describe('SearchInfo', () => {
     });
 
     it('should provide access to query search path', () => {
-        const path = new TasksFile('a/b/c.md');
-        const searchInfo = new SearchInfo(path, []);
+        const path = 'a/b/c.md';
+        const tasksFile = new TasksFile(path);
+        const searchInfo = new SearchInfo(tasksFile, []);
 
-        expect(searchInfo.tasksFile).toEqual(path);
+        expect(searchInfo.tasksFile).toEqual(tasksFile);
+        expect(searchInfo.tasksFile?.path).toEqual(path);
     });
 
     it('should create a QueryContext from a known path', () => {
