@@ -47,10 +47,10 @@ export class GlobalQuery {
 
     /**
      * Returns {@link Query} object with the Global Query
-     * @param path
+     * @param tasksFile
      */
-    public query(path: OptionalTasksFile = undefined): Query {
-        return new Query(this._source, path);
+    public query(tasksFile: OptionalTasksFile = undefined): Query {
+        return new Query(this._source, tasksFile);
     }
 
     /**
