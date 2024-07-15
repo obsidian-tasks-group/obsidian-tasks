@@ -284,8 +284,8 @@ describe('boolean query - explain', () => {
 
     function explainFilters(indentationLevel: number, source: string) {
         const indentation = ' '.repeat(indentationLevel);
-        const path = new TasksFile('some/sample/note.md');
-        const query1 = new Query(source, path);
+        const tasksFile = new TasksFile('some/sample/note.md');
+        const query1 = new Query(source, tasksFile);
         return new Explainer(indentation).explainFilters(query1);
     }
 

@@ -34,13 +34,13 @@ describe('SearchInfo', () => {
     });
 
     it('should create a QueryContext from a known path', () => {
-        const path = new TasksFile('a/b/c.md');
-        const searchInfo = new SearchInfo(path, []);
+        const tasksFile = new TasksFile('a/b/c.md');
+        const searchInfo = new SearchInfo(tasksFile, []);
 
         const queryContext = searchInfo.queryContext();
 
         expect(queryContext).not.toBeUndefined();
-        expect(queryContext!.query.file.path).toEqual(path.path);
+        expect(queryContext!.query.file.path).toEqual(tasksFile.path);
     });
 
     it('should not create a QueryContext from unknown path', () => {

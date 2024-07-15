@@ -682,10 +682,10 @@ Problem statement:
         it('should expand placeholder values in filters, but not source', () => {
             // Arrange
             const rawQuery = 'path includes {{query.file.path}}';
-            const path = new TasksFile('a/b/path with space.md');
+            const tasksFile = new TasksFile('a/b/path with space.md');
 
             // Act
-            const query = new Query(rawQuery, path);
+            const query = new Query(rawQuery, tasksFile);
 
             // Assert
             expect(query.source).toEqual(rawQuery); // Interesting that query.source still has the placeholder text
@@ -714,10 +714,10 @@ Problem statement:
         it('should report error if non-existent placeholder used', () => {
             // Arrange
             const source = 'path includes {{query.file.noSuchProperty}}';
-            const path = new TasksFile('a/b/path with space.md');
+            const tasksFile = new TasksFile('a/b/path with space.md');
 
             // Act
-            const query = new Query(source, path);
+            const query = new Query(source, tasksFile);
 
             // Assert
             expect(query).not.toBeValid();
@@ -1265,11 +1265,11 @@ describe('Query', () => {
 
         it('should pass the query path through to filter functions', () => {
             // Arrange
-            const queryPath = new TasksFile('this/was/passed/in/correctly.md');
-            const query = new Query('', queryPath);
+            const queryTasksFile = new TasksFile('this/was/passed/in/correctly.md');
+            const query = new Query('', queryTasksFile);
 
             const matchesIfSearchInfoHasCorrectPath = (_task: Task, searchInfo: SearchInfo) => {
-                return searchInfo.tasksFile === queryPath;
+                return searchInfo.tasksFile === queryTasksFile;
             };
             query.addFilter(
                 new Filter('instruction', matchesIfSearchInfoHasCorrectPath, new Explanation('explanation')),
@@ -1365,9 +1365,9 @@ describe('Query', () => {
             const source = 'group by function query.file.path';
             const sourceUpper = 'GROUP BY FUNCTION query.file.path';
 
-            const path = new TasksFile('hello.md');
-            const query = new Query(source, path);
-            const queryUpper = new Query(sourceUpper, path);
+            const tasksFile = new TasksFile('hello.md');
+            const query = new Query(source, tasksFile);
+            const queryUpper = new Query(sourceUpper, tasksFile);
 
             // Act
             const results = query.applyQueryToTasks([new TaskBuilder().build()]);
@@ -1380,8 +1380,8 @@ describe('Query', () => {
             expect(groups.groups.length).toEqual(1);
             expect(groupsUpper.groups.length).toEqual(1);
 
-            expect(groups.groups[0].groups).toEqual([path.path]);
-            expect(groupsUpper.groups[0].groups).toEqual([path.path]);
+            expect(groups.groups[0].groups).toEqual([tasksFile.path]);
+            expect(groupsUpper.groups[0].groups).toEqual([tasksFile.path]);
         });
 
         it('should log meaningful error for supported group type', () => {

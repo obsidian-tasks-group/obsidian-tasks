@@ -108,16 +108,16 @@ describe('Grouping tasks', () => {
         };
         const grouper: Grouper = new Grouper('group by test', 'test', groupByQueryPath, false);
 
-        const filename = new TasksFile('somewhere/anything.md');
+        const tasksFile = new TasksFile('somewhere/anything.md');
         const tasks = [new TaskBuilder().build()];
-        const searchInfo = new SearchInfo(filename, tasks);
+        const searchInfo = new SearchInfo(tasksFile, tasks);
 
         // Act
         const groups = new TaskGroups([grouper], tasks, searchInfo);
 
         // Assert
         expect(groups.groups.length).toEqual(1);
-        expect(groups.groups[0].groups).toEqual([filename.path]);
+        expect(groups.groups[0].groups).toEqual([tasksFile.path]);
     });
 
     it('sorts group names correctly', () => {
