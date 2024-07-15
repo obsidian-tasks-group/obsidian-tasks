@@ -136,7 +136,7 @@ describe('query used for QueryRenderer', () => {
 
         // Assert
         expect(query.source).toEqual(`${globalQuerySource}\n${querySource}`);
-        expect(query.filePath).toEqual(filePath);
+        expect(query.tasksFile).toEqual(filePath);
     });
 
     it('should ignore the global query if "ignore global query" is set', () => {
@@ -153,6 +153,6 @@ describe('query used for QueryRenderer', () => {
 
         // Assert
         expect(query.source).toEqual('description includes from_block_query\nignore global query');
-        expect(query.filePath).toEqual(filePath);
+        expect(query.tasksFile).toEqual(filePath);
     });
 });

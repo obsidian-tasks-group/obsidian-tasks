@@ -23,7 +23,7 @@ import { Statement } from './Statement';
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
-    public readonly filePath: OptionalTasksFile;
+    public readonly tasksFile: OptionalTasksFile;
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
@@ -54,7 +54,7 @@ export class Query implements IQuery {
         this._queryId = this.generateQueryId(10);
 
         this.source = source;
-        this.filePath = tasksFile;
+        this.tasksFile = tasksFile;
 
         this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
@@ -126,7 +126,7 @@ export class Query implements IQuery {
     private expandPlaceholders(statement: Statement, tasksFile: OptionalTasksFile) {
         const source = statement.anyContinuationLinesRemoved;
         if (source.includes('{{') && source.includes('}}')) {
-            if (this.filePath === undefined) {
+            if (this.tasksFile === undefined) {
                 this._error = `The query looks like it contains a placeholder, with "{{" and "}}"
 but no file path has been supplied, so cannot expand placeholder values.
 The query is:
@@ -181,7 +181,7 @@ ${source}`;
     public append(q2: Query): Query {
         if (this.source === '') return q2;
         if (q2.source === '') return this;
-        return new Query(`${this.source}\n${q2.source}`, this.filePath);
+        return new Query(`${this.source}\n${q2.source}`, this.tasksFile);
     }
 
     /**
@@ -260,7 +260,7 @@ ${statement.explainStatement('    ')}
     public applyQueryToTasks(tasks: Task[]): QueryResult {
         this.debug(`Executing query: ${this.formatQueryForLogging()}`);
 
-        const searchInfo = new SearchInfo(this.filePath, tasks);
+        const searchInfo = new SearchInfo(this.tasksFile, tasks);
         try {
             this.filters.forEach((filter) => {
                 tasks = tasks.filter((task) => filter.filterFunction(task, searchInfo));
@@ -420,6 +420,6 @@ ${statement.explainStatement('    ')}
     }
 
     public debug(message: string, objects?: any): void {
-        this.logger.debugWithId(this._queryId, `"${this.filePath}": ${message}`, objects);
+        this.logger.debugWithId(this._queryId, `"${this.tasksFile}": ${message}`, objects);
     }
 }
