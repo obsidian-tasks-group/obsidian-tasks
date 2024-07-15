@@ -1264,7 +1264,7 @@ describe('Query', () => {
             const query = new Query('', queryPath);
 
             const matchesIfSearchInfoHasCorrectPath = (_task: Task, searchInfo: SearchInfo) => {
-                return searchInfo.queryPath === queryPath;
+                return searchInfo.tasksFile === queryPath;
             };
             query.addFilter(
                 new Filter('instruction', matchesIfSearchInfoHasCorrectPath, new Explanation('explanation')),

@@ -28,7 +28,7 @@ describe('SearchInfo', () => {
         const path = new TasksFile('a/b/c.md');
         const searchInfo = new SearchInfo(path, []);
 
-        expect(searchInfo.queryPath).toEqual(path);
+        expect(searchInfo.tasksFile).toEqual(path);
     });
 
     it('should create a QueryContext from a known path', () => {

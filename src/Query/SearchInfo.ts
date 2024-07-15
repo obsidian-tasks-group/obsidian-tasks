@@ -13,10 +13,10 @@ export class SearchInfo {
     /** The list of tasks being searched.
      */
     public readonly allTasks: Readonly<Task[]>;
-    public readonly queryPath: OptionalTasksFile;
+    public readonly tasksFile: OptionalTasksFile;
 
     public constructor(queryPath: OptionalTasksFile, allTasks: Task[]) {
-        this.queryPath = queryPath;
+        this.tasksFile = queryPath;
         this.allTasks = [...allTasks];
     }
 
@@ -31,6 +31,6 @@ export class SearchInfo {
      * @return A QueryContext, or undefined if the path to the query file is unknown.
      */
     public queryContext(): QueryContext | undefined {
-        return this.queryPath ? makeQueryContextWithTasks(this.queryPath, this.allTasks) : undefined;
+        return this.tasksFile ? makeQueryContextWithTasks(this.tasksFile, this.allTasks) : undefined;
     }
 }
