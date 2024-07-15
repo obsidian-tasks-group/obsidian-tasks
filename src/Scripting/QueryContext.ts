@@ -25,13 +25,13 @@ export interface QueryContext {
 
 /**
  * Create a {@link QueryContext} to represent a query in note at the give path.
- * @param path
+ * @param tasksFile
  *
  * @see SearchInfo.queryContext
  * @see makeQueryContextWithTasks
  */
-export function makeQueryContext(path: TasksFile): QueryContext {
-    return makeQueryContextWithTasks(path, []);
+export function makeQueryContext(tasksFile: TasksFile): QueryContext {
+    return makeQueryContextWithTasks(tasksFile, []);
 }
 
 export function makeQueryContextWithTasks(tasksFile: TasksFile, allTasks: Readonly<Task[]>): QueryContext {
