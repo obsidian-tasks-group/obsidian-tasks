@@ -45,7 +45,7 @@ export class QueryRenderer {
             events: this.events,
             container: element,
             source,
-            filePath: new TasksFile(context.sourcePath),
+            tasksFile: new TasksFile(context.sourcePath),
         });
         context.addChild(queryRenderChild);
         queryRenderChild.load();
@@ -70,7 +70,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private readonly source: string;
 
     /// The path of the file that contains the instruction block.
-    private readonly filePath: TasksFile;
+    private readonly tasksFile: TasksFile;
 
     private query: IQuery;
     // @ts-expect-error: TS6133: 'queryType' is declared but its value is never read
@@ -85,14 +85,14 @@ class QueryRenderChild extends MarkdownRenderChild {
         events,
         container,
         source,
-        filePath,
+        tasksFile,
     }: {
         app: App;
         plugin: TasksPlugin;
         events: TasksEvents;
         container: HTMLElement;
         source: string;
-        filePath: TasksFile;
+        tasksFile: TasksFile;
     }) {
         super(container);
 
@@ -100,19 +100,19 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.plugin = plugin;
         this.events = events;
         this.source = source;
-        this.filePath = filePath;
+        this.tasksFile = tasksFile;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
         // added later.
         switch (this.containerEl.className) {
             case 'block-language-tasks':
-                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.filePath);
+                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
                 this.queryType = 'tasks';
                 break;
 
             default:
-                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.filePath);
+                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
                 this.queryType = 'tasks';
                 break;
         }
@@ -153,7 +153,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
         this.queryReloadTimeout = setTimeout(() => {
-            this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.filePath);
+            this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
             // Process the current cache state:
             this.events.triggerRequestCacheUpdate(this.render.bind(this));
             this.reloadQueryAtMidnight();
@@ -190,7 +190,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
-        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
+        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.tasksFile}`);
         measureSearch.start();
 
         this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
@@ -206,7 +206,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async renderSearchResults(queryResult: QueryResult, content: HTMLDivElement) {
-        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
+        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.tasksFile}`);
         measureRender.start();
 
         await this.addAllTaskGroups(queryResult.taskGroups, content);
@@ -233,7 +233,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.source,
             GlobalFilter.getInstance(),
             GlobalQuery.getInstance(),
-            this.filePath,
+            this.tasksFile,
         );
 
         const explanationsBlock = createAndAppendElement('pre', content);
@@ -371,7 +371,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const headerEl = createAndAppendElement(header, content);
         headerEl.addClass('tasks-group-heading');
-        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.filePath.path, this);
+        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this);
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
