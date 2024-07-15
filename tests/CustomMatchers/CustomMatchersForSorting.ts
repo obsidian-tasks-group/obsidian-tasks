@@ -4,6 +4,7 @@ import type { Sorter } from '../../src/Query/Sort/Sorter';
 import type { Task } from '../../src/Task/Task';
 import { compareByDate } from '../../src/lib/DateTools';
 import { SearchInfo } from '../../src/Query/SearchInfo';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 
 declare global {
     namespace jest {
@@ -39,7 +40,7 @@ expect.extend({
         expect(tasks.length).toEqual(2);
         const taskA = tasks[0];
         const taskB = tasks[1];
-        const actual = sorting.comparator(taskA, taskB, new SearchInfo('dummy path.md', tasks));
+        const actual = sorting.comparator(taskA, taskB, new SearchInfo(new TasksFile('dummy path.md'), tasks));
 
         let pass;
         let expectedDesription: string;

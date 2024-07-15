@@ -2,6 +2,7 @@ import type { GlobalFilter } from '../Config/GlobalFilter';
 import type { GlobalQuery } from '../Config/GlobalQuery';
 import { Query } from '../Query/Query';
 import { Explainer } from '../Query/Explain/Explainer';
+import type { OptionalTasksFile } from '../Scripting/TasksFile';
 
 /**
  * @summary
@@ -22,14 +23,14 @@ import { Explainer } from '../Query/Explain/Explainer';
  * @param {string} source The source of the task block to explain
  * @param {GlobalFilter} globalFilter The global filter. In `src/`, generally pass in {@link GlobalFilter.getInstance}
  * @param {GlobalQuery} globalQuery The global query. In `src/`, generally pass in {@link GlobalQuery.getInstance}
- * @param {string} path The location of the task block, if known
+ * @param {OptionalTasksFile} tasksFile The location of the task block, if known
  * @returns {string}
  */
 export function explainResults(
     source: string,
     globalFilter: GlobalFilter,
     globalQuery: GlobalQuery,
-    path: string | undefined = undefined,
+    tasksFile: OptionalTasksFile = undefined,
 ): string {
     let result = '';
 
@@ -38,11 +39,11 @@ export function explainResults(
     }
 
     const explainer = new Explainer('  ');
-    const tasksBlockQuery = new Query(source, path);
+    const tasksBlockQuery = new Query(source, tasksFile);
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         if (globalQuery.hasInstructions()) {
-            const globalQueryQuery = globalQuery.query(path);
+            const globalQueryQuery = globalQuery.query(tasksFile);
             result += `Explanation of the global query:\n\n${explainer.explainQuery(globalQueryQuery)}\n`;
         }
     }
@@ -59,15 +60,19 @@ export function explainResults(
  *
  * @param {string} source The query source from the task block
  * @param globalQuery
- * @param {string | undefined} path The path to the file containing the query, if available.
+ * @param {OptionalTasksFile} tasksFile The path to the file containing the query, if available.
  * @returns {Query} The query to execute
  */
-export function getQueryForQueryRenderer(source: string, globalQuery: GlobalQuery, path: string | undefined): Query {
-    const tasksBlockQuery = new Query(source, path);
+export function getQueryForQueryRenderer(
+    source: string,
+    globalQuery: GlobalQuery,
+    tasksFile: OptionalTasksFile,
+): Query {
+    const tasksBlockQuery = new Query(source, tasksFile);
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
         return tasksBlockQuery;
     }
 
-    return globalQuery.query(path).append(tasksBlockQuery);
+    return globalQuery.query(tasksFile).append(tasksBlockQuery);
 }

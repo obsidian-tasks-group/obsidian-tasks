@@ -5,6 +5,7 @@ import type { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { Query } from '../../src/Query/Query';
 import { explainResults } from '../../src/lib/QueryRendererHelper';
 import type { Task } from '../../src/Task/Task';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyMarkdown } from './VerifyMarkdown';
 
 export function printIteration<T1>(func: <T1>(t1: T1) => any, params1: T1[]): string {
@@ -93,7 +94,12 @@ export function verifyTaskBlockExplanation(
     globalQuery: GlobalQuery,
     options?: Options,
 ): void {
-    const explanation = explainResults(instructions, globalFilter, globalQuery, 'some/sample/file path.md');
+    const explanation = explainResults(
+        instructions,
+        globalFilter,
+        globalQuery,
+        new TasksFile('some/sample/file path.md'),
+    );
 
     verifyWithFileExtension(explanation, 'explanation.text', options);
 }

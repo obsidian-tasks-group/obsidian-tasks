@@ -1,5 +1,6 @@
 import type { Task } from '../Task/Task';
 import { type QueryContext, makeQueryContextWithTasks } from '../Scripting/QueryContext';
+import type { OptionalTasksFile } from '../Scripting/TasksFile';
 
 /**
  * SearchInfo contains selected data passed in from the {@link Query} being executed.
@@ -12,15 +13,19 @@ export class SearchInfo {
     /** The list of tasks being searched.
      */
     public readonly allTasks: Readonly<Task[]>;
-    public readonly queryPath: string | undefined;
+    public readonly tasksFile: OptionalTasksFile;
 
-    public constructor(queryPath: string | undefined, allTasks: Task[]) {
-        this.queryPath = queryPath;
+    public constructor(tasksFile: OptionalTasksFile, allTasks: Task[]) {
+        this.tasksFile = tasksFile;
         this.allTasks = [...allTasks];
     }
 
     public static fromAllTasks(tasks: Task[]): SearchInfo {
         return new SearchInfo(undefined, tasks);
+    }
+
+    public get queryPath(): string | undefined {
+        return this.tasksFile?.path ?? undefined;
     }
 
     /**
@@ -30,6 +35,6 @@ export class SearchInfo {
      * @return A QueryContext, or undefined if the path to the query file is unknown.
      */
     public queryContext(): QueryContext | undefined {
-        return this.queryPath ? makeQueryContextWithTasks(this.queryPath, this.allTasks) : undefined;
+        return this.tasksFile ? makeQueryContextWithTasks(this.tasksFile, this.allTasks) : undefined;
     }
 }

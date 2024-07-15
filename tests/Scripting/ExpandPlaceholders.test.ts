@@ -1,8 +1,9 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 
 describe('ExpandTemplate', () => {
-    const path = 'a/b/path with space.md';
+    const tasksFile = new TasksFile('a/b/path with space.md');
 
     it('hard-coded call', () => {
         const view = {
@@ -18,7 +19,7 @@ describe('ExpandTemplate', () => {
         const rawString = `path includes {{query.file.path}}
 filename includes {{query.file.filename}}`;
 
-        const queryContext = makeQueryContext(path);
+        const queryContext = makeQueryContext(tasksFile);
         expect(expandPlaceholders(rawString, queryContext)).toMatchInlineSnapshot(`
             "path includes a/b/path with space.md
             filename includes path with space.md"
@@ -26,7 +27,7 @@ filename includes {{query.file.filename}}`;
     });
 
     it('should return the input string if no {{ in line', function () {
-        const queryContext = makeQueryContext(path);
+        const queryContext = makeQueryContext(tasksFile);
         const line = 'no braces here';
 
         const result = expandPlaceholders(line, queryContext);
@@ -51,7 +52,7 @@ The problem is in:
     });
 
     it('should throw an error if unknown template nested field used', () => {
-        const queryContext = makeQueryContext('stuff.md');
+        const queryContext = makeQueryContext(new TasksFile('stuff.md'));
         const source = '{{ query.file.nonsense }}';
 
         expect(() => expandPlaceholders(source, queryContext)).toThrow(
