@@ -2,11 +2,11 @@
 import type { Moment } from 'moment';
 // end-snippet
 
-import { RRule } from 'rrule';
 import { compareByDate } from '../lib/DateTools';
+import { RecurrenceRule } from './RecurrenceRule';
 
 export class Recurrence {
-    private readonly rrule: RRule;
+    private readonly rrule: RecurrenceRule;
     private readonly baseOnToday: boolean;
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
@@ -35,7 +35,7 @@ export class Recurrence {
         scheduledDate,
         dueDate,
     }: {
-        rrule: RRule;
+        rrule: RecurrenceRule;
         baseOnToday: boolean;
         referenceDate: Moment | null;
         startDate: Moment | null;
@@ -70,7 +70,7 @@ export class Recurrence {
             const isolatedRuleText = match[1].trim();
             const baseOnToday = match[2] !== undefined;
 
-            const options = RRule.parseText(isolatedRuleText);
+            const options = RecurrenceRule.parseText(isolatedRuleText);
             if (options !== null) {
                 // Pick the reference date for recurrence based on importance.
                 // Assuming due date has the highest priority.
@@ -90,7 +90,7 @@ export class Recurrence {
                     options.dtstart = window.moment().startOf('day').utc(true).toDate();
                 }
 
-                const rrule = new RRule(options);
+                const rrule = new RecurrenceRule(options);
                 return new Recurrence({
                     rrule,
                     baseOnToday,
@@ -207,7 +207,7 @@ export class Recurrence {
     }
 
     private nextReferenceDateFromToday(today: Moment): Moment {
-        const ruleBasedOnToday = new RRule({
+        const ruleBasedOnToday = new RecurrenceRule({
             ...this.rrule.origOptions,
             dtstart: today.startOf('day').utc(true).toDate(),
         });
@@ -248,7 +248,7 @@ export class Recurrence {
      * eventually calculate the next occurrence based on `2022-01-28`, ending up
      * in February as the user would expect.
      */
-    private nextAfter(after: Moment, rrule: RRule): Moment {
+    private nextAfter(after: Moment, rrule: RecurrenceRule): Moment {
         // We need to remove the timezone, as rrule does not regard timezones and always
         // calculates in UTC.
         // The timezone is added again before returning the next date.
@@ -283,7 +283,7 @@ export class Recurrence {
     private static nextAfterMonths(
         after: Moment,
         next: Moment,
-        rrule: RRule,
+        rrule: RecurrenceRule,
         skippingMonths: string | undefined,
     ): Moment {
         // Parse `skippingMonths`, if it exists.
@@ -323,7 +323,7 @@ export class Recurrence {
     private static nextAfterYears(
         after: Moment,
         next: Moment,
-        rrule: RRule,
+        rrule: RecurrenceRule,
         skippingYears: string | undefined,
     ): Moment {
         // Parse `skippingYears`, if it exists.
@@ -356,12 +356,12 @@ export class Recurrence {
      *
      * WARNING: This method manipulates the given instance of `after`.
      */
-    private static fromOneDayEarlier(after: Moment, rrule: RRule): Moment {
+    private static fromOneDayEarlier(after: Moment, rrule: RecurrenceRule): Moment {
         after.subtract(1, 'days').endOf('day');
 
         const options = rrule.origOptions;
         options.dtstart = after.startOf('day').toDate();
-        rrule = new RRule(options);
+        rrule = new RecurrenceRule(options);
 
         return window.moment(rrule.after(after.toDate()));
     }
