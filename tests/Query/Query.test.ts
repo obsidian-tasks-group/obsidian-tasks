@@ -1227,6 +1227,15 @@ describe('Query', () => {
         });
     });
 
+    describe('query path and metadata', function () {
+        it('should provide access to the path of the query', () => {
+            const path = 'query location.md';
+            const query = new Query('not done', new TasksFile(path));
+
+            expect(query.filePath).toEqual(path);
+        });
+    });
+
     describe('SearchInfo', () => {
         it('should pass SearchInfo through to filter functions', () => {
             // Arrange
