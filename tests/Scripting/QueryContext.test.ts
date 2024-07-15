@@ -8,9 +8,9 @@ import { FunctionField } from '../../src/Query/Filter/FunctionField';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 
-const path = new TasksFile('a/b/c.md');
-const task = new TaskBuilder().path(path.path).build();
-const queryContext = makeQueryContext(path);
+const tasksFile = new TasksFile('a/b/c.md');
+const task = new TaskBuilder().path(tasksFile.path).build();
+const queryContext = makeQueryContext(tasksFile);
 
 describe('QueryContext', () => {
     describe('values should all match their corresponding filters', () => {
@@ -47,7 +47,7 @@ describe('QueryContext', () => {
             const instruction = 'group by function query.allTasks.length';
             const grouper = new FunctionField().createGrouperFromLine(instruction);
             expect(grouper).not.toBeNull();
-            const searchInfo = new SearchInfo(path, [task]);
+            const searchInfo = new SearchInfo(tasksFile, [task]);
 
             // Act
             const group: string[] = grouper!.grouper(task, searchInfo);

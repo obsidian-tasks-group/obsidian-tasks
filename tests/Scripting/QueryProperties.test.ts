@@ -10,11 +10,11 @@ import { addBackticks, determineExpressionType, formatToRepresentType } from './
 describe('query', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const markdownTable = new MarkdownTable(['Field', 'Type', 'Example']);
-        const path = new TasksFile('root/sub-folder/file containing query.md');
+        const tasksFile = new TasksFile('root/sub-folder/file containing query.md');
         const task = new TaskBuilder()
             .description('... an array with all the Tasks-tracked tasks in the vault ...')
             .build();
-        const queryContext = makeQueryContextWithTasks(path, [task]);
+        const queryContext = makeQueryContextWithTasks(tasksFile, [task]);
         for (const field of fields) {
             const value1 = parseAndEvaluateExpression(task, field, queryContext);
             const cells = [

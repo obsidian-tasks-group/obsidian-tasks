@@ -60,11 +60,11 @@ describe('FunctionField - filtering', () => {
             'filter by function task.file.path === query.file.path',
         );
         expect(tasksInSameFileAsQuery).toBeValid();
-        const queryFilePath = new TasksFile('/a/b/query.md');
+        const queryTasksFile = new TasksFile('/a/b/query.md');
 
-        const taskInQueryFile: Task = new TaskBuilder().path(queryFilePath.path).build();
+        const taskInQueryFile: Task = new TaskBuilder().path(queryTasksFile.path).build();
         const taskNotInQueryFile: Task = new TaskBuilder().path('some other path.md').build();
-        const searchInfo = new SearchInfo(queryFilePath, [taskInQueryFile, taskNotInQueryFile]);
+        const searchInfo = new SearchInfo(queryTasksFile, [taskInQueryFile, taskNotInQueryFile]);
 
         expect(tasksInSameFileAsQuery.filterFunction!(taskInQueryFile, searchInfo)).toEqual(true);
         expect(tasksInSameFileAsQuery.filterFunction!(taskNotInQueryFile, searchInfo)).toEqual(false);
