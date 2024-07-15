@@ -4,7 +4,7 @@ import moment from 'moment';
 
 type RecurrenceRuleOptions = Omit<Options, 'freq'> & { freq: Options['freq'] | 'spaced' };
 
-type SpacedRule = { freq: 'spaced'; iteration: number };
+type SpacedRule = { freq: 'spaced'; repetition: number };
 
 export class RecurrenceRule {
     private rule: RRule | SpacedRule;
@@ -12,55 +12,58 @@ export class RecurrenceRule {
 
     constructor(public readonly origOptions: Partial<RecurrenceRuleOptions>) {
         if (this.origOptions.freq === 'spaced') {
-            this.rule = { freq: 'spaced', iteration: 0 };
+            this.rule = { freq: 'spaced', repetition: this.origOptions.count ?? 0 };
         } else {
             this.rule = new RRule(this.origOptions as Options);
         }
     }
 
     after(dt: Date): Date | null {
-        if (this.isSpacedRule(this.rule)) {
-            const daysToNextRepetition = this.spacedRepetitionProgression.slice(this.rule.iteration).at(0);
+        if (RecurrenceRule.isSpacedRule(this.rule)) {
+            const daysToNextRepetition = this.spacedRepetitionProgression[this.rule.repetition];
             if (!daysToNextRepetition) {
                 return null;
             }
-            this.rule.iteration++;
             return moment(dt).add(daysToNextRepetition, 'days').toDate();
         }
         return this.rule.after(dt);
     }
 
     toText() {
-        if (this.isSpacedRule(this.rule)) {
+        if (RecurrenceRule.isSpacedRule(this.rule)) {
             let serialized = 'spaced';
-            if (this.rule.iteration > 0) {
-                serialized += ` (${this.rule.iteration})`;
+            if (this.rule.repetition > 0) {
+                serialized += `${this.rule.repetition}`;
             }
             return serialized;
         }
         return this.rule.toText();
     }
 
+    nextIteration() {
+        if (!RecurrenceRule.isSpacedRule(this.rule)) {
+            return null;
+        }
+        return new RecurrenceRule({ freq: 'spaced', count: this.rule.repetition + 1 });
+    }
+
+    public get isSpacedRule() {
+        return RecurrenceRule.isSpacedRule(this.rule);
+    }
+
     static parseText(text: string): Partial<RecurrenceRuleOptions> {
         if (text.startsWith('spaced')) {
-            let count = 0;
-            if (text.startsWith('spaced (')) {
-                try {
-                    count = parseInt(text.charAt(8));
-                    // eslint-disable-next-line no-empty
-                } catch {}
-            }
-
+            const countCandidate = parseInt(text.at(-1)!);
             return {
                 freq: 'spaced',
-                count,
+                count: Number.isInteger(countCandidate) ? countCandidate : 0,
             };
         }
 
         return RRule.parseText(text);
     }
 
-    private isSpacedRule(rule: RRule | SpacedRule): rule is SpacedRule {
+    static isSpacedRule(rule: RRule | SpacedRule): rule is SpacedRule {
         return (rule as SpacedRule).freq === 'spaced';
     }
 }

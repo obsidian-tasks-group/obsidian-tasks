@@ -364,6 +364,7 @@ export class Task extends ListItem {
             startDate: Moment | null;
             scheduledDate: Moment | null;
             dueDate: Moment | null;
+            recurrence: Recurrence;
         } | null = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted() && this.recurrence !== null) {
@@ -425,6 +426,7 @@ export class Task extends ListItem {
             startDate: moment.Moment | null;
             scheduledDate: moment.Moment | null;
             dueDate: moment.Moment | null;
+            recurrence: Recurrence;
         },
     ) {
         const { setCreatedDate } = getSettings();

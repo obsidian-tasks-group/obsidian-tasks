@@ -25,6 +25,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: null,
+            recurrence: recurrence,
         });
     });
 
