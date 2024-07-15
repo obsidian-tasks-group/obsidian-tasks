@@ -121,7 +121,7 @@ export class Recurrence {
     }
 
     /**
-     * Returns the dates and options of the next occurrence or null if there is no next occurrence.
+     * Returns the dates and a new instance of Recurrence of the next occurrence or null if there is no next occurrence.
      *
      * @param today - Optional date representing the completion date. Defaults to today.
      */
