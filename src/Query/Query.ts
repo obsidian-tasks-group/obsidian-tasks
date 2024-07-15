@@ -81,6 +81,10 @@ export class Query implements IQuery {
         });
     }
 
+    public get filePath(): string | undefined {
+        return this.tasksFile?.path ?? undefined;
+    }
+
     public get queryId(): string {
         return this._queryId;
     }
@@ -420,6 +424,6 @@ ${statement.explainStatement('    ')}
     }
 
     public debug(message: string, objects?: any): void {
-        this.logger.debugWithId(this._queryId, `"${this.tasksFile}": ${message}`, objects);
+        this.logger.debugWithId(this._queryId, `"${this.filePath}": ${message}`, objects);
     }
 }
