@@ -15,8 +15,8 @@ export class SearchInfo {
     public readonly allTasks: Readonly<Task[]>;
     public readonly tasksFile: OptionalTasksFile;
 
-    public constructor(queryPath: OptionalTasksFile, allTasks: Task[]) {
-        this.tasksFile = queryPath;
+    public constructor(tasksFile: OptionalTasksFile, allTasks: Task[]) {
+        this.tasksFile = tasksFile;
         this.allTasks = [...allTasks];
     }
 
