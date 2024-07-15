@@ -1234,6 +1234,11 @@ describe('Query', () => {
 
             expect(query.filePath).toEqual(path);
         });
+
+        it('should give filePath unknown if no path provided to query', () => {
+            const query = new Query('not done');
+            expect(query.filePath).toEqual(undefined);
+        });
     });
 
     describe('SearchInfo', () => {
