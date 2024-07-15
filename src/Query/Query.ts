@@ -50,16 +50,16 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor(source: string, path: OptionalTasksFile = undefined) {
+    constructor(source: string, tasksFile: OptionalTasksFile = undefined) {
         this._queryId = this.generateQueryId(10);
 
         this.source = source;
-        this.filePath = path;
+        this.filePath = tasksFile;
 
         this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
         continueLines(source).forEach((statement: Statement) => {
-            const line = this.expandPlaceholders(statement, path);
+            const line = this.expandPlaceholders(statement, tasksFile);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
@@ -123,7 +123,7 @@ export class Query implements IQuery {
         return `[${this.source.split('\n').join(' ; ')}]`;
     }
 
-    private expandPlaceholders(statement: Statement, path: OptionalTasksFile) {
+    private expandPlaceholders(statement: Statement, tasksFile: OptionalTasksFile) {
         const source = statement.anyContinuationLinesRemoved;
         if (source.includes('{{') && source.includes('}}')) {
             if (this.filePath === undefined) {
@@ -139,8 +139,8 @@ ${source}`;
         // TODO Show the original and expanded text in explanations
         // TODO Give user error info if they try and put a string in a regex search
         let expandedSource: string = source;
-        if (path) {
-            const queryContext = makeQueryContext(path);
+        if (tasksFile) {
+            const queryContext = makeQueryContext(tasksFile);
             try {
                 expandedSource = expandPlaceholders(source, queryContext);
             } catch (error) {
