@@ -104,7 +104,7 @@ describe('Grouping tasks', () => {
     it('should provide access to SearchInfo', () => {
         // Arrange
         const groupByQueryPath: GrouperFunction = (_task: Task, searchInfo: SearchInfo) => {
-            return [searchInfo.queryPath ? searchInfo.queryPath.path : 'No SearchInfo'];
+            return [searchInfo.tasksFile ? searchInfo.tasksFile.path : 'No SearchInfo'];
         };
         const grouper: Grouper = new Grouper('group by test', 'test', groupByQueryPath, false);
 
