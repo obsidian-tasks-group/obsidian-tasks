@@ -69,7 +69,7 @@ class QueryRenderChild extends MarkdownRenderChild {
      */
     private readonly source: string;
 
-    /// The path of the file that contains the instruction block.
+    // The path of the file that contains the instruction block, and cached data from that file.
     private readonly tasksFile: TasksFile;
 
     private query: IQuery;
