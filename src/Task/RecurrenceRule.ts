@@ -4,54 +4,64 @@ import moment from 'moment';
 
 type RecurrenceRuleOptions = Omit<Options, 'freq'> & { freq: Options['freq'] | 'spaced' };
 
-type SpacedRule = { freq: 'spaced'; repetition: number };
-
 export class RecurrenceRule {
     private rule: RRule | SpacedRule;
-    private readonly spacedRepetitionProgression = [1, 3, 10];
 
     constructor(public readonly origOptions: Partial<RecurrenceRuleOptions>) {
         if (this.origOptions.freq === 'spaced') {
-            this.rule = { freq: 'spaced', repetition: this.origOptions.count ?? 0 };
+            this.rule = new SpacedRule(this.origOptions.count ?? 0);
         } else {
             this.rule = new RRule(this.origOptions as Options);
         }
     }
 
     after(dt: Date): Date | null {
-        if (RecurrenceRule.isSpacedRule(this.rule)) {
-            const daysToNextRepetition = this.spacedRepetitionProgression[this.rule.repetition];
-            if (!daysToNextRepetition) {
-                return null;
-            }
-            return moment(dt).add(daysToNextRepetition, 'days').toDate();
-        }
         return this.rule.after(dt);
     }
 
     toText() {
-        if (RecurrenceRule.isSpacedRule(this.rule)) {
-            let serialized = 'spaced';
-            if (this.rule.repetition > 0) {
-                serialized += `${this.rule.repetition}`;
-            }
-            return serialized;
-        }
         return this.rule.toText();
     }
 
     next() {
-        if (RecurrenceRule.isSpacedRule(this.rule)) {
+        if (this.rule instanceof SpacedRule) {
             return new RecurrenceRule({ freq: 'spaced', count: this.rule.repetition + 1 });
         }
         return this;
     }
 
-    public get isSpacedRule() {
-        return RecurrenceRule.isSpacedRule(this.rule);
+    static parseText(text: string): Partial<RecurrenceRuleOptions> {
+        const optionsParsedBySpacedRule = SpacedRule.parseText(text);
+        if (optionsParsedBySpacedRule !== null) {
+            return optionsParsedBySpacedRule;
+        }
+
+        return RRule.parseText(text);
+    }
+}
+
+class SpacedRule {
+    private readonly spacedRepetitionProgression = [1, 3, 10];
+
+    constructor(public readonly repetition: number) {}
+
+    after(dt: Date): Date | null {
+        const daysToNextRepetition = this.spacedRepetitionProgression[this.repetition];
+        if (!daysToNextRepetition) {
+            return null;
+        }
+        return moment(dt).add(daysToNextRepetition, 'days').toDate();
     }
 
-    static parseText(text: string): Partial<RecurrenceRuleOptions> {
+    toText() {
+        let serialized = 'spaced';
+        if (this.repetition > 0) {
+            serialized += `${this.repetition}`;
+        }
+        return serialized;
+    }
+
+    static parseText(text: string): Partial<RecurrenceRuleOptions> | null {
         if (text.startsWith('spaced')) {
             const countCandidate = parseInt(text.at(-1)!);
             return {
@@ -60,10 +70,6 @@ export class RecurrenceRule {
             };
         }
 
-        return RRule.parseText(text);
-    }
-
-    static isSpacedRule(rule: RRule | SpacedRule): rule is SpacedRule {
-        return (rule as SpacedRule).freq === 'spaced';
+        return null;
     }
 }
