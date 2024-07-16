@@ -360,15 +360,10 @@ export class Task extends ListItem {
             today,
         );
 
-        let nextOccurrence: {
-            startDate: Moment | null;
-            scheduledDate: Moment | null;
-            dueDate: Moment | null;
-            recurrence: Recurrence;
-        } | null = null;
+        let nextRecurrence: Recurrence | null = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted() && this.recurrence !== null) {
-                nextOccurrence = this.recurrence.next(today);
+                nextRecurrence = this.recurrence.next(today);
             }
         }
 
@@ -381,8 +376,8 @@ export class Task extends ListItem {
 
         const newTasks: Task[] = [];
 
-        if (nextOccurrence !== null) {
-            const nextTask = this.createNextOccurrence(newStatus, nextOccurrence);
+        if (nextRecurrence !== null) {
+            const nextTask = this.createNextOccurrence(newStatus, nextRecurrence);
             newTasks.push(nextTask);
         }
 
@@ -420,15 +415,7 @@ export class Task extends ListItem {
         return newDate;
     }
 
-    private createNextOccurrence(
-        newStatus: Status,
-        nextOccurrence: {
-            startDate: moment.Moment | null;
-            scheduledDate: moment.Moment | null;
-            dueDate: moment.Moment | null;
-            recurrence: Recurrence;
-        },
-    ) {
+    private createNextOccurrence(newStatus: Status, nextRecurrence: Recurrence) {
         const { setCreatedDate } = getSettings();
         let createdDate: moment.Moment | null = null;
         if (setCreatedDate) {
@@ -445,7 +432,10 @@ export class Task extends ListItem {
         const nextStatus = statusRegistry.getNextRecurrenceStatusOrCreate(newStatus);
         return new Task({
             ...this,
-            ...nextOccurrence,
+            startDate: nextRecurrence.startDate,
+            scheduledDate: nextRecurrence.scheduledDate,
+            dueDate: nextRecurrence.dueDate,
+            recurrence: nextRecurrence,
             status: nextStatus,
             // New occurrences cannot have the same block link.
             // And random block links don't help.

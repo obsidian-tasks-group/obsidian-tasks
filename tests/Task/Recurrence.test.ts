@@ -21,12 +21,10 @@ describe('Recurrence', () => {
         const next = recurrence!.next();
 
         // Assert
-        expect(next).toStrictEqual({
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-            recurrence: recurrence,
-        });
+        expect(next).toBeInstanceOf(Recurrence);
+        expect(next?.startDate).toBe(null);
+        expect(next?.scheduledDate).toBe(null);
+        expect(next?.dueDate).toBe(null);
     });
 
     it('creates a recurrence the next month, even on the 31st', () => {

@@ -8,9 +8,9 @@ import { RecurrenceRule } from './RecurrenceRule';
 export class Recurrence {
     private readonly rrule: RecurrenceRule;
     private readonly baseOnToday: boolean;
-    private readonly startDate: Moment | null;
-    private readonly scheduledDate: Moment | null;
-    private readonly dueDate: Moment | null;
+    public readonly startDate: Moment | null;
+    public readonly scheduledDate: Moment | null;
+    public readonly dueDate: Moment | null;
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -121,16 +121,11 @@ export class Recurrence {
     }
 
     /**
-     * Returns the dates and a new instance of Recurrence of the next occurrence or null if there is no next occurrence.
+     * Returns the next recurrence or null if there is no next recurrence.
      *
      * @param today - Optional date representing the completion date. Defaults to today.
      */
-    public next(today = window.moment()): {
-        startDate: Moment | null;
-        scheduledDate: Moment | null;
-        dueDate: Moment | null;
-        recurrence: Recurrence;
-    } | null {
+    public next(today = window.moment()): Recurrence | null {
         const next = this.nextReferenceDate(today);
 
         if (next !== null) {
@@ -169,25 +164,14 @@ export class Recurrence {
                 }
             }
 
-            let recurrence: Recurrence = this;
-            if (this.rrule.isSpacedRule) {
-                const newRule = this.rrule.nextIteration()!;
-                recurrence = new Recurrence({
-                    rrule: newRule,
-                    referenceDate: this.referenceDate,
-                    scheduledDate: this.scheduledDate,
-                    startDate: this.startDate,
-                    baseOnToday: this.baseOnToday,
-                    dueDate: this.dueDate,
-                });
-            }
-
-            return {
-                startDate,
-                scheduledDate,
-                dueDate,
-                recurrence,
-            };
+            return new Recurrence({
+                rrule: this.rrule.next(),
+                referenceDate: this.referenceDate,
+                scheduledDate: scheduledDate,
+                startDate: startDate,
+                baseOnToday: this.baseOnToday,
+                dueDate: dueDate,
+            });
         }
 
         return null;

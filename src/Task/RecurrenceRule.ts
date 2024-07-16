@@ -40,11 +40,11 @@ export class RecurrenceRule {
         return this.rule.toText();
     }
 
-    nextIteration() {
-        if (!RecurrenceRule.isSpacedRule(this.rule)) {
-            return null;
+    next() {
+        if (RecurrenceRule.isSpacedRule(this.rule)) {
+            return new RecurrenceRule({ freq: 'spaced', count: this.rule.repetition + 1 });
         }
-        return new RecurrenceRule({ freq: 'spaced', count: this.rule.repetition + 1 });
+        return this;
     }
 
     public get isSpacedRule() {
