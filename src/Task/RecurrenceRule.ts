@@ -36,6 +36,11 @@ export class RecurrenceRule {
     next() {
         if (this.rule instanceof CustomRecurrenceRule) {
             const nextOptions = this.rule.next();
+
+            if (!nextOptions) {
+                return null;
+            }
+
             return new RecurrenceRule(nextOptions);
         }
         return this;
@@ -62,7 +67,7 @@ export type CustomRecurrenceRuleName = string;
 export abstract class CustomRecurrenceRule {
     abstract after(dt: Date): Date | null;
     abstract toText(): string;
-    abstract next(): CustomRecurrenceRuleOptions;
+    abstract next(): CustomRecurrenceRuleOptions | null;
 }
 export interface CustomRecurrenceRuleStatic {
     parseText(_text: string): CustomRecurrenceRuleOptions;
