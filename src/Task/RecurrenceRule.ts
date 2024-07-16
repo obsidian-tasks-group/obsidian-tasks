@@ -44,10 +44,9 @@ export class RecurrenceRule {
     static parseText(text: string): RecurrenceRuleOptions {
         // Try parsing text with the custom parsers first
         // If none of them work, then fallback to the default recurrence
-        for (const customRecurrenceRule of Object.values(customRecurrenceRuleRegistry)) {
-            const optionsParsedByCustomRule = customRecurrenceRule.parseText(text);
-            if (optionsParsedByCustomRule !== null) {
-                return optionsParsedByCustomRule;
+        for (const [ruleName, ruleClass] of Object.entries(customRecurrenceRuleRegistry)) {
+            if (text.startsWith(ruleName)) {
+                return ruleClass.parseText(text);
             }
         }
 
@@ -66,39 +65,5 @@ export abstract class CustomRecurrenceRule {
     abstract next(): CustomRecurrenceRuleOptions;
 }
 export interface CustomRecurrenceRuleStatic {
-    parseText(_text: string): CustomRecurrenceRuleOptions | null;
+    parseText(_text: string): CustomRecurrenceRuleOptions;
 }
-
-// class SpacedRule {
-//     private readonly spacedRepetitionProgression = [1, 3, 10];
-
-//     constructor(public readonly repetition: number) {}
-
-//     after(dt: Date): Date | null {
-//         const daysToNextRepetition = this.spacedRepetitionProgression[this.repetition];
-//         if (!daysToNextRepetition) {
-//             return null;
-//         }
-//         return moment(dt).add(daysToNextRepetition, 'days').toDate();
-//     }
-
-//     toText() {
-//         let serialized = 'spaced';
-//         if (this.repetition > 0) {
-//             serialized += `${this.repetition}`;
-//         }
-//         return serialized;
-//     }
-
-//     static parseText(text: string): RecurrenceRuleOptions | null {
-//         if (text.startsWith('spaced')) {
-//             const countCandidate = parseInt(text.at(-1)!);
-//             return {
-//                 freq: 'spaced',
-//                 count: Number.isInteger(countCandidate) ? countCandidate : 0,
-//             };
-//         }
-
-//         return null;
-//     }
-// }
