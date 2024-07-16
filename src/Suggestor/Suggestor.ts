@@ -365,7 +365,6 @@ function addRecurrenceSuggestions(
         'every week on Thursday',
         'every week on Friday',
         'every week on Saturday',
-        'spaced',
     ];
 
     const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
