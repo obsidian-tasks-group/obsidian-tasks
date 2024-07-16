@@ -13,10 +13,10 @@ import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
 import { DateFallback } from './DateFallback';
 import { ListItem } from './ListItem';
 import { Urgency } from './Urgency';
-import type { Recurrence } from './Recurrence';
 import type { TaskLocation } from './TaskLocation';
 import type { Priority } from './Priority';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
+import type { AbstractRecurrence } from './AbstractRecurrence';
 
 /**
  * Storage for the task line, broken down in to sections.
@@ -58,7 +58,7 @@ export class Task extends ListItem {
     public readonly doneDate: Moment | null;
     public readonly cancelledDate: Moment | null;
 
-    public readonly recurrence: Recurrence | null;
+    public readonly recurrence: AbstractRecurrence | null;
 
     public readonly dependsOn: string[];
     public readonly id: string;
@@ -107,7 +107,7 @@ export class Task extends ListItem {
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
         cancelledDate: moment.Moment | null;
-        recurrence: Recurrence | null;
+        recurrence: AbstractRecurrence | null;
         dependsOn: string[] | [];
         id: string;
         blockLink: string;
@@ -360,7 +360,7 @@ export class Task extends ListItem {
             today,
         );
 
-        let nextRecurrence: Recurrence | null = null;
+        let nextRecurrence: AbstractRecurrence | null = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted() && this.recurrence !== null) {
                 nextRecurrence = this.recurrence.next(today);
@@ -415,7 +415,7 @@ export class Task extends ListItem {
         return newDate;
     }
 
-    private createNextOccurrence(newStatus: Status, nextRecurrence: Recurrence) {
+    private createNextOccurrence(newStatus: Status, nextRecurrence: AbstractRecurrence) {
         const { setCreatedDate } = getSettings();
         let createdDate: moment.Moment | null = null;
         if (setCreatedDate) {

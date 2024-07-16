@@ -1,5 +1,5 @@
 import type { App } from 'obsidian';
-import { customRecurrenceRuleRegistry } from '../Task/RecurrenceRule';
+import { addToRecurrenceRegistry } from '../Task/RecurrenceRegistry';
 import { toggleLine } from '../Commands/ToggleDone';
 import { createTaskLineModal } from './createTaskLineModal';
 import type { TasksApiV1 } from './TasksApiV1';
@@ -16,8 +16,8 @@ export const tasksApiV1 = (app: App): TasksApiV1 => {
             return createTaskLineModal(app, defaultTaskModalFactory);
         },
         executeToggleTaskDoneCommand: (line: string, path: string) => toggleLine(line, path).text,
-        addCustomRecurrenceRule: (name, customRecurrenceRuleClass) => {
-            customRecurrenceRuleRegistry[name] = customRecurrenceRuleClass;
+        addCustomRecurrence: (customRecurrenceClass) => {
+            addToRecurrenceRegistry(customRecurrenceClass);
         },
     };
 };

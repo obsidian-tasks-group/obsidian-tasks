@@ -1,9 +1,10 @@
+import type { AbstractRecurrence } from '../Task/AbstractRecurrence';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { parseTypedDateForSaving } from '../lib/DateTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
 import { Priority } from '../Task/Priority';
-import { Recurrence } from '../Task/Recurrence';
+import { parseRecurrenceText } from '../Task/RecurrenceRegistry';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 
@@ -153,9 +154,9 @@ export class EditableTask {
         const createdDate = parseTypedDateForSaving(this.createdDate, this.forwardOnly);
         const doneDate = parseTypedDateForSaving(this.doneDate, this.forwardOnly);
 
-        let recurrence: Recurrence | null = null;
+        let recurrence: AbstractRecurrence | null = null;
         if (this.recurrenceRule) {
-            recurrence = Recurrence.fromText({
+            recurrence = parseRecurrenceText({
                 recurrenceRuleText: this.recurrenceRule,
                 startDate,
                 scheduledDate,
@@ -247,7 +248,7 @@ export class EditableTask {
             return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
         }
 
-        const recurrenceFromText = Recurrence.fromText({
+        const recurrenceFromText = parseRecurrenceText({
             recurrenceRuleText: this.recurrenceRule,
             // Only for representation in the modal, no dates required.
             startDate: null,

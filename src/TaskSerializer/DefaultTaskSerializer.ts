@@ -1,9 +1,10 @@
 import type { Moment } from 'moment';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { Recurrence } from '../Task/Recurrence';
+import { parseRecurrenceText } from '../Task/RecurrenceRegistry';
 import { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import type { AbstractRecurrence } from '../Task/AbstractRecurrence';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}
@@ -257,7 +258,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let cancelledDate: Moment | null = null;
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
-        let recurrence: Recurrence | null = null;
+        let recurrence: AbstractRecurrence | null = null;
         let id: string = '';
         let dependsOn: string[] | [] = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
@@ -365,7 +366,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
 
         // Now that we have all the task details, parse the recurrence rule if we found any
         if (recurrenceRule.length > 0) {
-            recurrence = Recurrence.fromText({
+            recurrence = parseRecurrenceText({
                 recurrenceRuleText: recurrenceRule,
                 startDate,
                 scheduledDate,

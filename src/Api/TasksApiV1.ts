@@ -1,4 +1,4 @@
-import type { CustomRecurrenceRuleName, CustomRecurrenceRuleRegistryEntry } from '../Task/RecurrenceRule';
+import type { AbstractRecurrenceClassDefinition } from '../Task/AbstractRecurrence';
 
 /**
  * Tasks API v1 interface
@@ -23,13 +23,9 @@ export interface TasksApiV1 {
     executeToggleTaskDoneCommand: (line: string, path: string) => string;
 
     /**
-     * Adds a custom recurrence rule.
+     * Adds a custom recurrence.
      *
-     * @param name Name of the custom recurrence rule
-     * @param customRecurrenceRule An subclass of CustomRecurrenceRule, that also implements a static method `parseText`.
+     * @param customRecurrence A subclass of AbstractRecurrence, that also implements a static method `fromText`.
      */
-    addCustomRecurrenceRule: (
-        name: CustomRecurrenceRuleName,
-        customRecurrenceRule: CustomRecurrenceRuleRegistryEntry,
-    ) => void;
+    addCustomRecurrence: (customRecurrence: AbstractRecurrenceClassDefinition) => void;
 }
