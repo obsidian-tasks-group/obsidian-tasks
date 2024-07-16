@@ -1,3 +1,5 @@
+import type { CustomRecurrenceRuleName, CustomRecurrenceRuleRegistryEntry } from '../Task/RecurrenceRule';
+
 /**
  * Tasks API v1 interface
  */
@@ -19,4 +21,15 @@ export interface TasksApiV1 {
      *          if a recurring task was completed.
      */
     executeToggleTaskDoneCommand: (line: string, path: string) => string;
+
+    /**
+     * Adds a custom recurrence rule.
+     *
+     * @param name Name of the custom recurrence rule
+     * @param customRecurrenceRule An subclass of CustomRecurrenceRule, that also implements a static method `parseText`.
+     */
+    addCustomRecurrenceRule: (
+        name: CustomRecurrenceRuleName,
+        customRecurrenceRule: CustomRecurrenceRuleRegistryEntry,
+    ) => void;
 }
