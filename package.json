@@ -61,7 +61,7 @@
     "svelte-check": "^3.8.4",
     "svelte-jester": "^2.3.2",
     "svelte-preprocess": "^5.0.4",
-    "ts-jest": "^29.1.1",
+    "ts-jest": "^29.2.3",
     "tslib": "^2.5.2",
     "typescript": "^5.0.4"
   },
