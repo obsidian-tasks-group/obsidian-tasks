@@ -52,9 +52,6 @@ async function writeListOfAllTestFunctions(files) {
     let imports = '';
     let functions = '';
     for (const file of files) {
-        if (!file.endsWith('.md')) {
-            continue;
-        }
         const filename = file.split('/')[1].replace('.md', '');
         imports += `import { ${filename} } from './__test_data__/${filename}';\n`;
         functions += `        ${filename},\n`;
@@ -89,7 +86,7 @@ async function export_files(tp) {
         await convertMarkdownFileToTestFunction(file, tp);
     }
 
-    await writeListOfAllTestFunctions(files);
+    await writeListOfAllTestFunctions(markdownFiles);
 
     const message = 'Success - now run "yarn lint:test-data" to format the generated files.';
     new Notice(message);
