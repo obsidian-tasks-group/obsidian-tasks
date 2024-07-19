@@ -178,16 +178,16 @@ export class Recurrence {
     }
 
     private appleSauce(nextReferenceDate: Date, currentOccurrence: Moment | null) {
-        let startDate: Moment | null = null;
+        let nextOccurrence: Moment | null = null;
         if (currentOccurrence) {
             const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
 
             // Cloning so that original won't be manipulated:
-            startDate = window.moment(nextReferenceDate);
+            nextOccurrence = window.moment(nextReferenceDate);
             // Rounding days to handle cross daylight-savings-time recurrences.
-            startDate.add(Math.round(originalDifference.asDays()), 'days');
+            nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
         }
-        return startDate;
+        return nextOccurrence;
     }
 
     public identicalTo(other: Recurrence) {
