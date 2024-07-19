@@ -178,7 +178,6 @@ export class Recurrence {
     }
 
     private appleSauce(nextReferenceDate: Date, currentOccurrence: Moment | null) {
-        let nextOccurrence: Moment | null = null;
         if (currentOccurrence === null) {
             return null;
         }
@@ -186,7 +185,7 @@ export class Recurrence {
         const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
 
         // Cloning so that original won't be manipulated:
-        nextOccurrence = window.moment(nextReferenceDate);
+        const nextOccurrence = window.moment(nextReferenceDate);
         // Rounding days to handle cross daylight-savings-time recurrences.
         nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
         return nextOccurrence;
