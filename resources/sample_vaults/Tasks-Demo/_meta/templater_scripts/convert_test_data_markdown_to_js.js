@@ -1,9 +1,11 @@
 const fs = require('node:fs');
 const util = require('util');
 
+const vault = app.vault;
+
 async function getMarkdownFiles() {
     // Get all files from Test Data/ directory
-    const { files } = await app.vault.adapter.list('Test Data/');
+    const { files } = await vault.adapter.list('Test Data/');
     return files.filter((file) => file.endsWith('.md'));
 }
 
@@ -12,7 +14,7 @@ function getBasename(filePath) {
 }
 
 function getOutputFilePath(outputFile) {
-    const rootOfVault = app.vault.adapter.getBasePath();
+    const rootOfVault = vault.adapter.getBasePath();
     return rootOfVault + '/../../../tests/Obsidian/' + outputFile;
 }
 
@@ -31,9 +33,9 @@ function showNotice(message) {
 }
 
 async function convertMarkdownFileToTestFunction(filePath, tp) {
-    const tFile = app.vault.getAbstractFileByPath(filePath);
+    const tFile = vault.getAbstractFileByPath(filePath);
 
-    const fileContents = await app.vault.read(tFile);
+    const fileContents = await vault.read(tFile);
     const cachedMetadata = app.metadataCache.getFileCache(tFile);
     const obsidianApiVersion = tp.obsidian.apiVersion;
     const getAllTags = tp.obsidian.getAllTags(cachedMetadata);
