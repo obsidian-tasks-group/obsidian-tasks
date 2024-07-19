@@ -179,7 +179,9 @@ export class Recurrence {
 
     private appleSauce(nextReferenceDate: Date, currentOccurrence: Moment | null) {
         let nextOccurrence: Moment | null = null;
-        if (currentOccurrence) {
+        if (currentOccurrence === null) {
+            return null;
+        } else {
             const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
 
             // Cloning so that original won't be manipulated:
