@@ -51,8 +51,7 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
 async function writeListOfAllTestFunctions(files) {
     let imports = '';
     let functions = '';
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+    for (const file of files) {
         if (!file.endsWith('.md')) {
             continue;
         }
@@ -78,8 +77,7 @@ ${functions}    ];
 async function export_files(tp) {
     // Get all files from Test Data/ directory
     const { files } = await app.vault.adapter.list('Test Data/');
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+    for (const file of files) {
         if (!file.endsWith('.md')) {
             continue;
         }
