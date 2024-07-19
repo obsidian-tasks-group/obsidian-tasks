@@ -638,8 +638,8 @@ describe('cache', () => {
     });
 });
 
-describe('all mock files', () => {
-    const files: any = [
+function allCacheSampleData() {
+    return [
         blockquote,
         callout,
         callout_custom,
@@ -694,6 +694,10 @@ describe('all mock files', () => {
         yaml_tags_with_two_values_on_one_line,
         yaml_tags_with_two_values_on_two_lines,
     ];
+}
+
+describe('all mock files', () => {
+    const files: any = allCacheSampleData();
 
     it.each(listPathAndData(files))(
         'should create valid TasksFile for all mock files: "%s"',
