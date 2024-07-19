@@ -14,6 +14,10 @@ async function getMarkdownFile() {
     return markdownFiles;
 }
 
+function getBasename(filePath) {
+    return filePath.split('/')[1].replace('.md', '');
+}
+
 function getOutputFilePath(outputFile) {
     const rootOfVault = app.vault.adapter.getBasePath();
     return rootOfVault + '/../../../tests/Obsidian/' + outputFile;
@@ -39,7 +43,7 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     const parseFrontMatterTags = tp.obsidian.parseFrontMatterTags(cachedMetadata.frontmatter);
     const data = { filePath, fileContents, cachedMetadata, obsidianApiVersion, getAllTags, parseFrontMatterTags };
 
-    const filename = filePath.split('/')[1].replace('.md', '');
+    const filename = getBasename(filePath);
     if (filename.includes(' ')) {
         // The file name is used to create a TypeScript variable, so disallow spaces:
         const message = `ERROR - spaces not allowed in filenames: "${filename}"`;
@@ -65,7 +69,7 @@ async function writeListOfAllTestFunctions(files) {
     let imports = '';
     let functions = '';
     for (const file of files) {
-        const filename = file.split('/')[1].replace('.md', '');
+        const filename = getBasename(file);
         imports += `import { ${filename} } from './__test_data__/${filename}';\n`;
         functions += `        ${filename},\n`;
     }
