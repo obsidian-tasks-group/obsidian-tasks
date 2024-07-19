@@ -7,6 +7,16 @@ function getOutputFilePath(outputFile) {
     return testSourceFile;
 }
 
+function writeFile(testSourceFile, content) {
+    fs.writeFile(testSourceFile, content, (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            // file written successfully
+        }
+    });
+}
+
 async function convertMarkdownFileToTestFunction(filePath, tp) {
     const tFile = app.vault.getAbstractFileByPath(filePath);
 
@@ -36,14 +46,7 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     const options = { depth: null, compact: false };
     const dataAsJSSource = util.inspect(data, options);
     const content = `export const ${filename} = ${dataAsJSSource};`;
-
-    fs.writeFile(testSourceFile, content, (err) => {
-        if (err) {
-            console.error(err);
-        } else {
-            // file written successfully
-        }
-    });
+    writeFile(testSourceFile, content);
 }
 
 async function writeListOfAllTestFunctions(files) {
