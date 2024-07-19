@@ -150,31 +150,31 @@ export class Recurrence {
                 scheduledDate: null,
                 dueDate: null,
             };
-        } else {
-            if (this.startDate) {
-                const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
+        }
 
-                // Cloning so that original won't be manipulated:
-                startDate = window.moment(next);
-                // Rounding days to handle cross daylight-savings-time recurrences.
-                startDate.add(Math.round(originalDifference.asDays()), 'days');
-            }
-            if (this.scheduledDate) {
-                const originalDifference = window.moment.duration(this.scheduledDate.diff(this.referenceDate));
+        if (this.startDate) {
+            const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
 
-                // Cloning so that original won't be manipulated:
-                scheduledDate = window.moment(next);
-                // Rounding days to handle cross daylight-savings-time recurrences.
-                scheduledDate.add(Math.round(originalDifference.asDays()), 'days');
-            }
-            if (this.dueDate) {
-                const originalDifference = window.moment.duration(this.dueDate.diff(this.referenceDate));
+            // Cloning so that original won't be manipulated:
+            startDate = window.moment(next);
+            // Rounding days to handle cross daylight-savings-time recurrences.
+            startDate.add(Math.round(originalDifference.asDays()), 'days');
+        }
+        if (this.scheduledDate) {
+            const originalDifference = window.moment.duration(this.scheduledDate.diff(this.referenceDate));
 
-                // Cloning so that original won't be manipulated:
-                dueDate = window.moment(next);
-                // Rounding days to handle cross daylight-savings-time recurrences.
-                dueDate.add(Math.round(originalDifference.asDays()), 'days');
-            }
+            // Cloning so that original won't be manipulated:
+            scheduledDate = window.moment(next);
+            // Rounding days to handle cross daylight-savings-time recurrences.
+            scheduledDate.add(Math.round(originalDifference.asDays()), 'days');
+        }
+        if (this.dueDate) {
+            const originalDifference = window.moment.duration(this.dueDate.diff(this.referenceDate));
+
+            // Cloning so that original won't be manipulated:
+            dueDate = window.moment(next);
+            // Rounding days to handle cross daylight-savings-time recurrences.
+            dueDate.add(Math.round(originalDifference.asDays()), 'days');
         }
 
         return {
