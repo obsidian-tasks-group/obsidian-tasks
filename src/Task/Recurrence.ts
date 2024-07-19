@@ -148,14 +148,10 @@ export class Recurrence {
 
         // Keep the relative difference between the reference date and
         // start/scheduled/due.
-        const startDate = this.appleSauce(next, this.startDate);
-        const scheduledDate = this.appleSauce(next, this.scheduledDate);
-        const dueDate = this.appleSauce(next, this.dueDate);
-
         return {
-            startDate,
-            scheduledDate,
-            dueDate,
+            startDate: this.appleSauce(next, this.startDate),
+            scheduledDate: this.appleSauce(next, this.scheduledDate),
+            dueDate: this.appleSauce(next, this.dueDate),
         };
     }
 
