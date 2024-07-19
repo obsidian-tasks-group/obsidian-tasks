@@ -1,6 +1,12 @@
 const fs = require('node:fs');
 const util = require('util');
 
+function getOutputFilePath(outputFile) {
+    const rootOfVault = app.vault.adapter.getBasePath();
+    const testSourceFile = rootOfVault + '/../../../tests/Obsidian/' + outputFile;
+    return testSourceFile;
+}
+
 async function convertMarkdownFileToTestFunction(filePath, tp) {
     const tFile = app.vault.getAbstractFileByPath(filePath);
 
@@ -26,8 +32,7 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     }
 
     const outputFile = '__test_data__/' + filename + '.ts';
-    const rootOfVault = app.vault.adapter.getBasePath();
-    const testSourceFile = rootOfVault + '/../../../tests/Obsidian/' + outputFile;
+    const testSourceFile = getOutputFilePath(outputFile);
 
     const options = { depth: null, compact: false };
     const dataAsJSSource = util.inspect(data, options);
