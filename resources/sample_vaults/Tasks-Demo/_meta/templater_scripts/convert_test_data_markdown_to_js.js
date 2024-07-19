@@ -54,7 +54,10 @@ async function writeListOfAllTestFunctions(files) {
         functions += `        ${filename},\n`;
     }
 
-    let content = `${imports}
+    let content = `// DO NOT EDIT!
+// This file is machine-generated in the test vault, by convert_test_data_markdown_to_js.js.
+
+${imports}
 export function allCacheSampleData() {
     return [
 ${functions}    ];

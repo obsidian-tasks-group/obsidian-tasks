@@ -1,3 +1,6 @@
+// DO NOT EDIT!
+// This file is machine-generated in the test vault, by convert_test_data_markdown_to_js.js.
+
 import { blockquote } from './__test_data__/blockquote';
 import { callout } from './__test_data__/callout';
 import { callout_custom } from './__test_data__/callout_custom';
