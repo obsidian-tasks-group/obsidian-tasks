@@ -26,6 +26,10 @@ function writeFile(testSourceFile, content) {
     });
 }
 
+function showNotice(message) {
+    new Notice(message);
+}
+
 async function convertMarkdownFileToTestFunction(filePath, tp) {
     const tFile = app.vault.getAbstractFileByPath(filePath);
 
@@ -40,13 +44,13 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     if (filename.includes(' ')) {
         // The file name is used to create a TypeScript variable, so disallow spaces:
         const message = `ERROR - spaces not allowed in filenames: "${filename}"`;
-        new Notice(message);
+        showNotice(message);
         return '';
     }
 
     if (!fileContents.endsWith('\n')) {
         const message = `ERROR - missing newline character at end of: "${filename}"`;
-        new Notice(message);
+        showNotice(message);
         return '';
     }
 
@@ -91,7 +95,7 @@ async function export_files(tp) {
     await writeListOfAllTestFunctions(markdownFiles);
 
     const message = 'Success - now run "yarn lint:test-data" to format the generated files.';
-    new Notice(message);
+    showNotice(message);
     return '';
 }
 
