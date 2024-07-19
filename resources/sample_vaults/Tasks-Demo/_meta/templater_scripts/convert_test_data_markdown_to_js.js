@@ -65,10 +65,11 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
 async function writeListOfAllTestFunctions(files) {
     const basenames = files.map((file) => getBasename(file));
 
-    let imports = '';
+    const imports = basenames
+        .map((filename) => `import { ${filename} } from './__test_data__/${filename}';\n`)
+        .join('');
     let functions = '';
     for (const filename of basenames) {
-        imports += `import { ${filename} } from './__test_data__/${filename}';\n`;
         functions += `        ${filename},\n`;
     }
 
