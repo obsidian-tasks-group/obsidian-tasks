@@ -136,12 +136,6 @@ export class Recurrence {
             return null;
         }
 
-        // Keep the relative difference between the reference date and
-        // start/scheduled/due.
-        let startDate: Moment | null = null;
-        let scheduledDate: Moment | null = null;
-        let dueDate: Moment | null = null;
-
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
         if (this.referenceDate === null) {
@@ -151,6 +145,12 @@ export class Recurrence {
                 dueDate: null,
             };
         }
+
+        // Keep the relative difference between the reference date and
+        // start/scheduled/due.
+        let startDate: Moment | null = null;
+        let scheduledDate: Moment | null = null;
+        let dueDate: Moment | null = null;
 
         if (this.startDate) {
             const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
