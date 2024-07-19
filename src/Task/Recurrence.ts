@@ -144,7 +144,13 @@ export class Recurrence {
 
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
-        if (this.referenceDate) {
+        if (!this.referenceDate) {
+            return {
+                startDate: null,
+                scheduledDate: null,
+                dueDate: null,
+            };
+        } else {
             if (this.startDate) {
                 const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
 
