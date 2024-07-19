@@ -144,7 +144,7 @@ export class Recurrence {
 
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
-        if (!this.referenceDate) {
+        if (this.referenceDate === null) {
             return {
                 startDate: null,
                 scheduledDate: null,
