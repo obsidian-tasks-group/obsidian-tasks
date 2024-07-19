@@ -3,15 +3,8 @@ const util = require('util');
 
 async function getMarkdownFiles() {
     // Get all files from Test Data/ directory
-    const markdownFiles = [];
     const { files } = await app.vault.adapter.list('Test Data/');
-    for (const file of files) {
-        if (!file.endsWith('.md')) {
-            continue;
-        }
-        markdownFiles.push(file);
-    }
-    return markdownFiles;
+    return files.filter((file) => file.endsWith('.md'));
 }
 
 function getBasename(filePath) {
