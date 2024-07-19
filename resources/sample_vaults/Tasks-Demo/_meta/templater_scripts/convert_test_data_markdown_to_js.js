@@ -69,8 +69,7 @@ ${functions}    ];
 }
 `;
 
-    const rootOfVault = app.vault.adapter.getBasePath();
-    const testSourceFile = rootOfVault + '/../../../tests/Obsidian/AllCacheSampleData.ts';
+    const testSourceFile = getOutputFilePath('AllCacheSampleData.ts');
     fs.writeFile(testSourceFile, content, (err) => {
         if (err) {
             console.error(err);
