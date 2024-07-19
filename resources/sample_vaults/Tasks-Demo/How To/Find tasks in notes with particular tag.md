@@ -54,3 +54,24 @@ filter by function ! task.file.tags.includes('#examples')
 
 limit 20
 ```
+
+#### Group by tags - in frontmatter or body
+
+```tasks
+group by function task.file.tags
+folder does not include Test Data
+
+limit groups 3
+limit 100
+```
+
+#### Group by tags - in frontmatter or body, ignoring the global filter
+
+```tasks
+# TODO Provide task.file.tagsWithoutGlobalFilter
+group by function task.file.tags.filter( (t) => t !== '#task' )
+folder does not include Test Data
+
+limit groups 3
+limit 100
+```
