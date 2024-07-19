@@ -73,13 +73,7 @@ ${functions}    ];
 `;
 
     const testSourceFile = getOutputFilePath('AllCacheSampleData.ts');
-    fs.writeFile(testSourceFile, content, (err) => {
-        if (err) {
-            console.error(err);
-        } else {
-            // file written successfully
-        }
-    });
+    writeFile(testSourceFile, content);
 }
 
 async function export_files(tp) {
