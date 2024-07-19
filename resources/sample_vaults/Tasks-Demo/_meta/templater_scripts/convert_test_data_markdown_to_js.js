@@ -31,8 +31,7 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
         return '';
     }
 
-    const outputFile = '__test_data__/' + filename + '.ts';
-    const testSourceFile = getOutputFilePath(outputFile);
+    const testSourceFile = getOutputFilePath('__test_data__/' + filename + '.ts');
 
     const options = { depth: null, compact: false };
     const dataAsJSSource = util.inspect(data, options);
