@@ -41,6 +41,37 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     });
 }
 
+async function writeListOfAllTestFunctions(files) {
+    let imports = '';
+    let functions = '';
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (!file.endsWith('.md')) {
+            continue;
+        }
+        const filename = file.split('/')[1].replace('.md', '');
+        imports += `import { ${filename} } from './__test_data__/${filename}';\n`;
+        functions += `        ${filename},\n`;
+    }
+
+    let content = `${imports}
+export function allCacheSampleData() {
+    return [
+${functions}    ];
+}
+`;
+
+    const rootOfVault = app.vault.adapter.getBasePath();
+    const testSourceFile = rootOfVault + '/../../../tests/Obsidian/AllCacheSampleData.ts';
+    fs.writeFile(testSourceFile, content, (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            // file written successfully
+        }
+    });
+}
+
 async function export_files(tp) {
     // Get all files from Test Data/ directory
     const { files } = await app.vault.adapter.list('Test Data/');
@@ -51,6 +82,8 @@ async function export_files(tp) {
         }
         await convertMarkdownFileToTestFunction(file, tp);
     }
+
+    await writeListOfAllTestFunctions(files);
 
     const message = 'Success - now run "yarn lint:test-data" to format the generated files.';
     new Notice(message);
