@@ -25,8 +25,9 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
         return '';
     }
 
+    const outputFile = '__test_data__/' + filename + '.ts';
     const rootOfVault = app.vault.adapter.getBasePath();
-    const testSourceFile = rootOfVault + '/../../../tests/Obsidian/' + '__test_data__/' + filename + '.ts';
+    const testSourceFile = rootOfVault + '/../../../tests/Obsidian/' + outputFile;
 
     const options = { depth: null, compact: false };
     const dataAsJSSource = util.inspect(data, options);
