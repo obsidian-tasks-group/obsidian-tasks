@@ -146,8 +146,6 @@ export class Recurrence {
             };
         }
 
-        // Keep the relative difference between the reference date and
-        // start/scheduled/due.
         return {
             startDate: this.appleSauce(next, this.startDate),
             scheduledDate: this.appleSauce(next, this.scheduledDate),
@@ -155,6 +153,14 @@ export class Recurrence {
         };
     }
 
+    /**
+     * Gets next occurrence (start/scheduled/due date) keeping the relative distance
+     * with the reference date
+     *
+     * @param nextReferenceDate
+     * @param currentOccurrence start/scheduled/due date
+     * @private
+     */
     private appleSauce(nextReferenceDate: Date, currentOccurrence: Moment | null) {
         if (currentOccurrence === null) {
             return null;
