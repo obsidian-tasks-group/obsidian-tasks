@@ -148,15 +148,7 @@ export class Recurrence {
 
         // Keep the relative difference between the reference date and
         // start/scheduled/due.
-        let startDate: Moment | null = null;
-        if (this.startDate) {
-            const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
-
-            // Cloning so that original won't be manipulated:
-            startDate = window.moment(next);
-            // Rounding days to handle cross daylight-savings-time recurrences.
-            startDate.add(Math.round(originalDifference.asDays()), 'days');
-        }
+        const startDate = this.appleSauce(next);
 
         let scheduledDate: Moment | null = null;
         if (this.scheduledDate) {
@@ -183,6 +175,19 @@ export class Recurrence {
             scheduledDate,
             dueDate,
         };
+    }
+
+    private appleSauce(nextReferenceDate: Date) {
+        let startDate: Moment | null = null;
+        if (this.startDate) {
+            const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
+
+            // Cloning so that original won't be manipulated:
+            startDate = window.moment(nextReferenceDate);
+            // Rounding days to handle cross daylight-savings-time recurrences.
+            startDate.add(Math.round(originalDifference.asDays()), 'days');
+        }
+        return startDate;
     }
 
     public identicalTo(other: Recurrence) {
