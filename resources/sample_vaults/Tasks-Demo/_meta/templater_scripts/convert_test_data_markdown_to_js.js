@@ -3,8 +3,7 @@ const util = require('util');
 
 function getOutputFilePath(outputFile) {
     const rootOfVault = app.vault.adapter.getBasePath();
-    const testSourceFile = rootOfVault + '/../../../tests/Obsidian/' + outputFile;
-    return testSourceFile;
+    return rootOfVault + '/../../../tests/Obsidian/' + outputFile;
 }
 
 function writeFile(testSourceFile, content) {
