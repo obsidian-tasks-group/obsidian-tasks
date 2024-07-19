@@ -18,6 +18,9 @@ export class TasksFile {
         if (rawFrontmatter !== undefined) {
             this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
             this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter) ?? [];
+        } else {
+            // Always make TasksFile.frontmatter.tags exist and be empty, even if no frontmatter present.
+            this._frontmatter.tags = [];
         }
     }
 

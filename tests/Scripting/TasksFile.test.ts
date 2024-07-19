@@ -64,21 +64,21 @@ describe('TasksFile - reading frontmatter', () => {
         const tasksFile = new TasksFile('some path.md', {});
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontmatter).toEqual({});
+        expect(tasksFile.frontmatter).toEqual({ tags: [] });
     });
 
     it('should read file with no yaml metadata', () => {
         const tasksFile = getTasksFileFromMockData(no_yaml);
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontmatter).toEqual({});
-        expect(tasksFile.frontmatter.tags).toEqual(undefined); // TODO This will be inconvenient for users - should be []?
+        expect(tasksFile.frontmatter).toEqual({ tags: [] });
+        expect(tasksFile.frontmatter.tags).toEqual([]);
     });
 
     it('should read file with empty yaml metadata', () => {
         const tasksFile = getTasksFileFromMockData(empty_yaml);
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontmatter).toEqual({});
-        expect(tasksFile.frontmatter.tags).toEqual(undefined); // TODO This will be inconvenient for users - should be []?
+        expect(tasksFile.frontmatter).toEqual({ tags: [] });
+        expect(tasksFile.frontmatter.tags).toEqual([]);
     });
 
     it('should provide an independent copy of frontmatter', () => {
