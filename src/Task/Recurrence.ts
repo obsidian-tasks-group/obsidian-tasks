@@ -181,14 +181,14 @@ export class Recurrence {
         let nextOccurrence: Moment | null = null;
         if (currentOccurrence === null) {
             return null;
-        } else {
-            const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
-
-            // Cloning so that original won't be manipulated:
-            nextOccurrence = window.moment(nextReferenceDate);
-            // Rounding days to handle cross daylight-savings-time recurrences.
-            nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
         }
+
+        const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
+
+        // Cloning so that original won't be manipulated:
+        nextOccurrence = window.moment(nextReferenceDate);
+        // Rounding days to handle cross daylight-savings-time recurrences.
+        nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
         return nextOccurrence;
     }
 
