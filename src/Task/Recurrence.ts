@@ -161,7 +161,7 @@ export class Recurrence {
      * @param currentOccurrence start/scheduled/due date
      * @private
      */
-    private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null) {
+    private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null): Moment | null {
         if (currentOccurrence === null) {
             return null;
         }
