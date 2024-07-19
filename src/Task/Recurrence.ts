@@ -132,7 +132,9 @@ export class Recurrence {
     } | null {
         const next = this.nextReferenceDate(today);
 
-        if (next !== null) {
+        if (next === null) {
+            return null;
+        } else {
             // Keep the relative difference between the reference date and
             // start/scheduled/due.
             let startDate: Moment | null = null;
@@ -174,8 +176,6 @@ export class Recurrence {
                 dueDate,
             };
         }
-
-        return null;
     }
 
     public identicalTo(other: Recurrence) {
