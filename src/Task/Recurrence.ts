@@ -148,7 +148,7 @@ export class Recurrence {
 
         // Keep the relative difference between the reference date and
         // start/scheduled/due.
-        const startDate = this.appleSauce(next);
+        const startDate = this.appleSauce(next, this.startDate);
 
         let scheduledDate: Moment | null = null;
         if (this.scheduledDate) {
@@ -177,10 +177,10 @@ export class Recurrence {
         };
     }
 
-    private appleSauce(nextReferenceDate: Date) {
+    private appleSauce(nextReferenceDate: Date, currentOccurrence: Moment | null) {
         let startDate: Moment | null = null;
-        if (this.startDate) {
-            const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
+        if (currentOccurrence) {
+            const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
 
             // Cloning so that original won't be manipulated:
             startDate = window.moment(nextReferenceDate);
