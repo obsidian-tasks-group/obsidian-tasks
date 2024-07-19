@@ -68,10 +68,7 @@ async function writeListOfAllTestFunctions(files) {
     const imports = basenames
         .map((filename) => `import { ${filename} } from './__test_data__/${filename}';\n`)
         .join('');
-    let functions = '';
-    for (const filename of basenames) {
-        functions += `        ${filename},\n`;
-    }
+    const functions = basenames.map((filename) => `        ${filename},\n`).join('');
 
     let content = `// DO NOT EDIT!
 // This file is machine-generated in the test vault, by convert_test_data_markdown_to_js.js.
