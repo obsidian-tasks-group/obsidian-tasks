@@ -76,11 +76,16 @@ ${functions}    ];
 
 async function export_files(tp) {
     // Get all files from Test Data/ directory
+    const markdownFiles = [];
     const { files } = await app.vault.adapter.list('Test Data/');
     for (const file of files) {
         if (!file.endsWith('.md')) {
             continue;
         }
+        markdownFiles.push(file);
+    }
+
+    for (const file of markdownFiles) {
         await convertMarkdownFileToTestFunction(file, tp);
     }
 
