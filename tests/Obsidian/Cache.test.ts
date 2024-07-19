@@ -621,15 +621,12 @@ describe('all mock files', () => {
             expect(frontmatter).not.toBeUndefined();
             expect(frontmatter).not.toBeNull();
 
-            if (tasksFile.cachedMetadata.frontmatter === undefined) {
-                // No frontmatter in the file, so processed frontmatter will be empty object (so without a tags value)
-                expect(frontmatter).toEqual({});
-            } else {
-                expect(frontmatter.tags).not.toBeUndefined();
-                expect(frontmatter.tags).not.toBeNull();
-                expect(frontmatter.tags).not.toContain(null);
-                expect(frontmatter.tags).not.toContain(undefined);
-            }
+            // We always define frontmatter.tags, even if there was no frontmatter,
+            // to simplify a common user operation in custom filters.
+            expect(frontmatter.tags).not.toBeUndefined();
+            expect(frontmatter.tags).not.toBeNull();
+            expect(frontmatter.tags).not.toContain(null);
+            expect(frontmatter.tags).not.toContain(undefined);
         },
     );
 
