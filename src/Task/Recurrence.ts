@@ -149,9 +149,6 @@ export class Recurrence {
         // Keep the relative difference between the reference date and
         // start/scheduled/due.
         let startDate: Moment | null = null;
-        let scheduledDate: Moment | null = null;
-        let dueDate: Moment | null = null;
-
         if (this.startDate) {
             const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
 
@@ -160,6 +157,8 @@ export class Recurrence {
             // Rounding days to handle cross daylight-savings-time recurrences.
             startDate.add(Math.round(originalDifference.asDays()), 'days');
         }
+
+        let scheduledDate: Moment | null = null;
         if (this.scheduledDate) {
             const originalDifference = window.moment.duration(this.scheduledDate.diff(this.referenceDate));
 
@@ -168,6 +167,8 @@ export class Recurrence {
             // Rounding days to handle cross daylight-savings-time recurrences.
             scheduledDate.add(Math.round(originalDifference.asDays()), 'days');
         }
+
+        let dueDate: Moment | null = null;
         if (this.dueDate) {
             const originalDifference = window.moment.duration(this.dueDate.diff(this.referenceDate));
 
