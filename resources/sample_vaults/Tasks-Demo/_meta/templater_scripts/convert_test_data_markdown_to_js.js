@@ -43,14 +43,12 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     const filename = getBasename(filePath);
     if (filename.includes(' ')) {
         // The file name is used to create a TypeScript variable, so disallow spaces:
-        const message = `ERROR - spaces not allowed in filenames: "${filename}"`;
-        showNotice(message);
+        showNotice(`ERROR - spaces not allowed in filenames: "${filename}"`);
         return '';
     }
 
     if (!fileContents.endsWith('\n')) {
-        const message = `ERROR - missing newline character at end of: "${filename}"`;
-        showNotice(message);
+        showNotice(`ERROR - missing newline character at end of: "${filename}"`);
         return '';
     }
 
@@ -94,8 +92,7 @@ async function export_files(tp) {
 
     await writeListOfAllTestFunctions(markdownFiles);
 
-    const message = 'Success - now run "yarn lint:test-data" to format the generated files.';
-    showNotice(message);
+    showNotice('Success - now run "yarn lint:test-data" to format the generated files.');
     return '';
 }
 
