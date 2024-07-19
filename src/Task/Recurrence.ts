@@ -147,9 +147,9 @@ export class Recurrence {
         }
 
         return {
-            startDate: this.appleSauce(next, this.startDate),
-            scheduledDate: this.appleSauce(next, this.scheduledDate),
-            dueDate: this.appleSauce(next, this.dueDate),
+            startDate: this.nextOccurrence(next, this.startDate),
+            scheduledDate: this.nextOccurrence(next, this.scheduledDate),
+            dueDate: this.nextOccurrence(next, this.dueDate),
         };
     }
 
@@ -161,7 +161,7 @@ export class Recurrence {
      * @param currentOccurrence start/scheduled/due date
      * @private
      */
-    private appleSauce(nextReferenceDate: Date, currentOccurrence: Moment | null) {
+    private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null) {
         if (currentOccurrence === null) {
             return null;
         }
