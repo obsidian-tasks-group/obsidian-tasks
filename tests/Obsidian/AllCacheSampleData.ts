@@ -28,6 +28,7 @@ import { inheritance_task_listitem } from './__test_data__/inheritance_task_list
 import { inheritance_task_listitem_mixed_grandchildren } from './__test_data__/inheritance_task_listitem_mixed_grandchildren';
 import { inheritance_task_listitem_task } from './__test_data__/inheritance_task_listitem_task';
 import { inheritance_task_mixed_children } from './__test_data__/inheritance_task_mixed_children';
+import { jason_properties } from './__test_data__/jason_properties';
 import { link_in_file_body } from './__test_data__/link_in_file_body';
 import { link_in_file_body_with_custom_display_text } from './__test_data__/link_in_file_body_with_custom_display_text';
 import { link_in_heading } from './__test_data__/link_in_heading';
@@ -84,6 +85,7 @@ export function allCacheSampleData() {
         inheritance_task_listitem_mixed_grandchildren,
         inheritance_task_listitem_task,
         inheritance_task_mixed_children,
+        jason_properties,
         link_in_file_body,
         link_in_file_body_with_custom_display_text,
         link_in_heading,
