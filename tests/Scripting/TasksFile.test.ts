@@ -1,3 +1,4 @@
+import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { callouts_nested_issue_2890_unlabelled } from '../Obsidian/__test_data__/callouts_nested_issue_2890_unlabelled';
 import { no_yaml } from '../Obsidian/__test_data__/no_yaml';
@@ -12,6 +13,8 @@ import { yaml_tags_is_empty } from '../Obsidian/__test_data__/yaml_tags_is_empty
 import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
+import { yaml_complex_example } from '../Obsidian/__test_data__/yaml_complex_example';
+import { yaml_complex_example_standardised } from '../Obsidian/__test_data__/yaml_complex_example_standardised';
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
@@ -130,6 +133,16 @@ describe('TasksFile - reading frontmatter', () => {
         const tasksFile = getTasksFileFromMockData(jason_properties);
         expect(tasksFile.frontmatter.tags).toEqual(['#journal']);
         expect(tasksFile.frontmatter.publish).toEqual(false);
+    });
+
+    it('should read yaml_complex_example', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_complex_example);
+        verifyAsJson(tasksFile.frontmatter);
+    });
+
+    it('should read yaml_complex_example_standardised', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_complex_example_standardised);
+        verifyAsJson(tasksFile.frontmatter);
     });
 });
 
