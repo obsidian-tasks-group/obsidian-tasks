@@ -1,6 +1,4 @@
-import type { CachedMetadata } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
-import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import { callouts_nested_issue_2890_unlabelled } from '../Obsidian/__test_data__/callouts_nested_issue_2890_unlabelled';
 import { no_yaml } from '../Obsidian/__test_data__/no_yaml';
 import { empty_yaml } from '../Obsidian/__test_data__/empty_yaml';
@@ -12,6 +10,7 @@ import { yaml_tags_had_value_then_was_emptied_by_obsidian } from '../Obsidian/__
 import { yaml_tags_is_empty_list } from '../Obsidian/__test_data__/yaml_tags_is_empty_list';
 import { yaml_tags_is_empty } from '../Obsidian/__test_data__/yaml_tags_is_empty';
 import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
+import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
@@ -60,37 +59,26 @@ describe('TasksFile', () => {
     });
 });
 
-function getTasksFileFromMockData(data: any) {
-    setCurrentCacheFile(data);
-    const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
-    return new TasksFile(data.filePath, cachedMetadata);
-}
-
-function listPathAndData(inputs: any[]) {
-    // We use map() to extract the path, to use it as a test name in it.each()
-    return inputs.map((data) => [data.filePath, data]);
-}
-
 describe('TasksFile - reading frontmatter', () => {
     it('should read file if not given CachedMetadata', () => {
         const tasksFile = new TasksFile('some path.md', {});
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontmatter).toEqual({});
+        expect(tasksFile.frontmatter).toEqual({ tags: [] });
     });
 
     it('should read file with no yaml metadata', () => {
         const tasksFile = getTasksFileFromMockData(no_yaml);
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontmatter).toEqual({});
-        expect(tasksFile.frontmatter.tags).toEqual(undefined); // TODO This will be inconvenient for users - should be []?
+        expect(tasksFile.frontmatter).toEqual({ tags: [] });
+        expect(tasksFile.frontmatter.tags).toEqual([]);
     });
 
     it('should read file with empty yaml metadata', () => {
         const tasksFile = getTasksFileFromMockData(empty_yaml);
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
-        expect(tasksFile.frontmatter).toEqual({});
-        expect(tasksFile.frontmatter.tags).toEqual(undefined); // TODO This will be inconvenient for users - should be []?
+        expect(tasksFile.frontmatter).toEqual({ tags: [] });
+        expect(tasksFile.frontmatter.tags).toEqual([]);
     });
 
     it('should provide an independent copy of frontmatter', () => {

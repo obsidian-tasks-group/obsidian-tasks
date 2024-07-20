@@ -6,6 +6,8 @@ import type { CachedMetadata } from 'obsidian';
 import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
 import type { ListItem } from '../../src/Task/ListItem';
+import { setCurrentCacheFile } from '../__mocks__/obsidian';
+import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { inheritance_1parent1child } from './__test_data__/inheritance_1parent1child';
 import { inheritance_1parent1child1newroot_after_header } from './__test_data__/inheritance_1parent1child1newroot_after_header';
 import { inheritance_1parent1child1sibling_emptystring } from './__test_data__/inheritance_1parent1child1sibling_emptystring';
@@ -29,6 +31,7 @@ import { callout } from './__test_data__/callout';
 import { callout_labelled } from './__test_data__/callout_labelled';
 import { callout_custom } from './__test_data__/callout_custom';
 import { callouts_nested_issue_2890_unlabelled } from './__test_data__/callouts_nested_issue_2890_unlabelled';
+import { allCacheSampleData } from './AllCacheSampleData';
 
 window.moment = moment;
 
@@ -75,6 +78,7 @@ interface SimulatedFile {
 
 function readTasksFromSimulatedFile(testData: SimulatedFile) {
     const logger = logging.getLogger('testCache');
+    setCurrentCacheFile(testData);
     return getTasksFromFileContent2(
         testData.filePath,
         testData.fileContents,
@@ -604,4 +608,34 @@ describe('cache', () => {
         `);
         expect(tasks.length).toEqual(4);
     });
+});
+
+describe('all mock files', () => {
+    const files: any = allCacheSampleData();
+
+    it.each(listPathAndData(files))(
+        'should create valid TasksFile for all mock files: "%s"',
+        (_path: string, file: any) => {
+            const tasksFile = getTasksFileFromMockData(file);
+
+            const frontmatter = tasksFile.frontmatter;
+            expect(frontmatter).not.toBeUndefined();
+            expect(frontmatter).not.toBeNull();
+
+            // We always define frontmatter.tags, even if there was no frontmatter,
+            // to simplify a common user operation in custom filters.
+            expect(frontmatter.tags).not.toBeUndefined();
+            expect(frontmatter.tags).not.toBeNull();
+            expect(frontmatter.tags).not.toContain(null);
+            expect(frontmatter.tags).not.toContain(undefined);
+        },
+    );
+
+    it.each(listPathAndData(files))(
+        'should be able to read tasks from all mock files: "%s"',
+        (_path: string, file: any) => {
+            const tasks = readTasksFromSimulatedFile(file);
+            expect(tasks.length).toBeGreaterThan(0);
+        },
+    );
 });
