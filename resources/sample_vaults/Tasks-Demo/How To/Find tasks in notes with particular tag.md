@@ -36,7 +36,7 @@ Credit: jonlemon in [this Obsidian Forum thread](https://forum.obsidian.md/t/how
 #### Presence of tag - in frontmatter
 
 ```tasks
-filter by function task.file.frontmatter.tags?.includes('#examples') ?? false
+filter by function task.file.frontmatter.tags.includes('#examples')
 ```
 
 ### Tasks in files that have a Tag anywhere - in frontmatter or body
@@ -53,4 +53,25 @@ filter by function task.file.tags.includes('#examples')
 filter by function ! task.file.tags.includes('#examples')
 
 limit 20
+```
+
+#### Group by tags - in frontmatter or body
+
+```tasks
+group by function task.file.tags
+folder does not include Test Data
+
+limit groups 3
+limit 100
+```
+
+#### Group by tags - in frontmatter or body, ignoring the global filter
+
+```tasks
+# TODO Provide task.file.tagsWithoutGlobalFilter
+group by function task.file.tags.filter( (t) => t !== '#task' )
+folder does not include Test Data
+
+limit groups 3
+limit 100
 ```
