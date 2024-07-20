@@ -6,6 +6,16 @@ publish: true
 
 <span class="related-pages">#testing/automated-testing</span>
 
+## Overview
+
+The Tasks plugin uses data created by the Obsidian API. The Obsidian API does not run in any test framework.
+
+So we need a way to access Obsidian-generated data in our tests. This page tries to describe this mechanism.
+
+1. [resources/sample_vaults/Tasks-Demo/Test Data](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo/Test%20Data) contains representative samples Markdown files for different scenarios.
+2. The process described in [[#Test data creation sequence]] converts these files to matching TypeScript files in [tests/Obsidian/\_\_test_data\_\_](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__).
+3. So far the files that use this mechanism are [tests/Obsidian/Cache.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/Cache.test.ts) and [tests/Scripting/TasksFile.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Scripting/TasksFile.test.ts). Refer to these files for examples.
+
 ## Test data creation sequence
   
 If using this on an Obsidian version newer than the one in saved `tests/Obsidian/__test_data__/*.ts`, go to Settings → Files and links → Advanced → Rebuild vault cache.
