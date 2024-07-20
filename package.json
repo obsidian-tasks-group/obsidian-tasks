@@ -26,7 +26,7 @@
     "task-manager",
     "task-management"
   ],
-  "author": "Martin Schenck and Clare Macrae",
+  "author": "Clare Macrae and Ilyas Landikov (created by Martin Schenck)",
   "license": "MIT",
   "devDependencies": {
     "@codemirror/view": "^6.2.0",
