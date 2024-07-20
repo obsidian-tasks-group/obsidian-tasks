@@ -11,6 +11,7 @@ import { yaml_tags_is_empty_list } from '../Obsidian/__test_data__/yaml_tags_is_
 import { yaml_tags_is_empty } from '../Obsidian/__test_data__/yaml_tags_is_empty';
 import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
+import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
@@ -123,6 +124,12 @@ describe('TasksFile - reading frontmatter', () => {
     it('should read file with custom number property', () => {
         const tasksFile = getTasksFileFromMockData(yaml_custom_number_property);
         expect(tasksFile.frontmatter?.custom_number_prop).toEqual(42);
+    });
+
+    it('should read JSON frontmatter', () => {
+        const tasksFile = getTasksFileFromMockData(jason_properties);
+        expect(tasksFile.frontmatter.tags).toEqual(['#journal']);
+        expect(tasksFile.frontmatter.publish).toEqual(false);
     });
 });
 
