@@ -24,6 +24,10 @@ Testing dates and times:
 - [[How do I use Moment in tests]] - how to test date and time values
 - [[Simulating Dates and Times]] - examples of how to use fixed dates and times in tests
 
+Testing code that uses Obsidian API:
+
+- [[Using Obsidian API in tests]]
+
 More advanced features:
 
 - [[Snapshot Tests]] - easy testing of complex string values
