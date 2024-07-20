@@ -136,12 +136,6 @@ export class Recurrence {
             return null;
         }
 
-        // Keep the relative difference between the reference date and
-        // start/scheduled/due.
-        let startDate: Moment | null = null;
-        let scheduledDate: Moment | null = null;
-        let dueDate: Moment | null = null;
-
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
         if (this.referenceDate === null) {
@@ -152,36 +146,33 @@ export class Recurrence {
             };
         }
 
-        if (this.startDate) {
-            const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
-
-            // Cloning so that original won't be manipulated:
-            startDate = window.moment(next);
-            // Rounding days to handle cross daylight-savings-time recurrences.
-            startDate.add(Math.round(originalDifference.asDays()), 'days');
-        }
-        if (this.scheduledDate) {
-            const originalDifference = window.moment.duration(this.scheduledDate.diff(this.referenceDate));
-
-            // Cloning so that original won't be manipulated:
-            scheduledDate = window.moment(next);
-            // Rounding days to handle cross daylight-savings-time recurrences.
-            scheduledDate.add(Math.round(originalDifference.asDays()), 'days');
-        }
-        if (this.dueDate) {
-            const originalDifference = window.moment.duration(this.dueDate.diff(this.referenceDate));
-
-            // Cloning so that original won't be manipulated:
-            dueDate = window.moment(next);
-            // Rounding days to handle cross daylight-savings-time recurrences.
-            dueDate.add(Math.round(originalDifference.asDays()), 'days');
-        }
-
         return {
-            startDate,
-            scheduledDate,
-            dueDate,
+            startDate: this.nextOccurrence(next, this.startDate),
+            scheduledDate: this.nextOccurrence(next, this.scheduledDate),
+            dueDate: this.nextOccurrence(next, this.dueDate),
         };
+    }
+
+    /**
+     * Gets next occurrence (start/scheduled/due date) keeping the relative distance
+     * with the reference date
+     *
+     * @param nextReferenceDate
+     * @param currentOccurrence start/scheduled/due date
+     * @private
+     */
+    private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null): Moment | null {
+        if (currentOccurrence === null) {
+            return null;
+        }
+
+        const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
+
+        // Cloning so that original won't be manipulated:
+        const nextOccurrence = window.moment(nextReferenceDate);
+        // Rounding days to handle cross daylight-savings-time recurrences.
+        nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
+        return nextOccurrence;
     }
 
     public identicalTo(other: Recurrence) {
