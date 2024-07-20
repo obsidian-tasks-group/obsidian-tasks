@@ -78,6 +78,7 @@ interface SimulatedFile {
 
 function readTasksFromSimulatedFile(testData: SimulatedFile) {
     const logger = logging.getLogger('testCache');
+    setCurrentCacheFile(testData);
     return getTasksFromFileContent2(
         testData.filePath,
         testData.fileContents,
@@ -633,7 +634,6 @@ describe('all mock files', () => {
     it.each(listPathAndData(files))(
         'should be able to read tasks from all mock files: "%s"',
         (_path: string, file: any) => {
-            setCurrentCacheFile(file);
             const tasks = readTasksFromSimulatedFile(file);
             expect(tasks.length).toBeGreaterThan(0);
         },
