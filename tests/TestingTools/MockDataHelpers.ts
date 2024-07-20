@@ -6,7 +6,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 
 export function getTasksFileFromMockData(data: any) {
     setCurrentCacheFile(data);
-    const cachedMetadata = data.cachedMetadata as any as CachedMetadata;
+    const cachedMetadata = data.cachedMetadata as CachedMetadata;
     return new TasksFile(data.filePath, cachedMetadata);
 }
 
