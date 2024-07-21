@@ -9,5 +9,10 @@
   ],
   "sample_number_property": 246,
   "sample_text_property": "Sample Text Value",
-  "tags": []
+  "aliases": [
+    "YAML All Property Types Populated"
+  ],
+  "tags": [
+    "#sample/tag/value"
+  ]
 }

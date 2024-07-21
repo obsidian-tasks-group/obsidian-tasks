@@ -8,6 +8,10 @@ sample_list_property:
   - Value
 sample_number_property: 246
 sample_text_property: Sample Text Value
+aliases:
+  - YAML All Property Types Populated
+tags:
+  - sample/tag/value
 ---
 
 # yaml_all_property_types_populated
