@@ -4,7 +4,9 @@ sample_date_property:
 sample_date_and_time_property: 
 sample_list_property: 
 sample_number_property: 
-sample_text_property:
+sample_text_property: 
+aliases: 
+tags:
 ---
 # yaml_all_property_types_empty
 

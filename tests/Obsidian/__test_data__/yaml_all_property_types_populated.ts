@@ -11,6 +11,10 @@ export const yaml_all_property_types_populated = {
         '  - Value\n' +
         'sample_number_property: 246\n' +
         'sample_text_property: Sample Text Value\n' +
+        'aliases:\n' +
+        '  - YAML All Property Types Populated\n' +
+        'tags:\n' +
+        '  - sample/tag/value\n' +
         '---\n' +
         '\n' +
         '# yaml_all_property_types_populated\n' +
@@ -21,14 +25,14 @@ export const yaml_all_property_types_populated = {
             {
                 position: {
                     start: {
-                        line: 14,
+                        line: 18,
                         col: 6,
-                        offset: 287,
+                        offset: 361,
                     },
                     end: {
-                        line: 14,
+                        line: 18,
                         col: 11,
-                        offset: 292,
+                        offset: 366,
                     },
                 },
                 tag: '#task',
@@ -38,14 +42,14 @@ export const yaml_all_property_types_populated = {
             {
                 position: {
                     start: {
-                        line: 12,
+                        line: 16,
                         col: 0,
-                        offset: 244,
+                        offset: 318,
                     },
                     end: {
-                        line: 12,
+                        line: 16,
                         col: 35,
-                        offset: 279,
+                        offset: 353,
                     },
                 },
                 heading: 'yaml_all_property_types_populated',
@@ -62,9 +66,9 @@ export const yaml_all_property_types_populated = {
                         offset: 0,
                     },
                     end: {
-                        line: 10,
+                        line: 14,
                         col: 3,
-                        offset: 242,
+                        offset: 316,
                     },
                 },
             },
@@ -72,14 +76,14 @@ export const yaml_all_property_types_populated = {
                 type: 'heading',
                 position: {
                     start: {
-                        line: 12,
+                        line: 16,
                         col: 0,
-                        offset: 244,
+                        offset: 318,
                     },
                     end: {
-                        line: 12,
+                        line: 16,
                         col: 35,
-                        offset: 279,
+                        offset: 353,
                     },
                 },
             },
@@ -87,14 +91,14 @@ export const yaml_all_property_types_populated = {
                 type: 'list',
                 position: {
                     start: {
-                        line: 14,
+                        line: 18,
                         col: 0,
-                        offset: 281,
+                        offset: 355,
                     },
                     end: {
-                        line: 14,
+                        line: 18,
                         col: 55,
-                        offset: 336,
+                        offset: 410,
                     },
                 },
             },
@@ -103,17 +107,17 @@ export const yaml_all_property_types_populated = {
             {
                 position: {
                     start: {
-                        line: 14,
+                        line: 18,
                         col: 0,
-                        offset: 281,
+                        offset: 355,
                     },
                     end: {
-                        line: 14,
+                        line: 18,
                         col: 55,
-                        offset: 336,
+                        offset: 410,
                     },
                 },
-                parent: -14,
+                parent: -18,
                 task: ' ',
             },
         ],
@@ -124,6 +128,8 @@ export const yaml_all_property_types_populated = {
             sample_list_property: ['Sample', 'List', 'Value'],
             sample_number_property: 246,
             sample_text_property: 'Sample Text Value',
+            aliases: ['YAML All Property Types Populated'],
+            tags: ['sample/tag/value'],
         },
         frontmatterPosition: {
             start: {
@@ -132,14 +138,14 @@ export const yaml_all_property_types_populated = {
                 offset: 0,
             },
             end: {
-                line: 10,
+                line: 14,
                 col: 3,
-                offset: 242,
+                offset: 316,
             },
         },
         frontmatterLinks: [],
     },
     obsidianApiVersion: '1.6.7',
-    getAllTags: ['#task'],
-    parseFrontMatterTags: null,
+    getAllTags: ['#sample/tag/value', '#task'],
+    parseFrontMatterTags: ['#sample/tag/value'],
 };

@@ -7,7 +7,9 @@ export const yaml_all_property_types_empty = {
         'sample_date_and_time_property: \n' +
         'sample_list_property: \n' +
         'sample_number_property: \n' +
-        'sample_text_property:\n' +
+        'sample_text_property: \n' +
+        'aliases: \n' +
+        'tags:\n' +
         '---\n' +
         '# yaml_all_property_types_empty\n' +
         '\n' +
@@ -17,14 +19,14 @@ export const yaml_all_property_types_empty = {
             {
                 position: {
                     start: {
-                        line: 10,
+                        line: 12,
                         col: 6,
-                        offset: 199,
+                        offset: 216,
                     },
                     end: {
-                        line: 10,
+                        line: 12,
                         col: 11,
-                        offset: 204,
+                        offset: 221,
                     },
                 },
                 tag: '#task',
@@ -34,14 +36,14 @@ export const yaml_all_property_types_empty = {
             {
                 position: {
                     start: {
-                        line: 8,
+                        line: 10,
                         col: 0,
-                        offset: 160,
+                        offset: 177,
                     },
                     end: {
-                        line: 8,
+                        line: 10,
                         col: 31,
-                        offset: 191,
+                        offset: 208,
                     },
                 },
                 heading: 'yaml_all_property_types_empty',
@@ -58,9 +60,9 @@ export const yaml_all_property_types_empty = {
                         offset: 0,
                     },
                     end: {
-                        line: 7,
+                        line: 9,
                         col: 3,
-                        offset: 159,
+                        offset: 176,
                     },
                 },
             },
@@ -68,14 +70,14 @@ export const yaml_all_property_types_empty = {
                 type: 'heading',
                 position: {
                     start: {
-                        line: 8,
+                        line: 10,
                         col: 0,
-                        offset: 160,
+                        offset: 177,
                     },
                     end: {
-                        line: 8,
+                        line: 10,
                         col: 31,
-                        offset: 191,
+                        offset: 208,
                     },
                 },
             },
@@ -83,14 +85,14 @@ export const yaml_all_property_types_empty = {
                 type: 'list',
                 position: {
                     start: {
-                        line: 10,
+                        line: 12,
                         col: 0,
-                        offset: 193,
+                        offset: 210,
                     },
                     end: {
-                        line: 10,
+                        line: 12,
                         col: 51,
-                        offset: 244,
+                        offset: 261,
                     },
                 },
             },
@@ -99,17 +101,17 @@ export const yaml_all_property_types_empty = {
             {
                 position: {
                     start: {
-                        line: 10,
+                        line: 12,
                         col: 0,
-                        offset: 193,
+                        offset: 210,
                     },
                     end: {
-                        line: 10,
+                        line: 12,
                         col: 51,
-                        offset: 244,
+                        offset: 261,
                     },
                 },
-                parent: -10,
+                parent: -12,
                 task: ' ',
             },
         ],
@@ -120,6 +122,8 @@ export const yaml_all_property_types_empty = {
             sample_list_property: null,
             sample_number_property: null,
             sample_text_property: null,
+            aliases: null,
+            tags: null,
         },
         frontmatterPosition: {
             start: {
@@ -128,9 +132,9 @@ export const yaml_all_property_types_empty = {
                 offset: 0,
             },
             end: {
-                line: 7,
+                line: 9,
                 col: 3,
-                offset: 159,
+                offset: 176,
             },
         },
         frontmatterLinks: [],
