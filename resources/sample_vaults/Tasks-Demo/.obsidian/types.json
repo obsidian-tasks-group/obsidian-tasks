@@ -10,6 +10,8 @@
     "sample_date_property": "date",
     "sample_date_and_time_property": "datetime",
     "sample_checkbox_property": "checkbox",
-    "sample_number_property": "number"
+    "sample_number_property": "number",
+    "sample_link_list_property": "multitext",
+    "sample_link_property": "text"
   }
 }

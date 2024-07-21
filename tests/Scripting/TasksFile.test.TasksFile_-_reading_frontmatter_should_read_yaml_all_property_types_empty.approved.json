@@ -5,6 +5,8 @@
   "sample_list_property": null,
   "sample_number_property": null,
   "sample_text_property": null,
+  "sample_link_property": null,
+  "sample_link_list_property": null,
   "aliases": null,
   "tags": []
 }
