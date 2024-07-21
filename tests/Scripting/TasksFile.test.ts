@@ -15,6 +15,8 @@ import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockD
 import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
 import { yaml_complex_example } from '../Obsidian/__test_data__/yaml_complex_example';
 import { yaml_complex_example_standardised } from '../Obsidian/__test_data__/yaml_complex_example_standardised';
+import { yaml_all_property_types_empty } from '../Obsidian/__test_data__/yaml_all_property_types_empty';
+import { yaml_all_property_types_populated } from '../Obsidian/__test_data__/yaml_all_property_types_populated';
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
@@ -142,6 +144,18 @@ describe('TasksFile - reading frontmatter', () => {
 
     it('should read yaml_complex_example_standardised', () => {
         const tasksFile = getTasksFileFromMockData(yaml_complex_example_standardised);
+        verifyAsJson(tasksFile.frontmatter);
+    });
+
+    it('should read yaml_all_property_types_empty', () => {
+        // See https://help.obsidian.md/Editing+and+formatting/Properties#Property+types
+        const tasksFile = getTasksFileFromMockData(yaml_all_property_types_empty);
+        verifyAsJson(tasksFile.frontmatter);
+    });
+
+    it('should read yaml_all_property_types_populated', () => {
+        // See https://help.obsidian.md/Editing+and+formatting/Properties#Property+types
+        const tasksFile = getTasksFileFromMockData(yaml_all_property_types_populated);
         verifyAsJson(tasksFile.frontmatter);
     });
 });
