@@ -17,7 +17,7 @@ import { yaml_complex_example } from '../Obsidian/__test_data__/yaml_complex_exa
 import { yaml_complex_example_standardised } from '../Obsidian/__test_data__/yaml_complex_example_standardised';
 import { yaml_all_property_types_empty } from '../Obsidian/__test_data__/yaml_all_property_types_empty';
 import { yaml_all_property_types_populated } from '../Obsidian/__test_data__/yaml_all_property_types_populated';
-import { formatToRepresentType } from './ScriptingTestHelpers';
+import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
@@ -160,20 +160,21 @@ describe('TasksFile - reading frontmatter', () => {
         const frontmatter = tasksFile.frontmatter;
         verifyAsJson(frontmatter);
         const propertyValueTypes = Object.keys(frontmatter).map(
-            (key) => `${key} => ${formatToRepresentType(frontmatter[key])}`,
+            (key) =>
+                `${key} => ${determineExpressionType(frontmatter[key])} = ${formatToRepresentType(frontmatter[key])}`,
         );
         expect(propertyValueTypes).toMatchInlineSnapshot(`
             [
-              "sample_checkbox_property => true",
-              "sample_date_property => '2024-07-21'",
-              "sample_date_and_time_property => '2024-07-21T12:37:00'",
-              "sample_list_property => ['Sample', 'List', 'Value']",
-              "sample_number_property => 246",
-              "sample_text_property => 'Sample Text Value'",
-              "sample_link_property => '[[yaml_all_property_types_populated]]'",
-              "sample_link_list_property => ['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']",
-              "aliases => ['YAML All Property Types Populated']",
-              "tags => ['#sample/tag/value']",
+              "sample_checkbox_property => boolean = true",
+              "sample_date_property => string = '2024-07-21'",
+              "sample_date_and_time_property => string = '2024-07-21T12:37:00'",
+              "sample_list_property => string[] = ['Sample', 'List', 'Value']",
+              "sample_number_property => number = 246",
+              "sample_text_property => string = 'Sample Text Value'",
+              "sample_link_property => string = '[[yaml_all_property_types_populated]]'",
+              "sample_link_list_property => string[] = ['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']",
+              "aliases => string[] = ['YAML All Property Types Populated']",
+              "tags => string[] = ['#sample/tag/value']",
             ]
         `);
     });
