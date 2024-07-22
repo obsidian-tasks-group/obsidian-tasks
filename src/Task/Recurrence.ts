@@ -109,10 +109,6 @@ export class Occurrence {
     }
 }
 
-function nextOccurrence(occurrence: Occurrence, next: Date) {
-    return occurrence.nextOccurrence(next);
-}
-
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
@@ -190,7 +186,7 @@ export class Recurrence {
         }
 
         const occurrence = this.occurrence;
-        return nextOccurrence(occurrence, next);
+        return occurrence.nextOccurrence(next);
     }
 
     public identicalTo(other: Recurrence) {
