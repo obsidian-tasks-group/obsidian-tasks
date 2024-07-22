@@ -36,7 +36,7 @@ export class Occurrence {
         this.referenceDate = this.getReferenceDate();
     }
 
-    public getReferenceDate(): Moment | null {
+    private getReferenceDate(): Moment | null {
         // Pick the reference date for recurrence based on importance.
         // Assuming due date has the highest priority.
         let referenceDate: Moment | null = null;
@@ -74,7 +74,7 @@ export class Occurrence {
      * @param currentOccurrenceDate start/scheduled/due date
      * @private
      */
-    public nextOccurrenceDate(currentOccurrenceDate: Moment | null, nextReferenceDate: Date) {
+    private nextOccurrenceDate(currentOccurrenceDate: Moment | null, nextReferenceDate: Date) {
         if (currentOccurrenceDate === null) {
             return null;
         }
