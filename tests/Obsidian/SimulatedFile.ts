@@ -3,7 +3,7 @@ import { logging } from '../../src/lib/logging';
 import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
 
-interface SimulatedFile {
+export interface SimulatedFile {
     cachedMetadata: CachedMetadata;
     filePath: string;
     fileContents: string;

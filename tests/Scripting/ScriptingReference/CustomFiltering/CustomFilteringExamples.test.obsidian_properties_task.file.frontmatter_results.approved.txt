@@ -1,0 +1,17 @@
+Results of custom filters
+
+
+
+filter by function task.file.frontmatter['kanban-plugin'] === 'basic'
+todo.
+=>
+- [ ] #task Task in 'example_kanban'
+====================================================================================
+
+
+filter by function task.file.frontmatter['kanban-plugin'] !== undefined
+todo.
+=>
+- [ ] #task Task in 'example_kanban'
+====================================================================================
+

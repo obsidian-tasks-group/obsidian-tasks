@@ -4,6 +4,8 @@
 
 import moment from 'moment';
 import type { Task } from '../../../../src/Task/Task';
+import { allCacheSampleData } from '../../../Obsidian/AllCacheSampleData';
+import { type SimulatedFile, readTasksFromSimulatedFile } from '../../../Obsidian/SimulatedFile';
 import { fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
@@ -344,6 +346,35 @@ describe('file properties', () => {
 "    For demonstration purposes, this is slightly imprecise, in that it would also match nested tasks, such as `#context/home/ground-floor`",
 
      */
+
+    it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
+        verifyFunctionFieldFilterSamplesOnTasks(groups, tasks);
+    });
+
+    it.each(testData)('%s docs', (_: string, groups: QueryInstructionLineAndDescription[], _tasks: Task[]) => {
+        verifyFunctionFieldFilterSamplesForDocs(groups);
+    });
+});
+
+describe('obsidian properties', () => {
+    const tasks: Task[] = allCacheSampleData().flatMap((simulatedFile) => {
+        return readTasksFromSimulatedFile(simulatedFile as SimulatedFile);
+    });
+
+    const testData: CustomPropertyDocsTestData[] = [
+        // ---------------------------------------------------------------------------------
+        // PROPERTIES FIELDS
+        // ---------------------------------------------------------------------------------
+
+        [
+            'task.file.frontmatter',
+            [
+                ["filter by function task.file.frontmatter['kanban-plugin'] === 'basic'", 'todo'],
+                ["filter by function task.file.frontmatter['kanban-plugin'] !== undefined", 'todo'],
+            ],
+            tasks,
+        ],
+    ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
         verifyFunctionFieldFilterSamplesOnTasks(groups, tasks);
