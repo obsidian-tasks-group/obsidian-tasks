@@ -12,6 +12,7 @@
     "sample_checkbox_property": "checkbox",
     "sample_number_property": "number",
     "sample_link_list_property": "multitext",
-    "sample_link_property": "text"
+    "sample_link_property": "text",
+    "creation date": "datetime"
   }
 }

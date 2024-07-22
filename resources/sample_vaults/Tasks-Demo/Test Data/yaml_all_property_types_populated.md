@@ -16,6 +16,7 @@ aliases:
   - YAML All Property Types Populated
 tags:
   - sample/tag/value
+creation date: 2024-05-25T15:17:00
 ---
 
 # yaml_all_property_types_populated

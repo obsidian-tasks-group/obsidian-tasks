@@ -19,6 +19,7 @@ export const yaml_all_property_types_populated = {
         '  - YAML All Property Types Populated\n' +
         'tags:\n' +
         '  - sample/tag/value\n' +
+        'creation date: 2024-05-25T15:17:00\n' +
         '---\n' +
         '\n' +
         '# yaml_all_property_types_populated\n' +
@@ -29,14 +30,14 @@ export const yaml_all_property_types_populated = {
             {
                 position: {
                     start: {
-                        line: 22,
+                        line: 23,
                         col: 6,
-                        offset: 534,
+                        offset: 569,
                     },
                     end: {
-                        line: 22,
+                        line: 23,
                         col: 11,
-                        offset: 539,
+                        offset: 574,
                     },
                 },
                 tag: '#task',
@@ -46,14 +47,14 @@ export const yaml_all_property_types_populated = {
             {
                 position: {
                     start: {
-                        line: 20,
+                        line: 21,
                         col: 0,
-                        offset: 491,
+                        offset: 526,
                     },
                     end: {
-                        line: 20,
+                        line: 21,
                         col: 35,
-                        offset: 526,
+                        offset: 561,
                     },
                 },
                 heading: 'yaml_all_property_types_populated',
@@ -70,9 +71,9 @@ export const yaml_all_property_types_populated = {
                         offset: 0,
                     },
                     end: {
-                        line: 18,
+                        line: 19,
                         col: 3,
-                        offset: 489,
+                        offset: 524,
                     },
                 },
             },
@@ -80,14 +81,14 @@ export const yaml_all_property_types_populated = {
                 type: 'heading',
                 position: {
                     start: {
-                        line: 20,
+                        line: 21,
                         col: 0,
-                        offset: 491,
+                        offset: 526,
                     },
                     end: {
-                        line: 20,
+                        line: 21,
                         col: 35,
-                        offset: 526,
+                        offset: 561,
                     },
                 },
             },
@@ -95,14 +96,14 @@ export const yaml_all_property_types_populated = {
                 type: 'list',
                 position: {
                     start: {
-                        line: 22,
+                        line: 23,
                         col: 0,
-                        offset: 528,
+                        offset: 563,
                     },
                     end: {
-                        line: 22,
+                        line: 23,
                         col: 55,
-                        offset: 583,
+                        offset: 618,
                     },
                 },
             },
@@ -111,17 +112,17 @@ export const yaml_all_property_types_populated = {
             {
                 position: {
                     start: {
-                        line: 22,
+                        line: 23,
                         col: 0,
-                        offset: 528,
+                        offset: 563,
                     },
                     end: {
-                        line: 22,
+                        line: 23,
                         col: 55,
-                        offset: 583,
+                        offset: 618,
                     },
                 },
-                parent: -22,
+                parent: -23,
                 task: ' ',
             },
         ],
@@ -136,6 +137,7 @@ export const yaml_all_property_types_populated = {
             sample_link_list_property: ['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]'],
             aliases: ['YAML All Property Types Populated'],
             tags: ['sample/tag/value'],
+            'creation date': '2024-05-25T15:17:00',
         },
         frontmatterPosition: {
             start: {
@@ -144,9 +146,9 @@ export const yaml_all_property_types_populated = {
                 offset: 0,
             },
             end: {
-                line: 18,
+                line: 19,
                 col: 3,
-                offset: 489,
+                offset: 524,
             },
         },
         frontmatterLinks: [
