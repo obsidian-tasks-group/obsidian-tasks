@@ -109,7 +109,7 @@ export class Recurrence {
 
             const options = RRule.parseText(isolatedRuleText);
             if (options !== null) {
-                const referenceDate = occurrence.getReferenceDate();
+                const referenceDate = occurrence.referenceDate;
 
                 if (!baseOnToday && referenceDate !== null) {
                     options.dtstart = window.moment(referenceDate).startOf('day').utc(true).toDate();
