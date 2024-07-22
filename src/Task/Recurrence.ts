@@ -25,7 +25,7 @@ export class Occurrence {
     }
 }
 
-function getReferenceDate(occurrence: Occurrence) {
+function appleSauce(occurrence: Occurrence) {
     // Pick the reference date for recurrence based on importance.
     // Assuming due date has the highest priority.
     let referenceDate: Moment | null = null;
@@ -38,6 +38,10 @@ function getReferenceDate(occurrence: Occurrence) {
         referenceDate = window.moment(occurrence.startDate);
     }
     return referenceDate;
+}
+
+function getReferenceDate(occurrence: Occurrence) {
+    return appleSauce(occurrence);
 }
 
 export class Recurrence {
