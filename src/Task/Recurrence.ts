@@ -89,6 +89,10 @@ export class Occurrence {
         nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
         return nextOccurrence;
     }
+
+    public nextOccurrence(next: Date): Occurrence {
+        return appleSauce(this, next);
+    }
 }
 
 function appleSauce(occurrence: Occurrence, next: Date) {
@@ -110,7 +114,7 @@ function appleSauce(occurrence: Occurrence, next: Date) {
 }
 
 function nextOccurrence(occurrence: Occurrence, next: Date) {
-    return appleSauce(occurrence, next);
+    return occurrence.nextOccurrence(next);
 }
 
 export class Recurrence {
