@@ -36,10 +36,16 @@ export class Occurrence {
         this.referenceDate = this.getReferenceDate();
     }
 
+    /**
+     *  Pick the reference date for occurrence based on importance.
+     *  Assuming due date has the highest priority, then scheduled date,
+     *  then start date.
+     *
+     *  The Moment objects are cloned.
+     *
+     * @private
+     */
     private getReferenceDate(): Moment | null {
-        // Pick the reference date for recurrence based on importance.
-        // Assuming due date has the highest priority.
-        // Clone the moment objects.
         if (this.dueDate) {
             return window.moment(this.dueDate);
         }
