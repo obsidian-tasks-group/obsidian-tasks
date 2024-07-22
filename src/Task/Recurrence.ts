@@ -91,26 +91,22 @@ export class Occurrence {
     }
 
     public nextOccurrence(next: Date): Occurrence {
-        return appleSauce(this, next);
-    }
-}
+        // Only if a reference date is given. A reference date will exist if at
+        // least one of the other dates is set.
+        if (this.referenceDate === null) {
+            return new Occurrence({
+                startDate: null,
+                scheduledDate: null,
+                dueDate: null,
+            });
+        }
 
-function appleSauce(occurrence: Occurrence, next: Date) {
-    // Only if a reference date is given. A reference date will exist if at
-    // least one of the other dates is set.
-    if (occurrence.referenceDate === null) {
         return new Occurrence({
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
+            startDate: this.nextOccurrenceDate(this.startDate, next),
+            scheduledDate: this.nextOccurrenceDate(this.scheduledDate, next),
+            dueDate: this.nextOccurrenceDate(this.dueDate, next),
         });
     }
-
-    return new Occurrence({
-        startDate: occurrence.nextOccurrenceDate(occurrence.startDate, next),
-        scheduledDate: occurrence.nextOccurrenceDate(occurrence.scheduledDate, next),
-        dueDate: occurrence.nextOccurrenceDate(occurrence.dueDate, next),
-    });
 }
 
 function nextOccurrence(occurrence: Occurrence, next: Date) {
