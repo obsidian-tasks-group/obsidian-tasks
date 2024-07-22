@@ -15,3 +15,11 @@ todo.
 - [ ] #task Task in 'example_kanban'
 ====================================================================================
 
+
+filter by function task.file.frontmatter['sample_list_property'] !== undefined
+find tasks in files where the list property 'sample_list_property' exists regardless of the value.
+=>
+- [ ] #task Task in 'yaml_all_property_types_empty'
+- [ ] #task Task in 'yaml_all_property_types_populated'
+====================================================================================
+
