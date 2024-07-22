@@ -69,6 +69,14 @@ export class Occurrence {
         return true;
     }
 
+    /**
+     * Gets next occurrence (start/scheduled/due date) keeping the relative distance
+     * with the reference date
+     *
+     * @param nextReferenceDate
+     * @param currentOccurrence start/scheduled/due date
+     * @private
+     */
     public nextOccurrenceDate(currentOccurrence: Moment | null, nextReferenceDate: Date) {
         if (currentOccurrence === null) {
             return null;
@@ -180,14 +188,6 @@ export class Recurrence {
         };
     }
 
-    /**
-     * Gets next occurrence (start/scheduled/due date) keeping the relative distance
-     * with the reference date
-     *
-     * @param nextReferenceDate
-     * @param currentOccurrence start/scheduled/due date
-     * @private
-     */
     private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null): Moment | null {
         return this.occurrence.nextOccurrenceDate(currentOccurrence, nextReferenceDate);
     }
