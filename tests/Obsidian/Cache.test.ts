@@ -2,11 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment/moment';
-import type { CachedMetadata } from 'obsidian';
-import { logging } from '../../src/lib/logging';
-import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
 import type { ListItem } from '../../src/Task/ListItem';
-import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { inheritance_1parent1child } from './__test_data__/inheritance_1parent1child';
 import { inheritance_1parent1child1newroot_after_header } from './__test_data__/inheritance_1parent1child1newroot_after_header';
@@ -32,37 +28,9 @@ import { callout_labelled } from './__test_data__/callout_labelled';
 import { callout_custom } from './__test_data__/callout_custom';
 import { callouts_nested_issue_2890_unlabelled } from './__test_data__/callouts_nested_issue_2890_unlabelled';
 import { allCacheSampleData } from './AllCacheSampleData';
+import { readTasksFromSimulatedFile } from './SimulatedFile';
 
 window.moment = moment;
-
-function errorReporter() {
-    return;
-}
-
-interface SimulatedFile {
-    cachedMetadata: CachedMetadata;
-    filePath: string;
-    fileContents: string;
-}
-
-/**
- For explanations on how to test code that is using Obsidian API
- refer to https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests
-
- TODO: Make the order of values in the generated code stable.
- */
-function readTasksFromSimulatedFile(testData: SimulatedFile) {
-    const logger = logging.getLogger('testCache');
-    setCurrentCacheFile(testData);
-    return getTasksFromFileContent2(
-        testData.filePath,
-        testData.fileContents,
-        testData.cachedMetadata.listItems!,
-        logger,
-        testData.cachedMetadata,
-        errorReporter,
-    );
-}
 
 function testRootAndChildren(root: ListItem, children: ListItem[]) {
     expect(root.parent).toEqual(null);
