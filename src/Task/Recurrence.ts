@@ -25,23 +25,19 @@ export class Occurrence {
     }
 
     public getReferenceDate(): Moment | null {
-        return appleSauce(this);
+        // Pick the reference date for recurrence based on importance.
+        // Assuming due date has the highest priority.
+        let referenceDate: Moment | null = null;
+        // Clone the moment objects.
+        if (this.dueDate) {
+            referenceDate = window.moment(this.dueDate);
+        } else if (this.scheduledDate) {
+            referenceDate = window.moment(this.scheduledDate);
+        } else if (this.startDate) {
+            referenceDate = window.moment(this.startDate);
+        }
+        return referenceDate;
     }
-}
-
-function appleSauce(occurrence: Occurrence) {
-    // Pick the reference date for recurrence based on importance.
-    // Assuming due date has the highest priority.
-    let referenceDate: Moment | null = null;
-    // Clone the moment objects.
-    if (occurrence.dueDate) {
-        referenceDate = window.moment(occurrence.dueDate);
-    } else if (occurrence.scheduledDate) {
-        referenceDate = window.moment(occurrence.scheduledDate);
-    } else if (occurrence.startDate) {
-        referenceDate = window.moment(occurrence.startDate);
-    }
-    return referenceDate;
 }
 
 function getReferenceDate(occurrence: Occurrence) {
