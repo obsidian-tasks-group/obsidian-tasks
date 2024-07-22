@@ -23,3 +23,25 @@ find tasks in files where the list property 'sample_list_property' exists regard
 - [ ] #task Task in 'yaml_all_property_types_populated'
 ====================================================================================
 
+
+filter by function task.file.frontmatter.sample_list_property !== undefined
+find tasks in files where the list property 'sample_list_property' exists regardless of the value.
+=>
+- [ ] #task Task in 'yaml_all_property_types_empty'
+- [ ] #task Task in 'yaml_all_property_types_populated'
+====================================================================================
+
+
+filter by function task.file.frontmatter.sample_list_property?.length > 0
+find tasks in files where the list property 'sample_list_property' exists and has at least one list item.
+=>
+- [ ] #task Task in 'yaml_all_property_types_populated'
+====================================================================================
+
+
+filter by function task.file.frontmatter.sample_list_property?.length === 0
+find tasks in files where the list property 'sample_list_property' exists and has no list items.
+=>
+
+====================================================================================
+

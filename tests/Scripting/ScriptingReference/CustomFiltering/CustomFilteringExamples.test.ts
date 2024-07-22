@@ -375,6 +375,18 @@ describe('obsidian properties', () => {
                     "filter by function task.file.frontmatter['sample_list_property'] !== undefined",
                     "find tasks in files where the list property 'sample_list_property' exists regardless of the value",
                 ],
+                [
+                    'filter by function task.file.frontmatter.sample_list_property !== undefined',
+                    "find tasks in files where the list property 'sample_list_property' exists regardless of the value",
+                ],
+                [
+                    'filter by function task.file.frontmatter.sample_list_property?.length > 0',
+                    "find tasks in files where the list property 'sample_list_property' exists and has at least one list item",
+                ],
+                [
+                    'filter by function task.file.frontmatter.sample_list_property?.length === 0',
+                    "find tasks in files where the list property 'sample_list_property' exists and has no list items",
+                ],
             ],
             tasks,
         ],
