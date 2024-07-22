@@ -185,8 +185,7 @@ export class Recurrence {
             return null;
         }
 
-        const occurrence = this.occurrence;
-        return occurrence.nextOccurrence(next);
+        return this.occurrence.nextOccurrence(next);
     }
 
     public identicalTo(other: Recurrence) {
