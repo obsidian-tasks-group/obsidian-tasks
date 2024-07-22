@@ -91,6 +91,24 @@ export class Occurrence {
     }
 }
 
+function nextOccurrence(occurrence: Occurrence, next: Date) {
+    // Only if a reference date is given. A reference date will exist if at
+    // least one of the other dates is set.
+    if (occurrence.referenceDate === null) {
+        return new Occurrence({
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+        });
+    }
+
+    return new Occurrence({
+        startDate: occurrence.nextOccurrenceDate(occurrence.startDate, next),
+        scheduledDate: occurrence.nextOccurrenceDate(occurrence.scheduledDate, next),
+        dueDate: occurrence.nextOccurrenceDate(occurrence.dueDate, next),
+    });
+}
+
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
@@ -168,21 +186,7 @@ export class Recurrence {
         }
 
         const occurrence = this.occurrence;
-        // Only if a reference date is given. A reference date will exist if at
-        // least one of the other dates is set.
-        if (occurrence.referenceDate === null) {
-            return new Occurrence({
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            });
-        }
-
-        return new Occurrence({
-            startDate: occurrence.nextOccurrenceDate(occurrence.startDate, next),
-            scheduledDate: occurrence.nextOccurrenceDate(occurrence.scheduledDate, next),
-            dueDate: occurrence.nextOccurrenceDate(occurrence.dueDate, next),
-        });
+        return nextOccurrence(occurrence, next);
     }
 
     public identicalTo(other: Recurrence) {
