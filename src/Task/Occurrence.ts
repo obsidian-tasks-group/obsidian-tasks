@@ -2,9 +2,9 @@ import type { Moment } from 'moment/moment';
 import { compareByDate } from '../lib/DateTools';
 
 export class Occurrence {
-    readonly startDate: Moment | null;
-    readonly scheduledDate: Moment | null;
-    readonly dueDate: Moment | null;
+    public readonly startDate: Moment | null;
+    public readonly scheduledDate: Moment | null;
+    public readonly dueDate: Moment | null;
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -19,7 +19,7 @@ export class Occurrence {
      * same relative distance to the due date as the original task. For example
      * "starts one week before it is due".
      */
-    readonly referenceDate: Moment | null;
+    public readonly referenceDate: Moment | null;
 
     constructor({
         startDate,
