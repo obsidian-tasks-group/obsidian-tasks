@@ -90,7 +90,7 @@ export class Occurrence {
         return nextOccurrence;
     }
 
-    public nextOccurrence(nextReferenceDate: Date): Occurrence {
+    public next(nextReferenceDate: Date): Occurrence {
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
         if (this.referenceDate === null) {
@@ -185,7 +185,7 @@ export class Recurrence {
             return null;
         }
 
-        return this.occurrence.nextOccurrence(nextReferenceDate);
+        return this.occurrence.next(nextReferenceDate);
     }
 
     public identicalTo(other: Recurrence) {
