@@ -7,17 +7,19 @@ import { compareByDate } from '../lib/DateTools';
 
 class Occurrence {
     readonly startDate: Moment | null;
+    readonly scheduledDate: Moment | null;
+    readonly dueDate: Moment | null;
 
-    constructor(startDate: Moment | null) {
+    constructor(startDate: Moment | null, scheduledDate: Moment | null, dueDate: Moment | null) {
         this.startDate = startDate;
+        this.scheduledDate = scheduledDate;
+        this.dueDate = dueDate;
     }
 }
 
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
-    private readonly scheduledDate: Moment | null;
-    private readonly dueDate: Moment | null;
     readonly occurrence: Occurrence;
 
     /**
@@ -53,9 +55,7 @@ export class Recurrence {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
         this.referenceDate = referenceDate;
-        this.scheduledDate = scheduledDate;
-        this.dueDate = dueDate;
-        this.occurrence = new Occurrence(startDate);
+        this.occurrence = new Occurrence(startDate, scheduledDate, dueDate);
     }
 
     public static fromText({
@@ -156,8 +156,8 @@ export class Recurrence {
 
         return {
             startDate: this.nextOccurrence(next, this.occurrence.startDate),
-            scheduledDate: this.nextOccurrence(next, this.scheduledDate),
-            dueDate: this.nextOccurrence(next, this.dueDate),
+            scheduledDate: this.nextOccurrence(next, this.occurrence.scheduledDate),
+            dueDate: this.nextOccurrence(next, this.occurrence.dueDate),
         };
     }
 
@@ -192,10 +192,10 @@ export class Recurrence {
         if (compareByDate(this.occurrence.startDate, other.occurrence.startDate) !== 0) {
             return false;
         }
-        if (compareByDate(this.scheduledDate, other.scheduledDate) !== 0) {
+        if (compareByDate(this.occurrence.scheduledDate, other.occurrence.scheduledDate) !== 0) {
             return false;
         }
-        if (compareByDate(this.dueDate, other.dueDate) !== 0) {
+        if (compareByDate(this.occurrence.dueDate, other.occurrence.dueDate) !== 0) {
             return false;
         }
 
