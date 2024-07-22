@@ -41,21 +41,17 @@ export class Recurrence {
         rrule,
         baseOnToday,
         referenceDate,
-        startDate,
-        scheduledDate,
-        dueDate,
+        occurrence,
     }: {
         rrule: RRule;
         baseOnToday: boolean;
         referenceDate: Moment | null;
-        startDate: Moment | null;
-        scheduledDate: Moment | null;
-        dueDate: Moment | null;
+        occurrence: Occurrence;
     }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
         this.referenceDate = referenceDate;
-        this.occurrence = new Occurrence(startDate, scheduledDate, dueDate);
+        this.occurrence = occurrence;
     }
 
     public static fromText({
@@ -103,9 +99,7 @@ export class Recurrence {
                     rrule,
                     baseOnToday,
                     referenceDate,
-                    startDate,
-                    scheduledDate,
-                    dueDate,
+                    occurrence: new Occurrence(startDate, scheduledDate, dueDate),
                 });
             }
         } catch (e) {
