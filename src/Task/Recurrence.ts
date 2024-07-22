@@ -167,9 +167,10 @@ export class Recurrence {
             return null;
         }
 
+        const occurrence = this.occurrence;
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
-        if (this.occurrence.referenceDate === null) {
+        if (occurrence.referenceDate === null) {
             return new Occurrence({
                 startDate: null,
                 scheduledDate: null,
@@ -178,9 +179,9 @@ export class Recurrence {
         }
 
         return new Occurrence({
-            startDate: this.occurrence.nextOccurrenceDate(this.occurrence.startDate, next),
-            scheduledDate: this.occurrence.nextOccurrenceDate(this.occurrence.scheduledDate, next),
-            dueDate: this.occurrence.nextOccurrenceDate(this.occurrence.dueDate, next),
+            startDate: occurrence.nextOccurrenceDate(occurrence.startDate, next),
+            scheduledDate: occurrence.nextOccurrenceDate(occurrence.scheduledDate, next),
+            dueDate: occurrence.nextOccurrenceDate(occurrence.dueDate, next),
         });
     }
 
