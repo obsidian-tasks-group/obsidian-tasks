@@ -3,7 +3,7 @@ import type { Moment } from 'moment';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
 import { Task } from '../../src/Task/Task';
-import { Recurrence } from '../../src/Task/Recurrence';
+import { Occurrence, Recurrence } from '../../src/Task/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskLocation } from '../../src/Task/TaskLocation';
@@ -132,9 +132,11 @@ export class TaskBuilder {
         taskBuilder.recurrence(
             Recurrence.fromText({
                 recurrenceRuleText: 'every day when done',
-                startDate: taskBuilder._startDate,
-                scheduledDate: taskBuilder._scheduledDate,
-                dueDate: taskBuilder._dueDate,
+                occurrence: new Occurrence({
+                    startDate: taskBuilder._startDate,
+                    scheduledDate: taskBuilder._scheduledDate,
+                    dueDate: taskBuilder._dueDate,
+                }),
             }),
         );
 
