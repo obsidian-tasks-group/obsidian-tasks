@@ -175,6 +175,7 @@ describe('TasksFile - reading frontmatter', () => {
               "sample_link_list_property => string[] = ['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']",
               "aliases => string[] = ['YAML All Property Types Populated']",
               "tags => string[] = ['#sample/tag/value']",
+              "creation date => string = '2024-05-25T15:17:00'",
             ]
         `);
     });

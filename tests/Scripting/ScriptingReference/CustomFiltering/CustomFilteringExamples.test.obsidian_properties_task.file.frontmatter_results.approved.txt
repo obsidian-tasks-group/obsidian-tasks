@@ -1,0 +1,54 @@
+Results of custom filters
+
+
+
+filter by function task.file.frontmatter['kanban-plugin'] === 'basic'
+todo.
+=>
+- [ ] #task Task in 'example_kanban'
+====================================================================================
+
+
+filter by function task.file.frontmatter['kanban-plugin'] !== undefined
+todo.
+=>
+- [ ] #task Task in 'example_kanban'
+====================================================================================
+
+
+filter by function task.file.frontmatter['sample_list_property'] !== undefined
+find tasks in files where the list property 'sample_list_property' exists regardless of the value.
+=>
+- [ ] #task Task in 'yaml_all_property_types_empty'
+- [ ] #task Task in 'yaml_all_property_types_populated'
+====================================================================================
+
+
+filter by function task.file.frontmatter.sample_list_property !== undefined
+find tasks in files where the list property 'sample_list_property' exists regardless of the value.
+=>
+- [ ] #task Task in 'yaml_all_property_types_empty'
+- [ ] #task Task in 'yaml_all_property_types_populated'
+====================================================================================
+
+
+filter by function task.file.frontmatter.sample_list_property?.length > 0
+find tasks in files where the list property 'sample_list_property' exists and has at least one list item.
+=>
+- [ ] #task Task in 'yaml_all_property_types_populated'
+====================================================================================
+
+
+filter by function task.file.frontmatter.sample_list_property?.length === 0
+find tasks in files where the list property 'sample_list_property' exists and has no list items.
+=>
+
+====================================================================================
+
+
+filter by function task.file.frontmatter['creation date']?.includes('2024') ?? false
+find tasks in files where the date property 'creation date' includes string '2024'.
+=>
+- [ ] #task Task in 'yaml_all_property_types_populated'
+====================================================================================
+
