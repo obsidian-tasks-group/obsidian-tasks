@@ -160,11 +160,7 @@ export class Recurrence {
      *
      * @param today - Optional date representing the completion date. Defaults to today.
      */
-    public next(today = window.moment()): {
-        startDate: Moment | null;
-        scheduledDate: Moment | null;
-        dueDate: Moment | null;
-    } | null {
+    public next(today = window.moment()): Occurrence | null {
         const next = this.nextReferenceDate(today);
 
         if (next === null) {
@@ -174,18 +170,18 @@ export class Recurrence {
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
         if (this.occurrence.referenceDate === null) {
-            return {
+            return new Occurrence({
                 startDate: null,
                 scheduledDate: null,
                 dueDate: null,
-            };
+            });
         }
 
-        return {
+        return new Occurrence({
             startDate: this.occurrence.nextOccurrenceDate(this.occurrence.startDate, next),
             scheduledDate: this.occurrence.nextOccurrenceDate(this.occurrence.scheduledDate, next),
             dueDate: this.occurrence.nextOccurrenceDate(this.occurrence.dueDate, next),
-        };
+        });
     }
 
     public identicalTo(other: Recurrence) {
