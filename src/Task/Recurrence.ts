@@ -70,7 +70,7 @@ export class Occurrence {
     }
 }
 
-function nextOccurrenceDate(currentOccurrence: Moment | null, occurrence: Occurrence, nextReferenceDate: Date) {
+function appleSauce(currentOccurrence: moment.Moment | null, occurrence: Occurrence, nextReferenceDate: Date) {
     if (currentOccurrence === null) {
         return null;
     }
@@ -81,6 +81,10 @@ function nextOccurrenceDate(currentOccurrence: Moment | null, occurrence: Occurr
     // Rounding days to handle cross daylight-savings-time recurrences.
     nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
     return nextOccurrence;
+}
+
+function nextOccurrenceDate(currentOccurrence: Moment | null, occurrence: Occurrence, nextReferenceDate: Date) {
+    return appleSauce(currentOccurrence, occurrence, nextReferenceDate);
 }
 
 export class Recurrence {
