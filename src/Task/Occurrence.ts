@@ -39,7 +39,6 @@ export class Occurrence {
     private getReferenceDate(): Moment | null {
         // Pick the reference date for recurrence based on importance.
         // Assuming due date has the highest priority.
-        const referenceDate: Moment | null = null;
         // Clone the moment objects.
         if (this.dueDate) {
             return window.moment(this.dueDate);
@@ -53,7 +52,7 @@ export class Occurrence {
             return window.moment(this.startDate);
         }
 
-        return referenceDate;
+        return null;
     }
 
     public isIdenticalTo(other: Occurrence) {
