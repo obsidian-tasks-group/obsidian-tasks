@@ -75,16 +75,7 @@ export class Recurrence {
     private readonly baseOnToday: boolean;
     readonly occurrence: Occurrence;
 
-    constructor({
-        rrule,
-        baseOnToday,
-        occurrence,
-    }: {
-        rrule: RRule;
-        baseOnToday: boolean;
-        referenceDate: Moment | null;
-        occurrence: Occurrence;
-    }) {
+    constructor({ rrule, baseOnToday, occurrence }: { rrule: RRule; baseOnToday: boolean; occurrence: Occurrence }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
         this.occurrence = occurrence;
@@ -120,7 +111,6 @@ export class Recurrence {
                 return new Recurrence({
                     rrule,
                     baseOnToday,
-                    referenceDate,
                     occurrence,
                 });
             }
