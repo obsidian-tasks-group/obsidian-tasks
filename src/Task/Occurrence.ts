@@ -22,17 +22,17 @@ export class Occurrence {
     public readonly referenceDate: Moment | null;
 
     constructor({
-        startDate,
-        scheduledDate,
-        dueDate,
+        startDate = null,
+        scheduledDate = null,
+        dueDate = null,
     }: {
-        startDate: Moment | null;
-        scheduledDate: Moment | null;
-        dueDate: Moment | null;
+        startDate?: Moment | null;
+        scheduledDate?: Moment | null;
+        dueDate?: Moment | null;
     }) {
-        this.startDate = startDate;
-        this.scheduledDate = scheduledDate;
-        this.dueDate = dueDate;
+        this.startDate = startDate ?? null;
+        this.scheduledDate = scheduledDate ?? null;
+        this.dueDate = dueDate ?? null;
         this.referenceDate = this.getReferenceDate();
     }
 
