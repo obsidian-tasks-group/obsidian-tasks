@@ -10,7 +10,15 @@ class Occurrence {
     readonly scheduledDate: Moment | null;
     readonly dueDate: Moment | null;
 
-    constructor(startDate: Moment | null, scheduledDate: Moment | null, dueDate: Moment | null) {
+    constructor({
+        startDate,
+        scheduledDate,
+        dueDate,
+    }: {
+        startDate: Moment | null;
+        scheduledDate: Moment | null;
+        dueDate: Moment | null;
+    }) {
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
@@ -99,7 +107,7 @@ export class Recurrence {
                     rrule,
                     baseOnToday,
                     referenceDate,
-                    occurrence: new Occurrence(startDate, scheduledDate, dueDate),
+                    occurrence: new Occurrence({ startDate, scheduledDate, dueDate }),
                 });
             }
         } catch (e) {
