@@ -3,7 +3,7 @@ import { parseTypedDateForSaving } from '../lib/DateTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
 import { Priority } from '../Task/Priority';
-import { Recurrence } from '../Task/Recurrence';
+import { Occurrence, Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 
@@ -157,9 +157,7 @@ export class EditableTask {
         if (this.recurrenceRule) {
             recurrence = Recurrence.fromText({
                 recurrenceRuleText: this.recurrenceRule,
-                startDate,
-                scheduledDate,
-                dueDate,
+                occurrence: new Occurrence({ startDate, scheduledDate, dueDate }),
             });
         }
 
@@ -250,9 +248,7 @@ export class EditableTask {
         const recurrenceFromText = Recurrence.fromText({
             recurrenceRuleText: this.recurrenceRule,
             // Only for representation in the modal, no dates required.
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
+            occurrence: new Occurrence({ startDate: null, scheduledDate: null, dueDate: null }),
         })?.toText();
 
         if (!recurrenceFromText) {
