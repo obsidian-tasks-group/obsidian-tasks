@@ -13,11 +13,7 @@ describe('Recurrence', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every week',
-            occurrence: new Occurrence({
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            }),
+            occurrence: new Occurrence({}),
         });
 
         // Act
@@ -33,8 +29,6 @@ describe('Recurrence', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every month',
             occurrence: new Occurrence({
-                startDate: null,
-                scheduledDate: null,
                 dueDate: moment('2022-01-31').startOf('day'),
             }),
         });
@@ -53,8 +47,6 @@ describe('Recurrence', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 3 months',
             occurrence: new Occurrence({
-                startDate: null,
-                scheduledDate: null,
                 dueDate: moment('2022-01-31').startOf('day'),
             }),
         });
@@ -73,8 +65,6 @@ describe('Recurrence', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 2 months',
             occurrence: new Occurrence({
-                startDate: null,
-                scheduledDate: null,
                 dueDate: moment('2023-12-31').startOf('day'),
             }),
         });
@@ -93,8 +83,6 @@ describe('Recurrence', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 2 years',
             occurrence: new Occurrence({
-                startDate: null,
-                scheduledDate: null,
                 dueDate: moment('2024-02-29').startOf('day'),
             }),
         });
@@ -113,8 +101,6 @@ describe('Recurrence', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 11 months',
             occurrence: new Occurrence({
-                startDate: null,
-                scheduledDate: null,
                 dueDate: moment('2020-03-31').startOf('day'),
             }),
         });
@@ -133,8 +119,6 @@ describe('Recurrence', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 13 months',
             occurrence: new Occurrence({
-                startDate: null,
-                scheduledDate: null,
                 dueDate: moment('2020-01-31').startOf('day'),
             }),
         });
@@ -157,8 +141,6 @@ describe('Recurrence - with invalid dates in tasks', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day',
             occurrence: new Occurrence({
-                startDate: null,
-                scheduledDate: null,
                 dueDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
             }),
         });
@@ -179,7 +161,6 @@ describe('Recurrence - with invalid dates in tasks', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day',
             occurrence: new Occurrence({
-                startDate: null,
                 scheduledDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
                 dueDate: moment('2022-02-27').startOf('day'),
             }),
