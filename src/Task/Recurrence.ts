@@ -5,7 +5,7 @@ import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 import { compareByDate } from '../lib/DateTools';
 
-class Occurrence {
+export class Occurrence {
     readonly startDate: Moment | null;
     readonly scheduledDate: Moment | null;
     readonly dueDate: Moment | null;
@@ -64,14 +64,10 @@ export class Recurrence {
 
     public static fromText({
         recurrenceRuleText,
-        startDate,
-        scheduledDate,
-        dueDate,
+        occurrence,
     }: {
         recurrenceRuleText: string;
-        startDate: Moment | null;
-        scheduledDate: Moment | null;
-        dueDate: Moment | null;
+        occurrence: Occurrence;
     }): Recurrence | null {
         try {
             const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
@@ -88,12 +84,12 @@ export class Recurrence {
                 // Assuming due date has the highest priority.
                 let referenceDate: Moment | null = null;
                 // Clone the moment objects.
-                if (dueDate) {
-                    referenceDate = window.moment(dueDate);
-                } else if (scheduledDate) {
-                    referenceDate = window.moment(scheduledDate);
-                } else if (startDate) {
-                    referenceDate = window.moment(startDate);
+                if (occurrence.dueDate) {
+                    referenceDate = window.moment(occurrence.dueDate);
+                } else if (occurrence.scheduledDate) {
+                    referenceDate = window.moment(occurrence.scheduledDate);
+                } else if (occurrence.startDate) {
+                    referenceDate = window.moment(occurrence.startDate);
                 }
 
                 if (!baseOnToday && referenceDate !== null) {
@@ -107,7 +103,7 @@ export class Recurrence {
                     rrule,
                     baseOnToday,
                     referenceDate,
-                    occurrence: new Occurrence({ startDate, scheduledDate, dueDate }),
+                    occurrence,
                 });
             }
         } catch (e) {
