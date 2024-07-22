@@ -25,6 +25,21 @@ export class Occurrence {
     }
 }
 
+function getReferenceDate(occurrence: Occurrence) {
+    // Pick the reference date for recurrence based on importance.
+    // Assuming due date has the highest priority.
+    let referenceDate: Moment | null = null;
+    // Clone the moment objects.
+    if (occurrence.dueDate) {
+        referenceDate = window.moment(occurrence.dueDate);
+    } else if (occurrence.scheduledDate) {
+        referenceDate = window.moment(occurrence.scheduledDate);
+    } else if (occurrence.startDate) {
+        referenceDate = window.moment(occurrence.startDate);
+    }
+    return referenceDate;
+}
+
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
@@ -80,17 +95,7 @@ export class Recurrence {
 
             const options = RRule.parseText(isolatedRuleText);
             if (options !== null) {
-                // Pick the reference date for recurrence based on importance.
-                // Assuming due date has the highest priority.
-                let referenceDate: Moment | null = null;
-                // Clone the moment objects.
-                if (occurrence.dueDate) {
-                    referenceDate = window.moment(occurrence.dueDate);
-                } else if (occurrence.scheduledDate) {
-                    referenceDate = window.moment(occurrence.scheduledDate);
-                } else if (occurrence.startDate) {
-                    referenceDate = window.moment(occurrence.startDate);
-                }
+                const referenceDate = getReferenceDate(occurrence);
 
                 if (!baseOnToday && referenceDate !== null) {
                     options.dtstart = window.moment(referenceDate).startOf('day').utc(true).toDate();
