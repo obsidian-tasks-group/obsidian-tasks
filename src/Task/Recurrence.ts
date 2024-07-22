@@ -176,11 +176,12 @@ export class Recurrence {
      * @private
      */
     private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null): Moment | null {
+        const occurrence = this.occurrence;
+
         if (currentOccurrence === null) {
             return null;
         }
-
-        const originalDifference = window.moment.duration(currentOccurrence.diff(this.occurrence.referenceDate));
+        const originalDifference = window.moment.duration(currentOccurrence.diff(occurrence.referenceDate));
 
         // Cloning so that original won't be manipulated:
         const nextOccurrence = window.moment(nextReferenceDate);
