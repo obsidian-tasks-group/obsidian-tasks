@@ -191,14 +191,16 @@ export class Recurrence {
             return false;
         }
 
+        const occurrence = this.occurrence;
+        const otherOccurrence = other.occurrence;
         // Compare Date fields
-        if (compareByDate(this.occurrence.startDate, other.occurrence.startDate) !== 0) {
+        if (compareByDate(occurrence.startDate, otherOccurrence.startDate) !== 0) {
             return false;
         }
-        if (compareByDate(this.occurrence.scheduledDate, other.occurrence.scheduledDate) !== 0) {
+        if (compareByDate(occurrence.scheduledDate, otherOccurrence.scheduledDate) !== 0) {
             return false;
         }
-        if (compareByDate(this.occurrence.dueDate, other.occurrence.dueDate) !== 0) {
+        if (compareByDate(occurrence.dueDate, otherOccurrence.dueDate) !== 0) {
             return false;
         }
 
