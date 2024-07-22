@@ -415,14 +415,7 @@ export class Task extends ListItem {
         return newDate;
     }
 
-    private createNextOccurrence(
-        newStatus: Status,
-        nextOccurrence: {
-            startDate: moment.Moment | null;
-            scheduledDate: moment.Moment | null;
-            dueDate: moment.Moment | null;
-        },
-    ) {
+    private createNextOccurrence(newStatus: Status, nextOccurrence: Occurrence) {
         const { setCreatedDate } = getSettings();
         let createdDate: moment.Moment | null = null;
         if (setCreatedDate) {
