@@ -23,6 +23,10 @@ export class Occurrence {
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
     }
+
+    public getReferenceDate(): Moment | null {
+        return appleSauce(this);
+    }
 }
 
 function appleSauce(occurrence: Occurrence) {
@@ -41,7 +45,7 @@ function appleSauce(occurrence: Occurrence) {
 }
 
 function getReferenceDate(occurrence: Occurrence) {
-    return appleSauce(occurrence);
+    return occurrence.getReferenceDate();
 }
 
 export class Recurrence {
