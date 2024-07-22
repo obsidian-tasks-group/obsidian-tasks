@@ -182,14 +182,10 @@ export class Recurrence {
         }
 
         return {
-            startDate: this.nextOccurrence(next, this.occurrence.startDate),
-            scheduledDate: this.nextOccurrence(next, this.occurrence.scheduledDate),
-            dueDate: this.nextOccurrence(next, this.occurrence.dueDate),
+            startDate: this.occurrence.nextOccurrenceDate(this.occurrence.startDate, next),
+            scheduledDate: this.occurrence.nextOccurrenceDate(this.occurrence.scheduledDate, next),
+            dueDate: this.occurrence.nextOccurrenceDate(this.occurrence.dueDate, next),
         };
-    }
-
-    private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null): Moment | null {
-        return this.occurrence.nextOccurrenceDate(currentOccurrence, nextReferenceDate);
     }
 
     public identicalTo(other: Recurrence) {
