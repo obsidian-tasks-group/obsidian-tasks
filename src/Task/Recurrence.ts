@@ -74,14 +74,14 @@ export class Occurrence {
      * with the reference date
      *
      * @param nextReferenceDate
-     * @param currentOccurrence start/scheduled/due date
+     * @param currentOccurrenceDate start/scheduled/due date
      * @private
      */
-    public nextOccurrenceDate(currentOccurrence: Moment | null, nextReferenceDate: Date) {
-        if (currentOccurrence === null) {
+    public nextOccurrenceDate(currentOccurrenceDate: Moment | null, nextReferenceDate: Date) {
+        if (currentOccurrenceDate === null) {
             return null;
         }
-        const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
+        const originalDifference = window.moment.duration(currentOccurrenceDate.diff(this.referenceDate));
 
         // Cloning so that original won't be manipulated:
         const nextOccurrence = window.moment(nextReferenceDate);
