@@ -83,10 +83,6 @@ export class Occurrence {
     }
 }
 
-function nextOccurrenceDate(currentOccurrence: Moment | null, occurrence: Occurrence, nextReferenceDate: Date) {
-    return occurrence.nextOccurrenceDate(currentOccurrence, nextReferenceDate);
-}
-
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
@@ -195,7 +191,7 @@ export class Recurrence {
     private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null): Moment | null {
         const occurrence = this.occurrence;
 
-        return nextOccurrenceDate(currentOccurrence, occurrence, nextReferenceDate);
+        return occurrence.nextOccurrenceDate(currentOccurrence, nextReferenceDate);
     }
 
     public identicalTo(other: Recurrence) {
