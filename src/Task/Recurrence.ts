@@ -1,7 +1,6 @@
 // begin-snippet: declare-Moment-type-in-src
 import type { Moment } from 'moment';
 // end-snippet
-
 import { RRule } from 'rrule';
 import { compareByDate } from '../lib/DateTools';
 
@@ -22,6 +21,36 @@ export class Occurrence {
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
+    }
+
+    public getReferenceDate(): Moment | null {
+        // Pick the reference date for recurrence based on importance.
+        // Assuming due date has the highest priority.
+        let referenceDate: Moment | null = null;
+        // Clone the moment objects.
+        if (this.dueDate) {
+            referenceDate = window.moment(this.dueDate);
+        } else if (this.scheduledDate) {
+            referenceDate = window.moment(this.scheduledDate);
+        } else if (this.startDate) {
+            referenceDate = window.moment(this.startDate);
+        }
+        return referenceDate;
+    }
+
+    public isIdenticalTo(other: Occurrence) {
+        // Compare Date fields
+        if (compareByDate(this.startDate, other.startDate) !== 0) {
+            return false;
+        }
+        if (compareByDate(this.scheduledDate, other.scheduledDate) !== 0) {
+            return false;
+        }
+        if (compareByDate(this.dueDate, other.dueDate) !== 0) {
+            return false;
+        }
+
+        return true;
     }
 }
 
@@ -80,17 +109,7 @@ export class Recurrence {
 
             const options = RRule.parseText(isolatedRuleText);
             if (options !== null) {
-                // Pick the reference date for recurrence based on importance.
-                // Assuming due date has the highest priority.
-                let referenceDate: Moment | null = null;
-                // Clone the moment objects.
-                if (occurrence.dueDate) {
-                    referenceDate = window.moment(occurrence.dueDate);
-                } else if (occurrence.scheduledDate) {
-                    referenceDate = window.moment(occurrence.scheduledDate);
-                } else if (occurrence.startDate) {
-                    referenceDate = window.moment(occurrence.startDate);
-                }
+                const referenceDate = occurrence.getReferenceDate();
 
                 if (!baseOnToday && referenceDate !== null) {
                     options.dtstart = window.moment(referenceDate).startOf('day').utc(true).toDate();
@@ -186,14 +205,7 @@ export class Recurrence {
             return false;
         }
 
-        // Compare Date fields
-        if (compareByDate(this.occurrence.startDate, other.occurrence.startDate) !== 0) {
-            return false;
-        }
-        if (compareByDate(this.occurrence.scheduledDate, other.occurrence.scheduledDate) !== 0) {
-            return false;
-        }
-        if (compareByDate(this.occurrence.dueDate, other.occurrence.dueDate) !== 0) {
+        if (!this.occurrence.isIdenticalTo(other.occurrence)) {
             return false;
         }
 
