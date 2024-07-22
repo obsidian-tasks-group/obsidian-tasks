@@ -5,12 +5,15 @@ import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 import { compareByDate } from '../lib/DateTools';
 
+class Occurrence {}
+
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
+    readonly occurrence: Occurrence;
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -48,6 +51,7 @@ export class Recurrence {
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
+        this.occurrence = new Occurrence();
     }
 
     public static fromText({
