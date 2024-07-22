@@ -40,23 +40,19 @@ export class Occurrence {
     }
 
     public isIdenticalTo(other: Occurrence) {
-        return fooBar(this, other);
-    }
-}
+        // Compare Date fields
+        if (compareByDate(this.startDate, other.startDate) !== 0) {
+            return false;
+        }
+        if (compareByDate(this.scheduledDate, other.scheduledDate) !== 0) {
+            return false;
+        }
+        if (compareByDate(this.dueDate, other.dueDate) !== 0) {
+            return false;
+        }
 
-function fooBar(occurrence: Occurrence, otherOccurrence: Occurrence) {
-    // Compare Date fields
-    if (compareByDate(occurrence.startDate, otherOccurrence.startDate) !== 0) {
-        return false;
+        return true;
     }
-    if (compareByDate(occurrence.scheduledDate, otherOccurrence.scheduledDate) !== 0) {
-        return false;
-    }
-    if (compareByDate(occurrence.dueDate, otherOccurrence.dueDate) !== 0) {
-        return false;
-    }
-
-    return true;
 }
 
 function appleSauce(occurrence: Occurrence, otherOccurrence: Occurrence): boolean {
