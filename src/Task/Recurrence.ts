@@ -189,9 +189,7 @@ export class Recurrence {
      * @private
      */
     private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null): Moment | null {
-        const occurrence = this.occurrence;
-
-        return occurrence.nextOccurrenceDate(currentOccurrence, nextReferenceDate);
+        return this.occurrence.nextOccurrenceDate(currentOccurrence, nextReferenceDate);
     }
 
     public identicalTo(other: Recurrence) {
