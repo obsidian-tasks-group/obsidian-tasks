@@ -39,15 +39,20 @@ export class Occurrence {
     private getReferenceDate(): Moment | null {
         // Pick the reference date for recurrence based on importance.
         // Assuming due date has the highest priority.
-        let referenceDate: Moment | null = null;
+        const referenceDate: Moment | null = null;
         // Clone the moment objects.
         if (this.dueDate) {
-            referenceDate = window.moment(this.dueDate);
-        } else if (this.scheduledDate) {
-            referenceDate = window.moment(this.scheduledDate);
-        } else if (this.startDate) {
-            referenceDate = window.moment(this.startDate);
+            return window.moment(this.dueDate);
         }
+
+        if (this.scheduledDate) {
+            return window.moment(this.scheduledDate);
+        }
+
+        if (this.startDate) {
+            return window.moment(this.startDate);
+        }
+
         return referenceDate;
     }
 
