@@ -38,6 +38,10 @@ export class Occurrence {
         }
         return referenceDate;
     }
+
+    public isIdenticalTo(other: Occurrence) {
+        return fooBar(this, other);
+    }
 }
 
 function fooBar(occurrence: Occurrence, otherOccurrence: Occurrence) {
@@ -56,7 +60,7 @@ function fooBar(occurrence: Occurrence, otherOccurrence: Occurrence) {
 }
 
 function appleSauce(occurrence: Occurrence, otherOccurrence: Occurrence): boolean {
-    return fooBar(occurrence, otherOccurrence);
+    return occurrence.isIdenticalTo(otherOccurrence);
 }
 
 export class Recurrence {
