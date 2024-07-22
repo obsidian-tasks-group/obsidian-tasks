@@ -5,7 +5,13 @@ import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 import { compareByDate } from '../lib/DateTools';
 
-class Occurrence {}
+class Occurrence {
+    readonly startDate: Moment | null;
+
+    constructor(startDate: Moment | null) {
+        this.startDate = startDate;
+    }
+}
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -51,7 +57,7 @@ export class Recurrence {
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
-        this.occurrence = new Occurrence();
+        this.occurrence = new Occurrence(startDate);
     }
 
     public static fromText({
