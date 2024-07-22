@@ -40,6 +40,21 @@ export class Occurrence {
     }
 }
 
+function appleSauce(occurrence: Occurrence, otherOccurrence: Occurrence): boolean {
+    // Compare Date fields
+    if (compareByDate(occurrence.startDate, otherOccurrence.startDate) !== 0) {
+        return false;
+    }
+    if (compareByDate(occurrence.scheduledDate, otherOccurrence.scheduledDate) !== 0) {
+        return false;
+    }
+    if (compareByDate(occurrence.dueDate, otherOccurrence.dueDate) !== 0) {
+        return false;
+    }
+
+    return true;
+}
+
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
@@ -193,14 +208,7 @@ export class Recurrence {
 
         const occurrence = this.occurrence;
         const otherOccurrence = other.occurrence;
-        // Compare Date fields
-        if (compareByDate(occurrence.startDate, otherOccurrence.startDate) !== 0) {
-            return false;
-        }
-        if (compareByDate(occurrence.scheduledDate, otherOccurrence.scheduledDate) !== 0) {
-            return false;
-        }
-        if (compareByDate(occurrence.dueDate, otherOccurrence.dueDate) !== 0) {
+        if (!appleSauce(occurrence, otherOccurrence)) {
             return false;
         }
 
