@@ -13,7 +13,7 @@ import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
 import { DateFallback } from './DateFallback';
 import { ListItem } from './ListItem';
 import { Urgency } from './Urgency';
-import type { Recurrence } from './Recurrence';
+import type { Occurrence, Recurrence } from './Recurrence';
 import type { TaskLocation } from './TaskLocation';
 import type { Priority } from './Priority';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
@@ -360,11 +360,7 @@ export class Task extends ListItem {
             today,
         );
 
-        let nextOccurrence: {
-            startDate: Moment | null;
-            scheduledDate: Moment | null;
-            dueDate: Moment | null;
-        } | null = null;
+        let nextOccurrence: Occurrence | null = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted() && this.recurrence !== null) {
                 nextOccurrence = this.recurrence.next(today);
