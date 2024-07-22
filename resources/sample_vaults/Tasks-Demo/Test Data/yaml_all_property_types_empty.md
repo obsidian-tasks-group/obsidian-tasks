@@ -8,7 +8,8 @@ sample_text_property:
 sample_link_property: 
 sample_link_list_property: 
 aliases: 
-tags:
+tags: 
+creation date:
 ---
 # yaml_all_property_types_empty
 

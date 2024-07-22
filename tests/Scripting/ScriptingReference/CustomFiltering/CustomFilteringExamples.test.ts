@@ -387,6 +387,10 @@ describe('obsidian properties', () => {
                     'filter by function task.file.frontmatter.sample_list_property?.length === 0',
                     "find tasks in files where the list property 'sample_list_property' exists and has no list items",
                 ],
+                [
+                    "filter by function task.file.frontmatter['creation date']?.includes('2024') ?? false",
+                    "find tasks in files where the date property 'creation date' includes string '2024'",
+                ],
             ],
             tasks,
         ],
