@@ -40,7 +40,7 @@ export class Occurrence {
     }
 }
 
-function appleSauce(occurrence: Occurrence, otherOccurrence: Occurrence): boolean {
+function fooBar(occurrence: Occurrence, otherOccurrence: Occurrence) {
     // Compare Date fields
     if (compareByDate(occurrence.startDate, otherOccurrence.startDate) !== 0) {
         return false;
@@ -53,6 +53,10 @@ function appleSauce(occurrence: Occurrence, otherOccurrence: Occurrence): boolea
     }
 
     return true;
+}
+
+function appleSauce(occurrence: Occurrence, otherOccurrence: Occurrence): boolean {
+    return fooBar(occurrence, otherOccurrence);
 }
 
 export class Recurrence {
