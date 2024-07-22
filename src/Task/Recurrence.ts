@@ -40,10 +40,6 @@ export class Occurrence {
     }
 }
 
-function getReferenceDate(occurrence: Occurrence) {
-    return occurrence.getReferenceDate();
-}
-
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
@@ -99,7 +95,7 @@ export class Recurrence {
 
             const options = RRule.parseText(isolatedRuleText);
             if (options !== null) {
-                const referenceDate = getReferenceDate(occurrence);
+                const referenceDate = occurrence.getReferenceDate();
 
                 if (!baseOnToday && referenceDate !== null) {
                     options.dtstart = window.moment(referenceDate).startOf('day').utc(true).toDate();
