@@ -1,7 +1,6 @@
 // begin-snippet: declare-Moment-type-in-src
 import type { Moment } from 'moment';
 // end-snippet
-
 import { RRule } from 'rrule';
 import { compareByDate } from '../lib/DateTools';
 
@@ -53,10 +52,6 @@ export class Occurrence {
 
         return true;
     }
-}
-
-function appleSauce(occurrence: Occurrence, otherOccurrence: Occurrence): boolean {
-    return occurrence.isIdenticalTo(otherOccurrence);
 }
 
 export class Recurrence {
@@ -212,7 +207,7 @@ export class Recurrence {
 
         const occurrence = this.occurrence;
         const otherOccurrence = other.occurrence;
-        if (!appleSauce(occurrence, otherOccurrence)) {
+        if (!occurrence.isIdenticalTo(otherOccurrence)) {
             return false;
         }
 
