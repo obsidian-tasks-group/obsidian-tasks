@@ -205,9 +205,7 @@ export class Recurrence {
             return false;
         }
 
-        const occurrence = this.occurrence;
-        const otherOccurrence = other.occurrence;
-        if (!occurrence.isIdenticalTo(otherOccurrence)) {
+        if (!this.occurrence.isIdenticalTo(other.occurrence)) {
             return false;
         }
 
