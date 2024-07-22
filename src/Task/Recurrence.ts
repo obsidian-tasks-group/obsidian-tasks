@@ -16,7 +16,6 @@ class Occurrence {
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
-    private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
     readonly occurrence: Occurrence;
@@ -54,7 +53,6 @@ export class Recurrence {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
         this.referenceDate = referenceDate;
-        this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.occurrence = new Occurrence(startDate);
@@ -157,7 +155,7 @@ export class Recurrence {
         }
 
         return {
-            startDate: this.nextOccurrence(next, this.startDate),
+            startDate: this.nextOccurrence(next, this.occurrence.startDate),
             scheduledDate: this.nextOccurrence(next, this.scheduledDate),
             dueDate: this.nextOccurrence(next, this.dueDate),
         };
@@ -191,7 +189,7 @@ export class Recurrence {
         }
 
         // Compare Date fields
-        if (compareByDate(this.startDate, other.startDate) !== 0) {
+        if (compareByDate(this.occurrence.startDate, other.occurrence.startDate) !== 0) {
             return false;
         }
         if (compareByDate(this.scheduledDate, other.scheduledDate) !== 0) {
