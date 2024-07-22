@@ -70,6 +70,19 @@ export class Occurrence {
     }
 }
 
+function nextOccurrenceDate(currentOccurrence: Moment | null, occurrence: Occurrence, nextReferenceDate: Date) {
+    if (currentOccurrence === null) {
+        return null;
+    }
+    const originalDifference = window.moment.duration(currentOccurrence.diff(occurrence.referenceDate));
+
+    // Cloning so that original won't be manipulated:
+    const nextOccurrence = window.moment(nextReferenceDate);
+    // Rounding days to handle cross daylight-savings-time recurrences.
+    nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
+    return nextOccurrence;
+}
+
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
@@ -178,16 +191,7 @@ export class Recurrence {
     private nextOccurrence(nextReferenceDate: Date, currentOccurrence: Moment | null): Moment | null {
         const occurrence = this.occurrence;
 
-        if (currentOccurrence === null) {
-            return null;
-        }
-        const originalDifference = window.moment.duration(currentOccurrence.diff(occurrence.referenceDate));
-
-        // Cloning so that original won't be manipulated:
-        const nextOccurrence = window.moment(nextReferenceDate);
-        // Rounding days to handle cross daylight-savings-time recurrences.
-        nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
-        return nextOccurrence;
+        return nextOccurrenceDate(currentOccurrence, occurrence, nextReferenceDate);
     }
 
     public identicalTo(other: Recurrence) {
