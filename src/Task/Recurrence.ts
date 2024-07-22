@@ -179,13 +179,13 @@ export class Recurrence {
      * @param today - Optional date representing the completion date. Defaults to today.
      */
     public next(today = window.moment()): Occurrence | null {
-        const next = this.nextReferenceDate(today);
+        const nextReferenceDate = this.nextReferenceDate(today);
 
-        if (next === null) {
+        if (nextReferenceDate === null) {
             return null;
         }
 
-        return this.occurrence.nextOccurrence(next);
+        return this.occurrence.nextOccurrence(nextReferenceDate);
     }
 
     public identicalTo(other: Recurrence) {
