@@ -68,6 +68,10 @@ export class Occurrence {
 
         return true;
     }
+
+    public nextOccurrenceDate(currentOccurrence: Moment | null, nextReferenceDate: Date) {
+        return appleSauce(currentOccurrence, this, nextReferenceDate);
+    }
 }
 
 function appleSauce(currentOccurrence: moment.Moment | null, occurrence: Occurrence, nextReferenceDate: Date) {
@@ -84,7 +88,7 @@ function appleSauce(currentOccurrence: moment.Moment | null, occurrence: Occurre
 }
 
 function nextOccurrenceDate(currentOccurrence: Moment | null, occurrence: Occurrence, nextReferenceDate: Date) {
-    return appleSauce(currentOccurrence, occurrence, nextReferenceDate);
+    return occurrence.nextOccurrenceDate(currentOccurrence, nextReferenceDate);
 }
 
 export class Recurrence {
