@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { Recurrence } from '../Task/Recurrence';
+import { Occurrence, Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
@@ -367,9 +367,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         if (recurrenceRule.length > 0) {
             recurrence = Recurrence.fromText({
                 recurrenceRuleText: recurrenceRule,
-                startDate,
-                scheduledDate,
-                dueDate,
+                occurrence: new Occurrence({ startDate, scheduledDate, dueDate }),
             });
         }
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
