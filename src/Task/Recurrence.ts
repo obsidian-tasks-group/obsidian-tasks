@@ -52,12 +52,6 @@ export class Occurrence {
 
         return true;
     }
-}
-
-export class Recurrence {
-    private readonly rrule: RRule;
-    private readonly baseOnToday: boolean;
-    readonly occurrence: Occurrence;
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -72,12 +66,19 @@ export class Recurrence {
      * same relative distance to the due date as the original task. For example
      * "starts one week before it is due".
      */
-    private readonly referenceDate: Moment | null;
+    public get referenceDate(): Moment | null {
+        return this.getReferenceDate();
+    }
+}
+
+export class Recurrence {
+    private readonly rrule: RRule;
+    private readonly baseOnToday: boolean;
+    readonly occurrence: Occurrence;
 
     constructor({
         rrule,
         baseOnToday,
-        referenceDate,
         occurrence,
     }: {
         rrule: RRule;
@@ -87,7 +88,6 @@ export class Recurrence {
     }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
-        this.referenceDate = referenceDate;
         this.occurrence = occurrence;
     }
 
@@ -163,7 +163,7 @@ export class Recurrence {
 
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
-        if (this.referenceDate === null) {
+        if (this.occurrence.referenceDate === null) {
             return {
                 startDate: null,
                 scheduledDate: null,
@@ -191,7 +191,7 @@ export class Recurrence {
             return null;
         }
 
-        const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
+        const originalDifference = window.moment.duration(currentOccurrence.diff(this.occurrence.referenceDate));
 
         // Cloning so that original won't be manipulated:
         const nextOccurrence = window.moment(nextReferenceDate);
@@ -237,7 +237,7 @@ export class Recurrence {
         const after = window
             // Reference date can be `undefined` to mean "today".
             // Moment only accepts `undefined`, not `null`.
-            .moment(this.referenceDate ?? undefined)
+            .moment(this.occurrence.referenceDate ?? undefined)
             .endOf('day');
 
         return this.nextAfter(after, this.rrule);
