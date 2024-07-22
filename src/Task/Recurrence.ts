@@ -70,21 +70,17 @@ export class Occurrence {
     }
 
     public nextOccurrenceDate(currentOccurrence: Moment | null, nextReferenceDate: Date) {
-        return appleSauce(currentOccurrence, this, nextReferenceDate);
-    }
-}
+        if (currentOccurrence === null) {
+            return null;
+        }
+        const originalDifference = window.moment.duration(currentOccurrence.diff(this.referenceDate));
 
-function appleSauce(currentOccurrence: moment.Moment | null, occurrence: Occurrence, nextReferenceDate: Date) {
-    if (currentOccurrence === null) {
-        return null;
+        // Cloning so that original won't be manipulated:
+        const nextOccurrence = window.moment(nextReferenceDate);
+        // Rounding days to handle cross daylight-savings-time recurrences.
+        nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
+        return nextOccurrence;
     }
-    const originalDifference = window.moment.duration(currentOccurrence.diff(occurrence.referenceDate));
-
-    // Cloning so that original won't be manipulated:
-    const nextOccurrence = window.moment(nextReferenceDate);
-    // Rounding days to handle cross daylight-savings-time recurrences.
-    nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
-    return nextOccurrence;
 }
 
 function nextOccurrenceDate(currentOccurrence: Moment | null, occurrence: Occurrence, nextReferenceDate: Date) {
