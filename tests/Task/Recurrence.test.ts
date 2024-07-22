@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Occurrence, Recurrence } from '../../src/Task/Recurrence';
+import { Occurrence } from '../../src/Task/Occurrence';
+import { Recurrence } from '../../src/Task/Recurrence';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 
 window.moment = moment;
