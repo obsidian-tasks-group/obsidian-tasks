@@ -375,19 +375,13 @@ export class Task extends ListItem {
             cancelledDate: newCancelledDate,
         });
 
-        const newTasks: Task[] = [];
-
         if (nextOccurrence === null) {
             return [toggledTask];
         }
 
         const nextTask = this.createNextOccurrence(newStatus, nextOccurrence);
-        newTasks.push(nextTask);
-
         // Write next occurrence before previous occurrence.
-        newTasks.push(toggledTask);
-
-        return newTasks;
+        return [nextTask, toggledTask];
     }
 
     /**
