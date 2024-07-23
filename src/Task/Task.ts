@@ -375,6 +375,8 @@ export class Task extends ListItem {
         let nextOccurrence: Occurrence | null = null;
         if (!this.status.isCompleted() && this.recurrence !== null) {
             nextOccurrence = this.recurrence.next(today);
+        } else {
+            return [toggledTask];
         }
 
         if (nextOccurrence === null) {
