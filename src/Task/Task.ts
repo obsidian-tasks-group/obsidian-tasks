@@ -377,11 +377,11 @@ export class Task extends ListItem {
 
         const newTasks: Task[] = [];
 
-        if (nextOccurrence !== null) {
+        if (nextOccurrence === null) {
+            return [toggledTask];
+        } else {
             const nextTask = this.createNextOccurrence(newStatus, nextOccurrence);
             newTasks.push(nextTask);
-        } else {
-            return [toggledTask];
         }
 
         // Write next occurrence before previous occurrence.
