@@ -372,12 +372,11 @@ export class Task extends ListItem {
             return [toggledTask];
         }
 
-        let nextOccurrence: Occurrence | null = null;
         if (this.status.isCompleted() || this.recurrence === null) {
             return [toggledTask];
         }
-        nextOccurrence = this.recurrence.next(today);
 
+        const nextOccurrence = this.recurrence.next(today);
         if (nextOccurrence === null) {
             return [toggledTask];
         }
