@@ -369,12 +369,12 @@ export class Task extends ListItem {
         });
 
         let nextOccurrence: Occurrence | null = null;
-        if (newStatus.isCompleted()) {
+        if (!newStatus.isCompleted()) {
+            return [toggledTask];
+        } else {
             if (!this.status.isCompleted() && this.recurrence !== null) {
                 nextOccurrence = this.recurrence.next(today);
             }
-        } else {
-            return [toggledTask];
         }
 
         if (nextOccurrence === null) {
