@@ -372,7 +372,11 @@ export class Task extends ListItem {
             return [toggledTask];
         }
 
-        if (this.status.isCompleted() || this.recurrence === null) {
+        if (this.status.isCompleted()) {
+            return [toggledTask];
+        }
+
+        if (this.recurrence === null) {
             return [toggledTask];
         }
 
