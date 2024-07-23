@@ -380,6 +380,8 @@ export class Task extends ListItem {
         if (nextOccurrence !== null) {
             const nextTask = this.createNextOccurrence(newStatus, nextOccurrence);
             newTasks.push(nextTask);
+        } else {
+            return [toggledTask];
         }
 
         // Write next occurrence before previous occurrence.
