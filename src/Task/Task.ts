@@ -361,19 +361,19 @@ export class Task extends ListItem {
             today,
         );
 
-        let nextOccurrence: Occurrence | null = null;
-        if (newStatus.isCompleted()) {
-            if (!this.status.isCompleted() && this.recurrence !== null) {
-                nextOccurrence = this.recurrence.next(today);
-            }
-        }
-
         const toggledTask = new Task({
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
             cancelledDate: newCancelledDate,
         });
+
+        let nextOccurrence: Occurrence | null = null;
+        if (newStatus.isCompleted()) {
+            if (!this.status.isCompleted() && this.recurrence !== null) {
+                nextOccurrence = this.recurrence.next(today);
+            }
+        }
 
         if (nextOccurrence === null) {
             return [toggledTask];
