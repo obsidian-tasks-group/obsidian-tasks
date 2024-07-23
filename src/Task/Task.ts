@@ -373,6 +373,8 @@ export class Task extends ListItem {
             if (!this.status.isCompleted() && this.recurrence !== null) {
                 nextOccurrence = this.recurrence.next(today);
             }
+        } else {
+            return [toggledTask];
         }
 
         if (nextOccurrence === null) {
