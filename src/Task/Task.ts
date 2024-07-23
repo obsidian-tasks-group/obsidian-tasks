@@ -368,10 +368,11 @@ export class Task extends ListItem {
             cancelledDate: newCancelledDate,
         });
 
-        let nextOccurrence: Occurrence | null = null;
         if (!newStatus.isCompleted()) {
             return [toggledTask];
         }
+
+        let nextOccurrence: Occurrence | null = null;
         if (!this.status.isCompleted() && this.recurrence !== null) {
             nextOccurrence = this.recurrence.next(today);
         }
