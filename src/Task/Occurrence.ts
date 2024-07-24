@@ -76,6 +76,13 @@ export class Occurrence {
         return true;
     }
 
+    /**
+     * Provides an {@link Occurrence} with the dates calculated relative to a new reference date.
+     *
+     * If the occurrence has no reference date, an empty {@link Occurrence} will be returned.
+     *
+     * @param nextReferenceDate
+     */
     public next(nextReferenceDate: Date): Occurrence {
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
