@@ -99,6 +99,15 @@
     ];
 
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
+
+    $: {
+        const cancelledAndDoneDateAreSet = editableTask.cancelledDate.length > 0 && editableTask.doneDate.length > 0;
+        if (cancelledAndDoneDateAreSet) {
+            isCancelledDateValid = false;
+            isDoneDateValid = false;
+        }
+    }
+
     $: formIsValid =
         isDueDateValid &&
         isRecurrenceValid &&
