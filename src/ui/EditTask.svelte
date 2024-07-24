@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
+    import { parseTypedDateForDisplayUsingFutureDate } from '../lib/DateTools';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
     import DateEditor from './DateEditor.svelte';
@@ -105,6 +106,20 @@
         if (cancelledAndDoneDateAreSet) {
             isCancelledDateValid = false;
             isDoneDateValid = false;
+        } else {
+            const cancelledParsedDate = parseTypedDateForDisplayUsingFutureDate(
+                'cancelled',
+                editableTask.cancelledDate,
+                editableTask.forwardOnly,
+            );
+            isCancelledDateValid = !cancelledParsedDate.includes('invalid');
+
+            const doneParsedDate = parseTypedDateForDisplayUsingFutureDate(
+                'done',
+                editableTask.doneDate,
+                editableTask.forwardOnly,
+            );
+            isDoneDateValid = !doneParsedDate.includes('invalid');
         }
     }
 
