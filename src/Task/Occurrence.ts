@@ -61,7 +61,7 @@ export class Occurrence {
         return null;
     }
 
-    public isIdenticalTo(other: Occurrence) {
+    public isIdenticalTo(other: Occurrence): boolean {
         // Compare Date fields
         if (compareByDate(this.startDate, other.startDate) !== 0) {
             return false;
@@ -109,7 +109,7 @@ export class Occurrence {
      * @param currentOccurrenceDate start/scheduled/due date
      * @private
      */
-    private nextOccurrenceDate(currentOccurrenceDate: Moment | null, nextReferenceDate: Date) {
+    private nextOccurrenceDate(currentOccurrenceDate: Moment | null, nextReferenceDate: Date): Moment | null {
         if (currentOccurrenceDate === null) {
             return null;
         }
