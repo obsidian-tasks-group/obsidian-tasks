@@ -49,6 +49,17 @@ function isValidQueryFilter(filter: string) {
     expect(query.filters[0]).toBeDefined();
 }
 
+function isValidQuerySort(filter: string) {
+    // Arrange
+    const query = new Query(filter);
+
+    // Assert
+    expect(query.error).toBeUndefined();
+    expect(query.sorting.length).toEqual(1);
+    expect(query.sorting[0]).toBeDefined();
+    expect(query.sorting[0].instruction).toEqual(filter);
+}
+
 function isValidQueryGroup(filter: string) {
     // Arrange
     const query = new Query(filter);
@@ -306,17 +317,10 @@ describe('Query parsing', () => {
             'sort by urgency reverse',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
-            // Arrange
-            const query = new Query(filter);
-            const queryUpperCase = new Query(filter.toUpperCase());
-
-            // Assert
-            expect(query.error).toBeUndefined();
-            expect(query.sorting.length).toEqual(1);
-            expect(query.sorting[0]).toBeDefined();
-            expect(query.sorting[0].instruction).toEqual(filter);
+            isValidQuerySort(filter);
 
             // Assert Uppercase
+            const queryUpperCase = new Query(filter.toUpperCase());
             expect(queryUpperCase.error).toBeUndefined();
             expect(queryUpperCase.sorting.length).toEqual(1);
             expect(queryUpperCase.sorting[0]).toBeDefined();
