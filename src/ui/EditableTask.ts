@@ -2,8 +2,9 @@ import { GlobalFilter } from '../Config/GlobalFilter';
 import { parseTypedDateForSaving } from '../lib/DateTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
+import { Occurrence } from '../Task/Occurrence';
 import { Priority } from '../Task/Priority';
-import { Occurrence, Recurrence } from '../Task/Recurrence';
+import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 
