@@ -69,11 +69,12 @@ function isValidQueryGroup(filter: string) {
     expect(query.grouping.length).toEqual(1);
     expect(query.grouping[0]).toBeDefined();
 
+    const instruction = query.grouping[0].instruction;
     // The built-in grouping instructions always provide a lower-case instruction, regardless of the instruction case.
     // 'filter by function' respects the supplied case.
     // So for consistency with the initial code, we only test the instruction for lower-case inputs:
     if (filter === filter.toLowerCase()) {
-        expect(query.grouping[0].instruction).toEqual(filter);
+        expect(instruction).toEqual(filter);
     }
 }
 
