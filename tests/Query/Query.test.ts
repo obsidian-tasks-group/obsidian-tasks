@@ -39,6 +39,17 @@ function sortInstructionLines(filters: ReadonlyArray<string>) {
     return [...filters].sort((a: string, b: string) => a.localeCompare(b, undefined, { numeric: true }));
 }
 
+function isValidQueryGroup(filter: string) {
+    // Arrange
+    const query = new Query(filter);
+
+    // Assert
+    expect(query.error).toBeUndefined();
+    expect(query.grouping.length).toEqual(1);
+    expect(query.grouping[0]).toBeDefined();
+    expect(query.grouping[0].instruction).toEqual(filter);
+}
+
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
@@ -384,14 +395,7 @@ describe('Query parsing', () => {
             'group by urgency reverse',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
-            // Arrange
-            const query = new Query(filter);
-
-            // Assert
-            expect(query.error).toBeUndefined();
-            expect(query.grouping.length).toEqual(1);
-            expect(query.grouping[0]).toBeDefined();
-            expect(query.grouping[0].instruction).toEqual(filter);
+            isValidQueryGroup(filter);
 
             // Assert
             const queryUpperCase = new Query(filter.toUpperCase());
