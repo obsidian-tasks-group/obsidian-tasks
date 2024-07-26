@@ -47,7 +47,13 @@ function isValidQueryGroup(filter: string) {
     expect(query.error).toBeUndefined();
     expect(query.grouping.length).toEqual(1);
     expect(query.grouping[0]).toBeDefined();
-    expect(query.grouping[0].instruction).toEqual(filter);
+
+    // The built-in grouping instructions always provide a lower-case instruction, regardless of the instruction case.
+    // 'filter by function' respects the supplied case.
+    // So for consistency with the initial code, we only test the instruction for lower-case inputs:
+    if (filter === filter.toLowerCase()) {
+        expect(query.grouping[0].instruction).toEqual(filter);
+    }
 }
 
 describe('Query parsing', () => {
@@ -396,13 +402,7 @@ describe('Query parsing', () => {
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             isValidQueryGroup(filter);
-
-            // Assert
-            const queryUpperCase = new Query(filter.toUpperCase());
-
-            expect(queryUpperCase.error).toBeUndefined();
-            expect(queryUpperCase.grouping.length).toEqual(1);
-            expect(queryUpperCase.grouping[0]).toBeDefined();
+            isValidQueryGroup(filter.toUpperCase());
         });
 
         it('sample lines really are in alphabetical order', () => {
