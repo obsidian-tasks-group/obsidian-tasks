@@ -87,6 +87,11 @@ function isInvalidQueryInstruction(getQueryError: (source: string) => string | u
 Problem line: "${source}"`);
 }
 
+function isInvalidQueryInstructionLowerAndUpper(getQueryError: (source: string) => string | undefined, source: string) {
+    isInvalidQueryInstruction(getQueryError, source);
+    isInvalidQueryInstruction(getQueryError, source.toUpperCase());
+}
+
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
@@ -586,8 +591,7 @@ Problem line: "${source}"`,
 
         it('for invalid sort by', () => {
             const source = 'sort by nonsense';
-            isInvalidQueryInstruction(getQueryError, source);
-            isInvalidQueryInstruction(getQueryError, source.toUpperCase());
+            isInvalidQueryInstructionLowerAndUpper(getQueryError, source);
         });
 
         it('for invalid group by', () => {
