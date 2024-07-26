@@ -201,12 +201,7 @@ describe('Query parsing', () => {
     describe('should recognise every supported filter', () => {
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             isValidQueryFilter(filter);
-
-            // Assert Uppercase
-            const queryUpperCase = new Query(filter.toUpperCase());
-            expect(queryUpperCase.error).toBeUndefined();
-            expect(queryUpperCase.filters.length).toEqual(1);
-            expect(queryUpperCase.filters[0]).toBeDefined();
+            isValidQueryFilter(filter.toUpperCase());
         });
 
         it('sample lines really are in alphabetical order', () => {
