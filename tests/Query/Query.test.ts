@@ -255,6 +255,7 @@ describe('Query parsing', () => {
         const task = fromLine({
             line: taskLine,
         });
+        const searchInfo = SearchInfo.fromAllTasks([task]);
         test.concurrent.each<string>(filters)('sub-query %j is recognized inside a boolean query', (filter) => {
             // Arrange
             // For every sub-query from the filters list above, compose a boolean query that is always
@@ -267,7 +268,7 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-            expect(query.filters[0].filterFunction(task, SearchInfo.fromAllTasks([task]))).toBeTruthy();
+            expect(query.filters[0].filterFunction(task, searchInfo)).toBeTruthy();
         });
     });
 
