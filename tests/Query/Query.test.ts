@@ -82,6 +82,11 @@ function isValidQueryGroup(filter: string) {
     lowerCaseFilterGaveExpectionInstruction(filter, query.grouping[0].instruction);
 }
 
+function isInvalidQueryInstruction(getQueryError: (source: string) => string | undefined, source: string) {
+    expect(getQueryError(source)).toEqual(`do not understand query
+Problem line: "${source}"`);
+}
+
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
@@ -581,9 +586,8 @@ Problem line: "${source}"`,
 
         it('for invalid sort by', () => {
             const source = 'sort by nonsense';
+            isInvalidQueryInstruction(getQueryError, source);
             const sourceUpperCase = source.toUpperCase();
-            expect(getQueryError(source)).toEqual(`do not understand query
-Problem line: "${source}"`);
             expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
 Problem line: "${sourceUpperCase}"`);
         });
