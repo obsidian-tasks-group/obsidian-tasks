@@ -251,17 +251,16 @@ describe('Query parsing', () => {
     });
 
     describe('should not confuse a boolean query for any other single field', () => {
+        const taskLine = '- [ ] this is a task due 📅 2021-09-12 #inside_tag ⏫ #some/tags_with_underscore';
+        const task = fromLine({
+            line: taskLine,
+        });
         test.concurrent.each<string>(filters)('sub-query %j is recognized inside a boolean query', (filter) => {
             // Arrange
             // For every sub-query from the filters list above, compose a boolean query that is always
             // true, in the format (expression) OR NOT (expression)
             const queryString = `(${filter}) OR NOT (${filter})`;
             const query = new Query(queryString);
-
-            const taskLine = '- [ ] this is a task due 📅 2021-09-12 #inside_tag ⏫ #some/tags_with_underscore';
-            const task = fromLine({
-                line: taskLine,
-            });
 
             // Assert
             expect(query.error).toBeUndefined();
