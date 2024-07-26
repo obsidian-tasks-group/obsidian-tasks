@@ -386,7 +386,6 @@ describe('Query parsing', () => {
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query(filter);
-            const queryUpperCase = new Query(filter.toUpperCase());
 
             // Assert
             expect(query.error).toBeUndefined();
@@ -395,6 +394,8 @@ describe('Query parsing', () => {
             expect(query.grouping[0].instruction).toEqual(filter);
 
             // Assert
+            const queryUpperCase = new Query(filter.toUpperCase());
+
             expect(queryUpperCase.error).toBeUndefined();
             expect(queryUpperCase.grouping.length).toEqual(1);
             expect(queryUpperCase.grouping[0]).toBeDefined();
