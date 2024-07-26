@@ -47,6 +47,8 @@ function isValidQueryFilter(filter: string) {
     expect(query.error).toBeUndefined();
     expect(query.filters.length).toEqual(1);
     expect(query.filters[0]).toBeDefined();
+
+    return query;
 }
 
 function lowerCaseFilterGaveExpectionInstruction(filter: string, instruction: string) {
@@ -261,12 +263,9 @@ describe('Query parsing', () => {
             // For every sub-query from the filters list above, compose a boolean query that is always
             // true, in the format (expression) OR NOT (expression)
             const queryString = `(${filter}) OR NOT (${filter})`;
-            const query = new Query(queryString);
 
             // Assert
-            expect(query.error).toBeUndefined();
-            expect(query.filters.length).toEqual(1);
-            expect(query.filters[0]).toBeDefined();
+            const query = isValidQueryFilter(queryString);
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
             expect(query.filters[0].filterFunction(task, searchInfo)).toBeTruthy();
         });
