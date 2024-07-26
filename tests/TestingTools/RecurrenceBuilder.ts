@@ -1,6 +1,7 @@
 // Builder
 import type { Moment } from 'moment';
-import { Occurrence, Recurrence } from '../../src/Task/Recurrence';
+import { Occurrence } from '../../src/Task/Occurrence';
+import { Recurrence } from '../../src/Task/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 
 /**

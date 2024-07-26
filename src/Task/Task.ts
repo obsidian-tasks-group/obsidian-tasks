@@ -12,6 +12,7 @@ import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
 import { DateFallback } from './DateFallback';
 import { ListItem } from './ListItem';
+import type { Occurrence } from './Occurrence';
 import { Urgency } from './Urgency';
 import type { Recurrence } from './Recurrence';
 import type { TaskLocation } from './TaskLocation';
@@ -360,11 +361,7 @@ export class Task extends ListItem {
             today,
         );
 
-        let nextOccurrence: {
-            startDate: Moment | null;
-            scheduledDate: Moment | null;
-            dueDate: Moment | null;
-        } | null = null;
+        let nextOccurrence: Occurrence | null = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted() && this.recurrence !== null) {
                 nextOccurrence = this.recurrence.next(today);
@@ -419,14 +416,7 @@ export class Task extends ListItem {
         return newDate;
     }
 
-    private createNextOccurrence(
-        newStatus: Status,
-        nextOccurrence: {
-            startDate: moment.Moment | null;
-            scheduledDate: moment.Moment | null;
-            dueDate: moment.Moment | null;
-        },
-    ) {
+    private createNextOccurrence(newStatus: Status, nextOccurrence: Occurrence) {
         const { setCreatedDate } = getSettings();
         let createdDate: moment.Moment | null = null;
         if (setCreatedDate) {

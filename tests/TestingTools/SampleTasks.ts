@@ -1,5 +1,6 @@
+import { Occurrence } from '../../src/Task/Occurrence';
 import { Task } from '../../src/Task/Task';
-import { Occurrence, Recurrence } from '../../src/Task/Recurrence';
+import { Recurrence } from '../../src/Task/Recurrence';
 import { Status } from '../../src/Statuses/Status';
 import { StatusType } from '../../src/Statuses/StatusConfiguration';
 import { Priority } from '../../src/Task/Priority';
