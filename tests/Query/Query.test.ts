@@ -66,7 +66,7 @@ function isValidQuerySort(filter: string) {
     expect(query.error).toBeUndefined();
     expect(query.sorting.length).toEqual(1);
     expect(query.sorting[0]).toBeDefined();
-    expect(query.sorting[0].instruction).toEqual(filter);
+    lowerCaseFilterGaveExpectionInstruction(filter, query.sorting[0].instruction);
 }
 
 function isValidQueryGroup(filter: string) {
@@ -321,12 +321,7 @@ describe('Query parsing', () => {
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             isValidQuerySort(filter);
-
-            // Assert Uppercase
-            const queryUpperCase = new Query(filter.toUpperCase());
-            expect(queryUpperCase.error).toBeUndefined();
-            expect(queryUpperCase.sorting.length).toEqual(1);
-            expect(queryUpperCase.sorting[0]).toBeDefined();
+            isValidQuerySort(filter.toUpperCase());
         });
 
         it('sample lines really are in alphabetical order', () => {
