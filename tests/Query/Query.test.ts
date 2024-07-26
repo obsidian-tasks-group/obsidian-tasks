@@ -587,9 +587,7 @@ Problem line: "${source}"`,
         it('for invalid sort by', () => {
             const source = 'sort by nonsense';
             isInvalidQueryInstruction(getQueryError, source);
-            const sourceUpperCase = source.toUpperCase();
-            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
-Problem line: "${sourceUpperCase}"`);
+            isInvalidQueryInstruction(getQueryError, source.toUpperCase());
         });
 
         it('for invalid group by', () => {
