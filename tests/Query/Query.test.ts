@@ -39,6 +39,16 @@ function sortInstructionLines(filters: ReadonlyArray<string>) {
     return [...filters].sort((a: string, b: string) => a.localeCompare(b, undefined, { numeric: true }));
 }
 
+function isValidQueryFilter(filter: string) {
+    // Arrange
+    const query = new Query(filter);
+
+    // Assert
+    expect(query.error).toBeUndefined();
+    expect(query.filters.length).toEqual(1);
+    expect(query.filters[0]).toBeDefined();
+}
+
 function isValidQueryGroup(filter: string) {
     // Arrange
     const query = new Query(filter);
@@ -190,16 +200,10 @@ describe('Query parsing', () => {
      */
     describe('should recognise every supported filter', () => {
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
-            // Arrange
-            const query = new Query(filter);
-            const queryUpperCase = new Query(filter.toUpperCase());
-
-            // Assert
-            expect(query.error).toBeUndefined();
-            expect(query.filters.length).toEqual(1);
-            expect(query.filters[0]).toBeDefined();
+            isValidQueryFilter(filter);
 
             // Assert Uppercase
+            const queryUpperCase = new Query(filter.toUpperCase());
             expect(queryUpperCase.error).toBeUndefined();
             expect(queryUpperCase.filters.length).toEqual(1);
             expect(queryUpperCase.filters[0]).toBeDefined();
