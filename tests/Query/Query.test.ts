@@ -49,6 +49,15 @@ function isValidQueryFilter(filter: string) {
     expect(query.filters[0]).toBeDefined();
 }
 
+function lowerCaseFilterGaveExpectionInstruction(filter: string, instruction: string) {
+    // The built-in grouping instructions always provide a lower-case instruction, regardless of the instruction case.
+    // 'filter by function' respects the supplied case.
+    // So for consistency with the initial code, we only test the instruction for lower-case inputs:
+    if (filter === filter.toLowerCase()) {
+        expect(instruction).toEqual(filter);
+    }
+}
+
 function isValidQuerySort(filter: string) {
     // Arrange
     const query = new Query(filter);
@@ -68,14 +77,7 @@ function isValidQueryGroup(filter: string) {
     expect(query.error).toBeUndefined();
     expect(query.grouping.length).toEqual(1);
     expect(query.grouping[0]).toBeDefined();
-
-    const instruction = query.grouping[0].instruction;
-    // The built-in grouping instructions always provide a lower-case instruction, regardless of the instruction case.
-    // 'filter by function' respects the supplied case.
-    // So for consistency with the initial code, we only test the instruction for lower-case inputs:
-    if (filter === filter.toLowerCase()) {
-        expect(instruction).toEqual(filter);
-    }
+    lowerCaseFilterGaveExpectionInstruction(filter, query.grouping[0].instruction);
 }
 
 describe('Query parsing', () => {
