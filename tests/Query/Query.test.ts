@@ -596,29 +596,17 @@ Problem line: "${source}"`,
 
         it('for invalid group by', () => {
             const source = 'group by nonsense';
-            const sourceUpperCase = source.toUpperCase();
-            expect(getQueryError(source)).toEqual(`do not understand query
-Problem line: "${source}"`);
-            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
-Problem line: "${sourceUpperCase}"`);
+            isInvalidQueryInstructionLowerAndUpper(getQueryError, source);
         });
 
         it('for invalid hide', () => {
             const source = 'hide nonsense';
-            const sourceUpperCase = source.toUpperCase();
-            expect(getQueryError(source)).toEqual(`do not understand query
-Problem line: "${source}"`);
-            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
-Problem line: "${sourceUpperCase}"`);
+            isInvalidQueryInstructionLowerAndUpper(getQueryError, source);
         });
 
         it('for unknown instruction', () => {
             const source = 'spaghetti';
-            const sourceUpperCase = source.toUpperCase();
-            expect(getQueryError(source)).toEqual(`do not understand query
-Problem line: "${source}"`);
-            expect(getQueryError(sourceUpperCase)).toEqual(`do not understand query
-Problem line: "${sourceUpperCase}"`);
+            isInvalidQueryInstructionLowerAndUpper(getQueryError, source);
         });
 
         it('for instruction with continuation characters and placeholders', () => {
