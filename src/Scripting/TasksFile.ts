@@ -135,7 +135,11 @@ export class TasksFile {
         return this.withoutExtension(this.filename);
     }
 
-    public hasProperty(_key: string) {
+    public hasProperty(key: string): boolean {
+        if (this.frontmatter[key] !== null) {
+            return true;
+        }
+
         return false;
     }
 }
