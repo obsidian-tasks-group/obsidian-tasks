@@ -140,6 +140,10 @@ export class TasksFile {
             return false;
         }
 
+        if (this.frontmatter[key] === undefined) {
+            return false;
+        }
+
         return true;
     }
 }
