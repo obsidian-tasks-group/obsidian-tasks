@@ -12,6 +12,8 @@ import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { makeQueryContextWithTasks } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
+import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
+import { docs_sample_for_task_properties_reference } from '../Obsidian/__test_data__/docs_sample_for_task_properties_reference';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -137,6 +139,25 @@ describe('task', () => {
             'task.file.filenameWithoutExtension',
             'task.hasHeading',
             'task.heading',
+        ]);
+    });
+
+    // TODO Merge this section in to 'file properties' above.
+    it('file properties temp', () => {
+        const tasks = readTasksFromSimulatedFile(docs_sample_for_task_properties_reference as any);
+        const task1 = tasks[0];
+        const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
+        verifyFieldDataFromTasksForReferenceDocs(task1, task2, [
+            "task.file.hasProperty('creation date')",
+            "task.file.property('creation date')",
+            "task.file.property('sample_checkbox_property')",
+            "task.file.property('sample_date_property')",
+            "task.file.property('sample_date_and_time_property')",
+            "task.file.property('sample_list_property')",
+            "task.file.property('sample_number_property')",
+            "task.file.property('sample_text_property')",
+            "task.file.property('sample_link_property')",
+            "task.file.property('sample_link_list_property')",
         ]);
     });
 });
