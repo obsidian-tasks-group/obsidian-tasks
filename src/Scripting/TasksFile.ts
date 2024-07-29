@@ -134,4 +134,8 @@ export class TasksFile {
     get filenameWithoutExtension(): string {
         return this.withoutExtension(this.filename);
     }
+
+    public hasProperty(_key: string) {
+        return false;
+    }
 }
