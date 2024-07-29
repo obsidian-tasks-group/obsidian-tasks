@@ -134,4 +134,47 @@ export class TasksFile {
     get filenameWithoutExtension(): string {
         return this.withoutExtension(this.filename);
     }
+
+    public hasProperty(key: string): boolean {
+        const foundKey = this.findKeyInFrontmatter(key);
+        if (foundKey === undefined) {
+            return false;
+        }
+
+        const propertyValue = this.frontmatter[foundKey];
+        if (propertyValue === null) {
+            return false;
+        }
+
+        if (propertyValue === undefined) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public property(key: string): any {
+        const foundKey = this.findKeyInFrontmatter(key);
+        if (foundKey === undefined) {
+            return null;
+        }
+
+        const propertyValue = this.frontmatter[foundKey];
+        if (propertyValue === undefined) {
+            return null;
+        }
+
+        if (Array.isArray(propertyValue)) {
+            return propertyValue.filter((item: any) => item !== null);
+        }
+
+        return propertyValue;
+    }
+
+    private findKeyInFrontmatter(key: string) {
+        return Object.keys(this.frontmatter).find((searchKey: string) => {
+            const lowerCaseSearchKey = searchKey.toLowerCase();
+            return lowerCaseSearchKey === key.toLowerCase();
+        });
+    }
 }
