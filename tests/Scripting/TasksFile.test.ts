@@ -189,14 +189,11 @@ describe('TasksFile - reading tags', () => {
         expect(tasksFile.frontmatter.tags).toEqual(['#single-value-new-line']);
     });
 
-    it.failing('should return empty tag list if not frontmatter supplied', () => {
+    it('should return empty tag list if frontmatter not supplied', () => {
         // This confirms that accessing tags via TasksFile behaves reasonably
         // in tests of tasks that were created without CachedMetadata (as is the case with the majority of tests)
         const tasksFile = new TasksFile('somewhere.md');
-
-        // TODO: Gives: Error: Inconsistent test data used in mock getAllTags()
         expect(tasksFile.tags).toEqual([]);
-
         expect(tasksFile.frontmatter.tags).toEqual([]);
     });
 
