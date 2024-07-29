@@ -267,4 +267,10 @@ describe('TasksFile - properties', () => {
         expect(tasksFile.property('tags')).toEqual(['#sample/tag/value']);
         expect(tasksFile.property('creation date')).toEqual('2024-05-25T15:17:00');
     });
+
+    it('should ignore the case of a lower case property name', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_all_property_types_populated);
+        expect(tasksFile.hasProperty('SAMPLE_CHECKBOX_PROPERTY')).toEqual(true);
+        expect(tasksFile.property('SAMPLE_CHECKBOX_PROPERTY')).toEqual(true);
+    });
 });
