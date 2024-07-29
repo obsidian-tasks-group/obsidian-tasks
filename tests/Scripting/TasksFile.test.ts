@@ -249,4 +249,22 @@ describe('TasksFile - properties', () => {
         expect(tasksFile.property('custom_list')).toEqual(['value 1', 'value 2']);
         expect(tasksFile.property('unknown_list')).toEqual([]);
     });
+
+    it('should return properties of each type', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_all_property_types_populated);
+        expect(tasksFile.property('sample_checkbox_property')).toEqual(true);
+        expect(tasksFile.property('sample_date_property')).toEqual('2024-07-21');
+        expect(tasksFile.property('sample_date_and_time_property')).toEqual('2024-07-21T12:37:00');
+        expect(tasksFile.property('sample_list_property')).toEqual(['Sample', 'List', 'Value']);
+        expect(tasksFile.property('sample_number_property')).toEqual(246);
+        expect(tasksFile.property('sample_text_property')).toEqual('Sample Text Value');
+        expect(tasksFile.property('sample_link_property')).toEqual('[[yaml_all_property_types_populated]]');
+        expect(tasksFile.property('sample_link_list_property')).toEqual([
+            '[[yaml_all_property_types_populated]]',
+            '[[yaml_all_property_types_empty]]',
+        ]);
+        expect(tasksFile.property('aliases')).toEqual(['YAML All Property Types Populated']);
+        expect(tasksFile.property('tags')).toEqual(['#sample/tag/value']);
+        expect(tasksFile.property('creation date')).toEqual('2024-05-25T15:17:00');
+    });
 });
