@@ -2,16 +2,16 @@
 
 
 ```javascript
-filter by function task.file.frontmatter['kanban-plugin'] === 'basic'
-```
-
-- todo.
-
-```javascript
 filter by function task.file.frontmatter['kanban-plugin'] !== undefined
 ```
 
-- todo.
+- find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards.
+
+```javascript
+filter by function task.file.frontmatter['kanban-plugin'] === undefined
+```
+
+- find tasks NOT in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards.
 
 ```javascript
 filter by function task.file.frontmatter['sample_list_property'] !== undefined
