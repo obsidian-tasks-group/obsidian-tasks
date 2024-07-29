@@ -11,6 +11,7 @@ import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { makeQueryContextWithTasks } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import type { Task } from '../../src/Task/Task';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -19,9 +20,13 @@ window.moment = moment;
 
 describe('task', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
-        const markdownTable = new MarkdownTable(['Field', 'Type 1', 'Example 1', 'Type 2', 'Example 2']);
         const task1 = TaskBuilder.createFullyPopulatedTask();
         const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
+        verifyFieldDataFromTasksForReferenceDocs(task1, task2, fields);
+    }
+
+    function verifyFieldDataFromTasksForReferenceDocs(task1: Task, task2: Task, fields: string[]) {
+        const markdownTable = new MarkdownTable(['Field', 'Type 1', 'Example 1', 'Type 2', 'Example 2']);
         const queryContext = makeQueryContextWithTasks(new TasksFile(task1.path), [task1, task2]);
         for (const field of fields) {
             const value1 = parseAndEvaluateExpression(task1, field, queryContext);
