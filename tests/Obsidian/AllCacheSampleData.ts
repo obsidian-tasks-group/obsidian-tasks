@@ -45,6 +45,7 @@ import { yaml_1_alias } from './__test_data__/yaml_1_alias';
 import { yaml_2_aliases } from './__test_data__/yaml_2_aliases';
 import { yaml_all_property_types_empty } from './__test_data__/yaml_all_property_types_empty';
 import { yaml_all_property_types_populated } from './__test_data__/yaml_all_property_types_populated';
+import { yaml_capitalised_property_name } from './__test_data__/yaml_capitalised_property_name';
 import { yaml_complex_example } from './__test_data__/yaml_complex_example';
 import { yaml_complex_example_standardised } from './__test_data__/yaml_complex_example_standardised';
 import { yaml_custom_number_property } from './__test_data__/yaml_custom_number_property';
@@ -104,6 +105,7 @@ export function allCacheSampleData() {
         yaml_2_aliases,
         yaml_all_property_types_empty,
         yaml_all_property_types_populated,
+        yaml_capitalised_property_name,
         yaml_complex_example,
         yaml_complex_example_standardised,
         yaml_custom_number_property,

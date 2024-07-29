@@ -3,6 +3,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { callouts_nested_issue_2890_unlabelled } from '../Obsidian/__test_data__/callouts_nested_issue_2890_unlabelled';
 import { no_yaml } from '../Obsidian/__test_data__/no_yaml';
 import { empty_yaml } from '../Obsidian/__test_data__/empty_yaml';
+import { yaml_capitalised_property_name } from '../Obsidian/__test_data__/yaml_capitalised_property_name';
 import { yaml_tags_has_multiple_values } from '../Obsidian/__test_data__/yaml_tags_has_multiple_values';
 import { yaml_custom_number_property } from '../Obsidian/__test_data__/yaml_custom_number_property';
 import { yaml_tags_with_one_value_on_new_line } from '../Obsidian/__test_data__/yaml_tags_with_one_value_on_new_line';
@@ -272,5 +273,11 @@ describe('TasksFile - properties', () => {
         const tasksFile = getTasksFileFromMockData(yaml_all_property_types_populated);
         expect(tasksFile.hasProperty('SAMPLE_CHECKBOX_PROPERTY')).toEqual(true);
         expect(tasksFile.property('SAMPLE_CHECKBOX_PROPERTY')).toEqual(true);
+    });
+
+    it.failing('should ignore the case of a upper case property name', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_capitalised_property_name);
+        expect(tasksFile.hasProperty('capital_property')).toEqual(true);
+        expect(tasksFile.property('capital_property')).toEqual(true);
     });
 });
