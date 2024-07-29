@@ -136,10 +136,10 @@ export class TasksFile {
     }
 
     public hasProperty(key: string): boolean {
-        if (this.frontmatter[key] !== null) {
-            return true;
+        if (this.frontmatter[key] === null) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 }
