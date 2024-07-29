@@ -238,4 +238,9 @@ describe('TasksFile - properties', () => {
         const tasksFile = getTasksFileFromMockData(example_kanban);
         expect(tasksFile.property('kanban-plugin')).toEqual('basic');
     });
+
+    it('should return null for a missing property value', () => {
+        const tasksFile = getTasksFileFromMockData(no_yaml);
+        expect(tasksFile.property('kanban-plugin')).toEqual(null);
+    });
 });
