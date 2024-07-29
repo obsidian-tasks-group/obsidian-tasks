@@ -15,11 +15,14 @@ sample_link_list_property:
 aliases:
   - YAML All Property Types Populated
 tags:
-  - sample/tag/value
+  - tag-from-file-properties
 creation date: 2024-05-25T15:17:00
 project: Secret Project
 ---
 
 # docs_sample_for_task_properties_reference
 
-- [ ] #task Task in 'docs_sample_for_task_properties_reference'
+#tag-from-file-body
+
+- [ ] #task Task in 'docs_sample_for_task_properties_reference' #tag-from-task-line
+- [ ] #task Another task in 'docs_sample_for_task_properties_reference'
