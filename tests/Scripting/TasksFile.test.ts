@@ -243,4 +243,10 @@ describe('TasksFile - properties', () => {
         const tasksFile = getTasksFileFromMockData(no_yaml);
         expect(tasksFile.property('kanban-plugin')).toEqual(null);
     });
+
+    it('should remove nulls from a list property', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_complex_example);
+        expect(tasksFile.property('custom_list')).toEqual(['value 1', 'value 2']);
+        expect(tasksFile.property('unknown_list')).toEqual([]);
+    });
 });

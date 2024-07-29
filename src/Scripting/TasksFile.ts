@@ -152,6 +152,10 @@ export class TasksFile {
             return null;
         }
 
+        if (Array.isArray(this.frontmatter[key])) {
+            return this.frontmatter[key].filter((item: any) => item !== null);
+        }
+
         return this.frontmatter[key];
     }
 }
