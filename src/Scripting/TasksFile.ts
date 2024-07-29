@@ -136,11 +136,12 @@ export class TasksFile {
     }
 
     public hasProperty(key: string): boolean {
-        if (this.frontmatter[key] === null) {
+        const propertyValue = this.frontmatter[key.toLowerCase()];
+        if (propertyValue === null) {
             return false;
         }
 
-        if (this.frontmatter[key] === undefined) {
+        if (propertyValue === undefined) {
             return false;
         }
 
@@ -148,7 +149,7 @@ export class TasksFile {
     }
 
     public property(key: string): any {
-        const propertyValue = this.frontmatter[key];
+        const propertyValue = this.frontmatter[key.toLowerCase()];
         if (propertyValue === undefined) {
             return null;
         }
