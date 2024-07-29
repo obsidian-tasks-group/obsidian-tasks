@@ -10,6 +10,7 @@ export class TasksFile {
     private readonly _cachedMetadata: CachedMetadata;
     // Always make TasksFile.frontmatter.tags exist and be empty, even if no frontmatter present:
     private readonly _frontmatter = { tags: [] } as any;
+    private readonly _tags: string[] = [];
 
     constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
@@ -19,6 +20,11 @@ export class TasksFile {
         if (rawFrontmatter !== undefined) {
             this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
             this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter) ?? [];
+        }
+
+        if (Object.keys(cachedMetadata).length !== 0) {
+            const tags = getAllTags(this.cachedMetadata) ?? [];
+            this._tags = [...new Set(tags)];
         }
     }
 
@@ -40,9 +46,7 @@ export class TasksFile {
      * @todo Review presence of global filter tag in the results.
      */
     get tags(): string[] {
-        // TODO Replace this with storing the sanitised tags, to avoid repeated re-calculation.
-        const tags = getAllTags(this.cachedMetadata) ?? [];
-        return [...new Set(tags)];
+        return this._tags;
     }
 
     /**
