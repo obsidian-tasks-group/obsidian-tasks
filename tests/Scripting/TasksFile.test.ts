@@ -206,3 +206,13 @@ describe('TasksFile - reading tags', () => {
         expect(tasksFile.frontmatter.tags).toEqual([]);
     });
 });
+
+describe('TasksFile - properties', () => {
+    it('should not have any properties in a file with empty frontmatter', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_all_property_types_empty);
+
+        Object.keys(tasksFile.frontmatter).forEach((key) => {
+            expect(tasksFile.hasProperty(key)).toEqual(false);
+        });
+    });
+});
