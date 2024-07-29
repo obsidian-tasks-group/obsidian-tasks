@@ -148,6 +148,10 @@ export class TasksFile {
     }
 
     property(key: string): any {
+        if (this.frontmatter[key] === undefined) {
+            return null;
+        }
+
         return this.frontmatter[key];
     }
 }
