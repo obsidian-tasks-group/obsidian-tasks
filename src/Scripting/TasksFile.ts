@@ -146,4 +146,8 @@ export class TasksFile {
 
         return true;
     }
+
+    property(key: string): any {
+        return this.frontmatter[key];
+    }
 }

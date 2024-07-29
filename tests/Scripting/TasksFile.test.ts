@@ -233,4 +233,9 @@ describe('TasksFile - properties', () => {
 
         expect(tasksFile.hasProperty('appleSauce')).toEqual(false);
     });
+
+    it('should obtain a string property value', () => {
+        const tasksFile = getTasksFileFromMockData(example_kanban);
+        expect(tasksFile.property('kanban-plugin')).toEqual('basic');
+    });
 });
