@@ -136,7 +136,12 @@ export class TasksFile {
     }
 
     public hasProperty(key: string): boolean {
-        const propertyValue = this.frontmatter[key.toLowerCase()];
+        const foundKey = this.findKeyInFrontmatter(key);
+        if (foundKey === undefined) {
+            return false;
+        }
+
+        const propertyValue = this.frontmatter[foundKey];
         if (propertyValue === null) {
             return false;
         }
@@ -149,7 +154,12 @@ export class TasksFile {
     }
 
     public property(key: string): any {
-        const propertyValue = this.frontmatter[key.toLowerCase()];
+        const foundKey = this.findKeyInFrontmatter(key);
+        if (foundKey === undefined) {
+            return null;
+        }
+
+        const propertyValue = this.frontmatter[foundKey];
         if (propertyValue === undefined) {
             return null;
         }
@@ -159,5 +169,12 @@ export class TasksFile {
         }
 
         return propertyValue;
+    }
+
+    private findKeyInFrontmatter(key: string) {
+        return Object.keys(this.frontmatter).find((searchKey: string) => {
+            const lowerCaseSearchKey = searchKey.toLowerCase();
+            return lowerCaseSearchKey === key.toLowerCase();
+        });
     }
 }

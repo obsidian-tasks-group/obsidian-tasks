@@ -275,9 +275,9 @@ describe('TasksFile - properties', () => {
         expect(tasksFile.property('SAMPLE_CHECKBOX_PROPERTY')).toEqual(true);
     });
 
-    it.failing('should ignore the case of a upper case property name', () => {
+    it('should ignore the case of a upper case property name', () => {
         const tasksFile = getTasksFileFromMockData(yaml_capitalised_property_name);
         expect(tasksFile.hasProperty('capital_property')).toEqual(true);
-        expect(tasksFile.property('capital_property')).toEqual(true);
+        expect(tasksFile.property('capital_property')).toEqual('some value');
     });
 });
