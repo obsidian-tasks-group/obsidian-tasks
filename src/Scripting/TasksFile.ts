@@ -147,7 +147,7 @@ export class TasksFile {
         return true;
     }
 
-    property(key: string): any {
+    public property(key: string): any {
         const propertyValue = this.frontmatter[key];
         if (propertyValue === undefined) {
             return null;
