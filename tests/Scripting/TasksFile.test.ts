@@ -212,7 +212,19 @@ describe('TasksFile - properties', () => {
         const tasksFile = getTasksFileFromMockData(yaml_all_property_types_empty);
 
         Object.keys(tasksFile.frontmatter).forEach((key) => {
-            expect(tasksFile.hasProperty(key)).toEqual(false);
+            if (key === 'tags') {
+                expect(tasksFile.hasProperty(key)).toEqual(true);
+            } else {
+                expect(tasksFile.hasProperty(key)).toEqual(false);
+            }
+        });
+    });
+
+    it('should not have any properties in a file with populated frontmatter', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_all_property_types_populated);
+
+        Object.keys(tasksFile.frontmatter).forEach((key) => {
+            expect(tasksFile.hasProperty(key)).toEqual(true);
         });
     });
 });
