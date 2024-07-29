@@ -172,9 +172,10 @@ export class TasksFile {
     }
 
     private findKeyInFrontmatter(key: string) {
+        const lowerCaseKey = key.toLowerCase();
         return Object.keys(this.frontmatter).find((searchKey: string) => {
             const lowerCaseSearchKey = searchKey.toLowerCase();
-            return lowerCaseSearchKey === key.toLowerCase();
+            return lowerCaseSearchKey === lowerCaseKey;
         });
     }
 }
