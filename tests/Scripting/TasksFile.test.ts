@@ -231,7 +231,6 @@ describe('TasksFile - properties', () => {
 
     it('should treat non-exising properties correctly', () => {
         const tasksFile = getTasksFileFromMockData(no_yaml);
-
         expect(tasksFile.hasProperty('appleSauce')).toEqual(false);
     });
 
