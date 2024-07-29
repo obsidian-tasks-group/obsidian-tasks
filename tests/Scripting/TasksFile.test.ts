@@ -221,7 +221,7 @@ describe('TasksFile - properties', () => {
         });
     });
 
-    it('should not have any properties in a file with populated frontmatter', () => {
+    it('should have all properties in a file with populated frontmatter', () => {
         const tasksFile = getTasksFileFromMockData(yaml_all_property_types_populated);
 
         Object.keys(tasksFile.frontmatter).forEach((key) => {
