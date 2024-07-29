@@ -227,4 +227,10 @@ describe('TasksFile - properties', () => {
             expect(tasksFile.hasProperty(key)).toEqual(true);
         });
     });
+
+    it('should treat non-exising properties correctly', () => {
+        const tasksFile = getTasksFileFromMockData(no_yaml);
+
+        expect(tasksFile.hasProperty('appleSauce')).toEqual(false);
+    });
 });
