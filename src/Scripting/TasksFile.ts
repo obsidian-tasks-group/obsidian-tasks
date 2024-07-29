@@ -148,14 +148,15 @@ export class TasksFile {
     }
 
     property(key: string): any {
-        if (this.frontmatter[key] === undefined) {
+        const propertyValue = this.frontmatter[key];
+        if (propertyValue === undefined) {
             return null;
         }
 
-        if (Array.isArray(this.frontmatter[key])) {
-            return this.frontmatter[key].filter((item: any) => item !== null);
+        if (Array.isArray(propertyValue)) {
+            return propertyValue.filter((item: any) => item !== null);
         }
 
-        return this.frontmatter[key];
+        return propertyValue;
     }
 }
