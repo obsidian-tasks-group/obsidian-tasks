@@ -11,6 +11,10 @@ export const docs_sample_for_task_properties_reference = {
         '  - Value\n' +
         'sample_number_property: 246\n' +
         'sample_text_property: Sample Text Value\n' +
+        'sample_text_multiline_property: |\n' +
+        '  Sample\n' +
+        '  Text\n' +
+        '  Value\n' +
         'sample_link_property: "[[yaml_all_property_types_populated]]"\n' +
         'sample_link_list_property:\n' +
         '  - "[[yaml_all_property_types_populated]]"\n' +
@@ -34,14 +38,14 @@ export const docs_sample_for_task_properties_reference = {
             {
                 position: {
                     start: {
-                        line: 24,
+                        line: 28,
                         col: 0,
-                        offset: 603,
+                        offset: 661,
                     },
                     end: {
-                        line: 24,
+                        line: 28,
                         col: 19,
-                        offset: 622,
+                        offset: 680,
                     },
                 },
                 tag: '#tag-from-file-body',
@@ -49,14 +53,14 @@ export const docs_sample_for_task_properties_reference = {
             {
                 position: {
                     start: {
-                        line: 26,
+                        line: 30,
                         col: 6,
-                        offset: 630,
+                        offset: 688,
                     },
                     end: {
-                        line: 26,
+                        line: 30,
                         col: 11,
-                        offset: 635,
+                        offset: 693,
                     },
                 },
                 tag: '#task',
@@ -64,14 +68,14 @@ export const docs_sample_for_task_properties_reference = {
             {
                 position: {
                     start: {
-                        line: 26,
+                        line: 30,
                         col: 64,
-                        offset: 688,
+                        offset: 746,
                     },
                     end: {
-                        line: 26,
+                        line: 30,
                         col: 83,
-                        offset: 707,
+                        offset: 765,
                     },
                 },
                 tag: '#tag-from-task-line',
@@ -79,14 +83,14 @@ export const docs_sample_for_task_properties_reference = {
             {
                 position: {
                     start: {
-                        line: 27,
+                        line: 31,
                         col: 6,
-                        offset: 714,
+                        offset: 772,
                     },
                     end: {
-                        line: 27,
+                        line: 31,
                         col: 11,
-                        offset: 719,
+                        offset: 777,
                     },
                 },
                 tag: '#task',
@@ -96,14 +100,14 @@ export const docs_sample_for_task_properties_reference = {
             {
                 position: {
                     start: {
-                        line: 22,
+                        line: 26,
                         col: 0,
-                        offset: 558,
+                        offset: 616,
                     },
                     end: {
-                        line: 22,
+                        line: 26,
                         col: 43,
-                        offset: 601,
+                        offset: 659,
                     },
                 },
                 heading: 'docs_sample_for_task_properties_reference',
@@ -120,9 +124,9 @@ export const docs_sample_for_task_properties_reference = {
                         offset: 0,
                     },
                     end: {
-                        line: 20,
+                        line: 24,
                         col: 3,
-                        offset: 556,
+                        offset: 614,
                     },
                 },
             },
@@ -130,14 +134,14 @@ export const docs_sample_for_task_properties_reference = {
                 type: 'heading',
                 position: {
                     start: {
-                        line: 22,
+                        line: 26,
                         col: 0,
-                        offset: 558,
+                        offset: 616,
                     },
                     end: {
-                        line: 22,
+                        line: 26,
                         col: 43,
-                        offset: 601,
+                        offset: 659,
                     },
                 },
             },
@@ -145,14 +149,14 @@ export const docs_sample_for_task_properties_reference = {
                 type: 'paragraph',
                 position: {
                     start: {
-                        line: 24,
+                        line: 28,
                         col: 0,
-                        offset: 603,
+                        offset: 661,
                     },
                     end: {
-                        line: 24,
+                        line: 28,
                         col: 19,
-                        offset: 622,
+                        offset: 680,
                     },
                 },
             },
@@ -160,14 +164,14 @@ export const docs_sample_for_task_properties_reference = {
                 type: 'list',
                 position: {
                     start: {
-                        line: 26,
+                        line: 30,
                         col: 0,
-                        offset: 624,
+                        offset: 682,
                     },
                     end: {
-                        line: 27,
+                        line: 31,
                         col: 71,
-                        offset: 779,
+                        offset: 837,
                     },
                 },
             },
@@ -176,33 +180,33 @@ export const docs_sample_for_task_properties_reference = {
             {
                 position: {
                     start: {
-                        line: 26,
+                        line: 30,
                         col: 0,
-                        offset: 624,
+                        offset: 682,
                     },
                     end: {
-                        line: 26,
+                        line: 30,
                         col: 83,
-                        offset: 707,
+                        offset: 765,
                     },
                 },
-                parent: -26,
+                parent: -30,
                 task: ' ',
             },
             {
                 position: {
                     start: {
-                        line: 27,
+                        line: 31,
                         col: 0,
-                        offset: 708,
+                        offset: 766,
                     },
                     end: {
-                        line: 27,
+                        line: 31,
                         col: 71,
-                        offset: 779,
+                        offset: 837,
                     },
                 },
-                parent: -26,
+                parent: -30,
                 task: ' ',
             },
         ],
@@ -213,6 +217,7 @@ export const docs_sample_for_task_properties_reference = {
             sample_list_property: ['Sample', 'List', 'Value'],
             sample_number_property: 246,
             sample_text_property: 'Sample Text Value',
+            sample_text_multiline_property: 'Sample\nText\nValue\n',
             sample_link_property: '[[yaml_all_property_types_populated]]',
             sample_link_list_property: ['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]'],
             aliases: ['YAML All Property Types Populated'],
@@ -227,9 +232,9 @@ export const docs_sample_for_task_properties_reference = {
                 offset: 0,
             },
             end: {
-                line: 20,
+                line: 24,
                 col: 3,
-                offset: 556,
+                offset: 614,
             },
         },
         frontmatterLinks: [

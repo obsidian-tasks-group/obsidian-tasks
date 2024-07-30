@@ -8,6 +8,10 @@ sample_list_property:
   - Value
 sample_number_property: 246
 sample_text_property: Sample Text Value
+sample_text_multiline_property: |
+  Sample
+  Text
+  Value
 sample_link_property: "[[yaml_all_property_types_populated]]"
 sample_link_list_property:
   - "[[yaml_all_property_types_populated]]"
