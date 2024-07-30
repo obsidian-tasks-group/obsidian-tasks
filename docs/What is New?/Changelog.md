@@ -8,11 +8,6 @@ See also [[Breaking Changes]].
 
 _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)..._
 
-<!--
-    Keep to around 2 to 3 releases, so that 'Navigation around this site' is visible.
-    Move the older ones down to the top of the comment block below...
--->
-
 - 7.6.0:
   - New setting to [[Use Filename as Default Date#Additional date format|recognise extra date format]] in file name as default date.
   - Add page [[Request a Feature]].
