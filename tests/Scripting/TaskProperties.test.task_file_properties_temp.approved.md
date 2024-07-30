@@ -12,7 +12,7 @@
 | `task.file.property('sample_text_property')` | `string` | `'Sample Text Value'` | `null` | `null` |
 | `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` | `null` | `null` |
 | `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` | `null` | `null` |
-| `task.file.frontmatter.tags` | `string[]` | `['#tag-from-file-properties']` | `any[]` | `[]` |
+| `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` | `any[]` | `[]` |
 | `task.file.tags` | `string[]` | `['#tag-from-file-properties', '#tag-from-file-body', '#task', '#tag-from-task-line']` | `any[]` | `[]` |
 
 
