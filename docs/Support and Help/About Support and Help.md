@@ -18,8 +18,4 @@ publish: true
 - [[Report a Bug]]
 - [[Request a Feature]]
 - [[Useful Links]]
-
-### Ways to use the Tasks Plugin
-
-- [[Resources]]
   - Links to write-ups,  talks and sample vaults from people who use this plugin.
