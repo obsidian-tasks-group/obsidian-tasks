@@ -1,3 +1,9 @@
+---
+publish: true
+aliases:
+  - Useful Links
+---
+
 # Useful Links
 
 ## More Tasks resources
