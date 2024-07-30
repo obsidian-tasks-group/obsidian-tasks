@@ -370,11 +370,11 @@ describe('obsidian properties', () => {
             'task.file.frontmatter',
             [
                 [
-                    "filter by function task.file.frontmatter['kanban-plugin'] !== undefined",
+                    "filter by function task.file.hasProperty('kanban-plugin')",
                     'find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards',
                 ],
                 [
-                    "filter by function task.file.frontmatter['kanban-plugin'] === undefined",
+                    "filter by function !task.file.hasProperty('kanban-plugin')",
                     'find tasks NOT in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards',
                 ],
                 [
@@ -386,15 +386,15 @@ describe('obsidian properties', () => {
                     "find tasks in files where the list property 'sample_list_property' exists regardless of the value",
                 ],
                 [
-                    'filter by function task.file.frontmatter.sample_list_property?.length > 0',
+                    'filter by function task.file.property("sample_list_property")?.length > 0',
                     "find tasks in files where the list property 'sample_list_property' exists and has at least one list item",
                 ],
                 [
-                    'filter by function task.file.frontmatter.sample_list_property?.length === 0',
+                    'filter by function task.file.property("sample_list_property")?.length === 0',
                     "find tasks in files where the list property 'sample_list_property' exists and has no list items",
                 ],
                 [
-                    "filter by function task.file.frontmatter['creation date']?.includes('2024') ?? false",
+                    "filter by function task.file.property('creation date')?.includes('2024') ?? false",
                     "find tasks in files where the date property 'creation date' includes string '2024'",
                 ],
             ],
