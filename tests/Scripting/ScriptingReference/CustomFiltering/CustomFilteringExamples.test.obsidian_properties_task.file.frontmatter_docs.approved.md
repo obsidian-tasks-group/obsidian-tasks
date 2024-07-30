@@ -8,24 +8,6 @@ filter by function task.file.hasProperty('kanban-plugin')
 - find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards.
 
 ```javascript
-filter by function !task.file.hasProperty('kanban-plugin')
-```
-
-- find tasks NOT in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards.
-
-```javascript
-filter by function task.file.frontmatter['sample_list_property'] !== undefined
-```
-
-- find tasks in files where the list property 'sample_list_property' exists regardless of the value.
-
-```javascript
-filter by function task.file.frontmatter.sample_list_property !== undefined
-```
-
-- find tasks in files where the list property 'sample_list_property' exists regardless of the value.
-
-```javascript
 filter by function task.file.property("sample_list_property")?.length > 0
 ```
 
