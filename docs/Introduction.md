@@ -40,8 +40,6 @@ Supports due dates, recurring tasks (repetition), done dates, sub-set of checkli
 
 You can toggle the task status in any view or query and it will update the source file.
 
-For changes in each release, please check the [releases page](https://github.com/obsidian-tasks-group/obsidian-tasks/releases).
-
 ## Screenshots
 
 - _All screenshots assume the global filter `#task` which is not set by default (see also "Getting Started")._
