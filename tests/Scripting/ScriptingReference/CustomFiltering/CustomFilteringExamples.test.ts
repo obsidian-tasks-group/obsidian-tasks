@@ -374,18 +374,6 @@ describe('obsidian properties', () => {
                     'find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards',
                 ],
                 [
-                    "filter by function !task.file.hasProperty('kanban-plugin')",
-                    'find tasks NOT in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards',
-                ],
-                [
-                    "filter by function task.file.frontmatter['sample_list_property'] !== undefined",
-                    "find tasks in files where the list property 'sample_list_property' exists regardless of the value",
-                ],
-                [
-                    'filter by function task.file.frontmatter.sample_list_property !== undefined',
-                    "find tasks in files where the list property 'sample_list_property' exists regardless of the value",
-                ],
-                [
                     'filter by function task.file.property("sample_list_property")?.length > 0',
                     "find tasks in files where the list property 'sample_list_property' exists and has at least one list item",
                 ],
