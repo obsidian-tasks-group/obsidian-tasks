@@ -4,7 +4,7 @@ publish: true
 
 # Changelog
 
-See also [[Breaking Changes]].
+See also [[Breaking Changes]]: Tasks releases with version numbers ending `.0.0` indicate that an update to user vaults may be required.
 
 _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)..._
 
