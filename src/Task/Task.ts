@@ -361,13 +361,6 @@ export class Task extends ListItem {
             today,
         );
 
-        let nextOccurrence: Occurrence | null = null;
-        if (newStatus.isCompleted()) {
-            if (!this.status.isCompleted() && this.recurrence !== null) {
-                nextOccurrence = this.recurrence.next(today);
-            }
-        }
-
         const toggledTask = new Task({
             ...this,
             status: newStatus,
@@ -375,17 +368,27 @@ export class Task extends ListItem {
             cancelledDate: newCancelledDate,
         });
 
-        const newTasks: Task[] = [];
-
-        if (nextOccurrence !== null) {
-            const nextTask = this.createNextOccurrence(newStatus, nextOccurrence);
-            newTasks.push(nextTask);
+        if (!newStatus.isCompleted()) {
+            return [toggledTask];
         }
 
-        // Write next occurrence before previous occurrence.
-        newTasks.push(toggledTask);
+        if (this.status.isCompleted()) {
+            return [toggledTask];
+        }
 
-        return newTasks;
+        const recurrence = this.recurrence;
+        if (recurrence === null) {
+            return [toggledTask];
+        }
+
+        const nextOccurrence = recurrence.next(today);
+        if (nextOccurrence === null) {
+            return [toggledTask];
+        }
+
+        const nextTask = this.createNextOccurrence(newStatus, nextOccurrence);
+        // Write next occurrence before previous occurrence.
+        return [nextTask, toggledTask];
     }
 
     /**
