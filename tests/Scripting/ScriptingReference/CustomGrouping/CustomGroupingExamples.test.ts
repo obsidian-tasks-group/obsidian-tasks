@@ -397,7 +397,7 @@ describe('obsidian properties', () => {
                     "group tasks by 'creation date' date property",
                 ],
                 [
-                    "group by function task.file.property('creation date') ? window.moment(task.file.property('creation date')).format('MMMM') : 'no month'",
+                    "group by function const value = task.file.property('creation date'); return value ? window.moment(value).format('MMMM') : 'no month'",
                     "group tasks by month in 'creation date' date property",
                 ],
             ],
