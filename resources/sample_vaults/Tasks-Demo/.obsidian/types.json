@@ -14,6 +14,7 @@
     "sample_link_list_property": "multitext",
     "sample_link_property": "text",
     "creation date": "datetime",
-    "project": "text"
+    "project": "text",
+    "sample_text_multiline_property": "text"
   }
 }

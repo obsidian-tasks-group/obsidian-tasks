@@ -5,7 +5,7 @@ import { Task } from '../../src/Task/Task';
 
 export function formatToRepresentType(x: any): string {
     if (typeof x === 'string') {
-        return "'" + x + "'";
+        return "'" + x.replace(/\n/g, '\\n') + "'";
     }
 
     if (moment.isMoment(x)) {

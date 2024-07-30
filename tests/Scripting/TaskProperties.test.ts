@@ -156,6 +156,7 @@ describe('task', () => {
             "task.file.property('sample_list_property')",
             "task.file.property('sample_number_property')",
             "task.file.property('sample_text_property')",
+            "task.file.property('sample_text_multiline_property')",
             "task.file.property('sample_link_property')",
             "task.file.property('sample_link_list_property')",
             "task.file.property('tags')",

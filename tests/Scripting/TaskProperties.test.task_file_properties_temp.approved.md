@@ -10,6 +10,7 @@
 | `task.file.property('sample_list_property')` | `string[]` | `['Sample', 'List', 'Value']` | `null` | `null` |
 | `task.file.property('sample_number_property')` | `number` | `246` | `null` | `null` |
 | `task.file.property('sample_text_property')` | `string` | `'Sample Text Value'` | `null` | `null` |
+| `task.file.property('sample_text_multiline_property')` | `string` | `'Sample\nText\nValue\n'` | `null` | `null` |
 | `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` | `null` | `null` |
 | `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` | `null` | `null` |
 | `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` | `any[]` | `[]` |
