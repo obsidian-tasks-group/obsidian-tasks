@@ -17,6 +17,7 @@ publish: true
   - Tasks releases with version numbers ending `.0.0` indicate that an update to user vaults may be required.
 - [[Report a Bug]]
 - [[Request a Feature]]
+- [[Useful Links]]
 
 ### Ways to use the Tasks Plugin
 

@@ -153,7 +153,6 @@ These are the main pages and sections, that connect to all the pages here:
 >
 > - [[About How Tos|How Tos ...]]
 > - [[About Support and Help|Support and Help ...]]
-> - [[Useful Links]]
 
 ## Task management for the Obsidian knowledge base
 
