@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Support and Help/Breaking Changes
 ---
 
 # Breaking changes
