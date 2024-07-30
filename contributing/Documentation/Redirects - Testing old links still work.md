@@ -16,12 +16,14 @@ All these links should still work:
 - <https://publish.obsidian.md/tasks/Getting+Started/Backlinks>
 - <https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task>
 - <https://publish.obsidian.md/tasks/How+To/How+Tos>
+- <https://publish.obsidian.md/tasks/Installation>
 - <https://publish.obsidian.md/tasks/Installation/Installation>
 - <https://publish.obsidian.md/tasks/Other+Plugins/Other+Plugins>
 - <https://publish.obsidian.md/tasks/Queries/Queries>
 - <https://publish.obsidian.md/tasks/Quick+Reference/Quick+Reference>
 - <https://publish.obsidian.md/tasks/Reference/Reference>
 - <https://publish.obsidian.md/tasks/Reference/Status+Collections/Status+Collections>
+- <https://publish.obsidian.md/tasks/Useful+Links>
 
 ## Moved files in the contributing vault
 
