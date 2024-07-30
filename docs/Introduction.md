@@ -4,15 +4,6 @@ publish: true
 
 # Introduction
 
-## What's New?
-
-<!-- force a blank line --><!-- include: snippet-callout-titles-bug.md -->
-
-> [!Warning] Warning: Obsidian bug in versions 1.6.0 to 1.6.3 has caused some tasks not to be found
-> See [[Missing tasks in callouts with some Obsidian 1.6.x versions]] for how to ==make Obsidian 1.6.5 fix its metadata cache==, in case it was broken by earlier 1.6.x versions.
-
-<!-- force a blank line --><!-- endInclude -->
-
 ## Navigation around this site
 
 These are the main pages and sections, that connect to all the pages here:
@@ -48,14 +39,6 @@ Query them and mark them as done wherever you want.
 Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
 You can toggle the task status in any view or query and it will update the source file.
-
-> Please submit bugs using [[Report a Bug]].
->
-> Please submit ideas using the [Feature Request form](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/new?assignees=&labels=type%3A+enhancement&template=feature-request.yaml).
->
-> Please ask for help in the [Q&A Discussions section](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/q-a) by clicking **New discussion**.
->
-> Please share any interesting or fun uses of tasks in the [Show and Tell Discussions section](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/show-and-tell) by clicking **New discussion**.
 
 For changes in each release, please check the [releases page](https://github.com/obsidian-tasks-group/obsidian-tasks/releases).
 

@@ -31,10 +31,16 @@ If you'd like to see the Tasks plugin in action, have a look at these resources 
 
 _Did we miss any? [Let us know](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2732) and we'll add them to the list._
 
-## More Tasks resources
+## Tasks resources on GitHub
 
-- [Contributing Guide](https://publish.obsidian.md/tasks-contributing/)
 - Tasks plugin [GitHub repository](https://github.com/obsidian-tasks-group/obsidian-tasks)
+- Chat with users
+  - Ask for help in the [Q&A Discussions section](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/q-a) by clicking **New discussion**.
+  - Share any interesting or fun uses of tasks in the [Show and Tell Discussions section](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/show-and-tell) by clicking **New discussion**.
 - Improving the plugin:
   - [Issues](https://github.com/obsidian-tasks-group/obsidian-tasks/issues)
   - [Discussions](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions)
+
+## Notes for Tasks developers
+
+- [Contributing Guide](https://publish.obsidian.md/tasks-contributing/)
