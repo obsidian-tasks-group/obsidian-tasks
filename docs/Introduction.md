@@ -11,7 +11,6 @@ These are the main pages and sections, that connect to all the pages here:
 > [!Info] Navigation
 > ### Basics
 >
-> - [[Installation]]
 > - [[About Getting Started|Getting Started ...]]
 >   - [[About Statuses|Statuses ...]]
 > - [[About Editing|Editing...]]
@@ -31,6 +30,7 @@ These are the main pages and sections, that connect to all the pages here:
 >
 > - [[About How Tos|How Tos ...]]
 > - [[About Support and Help|Support and Help ...]]
+> - [[Changelog|Changelog...]]
 
 ## Task management for the Obsidian knowledge base
 

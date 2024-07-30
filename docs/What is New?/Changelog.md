@@ -4,6 +4,8 @@ publish: true
 
 # Changelog
 
+See also [[Breaking Changes]].
+
 _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)..._
 
 <!--
