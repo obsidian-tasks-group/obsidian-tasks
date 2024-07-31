@@ -199,6 +199,7 @@ describe('EditableTask tests', () => {
                     "tags": [],
                   },
                   "_path": "some/folder/fileName.md",
+                  "_tags": [],
                 },
               },
             }
