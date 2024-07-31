@@ -29,7 +29,14 @@ describe('task', () => {
 
     function verifyFieldDataFromTasksForReferenceDocs(task1: Task, task2: Task, fields: string[]) {
         const tasks = [task1, task2];
-        const markdownTable = new MarkdownTable(['Field', 'Type 1', 'Example 1', 'Type 2', 'Example 2']);
+
+        const headings = ['Field'];
+        tasks.forEach((_, index) => {
+            headings.push(`Type ${index + 1}`);
+            headings.push(`Example ${index + 1}`);
+        });
+        const markdownTable = new MarkdownTable(headings);
+
         const queryContext = makeQueryContextWithTasks(new TasksFile(task1.path), tasks);
         for (const field of fields) {
             const cells = [addBackticks(field)];
