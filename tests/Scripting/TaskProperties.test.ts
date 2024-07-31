@@ -30,7 +30,7 @@ describe('task', () => {
     function verifyFieldDataFromTasksForReferenceDocs(task1: Task, task2: Task, fields: string[]) {
         const tasks = [task1, task2];
         const markdownTable = new MarkdownTable(['Field', 'Type 1', 'Example 1', 'Type 2', 'Example 2']);
-        const queryContext = makeQueryContextWithTasks(new TasksFile(task1.path), [task1, task2]);
+        const queryContext = makeQueryContextWithTasks(new TasksFile(task1.path), tasks);
         for (const field of fields) {
             const cells = [addBackticks(field)];
             for (const task of tasks) {
