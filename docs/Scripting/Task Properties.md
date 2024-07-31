@@ -205,7 +205,7 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 > Access to the following values was introduced in Tasks X.Y.Z.
 
-<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_file_properties_temp.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
 
 | Field | Type 1 | Example 1 |
 | ----- | ----- | ----- |
