@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Obsidian Properties
+# Frontmatter Properties
 
 > [!warning]
 > This page describes a **highly advanced** and **experimental** feature of the Tasks plugin, in order to get feedback from early adopters.
