@@ -378,13 +378,12 @@ export class Task extends ListItem {
             return [toggledTask];
         }
 
-        const recurrence = this.recurrence;
-        const noRecurrenceRule = recurrence === null;
+        const noRecurrenceRule = this.recurrence === null;
         if (noRecurrenceRule) {
             return [toggledTask];
         }
 
-        const nextOccurrence = recurrence.next(today);
+        const nextOccurrence = this.recurrence.next(today);
         if (nextOccurrence === null) {
             return [toggledTask];
         }
