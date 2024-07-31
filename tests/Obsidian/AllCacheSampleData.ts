@@ -9,6 +9,7 @@ import { callouts_nested_issue_2890_labelled } from './__test_data__/callouts_ne
 import { callouts_nested_issue_2890_unlabelled } from './__test_data__/callouts_nested_issue_2890_unlabelled';
 import { comments_html_style } from './__test_data__/comments_html_style';
 import { comments_markdown_style } from './__test_data__/comments_markdown_style';
+import { docs_sample_for_task_properties_reference } from './__test_data__/docs_sample_for_task_properties_reference';
 import { empty_yaml } from './__test_data__/empty_yaml';
 import { example_kanban } from './__test_data__/example_kanban';
 import { inheritance_1parent1child } from './__test_data__/inheritance_1parent1child';
@@ -69,6 +70,7 @@ export function allCacheSampleData() {
         callouts_nested_issue_2890_unlabelled,
         comments_html_style,
         comments_markdown_style,
+        docs_sample_for_task_properties_reference,
         empty_yaml,
         example_kanban,
         inheritance_1parent1child,

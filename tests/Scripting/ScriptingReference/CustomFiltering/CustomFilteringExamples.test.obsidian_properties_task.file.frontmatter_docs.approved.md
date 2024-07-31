@@ -2,43 +2,25 @@
 
 
 ```javascript
-filter by function task.file.frontmatter['kanban-plugin'] === 'basic'
+filter by function task.file.hasProperty('kanban-plugin')
 ```
 
-- todo.
+- find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards.
 
 ```javascript
-filter by function task.file.frontmatter['kanban-plugin'] !== undefined
-```
-
-- todo.
-
-```javascript
-filter by function task.file.frontmatter['sample_list_property'] !== undefined
-```
-
-- find tasks in files where the list property 'sample_list_property' exists regardless of the value.
-
-```javascript
-filter by function task.file.frontmatter.sample_list_property !== undefined
-```
-
-- find tasks in files where the list property 'sample_list_property' exists regardless of the value.
-
-```javascript
-filter by function task.file.frontmatter.sample_list_property?.length > 0
+filter by function task.file.property("sample_list_property")?.length > 0
 ```
 
 - find tasks in files where the list property 'sample_list_property' exists and has at least one list item.
 
 ```javascript
-filter by function task.file.frontmatter.sample_list_property?.length === 0
+filter by function task.file.property("sample_list_property")?.length === 0
 ```
 
 - find tasks in files where the list property 'sample_list_property' exists and has no list items.
 
 ```javascript
-filter by function task.file.frontmatter['creation date']?.includes('2024') ?? false
+filter by function task.file.property('creation date')?.includes('2024') ?? false
 ```
 
 - find tasks in files where the date property 'creation date' includes string '2024'.
