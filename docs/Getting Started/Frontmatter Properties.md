@@ -12,7 +12,7 @@ publish: true
 > [!released]
 > Use of Obsidian Properties was introduced in Tasks X.Y.Z.
 
-## What are Obsidian Properties
+## What are Frontmatter Properties
 
 Obsidian offers a facility called [Properties](https://help.obsidian.md/Editing+and+formatting/Properties).
 
@@ -20,6 +20,8 @@ The Obsidian documentation says:
 
 > [!Quote]
 > Properties allow you to organize information about a note. Properties contain structured data such as text, links, dates, checkboxes, and numbers. Properties can also be used in combination with [Community plugins](https://help.obsidian.md/Extending+Obsidian/Community+plugins) that can do useful things with your structured data.
+
+In the Tasks documentation, we refer to these as Frontmatter Properties, to distinguish them from Task and Query properties.
 
 ## What do you need to know?
 
