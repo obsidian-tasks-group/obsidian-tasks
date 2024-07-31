@@ -28,18 +28,16 @@ describe('task', () => {
     }
 
     function verifyFieldDataFromTasksForReferenceDocs(task1: Task, task2: Task, fields: string[]) {
+        const tasks = [task1, task2];
         const markdownTable = new MarkdownTable(['Field', 'Type 1', 'Example 1', 'Type 2', 'Example 2']);
         const queryContext = makeQueryContextWithTasks(new TasksFile(task1.path), [task1, task2]);
         for (const field of fields) {
-            const value1 = parseAndEvaluateExpression(task1, field, queryContext);
-            const value2 = parseAndEvaluateExpression(task2, field, queryContext);
-            const cells = [
-                addBackticks(field),
-                addBackticks(determineExpressionType(value1)),
-                addBackticks(formatToRepresentType(value1)),
-                addBackticks(determineExpressionType(value2)),
-                addBackticks(formatToRepresentType(value2)),
-            ];
+            const cells = [addBackticks(field)];
+            for (const task of tasks) {
+                const value = parseAndEvaluateExpression(task, field, queryContext);
+                cells.push(addBackticks(determineExpressionType(value)));
+                cells.push(addBackticks(formatToRepresentType(value)));
+            }
             markdownTable.addRow(cells);
         }
         verifyMarkdownForDocs(markdownTable.markdown);
