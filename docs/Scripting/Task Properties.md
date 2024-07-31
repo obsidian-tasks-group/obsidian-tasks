@@ -200,10 +200,12 @@ For more information, including adding your own customised statuses, see [[Statu
 
 [^commented]: Text inside `%% ... %%` comments is hidden from view. It is used to control the order that group headings are sorted in.
 
-## Accessing values from file properties
+## Values for Frontmatter Properties
 
 > [!released]
-> Access to the following values was introduced in Tasks X.Y.Z.
+> Access to the frontmatter properties was introduced in Tasks X.Y.Z.
+
+These values are described in [[Frontmatter Properties]].
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
 
