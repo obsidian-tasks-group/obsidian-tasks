@@ -151,6 +151,10 @@ filter by function ! task.file.hasProperty('kanban-plugin')
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.obsidian_properties_task.file.frontmatter_docs.approved.md -->
 
+```javascript
+filter by function task.file.hasProperty('kanban-plugin')
+```
+
 - find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards.
 
 ```javascript
