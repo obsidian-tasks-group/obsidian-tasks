@@ -35,6 +35,62 @@ The Obsidian documentation says:
 | `task.file.frontmatter` | Accesses a slightly sanitised/standardised version of the frontmatter/properties in the file containing the task |
 |                         |                                                                                                                  |
 
+## How does Tasks interpret Obsidian Properties?
+
+Consider a file with the following example properties:
+
+<!-- TODO this was copied from docs_sample_for_task_properties_reference.md - embed the content automatically in future... -->
+
+```yaml
+---
+sample_checkbox_property: true
+sample_date_property: 2024-07-21
+sample_date_and_time_property: 2024-07-21T12:37:00
+sample_list_property:
+  - Sample
+  - List
+  - Value
+sample_number_property: 246
+sample_text_property: Sample Text Value
+sample_text_multiline_property: |
+  Sample
+  Text
+  Value
+sample_link_property: "[[yaml_all_property_types_populated]]"
+sample_link_list_property:
+  - "[[yaml_all_property_types_populated]]"
+  - "[[yaml_all_property_types_empty]]"
+aliases:
+  - YAML All Property Types Populated
+tags:
+  - tag-from-file-properties
+creation date: 2024-05-25T15:17:00
+project: Secret Project
+---
+```
+
+The following table shows how some of those properties are interpreted by Tasks:
+
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_file_properties_temp.approved.md -->
+
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.file.hasProperty('creation date')` | `boolean` | `true` | `boolean` | `false` |
+| `task.file.property('creation date')` | `string` | `'2024-05-25T15:17:00'` | `null` | `null` |
+| `task.file.property('sample_checkbox_property')` | `boolean` | `true` | `null` | `null` |
+| `task.file.property('sample_date_property')` | `string` | `'2024-07-21'` | `null` | `null` |
+| `task.file.property('sample_date_and_time_property')` | `string` | `'2024-07-21T12:37:00'` | `null` | `null` |
+| `task.file.property('sample_list_property')` | `string[]` | `['Sample', 'List', 'Value']` | `null` | `null` |
+| `task.file.property('sample_number_property')` | `number` | `246` | `null` | `null` |
+| `task.file.property('sample_text_property')` | `string` | `'Sample Text Value'` | `null` | `null` |
+| `task.file.property('sample_text_multiline_property')` | `string` | `'Sample\nText\nValue\n'` | `null` | `null` |
+| `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` | `null` | `null` |
+| `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` | `null` | `null` |
+| `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` | `any[]` | `[]` |
+| `task.file.tags` | `string[]` | `['#tag-from-file-properties', '#tag-from-file-body', '#task', '#tag-from-task-line']` | `any[]` | `[]` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## Examples
 
 ### Filtering examples
@@ -84,6 +140,8 @@ group by function \
 ```
 
 - group tasks by month in 'creation date' date property.
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Limitations
 
