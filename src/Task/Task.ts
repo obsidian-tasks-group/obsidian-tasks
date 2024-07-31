@@ -369,16 +369,15 @@ export class Task extends ListItem {
         });
 
         const newStatusIsNotDone = !newStatus.isCompleted();
+        const oldStatusWasDone = this.status.isCompleted();
+        const noRecurrenceRule = this.recurrence === null;
+
         if (newStatusIsNotDone) {
             return [toggledTask];
         }
-
-        const oldStatusWasDone = this.status.isCompleted();
         if (oldStatusWasDone) {
             return [toggledTask];
         }
-
-        const noRecurrenceRule = this.recurrence === null;
         if (noRecurrenceRule) {
             return [toggledTask];
         }
