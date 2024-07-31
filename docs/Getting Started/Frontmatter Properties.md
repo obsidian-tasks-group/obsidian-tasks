@@ -73,7 +73,7 @@ project: Secret Project
 
 The following table shows how some of those properties are interpreted by Tasks:
 
-<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_file_properties_temp.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
 
 | Field | Type 1 | Example 1 |
 | ----- | ----- | ----- |

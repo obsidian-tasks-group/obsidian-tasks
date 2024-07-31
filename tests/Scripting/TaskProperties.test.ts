@@ -145,7 +145,7 @@ describe('task', () => {
         ]);
     });
 
-    it('file properties temp', () => {
+    it('frontmatter properties', () => {
         const tasks = readTasksFromSimulatedFile(docs_sample_for_task_properties_reference as any);
         // Show just the first task:
         verifyFieldDataFromTasksForReferenceDocs(tasks.slice(0, 1), [
