@@ -4,13 +4,8 @@ publish: true
 
 # Frontmatter Properties
 
-> [!warning]
-> This page describes a **highly advanced** and **experimental** feature of the Tasks plugin, in order to get feedback from early adopters.
->
-> The facilities are likely to change before final release, and your queries will probably need updating later on.
-
 > [!released]
-> Use of Obsidian Properties was introduced in Tasks X.Y.Z.
+> Use of Frontmatter Properties was introduced in Tasks X.Y.Z.
 
 ## What are Frontmatter Properties
 
@@ -25,19 +20,27 @@ In the Tasks documentation, we refer to these as Frontmatter Properties, to dist
 
 ## What do you need to know?
 
-- `TAG` and `TAGS` are standardised to `tags`
-- `#` prefix is added to all tag values in frontmatter
-- `ALIAS` and `ALIASES` are not standardised yet
-- A value of `null` means that the property key was present in the file, but there was no value.
-- A value of `undefined` means you tried accessing a property key that was not present in the frontmatter.
-- Currently, in custom filters, sorts and groupings, a slightly standardised version of the frontmatter is available via:
+- Frontmatter property values can be used in  the following instructions:
+  - `filter by function`
+  - `sort by function`
+  - `group by function`
+- `task.file.hasProperty('property name')` returns `true` if:
+  - The task is in a file that has a property called `property name`
+  - And that property has a non-empty value.
+- `task.file.property('property name')` returns:
+  - The property's value
+  - Or `null` if:
+    - the property has no value,
+    - or the task's file does not contain that property.
+  - Property names are case-insensitive:
+    - `property name` will find `Property Name`, for example.
+- Tags in Frontmatter can be accessed with `task.file.property('tags')`
+  - `TAG` and `TAGS` are standardised to `tags`
+  - `#` prefix is added to all tag values in frontmatter
+- Aliases in Frontmatter are not yet standardised.
+  - If your vault contains a mixture of `ALIAS` and `ALIASES`,  your queries will need to be coded to handle both spellings, for now.
 
-| What                    | Meaning                                                                                                          |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `task.file.frontmatter` | Accesses a slightly sanitised/standardised version of the frontmatter/properties in the file containing the task |
-|                         |                                                                                                                  |
-
-## How does Tasks interpret Obsidian Properties?
+## How does Tasks interpret Frontmatter Properties?
 
 Consider a file with the following example properties:
 
@@ -71,7 +74,7 @@ project: Secret Project
 ---
 ```
 
-The following table shows how some of those properties are interpreted by Tasks:
+The following table shows how most of those properties are interpreted in Tasks queries:
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
 
