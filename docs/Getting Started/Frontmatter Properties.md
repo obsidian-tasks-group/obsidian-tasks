@@ -7,6 +7,15 @@ publish: true
 > [!released]
 > Use of Frontmatter Properties was introduced in Tasks X.Y.Z.
 
+> [!warning]
+> The current implementation of Tasks does not re-read task lines if their file's frontmatter changes.
+>
+> So for now, if you edit frontmatter values, you will need to do one of:
+>
+> 1. Make an edit to any task line in the file, which causes the whole file to be reread
+> 2. Run the `Reload app without saving` command
+> 3. Restart Obsidian.
+
 ## What are Frontmatter Properties
 
 Obsidian offers a facility called [Properties](https://help.obsidian.md/Editing+and+formatting/Properties).
