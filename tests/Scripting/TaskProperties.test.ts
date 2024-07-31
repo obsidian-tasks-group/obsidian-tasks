@@ -160,7 +160,7 @@ describe('task', () => {
             "task.file.property('sample_link_property')",
             "task.file.property('sample_link_list_property')",
             "task.file.property('tags')",
-            'task.file.tags', // TODO Replace
+            // 'task.file.tags', // TODO Replace
             // 'task.file.tags()', // TODO Implement
             // "task.file.tags('body')", // TODO Implement
             // "task.file.tags('properties')", // TODO Implement
