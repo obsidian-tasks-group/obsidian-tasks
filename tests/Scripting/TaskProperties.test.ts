@@ -24,12 +24,10 @@ describe('task', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const task1 = TaskBuilder.createFullyPopulatedTask();
         const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
-        verifyFieldDataFromTasksForReferenceDocs(task1, task2, fields);
+        verifyFieldDataFromTasksForReferenceDocs([task1, task2], fields);
     }
 
-    function verifyFieldDataFromTasksForReferenceDocs(task1: Task, task2: Task, fields: string[]) {
-        const tasks = [task1, task2];
-
+    function verifyFieldDataFromTasksForReferenceDocs(tasks: Task[], fields: string[]) {
         const headings = ['Field'];
         tasks.forEach((_, index) => {
             headings.push(`Type ${index + 1}`);
@@ -37,7 +35,7 @@ describe('task', () => {
         });
         const markdownTable = new MarkdownTable(headings);
 
-        const queryContext = makeQueryContextWithTasks(new TasksFile(task1.path), tasks);
+        const queryContext = makeQueryContextWithTasks(new TasksFile(tasks[0].path), tasks);
         for (const field of fields) {
             const cells = [addBackticks(field)];
             for (const task of tasks) {
@@ -150,9 +148,9 @@ describe('task', () => {
     // TODO Merge this section in to 'file properties' above.
     it('file properties temp', () => {
         const tasks = readTasksFromSimulatedFile(docs_sample_for_task_properties_reference as any);
-        const task1 = tasks[0];
-        const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
-        verifyFieldDataFromTasksForReferenceDocs(task1, task2, [
+        const tasks2 = [tasks[0]];
+        tasks2.push(new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build());
+        verifyFieldDataFromTasksForReferenceDocs(tasks2, [
             "task.file.hasProperty('creation date')",
             "task.file.property('creation date')",
             "task.file.property('sample_checkbox_property')",
