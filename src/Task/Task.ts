@@ -368,16 +368,19 @@ export class Task extends ListItem {
             cancelledDate: newCancelledDate,
         });
 
-        if (!newStatus.isCompleted()) {
+        const newStatusIsNotDone = !newStatus.isCompleted();
+        if (newStatusIsNotDone) {
             return [toggledTask];
         }
 
-        if (this.status.isCompleted()) {
+        const oldStatusWasDone = this.status.isCompleted();
+        if (oldStatusWasDone) {
             return [toggledTask];
         }
 
         const recurrence = this.recurrence;
-        if (recurrence === null) {
+        const noRecurrenceRule = recurrence === null;
+        if (noRecurrenceRule) {
             return [toggledTask];
         }
 
