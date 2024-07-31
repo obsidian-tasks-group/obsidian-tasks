@@ -217,11 +217,12 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.file.property('sample_list_property')` | `string[]` | `['Sample', 'List', 'Value']` | `null` | `null` |
 | `task.file.property('sample_number_property')` | `number` | `246` | `null` | `null` |
 | `task.file.property('sample_text_property')` | `string` | `'Sample Text Value'` | `null` | `null` |
+| `task.file.property('sample_text_multiline_property')` | `string` | `'Sample\nText\nValue\n'` | `null` | `null` |
 | `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` | `null` | `null` |
 | `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` | `null` | `null` |
-| `task.file.frontmatter.tags` | `string[]` | `['#tag-from-file-properties']` | `any[]` | `[]` |
+| `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` | `any[]` | `[]` |
 | `task.file.tags` | `string[]` | `['#tag-from-file-properties', '#tag-from-file-body', '#task', '#tag-from-task-line']` | `any[]` | `[]` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-1. `task.file.frontmatter.tags` and `task.file.tags` are experimental, and are expected to be removed by the time access to property vales is released.
+1. `task.file.tags` is experimental, and is expected to be changed or removed by the time access to property vales is released.
