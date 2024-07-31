@@ -145,12 +145,10 @@ describe('task', () => {
         ]);
     });
 
-    // TODO Merge this section in to 'file properties' above.
     it('file properties temp', () => {
         const tasks = readTasksFromSimulatedFile(docs_sample_for_task_properties_reference as any);
-        const tasks2 = [tasks[0]];
-        tasks2.push(new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build());
-        verifyFieldDataFromTasksForReferenceDocs(tasks2, [
+        // Show just the first task:
+        verifyFieldDataFromTasksForReferenceDocs(tasks.slice(0, 1), [
             "task.file.hasProperty('creation date')",
             "task.file.property('creation date')",
             "task.file.property('sample_checkbox_property')",
