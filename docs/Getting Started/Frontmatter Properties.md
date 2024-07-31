@@ -16,9 +16,17 @@ The Obsidian documentation says:
 > [!Quote]
 > Properties allow you to organize information about a note. Properties contain structured data such as text, links, dates, checkboxes, and numbers. Properties can also be used in combination with [Community plugins](https://help.obsidian.md/Extending+Obsidian/Community+plugins) that can do useful things with your structured data.
 
+This is an example property section, and it *must* appear on the very first line of the markdown file:
+
+```yaml
+---
+name: value
+---
+```
+
 In the Tasks documentation, we refer to these as Frontmatter Properties, to distinguish them from Task and Query properties.
 
-## What do you need to know?
+## How does Tasks treat Frontmatter Properties?
 
 - Frontmatter property values can be used in  the following instructions:
   - `filter by function`
@@ -35,14 +43,15 @@ In the Tasks documentation, we refer to these as Frontmatter Properties, to dist
   - Property names are case-insensitive:
     - `property name` will find `Property Name`, for example.
 - Tags in Frontmatter can be accessed with `task.file.property('tags')`
-  - `TAG` and `TAGS` are standardised to `tags`
-  - `#` prefix is added to all tag values in frontmatter
+  - `TAG` and `TAGS` are standardised to `tags`.
+  - The `#` prefix is added to all tag values in frontmatter.
 - Aliases in Frontmatter are not yet standardised.
   - If your vault contains a mixture of `ALIAS` and `ALIASES`,  your queries will need to be coded to handle both spellings, for now.
+- Tasks reads both YAML and [JSON](https://help.obsidian.md/Editing+and+formatting/Properties#JSON+Properties) properties.
 
 ## How does Tasks interpret Frontmatter Properties?
 
-Consider a file with the following example properties:
+Consider a file with the following example properties (or "Frontmatter"):
 
 <!-- TODO this was copied from docs_sample_for_task_properties_reference.md - embed the content automatically in future... -->
 
@@ -95,15 +104,43 @@ The following table shows how most of those properties are interpreted in Tasks 
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-## Examples
+## Frontmatter Properties Examples
 
-### Filtering examples
+### Tags
 
-<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.obsidian_properties_task.file.frontmatter_docs.approved.md -->
+#### Show files from tasks with a specific tag in frontmatter
+
+```javascript
+filter by function task.file.property('tags').includes('#sample-tag')
+```
+
+Note that this is an exact tag search. It will not match `#sample-tag/some-sub-tag`.
+
+#### Do not show any tasks from files with a specific tag in frontmatter
+
+```javascript
+filter by function ! task.file.property('tags').includes('#notasks')
+```
+
+If you wanted to adopt such a convention throughout all your Tasks queries, you could add the above to your [[Global Query]].
+
+### Kanban plugin
+
+#### Only show tasks in Kanban plugin files
 
 ```javascript
 filter by function task.file.hasProperty('kanban-plugin')
 ```
+
+#### Don't show tasks in Kanban plugin files
+
+```javascript
+filter by function ! task.file.hasProperty('kanban-plugin')
+```
+
+### More filtering examples
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.obsidian_properties_task.file.frontmatter_docs.approved.md -->
 
 - find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards.
 
@@ -127,7 +164,7 @@ filter by function task.file.property('creation date')?.includes('2024') ?? fals
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-### Grouping examples
+### More grouping examples
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.obsidian_properties_task.file.frontmatter_docs.approved.md -->
 
@@ -149,4 +186,6 @@ group by function \
 
 ## Limitations
 
-- It is not yet possible to use properties in the query file
+- It is not yet possible to use properties in the query file:
+  - `query.file.hasProperty()` does not yet work.
+  - `query.file.property()` does not yet work.
