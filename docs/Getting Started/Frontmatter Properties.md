@@ -48,10 +48,10 @@ In the Tasks documentation, we refer to these as Frontmatter Properties, to dist
     - `property name` will find `Property Name`, for example.
 - Tags in Frontmatter can be accessed with `task.file.property('tags')`
   - `TAG` and `TAGS` are standardised to `tags`.
-  - The `#` prefix is added to all tag values in frontmatter.
+  - The `#` prefix is added to all tag values returned by this function.
 - Aliases in Frontmatter are not yet standardised.
   - If your vault contains a mixture of `alias`, `ALIAS` and `ALIASES`,  your queries will need to be coded to handle both spellings, for now.
-- Tasks reads both YAML and [JSON](https://help.obsidian.md/Editing+and+formatting/Properties#JSON+Properties) properties.
+- Tasks reads both YAML and [JSON](https://help.obsidian.md/Editing+and+formatting/Properties#JSON+Properties) formats.
 
 ## Frontmatter Properties Examples
 
