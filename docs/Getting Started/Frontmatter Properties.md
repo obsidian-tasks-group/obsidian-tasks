@@ -92,6 +92,53 @@ filter by function task.file.hasProperty('kanban-plugin')
 filter by function ! task.file.hasProperty('kanban-plugin')
 ```
 
+### Tracking projects
+
+#### Use a `project` property
+
+Suppose you have multiple files associated with a project, spread throughout your vault, and they all have a `project` property like this:
+
+```yaml
+---
+project: Project 1
+---
+```
+
+This search will find all tasks in those files:
+
+```javascript
+filter by function task.file.property('project') === 'Project 1'
+```
+
+#### Use `#project/...` tag values
+
+Some people prefer to use properties tags to identify projects. One advantage of tags is it is easy to add multiple values.
+
+```yaml
+---
+tags:
+  - project/project-1
+---
+```
+
+This exact-match search will find all tasks in such files:
+
+```javascript
+filter by function task.file.property('tags').includes('#project/project-1')
+```
+
+If you wanted to use a sub-string search to find all tasks in files with any properties tag beginning `#project/` you could use [optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) and the [nullish coalescing operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) like this:
+
+```javascript
+filter by function task.file.property('tags')?.join(',').includes('#project/') ?? false
+```
+
+Or you could use [template literals (Template strings)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) like this:
+
+```javascript
+filter by function `${task.file.property('tags')}`.includes('#project/')
+```
+
 ### More filtering examples
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.obsidian_properties_task.file.frontmatter_docs.approved.md -->
