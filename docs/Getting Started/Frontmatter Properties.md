@@ -55,7 +55,7 @@ In the Tasks documentation, we refer to these as Frontmatter Properties, to dist
   - `TAG` and `TAGS` are standardised to `tags`.
   - The `#` prefix is added to all tag values in frontmatter.
 - Aliases in Frontmatter are not yet standardised.
-  - If your vault contains a mixture of `ALIAS` and `ALIASES`,  your queries will need to be coded to handle both spellings, for now.
+  - If your vault contains a mixture of `alias`, `ALIAS` and `ALIASES`,  your queries will need to be coded to handle both spellings, for now.
 - Tasks reads both YAML and [JSON](https://help.obsidian.md/Editing+and+formatting/Properties#JSON+Properties) properties.
 
 ## How does Tasks interpret Frontmatter Properties?
