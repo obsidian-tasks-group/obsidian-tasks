@@ -205,7 +205,7 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 > Access to the frontmatter properties was introduced in Tasks X.Y.Z.
 
-These values are described in [[Frontmatter Properties]].
+These are described in full in [[Frontmatter Properties]].
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
 
@@ -225,3 +225,7 @@ These values are described in [[Frontmatter Properties]].
 | `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+1. `task.file.hasProperty()` and `task.file.property()` were added in Tasks X.Y.Z
+1. `task.file.hasProperty('property name')` returns true if the property `'property name'` is both present in the file and has a non-`null` value.
+1. `task.file.property('property name')` returns either the value in the file, or `null` if there is no value.
