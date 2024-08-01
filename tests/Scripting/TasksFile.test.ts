@@ -81,6 +81,12 @@ describe('TasksFile - raw frontmatter - identicalTo', () => {
         expect(file1.rawFrontMatterIdenticalTo(file2)).toEqual(true);
     });
 
+    it('should recognise identical frontmatter', () => {
+        const file1 = getTasksFileFromMockData(yaml_tags_is_empty_list);
+        const file2 = getTasksFileFromMockData(yaml_tags_had_value_then_was_emptied_by_obsidian);
+        expect(file1.rawFrontMatterIdenticalTo(file2)).toEqual(true);
+    });
+
     it('should detect different alias values as different', () => {
         const file1 = getTasksFileFromMockData(yaml_1_alias);
         const file2 = getTasksFileFromMockData(yaml_2_aliases);

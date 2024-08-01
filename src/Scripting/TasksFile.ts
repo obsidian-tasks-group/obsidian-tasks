@@ -97,9 +97,14 @@ export class TasksFile {
         const thisFrontmatter = this.cachedMetadata.frontmatter ?? undefined;
         const thatFrontmatter = other.cachedMetadata.frontmatter ?? undefined;
         if (thisFrontmatter === thatFrontmatter) {
+            // The same object
             return true;
         }
-        return false;
+        // Check if the same content.
+        // This is fairly simplistic.
+        // For example, it treats values that are the same but in a different order as being different,
+        // although their information content is the same.
+        return JSON.stringify(thisFrontmatter) === JSON.stringify(thatFrontmatter);
     }
 
     /**
