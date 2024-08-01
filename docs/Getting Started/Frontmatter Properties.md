@@ -139,25 +139,40 @@ Or you could use [template literals (Template strings)](https://developer.mozill
 filter by function `${task.file.property('tags')}`.includes('#project/')
 ```
 
-### More grouping examples
+### Using date values
 
-<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.obsidian_properties_task.file.frontmatter_docs.approved.md -->
+Obsidian supports [Date](https://help.obsidian.md/Editing+and+formatting/Properties#^date-time) and [Date & time](https://help.obsidian.md/Editing+and+formatting/Properties#^date-time) property values.
+
+It stores them in the format shown in these examples:
+
+```yaml
+---
+date: 2020-08-21
+time: 2020-08-21T10:30:00
+---
+```
+
+Currently, Tasks does nothing special with these, seeing them as string values.
+
+#### Grouping by raw date values
+
+A `creation date` property might be used like this, to group tasks by the date their file was created, according to the stored property values:
 
 ```javascript
 group by function task.file.property('creation date') ?? 'no creation date'
 ```
 
-- group tasks by 'creation date' date property.
+#### Formatting date values using Moment.js
+
+If you want to do date calculations on `Date` or `Date & time` values, you can use `window.moment(value)` to create a [Moment.js](https://momentjs.com) object.
+
+For example:
 
 ```javascript
 group by function \
     const value = task.file.property('creation date'); \
-    return value ? window.moment(value).format('MMMM') : 'no month'
+    return value ? window.moment(value).format('YYYY MMMM') : 'no date'
 ```
-
-- group tasks by month in 'creation date' date property.
-
-<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## How does Tasks interpret Frontmatter Properties?
 
