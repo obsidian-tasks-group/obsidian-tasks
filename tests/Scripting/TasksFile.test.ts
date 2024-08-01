@@ -77,33 +77,27 @@ describe('TasksFile - raw frontmatter - identicalTo', () => {
     }
 
     it('should treat self as identical', () => {
-        const noYaml = getTasksFileFromMockData(no_yaml);
-        expect(noYaml.rawFrontMatterIdenticalTo(noYaml)).toEqual(true);
+        expectRawFrontmatterToBeIdentical(no_yaml, no_yaml, true);
     });
 
     it('should treat empty frontmatter same as no frontmatter', () => {
-        const case1 = no_yaml;
-        const case2 = empty_yaml;
-        const expectedToBeIdentical = true;
-        expectRawFrontmatterToBeIdentical(case1, case2, expectedToBeIdentical);
+        expectRawFrontmatterToBeIdentical(no_yaml, empty_yaml, true);
     });
 
     it('should recognise identical frontmatter - simple empty tags list', () => {
-        const file1 = getTasksFileFromMockData(yaml_tags_is_empty_list);
-        const file2 = getTasksFileFromMockData(yaml_tags_had_value_then_was_emptied_by_obsidian);
-        expect(file1.rawFrontMatterIdenticalTo(file2)).toEqual(true);
+        expectRawFrontmatterToBeIdentical(
+            yaml_tags_is_empty_list,
+            yaml_tags_had_value_then_was_emptied_by_obsidian,
+            true,
+        );
     });
 
     it('should detect different alias values as different', () => {
-        const file1 = getTasksFileFromMockData(yaml_1_alias);
-        const file2 = getTasksFileFromMockData(yaml_2_aliases);
-        expect(file1.rawFrontMatterIdenticalTo(file2)).toEqual(false);
+        expectRawFrontmatterToBeIdentical(yaml_1_alias, yaml_2_aliases, false);
     });
 
     it('should treat missing and populated frontmatter as different', () => {
-        const file1 = getTasksFileFromMockData(no_yaml);
-        const file2 = getTasksFileFromMockData(yaml_complex_example);
-        expect(file1.rawFrontMatterIdenticalTo(file2)).toEqual(false);
+        expectRawFrontmatterToBeIdentical(no_yaml, yaml_complex_example, false);
     });
 });
 
