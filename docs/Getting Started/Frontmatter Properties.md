@@ -20,6 +20,8 @@ publish: true
 
 Obsidian offers a facility called [Properties](https://help.obsidian.md/Editing+and+formatting/Properties).
 
+Properties allow you to organize information about a note. Properties contain structured data such as text, links, dates, checkboxes, and numbers.
+
 This is an example property section, and it *must* appear on the very first line of the markdown file:
 
 ```yaml
@@ -29,6 +31,10 @@ name: value
 ```
 
 In the Tasks documentation, we refer to these as Frontmatter Properties, to distinguish them from Task and Query properties.
+
+## Why use Frontmatter Properties in Tasks queries?
+
+For example, if you associate a tag with a project, you might want to put that tag in one place at the top of the file, instead of having to remember to add it on every single task line in the file.
 
 ## How does Tasks treat Frontmatter Properties?
 
