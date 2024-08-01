@@ -58,61 +58,6 @@ In the Tasks documentation, we refer to these as Frontmatter Properties, to dist
   - If your vault contains a mixture of `alias`, `ALIAS` and `ALIASES`,  your queries will need to be coded to handle both spellings, for now.
 - Tasks reads both YAML and [JSON](https://help.obsidian.md/Editing+and+formatting/Properties#JSON+Properties) properties.
 
-## How does Tasks interpret Frontmatter Properties?
-
-Consider a file with the following example properties (or "Frontmatter"):
-
-<!-- TODO this was copied from docs_sample_for_task_properties_reference.md - embed the content automatically in future... -->
-
-```yaml
----
-sample_checkbox_property: true
-sample_date_property: 2024-07-21
-sample_date_and_time_property: 2024-07-21T12:37:00
-sample_list_property:
-  - Sample
-  - List
-  - Value
-sample_number_property: 246
-sample_text_property: Sample Text Value
-sample_text_multiline_property: |
-  Sample
-  Text
-  Value
-sample_link_property: "[[yaml_all_property_types_populated]]"
-sample_link_list_property:
-  - "[[yaml_all_property_types_populated]]"
-  - "[[yaml_all_property_types_empty]]"
-aliases:
-  - YAML All Property Types Populated
-tags:
-  - tag-from-file-properties
-creation date: 2024-05-25T15:17:00
-project: Secret Project
----
-```
-
-The following table shows how most of those properties are interpreted in Tasks queries:
-
-<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
-
-| Field | Type 1 | Example 1 |
-| ----- | ----- | ----- |
-| `task.file.hasProperty('creation date')` | `boolean` | `true` |
-| `task.file.property('creation date')` | `string` | `'2024-05-25T15:17:00'` |
-| `task.file.property('sample_checkbox_property')` | `boolean` | `true` |
-| `task.file.property('sample_date_property')` | `string` | `'2024-07-21'` |
-| `task.file.property('sample_date_and_time_property')` | `string` | `'2024-07-21T12:37:00'` |
-| `task.file.property('sample_list_property')` | `string[]` | `['Sample', 'List', 'Value']` |
-| `task.file.property('sample_number_property')` | `number` | `246` |
-| `task.file.property('sample_text_property')` | `string` | `'Sample Text Value'` |
-| `task.file.property('sample_text_multiline_property')` | `string` | `'Sample\nText\nValue\n'` |
-| `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` |
-| `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
-| `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
-
-<!-- placeholder to force blank line after included text --><!-- endInclude -->
-
 ## Frontmatter Properties Examples
 
 ### Tags
@@ -194,6 +139,61 @@ group by function \
 ```
 
 - group tasks by month in 'creation date' date property.
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+## How does Tasks interpret Frontmatter Properties?
+
+Consider a file with the following example properties (or "Frontmatter"):
+
+<!-- TODO this was copied from docs_sample_for_task_properties_reference.md - embed the content automatically in future... -->
+
+```yaml
+---
+sample_checkbox_property: true
+sample_date_property: 2024-07-21
+sample_date_and_time_property: 2024-07-21T12:37:00
+sample_list_property:
+  - Sample
+  - List
+  - Value
+sample_number_property: 246
+sample_text_property: Sample Text Value
+sample_text_multiline_property: |
+  Sample
+  Text
+  Value
+sample_link_property: "[[yaml_all_property_types_populated]]"
+sample_link_list_property:
+  - "[[yaml_all_property_types_populated]]"
+  - "[[yaml_all_property_types_empty]]"
+aliases:
+  - YAML All Property Types Populated
+tags:
+  - tag-from-file-properties
+creation date: 2024-05-25T15:17:00
+project: Secret Project
+---
+```
+
+The following table shows how most of those properties are interpreted in Tasks queries:
+
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
+
+| Field | Type 1 | Example 1 |
+| ----- | ----- | ----- |
+| `task.file.hasProperty('creation date')` | `boolean` | `true` |
+| `task.file.property('creation date')` | `string` | `'2024-05-25T15:17:00'` |
+| `task.file.property('sample_checkbox_property')` | `boolean` | `true` |
+| `task.file.property('sample_date_property')` | `string` | `'2024-07-21'` |
+| `task.file.property('sample_date_and_time_property')` | `string` | `'2024-07-21T12:37:00'` |
+| `task.file.property('sample_list_property')` | `string[]` | `['Sample', 'List', 'Value']` |
+| `task.file.property('sample_number_property')` | `number` | `246` |
+| `task.file.property('sample_text_property')` | `string` | `'Sample Text Value'` |
+| `task.file.property('sample_text_multiline_property')` | `string` | `'Sample\nText\nValue\n'` |
+| `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` |
+| `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
+| `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
