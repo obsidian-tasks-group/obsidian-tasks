@@ -70,15 +70,22 @@ describe('TasksFile', () => {
 });
 
 describe('TasksFile - raw frontmatter - identicalTo', () => {
+    function expectRawFrontmatterToBeIdentical(case1: any, case2: any, expectedToBeIdentical: boolean) {
+        const file1 = getTasksFileFromMockData(case1);
+        const file2 = getTasksFileFromMockData(case2);
+        expect(file1.rawFrontMatterIdenticalTo(file2)).toEqual(expectedToBeIdentical);
+    }
+
     it('should treat self as identical', () => {
         const noYaml = getTasksFileFromMockData(no_yaml);
         expect(noYaml.rawFrontMatterIdenticalTo(noYaml)).toEqual(true);
     });
 
     it('should treat empty frontmatter same as no frontmatter', () => {
-        const file1 = getTasksFileFromMockData(no_yaml);
-        const file2 = getTasksFileFromMockData(empty_yaml);
-        expect(file1.rawFrontMatterIdenticalTo(file2)).toEqual(true);
+        const case1 = no_yaml;
+        const case2 = empty_yaml;
+        const expectedToBeIdentical = true;
+        expectRawFrontmatterToBeIdentical(case1, case2, expectedToBeIdentical);
     });
 
     it('should recognise identical frontmatter - simple empty tags list', () => {
