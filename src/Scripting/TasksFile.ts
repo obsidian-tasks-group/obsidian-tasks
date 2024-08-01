@@ -91,10 +91,15 @@ export class TasksFile {
      * This can be used to detect whether Task objects need to be updated,
      * or (later) whether queries need to be updated, due to user edits.
      *
-     * @param _noYaml
+     * @param other
      */
-    public rawFrontMatterIdenticalTo(_noYaml: TasksFile): boolean {
-        return true;
+    public rawFrontMatterIdenticalTo(other: TasksFile): boolean {
+        const thisFrontmatter = this.cachedMetadata.frontmatter ?? undefined;
+        const thatFrontmatter = other.cachedMetadata.frontmatter ?? undefined;
+        if (thisFrontmatter === thatFrontmatter) {
+            return true;
+        }
+        return false;
     }
 
     /**

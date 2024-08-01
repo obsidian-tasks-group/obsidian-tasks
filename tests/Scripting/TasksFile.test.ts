@@ -18,6 +18,8 @@ import { yaml_complex_example } from '../Obsidian/__test_data__/yaml_complex_exa
 import { yaml_complex_example_standardised } from '../Obsidian/__test_data__/yaml_complex_example_standardised';
 import { yaml_all_property_types_empty } from '../Obsidian/__test_data__/yaml_all_property_types_empty';
 import { yaml_all_property_types_populated } from '../Obsidian/__test_data__/yaml_all_property_types_populated';
+import { yaml_1_alias } from '../Obsidian/__test_data__/yaml_1_alias';
+import { yaml_2_aliases } from '../Obsidian/__test_data__/yaml_2_aliases';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('TasksFile', () => {
@@ -71,6 +73,18 @@ describe('TasksFile - raw frontmatter - identicalTo', () => {
     it('should treat self as identical', () => {
         const noYaml = getTasksFileFromMockData(no_yaml);
         expect(noYaml.rawFrontMatterIdenticalTo(noYaml)).toEqual(true);
+    });
+
+    it('should treat empty frontmatter same as no frontmatter', () => {
+        const file1 = getTasksFileFromMockData(no_yaml);
+        const file2 = getTasksFileFromMockData(empty_yaml);
+        expect(file1.rawFrontMatterIdenticalTo(file2)).toEqual(true);
+    });
+
+    it('should detect different alias values as different', () => {
+        const file1 = getTasksFileFromMockData(yaml_1_alias);
+        const file2 = getTasksFileFromMockData(yaml_2_aliases);
+        expect(file1.rawFrontMatterIdenticalTo(file2)).toEqual(false);
     });
 });
 
