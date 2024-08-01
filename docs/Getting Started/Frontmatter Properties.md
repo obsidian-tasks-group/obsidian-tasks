@@ -20,11 +20,6 @@ publish: true
 
 Obsidian offers a facility called [Properties](https://help.obsidian.md/Editing+and+formatting/Properties).
 
-The Obsidian documentation says:
-
-> [!Quote]
-> Properties allow you to organize information about a note. Properties contain structured data such as text, links, dates, checkboxes, and numbers. Properties can also be used in combination with [Community plugins](https://help.obsidian.md/Extending+Obsidian/Community+plugins) that can do useful things with your structured data.
-
 This is an example property section, and it *must* appear on the very first line of the markdown file:
 
 ```yaml
