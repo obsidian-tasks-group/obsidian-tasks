@@ -20,10 +20,7 @@ publish: true
 
 Obsidian offers a facility called [Properties](https://help.obsidian.md/Editing+and+formatting/Properties).
 
-The Obsidian documentation says:
-
-> [!Quote]
-> Properties allow you to organize information about a note. Properties contain structured data such as text, links, dates, checkboxes, and numbers. Properties can also be used in combination with [Community plugins](https://help.obsidian.md/Extending+Obsidian/Community+plugins) that can do useful things with your structured data.
+Properties allow you to organize information about a note. Properties contain structured data such as text, links, dates, checkboxes, and numbers.
 
 This is an example property section, and it *must* appear on the very first line of the markdown file:
 
@@ -34,6 +31,10 @@ name: value
 ```
 
 In the Tasks documentation, we refer to these as Frontmatter Properties, to distinguish them from Task and Query properties.
+
+## Why use Frontmatter Properties in Tasks queries?
+
+For example, if you associate a tag with a project, you might want to put that tag in one place at the top of the file, instead of having to remember to add it on every single task line in the file.
 
 ## How does Tasks treat Frontmatter Properties?
 
@@ -53,10 +54,126 @@ In the Tasks documentation, we refer to these as Frontmatter Properties, to dist
     - `property name` will find `Property Name`, for example.
 - Tags in Frontmatter can be accessed with `task.file.property('tags')`
   - `TAG` and `TAGS` are standardised to `tags`.
-  - The `#` prefix is added to all tag values in frontmatter.
+  - The `#` prefix is added to all tag values returned by this function.
 - Aliases in Frontmatter are not yet standardised.
   - If your vault contains a mixture of `alias`, `ALIAS` and `ALIASES`,  your queries will need to be coded to handle both spellings, for now.
-- Tasks reads both YAML and [JSON](https://help.obsidian.md/Editing+and+formatting/Properties#JSON+Properties) properties.
+- Tasks reads both YAML and [JSON](https://help.obsidian.md/Editing+and+formatting/Properties#JSON+Properties) formats.
+
+## Frontmatter Properties Examples
+
+### Tags
+
+#### Show files from tasks with a specific tag in frontmatter
+
+```javascript
+filter by function task.file.property('tags').includes('#sample-tag')
+```
+
+Note that this is an exact tag search. It will not match `#sample-tag/some-sub-tag`.
+
+#### Do not show any tasks from files with a specific tag in frontmatter
+
+```javascript
+filter by function ! task.file.property('tags').includes('#notasks')
+```
+
+If you wanted to adopt such a convention throughout all your Tasks queries, you could add the above to your [[Global Query]].
+
+### Kanban plugin
+
+#### Only show tasks in Kanban plugin files
+
+```javascript
+filter by function task.file.hasProperty('kanban-plugin')
+```
+
+#### Don't show tasks in Kanban plugin files
+
+```javascript
+filter by function ! task.file.hasProperty('kanban-plugin')
+```
+
+### Tracking projects
+
+#### Use a `project` property
+
+Suppose you have multiple files associated with a project, spread throughout your vault, and they all have a `project` property like this:
+
+```yaml
+---
+project: Project 1
+---
+```
+
+This search will find all tasks in those files:
+
+```javascript
+filter by function task.file.property('project') === 'Project 1'
+```
+
+#### Use `#project/...` tag values
+
+Some people prefer to use properties tags to identify projects. One advantage of tags is it is easy to add multiple values.
+
+```yaml
+---
+tags:
+  - project/project-1
+---
+```
+
+This exact-match search will find all tasks in such files:
+
+```javascript
+filter by function task.file.property('tags').includes('#project/project-1')
+```
+
+If you wanted to use a sub-string search to find all tasks in files with any properties tag beginning `#project/` you could use [optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) and the [nullish coalescing operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) like this:
+
+```javascript
+filter by function task.file.property('tags')?.join(',').includes('#project/') ?? false
+```
+
+Or you could use [template literals (Template strings)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) like this:
+
+```javascript
+filter by function `${task.file.property('tags')}`.includes('#project/')
+```
+
+### Using date values
+
+Obsidian supports [Date](https://help.obsidian.md/Editing+and+formatting/Properties#^date-time) and [Date & time](https://help.obsidian.md/Editing+and+formatting/Properties#^date-time) property values.
+
+It stores them in the format shown in these examples:
+
+```yaml
+---
+date: 2020-08-21
+time: 2020-08-21T10:30:00
+---
+```
+
+Currently, Tasks does nothing special with these, seeing them as string values.
+
+#### Grouping by raw date values
+
+A `creation date` property might be used like this, to group tasks by the date their file was created, according to the stored property values:
+
+```javascript
+group by function task.file.property('creation date') ?? 'no creation date'
+```
+
+#### Formatting date values using Moment.js
+
+If you want to do date calculations on `Date` or `Date & time` values, you can use `window.moment(value)` to create a [Moment.js](https://momentjs.com) object.
+
+For example:
+
+```javascript
+group by function \
+    const value = task.file.property('creation date'); \
+    return value ? window.moment(value).format('YYYY MMMM') : 'no date'
+```
 
 ## How does Tasks interpret Frontmatter Properties?
 
@@ -110,90 +227,6 @@ The following table shows how most of those properties are interpreted in Tasks 
 | `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` |
 | `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
 | `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
-
-<!-- placeholder to force blank line after included text --><!-- endInclude -->
-
-## Frontmatter Properties Examples
-
-### Tags
-
-#### Show files from tasks with a specific tag in frontmatter
-
-```javascript
-filter by function task.file.property('tags').includes('#sample-tag')
-```
-
-Note that this is an exact tag search. It will not match `#sample-tag/some-sub-tag`.
-
-#### Do not show any tasks from files with a specific tag in frontmatter
-
-```javascript
-filter by function ! task.file.property('tags').includes('#notasks')
-```
-
-If you wanted to adopt such a convention throughout all your Tasks queries, you could add the above to your [[Global Query]].
-
-### Kanban plugin
-
-#### Only show tasks in Kanban plugin files
-
-```javascript
-filter by function task.file.hasProperty('kanban-plugin')
-```
-
-#### Don't show tasks in Kanban plugin files
-
-```javascript
-filter by function ! task.file.hasProperty('kanban-plugin')
-```
-
-### More filtering examples
-
-<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.obsidian_properties_task.file.frontmatter_docs.approved.md -->
-
-```javascript
-filter by function task.file.hasProperty('kanban-plugin')
-```
-
-- find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards.
-
-```javascript
-filter by function task.file.property("sample_list_property")?.length > 0
-```
-
-- find tasks in files where the list property 'sample_list_property' exists and has at least one list item.
-
-```javascript
-filter by function task.file.property("sample_list_property")?.length === 0
-```
-
-- find tasks in files where the list property 'sample_list_property' exists and has no list items.
-
-```javascript
-filter by function task.file.property('creation date')?.includes('2024') ?? false
-```
-
-- find tasks in files where the date property 'creation date' includes string '2024'.
-
-<!-- placeholder to force blank line after included text --><!-- endInclude -->
-
-### More grouping examples
-
-<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.obsidian_properties_task.file.frontmatter_docs.approved.md -->
-
-```javascript
-group by function task.file.property('creation date') ?? 'no creation date'
-```
-
-- group tasks by 'creation date' date property.
-
-```javascript
-group by function \
-    const value = task.file.property('creation date'); \
-    return value ? window.moment(value).format('MMMM') : 'no month'
-```
-
-- group tasks by month in 'creation date' date property.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
