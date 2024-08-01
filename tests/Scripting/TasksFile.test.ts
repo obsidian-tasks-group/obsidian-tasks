@@ -67,6 +67,13 @@ describe('TasksFile', () => {
     });
 });
 
+describe('TasksFile - raw frontmatter - identicalTo', () => {
+    it('should treat self as identical', () => {
+        const noYaml = getTasksFileFromMockData(no_yaml);
+        expect(noYaml.rawFrontMatterIdenticalTo(noYaml)).toEqual(true);
+    });
+});
+
 describe('TasksFile - reading frontmatter', () => {
     it('should read file if not given CachedMetadata', () => {
         const tasksFile = new TasksFile('some path.md', {});
