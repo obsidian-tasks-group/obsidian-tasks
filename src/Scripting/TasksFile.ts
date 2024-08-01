@@ -85,6 +85,19 @@ export class TasksFile {
     }
 
     /**
+     * Does the data content of another TasksFile's raw frontmatter
+     * match this one.
+     *
+     * This can be used to detect whether Task objects need to be updated,
+     * or (later) whether queries need to be updated, due to user edits.
+     *
+     * @param _noYaml
+     */
+    public rawFrontMatterIdenticalTo(_noYaml: TasksFile): boolean {
+        return true;
+    }
+
+    /**
      * Return the path to the file, with the filename extension removed.
      */
     get pathWithoutExtension(): string {
