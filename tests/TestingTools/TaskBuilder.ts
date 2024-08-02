@@ -10,6 +10,7 @@ import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { Priority } from '../../src/Task/Priority';
+import { setCurrentCacheFile } from '../__mocks__/obsidian';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -53,6 +54,7 @@ export class TaskBuilder {
     private _id: string = '';
     private _dependsOn: string[] = [];
     private _cachedMetadata: CachedMetadata = {};
+    private _mockData: any = undefined;
 
     /**
      * Build a Task
@@ -70,6 +72,9 @@ export class TaskBuilder {
         let description = this._description;
         if (this._tags.length > 0) {
             description += ' ' + this._tags.join(' ');
+        }
+        if (this._mockData !== undefined) {
+            setCurrentCacheFile(this._mockData);
         }
         const task = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -204,6 +209,19 @@ export class TaskBuilder {
      */
     public cachedMetadata(cachedMetadata: CachedMetadata) {
         this._cachedMetadata = cachedMetadata;
+        return this;
+    }
+
+    /**
+     * See {@link example_kanban} and other files in the same directory, for available sample mock data.
+     *
+     * @example
+     *      const builder = new TaskBuilder().mockData(example_kanban);
+     * @param mockData
+     */
+    public mockData(mockData: any) {
+        this._mockData = mockData;
+        this._cachedMetadata = mockData.cachedMetadata;
         return this;
     }
 
