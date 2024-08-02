@@ -32,6 +32,11 @@ name: value
 
 In the Tasks documentation, we refer to these as Frontmatter Properties, to distinguish them from Task and Query properties.
 
+Background reading on Obsidian Properties:
+
+- [An Introduction to Obsidian Properties - Obsidian Rocks](https://obsidian.rocks/an-introduction-to-obsidian-properties/)
+- [Obsidian "properties" to help sort your stuff - Mickey Mellen](https://www.mickmel.com/obsidian-properties-to-help-sort-your-stuff/)
+
 ## Why use Frontmatter Properties in Tasks queries?
 
 For example, if you associate a tag with a project, you might want to put that tag in one place at the top of the file, instead of having to remember to add it on every single task line in the file.
