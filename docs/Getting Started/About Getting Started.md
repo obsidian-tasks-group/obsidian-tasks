@@ -41,7 +41,7 @@ publish: true
 - [[Task Dependencies]]
   - Define the order in which you want to work on a set of tasks.
   - Then adjust your searches, perhaps to see tasks that are [[Filters#Blocking Tasks|blocking others]], or hide ones that are [[Filters#Blocked Tasks|blocked]] and cannot yet be done.
-- [[Frontmatter Properties]]
+- [[Obsidian Properties]]
   - Learn how to use data in Obsidian [Properties](https://help.obsidian.md/Editing+and+formatting/Properties) in your queries, for example to only search tasks in Kanban plugin files.
 
 ## Easy editing of tasks

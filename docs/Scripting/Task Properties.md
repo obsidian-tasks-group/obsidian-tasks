@@ -205,7 +205,7 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 > Access to the frontmatter properties was introduced in Tasks X.Y.Z.
 
-These are described in full in [[Frontmatter Properties]].
+These are described in full in [[Obsidian Properties]].
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
 

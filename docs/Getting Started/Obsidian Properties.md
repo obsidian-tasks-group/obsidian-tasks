@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Frontmatter Properties
+# Obsidian Properties
 
 > [!released]
 > Use of Frontmatter Properties was introduced in Tasks X.Y.Z.
