@@ -1,6 +1,5 @@
 // Builder
 import type { Moment } from 'moment';
-import type { CachedMetadata } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
 import { Occurrence } from '../../src/Task/Occurrence';
@@ -53,7 +52,6 @@ export class TaskBuilder {
     private _scheduledDateIsInferred: boolean = false;
     private _id: string = '';
     private _dependsOn: string[] = [];
-    private _cachedMetadata: CachedMetadata = {};
     private _mockData: any = undefined;
 
     /**
@@ -76,12 +74,13 @@ export class TaskBuilder {
         if (this._mockData !== undefined) {
             setCurrentCacheFile(this._mockData);
         }
+        const cachedMetadata = this._mockData?.cachedMetadata ?? {};
         const task = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
-                new TasksFile(this._path, this._cachedMetadata),
+                new TasksFile(this._path, cachedMetadata),
                 this._lineNumber,
                 this._sectionStart,
                 this._sectionIndex,
@@ -199,20 +198,6 @@ export class TaskBuilder {
     }
 
     /**
-     * See {@link example_kanban} and other files in the same directory, for available sample test data.
-     * See {@link getTasksFileFromMockData} for obtaining CachedMetadata objects from sample test data.
-     *
-     * @example
-     *      const cachedMetadata = getTasksFileFromMockData(example_kanban).cachedMetadata;
-     *      const builder = new TaskBuilder().cachedMetadata(cachedMetadata);
-     * @param cachedMetadata
-     */
-    public cachedMetadata(cachedMetadata: CachedMetadata) {
-        this._cachedMetadata = cachedMetadata;
-        return this;
-    }
-
-    /**
      * See {@link example_kanban} and other files in the same directory, for available sample mock data.
      *
      * @example
@@ -221,7 +206,6 @@ export class TaskBuilder {
      */
     public mockData(mockData: any) {
         this._mockData = mockData;
-        this._cachedMetadata = mockData.cachedMetadata;
         return this;
     }
 

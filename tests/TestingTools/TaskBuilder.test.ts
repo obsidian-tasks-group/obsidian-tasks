@@ -7,7 +7,6 @@ import type { Task } from '../../src/Task/Task';
 import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
 import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
 import { TaskBuilder } from './TaskBuilder';
-import { getTasksFileFromMockData } from './MockDataHelpers';
 
 export {};
 
@@ -27,10 +26,9 @@ describe('TaskBuilder', () => {
     });
 
     it('should populate CachedMetadata', () => {
-        const cachedMetadata = getTasksFileFromMockData(example_kanban).cachedMetadata;
-        const builder = new TaskBuilder().cachedMetadata(cachedMetadata);
+        const builder = new TaskBuilder().mockData(example_kanban);
         const task = builder.build();
-        expect(task.file.cachedMetadata).toBe(cachedMetadata);
+        expect(task.file.cachedMetadata).toBe(example_kanban.cachedMetadata);
     });
 
     it('should populate CachedMetadata in two different TaskBuilder objects simultaneously', () => {
