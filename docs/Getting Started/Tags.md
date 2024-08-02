@@ -72,7 +72,7 @@ Since Tasks X.Y.Z, Tasks **does** now read this data.
 
 You can learn more in:
 
-- [[Frontmatter Properties]], and the examples in that file
+- [[Obsidian Properties]], and the examples in that file
 - [Find tasks in notes with particular tag](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/How%20To/Find%20tasks%20in%20notes%20with%20particular%20tag.md).
 
 ### Order of tags in task lines
