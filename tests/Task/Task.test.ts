@@ -19,6 +19,8 @@ import { Priority } from '../../src/Task/Priority';
 import { SampleTasks } from '../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../TestingTools/FilterTestHelpers';
 import type { TasksDate } from '../../src/Scripting/TasksDate';
+import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
+import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
 
 window.moment = moment;
 
@@ -1567,6 +1569,14 @@ describe('identicalTo', () => {
         // Check it is case-sensitive
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().path('Same Test File.md'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().path('different text.md'));
+    });
+
+    it('should check frontmatter/properties', () => {
+        const lhs = new TaskBuilder().mockData(example_kanban);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().mockData(example_kanban));
+
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().mockData({}));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().mockData(jason_properties));
     });
 
     it('should check indentation', () => {
