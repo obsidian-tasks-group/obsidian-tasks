@@ -93,7 +93,7 @@ export class TasksFile {
      *
      * @param other
      */
-    public rawFrontMatterIdenticalTo(other: TasksFile): boolean {
+    public rawFrontmatterIdenticalTo(other: TasksFile): boolean {
         const thisFrontmatter: FrontMatterCache | undefined = this.cachedMetadata.frontmatter;
         const thatFrontmatter: FrontMatterCache | undefined = other.cachedMetadata.frontmatter;
         if (thisFrontmatter === thatFrontmatter) {
