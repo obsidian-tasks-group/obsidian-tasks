@@ -1,6 +1,11 @@
 import type { Moment } from 'moment/moment';
 import { compareByDate } from '../lib/DateTools';
 
+/**
+ * A set of dates on a single instance of {@link Recurrence}.
+ *
+ * It is responsible for calculating the set of dates for the next occurrence.
+ */
 export class Occurrence {
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
