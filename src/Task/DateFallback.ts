@@ -88,7 +88,7 @@ export class DateFallback {
      * @param newLocation  - new location
      * @param fallbackDate - fallback date from new location, for efficiency. Can be null
      */
-    public static updateTaskPath(task: Task, newLocation: TaskLocation, fallbackDate: moment.Moment | null): Task {
+    public static updateTaskPath(task: Task, newLocation: TaskLocation, fallbackDate: Moment | null): Task {
         // initialize with values from before the path was changed
         let scheduledDate = task.scheduledDate;
         let scheduledDateIsInferred = task.scheduledDateIsInferred;
