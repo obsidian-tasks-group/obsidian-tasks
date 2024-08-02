@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-import { describe, expect, it } from '@jest/globals';
 import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
