@@ -5,6 +5,7 @@
 import moment from 'moment';
 import type { Task } from '../../src/Task/Task';
 import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
+import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
 import { TaskBuilder } from './TaskBuilder';
 import { getTasksFileFromMockData } from './MockDataHelpers';
 
@@ -30,6 +31,15 @@ describe('TaskBuilder', () => {
         const builder = new TaskBuilder().cachedMetadata(cachedMetadata);
         const task = builder.build();
         expect(task.file.cachedMetadata).toBe(cachedMetadata);
+    });
+
+    it('should populate CachedMetadata in two different TaskBuilder objects simultaneously', () => {
+        const builder1 = new TaskBuilder().mockData(example_kanban);
+        const builder2 = new TaskBuilder().mockData(jason_properties);
+        const task1 = builder1.build();
+        const task2 = builder2.build();
+        expect(task1.file.property('kanban-plugin')).toEqual('basic');
+        expect(task2.file.property('publish')).toEqual(false);
     });
 
     function hasValue<Type>(value: Type[keyof Type]): boolean {
