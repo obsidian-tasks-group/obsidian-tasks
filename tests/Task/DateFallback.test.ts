@@ -405,7 +405,11 @@ describe('update fallback date when path is changed', () => {
         const fallbackDate = DateFallback.fromPath(newPath);
 
         // Act
-        const updatedTask = DateFallback.updateTaskPath(task, newPath, fallbackDate);
+        const updatedTask = DateFallback.updateTaskPath(
+            task,
+            task.taskLocation.fromRenamedFile(new TasksFile(newPath)),
+            fallbackDate,
+        );
 
         // Assert
         if (expectedScheduledDate === null) {
