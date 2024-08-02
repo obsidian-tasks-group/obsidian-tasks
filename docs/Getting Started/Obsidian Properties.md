@@ -30,9 +30,19 @@ Background reading on Obsidian Properties:
 
 ## Why use Obsidian Properties in Tasks queries?
 
+Only if it will save you time!
+
+Many, if not most, Tasks searches do not need to use Obsidian Properties.
+
+But you might want to put a piece of information in to a file's Obsidian Properties, rather than putting it on every task in the file.
+
 For example, if you associate a tag with a project, you might want to put that tag in one place at the top of the file, instead of having to remember to add it on every single task line in the file.
 
 ## How does Tasks treat Obsidian Properties?
+
+You might want to start with the [[#Obsidian Properties Query Examples|examples below]] for an idea of *what* Tasks can do with Obsidian Properties.
+
+This section describes the *how*...
 
 - Frontmatter property values can be used in  the following instructions:
   - `filter by function`
