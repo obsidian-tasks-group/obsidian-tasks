@@ -284,18 +284,17 @@ export class Cache {
                 const fallbackDate = new Lazy(() => DateFallback.fromPath(file.path));
 
                 this.tasks = this.tasks.map((task: Task): Task => {
-                    if (task.path === oldPath) {
-                        if (!useFilenameAsScheduledDate) {
-                            return new Task({
-                                ...task,
-                                taskLocation: task.taskLocation.fromRenamedFile(tasksFile),
-                            });
-                        } else {
-                            return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
-                        }
-                    } else {
+                    if (task.path !== oldPath) {
                         return task;
                     }
+                    const taskLocation = task.taskLocation.fromRenamedFile(tasksFile);
+                    if (useFilenameAsScheduledDate) {
+                        return DateFallback.updateTaskPath(task, taskLocation, fallbackDate.value);
+                    }
+                    return new Task({
+                        ...task,
+                        taskLocation,
+                    });
                 });
 
                 this.notifySubscribers();
