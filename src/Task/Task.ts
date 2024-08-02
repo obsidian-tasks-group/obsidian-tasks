@@ -880,9 +880,11 @@ export class Task extends ListItem {
         const recurrence2 = other.recurrence;
         if (recurrence1 === null && recurrence2 !== null) {
             return false;
-        } else if (recurrence1 !== null && recurrence2 === null) {
+        }
+        if (recurrence1 !== null && recurrence2 === null) {
             return false;
-        } else if (recurrence1 && recurrence2 && !recurrence1.identicalTo(recurrence2)) {
+        }
+        if (recurrence1 && recurrence2 && !recurrence1.identicalTo(recurrence2)) {
             return false;
         }
         return true;
