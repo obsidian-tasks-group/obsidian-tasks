@@ -203,7 +203,7 @@ For more information, including adding your own customised statuses, see [[Statu
 ## Values for Obsidian Properties
 
 > [!released]
-> Access to the Obsidian Properties was introduced in Tasks X.Y.Z.
+> Access to the Obsidian Properties was introduced in Tasks 7.7.0.
 
 These are described in full in [[Obsidian Properties]].
 
@@ -226,6 +226,6 @@ These are described in full in [[Obsidian Properties]].
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
-1. `task.file.hasProperty()` and `task.file.property()` were added in Tasks X.Y.Z
+1. `task.file.hasProperty()` and `task.file.property()` were added in Tasks 7.7.0
 1. `task.file.hasProperty('property name')` returns true if the property `'property name'` is both present in the file and has a non-`null` value.
 1. `task.file.property('property name')` returns either the value in the file, or `null` if there is no value.

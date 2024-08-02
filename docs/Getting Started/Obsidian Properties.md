@@ -5,7 +5,7 @@ publish: true
 # Obsidian Properties
 
 > [!released]
-> Use of Obsidian Properties was introduced in Tasks X.Y.Z.
+> Use of Obsidian Properties was introduced in Tasks 7.7.0.
 
 ## What are Obsidian Properties?
 

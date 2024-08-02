@@ -68,7 +68,7 @@ tags:
 ---
 ```
 
-Since Tasks X.Y.Z, Tasks **does** now read this data.
+Since Tasks 7.7.0, Tasks **does** now read this data.
 
 You can learn more in:
 
