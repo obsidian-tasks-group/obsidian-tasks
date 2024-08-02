@@ -286,16 +286,15 @@ export class Cache {
                 this.tasks = this.tasks.map((task: Task): Task => {
                     if (task.path !== oldPath) {
                         return task;
+                    }
+                    const taskLocation = task.taskLocation.fromRenamedFile(tasksFile);
+                    if (!useFilenameAsScheduledDate) {
+                        return new Task({
+                            ...task,
+                            taskLocation: taskLocation,
+                        });
                     } else {
-                        const taskLocation = task.taskLocation.fromRenamedFile(tasksFile);
-                        if (!useFilenameAsScheduledDate) {
-                            return new Task({
-                                ...task,
-                                taskLocation: taskLocation,
-                            });
-                        } else {
-                            return DateFallback.updateTaskPath(task, taskLocation, fallbackDate.value);
-                        }
+                        return DateFallback.updateTaskPath(task, taskLocation, fallbackDate.value);
                     }
                 });
 
