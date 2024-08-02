@@ -5,7 +5,7 @@ publish: true
 # Obsidian Properties
 
 > [!released]
-> Use of Frontmatter Properties was introduced in Tasks X.Y.Z.
+> Use of Obsidian Properties was introduced in Tasks X.Y.Z.
 
 > [!warning]
 > The current implementation of Tasks does not re-read task lines if their file's frontmatter changes.
@@ -16,7 +16,7 @@ publish: true
 > 2. Run the `Reload app without saving` command
 > 3. Restart Obsidian.
 
-## What are Frontmatter Properties
+## What are Obsidian Properties?
 
 Obsidian offers a facility called [Properties](https://help.obsidian.md/Editing+and+formatting/Properties).
 
@@ -30,18 +30,18 @@ name: value
 ---
 ```
 
-In the Tasks documentation, we refer to these as Frontmatter Properties, to distinguish them from Task and Query properties.
+In the Tasks documentation, we refer to these as Obsidian Properties, to distinguish them from Task and Query properties.
 
 Background reading on Obsidian Properties:
 
 - [An Introduction to Obsidian Properties - Obsidian Rocks](https://obsidian.rocks/an-introduction-to-obsidian-properties/)
 - [Obsidian "properties" to help sort your stuff - Mickey Mellen](https://www.mickmel.com/obsidian-properties-to-help-sort-your-stuff/)
 
-## Why use Frontmatter Properties in Tasks queries?
+## Why use Obsidian Properties in Tasks queries?
 
 For example, if you associate a tag with a project, you might want to put that tag in one place at the top of the file, instead of having to remember to add it on every single task line in the file.
 
-## How does Tasks treat Frontmatter Properties?
+## How does Tasks treat Obsidian Properties?
 
 - Frontmatter property values can be used in  the following instructions:
   - `filter by function`
@@ -64,7 +64,7 @@ For example, if you associate a tag with a project, you might want to put that t
   - If your vault contains a mixture of `alias`, `ALIAS` and `ALIASES`,  your queries will need to be coded to handle both spellings, for now.
 - Tasks reads both YAML and [JSON](https://help.obsidian.md/Editing+and+formatting/Properties#JSON+Properties) formats.
 
-## Frontmatter Properties Examples
+## Obsidian Properties Query Examples
 
 ### Tags
 
@@ -180,7 +180,7 @@ group by function \
     return value ? window.moment(value).format('YYYY MMMM') : 'no date'
 ```
 
-## How does Tasks interpret Frontmatter Properties?
+## How does Tasks interpret Obsidian Properties?
 
 Consider a file with the following example properties (or "Frontmatter"):
 

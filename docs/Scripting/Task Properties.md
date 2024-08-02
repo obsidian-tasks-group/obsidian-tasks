@@ -200,10 +200,10 @@ For more information, including adding your own customised statuses, see [[Statu
 
 [^commented]: Text inside `%% ... %%` comments is hidden from view. It is used to control the order that group headings are sorted in.
 
-## Values for Frontmatter Properties
+## Values for Obsidian Properties
 
 > [!released]
-> Access to the frontmatter properties was introduced in Tasks X.Y.Z.
+> Access to the Obsidian Properties was introduced in Tasks X.Y.Z.
 
 These are described in full in [[Obsidian Properties]].
 
