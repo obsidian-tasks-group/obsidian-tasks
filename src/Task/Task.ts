@@ -864,7 +864,18 @@ export class Task extends ListItem {
                 return false;
             }
         }
+        if (!this.recurrenceIdenticalTo(other)) {
+            return false;
+        }
 
+        if (!this.file.rawFrontmatterIdenticalTo(other.file)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private recurrenceIdenticalTo(other: Task) {
         let recurrenceSame = true;
         const recurrence1 = this.recurrence;
         const recurrence2 = other.recurrence;
@@ -875,15 +886,7 @@ export class Task extends ListItem {
         } else if (recurrence1 && recurrence2 && !recurrence1.identicalTo(recurrence2)) {
             recurrenceSame = false;
         }
-        if (!recurrenceSame) {
-            return false;
-        }
-
-        if (!this.file.rawFrontmatterIdenticalTo(other.file)) {
-            return false;
-        }
-
-        return true;
+        return recurrenceSame;
     }
 
     public static allDateFields(): (keyof Task)[] {
