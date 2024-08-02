@@ -293,7 +293,7 @@ export class Cache {
                     }
                     return new Task({
                         ...task,
-                        taskLocation: taskLocation,
+                        taskLocation,
                     });
                 });
 
