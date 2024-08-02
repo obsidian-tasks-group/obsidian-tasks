@@ -8,7 +8,7 @@ See also [[Breaking Changes]]: Tasks releases with version numbers ending `.0.0`
 
 _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)..._
 
-- X.Y.Z:
+- 7.7.0:
   - Queries can now use values in [[Obsidian Properties]] (also known as YAML or frontmatter) for filtering, sorting and grouping.
 - 7.6.0:
   - New setting to [[Use Filename as Default Date#Additional date format|recognise extra date format]] in file name as default date.
