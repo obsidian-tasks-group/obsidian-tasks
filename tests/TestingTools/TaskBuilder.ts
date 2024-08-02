@@ -9,6 +9,7 @@ import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { Priority } from '../../src/Task/Priority';
+import { setCurrentCacheFile } from '../__mocks__/obsidian';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -51,6 +52,7 @@ export class TaskBuilder {
     private _scheduledDateIsInferred: boolean = false;
     private _id: string = '';
     private _dependsOn: string[] = [];
+    private _mockData: any = undefined;
 
     /**
      * Build a Task
@@ -69,12 +71,16 @@ export class TaskBuilder {
         if (this._tags.length > 0) {
             description += ' ' + this._tags.join(' ');
         }
+        if (this._mockData !== undefined) {
+            setCurrentCacheFile(this._mockData);
+        }
+        const cachedMetadata = this._mockData?.cachedMetadata ?? {};
         const task = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
-                new TasksFile(this._path),
+                new TasksFile(this._path, cachedMetadata),
                 this._lineNumber,
                 this._sectionStart,
                 this._sectionIndex,
@@ -188,6 +194,18 @@ export class TaskBuilder {
      */
     public path(path: string): TaskBuilder {
         this._path = path;
+        return this;
+    }
+
+    /**
+     * See {@link example_kanban} and other files in the same directory, for available sample mock data.
+     *
+     * @example
+     *      const builder = new TaskBuilder().mockData(example_kanban);
+     * @param mockData
+     */
+    public mockData(mockData: any) {
+        this._mockData = mockData;
         return this;
     }
 

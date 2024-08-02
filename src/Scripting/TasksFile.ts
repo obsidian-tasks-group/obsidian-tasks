@@ -85,6 +85,34 @@ export class TasksFile {
     }
 
     /**
+     * Does the data content of another TasksFile's raw frontmatter
+     * match this one.
+     *
+     * This can be used to detect whether Task objects need to be updated,
+     * or (later) whether queries need to be updated, due to user edits.
+     *
+     * @param other
+     */
+    public rawFrontmatterIdenticalTo(other: TasksFile): boolean {
+        const thisFrontmatter: FrontMatterCache | undefined = this.cachedMetadata.frontmatter;
+        const thatFrontmatter: FrontMatterCache | undefined = other.cachedMetadata.frontmatter;
+        if (thisFrontmatter === thatFrontmatter) {
+            // The same object or both undefined
+            return true;
+        }
+
+        if (!thisFrontmatter || !thatFrontmatter) {
+            return false; // One is undefined and the other is not
+        }
+
+        // Check if the same content.
+        // This is fairly simplistic.
+        // For example, it treats values that are the same but in a different order as being different,
+        // although their information content is the same.
+        return JSON.stringify(thisFrontmatter) === JSON.stringify(thatFrontmatter);
+    }
+
+    /**
      * Return the path to the file, with the filename extension removed.
      */
     get pathWithoutExtension(): string {
