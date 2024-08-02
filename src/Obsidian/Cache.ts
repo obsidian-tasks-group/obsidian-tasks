@@ -290,12 +290,11 @@ export class Cache {
                     const taskLocation = task.taskLocation.fromRenamedFile(tasksFile);
                     if (useFilenameAsScheduledDate) {
                         return DateFallback.updateTaskPath(task, taskLocation, fallbackDate.value);
-                    } else {
-                        return new Task({
-                            ...task,
-                            taskLocation: taskLocation,
-                        });
                     }
+                    return new Task({
+                        ...task,
+                        taskLocation: taskLocation,
+                    });
                 });
 
                 this.notifySubscribers();
