@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { getSettings } from '../Config/Settings';
-import { TasksFile } from '../Scripting/TasksFile';
+import type { TaskLocation } from './TaskLocation';
 import { Task } from './Task';
 
 /**
@@ -85,10 +85,16 @@ export class DateFallback {
     /**
      * Implement the logic to update the fields related to date fallback of a task when its file has moved
      * @param task         - task to update
-     * @param newPath      - new location
+     * @param _newPath     - new location
+     * @param newLocation  - new location
      * @param fallbackDate - fallback date from new location, for efficiency. Can be null
      */
-    public static updateTaskPath(task: Task, newPath: string, fallbackDate: Moment | null): Task {
+    public static updateTaskPath(
+        task: Task,
+        _newPath: string,
+        newLocation: TaskLocation,
+        fallbackDate: moment.Moment | null,
+    ): Task {
         // initialize with values from before the path was changed
         let scheduledDate = task.scheduledDate;
         let scheduledDateIsInferred = task.scheduledDateIsInferred;
@@ -123,7 +129,7 @@ export class DateFallback {
 
         return new Task({
             ...task,
-            taskLocation: task.taskLocation.fromRenamedFile(new TasksFile(newPath)),
+            taskLocation: newLocation,
             scheduledDate,
             scheduledDateIsInferred,
         });

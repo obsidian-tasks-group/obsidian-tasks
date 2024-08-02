@@ -291,7 +291,12 @@ export class Cache {
                                 taskLocation: task.taskLocation.fromRenamedFile(tasksFile),
                             });
                         } else {
-                            return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
+                            return DateFallback.updateTaskPath(
+                                task,
+                                file.path,
+                                task.taskLocation.fromRenamedFile(new TasksFile(file.path)),
+                                fallbackDate.value,
+                            );
                         }
                     } else {
                         return task;
