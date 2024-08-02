@@ -113,7 +113,7 @@ export class DateFallback {
                 scheduledDate = fallbackDate;
             } else if (this.canApplyFallback(task)) {
                 // ...and the task is candidate to date fallback
-                // sest the scheduled date from the new path
+                // set the scheduled date from the new path
                 scheduledDate = fallbackDate;
                 scheduledDateIsInferred = true;
             } else {
