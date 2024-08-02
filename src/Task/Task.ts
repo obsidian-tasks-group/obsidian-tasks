@@ -876,17 +876,16 @@ export class Task extends ListItem {
     }
 
     private recurrenceIdenticalTo(other: Task) {
-        let recurrenceSame = true;
         const recurrence1 = this.recurrence;
         const recurrence2 = other.recurrence;
         if (recurrence1 === null && recurrence2 !== null) {
-            recurrenceSame = false;
+            return false;
         } else if (recurrence1 !== null && recurrence2 === null) {
-            recurrenceSame = false;
+            return false;
         } else if (recurrence1 && recurrence2 && !recurrence1.identicalTo(recurrence2)) {
-            recurrenceSame = false;
+            return false;
         }
-        return recurrenceSame;
+        return true;
     }
 
     public static allDateFields(): (keyof Task)[] {
