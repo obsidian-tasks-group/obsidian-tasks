@@ -18,6 +18,8 @@ import { yaml_complex_example } from '../Obsidian/__test_data__/yaml_complex_exa
 import { yaml_complex_example_standardised } from '../Obsidian/__test_data__/yaml_complex_example_standardised';
 import { yaml_all_property_types_empty } from '../Obsidian/__test_data__/yaml_all_property_types_empty';
 import { yaml_all_property_types_populated } from '../Obsidian/__test_data__/yaml_all_property_types_populated';
+import { yaml_1_alias } from '../Obsidian/__test_data__/yaml_1_alias';
+import { yaml_2_aliases } from '../Obsidian/__test_data__/yaml_2_aliases';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('TasksFile', () => {
@@ -64,6 +66,39 @@ describe('TasksFile', () => {
 
         // Check it escapes the '.' in the file extension
         expect(new TasksFile('1.md.only-replace.2,md').filenameWithoutExtension).toEqual('1.md.only-replace.2,md');
+    });
+});
+
+describe('TasksFile - raw frontmatter - identicalTo', () => {
+    function expectRawFrontmatterToBeIdentical(case1: any, case2: any, expectedToBeIdentical: boolean) {
+        const file1 = getTasksFileFromMockData(case1);
+        const file2 = getTasksFileFromMockData(case2);
+        expect(file1.rawFrontmatterIdenticalTo(file2)).toEqual(expectedToBeIdentical);
+        expect(file2.rawFrontmatterIdenticalTo(file1)).toEqual(expectedToBeIdentical);
+    }
+
+    it('should treat self as identical', () => {
+        expectRawFrontmatterToBeIdentical(no_yaml, no_yaml, true);
+    });
+
+    it('should treat empty frontmatter same as no frontmatter', () => {
+        expectRawFrontmatterToBeIdentical(no_yaml, empty_yaml, true);
+    });
+
+    it('should recognise identical frontmatter - simple empty tags list', () => {
+        expectRawFrontmatterToBeIdentical(
+            yaml_tags_is_empty_list,
+            yaml_tags_had_value_then_was_emptied_by_obsidian,
+            true,
+        );
+    });
+
+    it('should detect different alias values as different', () => {
+        expectRawFrontmatterToBeIdentical(yaml_1_alias, yaml_2_aliases, false);
+    });
+
+    it('should treat missing and populated frontmatter as different', () => {
+        expectRawFrontmatterToBeIdentical(no_yaml, yaml_complex_example, false);
     });
 });
 

@@ -875,6 +875,10 @@ export class Task extends ListItem {
             return false;
         }
 
+        if (!this.file.rawFrontmatterIdenticalTo(other.file)) {
+            return false;
+        }
+
         return true;
     }
 
