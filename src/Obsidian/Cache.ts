@@ -293,7 +293,6 @@ export class Cache {
                         } else {
                             return DateFallback.updateTaskPath(
                                 task,
-                                file.path,
                                 task.taskLocation.fromRenamedFile(new TasksFile(file.path)),
                                 fallbackDate.value,
                             );
