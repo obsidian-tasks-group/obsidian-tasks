@@ -1,5 +1,6 @@
 // Builder
 import type { Moment } from 'moment';
+import type { CachedMetadata } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
 import { Occurrence } from '../../src/Task/Occurrence';
@@ -51,6 +52,7 @@ export class TaskBuilder {
     private _scheduledDateIsInferred: boolean = false;
     private _id: string = '';
     private _dependsOn: string[] = [];
+    private _cachedMetadata: CachedMetadata = {};
 
     /**
      * Build a Task
@@ -74,7 +76,7 @@ export class TaskBuilder {
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
-                new TasksFile(this._path),
+                new TasksFile(this._path, this._cachedMetadata),
                 this._lineNumber,
                 this._sectionStart,
                 this._sectionIndex,
@@ -188,6 +190,20 @@ export class TaskBuilder {
      */
     public path(path: string): TaskBuilder {
         this._path = path;
+        return this;
+    }
+
+    /**
+     * See {@link example_kanban} and other files in the same directory, for available sample test data.
+     * See {@link getTasksFileFromMockData} for obtaining CachedMetadata objects from sample test data.
+     *
+     * @example
+     *      const cachedMetadata = getTasksFileFromMockData(example_kanban).cachedMetadata;
+     *      const builder = new TaskBuilder().cachedMetadata(cachedMetadata);
+     * @param cachedMetadata
+     */
+    public cachedMetadata(cachedMetadata: CachedMetadata) {
+        this._cachedMetadata = cachedMetadata;
         return this;
     }
 

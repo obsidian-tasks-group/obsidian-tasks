@@ -4,7 +4,9 @@
 
 import moment from 'moment';
 import type { Task } from '../../src/Task/Task';
+import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
 import { TaskBuilder } from './TaskBuilder';
+import { getTasksFileFromMockData } from './MockDataHelpers';
 
 export {};
 
@@ -21,6 +23,13 @@ describe('TaskBuilder', () => {
         const builder = new TaskBuilder();
         const task = builder.description('hello').build();
         expect(task.originalMarkdown).toEqual('- [ ] hello');
+    });
+
+    it('should populate CachedMetadata', () => {
+        const cachedMetadata = getTasksFileFromMockData(example_kanban).cachedMetadata;
+        const builder = new TaskBuilder().cachedMetadata(cachedMetadata);
+        const task = builder.build();
+        expect(task.file.cachedMetadata).toBe(cachedMetadata);
     });
 
     function hasValue<Type>(value: Type[keyof Type]): boolean {
