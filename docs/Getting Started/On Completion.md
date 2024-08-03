@@ -18,6 +18,8 @@ This feature is enabled by adding (*after* the description within a task) a fiel
 > [!info]
 > If you are using [[Dataview Format]] for Tasks,  instead of the 🏁 emoji the desired ***action*** would follow the double colons in `[onCompletion:: ]`.)
 
+## Supported actions
+
 At present, two "On Completion" ***actions*** are supported:
 
 1. **Ignore** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nothing will be done with the just-completed task.  (This is the default action.)
@@ -30,6 +32,8 @@ At present, two "On Completion" ***actions*** are supported:
 > - or to a "completed tasks list" within the original host note.
 >
 > We are tracking these ideas in [issue #2855](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2855) and [issue #2856](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2856), respectively.
+
+## Worked examples
 
 > [!info]
 > In order to keep it simple, the following assumes that **Tasks** is configured so as not to use a [[Global Filter]] nor  add a [[Dates#Done date]] when you complete a task.
