@@ -24,9 +24,12 @@ At present, two "On Completion" ***actions*** are supported:
 2. **Delete** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the completed instance of the task.
 
 > [!tip]
-> Two additional ***actions*** -- moving a just-completed task to either a separate "completed tasks archive" note or to a "completed tasks list" within the original host note -- are being considered for implementation.  
+> Two additional ***actions*** are being considered for future implementation, namely moving a just-completed task to:
 >
-> We are tracking requests for this additional functionality in [issue #2855](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2855) and [issue #2856](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2856), respectively.  If you would like having one or both of these available as optional automatic actions, feel free to register your support there.
+> - either a separate "completed tasks archive" note,
+> - or to a "completed tasks list" within the original host note.
+>
+> We are tracking these ideas in [issue #2855](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2855) and [issue #2856](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2856), respectively.
 
 > [!info]
 > In order to keep it simple, the following assumes that **Tasks** is configured so as not to use a [[Global Filter]] nor  add a [[Dates#Done date]] when you complete a task.
@@ -59,4 +62,4 @@ At present, two "On Completion" ***actions*** are supported:
 
 At present, the "On Completion" signifier and desired **Action** identifier have to be added to a task manually.
 
-In recognition that that could be both tedious and error-prone, we're working on adding the ability to set or change each task's "On Completion" **Action** using the plugin's [[Create or edit Task|'Create or Edit Task' modal dialog]].
+In recognition that this could be both tedious and error-prone, we will eventually enable the [[Create or edit Task|'Create or Edit Task' modal dialog]] to edit the "On Completion" **Action**.
