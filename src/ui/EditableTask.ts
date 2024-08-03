@@ -37,26 +37,29 @@ export class EditableTask {
     blocking: Task[];
 
     private constructor(editableTask: {
-        dueDate: string;
+        addGlobalFilterOnSave: boolean;
+        originalBlocking: Task[];
+
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         description: string;
-        scheduledDate: string;
-        recurrenceRule: string;
-        blockedBy: Task[];
+        status: Status;
         priority: EditableTaskPriority;
         // onCompletion: 'ignore' | 'delete';
         onCompletion: OnCompletion;
-        addGlobalFilterOnSave: boolean;
-        originalBlocking: Task[];
+        recurrenceRule: string;
         createdDate: string;
-        blocking: Task[];
-        forwardOnly: boolean;
-        doneDate: string;
         startDate: string;
+        scheduledDate: string;
+        dueDate: string;
+        doneDate: string;
         cancelledDate: string;
-        status: Status;
+        forwardOnly: boolean;
+        blockedBy: Task[];
+        blocking: Task[];
     }) {
         this.addGlobalFilterOnSave = editableTask.addGlobalFilterOnSave;
         this.originalBlocking = editableTask.originalBlocking;
+
         this.description = editableTask.description;
         this.status = editableTask.status;
         this.priority = editableTask.priority;
