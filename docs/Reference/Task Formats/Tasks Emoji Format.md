@@ -50,10 +50,12 @@ For more information, see [[Recurring Tasks]].
 
 ## Tasks Emoji Format for OnCompletion
 
-```markdown
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_tasksPluginEmoji-snippet.approved.md -->
+```md
 - [ ] #task Remove this task when done 🏁 delete
 - [ ] #task Remove completed instance of this recurring task when done 🔁 every day when done 🏁 delete
 ```
+<!-- endSnippet -->
 
 For more information, see [[On Completion]].
 
