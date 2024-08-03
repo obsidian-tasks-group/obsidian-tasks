@@ -281,8 +281,8 @@ export class SampleTasks {
     }
 
     public static withSampleOnCompletionValues() {
-        const everyDayWhenDone = Recurrence.fromText({
-            recurrenceRuleText: 'every day when done',
+        const everyDay = Recurrence.fromText({
+            recurrenceRuleText: 'every day',
             occurrence: new Occurrence({
                 startDate: null,
                 scheduledDate: null,
@@ -293,7 +293,7 @@ export class SampleTasks {
         const task2 = new TaskBuilder()
             .description('#task Remove completed instance of this recurring task when done')
             .onCompletion('delete')
-            .recurrence(everyDayWhenDone)
+            .recurrence(everyDay)
             .build();
         return [task1, task2];
     }

@@ -1,2 +1,2 @@
 - [ ] #task Remove this task when done  [onCompletion:: delete]
-- [ ] #task Remove completed instance of this recurring task when done  [repeat:: every day when done]  [onCompletion:: delete]
+- [ ] #task Remove completed instance of this recurring task when done  [repeat:: every day]  [onCompletion:: delete]
