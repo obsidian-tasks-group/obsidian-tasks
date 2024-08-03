@@ -204,4 +204,7 @@ export const inheritance_1parent1child1newroot_after_header = {
             },
         ],
     },
+    obsidianApiVersion: '1.6.5',
+    getAllTags: ['#task', '#task', '#task'],
+    parseFrontMatterTags: null,
 };

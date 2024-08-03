@@ -35,9 +35,11 @@ The following placeholders are available:
 
 ```text
 {{query.file.path}}
+{{query.file.pathWithoutExtension}}
 {{query.file.root}}
 {{query.file.folder}}
 {{query.file.filename}}
+{{query.file.filenameWithoutExtension}}
 ```
 
 They can be used with any text filter, not just `path`, `file`, `folder`, `filename`. For example, they might be useful with `description` and `heading` filters.
@@ -49,7 +51,9 @@ For more information, see:
 
 ## Using Dataview to generate Tasks blocks - the old way
 
-<label class="ob-comment" title="" style=""> Assumptions <input type="checkbox"> <span style=""> Move this to a separate note<br> - but retain the original heading<br> - and link to it from here </span></label>:
+<!-- Move this to a separate note - but retain the original heading - and link to it from here... -->
+
+Assumptions:
 
 - We assume that you know how to install and enable the [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin.
 

@@ -7,7 +7,9 @@ publish: true
 ## Automatic scheduled date
 
 > [!released]
-Introduced in Tasks 1.18.0.
+>
+> - Introduced in Tasks 1.18.0.
+> - Support for filenames exactly matching a custom format added in 7.6.0.
 
 You can automatically set a scheduled date for tasks based on the name of their files. This feature can be enabled in the
 settings, via the option `Use filename as Scheduled date for undated tasks`. Changing this requires a restart of Obsidian.
@@ -25,12 +27,11 @@ not done
 ```
 ````
 
-> [!info]
-> The task is not visually modified in any Obsidian views: the scheduled date is only implied, and not displayed.
-
-It will however appear in the
-[[Create or edit Task|edit dialog]].
-It can also be examined by using the `group by scheduled` instruction in a tasks block.
+> [!info] Seeing implied dates
+>
+> - The task is not visually modified in any Obsidian views: the scheduled date is only implied, and not displayed.
+> - It will however appear in the [[Create or edit Task|edit dialog]].
+> - It can also be examined by using the `group by scheduled` instruction in a tasks block.
 
 ## Rules
 
@@ -38,10 +39,12 @@ For the scheduled date to be automatically set from the file name, the following
 
 - the setting 'Use filename as Scheduled date for undated tasks' must be enabled, and Obsidian restarted,
 - the task must have no existing scheduled date, due date or start date,
-- the file name must contain a date in the format `YYYY-MM-DD` or `YYYYMMDD`,
-- the file must be in one of the configured folders or its sub-folders if that setting is enabled.
+- one of these must be true:
+  1. either the file name must **contain** a date in the format `YYYY-MM-DD` or `YYYYMMDD`,
+  2. or the file name must **exactly equal** an additional date format which has been added using the [[Use Filename as Default Date#Additional date format|additional date format setting]]),
+- the file must be in one of the configured folders or its sub-folders if [[#Folders setting|that setting is enabled]].
 
-Examples of file names :
+Examples of file names that contain the built-in date formats:
 
 ```text
 daily/2022-10-12 Wednesday.md
@@ -51,9 +54,42 @@ meetings/rd. 2022-09-07.md
 
 ## Settings
 
-The following image shows the two settings relating to this feature:
-
+The following image shows the settings relating to this feature:
 ![Use filename as Scheduled date for undated tasks settings](../images/settings-use-filename-for-date.png)
+
+### Additional date format
+> [!released]
+> Introduced in tasks 7.6.0.
+
+By default, only the date formats `YYYY-MM-DD` and `YYYYMMDD` will be matched.
+
+This setting allows you to specify an additional date format to be matched for this feature.
+
+> [!warning]
+> Note that unlike the `YYYY-MM-DD` and `YYYYMMDD` date formats, this setting does not support prefixes or suffixes in file names at this time. The custom additional date format must be an exact match to the file.
+>
+> So if the additional format is `MMM D YYYY`:
+>
+> - A file `Jan 4 2024.md` would be detected as the date `2024-01-04`.
+> - A file `Notes from Jan 4 2024.md` wouldn't be recognised as having a date.
+
+See the [syntax reference](https://momentjs.com/docs/#/displaying/format/) for supported date formats.
+
+> [!example] Example 1
+> If you have a daily note in `daily/Jun 20 2024`, then you could use the date format `MMMM Do YYYY` to automatically set tasks within that file as scheduled on that date.
+
+> [!example] Example 2
+> If your Daily Notes core plugin settings specifies a Date format with folders:
+>
+> ```text
+> YYYY/MM/dddd, MMMM Do YYYY
+> ```
+>
+> Then you would want to put this text in as the additional filename date format:
+>
+> ```text
+> dddd, MMMM Do YYYY
+> ```
 
 ### Folders setting
 
@@ -75,12 +111,10 @@ Examples:
 
 ## Limitations
 
-### Recognised date formats
-
-It is not possible to change the format of dates recognised by [[Use Filename as Default Date]]: only `YYYY-MM-DD` or `YYYYMMDD` are recognised.
-
-We are tracking this in [issue #1369](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1369).
-
 ### Apply setting to selected folders
 
 Folders with a comma (`,`) in their name are not supported.
+
+### Exact matching for additional date format
+
+Unlike the `YYYY-MM-DD` and `YYYYMMDD` date formats, if an additional custom date format is provided, it will not support prefixes or suffixes and will only match files following the exact format provided.

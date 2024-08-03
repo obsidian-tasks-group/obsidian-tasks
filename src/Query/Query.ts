@@ -7,6 +7,7 @@ import { logging } from '../lib/logging';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
 import type { Task } from '../Task/Task';
+import type { OptionalTasksFile } from '../Scripting/TasksFile';
 import { Explainer } from './Explain/Explainer';
 import type { Filter } from './Filter/Filter';
 import * as FilterParser from './FilterParser';
@@ -22,7 +23,7 @@ import { Statement } from './Statement';
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
-    public readonly filePath: string | undefined;
+    public readonly tasksFile: OptionalTasksFile;
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
@@ -49,16 +50,16 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor(source: string, path: string | undefined = undefined) {
+    constructor(source: string, tasksFile: OptionalTasksFile = undefined) {
         this._queryId = this.generateQueryId(10);
 
         this.source = source;
-        this.filePath = path;
+        this.tasksFile = tasksFile;
 
         this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
         continueLines(source).forEach((statement: Statement) => {
-            const line = this.expandPlaceholders(statement, path);
+            const line = this.expandPlaceholders(statement, tasksFile);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
@@ -78,6 +79,10 @@ export class Query implements IQuery {
                 return;
             }
         });
+    }
+
+    public get filePath(): string | undefined {
+        return this.tasksFile?.path ?? undefined;
     }
 
     public get queryId(): string {
@@ -122,10 +127,10 @@ export class Query implements IQuery {
         return `[${this.source.split('\n').join(' ; ')}]`;
     }
 
-    private expandPlaceholders(statement: Statement, path: string | undefined) {
+    private expandPlaceholders(statement: Statement, tasksFile: OptionalTasksFile) {
         const source = statement.anyContinuationLinesRemoved;
         if (source.includes('{{') && source.includes('}}')) {
-            if (this.filePath === undefined) {
+            if (this.tasksFile === undefined) {
                 this._error = `The query looks like it contains a placeholder, with "{{" and "}}"
 but no file path has been supplied, so cannot expand placeholder values.
 The query is:
@@ -138,8 +143,8 @@ ${source}`;
         // TODO Show the original and expanded text in explanations
         // TODO Give user error info if they try and put a string in a regex search
         let expandedSource: string = source;
-        if (path) {
-            const queryContext = makeQueryContext(path);
+        if (tasksFile) {
+            const queryContext = makeQueryContext(tasksFile);
             try {
                 expandedSource = expandPlaceholders(source, queryContext);
             } catch (error) {
@@ -180,7 +185,7 @@ ${source}`;
     public append(q2: Query): Query {
         if (this.source === '') return q2;
         if (q2.source === '') return this;
-        return new Query(`${this.source}\n${q2.source}`, this.filePath);
+        return new Query(`${this.source}\n${q2.source}`, this.tasksFile);
     }
 
     /**
@@ -259,7 +264,7 @@ ${statement.explainStatement('    ')}
     public applyQueryToTasks(tasks: Task[]): QueryResult {
         this.debug(`Executing query: ${this.formatQueryForLogging()}`);
 
-        const searchInfo = new SearchInfo(this.filePath, tasks);
+        const searchInfo = new SearchInfo(this.tasksFile, tasks);
         try {
             this.filters.forEach((filter) => {
                 tasks = tasks.filter((task) => filter.filterFunction(task, searchInfo));

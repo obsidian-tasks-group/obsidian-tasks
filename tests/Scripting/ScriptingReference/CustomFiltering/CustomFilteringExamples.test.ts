@@ -4,6 +4,8 @@
 
 import moment from 'moment';
 import type { Task } from '../../../../src/Task/Task';
+import { allCacheSampleData } from '../../../Obsidian/AllCacheSampleData';
+import { type SimulatedFile, readTasksFromSimulatedFile } from '../../../Obsidian/SimulatedFile';
 import { fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
@@ -344,6 +346,49 @@ describe('file properties', () => {
 "    For demonstration purposes, this is slightly imprecise, in that it would also match nested tasks, such as `#context/home/ground-floor`",
 
      */
+
+    it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
+        verifyFunctionFieldFilterSamplesOnTasks(groups, tasks);
+    });
+
+    it.each(testData)('%s docs', (_: string, groups: QueryInstructionLineAndDescription[], _tasks: Task[]) => {
+        verifyFunctionFieldFilterSamplesForDocs(groups);
+    });
+});
+
+describe('obsidian properties', () => {
+    const tasks: Task[] = allCacheSampleData().flatMap((simulatedFile) => {
+        return readTasksFromSimulatedFile(simulatedFile as SimulatedFile);
+    });
+
+    const testData: CustomPropertyDocsTestData[] = [
+        // ---------------------------------------------------------------------------------
+        // PROPERTIES FIELDS
+        // ---------------------------------------------------------------------------------
+
+        [
+            'task.file.frontmatter',
+            [
+                [
+                    "filter by function task.file.hasProperty('kanban-plugin')",
+                    'find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards',
+                ],
+                [
+                    'filter by function task.file.property("sample_list_property")?.length > 0',
+                    "find tasks in files where the list property 'sample_list_property' exists and has at least one list item",
+                ],
+                [
+                    'filter by function task.file.property("sample_list_property")?.length === 0',
+                    "find tasks in files where the list property 'sample_list_property' exists and has no list items",
+                ],
+                [
+                    "filter by function task.file.property('creation date')?.includes('2024') ?? false",
+                    "find tasks in files where the date property 'creation date' includes string '2024'",
+                ],
+            ],
+            tasks,
+        ],
+    ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
         verifyFunctionFieldFilterSamplesOnTasks(groups, tasks);

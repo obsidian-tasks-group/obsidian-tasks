@@ -1,9 +1,10 @@
 import type { Moment } from 'moment';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { OnCompletion } from '../Task/OnCompletion';
-import { Priority } from '../Task/Priority';
+import { Occurrence } from '../Task/Occurrence';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
+import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import type { TaskDetails, TaskSerializer } from '.';
 
@@ -389,9 +390,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         if (recurrenceRule.length > 0) {
             recurrence = Recurrence.fromText({
                 recurrenceRuleText: recurrenceRule,
-                startDate,
-                scheduledDate,
-                dueDate,
+                occurrence: new Occurrence({ startDate, scheduledDate, dueDate }),
             });
         }
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the

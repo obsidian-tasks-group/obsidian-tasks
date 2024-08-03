@@ -153,6 +153,13 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. `task.description` has spaces at the start and end stripped off.
 1. `task.description` includes any tags.
+1. `task.priorityName` and `task.priorityNumber` values are:
+    - 'Highest': 0
+    - 'High': 1
+    - 'Medium': 2
+    - 'Normal': 3
+    - 'Low': 4
+    - 'Lowest': 5
 1. `task.priorityNameGroupText` (added in Tasks 4.9.0) is a convenient way to sort priority names in to a natural order in custom grouping functions.
 1. `task.isRecurring` is:
     - `true` if the Task has a **valid** recurrence rule,
@@ -193,3 +200,33 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `task.file.filenameWithoutExtension` was added in Tasks 4.8.0.
 
 [^commented]: Text inside `%% ... %%` comments is hidden from view. It is used to control the order that group headings are sorted in.
+
+## Values for Obsidian Properties
+
+> [!released]
+> Access to the Obsidian Properties was introduced in Tasks 7.7.0.
+
+These are described in full in [[Obsidian Properties]].
+
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
+
+| Field | Type 1 | Example 1 |
+| ----- | ----- | ----- |
+| `task.file.hasProperty('creation date')` | `boolean` | `true` |
+| `task.file.property('creation date')` | `string` | `'2024-05-25T15:17:00'` |
+| `task.file.property('sample_checkbox_property')` | `boolean` | `true` |
+| `task.file.property('sample_date_property')` | `string` | `'2024-07-21'` |
+| `task.file.property('sample_date_and_time_property')` | `string` | `'2024-07-21T12:37:00'` |
+| `task.file.property('sample_list_property')` | `string[]` | `['Sample', 'List', 'Value']` |
+| `task.file.property('sample_number_property')` | `number` | `246` |
+| `task.file.property('sample_text_property')` | `string` | `'Sample Text Value'` |
+| `task.file.property('sample_text_multiline_property')` | `string` | `'Sample\nText\nValue\n'` |
+| `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` |
+| `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
+| `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+1. `task.file.hasProperty()` and `task.file.property()` were added in Tasks 7.7.0
+1. `task.file.hasProperty('property name')` returns true if the property `'property name'` is both present in the file and has a non-`null` value.
+1. `task.file.property('property name')` returns either the value in the file, or `null` if there is no value.

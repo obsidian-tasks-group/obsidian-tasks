@@ -22,6 +22,7 @@ import { fromLine } from '../../TestingTools/TestHelpers';
 import { Query } from '../../../src/Query/Query';
 import { TasksDate } from '../../../src/Scripting/TasksDate';
 import { Priority } from '../../../src/Task/Priority';
+import { TasksFile } from '../../../src/Scripting/TasksFile';
 
 window.moment = moment;
 
@@ -59,11 +60,11 @@ describe('FunctionField - filtering', () => {
             'filter by function task.file.path === query.file.path',
         );
         expect(tasksInSameFileAsQuery).toBeValid();
-        const queryFilePath = '/a/b/query.md';
+        const queryTasksFile = new TasksFile('/a/b/query.md');
 
-        const taskInQueryFile: Task = new TaskBuilder().path(queryFilePath).build();
+        const taskInQueryFile: Task = new TaskBuilder().path(queryTasksFile.path).build();
         const taskNotInQueryFile: Task = new TaskBuilder().path('some other path.md').build();
-        const searchInfo = new SearchInfo(queryFilePath, [taskInQueryFile, taskNotInQueryFile]);
+        const searchInfo = new SearchInfo(queryTasksFile, [taskInQueryFile, taskNotInQueryFile]);
 
         expect(tasksInSameFileAsQuery.filterFunction!(taskInQueryFile, searchInfo)).toEqual(true);
         expect(tasksInSameFileAsQuery.filterFunction!(taskNotInQueryFile, searchInfo)).toEqual(false);
@@ -617,6 +618,8 @@ describe('FunctionField - grouping - example functions', () => {
         const line = 'group by function query.file.filename';
         const grouper = createGrouper(line);
         const task = new TaskBuilder().build();
-        toGroupTaskUsingSearchInfo(grouper, task, new SearchInfo('queries/query file.md', [task]), ['query file.md']);
+        toGroupTaskUsingSearchInfo(grouper, task, new SearchInfo(new TasksFile('queries/query file.md'), [task]), [
+            'query file.md',
+        ]);
     });
 });

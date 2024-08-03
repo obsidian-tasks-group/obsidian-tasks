@@ -1,5 +1,6 @@
 // Builder
 import type { Moment } from 'moment';
+import { Occurrence } from '../../src/Task/Occurrence';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 
@@ -35,9 +36,11 @@ export class RecurrenceBuilder {
     public build(): Recurrence {
         return Recurrence.fromText({
             recurrenceRuleText: this._recurrenceRuleText,
-            startDate: this._startDate,
-            scheduledDate: this._scheduledDate,
-            dueDate: this._dueDate,
+            occurrence: new Occurrence({
+                startDate: this._startDate,
+                scheduledDate: this._scheduledDate,
+                dueDate: this._dueDate,
+            }),
         }) as Recurrence;
     }
 

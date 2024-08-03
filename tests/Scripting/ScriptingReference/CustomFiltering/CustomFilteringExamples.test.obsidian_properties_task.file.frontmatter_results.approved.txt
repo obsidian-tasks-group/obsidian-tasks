@@ -1,0 +1,35 @@
+Results of custom filters
+
+
+
+filter by function task.file.hasProperty('kanban-plugin')
+find tasks in [Kanban Plugin](https://github.com/mgmeyers/obsidian-kanban) boards.
+=>
+- [ ] #task Task in 'example_kanban'
+====================================================================================
+
+
+filter by function task.file.property("sample_list_property")?.length > 0
+find tasks in files where the list property 'sample_list_property' exists and has at least one list item.
+=>
+- [ ] #task Task in 'docs_sample_for_task_properties_reference' #tag-from-task-line
+- [ ] #task Another task in 'docs_sample_for_task_properties_reference'
+- [ ] #task Task in 'yaml_all_property_types_populated'
+====================================================================================
+
+
+filter by function task.file.property("sample_list_property")?.length === 0
+find tasks in files where the list property 'sample_list_property' exists and has no list items.
+=>
+
+====================================================================================
+
+
+filter by function task.file.property('creation date')?.includes('2024') ?? false
+find tasks in files where the date property 'creation date' includes string '2024'.
+=>
+- [ ] #task Task in 'docs_sample_for_task_properties_reference' #tag-from-task-line
+- [ ] #task Another task in 'docs_sample_for_task_properties_reference'
+- [ ] #task Task in 'yaml_all_property_types_populated'
+====================================================================================
+

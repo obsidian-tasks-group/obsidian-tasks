@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { getSettings } from '../Config/Settings';
-import { TasksFile } from '../Scripting/TasksFile';
+import type { TaskLocation } from './TaskLocation';
 import { Task } from './Task';
 
 /**
@@ -46,6 +46,14 @@ export class DateFallback {
 
         const basename = path.substring(firstPos, lastPos);
 
+        const { filenameAsScheduledDateFormat } = getSettings();
+        if (filenameAsScheduledDateFormat !== '') {
+            const date = window.moment(basename, filenameAsScheduledDateFormat, true);
+            if (date.isValid()) {
+                return date;
+            }
+        }
+
         let dateMatch = /(\d{4})-(\d{2})-(\d{2})/.exec(basename);
         if (!dateMatch) dateMatch = /(\d{4})(\d{2})(\d{2})/.exec(basename);
 
@@ -77,10 +85,10 @@ export class DateFallback {
     /**
      * Implement the logic to update the fields related to date fallback of a task when its file has moved
      * @param task         - task to update
-     * @param newPath      - new location
+     * @param newLocation  - new location
      * @param fallbackDate - fallback date from new location, for efficiency. Can be null
      */
-    public static updateTaskPath(task: Task, newPath: string, fallbackDate: Moment | null): Task {
+    public static updateTaskPath(task: Task, newLocation: TaskLocation, fallbackDate: Moment | null): Task {
         // initialize with values from before the path was changed
         let scheduledDate = task.scheduledDate;
         let scheduledDateIsInferred = task.scheduledDateIsInferred;
@@ -105,7 +113,7 @@ export class DateFallback {
                 scheduledDate = fallbackDate;
             } else if (this.canApplyFallback(task)) {
                 // ...and the task is candidate to date fallback
-                // sest the scheduled date from the new path
+                // set the scheduled date from the new path
                 scheduledDate = fallbackDate;
                 scheduledDateIsInferred = true;
             } else {
@@ -115,7 +123,7 @@ export class DateFallback {
 
         return new Task({
             ...task,
-            taskLocation: task.taskLocation.fromRenamedFile(new TasksFile(newPath)),
+            taskLocation: newLocation,
             scheduledDate,
             scheduledDateIsInferred,
         });

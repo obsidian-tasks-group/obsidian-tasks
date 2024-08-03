@@ -3,7 +3,7 @@ Results of custom groupers
 
 
 group by function task.file.folder
-Same as 'group by folder'.
+Like 'group by folder', except that it does not escape any Markdown formatting characters in the folder.
 =>
 /
 a/

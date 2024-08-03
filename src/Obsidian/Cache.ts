@@ -3,6 +3,7 @@ import type { CachedMetadata, EventRef } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 import { TasksFile } from '../Scripting/TasksFile';
+import { ListItem } from '../Task/ListItem';
 
 import { Task } from '../Task/Task';
 import { DateFallback } from '../Task/DateFallback';
@@ -26,7 +27,7 @@ export function getTasksFromFileContent2(
     fileCache: CachedMetadata,
     errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
 ) {
-    const tasksFile = new TasksFile(filePath);
+    const tasksFile = new TasksFile(filePath, fileCache);
     const tasks: Task[] = [];
     const fileLines = fileContent.split('\n');
     const linesInFile = fileLines.length;
@@ -40,7 +41,7 @@ export function getTasksFromFileContent2(
     // rendered lists.
     let currentSection: SectionCache | null = null;
     let sectionIndex = 0;
-    const line2Task: Map<number, Task> = new Map();
+    const line2ListItem: Map<number, ListItem> = new Map();
     for (const listItem of listItems) {
         if (listItem.task !== undefined) {
             const lineNumber = listItem.position.start.line;
@@ -95,16 +96,16 @@ export function getTasksFromFileContent2(
 
                 if (task !== null) {
                     // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
-                    // That is not a problem, as we never put a negative number in line2Task map, so parent will be null.
-                    const parentTask: Task | null = line2Task.get(listItem.parent) ?? null;
-                    if (parentTask !== null) {
+                    // That is not a problem, as we never put a negative number in line2ListItem map, so parent will be null.
+                    const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
+                    if (parentListItem !== null) {
                         task = new Task({
                             ...task,
-                            parent: parentTask,
+                            parent: parentListItem,
                         });
                     }
 
-                    line2Task.set(lineNumber, task);
+                    line2ListItem.set(lineNumber, task);
                 }
             } catch (e) {
                 errorReporter(e, filePath, listItem, line);
@@ -115,6 +116,21 @@ export function getTasksFromFileContent2(
                 sectionIndex++;
                 tasks.push(task);
             }
+        } else {
+            // 1st:
+            // Root ListItems should not be parents of anything.
+            // This behavior was introduced in DataView plugin, so we want keep it for consistency reasons.
+            // 2nd:
+            // Usually, root listItem has parent = -lineNumber, but for listItems on the top of the file (on 0 line), it is -1.
+            if (listItem.parent < 0) {
+                continue;
+            }
+
+            const lineNumber = listItem.position.start.line;
+
+            const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
+
+            line2ListItem.set(lineNumber, new ListItem(fileLines[lineNumber], parentListItem));
         }
     }
 
@@ -262,22 +278,23 @@ export class Cache {
             this.logger.debug(`Cache.subscribeToVault.renamedEventReference() ${file.path}`);
 
             this.tasksMutex.runExclusive(() => {
-                const tasksFile = new TasksFile(file.path);
+                const fileCache = this.metadataCache.getFileCache(file);
+                // TODO What if the file has been renamed but the cache not yet updated?
+                const tasksFile = new TasksFile(file.path, fileCache ?? undefined);
                 const fallbackDate = new Lazy(() => DateFallback.fromPath(file.path));
 
                 this.tasks = this.tasks.map((task: Task): Task => {
-                    if (task.path === oldPath) {
-                        if (!useFilenameAsScheduledDate) {
-                            return new Task({
-                                ...task,
-                                taskLocation: task.taskLocation.fromRenamedFile(tasksFile),
-                            });
-                        } else {
-                            return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
-                        }
-                    } else {
+                    if (task.path !== oldPath) {
                         return task;
                     }
+                    const taskLocation = task.taskLocation.fromRenamedFile(tasksFile);
+                    if (useFilenameAsScheduledDate) {
+                        return DateFallback.updateTaskPath(task, taskLocation, fallbackDate.value);
+                    }
+                    return new Task({
+                        ...task,
+                        taskLocation,
+                    });
                 });
 
                 this.notifySubscribers();

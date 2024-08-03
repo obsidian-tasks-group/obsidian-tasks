@@ -19,6 +19,8 @@ import { Priority } from '../../src/Task/Priority';
 import { SampleTasks } from '../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../TestingTools/FilterTestHelpers';
 import type { TasksDate } from '../../src/Scripting/TasksDate';
+import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
+import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
 
 window.moment = moment;
 
@@ -1094,12 +1096,14 @@ describe('toggle done', () => {
 
         // Testing 'when done' does not skip when next occurrence is a non-existent date
         {
+            // This also showed the existence of #2867 - which caused the done date to be '2021-08-30'
             interval: 'every month when done',
             scheduled: '1999-01-23',
             today: '2021-08-31',
             nextScheduled: '2021-09-30',
         },
         {
+            // This also showed the existence of #2867 - which caused the done date to be '2020-02-28'
             interval: 'every 2 years when done',
             start: '1999-01-23',
             today: '2020-02-29', // is a leap year
@@ -1131,12 +1135,8 @@ describe('toggle done', () => {
         },
     ];
 
-    // This was calling test.concurrent.each() to run the tests in parallel, but I couldn't
-    // get it to run beforeAll() before running the tests.
-    // https://github.com/facebook/jest/issues/7997#issuecomment-796965078
-    test.each<RecurrenceCase>(recurrenceCases)(
-        'recurs correctly (%j)',
-        ({
+    function testRecurrenceCase(recurrenceCase: RecurrenceCase) {
+        const {
             // inputs:
             interval,
             symbol,
@@ -1151,60 +1151,76 @@ describe('toggle done', () => {
             nextScheduled,
             nextStart,
             nextInterval,
-        }) => {
-            if (today) {
-                jest.useFakeTimers();
-                jest.setSystemTime(new Date(today));
-            }
+        } = recurrenceCase;
+        if (today) {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date(today));
+        }
 
-            // If this test fails, the RecurrenceCase had no expected new dates set, and so
-            // is accidentally not doing any testing.
-            const atLeaseOneExpectationSupplied =
-                nextStart !== undefined ||
-                nextDue !== undefined ||
-                nextScheduled !== undefined ||
-                nextSymbol !== undefined ||
-                doneSymbol !== undefined;
-            expect(atLeaseOneExpectationSupplied).toStrictEqual(true);
+        // If this test fails, the RecurrenceCase had no expected new dates set, and so
+        // is accidentally not doing any testing.
+        const atLeaseOneExpectationSupplied =
+            nextStart !== undefined ||
+            nextDue !== undefined ||
+            nextScheduled !== undefined ||
+            nextSymbol !== undefined ||
+            doneSymbol !== undefined;
+        expect(atLeaseOneExpectationSupplied).toStrictEqual(true);
 
-            const line = [
-                `- [${symbol ?? ' '}] I am task`,
-                `🔁 ${interval}`,
-                !!scheduled && `⏳ ${scheduled}`,
-                !!due && `📅 ${due}`,
-                !!start && `🛫 ${start}`,
-            ]
-                .filter(Boolean)
-                .join(' ');
+        const line = [
+            `- [${symbol ?? ' '}] I am task`,
+            `🔁 ${interval}`,
+            !!scheduled && `⏳ ${scheduled}`,
+            !!due && `📅 ${due}`,
+            !!start && `🛫 ${start}`,
+        ]
+            .filter(Boolean)
+            .join(' ');
 
-            const task = fromLine({
-                line,
-            });
+        const task = fromLine({
+            line,
+        });
 
-            const tasks = task!.toggle();
-            expect(tasks.length).toEqual(2);
-            const doneTask: Task = tasks[1];
-            const nextTask: Task = tasks[0];
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const doneTask: Task = tasks[1];
+        const nextTask: Task = tasks[0];
 
-            expect(doneTask.status.symbol).toEqual(doneSymbol ?? 'x');
-            expect(nextTask.status.symbol).toEqual(nextSymbol ?? ' ');
+        expect(doneTask.status.symbol).toEqual(doneSymbol ?? 'x');
+        if (today) {
             expect({
-                nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
-                nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),
-                nextStart: nextTask.startDate?.format('YYYY-MM-DD'),
+                doneDate: doneTask.doneDate?.format('YYYY-MM-DD'),
             }).toMatchObject({
-                nextDue,
-                nextScheduled,
-                nextStart,
+                doneDate: today,
             });
+        }
 
-            if (nextInterval) {
-                expect(nextTask.recurrence?.toText()).toBe(nextInterval);
-            } else {
-                expect(nextTask.recurrence?.toText()).toBe(interval);
-            }
-        },
-    );
+        expect(nextTask.status.symbol).toEqual(nextSymbol ?? ' ');
+        expect({
+            nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
+            nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),
+            nextStart: nextTask.startDate?.format('YYYY-MM-DD'),
+        }).toMatchObject({
+            nextDue,
+            nextScheduled,
+            nextStart,
+        });
+
+        if (nextInterval) {
+            expect(nextTask.recurrence?.toText()).toBe(nextInterval);
+        } else {
+            expect(nextTask.recurrence?.toText()).toBe(interval);
+        }
+    }
+
+    // This was calling test.concurrent.each() to run the tests in parallel, but I couldn't
+    // get it to run beforeAll() before running the tests.
+    // https://github.com/facebook/jest/issues/7997#issuecomment-796965078
+    test.each<RecurrenceCase>(recurrenceCases)('recurs correctly (%j)', (recurrenceCase) => {
+        {
+            testRecurrenceCase(recurrenceCase);
+        }
+    });
 
     it('supports recurrence rule after a due date', () => {
         // Arrange
@@ -1553,6 +1569,14 @@ describe('identicalTo', () => {
         // Check it is case-sensitive
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().path('Same Test File.md'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().path('different text.md'));
+    });
+
+    it('should check frontmatter/properties', () => {
+        const lhs = new TaskBuilder().mockData(example_kanban);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().mockData(example_kanban));
+
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().mockData({}));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().mockData(jason_properties));
     });
 
     it('should check indentation', () => {

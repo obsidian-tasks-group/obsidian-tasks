@@ -28,5 +28,6 @@ export type SuggestionBuilder = (
     cursorPos: number,
     settings: Settings,
     allTasks: Task[],
+    canSaveEdits: boolean,
     taskToSuggestFor?: Task,
 ) => SuggestInfo[];

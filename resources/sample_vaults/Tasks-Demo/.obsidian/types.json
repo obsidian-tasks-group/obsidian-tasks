@@ -1,0 +1,20 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "cssclasses": "multitext",
+    "tags": "tags",
+    "custom_number_prop": "number",
+    "custom_list": "multitext",
+    "custom_list_2": "multitext",
+    "sample_list_property": "multitext",
+    "sample_date_property": "date",
+    "sample_date_and_time_property": "datetime",
+    "sample_checkbox_property": "checkbox",
+    "sample_number_property": "number",
+    "sample_link_list_property": "multitext",
+    "sample_link_property": "text",
+    "creation date": "datetime",
+    "project": "text",
+    "sample_text_multiline_property": "text"
+  }
+}

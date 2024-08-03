@@ -121,7 +121,6 @@ export class LogManager extends EventEmitter2 {
         return this;
     }
 
-    // private period: number = 0;
     arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
     /**
@@ -306,6 +305,10 @@ type TimingMap = {
     [id: string]: number[];
 };
 
+// Comment from the original author:
+// I was calculating metrics on call times to debug some performance issues.
+// This is a simple JS hashmap where the id could be one of the 4 items.
+// (see the comment-out code in logCall below...)
 const timingMap: TimingMap = {};
 
 /**

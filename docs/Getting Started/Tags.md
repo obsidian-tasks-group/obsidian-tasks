@@ -68,9 +68,12 @@ tags:
 ---
 ```
 
-Tasks does not currently read this data. We are tracking this in [discussion #232](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/232).
+Since Tasks 7.7.0, Tasks **does** now read this data.
 
-For now, see [Find tasks in notes with particular tag](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/How%20To/Find%20tasks%20in%20notes%20with%20particular%20tag.md) for a workaround using [[Dataview]] and Tasks together.
+You can learn more in:
+
+- [[Obsidian Properties]], and the examples in that file
+- [Find tasks in notes with particular tag](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/How%20To/Find%20tasks%20in%20notes%20with%20particular%20tag.md).
 
 ### Order of tags in task lines
 

@@ -2,6 +2,7 @@ import type { Editor, EditorPosition } from 'obsidian';
 import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
+import { Occurrence } from '../Task/Occurrence';
 import { Recurrence } from '../Task/Recurrence';
 import {
     type DefaultTaskSerializerSymbols,
@@ -31,6 +32,10 @@ declare global {
 export const showDependencySuggestionsDefault = true;
 globalThis.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
 
+function includeDependencySuggestions(canSaveEdits: boolean) {
+    return globalThis.SHOW_DEPENDENCY_SUGGESTIONS && canSaveEdits;
+}
+
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
     maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
@@ -46,6 +51,7 @@ export function makeDefaultSuggestionBuilder(
         cursorPos: number,
         settings: Settings,
         allTasks: Task[],
+        canSaveEdits: boolean,
         taskToSuggestFor?: Task,
     ): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
@@ -61,7 +67,7 @@ export function makeDefaultSuggestionBuilder(
         );
 
         // add Auto ID suggestions
-        if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
+        if (includeDependencySuggestions(canSaveEdits)) {
             suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
 
             // add dependecy suggestions
@@ -79,7 +85,9 @@ export function makeDefaultSuggestionBuilder(
         }
 
         // add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode));
+        suggestions = suggestions.concat(
+            addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode, canSaveEdits),
+        );
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
@@ -125,6 +133,7 @@ function addTaskPropertySuggestions(
     _settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
     dataviewMode: boolean,
+    canSaveEdits: boolean,
 ): SuggestInfo[] {
     const hasPriority = (line: string) =>
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
@@ -148,20 +157,6 @@ function addTaskPropertySuggestions(
             displayText: `${symbols.scheduledDateSymbol} scheduled date`,
             appendText: `${symbols.scheduledDateSymbol} `,
         });
-
-    if (globalThis.SHOW_DEPENDENCY_SUGGESTIONS) {
-        if (!line.includes(symbols.idSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.idSymbol} Task ID`,
-                appendText: `${symbols.idSymbol}`,
-            });
-
-        if (!line.includes(symbols.dependsOnSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.dependsOnSymbol} Task depends on ID`,
-                appendText: `${symbols.dependsOnSymbol}`,
-            });
-    }
 
     if (!hasPriority(line)) {
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
@@ -196,6 +191,20 @@ function addTaskPropertySuggestions(
             appendText: `${symbols.createdDateSymbol} ${formattedDate}` + postfix,
             insertSkip: dataviewMode ? insertSkip : undefined,
         });
+    }
+
+    if (includeDependencySuggestions(canSaveEdits)) {
+        if (!line.includes(symbols.idSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.idSymbol} id`,
+                appendText: `${symbols.idSymbol}`,
+            });
+
+        if (!line.includes(symbols.dependsOnSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.dependsOnSymbol} depends on id`,
+                appendText: `${symbols.dependsOnSymbol}`,
+            });
     }
 
     // We now filter the general suggestions according to the word at the cursor. If there's
@@ -373,9 +382,11 @@ function addRecurrenceSuggestions(
             // We also add a nice checkmark in this case to denote it's a complete valid recurrence description
             const parsedRecurrence = Recurrence.fromText({
                 recurrenceRuleText: recurrenceString,
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
+                occurrence: new Occurrence({
+                    startDate: null,
+                    scheduledDate: null,
+                    dueDate: null,
+                }),
             })?.toText();
             if (parsedRecurrence) {
                 const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + postfix;
@@ -443,7 +454,7 @@ function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allT
         const ID = generateUniqueId(allTasks.map((task) => task.id));
         results.push({
             suggestionType: 'match',
-            displayText: 'Auto Generate Unique ID',
+            displayText: 'generate unique id',
             appendText: `${idSymbol} ${ID}`,
             insertAt: idMatch.index,
             insertSkip: idSymbol.length,
@@ -660,13 +671,20 @@ export function canSuggestForLine(line: string, cursor: EditorPosition, editor: 
 }
 
 /**
+ * This function is to specifically allow other plugins to offer Tasks auto suggest.
+ *
+ * Plugins that have a showTasksPluginAutoSuggest() method on their Editor can
+ * allow their users to use the Tasks auto-suggest menu if they wish.
+ * See more details in https://publish.obsidian.md/tasks/Advanced/Tasks+Api#Auto-Suggest+Integration
+ *
  * Return
  * - true if the parent editor is explicitly requesting that the suggest be displayed
  * - false if it is requesting that it be hidden
  * - undefined if the parent editor wants to defer to the default behavior
  *
- * @param editor - the editor instance to which the suggest belongs
+ * @param editor - the editor instance from the other plugin which would want to use Tasks' auto suggest
  * @param cursor - the cursor position
+ * @param lineHasGlobalFilter
  */
 function editorIsRequestingSuggest(
     editor: Editor,

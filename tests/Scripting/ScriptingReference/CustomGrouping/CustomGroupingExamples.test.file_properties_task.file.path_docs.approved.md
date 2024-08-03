@@ -5,7 +5,7 @@
 group by function task.file.path
 ```
 
-- Like 'group by path' but includes the file extension.
+- Like 'group by path' but includes the file extension, and does not escape any Markdown formatting characters in the path.
 
 ```javascript
 group by function task.file.path.replace(query.file.folder, '')

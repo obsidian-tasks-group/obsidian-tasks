@@ -11615,15 +11615,25 @@ var QuickAddApi = class {
             plugin,
             choiceExecutor
           ).format;
-          const modelProvider = getModelProvider(model.name);
+          let _model;
+          if (typeof model === "string") {
+            const foundModel = getModelByName(model);
+            if (!foundModel) {
+              throw new Error(`Model '${model}' not found.`);
+            }
+            _model = foundModel;
+          } else {
+            _model = model;
+          }
+          const modelProvider = getModelProvider(_model.name);
           if (!modelProvider) {
             throw new Error(
-              `Model '${model.name}' not found in any provider`
+              `Model '${_model.name}' not found in any provider`
             );
           }
           const assistantRes = await Prompt(
             {
-              model,
+              model: _model,
               prompt,
               apiKey: modelProvider.apiKey,
               modelOptions: settings?.modelOptions ?? {},
@@ -11657,11 +11667,17 @@ var QuickAddApi = class {
             plugin,
             choiceExecutor
           ).format;
-          const _model = getModelByName(model);
-          if (!_model) {
-            throw new Error(`Model ${model} not found.`);
+          let _model;
+          if (typeof model === "string") {
+            const foundModel = getModelByName(model);
+            if (!foundModel) {
+              throw new Error(`Model ${model} not found.`);
+            }
+            _model = foundModel;
+          } else {
+            _model = model;
           }
-          const modelProvider = getModelProvider(model);
+          const modelProvider = getModelProvider(_model.name);
           if (!modelProvider) {
             throw new Error(
               `Model '${_model.name}' not found in any provider`
@@ -13778,7 +13794,7 @@ var CaptureChoiceBuilder = class extends ChoiceBuilder {
         this.contentEl
       );
       considerSubsectionsSetting.setName("Consider subsections").setDesc(
-        "Enabling this will insert the text at the end of the section & its subsections, rather than just at the end of the target section.A section is defined by a heading, and its subsections are all the headings inside that section."
+        "Enabling this will insert the text at the end of the section & its subsections, rather than just at the end of the target section. A section is defined by a heading, and its subsections are all the headings inside that section."
       ).addToggle(
         (toggle) => toggle.setValue(this.choice.insertAfter?.considerSubsections).onChange((value) => {
           if (!value) {
@@ -17612,6 +17628,7 @@ var DEFAULT_SETTINGS = {
   announceUpdates: true,
   version: "0.0.0",
   disableOnlineFeatures: true,
+  enableRibbonIcon: false,
   ai: {
     defaultModel: "Ask me",
     defaultSystemPrompt: `As an AI assistant within Obsidian, your primary goal is to help users manage their ideas and knowledge more effectively. Format your responses using Markdown syntax. Please use the [[Obsidian]] link format. You can write aliases for the links by writing [[Obsidian|the alias after the pipe symbol]]. To use mathematical notation, use LaTeX syntax. LaTeX syntax for larger equations should be on separate lines, surrounded with double dollar signs ($$). You can also inline math expressions by wrapping it in $ symbols. For example, use $$w_{ij}^{	ext{new}}:=w_{ij}^{	ext{current}}+etacdotdelta_jcdot x_{ij}$$ on a separate line, but you can write "($eta$ = learning rate, $delta_j$ = error term, $x_{ij}$ = input)" inline.`,
@@ -17642,6 +17659,7 @@ var QuickAddSettingsTab = class extends import_obsidian34.PluginSettingTab {
     this.addTemplateFolderPathSetting();
     this.addAnnounceUpdatesSetting();
     this.addDisableOnlineFeaturesSetting();
+    this.addEnableRibbonIconSetting();
   }
   addAnnounceUpdatesSetting() {
     const setting = new import_obsidian34.Setting(this.containerEl);
@@ -17716,7 +17734,7 @@ var QuickAddSettingsTab = class extends import_obsidian34.PluginSettingTab {
   }
   addDisableOnlineFeaturesSetting() {
     new import_obsidian34.Setting(this.containerEl).setName("Disable AI & Online features").setDesc(
-      "This prevents the plugin from making requests to external providers like OpenAI. You can still use User Scripts to execute arbitrary code, inclulding contacting external providers. However, this setting disables plugin features like the AI Assistant from doing so. You need to disable this setting to use the AI Assistant."
+      "This prevents the plugin from making requests to external providers like OpenAI. You can still use User Scripts to execute arbitrary code, including contacting external providers. However, this setting disables plugin features like the AI Assistant from doing so. You need to disable this setting to use the AI Assistant."
     ).addToggle(
       (toggle) => toggle.setValue(settingsStore.getState().disableOnlineFeatures).onChange((value) => {
         settingsStore.setState({
@@ -17725,6 +17743,16 @@ var QuickAddSettingsTab = class extends import_obsidian34.PluginSettingTab {
         this.display();
       })
     );
+  }
+  addEnableRibbonIconSetting() {
+    new import_obsidian34.Setting(this.containerEl).setName("Show icon in sidebar").setDesc("Add QuickAdd icon to the sidebar ribbon. Requires a reload.").addToggle((toggle) => {
+      toggle.setValue(settingsStore.getState().enableRibbonIcon).onChange((value) => {
+        settingsStore.setState({
+          enableRibbonIcon: value
+        });
+        this.display();
+      });
+    });
   }
 };
 
@@ -19866,6 +19894,11 @@ var QuickAdd = class extends import_obsidian42.Plugin {
       }
     });
     log.register(new ConsoleErrorLogger()).register(new GuiLogger(this));
+    if (this.settings.enableRibbonIcon) {
+      this.addRibbonIcon("file-plus", "QuickAdd", () => {
+        ChoiceSuggester.Open(this, this.settings.choices);
+      });
+    }
     this.addSettingTab(new QuickAddSettingsTab(this.app, this));
     this.app.workspace.onLayoutReady(
       () => new StartupMacroEngine(

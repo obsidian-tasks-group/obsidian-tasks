@@ -1,65 +1,26 @@
 // begin-snippet: declare-Moment-type-in-src
 import type { Moment } from 'moment';
 // end-snippet
-
 import { RRule } from 'rrule';
-import { compareByDate } from '../lib/DateTools';
+import type { Occurrence } from './Occurrence';
 
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
-    private readonly startDate: Moment | null;
-    private readonly scheduledDate: Moment | null;
-    private readonly dueDate: Moment | null;
+    readonly occurrence: Occurrence;
 
-    /**
-     * The reference date is used to calculate future occurrences.
-     *
-     * Future occurrences will recur based on the reference date.
-     * The reference date is the due date, if it is given.
-     * Otherwise the scheduled date, if it is given. And so on.
-     *
-     * Recurrence of all dates will be kept relative to the reference date.
-     * For example: if the due date and the start date are given, the due date
-     * is the reference date. Future occurrences will have a start date with the
-     * same relative distance to the due date as the original task. For example
-     * "starts one week before it is due".
-     */
-    private readonly referenceDate: Moment | null;
-
-    constructor({
-        rrule,
-        baseOnToday,
-        referenceDate,
-        startDate,
-        scheduledDate,
-        dueDate,
-    }: {
-        rrule: RRule;
-        baseOnToday: boolean;
-        referenceDate: Moment | null;
-        startDate: Moment | null;
-        scheduledDate: Moment | null;
-        dueDate: Moment | null;
-    }) {
+    constructor({ rrule, baseOnToday, occurrence }: { rrule: RRule; baseOnToday: boolean; occurrence: Occurrence }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
-        this.referenceDate = referenceDate;
-        this.startDate = startDate;
-        this.scheduledDate = scheduledDate;
-        this.dueDate = dueDate;
+        this.occurrence = occurrence;
     }
 
     public static fromText({
         recurrenceRuleText,
-        startDate,
-        scheduledDate,
-        dueDate,
+        occurrence,
     }: {
         recurrenceRuleText: string;
-        startDate: Moment | null;
-        scheduledDate: Moment | null;
-        dueDate: Moment | null;
+        occurrence: Occurrence;
     }): Recurrence | null {
         try {
             const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
@@ -72,17 +33,7 @@ export class Recurrence {
 
             const options = RRule.parseText(isolatedRuleText);
             if (options !== null) {
-                // Pick the reference date for recurrence based on importance.
-                // Assuming due date has the highest priority.
-                let referenceDate: Moment | null = null;
-                // Clone the moment objects.
-                if (dueDate) {
-                    referenceDate = window.moment(dueDate);
-                } else if (scheduledDate) {
-                    referenceDate = window.moment(scheduledDate);
-                } else if (startDate) {
-                    referenceDate = window.moment(startDate);
-                }
+                const referenceDate = occurrence.referenceDate;
 
                 if (!baseOnToday && referenceDate !== null) {
                     options.dtstart = window.moment(referenceDate).startOf('day').utc(true).toDate();
@@ -94,10 +45,7 @@ export class Recurrence {
                 return new Recurrence({
                     rrule,
                     baseOnToday,
-                    referenceDate,
-                    startDate,
-                    scheduledDate,
-                    dueDate,
+                    occurrence,
                 });
             }
         } catch (e) {
@@ -125,57 +73,14 @@ export class Recurrence {
      *
      * @param today - Optional date representing the completion date. Defaults to today.
      */
-    public next(today = window.moment()): {
-        startDate: Moment | null;
-        scheduledDate: Moment | null;
-        dueDate: Moment | null;
-    } | null {
-        const next = this.nextReferenceDate(today);
+    public next(today = window.moment()): Occurrence | null {
+        const nextReferenceDate = this.nextReferenceDate(today);
 
-        if (next !== null) {
-            // Keep the relative difference between the reference date and
-            // start/scheduled/due.
-            let startDate: Moment | null = null;
-            let scheduledDate: Moment | null = null;
-            let dueDate: Moment | null = null;
-
-            // Only if a reference date is given. A reference date will exist if at
-            // least one of the other dates is set.
-            if (this.referenceDate) {
-                if (this.startDate) {
-                    const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
-
-                    // Cloning so that original won't be manipulated:
-                    startDate = window.moment(next);
-                    // Rounding days to handle cross daylight-savings-time recurrences.
-                    startDate.add(Math.round(originalDifference.asDays()), 'days');
-                }
-                if (this.scheduledDate) {
-                    const originalDifference = window.moment.duration(this.scheduledDate.diff(this.referenceDate));
-
-                    // Cloning so that original won't be manipulated:
-                    scheduledDate = window.moment(next);
-                    // Rounding days to handle cross daylight-savings-time recurrences.
-                    scheduledDate.add(Math.round(originalDifference.asDays()), 'days');
-                }
-                if (this.dueDate) {
-                    const originalDifference = window.moment.duration(this.dueDate.diff(this.referenceDate));
-
-                    // Cloning so that original won't be manipulated:
-                    dueDate = window.moment(next);
-                    // Rounding days to handle cross daylight-savings-time recurrences.
-                    dueDate.add(Math.round(originalDifference.asDays()), 'days');
-                }
-            }
-
-            return {
-                startDate,
-                scheduledDate,
-                dueDate,
-            };
+        if (nextReferenceDate === null) {
+            return null;
         }
 
-        return null;
+        return this.occurrence.next(nextReferenceDate);
     }
 
     public identicalTo(other: Recurrence) {
@@ -183,14 +88,7 @@ export class Recurrence {
             return false;
         }
 
-        // Compare Date fields
-        if (compareByDate(this.startDate, other.startDate) !== 0) {
-            return false;
-        }
-        if (compareByDate(this.scheduledDate, other.scheduledDate) !== 0) {
-            return false;
-        }
-        if (compareByDate(this.dueDate, other.dueDate) !== 0) {
+        if (!this.occurrence.isIdenticalTo(other.occurrence)) {
             return false;
         }
 
@@ -200,7 +98,7 @@ export class Recurrence {
     private nextReferenceDate(today: Moment): Date {
         if (this.baseOnToday) {
             // The next occurrence should happen based off the current date.
-            return this.nextReferenceDateFromToday(today).toDate();
+            return this.nextReferenceDateFromToday(today.clone()).toDate();
         } else {
             return this.nextReferenceDateFromOriginalReferenceDate().toDate();
         }
@@ -222,7 +120,7 @@ export class Recurrence {
         const after = window
             // Reference date can be `undefined` to mean "today".
             // Moment only accepts `undefined`, not `null`.
-            .moment(this.referenceDate ?? undefined)
+            .moment(this.occurrence.referenceDate ?? undefined)
             .endOf('day');
 
         return this.nextAfter(after, this.rrule);

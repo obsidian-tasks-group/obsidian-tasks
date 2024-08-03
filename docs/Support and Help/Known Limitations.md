@@ -51,13 +51,13 @@ This page gathers together all the documentation on known limitations of the plu
 
 ![[Use Filename as Default Date#Limitations]]
 
+## Editing Tasks: Auto-Suggest
+
+![[Auto-Suggest#Limitations of Auto-Suggest]]
+
 ## Editing Tasks: Create or edit Task
 
 ![[Create or edit Task#Known limitations]]
-
-## Editing Tasks: Auto-Suggest
-
-![[Auto-Suggest#Current Limitations]]
 
 ## Editing Tasks: Postponing
 

@@ -1,15 +1,26 @@
 # Report a Bug
 
+See also [[Request a Feature]].
+
 ## Summary
 
 If you require support with a bug, you can help us to help you.
 
-Please understand that Tasks is mostly maintained by a single person in their free time, and:
+Please understand that Tasks is mostly maintained by two people in their free time, and:
 
 - our spending **time dealing with incomplete bug reports means** ...
 - ... us spending **less time improving the plugin**.
 
 Please follow the steps in this page **fully** when reporting a bug, to save your time and ours. Thank you.
+
+## Active Issues
+
+<!-- force a blank line --><!-- include: snippet-callout-titles-bug.md -->
+
+> [!Warning] Warning: Obsidian bug in versions 1.6.0 to 1.6.3 has caused some tasks not to be found
+> See [[Missing tasks in callouts with some Obsidian 1.6.x versions]] for how to ==make Obsidian 1.6.5 fix its metadata cache==, in case it was broken by earlier 1.6.x versions.
+
+<!-- force a blank line --><!-- endInclude -->
 
 ## Before reporting a bug
 

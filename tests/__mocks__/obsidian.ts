@@ -1,3 +1,5 @@
+import type { CachedMetadata } from 'obsidian';
+
 export {};
 
 export class MenuItem {
@@ -120,6 +122,26 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
               matches: matches,
           }
         : null;
+}
+
+let mockedFileData: any = {};
+
+export function setCurrentCacheFile(mockData: any) {
+    mockedFileData = mockData;
+}
+
+export function getAllTags(cachedMetadata: CachedMetadata): string[] {
+    if (cachedMetadata !== mockedFileData.cachedMetadata) {
+        throw new Error('Inconsistent test data used in mock getAllTags()');
+    }
+    return mockedFileData.getAllTags;
+}
+
+export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
+    if (frontmatter !== mockedFileData.cachedMetadata.frontmatter) {
+        throw new Error('Inconsistent test data used in mock parseFrontMatterTags()');
+    }
+    return mockedFileData.parseFrontMatterTags;
 }
 
 /**

@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { Occurrence } from '../../src/Task/Occurrence';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 
@@ -12,29 +13,24 @@ describe('Recurrence', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every week',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
+            occurrence: new Occurrence({}),
         });
 
         // Act
         const next = recurrence!.next();
 
         // Assert
-        expect(next).toStrictEqual({
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-        });
+        const nullOccurrence = new Occurrence({ startDate: null, scheduledDate: null, dueDate: null });
+        expect(next).toStrictEqual(nullOccurrence);
     });
 
     it('creates a recurrence the next month, even on the 31st', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every month',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: moment('2022-01-31').startOf('day'),
+            occurrence: new Occurrence({
+                dueDate: moment('2022-01-31').startOf('day'),
+            }),
         });
 
         // Act
@@ -50,9 +46,9 @@ describe('Recurrence', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 3 months',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: moment('2022-01-31').startOf('day'),
+            occurrence: new Occurrence({
+                dueDate: moment('2022-01-31').startOf('day'),
+            }),
         });
 
         // Act
@@ -68,9 +64,9 @@ describe('Recurrence', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 2 months',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: moment('2023-12-31').startOf('day'),
+            occurrence: new Occurrence({
+                dueDate: moment('2023-12-31').startOf('day'),
+            }),
         });
 
         // Act
@@ -86,9 +82,9 @@ describe('Recurrence', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 2 years',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: moment('2024-02-29').startOf('day'),
+            occurrence: new Occurrence({
+                dueDate: moment('2024-02-29').startOf('day'),
+            }),
         });
 
         // Act
@@ -104,9 +100,9 @@ describe('Recurrence', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 11 months',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: moment('2020-03-31').startOf('day'),
+            occurrence: new Occurrence({
+                dueDate: moment('2020-03-31').startOf('day'),
+            }),
         });
 
         // Act
@@ -122,9 +118,9 @@ describe('Recurrence', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every 13 months',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: moment('2020-01-31').startOf('day'),
+            occurrence: new Occurrence({
+                dueDate: moment('2020-01-31').startOf('day'),
+            }),
         });
 
         // Act
@@ -144,9 +140,9 @@ describe('Recurrence - with invalid dates in tasks', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
+            occurrence: new Occurrence({
+                dueDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
+            }),
         });
 
         // Assert
@@ -164,9 +160,10 @@ describe('Recurrence - with invalid dates in tasks', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day',
-            startDate: null,
-            scheduledDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
-            dueDate: moment('2022-02-27').startOf('day'),
+            occurrence: new Occurrence({
+                scheduledDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
+                dueDate: moment('2022-02-27').startOf('day'),
+            }),
         });
 
         // Act

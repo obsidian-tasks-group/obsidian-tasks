@@ -1,3 +1,4 @@
+import { Occurrence } from '../../src/Task/Occurrence';
 import { Task } from '../../src/Task/Task';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Status } from '../../src/Statuses/Status';
@@ -55,9 +56,11 @@ export class SampleTasks {
                 .recurrence(
                     Recurrence.fromText({
                         recurrenceRuleText: recurrenceRule,
-                        startDate: null,
-                        scheduledDate: null,
-                        dueDate: null,
+                        occurrence: new Occurrence({
+                            startDate: null,
+                            scheduledDate: null,
+                            dueDate: null,
+                        }),
                     }),
                 )
                 .build();
@@ -280,9 +283,11 @@ export class SampleTasks {
     public static withSampleOnCompletionValues() {
         const everyDayWhenDone = Recurrence.fromText({
             recurrenceRuleText: 'every day when done',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
+            occurrence: new Occurrence({
+                startDate: null,
+                scheduledDate: null,
+                dueDate: null,
+            }),
         });
         const task1 = new TaskBuilder().description('#task Remove this task when done').onCompletion('delete').build();
         const task2 = new TaskBuilder()

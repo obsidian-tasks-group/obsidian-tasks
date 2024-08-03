@@ -1,0 +1,21 @@
+Results of custom groupers
+
+
+
+group by function task.file.property('creation date') ?? 'no creation date'
+group tasks by 'creation date' date property.
+=>
+2024-05-25T15:17:00
+no creation date
+====================================================================================
+
+
+group by function \
+    const value = task.file.property('creation date'); \
+    return value ? window.moment(value).format('MMMM') : 'no month'
+group tasks by month in 'creation date' date property.
+=>
+May
+no month
+====================================================================================
+

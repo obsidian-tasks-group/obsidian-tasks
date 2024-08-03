@@ -1,4 +1,3 @@
-import { it } from '@jest/globals';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { EMPTY } from 'approvals/lib/Utilities/Printers';
 import { formatToRepresentType } from '../Scripting/ScriptingTestHelpers';

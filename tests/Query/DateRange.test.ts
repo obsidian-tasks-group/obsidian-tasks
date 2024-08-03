@@ -30,7 +30,7 @@ describe('DateRange - absolute date ranges', () => {
 describe('DateRange - relative date ranges', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2021, 9, 6)); // 2021-10-06
+        jest.setSystemTime(new Date('2021-10-06'));
     });
 
     afterAll(() => {
@@ -51,7 +51,7 @@ describe('DateRange - relative date ranges', () => {
 describe('Date Parser - correct delta for next & last month & quarter (Today is 2021-04-03)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2021, 4 - 1, 3)); // 2021-04-03
+        jest.setSystemTime(new Date('2021-04-03'));
     });
 
     afterAll(() => {

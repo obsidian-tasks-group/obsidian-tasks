@@ -198,7 +198,12 @@ describe('EditableTask tests', () => {
                 "_sectionIndex": 3,
                 "_sectionStart": 5,
                 "_tasksFile": TasksFile {
+                  "_cachedMetadata": {},
+                  "_frontmatter": {
+                    "tags": [],
+                  },
                   "_path": "some/folder/fileName.md",
+                  "_tags": [],
                 },
               },
             }

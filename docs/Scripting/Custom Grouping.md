@@ -136,7 +136,7 @@ group by function task.due.fromNow.groupText
 ```
 
 - Group by the [time from now](https://momentjs.com/docs/#/displaying/fromnow/), for example `8 days ago`, `in 11 hours`.
-- It users an empty string (so no heading) if there is no due date.
+- It uses an empty string (so no heading) if there is no due date.
 - The values `task.due.fromNow.name` and `task.due.fromNow.sortOrder` are also available.
 
 ```javascript
@@ -203,7 +203,7 @@ group by function task.urgency.toFixed(3)
 group by function task.file.folder
 ```
 
-- Same as 'group by folder'.
+- Like 'group by folder', except that it does not escape any Markdown formatting characters in the folder.
 
 ```javascript
 group by function task.file.folder.slice(0, -1).split('/').pop() + '/'
