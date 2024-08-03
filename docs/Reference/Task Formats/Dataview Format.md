@@ -140,6 +140,8 @@ For more information, see [[Recurring Tasks]].
 ```
 <!-- endSnippet -->
 
+For more information, see [[On Completion]].
+
 ### Dataview Format for Dependencies
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_dataview-snippet.approved.md -->
