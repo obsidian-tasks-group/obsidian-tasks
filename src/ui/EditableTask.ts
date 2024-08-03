@@ -22,7 +22,7 @@ export class EditableTask {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     description: string;
     status: Status;
-    priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
+    priority: EditableTaskPriority;
     recurrenceRule: string;
     // onCompletion: 'ignore' | 'delete';
     onCompletion: OnCompletion;
@@ -42,7 +42,7 @@ export class EditableTask {
         scheduledDate: string;
         recurrenceRule: string;
         blockedBy: Task[];
-        priority: 'none' | 'lowest' | 'medium' | 'highest' | 'high' | 'low';
+        priority: EditableTaskPriority;
         // onCompletion: 'ignore' | 'delete';
         onCompletion: OnCompletion;
         addGlobalFilterOnSave: boolean;
