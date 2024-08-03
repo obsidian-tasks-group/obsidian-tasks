@@ -56,8 +56,8 @@ This section describes the *how*...
   - Or `null` if:
     - the property has no value,
     - or the task's file does not contain that property.
-  - Property names are case-insensitive:
-    - `property name` will find `Property Name`, for example.
+- Property names are case-insensitive:
+  - `property name` will find `Property Name`, for example.
 - Tags in Frontmatter can be accessed with `task.file.property('tags')`
   - `TAG` and `TAGS` are standardised to `tags`.
   - The `#` prefix is added to all tag values returned by this function.
