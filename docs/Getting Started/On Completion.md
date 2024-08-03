@@ -35,23 +35,23 @@ At present, two "On Completion" ***actions*** are supported:
 > In order to keep it simple, the following assumes that **Tasks** is configured so as not to use a [[Global Filter]] nor  add a [[Dates#Done date]] when you complete a task.
 
 > [!example] Imagine that your vault consists of a single note file `My Project.md`, with these contents:
-
-```text
-# My Project Tasks
-- [ ] Leave me alone
-- [ ] Leave me alone too! 🏁 ignore
-- [ ] Delete me upon completion 🏁 delete
-- [ ] Delete my completed instance, leave my next instance 📅 2021-05-20 🔁 every day when done 🏁 delete
-```
+>
+> ```text
+> # My Project Tasks
+> - [ ] Leave me alone
+> - [ ] Leave me alone too! 🏁 ignore
+> - [ ] Delete me upon completion 🏁 delete
+> - [ ] Delete my completed instance, leave my next instance 📅 2021-05-20 🔁 every day when done 🏁 delete
+> ```
 
 > [!success] Using the plugin's default settings, after *using Tasks* to mark each task as "done", your `My Project` note file will contain:
-
-```text
-# My Project Tasks
-- [x] Leave me alone
-- [x] Leave me alone too! 🏁 ignore
-- [ ] Delete my completed instance, leave my next instance 📅 2021-05-21 🔁 every day when done 🏁 delete
-```
+>
+> ```text
+> # My Project Tasks
+> - [x] Leave me alone
+> - [x] Leave me alone too! 🏁 ignore
+> - [ ] Delete my completed instance, leave my next instance 📅 2021-05-21 🔁 every day when done 🏁 delete
+> ```
 
 > [!note] Note that
 >
