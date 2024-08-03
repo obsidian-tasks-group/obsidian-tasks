@@ -62,6 +62,12 @@ At present, two "On Completion" ***actions*** are supported:
 > - The task assigned the `ignore` action is treated the same as one that has no onCompletion field at all, and
 > - The next instance of the recurring task has replaced the original, completed instance.
 
+> [!warning]
+> Currently, `🏁 ignore`  has some slightly confusing behaviour:
+>
+> - When viewed in Reading mode, `🏁 ignore` is not shown.
+> - When tasks are completed, any `🏁 ignore` text is deleted.
+
 ## Assigning and changing a given task's "On Completion" action
 
 At present, the "On Completion" signifier and desired **Action** identifier have to be added to a task manually.
