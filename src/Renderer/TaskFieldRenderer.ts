@@ -177,6 +177,7 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
 
     description: createFieldWithoutDataAttributes('task-description'),
     recurrenceRule: createFieldWithoutDataAttributes('task-recurring'),
+    onCompletion: createFieldWithoutDataAttributes('task-onCompletion'),
     dependsOn: createFieldWithoutDataAttributes('task-dependsOn'),
     id: createFieldWithoutDataAttributes('task-id'),
     blockLink: createFieldWithoutDataAttributes('task-block-link'),

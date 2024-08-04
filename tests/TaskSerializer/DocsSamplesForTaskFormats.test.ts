@@ -73,6 +73,23 @@ describe('Serializer', () => {
         });
     });
 
+    describe('OnCompletion', () => {
+        function allOnCompletionLines() {
+            const tasks = SampleTasks.withSampleOnCompletionValues();
+            return tasks.map((t) => t.toFileLineString()).join('\n');
+        }
+
+        it.each(Object.keys(TASK_FORMATS))('%s-snippet', (key: string) => {
+            updateSettings({ taskFormat: key as keyof TASK_FORMATS });
+            verifyMarkdown(allOnCompletionLines());
+        });
+
+        it.each(Object.keys(TASK_FORMATS))('%s-include', (key: string) => {
+            updateSettings({ taskFormat: key as keyof TASK_FORMATS });
+            verifyMarkdownForDocs(allOnCompletionLines());
+        });
+    });
+
     describe('Dependencies', () => {
         function allDependencyLines() {
             const tasks = SampleTasks.withAllRepresentativeDependencyFields();

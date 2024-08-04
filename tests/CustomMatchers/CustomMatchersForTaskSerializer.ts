@@ -1,6 +1,7 @@
 import { diff } from 'jest-diff';
 import type { MatcherFunction } from 'expect';
 import moment from 'moment';
+import { OnCompletion } from '../../src/Task/OnCompletion';
 import type { TaskDetails } from '../../src/TaskSerializer';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Priority } from '../../src/Task/Priority';
@@ -61,6 +62,10 @@ function isTaskDetails(val: any): val is TaskDetails {
         return false;
     }
 
+    if (!Object.values(OnCompletion).includes(val.onCompletion)) {
+        return false;
+    }
+
     return true;
 }
 
@@ -110,6 +115,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         doneDate: null,
         cancelledDate: null,
         recurrence: null,
+        onCompletion: '',
         dependsOn: [],
         id: '',
         tags: [],

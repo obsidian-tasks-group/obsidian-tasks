@@ -1,5 +1,15 @@
+import { Notice } from 'obsidian';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { Task } from './Task';
+
+export enum OnCompletion {
+    Ignore = '',
+    Delete = 'delete',
+}
+
+function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) {
+    return tasks.filter((task) => task !== changedStatusTask);
+}
 
 export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const tasksArrayLength = tasks.length;
@@ -11,23 +21,19 @@ export function handleOnCompletion(task: Task, tasks: Task[]): Task[] {
     const changedStatusTask = tasks[tasksArrayLength - 1];
     const endStatus = changedStatusTask.status;
 
-    const ocTrigger = ' 🏁 ';
-    const taskString = changedStatusTask.description;
-
-    if (!taskString.includes(ocTrigger) || endStatus.type !== StatusType.DONE || endStatus.type === startStatus.type) {
+    if (!task.onCompletion || endStatus.type !== StatusType.DONE || endStatus.type === startStatus.type) {
         return tasks;
     }
 
-    if (taskString.includes('🏁 Delete')) {
-        return tasks.filter((task) => task !== changedStatusTask);
+    const ocAction = task.onCompletion.toLowerCase();
+
+    if ('delete' === ocAction) {
+        return returnWithoutCompletedInstance(tasks, changedStatusTask);
     }
-    // const errorMessage = 'Unknown "On Completion" action: ' + ocAction;
-    const errorMessage = 'Unknown "On Completion" action';
-    console.log(errorMessage);
+
+    const errorText = 'Unknown "On Completion" action: ' + task.onCompletion;
+    const hintText = '\nClick here to clear';
+    const noticeText = errorText + hintText;
+    new Notice(noticeText, 0);
     return tasks;
-    // const hint = '\nClick here to clear';
-    // const noticeMessage = errorMessage + hint;
-    // new Notice(noticeMessage, 0);
-    // console.log('Uh-oh -- we should never actually get here...  :( ');
-    // throw new Error('Something went wrong');
 }

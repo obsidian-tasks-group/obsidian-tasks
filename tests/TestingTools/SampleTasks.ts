@@ -279,4 +279,22 @@ export class SampleTasks {
             return new TaskBuilder().blockLink(blockLink).build();
         });
     }
+
+    public static withSampleOnCompletionValues() {
+        const everyDay = Recurrence.fromText({
+            recurrenceRuleText: 'every day',
+            occurrence: new Occurrence({
+                startDate: null,
+                scheduledDate: null,
+                dueDate: null,
+            }),
+        });
+        const task1 = new TaskBuilder().description('#task Remove this task when done').onCompletion('delete').build();
+        const task2 = new TaskBuilder()
+            .description('#task Remove completed instance of this recurring task when done')
+            .onCompletion('delete')
+            .recurrence(everyDay)
+            .build();
+        return [task1, task2];
+    }
 }
