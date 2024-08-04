@@ -48,6 +48,17 @@ For more information, see [[Priority]].
 
 For more information, see [[Recurring Tasks]].
 
+## Tasks Emoji Format for OnCompletion
+
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_tasksPluginEmoji-snippet.approved.md -->
+```md
+- [ ] #task Remove this task when done 🏁 delete
+- [ ] #task Remove completed instance of this recurring task when done 🔁 every day 🏁 delete
+```
+<!-- endSnippet -->
+
+For more information, see [[On Completion]].
+
 ## Tasks Emoji  Format for Dependencies
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_tasksPluginEmoji-snippet.approved.md -->

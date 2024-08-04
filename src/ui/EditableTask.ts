@@ -2,6 +2,7 @@ import { GlobalFilter } from '../Config/GlobalFilter';
 import { parseTypedDateForSaving } from '../lib/DateTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
+import { OnCompletion } from '../Task/OnCompletion';
 import { Occurrence } from '../Task/Occurrence';
 import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
@@ -22,8 +23,10 @@ export class EditableTask {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     description: string;
     status: Status;
-    priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
+    priority: EditableTaskPriority;
     recurrenceRule: string;
+    // onCompletion: 'ignore' | 'delete';
+    onCompletion: OnCompletion;
     createdDate: string;
     startDate: string;
     scheduledDate: string;
@@ -42,6 +45,8 @@ export class EditableTask {
         description: string;
         status: Status;
         priority: EditableTaskPriority;
+        // onCompletion: 'ignore' | 'delete';
+        onCompletion: OnCompletion;
         recurrenceRule: string;
         createdDate: string;
         startDate: string;
@@ -59,6 +64,7 @@ export class EditableTask {
         this.description = editableTask.description;
         this.status = editableTask.status;
         this.priority = editableTask.priority;
+        this.onCompletion = editableTask.onCompletion;
         this.recurrenceRule = editableTask.recurrenceRule;
         this.createdDate = editableTask.createdDate;
         this.startDate = editableTask.startDate;
@@ -119,6 +125,7 @@ export class EditableTask {
             status: task.status,
             priority,
             recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
+            onCompletion: task.onCompletion,
             createdDate: task.created.formatAsDate(),
             startDate: task.start.formatAsDate(),
             scheduledDate: task.scheduled.formatAsDate(),
@@ -183,6 +190,15 @@ export class EditableTask {
                 parsedPriority = Priority.None;
         }
 
+        let parsedOnCompletion: OnCompletion;
+        switch (this.onCompletion) {
+            case 'delete':
+                parsedOnCompletion = OnCompletion.Delete;
+                break;
+            default:
+                parsedOnCompletion = OnCompletion.Ignore;
+        }
+
         const blockedByWithIds = [];
 
         for (const depTask of this.blockedBy) {
@@ -211,6 +227,7 @@ export class EditableTask {
             description,
             status: task.status,
             priority: parsedPriority,
+            onCompletion: parsedOnCompletion,
             recurrence,
             startDate,
             scheduledDate,

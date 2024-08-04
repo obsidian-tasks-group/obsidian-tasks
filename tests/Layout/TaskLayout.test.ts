@@ -36,6 +36,7 @@ describe('TaskLayout tests', () => {
             tasks-layout-hide-dependsOn
             tasks-layout-hide-priority
             tasks-layout-hide-recurrenceRule
+            tasks-layout-hide-onCompletion
             tasks-layout-hide-createdDate
             tasks-layout-hide-startDate
             tasks-layout-hide-scheduledDate

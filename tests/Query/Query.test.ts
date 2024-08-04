@@ -6,6 +6,7 @@ import { Query } from '../../src/Query/Query';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
 import { Task } from '../../src/Task/Task';
+import { OnCompletion } from '../../src/Task/OnCompletion';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { fieldCreators } from '../../src/Query/FilterParser';
 import type { Field } from '../../src/Query/Filter/Field';
@@ -752,6 +753,7 @@ describe('Query', () => {
                     doneDate: null,
                     cancelledDate: null,
                     recurrence: null,
+                    onCompletion: OnCompletion.Ignore,
                     dependsOn: [],
                     id: '',
                     blockLink: '',
@@ -773,6 +775,7 @@ describe('Query', () => {
                     doneDate: null,
                     cancelledDate: null,
                     recurrence: null,
+                    onCompletion: OnCompletion.Ignore,
                     dependsOn: [],
                     id: '',
                     blockLink: '',

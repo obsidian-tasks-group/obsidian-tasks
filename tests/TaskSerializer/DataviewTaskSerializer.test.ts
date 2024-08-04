@@ -7,6 +7,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from '../../src/TaskSerializer/DataviewTaskSerializer';
 import type { Task } from '../../src/Task/Task';
 import type { TaskDetails } from '../../src/TaskSerializer';
+import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
 
 jest.mock('obsidian');
@@ -49,6 +50,14 @@ describe('DataviewTaskSerializer', () => {
             const taskDetails = deserialize('[repeat:: every day]');
             expect(taskDetails).toMatchTaskDetails({
                 recurrence: new RecurrenceBuilder().rule('every day').build(),
+            });
+        });
+
+        describe('should parse onCompletion', () => {
+            it('should parse delete action', () => {
+                const onCompletion = '[onCompletion:: delete]';
+                const taskDetails = deserialize(onCompletion);
+                expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Delete });
             });
         });
 
@@ -317,6 +326,12 @@ describe('DataviewTaskSerializer', () => {
             expect(serialized).toEqual('  [repeat:: every day]');
         });
 
+        it('should serialize onCompletion', () => {
+            const task = new TaskBuilder().onCompletion('delete').description('').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual('  [onCompletion:: delete]');
+        });
+
         it('should serialize tags', () => {
             const task = new TaskBuilder().description('').tags(['#hello', '#world', '#task']).build();
             const serialized = serialize(task);
@@ -339,7 +354,7 @@ describe('DataviewTaskSerializer', () => {
             const task = TaskBuilder.createFullyPopulatedTask();
             const serialized = serialize(task);
             expect(serialized).toMatchInlineSnapshot(
-                '"Do exercises #todo #health  [id:: abcdef]  [dependsOn:: 123456,abc123]  [priority:: medium]  [repeat:: every day when done]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [due:: 2023-07-04]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
+                '"Do exercises #todo #health  [id:: abcdef]  [dependsOn:: 123456,abc123]  [priority:: medium]  [repeat:: every day when done]  [onCompletion:: delete]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [due:: 2023-07-04]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
             );
         });
     });

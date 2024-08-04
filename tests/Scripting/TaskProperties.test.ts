@@ -124,6 +124,7 @@ describe('task', () => {
             'task.urgency',
             'task.isRecurring',
             'task.recurrenceRule',
+            'task.onCompletion',
             'task.tags',
             // 'task.indentation', // Cannot just use length to determine if sub-task, as it many be '> ' due to being in a sub-task
             // 'task.listMarker', // Not a priority to release
