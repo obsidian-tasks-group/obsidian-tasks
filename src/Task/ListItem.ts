@@ -17,6 +17,9 @@ export class ListItem {
         }
     }
 
+    /**
+     * Parses the parents recursively until a {@link ListItem} with a `null` parent is found.
+     */
     get root(): ListItem {
         if (this.parent === null) {
             return this;
@@ -25,6 +28,9 @@ export class ListItem {
         return this.parent.root;
     }
 
+    /**
+     * Checks whether this item has no parent.
+     */
     get isRoot(): boolean {
         return this.parent === null;
     }
