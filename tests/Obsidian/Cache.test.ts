@@ -13,7 +13,9 @@ import { inheritance_1parent2children1sibling } from './__test_data__/inheritanc
 import { inheritance_1parent2children2grandchildren } from './__test_data__/inheritance_1parent2children2grandchildren';
 import { inheritance_1parent2children2grandchildren1sibling } from './__test_data__/inheritance_1parent2children2grandchildren1sibling';
 import { inheritance_1parent2children2grandchildren1sibling_start_with_heading } from './__test_data__/inheritance_1parent2children2grandchildren1sibling_start_with_heading';
+import { inheritance_2roots_listitem_listitem_task } from './__test_data__/inheritance_2roots_listitem_listitem_task';
 import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
+import { inheritance_listitem_listitem_task } from './__test_data__/inheritance_listitem_listitem_task';
 import { inheritance_listitem_task } from './__test_data__/inheritance_listitem_task';
 import { inheritance_listitem_task_siblings } from './__test_data__/inheritance_listitem_task_siblings';
 import { inheritance_task_2listitem_3task } from './__test_data__/inheritance_task_2listitem_3task';
@@ -77,14 +79,17 @@ function printHierarchy(listItem: ListItem, depth: number): string {
  * @param listItems
  */
 function printRoots(listItems: ListItem[]) {
-    let rootHierarchies = '';
-
+    const roots: ListItem[] = [];
     for (const listItem of listItems) {
-        if (listItem.parent === null) {
-            rootHierarchies += printHierarchy(listItem, 0);
+        if (!roots.includes(listItem.root)) {
+            roots.push(listItem.root);
         }
     }
 
+    let rootHierarchies = '';
+    roots.forEach((root) => {
+        rootHierarchies += printHierarchy(root, 0);
+    });
     return rootHierarchies;
 }
 
@@ -317,7 +322,53 @@ describe('cache', () => {
         expect(tasks.length).toEqual(1);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- [ ] child task : Task
+            "- parent list item : ListItem
+                - [ ] child task : Task
+            "
+        `);
+    });
+
+    it('should read grandchild task under parent and child listItem', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_listitem_listitem_task);
+        expect(inheritance_listitem_listitem_task.fileContents).toMatchInlineSnapshot(`
+            "- parent list item
+                - child list item
+                    - [ ] grandchild task
+            "
+        `);
+
+        expect(tasks.length).toEqual(1);
+
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "- parent list item : ListItem
+                - child list item : ListItem
+                    - [ ] grandchild task : Task
+            "
+        `);
+    });
+
+    it('should read 2 roots with grandchild task under parent and child listItem', () => {
+        const tasks = readTasksFromSimulatedFile(inheritance_2roots_listitem_listitem_task);
+        expect(inheritance_2roots_listitem_listitem_task.fileContents).toMatchInlineSnapshot(`
+            "- parent list item 1
+                - child list item 1
+                    - [ ] grandchild task 1
+
+            - parent list item 2
+                - child list item 2
+                    - [ ] grandchild task 2
+            "
+        `);
+
+        expect(tasks.length).toEqual(2);
+
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "- parent list item 1 : ListItem
+                - child list item 1 : ListItem
+                    - [ ] grandchild task 1 : Task
+            - parent list item 2 : ListItem
+                - child list item 2 : ListItem
+                    - [ ] grandchild task 2 : Task
             "
         `);
     });
