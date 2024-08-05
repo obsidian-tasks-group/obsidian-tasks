@@ -22,6 +22,6 @@ export class ListItem {
             return this;
         }
 
-        return this.parent;
+        return this.parent.root;
     }
 }
