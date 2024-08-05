@@ -117,15 +117,6 @@ export function getTasksFromFileContent2(
                 tasks.push(task);
             }
         } else {
-            // 1st:
-            // Root ListItems should not be parents of anything.
-            // This behavior was introduced in DataView plugin, so we want keep it for consistency reasons.
-            // 2nd:
-            // Usually, root listItem has parent = -lineNumber, but for listItems on the top of the file (on 0 line), it is -1.
-            if (listItem.parent < 0) {
-                continue;
-            }
-
             const lineNumber = listItem.position.start.line;
 
             const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;

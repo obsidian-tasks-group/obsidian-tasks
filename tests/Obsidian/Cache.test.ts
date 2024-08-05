@@ -322,7 +322,8 @@ describe('cache', () => {
         expect(tasks.length).toEqual(1);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- [ ] child task : Task
+            "- parent list item : ListItem
+                - [ ] child task : Task
             "
         `);
     });
@@ -339,8 +340,9 @@ describe('cache', () => {
         expect(tasks.length).toEqual(1);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- child list item : ListItem
-                - [ ] grandchild task : Task
+            "- parent list item : ListItem
+                - child list item : ListItem
+                    - [ ] grandchild task : Task
             "
         `);
     });
@@ -361,10 +363,12 @@ describe('cache', () => {
         expect(tasks.length).toEqual(2);
 
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
-            "- child list item 1 : ListItem
-                - [ ] grandchild task 1 : Task
-            - child list item 2 : ListItem
-                - [ ] grandchild task 2 : Task
+            "- parent list item 1 : ListItem
+                - child list item 1 : ListItem
+                    - [ ] grandchild task 1 : Task
+            - parent list item 2 : ListItem
+                - child list item 2 : ListItem
+                    - [ ] grandchild task 2 : Task
             "
         `);
     });
