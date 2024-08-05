@@ -18,6 +18,10 @@ export class ListItem {
     }
 
     get root(): ListItem {
-        return this;
+        if (this.parent === null) {
+            return this;
+        }
+
+        return this.parent;
     }
 }
