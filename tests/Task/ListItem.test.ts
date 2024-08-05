@@ -15,7 +15,6 @@ describe('list item tests', () => {
         expect(listItem).toBeDefined();
         expect(listItem.children).toEqual([]);
         expect(listItem.parent).toEqual(null);
-        expect(listItem.root).toEqual(listItem);
     });
 
     it('should create a list item with 2 children', () => {
@@ -33,7 +32,6 @@ describe('list item tests', () => {
         const listItem = new ListItem('', parentItem);
         expect(listItem).toBeDefined();
         expect(listItem.parent).toEqual(parentItem);
-        expect(listItem.root).toEqual(parentItem);
         expect(parentItem.children).toEqual([listItem]);
     });
 
@@ -62,5 +60,13 @@ describe('list item tests', () => {
 
         expect(parentTask!.children).toEqual([childListItem]);
         expect(childListItem.parent).toBe(parentTask);
+    });
+
+    it('should identify root of the hierarchy', () => {
+        const grandParent = new ListItem('- grand parent', null);
+        const parent = new ListItem('- parent', grandParent);
+
+        expect(grandParent.root.originalMarkdown).toEqual('- grand parent');
+        expect(parent.root.originalMarkdown).toEqual('- grand parent');
     });
 });
