@@ -33,6 +33,7 @@ describe('list item tests', () => {
         const listItem = new ListItem('', parentItem);
         expect(listItem).toBeDefined();
         expect(listItem.parent).toEqual(parentItem);
+        expect(listItem.root).toEqual(parentItem);
         expect(parentItem.children).toEqual([listItem]);
     });
 
