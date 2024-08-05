@@ -65,8 +65,10 @@ describe('list item tests', () => {
     it('should identify root of the hierarchy', () => {
         const grandParent = new ListItem('- grand parent', null);
         const parent = new ListItem('- parent', grandParent);
+        const child = new ListItem('- child', parent);
 
         expect(grandParent.root.originalMarkdown).toEqual('- grand parent');
         expect(parent.root.originalMarkdown).toEqual('- grand parent');
+        expect(child.root.originalMarkdown).toEqual('- grand parent');
     });
 });
