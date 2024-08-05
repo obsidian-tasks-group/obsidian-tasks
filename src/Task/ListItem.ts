@@ -24,4 +24,8 @@ export class ListItem {
 
         return this.parent.root;
     }
+
+    get isRoot(): boolean {
+        return this.parent === null;
+    }
 }
