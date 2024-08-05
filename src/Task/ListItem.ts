@@ -18,7 +18,15 @@ export class ListItem {
     }
 
     /**
-     * Parses the parents recursively until a {@link ListItem} with a `null` parent is found.
+     * Return the top-level parent of this list item or task,
+     * which will not be indented.
+     *
+     * The root of an unintended item is itself.
+     *
+     * This is useful because the Tasks plugin currently only stores a flat list of {@link Task} objects,
+     * and does not provide direct access to all the parsed {@link ListItem} objects.
+     *
+     * @see isRoot
      */
     get root(): ListItem {
         if (this.parent === null) {
@@ -29,7 +37,9 @@ export class ListItem {
     }
 
     /**
-     * Checks whether this item has no parent.
+     * Returns whether this is a top-level (unindented) list item or task.
+     *
+     * @see root
      */
     get isRoot(): boolean {
         return this.parent === null;
