@@ -79,14 +79,17 @@ function printHierarchy(listItem: ListItem, depth: number): string {
  * @param listItems
  */
 function printRoots(listItems: ListItem[]) {
-    let rootHierarchies = '';
-
+    const roots: ListItem[] = [];
     for (const listItem of listItems) {
-        if (listItem.parent === null) {
-            rootHierarchies += printHierarchy(listItem, 0);
+        if (!roots.includes(listItem.root)) {
+            roots.push(listItem.root);
         }
     }
 
+    let rootHierarchies = '';
+    roots.forEach((root) => {
+        rootHierarchies += printHierarchy(root, 0);
+    });
     return rootHierarchies;
 }
 
@@ -335,7 +338,11 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(1);
 
-        expect(printRoots(tasks)).toMatchInlineSnapshot('""');
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "- child list item : ListItem
+                - [ ] grandchild task : Task
+            "
+        `);
     });
 
     it('should read 2 roots with grandchild task under parent and child listItem', () => {
@@ -353,7 +360,13 @@ describe('cache', () => {
 
         expect(tasks.length).toEqual(2);
 
-        expect(printRoots(tasks)).toMatchInlineSnapshot('""');
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "- child list item 1 : ListItem
+                - [ ] grandchild task 1 : Task
+            - child list item 2 : ListItem
+                - [ ] grandchild task 2 : Task
+            "
+        `);
     });
 
     it('should read parent task and child listItem', () => {
