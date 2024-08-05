@@ -15,6 +15,7 @@ describe('list item tests', () => {
         expect(listItem).toBeDefined();
         expect(listItem.children).toEqual([]);
         expect(listItem.parent).toEqual(null);
+        expect(listItem.root).toEqual(listItem);
     });
 
     it('should create a list item with 2 children', () => {
