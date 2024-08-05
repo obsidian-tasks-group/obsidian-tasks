@@ -16,4 +16,8 @@ export class ListItem {
             parent.children.push(this);
         }
     }
+
+    get root(): ListItem {
+        return this;
+    }
 }
