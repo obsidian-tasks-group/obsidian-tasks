@@ -70,5 +70,9 @@ describe('list item tests', () => {
         expect(grandParent.root.originalMarkdown).toEqual('- grand parent');
         expect(parent.root.originalMarkdown).toEqual('- grand parent');
         expect(child.root.originalMarkdown).toEqual('- grand parent');
+
+        expect(grandParent.isRoot).toEqual(true);
+        expect(parent.isRoot).toEqual(false);
+        expect(child.isRoot).toEqual(false);
     });
 });
