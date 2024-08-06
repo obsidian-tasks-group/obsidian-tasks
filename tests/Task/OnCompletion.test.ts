@@ -29,26 +29,17 @@ export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) 
 }
 
 describe('OnCompletion feature', () => {
-    it('should just return task if StatusType has not changed', () => {
+    it('should not delete an already-done task', () => {
         // Arrange
-        const dueDate = '2024-02-10';
-        const task = new TaskBuilder()
-            .description('An already-DONE, non-recurring task')
-            .onCompletion(OnCompletion.Delete)
-            .dueDate(dueDate)
-            .doneDate(dueDate)
-            .status(Status.DONE)
-            .build();
-        expect(task.status.type).toEqual(StatusType.DONE);
+        const line = '- [x] An already-DONE, non-recurring task 🏁 delete ✅ 2024-02-10';
+        const task = fromLine({ line });
 
         // Act
         const returnedTasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
         expect(returnedTasks.length).toEqual(1);
-        expect(toLines(returnedTasks).join('\n')).toMatchInlineSnapshot(
-            '"- [x] An already-DONE, non-recurring task 🏁 delete 📅 2024-02-10 ✅ 2024-02-10"',
-        );
+        expect(returnedTasks[0].originalMarkdown).toEqual(line);
     });
 
     it('should just return trigger-less, non-recurring task', () => {
