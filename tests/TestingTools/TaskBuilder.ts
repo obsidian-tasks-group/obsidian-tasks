@@ -292,12 +292,8 @@ export class TaskBuilder {
         return this;
     }
 
-    public onCompletion(onCompletion: string): this {
-        if (onCompletion === 'delete') {
-            this._onCompletion = OnCompletion.Delete;
-        } else {
-            this._onCompletion = OnCompletion.Ignore;
-        }
+    public onCompletion(onCompletion: OnCompletion): this {
+        this._onCompletion = onCompletion;
         return this;
     }
 
