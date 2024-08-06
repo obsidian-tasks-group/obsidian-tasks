@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { OnCompletion } from '../Task/OnCompletion';
+import { OnCompletion, parseOnCompletionValue } from '../Task/OnCompletion';
 import { Occurrence } from '../Task/Occurrence';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
@@ -127,15 +127,6 @@ export function allTaskPluginEmojis() {
         }
     });
     return allEmojis;
-}
-
-function parseOnCompletionValue(inputOnCompletionValue: string) {
-    const onCompletionString = inputOnCompletionValue.trim().toLowerCase();
-    if (onCompletionString === 'delete') {
-        return OnCompletion.Delete;
-    } else {
-        return OnCompletion.Ignore;
-    }
 }
 
 export class DefaultTaskSerializer implements TaskSerializer {
