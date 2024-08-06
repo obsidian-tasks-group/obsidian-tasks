@@ -1,4 +1,3 @@
-import { Notice } from 'obsidian';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { Task } from './Task';
 
@@ -44,9 +43,9 @@ export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[]
         return returnWithoutCompletedInstance(newTasks, changedStatusTask);
     }
 
-    const errorText = 'Unknown "On Completion" action: ' + originalTask.onCompletion;
-    const hintText = '\nClick here to clear';
-    const noticeText = errorText + hintText;
-    new Notice(noticeText, 0);
+    // We will only reach here when adding a new option to OnCompletion, and before
+    // the handler code has been added. This is expected to be found in tests.
+    console.log(`OnCompletion action ${ocAction} not yet implemented.`);
+
     return newTasks;
 }
