@@ -9,7 +9,7 @@ import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfig
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine, toLines, toMarkdown } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
-import { handleOnCompletion } from '../../src/Task/OnCompletion';
+import { OnCompletion, handleOnCompletion } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
 
@@ -34,7 +34,7 @@ describe('OnCompletion feature', () => {
         const dueDate = '2024-02-10';
         const task = new TaskBuilder()
             .description('An already-DONE, non-recurring task')
-            .onCompletion('delete')
+            .onCompletion(OnCompletion.Delete)
             .dueDate(dueDate)
             .doneDate(dueDate)
             .status(Status.DONE)
@@ -96,7 +96,7 @@ describe('OnCompletion feature', () => {
         const task = new TaskBuilder()
             .description('A recurring task with OC_DELETE trigger')
             .recurrence(recurrence)
-            .onCompletion('delete')
+            .onCompletion(OnCompletion.Delete)
             .dueDate(dueDate)
             .build();
 
@@ -114,7 +114,7 @@ describe('OnCompletion feature', () => {
         const done2 = new Status(new StatusConfiguration('X', 'DONE', ' ', true, StatusType.DONE));
         const task = new TaskBuilder()
             .description('A simple done task with')
-            .onCompletion('delete')
+            .onCompletion(OnCompletion.Delete)
             .status(done1)
             .build();
 
@@ -129,7 +129,10 @@ describe('OnCompletion feature', () => {
 
     it('should return a task featuring the On Completion flag trigger but an empty string Action', () => {
         // Arrange
-        const task = new TaskBuilder().description('A non-recurring task with').onCompletion('').build();
+        const task = new TaskBuilder()
+            .description('A non-recurring task with')
+            .onCompletion(OnCompletion.Ignore)
+            .build();
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
@@ -146,7 +149,7 @@ describe('OnCompletion - Delete action', () => {
         const task = new TaskBuilder()
             .description('A non-recurring task with OC_DELETE trigger')
             .dueDate(dueDate)
-            .onCompletion('delete')
+            .onCompletion(OnCompletion.Delete)
             .build();
         expect(task.status.type).toEqual(StatusType.TODO);
 
@@ -165,7 +168,7 @@ describe('OnCompletion - Delete action', () => {
             .description('A recurring task with OC_DELETE trigger')
             .recurrence(recurrence)
             .dueDate(dueDate)
-            .onCompletion('delete')
+            .onCompletion(OnCompletion.Delete)
             .build();
         expect(task.status.type).toEqual(StatusType.TODO);
 
@@ -182,7 +185,7 @@ describe('OnCompletion - Delete action', () => {
         // Arrange
         const task = new TaskBuilder()
             .description('A non-recurring task with OC_DELETE trigger')
-            .onCompletion('delete')
+            .onCompletion(OnCompletion.Delete)
             .build();
 
         // Act
