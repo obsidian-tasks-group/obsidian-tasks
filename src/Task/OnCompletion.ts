@@ -7,6 +7,15 @@ export enum OnCompletion {
     Delete = 'delete',
 }
 
+export function parseOnCompletionValue(inputOnCompletionValue: string) {
+    const onCompletionString = inputOnCompletionValue.trim().toLowerCase();
+    if (onCompletionString === 'delete') {
+        return OnCompletion.Delete;
+    } else {
+        return OnCompletion.Ignore;
+    }
+}
+
 function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) {
     return tasks.filter((task) => task !== changedStatusTask);
 }
