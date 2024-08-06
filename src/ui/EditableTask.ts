@@ -25,7 +25,6 @@ export class EditableTask {
     status: Status;
     priority: EditableTaskPriority;
     recurrenceRule: string;
-    // onCompletion: 'ignore' | 'delete';
     onCompletion: OnCompletion;
     createdDate: string;
     startDate: string;
@@ -45,7 +44,6 @@ export class EditableTask {
         description: string;
         status: Status;
         priority: EditableTaskPriority;
-        // onCompletion: 'ignore' | 'delete';
         onCompletion: OnCompletion;
         recurrenceRule: string;
         createdDate: string;
