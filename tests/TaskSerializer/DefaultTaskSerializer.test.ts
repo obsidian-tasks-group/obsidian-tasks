@@ -258,7 +258,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         it('should serialize onCompletion', () => {
-            const task = new TaskBuilder().onCompletion('delete').description('').build();
+            const task = new TaskBuilder().onCompletion(OnCompletion.Delete).description('').build();
             const serialized = serialize(task);
             expect(serialized).toEqual(` ${onCompletionSymbol} delete`);
         });
