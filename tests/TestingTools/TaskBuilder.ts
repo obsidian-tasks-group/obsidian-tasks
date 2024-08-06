@@ -165,7 +165,7 @@ export class TaskBuilder {
      *
      * @param status
      */
-    public status(status: Status): TaskBuilder {
+    public status(status: Status): this {
         this._status = status;
         return this;
     }
@@ -176,7 +176,7 @@ export class TaskBuilder {
         nextStatusSymbol: string,
         availableAsCommand: boolean,
         type: StatusType,
-    ): TaskBuilder {
+    ): this {
         const statusConfiguration = new StatusConfiguration(symbol, name, nextStatusSymbol, availableAsCommand, type);
         return this.status(new Status(statusConfiguration));
     }
@@ -187,7 +187,7 @@ export class TaskBuilder {
      * This is not parsed for tags. Tags should be added via the separate {@link tags} method.
      * @param description - description for the task, without tags
      */
-    public description(description: string): TaskBuilder {
+    public description(description: string): this {
         this._description = description;
         return this;
     }
@@ -196,7 +196,7 @@ export class TaskBuilder {
      *
      * @param path Path to file, including file name extension. Use empty string to indicate 'unknown
      */
-    public path(path: string): TaskBuilder {
+    public path(path: string): this {
         this._path = path;
         return this;
     }
@@ -213,72 +213,72 @@ export class TaskBuilder {
         return this;
     }
 
-    public indentation(indentation: string): TaskBuilder {
+    public indentation(indentation: string): this {
         this._indentation = indentation;
         return this;
     }
 
-    public listMarker(listMarker: string): TaskBuilder {
+    public listMarker(listMarker: string): this {
         this._listMarker = listMarker;
         return this;
     }
 
-    public lineNumber(lineNumber: number): TaskBuilder {
+    public lineNumber(lineNumber: number): this {
         this._lineNumber = lineNumber;
         return this;
     }
 
-    public sectionStart(sectionStart: number): TaskBuilder {
+    public sectionStart(sectionStart: number): this {
         this._sectionStart = sectionStart;
         return this;
     }
 
-    public sectionIndex(sectionIndex: number): TaskBuilder {
+    public sectionIndex(sectionIndex: number): this {
         this._sectionIndex = sectionIndex;
         return this;
     }
 
-    public precedingHeader(precedingHeader: string | null): TaskBuilder {
+    public precedingHeader(precedingHeader: string | null): this {
         this._precedingHeader = precedingHeader;
         return this;
     }
 
-    public tags(tags: string[]): TaskBuilder {
+    public tags(tags: string[]): this {
         this._tags = tags;
         return this;
     }
 
-    public priority(priority: Priority): TaskBuilder {
+    public priority(priority: Priority): this {
         this._priority = priority;
         return this;
     }
 
-    public createdDate(createdDate: string | null): TaskBuilder {
+    public createdDate(createdDate: string | null): this {
         this._createdDate = TaskBuilder.parseDate(createdDate);
         return this;
     }
 
-    public startDate(startDate: string | null): TaskBuilder {
+    public startDate(startDate: string | null): this {
         this._startDate = TaskBuilder.parseDate(startDate);
         return this;
     }
 
-    public scheduledDate(scheduledDate: string | null): TaskBuilder {
+    public scheduledDate(scheduledDate: string | null): this {
         this._scheduledDate = TaskBuilder.parseDate(scheduledDate);
         return this;
     }
 
-    public dueDate(dueDate: string | null): TaskBuilder {
+    public dueDate(dueDate: string | null): this {
         this._dueDate = TaskBuilder.parseDate(dueDate);
         return this;
     }
 
-    public doneDate(doneDate: string | null): TaskBuilder {
+    public doneDate(doneDate: string | null): this {
         this._doneDate = TaskBuilder.parseDate(doneDate);
         return this;
     }
 
-    public cancelledDate(cancelledDate: string | null): TaskBuilder {
+    public cancelledDate(cancelledDate: string | null): this {
         this._cancelledDate = TaskBuilder.parseDate(cancelledDate);
         return this;
     }
@@ -287,12 +287,12 @@ export class TaskBuilder {
      * See {@link RecurrenceBuilder} for easy construction of {@link Recurrence} objects in tests.
      * @param recurrence
      */
-    public recurrence(recurrence: Recurrence | null): TaskBuilder {
+    public recurrence(recurrence: Recurrence | null): this {
         this._recurrence = recurrence;
         return this;
     }
 
-    public onCompletion(onCompletion: string): TaskBuilder {
+    public onCompletion(onCompletion: string): this {
         if (onCompletion === 'delete') {
             this._onCompletion = OnCompletion.Delete;
         } else {
@@ -301,7 +301,7 @@ export class TaskBuilder {
         return this;
     }
 
-    public blockLink(blockLink: string): TaskBuilder {
+    public blockLink(blockLink: string): this {
         this._blockLink = blockLink;
         return this;
     }
