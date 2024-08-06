@@ -129,6 +129,15 @@ export function allTaskPluginEmojis() {
     return allEmojis;
 }
 
+function parseOnCompletionValue(inputOnCompletionValue: string) {
+    const onCompletionString = inputOnCompletionValue.trim().toLowerCase();
+    if (onCompletionString === 'delete') {
+        return OnCompletion.Delete;
+    } else {
+        return OnCompletion.Ignore;
+    }
+}
+
 export class DefaultTaskSerializer implements TaskSerializer {
     constructor(public readonly symbols: DefaultTaskSerializerSymbols) {}
 
@@ -344,12 +353,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
             const onCompletionMatch = line.match(TaskFormatRegularExpressions.onCompletionRegex);
             if (onCompletionMatch != null) {
                 line = line.replace(TaskFormatRegularExpressions.onCompletionRegex, '').trim();
-                const onCompletionString = onCompletionMatch[1].trim().toLowerCase();
-                if (onCompletionString === 'delete') {
-                    onCompletion = OnCompletion.Delete;
-                } else {
-                    onCompletion = OnCompletion.Ignore;
-                }
+                const inputOnCompletionValue = onCompletionMatch[1];
+                onCompletion = parseOnCompletionValue(inputOnCompletionValue);
                 matched = true;
             }
 
