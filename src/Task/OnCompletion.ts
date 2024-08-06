@@ -25,9 +25,9 @@ export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[]
         return newTasks;
     }
 
-    const ocAction = originalTask.onCompletion.toLowerCase();
+    const ocAction: OnCompletion = originalTask.onCompletion;
 
-    if ('delete' === ocAction) {
+    if (OnCompletion.Delete === ocAction) {
         return returnWithoutCompletedInstance(newTasks, changedStatusTask);
     }
 
