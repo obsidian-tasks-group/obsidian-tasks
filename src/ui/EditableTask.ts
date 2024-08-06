@@ -2,7 +2,7 @@ import { GlobalFilter } from '../Config/GlobalFilter';
 import { parseTypedDateForSaving } from '../lib/DateTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
-import { OnCompletion } from '../Task/OnCompletion';
+import type { OnCompletion } from '../Task/OnCompletion';
 import { Occurrence } from '../Task/Occurrence';
 import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
@@ -188,14 +188,7 @@ export class EditableTask {
                 parsedPriority = Priority.None;
         }
 
-        let parsedOnCompletion: OnCompletion;
-        switch (this.onCompletion) {
-            case 'delete':
-                parsedOnCompletion = OnCompletion.Delete;
-                break;
-            default:
-                parsedOnCompletion = OnCompletion.Ignore;
-        }
+        const parsedOnCompletion: OnCompletion = this.onCompletion;
 
         const blockedByWithIds = [];
 
