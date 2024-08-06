@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { OnCompletion } from '../Task/OnCompletion';
+import { OnCompletion, parseOnCompletionValue } from '../Task/OnCompletion';
 import { Occurrence } from '../Task/Occurrence';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
@@ -344,12 +344,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
             const onCompletionMatch = line.match(TaskFormatRegularExpressions.onCompletionRegex);
             if (onCompletionMatch != null) {
                 line = line.replace(TaskFormatRegularExpressions.onCompletionRegex, '').trim();
-                const onCompletionString = onCompletionMatch[1].trim().toLowerCase();
-                if (onCompletionString === 'delete') {
-                    onCompletion = OnCompletion.Delete;
-                } else {
-                    onCompletion = OnCompletion.Ignore;
-                }
+                const inputOnCompletionValue = onCompletionMatch[1];
+                onCompletion = parseOnCompletionValue(inputOnCompletionValue);
                 matched = true;
             }
 

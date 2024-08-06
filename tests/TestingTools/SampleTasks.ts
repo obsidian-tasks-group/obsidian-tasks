@@ -5,6 +5,7 @@ import { Status } from '../../src/Statuses/Status';
 import { StatusType } from '../../src/Statuses/StatusConfiguration';
 import { Priority } from '../../src/Task/Priority';
 import { PriorityTools } from '../../src/lib/PriorityTools';
+import { OnCompletion } from '../../src/Task/OnCompletion';
 import { TaskBuilder } from './TaskBuilder';
 import { fromLine, fromLines } from './TestHelpers';
 
@@ -289,10 +290,13 @@ export class SampleTasks {
                 dueDate: null,
             }),
         });
-        const task1 = new TaskBuilder().description('#task Remove this task when done').onCompletion('delete').build();
+        const task1 = new TaskBuilder()
+            .description('#task Remove this task when done')
+            .onCompletion(OnCompletion.Delete)
+            .build();
         const task2 = new TaskBuilder()
             .description('#task Remove completed instance of this recurring task when done')
-            .onCompletion('delete')
+            .onCompletion(OnCompletion.Delete)
             .recurrence(everyDay)
             .build();
         return [task1, task2];

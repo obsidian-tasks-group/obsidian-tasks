@@ -450,6 +450,16 @@ describe('Task editing', () => {
             expect(await editFieldAndSave(line, 'start', '2024-01-01')).toEqual('- [ ] simple 🛫 2024-01-01');
         });
     });
+
+    describe('OnCompletion editing', () => {
+        it('should retain any OnCompletion value', async () => {
+            // We cannot yet edit the OnCompletion in the modal.
+            // So for now, just test to ensure that any initial value is retained.
+            expect(await editFieldAndSave('- [ ] description  🏁 delete', 'start', '2024-01-01')).toEqual(
+                '- [ ] description 🏁 delete 🛫 2024-01-01',
+            );
+        });
+    });
 });
 
 /**

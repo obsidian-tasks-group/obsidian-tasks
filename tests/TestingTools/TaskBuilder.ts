@@ -129,7 +129,7 @@ export class TaskBuilder {
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
             .cancelledDate('2023-07-06')
-            .onCompletion('delete')
+            .onCompletion(OnCompletion.Delete)
             .dependsOn(['123456', 'abc123'])
             .id('abcdef')
             .blockLink(' ^dcf64c')
@@ -292,12 +292,8 @@ export class TaskBuilder {
         return this;
     }
 
-    public onCompletion(onCompletion: string): this {
-        if (onCompletion === 'delete') {
-            this._onCompletion = OnCompletion.Delete;
-        } else {
-            this._onCompletion = OnCompletion.Ignore;
-        }
+    public onCompletion(onCompletion: OnCompletion): this {
+        this._onCompletion = onCompletion;
         return this;
     }
 
