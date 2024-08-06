@@ -204,7 +204,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 if (!task.recurrence) return '';
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
             case TaskLayoutComponent.OnCompletion:
-                if (!task.onCompletion) return '';
+                if (task.onCompletion === OnCompletion.Ignore) return '';
                 return symbolAndStringValue(shortMode, onCompletionSymbol, task.onCompletion);
             case TaskLayoutComponent.DependsOn: {
                 if (task.dependsOn.length === 0) return '';
