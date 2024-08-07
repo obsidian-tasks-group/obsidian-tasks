@@ -290,15 +290,13 @@ export class SampleTasks {
                 dueDate: null,
             }),
         });
-        const task1 = new TaskBuilder()
+        const builder1 = new TaskBuilder()
             .description('#task Remove this task when done')
-            .onCompletion(OnCompletion.Delete)
-            .build();
-        const task2 = new TaskBuilder()
+            .onCompletion(OnCompletion.Delete);
+        const builder2 = new TaskBuilder()
             .description('#task Remove completed instance of this recurring task when done')
             .onCompletion(OnCompletion.Delete)
-            .recurrence(everyDay)
-            .build();
-        return [task1, task2];
+            .recurrence(everyDay);
+        return [builder1, builder2].map((builder) => builder.build());
     }
 }
