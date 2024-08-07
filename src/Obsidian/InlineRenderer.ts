@@ -125,7 +125,7 @@ export class InlineRenderer {
                 const nodeName = renderedChild.nodeName.toLowerCase();
                 if (nodeName === 'div') {
                     taskElement.prepend(renderedChild);
-                } else if (nodeName === 'ul') {
+                } else if (nodeName === 'ul' || nodeName === 'ol') {
                     taskElement.append(renderedChild);
                 }
             }
