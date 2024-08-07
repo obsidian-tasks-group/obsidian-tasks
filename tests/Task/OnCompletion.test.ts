@@ -31,14 +31,18 @@ function makeTask(line: string) {
 }
 
 describe('OnCompletion - parsing', () => {
+    function checkParseOnCompletionValue(input: string, expected: OnCompletion) {
+        expect(parseOnCompletionValue(input)).toEqual(expected);
+    }
+
     const deletes = ['delete', 'DELETE', ' delete '];
     it.each(deletes)('should parse "%s" as OnCompletion.Delete', (input: string) => {
-        expect(parseOnCompletionValue(input)).toEqual(OnCompletion.Delete);
+        checkParseOnCompletionValue(input, OnCompletion.Delete);
     });
 
     const ignores = ['', 'unknown'];
     it.each(ignores)('should parse "%s" as OnCompletion.Ignore', (input: string) => {
-        expect(parseOnCompletionValue(input)).toEqual(OnCompletion.Ignore);
+        checkParseOnCompletionValue(input, OnCompletion.Ignore);
     });
 });
 
