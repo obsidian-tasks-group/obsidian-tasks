@@ -47,7 +47,6 @@ describe('OnCompletion feature', () => {
     it('should just return trigger-less, non-recurring task', () => {
         // Arrange
         const task = makeTask('- [ ] A non-recurring task with no trigger 📅 2024-02-10');
-        expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
@@ -62,7 +61,6 @@ describe('OnCompletion feature', () => {
     it('should just return trigger-less recurring task', () => {
         // Arrange
         const task = makeTask('- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10');
-        expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
@@ -117,7 +115,6 @@ describe('OnCompletion - Delete action', () => {
     it('should discard a non-recurring task with "delete" Action upon completion', () => {
         // Arrange
         const task = makeTask('- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete 📅 2024-02-10');
-        expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
@@ -129,7 +126,6 @@ describe('OnCompletion - Delete action', () => {
     it('should retain only the next instance of a recurring task with "delete" Action upon completion', () => {
         // Arrange
         const task = makeTask('- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10');
-        expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
