@@ -40,6 +40,11 @@ describe('OnCompletion - parsing', () => {
         checkParseOnCompletionValue(input, OnCompletion.Delete);
     });
 
+    const keeps = ['keep', 'KEEP', ' keep '];
+    it.each(keeps)('should parse "%s" as OnCompletion.Keep', (input: string) => {
+        checkParseOnCompletionValue(input, OnCompletion.Keep);
+    });
+
     const ignores = ['', 'unknown'];
     it.each(ignores)('should parse "%s" as OnCompletion.Ignore', (input: string) => {
         checkParseOnCompletionValue(input, OnCompletion.Ignore);
