@@ -24,10 +24,12 @@ This feature is enabled by adding (*after* the description within a task) a fiel
 
 ## Supported actions
 
-At present, two "On Completion" ***actions*** are supported:
+At present, these "On Completion" ***actions*** are supported:
 
-1. **Keep** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nothing will be done with the just-completed task.  (This is the default action.)
-2. **Delete** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the completed instance of the task.
+| Action     | Behaviour                                                                         |
+| ---------- | --------------------------------------------------------------------------------- |
+| **Keep**   | Nothing will be done with the just-completed task.  (This is the default action.) |
+| **Delete** | Removes the completed instance of the task.                                       |
 
 > [!tip]
 > Two additional ***actions*** are being considered for future implementation, namely moving a just-completed task to:
