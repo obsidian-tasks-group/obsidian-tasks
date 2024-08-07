@@ -114,7 +114,7 @@ describe('OnCompletion feature', () => {
 });
 
 describe('OnCompletion - Delete action', () => {
-    it('should return an empty Array for a non-recurring task with "delete" Action', () => {
+    it('should discard a non-recurring task with "delete" Action upon completion', () => {
         // Arrange
         const task = makeTask('- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete 📅 2024-02-10');
         expect(task.status.type).toEqual(StatusType.TODO);
@@ -126,7 +126,7 @@ describe('OnCompletion - Delete action', () => {
         expect(tasks).toEqual([]);
     });
 
-    it('should return only the next instance of a recurring task with "delete" Action', () => {
+    it('should retain only the next instance of a recurring task with "delete" Action upon completion', () => {
         // Arrange
         const task = makeTask('- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10');
         expect(task.status.type).toEqual(StatusType.TODO);
@@ -140,7 +140,8 @@ describe('OnCompletion - Delete action', () => {
             '"- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-11"',
         );
     });
-    it('should delete a simple task with flag on completion', () => {
+
+    it('should delete a simple task with "delete" Action upon completion', () => {
         // Arrange
         const task = makeTask('- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete');
 
