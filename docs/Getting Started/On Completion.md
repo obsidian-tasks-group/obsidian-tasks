@@ -1,13 +1,17 @@
 ---
 publish: true
 ---
+
 # On Completion
+
 > [!tip]
 > If you have ever wished that Tasks would automatically *do something* with the tasks that you complete (*especially* likely if you use [[Recurring Tasks|recurring tasks]], which tend to accumulate within the note that holds them), then the **"On Completion"** feature could be the answer!
 
 > [!released]
 > Introduced in Tasks X.Y.Z.
+
 ## Introduction
+
 Obsidian Tasks can automatically perform an action upon a task when it is marked 'done'.
 
 This feature is enabled by adding (*after* the description within a task) a field consisting of:
