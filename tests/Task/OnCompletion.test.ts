@@ -3,13 +3,11 @@
  */
 import moment from 'moment';
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine, toLines, toMarkdown } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
-import { OnCompletion, handleOnCompletion } from '../../src/Task/OnCompletion';
+import { handleOnCompletion } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
 
@@ -28,11 +26,15 @@ export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) 
     return handleOnCompletion(task, tasks);
 }
 
+function makeTask(line: string) {
+    return fromLine({ line });
+}
+
 describe('OnCompletion feature', () => {
     it('should not delete an already-done task', () => {
         // Arrange
         const line = '- [x] An already-DONE, non-recurring task 🏁 delete ✅ 2024-02-10';
-        const task = fromLine({ line });
+        const task = makeTask(line);
 
         // Act
         const returnedTasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
@@ -44,8 +46,7 @@ describe('OnCompletion feature', () => {
 
     it('should just return trigger-less, non-recurring task', () => {
         // Arrange
-        const dueDate = '2024-02-10';
-        const task = new TaskBuilder().description('A non-recurring task with no trigger').dueDate(dueDate).build();
+        const task = makeTask('- [ ] A non-recurring task with no trigger 📅 2024-02-10');
         expect(task.toFileLineString()).toMatchInlineSnapshot(
             '"- [ ] A non-recurring task with no trigger 📅 2024-02-10"',
         );
@@ -63,13 +64,7 @@ describe('OnCompletion feature', () => {
 
     it('should just return trigger-less recurring task', () => {
         // Arrange
-        const dueDate = '2024-02-10';
-        const recurrence = new RecurrenceBuilder().rule('every day').dueDate(dueDate).build();
-        const task = new TaskBuilder()
-            .description('A recurring task with no trigger')
-            .recurrence(recurrence)
-            .dueDate(dueDate)
-            .build();
+        const task = makeTask('- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10');
         expect(task.toFileLineString()).toMatchInlineSnapshot(
             '"- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10"',
         );
@@ -88,14 +83,7 @@ describe('OnCompletion feature', () => {
 
     it('should return the task when going from TODO to IN_PROGRESS', () => {
         // Arrange
-        const dueDate = '2024-02-10';
-        const recurrence = new RecurrenceBuilder().rule('every day').dueDate(dueDate).build();
-        const task = new TaskBuilder()
-            .description('A recurring task with OC_DELETE trigger')
-            .recurrence(recurrence)
-            .onCompletion(OnCompletion.Delete)
-            .dueDate(dueDate)
-            .build();
+        const task = makeTask('- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10');
         expect(task.toFileLineString()).toMatchInlineSnapshot(
             '"- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10"',
         );
@@ -110,13 +98,8 @@ describe('OnCompletion feature', () => {
 
     it('should return the task when going from one DONE status to another DONE status', () => {
         // Arrange
-        const done1 = new Status(new StatusConfiguration('x', 'done', ' ', true, StatusType.DONE));
         const done2 = new Status(new StatusConfiguration('X', 'DONE', ' ', true, StatusType.DONE));
-        const task = new TaskBuilder()
-            .description('A simple done task with')
-            .onCompletion(OnCompletion.Delete)
-            .status(done1)
-            .build();
+        const task = makeTask('- [x] A simple done task with 🏁 delete');
         expect(task.toFileLineString()).toMatchInlineSnapshot('"- [x] A simple done task with 🏁 delete"');
 
         // Act
@@ -130,10 +113,7 @@ describe('OnCompletion feature', () => {
 
     it('should return a task featuring the On Completion flag trigger but an empty string Action', () => {
         // Arrange
-        const task = new TaskBuilder()
-            .description('A non-recurring task with')
-            .onCompletion(OnCompletion.Ignore)
-            .build();
+        const task = makeTask('- [ ] A non-recurring task with');
         expect(task.toFileLineString()).toMatchInlineSnapshot('"- [ ] A non-recurring task with"');
 
         // Act
@@ -147,12 +127,7 @@ describe('OnCompletion feature', () => {
 describe('OnCompletion - Delete action', () => {
     it('should return an empty Array for a non-recurring task with "delete" Action', () => {
         // Arrange
-        const dueDate = '2024-02-10';
-        const task = new TaskBuilder()
-            .description('A non-recurring task with OC_DELETE trigger')
-            .dueDate(dueDate)
-            .onCompletion(OnCompletion.Delete)
-            .build();
+        const task = makeTask('- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete 📅 2024-02-10');
         expect(task.toFileLineString()).toMatchInlineSnapshot(
             '"- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete 📅 2024-02-10"',
         );
@@ -167,14 +142,7 @@ describe('OnCompletion - Delete action', () => {
 
     it('should return only the next instance of a recurring task with "delete" Action', () => {
         // Arrange
-        const dueDate = '2024-02-10';
-        const recurrence = new RecurrenceBuilder().rule('every day').dueDate(dueDate).build();
-        const task = new TaskBuilder()
-            .description('A recurring task with OC_DELETE trigger')
-            .recurrence(recurrence)
-            .dueDate(dueDate)
-            .onCompletion(OnCompletion.Delete)
-            .build();
+        const task = makeTask('- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10');
         expect(task.toFileLineString()).toMatchInlineSnapshot(
             '"- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10"',
         );
@@ -191,10 +159,7 @@ describe('OnCompletion - Delete action', () => {
     });
     it('should delete a simple task with flag on completion', () => {
         // Arrange
-        const task = new TaskBuilder()
-            .description('A non-recurring task with OC_DELETE trigger')
-            .onCompletion(OnCompletion.Delete)
-            .build();
+        const task = makeTask('- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete');
         expect(task.toFileLineString()).toMatchInlineSnapshot(
             '"- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete"',
         );
