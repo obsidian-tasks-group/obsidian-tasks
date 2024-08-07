@@ -130,6 +130,19 @@ describe('OnCompletion - cases where all tasks are retained', () => {
     });
 });
 
+describe('OnCompletion - "keep" action', () => {
+    it('should retain a task with "keep" Action upon completion', () => {
+        // Arrange
+        const task = makeTask('- [ ] A non-recurring task with "keep" Action 🏁 keep');
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+    });
+});
+
 describe('OnCompletion - "delete" action', () => {
     it('should retain only the next instance of a recurring task with "delete" Action upon completion', () => {
         // Arrange
