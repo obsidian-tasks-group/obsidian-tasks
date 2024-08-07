@@ -26,7 +26,7 @@ This feature is enabled by adding (*after* the description within a task) a fiel
 
 At present, two "On Completion" ***actions*** are supported:
 
-1. **Ignore** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nothing will be done with the just-completed task.  (This is the default action.)
+1. **Keep** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nothing will be done with the just-completed task.  (This is the default action.)
 2. **Delete** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the completed instance of the task.
 
 > [!tip]
@@ -47,7 +47,7 @@ At present, two "On Completion" ***actions*** are supported:
 > ```text
 > # My Project Tasks
 > - [ ] Leave me alone
-> - [ ] Leave me alone too! 🏁 ignore
+> - [ ] Leave me alone too! 🏁 keep
 > - [ ] Delete me upon completion 🏁 delete
 > - [ ] Delete my completed instance, leave my next instance 📅 2021-05-20 🔁 every day when done 🏁 delete
 > ```
@@ -57,20 +57,14 @@ At present, two "On Completion" ***actions*** are supported:
 > ```text
 > # My Project Tasks
 > - [x] Leave me alone
-> - [x] Leave me alone too! 🏁 ignore
+> - [x] Leave me alone too! 🏁 keep
 > - [ ] Delete my completed instance, leave my next instance 📅 2021-05-21 🔁 every day when done 🏁 delete
 > ```
 
 > [!note] Note that
 >
-> - The task assigned the `ignore` action is treated the same as one that has no onCompletion field at all, and
+> - The task assigned the `keep` action is treated the same as one that has no onCompletion field at all, and
 > - The next instance of the recurring task has replaced the original, completed instance.
-
-> [!warning]
-> Currently, `🏁 ignore`  has some slightly confusing behaviour:
->
-> - When viewed in Reading mode, `🏁 ignore` is not shown.
-> - When tasks are completed, any `🏁 ignore` text is deleted.
 
 ## Assigning and changing a given task's "On Completion" action
 
