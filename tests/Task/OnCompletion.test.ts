@@ -7,7 +7,7 @@ import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { fromLine, toMarkdown } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
-import { handleOnCompletion } from '../../src/Task/OnCompletion';
+import { OnCompletion, handleOnCompletion, parseOnCompletionValue } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
 
@@ -29,6 +29,18 @@ export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) 
 function makeTask(line: string) {
     return fromLine({ line });
 }
+
+describe('OnCompletion - parsing', () => {
+    const deletes = ['delete', 'DELETE', ' delete '];
+    it.each(deletes)('should parse "%s" as OnCompletion.Delete', (input: string) => {
+        expect(parseOnCompletionValue(input)).toEqual(OnCompletion.Delete);
+    });
+
+    const ignores = ['', 'unknown'];
+    it.each(ignores)('should parse "%s" as OnCompletion.Ignore', (input: string) => {
+        expect(parseOnCompletionValue(input)).toEqual(OnCompletion.Ignore);
+    });
+});
 
 describe('OnCompletion feature', () => {
     it('should not delete an already-done task', () => {
