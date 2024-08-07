@@ -75,7 +75,7 @@ describe('OnCompletion feature', () => {
 
     it('should return the task when going from TODO to IN_PROGRESS', () => {
         // Arrange
-        const task = makeTask('- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10');
+        const task = makeTask('- [ ] A recurring task with "delete" Action 🔁 every day 🏁 delete 📅 2024-02-10');
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeInProgress());
@@ -114,7 +114,7 @@ describe('OnCompletion feature', () => {
 describe('OnCompletion - Delete action', () => {
     it('should retain only the next instance of a recurring task with "delete" Action upon completion', () => {
         // Arrange
-        const task = makeTask('- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10');
+        const task = makeTask('- [ ] A recurring task with "delete" Action 🔁 every day 🏁 delete 📅 2024-02-10');
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
@@ -122,13 +122,13 @@ describe('OnCompletion - Delete action', () => {
         // Assert
         expect(tasks.length).toEqual(1);
         expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(
-            '"- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-11"',
+            '"- [ ] A recurring task with "delete" Action 🔁 every day 🏁 delete 📅 2024-02-11"',
         );
     });
 
     it('should discard a task with "delete" Action upon completion', () => {
         // Arrange
-        const task = makeTask('- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete');
+        const task = makeTask('- [ ] A non-recurring task with "delete" Action 🏁 delete');
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
