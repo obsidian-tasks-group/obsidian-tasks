@@ -5,7 +5,7 @@ import moment from 'moment';
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { fromLine, toLines, toMarkdown } from '../TestingTools/TestHelpers';
+import { fromLine, toMarkdown } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
 import { handleOnCompletion } from '../../src/Task/OnCompletion';
 
@@ -52,8 +52,7 @@ describe('OnCompletion feature', () => {
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
-        expect(tasks.length).toEqual(1);
-        expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(
+        expect(toMarkdown(tasks)).toMatchInlineSnapshot(
             '"- [x] A non-recurring task with no trigger 📅 2024-02-10 ✅ 2024-02-11"',
         );
     });
@@ -66,8 +65,7 @@ describe('OnCompletion feature', () => {
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
-        expect(tasks.length).toEqual(2);
-        expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(`
+        expect(toMarkdown(tasks)).toMatchInlineSnapshot(`
             "- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-11
             - [x] A recurring task with no trigger 🔁 every day 📅 2024-02-10 ✅ 2024-02-11"
         `);
@@ -120,8 +118,7 @@ describe('OnCompletion - Delete action', () => {
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
 
         // Assert
-        expect(tasks.length).toEqual(1);
-        expect(toLines(tasks).join('\n')).toMatchInlineSnapshot(
+        expect(toMarkdown(tasks)).toMatchInlineSnapshot(
             '"- [ ] A recurring task with "delete" Action 🔁 every day 🏁 delete 📅 2024-02-11"',
         );
     });
