@@ -122,9 +122,10 @@ export class InlineRenderer {
             const renderedChildren = renderedElement.childNodes;
             for (let i = 0; i < renderedChildren.length; i = i + 1) {
                 const renderedChild = renderedChildren[i];
-                if (renderedChild.nodeName.toLowerCase() === 'div') {
+                const nodeName = renderedChild.nodeName.toLowerCase();
+                if (nodeName === 'div') {
                     taskElement.prepend(renderedChild);
-                } else if (renderedChild.nodeName.toLowerCase() === 'ul') {
+                } else if (nodeName === 'ul' || nodeName === 'ol') {
                     taskElement.append(renderedChild);
                 }
             }
