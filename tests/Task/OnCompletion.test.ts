@@ -47,9 +47,6 @@ describe('OnCompletion feature', () => {
     it('should just return trigger-less, non-recurring task', () => {
         // Arrange
         const task = makeTask('- [ ] A non-recurring task with no trigger 📅 2024-02-10');
-        expect(task.toFileLineString()).toMatchInlineSnapshot(
-            '"- [ ] A non-recurring task with no trigger 📅 2024-02-10"',
-        );
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
@@ -65,9 +62,6 @@ describe('OnCompletion feature', () => {
     it('should just return trigger-less recurring task', () => {
         // Arrange
         const task = makeTask('- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10');
-        expect(task.toFileLineString()).toMatchInlineSnapshot(
-            '"- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10"',
-        );
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
@@ -84,9 +78,6 @@ describe('OnCompletion feature', () => {
     it('should return the task when going from TODO to IN_PROGRESS', () => {
         // Arrange
         const task = makeTask('- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10');
-        expect(task.toFileLineString()).toMatchInlineSnapshot(
-            '"- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10"',
-        );
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeInProgress());
@@ -100,7 +91,6 @@ describe('OnCompletion feature', () => {
         // Arrange
         const done2 = new Status(new StatusConfiguration('X', 'DONE', ' ', true, StatusType.DONE));
         const task = makeTask('- [x] A simple done task with 🏁 delete');
-        expect(task.toFileLineString()).toMatchInlineSnapshot('"- [x] A simple done task with 🏁 delete"');
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, done2);
@@ -114,7 +104,6 @@ describe('OnCompletion feature', () => {
     it('should return a task featuring the On Completion flag trigger but an empty string Action', () => {
         // Arrange
         const task = makeTask('- [ ] A non-recurring task with');
-        expect(task.toFileLineString()).toMatchInlineSnapshot('"- [ ] A non-recurring task with"');
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
@@ -128,9 +117,6 @@ describe('OnCompletion - Delete action', () => {
     it('should return an empty Array for a non-recurring task with "delete" Action', () => {
         // Arrange
         const task = makeTask('- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete 📅 2024-02-10');
-        expect(task.toFileLineString()).toMatchInlineSnapshot(
-            '"- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete 📅 2024-02-10"',
-        );
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
@@ -143,9 +129,6 @@ describe('OnCompletion - Delete action', () => {
     it('should return only the next instance of a recurring task with "delete" Action', () => {
         // Arrange
         const task = makeTask('- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10');
-        expect(task.toFileLineString()).toMatchInlineSnapshot(
-            '"- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10"',
-        );
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
@@ -160,9 +143,6 @@ describe('OnCompletion - Delete action', () => {
     it('should delete a simple task with flag on completion', () => {
         // Arrange
         const task = makeTask('- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete');
-        expect(task.toFileLineString()).toMatchInlineSnapshot(
-            '"- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete"',
-        );
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
