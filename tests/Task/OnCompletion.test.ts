@@ -46,6 +46,9 @@ describe('OnCompletion feature', () => {
         // Arrange
         const dueDate = '2024-02-10';
         const task = new TaskBuilder().description('A non-recurring task with no trigger').dueDate(dueDate).build();
+        expect(task.toFileLineString()).toMatchInlineSnapshot(
+            '"- [ ] A non-recurring task with no trigger 📅 2024-02-10"',
+        );
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
@@ -67,6 +70,9 @@ describe('OnCompletion feature', () => {
             .recurrence(recurrence)
             .dueDate(dueDate)
             .build();
+        expect(task.toFileLineString()).toMatchInlineSnapshot(
+            '"- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10"',
+        );
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
@@ -90,6 +96,9 @@ describe('OnCompletion feature', () => {
             .onCompletion(OnCompletion.Delete)
             .dueDate(dueDate)
             .build();
+        expect(task.toFileLineString()).toMatchInlineSnapshot(
+            '"- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10"',
+        );
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeInProgress());
@@ -108,6 +117,7 @@ describe('OnCompletion feature', () => {
             .onCompletion(OnCompletion.Delete)
             .status(done1)
             .build();
+        expect(task.toFileLineString()).toMatchInlineSnapshot('"- [x] A simple done task with 🏁 delete"');
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, done2);
@@ -124,6 +134,7 @@ describe('OnCompletion feature', () => {
             .description('A non-recurring task with')
             .onCompletion(OnCompletion.Ignore)
             .build();
+        expect(task.toFileLineString()).toMatchInlineSnapshot('"- [ ] A non-recurring task with"');
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
@@ -142,6 +153,9 @@ describe('OnCompletion - Delete action', () => {
             .dueDate(dueDate)
             .onCompletion(OnCompletion.Delete)
             .build();
+        expect(task.toFileLineString()).toMatchInlineSnapshot(
+            '"- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete 📅 2024-02-10"',
+        );
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
@@ -161,6 +175,9 @@ describe('OnCompletion - Delete action', () => {
             .dueDate(dueDate)
             .onCompletion(OnCompletion.Delete)
             .build();
+        expect(task.toFileLineString()).toMatchInlineSnapshot(
+            '"- [ ] A recurring task with OC_DELETE trigger 🔁 every day 🏁 delete 📅 2024-02-10"',
+        );
         expect(task.status.type).toEqual(StatusType.TODO);
 
         // Act
@@ -178,6 +195,9 @@ describe('OnCompletion - Delete action', () => {
             .description('A non-recurring task with OC_DELETE trigger')
             .onCompletion(OnCompletion.Delete)
             .build();
+        expect(task.toFileLineString()).toMatchInlineSnapshot(
+            '"- [ ] A non-recurring task with OC_DELETE trigger 🏁 delete"',
+        );
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
