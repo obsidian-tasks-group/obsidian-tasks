@@ -40,6 +40,11 @@ describe('OnCompletion - parsing', () => {
         checkParseOnCompletionValue(input, OnCompletion.Delete);
     });
 
+    const keeps = ['keep', 'KEEP', ' keep '];
+    it.each(keeps)('should parse "%s" as OnCompletion.Keep', (input: string) => {
+        checkParseOnCompletionValue(input, OnCompletion.Keep);
+    });
+
     const ignores = ['', 'unknown'];
     it.each(ignores)('should parse "%s" as OnCompletion.Ignore', (input: string) => {
         checkParseOnCompletionValue(input, OnCompletion.Ignore);
@@ -116,6 +121,19 @@ describe('OnCompletion - cases where all tasks are retained', () => {
     it('should return a task featuring the On Completion flag trigger but an empty string Action', () => {
         // Arrange
         const task = makeTask('- [ ] A non-recurring task with');
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+
+        // Assert
+        expect(tasks.length).toEqual(1);
+    });
+});
+
+describe('OnCompletion - "keep" action', () => {
+    it('should retain a task with "keep" Action upon completion', () => {
+        // Arrange
+        const task = makeTask('- [ ] A non-recurring task with "keep" Action 🏁 keep');
 
         // Act
         const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());

@@ -3,6 +3,7 @@ import type { Task } from './Task';
 
 export enum OnCompletion {
     Ignore = '',
+    Keep = 'keep', // Like Ignore, but is visible on task lines
     Delete = 'delete',
 }
 
@@ -10,6 +11,8 @@ export function parseOnCompletionValue(inputOnCompletionValue: string) {
     const onCompletionString = inputOnCompletionValue.trim().toLowerCase();
     if (onCompletionString === 'delete') {
         return OnCompletion.Delete;
+    } else if (onCompletionString === 'keep') {
+        return OnCompletion.Keep;
     } else {
         return OnCompletion.Ignore;
     }
@@ -31,7 +34,11 @@ function keepTasks(originalTask: Task, changedStatusTask: Task) {
 
 export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[] {
     const tasksArrayLength = newTasks.length;
-    if (originalTask.onCompletion === OnCompletion.Ignore || tasksArrayLength === 0) {
+    if (
+        originalTask.onCompletion === OnCompletion.Ignore ||
+        originalTask.onCompletion === OnCompletion.Keep ||
+        tasksArrayLength === 0
+    ) {
         return newTasks;
     }
     const changedStatusTask = newTasks[tasksArrayLength - 1];
