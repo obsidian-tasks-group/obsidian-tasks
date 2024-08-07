@@ -19,19 +19,23 @@ function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) 
     return tasks.filter((task) => task !== changedStatusTask);
 }
 
+function keepTasks(originalTask: Task, changedStatusTask: Task) {
+    const startStatus = originalTask.status;
+    const endStatus = changedStatusTask.status;
+
+    const statusDidNotChange = endStatus.type === startStatus.type;
+    const endStatusIsNotDone = endStatus.type !== StatusType.DONE;
+
+    return endStatusIsNotDone || statusDidNotChange;
+}
+
 export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[] {
     const tasksArrayLength = newTasks.length;
     if (originalTask.onCompletion === OnCompletion.Ignore || tasksArrayLength === 0) {
         return newTasks;
     }
     const changedStatusTask = newTasks[tasksArrayLength - 1];
-
-    const startStatus = originalTask.status;
-    const endStatus = changedStatusTask.status;
-
-    const statusDidNotChange = endStatus.type === startStatus.type;
-    const endStatusIsNotDone = endStatus.type !== StatusType.DONE;
-    const keepAllTasks = endStatusIsNotDone || statusDidNotChange;
+    const keepAllTasks = keepTasks(originalTask, changedStatusTask);
     if (keepAllTasks) {
         return newTasks;
     }
