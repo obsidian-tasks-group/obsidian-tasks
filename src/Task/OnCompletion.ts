@@ -21,7 +21,7 @@ function returnWithoutCompletedInstance(tasks: Task[], changedStatusTask: Task) 
 
 export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[] {
     const tasksArrayLength = newTasks.length;
-    if (tasksArrayLength === 0) {
+    if (originalTask.onCompletion === OnCompletion.Ignore || tasksArrayLength === 0) {
         return newTasks;
     }
     const startStatus = originalTask.status;
@@ -29,9 +29,6 @@ export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[]
     const changedStatusTask = newTasks[tasksArrayLength - 1];
     const endStatus = changedStatusTask.status;
 
-    if (originalTask.onCompletion === OnCompletion.Ignore) {
-        return newTasks;
-    }
     if (endStatus.type !== StatusType.DONE || endStatus.type === startStatus.type) {
         return newTasks;
     }
