@@ -46,7 +46,7 @@ describe('OnCompletion - parsing', () => {
     });
 });
 
-describe('OnCompletion feature', () => {
+describe('OnCompletion - cases where all tasks are retained', () => {
     it('should not delete an already-done task', () => {
         // Arrange
         const line = '- [x] An already-DONE, non-recurring task 🏁 delete ✅ 2024-02-10';
@@ -125,7 +125,7 @@ describe('OnCompletion feature', () => {
     });
 });
 
-describe('OnCompletion - Delete action', () => {
+describe('OnCompletion - "delete" action', () => {
     it('should retain only the next instance of a recurring task with "delete" Action upon completion', () => {
         // Arrange
         const task = makeTask('- [ ] A recurring task with "delete" Action 🔁 every day 🏁 delete 📅 2024-02-10');
