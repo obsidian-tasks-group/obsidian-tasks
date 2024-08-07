@@ -3,6 +3,7 @@ import type { Task } from './Task';
 
 export enum OnCompletion {
     Ignore = '',
+    Keep = 'keep', // Like Ignore, but is visible on task lines
     Delete = 'delete',
 }
 
@@ -10,6 +11,8 @@ export function parseOnCompletionValue(inputOnCompletionValue: string) {
     const onCompletionString = inputOnCompletionValue.trim().toLowerCase();
     if (onCompletionString === 'delete') {
         return OnCompletion.Delete;
+    } else if (onCompletionString === 'keep') {
+        return OnCompletion.Keep;
     } else {
         return OnCompletion.Ignore;
     }
