@@ -29,11 +29,10 @@ export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[]
     const changedStatusTask = newTasks[tasksArrayLength - 1];
     const endStatus = changedStatusTask.status;
 
-    if (
-        originalTask.onCompletion === OnCompletion.Ignore ||
-        endStatus.type !== StatusType.DONE ||
-        endStatus.type === startStatus.type
-    ) {
+    if (originalTask.onCompletion === OnCompletion.Ignore) {
+        return newTasks;
+    }
+    if (endStatus.type !== StatusType.DONE || endStatus.type === startStatus.type) {
         return newTasks;
     }
 
