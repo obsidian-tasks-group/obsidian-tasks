@@ -1,2 +1,4 @@
+- [ ] #task Keep this task when done
+- [ ] #task Keep this task when done too 🏁 keep
 - [ ] #task Remove this task when done 🏁 delete
 - [ ] #task Remove completed instance of this recurring task when done 🔁 every day 🏁 delete
