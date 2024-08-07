@@ -34,7 +34,11 @@ function keepTasks(originalTask: Task, changedStatusTask: Task) {
 
 export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[] {
     const tasksArrayLength = newTasks.length;
-    if (originalTask.onCompletion === OnCompletion.Ignore || tasksArrayLength === 0) {
+    if (
+        originalTask.onCompletion === OnCompletion.Ignore ||
+        originalTask.onCompletion === OnCompletion.Keep ||
+        tasksArrayLength === 0
+    ) {
         return newTasks;
     }
     const changedStatusTask = newTasks[tasksArrayLength - 1];
