@@ -19,9 +19,9 @@ type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) 
 export interface QueryRendererParameters {
     allTasks: Task[];
     allMarkdownFiles: TFile[];
-    backlinksClickHandler: (ev: MouseEvent, task: Task) => Promise<void>;
-    backlinksMousedownHandler: (ev: MouseEvent, task: Task) => Promise<void>;
-    editTaskPencilClickHandler: (event: MouseEvent, task: Task, allTasks: Task[]) => void;
+    backlinksClickHandler: BacklinksEventHandler;
+    backlinksMousedownHandler: BacklinksEventHandler;
+    editTaskPencilClickHandler: EditButtonClickHandler;
 }
 
 export class QueryResultsRenderer extends MarkdownRenderChild {
