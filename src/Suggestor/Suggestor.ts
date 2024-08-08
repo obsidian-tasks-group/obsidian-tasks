@@ -146,12 +146,12 @@ function addTaskPropertySuggestions(
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
 
     const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(
+        genericSuggestions,
         line,
         cursorPos,
-        settings,
-        genericSuggestions,
         dataviewMode,
         insertSkip,
+        settings,
     );
 
     // That's where we're adding all the suggestions in case there's nothing specific to match
@@ -267,12 +267,12 @@ function addDependencySuggestions(
 }
 
 function filterGeneralSuggestionsForWordAtCursor(
+    genericSuggestions: SuggestInfo[],
     line: string,
     cursorPos: number,
-    settings: Settings,
-    genericSuggestions: SuggestInfo[],
     dataviewMode: boolean,
     insertSkip: number,
+    settings: Settings,
 ) {
     // We now filter the general suggestions according to the word at the cursor. If there's
     // something to match, we filter the suggestions accordingly, so the user can get more specific
