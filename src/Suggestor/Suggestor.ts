@@ -154,25 +154,7 @@ function addTaskPropertySuggestions(
             displayText: `${symbols.scheduledDateSymbol} scheduled date`,
             appendText: `${symbols.scheduledDateSymbol} `,
         });
-
-    const hasPriority = (line: string) =>
-        Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
-    if (!hasPriority(line)) {
-        const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
-        const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
-
-        for (const priorityText of priorityTexts) {
-            const prioritySymbol = prioritySymbols[priorityText];
-
-            genericSuggestions.push({
-                displayText: dataviewMode
-                    ? `${prioritySymbol} priority`
-                    : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
-                appendText: `${prioritySymbol}${postfix}`,
-                insertSkip: dataviewMode ? insertSkip : undefined,
-            });
-        }
-    }
+    addPrioritySuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
     addRecurrenceSuggestions(genericSuggestions, symbols, line);
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
@@ -191,6 +173,34 @@ function addTaskPropertySuggestions(
     if (matchingSuggestions.length === 0 && settings.autoSuggestMinMatch === 0) return genericSuggestions;
 
     return matchingSuggestions;
+}
+
+function addPrioritySuggestions(
+    genericSuggestions: SuggestInfo[],
+    symbols: DefaultTaskSerializerSymbols,
+    line: string,
+    postfix: string,
+    dataviewMode: boolean,
+    insertSkip: number,
+) {
+    const hasPriority = (line: string) =>
+        Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
+    if (!hasPriority(line)) {
+        const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
+        const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
+
+        for (const priorityText of priorityTexts) {
+            const prioritySymbol = prioritySymbols[priorityText];
+
+            genericSuggestions.push({
+                displayText: dataviewMode
+                    ? `${prioritySymbol} priority`
+                    : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
+                appendText: `${prioritySymbol}${postfix}`,
+                insertSkip: dataviewMode ? insertSkip : undefined,
+            });
+        }
+    }
 }
 
 function addRecurrenceSuggestions(
