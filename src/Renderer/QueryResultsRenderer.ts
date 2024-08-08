@@ -50,6 +50,52 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         }
     }
 
+    protected addBacklinks(
+        listItem: HTMLElement,
+        task: Task,
+        shortMode: boolean,
+        isFilenameUnique: boolean | undefined,
+        clickHandler: (ev: MouseEvent, task: Task) => Promise<void>,
+        mousedownHandler: (ev: MouseEvent, task: Task) => Promise<void>,
+    ) {
+        const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
+
+        if (!shortMode) {
+            backLink.append(' (');
+        }
+
+        const link = createAndAppendElement('a', backLink);
+
+        link.rel = 'noopener';
+        link.target = '_blank';
+        link.addClass('internal-link');
+        if (shortMode) {
+            link.addClass('internal-link-short-mode');
+        }
+
+        let linkText: string;
+        if (shortMode) {
+            linkText = ' 🔗';
+        } else {
+            linkText = task.getLinkText({ isFilenameUnique }) ?? '';
+        }
+
+        link.setText(linkText);
+
+        // Go to the line the task is defined at
+        link.addEventListener('click', async (ev: MouseEvent) => {
+            await clickHandler(ev, task);
+        });
+
+        link.addEventListener('mousedown', async (ev: MouseEvent) => {
+            await mousedownHandler(ev, task);
+        });
+
+        if (!shortMode) {
+            backLink.append(')');
+        }
+    }
+
     protected addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
         const amount = 1;
         const timeUnit = 'day';
