@@ -135,9 +135,6 @@ function addTaskPropertySuggestions(
     dataviewMode: boolean,
     canSaveEdits: boolean,
 ): SuggestInfo[] {
-    const hasPriority = (line: string) =>
-        Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
-
     const genericSuggestions: SuggestInfo[] = [];
     const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
@@ -158,6 +155,8 @@ function addTaskPropertySuggestions(
             appendText: `${symbols.scheduledDateSymbol} `,
         });
 
+    const hasPriority = (line: string) =>
+        Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
     if (!hasPriority(line)) {
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
         const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
