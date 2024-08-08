@@ -136,14 +136,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         const shortMode = this.query.queryLayoutOptions.shortMode;
 
         if (!this.query.queryLayoutOptions.hideBacklinks) {
-            this.addBacklinks(
-                extrasSpan,
-                task,
-                shortMode,
-                isFilenameUnique,
-                queryRendererParameters.backlinksClickHandler,
-                queryRendererParameters.backlinksMousedownHandler,
-            );
+            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique, queryRendererParameters);
         }
 
         if (!this.query.queryLayoutOptions.hideEditButton) {
@@ -210,8 +203,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         task: Task,
         shortMode: boolean,
         isFilenameUnique: boolean | undefined,
-        clickHandler: BacklinksEventHandler,
-        mousedownHandler: BacklinksEventHandler,
+        queryRendererParameters: QueryRendererParameters,
     ) {
         const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
@@ -239,11 +231,11 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
 
         // Go to the line the task is defined at
         link.addEventListener('click', async (ev: MouseEvent) => {
-            await clickHandler(ev, task);
+            await queryRendererParameters.backlinksClickHandler(ev, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
-            await mousedownHandler(ev, task);
+            await queryRendererParameters.backlinksMousedownHandler(ev, task);
         });
 
         if (!shortMode) {
