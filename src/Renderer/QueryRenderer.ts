@@ -58,9 +58,6 @@ class QueryRenderChild extends QueryResultsRenderer {
     private plugin: TasksPlugin;
     private readonly events: TasksEvents;
 
-    // The path of the file that contains the instruction block, and cached data from that file.
-    private readonly tasksFile: TasksFile;
-
     private query: IQuery;
     // @ts-expect-error: TS6133: 'queryType' is declared but its value is never read
     private queryType: string; // whilst there is only one query type, there is no point logging this value
@@ -83,12 +80,11 @@ class QueryRenderChild extends QueryResultsRenderer {
         source: string;
         tasksFile: TasksFile;
     }) {
-        super(container, source);
+        super(container, source, tasksFile);
 
         this.app = app;
         this.plugin = plugin;
         this.events = events;
-        this.tasksFile = tasksFile;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
