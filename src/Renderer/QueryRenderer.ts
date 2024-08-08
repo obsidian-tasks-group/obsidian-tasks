@@ -94,10 +94,6 @@ class QueryRenderChild extends QueryResultsRenderer {
         }
     }
 
-    public get filePath(): string | undefined {
-        return this.tasksFile?.path ?? undefined;
-    }
-
     /**
      * Reloads the query after midnight to update results from relative date queries.
      *
