@@ -458,12 +458,4 @@ class QueryRenderChild extends QueryResultsRenderer {
 
         return allFilesWithSameName.length < 2;
     }
-
-    private getGroupingAttribute() {
-        const groupingRules: string[] = [];
-        for (const group of this.query.grouping) {
-            groupingRules.push(group.property);
-        }
-        return groupingRules.join(',');
-    }
 }
