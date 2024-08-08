@@ -166,10 +166,11 @@ function addHappensDatesSuggestions(
     symbols: DefaultTaskSerializerSymbols,
     line: string,
 ) {
-    if (!line.includes(symbols.dueDateSymbol))
+    const dateSymbol = symbols.dueDateSymbol;
+    if (!line.includes(dateSymbol))
         genericSuggestions.push({
-            displayText: `${symbols.dueDateSymbol} due date`,
-            appendText: `${symbols.dueDateSymbol} `,
+            displayText: `${dateSymbol} due date`,
+            appendText: `${dateSymbol} `,
         });
     if (!line.includes(symbols.startDateSymbol))
         genericSuggestions.push({
