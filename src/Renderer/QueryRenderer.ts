@@ -1,4 +1,4 @@
-import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
+import type { EventRef, MarkdownPostProcessorContext, TFile } from 'obsidian';
 import { App, Keymap } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
@@ -227,7 +227,14 @@ class QueryRenderChild extends QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            await this.addTask(taskList, taskLineRenderer, task, taskIndex, this.plugin.getTasks());
+            await this.addTask(
+                taskList,
+                taskLineRenderer,
+                task,
+                taskIndex,
+                this.plugin.getTasks(),
+                this.app.vault.getMarkdownFiles(),
+            );
         }
 
         content.appendChild(taskList);
@@ -239,8 +246,9 @@ class QueryRenderChild extends QueryResultsRenderer {
         task: Task,
         taskIndex: number,
         allTasks: Task[],
+        allMarkdownFiles: TFile[],
     ) {
-        const isFilenameUnique = this.isFilenameUnique({ task }, this.app.vault.getMarkdownFiles());
+        const isFilenameUnique = this.isFilenameUnique({ task }, allMarkdownFiles);
         const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
 
         // Remove all footnotes. They don't re-appear in another document.
