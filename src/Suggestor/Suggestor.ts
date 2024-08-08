@@ -175,16 +175,8 @@ function addHappensDatesSuggestions(
     };
 
     addDate(symbols.dueDateSymbol, 'due date');
-    if (!line.includes(symbols.startDateSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.startDateSymbol} start date`,
-            appendText: `${symbols.startDateSymbol} `,
-        });
-    if (!line.includes(symbols.scheduledDateSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.scheduledDateSymbol} scheduled date`,
-            appendText: `${symbols.scheduledDateSymbol} `,
-        });
+    addDate(symbols.startDateSymbol, 'start date');
+    addDate(symbols.scheduledDateSymbol, 'scheduled date');
 }
 
 function addPrioritySuggestions(
