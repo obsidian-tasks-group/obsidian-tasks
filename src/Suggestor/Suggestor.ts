@@ -244,6 +244,7 @@ function addDependencySuggestions(
     canSaveEdits: boolean,
 ) {
     if (includeDependencySuggestions(canSaveEdits)) {
+        // These don't reuse addField() because they don't have a space at the end of the appendText values.
         if (!line.includes(symbols.idSymbol))
             genericSuggestions.push({
                 displayText: `${symbols.idSymbol} id`,
