@@ -367,9 +367,8 @@ class QueryRenderChild extends QueryResultsRenderer {
 
         // Go to the line the task is defined at
         const app = this.app;
-        const vault = app.vault;
         link.addEventListener('click', async (ev: MouseEvent) => {
-            const result = await getTaskLineAndFile(task, vault);
+            const result = await getTaskLineAndFile(task, app.vault);
             if (result) {
                 const [line, file] = result;
                 const leaf = app.workspace.getLeaf(Keymap.isModEvent(ev));
@@ -389,7 +388,7 @@ class QueryRenderChild extends QueryResultsRenderer {
             // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
             // the 'click' event is more generic for touch devices etc.)
             if (ev.button === 1) {
-                const result = await getTaskLineAndFile(task, vault);
+                const result = await getTaskLineAndFile(task, app.vault);
                 if (result) {
                     const [line, file] = result;
                     const leaf = app.workspace.getLeaf('tab');
