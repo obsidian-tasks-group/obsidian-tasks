@@ -174,9 +174,7 @@ function addHappensDatesSuggestions(
             });
     };
 
-    const dateSymbol = symbols.dueDateSymbol;
-    const fieldName = 'due date';
-    addDate(dateSymbol, fieldName);
+    addDate(symbols.dueDateSymbol, 'due date');
     if (!line.includes(symbols.startDateSymbol))
         genericSuggestions.push({
             displayText: `${symbols.startDateSymbol} start date`,
