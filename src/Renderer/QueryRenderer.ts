@@ -352,8 +352,8 @@ class QueryRenderChild extends QueryResultsRenderer {
         task: Task,
         shortMode: boolean,
         isFilenameUnique: boolean | undefined,
-        clickHandler: (ev: MouseEvent, app: App, task: Task) => Promise<void>,
-        mousedownHandler: (ev: MouseEvent, app: App, task: Task) => Promise<void>,
+        clickHandler: (ev: MouseEvent, task: Task) => Promise<void>,
+        mousedownHandler: (ev: MouseEvent, task: Task) => Promise<void>,
     ) {
         const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
@@ -380,13 +380,12 @@ class QueryRenderChild extends QueryResultsRenderer {
         link.setText(linkText);
 
         // Go to the line the task is defined at
-        const app = this.app;
         link.addEventListener('click', async (ev: MouseEvent) => {
-            await clickHandler(ev, app, task);
+            await clickHandler(ev, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
-            await mousedownHandler(ev, app, task);
+            await mousedownHandler(ev, task);
         });
 
         if (!shortMode) {
@@ -395,7 +394,7 @@ class QueryRenderChild extends QueryResultsRenderer {
     }
 }
 
-async function backlinksClickHandler(ev: MouseEvent, app: App, task: Task) {
+async function backlinksClickHandler(ev: MouseEvent, task: Task) {
     const result = await getTaskLineAndFile(task, app.vault);
     if (result) {
         const [line, file] = result;
@@ -409,7 +408,7 @@ async function backlinksClickHandler(ev: MouseEvent, app: App, task: Task) {
     }
 }
 
-async function backlinksMousedownHandler(ev: MouseEvent, app: App, task: Task) {
+async function backlinksMousedownHandler(ev: MouseEvent, task: Task) {
     // Open in a new tab on middle-click.
     // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
     // solely for this.
