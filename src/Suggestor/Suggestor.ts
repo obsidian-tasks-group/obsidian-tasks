@@ -167,9 +167,10 @@ function addHappensDatesSuggestions(
     line: string,
 ) {
     const dateSymbol = symbols.dueDateSymbol;
+    const fieldName = 'due date';
     if (!line.includes(dateSymbol))
         genericSuggestions.push({
-            displayText: `${dateSymbol} due date`,
+            displayText: `${dateSymbol} ${fieldName}`,
             appendText: `${dateSymbol} `,
         });
     if (!line.includes(symbols.startDateSymbol))
