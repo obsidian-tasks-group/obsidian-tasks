@@ -63,7 +63,7 @@ export function makeDefaultSuggestionBuilder(
 
         // add recurrence suggestions if relevant
         suggestions = suggestions.concat(
-            addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, dataviewMode),
+            addRecurrenceValueSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, dataviewMode),
         );
 
         // add Auto ID suggestions
@@ -384,7 +384,7 @@ function addDatesSuggestions(
  * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
  * something where a recurrence is expected) or unfiltered
  */
-function addRecurrenceSuggestions(
+function addRecurrenceValueSuggestions(
     line: string,
     cursorPos: number,
     settings: Settings,
