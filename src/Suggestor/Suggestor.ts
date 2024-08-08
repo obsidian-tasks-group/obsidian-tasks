@@ -166,7 +166,7 @@ function addHappensDatesSuggestions(
     symbols: DefaultTaskSerializerSymbols,
     line: string,
 ) {
-    const addDate = (dateSymbol: string, fieldName: string) => {
+    const addDate = (genericSuggestions: SuggestInfo[], dateSymbol: string, fieldName: string) => {
         if (!line.includes(dateSymbol))
             genericSuggestions.push({
                 displayText: `${dateSymbol} ${fieldName}`,
@@ -174,9 +174,9 @@ function addHappensDatesSuggestions(
             });
     };
 
-    addDate(symbols.dueDateSymbol, 'due date');
-    addDate(symbols.startDateSymbol, 'start date');
-    addDate(symbols.scheduledDateSymbol, 'scheduled date');
+    addDate(genericSuggestions, symbols.dueDateSymbol, 'due date');
+    addDate(genericSuggestions, symbols.startDateSymbol, 'start date');
+    addDate(genericSuggestions, symbols.scheduledDateSymbol, 'scheduled date');
 }
 
 function addPrioritySuggestions(
