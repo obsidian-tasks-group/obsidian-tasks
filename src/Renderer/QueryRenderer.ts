@@ -16,7 +16,7 @@ import type { QueryResult } from '../Query/QueryResult';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../Task/DateFallback';
 import type { Task } from '../Task/Task';
-import { QueryResultsRenderer } from './QueryResultsRenderer';
+import { type QueryRendererParameters, QueryResultsRenderer } from './QueryResultsRenderer';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -225,6 +225,13 @@ class QueryRenderChild extends QueryResultsRenderer {
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
+        const queryRendererParameters: QueryRendererParameters = {
+            allTasks: this.plugin.getTasks(),
+            allMarkdownFiles: this.app.vault.getMarkdownFiles(),
+            backlinksClickHandler,
+            backlinksMousedownHandler,
+            editTaskPencilClickHandler,
+        };
         for (const [taskIndex, task] of tasks.entries()) {
             await this.addTask(
                 taskList,
@@ -236,6 +243,7 @@ class QueryRenderChild extends QueryResultsRenderer {
                 backlinksClickHandler,
                 backlinksMousedownHandler,
                 editTaskPencilClickHandler,
+                queryRendererParameters,
             );
         }
 

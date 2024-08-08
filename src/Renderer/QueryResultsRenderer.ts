@@ -13,6 +13,14 @@ import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
 
+export interface QueryRendererParameters {
+    allTasks: Task[];
+    allMarkdownFiles: TFile[];
+    backlinksClickHandler: (ev: MouseEvent, task: Task) => Promise<void>;
+    backlinksMousedownHandler: (ev: MouseEvent, task: Task) => Promise<void>;
+    editTaskPencilClickHandler: (event: MouseEvent, task: Task, allTasks: Task[]) => void;
+}
+
 export class QueryResultsRenderer extends MarkdownRenderChild {
     /**
      * The complete text in the instruction block, such as:
@@ -64,6 +72,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         backlinksClickHandler: BacklinksEventHandler,
         backlinksMousedownHandler: BacklinksEventHandler,
         editTaskPencilClickHandler: EditButtonClickHandler,
+        _queryRendererParameters: QueryRendererParameters,
     ) {
         const isFilenameUnique = this.isFilenameUnique({ task }, allMarkdownFiles);
         const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
