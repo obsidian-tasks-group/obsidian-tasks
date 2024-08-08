@@ -67,12 +67,11 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         taskLineRenderer: TaskLineRenderer,
         task: Task,
         taskIndex: number,
-        allTasks: Task[],
         allMarkdownFiles: TFile[],
         backlinksClickHandler: BacklinksEventHandler,
         backlinksMousedownHandler: BacklinksEventHandler,
         editTaskPencilClickHandler: EditButtonClickHandler,
-        _queryRendererParameters: QueryRendererParameters,
+        queryRendererParameters: QueryRendererParameters,
     ) {
         const isFilenameUnique = this.isFilenameUnique({ task }, allMarkdownFiles);
         const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
@@ -101,7 +100,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         }
 
         if (!this.query.queryLayoutOptions.hideEditButton) {
-            this.addEditButton(extrasSpan, task, allTasks, editTaskPencilClickHandler);
+            this.addEditButton(extrasSpan, task, queryRendererParameters.allTasks, editTaskPencilClickHandler);
         }
 
         if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
