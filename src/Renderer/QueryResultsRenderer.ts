@@ -1,4 +1,5 @@
 import { MarkdownRenderChild } from 'obsidian';
+import type { TasksFile } from '../Scripting/TasksFile';
 
 export class QueryResultsRenderer extends MarkdownRenderChild {
     /**
@@ -13,9 +14,13 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
      */
     protected readonly source: string;
 
-    constructor(container: HTMLElement, source: string) {
+    // The path of the file that contains the instruction block, and cached data from that file.
+    protected readonly tasksFile: TasksFile;
+
+    constructor(container: HTMLElement, source: string, tasksFile: TasksFile) {
         super(container);
 
         this.source = source;
+        this.tasksFile = tasksFile;
     }
 }
