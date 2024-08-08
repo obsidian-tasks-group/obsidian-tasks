@@ -130,7 +130,7 @@ function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
 function addTaskPropertySuggestions(
     line: string,
     cursorPos: number,
-    _settings: Settings,
+    settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
     dataviewMode: boolean,
     canSaveEdits: boolean,
@@ -214,7 +214,7 @@ function addTaskPropertySuggestions(
     const matchingSuggestions: SuggestInfo[] = [];
     if (wordMatch && wordMatch.length > 0) {
         const wordUnderCursor = wordMatch[0];
-        if (wordUnderCursor.length >= Math.max(1, _settings.autoSuggestMinMatch)) {
+        if (wordUnderCursor.length >= Math.max(1, settings.autoSuggestMinMatch)) {
             const filteredSuggestions = genericSuggestions.filter((suggestInfo) => {
                 const textToMatch = suggestInfo.textToMatch || suggestInfo.displayText;
                 return textToMatch.toLowerCase().includes(wordUnderCursor.toLowerCase());
@@ -237,7 +237,7 @@ function addTaskPropertySuggestions(
     }
     // That's where we're adding all the suggestions in case there's nothing specific to match
     // (and we're allowed by the settings to bring back a zero-sized match)
-    if (matchingSuggestions.length === 0 && _settings.autoSuggestMinMatch === 0) return genericSuggestions;
+    if (matchingSuggestions.length === 0 && settings.autoSuggestMinMatch === 0) return genericSuggestions;
 
     return matchingSuggestions;
 }
