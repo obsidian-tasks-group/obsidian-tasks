@@ -256,7 +256,14 @@ class QueryRenderChild extends QueryResultsRenderer {
         const shortMode = this.query.queryLayoutOptions.shortMode;
 
         if (!this.query.queryLayoutOptions.hideBacklinks) {
-            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
+            this.addBacklinks(
+                extrasSpan,
+                task,
+                shortMode,
+                isFilenameUnique,
+                backlinksClickHandler,
+                backlinksMousedownHandler,
+            );
         }
 
         if (!this.query.queryLayoutOptions.hideEditButton) {
@@ -340,7 +347,14 @@ class QueryRenderChild extends QueryResultsRenderer {
         await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this);
     }
 
-    private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
+    private addBacklinks(
+        listItem: HTMLElement,
+        task: Task,
+        shortMode: boolean,
+        isFilenameUnique: boolean | undefined,
+        clickHandler: (ev: MouseEvent, app: App, task: Task) => Promise<void>,
+        mousedownHandler: (ev: MouseEvent, app: App, task: Task) => Promise<void>,
+    ) {
         const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
         if (!shortMode) {
@@ -368,11 +382,11 @@ class QueryRenderChild extends QueryResultsRenderer {
         // Go to the line the task is defined at
         const app = this.app;
         link.addEventListener('click', async (ev: MouseEvent) => {
-            await backlinksClickHandler(ev, app, task);
+            await clickHandler(ev, app, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
-            await backlinksMousedownHandler(ev, app, task);
+            await mousedownHandler(ev, app, task);
         });
 
         if (!shortMode) {
