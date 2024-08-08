@@ -368,17 +368,7 @@ class QueryRenderChild extends QueryResultsRenderer {
         // Go to the line the task is defined at
         const app = this.app;
         link.addEventListener('click', async (ev: MouseEvent) => {
-            const result = await getTaskLineAndFile(task, app.vault);
-            if (result) {
-                const [line, file] = result;
-                const leaf = app.workspace.getLeaf(Keymap.isModEvent(ev));
-                // When the corresponding task has been found,
-                // suppress the default behavior of the mouse click event
-                // (which would interfere e.g. if the query is rendered inside a callout).
-                ev.preventDefault();
-                // Instead of the default behavior, open the file with the required line highlighted.
-                await leaf.openFile(file, { eState: { line: line } });
-            }
+            await addBacklinksClickHandler(ev, app, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
@@ -401,5 +391,19 @@ class QueryRenderChild extends QueryResultsRenderer {
         if (!shortMode) {
             backLink.append(')');
         }
+    }
+}
+
+async function addBacklinksClickHandler(ev: MouseEvent, app: App, task: Task) {
+    const result = await getTaskLineAndFile(task, app.vault);
+    if (result) {
+        const [line, file] = result;
+        const leaf = app.workspace.getLeaf(Keymap.isModEvent(ev));
+        // When the corresponding task has been found,
+        // suppress the default behavior of the mouse click event
+        // (which would interfere e.g. if the query is rendered inside a callout).
+        ev.preventDefault();
+        // Instead of the default behavior, open the file with the required line highlighted.
+        await leaf.openFile(file, { eState: { line: line } });
     }
 }
