@@ -14,7 +14,7 @@ import type { QueryResult } from '../Query/QueryResult';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../Task/DateFallback';
 import type { Task } from '../Task/Task';
-import { QueryResultsRenderer } from './QueryResultsRenderer';
+import { type QueryRendererParameters, QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -171,7 +171,13 @@ class QueryRenderChild extends QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
-        await this.addAllTaskGroups(queryResult.taskGroups, content);
+        await this.addAllTaskGroups(queryResult.taskGroups, content, {
+            allTasks: this.plugin.getTasks(),
+            allMarkdownFiles: this.app.vault.getMarkdownFiles(),
+            backlinksClickHandler,
+            backlinksMousedownHandler,
+            editTaskPencilClickHandler,
+        });
 
         const totalTasksCount = queryResult.totalTasksCount;
         this.addTaskCount(content, queryResult);
@@ -204,19 +210,17 @@ class QueryRenderChild extends QueryResultsRenderer {
         content.appendChild(explanationsBlock);
     }
 
-    private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups, content: HTMLDivElement) {
+    private async addAllTaskGroups(
+        tasksSortedLimitedGrouped: TaskGroups,
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
         for (const group of tasksSortedLimitedGrouped.groups) {
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(content, group.groupHeadings);
 
-            await this.createTaskList(group.tasks, content, {
-                allTasks: this.plugin.getTasks(),
-                allMarkdownFiles: this.app.vault.getMarkdownFiles(),
-                backlinksClickHandler,
-                backlinksMousedownHandler,
-                editTaskPencilClickHandler,
-            });
+            await this.createTaskList(group.tasks, content, queryRendererParameters);
         }
     }
 }
