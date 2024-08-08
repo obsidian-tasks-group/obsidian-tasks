@@ -9,12 +9,11 @@ import { State } from '../Obsidian/Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
-import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../Task/DateFallback';
 import type { Task } from '../Task/Task';
-import { type QueryRendererParameters, QueryResultsRenderer } from './QueryResultsRenderer';
+import { QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -208,20 +207,6 @@ class QueryRenderChild extends QueryResultsRenderer {
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
         explanationsBlock.setText(explanationAsString);
         content.appendChild(explanationsBlock);
-    }
-
-    private async addAllTaskGroups(
-        tasksSortedLimitedGrouped: TaskGroups,
-        content: HTMLDivElement,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
-        for (const group of tasksSortedLimitedGrouped.groups) {
-            // If there were no 'group by' instructions, group.groupHeadings
-            // will be empty, and no headings will be added.
-            await this.addGroupHeadings(content, group.groupHeadings);
-
-            await this.createTaskList(group.tasks, content, queryRendererParameters);
-        }
     }
 }
 

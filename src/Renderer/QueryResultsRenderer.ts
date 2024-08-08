@@ -5,6 +5,7 @@ import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
+import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../Scripting/Postponer';
 import type { TasksFile } from '../Scripting/TasksFile';
@@ -61,6 +62,20 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
                 this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
                 this.queryType = 'tasks';
                 break;
+        }
+    }
+
+    protected async addAllTaskGroups(
+        tasksSortedLimitedGrouped: TaskGroups,
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
+        for (const group of tasksSortedLimitedGrouped.groups) {
+            // If there were no 'group by' instructions, group.groupHeadings
+            // will be empty, and no headings will be added.
+            await this.addGroupHeadings(content, group.groupHeadings);
+
+            await this.createTaskList(group.tasks, content, queryRendererParameters);
         }
     }
 
