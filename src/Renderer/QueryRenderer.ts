@@ -1,4 +1,4 @@
-import type { EventRef, MarkdownPostProcessorContext, TFile } from 'obsidian';
+import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
@@ -13,11 +13,10 @@ import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
-import { shouldShowPostponeButton } from '../Scripting/Postponer';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../Task/DateFallback';
 import type { Task } from '../Task/Task';
-import { type BacklinksEventHandler, QueryResultsRenderer } from './QueryResultsRenderer';
+import { QueryResultsRenderer } from './QueryResultsRenderer';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -48,8 +47,6 @@ export class QueryRenderer {
         queryRenderChild.load();
     }
 }
-
-type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
 
 class QueryRenderChild extends QueryResultsRenderer {
     private readonly app: App;
@@ -243,70 +240,6 @@ class QueryRenderChild extends QueryResultsRenderer {
         }
 
         content.appendChild(taskList);
-    }
-
-    private async addTask(
-        taskList: HTMLUListElement,
-        taskLineRenderer: TaskLineRenderer,
-        task: Task,
-        taskIndex: number,
-        allTasks: Task[],
-        allMarkdownFiles: TFile[],
-        backlinksClickHandler: BacklinksEventHandler,
-        backlinksMousedownHandler: BacklinksEventHandler,
-        editTaskPencilClickHandler: EditButtonClickHandler,
-    ) {
-        const isFilenameUnique = this.isFilenameUnique({ task }, allMarkdownFiles);
-        const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
-
-        // Remove all footnotes. They don't re-appear in another document.
-        const footnotes = listItem.querySelectorAll('[data-footnote-id]');
-        footnotes.forEach((footnote) => footnote.remove());
-
-        const extrasSpan = listItem.createSpan('task-extras');
-
-        if (!this.query.queryLayoutOptions.hideUrgency) {
-            this.addUrgency(extrasSpan, task);
-        }
-
-        const shortMode = this.query.queryLayoutOptions.shortMode;
-
-        if (!this.query.queryLayoutOptions.hideBacklinks) {
-            this.addBacklinks(
-                extrasSpan,
-                task,
-                shortMode,
-                isFilenameUnique,
-                backlinksClickHandler,
-                backlinksMousedownHandler,
-            );
-        }
-
-        if (!this.query.queryLayoutOptions.hideEditButton) {
-            this.addEditButton(extrasSpan, task, allTasks, editTaskPencilClickHandler);
-        }
-
-        if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
-            this.addPostponeButton(extrasSpan, task, shortMode);
-        }
-
-        taskList.appendChild(listItem);
-    }
-
-    private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[], clickHandler: EditButtonClickHandler) {
-        const editTaskPencil = createAndAppendElement('a', listItem);
-        editTaskPencil.addClass('tasks-edit');
-        editTaskPencil.title = 'Edit task';
-        editTaskPencil.href = '#';
-
-        editTaskPencil.onClickEvent((event: MouseEvent) => {
-            clickHandler(event, task, allTasks);
-        });
-    }
-
-    private addUrgency(listItem: HTMLElement, task: Task) {
-        const text = new Intl.NumberFormat().format(task.urgency);
-        listItem.createSpan({ text, cls: 'tasks-urgency' });
     }
 
     private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups, content: HTMLDivElement) {

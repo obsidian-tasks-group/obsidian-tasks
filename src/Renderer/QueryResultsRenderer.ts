@@ -4,13 +4,14 @@ import type { IQuery } from '../IQuery';
 import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
-import { postponeButtonTitle } from '../Scripting/Postponer';
+import { postponeButtonTitle, shouldShowPostponeButton } from '../Scripting/Postponer';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
-import { createAndAppendElement } from './TaskLineRenderer';
+import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
-export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
+type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
+type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
 
 export class QueryResultsRenderer extends MarkdownRenderChild {
     /**
@@ -51,6 +52,70 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
                 this.queryType = 'tasks';
                 break;
         }
+    }
+
+    protected async addTask(
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        task: Task,
+        taskIndex: number,
+        allTasks: Task[],
+        allMarkdownFiles: TFile[],
+        backlinksClickHandler: BacklinksEventHandler,
+        backlinksMousedownHandler: BacklinksEventHandler,
+        editTaskPencilClickHandler: EditButtonClickHandler,
+    ) {
+        const isFilenameUnique = this.isFilenameUnique({ task }, allMarkdownFiles);
+        const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
+
+        // Remove all footnotes. They don't re-appear in another document.
+        const footnotes = listItem.querySelectorAll('[data-footnote-id]');
+        footnotes.forEach((footnote) => footnote.remove());
+
+        const extrasSpan = listItem.createSpan('task-extras');
+
+        if (!this.query.queryLayoutOptions.hideUrgency) {
+            this.addUrgency(extrasSpan, task);
+        }
+
+        const shortMode = this.query.queryLayoutOptions.shortMode;
+
+        if (!this.query.queryLayoutOptions.hideBacklinks) {
+            this.addBacklinks(
+                extrasSpan,
+                task,
+                shortMode,
+                isFilenameUnique,
+                backlinksClickHandler,
+                backlinksMousedownHandler,
+            );
+        }
+
+        if (!this.query.queryLayoutOptions.hideEditButton) {
+            this.addEditButton(extrasSpan, task, allTasks, editTaskPencilClickHandler);
+        }
+
+        if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+            this.addPostponeButton(extrasSpan, task, shortMode);
+        }
+
+        taskList.appendChild(listItem);
+    }
+
+    private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[], clickHandler: EditButtonClickHandler) {
+        const editTaskPencil = createAndAppendElement('a', listItem);
+        editTaskPencil.addClass('tasks-edit');
+        editTaskPencil.title = 'Edit task';
+        editTaskPencil.href = '#';
+
+        editTaskPencil.onClickEvent((event: MouseEvent) => {
+            clickHandler(event, task, allTasks);
+        });
+    }
+
+    private addUrgency(listItem: HTMLElement, task: Task) {
+        const text = new Intl.NumberFormat().format(task.urgency);
+        listItem.createSpan({ text, cls: 'tasks-urgency' });
     }
 
     /**
