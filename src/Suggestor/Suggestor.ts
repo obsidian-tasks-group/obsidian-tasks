@@ -162,8 +162,7 @@ function addTaskPropertySuggestions(
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
         const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
 
-        for (const element of priorityTexts) {
-            const priorityText = element;
+        for (const priorityText of priorityTexts) {
             const prioritySymbol = prioritySymbols[priorityText];
 
             genericSuggestions.push({
