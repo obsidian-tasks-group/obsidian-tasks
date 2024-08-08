@@ -43,10 +43,6 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
     protected query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
-    public get filePath(): string | undefined {
-        return this.tasksFile?.path ?? undefined;
-    }
-
     constructor(container: HTMLElement, source: string, tasksFile: TasksFile) {
         super(container);
 
@@ -67,6 +63,10 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
                 this.queryType = 'tasks';
                 break;
         }
+    }
+
+    public get filePath(): string | undefined {
+        return this.tasksFile?.path ?? undefined;
     }
 
     protected async addAllTaskGroups(
