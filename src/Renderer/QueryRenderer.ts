@@ -206,7 +206,11 @@ class QueryRenderChild extends QueryResultsRenderer {
         content.appendChild(explanationsBlock);
     }
 
-    private async createTaskList(tasks: Task[], content: HTMLDivElement): Promise<void> {
+    private async createTaskList(
+        tasks: Task[],
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ): Promise<void> {
         const taskList = createAndAppendElement('ul', content);
 
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
@@ -225,13 +229,6 @@ class QueryRenderChild extends QueryResultsRenderer {
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
-        const queryRendererParameters: QueryRendererParameters = {
-            allTasks: this.plugin.getTasks(),
-            allMarkdownFiles: this.app.vault.getMarkdownFiles(),
-            backlinksClickHandler,
-            backlinksMousedownHandler,
-            editTaskPencilClickHandler,
-        };
         for (const [taskIndex, task] of tasks.entries()) {
             await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
         }
@@ -245,7 +242,13 @@ class QueryRenderChild extends QueryResultsRenderer {
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(content, group.groupHeadings);
 
-            await this.createTaskList(group.tasks, content);
+            await this.createTaskList(group.tasks, content, {
+                allTasks: this.plugin.getTasks(),
+                allMarkdownFiles: this.app.vault.getMarkdownFiles(),
+                backlinksClickHandler,
+                backlinksMousedownHandler,
+                editTaskPencilClickHandler,
+            });
         }
     }
 }
