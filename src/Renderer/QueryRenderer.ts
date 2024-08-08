@@ -11,7 +11,6 @@ import { State } from '../Obsidian/Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
-import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
 import { shouldShowPostponeButton } from '../Scripting/Postponer';
@@ -317,19 +316,6 @@ class QueryRenderChild extends QueryResultsRenderer {
             await this.addGroupHeadings(content, group.groupHeadings);
 
             await this.createTaskList(group.tasks, content);
-        }
-    }
-
-    /**
-     * Display headings for a group of tasks.
-     * @param content
-     * @param groupHeadings - The headings to display. This can be an empty array,
-     *                        in which case no headings will be added.
-     * @private
-     */
-    private async addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupDisplayHeading[]) {
-        for (const heading of groupHeadings) {
-            await this.addGroupHeading(content, heading);
         }
     }
 }
