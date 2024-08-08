@@ -431,13 +431,4 @@ class QueryRenderChild extends QueryResultsRenderer {
             menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
         });
     }
-
-    private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
-        if (!this.query.queryLayoutOptions.hideTaskCount) {
-            content.createDiv({
-                text: queryResult.totalTasksCountDisplayText(),
-                cls: 'tasks-count',
-            });
-        }
-    }
 }

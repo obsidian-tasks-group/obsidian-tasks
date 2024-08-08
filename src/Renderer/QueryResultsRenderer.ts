@@ -2,6 +2,7 @@ import { MarkdownRenderChild, TFile } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
+import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 
@@ -43,6 +44,15 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
                 this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
                 this.queryType = 'tasks';
                 break;
+        }
+    }
+
+    protected addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
+        if (!this.query.queryLayoutOptions.hideTaskCount) {
+            content.createDiv({
+                text: queryResult.totalTasksCountDisplayText(),
+                cls: 'tasks-count',
+            });
         }
     }
 
