@@ -227,7 +227,7 @@ class QueryRenderChild extends QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            await this.addTask(taskList, taskLineRenderer, task, taskIndex);
+            await this.addTask(taskList, taskLineRenderer, task, taskIndex, this.plugin.getTasks());
         }
 
         content.appendChild(taskList);
@@ -238,6 +238,7 @@ class QueryRenderChild extends QueryResultsRenderer {
         taskLineRenderer: TaskLineRenderer,
         task: Task,
         taskIndex: number,
+        allTasks: Task[],
     ) {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.app.vault.getMarkdownFiles());
         const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
@@ -267,7 +268,7 @@ class QueryRenderChild extends QueryResultsRenderer {
 
         if (!this.query.queryLayoutOptions.hideEditButton) {
             // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
-            this.addEditButton(extrasSpan, task, this.plugin.getTasks()!);
+            this.addEditButton(extrasSpan, task, allTasks);
         }
 
         if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
