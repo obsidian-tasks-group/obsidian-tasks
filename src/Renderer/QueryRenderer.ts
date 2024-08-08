@@ -366,12 +366,13 @@ class QueryRenderChild extends QueryResultsRenderer {
         link.setText(linkText);
 
         // Go to the line the task is defined at
-        const vault = this.app.vault;
+        const app = this.app;
+        const vault = app.vault;
         link.addEventListener('click', async (ev: MouseEvent) => {
             const result = await getTaskLineAndFile(task, vault);
             if (result) {
                 const [line, file] = result;
-                const leaf = this.app.workspace.getLeaf(Keymap.isModEvent(ev));
+                const leaf = app.workspace.getLeaf(Keymap.isModEvent(ev));
                 // When the corresponding task has been found,
                 // suppress the default behavior of the mouse click event
                 // (which would interfere e.g. if the query is rendered inside a callout).
@@ -391,7 +392,7 @@ class QueryRenderChild extends QueryResultsRenderer {
                 const result = await getTaskLineAndFile(task, vault);
                 if (result) {
                     const [line, file] = result;
-                    const leaf = this.app.workspace.getLeaf('tab');
+                    const leaf = app.workspace.getLeaf('tab');
                     ev.preventDefault();
                     await leaf.openFile(file, { eState: { line: line } });
                 }
