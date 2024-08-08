@@ -292,23 +292,7 @@ class QueryRenderChild extends QueryResultsRenderer {
         editTaskPencil.href = '#';
 
         editTaskPencil.onClickEvent((event: MouseEvent) => {
-            event.preventDefault();
-
-            const onSubmit = async (updatedTasks: Task[]): Promise<void> => {
-                await replaceTaskWithTasks({
-                    originalTask: task,
-                    newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
-                });
-            };
-
-            // Need to create a new instance every time, as cursor/task can change.
-            const taskModal = new TaskModal({
-                app,
-                task,
-                onSubmit,
-                allTasks,
-            });
-            taskModal.open();
+            editTaskPencilClickHandler(event, task, allTasks);
         });
     }
 
@@ -326,6 +310,26 @@ class QueryRenderChild extends QueryResultsRenderer {
             await this.createTaskList(group.tasks, content);
         }
     }
+}
+
+function editTaskPencilClickHandler(event: MouseEvent, task: Task, allTasks: Task[]) {
+    event.preventDefault();
+
+    const onSubmit = async (updatedTasks: Task[]): Promise<void> => {
+        await replaceTaskWithTasks({
+            originalTask: task,
+            newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
+        });
+    };
+
+    // Need to create a new instance every time, as cursor/task can change.
+    const taskModal = new TaskModal({
+        app,
+        task,
+        onSubmit,
+        allTasks,
+    });
+    taskModal.open();
 }
 
 async function backlinksClickHandler(ev: MouseEvent, task: Task) {
