@@ -2,8 +2,6 @@ import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderer, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
-
-import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
@@ -58,10 +56,6 @@ class QueryRenderChild extends QueryResultsRenderer {
     private plugin: TasksPlugin;
     private readonly events: TasksEvents;
 
-    private query: IQuery;
-    // @ts-expect-error: TS6133: 'queryType' is declared but its value is never read
-    private queryType: string; // whilst there is only one query type, there is no point logging this value
-
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
@@ -85,21 +79,6 @@ class QueryRenderChild extends QueryResultsRenderer {
         this.app = app;
         this.plugin = plugin;
         this.events = events;
-
-        // The engine is chosen on the basis of the code block language. Currently,
-        // there is only the main engine for the plugin, this allows others to be
-        // added later.
-        switch (this.containerEl.className) {
-            case 'block-language-tasks':
-                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
-                this.queryType = 'tasks';
-                break;
-
-            default:
-                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
-                this.queryType = 'tasks';
-                break;
-        }
     }
 
     onload() {
