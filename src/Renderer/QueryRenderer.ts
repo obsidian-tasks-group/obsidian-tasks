@@ -1,5 +1,5 @@
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
-import { App, Keymap, MarkdownRenderer, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
@@ -439,23 +439,5 @@ class QueryRenderChild extends QueryResultsRenderer {
                 cls: 'tasks-count',
             });
         }
-    }
-
-    private isFilenameUnique({ task }: { task: Task }, allMarkdownFiles: TFile[]): boolean | undefined {
-        // Will match the filename without extension (the file's "basename").
-        const filenameMatch = task.path.match(/([^/]*)\..+$/i);
-        if (filenameMatch === null) {
-            return undefined;
-        }
-
-        const filename = filenameMatch[1];
-        const allFilesWithSameName = allMarkdownFiles.filter((file: TFile) => {
-            if (file.basename === filename) {
-                // Found a file with the same name (it might actually be the same file, but we'll take that into account later.)
-                return true;
-            }
-        });
-
-        return allFilesWithSameName.length < 2;
     }
 }
