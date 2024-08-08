@@ -191,20 +191,8 @@ function addTaskPropertySuggestions(
             insertSkip: dataviewMode ? insertSkip : undefined,
         });
     }
+    addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
 
-    if (includeDependencySuggestions(canSaveEdits)) {
-        if (!line.includes(symbols.idSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.idSymbol} id`,
-                appendText: `${symbols.idSymbol}`,
-            });
-
-        if (!line.includes(symbols.dependsOnSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.dependsOnSymbol} depends on id`,
-                appendText: `${symbols.dependsOnSymbol}`,
-            });
-    }
     const matchingSuggestions = filterGeneralSuggestsForWordAtCursor(
         line,
         cursorPos,
@@ -219,6 +207,27 @@ function addTaskPropertySuggestions(
     if (matchingSuggestions.length === 0 && settings.autoSuggestMinMatch === 0) return genericSuggestions;
 
     return matchingSuggestions;
+}
+
+function addDependencySuggestions(
+    genericSuggestions: SuggestInfo[],
+    symbols: DefaultTaskSerializerSymbols,
+    line: string,
+    canSaveEdits: boolean,
+) {
+    if (includeDependencySuggestions(canSaveEdits)) {
+        if (!line.includes(symbols.idSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.idSymbol} id`,
+                appendText: `${symbols.idSymbol}`,
+            });
+
+        if (!line.includes(symbols.dependsOnSymbol))
+            genericSuggestions.push({
+                displayText: `${symbols.dependsOnSymbol} depends on id`,
+                appendText: `${symbols.dependsOnSymbol}`,
+            });
+    }
 }
 
 function filterGeneralSuggestsForWordAtCursor(
