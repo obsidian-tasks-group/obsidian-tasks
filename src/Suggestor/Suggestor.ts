@@ -174,12 +174,7 @@ function addTaskPropertySuggestions(
             });
         }
     }
-
-    if (!line.includes(symbols.recurrenceSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.recurrenceSymbol} recurring (repeat)`,
-            appendText: `${symbols.recurrenceSymbol} `,
-        });
+    addRecurrenceSuggestions(genericSuggestions, symbols, line);
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
 
@@ -197,6 +192,18 @@ function addTaskPropertySuggestions(
     if (matchingSuggestions.length === 0 && settings.autoSuggestMinMatch === 0) return genericSuggestions;
 
     return matchingSuggestions;
+}
+
+function addRecurrenceSuggestions(
+    genericSuggestions: SuggestInfo[],
+    symbols: DefaultTaskSerializerSymbols,
+    line: string,
+) {
+    if (!line.includes(symbols.recurrenceSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.recurrenceSymbol} recurring (repeat)`,
+            appendText: `${symbols.recurrenceSymbol} `,
+        });
 }
 
 function addTaskLifecycleDateSuggestions(
