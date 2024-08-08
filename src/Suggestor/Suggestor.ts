@@ -161,13 +161,13 @@ function addTaskPropertySuggestions(
     return matchingSuggestions;
 }
 
-const addField = (genericSuggestions: SuggestInfo[], line: string, dateSymbol: string, fieldName: string) => {
+function addField(genericSuggestions: SuggestInfo[], line: string, dateSymbol: string, fieldName: string) {
     if (!line.includes(dateSymbol))
         genericSuggestions.push({
             displayText: `${dateSymbol} ${fieldName}`,
             appendText: `${dateSymbol} `,
         });
-};
+}
 
 function addHappensDatesSuggestions(
     genericSuggestions: SuggestInfo[],
