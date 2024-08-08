@@ -10,7 +10,7 @@ import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { createAndAppendElement } from './TaskLineRenderer';
 
-type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
+export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 
 export class QueryResultsRenderer extends MarkdownRenderChild {
     /**

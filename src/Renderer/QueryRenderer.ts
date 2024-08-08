@@ -17,7 +17,7 @@ import { shouldShowPostponeButton } from '../Scripting/Postponer';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../Task/DateFallback';
 import type { Task } from '../Task/Task';
-import { QueryResultsRenderer } from './QueryResultsRenderer';
+import { type BacklinksEventHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -236,6 +236,9 @@ class QueryRenderChild extends QueryResultsRenderer {
                 taskIndex,
                 this.plugin.getTasks(),
                 this.app.vault.getMarkdownFiles(),
+                backlinksClickHandler,
+                backlinksMousedownHandler,
+                editTaskPencilClickHandler,
             );
         }
 
@@ -249,6 +252,9 @@ class QueryRenderChild extends QueryResultsRenderer {
         taskIndex: number,
         allTasks: Task[],
         allMarkdownFiles: TFile[],
+        backlinksClickHandler: BacklinksEventHandler,
+        backlinksMousedownHandler: BacklinksEventHandler,
+        editTaskPencilClickHandler: EditButtonClickHandler,
     ) {
         const isFilenameUnique = this.isFilenameUnique({ task }, allMarkdownFiles);
         const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
