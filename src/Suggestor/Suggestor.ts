@@ -205,7 +205,30 @@ function addTaskPropertySuggestions(
                 appendText: `${symbols.dependsOnSymbol}`,
             });
     }
+    const matchingSuggestions = filterGeneralSuggestsForWordAtCursor(
+        line,
+        cursorPos,
+        settings,
+        genericSuggestions,
+        dataviewMode,
+        insertSkip,
+    );
 
+    // That's where we're adding all the suggestions in case there's nothing specific to match
+    // (and we're allowed by the settings to bring back a zero-sized match)
+    if (matchingSuggestions.length === 0 && settings.autoSuggestMinMatch === 0) return genericSuggestions;
+
+    return matchingSuggestions;
+}
+
+function filterGeneralSuggestsForWordAtCursor(
+    line: string,
+    cursorPos: number,
+    settings: Settings,
+    genericSuggestions: SuggestInfo[],
+    dataviewMode: boolean,
+    insertSkip: number,
+) {
     // We now filter the general suggestions according to the word at the cursor. If there's
     // something to match, we filter the suggestions accordingly, so the user can get more specific
     // results according to what she's typing.
@@ -235,10 +258,6 @@ function addTaskPropertySuggestions(
             }
         }
     }
-    // That's where we're adding all the suggestions in case there's nothing specific to match
-    // (and we're allowed by the settings to bring back a zero-sized match)
-    if (matchingSuggestions.length === 0 && settings.autoSuggestMinMatch === 0) return genericSuggestions;
-
     return matchingSuggestions;
 }
 
