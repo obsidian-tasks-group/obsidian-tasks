@@ -275,7 +275,7 @@ class QueryRenderChild extends QueryResultsRenderer {
         }
 
         if (!this.query.queryLayoutOptions.hideEditButton) {
-            this.addEditButton(extrasSpan, task, allTasks);
+            this.addEditButton(extrasSpan, task, allTasks, editTaskPencilClickHandler);
         }
 
         if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
@@ -285,14 +285,19 @@ class QueryRenderChild extends QueryResultsRenderer {
         taskList.appendChild(listItem);
     }
 
-    private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[]) {
+    private addEditButton(
+        listItem: HTMLElement,
+        task: Task,
+        allTasks: Task[],
+        clickHandler: (event: MouseEvent, task: Task, allTasks: Task[]) => void,
+    ) {
         const editTaskPencil = createAndAppendElement('a', listItem);
         editTaskPencil.addClass('tasks-edit');
         editTaskPencil.title = 'Edit task';
         editTaskPencil.href = '#';
 
         editTaskPencil.onClickEvent((event: MouseEvent) => {
-            editTaskPencilClickHandler(event, task, allTasks);
+            clickHandler(event, task, allTasks);
         });
     }
 
