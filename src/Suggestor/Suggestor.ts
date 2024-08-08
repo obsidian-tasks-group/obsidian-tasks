@@ -139,21 +139,7 @@ function addTaskPropertySuggestions(
     const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    if (!line.includes(symbols.dueDateSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.dueDateSymbol} due date`,
-            appendText: `${symbols.dueDateSymbol} `,
-        });
-    if (!line.includes(symbols.startDateSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.startDateSymbol} start date`,
-            appendText: `${symbols.startDateSymbol} `,
-        });
-    if (!line.includes(symbols.scheduledDateSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.scheduledDateSymbol} scheduled date`,
-            appendText: `${symbols.scheduledDateSymbol} `,
-        });
+    addHappensDatesSuggestions(genericSuggestions, symbols, line);
     addPrioritySuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
     addRecurrenceSuggestions(genericSuggestions, symbols, line);
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
@@ -173,6 +159,28 @@ function addTaskPropertySuggestions(
     if (matchingSuggestions.length === 0 && settings.autoSuggestMinMatch === 0) return genericSuggestions;
 
     return matchingSuggestions;
+}
+
+function addHappensDatesSuggestions(
+    genericSuggestions: SuggestInfo[],
+    symbols: DefaultTaskSerializerSymbols,
+    line: string,
+) {
+    if (!line.includes(symbols.dueDateSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.dueDateSymbol} due date`,
+            appendText: `${symbols.dueDateSymbol} `,
+        });
+    if (!line.includes(symbols.startDateSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.startDateSymbol} start date`,
+            appendText: `${symbols.startDateSymbol} `,
+        });
+    if (!line.includes(symbols.scheduledDateSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.scheduledDateSymbol} scheduled date`,
+            appendText: `${symbols.scheduledDateSymbol} `,
+        });
 }
 
 function addPrioritySuggestions(
