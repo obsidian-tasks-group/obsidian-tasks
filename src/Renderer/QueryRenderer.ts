@@ -368,11 +368,11 @@ class QueryRenderChild extends QueryResultsRenderer {
         // Go to the line the task is defined at
         const app = this.app;
         link.addEventListener('click', async (ev: MouseEvent) => {
-            await addBacklinksClickHandler(ev, app, task);
+            await backlinksClickHandler(ev, app, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
-            await addBacklinksMousedownHandler(ev, app, task);
+            await backlinksMousedownHandler(ev, app, task);
         });
 
         if (!shortMode) {
@@ -381,7 +381,7 @@ class QueryRenderChild extends QueryResultsRenderer {
     }
 }
 
-async function addBacklinksClickHandler(ev: MouseEvent, app: App, task: Task) {
+async function backlinksClickHandler(ev: MouseEvent, app: App, task: Task) {
     const result = await getTaskLineAndFile(task, app.vault);
     if (result) {
         const [line, file] = result;
@@ -395,7 +395,7 @@ async function addBacklinksClickHandler(ev: MouseEvent, app: App, task: Task) {
     }
 }
 
-async function addBacklinksMousedownHandler(ev: MouseEvent, app: App, task: Task) {
+async function backlinksMousedownHandler(ev: MouseEvent, app: App, task: Task) {
     // Open in a new tab on middle-click.
     // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
     // solely for this.
