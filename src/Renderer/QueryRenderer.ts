@@ -303,7 +303,7 @@ class QueryRenderChild extends QueryResultsRenderer {
 
             // Need to create a new instance every time, as cursor/task can change.
             const taskModal = new TaskModal({
-                app: this.app,
+                app,
                 task,
                 onSubmit,
                 allTasks,
