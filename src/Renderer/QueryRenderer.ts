@@ -49,6 +49,8 @@ export class QueryRenderer {
     }
 }
 
+type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
+
 class QueryRenderChild extends QueryResultsRenderer {
     private readonly app: App;
     private plugin: TasksPlugin;
@@ -285,12 +287,7 @@ class QueryRenderChild extends QueryResultsRenderer {
         taskList.appendChild(listItem);
     }
 
-    private addEditButton(
-        listItem: HTMLElement,
-        task: Task,
-        allTasks: Task[],
-        clickHandler: (event: MouseEvent, task: Task, allTasks: Task[]) => void,
-    ) {
+    private addEditButton(listItem: HTMLElement, task: Task, allTasks: Task[], clickHandler: EditButtonClickHandler) {
         const editTaskPencil = createAndAppendElement('a', listItem);
         editTaskPencil.addClass('tasks-edit');
         editTaskPencil.title = 'Edit task';
