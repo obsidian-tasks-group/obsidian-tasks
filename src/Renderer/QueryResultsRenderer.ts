@@ -51,6 +51,19 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         }
     }
 
+    /**
+     * Display headings for a group of tasks.
+     * @param content
+     * @param groupHeadings - The headings to display. This can be an empty array,
+     *                        in which case no headings will be added.
+     * @private
+     */
+    protected async addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupDisplayHeading[]) {
+        for (const heading of groupHeadings) {
+            await this.addGroupHeading(content, heading);
+        }
+    }
+
     protected async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
