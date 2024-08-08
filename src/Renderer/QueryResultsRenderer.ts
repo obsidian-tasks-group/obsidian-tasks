@@ -1,8 +1,9 @@
-import { MarkdownRenderChild } from 'obsidian';
+import { MarkdownRenderChild, TFile } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
 import type { TasksFile } from '../Scripting/TasksFile';
+import type { Task } from '../Task/Task';
 
 export class QueryResultsRenderer extends MarkdownRenderChild {
     /**
@@ -43,6 +44,24 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
                 this.queryType = 'tasks';
                 break;
         }
+    }
+
+    protected isFilenameUnique({ task }: { task: Task }, allMarkdownFiles: TFile[]): boolean | undefined {
+        // Will match the filename without extension (the file's "basename").
+        const filenameMatch = task.path.match(/([^/]*)\..+$/i);
+        if (filenameMatch === null) {
+            return undefined;
+        }
+
+        const filename = filenameMatch[1];
+        const allFilesWithSameName = allMarkdownFiles.filter((file: TFile) => {
+            if (file.basename === filename) {
+                // Found a file with the same name (it might actually be the same file, but we'll take that into account later.)
+                return true;
+            }
+        });
+
+        return allFilesWithSameName.length < 2;
     }
 
     protected getGroupingAttribute() {
