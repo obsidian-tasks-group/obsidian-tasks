@@ -145,7 +145,7 @@ function addTaskPropertySuggestions(
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
 
-    const matchingSuggestions = filterGeneralSuggestsForWordAtCursor(
+    const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(
         line,
         cursorPos,
         settings,
@@ -266,7 +266,7 @@ function addDependencySuggestions(
     }
 }
 
-function filterGeneralSuggestsForWordAtCursor(
+function filterGeneralSuggestionsForWordAtCursor(
     line: string,
     cursorPos: number,
     settings: Settings,
