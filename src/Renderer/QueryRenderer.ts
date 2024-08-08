@@ -238,7 +238,6 @@ class QueryRenderChild extends QueryResultsRenderer {
                 taskLineRenderer,
                 task,
                 taskIndex,
-                this.plugin.getTasks(),
                 this.app.vault.getMarkdownFiles(),
                 backlinksClickHandler,
                 backlinksMousedownHandler,
