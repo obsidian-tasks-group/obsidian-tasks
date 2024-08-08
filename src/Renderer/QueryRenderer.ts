@@ -1,5 +1,5 @@
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
-import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderer, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
@@ -21,6 +21,7 @@ import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { State } from '../Obsidian/Cache';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { TasksFile } from '../Scripting/TasksFile';
+import { QueryResultsRenderer } from './QueryResultsRenderer';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -52,7 +53,7 @@ export class QueryRenderer {
     }
 }
 
-class QueryRenderChild extends MarkdownRenderChild {
+class QueryRenderChild extends QueryResultsRenderer {
     private readonly app: App;
     private plugin: TasksPlugin;
     private readonly events: TasksEvents;
