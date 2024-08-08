@@ -10,6 +10,8 @@ import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { createAndAppendElement } from './TaskLineRenderer';
 
+type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
+
 export class QueryResultsRenderer extends MarkdownRenderChild {
     /**
      * The complete text in the instruction block, such as:
@@ -83,8 +85,8 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         task: Task,
         shortMode: boolean,
         isFilenameUnique: boolean | undefined,
-        clickHandler: (ev: MouseEvent, task: Task) => Promise<void>,
-        mousedownHandler: (ev: MouseEvent, task: Task) => Promise<void>,
+        clickHandler: BacklinksEventHandler,
+        mousedownHandler: BacklinksEventHandler,
     ) {
         const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
