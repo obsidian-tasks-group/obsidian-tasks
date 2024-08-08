@@ -2,25 +2,25 @@ import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap, MarkdownRenderer, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
-import { QueryLayout } from '../Layout/QueryLayout';
-import { DateFallback } from '../Task/DateFallback';
 
 import type { IQuery } from '../IQuery';
-import { explainResults, getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
-import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import type { QueryResult } from '../Query/QueryResult';
-import type { TaskGroups } from '../Query/Group/TaskGroups';
-import { postponeButtonTitle, shouldShowPostponeButton } from '../Scripting/Postponer';
-import type { Task } from '../Task/Task';
+import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
-import { PostponeMenu } from '../ui/Menus/PostponeMenu';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
+import { explainResults, getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
 import type TasksPlugin from '../main';
+import { State } from '../Obsidian/Cache';
+import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
-import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
-import { State } from '../Obsidian/Cache';
-import { PerformanceTracker } from '../lib/PerformanceTracker';
+import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
+import type { TaskGroups } from '../Query/Group/TaskGroups';
+import type { QueryResult } from '../Query/QueryResult';
+import { postponeButtonTitle, shouldShowPostponeButton } from '../Scripting/Postponer';
 import { TasksFile } from '../Scripting/TasksFile';
+import { DateFallback } from '../Task/DateFallback';
+import type { Task } from '../Task/Task';
+import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { QueryResultsRenderer } from './QueryResultsRenderer';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
@@ -58,18 +58,6 @@ class QueryRenderChild extends QueryResultsRenderer {
     private plugin: TasksPlugin;
     private readonly events: TasksEvents;
 
-    /**
-     * The complete text in the instruction block, such as:
-     * ```
-     *   not done
-     *   short mode
-     * ```
-     *
-     * This does not contain the Global Query from the user's settings.
-     * Use {@link getQueryForQueryRenderer} to get this value prefixed with the Global Query.
-     */
-    private readonly source: string;
-
     // The path of the file that contains the instruction block, and cached data from that file.
     private readonly tasksFile: TasksFile;
 
@@ -95,12 +83,11 @@ class QueryRenderChild extends QueryResultsRenderer {
         source: string;
         tasksFile: TasksFile;
     }) {
-        super(container);
+        super(container, source);
 
         this.app = app;
         this.plugin = plugin;
         this.events = events;
-        this.source = source;
         this.tasksFile = tasksFile;
 
         // The engine is chosen on the basis of the code block language. Currently,
