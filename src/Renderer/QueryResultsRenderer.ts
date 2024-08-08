@@ -44,4 +44,12 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
                 break;
         }
     }
+
+    protected getGroupingAttribute() {
+        const groupingRules: string[] = [];
+        for (const group of this.query.grouping) {
+            groupingRules.push(group.property);
+        }
+        return groupingRules.join(',');
+    }
 }
