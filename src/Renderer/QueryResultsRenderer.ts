@@ -67,13 +67,9 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         taskLineRenderer: TaskLineRenderer,
         task: Task,
         taskIndex: number,
-        allMarkdownFiles: TFile[],
-        backlinksClickHandler: BacklinksEventHandler,
-        backlinksMousedownHandler: BacklinksEventHandler,
-        editTaskPencilClickHandler: EditButtonClickHandler,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        const isFilenameUnique = this.isFilenameUnique({ task }, allMarkdownFiles);
+        const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
         const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
 
         // Remove all footnotes. They don't re-appear in another document.
@@ -94,13 +90,18 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
                 task,
                 shortMode,
                 isFilenameUnique,
-                backlinksClickHandler,
-                backlinksMousedownHandler,
+                queryRendererParameters.backlinksClickHandler,
+                queryRendererParameters.backlinksMousedownHandler,
             );
         }
 
         if (!this.query.queryLayoutOptions.hideEditButton) {
-            this.addEditButton(extrasSpan, task, queryRendererParameters.allTasks, editTaskPencilClickHandler);
+            this.addEditButton(
+                extrasSpan,
+                task,
+                queryRendererParameters.allTasks,
+                queryRendererParameters.editTaskPencilClickHandler,
+            );
         }
 
         if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {

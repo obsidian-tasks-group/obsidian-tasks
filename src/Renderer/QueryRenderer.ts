@@ -233,17 +233,7 @@ class QueryRenderChild extends QueryResultsRenderer {
             editTaskPencilClickHandler,
         };
         for (const [taskIndex, task] of tasks.entries()) {
-            await this.addTask(
-                taskList,
-                taskLineRenderer,
-                task,
-                taskIndex,
-                this.app.vault.getMarkdownFiles(),
-                backlinksClickHandler,
-                backlinksMousedownHandler,
-                editTaskPencilClickHandler,
-                queryRendererParameters,
-            );
+            await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
         }
 
         content.appendChild(taskList);
