@@ -3,8 +3,11 @@ import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
+import { postponeButtonTitle } from '../Scripting/Postponer';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
+import { PostponeMenu } from '../ui/Menus/PostponeMenu';
+import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryResultsRenderer extends MarkdownRenderChild {
     /**
@@ -45,6 +48,34 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
                 this.queryType = 'tasks';
                 break;
         }
+    }
+
+    protected addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
+        const amount = 1;
+        const timeUnit = 'day';
+        const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
+
+        const button = createAndAppendElement('a', listItem);
+        button.addClass('tasks-postpone');
+        if (shortMode) {
+            button.addClass('tasks-postpone-short-mode');
+        }
+        button.title = buttonTooltipText;
+
+        button.addEventListener('click', (ev: MouseEvent) => {
+            ev.preventDefault(); // suppress the default click behavior
+            ev.stopPropagation(); // suppress further event propagation
+            PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit);
+        });
+
+        /** Open a context menu on right-click.
+         */
+        button.addEventListener('contextmenu', async (ev: MouseEvent) => {
+            ev.preventDefault(); // suppress the default context menu
+            ev.stopPropagation(); // suppress further event propagation
+            const menu = new PostponeMenu(button, task);
+            menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+        });
     }
 
     protected addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
