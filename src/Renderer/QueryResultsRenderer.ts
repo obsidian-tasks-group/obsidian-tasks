@@ -83,7 +83,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         }
     }
 
-    protected async createTaskList(
+    private async createTaskList(
         tasks: Task[],
         content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
@@ -113,7 +113,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         content.appendChild(taskList);
     }
 
-    protected async addTask(
+    private async addTask(
         taskList: HTMLUListElement,
         taskLineRenderer: TaskLineRenderer,
         task: Task,
@@ -185,13 +185,13 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
      *                        in which case no headings will be added.
      * @private
      */
-    protected async addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupDisplayHeading[]) {
+    private async addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupDisplayHeading[]) {
         for (const heading of groupHeadings) {
             await this.addGroupHeading(content, heading);
         }
     }
 
-    protected async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
+    private async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
@@ -205,7 +205,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this);
     }
 
-    protected addBacklinks(
+    private addBacklinks(
         listItem: HTMLElement,
         task: Task,
         shortMode: boolean,
@@ -251,7 +251,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         }
     }
 
-    protected addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
+    private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
         const amount = 1;
         const timeUnit = 'day';
         const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
@@ -288,7 +288,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         }
     }
 
-    protected isFilenameUnique({ task }: { task: Task }, allMarkdownFiles: TFile[]): boolean | undefined {
+    private isFilenameUnique({ task }: { task: Task }, allMarkdownFiles: TFile[]): boolean | undefined {
         // Will match the filename without extension (the file's "basename").
         const filenameMatch = task.path.match(/([^/]*)\..+$/i);
         if (filenameMatch === null) {
@@ -306,7 +306,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         return allFilesWithSameName.length < 2;
     }
 
-    protected getGroupingAttribute() {
+    private getGroupingAttribute() {
         const groupingRules: string[] = [];
         for (const group of this.query.grouping) {
             groupingRules.push(group.property);
