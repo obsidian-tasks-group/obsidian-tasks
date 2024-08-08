@@ -1,5 +1,5 @@
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
-import { App, Keymap, MarkdownRenderer } from 'obsidian';
+import { App, Keymap } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
@@ -331,20 +331,6 @@ class QueryRenderChild extends QueryResultsRenderer {
         for (const heading of groupHeadings) {
             await this.addGroupHeading(content, heading);
         }
-    }
-
-    private async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
-        // Headings nested to 2 or more levels are all displayed with 'h6:
-        let header: keyof HTMLElementTagNameMap = 'h6';
-        if (group.nestingLevel === 0) {
-            header = 'h4';
-        } else if (group.nestingLevel === 1) {
-            header = 'h5';
-        }
-
-        const headerEl = createAndAppendElement(header, content);
-        headerEl.addClass('tasks-group-heading');
-        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this);
     }
 }
 

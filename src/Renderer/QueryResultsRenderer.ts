@@ -1,7 +1,8 @@
-import { MarkdownRenderChild, TFile } from 'obsidian';
+import { MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
+import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
 import { postponeButtonTitle } from '../Scripting/Postponer';
 import type { TasksFile } from '../Scripting/TasksFile';
@@ -48,6 +49,20 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
                 this.queryType = 'tasks';
                 break;
         }
+    }
+
+    protected async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
+        // Headings nested to 2 or more levels are all displayed with 'h6:
+        let header: keyof HTMLElementTagNameMap = 'h6';
+        if (group.nestingLevel === 0) {
+            header = 'h4';
+        } else if (group.nestingLevel === 1) {
+            header = 'h5';
+        }
+
+        const headerEl = createAndAppendElement(header, content);
+        headerEl.addClass('tasks-group-heading');
+        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this);
     }
 
     protected addBacklinks(
