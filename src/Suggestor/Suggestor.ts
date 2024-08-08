@@ -161,19 +161,19 @@ function addTaskPropertySuggestions(
     return matchingSuggestions;
 }
 
+const addField = (genericSuggestions: SuggestInfo[], line: string, dateSymbol: string, fieldName: string) => {
+    if (!line.includes(dateSymbol))
+        genericSuggestions.push({
+            displayText: `${dateSymbol} ${fieldName}`,
+            appendText: `${dateSymbol} `,
+        });
+};
+
 function addHappensDatesSuggestions(
     genericSuggestions: SuggestInfo[],
     symbols: DefaultTaskSerializerSymbols,
     line: string,
 ) {
-    const addField = (genericSuggestions: SuggestInfo[], line: string, dateSymbol: string, fieldName: string) => {
-        if (!line.includes(dateSymbol))
-            genericSuggestions.push({
-                displayText: `${dateSymbol} ${fieldName}`,
-                appendText: `${dateSymbol} `,
-            });
-    };
-
     addField(genericSuggestions, line, symbols.dueDateSymbol, 'due date');
     addField(genericSuggestions, line, symbols.startDateSymbol, 'start date');
     addField(genericSuggestions, line, symbols.scheduledDateSymbol, 'scheduled date');
