@@ -2,8 +2,6 @@ import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import { App, Keymap } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
-import { QueryLayout } from '../Layout/QueryLayout';
-import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { explainResults, getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
 import type TasksPlugin from '../main';
@@ -16,8 +14,8 @@ import type { QueryResult } from '../Query/QueryResult';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../Task/DateFallback';
 import type { Task } from '../Task/Task';
-import { type QueryRendererParameters, QueryResultsRenderer } from './QueryResultsRenderer';
-import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
+import { QueryResultsRenderer } from './QueryResultsRenderer';
+import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -204,36 +202,6 @@ class QueryRenderChild extends QueryResultsRenderer {
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
         explanationsBlock.setText(explanationAsString);
         content.appendChild(explanationsBlock);
-    }
-
-    private async createTaskList(
-        tasks: Task[],
-        content: HTMLDivElement,
-        queryRendererParameters: QueryRendererParameters,
-    ): Promise<void> {
-        const taskList = createAndAppendElement('ul', content);
-
-        taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
-        const taskLayout = new TaskLayout(this.query.taskLayoutOptions);
-        taskList.addClasses(taskLayout.generateHiddenClasses());
-        const queryLayout = new QueryLayout(this.query.queryLayoutOptions);
-        taskList.addClasses(queryLayout.getHiddenClasses());
-
-        const groupingAttribute = this.getGroupingAttribute();
-        if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
-
-        const taskLineRenderer = new TaskLineRenderer({
-            obsidianComponent: this,
-            parentUlElement: taskList,
-            taskLayoutOptions: this.query.taskLayoutOptions,
-            queryLayoutOptions: this.query.queryLayoutOptions,
-        });
-
-        for (const [taskIndex, task] of tasks.entries()) {
-            await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
-        }
-
-        content.appendChild(taskList);
     }
 
     private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups, content: HTMLDivElement) {
