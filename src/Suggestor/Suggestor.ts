@@ -180,17 +180,7 @@ function addTaskPropertySuggestions(
             displayText: `${symbols.recurrenceSymbol} recurring (repeat)`,
             appendText: `${symbols.recurrenceSymbol} `,
         });
-    if (!line.includes(symbols.createdDateSymbol)) {
-        const parsedDate = DateParser.parseDate('today', true);
-        const formattedDate = parsedDate.format(TaskRegularExpressions.dateFormat);
-        genericSuggestions.push({
-            // We don't want this to match when the user types "today"
-            textToMatch: `${symbols.createdDateSymbol} created`,
-            displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
-            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + postfix,
-            insertSkip: dataviewMode ? insertSkip : undefined,
-        });
-    }
+    addTaskLifecycleDateSuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
 
     const matchingSuggestions = filterGeneralSuggestsForWordAtCursor(
@@ -207,6 +197,28 @@ function addTaskPropertySuggestions(
     if (matchingSuggestions.length === 0 && settings.autoSuggestMinMatch === 0) return genericSuggestions;
 
     return matchingSuggestions;
+}
+
+function addTaskLifecycleDateSuggestions(
+    genericSuggestions: SuggestInfo[],
+    symbols: DefaultTaskSerializerSymbols,
+    line: string,
+    postfix: string,
+    dataviewMode: boolean,
+    insertSkip: number,
+) {
+    // This will eventually also support Done and Cancelled dates
+    if (!line.includes(symbols.createdDateSymbol)) {
+        const parsedDate = DateParser.parseDate('today', true);
+        const formattedDate = parsedDate.format(TaskRegularExpressions.dateFormat);
+        genericSuggestions.push({
+            // We don't want this to match when the user types "today"
+            textToMatch: `${symbols.createdDateSymbol} created`,
+            displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
+            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + postfix,
+            insertSkip: dataviewMode ? insertSkip : undefined,
+        });
+    }
 }
 
 function addDependencySuggestions(
