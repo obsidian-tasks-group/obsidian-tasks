@@ -212,11 +212,7 @@ function addRecurrenceSuggestions(
     symbols: DefaultTaskSerializerSymbols,
     line: string,
 ) {
-    if (!line.includes(symbols.recurrenceSymbol))
-        genericSuggestions.push({
-            displayText: `${symbols.recurrenceSymbol} recurring (repeat)`,
-            appendText: `${symbols.recurrenceSymbol} `,
-        });
+    addField(genericSuggestions, line, symbols.recurrenceSymbol, 'recurring (repeat)');
 }
 
 function addTaskLifecycleDateSuggestions(
