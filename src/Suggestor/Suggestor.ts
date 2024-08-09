@@ -488,7 +488,7 @@ function addRecurrenceValueSuggestions(
         }
 
         for (const match of genericMatches) {
-            const insertSkipValue = dataviewMode ? recurrenceMatch[0].length + insertSkip : recurrenceMatch[0].length;
+            const insertSkipValue = calculateSkipValueForMatch(dataviewMode, insertSkip, recurrenceMatch[0]);
             results.push({
                 suggestionType: 'match',
                 displayText: `${match}`,
