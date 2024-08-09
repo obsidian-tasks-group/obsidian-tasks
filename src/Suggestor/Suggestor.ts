@@ -380,13 +380,12 @@ function addDatesSuggestions(
         for (const match of genericMatches) {
             const parsedDate = DateParser.parseDate(match, true);
             const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
-            const insertSkipValue = calculateSkipValueForMatch(dataviewMode, insertSkip, dateMatch[0]);
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,
                 appendText: `${datePrefix} ${formattedDate}` + postfix,
                 insertAt: dateMatch.index,
-                insertSkip: insertSkipValue,
+                insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, dateMatch[0]),
             });
         }
     }
@@ -446,13 +445,12 @@ function addRecurrenceValueSuggestions(
             })?.toText();
             if (parsedRecurrence) {
                 const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + postfix;
-                const insertSkipValue = calculateSkipValueForMatch(dataviewMode, insertSkip, recurrenceMatch[0]);
                 results.push({
                     suggestionType: 'match',
                     displayText: `✅ ${parsedRecurrence}`,
                     appendText: appendedText,
                     insertAt: recurrenceMatch.index,
-                    insertSkip: insertSkipValue,
+                    insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, recurrenceMatch[0]),
                 });
                 // If the full match includes a complete valid suggestion *ending with space*,
                 // don't suggest anything. The user is trying to continue to type something that is likely
@@ -486,13 +484,12 @@ function addRecurrenceValueSuggestions(
         }
 
         for (const match of genericMatches) {
-            const insertSkipValue = calculateSkipValueForMatch(dataviewMode, insertSkip, recurrenceMatch[0]);
             results.push({
                 suggestionType: 'match',
                 displayText: `${match}`,
                 appendText: `${recurrencePrefix} ${match}` + postfix,
                 insertAt: recurrenceMatch.index,
-                insertSkip: insertSkipValue,
+                insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, recurrenceMatch[0]),
             });
         }
     }
