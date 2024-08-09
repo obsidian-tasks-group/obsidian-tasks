@@ -11,7 +11,7 @@
 | ⏬ lowest priority | ⏬  |
 | 🔁 recurring (repeat) | 🔁  |
 | ➕ created today (2022-07-11) | ➕ 2022-07-11  |
-| 🆔 id | 🆔 ****** |
+| 🆔 id | 🆔  |
 | ⛔ depends on id | ⛔  |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
