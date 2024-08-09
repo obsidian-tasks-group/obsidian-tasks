@@ -48,10 +48,10 @@
   },
   {
     "displayText": "id:: id",
-    "appendText": "id::"
+    "appendText": "id:: "
   },
   {
     "displayText": "dependsOn:: depends on id",
-    "appendText": "dependsOn::"
+    "appendText": "dependsOn:: "
   }
 ]
