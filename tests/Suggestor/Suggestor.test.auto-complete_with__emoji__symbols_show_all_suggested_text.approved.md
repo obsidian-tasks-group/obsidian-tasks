@@ -11,8 +11,8 @@
 | ⏬ lowest priority | ⏬  |
 | 🔁 recurring (repeat) | 🔁  |
 | ➕ created today (2022-07-11) | ➕ 2022-07-11  |
-| 🆔 id | 🆔 |
-| ⛔ depends on id | ⛔ |
+| 🆔 id | 🆔  |
+| ⛔ depends on id | ⛔  |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
 | every week | 🔁 every week  |
@@ -62,4 +62,4 @@
 | next week (2022-07-18) | 🛫 2022-07-18  |
 | next month (2022-08-11) | 🛫 2022-08-11  |
 | next year (2023-07-11) | 🛫 2023-07-11  |
-| generate unique id | 🆔 ****** |
+| generate unique id | 🆔 ******  |

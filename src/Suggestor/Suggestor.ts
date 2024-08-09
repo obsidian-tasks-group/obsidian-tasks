@@ -68,7 +68,9 @@ export function makeDefaultSuggestionBuilder(
 
         // add Auto ID suggestions
         if (includeDependencySuggestions(canSaveEdits)) {
-            suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
+            suggestions = suggestions.concat(
+                addIDSuggestion(line, cursorPos, symbols.idSymbol, dataviewMode, allTasks),
+            );
 
             // add dependecy suggestions
             suggestions = suggestions.concat(
@@ -244,18 +246,8 @@ function addDependencySuggestions(
     canSaveEdits: boolean,
 ) {
     if (includeDependencySuggestions(canSaveEdits)) {
-        // These don't reuse addField() because they don't have a space at the end of the appendText values.
-        if (!line.includes(symbols.idSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.idSymbol} id`,
-                appendText: `${symbols.idSymbol}`,
-            });
-
-        if (!line.includes(symbols.dependsOnSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.dependsOnSymbol} depends on id`,
-                appendText: `${symbols.dependsOnSymbol}`,
-            });
+        addField(genericSuggestions, line, symbols.idSymbol, 'id');
+        addField(genericSuggestions, line, symbols.dependsOnSymbol, 'depends on id');
     }
 }
 
@@ -380,13 +372,12 @@ function addDatesSuggestions(
         for (const match of genericMatches) {
             const parsedDate = DateParser.parseDate(match, true);
             const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
-            const insertSkipValue = dataviewMode ? dateMatch[0].length + insertSkip : dateMatch[0].length;
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,
                 appendText: `${datePrefix} ${formattedDate}` + postfix,
                 insertAt: dateMatch.index,
-                insertSkip: insertSkipValue,
+                insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, dateMatch[0]),
             });
         }
     }
@@ -446,15 +437,12 @@ function addRecurrenceValueSuggestions(
             })?.toText();
             if (parsedRecurrence) {
                 const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + postfix;
-                const insertSkipValue = dataviewMode
-                    ? recurrenceMatch[0].length + insertSkip
-                    : recurrenceMatch[0].length;
                 results.push({
                     suggestionType: 'match',
                     displayText: `✅ ${parsedRecurrence}`,
                     appendText: appendedText,
                     insertAt: recurrenceMatch.index,
-                    insertSkip: insertSkipValue,
+                    insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, recurrenceMatch[0]),
                 });
                 // If the full match includes a complete valid suggestion *ending with space*,
                 // don't suggest anything. The user is trying to continue to type something that is likely
@@ -491,9 +479,9 @@ function addRecurrenceValueSuggestions(
             results.push({
                 suggestionType: 'match',
                 displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match} `,
+                appendText: `${recurrencePrefix} ${match}` + postfix,
                 insertAt: recurrenceMatch.index,
-                insertSkip: recurrenceMatch[0].length,
+                insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, recurrenceMatch[0]),
             });
         }
     }
@@ -501,7 +489,9 @@ function addRecurrenceValueSuggestions(
     return results;
 }
 
-function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allTasks: Task[]) {
+function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, dataviewMode: boolean, allTasks: Task[]) {
+    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
+
     const results: SuggestInfo[] = [];
     const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})?`, 'ug');
     const idMatch = matchIfCursorInRegex(line, idRegex, cursorPos);
@@ -511,9 +501,9 @@ function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allT
         results.push({
             suggestionType: 'match',
             displayText: 'generate unique id',
-            appendText: `${idSymbol} ${ID}`,
+            appendText: `${idSymbol} ${ID}` + postfix,
             insertAt: idMatch.index,
-            insertSkip: idSymbol.length,
+            insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, idMatch[0]),
         });
     }
 
@@ -774,4 +764,8 @@ function cursorIsInTaskLineDescription(line: string, cursorPosition: number) {
     const beforeDescription = components.indentation + components.listMarker + ' [' + components.status.symbol + '] ';
 
     return cursorPosition >= beforeDescription.length;
+}
+
+function calculateSkipValueForMatch(dataviewMode: boolean, insertSkip: number, match: string) {
+    return dataviewMode ? match.length + insertSkip : match.length;
 }

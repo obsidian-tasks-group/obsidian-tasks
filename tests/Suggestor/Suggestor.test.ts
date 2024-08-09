@@ -61,7 +61,7 @@ function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: 
  * @returns the SuggestInfo, with all ID's Masked
  */
 function maskIDSuggestionForTesting(idSymbol: string, suggestions: SuggestInfo[]): SuggestInfo[] {
-    const idRegex = new RegExp(`${idSymbol}( [0-9a-zA-Z]*)`, 'ug');
+    const idRegex = new RegExp(`${idSymbol}( [0-9a-zA-Z]+)`, 'ug');
     suggestions.forEach((element) => {
         element.appendText = element.appendText.replace(idRegex, `${idSymbol} ******`);
     });
