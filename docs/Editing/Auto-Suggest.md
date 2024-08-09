@@ -240,8 +240,8 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | ⏬ lowest priority | ⏬  |
 | 🔁 recurring (repeat) | 🔁  |
 | ➕ created today (2022-07-11) | ➕ 2022-07-11  |
-| 🆔 id | 🆔 |
-| ⛔ depends on id | ⛔ |
+| 🆔 id | 🆔  |
+| ⛔ depends on id | ⛔  |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
 | every week | 🔁 every week  |
@@ -291,7 +291,7 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | next week (2022-07-18) | 🛫 2022-07-18  |
 | next month (2022-08-11) | 🛫 2022-08-11  |
 | next year (2023-07-11) | 🛫 2023-07-11  |
-| generate unique id | 🆔 ****** |
+| generate unique id | 🆔 ******  |
 <!-- endInclude -->
 
 ### How can I use auto-suggest features from other plugins together with the Tasks auto-suggest?
