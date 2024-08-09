@@ -488,12 +488,13 @@ function addRecurrenceValueSuggestions(
         }
 
         for (const match of genericMatches) {
+            const insertSkipValue = dataviewMode ? recurrenceMatch[0].length + insertSkip : recurrenceMatch[0].length;
             results.push({
                 suggestionType: 'match',
                 displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match} `,
+                appendText: `${recurrencePrefix} ${match}` + postfix,
                 insertAt: recurrenceMatch.index,
-                insertSkip: recurrenceMatch[0].length,
+                insertSkip: insertSkipValue,
             });
         }
     }
