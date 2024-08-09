@@ -380,7 +380,7 @@ function addDatesSuggestions(
         for (const match of genericMatches) {
             const parsedDate = DateParser.parseDate(match, true);
             const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
-            const insertSkipValue = calculateSkipValueForMatch(dataviewMode, insertSkip, dateMatch);
+            const insertSkipValue = calculateSkipValueForMatch(dataviewMode, insertSkip, dateMatch[0]);
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,
@@ -777,6 +777,6 @@ function cursorIsInTaskLineDescription(line: string, cursorPosition: number) {
     return cursorPosition >= beforeDescription.length;
 }
 
-function calculateSkipValueForMatch(dataviewMode: boolean, insertSkip: number, dateMatch: RegExpMatchArray) {
-    return dataviewMode ? dateMatch[0].length + insertSkip : dateMatch[0].length;
+function calculateSkipValueForMatch(dataviewMode: boolean, insertSkip: number, match: string) {
+    return dataviewMode ? match.length + insertSkip : match.length;
 }
