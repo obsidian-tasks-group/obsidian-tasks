@@ -68,7 +68,9 @@ export function makeDefaultSuggestionBuilder(
 
         // add Auto ID suggestions
         if (includeDependencySuggestions(canSaveEdits)) {
-            suggestions = suggestions.concat(addIDSuggestion(line, cursorPos, symbols.idSymbol, allTasks));
+            suggestions = suggestions.concat(
+                addIDSuggestion(line, cursorPos, symbols.idSymbol, dataviewMode, allTasks),
+            );
 
             // add dependecy suggestions
             suggestions = suggestions.concat(
@@ -497,7 +499,9 @@ function addRecurrenceValueSuggestions(
     return results;
 }
 
-function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allTasks: Task[]) {
+function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, dataviewMode: boolean, allTasks: Task[]) {
+    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
+
     const results: SuggestInfo[] = [];
     const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})?`, 'ug');
     const idMatch = matchIfCursorInRegex(line, idRegex, cursorPos);
@@ -507,9 +511,9 @@ function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, allT
         results.push({
             suggestionType: 'match',
             displayText: 'generate unique id',
-            appendText: `${idSymbol} ${ID}`,
+            appendText: `${idSymbol} ${ID}` + postfix,
             insertAt: idMatch.index,
-            insertSkip: idSymbol.length,
+            insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, idMatch[0]),
         });
     }
 
