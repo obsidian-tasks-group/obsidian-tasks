@@ -246,18 +246,8 @@ function addDependencySuggestions(
     canSaveEdits: boolean,
 ) {
     if (includeDependencySuggestions(canSaveEdits)) {
-        // These don't reuse addField() because they don't have a space at the end of the appendText values.
-        if (!line.includes(symbols.idSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.idSymbol} id`,
-                appendText: `${symbols.idSymbol} `,
-            });
-
-        if (!line.includes(symbols.dependsOnSymbol))
-            genericSuggestions.push({
-                displayText: `${symbols.dependsOnSymbol} depends on id`,
-                appendText: `${symbols.dependsOnSymbol} `,
-            });
+        addField(genericSuggestions, line, symbols.idSymbol, 'id');
+        addField(genericSuggestions, line, symbols.dependsOnSymbol, 'depends on id');
     }
 }
 
