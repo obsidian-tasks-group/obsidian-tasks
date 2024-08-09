@@ -47,10 +47,10 @@
   },
   {
     "displayText": "🆔 id",
-    "appendText": "🆔"
+    "appendText": "🆔 "
   },
   {
     "displayText": "⛔ depends on id",
-    "appendText": "⛔"
+    "appendText": "⛔ "
   }
 ]
