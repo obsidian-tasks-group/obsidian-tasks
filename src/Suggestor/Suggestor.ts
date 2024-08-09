@@ -250,13 +250,13 @@ function addDependencySuggestions(
         if (!line.includes(symbols.idSymbol))
             genericSuggestions.push({
                 displayText: `${symbols.idSymbol} id`,
-                appendText: `${symbols.idSymbol}`,
+                appendText: `${symbols.idSymbol} `,
             });
 
         if (!line.includes(symbols.dependsOnSymbol))
             genericSuggestions.push({
                 displayText: `${symbols.dependsOnSymbol} depends on id`,
-                appendText: `${symbols.dependsOnSymbol}`,
+                appendText: `${symbols.dependsOnSymbol} `,
             });
     }
 }
