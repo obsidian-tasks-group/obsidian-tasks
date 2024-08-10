@@ -67,7 +67,7 @@ export function makeDefaultSuggestionBuilder(
         let suggestions: SuggestInfo[] = [];
 
         const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
-        const suggestorParameters: SuggestorParameters = {
+        const parameters: SuggestorParameters = {
             line,
             cursorPos,
             settings,
@@ -77,25 +77,23 @@ export function makeDefaultSuggestionBuilder(
         };
 
         // add date suggestions if relevant
-        suggestions = suggestions.concat(
-            addDatesSuggestions(datePrefixRegex, maxGenericSuggestions, suggestorParameters),
-        );
+        suggestions = suggestions.concat(addDatesSuggestions(datePrefixRegex, maxGenericSuggestions, parameters));
 
         // add recurrence suggestions if relevant
-        suggestions = suggestions.concat(addRecurrenceValueSuggestions(symbols.recurrenceSymbol, suggestorParameters));
+        suggestions = suggestions.concat(addRecurrenceValueSuggestions(symbols.recurrenceSymbol, parameters));
 
         // add Auto ID suggestions
         if (includeDependencySuggestions(canSaveEdits)) {
-            suggestions = suggestions.concat(addIDSuggestion(symbols.idSymbol, allTasks, suggestorParameters));
+            suggestions = suggestions.concat(addIDSuggestion(symbols.idSymbol, allTasks, parameters));
 
             // add dependecy suggestions
             suggestions = suggestions.concat(
-                addDependsOnSuggestions(symbols.dependsOnSymbol, allTasks, suggestorParameters, taskToSuggestFor),
+                addDependsOnSuggestions(symbols.dependsOnSymbol, allTasks, parameters, taskToSuggestFor),
             );
         }
 
         // add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(addTaskPropertySuggestions(symbols, canSaveEdits, suggestorParameters));
+        suggestions = suggestions.concat(addTaskPropertySuggestions(symbols, canSaveEdits, parameters));
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
@@ -138,24 +136,23 @@ function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
 function addTaskPropertySuggestions(
     symbols: DefaultTaskSerializerSymbols,
     canSaveEdits: boolean,
-    suggestorParameters: SuggestorParameters,
+    parameters: SuggestorParameters,
 ): SuggestInfo[] {
     const genericSuggestions: SuggestInfo[] = [];
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    const line = suggestorParameters.line;
+    const line = parameters.line;
     addHappensDatesSuggestions(genericSuggestions, symbols, line);
-    addPrioritySuggestions(genericSuggestions, symbols, suggestorParameters);
+    addPrioritySuggestions(genericSuggestions, symbols, parameters);
     addRecurrenceSuggestions(genericSuggestions, symbols, line);
-    addTaskLifecycleDateSuggestions(genericSuggestions, symbols, suggestorParameters);
+    addTaskLifecycleDateSuggestions(genericSuggestions, symbols, parameters);
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
 
-    const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(genericSuggestions, suggestorParameters);
+    const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(genericSuggestions, parameters);
 
     // That's where we're adding all the suggestions in case there's nothing specific to match
     // (and we're allowed by the settings to bring back a zero-sized match)
-    if (matchingSuggestions.length === 0 && suggestorParameters.settings.autoSuggestMinMatch === 0)
-        return genericSuggestions;
+    if (matchingSuggestions.length === 0 && parameters.settings.autoSuggestMinMatch === 0) return genericSuggestions;
 
     return matchingSuggestions;
 }
@@ -181,11 +178,11 @@ function addHappensDatesSuggestions(
 function addPrioritySuggestions(
     genericSuggestions: SuggestInfo[],
     symbols: DefaultTaskSerializerSymbols,
-    suggestorParameters: SuggestorParameters,
+    parameters: SuggestorParameters,
 ) {
     const hasPriority = (line: string) =>
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
-    if (!hasPriority(suggestorParameters.line)) {
+    if (!hasPriority(parameters.line)) {
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
         const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
 
@@ -193,11 +190,11 @@ function addPrioritySuggestions(
             const prioritySymbol = prioritySymbols[priorityText];
 
             genericSuggestions.push({
-                displayText: suggestorParameters.dataviewMode
+                displayText: parameters.dataviewMode
                     ? `${prioritySymbol} priority`
                     : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
-                appendText: `${prioritySymbol}${suggestorParameters.postfix}`,
-                insertSkip: suggestorParameters.dataviewMode ? suggestorParameters.insertSkip : undefined,
+                appendText: `${prioritySymbol}${parameters.postfix}`,
+                insertSkip: parameters.dataviewMode ? parameters.insertSkip : undefined,
             });
         }
     }
@@ -214,18 +211,18 @@ function addRecurrenceSuggestions(
 function addTaskLifecycleDateSuggestions(
     genericSuggestions: SuggestInfo[],
     symbols: DefaultTaskSerializerSymbols,
-    suggestorParameters: SuggestorParameters,
+    parameters: SuggestorParameters,
 ) {
     // This will eventually also support Done and Cancelled dates
-    if (!suggestorParameters.line.includes(symbols.createdDateSymbol)) {
+    if (!parameters.line.includes(symbols.createdDateSymbol)) {
         const parsedDate = DateParser.parseDate('today', true);
         const formattedDate = parsedDate.format(TaskRegularExpressions.dateFormat);
         genericSuggestions.push({
             // We don't want this to match when the user types "today"
             textToMatch: `${symbols.createdDateSymbol} created`,
             displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
-            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + suggestorParameters.postfix,
-            insertSkip: suggestorParameters.dataviewMode ? suggestorParameters.insertSkip : undefined,
+            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + parameters.postfix,
+            insertSkip: parameters.dataviewMode ? parameters.insertSkip : undefined,
         });
     }
 }
@@ -242,28 +239,25 @@ function addDependencySuggestions(
     }
 }
 
-function filterGeneralSuggestionsForWordAtCursor(
-    genericSuggestions: SuggestInfo[],
-    suggestorParameters: SuggestorParameters,
-) {
+function filterGeneralSuggestionsForWordAtCursor(genericSuggestions: SuggestInfo[], parameters: SuggestorParameters) {
     // We now filter the general suggestions according to the word at the cursor. If there's
     // something to match, we filter the suggestions accordingly, so the user can get more specific
     // results according to what she's typing.
     // If there's no good match, present the suggestions as they are
-    const wordMatch = matchIfCursorInRegex(/([a-zA-Z'_-]*)/g, suggestorParameters);
+    const wordMatch = matchIfCursorInRegex(/([a-zA-Z'_-]*)/g, parameters);
     const matchingSuggestions: SuggestInfo[] = [];
     if (wordMatch && wordMatch.length > 0) {
         const wordUnderCursor = wordMatch[0];
-        if (wordUnderCursor.length >= Math.max(1, suggestorParameters.settings.autoSuggestMinMatch)) {
+        if (wordUnderCursor.length >= Math.max(1, parameters.settings.autoSuggestMinMatch)) {
             const filteredSuggestions = genericSuggestions.filter((suggestInfo) => {
                 const textToMatch = suggestInfo.textToMatch || suggestInfo.displayText;
                 return textToMatch.toLowerCase().includes(wordUnderCursor.toLowerCase());
             });
             for (const filtered of filteredSuggestions) {
                 const insertSkipValue =
-                    suggestorParameters.dataviewMode &&
+                    parameters.dataviewMode &&
                     (filtered.displayText.includes('priority') || filtered.displayText.includes('created'))
-                        ? wordUnderCursor.length + suggestorParameters.insertSkip
+                        ? wordUnderCursor.length + parameters.insertSkip
                         : wordUnderCursor.length;
                 matchingSuggestions.push({
                     suggestionType: 'match',
@@ -289,7 +283,7 @@ function filterGeneralSuggestionsForWordAtCursor(
 function addDatesSuggestions(
     datePrefixRegex: string,
     maxGenericSuggestions: number,
-    suggestorParameters: SuggestorParameters,
+    parameters: SuggestorParameters,
 ): SuggestInfo[] {
     const genericSuggestions = [
         'today',
@@ -308,11 +302,11 @@ function addDatesSuggestions(
 
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const dateMatch = matchIfCursorInRegex(dateRegex, suggestorParameters);
+    const dateMatch = matchIfCursorInRegex(dateRegex, parameters);
     if (dateMatch && dateMatch.length >= 2) {
         const datePrefix = dateMatch[1];
         const dateString = dateMatch[2];
-        if (dateString.length < suggestorParameters.settings.autoSuggestMinMatch) {
+        if (dateString.length < parameters.settings.autoSuggestMinMatch) {
             return [];
         }
         // Try to parse the entered text as a valid date.
@@ -357,9 +351,9 @@ function addDatesSuggestions(
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,
-                appendText: `${datePrefix} ${formattedDate}` + suggestorParameters.postfix,
+                appendText: `${datePrefix} ${formattedDate}` + parameters.postfix,
                 insertAt: dateMatch.index,
-                insertSkip: calculateSkipValueForMatch(dateMatch[0], suggestorParameters),
+                insertSkip: calculateSkipValueForMatch(dateMatch[0], parameters),
             });
         }
     }
@@ -374,7 +368,7 @@ function addDatesSuggestions(
  * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
  * something where a recurrence is expected) or unfiltered
  */
-function addRecurrenceValueSuggestions(recurrenceSymbol: string, suggestorParameters: SuggestorParameters) {
+function addRecurrenceValueSuggestions(recurrenceSymbol: string, parameters: SuggestorParameters) {
     const genericSuggestions = [
         'every',
         'every day',
@@ -393,11 +387,11 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, suggestorParame
 
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const recurrenceMatch = matchIfCursorInRegex(recurrenceRegex, suggestorParameters);
+    const recurrenceMatch = matchIfCursorInRegex(recurrenceRegex, parameters);
     if (recurrenceMatch && recurrenceMatch.length >= 2) {
         const recurrencePrefix = recurrenceMatch[1];
         const recurrenceString = recurrenceMatch[2];
-        if (recurrenceString.length < suggestorParameters.settings.autoSuggestMinMatch) return [];
+        if (recurrenceString.length < parameters.settings.autoSuggestMinMatch) return [];
         if (recurrenceString.length > 0) {
             // If the text matches a valid recurence description, present it as a 1st suggestion.
             // We also add a nice checkmark in this case to denote it's a complete valid recurrence description
@@ -410,13 +404,13 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, suggestorParame
                 }),
             })?.toText();
             if (parsedRecurrence) {
-                const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + suggestorParameters.postfix;
+                const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + parameters.postfix;
                 results.push({
                     suggestionType: 'match',
                     displayText: `✅ ${parsedRecurrence}`,
                     appendText: appendedText,
                     insertAt: recurrenceMatch.index,
-                    insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], suggestorParameters),
+                    insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], parameters),
                 });
                 // If the full match includes a complete valid suggestion *ending with space*,
                 // don't suggest anything. The user is trying to continue to type something that is likely
@@ -434,7 +428,7 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, suggestorParame
         // In the case of recurrence rules, the max number should be small enough to allow users to "escape"
         // the mode of writing a recurrence rule, i.e. we should leave enough space for component suggestions
         const minMatch = 1;
-        const maxGenericDateSuggestions = suggestorParameters.settings.autoSuggestMaxItems / 2;
+        const maxGenericDateSuggestions = parameters.settings.autoSuggestMaxItems / 2;
         let genericMatches = genericSuggestions
             .filter(
                 (value) =>
@@ -453,9 +447,9 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, suggestorParame
             results.push({
                 suggestionType: 'match',
                 displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match}` + suggestorParameters.postfix,
+                appendText: `${recurrencePrefix} ${match}` + parameters.postfix,
                 insertAt: recurrenceMatch.index,
-                insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], suggestorParameters),
+                insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], parameters),
             });
         }
     }
@@ -463,19 +457,19 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, suggestorParame
     return results;
 }
 
-function addIDSuggestion(idSymbol: string, allTasks: Task[], suggestorParameters: SuggestorParameters) {
+function addIDSuggestion(idSymbol: string, allTasks: Task[], parameters: SuggestorParameters) {
     const results: SuggestInfo[] = [];
     const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})?`, 'ug');
-    const idMatch = matchIfCursorInRegex(idRegex, suggestorParameters);
+    const idMatch = matchIfCursorInRegex(idRegex, parameters);
 
     if (idMatch && idMatch[0].trim().length <= idSymbol.length) {
         const ID = generateUniqueId(allTasks.map((task) => task.id));
         results.push({
             suggestionType: 'match',
             displayText: 'generate unique id',
-            appendText: `${idSymbol} ${ID}` + suggestorParameters.postfix,
+            appendText: `${idSymbol} ${ID}` + parameters.postfix,
             insertAt: idMatch.index,
-            insertSkip: calculateSkipValueForMatch(idMatch[0], suggestorParameters),
+            insertSkip: calculateSkipValueForMatch(idMatch[0], parameters),
         });
     }
 
@@ -491,7 +485,7 @@ function addIDSuggestion(idSymbol: string, allTasks: Task[], suggestorParameters
 function addDependsOnSuggestions(
     dependsOnSymbol: string,
     allTasks: Task[],
-    suggestorParameters: SuggestorParameters,
+    parameters: SuggestorParameters,
     taskToSuggestFor?: Task,
 ) {
     const results: SuggestInfo[] = [];
@@ -506,14 +500,14 @@ function addDependsOnSuggestions(
     // In Tasks format:
     //    - Any following field will begin with an emoji.
     // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2827
-    const charactersExcludedFromDescriptionSearch = suggestorParameters.dataviewMode
+    const charactersExcludedFromDescriptionSearch = parameters.dataviewMode
         ? escapeRegExp('()[]')
         : allTaskPluginEmojis();
     const dependsOnRegex = new RegExp(
         `(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([^,${charactersExcludedFromDescriptionSearch}]*)`,
         'ug',
     );
-    const dependsOnMatch = matchIfCursorInRegex(dependsOnRegex, suggestorParameters);
+    const dependsOnMatch = matchIfCursorInRegex(dependsOnRegex, parameters);
     if (dependsOnMatch && dependsOnMatch.length >= 1) {
         // dependsOnMatch[1] = Depends On Symbol
         const existingDependsOnIdStrings = dependsOnMatch[2] || '';
@@ -529,7 +523,7 @@ function addDependsOnSuggestions(
             blockingTasks = allTasks.filter((task) => task.id && idsArray.includes(task.id));
         }
 
-        if (newTaskToAppend.length >= suggestorParameters.settings.autoSuggestMinMatch) {
+        if (newTaskToAppend.length >= parameters.settings.autoSuggestMinMatch) {
             const genericMatches = searchForCandidateTasksForDependency(
                 newTaskToAppend.trim(),
                 allTasks,
@@ -557,9 +551,9 @@ function addDependsOnSuggestions(
  * Matches a string with a regex according to a position (typically of a cursor).
  * Will return a result only if a match exists and the given position is part of it.
  */
-export function matchIfCursorInRegex(r: RegExp, suggestorParameters: SuggestorParameters): RegExpMatchArray | void {
-    const matches = suggestorParameters.line.matchAll(r);
-    const cursorPos = suggestorParameters.cursorPos;
+export function matchIfCursorInRegex(r: RegExp, parameters: SuggestorParameters): RegExpMatchArray | void {
+    const matches = parameters.line.matchAll(r);
+    const cursorPos = parameters.cursorPos;
     for (const match of matches) {
         if (match?.index && match.index < cursorPos && cursorPos <= match.index + match[0].length) return match;
     }
@@ -738,6 +732,6 @@ function cursorIsInTaskLineDescription(line: string, cursorPosition: number) {
     return cursorPosition >= beforeDescription.length;
 }
 
-function calculateSkipValueForMatch(match: string, suggestorParameters: SuggestorParameters) {
-    return suggestorParameters.dataviewMode ? match.length + suggestorParameters.insertSkip : match.length;
+function calculateSkipValueForMatch(match: string, parameters: SuggestorParameters) {
+    return parameters.dataviewMode ? match.length + parameters.insertSkip : match.length;
 }
