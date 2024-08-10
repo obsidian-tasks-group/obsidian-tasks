@@ -152,14 +152,14 @@ function addTaskPropertySuggestions(
     symbols: DefaultTaskSerializerSymbols,
     dataviewMode: boolean,
     canSaveEdits: boolean,
-    _suggestorParameters: SuggestorParameters,
+    suggestorParameters: SuggestorParameters,
 ): SuggestInfo[] {
     const genericSuggestions: SuggestInfo[] = [];
     const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     addHappensDatesSuggestions(genericSuggestions, symbols, line);
-    addPrioritySuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
+    addPrioritySuggestions(genericSuggestions, symbols, suggestorParameters);
     addRecurrenceSuggestions(genericSuggestions, symbols, line);
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
@@ -169,7 +169,7 @@ function addTaskPropertySuggestions(
         dataviewMode,
         insertSkip,
         settings,
-        _suggestorParameters,
+        suggestorParameters,
     );
 
     // That's where we're adding all the suggestions in case there's nothing specific to match
@@ -200,14 +200,11 @@ function addHappensDatesSuggestions(
 function addPrioritySuggestions(
     genericSuggestions: SuggestInfo[],
     symbols: DefaultTaskSerializerSymbols,
-    line: string,
-    postfix: string,
-    dataviewMode: boolean,
-    insertSkip: number,
+    suggestorParameters: SuggestorParameters,
 ) {
     const hasPriority = (line: string) =>
         Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
-    if (!hasPriority(line)) {
+    if (!hasPriority(suggestorParameters.line)) {
         const prioritySymbols: { [key: string]: string } = symbols.prioritySymbols;
         const priorityTexts = ['High', 'Medium', 'Low', 'Highest', 'Lowest'];
 
@@ -215,11 +212,11 @@ function addPrioritySuggestions(
             const prioritySymbol = prioritySymbols[priorityText];
 
             genericSuggestions.push({
-                displayText: dataviewMode
+                displayText: suggestorParameters.dataviewMode
                     ? `${prioritySymbol} priority`
                     : `${prioritySymbol} ${priorityText.toLowerCase()} priority`,
-                appendText: `${prioritySymbol}${postfix}`,
-                insertSkip: dataviewMode ? insertSkip : undefined,
+                appendText: `${prioritySymbol}${suggestorParameters.postfix}`,
+                insertSkip: suggestorParameters.dataviewMode ? suggestorParameters.insertSkip : undefined,
             });
         }
     }
