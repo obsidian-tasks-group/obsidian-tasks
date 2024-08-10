@@ -95,9 +95,7 @@ export function makeDefaultSuggestionBuilder(
         }
 
         // add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(
-            addTaskPropertySuggestions(line, settings, symbols, canSaveEdits, suggestorParameters),
-        );
+        suggestions = suggestions.concat(addTaskPropertySuggestions(symbols, canSaveEdits, suggestorParameters));
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
@@ -138,8 +136,6 @@ function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
  * Get suggestions for generic task components, e.g. a priority or a 'due' symbol
  */
 function addTaskPropertySuggestions(
-    line: string,
-    settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
     canSaveEdits: boolean,
     suggestorParameters: SuggestorParameters,
@@ -147,6 +143,7 @@ function addTaskPropertySuggestions(
     const genericSuggestions: SuggestInfo[] = [];
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
+    const line = suggestorParameters.line;
     addHappensDatesSuggestions(genericSuggestions, symbols, line);
     addPrioritySuggestions(genericSuggestions, symbols, suggestorParameters);
     addRecurrenceSuggestions(genericSuggestions, symbols, line);
@@ -157,7 +154,8 @@ function addTaskPropertySuggestions(
 
     // That's where we're adding all the suggestions in case there's nothing specific to match
     // (and we're allowed by the settings to bring back a zero-sized match)
-    if (matchingSuggestions.length === 0 && settings.autoSuggestMinMatch === 0) return genericSuggestions;
+    if (matchingSuggestions.length === 0 && suggestorParameters.settings.autoSuggestMinMatch === 0)
+        return genericSuggestions;
 
     return matchingSuggestions;
 }
