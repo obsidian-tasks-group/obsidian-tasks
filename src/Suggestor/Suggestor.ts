@@ -272,6 +272,8 @@ function filterGeneralSuggestionsForWordAtCursor(genericSuggestions: SuggestInfo
     return matchingSuggestions;
 }
 
+type Extractor = (datePrefix: string, genericMatch: string) => { displayText: string; appendText: string };
+
 /*
  * If the cursor is located in a section that should be followed by a date (due, start date or scheduled date),
  * suggest options for what to enter as a date.
@@ -346,7 +348,7 @@ function addDatesSuggestions(
             genericMatches = genericSuggestions.slice(0, maxGenericSuggestions);
         }
 
-        const extractor = (datePrefix: string, genericMatch: string) => {
+        const extractor: Extractor = (datePrefix: string, genericMatch: string) => {
             const parsedDate = DateParser.parseDate(genericMatch, true);
             const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
             const displayText = `${genericMatch} (${formattedDate})`;
