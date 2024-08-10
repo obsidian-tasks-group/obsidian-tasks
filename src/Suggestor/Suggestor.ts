@@ -86,9 +86,7 @@ export function makeDefaultSuggestionBuilder(
 
         // add Auto ID suggestions
         if (includeDependencySuggestions(canSaveEdits)) {
-            suggestions = suggestions.concat(
-                addIDSuggestion(line, cursorPos, symbols.idSymbol, dataviewMode, allTasks, suggestorParameters),
-            );
+            suggestions = suggestions.concat(addIDSuggestion(symbols.idSymbol, allTasks, suggestorParameters));
 
             // add dependecy suggestions
             suggestions = suggestions.concat(
@@ -493,28 +491,19 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, suggestorParame
     return results;
 }
 
-function addIDSuggestion(
-    line: string,
-    cursorPos: number,
-    idSymbol: string,
-    dataviewMode: boolean,
-    allTasks: Task[],
-    _suggestorParameters: SuggestorParameters,
-) {
-    const { postfix } = getAdjusters(dataviewMode, line, cursorPos);
-
+function addIDSuggestion(idSymbol: string, allTasks: Task[], suggestorParameters: SuggestorParameters) {
     const results: SuggestInfo[] = [];
     const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})?`, 'ug');
-    const idMatch = matchIfCursorInRegex(idRegex, _suggestorParameters);
+    const idMatch = matchIfCursorInRegex(idRegex, suggestorParameters);
 
     if (idMatch && idMatch[0].trim().length <= idSymbol.length) {
         const ID = generateUniqueId(allTasks.map((task) => task.id));
         results.push({
             suggestionType: 'match',
             displayText: 'generate unique id',
-            appendText: `${idSymbol} ${ID}` + postfix,
+            appendText: `${idSymbol} ${ID}` + suggestorParameters.postfix,
             insertAt: idMatch.index,
-            insertSkip: calculateSkipValueForMatch(idMatch[0], _suggestorParameters),
+            insertSkip: calculateSkipValueForMatch(idMatch[0], suggestorParameters),
         });
     }
 
