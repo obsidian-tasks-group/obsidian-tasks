@@ -78,15 +78,7 @@ export function makeDefaultSuggestionBuilder(
 
         // add date suggestions if relevant
         suggestions = suggestions.concat(
-            addDatesSuggestions(
-                line,
-                cursorPos,
-                settings,
-                datePrefixRegex,
-                maxGenericSuggestions,
-                dataviewMode,
-                suggestorParameters,
-            ),
+            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions, suggestorParameters),
         );
 
         // add recurrence suggestions if relevant
@@ -333,8 +325,7 @@ function addDatesSuggestions(
     settings: Settings,
     datePrefixRegex: string,
     maxGenericSuggestions: number,
-    dataviewMode: boolean,
-    _suggestorParameters: SuggestorParameters,
+    suggestorParameters: SuggestorParameters,
 ): SuggestInfo[] {
     const genericSuggestions = [
         'today',
@@ -350,8 +341,6 @@ function addDatesSuggestions(
         'next month',
         'next year',
     ];
-
-    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
@@ -404,9 +393,13 @@ function addDatesSuggestions(
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,
-                appendText: `${datePrefix} ${formattedDate}` + postfix,
+                appendText: `${datePrefix} ${formattedDate}` + suggestorParameters.postfix,
                 insertAt: dateMatch.index,
-                insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, dateMatch[0]),
+                insertSkip: calculateSkipValueForMatch(
+                    suggestorParameters.dataviewMode,
+                    suggestorParameters.insertSkip,
+                    dateMatch[0],
+                ),
             });
         }
     }
