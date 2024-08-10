@@ -155,13 +155,13 @@ function addTaskPropertySuggestions(
     suggestorParameters: SuggestorParameters,
 ): SuggestInfo[] {
     const genericSuggestions: SuggestInfo[] = [];
-    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
+    const { insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     addHappensDatesSuggestions(genericSuggestions, symbols, line);
     addPrioritySuggestions(genericSuggestions, symbols, suggestorParameters);
     addRecurrenceSuggestions(genericSuggestions, symbols, line);
-    addTaskLifecycleDateSuggestions(genericSuggestions, symbols, line, postfix, dataviewMode, insertSkip);
+    addTaskLifecycleDateSuggestions(genericSuggestions, symbols, suggestorParameters);
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
 
     const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(
@@ -233,21 +233,18 @@ function addRecurrenceSuggestions(
 function addTaskLifecycleDateSuggestions(
     genericSuggestions: SuggestInfo[],
     symbols: DefaultTaskSerializerSymbols,
-    line: string,
-    postfix: string,
-    dataviewMode: boolean,
-    insertSkip: number,
+    suggestorParameters: SuggestorParameters,
 ) {
     // This will eventually also support Done and Cancelled dates
-    if (!line.includes(symbols.createdDateSymbol)) {
+    if (!suggestorParameters.line.includes(symbols.createdDateSymbol)) {
         const parsedDate = DateParser.parseDate('today', true);
         const formattedDate = parsedDate.format(TaskRegularExpressions.dateFormat);
         genericSuggestions.push({
             // We don't want this to match when the user types "today"
             textToMatch: `${symbols.createdDateSymbol} created`,
             displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
-            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + postfix,
-            insertSkip: dataviewMode ? insertSkip : undefined,
+            appendText: `${symbols.createdDateSymbol} ${formattedDate}` + suggestorParameters.postfix,
+            insertSkip: suggestorParameters.dataviewMode ? suggestorParameters.insertSkip : undefined,
         });
     }
 }
