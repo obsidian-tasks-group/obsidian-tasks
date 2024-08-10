@@ -1,4 +1,5 @@
 import type { Editor, EditorPosition } from 'obsidian';
+
 import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../lib/DateAbbreviations';
@@ -36,6 +37,13 @@ function includeDependencySuggestions(canSaveEdits: boolean) {
     return globalThis.SHOW_DEPENDENCY_SUGGESTIONS && canSaveEdits;
 }
 
+export interface SuggestorParameters {
+    line: string;
+    cursorPos: number;
+    settings: Settings;
+    dataviewMode: boolean;
+}
+
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
     maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
@@ -55,6 +63,14 @@ export function makeDefaultSuggestionBuilder(
         taskToSuggestFor?: Task,
     ): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
+
+        // @ts-expect-error _suggestorParameters is Unused.
+        const _suggestorParameters = {
+            line,
+            cursorPos,
+            settings,
+            dataviewMode,
+        };
 
         // add date suggestions if relevant
         suggestions = suggestions.concat(
