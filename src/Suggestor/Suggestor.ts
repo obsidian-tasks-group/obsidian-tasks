@@ -348,10 +348,12 @@ function addDatesSuggestions(
         for (const genericMatch of genericMatches) {
             const parsedDate = DateParser.parseDate(genericMatch, true);
             const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
+            const displayText = `${genericMatch} (${formattedDate})`;
+            const appendText = `${datePrefix} ${formattedDate}`;
             results.push({
                 suggestionType: 'match',
-                displayText: `${genericMatch} (${formattedDate})`,
-                appendText: `${datePrefix} ${formattedDate}` + parameters.postfix,
+                displayText: displayText,
+                appendText: appendText + parameters.postfix,
                 insertAt: dateMatch.index,
                 insertSkip: calculateSkipValueForMatch(dateMatch[0], parameters),
             });
