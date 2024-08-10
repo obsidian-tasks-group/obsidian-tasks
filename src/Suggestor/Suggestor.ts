@@ -78,7 +78,7 @@ export function makeDefaultSuggestionBuilder(
 
         // add date suggestions if relevant
         suggestions = suggestions.concat(
-            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions, suggestorParameters),
+            addDatesSuggestions(datePrefixRegex, maxGenericSuggestions, suggestorParameters),
         );
 
         // add recurrence suggestions if relevant
@@ -320,9 +320,6 @@ function filterGeneralSuggestionsForWordAtCursor(
  * something where a date is expected) or unfiltered
  */
 function addDatesSuggestions(
-    line: string,
-    cursorPos: number,
-    settings: Settings,
     datePrefixRegex: string,
     maxGenericSuggestions: number,
     suggestorParameters: SuggestorParameters,
@@ -344,11 +341,11 @@ function addDatesSuggestions(
 
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const dateMatch = matchIfCursorInRegex(line, dateRegex, cursorPos);
+    const dateMatch = matchIfCursorInRegex(suggestorParameters.line, dateRegex, suggestorParameters.cursorPos);
     if (dateMatch && dateMatch.length >= 2) {
         const datePrefix = dateMatch[1];
         const dateString = dateMatch[2];
-        if (dateString.length < settings.autoSuggestMinMatch) {
+        if (dateString.length < suggestorParameters.settings.autoSuggestMinMatch) {
             return [];
         }
         // Try to parse the entered text as a valid date.
