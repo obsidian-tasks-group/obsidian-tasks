@@ -96,15 +96,7 @@ export function makeDefaultSuggestionBuilder(
 
         // add task property suggestions ('due', 'recurrence' etc)
         suggestions = suggestions.concat(
-            addTaskPropertySuggestions(
-                line,
-                cursorPos,
-                settings,
-                symbols,
-                dataviewMode,
-                canSaveEdits,
-                suggestorParameters,
-            ),
+            addTaskPropertySuggestions(line, settings, symbols, canSaveEdits, suggestorParameters),
         );
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
@@ -147,15 +139,12 @@ function getAdjusters(dataviewMode: boolean, line: string, cursorPos: number) {
  */
 function addTaskPropertySuggestions(
     line: string,
-    cursorPos: number,
     settings: Settings,
     symbols: DefaultTaskSerializerSymbols,
-    dataviewMode: boolean,
     canSaveEdits: boolean,
     suggestorParameters: SuggestorParameters,
 ): SuggestInfo[] {
     const genericSuggestions: SuggestInfo[] = [];
-    const { insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     addHappensDatesSuggestions(genericSuggestions, symbols, line);
@@ -164,13 +153,7 @@ function addTaskPropertySuggestions(
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, suggestorParameters);
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
 
-    const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(
-        genericSuggestions,
-        dataviewMode,
-        insertSkip,
-        settings,
-        suggestorParameters,
-    );
+    const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(genericSuggestions, suggestorParameters);
 
     // That's where we're adding all the suggestions in case there's nothing specific to match
     // (and we're allowed by the settings to bring back a zero-sized match)
@@ -263,9 +246,6 @@ function addDependencySuggestions(
 
 function filterGeneralSuggestionsForWordAtCursor(
     genericSuggestions: SuggestInfo[],
-    dataviewMode: boolean,
-    insertSkip: number,
-    settings: Settings,
     suggestorParameters: SuggestorParameters,
 ) {
     // We now filter the general suggestions according to the word at the cursor. If there's
@@ -276,16 +256,16 @@ function filterGeneralSuggestionsForWordAtCursor(
     const matchingSuggestions: SuggestInfo[] = [];
     if (wordMatch && wordMatch.length > 0) {
         const wordUnderCursor = wordMatch[0];
-        if (wordUnderCursor.length >= Math.max(1, settings.autoSuggestMinMatch)) {
+        if (wordUnderCursor.length >= Math.max(1, suggestorParameters.settings.autoSuggestMinMatch)) {
             const filteredSuggestions = genericSuggestions.filter((suggestInfo) => {
                 const textToMatch = suggestInfo.textToMatch || suggestInfo.displayText;
                 return textToMatch.toLowerCase().includes(wordUnderCursor.toLowerCase());
             });
             for (const filtered of filteredSuggestions) {
                 const insertSkipValue =
-                    dataviewMode &&
+                    suggestorParameters.dataviewMode &&
                     (filtered.displayText.includes('priority') || filtered.displayText.includes('created'))
-                        ? wordUnderCursor.length + insertSkip
+                        ? wordUnderCursor.length + suggestorParameters.insertSkip
                         : wordUnderCursor.length;
                 matchingSuggestions.push({
                     suggestionType: 'match',
