@@ -272,8 +272,6 @@ function filterGeneralSuggestionsForWordAtCursor(genericSuggestions: SuggestInfo
     return matchingSuggestions;
 }
 
-type Extractor = (datePrefix: string, genericMatch: string) => { displayText: string; appendText: string };
-
 /*
  * If the cursor is located in a section that should be followed by a date (due, start date or scheduled date),
  * suggest options for what to enter as a date.
@@ -355,17 +353,7 @@ function addDatesSuggestions(
             const appendText = `${datePrefix} ${formattedDate}`;
             return { displayText, appendText };
         };
-
-        for (const genericMatch of genericMatches) {
-            const { displayText, appendText } = extractor(datePrefix, genericMatch);
-            results.push({
-                suggestionType: 'match',
-                displayText: displayText,
-                appendText: appendText + parameters.postfix,
-                insertAt: dateMatch.index,
-                insertSkip: calculateSkipValueForMatch(dateMatch[0], parameters),
-            });
-        }
+        constructSuggestions(parameters, datePrefix, dateMatch, genericMatches, extractor, results);
     }
     return results;
 }
@@ -555,6 +543,28 @@ function addDependsOnSuggestions(
         }
     }
     return results;
+}
+
+type Extractor = (datePrefix: string, genericMatch: string) => { displayText: string; appendText: string };
+
+function constructSuggestions(
+    parameters: SuggestorParameters,
+    datePrefix: string,
+    dateMatch: RegExpMatchArray,
+    genericMatches: string[],
+    extractor: Extractor,
+    results: SuggestInfo[],
+) {
+    for (const genericMatch of genericMatches) {
+        const { displayText, appendText } = extractor(datePrefix, genericMatch);
+        results.push({
+            suggestionType: 'match',
+            displayText: displayText,
+            appendText: appendText + parameters.postfix,
+            insertAt: dateMatch.index,
+            insertSkip: calculateSkipValueForMatch(dateMatch[0], parameters),
+        });
+    }
 }
 
 /**
