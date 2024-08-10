@@ -398,12 +398,7 @@ function addDatesSuggestions(
                 displayText: `${match} (${formattedDate})`,
                 appendText: `${datePrefix} ${formattedDate}` + suggestorParameters.postfix,
                 insertAt: dateMatch.index,
-                insertSkip: calculateSkipValueForMatch(
-                    suggestorParameters.dataviewMode,
-                    suggestorParameters.insertSkip,
-                    dateMatch[0],
-                    suggestorParameters,
-                ),
+                insertSkip: calculateSkipValueForMatch(dateMatch[0], suggestorParameters),
             });
         }
     }
@@ -442,7 +437,7 @@ function addRecurrenceValueSuggestions(
         'every week on Saturday',
     ];
 
-    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
+    const { postfix } = getAdjusters(dataviewMode, line, cursorPos);
 
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
@@ -469,12 +464,7 @@ function addRecurrenceValueSuggestions(
                     displayText: `✅ ${parsedRecurrence}`,
                     appendText: appendedText,
                     insertAt: recurrenceMatch.index,
-                    insertSkip: calculateSkipValueForMatch(
-                        dataviewMode,
-                        insertSkip,
-                        recurrenceMatch[0],
-                        _suggestorParameters,
-                    ),
+                    insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], _suggestorParameters),
                 });
                 // If the full match includes a complete valid suggestion *ending with space*,
                 // don't suggest anything. The user is trying to continue to type something that is likely
@@ -513,12 +503,7 @@ function addRecurrenceValueSuggestions(
                 displayText: `${match}`,
                 appendText: `${recurrencePrefix} ${match}` + postfix,
                 insertAt: recurrenceMatch.index,
-                insertSkip: calculateSkipValueForMatch(
-                    dataviewMode,
-                    insertSkip,
-                    recurrenceMatch[0],
-                    _suggestorParameters,
-                ),
+                insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], _suggestorParameters),
             });
         }
     }
@@ -534,7 +519,7 @@ function addIDSuggestion(
     allTasks: Task[],
     _suggestorParameters: SuggestorParameters,
 ) {
-    const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
+    const { postfix } = getAdjusters(dataviewMode, line, cursorPos);
 
     const results: SuggestInfo[] = [];
     const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})?`, 'ug');
@@ -547,7 +532,7 @@ function addIDSuggestion(
             displayText: 'generate unique id',
             appendText: `${idSymbol} ${ID}` + postfix,
             insertAt: idMatch.index,
-            insertSkip: calculateSkipValueForMatch(dataviewMode, insertSkip, idMatch[0], _suggestorParameters),
+            insertSkip: calculateSkipValueForMatch(idMatch[0], _suggestorParameters),
         });
     }
 
@@ -810,11 +795,6 @@ function cursorIsInTaskLineDescription(line: string, cursorPosition: number) {
     return cursorPosition >= beforeDescription.length;
 }
 
-function calculateSkipValueForMatch(
-    dataviewMode: boolean,
-    insertSkip: number,
-    match: string,
-    _suggestorParameters: SuggestorParameters,
-) {
-    return dataviewMode ? match.length + insertSkip : match.length;
+function calculateSkipValueForMatch(match: string, suggestorParameters: SuggestorParameters) {
+    return suggestorParameters.dataviewMode ? match.length + suggestorParameters.insertSkip : match.length;
 }
