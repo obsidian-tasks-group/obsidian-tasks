@@ -108,6 +108,7 @@ export function makeDefaultSuggestionBuilder(
                     symbols.dependsOnSymbol,
                     allTasks,
                     dataviewMode,
+                    suggestorParameters,
                     taskToSuggestFor,
                 ),
             );
@@ -566,6 +567,7 @@ function addDependsOnSuggestions(
     dependsOnSymbol: string,
     allTasks: Task[],
     dataviewMode: boolean,
+    _suggestorParameters: SuggestorParameters,
     taskToSuggestFor?: Task,
 ) {
     const results: SuggestInfo[] = [];
