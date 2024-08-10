@@ -83,13 +83,20 @@ export function makeDefaultSuggestionBuilder(
 
         // add recurrence suggestions if relevant
         suggestions = suggestions.concat(
-            addRecurrenceValueSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol, dataviewMode),
+            addRecurrenceValueSuggestions(
+                line,
+                cursorPos,
+                settings,
+                symbols.recurrenceSymbol,
+                dataviewMode,
+                suggestorParameters,
+            ),
         );
 
         // add Auto ID suggestions
         if (includeDependencySuggestions(canSaveEdits)) {
             suggestions = suggestions.concat(
-                addIDSuggestion(line, cursorPos, symbols.idSymbol, dataviewMode, allTasks),
+                addIDSuggestion(line, cursorPos, symbols.idSymbol, dataviewMode, allTasks, suggestorParameters),
             );
 
             // add dependecy suggestions
@@ -108,7 +115,15 @@ export function makeDefaultSuggestionBuilder(
 
         // add task property suggestions ('due', 'recurrence' etc)
         suggestions = suggestions.concat(
-            addTaskPropertySuggestions(line, cursorPos, settings, symbols, dataviewMode, canSaveEdits),
+            addTaskPropertySuggestions(
+                line,
+                cursorPos,
+                settings,
+                symbols,
+                dataviewMode,
+                canSaveEdits,
+                suggestorParameters,
+            ),
         );
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
@@ -156,6 +171,7 @@ function addTaskPropertySuggestions(
     symbols: DefaultTaskSerializerSymbols,
     dataviewMode: boolean,
     canSaveEdits: boolean,
+    _suggestorParameters: SuggestorParameters,
 ): SuggestInfo[] {
     const genericSuggestions: SuggestInfo[] = [];
     const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
@@ -417,6 +433,7 @@ function addRecurrenceValueSuggestions(
     settings: Settings,
     recurrenceSymbol: string,
     dataviewMode: boolean,
+    _suggestorParameters: SuggestorParameters,
 ) {
     const genericSuggestions = [
         'every',
@@ -508,7 +525,14 @@ function addRecurrenceValueSuggestions(
     return results;
 }
 
-function addIDSuggestion(line: string, cursorPos: number, idSymbol: string, dataviewMode: boolean, allTasks: Task[]) {
+function addIDSuggestion(
+    line: string,
+    cursorPos: number,
+    idSymbol: string,
+    dataviewMode: boolean,
+    allTasks: Task[],
+    _suggestorParameters: SuggestorParameters,
+) {
     const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
 
     const results: SuggestInfo[] = [];
