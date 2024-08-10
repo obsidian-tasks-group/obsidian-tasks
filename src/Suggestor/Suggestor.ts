@@ -315,7 +315,7 @@ function addDatesSuggestions(
         // most likely means Saturday *in the future* and not yesterday.
         const possibleDate =
             dateString && dateString.length > 1 ? DateParser.parseDate(doAutocomplete(dateString), true) : null;
-        if (possibleDate && possibleDate.isValid()) {
+        if (possibleDate?.isValid()) {
             // Seems like the text that the user typed can be parsed as a valid date.
             // Present its completed form as a 1st suggestion
             results.push({
