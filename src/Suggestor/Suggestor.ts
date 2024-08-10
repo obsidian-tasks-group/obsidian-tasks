@@ -82,16 +82,7 @@ export function makeDefaultSuggestionBuilder(
         );
 
         // add recurrence suggestions if relevant
-        suggestions = suggestions.concat(
-            addRecurrenceValueSuggestions(
-                line,
-                cursorPos,
-                settings,
-                symbols.recurrenceSymbol,
-                dataviewMode,
-                suggestorParameters,
-            ),
-        );
+        suggestions = suggestions.concat(addRecurrenceValueSuggestions(symbols.recurrenceSymbol, suggestorParameters));
 
         // add Auto ID suggestions
         if (includeDependencySuggestions(canSaveEdits)) {
@@ -413,14 +404,7 @@ function addDatesSuggestions(
  * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
  * something where a recurrence is expected) or unfiltered
  */
-function addRecurrenceValueSuggestions(
-    line: string,
-    cursorPos: number,
-    settings: Settings,
-    recurrenceSymbol: string,
-    dataviewMode: boolean,
-    _suggestorParameters: SuggestorParameters,
-) {
+function addRecurrenceValueSuggestions(recurrenceSymbol: string, suggestorParameters: SuggestorParameters) {
     const genericSuggestions = [
         'every',
         'every day',
@@ -437,15 +421,13 @@ function addRecurrenceValueSuggestions(
         'every week on Saturday',
     ];
 
-    const { postfix } = getAdjusters(dataviewMode, line, cursorPos);
-
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const recurrenceMatch = matchIfCursorInRegex(recurrenceRegex, _suggestorParameters);
+    const recurrenceMatch = matchIfCursorInRegex(recurrenceRegex, suggestorParameters);
     if (recurrenceMatch && recurrenceMatch.length >= 2) {
         const recurrencePrefix = recurrenceMatch[1];
         const recurrenceString = recurrenceMatch[2];
-        if (recurrenceString.length < settings.autoSuggestMinMatch) return [];
+        if (recurrenceString.length < suggestorParameters.settings.autoSuggestMinMatch) return [];
         if (recurrenceString.length > 0) {
             // If the text matches a valid recurence description, present it as a 1st suggestion.
             // We also add a nice checkmark in this case to denote it's a complete valid recurrence description
@@ -458,13 +440,13 @@ function addRecurrenceValueSuggestions(
                 }),
             })?.toText();
             if (parsedRecurrence) {
-                const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + postfix;
+                const appendedText = `${recurrencePrefix} ${parsedRecurrence}` + suggestorParameters.postfix;
                 results.push({
                     suggestionType: 'match',
                     displayText: `✅ ${parsedRecurrence}`,
                     appendText: appendedText,
                     insertAt: recurrenceMatch.index,
-                    insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], _suggestorParameters),
+                    insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], suggestorParameters),
                 });
                 // If the full match includes a complete valid suggestion *ending with space*,
                 // don't suggest anything. The user is trying to continue to type something that is likely
@@ -482,7 +464,7 @@ function addRecurrenceValueSuggestions(
         // In the case of recurrence rules, the max number should be small enough to allow users to "escape"
         // the mode of writing a recurrence rule, i.e. we should leave enough space for component suggestions
         const minMatch = 1;
-        const maxGenericDateSuggestions = settings.autoSuggestMaxItems / 2;
+        const maxGenericDateSuggestions = suggestorParameters.settings.autoSuggestMaxItems / 2;
         let genericMatches = genericSuggestions
             .filter(
                 (value) =>
@@ -501,9 +483,9 @@ function addRecurrenceValueSuggestions(
             results.push({
                 suggestionType: 'match',
                 displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match}` + postfix,
+                appendText: `${recurrencePrefix} ${match}` + suggestorParameters.postfix,
                 insertAt: recurrenceMatch.index,
-                insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], _suggestorParameters),
+                insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], suggestorParameters),
             });
         }
     }
