@@ -101,14 +101,7 @@ export function makeDefaultSuggestionBuilder(
 
             // add dependecy suggestions
             suggestions = suggestions.concat(
-                addDependsOnSuggestions(
-                    settings,
-                    symbols.dependsOnSymbol,
-                    allTasks,
-                    dataviewMode,
-                    suggestorParameters,
-                    taskToSuggestFor,
-                ),
+                addDependsOnSuggestions(symbols.dependsOnSymbol, allTasks, suggestorParameters, taskToSuggestFor),
             );
         }
 
@@ -557,11 +550,9 @@ function addIDSuggestion(
  * of what the user is typing.
  */
 function addDependsOnSuggestions(
-    settings: Settings,
     dependsOnSymbol: string,
     allTasks: Task[],
-    dataviewMode: boolean,
-    _suggestorParameters: SuggestorParameters,
+    suggestorParameters: SuggestorParameters,
     taskToSuggestFor?: Task,
 ) {
     const results: SuggestInfo[] = [];
@@ -576,12 +567,14 @@ function addDependsOnSuggestions(
     // In Tasks format:
     //    - Any following field will begin with an emoji.
     // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2827
-    const charactersExcludedFromDescriptionSearch = dataviewMode ? escapeRegExp('()[]') : allTaskPluginEmojis();
+    const charactersExcludedFromDescriptionSearch = suggestorParameters.dataviewMode
+        ? escapeRegExp('()[]')
+        : allTaskPluginEmojis();
     const dependsOnRegex = new RegExp(
         `(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([^,${charactersExcludedFromDescriptionSearch}]*)`,
         'ug',
     );
-    const dependsOnMatch = matchIfCursorInRegex(dependsOnRegex, _suggestorParameters);
+    const dependsOnMatch = matchIfCursorInRegex(dependsOnRegex, suggestorParameters);
     if (dependsOnMatch && dependsOnMatch.length >= 1) {
         // dependsOnMatch[1] = Depends On Symbol
         const existingDependsOnIdStrings = dependsOnMatch[2] || '';
@@ -597,7 +590,7 @@ function addDependsOnSuggestions(
             blockingTasks = allTasks.filter((task) => task.id && idsArray.includes(task.id));
         }
 
-        if (newTaskToAppend.length >= settings.autoSuggestMinMatch) {
+        if (newTaskToAppend.length >= suggestorParameters.settings.autoSuggestMinMatch) {
             const genericMatches = searchForCandidateTasksForDependency(
                 newTaskToAppend.trim(),
                 allTasks,
