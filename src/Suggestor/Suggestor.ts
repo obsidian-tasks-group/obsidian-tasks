@@ -326,25 +326,7 @@ function addDatesSuggestions(
             });
         }
 
-        // Now to generic predefined suggestions.
-        // If we get a partial match with some of the suggestions (e.g. the user started typing "to"),
-        // we use that for matches ("tomorrow", "today" etc).
-        // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
-        // a max number. We want the max number to be around half the total allowed matches, to also allow
-        // some global generic matches (e.g. task components) to find their way to the menu
-        const minMatch = 1;
-        let genericMatches = genericSuggestions
-            .filter(
-                (value) =>
-                    dateString &&
-                    dateString.length >= minMatch &&
-                    value.toLowerCase().includes(dateString.toLowerCase()),
-            )
-            .slice(0, maxGenericSuggestions);
-        if (genericMatches.length === 0) {
-            // Do completely generic date suggestions
-            genericMatches = genericSuggestions.slice(0, maxGenericSuggestions);
-        }
+        const genericMatches = filterGenericSuggestions(genericSuggestions, dateString, maxGenericSuggestions);
 
         const extractor: Extractor = (datePrefix: string, genericMatch: string) => {
             const parsedDate = DateParser.parseDate(genericMatch, true);
@@ -543,6 +525,27 @@ function addDependsOnSuggestions(
         }
     }
     return results;
+}
+
+function filterGenericSuggestions(genericSuggestions: string[], dateString: string, maxGenericSuggestions: number) {
+    // Now to generic predefined suggestions.
+    // If we get a partial match with some of the suggestions (e.g. the user started typing "to"),
+    // we use that for matches ("tomorrow", "today" etc).
+    // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
+    // a max number. We want the max number to be around half the total allowed matches, to also allow
+    // some global generic matches (e.g. task components) to find their way to the menu
+    const minMatch = 1;
+    let genericMatches = genericSuggestions
+        .filter(
+            (value) =>
+                dateString && dateString.length >= minMatch && value.toLowerCase().includes(dateString.toLowerCase()),
+        )
+        .slice(0, maxGenericSuggestions);
+    if (genericMatches.length === 0) {
+        // Do completely generic date suggestions
+        genericMatches = genericSuggestions.slice(0, maxGenericSuggestions);
+    }
+    return genericMatches;
 }
 
 type Extractor = (datePrefix: string, genericMatch: string) => { displayText: string; appendText: string };
