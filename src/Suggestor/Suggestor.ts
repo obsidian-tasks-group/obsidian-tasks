@@ -102,8 +102,6 @@ export function makeDefaultSuggestionBuilder(
             // add dependecy suggestions
             suggestions = suggestions.concat(
                 addDependsOnSuggestions(
-                    line,
-                    cursorPos,
                     settings,
                     symbols.dependsOnSymbol,
                     allTasks,
@@ -186,8 +184,6 @@ function addTaskPropertySuggestions(
 
     const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(
         genericSuggestions,
-        line,
-        cursorPos,
         dataviewMode,
         insertSkip,
         settings,
@@ -291,8 +287,6 @@ function addDependencySuggestions(
 
 function filterGeneralSuggestionsForWordAtCursor(
     genericSuggestions: SuggestInfo[],
-    line: string,
-    cursorPos: number,
     dataviewMode: boolean,
     insertSkip: number,
     settings: Settings,
@@ -302,7 +296,7 @@ function filterGeneralSuggestionsForWordAtCursor(
     // something to match, we filter the suggestions accordingly, so the user can get more specific
     // results according to what she's typing.
     // If there's no good match, present the suggestions as they are
-    const wordMatch = matchIfCursorInRegex(line, /([a-zA-Z'_-]*)/g, cursorPos, suggestorParameters);
+    const wordMatch = matchIfCursorInRegex(/([a-zA-Z'_-]*)/g, suggestorParameters);
     const matchingSuggestions: SuggestInfo[] = [];
     if (wordMatch && wordMatch.length > 0) {
         const wordUnderCursor = wordMatch[0];
@@ -360,12 +354,7 @@ function addDatesSuggestions(
 
     const results: SuggestInfo[] = [];
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const dateMatch = matchIfCursorInRegex(
-        suggestorParameters.line,
-        dateRegex,
-        suggestorParameters.cursorPos,
-        suggestorParameters,
-    );
+    const dateMatch = matchIfCursorInRegex(dateRegex, suggestorParameters);
     if (dateMatch && dateMatch.length >= 2) {
         const datePrefix = dateMatch[1];
         const dateString = dateMatch[2];
@@ -463,7 +452,7 @@ function addRecurrenceValueSuggestions(
 
     const results: SuggestInfo[] = [];
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
-    const recurrenceMatch = matchIfCursorInRegex(line, recurrenceRegex, cursorPos, _suggestorParameters);
+    const recurrenceMatch = matchIfCursorInRegex(recurrenceRegex, _suggestorParameters);
     if (recurrenceMatch && recurrenceMatch.length >= 2) {
         const recurrencePrefix = recurrenceMatch[1];
         const recurrenceString = recurrenceMatch[2];
@@ -545,7 +534,7 @@ function addIDSuggestion(
 
     const results: SuggestInfo[] = [];
     const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})?`, 'ug');
-    const idMatch = matchIfCursorInRegex(line, idRegex, cursorPos, _suggestorParameters);
+    const idMatch = matchIfCursorInRegex(idRegex, _suggestorParameters);
 
     if (idMatch && idMatch[0].trim().length <= idSymbol.length) {
         const ID = generateUniqueId(allTasks.map((task) => task.id));
@@ -568,8 +557,6 @@ function addIDSuggestion(
  * of what the user is typing.
  */
 function addDependsOnSuggestions(
-    line: string,
-    cursorPos: number,
     settings: Settings,
     dependsOnSymbol: string,
     allTasks: Task[],
@@ -594,7 +581,7 @@ function addDependsOnSuggestions(
         `(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([^,${charactersExcludedFromDescriptionSearch}]*)`,
         'ug',
     );
-    const dependsOnMatch = matchIfCursorInRegex(line, dependsOnRegex, cursorPos, _suggestorParameters);
+    const dependsOnMatch = matchIfCursorInRegex(dependsOnRegex, _suggestorParameters);
     if (dependsOnMatch && dependsOnMatch.length >= 1) {
         // dependsOnMatch[1] = Depends On Symbol
         const existingDependsOnIdStrings = dependsOnMatch[2] || '';
@@ -638,15 +625,11 @@ function addDependsOnSuggestions(
  * Matches a string with a regex according to a position (typically of a cursor).
  * Will return a result only if a match exists and the given position is part of it.
  */
-export function matchIfCursorInRegex(
-    s: string,
-    r: RegExp,
-    position: number,
-    _suggestorParameters: SuggestorParameters,
-): RegExpMatchArray | void {
-    const matches = s.matchAll(r);
+export function matchIfCursorInRegex(r: RegExp, suggestorParameters: SuggestorParameters): RegExpMatchArray | void {
+    const matches = suggestorParameters.line.matchAll(r);
+    const cursorPos = suggestorParameters.cursorPos;
     for (const match of matches) {
-        if (match?.index && match.index < position && position <= match.index + match[0].length) return match;
+        if (match?.index && match.index < cursorPos && cursorPos <= match.index + match[0].length) return match;
     }
 }
 
