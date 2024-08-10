@@ -42,6 +42,8 @@ export interface SuggestorParameters {
     cursorPos: number;
     settings: Settings;
     dataviewMode: boolean;
+    postfix: string;
+    insertSkip: number;
 }
 
 export function makeDefaultSuggestionBuilder(
@@ -64,11 +66,14 @@ export function makeDefaultSuggestionBuilder(
     ): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
 
+        const { postfix, insertSkip } = getAdjusters(dataviewMode, line, cursorPos);
         const suggestorParameters: SuggestorParameters = {
             line,
             cursorPos,
             settings,
             dataviewMode,
+            postfix,
+            insertSkip,
         };
 
         // add date suggestions if relevant
