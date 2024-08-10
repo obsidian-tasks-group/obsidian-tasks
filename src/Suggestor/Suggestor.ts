@@ -64,8 +64,7 @@ export function makeDefaultSuggestionBuilder(
     ): SuggestInfo[] => {
         let suggestions: SuggestInfo[] = [];
 
-        // @ts-expect-error _suggestorParameters is Unused.
-        const _suggestorParameters = {
+        const suggestorParameters: SuggestorParameters = {
             line,
             cursorPos,
             settings,
@@ -74,7 +73,15 @@ export function makeDefaultSuggestionBuilder(
 
         // add date suggestions if relevant
         suggestions = suggestions.concat(
-            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions, dataviewMode),
+            addDatesSuggestions(
+                line,
+                cursorPos,
+                settings,
+                datePrefixRegex,
+                maxGenericSuggestions,
+                dataviewMode,
+                suggestorParameters,
+            ),
         );
 
         // add recurrence suggestions if relevant
@@ -322,6 +329,7 @@ function addDatesSuggestions(
     datePrefixRegex: string,
     maxGenericSuggestions: number,
     dataviewMode: boolean,
+    _suggestorParameters: SuggestorParameters,
 ): SuggestInfo[] {
     const genericSuggestions = [
         'today',
