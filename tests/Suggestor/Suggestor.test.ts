@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAll, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
@@ -198,19 +198,17 @@ describe.each([
         shouldOnlyOfferDefaultSuggestions(suggestions);
     }
 
-    /**
-     * Verify the full detail of a suggestion.
-     * @param line
-     */
-    function verifyFirstSuggestion(line: string) {
-        const suggestions = buildSuggestionsForEndOfLine(line, []);
-        const output = `For this markdown line:
+    function verifyFirstSuggestions(lines: string[], title: string) {
+        verifyAll(title, lines, (line) => {
+            const suggestions = buildSuggestionsForEndOfLine(line, []);
+            return `For this markdown line:
 "${line}"
 
 The first suggestion is:
 ${JSON.stringify(suggestions[0], null, 4)}
+--------------------------------------------------------------------------------
 `;
-        verify(output);
+        });
     }
 
     const {
@@ -242,14 +240,13 @@ ${JSON.stringify(suggestions[0], null, 4)}
         shouldStartWithSuggestionsContaining(line, ['today', 'tomorrow']);
     });
 
-    it('offers specific due date completion for a specific date', () => {
-        const line = `- [ ] some task ${dueDateSymbol} 27 oct`;
-        verifyFirstSuggestion(line);
-    });
-
-    it('offers specific due date completion for a specific interval', () => {
-        const line = `- [ ] some task ${dueDateSymbol} 1 year`;
-        verifyFirstSuggestion(line);
+    it('offers correct options for partial due date lines', () => {
+        const lines = [
+            `- [ ] some task ${dueDateSymbol}`, // just the due date symbol
+            `- [ ] some task ${dueDateSymbol} 27 oct`, // an absolute date
+            `- [ ] some task ${dueDateSymbol} 1 year`, // a relative date
+        ];
+        verifyFirstSuggestions(lines, 'How due date suggestions are affected by what the user has typed:');
     });
 
     it('offers generic recurrence completions', () => {
