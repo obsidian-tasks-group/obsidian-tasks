@@ -247,6 +247,11 @@ ${JSON.stringify(suggestions[0], null, 4)}
         verifyFirstSuggestion(line);
     });
 
+    it('offers specific due date completion for a specific interval', () => {
+        const line = `- [ ] some task ${dueDateSymbol} 1 year`;
+        verifyFirstSuggestion(line);
+    });
+
     it('offers generic recurrence completions', () => {
         const line = `- [ ] some task ${recurrenceSymbol}`;
         shouldStartWithSuggestionsEqualling(line, ['every', 'every day', 'every week']);
