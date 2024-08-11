@@ -423,11 +423,18 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, parameters: Sug
             genericMatches = genericSuggestions.slice(0, maxGenericDateSuggestions);
         }
 
+        const extractor = (match: string, recurrencePrefix: string) => {
+            const displayText = `${match}`;
+            const appendText = `${recurrencePrefix} ${match}`;
+            return { displayText, appendText };
+        };
+
         for (const match of genericMatches) {
+            const { displayText, appendText } = extractor(match, recurrencePrefix);
             results.push({
                 suggestionType: 'match',
-                displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match}` + parameters.postfix,
+                displayText: displayText,
+                appendText: appendText + parameters.postfix,
                 insertAt: recurrenceMatch.index,
                 insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], parameters),
             });
