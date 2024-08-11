@@ -1,0 +1,40 @@
+How due date suggestions are affected by what the user has typed:
+
+
+For this markdown line:
+"- [ ] some task due::"
+
+The first suggestion is:
+{
+    "suggestionType": "match",
+    "displayText": "today (2022-07-11)",
+    "appendText": "due:: 2022-07-11] ",
+    "insertAt": 16,
+    "insertSkip": 5
+}
+--------------------------------------------------------------------------------
+
+For this markdown line:
+"- [ ] some task due:: 27 oct"
+
+The first suggestion is:
+{
+    "displayText": "2022-10-27",
+    "appendText": "due:: 2022-10-27 ",
+    "insertAt": 16,
+    "insertSkip": 12
+}
+--------------------------------------------------------------------------------
+
+For this markdown line:
+"- [ ] some task due:: 1 year"
+
+The first suggestion is:
+{
+    "displayText": "2023-07-11",
+    "appendText": "due:: 2023-07-11 ",
+    "insertAt": 16,
+    "insertSkip": 12
+}
+--------------------------------------------------------------------------------
+

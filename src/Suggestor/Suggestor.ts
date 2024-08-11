@@ -326,36 +326,16 @@ function addDatesSuggestions(
             });
         }
 
-        // Now to generic predefined suggestions.
-        // If we get a partial match with some of the suggestions (e.g. the user started typing "to"),
-        // we use that for matches ("tomorrow", "today" etc).
-        // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
-        // a max number. We want the max number to be around half the total allowed matches, to also allow
-        // some global generic matches (e.g. task components) to find their way to the menu
-        const minMatch = 1;
-        let genericMatches = genericSuggestions
-            .filter(
-                (value) =>
-                    dateString &&
-                    dateString.length >= minMatch &&
-                    value.toLowerCase().includes(dateString.toLowerCase()),
-            )
-            .slice(0, maxGenericSuggestions);
-        if (genericMatches.length === 0) {
-            // Do completely generic date suggestions
-            genericMatches = genericSuggestions.slice(0, maxGenericSuggestions);
-        }
-        for (const match of genericMatches) {
-            const parsedDate = DateParser.parseDate(match, true);
+        const genericMatches = filterGenericSuggestions(genericSuggestions, dateString, maxGenericSuggestions);
+
+        const extractor: Extractor = (datePrefix: string, genericMatch: string) => {
+            const parsedDate = DateParser.parseDate(genericMatch, true);
             const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
-            results.push({
-                suggestionType: 'match',
-                displayText: `${match} (${formattedDate})`,
-                appendText: `${datePrefix} ${formattedDate}` + parameters.postfix,
-                insertAt: dateMatch.index,
-                insertSkip: calculateSkipValueForMatch(dateMatch[0], parameters),
-            });
-        }
+            const displayText = `${genericMatch} (${formattedDate})`;
+            const appendText = `${datePrefix} ${formattedDate}`;
+            return { displayText, appendText };
+        };
+        constructSuggestions(parameters, dateMatch, genericMatches, extractor, results);
     }
     return results;
 }
@@ -443,15 +423,12 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, parameters: Sug
             genericMatches = genericSuggestions.slice(0, maxGenericDateSuggestions);
         }
 
-        for (const match of genericMatches) {
-            results.push({
-                suggestionType: 'match',
-                displayText: `${match}`,
-                appendText: `${recurrencePrefix} ${match}` + parameters.postfix,
-                insertAt: recurrenceMatch.index,
-                insertSkip: calculateSkipValueForMatch(recurrenceMatch[0], parameters),
-            });
-        }
+        const extractor = (recurrencePrefix: string, match: string) => {
+            const displayText = `${match}`;
+            const appendText = `${recurrencePrefix} ${match}`;
+            return { displayText, appendText };
+        };
+        constructSuggestions(parameters, recurrenceMatch, genericMatches, extractor, results);
     }
 
     return results;
@@ -545,6 +522,77 @@ function addDependsOnSuggestions(
         }
     }
     return results;
+}
+
+/**
+ * Process a list of generic predefined suggestions.
+ *
+ * If we get a partial match with some of the suggestions (e.g. the user started typing "to", if it's a date field),
+ * we use that for matches ("tomorrow", "today" etc).
+ *
+ * Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
+ * a max number. We want the max number to be around half the total allowed matches, to also allow
+ * some global generic matches (e.g. task components) to find their way to the menu
+ *
+ * @param genericSuggestions A list of generic suggestions.
+ * @param typedText Any text that the user has typed.
+ * @param maxGenericSuggestions The maximum of suggested wanted.
+ *
+ * @see constructSuggestions
+ */
+function filterGenericSuggestions(genericSuggestions: string[], typedText: string, maxGenericSuggestions: number) {
+    const minMatch = 1;
+    let genericMatches = genericSuggestions
+        .filter(
+            (value) =>
+                typedText && typedText.length >= minMatch && value.toLowerCase().includes(typedText.toLowerCase()),
+        )
+        .slice(0, maxGenericSuggestions);
+    if (genericMatches.length === 0) {
+        // Do completely generic suggestions
+        genericMatches = genericSuggestions.slice(0, maxGenericSuggestions);
+    }
+    return genericMatches;
+}
+
+/**
+ * Function which converts a suggestion (such as `today` or `every wednesday`) to strings for
+ * use in {@link SuggestInfo}.
+ */
+type Extractor = (datePrefix: string, genericMatch: string) => { displayText: string; appendText: string };
+
+/**
+ *
+ * @param parameters A {@link SuggestorParameters} with details about the location to suggest for, and user settings.
+ * @param symbolAndTypedTextMatch A regular expression match, containing the {@link symbol}
+ *                                and any text that the user had already typed.
+ * @param genericMatches The raw strings containing the text of the suggestions to be created.
+ * @param extractor Function which converts a raw string from {@link genericMatches} to displayText and
+ *                  appendText values.
+ * @param results List of {@link SuggestInfo}: this function appends to this container.
+ *
+ * @returns A list of {@link SuggestInfo} objects, appended to the parameter {@link results}.
+ *
+ * @see filterGenericSuggestions
+ */
+function constructSuggestions(
+    parameters: SuggestorParameters,
+    symbolAndTypedTextMatch: RegExpMatchArray,
+    genericMatches: string[],
+    extractor: Extractor,
+    results: SuggestInfo[],
+) {
+    const symbol = symbolAndTypedTextMatch[1];
+    for (const genericMatch of genericMatches) {
+        const { displayText, appendText } = extractor(symbol, genericMatch);
+        results.push({
+            suggestionType: 'match',
+            displayText: displayText,
+            appendText: appendText + parameters.postfix,
+            insertAt: symbolAndTypedTextMatch.index,
+            insertSkip: calculateSkipValueForMatch(symbolAndTypedTextMatch[0], parameters),
+        });
+    }
 }
 
 /**
