@@ -527,13 +527,23 @@ function addDependsOnSuggestions(
     return results;
 }
 
+/**
+ * Process a list of generic predefined suggestions.
+ *
+ * If we get a partial match with some of the suggestions (e.g. the user started typing "to", if it's a date field),
+ * we use that for matches ("tomorrow", "today" etc).
+ *
+ * Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
+ * a max number. We want the max number to be around half the total allowed matches, to also allow
+ * some global generic matches (e.g. task components) to find their way to the menu
+ *
+ * @param genericSuggestions A list of generic suggestions.
+ * @param typedText Any text that the user has typed.
+ * @param maxGenericSuggestions The maximum of suggested wanted.
+ *
+ * @see constructSuggestions
+ */
 function filterGenericSuggestions(genericSuggestions: string[], typedText: string, maxGenericSuggestions: number) {
-    // Now to generic predefined suggestions.
-    // If we get a partial match with some of the suggestions (e.g. the user started typing "to", if it's a date field),
-    // we use that for matches ("tomorrow", "today" etc).
-    // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
-    // a max number. We want the max number to be around half the total allowed matches, to also allow
-    // some global generic matches (e.g. task components) to find their way to the menu
     const minMatch = 1;
     let genericMatches = genericSuggestions
         .filter(
@@ -548,8 +558,27 @@ function filterGenericSuggestions(genericSuggestions: string[], typedText: strin
     return genericMatches;
 }
 
+/**
+ * Function which converts a suggestion (such as `today` or `every wednesday`) to strings for
+ * use in {@link SuggestInfo}.
+ */
 type Extractor = (datePrefix: string, genericMatch: string) => { displayText: string; appendText: string };
 
+/**
+ *
+ * @param parameters A {@link SuggestorParameters} with details about the location to suggest for, and user settings.
+ * @param symbol The symbol that these suggestions are for. See {@link DEFAULT_SYMBOLS} and {@link DATAVIEW_SYMBOLS}.
+ * @param symbolAndTypedTextMatch A regular expression match, containing the {@link symbol}
+ *                                and any text that the user had already typed.
+ * @param genericMatches The raw strings containing the text of the suggestions to be created.
+ * @param extractor Function which converts a raw string from {@link genericMatches} to displayText and
+ *                  appendText values.
+ * @param results List of {@link SuggestInfo}: this function appends to this container.
+ *
+ * @returns A list of {@link SuggestInfo} objects, appended to the parameter {@link results}.
+ *
+ * @see filterGenericSuggestions
+ */
 function constructSuggestions(
     parameters: SuggestorParameters,
     symbol: string,
