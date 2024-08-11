@@ -552,20 +552,20 @@ type Extractor = (datePrefix: string, genericMatch: string) => { displayText: st
 
 function constructSuggestions(
     parameters: SuggestorParameters,
-    datePrefix: string,
-    dateMatch: RegExpMatchArray,
+    symbol: string,
+    symbolAndTypedTextMatch: RegExpMatchArray,
     genericMatches: string[],
     extractor: Extractor,
     results: SuggestInfo[],
 ) {
     for (const genericMatch of genericMatches) {
-        const { displayText, appendText } = extractor(datePrefix, genericMatch);
+        const { displayText, appendText } = extractor(symbol, genericMatch);
         results.push({
             suggestionType: 'match',
             displayText: displayText,
             appendText: appendText + parameters.postfix,
-            insertAt: dateMatch.index,
-            insertSkip: calculateSkipValueForMatch(dateMatch[0], parameters),
+            insertAt: symbolAndTypedTextMatch.index,
+            insertSkip: calculateSkipValueForMatch(symbolAndTypedTextMatch[0], parameters),
         });
     }
 }
