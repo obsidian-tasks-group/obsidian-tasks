@@ -260,6 +260,17 @@ ${JSON.stringify(suggestions[0], null, 4)}
         shouldStartWithSuggestionsEqualling(line, ['every week', 'every week on Sunday', 'every week on Monday']);
     });
 
+    it('offers correct options for partial recurrence lines', () => {
+        const lines = [
+            `- [ ] some task ${recurrenceSymbol}`,
+            `- [ ] some task ${recurrenceSymbol} ev`,
+            `- [ ] some task ${recurrenceSymbol} every day`,
+            `- [ ] some task ${recurrenceSymbol} every day when done`,
+            `- [ ] some task ${recurrenceSymbol} something else that ends with a space `,
+        ];
+        verifyFirstSuggestions(lines, 'How due date suggestions are affected by what the user has typed:');
+    });
+
     it('respects the minimal match setting', () => {
         // Arrange
         const originalSettings = getSettings();

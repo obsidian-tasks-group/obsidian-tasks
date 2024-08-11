@@ -1,0 +1,65 @@
+How due date suggestions are affected by what the user has typed:
+
+
+For this markdown line:
+"- [ ] some task repeat::"
+
+The first suggestion is:
+{
+    "suggestionType": "match",
+    "displayText": "every",
+    "appendText": "repeat:: every] ",
+    "insertAt": 16,
+    "insertSkip": 8
+}
+--------------------------------------------------------------------------------
+
+For this markdown line:
+"- [ ] some task repeat:: ev"
+
+The first suggestion is:
+{
+    "suggestionType": "match",
+    "displayText": "every",
+    "appendText": "repeat:: every] ",
+    "insertAt": 16,
+    "insertSkip": 11
+}
+--------------------------------------------------------------------------------
+
+For this markdown line:
+"- [ ] some task repeat:: every day"
+
+The first suggestion is:
+{
+    "suggestionType": "match",
+    "displayText": "✅ every day",
+    "appendText": "repeat:: every day] ",
+    "insertAt": 16,
+    "insertSkip": 18
+}
+--------------------------------------------------------------------------------
+
+For this markdown line:
+"- [ ] some task repeat:: every day when done"
+
+The first suggestion is:
+{
+    "suggestionType": "match",
+    "displayText": "✅ every day when done",
+    "appendText": "repeat:: every day when done] ",
+    "insertAt": 16,
+    "insertSkip": 28
+}
+--------------------------------------------------------------------------------
+
+For this markdown line:
+"- [ ] some task repeat:: something else that ends with a space "
+
+The first suggestion is:
+{
+    "displayText": "due:: due date",
+    "appendText": "due:: "
+}
+--------------------------------------------------------------------------------
+
