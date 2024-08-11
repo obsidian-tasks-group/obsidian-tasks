@@ -335,7 +335,7 @@ function addDatesSuggestions(
             const appendText = `${datePrefix} ${formattedDate}`;
             return { displayText, appendText };
         };
-        constructSuggestions(parameters, datePrefix, dateMatch, genericMatches, extractor, results);
+        constructSuggestions(parameters, dateMatch, genericMatches, extractor, results);
     }
     return results;
 }
@@ -567,7 +567,6 @@ type Extractor = (datePrefix: string, genericMatch: string) => { displayText: st
 /**
  *
  * @param parameters A {@link SuggestorParameters} with details about the location to suggest for, and user settings.
- * @param symbol The symbol that these suggestions are for. See {@link DEFAULT_SYMBOLS} and {@link DATAVIEW_SYMBOLS}.
  * @param symbolAndTypedTextMatch A regular expression match, containing the {@link symbol}
  *                                and any text that the user had already typed.
  * @param genericMatches The raw strings containing the text of the suggestions to be created.
@@ -581,12 +580,12 @@ type Extractor = (datePrefix: string, genericMatch: string) => { displayText: st
  */
 function constructSuggestions(
     parameters: SuggestorParameters,
-    symbol: string,
     symbolAndTypedTextMatch: RegExpMatchArray,
     genericMatches: string[],
     extractor: Extractor,
     results: SuggestInfo[],
 ) {
+    const symbol = symbolAndTypedTextMatch[1];
     for (const genericMatch of genericMatches) {
         const { displayText, appendText } = extractor(symbol, genericMatch);
         results.push({
