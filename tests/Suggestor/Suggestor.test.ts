@@ -198,6 +198,21 @@ describe.each([
         shouldOnlyOfferDefaultSuggestions(suggestions);
     }
 
+    /**
+     * Verify the full detail of a suggestion.
+     * @param line
+     */
+    function verifyFirstSuggestion(line: string) {
+        const suggestions = buildSuggestionsForEndOfLine(line, []);
+        const output = `For this markdown line:
+"${line}"
+
+The first suggestion is:
+${JSON.stringify(suggestions[0], null, 4)}
+`;
+        verify(output);
+    }
+
     const {
         dueDateSymbol,
         scheduledDateSymbol,
@@ -229,14 +244,7 @@ describe.each([
 
     it('offers specific due date completion for a specific date', () => {
         const line = `- [ ] some task ${dueDateSymbol} 27 oct`;
-        const suggestions = buildSuggestionsForEndOfLine(line, []);
-        const output = `For this markdown line:
-"${line}"
-
-The first suggestion is:
-${JSON.stringify(suggestions[0], null, 4)}
-`;
-        verify(output);
+        verifyFirstSuggestion(line);
     });
 
     it('offers generic recurrence completions', () => {
