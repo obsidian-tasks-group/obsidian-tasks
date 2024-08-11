@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
@@ -225,6 +225,18 @@ describe.each([
         // Arrange
         const line = `- [ ] some task ${dueDateSymbol} to`;
         shouldStartWithSuggestionsContaining(line, ['today', 'tomorrow']);
+    });
+
+    it('offers specific due date completion for a specific date', () => {
+        const line = `- [ ] some task ${dueDateSymbol} 27 oct`;
+        const suggestions = buildSuggestionsForEndOfLine(line, []);
+        const output = `For this markdown line:
+"${line}"
+
+The first suggestion is:
+${JSON.stringify(suggestions[0], null, 4)}
+`;
+        verify(output);
     });
 
     it('offers generic recurrence completions', () => {

@@ -1,0 +1,10 @@
+For this markdown line:
+"- [ ] some task 📅 27 oct"
+
+The first suggestion is:
+{
+    "displayText": "2022-10-27",
+    "appendText": "📅 2022-10-27 ",
+    "insertAt": 16,
+    "insertSkip": 9
+}
