@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAll, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
@@ -198,6 +198,19 @@ describe.each([
         shouldOnlyOfferDefaultSuggestions(suggestions);
     }
 
+    function verifyFirstSuggestions(lines: string[], title: string) {
+        verifyAll(title, lines, (line) => {
+            const suggestions = buildSuggestionsForEndOfLine(line, []);
+            return `For this markdown line:
+"${line}"
+
+The first suggestion is:
+${JSON.stringify(suggestions[0], null, 4)}
+--------------------------------------------------------------------------------
+`;
+        });
+    }
+
     const {
         dueDateSymbol,
         scheduledDateSymbol,
@@ -227,6 +240,15 @@ describe.each([
         shouldStartWithSuggestionsContaining(line, ['today', 'tomorrow']);
     });
 
+    it('offers correct options for partial due date lines', () => {
+        const lines = [
+            `- [ ] some task ${dueDateSymbol}`, // just the due date symbol
+            `- [ ] some task ${dueDateSymbol} 27 oct`, // an absolute date
+            `- [ ] some task ${dueDateSymbol} 1 year`, // a relative date
+        ];
+        verifyFirstSuggestions(lines, 'How due date suggestions are affected by what the user has typed:');
+    });
+
     it('offers generic recurrence completions', () => {
         const line = `- [ ] some task ${recurrenceSymbol}`;
         shouldStartWithSuggestionsEqualling(line, ['every', 'every day', 'every week']);
@@ -236,6 +258,17 @@ describe.each([
         // Arrange
         const line = `- [ ] some task ${recurrenceSymbol} every w`;
         shouldStartWithSuggestionsEqualling(line, ['every week', 'every week on Sunday', 'every week on Monday']);
+    });
+
+    it('offers correct options for partial recurrence lines', () => {
+        const lines = [
+            `- [ ] some task ${recurrenceSymbol}`,
+            `- [ ] some task ${recurrenceSymbol} ev`,
+            `- [ ] some task ${recurrenceSymbol} every day`,
+            `- [ ] some task ${recurrenceSymbol} every day when done`,
+            `- [ ] some task ${recurrenceSymbol} something else that ends with a space `,
+        ];
+        verifyFirstSuggestions(lines, 'How due date suggestions are affected by what the user has typed:');
     });
 
     it('respects the minimal match setting', () => {
