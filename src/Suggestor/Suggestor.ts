@@ -527,9 +527,9 @@ function addDependsOnSuggestions(
     return results;
 }
 
-function filterGenericSuggestions(genericSuggestions: string[], dateString: string, maxGenericSuggestions: number) {
+function filterGenericSuggestions(genericSuggestions: string[], typedText: string, maxGenericSuggestions: number) {
     // Now to generic predefined suggestions.
-    // If we get a partial match with some of the suggestions (e.g. the user started typing "to"),
+    // If we get a partial match with some of the suggestions (e.g. the user started typing "to", if it's a date field),
     // we use that for matches ("tomorrow", "today" etc).
     // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
     // a max number. We want the max number to be around half the total allowed matches, to also allow
@@ -538,11 +538,11 @@ function filterGenericSuggestions(genericSuggestions: string[], dateString: stri
     let genericMatches = genericSuggestions
         .filter(
             (value) =>
-                dateString && dateString.length >= minMatch && value.toLowerCase().includes(dateString.toLowerCase()),
+                typedText && typedText.length >= minMatch && value.toLowerCase().includes(typedText.toLowerCase()),
         )
         .slice(0, maxGenericSuggestions);
     if (genericMatches.length === 0) {
-        // Do completely generic date suggestions
+        // Do completely generic suggestions
         genericMatches = genericSuggestions.slice(0, maxGenericSuggestions);
     }
     return genericMatches;
