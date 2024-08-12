@@ -92,6 +92,11 @@ export function makeDefaultSuggestionBuilder(
             );
         }
 
+        // add on completion suggestions if relevant
+        suggestions = suggestions.concat(
+            addOnCompletionOptionSuggestions(symbols.onCompletionSymbol, maxGenericSuggestions, parameters),
+        );
+
         // add task property suggestions ('due', 'recurrence' etc)
         suggestions = suggestions.concat(addTaskPropertySuggestions(symbols, canSaveEdits, parameters));
 
@@ -155,6 +160,8 @@ function addTaskPropertySuggestions(
         addField(genericSuggestions, line, symbols.idSymbol, 'id');
         addField(genericSuggestions, line, symbols.dependsOnSymbol, 'depends on id');
     }
+
+    addField(genericSuggestions, line, symbols.onCompletionSymbol, 'on completion');
 
     const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(genericSuggestions, parameters);
 
@@ -407,6 +414,30 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, parameters: Sug
         constructSuggestions(parameters, recurrenceMatch, genericMatches, extractor, results);
     }
 
+    return results;
+}
+
+/*
+ * If the cursor is located in a section that should be followed by an OnCompletion action, suggest options
+ * for what to enter as the action.
+ */
+function addOnCompletionOptionSuggestions(
+    symbol: string,
+    maxGenericSuggestions: number,
+    parameters: SuggestorParameters,
+) {
+    const genericSuggestions = ['delete', 'keep'];
+
+    const results: SuggestInfo[] = [];
+    const regex = new RegExp(`(${symbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const match = matchIfCursorInRegex(regex, parameters);
+    if (match && match.length >= 2) {
+        const typedText = match[2];
+        if (typedText.length < parameters.settings.autoSuggestMinMatch) return [];
+
+        const genericMatches = filterGenericSuggestions(genericSuggestions, typedText, maxGenericSuggestions, true);
+        constructSuggestions(parameters, match, genericMatches, defaultExtractor, results);
+    }
     return results;
 }
 

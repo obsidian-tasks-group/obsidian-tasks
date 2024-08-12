@@ -52,5 +52,9 @@
   {
     "displayText": "⛔ depends on id",
     "appendText": "⛔ "
+  },
+  {
+    "displayText": "🏁 on completion",
+    "appendText": "🏁 "
   }
 ]
