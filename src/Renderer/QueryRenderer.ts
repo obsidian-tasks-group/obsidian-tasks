@@ -13,7 +13,7 @@ import type { QueryResult } from '../Query/QueryResult';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../Task/DateFallback';
 import type { Task } from '../Task/Task';
-import { QueryResultsRenderer } from './QueryResultsRenderer';
+import { type QueryRendererParameters, QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -124,7 +124,13 @@ class QueryRenderChild extends QueryResultsRenderer {
 
         const content = createAndAppendElement('div', this.containerEl);
         if (state === State.Warm && this.query.error === undefined) {
-            await this.renderQuerySearchResults(tasks, state, content);
+            await this.renderQuerySearchResults(tasks, state, content, {
+                allTasks: this.plugin.getTasks(),
+                allMarkdownFiles: this.app.vault.getMarkdownFiles(),
+                backlinksClickHandler,
+                backlinksMousedownHandler,
+                editTaskPencilClickHandler,
+            });
         } else if (this.query.error !== undefined) {
             this.renderErrorMessage(content, this.query.error);
         } else {
@@ -134,7 +140,12 @@ class QueryRenderChild extends QueryResultsRenderer {
         this.containerEl.firstChild?.replaceWith(content);
     }
 
-    private async renderQuerySearchResults(tasks: Task[], state: State.Warm, content: HTMLDivElement) {
+    private async renderQuerySearchResults(
+        tasks: Task[],
+        state: State.Warm,
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
         const queryResult = this.explainAndPerformSearch(state, tasks, content);
 
         if (queryResult.searchErrorMessage !== undefined) {
@@ -143,7 +154,7 @@ class QueryRenderChild extends QueryResultsRenderer {
             return;
         }
 
-        await this.renderSearchResults(queryResult, content);
+        await this.renderSearchResults(queryResult, content, queryRendererParameters);
     }
 
     private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
@@ -162,17 +173,15 @@ class QueryRenderChild extends QueryResultsRenderer {
         return queryResult;
     }
 
-    private async renderSearchResults(queryResult: QueryResult, content: HTMLDivElement) {
+    private async renderSearchResults(
+        queryResult: QueryResult,
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
-        await this.addAllTaskGroups(queryResult.taskGroups, content, {
-            allTasks: this.plugin.getTasks(),
-            allMarkdownFiles: this.app.vault.getMarkdownFiles(),
-            backlinksClickHandler,
-            backlinksMousedownHandler,
-            editTaskPencilClickHandler,
-        });
+        await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
 
         const totalTasksCount = queryResult.totalTasksCount;
         this.addTaskCount(content, queryResult);
