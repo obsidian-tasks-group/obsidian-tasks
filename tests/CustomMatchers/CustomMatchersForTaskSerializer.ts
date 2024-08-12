@@ -1,7 +1,6 @@
 import { diff } from 'jest-diff';
 import type { MatcherFunction } from 'expect';
 import moment from 'moment';
-import { OnCompletion } from '../../src/Task/OnCompletion';
 import type { TaskDetails } from '../../src/TaskSerializer';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Priority } from '../../src/Task/Priority';
@@ -59,10 +58,6 @@ function isTaskDetails(val: any): val is TaskDetails {
     }
 
     if (!Object.values(Priority).includes(val.priority)) {
-        return false;
-    }
-
-    if (!Object.values(OnCompletion).includes(val.onCompletion)) {
         return false;
     }
 
