@@ -219,6 +219,7 @@ ${JSON.stringify(suggestions[0], null, 4)}
         recurrenceSymbol,
         idSymbol,
         dependsOnSymbol,
+        onCompletionSymbol,
     } = symbols;
 
     it('offers basic completion options for an empty task', () => {
@@ -269,6 +270,11 @@ ${JSON.stringify(suggestions[0], null, 4)}
             `- [ ] some task ${recurrenceSymbol} something else that ends with a space `,
         ];
         verifyFirstSuggestions(lines, 'How due date suggestions are affected by what the user has typed:');
+    });
+
+    it('offers OnCompletion completions', () => {
+        const line = `- [ ] some task ${onCompletionSymbol}`;
+        shouldStartWithSuggestionsEqualling(line, ['delete', 'keep']);
     });
 
     it('respects the minimal match setting', () => {
@@ -473,12 +479,15 @@ ${JSON.stringify(suggestions[0], null, 4)}
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
 
+        // NEW_TASK_FIELD_EDIT_REQUIRED
+
         const lines = [
             '- [ ] some task',
             `- [ ] some task ${recurrenceSymbol} `,
             `- [ ] some task ${dueDateSymbol} `,
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
+            `- [ ] some task ${onCompletionSymbol} `,
         ];
         if (global.SHOW_DEPENDENCY_SUGGESTIONS) {
             lines.push(`- [ ] some task ${idSymbol} `);
