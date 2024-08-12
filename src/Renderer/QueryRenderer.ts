@@ -50,6 +50,8 @@ class QueryRenderChild extends QueryResultsRenderer {
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
+    private queryResultsRenderer: QueryResultsRenderer = this;
+
     constructor({
         app,
         plugin,
@@ -107,7 +109,11 @@ class QueryRenderChild extends QueryResultsRenderer {
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
         this.queryReloadTimeout = setTimeout(() => {
-            this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
+            this.queryResultsRenderer.query = getQueryForQueryRenderer(
+                this.queryResultsRenderer.source,
+                GlobalQuery.getInstance(),
+                this.queryResultsRenderer.tasksFile,
+            );
             // Process the current cache state:
             this.events.triggerRequestCacheUpdate(this.render.bind(this));
             this.reloadQueryAtMidnight();
@@ -116,7 +122,7 @@ class QueryRenderChild extends QueryResultsRenderer {
 
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         const content = createAndAppendElement('div', this.containerEl);
-        await this.render2(state, tasks, content, {
+        await this.queryResultsRenderer.render2(state, tasks, content, {
             allTasks: this.plugin.getTasks(),
             allMarkdownFiles: this.app.vault.getMarkdownFiles(),
             backlinksClickHandler,
