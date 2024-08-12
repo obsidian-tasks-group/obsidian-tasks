@@ -50,7 +50,6 @@ export class QueryResultsRenderer {
     private readonly obsidianComponent: Component;
 
     constructor(
-        _container: HTMLElement,
         className: string,
         source: string,
         tasksFile: TasksFile,
