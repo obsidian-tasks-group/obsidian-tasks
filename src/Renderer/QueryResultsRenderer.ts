@@ -72,7 +72,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         return this.tasksFile?.path ?? undefined;
     }
 
-    protected async render2(
+    public async render2(
         state: State | State.Warm,
         tasks: Task[],
         content: HTMLDivElement,
@@ -90,7 +90,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         }
     }
 
-    protected async renderQuerySearchResults(
+    private async renderQuerySearchResults(
         tasks: Task[],
         state: State.Warm,
         content: HTMLDivElement,
@@ -141,11 +141,11 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         measureRender.finish();
     }
 
-    protected renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
+    private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
         content.createDiv().innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
-    protected renderLoadingMessage(content: HTMLDivElement) {
+    private renderLoadingMessage(content: HTMLDivElement) {
         content.setText('Loading Tasks ...');
     }
 
@@ -164,7 +164,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         content.appendChild(explanationsBlock);
     }
 
-    protected async addAllTaskGroups(
+    private async addAllTaskGroups(
         tasksSortedLimitedGrouped: TaskGroups,
         content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
@@ -361,7 +361,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         });
     }
 
-    protected addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
+    private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
         if (!this.query.queryLayoutOptions.hideTaskCount) {
             content.createDiv({
                 text: queryResult.totalTasksCountDisplayText(),
