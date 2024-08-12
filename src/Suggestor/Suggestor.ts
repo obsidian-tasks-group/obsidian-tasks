@@ -318,7 +318,6 @@ function addDatesSuggestions(
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const dateMatch = matchIfCursorInRegex(dateRegex, parameters);
     if (dateMatch && dateMatch.length >= 2) {
-        const datePrefix = dateMatch[1];
         const dateString = dateMatch[2];
         if (dateString.length < parameters.settings.autoSuggestMinMatch) {
             return [];
@@ -333,13 +332,7 @@ function addDatesSuggestions(
             // Seems like the text that the user typed can be parsed as a valid date.
             // Present its completed form as a 1st suggestion
             const absoluteDate = possibleDate.format(TaskRegularExpressions.dateFormat);
-            const { displayText, appendText } = defaultExtractor(datePrefix, absoluteDate);
-            results.push({
-                displayText: displayText,
-                appendText: `${appendText} `,
-                insertAt: dateMatch.index,
-                insertSkip: dateMatch[0].length,
-            });
+            constructSuggestions(parameters, dateMatch, [absoluteDate], defaultExtractor, results);
         }
 
         const genericMatches = filterGenericSuggestions(genericSuggestions, dateString, maxGenericSuggestions);
