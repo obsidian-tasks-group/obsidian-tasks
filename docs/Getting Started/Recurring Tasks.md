@@ -20,7 +20,7 @@ See [[#Order of the new task]] below, for how to change this behaviour and make 
 The new task will have updated dates based off the original task.
 
 > [!tip]
-> If you only want the latest occurrence, and don't care to see the clutter of all the earlier tasks, check out the new [[On Completion]] facility, added in Tasks X.Y.Z.
+> If you only want the latest occurrence, and don't care to see the clutter of all the earlier tasks, check out the new [[On Completion]] facility, added in Tasks 7.8.0.
 
 ### Basic Example
 

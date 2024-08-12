@@ -8,7 +8,7 @@ publish: true
 > If you have ever wished that Tasks would automatically *do something* with the tasks that you complete (*especially* likely if you use [[Recurring Tasks|recurring tasks]], which tend to accumulate within the note that holds them), then the **"On Completion"** feature could be the answer!
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 7.8.0.
 
 ## Introduction
 
