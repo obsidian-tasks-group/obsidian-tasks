@@ -51,6 +51,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
 
     constructor(
         container: HTMLElement,
+        className: string,
         source: string,
         tasksFile: TasksFile,
         renderMarkdown: (markdown: string, el: HTMLElement, sourcePath: string, component: Component) => Promise<void>,
@@ -66,7 +67,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
         // added later.
-        switch (this.containerEl.className) {
+        switch (className) {
             case 'block-language-tasks':
                 this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
                 this.queryType = 'tasks';
