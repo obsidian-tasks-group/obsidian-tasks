@@ -408,16 +408,13 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, parameters: Sug
         // a max number.
         // In the case of recurrence rules, the max number should be small enough to allow users to "escape"
         // the mode of writing a recurrence rule, i.e. we should leave enough space for component suggestions
-        const minMatch = 1;
         const maxGenericDateSuggestions = parameters.settings.autoSuggestMaxItems / 2;
-        let genericMatches = genericSuggestions
-            .filter(
-                (value) =>
-                    recurrenceString &&
-                    recurrenceString.length >= minMatch &&
-                    value.toLowerCase().includes(recurrenceString.toLowerCase()),
-            )
-            .slice(0, maxGenericDateSuggestions);
+        let genericMatches = filterGenericSuggestions(
+            genericSuggestions,
+            recurrenceString,
+            maxGenericDateSuggestions,
+            false,
+        );
         if (genericMatches.length === 0 && recurrenceString.trim().length === 0) {
             // We have no actual match so do completely generic recurrence suggestions, but not if
             // there *was* a text to match (because it means the user is actually typing something else)
