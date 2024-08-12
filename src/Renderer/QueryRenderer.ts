@@ -71,6 +71,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         this.queryResultsRenderer = new QueryResultsRenderer(
             container,
+            this.containerEl.className,
             source,
             tasksFile,
             MarkdownRenderer.renderMarkdown,
