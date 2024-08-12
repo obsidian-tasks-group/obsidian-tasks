@@ -54,13 +54,14 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         source: string,
         tasksFile: TasksFile,
         renderMarkdown: (markdown: string, el: HTMLElement, sourcePath: string, component: Component) => Promise<void>,
+        obsidianComponent: Component,
     ) {
         super(container);
 
         this.source = source;
         this.tasksFile = tasksFile;
         this.renderMarkdown = renderMarkdown;
-        this.obsidianComponent = this;
+        this.obsidianComponent = obsidianComponent;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
