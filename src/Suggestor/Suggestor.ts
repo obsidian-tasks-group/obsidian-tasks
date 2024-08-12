@@ -142,7 +142,11 @@ function addTaskPropertySuggestions(
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
     const line = parameters.line;
-    addHappensDatesSuggestions(genericSuggestions, symbols, line);
+
+    addField(genericSuggestions, line, symbols.dueDateSymbol, 'due date');
+    addField(genericSuggestions, line, symbols.startDateSymbol, 'start date');
+    addField(genericSuggestions, line, symbols.scheduledDateSymbol, 'scheduled date');
+
     addPrioritySuggestions(genericSuggestions, symbols, parameters);
     addRecurrenceSuggestions(genericSuggestions, symbols, line);
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, parameters);
@@ -163,16 +167,6 @@ function addField(genericSuggestions: SuggestInfo[], line: string, dateSymbol: s
             displayText: `${dateSymbol} ${fieldName}`,
             appendText: `${dateSymbol} `,
         });
-}
-
-function addHappensDatesSuggestions(
-    genericSuggestions: SuggestInfo[],
-    symbols: DefaultTaskSerializerSymbols,
-    line: string,
-) {
-    addField(genericSuggestions, line, symbols.dueDateSymbol, 'due date');
-    addField(genericSuggestions, line, symbols.startDateSymbol, 'start date');
-    addField(genericSuggestions, line, symbols.scheduledDateSymbol, 'scheduled date');
 }
 
 function addPrioritySuggestions(
