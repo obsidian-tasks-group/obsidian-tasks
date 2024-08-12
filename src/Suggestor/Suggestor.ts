@@ -148,7 +148,7 @@ function addTaskPropertySuggestions(
     addField(genericSuggestions, line, symbols.scheduledDateSymbol, 'scheduled date');
 
     addPrioritySuggestions(genericSuggestions, symbols, parameters);
-    addRecurrenceSuggestions(genericSuggestions, symbols, line);
+    addField(genericSuggestions, line, symbols.recurrenceSymbol, 'recurring (repeat)');
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, parameters);
     addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
 
@@ -192,14 +192,6 @@ function addPrioritySuggestions(
             });
         }
     }
-}
-
-function addRecurrenceSuggestions(
-    genericSuggestions: SuggestInfo[],
-    symbols: DefaultTaskSerializerSymbols,
-    line: string,
-) {
-    addField(genericSuggestions, line, symbols.recurrenceSymbol, 'recurring (repeat)');
 }
 
 function addTaskLifecycleDateSuggestions(
