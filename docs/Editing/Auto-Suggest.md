@@ -242,6 +242,7 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | ➕ created today (2022-07-11) | ➕ 2022-07-11  |
 | 🆔 id | 🆔  |
 | ⛔ depends on id | ⛔  |
+| 🏁 on completion | 🏁  |
 | every | 🔁 every  |
 | every day | 🔁 every day  |
 | every week | 🔁 every week  |
@@ -291,6 +292,8 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | next week (2022-07-18) | 🛫 2022-07-18  |
 | next month (2022-08-11) | 🛫 2022-08-11  |
 | next year (2023-07-11) | 🛫 2023-07-11  |
+| delete | 🏁 delete  |
+| keep | 🏁 keep  |
 | generate unique id | 🆔 ******  |
 <!-- endInclude -->
 
