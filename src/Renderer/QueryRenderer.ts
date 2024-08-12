@@ -1,4 +1,4 @@
-import { type EventRef, type MarkdownPostProcessorContext, MarkdownRenderer } from 'obsidian';
+import { type EventRef, type MarkdownPostProcessorContext, MarkdownRenderChild, MarkdownRenderer } from 'obsidian';
 import { App, Keymap } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
@@ -42,7 +42,7 @@ export class QueryRenderer {
     }
 }
 
-class QueryRenderChild extends QueryResultsRenderer {
+class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private plugin: TasksPlugin;
     private readonly events: TasksEvents;
@@ -50,7 +50,7 @@ class QueryRenderChild extends QueryResultsRenderer {
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
-    private queryResultsRenderer: QueryResultsRenderer = this;
+    private queryResultsRenderer: QueryResultsRenderer;
 
     constructor({
         app,
@@ -67,8 +67,14 @@ class QueryRenderChild extends QueryResultsRenderer {
         source: string;
         tasksFile: TasksFile;
     }) {
-        super(container, source, tasksFile, MarkdownRenderer.renderMarkdown);
+        super(container);
 
+        this.queryResultsRenderer = new QueryResultsRenderer(
+            container,
+            source,
+            tasksFile,
+            MarkdownRenderer.renderMarkdown,
+        );
         this.app = app;
         this.plugin = plugin;
         this.events = events;
