@@ -1,4 +1,4 @@
-import { type Component, MarkdownRenderChild, TFile } from 'obsidian';
+import type { Component, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
@@ -27,7 +27,7 @@ export interface QueryRendererParameters {
     editTaskPencilClickHandler: EditButtonClickHandler;
 }
 
-export class QueryResultsRenderer extends MarkdownRenderChild {
+export class QueryResultsRenderer {
     /**
      * The complete text in the instruction block, such as:
      * ```
@@ -50,15 +50,13 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
     private readonly obsidianComponent: Component;
 
     constructor(
-        container: HTMLElement,
+        _container: HTMLElement,
         className: string,
         source: string,
         tasksFile: TasksFile,
         renderMarkdown: (markdown: string, el: HTMLElement, sourcePath: string, component: Component) => Promise<void>,
         obsidianComponent: Component,
     ) {
-        super(container);
-
         this.source = source;
         this.tasksFile = tasksFile;
         this.renderMarkdown = renderMarkdown;
@@ -207,7 +205,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
         const taskLineRenderer = new TaskLineRenderer({
-            obsidianComponent: this,
+            obsidianComponent: this.obsidianComponent,
             parentUlElement: taskList,
             taskLayoutOptions: this.query.taskLayoutOptions,
             queryLayoutOptions: this.query.queryLayoutOptions,
