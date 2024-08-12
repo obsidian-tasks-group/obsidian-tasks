@@ -335,7 +335,7 @@ function addDatesSuggestions(
             constructSuggestions(parameters, dateMatch, [absoluteDate], defaultExtractor, results);
         }
 
-        const genericMatches = filterGenericSuggestions(genericSuggestions, dateString, maxGenericSuggestions);
+        const genericMatches = filterGenericSuggestions(genericSuggestions, dateString, maxGenericSuggestions, true);
         constructSuggestions(parameters, dateMatch, genericMatches, dateExtractor, results);
     }
     return results;
@@ -538,10 +538,16 @@ function addDependsOnSuggestions(
  * @param genericSuggestions A list of generic suggestions.
  * @param typedText Any text that the user has typed.
  * @param maxGenericSuggestions The maximum of suggested wanted.
- *
+ * @param matchAllIfNoMatches If true, and {@link typedText} does not match any of the suggestions,
+ *                            then return all the suggestions.
  * @see constructSuggestions
  */
-function filterGenericSuggestions(genericSuggestions: string[], typedText: string, maxGenericSuggestions: number) {
+function filterGenericSuggestions(
+    genericSuggestions: string[],
+    typedText: string,
+    maxGenericSuggestions: number,
+    matchAllIfNoMatches: boolean,
+) {
     const minMatch = 1;
     let genericMatches = genericSuggestions
         .filter(
@@ -549,7 +555,8 @@ function filterGenericSuggestions(genericSuggestions: string[], typedText: strin
                 typedText && typedText.length >= minMatch && value.toLowerCase().includes(typedText.toLowerCase()),
         )
         .slice(0, maxGenericSuggestions);
-    if (genericMatches.length === 0) {
+
+    if (matchAllIfNoMatches && genericMatches.length === 0) {
         // Do completely generic suggestions
         genericMatches = genericSuggestions.slice(0, maxGenericSuggestions);
     }
