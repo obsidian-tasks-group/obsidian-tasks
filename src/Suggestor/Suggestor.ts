@@ -272,6 +272,12 @@ function filterGeneralSuggestionsForWordAtCursor(genericSuggestions: SuggestInfo
     return matchingSuggestions;
 }
 
+function defaultExtractor(absoluteDate: any, datePrefix: string) {
+    const displayText = `${absoluteDate}`;
+    const appendText = `${datePrefix} ${absoluteDate}`;
+    return { displayText, appendText };
+}
+
 function dateExtractor(datePrefix: string, genericMatch: string) {
     const parsedDate = DateParser.parseDate(genericMatch, true);
     const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
@@ -327,9 +333,10 @@ function addDatesSuggestions(
             // Seems like the text that the user typed can be parsed as a valid date.
             // Present its completed form as a 1st suggestion
             const absoluteDate = possibleDate.format(TaskRegularExpressions.dateFormat);
+            const { displayText, appendText } = defaultExtractor(absoluteDate, datePrefix);
             results.push({
-                displayText: `${absoluteDate}`,
-                appendText: `${datePrefix} ${absoluteDate} `,
+                displayText: displayText,
+                appendText: `${appendText} `,
                 insertAt: dateMatch.index,
                 insertSkip: dateMatch[0].length,
             });
