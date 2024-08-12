@@ -68,24 +68,24 @@ At present, these "On Completion" ***actions*** are supported:
 > - The task assigned the `keep` action is treated the same as one that has no onCompletion field at all, and
 > - The next instance of the recurring task has replaced the original, completed instance.
 
-***Never, ever*** put `🏁 delete` on a task that has [nested tasks or list items](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Nesting+lists), also known as child items, or sub-items.
-
-Don't do this:
-
-```text
-- [ ] Delete me upon completion 🏁 delete
-    - [ ] I am a nested task
-    - I am a nested list item.
-```
-
-When that first task is completed, the text will become:
-
-```text
-    - [ ] I am a nested task
-    - I am a nested list item.
-```
-
-Those two lines are now indented, which means they now form a code block, not a list!
+> [!warning] ***Never, ever*** put `🏁 delete` on a task that has [nested tasks or list items](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Nesting+lists), also known as child items, or sub-items.
+>
+> Don't do this:
+>
+> ```text
+> - [ ] Delete me upon completion 🏁 delete
+>     - [ ] I am a nested task
+>     - I am a nested list item.
+> ```
+>
+> When that first task is completed, the text will become:
+>
+> ```text
+>     - [ ] I am a nested task
+>     - I am a nested list item.
+> ```
+>
+> Those two lines are now indented, which means they now form a code block, not a list!
 
 ## Assigning and changing a given task's "On Completion" action
 
