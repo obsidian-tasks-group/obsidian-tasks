@@ -53,5 +53,9 @@
   {
     "displayText": "dependsOn:: depends on id",
     "appendText": "dependsOn:: "
+  },
+  {
+    "displayText": "onCompletion:: on completion",
+    "appendText": "onCompletion:: "
   }
 ]

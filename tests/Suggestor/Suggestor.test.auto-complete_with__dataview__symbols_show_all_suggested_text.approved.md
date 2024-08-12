@@ -12,6 +12,7 @@
 | created:: created today (2022-07-11) | created:: 2022-07-11]  |
 | id:: id | id::  |
 | dependsOn:: depends on id | dependsOn::  |
+| onCompletion:: on completion | onCompletion::  |
 | every | repeat:: every]  |
 | every day | repeat:: every day]  |
 | every week | repeat:: every week]  |
@@ -61,4 +62,6 @@
 | next week (2022-07-18) | start:: 2022-07-18]  |
 | next month (2022-08-11) | start:: 2022-08-11]  |
 | next year (2023-07-11) | start:: 2023-07-11]  |
+| delete | onCompletion:: delete]  |
+| keep | onCompletion:: keep]  |
 | generate unique id | id:: ******]  |
