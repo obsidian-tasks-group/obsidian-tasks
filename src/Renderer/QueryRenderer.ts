@@ -74,6 +74,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             source,
             tasksFile,
             MarkdownRenderer.renderMarkdown,
+            this,
         );
         this.app = app;
         this.plugin = plugin;
