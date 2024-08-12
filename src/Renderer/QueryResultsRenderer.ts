@@ -47,7 +47,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
     private readonly renderMarkdown;
-    private obsidianComponent = this;
+    private readonly obsidianComponent: Component;
 
     constructor(
         container: HTMLElement,
@@ -60,6 +60,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         this.source = source;
         this.tasksFile = tasksFile;
         this.renderMarkdown = renderMarkdown;
+        this.obsidianComponent = this;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
