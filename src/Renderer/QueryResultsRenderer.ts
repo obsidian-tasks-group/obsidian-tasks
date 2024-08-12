@@ -47,6 +47,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
     private readonly renderMarkdown;
+    private obsidianComponent = this;
 
     constructor(
         container: HTMLElement,
@@ -293,7 +294,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
 
         const headerEl = createAndAppendElement(header, content);
         headerEl.addClass('tasks-group-heading');
-        await this.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this);
+        await this.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this.obsidianComponent);
     }
 
     private addBacklinks(
