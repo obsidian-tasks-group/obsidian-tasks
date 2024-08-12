@@ -1,9 +1,12 @@
 import { MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
+import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
-import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
+import { explainResults, getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
+import type { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
@@ -67,6 +70,80 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
 
     public get filePath(): string | undefined {
         return this.tasksFile?.path ?? undefined;
+    }
+
+    protected async renderQuerySearchResults(
+        tasks: Task[],
+        state: State.Warm,
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
+        const queryResult = this.explainAndPerformSearch(state, tasks, content);
+
+        if (queryResult.searchErrorMessage !== undefined) {
+            // There was an error in the search, for example due to a problem custom function.
+            this.renderErrorMessage(content, queryResult.searchErrorMessage);
+            return;
+        }
+
+        await this.renderSearchResults(queryResult, content, queryRendererParameters);
+    }
+
+    private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
+        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
+        measureSearch.start();
+
+        this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
+
+        if (this.query.queryLayoutOptions.explainQuery) {
+            this.createExplanation(content);
+        }
+
+        const queryResult = this.query.applyQueryToTasks(tasks);
+
+        measureSearch.finish();
+        return queryResult;
+    }
+
+    private async renderSearchResults(
+        queryResult: QueryResult,
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
+        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
+        measureRender.start();
+
+        await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
+
+        const totalTasksCount = queryResult.totalTasksCount;
+        this.addTaskCount(content, queryResult);
+
+        this.query.debug(`[render] ${totalTasksCount} tasks displayed`);
+
+        measureRender.finish();
+    }
+
+    protected renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
+        content.createDiv().innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
+    }
+
+    protected renderLoadingMessage(content: HTMLDivElement) {
+        content.setText('Loading Tasks ...');
+    }
+
+    // Use the 'explain' instruction to enable this
+    private createExplanation(content: HTMLDivElement) {
+        const explanationAsString = explainResults(
+            this.source,
+            GlobalFilter.getInstance(),
+            GlobalQuery.getInstance(),
+            this.tasksFile,
+        );
+
+        const explanationsBlock = createAndAppendElement('pre', content);
+        explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
+        explanationsBlock.setText(explanationAsString);
+        content.appendChild(explanationsBlock);
     }
 
     protected async addAllTaskGroups(
