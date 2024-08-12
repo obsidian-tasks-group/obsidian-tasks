@@ -1,9 +1,12 @@
-import { MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
+import type { Component, TFile } from 'obsidian';
+import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
-import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
+import { explainResults, getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
+import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
@@ -24,7 +27,7 @@ export interface QueryRendererParameters {
     editTaskPencilClickHandler: EditButtonClickHandler;
 }
 
-export class QueryResultsRenderer extends MarkdownRenderChild {
+export class QueryResultsRenderer {
     /**
      * The complete text in the instruction block, such as:
      * ```
@@ -35,24 +38,33 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
      * This does not contain the Global Query from the user's settings.
      * Use {@link getQueryForQueryRenderer} to get this value prefixed with the Global Query.
      */
-    protected readonly source: string;
+    public readonly source: string;
 
     // The path of the file that contains the instruction block, and cached data from that file.
-    protected readonly tasksFile: TasksFile;
+    public readonly tasksFile: TasksFile;
 
-    protected query: IQuery;
+    public query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
-    constructor(container: HTMLElement, source: string, tasksFile: TasksFile) {
-        super(container);
+    private readonly renderMarkdown;
+    private readonly obsidianComponent: Component;
 
+    constructor(
+        className: string,
+        source: string,
+        tasksFile: TasksFile,
+        renderMarkdown: (markdown: string, el: HTMLElement, sourcePath: string, component: Component) => Promise<void>,
+        obsidianComponent: Component,
+    ) {
         this.source = source;
         this.tasksFile = tasksFile;
+        this.renderMarkdown = renderMarkdown;
+        this.obsidianComponent = obsidianComponent;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
         // added later.
-        switch (this.containerEl.className) {
+        switch (className) {
             case 'block-language-tasks':
                 this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
                 this.queryType = 'tasks';
@@ -69,7 +81,99 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         return this.tasksFile?.path ?? undefined;
     }
 
-    protected async addAllTaskGroups(
+    public async render2(
+        state: State | State.Warm,
+        tasks: Task[],
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
+        // Don't log anything here, for any state, as it generates huge amounts of
+        // console messages in large vaults, if Obsidian was opened with any
+        // notes with tasks code blocks in Reading or Live Preview mode.
+        if (state === State.Warm && this.query.error === undefined) {
+            await this.renderQuerySearchResults(tasks, state, content, queryRendererParameters);
+        } else if (this.query.error !== undefined) {
+            this.renderErrorMessage(content, this.query.error);
+        } else {
+            this.renderLoadingMessage(content);
+        }
+    }
+
+    private async renderQuerySearchResults(
+        tasks: Task[],
+        state: State.Warm,
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
+        const queryResult = this.explainAndPerformSearch(state, tasks, content);
+
+        if (queryResult.searchErrorMessage !== undefined) {
+            // There was an error in the search, for example due to a problem custom function.
+            this.renderErrorMessage(content, queryResult.searchErrorMessage);
+            return;
+        }
+
+        await this.renderSearchResults(queryResult, content, queryRendererParameters);
+    }
+
+    private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
+        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
+        measureSearch.start();
+
+        this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
+
+        if (this.query.queryLayoutOptions.explainQuery) {
+            this.createExplanation(content);
+        }
+
+        const queryResult = this.query.applyQueryToTasks(tasks);
+
+        measureSearch.finish();
+        return queryResult;
+    }
+
+    private async renderSearchResults(
+        queryResult: QueryResult,
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
+        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
+        measureRender.start();
+
+        await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
+
+        const totalTasksCount = queryResult.totalTasksCount;
+        this.addTaskCount(content, queryResult);
+
+        this.query.debug(`[render] ${totalTasksCount} tasks displayed`);
+
+        measureRender.finish();
+    }
+
+    private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
+        content.createDiv().innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
+    }
+
+    private renderLoadingMessage(content: HTMLDivElement) {
+        content.setText('Loading Tasks ...');
+    }
+
+    // Use the 'explain' instruction to enable this
+    private createExplanation(content: HTMLDivElement) {
+        const explanationAsString = explainResults(
+            this.source,
+            GlobalFilter.getInstance(),
+            GlobalQuery.getInstance(),
+            this.tasksFile,
+        );
+
+        const explanationsBlock = createAndAppendElement('pre', content);
+        explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
+        explanationsBlock.setText(explanationAsString);
+        content.appendChild(explanationsBlock);
+    }
+
+    private async addAllTaskGroups(
         tasksSortedLimitedGrouped: TaskGroups,
         content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
@@ -100,7 +204,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
         const taskLineRenderer = new TaskLineRenderer({
-            obsidianComponent: this,
+            obsidianComponent: this.obsidianComponent,
             parentUlElement: taskList,
             taskLayoutOptions: this.query.taskLayoutOptions,
             queryLayoutOptions: this.query.queryLayoutOptions,
@@ -190,7 +294,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
 
         const headerEl = createAndAppendElement(header, content);
         headerEl.addClass('tasks-group-heading');
-        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this);
+        await this.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this.obsidianComponent);
     }
 
     private addBacklinks(
@@ -266,7 +370,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
         });
     }
 
-    protected addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
+    private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
         if (!this.query.queryLayoutOptions.hideTaskCount) {
             content.createDiv({
                 text: queryResult.totalTasksCountDisplayText(),
