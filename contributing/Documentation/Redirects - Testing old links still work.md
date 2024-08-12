@@ -24,6 +24,8 @@ All these links should still work:
 - <https://publish.obsidian.md/tasks/Reference/Reference>
 - <https://publish.obsidian.md/tasks/Reference/Status+Collections/Status+Collections>
 - <https://publish.obsidian.md/tasks/Useful+Links>
+- <https://publish.obsidian.md/tasks/What+is+New%3F/Breaking+Changes>
+- <https://publish.obsidian.md/tasks/What+is+New%3F/Changelog>
 
 ## Moved files in the contributing vault
 
