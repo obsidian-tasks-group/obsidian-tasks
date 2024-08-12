@@ -150,7 +150,11 @@ function addTaskPropertySuggestions(
     addPrioritySuggestions(genericSuggestions, symbols, parameters);
     addField(genericSuggestions, line, symbols.recurrenceSymbol, 'recurring (repeat)');
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, parameters);
-    addDependencySuggestions(genericSuggestions, symbols, line, canSaveEdits);
+
+    if (includeDependencySuggestions(canSaveEdits)) {
+        addField(genericSuggestions, line, symbols.idSymbol, 'id');
+        addField(genericSuggestions, line, symbols.dependsOnSymbol, 'depends on id');
+    }
 
     const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(genericSuggestions, parameters);
 
@@ -210,18 +214,6 @@ function addTaskLifecycleDateSuggestions(
             appendText: `${symbols.createdDateSymbol} ${formattedDate}` + parameters.postfix,
             insertSkip: parameters.dataviewMode ? parameters.insertSkip : undefined,
         });
-    }
-}
-
-function addDependencySuggestions(
-    genericSuggestions: SuggestInfo[],
-    symbols: DefaultTaskSerializerSymbols,
-    line: string,
-    canSaveEdits: boolean,
-) {
-    if (includeDependencySuggestions(canSaveEdits)) {
-        addField(genericSuggestions, line, symbols.idSymbol, 'id');
-        addField(genericSuggestions, line, symbols.dependsOnSymbol, 'depends on id');
     }
 }
 
