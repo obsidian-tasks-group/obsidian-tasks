@@ -3,14 +3,14 @@ import { App, Keymap } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
 import type TasksPlugin from '../main';
-import { State } from '../Obsidian/Cache';
+import type { State } from '../Obsidian/Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../Task/DateFallback';
 import type { Task } from '../Task/Task';
-import { type QueryRendererParameters, QueryResultsRenderer } from './QueryResultsRenderer';
+import { QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -125,24 +125,6 @@ class QueryRenderChild extends QueryResultsRenderer {
         });
 
         this.containerEl.firstChild?.replaceWith(content);
-    }
-
-    private async render2(
-        state: State | State.Warm,
-        tasks: Task[],
-        content: HTMLDivElement,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
-        // Don't log anything here, for any state, as it generates huge amounts of
-        // console messages in large vaults, if Obsidian was opened with any
-        // notes with tasks code blocks in Reading or Live Preview mode.
-        if (state === State.Warm && this.query.error === undefined) {
-            await this.renderQuerySearchResults(tasks, state, content, queryRendererParameters);
-        } else if (this.query.error !== undefined) {
-            this.renderErrorMessage(content, this.query.error);
-        } else {
-            this.renderLoadingMessage(content);
-        }
     }
 }
 
