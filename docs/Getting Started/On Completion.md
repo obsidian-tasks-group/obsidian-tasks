@@ -86,6 +86,10 @@ At present, these "On Completion" ***actions*** are supported:
 > ```
 >
 > Those two lines are now indented, which means they now form a code block, not a list!
+>
+> | Before: 2 tasks and a list item | After: No tasks, just a code block |
+> | ------------------------------- | ---------------------------------- |
+> | ![[on-completion-before.png]]   | ![[on-completion-after.png]]       |
 
 ## Assigning and changing a given task's "On Completion" action
 
