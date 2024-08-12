@@ -272,16 +272,16 @@ function filterGeneralSuggestionsForWordAtCursor(genericSuggestions: SuggestInfo
     return matchingSuggestions;
 }
 
-function defaultExtractor(symbol: string, absoluteDate: any) {
-    const displayText = `${absoluteDate}`;
-    const appendText = `${symbol} ${absoluteDate}`;
+function defaultExtractor(symbol: string, suggestionText: any) {
+    const displayText = `${suggestionText}`;
+    const appendText = `${symbol} ${suggestionText}`;
     return { displayText, appendText };
 }
 
-function dateExtractor(symbol: string, genericMatch: string) {
-    const parsedDate = DateParser.parseDate(genericMatch, true);
+function dateExtractor(symbol: string, date: string) {
+    const parsedDate = DateParser.parseDate(date, true);
     const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
-    const displayText = `${genericMatch} (${formattedDate})`;
+    const displayText = `${date} (${formattedDate})`;
     const appendText = `${symbol} ${formattedDate}`;
     return { displayText, appendText };
 }
