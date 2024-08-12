@@ -46,6 +46,8 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
     protected query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
+    private renderMarkdown = MarkdownRenderer.renderMarkdown;
+
     constructor(container: HTMLElement, source: string, tasksFile: TasksFile) {
         super(container);
 
@@ -285,7 +287,7 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
 
         const headerEl = createAndAppendElement(header, content);
         headerEl.addClass('tasks-group-heading');
-        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this);
+        await this.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this);
     }
 
     private addBacklinks(
