@@ -6,7 +6,7 @@ import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { explainResults, getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
-import type { State } from '../Obsidian/Cache';
+import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
@@ -70,6 +70,24 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
 
     public get filePath(): string | undefined {
         return this.tasksFile?.path ?? undefined;
+    }
+
+    protected async render2(
+        state: State | State.Warm,
+        tasks: Task[],
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
+        // Don't log anything here, for any state, as it generates huge amounts of
+        // console messages in large vaults, if Obsidian was opened with any
+        // notes with tasks code blocks in Reading or Live Preview mode.
+        if (state === State.Warm && this.query.error === undefined) {
+            await this.renderQuerySearchResults(tasks, state, content, queryRendererParameters);
+        } else if (this.query.error !== undefined) {
+            this.renderErrorMessage(content, this.query.error);
+        } else {
+            this.renderLoadingMessage(content);
+        }
     }
 
     protected async renderQuerySearchResults(
