@@ -326,9 +326,10 @@ function addDatesSuggestions(
         if (possibleDate?.isValid()) {
             // Seems like the text that the user typed can be parsed as a valid date.
             // Present its completed form as a 1st suggestion
+            const absoluteDate = possibleDate.format(TaskRegularExpressions.dateFormat);
             results.push({
-                displayText: `${possibleDate.format(TaskRegularExpressions.dateFormat)}`,
-                appendText: `${datePrefix} ${possibleDate.format(TaskRegularExpressions.dateFormat)} `,
+                displayText: `${absoluteDate}`,
+                appendText: `${datePrefix} ${absoluteDate} `,
                 insertAt: dateMatch.index,
                 insertSkip: dateMatch[0].length,
             });
