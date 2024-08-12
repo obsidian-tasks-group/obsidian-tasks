@@ -11,7 +11,7 @@ aliases:
 > [!released]
 Introduced in Tasks 1.9.0.
 
-The [[Priority|Priorities]], [[Dates]], [[Recurring Tasks]] and [[Task Dependencies]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
+The [[Priority|Priorities]], [[Dates]], [[Recurring Tasks]], [[Task Dependencies]] and [[On Completion]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
 
 If you prefer to type your tasks, instead of using a dialog, there is now an intelligent auto-suggest completion mechanism that does a
 lot of the typing of emojis and dates for you.

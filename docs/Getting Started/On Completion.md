@@ -70,6 +70,6 @@ At present, these "On Completion" ***actions*** are supported:
 
 ## Assigning and changing a given task's "On Completion" action
 
-At present, the "On Completion" signifier and desired **Action** identifier have to be added to a task manually.
+The "On Completion" signifier and desired **Action** identifier can be added with [[Auto-Suggest]], to save typing them manually.
 
-In recognition that this could be both tedious and error-prone, we will eventually enable the [[Create or edit Task|'Create or Edit Task' modal dialog]] to edit the "On Completion" **Action**.
+We will also eventually enable the [[Create or edit Task|'Create or Edit Task' modal dialog]] to edit the "On Completion" **Action**.
