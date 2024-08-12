@@ -19,8 +19,9 @@ For this markdown line:
 
 The first suggestion is:
 {
+    "suggestionType": "match",
     "displayText": "2022-10-27",
-    "appendText": "due:: 2022-10-27 ",
+    "appendText": "due:: 2022-10-27] ",
     "insertAt": 16,
     "insertSkip": 12
 }
@@ -31,8 +32,9 @@ For this markdown line:
 
 The first suggestion is:
 {
+    "suggestionType": "match",
     "displayText": "2023-07-11",
-    "appendText": "due:: 2023-07-11 ",
+    "appendText": "due:: 2023-07-11] ",
     "insertAt": 16,
     "insertSkip": 12
 }
