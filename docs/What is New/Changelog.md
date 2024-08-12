@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - What is New?/Changelog
 ---
 
 # Changelog
