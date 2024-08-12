@@ -46,13 +46,15 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
     protected query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
-    private renderMarkdown = MarkdownRenderer.renderMarkdown;
+    private readonly renderMarkdown;
 
     constructor(container: HTMLElement, source: string, tasksFile: TasksFile) {
         super(container);
 
         this.source = source;
         this.tasksFile = tasksFile;
+
+        this.renderMarkdown = MarkdownRenderer.renderMarkdown;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
