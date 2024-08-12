@@ -228,7 +228,7 @@ function filterGeneralSuggestionsForWordAtCursor(genericSuggestions: SuggestInfo
         const wordUnderCursor = wordMatch[0];
         if (wordUnderCursor.length >= Math.max(1, parameters.settings.autoSuggestMinMatch)) {
             const filteredSuggestions = genericSuggestions.filter((suggestInfo) => {
-                const textToMatch = suggestInfo.textToMatch || suggestInfo.displayText;
+                const textToMatch = suggestInfo.textToMatch ?? suggestInfo.displayText;
                 return textToMatch.toLowerCase().includes(wordUnderCursor.toLowerCase());
             });
             for (const filtered of filteredSuggestions) {
