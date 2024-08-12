@@ -115,11 +115,16 @@ class QueryRenderChild extends QueryResultsRenderer {
     }
 
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
+        const content = createAndAppendElement('div', this.containerEl);
+        await this.render2(state, tasks, content);
+
+        this.containerEl.firstChild?.replaceWith(content);
+    }
+
+    private async render2(state: State | State.Warm, tasks: Task[], content: HTMLDivElement) {
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
-
-        const content = createAndAppendElement('div', this.containerEl);
         if (state === State.Warm && this.query.error === undefined) {
             await this.renderQuerySearchResults(tasks, state, content, {
                 allTasks: this.plugin.getTasks(),
@@ -133,8 +138,6 @@ class QueryRenderChild extends QueryResultsRenderer {
         } else {
             this.renderLoadingMessage(content);
         }
-
-        this.containerEl.firstChild?.replaceWith(content);
     }
 }
 
