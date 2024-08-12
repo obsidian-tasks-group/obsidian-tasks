@@ -41,6 +41,8 @@ At present, these "On Completion" ***actions*** are supported:
 
 ## Worked examples
 
+### Demos
+
 > [!info]
 > In order to keep it simple, the following assumes that **Tasks** is configured so as not to use a [[Global Filter]] nor  add a [[Dates#Done date]] when you complete a task.
 
@@ -68,6 +70,8 @@ At present, these "On Completion" ***actions*** are supported:
 > - The task assigned the `keep` action is treated the same as one that has no onCompletion field at all, and
 > - The next instance of the recurring task has replaced the original, completed instance.
 
+### Do not break your nested tasks
+
 > [!warning] ***Never, ever*** put `🏁 delete` on a task that has [nested tasks or list items](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Nesting+lists), also known as child items, or sub-items.
 >
 > Don't do this:
@@ -90,6 +94,8 @@ At present, these "On Completion" ***actions*** are supported:
 > | Before: 2 tasks and a list item | After: No tasks, just a code block |
 > | ------------------------------- | ---------------------------------- |
 > | ![[on-completion-before.png]]   | ![[on-completion-after.png]]       |
+>
+> Tasks does not yet issue any warnings if this happens.
 
 ## Assigning and changing a given task's "On Completion" action
 
