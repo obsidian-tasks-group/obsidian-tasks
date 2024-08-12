@@ -1,4 +1,4 @@
-import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
+import { type EventRef, type MarkdownPostProcessorContext, MarkdownRenderer } from 'obsidian';
 import { App, Keymap } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
@@ -65,7 +65,7 @@ class QueryRenderChild extends QueryResultsRenderer {
         source: string;
         tasksFile: TasksFile;
     }) {
-        super(container, source, tasksFile);
+        super(container, source, tasksFile, MarkdownRenderer.renderMarkdown);
 
         this.app = app;
         this.plugin = plugin;

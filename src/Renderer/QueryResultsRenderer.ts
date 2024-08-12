@@ -1,4 +1,4 @@
-import { MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
+import { type Component, MarkdownRenderChild, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
@@ -48,13 +48,17 @@ export class QueryResultsRenderer extends MarkdownRenderChild {
 
     private readonly renderMarkdown;
 
-    constructor(container: HTMLElement, source: string, tasksFile: TasksFile) {
+    constructor(
+        container: HTMLElement,
+        source: string,
+        tasksFile: TasksFile,
+        renderMarkdown: (markdown: string, el: HTMLElement, sourcePath: string, component: Component) => Promise<void>,
+    ) {
         super(container);
 
         this.source = source;
         this.tasksFile = tasksFile;
-
-        this.renderMarkdown = MarkdownRenderer.renderMarkdown;
+        this.renderMarkdown = renderMarkdown;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
