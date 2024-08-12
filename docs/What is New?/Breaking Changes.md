@@ -2,6 +2,7 @@
 publish: true
 aliases:
   - Support and Help/Breaking Changes
+  - What is New?/Breaking Changes
 ---
 
 # Breaking changes
