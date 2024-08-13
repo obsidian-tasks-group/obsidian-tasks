@@ -7,6 +7,27 @@ If your plugin does not need CSS, delete this file.
 
 */
 
+.js-engine-button {
+	/* Add a gap between text and icons. */
+	gap: var(--size-4-1);
+}
+
+.js-engine-button.mod-plain {
+	background: none;
+	box-shadow: none;
+	border: none;
+
+	color: var(--text-muted);
+}
+
+.js-engine-button.mod-plain:hover {
+	color: var(--text-normal);
+}
+
+.js-engine-button.disabled {
+	opacity: 0.6;
+}
+
 .js-engine-message-counter {
 	margin-left: var(--size-4-1);
 }
