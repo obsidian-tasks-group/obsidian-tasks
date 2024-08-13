@@ -1728,7 +1728,7 @@ function get_tfiles_from_folder(folder_str) {
     }
   });
   files.sort((a, b) => {
-    return a.basename.localeCompare(b.basename);
+    return a.path.localeCompare(b.path);
   });
   return files;
 }
@@ -1818,8 +1818,7 @@ var DEFAULT_SETTINGS = {
   syntax_highlighting: true,
   syntax_highlighting_mobile: false,
   enabled_templates_hotkeys: [""],
-  startup_templates: [""],
-  enable_ribbon_icon: true
+  startup_templates: [""]
 };
 var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
   constructor(plugin) {
@@ -1828,13 +1827,11 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
   }
   display() {
     this.containerEl.empty();
-    this.add_general_setting_header();
     this.add_template_folder_setting();
     this.add_internal_functions_setting();
     this.add_syntax_highlighting_settings();
     this.add_auto_jump_to_cursor();
     this.add_trigger_on_new_file_creation_setting();
-    this.add_ribbon_icon_setting();
     this.add_templates_hotkeys_setting();
     if (this.plugin.settings.trigger_on_file_creation) {
       this.add_folder_templates_setting();
@@ -1843,9 +1840,6 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
     this.add_user_script_functions_setting();
     this.add_user_system_command_functions_setting();
     this.add_donating_setting();
-  }
-  add_general_setting_header() {
-    this.containerEl.createEl("h2", { text: "General settings" });
   }
   add_template_folder_setting() {
     new import_obsidian6.Setting(this.containerEl).setName("Template folder location").setDesc("Files in this folder will be available as templates.").addSearch((cb) => {
@@ -1909,25 +1903,8 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
       });
     });
   }
-  add_ribbon_icon_setting() {
-    const desc = document.createDocumentFragment();
-    desc.append("Show Templater icon in sidebar ribbon, allowing you to quickly use templates anywhere.");
-    new import_obsidian6.Setting(this.containerEl).setName("Show icon in sidebar").setDesc(desc).addToggle((toggle) => {
-      toggle.setValue(this.plugin.settings.enable_ribbon_icon).onChange((enable_ribbon_icon) => {
-        this.plugin.settings.enable_ribbon_icon = enable_ribbon_icon;
-        this.plugin.save_settings();
-        if (this.plugin.settings.enable_ribbon_icon) {
-          this.plugin.addRibbonIcon("templater-icon", "Templater", async () => {
-            this.plugin.fuzzy_suggester.insert_template();
-          }).setAttribute("id", "rb-templater-icon");
-        } else {
-          document.getElementById("rb-templater-icon")?.remove();
-        }
-      });
-    });
-  }
   add_templates_hotkeys_setting() {
-    this.containerEl.createEl("h2", { text: "Template hotkeys" });
+    new import_obsidian6.Setting(this.containerEl).setName("Template hotkeys").setHeading();
     const desc = document.createDocumentFragment();
     desc.append("Template hotkeys allows you to bind a template to a hotkey.");
     new import_obsidian6.Setting(this.containerEl).setDesc(desc);
@@ -1982,13 +1959,14 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
     });
   }
   add_folder_templates_setting() {
-    this.containerEl.createEl("h2", { text: "Folder Templates" });
+    this.containerEl.createEl("h2", { text: "Folder templates" });
+    new import_obsidian6.Setting(this.containerEl).setName("Folder templates").setHeading();
     const descHeading = document.createDocumentFragment();
     descHeading.append("Folder Templates are triggered when a new ", descHeading.createEl("strong", { text: "empty " }), "file is created in a given folder.", descHeading.createEl("br"), "Templater will fill the empty file with the specified template.", descHeading.createEl("br"), "The deepest match is used. A global default template would be defined on the root ", descHeading.createEl("code", { text: "/" }), ".");
     new import_obsidian6.Setting(this.containerEl).setDesc(descHeading);
     const descUseNewFileTemplate = document.createDocumentFragment();
     descUseNewFileTemplate.append("When enabled Templater will make use of the folder templates defined below.");
-    new import_obsidian6.Setting(this.containerEl).setName("Enable Folder Templates").setDesc(descUseNewFileTemplate).addToggle((toggle) => {
+    new import_obsidian6.Setting(this.containerEl).setName("Enable folder templates").setDesc(descUseNewFileTemplate).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.enable_folder_templates).onChange((use_new_file_templates) => {
         this.plugin.settings.enable_folder_templates = use_new_file_templates;
         this.plugin.save_settings();
@@ -1998,7 +1976,7 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
     if (!this.plugin.settings.enable_folder_templates) {
       return;
     }
-    new import_obsidian6.Setting(this.containerEl).setName("Add New").setDesc("Add new folder template").addButton((button) => {
+    new import_obsidian6.Setting(this.containerEl).setName("Add new").setDesc("Add new folder template").addButton((button) => {
       button.setTooltip("Add additional folder template").setButtonText("+").setCta().onClick(() => {
         this.plugin.settings.folder_templates.push({
           folder: "",
@@ -2050,7 +2028,7 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
     });
   }
   add_startup_templates_setting() {
-    this.containerEl.createEl("h2", { text: "Startup templates" });
+    new import_obsidian6.Setting(this.containerEl).setName("Startup templates").setHeading();
     const desc = document.createDocumentFragment();
     desc.append("Startup templates are templates that will get executed once when Templater starts.", desc.createEl("br"), "These templates won't output anything.", desc.createEl("br"), "This can be useful to set up templates adding hooks to Obsidian events for example.");
     new import_obsidian6.Setting(this.containerEl).setDesc(desc);
@@ -2084,7 +2062,7 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
     });
   }
   add_user_script_functions_setting() {
-    this.containerEl.createEl("h2", { text: "User script functions" });
+    new import_obsidian6.Setting(this.containerEl).setName("User script functions").setHeading();
     let desc = document.createDocumentFragment();
     desc.append("All JavaScript files in this folder will be loaded as CommonJS modules, to import custom user functions.", desc.createEl("br"), "The folder needs to be accessible from the vault.", desc.createEl("br"), "Check the ", desc.createEl("a", {
       href: "https://silentvoid13.github.io/Templater/",
@@ -2130,9 +2108,7 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
     desc.append("Allows you to create user functions linked to system commands.", desc.createEl("br"), desc.createEl("b", {
       text: "Warning: "
     }), "It can be dangerous to execute arbitrary system commands from untrusted sources. Only run system commands that you understand, from trusted sources.");
-    this.containerEl.createEl("h2", {
-      text: "User system command functions"
-    });
+    new import_obsidian6.Setting(this.containerEl).setName("User system command functions").setHeading();
     new import_obsidian6.Setting(this.containerEl).setName("Enable user system command functions").setDesc(desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.enable_system_commands).onChange((enable_system_commands) => {
         this.plugin.settings.enable_system_commands = enable_system_commands;
@@ -2165,7 +2141,7 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
         const div2 = this.containerEl.createEl("div");
         div2.addClass("templater_div");
         const title = this.containerEl.createEl("h4", {
-          text: "User Function n\xB0" + i
+          text: "User function n\xB0" + i
         });
         title.addClass("templater_title");
         const setting2 = new import_obsidian6.Setting(this.containerEl).addExtraButton((extra) => {
@@ -2188,7 +2164,7 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
           t.inputEl.addClass("templater_template");
           return t;
         }).addTextArea((text) => {
-          const t = text.setPlaceholder("System Command").setValue(template_pair[1]).onChange((new_cmd) => {
+          const t = text.setPlaceholder("System command").setValue(template_pair[1]).onChange((new_cmd) => {
             const index = this.plugin.settings.templates_pairs.indexOf(template_pair);
             if (index > -1) {
               this.plugin.settings.templates_pairs[index][1] = new_cmd;
@@ -2207,7 +2183,7 @@ var TemplaterSettingTab = class extends import_obsidian6.PluginSettingTab {
       const div = this.containerEl.createEl("div");
       div.addClass("templater_div2");
       const setting = new import_obsidian6.Setting(this.containerEl).addButton((button) => {
-        button.setButtonText("Add New User Function").setCta().onClick(() => {
+        button.setButtonText("Add new user function").setCta().onClick(() => {
           this.plugin.settings.templates_pairs.push(["", ""]);
           this.plugin.save_settings();
           this.display();
@@ -2260,7 +2236,11 @@ var FuzzySuggester = class extends import_obsidian7.FuzzySuggestModal {
     return files;
   }
   getItemText(item) {
-    return item.basename;
+    let relativePath = item.path;
+    if (item.path.startsWith(this.plugin.settings.templates_folder)) {
+      relativePath = item.path.slice(this.plugin.settings.templates_folder.length + 1);
+    }
+    return relativePath.split(".").slice(0, -1).join(".");
   }
   onChooseItem(item) {
     switch (this.open_mode) {
@@ -3874,7 +3854,7 @@ var CommandHandler = class {
   setup() {
     this.plugin.addCommand({
       id: "insert-templater",
-      name: "Open Insert Template modal",
+      name: "Open insert template modal",
       icon: "templater-icon",
       hotkeys: [
         {
@@ -5624,11 +5604,9 @@ var TemplaterPlugin = class extends import_obsidian17.Plugin {
     this.command_handler = new CommandHandler(this);
     this.command_handler.setup();
     (0, import_obsidian17.addIcon)("templater-icon", ICON_DATA);
-    if (this.settings.enable_ribbon_icon) {
-      this.addRibbonIcon("templater-icon", "Templater", async () => {
-        this.fuzzy_suggester.insert_template();
-      }).setAttribute("id", "rb-templater-icon");
-    }
+    this.addRibbonIcon("templater-icon", "Templater", async () => {
+      this.fuzzy_suggester.insert_template();
+    }).setAttribute("id", "rb-templater-icon");
     this.addSettingTab(new TemplaterSettingTab(this));
     app.workspace.onLayoutReady(() => {
       this.templater.execute_startup_scripts();
