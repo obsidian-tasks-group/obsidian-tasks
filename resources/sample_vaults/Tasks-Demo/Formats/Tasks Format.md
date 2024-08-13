@@ -30,7 +30,16 @@
 
 - [ ] #task Is a recurring task 🔁 every day when done
 
----
+## Tasks Format for OnCompletion
+
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_tasksPluginEmoji-include.approved.md -->
+
+- [ ] #task Keep this task when done
+- [ ] #task Keep this task when done too 🏁 keep
+- [ ] #task Remove this task when done 🏁 delete
+- [ ] #task Remove completed instance of this recurring task when done 🔁 every day 🏁 delete
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Tasks Format for Dependencies
 
