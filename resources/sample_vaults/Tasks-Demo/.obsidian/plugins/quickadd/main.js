@@ -11097,7 +11097,8 @@ async function makeAnthropicRequest(apiKey, model, modelProvider, modelParams, p
     headers: {
       "Content-Type": "application/json",
       "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01"
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "max-tokens-3-5-sonnet-2024-07-15"
     },
     body: JSON.stringify({
       model: model.name,
@@ -17610,6 +17611,10 @@ var OpenAIProvider = {
     },
     {
       name: "gpt-4o",
+      maxTokens: 128e3
+    },
+    {
+      name: "gpt-4o-mini",
       maxTokens: 128e3
     }
   ]
