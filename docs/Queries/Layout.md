@@ -27,6 +27,7 @@ The following elements exist:
 - `due date`
 - `done date`
 - `recurrence rule`
+- `on completion`
 - `tags`
 - `task count`
 
