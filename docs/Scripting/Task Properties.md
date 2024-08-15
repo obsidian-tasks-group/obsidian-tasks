@@ -174,6 +174,10 @@ For more information, including adding your own customised statuses, see [[Statu
     - **or** an empty string (`''`) if:
         - **either** it does not have a recurrence rule,
         - **or** the recurrence rule is invalid (such as `🔁  every seven weeks`, for example).
+1. `task.onCompletion` (added in Tasks 7.8.0) will have one of these values:
+    - `delete`
+    - `keep`
+    - `` (empty string), which is the default, when the task has no [[On Completion]] action specified.
 1. Note that if there is a [[Global Filter]] enabled in settings, and the filter is a tag, it will be removed from `task.tags`.
 
 ## Values for File Properties

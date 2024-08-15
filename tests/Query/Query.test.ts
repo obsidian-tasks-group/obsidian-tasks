@@ -21,6 +21,7 @@ import type { FilteringCase } from '../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
+import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
 
 window.moment = moment;
 
@@ -456,6 +457,7 @@ describe('Query parsing', () => {
             'hide due date',
             'hide edit button',
             'hide id',
+            'hide on completion',
             'hide priority',
             'hide recurrence rule',
             'hide scheduled date',
@@ -478,6 +480,7 @@ describe('Query parsing', () => {
             'show due date',
             'show edit button',
             'show id',
+            'show on completion',
             'show priority',
             'show recurrence rule',
             'show scheduled date',
@@ -1284,6 +1287,18 @@ describe('Query', () => {
             // Assert
             // The task will match if the correct path.
             expect(results.totalTasksCount).toEqual(1);
+        });
+    });
+
+    describe('show and hide', () => {
+        it('should show "on completion" by default', () => {
+            const query = new Query('');
+            expect(query.taskLayoutOptions.isShown(TaskLayoutComponent.OnCompletion)).toEqual(true);
+        });
+
+        it('should allow to hide "on completion"', () => {
+            const query = new Query('hide on completion');
+            expect(query.taskLayoutOptions.isShown(TaskLayoutComponent.OnCompletion)).toEqual(false);
         });
     });
 
