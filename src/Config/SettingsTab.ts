@@ -596,6 +596,7 @@ export class SettingsTab extends PluginSettingTab {
             // Light and Dark themes - alphabetical order
             ['AnuPpuccin Theme', Themes.anuppuccinSupportedStatuses()],
             ['Aura Theme', Themes.auraSupportedStatuses()],
+            ['Border Theme', Themes.borderSupportedStatuses()],
             ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
             ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
             ['Minimal Theme', Themes.minimalSupportedStatuses()],
