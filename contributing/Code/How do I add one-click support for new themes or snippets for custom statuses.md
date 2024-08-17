@@ -1,11 +1,5 @@
 # How do I add one-click support for new themes or snippets for custom statuses?
 
-## Update tests/
-
-- Add a line for the new theme in [tests/DocumentationSamples/DocsSamplesForStatuses.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocumentationSamples/DocsSamplesForStatuses.test.ts)
-- After implementing the code below, run the tests
-- Run the new test and approve all the output files
-
 ## Update src/
 
 - **Add a file that contains the checkbox data**
@@ -15,6 +9,12 @@
 - Add a button to the **Status Settings**
   - Add the new theme to the list of supported themes in [src/Config/SettingsTab.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Config/SettingsTab.ts)
   - Search for `Aura Theme` to find the list.
+
+## Update tests/
+
+- Add a line for the new theme in [tests/DocumentationSamples/DocsSamplesForStatuses.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocumentationSamples/DocsSamplesForStatuses.test.ts)
+- Run the new test and approve all the output files
+  - See [[Approval Tests#Running Approval Tests]].
 
 ## Update sample vault: resources/sample_vaults/Tasks-Demo/
 
