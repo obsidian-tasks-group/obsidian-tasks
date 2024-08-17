@@ -6,7 +6,7 @@ import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/Task
 import type { QueryContext } from '../../Scripting/QueryContext';
 import type { SearchInfo } from '../SearchInfo';
 import { Sorter } from '../Sort/Sorter';
-import { compareByDate } from '../../lib/DateTools';
+import { compareByDate } from '../../DateTime/DateTools';
 import { getValueType } from '../../lib/TypeDetection';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';

@@ -11,7 +11,7 @@ import {
     postponeMenuItemTitle,
     postponementSuccessMessage,
     removeDateMenuItemTitle,
-} from '../../Scripting/Postponer';
+} from '../../DateTime/Postponer';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 type NamingFunction = (task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) => string;

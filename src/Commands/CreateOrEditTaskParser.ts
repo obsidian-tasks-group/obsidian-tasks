@@ -2,7 +2,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { Status } from '../Statuses/Status';
 import { OnCompletion } from '../Task/OnCompletion';
 import { Task } from '../Task/Task';
-import { DateFallback } from '../Task/DateFallback';
+import { DateFallback } from '../DateTime/DateFallback';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { TaskLocation } from '../Task/TaskLocation';
 import { getSettings } from '../Config/Settings';

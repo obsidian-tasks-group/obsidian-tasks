@@ -6,7 +6,7 @@ import moment from 'moment';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { DateFallback } from '../../src/Task/DateFallback';
+import { DateFallback } from '../../src/DateTime/DateFallback';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
@@ -416,7 +416,6 @@ describe('update fallback date when path is changed', () => {
             expect(updatedTask.scheduledDate).toBeNull();
         } else {
             expect(updatedTask.scheduledDate).toEqualMoment(expectedScheduledDate);
-            true;
         }
 
         expect(updatedTask.scheduledDateIsInferred).toBe(expectedIsInferred);

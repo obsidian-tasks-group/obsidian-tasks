@@ -1,7 +1,7 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { Task } from '../Task/Task';
-import { DateFallback } from '../Task/DateFallback';
+import { DateFallback } from '../DateTime/DateFallback';
 import { taskFromLine } from './CreateOrEditTaskParser';
 
 export const createOrEdit = (checking: boolean, editor: Editor, view: View, app: App, allTasks: Task[]) => {

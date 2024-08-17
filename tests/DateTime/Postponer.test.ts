@@ -15,7 +15,7 @@ import {
     postponementSuccessMessage,
     removeDateMenuItemTitle,
     shouldShowPostponeButton,
-} from '../../src/Scripting/Postponer';
+} from '../../src/DateTime/Postponer';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import type { PostponingFunction } from '../../src/ui/Menus/PostponeMenu';

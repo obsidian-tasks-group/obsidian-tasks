@@ -1,5 +1,5 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
-import { parseTypedDateForSaving } from '../lib/DateTools';
+import { parseTypedDateForSaving } from '../DateTime/DateTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
 import type { OnCompletion } from '../Task/OnCompletion';

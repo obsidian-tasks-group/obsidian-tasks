@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { doAutocomplete } from '../lib/DateAbbreviations';
-    import { parseTypedDateForDisplayUsingFutureDate } from '../lib/DateTools';
+    import { doAutocomplete } from '../DateTime/DateAbbreviations';
+    import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';

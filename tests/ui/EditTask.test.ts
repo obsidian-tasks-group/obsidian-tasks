@@ -7,7 +7,7 @@ import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import { DateFallback } from '../../src/Task/DateFallback';
+import { DateFallback } from '../../src/DateTime/DateFallback';
 import type { Task } from '../../src/Task/Task';
 import EditTask from '../../src/ui/EditTask.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';

@@ -18,7 +18,7 @@ import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { SampleTasks } from '../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../TestingTools/FilterTestHelpers';
-import type { TasksDate } from '../../src/Scripting/TasksDate';
+import type { TasksDate } from '../../src/DateTime/TasksDate';
 import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
 import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
 import { OnCompletion } from '../../src/Task/OnCompletion';
