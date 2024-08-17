@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import { getValueType } from '../../src/lib/TypeDetection';
-import { TasksDate } from '../../src/Scripting/TasksDate';
+import { TasksDate } from '../../src/DateTime/TasksDate';
 
 describe('getValueType', () => {
     it('should name values correctly', () => {

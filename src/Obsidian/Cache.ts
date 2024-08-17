@@ -6,7 +6,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { ListItem } from '../Task/ListItem';
 
 import { Task } from '../Task/Task';
-import { DateFallback } from '../Task/DateFallback';
+import { DateFallback } from '../DateTime/DateFallback';
 import { getSettings } from '../Config/Settings';
 import { Lazy } from '../lib/Lazy';
 import { TaskLocation } from '../Task/TaskLocation';

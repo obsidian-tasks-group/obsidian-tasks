@@ -3,7 +3,7 @@
  */
 
 import moment from 'moment';
-import { DateRange } from '../../src/Query/DateRange';
+import { DateRange } from '../../src/DateTime/DateRange';
 
 window.moment = moment;
 

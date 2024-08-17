@@ -10,7 +10,7 @@ import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
-import { postponeButtonTitle, shouldShowPostponeButton } from '../Scripting/Postponer';
+import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';

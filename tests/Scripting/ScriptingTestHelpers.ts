@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { TasksDate } from '../../src/Scripting/TasksDate';
+import { TasksDate } from '../../src/DateTime/TasksDate';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 import { Task } from '../../src/Task/Task';
 
