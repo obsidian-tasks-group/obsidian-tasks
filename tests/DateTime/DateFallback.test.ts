@@ -416,7 +416,6 @@ describe('update fallback date when path is changed', () => {
             expect(updatedTask.scheduledDate).toBeNull();
         } else {
             expect(updatedTask.scheduledDate).toEqualMoment(expectedScheduledDate);
-            true;
         }
 
         expect(updatedTask.scheduledDateIsInferred).toBe(expectedIsInferred);
