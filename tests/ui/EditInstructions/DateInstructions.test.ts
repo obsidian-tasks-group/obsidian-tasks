@@ -48,7 +48,7 @@ describe('SetTaskDate', () => {
         expect(newTasks[0].dueDate).toEqualMoment(moment(tomorrow));
     });
 
-    it.failing('should not edit task if already has chosen date', () => {
+    it('should not edit task if already has chosen date', () => {
         // Arrange
         const instruction = new SetTaskDate('dueDate', new Date(tomorrow));
 
