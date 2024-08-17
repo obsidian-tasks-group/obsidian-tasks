@@ -24,15 +24,11 @@ export class SetTaskDate implements TaskEditingInstruction {
         }
     }
 
-    private isSameDate(task: Task) {
-        return task[this.dateFieldToEdit]?.isSame(window.moment(this.newDate)) || false;
-    }
-
     public instructionDisplayName(): string {
         return `Set Date: ${this.newDate.toDateString()}`;
     }
 
     public isCheckedForTask(task: Task): boolean {
-        return this.isSameDate(task);
+        return task[this.dateFieldToEdit]?.isSame(window.moment(this.newDate)) || false;
     }
 }
