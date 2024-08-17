@@ -12,13 +12,16 @@ export class SetTaskDate implements TaskEditingInstruction {
     }
 
     public apply(task: Task): Task[] {
-        // TODO Should do nothing if the date is unchanged
-        return [
-            new Task({
-                ...task,
-                [this.dateFieldToEdit]: window.moment(this.newDate),
-            }),
-        ];
+        if (task[this.dateFieldToEdit]?.isSame(window.moment(this.newDate))) {
+            return [task];
+        } else {
+            return [
+                new Task({
+                    ...task,
+                    [this.dateFieldToEdit]: window.moment(this.newDate),
+                }),
+            ];
+        }
     }
 
     public instructionDisplayName(): string {
