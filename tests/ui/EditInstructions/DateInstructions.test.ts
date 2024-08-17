@@ -8,7 +8,6 @@ import { SetTaskDate } from '../../../src/ui/EditInstructions/DateInstructions';
 
 window.moment = moment;
 
-// const yesterday = '2023-12-02';
 const today = '2024-10-01';
 const tomorrow = '2023-12-04';
 
