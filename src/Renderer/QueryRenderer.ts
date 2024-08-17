@@ -8,7 +8,7 @@ import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
-import { DateFallback } from '../Task/DateFallback';
+import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
 import { QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
