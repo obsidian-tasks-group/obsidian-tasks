@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import { DateRange } from '../DateRange';
+import { DateRange } from '../../DateTime/DateRange';
 import type { Task } from '../../Task/Task';
 import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
