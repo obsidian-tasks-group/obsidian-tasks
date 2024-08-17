@@ -24,6 +24,7 @@ afterEach(() => {
 describe('SetTaskDate', () => {
     const taskWithNoDates = new TaskBuilder().build();
     const taskDueToday = new TaskBuilder().dueDate(today).build();
+    const taskDueTomorrow = new TaskBuilder().dueDate(tomorrow).build();
 
     it('should provide information to set up a menu item for due date', () => {
         // Arrange
@@ -45,5 +46,18 @@ describe('SetTaskDate', () => {
         // Assert
         expect(newTasks.length).toEqual(1);
         expect(newTasks[0].dueDate).toEqualMoment(moment(tomorrow));
+    });
+
+    it.failing('should not edit task if already has chosen date', () => {
+        // Arrange
+        const instruction = new SetTaskDate('dueDate', new Date(tomorrow));
+
+        // Assert
+        const newTasks = instruction.apply(taskDueTomorrow);
+
+        // Assert
+        expect(newTasks.length).toEqual(1);
+        // Expect it is the same object
+        expect(Object.is(newTasks[0], taskDueTomorrow)).toBe(true);
     });
 });
