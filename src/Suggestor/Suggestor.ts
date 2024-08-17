@@ -1,7 +1,7 @@
 import type { Editor, EditorPosition } from 'obsidian';
 
 import type { Settings } from '../Config/Settings';
-import { DateParser } from '../Query/DateParser';
+import { DateParser } from '../DateTime/DateParser';
 import { doAutocomplete } from '../DateTime/DateAbbreviations';
 import { Occurrence } from '../Task/Occurrence';
 import { Recurrence } from '../Task/Recurrence';

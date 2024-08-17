@@ -1,5 +1,5 @@
 import type moment from 'moment';
-import { DateParser } from '../../src/Query/DateParser';
+import { DateParser } from '../../src/DateTime/DateParser';
 import type { Sorter } from '../../src/Query/Sort/Sorter';
 import type { Task } from '../../src/Task/Task';
 import { compareByDate } from '../../src/DateTime/DateTools';

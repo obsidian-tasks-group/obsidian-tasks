@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { DateRange } from '../../DateTime/DateRange';
 import type { Task } from '../../Task/Task';
-import { DateParser } from '../DateParser';
+import { DateParser } from '../../DateTime/DateParser';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sort/Sorter';
 import { compareByDate } from '../../DateTime/DateTools';
