@@ -4,7 +4,7 @@ import { GlobalFilter } from '../Config/GlobalFilter';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import type { Status } from '../Statuses/Status';
 import { compareByDate } from '../lib/DateTools';
-import { TasksDate } from '../Scripting/TasksDate';
+import { TasksDate } from '../DateTime/TasksDate';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { TasksFile } from '../Scripting/TasksFile';
 import { PriorityTools } from '../lib/PriorityTools';
