@@ -11,6 +11,7 @@ See also [[Breaking Changes]]: Tasks releases with version numbers ending `.0.0`
 _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)..._
 
 - X.Y.Z:
+  - Add [[Layout|hide and show]] instructions `hide on completion` and `show on completion`.
   - Add one-click support for the [[Border Theme|Border]] theme.
 - 7.8.0.
   - Add [[On Completion]] facility, to tidy up your completed tasks.
