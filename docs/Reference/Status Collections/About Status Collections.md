@@ -67,6 +67,7 @@ However, you can also browse through the pages in this section, to see the other
 - [[About Status Collections]]
 - [[AnuPpuccin Theme]]
 - [[Aura Theme]]
+- [[Border Theme]]
 - [[Ebullientworks Theme]]
 - [[ITS Theme]]
 - [[LYT Mode Theme]]
