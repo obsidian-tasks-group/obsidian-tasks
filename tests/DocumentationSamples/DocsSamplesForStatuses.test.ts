@@ -63,6 +63,7 @@ describe('Theme', () => {
         // Alphabetical order by name:
         ['AnuPpuccin', Themes.anuppuccinSupportedStatuses()],
         ['Aura', Themes.auraSupportedStatuses()],
+        ['Border', Themes.borderSupportedStatuses()],
         ['Ebullientworks', Themes.ebullientworksSupportedStatuses()],
         ['ITS', Themes.itsSupportedStatuses()],
         ['LYT Mode', Themes.lytModeSupportedStatuses()],
