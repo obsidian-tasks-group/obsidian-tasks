@@ -12,7 +12,7 @@ export class SetTaskDate implements TaskEditingInstruction {
     }
 
     public apply(task: Task): Task[] {
-        if (this.isSameDate(task)) {
+        if (this.isCheckedForTask(task)) {
             return [task];
         } else {
             return [
