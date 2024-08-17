@@ -46,6 +46,20 @@ ul.contains-task-list .task-list-item-checkbox {
     }
 }
 
+/* Date fields: make it obvious they can be clicked */
+/* TODO Introduce a CSS class for clickable things, to remove the need to list all the date fields here */
+.task-cancelled,
+.task-created,
+.task-done,
+.task-due,
+.task-scheduled,
+.task-start {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
 /* Edit and postpone */
 .tasks-edit, .tasks-postpone {
     width: 1em;
