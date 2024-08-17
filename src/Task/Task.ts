@@ -10,7 +10,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import { PriorityTools } from '../lib/PriorityTools';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
-import { DateFallback } from './DateFallback';
+import { DateFallback } from '../DateTime/DateFallback';
 import { ListItem } from './ListItem';
 import type { Occurrence } from './Occurrence';
 import { Urgency } from './Urgency';

@@ -1,7 +1,7 @@
 import type { Moment, unitOfTime } from 'moment';
 import { capitalizeFirstLetter } from '../lib/StringHelpers';
-import { DateFallback } from '../Task/DateFallback';
 import { Task } from '../Task/Task';
+import { DateFallback } from './DateFallback';
 import { TasksDate } from './TasksDate';
 
 export function shouldShowPostponeButton(task: Task) {
