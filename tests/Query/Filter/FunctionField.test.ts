@@ -20,7 +20,7 @@ import {
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { Query } from '../../../src/Query/Query';
-import { TasksDate } from '../../../src/Scripting/TasksDate';
+import { TasksDate } from '../../../src/DateTime/TasksDate';
 import { Priority } from '../../../src/Task/Priority';
 import { TasksFile } from '../../../src/Scripting/TasksFile';
 
