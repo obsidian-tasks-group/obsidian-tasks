@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { doAutocomplete } from '../lib/DateAbbreviations';
+    import { doAutocomplete } from '../DateTime/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 

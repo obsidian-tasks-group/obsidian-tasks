@@ -1,4 +1,4 @@
-import { doAutocomplete } from '../../src/lib/DateAbbreviations';
+import { doAutocomplete } from '../../src/DateTime/DateAbbreviations';
 
 describe('DateAbbreviations', () => {
     it('should expand abbreviations', () => {
