@@ -1,6 +1,6 @@
 import * as chrono from 'chrono-node';
 import type { Moment } from 'moment';
-import { DateRange } from '../DateTime/DateRange';
+import { DateRange } from './DateRange';
 
 export class DateParser {
     public static parseDate(input: string, forwardDate: boolean = false): Moment {

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { DateParser } from '../../src/Query/DateParser';
+import { DateParser } from '../../src/DateTime/DateParser';
 
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 

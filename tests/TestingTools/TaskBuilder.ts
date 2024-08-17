@@ -6,7 +6,7 @@ import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Occurrence } from '../../src/Task/Occurrence';
 import { Task } from '../../src/Task/Task';
 import { Recurrence } from '../../src/Task/Recurrence';
-import { DateParser } from '../../src/Query/DateParser';
+import { DateParser } from '../../src/DateTime/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { Priority } from '../../src/Task/Priority';

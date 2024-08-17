@@ -2,7 +2,7 @@
 import type { Moment } from 'moment';
 import { Occurrence } from '../../src/Task/Occurrence';
 import { Recurrence } from '../../src/Task/Recurrence';
-import { DateParser } from '../../src/Query/DateParser';
+import { DateParser } from '../../src/DateTime/DateParser';
 
 /**
  * A fluent class for creating Recurrence objects for tests.
