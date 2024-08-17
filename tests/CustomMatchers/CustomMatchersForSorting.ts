@@ -2,7 +2,7 @@ import type moment from 'moment';
 import { DateParser } from '../../src/Query/DateParser';
 import type { Sorter } from '../../src/Query/Sort/Sorter';
 import type { Task } from '../../src/Task/Task';
-import { compareByDate } from '../../src/lib/DateTools';
+import { compareByDate } from '../../src/DateTime/DateTools';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 

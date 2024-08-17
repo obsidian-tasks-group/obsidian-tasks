@@ -3,7 +3,7 @@ import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import type { Status } from '../Statuses/Status';
-import { compareByDate } from '../lib/DateTools';
+import { compareByDate } from '../DateTime/DateTools';
 import { TasksDate } from '../DateTime/TasksDate';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import type { TasksFile } from '../Scripting/TasksFile';

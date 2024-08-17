@@ -1,5 +1,5 @@
 import type { Moment } from 'moment/moment';
-import { compareByDate } from '../lib/DateTools';
+import { compareByDate } from '../DateTime/DateTools';
 
 /**
  * A set of dates on a single instance of {@link Recurrence}.

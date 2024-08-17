@@ -4,7 +4,7 @@ import type { Task } from '../../Task/Task';
 import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sort/Sorter';
-import { compareByDate } from '../../lib/DateTools';
+import { compareByDate } from '../../DateTime/DateTools';
 import type { GrouperFunction } from '../Group/Grouper';
 import { TemplatingPluginTools } from '../../lib/TemplatingPluginTools';
 import { Field } from './Field';
