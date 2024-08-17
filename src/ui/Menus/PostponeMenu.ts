@@ -2,7 +2,6 @@ import { MenuItem, Notice } from 'obsidian';
 import type { Moment, unitOfTime } from 'moment/moment';
 import type { Task } from '../../Task/Task';
 import {
-    type HappensDate,
     createFixedDateTask,
     createPostponedTask,
     createTaskWithDateRemoved,
@@ -12,6 +11,7 @@ import {
     postponementSuccessMessage,
     removeDateMenuItemTitle,
 } from '../../DateTime/Postponer';
+import type { HappensDate } from '../../DateTime/DateFieldTypes';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 type NamingFunction = (task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) => string;
