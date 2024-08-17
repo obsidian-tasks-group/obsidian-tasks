@@ -7,5 +7,7 @@
   "readableLineLength": false,
   "spellcheck": true,
   "livePreview": false,
-  "newFileLocation": "current"
+  "newFileLocation": "current",
+  "useTab": false,
+  "tabSize": 2
 }
