@@ -33,7 +33,7 @@ describe('SetTaskDate', () => {
         // Assert
         expect(instruction.instructionDisplayName()).toEqual('Set Date: Tue Oct 01 2024');
         expect(instruction.isCheckedForTask(taskWithNoDates)).toEqual(false);
-        expect(instruction.isCheckedForTask(taskDueToday)).toEqual(false); // TODO should be true.
+        expect(instruction.isCheckedForTask(taskDueToday)).toEqual(true);
     });
 
     it('should edit the date', () => {

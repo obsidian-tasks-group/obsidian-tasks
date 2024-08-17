@@ -25,15 +25,14 @@ export class SetTaskDate implements TaskEditingInstruction {
     }
 
     private isSameDate(task: Task) {
-        return task[this.dateFieldToEdit]?.isSame(window.moment(this.newDate));
+        return task[this.dateFieldToEdit]?.isSame(window.moment(this.newDate)) || false;
     }
 
     public instructionDisplayName(): string {
         return `Set Date: ${this.newDate.toDateString()}`;
     }
 
-    public isCheckedForTask(_task: Task): boolean {
-        // TODO Make this check whether field already has the requested date.
-        return false;
+    public isCheckedForTask(task: Task): boolean {
+        return this.isSameDate(task);
     }
 }
