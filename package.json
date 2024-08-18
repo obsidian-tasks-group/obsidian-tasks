@@ -71,6 +71,7 @@
     "chrono-node": "2.3.9",
     "eslint-plugin-svelte3": "^4.0.0",
     "eventemitter2": "^6.4.5",
+    "flatpickr": "^4.6.13",
     "mustache": "^4.2.0",
     "mustache-validator": "^0.2.0",
     "rrule": "^2.7.2",
