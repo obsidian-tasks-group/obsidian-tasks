@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
-- X.Y.Z:
+- 7.9.0:
   - Add [[Layout|hide and show]] instructions `hide on completion` and `show on completion`.
   - Add one-click support for the [[Border Theme|Border]] theme.
 - 7.8.0.

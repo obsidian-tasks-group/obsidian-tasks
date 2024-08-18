@@ -1,7 +1,7 @@
 {
   "id": "obsidian-tasks-plugin",
   "name": "Tasks",
-  "version": "7.8.0",
+  "version": "7.9.0",
   "minAppVersion": "1.1.1",
   "description": "Track tasks across your vault. Supports due dates, recurring tasks, done dates, sub-set of checklist items, and filtering.",
   "helpUrl": "https://publish.obsidian.md/tasks/",
