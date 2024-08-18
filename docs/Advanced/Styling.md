@@ -97,12 +97,20 @@ To help visualise the structure above, here is the HTML for a sample task shown 
     <span class="task-priority" data-task-priority="medium"><span>🔼</span></span>
     <span class="task-recurring"><span>🔁 every day when done</span></span>
     <span class="task-onCompletion"><span>🏁 delete</span></span>
-    <span class="task-created" data-task-created="past-4d"><span>➕ 2023-07-01</span></span>
-    <span class="task-start" data-task-start="past-3d"><span>🛫 2023-07-02</span></span>
-    <span class="task-scheduled" data-task-scheduled="past-2d"><span>⏳ 2023-07-03</span></span>
-    <span class="task-due" data-task-due="past-1d"><span>📅 2023-07-04</span></span>
-    <span class="task-cancelled" data-task-cancelled="future-1d"><span>❌ 2023-07-06</span></span>
-    <span class="task-done" data-task-done="today"><span>✅ 2023-07-05</span></span>
+    <span class="task-created" data-task-created="past-4d" title="Click to edit created date">
+      <span>➕ 2023-07-01</span>
+    </span>
+    <span class="task-start" data-task-start="past-3d" title="Click to edit start date">
+      <span>🛫 2023-07-02</span>
+    </span>
+    <span class="task-scheduled" data-task-scheduled="past-2d" title="Click to edit scheduled date">
+      <span>⏳ 2023-07-03</span>
+    </span>
+    <span class="task-due" data-task-due="past-1d" title="Click to edit due date"><span>📅 2023-07-04</span></span>
+    <span class="task-cancelled" data-task-cancelled="future-1d" title="Click to edit cancelled date">
+      <span>❌ 2023-07-06</span>
+    </span>
+    <span class="task-done" data-task-done="today" title="Click to edit done date"><span>✅ 2023-07-05</span></span>
     <span class="task-block-link"><span>^dcf64c</span></span>
   </span>
 </li>
@@ -143,12 +151,16 @@ Here is the same task in [[Layout#Short Mode|short mode]]. The only difference i
     <span class="task-priority" data-task-priority="medium"><span>🔼</span></span>
     <span class="task-recurring"><span>🔁</span></span>
     <span class="task-onCompletion"><span>🏁</span></span>
-    <span class="task-created" data-task-created="past-4d"><span>➕</span></span>
-    <span class="task-start" data-task-start="past-3d"><span>🛫</span></span>
-    <span class="task-scheduled" data-task-scheduled="past-2d"><span>⏳</span></span>
-    <span class="task-due" data-task-due="past-1d"><span>📅</span></span>
-    <span class="task-cancelled" data-task-cancelled="future-1d"><span>❌</span></span>
-    <span class="task-done" data-task-done="today"><span>✅</span></span>
+    <span class="task-created" data-task-created="past-4d" title="Click to edit created date"><span>➕</span></span>
+    <span class="task-start" data-task-start="past-3d" title="Click to edit start date"><span>🛫</span></span>
+    <span class="task-scheduled" data-task-scheduled="past-2d" title="Click to edit scheduled date">
+      <span>⏳</span>
+    </span>
+    <span class="task-due" data-task-due="past-1d" title="Click to edit due date"><span>📅</span></span>
+    <span class="task-cancelled" data-task-cancelled="future-1d" title="Click to edit cancelled date">
+      <span>❌</span>
+    </span>
+    <span class="task-done" data-task-done="today" title="Click to edit done date"><span>✅</span></span>
     <span class="task-block-link"><span>^dcf64c</span></span>
   </span>
 </li>
