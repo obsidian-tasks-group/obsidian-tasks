@@ -4,6 +4,9 @@ import type { Task } from '../Task/Task';
 export type HappensDate = keyof Pick<Task, 'startDate' | 'scheduledDate' | 'dueDate'>;
 
 // NEW_TASK_FIELD_EDIT_REQUIRED - if new field is a date field.
+/**
+ * See also {@link Task.allDateFields}
+ */
 export type AllTaskDateFields = keyof Pick<
     Task,
     'cancelledDate' | 'createdDate' | 'doneDate' | 'dueDate' | 'scheduledDate' | 'startDate' // alphabetical order, please.
