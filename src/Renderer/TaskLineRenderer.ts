@@ -65,7 +65,9 @@ export class TaskLineRenderer {
         path: string,
         obsidianComponent: Component | null,
     ) {
-        if (!obsidianComponent) throw new Error('Must call the Obsidian renderer with an Obsidian Component object');
+        if (!obsidianComponent) {
+            return;
+        }
         await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
     }
 
