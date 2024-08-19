@@ -41,7 +41,15 @@ describe('DateMenu', () => {
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-              Set Date: Sun Dec 03 2023"
+              Scheduled in 2 days, on Tue 5th Dec
+              Scheduled in 3 days, on Wed 6th Dec
+              Scheduled in 4 days, on Thu 7th Dec
+              Scheduled in 5 days, on Fri 8th Dec
+              Scheduled in 6 days, on Sat 9th Dec
+              Scheduled in a week, on Sun 10th Dec
+              Scheduled in 2 weeks, on Sun 17th Dec
+              Scheduled in 3 weeks, on Sun 24th Dec
+              Scheduled in a month, on Wed 3rd Jan"
         `);
     });
 });
