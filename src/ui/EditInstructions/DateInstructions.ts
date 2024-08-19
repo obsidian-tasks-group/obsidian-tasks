@@ -5,10 +5,12 @@ import type { TaskEditingInstruction } from './TaskEditingInstruction';
 export class SetTaskDate implements TaskEditingInstruction {
     private readonly newDate: Date;
     private readonly dateFieldToEdit;
+    private readonly displayName: string;
 
-    constructor(dateFieldToEdit: AllTaskDateFields, date: Date) {
+    constructor(dateFieldToEdit: AllTaskDateFields, date: Date, displayName?: string) {
         this.newDate = date;
         this.dateFieldToEdit = dateFieldToEdit;
+        this.displayName = displayName ?? `Set Date: ${this.newDate.toDateString()}`;
     }
 
     public apply(task: Task): Task[] {
@@ -25,7 +27,7 @@ export class SetTaskDate implements TaskEditingInstruction {
     }
 
     public instructionDisplayName(): string {
-        return `Set Date: ${this.newDate.toDateString()}`;
+        return this.displayName;
     }
 
     public isCheckedForTask(task: Task): boolean {

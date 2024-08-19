@@ -35,6 +35,14 @@ describe('SetTaskDate', () => {
         expect(instruction.isCheckedForTask(taskDueToday)).toEqual(true);
     });
 
+    it('should create a menu item with a custom display name', () => {
+        // Arrange
+        const instruction = new SetTaskDate('dueDate', new Date(today), 'Apple Sauce');
+
+        // Assert
+        expect(instruction.instructionDisplayName()).toEqual('Apple Sauce');
+    });
+
     it('should edit the date', () => {
         // Arrange
         const instruction = new SetTaskDate('dueDate', new Date(tomorrow));
