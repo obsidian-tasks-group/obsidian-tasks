@@ -77,13 +77,15 @@ describe('SetRelativeTaskDate', () => {
         const amount: number = 1;
         const timeUnit: unitOfTime.DurationConstructor = 'day';
         const task = taskDueToday;
+        const expectedTitle = 'Due tomorrow, on Wed 2nd Oct';
+
         const instruction = new SetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit);
 
         // Apply
         const newTasks = instruction.apply(task);
 
         // Assert
-        expect(instruction.instructionDisplayName()).toEqual('Due tomorrow, on Wed 2nd Oct');
+        expect(instruction.instructionDisplayName()).toEqual(expectedTitle);
         expect(newTasks.length).toEqual(1);
         expect(newTasks[0].dueDate).toEqualMoment(moment(tomorrow));
     });
