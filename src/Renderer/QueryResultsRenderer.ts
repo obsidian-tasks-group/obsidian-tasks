@@ -81,7 +81,7 @@ export class QueryResultsRenderer {
         return this.tasksFile?.path ?? undefined;
     }
 
-    public async render2(
+    public async render(
         state: State | State.Warm,
         tasks: Task[],
         content: HTMLDivElement,
