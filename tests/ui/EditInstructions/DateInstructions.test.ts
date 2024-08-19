@@ -90,7 +90,7 @@ describe('SetRelativeTaskDate', () => {
         // Assert
         expect(instruction.instructionDisplayName()).toEqual(expectedTitle);
         expect(newTasks.length).toEqual(1);
-        expect(newTasks[0].dueDate).toEqualMoment(expectedNewDate);
+        expect(newTasks[0][dateFieldToEdit]).toEqualMoment(expectedNewDate);
     }
 
     it('should postpone a task with a due date', () => {
@@ -113,14 +113,6 @@ describe('SetRelativeTaskDate', () => {
         const expectedTitle = 'Start in 2 weeks, on Tue 15th Oct';
         const expectedNewDate = moment('2024-10-15');
 
-        const instruction = new SetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit);
-
-        // Apply
-        const newTasks = instruction.apply(task);
-
-        // Assert
-        expect(instruction.instructionDisplayName()).toEqual(expectedTitle);
-        expect(newTasks.length).toEqual(1);
-        expect(newTasks[0][dateFieldToEdit]).toEqualMoment(expectedNewDate);
+        testSetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit, expectedTitle, expectedNewDate);
     });
 });
