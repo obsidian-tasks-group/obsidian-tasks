@@ -3,13 +3,14 @@
  */
 import moment from 'moment';
 
+import type { unitOfTime } from 'moment/moment';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { SetTaskDate } from '../../../src/ui/EditInstructions/DateInstructions';
+import { SetRelativeTaskDate, SetTaskDate } from '../../../src/ui/EditInstructions/DateInstructions';
 
 window.moment = moment;
 
 const today = '2024-10-01';
-const tomorrow = '2023-12-04';
+const tomorrow = '2024-10-02';
 
 beforeEach(() => {
     jest.useFakeTimers();
@@ -20,11 +21,11 @@ afterEach(() => {
     jest.useRealTimers();
 });
 
-describe('SetTaskDate', () => {
-    const taskWithNoDates = new TaskBuilder().build();
-    const taskDueToday = new TaskBuilder().dueDate(today).build();
-    const taskDueTomorrow = new TaskBuilder().dueDate(tomorrow).build();
+const taskWithNoDates = new TaskBuilder().build();
+const taskDueToday = new TaskBuilder().dueDate(today).build();
+const taskDueTomorrow = new TaskBuilder().dueDate(tomorrow).build();
 
+describe('SetTaskDate', () => {
     it('should provide information to set up a menu item for due date', () => {
         // Arrange
         const instruction = new SetTaskDate('dueDate', new Date(today));
@@ -47,7 +48,7 @@ describe('SetTaskDate', () => {
         // Arrange
         const instruction = new SetTaskDate('dueDate', new Date(tomorrow));
 
-        // Assert
+        // Apply
         const newTasks = instruction.apply(taskWithNoDates);
 
         // Assert
@@ -59,12 +60,50 @@ describe('SetTaskDate', () => {
         // Arrange
         const instruction = new SetTaskDate('dueDate', new Date(tomorrow));
 
-        // Assert
+        // Apply
         const newTasks = instruction.apply(taskDueTomorrow);
 
         // Assert
         expect(newTasks.length).toEqual(1);
         // Expect it is the same object
         expect(Object.is(newTasks[0], taskDueTomorrow)).toBe(true);
+    });
+});
+
+describe('SetRelativeTaskDate', () => {
+    it('should postpone a task with a due date', () => {
+        // Arrange
+        const dateFieldToEdit = 'dueDate';
+        const amount: number = 1;
+        const timeUnit: unitOfTime.DurationConstructor = 'day';
+        const task = taskDueToday;
+        const instruction = new SetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit);
+
+        // Apply
+        const newTasks = instruction.apply(task);
+
+        // Assert
+        expect(instruction.instructionDisplayName()).toEqual('Due tomorrow, on Wed 2nd Oct');
+        expect(newTasks.length).toEqual(1);
+        expect(newTasks[0].dueDate).toEqualMoment(moment(tomorrow));
+    });
+
+    it("should postpone a task without a due date, based on today's date", () => {
+        // Arrange
+        const dateFieldToEdit = 'dueDate';
+        const amount: number = 1;
+        const timeUnit: unitOfTime.DurationConstructor = 'day';
+        const task = taskWithNoDates;
+        const instruction = new SetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit);
+
+        // Apply
+        const newTasks = instruction.apply(task);
+
+        // Assert
+        expect(instruction.instructionDisplayName()).toEqual(
+            'Cannot set a relative date for a task with no dueDate date. Will set relative to today.',
+        );
+        expect(newTasks.length).toEqual(1);
+        expect(newTasks[0].dueDate).toEqualMoment(moment(tomorrow));
     });
 });

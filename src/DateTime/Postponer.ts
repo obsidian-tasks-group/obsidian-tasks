@@ -193,7 +193,7 @@ export function splitDateText(updatedDateType: AllTaskDateFields) {
     return updatedDateType.replace('Date', ' date');
 }
 
-function postponeMenuItemTitleFromDate(
+export function postponeMenuItemTitleFromDate(
     updatedDateType: HappensDate,
     dateToUpdate: moment.Moment,
     amount: number,
