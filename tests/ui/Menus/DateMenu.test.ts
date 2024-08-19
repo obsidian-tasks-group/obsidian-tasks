@@ -63,17 +63,18 @@ describe('DateMenu', () => {
 
         // Assert
         const itemsAsText = menuToString(menu);
+        // TODO Improve wording to 'Cancelled 2 days ago'
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-              Cancelled in 2 days, on Tue 5th Dec
-              Cancelled in 3 days, on Wed 6th Dec
-              Cancelled in 4 days, on Thu 7th Dec
-              Cancelled in 5 days, on Fri 8th Dec
-              Cancelled in 6 days, on Sat 9th Dec
-              Cancelled in a week, on Sun 10th Dec
-              Cancelled in 2 weeks, on Sun 17th Dec
-              Cancelled in 3 weeks, on Sun 24th Dec
-              Cancelled in a month, on Wed 3rd Jan"
+              Cancelled in -2 days, on Fri 1st Dec
+              Cancelled in -3 days, on Thu 30th Nov
+              Cancelled in -4 days, on Wed 29th Nov
+              Cancelled in -5 days, on Tue 28th Nov
+              Cancelled in -6 days, on Mon 27th Nov
+              Cancelled in -1 week, on Sun 26th Nov
+              Cancelled in -2 weeks, on Sun 19th Nov
+              Cancelled in -3 weeks, on Sun 12th Nov
+              Cancelled in -1 month, on Fri 3rd Nov"
         `);
     });
 });
