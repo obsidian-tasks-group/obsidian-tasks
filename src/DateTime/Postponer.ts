@@ -185,7 +185,7 @@ export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: 
     }
 }
 
-function prettyPrintDateFieldName(updatedDateType: HappensDate) {
+function prettyPrintDateFieldName(updatedDateType: AllTaskDateFields) {
     return capitalizeFirstLetter(updatedDateType.replace('Date', ''));
 }
 
@@ -194,7 +194,7 @@ export function splitDateText(updatedDateType: AllTaskDateFields) {
 }
 
 export function postponeMenuItemTitleFromDate(
-    updatedDateType: HappensDate,
+    updatedDateType: AllTaskDateFields,
     dateToUpdate: moment.Moment,
     amount: number,
     timeUnit: unitOfTime.DurationConstructor,

@@ -1,5 +1,5 @@
 import type { unitOfTime } from 'moment';
-import type { AllTaskDateFields, HappensDate } from '../../DateTime/DateFieldTypes';
+import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import { Task } from '../../Task/Task';
 import { postponeMenuItemTitleFromDate } from '../../DateTime/Postponer';
 import { TasksDate } from '../../DateTime/TasksDate';
@@ -52,7 +52,7 @@ export class SetTaskDate implements TaskEditingInstruction {
 export class SetRelativeTaskDate extends SetTaskDate {
     constructor(
         taskDueToday: Task,
-        dateFieldToEdit: HappensDate,
+        dateFieldToEdit: AllTaskDateFields,
         amount: number,
         timeUnit: unitOfTime.DurationConstructor,
     ) {

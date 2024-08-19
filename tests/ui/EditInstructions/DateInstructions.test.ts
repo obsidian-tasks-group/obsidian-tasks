@@ -6,7 +6,7 @@ import moment from 'moment';
 import type { unitOfTime } from 'moment/moment';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { SetRelativeTaskDate, SetTaskDate } from '../../../src/ui/EditInstructions/DateInstructions';
-import type { HappensDate } from '../../../src/DateTime/DateFieldTypes';
+import type { AllTaskDateFields } from '../../../src/DateTime/DateFieldTypes';
 import type { Task } from '../../../src/Task/Task';
 
 window.moment = moment;
@@ -75,7 +75,7 @@ describe('SetTaskDate', () => {
 describe('SetRelativeTaskDate', () => {
     function testSetRelativeTaskDate(
         task: Task,
-        dateFieldToEdit: HappensDate,
+        dateFieldToEdit: AllTaskDateFields,
         amount: number,
         timeUnit: unitOfTime.DurationConstructor,
         expectedTitle: string,
@@ -101,5 +101,10 @@ describe('SetRelativeTaskDate', () => {
     it("should postpone a task without a due date, based on today's date", () => {
         const expectedTitle = 'Start in 2 weeks, on Tue 15th Oct';
         testSetRelativeTaskDate(taskWithNoDates, 'startDate', 2, 'weeks', expectedTitle, moment('2024-10-15'));
+    });
+
+    it('should set a done date', () => {
+        const expectedTitle = 'Done today, on Tue 1st Oct';
+        testSetRelativeTaskDate(taskWithNoDates, 'doneDate', 0, 'days', expectedTitle, moment(today));
     });
 });
