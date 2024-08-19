@@ -4,7 +4,7 @@ import { SetTaskDate } from '../EditInstructions/DateInstructions';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 export class DateMenu extends TaskEditingMenu {
-    private field: AllTaskDateFields;
+    private readonly field: AllTaskDateFields;
 
     /**
      * Constructor, which sets up the menu items.
