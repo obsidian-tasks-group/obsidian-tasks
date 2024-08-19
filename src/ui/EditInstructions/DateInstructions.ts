@@ -56,10 +56,8 @@ export class SetRelativeTaskDate extends SetTaskDate {
         amount: number,
         timeUnit: unitOfTime.DurationConstructor,
     ) {
-        const currentDate = taskDueToday[dateFieldToEdit];
-        const title = currentDate
-            ? postponeMenuItemTitleFromDate(dateFieldToEdit, currentDate, amount, timeUnit)
-            : `Cannot set a relative date for a task with no ${dateFieldToEdit} date. Will set relative to today.`;
+        const currentDate = taskDueToday[dateFieldToEdit] ?? window.moment();
+        const title = postponeMenuItemTitleFromDate(dateFieldToEdit, currentDate, amount, timeUnit);
 
         const newDate = new TasksDate(window.moment(currentDate)).postpone(timeUnit, amount).toDate();
         super(dateFieldToEdit, newDate, title);

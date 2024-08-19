@@ -100,9 +100,7 @@ describe('SetRelativeTaskDate', () => {
         const newTasks = instruction.apply(task);
 
         // Assert
-        expect(instruction.instructionDisplayName()).toEqual(
-            'Cannot set a relative date for a task with no dueDate date. Will set relative to today.',
-        );
+        expect(instruction.instructionDisplayName()).toEqual('Due tomorrow, on Wed 2nd Oct');
         expect(newTasks.length).toEqual(1);
         expect(newTasks[0].dueDate).toEqualMoment(moment(tomorrow));
     });
