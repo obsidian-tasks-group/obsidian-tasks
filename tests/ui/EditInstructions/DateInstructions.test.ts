@@ -6,6 +6,8 @@ import moment from 'moment';
 import type { unitOfTime } from 'moment/moment';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { SetRelativeTaskDate, SetTaskDate } from '../../../src/ui/EditInstructions/DateInstructions';
+import type { HappensDate } from '../../../src/DateTime/DateFieldTypes';
+import type { Task } from '../../../src/Task/Task';
 
 window.moment = moment;
 
@@ -71,15 +73,15 @@ describe('SetTaskDate', () => {
 });
 
 describe('SetRelativeTaskDate', () => {
-    it('should postpone a task with a due date', () => {
+    function testSetRelativeTaskDate(
+        task: Task,
+        dateFieldToEdit: HappensDate,
+        amount: number,
+        timeUnit: unitOfTime.DurationConstructor,
+        expectedTitle: string,
+        expectedNewDate: moment.Moment,
+    ) {
         // Arrange
-        const dateFieldToEdit = 'dueDate';
-        const amount: number = 1;
-        const timeUnit: unitOfTime.DurationConstructor = 'day';
-        const task = taskDueToday;
-        const expectedTitle = 'Due tomorrow, on Wed 2nd Oct';
-        const expectedNewDate = moment(tomorrow);
-
         const instruction = new SetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit);
 
         // Apply
@@ -89,6 +91,17 @@ describe('SetRelativeTaskDate', () => {
         expect(instruction.instructionDisplayName()).toEqual(expectedTitle);
         expect(newTasks.length).toEqual(1);
         expect(newTasks[0].dueDate).toEqualMoment(expectedNewDate);
+    }
+
+    it('should postpone a task with a due date', () => {
+        const dateFieldToEdit: HappensDate = 'dueDate';
+        const amount: number = 1;
+        const timeUnit: unitOfTime.DurationConstructor = 'day';
+        const task = taskDueToday;
+        const expectedTitle = 'Due tomorrow, on Wed 2nd Oct';
+        const expectedNewDate = moment(tomorrow);
+
+        testSetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit, expectedTitle, expectedNewDate);
     });
 
     it("should postpone a task without a due date, based on today's date", () => {
