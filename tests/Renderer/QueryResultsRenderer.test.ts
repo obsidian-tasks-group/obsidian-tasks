@@ -30,7 +30,7 @@ describe('QueryResultsRenderer tests', () => {
         };
         const container = document.createElement('div');
 
-        await renderer.render2(State.Warm, allTasks, container, queryRendererParameters);
+        await renderer.render(State.Warm, allTasks, container, queryRendererParameters);
 
         const prettyHTML = prettifyHTML(container.outerHTML);
         verifyWithFileExtension(prettyHTML, 'html');
