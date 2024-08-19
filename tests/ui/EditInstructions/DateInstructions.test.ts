@@ -110,14 +110,17 @@ describe('SetRelativeTaskDate', () => {
         const amount: number = 2;
         const timeUnit: unitOfTime.DurationConstructor = 'weeks';
         const task = taskWithNoDates;
+        const expectedTitle = 'Start in 2 weeks, on Tue 15th Oct';
+        const expectedNewDate = moment('2024-10-15');
+
         const instruction = new SetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit);
 
         // Apply
         const newTasks = instruction.apply(task);
 
         // Assert
-        expect(instruction.instructionDisplayName()).toEqual('Start in 2 weeks, on Tue 15th Oct');
+        expect(instruction.instructionDisplayName()).toEqual(expectedTitle);
         expect(newTasks.length).toEqual(1);
-        expect(newTasks[0][dateFieldToEdit]).toEqualMoment(moment('2024-10-15'));
+        expect(newTasks[0][dateFieldToEdit]).toEqualMoment(expectedNewDate);
     });
 });
