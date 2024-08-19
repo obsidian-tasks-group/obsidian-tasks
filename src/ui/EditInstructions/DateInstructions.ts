@@ -63,3 +63,24 @@ export class SetRelativeTaskDate extends SetTaskDate {
         super(dateFieldToEdit, newDate, title);
     }
 }
+
+export function allDateInstructions(field: AllTaskDateFields, task: Task) {
+    return [
+        // TODO Add Today and Tomorrow
+
+        new SetRelativeTaskDate(task, field, 2, 'days'),
+        new SetRelativeTaskDate(task, field, 3, 'days'),
+        new SetRelativeTaskDate(task, field, 4, 'days'),
+        new SetRelativeTaskDate(task, field, 5, 'days'),
+        new SetRelativeTaskDate(task, field, 6, 'days'),
+
+        // TODO Add a dividing line
+
+        new SetRelativeTaskDate(task, field, 1, 'week'),
+        new SetRelativeTaskDate(task, field, 2, 'weeks'),
+        new SetRelativeTaskDate(task, field, 3, 'weeks'),
+        new SetRelativeTaskDate(task, field, 1, 'month'),
+
+        // TODO Add Clear
+    ];
+}
