@@ -29,7 +29,7 @@ describe('DateMenu', () => {
         TestableTaskSaver.reset();
     });
 
-    it('should populate a menu for a specific field', () => {
+    it('should populate a menu for a Due date', () => {
         // Arrange
         const task = new TaskBuilder().dueDate(farPast).build();
 
@@ -50,6 +50,30 @@ describe('DateMenu', () => {
               Scheduled in 2 weeks, on Sun 17th Dec
               Scheduled in 3 weeks, on Sun 24th Dec
               Scheduled in a month, on Wed 3rd Jan"
+        `);
+    });
+
+    it('should populate a menu for a Cancelled date', () => {
+        // Arrange
+        const task = new TaskBuilder().cancelledDate(today).build();
+
+        // Act
+        const field = TaskLayoutComponent.CancelledDate;
+        const menu = new DateMenu(field, task);
+
+        // Assert
+        const itemsAsText = menuToString(menu);
+        expect(itemsAsText).toMatchInlineSnapshot(`
+            "
+              Cancelled in 2 days, on Tue 5th Dec
+              Cancelled in 3 days, on Wed 6th Dec
+              Cancelled in 4 days, on Thu 7th Dec
+              Cancelled in 5 days, on Fri 8th Dec
+              Cancelled in 6 days, on Sat 9th Dec
+              Cancelled in a week, on Sun 10th Dec
+              Cancelled in 2 weeks, on Sun 17th Dec
+              Cancelled in 3 weeks, on Sun 24th Dec
+              Cancelled in a month, on Wed 3rd Jan"
         `);
     });
 });
