@@ -1,7 +1,15 @@
-import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
+import type { unitOfTime } from 'moment';
+import type { AllTaskDateFields, HappensDate } from '../../DateTime/DateFieldTypes';
 import { Task } from '../../Task/Task';
+import { postponeMenuItemTitleFromDate } from '../../DateTime/Postponer';
+import { TasksDate } from '../../DateTime/TasksDate';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
+/**
+ * An instruction to set a date field to an absolute date.
+ *
+ * See also {@link SetRelativeTaskDate}.
+ */
 export class SetTaskDate implements TaskEditingInstruction {
     private readonly newDate: Date;
     private readonly dateFieldToEdit;
@@ -32,5 +40,28 @@ export class SetTaskDate implements TaskEditingInstruction {
 
     public isCheckedForTask(task: Task): boolean {
         return task[this.dateFieldToEdit]?.isSame(window.moment(this.newDate)) || false;
+    }
+}
+
+/**
+ * An instruction to set a date field to a date relative to the current value, or
+ * relative to today, if there is no current value.
+ *
+ * See also {@link SetTaskDate}.
+ */
+export class SetRelativeTaskDate extends SetTaskDate {
+    constructor(
+        taskDueToday: Task,
+        dateFieldToEdit: HappensDate,
+        amount: number,
+        timeUnit: unitOfTime.DurationConstructor,
+    ) {
+        const currentDate = taskDueToday[dateFieldToEdit];
+        const title = currentDate
+            ? postponeMenuItemTitleFromDate(dateFieldToEdit, currentDate, amount, timeUnit)
+            : `Cannot set a relative date for a task with no ${dateFieldToEdit} date. Will set relative to today.`;
+
+        const newDate = new TasksDate(window.moment(currentDate)).postpone(timeUnit, amount).toDate();
+        super(dateFieldToEdit, newDate, title);
     }
 }
