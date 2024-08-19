@@ -94,25 +94,12 @@ describe('SetRelativeTaskDate', () => {
     }
 
     it('should postpone a task with a due date', () => {
-        const dateFieldToEdit: HappensDate = 'dueDate';
-        const amount: number = 1;
-        const timeUnit: unitOfTime.DurationConstructor = 'day';
-        const task = taskDueToday;
         const expectedTitle = 'Due tomorrow, on Wed 2nd Oct';
-        const expectedNewDate = moment(tomorrow);
-
-        testSetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit, expectedTitle, expectedNewDate);
+        testSetRelativeTaskDate(taskDueToday, 'dueDate', 1, 'day', expectedTitle, moment(tomorrow));
     });
 
     it("should postpone a task without a due date, based on today's date", () => {
-        // Arrange
-        const dateFieldToEdit = 'startDate';
-        const amount: number = 2;
-        const timeUnit: unitOfTime.DurationConstructor = 'weeks';
-        const task = taskWithNoDates;
         const expectedTitle = 'Start in 2 weeks, on Tue 15th Oct';
-        const expectedNewDate = moment('2024-10-15');
-
-        testSetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit, expectedTitle, expectedNewDate);
+        testSetRelativeTaskDate(taskWithNoDates, 'startDate', 2, 'weeks', expectedTitle, moment('2024-10-15'));
     });
 });
