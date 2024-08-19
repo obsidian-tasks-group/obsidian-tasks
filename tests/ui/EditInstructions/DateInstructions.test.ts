@@ -90,9 +90,9 @@ describe('SetRelativeTaskDate', () => {
 
     it("should postpone a task without a due date, based on today's date", () => {
         // Arrange
-        const dateFieldToEdit = 'dueDate';
-        const amount: number = 1;
-        const timeUnit: unitOfTime.DurationConstructor = 'day';
+        const dateFieldToEdit = 'startDate';
+        const amount: number = 2;
+        const timeUnit: unitOfTime.DurationConstructor = 'weeks';
         const task = taskWithNoDates;
         const instruction = new SetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit);
 
@@ -100,8 +100,8 @@ describe('SetRelativeTaskDate', () => {
         const newTasks = instruction.apply(task);
 
         // Assert
-        expect(instruction.instructionDisplayName()).toEqual('Due tomorrow, on Wed 2nd Oct');
+        expect(instruction.instructionDisplayName()).toEqual('Start in 2 weeks, on Tue 15th Oct');
         expect(newTasks.length).toEqual(1);
-        expect(newTasks[0].dueDate).toEqualMoment(moment(tomorrow));
+        expect(newTasks[0][dateFieldToEdit]).toEqualMoment(moment('2024-10-15'));
     });
 });
