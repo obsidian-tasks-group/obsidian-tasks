@@ -296,9 +296,10 @@ export class QueryResultsRenderer {
         const headerEl = createAndAppendElement(header, content);
         headerEl.classList.add('tasks-group-heading');
 
-        if (this.obsidianComponent !== null) {
-            await this.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this.obsidianComponent);
+        if (this.obsidianComponent === null) {
+            return;
         }
+        await this.renderMarkdown(group.displayName, headerEl, this.tasksFile.path, this.obsidianComponent);
     }
 
     private addBacklinks(
