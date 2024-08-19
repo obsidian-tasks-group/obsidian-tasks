@@ -64,7 +64,13 @@ export class SetRelativeTaskDate extends SetTaskDate {
     }
 }
 
-export function allDateInstructions(field: AllTaskDateFields, task: Task) {
+/**
+ * For Starts, Scheduled, Due.
+ * @param field
+ * @param task
+ * @see allLifeCycleDateInstructions
+ */
+export function allHappensDateInstructions(field: AllTaskDateFields, task: Task) {
     return [
         // TODO Add Today and Tomorrow
 
@@ -80,6 +86,33 @@ export function allDateInstructions(field: AllTaskDateFields, task: Task) {
         new SetRelativeTaskDate(task, field, 2, 'weeks'),
         new SetRelativeTaskDate(task, field, 3, 'weeks'),
         new SetRelativeTaskDate(task, field, 1, 'month'),
+
+        // TODO Add Clear
+    ];
+}
+
+/**
+ * For Done, Cancelled, Created.
+ * @param field
+ * @param task
+ * @see allHappensDateInstructions
+ */
+export function allLifeCycleDateInstructions(field: AllTaskDateFields, task: Task) {
+    return [
+        // TODO Add Today and Yesterday
+
+        new SetRelativeTaskDate(task, field, -2, 'days'),
+        new SetRelativeTaskDate(task, field, -3, 'days'),
+        new SetRelativeTaskDate(task, field, -4, 'days'),
+        new SetRelativeTaskDate(task, field, -5, 'days'),
+        new SetRelativeTaskDate(task, field, -6, 'days'),
+
+        // TODO Add a dividing line
+
+        new SetRelativeTaskDate(task, field, -1, 'week'),
+        new SetRelativeTaskDate(task, field, -2, 'weeks'),
+        new SetRelativeTaskDate(task, field, -3, 'weeks'),
+        new SetRelativeTaskDate(task, field, -1, 'month'),
 
         // TODO Add Clear
     ];
