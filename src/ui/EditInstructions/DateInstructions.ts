@@ -72,24 +72,7 @@ export class SetRelativeTaskDate extends SetTaskDate {
  * @see allLifeCycleDateInstructions
  */
 export function allHappensDateInstructions(field: AllTaskDateFields, task: Task) {
-    return [
-        // TODO Add Today and Tomorrow
-
-        new SetRelativeTaskDate(task, field, 2, 'days'),
-        new SetRelativeTaskDate(task, field, 3, 'days'),
-        new SetRelativeTaskDate(task, field, 4, 'days'),
-        new SetRelativeTaskDate(task, field, 5, 'days'),
-        new SetRelativeTaskDate(task, field, 6, 'days'),
-
-        new MenuDividerInstruction(),
-
-        new SetRelativeTaskDate(task, field, 1, 'week'),
-        new SetRelativeTaskDate(task, field, 2, 'weeks'),
-        new SetRelativeTaskDate(task, field, 3, 'weeks'),
-        new SetRelativeTaskDate(task, field, 1, 'month'),
-
-        // TODO Add Clear
-    ];
+    return allDateInstructions(task, field);
 }
 
 /**
@@ -114,6 +97,27 @@ export function allLifeCycleDateInstructions(field: AllTaskDateFields, task: Tas
         new SetRelativeTaskDate(task, field, -2, 'weeks'),
         new SetRelativeTaskDate(task, field, -3, 'weeks'),
         new SetRelativeTaskDate(task, field, -1, 'month'),
+
+        // TODO Add Clear
+    ];
+}
+
+function allDateInstructions(task: Task, field: AllTaskDateFields) {
+    return [
+        // TODO Add Today and Tomorrow
+
+        new SetRelativeTaskDate(task, field, 2, 'days'),
+        new SetRelativeTaskDate(task, field, 3, 'days'),
+        new SetRelativeTaskDate(task, field, 4, 'days'),
+        new SetRelativeTaskDate(task, field, 5, 'days'),
+        new SetRelativeTaskDate(task, field, 6, 'days'),
+
+        new MenuDividerInstruction(),
+
+        new SetRelativeTaskDate(task, field, 1, 'week'),
+        new SetRelativeTaskDate(task, field, 2, 'weeks'),
+        new SetRelativeTaskDate(task, field, 3, 'weeks'),
+        new SetRelativeTaskDate(task, field, 1, 'month'),
 
         // TODO Add Clear
     ];
