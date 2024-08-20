@@ -119,10 +119,9 @@ describe('SetRelativeTaskDate', () => {
 });
 
 describe('DateInstruction lists', () => {
-    // TODO Stop this being tied to DueDate
     function applyAllInstructions(
-        field: TaskLayoutComponent.DueDate,
-        currentFieldValue: { dueDate: any },
+        field: TaskLayoutComponent.DueDate | TaskLayoutComponent.ScheduledDate | TaskLayoutComponent.StartDate,
+        currentFieldValue: { dueDate: any } | { scheduledDate: any } | { startDate: any },
         datesFunction: (field: AllTaskDateFields, task: Task) => TaskEditingInstruction[],
     ) {
         const task = new Task({ ...new TaskBuilder().build(), ...currentFieldValue });
@@ -172,43 +171,43 @@ describe('DateInstruction lists', () => {
 
         it('should offer future dates for task due today', () => {
             const allAppliedToTask = applyAllInstructions(
-                TaskLayoutComponent.DueDate,
-                { dueDate: window.moment(today) },
+                TaskLayoutComponent.ScheduledDate,
+                { scheduledDate: window.moment(today) },
                 allHappensDateInstructions,
             );
             expect(allAppliedToTask).toMatchInlineSnapshot(`
             "
-              Due in 2 days, on Thu 3rd Oct => 2024-10-03
-              Due in 3 days, on Fri 4th Oct => 2024-10-04
-              Due in 4 days, on Sat 5th Oct => 2024-10-05
-              Due in 5 days, on Sun 6th Oct => 2024-10-06
-              Due in 6 days, on Mon 7th Oct => 2024-10-07
+              Scheduled in 2 days, on Thu 3rd Oct => 2024-10-03
+              Scheduled in 3 days, on Fri 4th Oct => 2024-10-04
+              Scheduled in 4 days, on Sat 5th Oct => 2024-10-05
+              Scheduled in 5 days, on Sun 6th Oct => 2024-10-06
+              Scheduled in 6 days, on Mon 7th Oct => 2024-10-07
               ---
-              Due in a week, on Tue 8th Oct => 2024-10-08
-              Due in 2 weeks, on Tue 15th Oct => 2024-10-15
-              Due in 3 weeks, on Tue 22nd Oct => 2024-10-22
-              Due in a month, on Fri 1st Nov => 2024-11-01"
+              Scheduled in a week, on Tue 8th Oct => 2024-10-08
+              Scheduled in 2 weeks, on Tue 15th Oct => 2024-10-15
+              Scheduled in 3 weeks, on Tue 22nd Oct => 2024-10-22
+              Scheduled in a month, on Fri 1st Nov => 2024-11-01"
         `);
         });
 
         it('should offer future dates for task due tomorrow', () => {
             const allAppliedToTask = applyAllInstructions(
-                TaskLayoutComponent.DueDate,
-                { dueDate: window.moment(tomorrow) },
+                TaskLayoutComponent.StartDate,
+                { startDate: window.moment(tomorrow) },
                 allHappensDateInstructions,
             );
             expect(allAppliedToTask).toMatchInlineSnapshot(`
             "
-              Postpone due date by 2 days, to Fri 4th Oct => 2024-10-04
-              Postpone due date by 3 days, to Sat 5th Oct => 2024-10-05
-              Postpone due date by 4 days, to Sun 6th Oct => 2024-10-06
-              Postpone due date by 5 days, to Mon 7th Oct => 2024-10-07
-              Postpone due date by 6 days, to Tue 8th Oct => 2024-10-08
+              Postpone start date by 2 days, to Fri 4th Oct => 2024-10-04
+              Postpone start date by 3 days, to Sat 5th Oct => 2024-10-05
+              Postpone start date by 4 days, to Sun 6th Oct => 2024-10-06
+              Postpone start date by 5 days, to Mon 7th Oct => 2024-10-07
+              Postpone start date by 6 days, to Tue 8th Oct => 2024-10-08
               ---
-              Postpone due date by a week, to Wed 9th Oct => 2024-10-09
-              Postpone due date by 2 weeks, to Wed 16th Oct => 2024-10-16
-              Postpone due date by 3 weeks, to Wed 23rd Oct => 2024-10-23
-              Postpone due date by a month, to Sat 2nd Nov => 2024-11-02"
+              Postpone start date by a week, to Wed 9th Oct => 2024-10-09
+              Postpone start date by 2 weeks, to Wed 16th Oct => 2024-10-16
+              Postpone start date by 3 weeks, to Wed 23rd Oct => 2024-10-23
+              Postpone start date by a month, to Sat 2nd Nov => 2024-11-02"
         `);
         });
     });
