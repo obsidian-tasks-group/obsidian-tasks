@@ -2,6 +2,7 @@ import { Menu, type MenuItem } from 'obsidian';
 import type { Task } from '../../Task/Task';
 import { replaceTaskWithTasks } from '../../Obsidian/File';
 import type { TaskEditingInstruction } from '../EditInstructions/TaskEditingInstruction';
+import { SEPARATOR_INSTRUCTION_DISPLAY_NAME } from '../EditInstructions/MenuDividerInstruction';
 
 /**
  * A function for replacing one task with zero or more new tasks.
@@ -48,7 +49,11 @@ export class TaskEditingMenu extends Menu {
     }
 
     private addItemForInstruction(task: Task, instruction: TaskEditingInstruction) {
-        this.addItem((item) => this.getMenuItemCallback(task, item, instruction));
+        if (instruction.instructionDisplayName() === SEPARATOR_INSTRUCTION_DISPLAY_NAME) {
+            this.addSeparator();
+        } else {
+            this.addItem((item) => this.getMenuItemCallback(task, item, instruction));
+        }
     }
 
     private getMenuItemCallback(task: Task, item: MenuItem, instruction: TaskEditingInstruction) {

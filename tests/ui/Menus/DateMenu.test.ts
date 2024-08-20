@@ -46,6 +46,7 @@ describe('DateMenu', () => {
               Scheduled in 4 days, on Thu 7th Dec
               Scheduled in 5 days, on Fri 8th Dec
               Scheduled in 6 days, on Sat 9th Dec
+              ---
               Scheduled in a week, on Sun 10th Dec
               Scheduled in 2 weeks, on Sun 17th Dec
               Scheduled in 3 weeks, on Sun 24th Dec
@@ -71,6 +72,7 @@ describe('DateMenu', () => {
               Cancelled in -4 days, on Wed 29th Nov
               Cancelled in -5 days, on Tue 28th Nov
               Cancelled in -6 days, on Mon 27th Nov
+              ---
               Cancelled in -1 week, on Sun 26th Nov
               Cancelled in -2 weeks, on Sun 19th Nov
               Cancelled in -3 weeks, on Sun 12th Nov
