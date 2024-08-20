@@ -168,18 +168,21 @@ describe('DateInstruction lists', () => {
                 allHappensDateInstructions,
             );
             expect(allAppliedToTask).toMatchInlineSnapshot(`
-                            "
-                              Due in 2 days, on Thu 3rd Oct => 2024-10-03
-                              Due in 3 days, on Fri 4th Oct => 2024-10-04
-                              Due in 4 days, on Sat 5th Oct => 2024-10-05
-                              Due in 5 days, on Sun 6th Oct => 2024-10-06
-                              Due in 6 days, on Mon 7th Oct => 2024-10-07
-                              ---
-                              Due in a week, on Tue 8th Oct => 2024-10-08
-                              Due in 2 weeks, on Tue 15th Oct => 2024-10-15
-                              Due in 3 weeks, on Tue 22nd Oct => 2024-10-22
-                              Due in a month, on Fri 1st Nov => 2024-11-01"
-                    `);
+                "
+                  Due today, on Tue 1st Oct => 2024-10-01
+                  Due tomorrow, on Wed 2nd Oct => 2024-10-02
+                  ---
+                  Due in 2 days, on Thu 3rd Oct => 2024-10-03
+                  Due in 3 days, on Fri 4th Oct => 2024-10-04
+                  Due in 4 days, on Sat 5th Oct => 2024-10-05
+                  Due in 5 days, on Sun 6th Oct => 2024-10-06
+                  Due in 6 days, on Mon 7th Oct => 2024-10-07
+                  ---
+                  Due in a week, on Tue 8th Oct => 2024-10-08
+                  Due in 2 weeks, on Tue 15th Oct => 2024-10-15
+                  Due in 3 weeks, on Tue 22nd Oct => 2024-10-22
+                  Due in a month, on Fri 1st Nov => 2024-11-01"
+            `);
         });
 
         it('should offer future dates for task due today', () => {
@@ -189,18 +192,21 @@ describe('DateInstruction lists', () => {
                 allHappensDateInstructions,
             );
             expect(allAppliedToTask).toMatchInlineSnapshot(`
-                            "
-                              Scheduled in 2 days, on Thu 3rd Oct => 2024-10-03
-                              Scheduled in 3 days, on Fri 4th Oct => 2024-10-04
-                              Scheduled in 4 days, on Sat 5th Oct => 2024-10-05
-                              Scheduled in 5 days, on Sun 6th Oct => 2024-10-06
-                              Scheduled in 6 days, on Mon 7th Oct => 2024-10-07
-                              ---
-                              Scheduled in a week, on Tue 8th Oct => 2024-10-08
-                              Scheduled in 2 weeks, on Tue 15th Oct => 2024-10-15
-                              Scheduled in 3 weeks, on Tue 22nd Oct => 2024-10-22
-                              Scheduled in a month, on Fri 1st Nov => 2024-11-01"
-                    `);
+                "
+                  Scheduled today, on Tue 1st Oct => 2024-10-01
+                  Scheduled tomorrow, on Wed 2nd Oct => 2024-10-02
+                  ---
+                  Scheduled in 2 days, on Thu 3rd Oct => 2024-10-03
+                  Scheduled in 3 days, on Fri 4th Oct => 2024-10-04
+                  Scheduled in 4 days, on Sat 5th Oct => 2024-10-05
+                  Scheduled in 5 days, on Sun 6th Oct => 2024-10-06
+                  Scheduled in 6 days, on Mon 7th Oct => 2024-10-07
+                  ---
+                  Scheduled in a week, on Tue 8th Oct => 2024-10-08
+                  Scheduled in 2 weeks, on Tue 15th Oct => 2024-10-15
+                  Scheduled in 3 weeks, on Tue 22nd Oct => 2024-10-22
+                  Scheduled in a month, on Fri 1st Nov => 2024-11-01"
+            `);
         });
 
         it('should offer future dates for task due tomorrow', () => {
@@ -210,18 +216,21 @@ describe('DateInstruction lists', () => {
                 allHappensDateInstructions,
             );
             expect(allAppliedToTask).toMatchInlineSnapshot(`
-                            "
-                              Postpone start date by 2 days, to Fri 4th Oct => 2024-10-04
-                              Postpone start date by 3 days, to Sat 5th Oct => 2024-10-05
-                              Postpone start date by 4 days, to Sun 6th Oct => 2024-10-06
-                              Postpone start date by 5 days, to Mon 7th Oct => 2024-10-07
-                              Postpone start date by 6 days, to Tue 8th Oct => 2024-10-08
-                              ---
-                              Postpone start date by a week, to Wed 9th Oct => 2024-10-09
-                              Postpone start date by 2 weeks, to Wed 16th Oct => 2024-10-16
-                              Postpone start date by 3 weeks, to Wed 23rd Oct => 2024-10-23
-                              Postpone start date by a month, to Sat 2nd Nov => 2024-11-02"
-                    `);
+                "
+                  Start today, on Tue 1st Oct => 2024-10-01
+                  Start tomorrow, on Wed 2nd Oct => 2024-10-02
+                  ---
+                  Postpone start date by 2 days, to Fri 4th Oct => 2024-10-04
+                  Postpone start date by 3 days, to Sat 5th Oct => 2024-10-05
+                  Postpone start date by 4 days, to Sun 6th Oct => 2024-10-06
+                  Postpone start date by 5 days, to Mon 7th Oct => 2024-10-07
+                  Postpone start date by 6 days, to Tue 8th Oct => 2024-10-08
+                  ---
+                  Postpone start date by a week, to Wed 9th Oct => 2024-10-09
+                  Postpone start date by 2 weeks, to Wed 16th Oct => 2024-10-16
+                  Postpone start date by 3 weeks, to Wed 23rd Oct => 2024-10-23
+                  Postpone start date by a month, to Sat 2nd Nov => 2024-11-02"
+            `);
         });
     });
 
@@ -234,6 +243,9 @@ describe('DateInstruction lists', () => {
             );
             expect(allAppliedToTask).toMatchInlineSnapshot(`
                 "
+                  Created today, on Tue 1st Oct => 2024-10-01
+                  Created in -1 day, on Mon 30th Sep => 2024-09-30
+                  ---
                   Created in -2 days, on Sun 29th Sep => 2024-09-29
                   Created in -3 days, on Sat 28th Sep => 2024-09-28
                   Created in -4 days, on Fri 27th Sep => 2024-09-27
@@ -255,6 +267,9 @@ describe('DateInstruction lists', () => {
             );
             expect(allAppliedToTask).toMatchInlineSnapshot(`
                 "
+                  Done today, on Tue 1st Oct => 2024-10-01
+                  Done in -1 day, on Mon 30th Sep => 2024-09-30
+                  ---
                   Done in -2 days, on Sun 29th Sep => 2024-09-29
                   Done in -3 days, on Sat 28th Sep => 2024-09-28
                   Done in -4 days, on Fri 27th Sep => 2024-09-27
@@ -276,6 +291,9 @@ describe('DateInstruction lists', () => {
             );
             expect(allAppliedToTask).toMatchInlineSnapshot(`
                 "
+                  Cancelled today, on Tue 1st Oct => 2024-10-01
+                  Cancelled in -1 day, on Mon 30th Sep => 2024-09-30
+                  ---
                   Postpone cancelled date by -2 days, to Mon 30th Sep => 2024-09-30
                   Postpone cancelled date by -3 days, to Sun 29th Sep => 2024-09-29
                   Postpone cancelled date by -4 days, to Sat 28th Sep => 2024-09-28
