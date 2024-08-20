@@ -72,7 +72,7 @@ export class SetRelativeTaskDate extends SetTaskDate {
  * @see allLifeCycleDateInstructions
  */
 export function allHappensDateInstructions(field: AllTaskDateFields, task: Task) {
-    return allDateInstructions(task, field);
+    return allDateInstructions(task, field, 1);
 }
 
 /**
@@ -82,42 +82,31 @@ export function allHappensDateInstructions(field: AllTaskDateFields, task: Task)
  * @see allHappensDateInstructions
  */
 export function allLifeCycleDateInstructions(field: AllTaskDateFields, task: Task) {
-    return [
-        // TODO Add Today and Yesterday
-
-        new SetRelativeTaskDate(task, field, -2, 'days'),
-        new SetRelativeTaskDate(task, field, -3, 'days'),
-        new SetRelativeTaskDate(task, field, -4, 'days'),
-        new SetRelativeTaskDate(task, field, -5, 'days'),
-        new SetRelativeTaskDate(task, field, -6, 'days'),
-
-        new MenuDividerInstruction(),
-
-        new SetRelativeTaskDate(task, field, -1, 'week'),
-        new SetRelativeTaskDate(task, field, -2, 'weeks'),
-        new SetRelativeTaskDate(task, field, -3, 'weeks'),
-        new SetRelativeTaskDate(task, field, -1, 'month'),
-
-        // TODO Add Clear
-    ];
+    return allDateInstructions(task, field, -1);
 }
 
-function allDateInstructions(task: Task, field: AllTaskDateFields) {
+/**
+ * Add instructions to move a date either forwards or backwards
+ * @param task
+ * @param field
+ * @param factor - +1 means today or future dates; -1 = today or earlier dates.
+ */
+function allDateInstructions(task: Task, field: AllTaskDateFields, factor: number) {
     return [
         // TODO Add Today and Tomorrow
 
-        new SetRelativeTaskDate(task, field, 2, 'days'),
-        new SetRelativeTaskDate(task, field, 3, 'days'),
-        new SetRelativeTaskDate(task, field, 4, 'days'),
-        new SetRelativeTaskDate(task, field, 5, 'days'),
-        new SetRelativeTaskDate(task, field, 6, 'days'),
+        new SetRelativeTaskDate(task, field, factor * 2, 'days'),
+        new SetRelativeTaskDate(task, field, factor * 3, 'days'),
+        new SetRelativeTaskDate(task, field, factor * 4, 'days'),
+        new SetRelativeTaskDate(task, field, factor * 5, 'days'),
+        new SetRelativeTaskDate(task, field, factor * 6, 'days'),
 
         new MenuDividerInstruction(),
 
-        new SetRelativeTaskDate(task, field, 1, 'week'),
-        new SetRelativeTaskDate(task, field, 2, 'weeks'),
-        new SetRelativeTaskDate(task, field, 3, 'weeks'),
-        new SetRelativeTaskDate(task, field, 1, 'month'),
+        new SetRelativeTaskDate(task, field, factor, 'week'),
+        new SetRelativeTaskDate(task, field, factor * 2, 'weeks'),
+        new SetRelativeTaskDate(task, field, factor * 3, 'weeks'),
+        new SetRelativeTaskDate(task, field, factor, 'month'),
 
         // TODO Add Clear
     ];
