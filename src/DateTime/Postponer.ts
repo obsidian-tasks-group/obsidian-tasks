@@ -206,6 +206,7 @@ export function postponeMenuItemTitleFromDate(
     if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
         const updatedDateDisplayText = prettyPrintDateFieldName(updatedDateType);
         return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`
+            .replace(' in -1 day', ' yesterday')
             .replace(' in 0 days', ' today')
             .replace('in a day', 'tomorrow');
     } else {
