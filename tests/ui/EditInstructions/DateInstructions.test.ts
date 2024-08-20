@@ -125,22 +125,25 @@ describe('DateInstruction lists', () => {
     ) {
         const task = new Task({ ...new TaskBuilder().build(), ...currentFieldValue });
         const instructions = datesFunction(field, task);
-        return instructions
-            .map((instruction) => {
-                const checkMark = instruction.isCheckedForTask(taskWithNoDates) ? 'x' : ' ';
+        return (
+            '\n' +
+            instructions
+                .map((instruction) => {
+                    const checkMark = instruction.isCheckedForTask(taskWithNoDates) ? 'x' : ' ';
 
-                const label = instruction.instructionDisplayName();
-                if (label === SEPARATOR_INSTRUCTION_DISPLAY_NAME) {
-                    return `${checkMark} ${label}`;
-                }
+                    const label = instruction.instructionDisplayName();
+                    if (label === SEPARATOR_INSTRUCTION_DISPLAY_NAME) {
+                        return `${checkMark} ${label}`;
+                    }
 
-                const newTasks = instruction.apply(task);
-                expect(newTasks.length).toEqual(1);
-                const newDate = newTasks[0][field];
+                    const newTasks = instruction.apply(task);
+                    expect(newTasks.length).toEqual(1);
+                    const newDate = newTasks[0][field];
 
-                return `${checkMark} ${label} => ${new TasksDate(newDate).formatAsDate('No Date')}`;
-            })
-            .join('\n');
+                    return `${checkMark} ${label} => ${new TasksDate(newDate).formatAsDate('No Date')}`;
+                })
+                .join('\n')
+        );
     }
 
     it('should offer future dates for task due today', () => {
@@ -149,7 +152,7 @@ describe('DateInstruction lists', () => {
             { dueDate: window.moment(today) },
             allHappensDateInstructions,
         );
-        expect('\n' + allAppliedToTask).toMatchInlineSnapshot(`
+        expect(allAppliedToTask).toMatchInlineSnapshot(`
             "
               Due in 2 days, on Thu 3rd Oct => 2024-10-03
               Due in 3 days, on Fri 4th Oct => 2024-10-04
