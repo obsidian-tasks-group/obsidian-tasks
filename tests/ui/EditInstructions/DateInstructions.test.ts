@@ -5,9 +5,17 @@ import moment from 'moment';
 
 import type { unitOfTime } from 'moment/moment';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { SetRelativeTaskDate, SetTaskDate } from '../../../src/ui/EditInstructions/DateInstructions';
+import {
+    SetRelativeTaskDate,
+    SetTaskDate,
+    allHappensDateInstructions,
+} from '../../../src/ui/EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from '../../../src/DateTime/DateFieldTypes';
 import type { Task } from '../../../src/Task/Task';
+import { TaskLayoutComponent } from '../../../src/Layout/TaskLayoutOptions';
+import { TasksDate } from '../../../src/DateTime/TasksDate';
+import { SEPARATOR_INSTRUCTION_DISPLAY_NAME } from '../../../src/ui/EditInstructions/MenuDividerInstruction';
+import type { TaskEditingInstruction } from '../../../src/ui/EditInstructions/TaskEditingInstruction';
 
 window.moment = moment;
 
@@ -106,5 +114,47 @@ describe('SetRelativeTaskDate', () => {
     it('should set a done date', () => {
         const expectedTitle = 'Done today, on Tue 1st Oct';
         testSetRelativeTaskDate(taskWithNoDates, 'doneDate', 0, 'days', expectedTitle, moment(today));
+    });
+});
+
+describe('DateInstruction lists', () => {
+    function applyAll(instructions: TaskEditingInstruction[], task: Task, field: TaskLayoutComponent.DueDate) {
+        return instructions
+            .map((instruction) => {
+                const checkMark = instruction.isCheckedForTask(taskWithNoDates) ? 'x' : ' ';
+
+                const label = instruction.instructionDisplayName();
+                if (label === SEPARATOR_INSTRUCTION_DISPLAY_NAME) {
+                    return `${checkMark} ${label}`;
+                }
+
+                const newTasks = instruction.apply(task);
+                expect(newTasks.length).toEqual(1);
+                const newDate = newTasks[0][field];
+
+                return `${checkMark} ${label} => ${new TasksDate(newDate).formatAsDate('No Date')}`;
+            })
+            .join('\n');
+    }
+
+    it('should offer future dates for task due today', () => {
+        const task = taskDueToday;
+        const field = TaskLayoutComponent.DueDate;
+        const instructions = allHappensDateInstructions(field, task);
+
+        const allAppliedToTask = applyAll(instructions, task, field);
+        expect('\n' + allAppliedToTask).toMatchInlineSnapshot(`
+            "
+              Due in 2 days, on Thu 3rd Oct => 2024-10-03
+              Due in 3 days, on Fri 4th Oct => 2024-10-04
+              Due in 4 days, on Sat 5th Oct => 2024-10-05
+              Due in 5 days, on Sun 6th Oct => 2024-10-06
+              Due in 6 days, on Mon 7th Oct => 2024-10-07
+              ---
+              Due in a week, on Tue 8th Oct => 2024-10-08
+              Due in 2 weeks, on Tue 15th Oct => 2024-10-15
+              Due in 3 weeks, on Tue 22nd Oct => 2024-10-22
+              Due in a month, on Fri 1st Nov => 2024-11-01"
+        `);
     });
 });
