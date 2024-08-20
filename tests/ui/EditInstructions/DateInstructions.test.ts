@@ -244,7 +244,7 @@ describe('DateInstruction lists', () => {
             expect(allAppliedToTask).toMatchInlineSnapshot(`
                 "
                   Created today, on Tue 1st Oct => 2024-10-01
-                  Created in -1 day, on Mon 30th Sep => 2024-09-30
+                  Created yesterday, on Mon 30th Sep => 2024-09-30
                   ---
                   Created in -2 days, on Sun 29th Sep => 2024-09-29
                   Created in -3 days, on Sat 28th Sep => 2024-09-28
@@ -268,7 +268,7 @@ describe('DateInstruction lists', () => {
             expect(allAppliedToTask).toMatchInlineSnapshot(`
                 "
                   Done today, on Tue 1st Oct => 2024-10-01
-                  Done in -1 day, on Mon 30th Sep => 2024-09-30
+                  Done yesterday, on Mon 30th Sep => 2024-09-30
                   ---
                   Done in -2 days, on Sun 29th Sep => 2024-09-29
                   Done in -3 days, on Sat 28th Sep => 2024-09-28
@@ -292,7 +292,7 @@ describe('DateInstruction lists', () => {
             expect(allAppliedToTask).toMatchInlineSnapshot(`
                 "
                   Cancelled today, on Tue 1st Oct => 2024-10-01
-                  Cancelled in -1 day, on Mon 30th Sep => 2024-09-30
+                  Cancelled yesterday, on Mon 30th Sep => 2024-09-30
                   ---
                   Postpone cancelled date by -2 days, to Mon 30th Sep => 2024-09-30
                   Postpone cancelled date by -3 days, to Sun 29th Sep => 2024-09-29
