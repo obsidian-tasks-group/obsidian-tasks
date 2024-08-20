@@ -118,7 +118,13 @@ describe('SetRelativeTaskDate', () => {
 });
 
 describe('DateInstruction lists', () => {
-    function applyAll(instructions: TaskEditingInstruction[], task: Task, field: TaskLayoutComponent.DueDate) {
+    function applyAll2(
+        field: TaskLayoutComponent.DueDate,
+        currentFieldValue: { dueDate: any },
+        datesFunction: (field: AllTaskDateFields, task: Task) => TaskEditingInstruction[],
+    ) {
+        const task = new Task({ ...new TaskBuilder().build(), ...currentFieldValue });
+        const instructions = datesFunction(field, task);
         return instructions
             .map((instruction) => {
                 const checkMark = instruction.isCheckedForTask(taskWithNoDates) ? 'x' : ' ';
@@ -135,16 +141,6 @@ describe('DateInstruction lists', () => {
                 return `${checkMark} ${label} => ${new TasksDate(newDate).formatAsDate('No Date')}`;
             })
             .join('\n');
-    }
-
-    function applyAll2(
-        field: TaskLayoutComponent.DueDate,
-        currentFieldValue: { dueDate: any },
-        datesFunction: (field: AllTaskDateFields, task: Task) => TaskEditingInstruction[],
-    ) {
-        const task = new Task({ ...new TaskBuilder().build(), ...currentFieldValue });
-        const instructions = datesFunction(field, task);
-        return applyAll(instructions, task, field);
     }
 
     it('should offer future dates for task due today', () => {
