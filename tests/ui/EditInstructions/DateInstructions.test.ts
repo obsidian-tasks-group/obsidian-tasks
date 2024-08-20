@@ -148,13 +148,14 @@ describe('DateInstruction lists', () => {
         );
     }
 
-    it('should offer future dates for task due yesterday', () => {
-        const allAppliedToTask = applyAllInstructions(
-            TaskLayoutComponent.DueDate,
-            { dueDate: window.moment(yesterday) },
-            allHappensDateInstructions,
-        );
-        expect(allAppliedToTask).toMatchInlineSnapshot(`
+    describe('happens dates', () => {
+        it('should offer future dates for task due yesterday', () => {
+            const allAppliedToTask = applyAllInstructions(
+                TaskLayoutComponent.DueDate,
+                { dueDate: window.moment(yesterday) },
+                allHappensDateInstructions,
+            );
+            expect(allAppliedToTask).toMatchInlineSnapshot(`
             "
               Due in 2 days, on Thu 3rd Oct => 2024-10-03
               Due in 3 days, on Fri 4th Oct => 2024-10-04
@@ -167,15 +168,15 @@ describe('DateInstruction lists', () => {
               Due in 3 weeks, on Tue 22nd Oct => 2024-10-22
               Due in a month, on Fri 1st Nov => 2024-11-01"
         `);
-    });
+        });
 
-    it('should offer future dates for task due today', () => {
-        const allAppliedToTask = applyAllInstructions(
-            TaskLayoutComponent.DueDate,
-            { dueDate: window.moment(today) },
-            allHappensDateInstructions,
-        );
-        expect(allAppliedToTask).toMatchInlineSnapshot(`
+        it('should offer future dates for task due today', () => {
+            const allAppliedToTask = applyAllInstructions(
+                TaskLayoutComponent.DueDate,
+                { dueDate: window.moment(today) },
+                allHappensDateInstructions,
+            );
+            expect(allAppliedToTask).toMatchInlineSnapshot(`
             "
               Due in 2 days, on Thu 3rd Oct => 2024-10-03
               Due in 3 days, on Fri 4th Oct => 2024-10-04
@@ -188,15 +189,15 @@ describe('DateInstruction lists', () => {
               Due in 3 weeks, on Tue 22nd Oct => 2024-10-22
               Due in a month, on Fri 1st Nov => 2024-11-01"
         `);
-    });
+        });
 
-    it('should offer future dates for task due tomorrow', () => {
-        const allAppliedToTask = applyAllInstructions(
-            TaskLayoutComponent.DueDate,
-            { dueDate: window.moment(tomorrow) },
-            allHappensDateInstructions,
-        );
-        expect(allAppliedToTask).toMatchInlineSnapshot(`
+        it('should offer future dates for task due tomorrow', () => {
+            const allAppliedToTask = applyAllInstructions(
+                TaskLayoutComponent.DueDate,
+                { dueDate: window.moment(tomorrow) },
+                allHappensDateInstructions,
+            );
+            expect(allAppliedToTask).toMatchInlineSnapshot(`
             "
               Postpone due date by 2 days, to Fri 4th Oct => 2024-10-04
               Postpone due date by 3 days, to Sat 5th Oct => 2024-10-05
@@ -209,5 +210,6 @@ describe('DateInstruction lists', () => {
               Postpone due date by 3 weeks, to Wed 23rd Oct => 2024-10-23
               Postpone due date by a month, to Sat 2nd Nov => 2024-11-02"
         `);
+        });
     });
 });
