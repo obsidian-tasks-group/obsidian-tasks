@@ -118,7 +118,7 @@ describe('SetRelativeTaskDate', () => {
 });
 
 describe('DateInstruction lists', () => {
-    function applyAll2(
+    function applyAllInstructions(
         field: TaskLayoutComponent.DueDate,
         currentFieldValue: { dueDate: any },
         datesFunction: (field: AllTaskDateFields, task: Task) => TaskEditingInstruction[],
@@ -147,7 +147,7 @@ describe('DateInstruction lists', () => {
     }
 
     it('should offer future dates for task due today', () => {
-        const allAppliedToTask = applyAll2(
+        const allAppliedToTask = applyAllInstructions(
             TaskLayoutComponent.DueDate,
             { dueDate: window.moment(today) },
             allHappensDateInstructions,
