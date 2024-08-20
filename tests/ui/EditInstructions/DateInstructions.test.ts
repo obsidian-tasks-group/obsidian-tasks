@@ -144,10 +144,11 @@ describe('DateInstruction lists', () => {
     }
 
     it('should offer future dates for task due today', () => {
-        const field = TaskLayoutComponent.DueDate;
-        const currentFieldValue = { dueDate: window.moment(today) };
-        const datesFunction = allHappensDateInstructions;
-        const allAppliedToTask = applyAll2(field, currentFieldValue, datesFunction);
+        const allAppliedToTask = applyAll2(
+            TaskLayoutComponent.DueDate,
+            { dueDate: window.moment(today) },
+            allHappensDateInstructions,
+        );
         expect('\n' + allAppliedToTask).toMatchInlineSnapshot(`
             "
               Due in 2 days, on Thu 3rd Oct => 2024-10-03
