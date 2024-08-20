@@ -92,8 +92,21 @@ export function allLifeCycleDateInstructions(field: AllTaskDateFields, task: Tas
  * @param factor - +1 means today or future dates; -1 = today or earlier dates.
  */
 function allDateInstructions(task: Task, field: AllTaskDateFields, factor: number) {
+    const today = window.moment().startOf('day');
+    const todayAsDate = today.toDate();
+    const todayAsTasksDate = new TasksDate(today.clone());
+
     return [
-        // TODO Add Today and Tomorrow
+        new SetTaskDate(field, todayAsDate, postponeMenuItemTitleFromDate(field, today, 0, 'days')),
+
+        // A confusing mixture of Date, Moment and TasksDate!!!
+        new SetTaskDate(
+            field,
+            todayAsTasksDate.postpone('day', factor).toDate(),
+            postponeMenuItemTitleFromDate(field, today, factor, 'day'),
+        ),
+
+        new MenuDividerInstruction(),
 
         new SetRelativeTaskDate(task, field, factor * 2, 'days'),
         new SetRelativeTaskDate(task, field, factor * 3, 'days'),

@@ -41,6 +41,9 @@ describe('DateMenu', () => {
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+              Scheduled today, on Sun 3rd Dec
+              Scheduled tomorrow, on Mon 4th Dec
+              ---
               Scheduled in 2 days, on Tue 5th Dec
               Scheduled in 3 days, on Wed 6th Dec
               Scheduled in 4 days, on Thu 7th Dec
@@ -67,6 +70,9 @@ describe('DateMenu', () => {
         // TODO Improve wording to 'Cancelled 2 days ago'
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+            x Cancelled today, on Sun 3rd Dec
+              Cancelled in -1 day, on Sat 2nd Dec
+              ---
               Cancelled in -2 days, on Fri 1st Dec
               Cancelled in -3 days, on Thu 30th Nov
               Cancelled in -4 days, on Wed 29th Nov
