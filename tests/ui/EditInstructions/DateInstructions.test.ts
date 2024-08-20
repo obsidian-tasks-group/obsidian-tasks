@@ -11,7 +11,7 @@ import {
     allHappensDateInstructions,
 } from '../../../src/ui/EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from '../../../src/DateTime/DateFieldTypes';
-import type { Task } from '../../../src/Task/Task';
+import { Task } from '../../../src/Task/Task';
 import { TaskLayoutComponent } from '../../../src/Layout/TaskLayoutOptions';
 import { TasksDate } from '../../../src/DateTime/TasksDate';
 import { SEPARATOR_INSTRUCTION_DISPLAY_NAME } from '../../../src/ui/EditInstructions/MenuDividerInstruction';
@@ -138,9 +138,12 @@ describe('DateInstruction lists', () => {
     }
 
     it('should offer future dates for task due today', () => {
-        const task = taskDueToday;
         const field = TaskLayoutComponent.DueDate;
-        const instructions = allHappensDateInstructions(field, task);
+        const currentFieldValue = { dueDate: window.moment(today) };
+        const datesFunction = allHappensDateInstructions;
+
+        const task = new Task({ ...new TaskBuilder().build(), ...currentFieldValue });
+        const instructions = datesFunction(field, task);
 
         const allAppliedToTask = applyAll(instructions, task, field);
         expect('\n' + allAppliedToTask).toMatchInlineSnapshot(`
