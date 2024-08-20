@@ -137,15 +137,21 @@ describe('DateInstruction lists', () => {
             .join('\n');
     }
 
+    function applyAll2(
+        field: TaskLayoutComponent.DueDate,
+        currentFieldValue: { dueDate: any },
+        datesFunction: (field: AllTaskDateFields, task: Task) => TaskEditingInstruction[],
+    ) {
+        const task = new Task({ ...new TaskBuilder().build(), ...currentFieldValue });
+        const instructions = datesFunction(field, task);
+        return applyAll(instructions, task, field);
+    }
+
     it('should offer future dates for task due today', () => {
         const field = TaskLayoutComponent.DueDate;
         const currentFieldValue = { dueDate: window.moment(today) };
         const datesFunction = allHappensDateInstructions;
-
-        const task = new Task({ ...new TaskBuilder().build(), ...currentFieldValue });
-        const instructions = datesFunction(field, task);
-
-        const allAppliedToTask = applyAll(instructions, task, field);
+        const allAppliedToTask = applyAll2(field, currentFieldValue, datesFunction);
         expect('\n' + allAppliedToTask).toMatchInlineSnapshot(`
             "
               Due in 2 days, on Thu 3rd Oct => 2024-10-03
