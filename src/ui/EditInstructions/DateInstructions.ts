@@ -4,6 +4,7 @@ import { Task } from '../../Task/Task';
 import { postponeMenuItemTitleFromDate } from '../../DateTime/Postponer';
 import { TasksDate } from '../../DateTime/TasksDate';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
+import { MenuDividerInstruction } from './MenuDividerInstruction';
 
 /**
  * An instruction to set a date field to an absolute date.
@@ -80,7 +81,7 @@ export function allHappensDateInstructions(field: AllTaskDateFields, task: Task)
         new SetRelativeTaskDate(task, field, 5, 'days'),
         new SetRelativeTaskDate(task, field, 6, 'days'),
 
-        // TODO Add a dividing line
+        new MenuDividerInstruction(),
 
         new SetRelativeTaskDate(task, field, 1, 'week'),
         new SetRelativeTaskDate(task, field, 2, 'weeks'),
@@ -107,7 +108,7 @@ export function allLifeCycleDateInstructions(field: AllTaskDateFields, task: Tas
         new SetRelativeTaskDate(task, field, -5, 'days'),
         new SetRelativeTaskDate(task, field, -6, 'days'),
 
-        // TODO Add a dividing line
+        new MenuDividerInstruction(),
 
         new SetRelativeTaskDate(task, field, -1, 'week'),
         new SetRelativeTaskDate(task, field, -2, 'weeks'),
