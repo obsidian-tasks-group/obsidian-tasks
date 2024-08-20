@@ -11,6 +11,15 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2024-08-19'));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
+
 describe('QueryResultsRenderer tests', () => {
     it('fully populated task', async () => {
         const renderer = new QueryResultsRenderer(
