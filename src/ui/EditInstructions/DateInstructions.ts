@@ -52,8 +52,8 @@ export class SetTaskDate implements TaskEditingInstruction {
  */
 export class SetRelativeTaskDate extends SetTaskDate {
     constructor(
-        taskDueToday: Task,
         dateFieldToEdit: AllTaskDateFields,
+        taskDueToday: Task,
         amount: number,
         timeUnit: unitOfTime.DurationConstructor,
     ) {
@@ -148,18 +148,18 @@ function allDateInstructions(task: Task, field: AllTaskDateFields, factor: numbe
 
         new MenuDividerInstruction(),
 
-        new SetRelativeTaskDate(task, field, factor * 2, 'days'),
-        new SetRelativeTaskDate(task, field, factor * 3, 'days'),
-        new SetRelativeTaskDate(task, field, factor * 4, 'days'),
-        new SetRelativeTaskDate(task, field, factor * 5, 'days'),
-        new SetRelativeTaskDate(task, field, factor * 6, 'days'),
+        new SetRelativeTaskDate(field, task, factor * 2, 'days'),
+        new SetRelativeTaskDate(field, task, factor * 3, 'days'),
+        new SetRelativeTaskDate(field, task, factor * 4, 'days'),
+        new SetRelativeTaskDate(field, task, factor * 5, 'days'),
+        new SetRelativeTaskDate(field, task, factor * 6, 'days'),
 
         new MenuDividerInstruction(),
 
-        new SetRelativeTaskDate(task, field, factor, 'week'),
-        new SetRelativeTaskDate(task, field, factor * 2, 'weeks'),
-        new SetRelativeTaskDate(task, field, factor * 3, 'weeks'),
-        new SetRelativeTaskDate(task, field, factor, 'month'),
+        new SetRelativeTaskDate(field, task, factor, 'week'),
+        new SetRelativeTaskDate(field, task, factor * 2, 'weeks'),
+        new SetRelativeTaskDate(field, task, factor * 3, 'weeks'),
+        new SetRelativeTaskDate(field, task, factor, 'month'),
 
         new MenuDividerInstruction(),
 

@@ -93,7 +93,7 @@ describe('SetRelativeTaskDate', () => {
         expectedNewDate: moment.Moment,
     ) {
         // Arrange
-        const instruction = new SetRelativeTaskDate(task, dateFieldToEdit, amount, timeUnit);
+        const instruction = new SetRelativeTaskDate(dateFieldToEdit, task, amount, timeUnit);
 
         // Apply
         const newTasks = instruction.apply(task);
