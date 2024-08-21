@@ -246,16 +246,16 @@ describe('DateInstruction lists', () => {
                   Created today, on Tue 1st Oct => 2024-10-01
                   Created yesterday, on Mon 30th Sep => 2024-09-30
                   ---
-                  Created in -2 days, on Sun 29th Sep => 2024-09-29
-                  Created in -3 days, on Sat 28th Sep => 2024-09-28
-                  Created in -4 days, on Fri 27th Sep => 2024-09-27
-                  Created in -5 days, on Thu 26th Sep => 2024-09-26
-                  Created in -6 days, on Wed 25th Sep => 2024-09-25
+                  Created 2 days ago, on Sun 29th Sep => 2024-09-29
+                  Created 3 days ago, on Sat 28th Sep => 2024-09-28
+                  Created 4 days ago, on Fri 27th Sep => 2024-09-27
+                  Created 5 days ago, on Thu 26th Sep => 2024-09-26
+                  Created 6 days ago, on Wed 25th Sep => 2024-09-25
                   ---
-                  Created in -1 week, on Tue 24th Sep => 2024-09-24
-                  Created in -2 weeks, on Tue 17th Sep => 2024-09-17
-                  Created in -3 weeks, on Tue 10th Sep => 2024-09-10
-                  Created in -1 month, on Sun 1st Sep => 2024-09-01"
+                  Created 1 week ago, on Tue 24th Sep => 2024-09-24
+                  Created 2 weeks ago, on Tue 17th Sep => 2024-09-17
+                  Created 3 weeks ago, on Tue 10th Sep => 2024-09-10
+                  Created 1 month ago, on Sun 1st Sep => 2024-09-01"
             `);
         });
 
@@ -270,16 +270,16 @@ describe('DateInstruction lists', () => {
                   Done today, on Tue 1st Oct => 2024-10-01
                   Done yesterday, on Mon 30th Sep => 2024-09-30
                   ---
-                  Done in -2 days, on Sun 29th Sep => 2024-09-29
-                  Done in -3 days, on Sat 28th Sep => 2024-09-28
-                  Done in -4 days, on Fri 27th Sep => 2024-09-27
-                  Done in -5 days, on Thu 26th Sep => 2024-09-26
-                  Done in -6 days, on Wed 25th Sep => 2024-09-25
+                  Done 2 days ago, on Sun 29th Sep => 2024-09-29
+                  Done 3 days ago, on Sat 28th Sep => 2024-09-28
+                  Done 4 days ago, on Fri 27th Sep => 2024-09-27
+                  Done 5 days ago, on Thu 26th Sep => 2024-09-26
+                  Done 6 days ago, on Wed 25th Sep => 2024-09-25
                   ---
-                  Done in -1 week, on Tue 24th Sep => 2024-09-24
-                  Done in -2 weeks, on Tue 17th Sep => 2024-09-17
-                  Done in -3 weeks, on Tue 10th Sep => 2024-09-10
-                  Done in -1 month, on Sun 1st Sep => 2024-09-01"
+                  Done 1 week ago, on Tue 24th Sep => 2024-09-24
+                  Done 2 weeks ago, on Tue 17th Sep => 2024-09-17
+                  Done 3 weeks ago, on Tue 10th Sep => 2024-09-10
+                  Done 1 month ago, on Sun 1st Sep => 2024-09-01"
             `);
         });
 
