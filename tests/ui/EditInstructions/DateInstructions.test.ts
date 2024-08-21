@@ -294,16 +294,16 @@ describe('DateInstruction lists', () => {
                   Cancelled today, on Tue 1st Oct => 2024-10-01
                   Cancelled yesterday, on Mon 30th Sep => 2024-09-30
                   ---
-                  Postpone cancelled date by -2 days, to Mon 30th Sep => 2024-09-30
-                  Postpone cancelled date by -3 days, to Sun 29th Sep => 2024-09-29
-                  Postpone cancelled date by -4 days, to Sat 28th Sep => 2024-09-28
-                  Postpone cancelled date by -5 days, to Fri 27th Sep => 2024-09-27
-                  Postpone cancelled date by -6 days, to Thu 26th Sep => 2024-09-26
+                  Backdate cancelled date by 2 days, to Mon 30th Sep => 2024-09-30
+                  Backdate cancelled date by 3 days, to Sun 29th Sep => 2024-09-29
+                  Backdate cancelled date by 4 days, to Sat 28th Sep => 2024-09-28
+                  Backdate cancelled date by 5 days, to Fri 27th Sep => 2024-09-27
+                  Backdate cancelled date by 6 days, to Thu 26th Sep => 2024-09-26
                   ---
-                  Postpone cancelled date by -1 week, to Wed 25th Sep => 2024-09-25
-                  Postpone cancelled date by -2 weeks, to Wed 18th Sep => 2024-09-18
-                  Postpone cancelled date by -3 weeks, to Wed 11th Sep => 2024-09-11
-                  Postpone cancelled date by -1 month, to Mon 2nd Sep => 2024-09-02"
+                  Backdate cancelled date by 1 week, to Wed 25th Sep => 2024-09-25
+                  Backdate cancelled date by 2 weeks, to Wed 18th Sep => 2024-09-18
+                  Backdate cancelled date by 3 weeks, to Wed 11th Sep => 2024-09-11
+                  Backdate cancelled date by 1 month, to Mon 2nd Sep => 2024-09-02"
             `);
         });
     });
