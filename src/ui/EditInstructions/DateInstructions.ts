@@ -9,7 +9,7 @@ import { MenuDividerInstruction } from './MenuDividerInstruction';
 /**
  * An instruction to set a date field to an absolute date.
  *
- * See also {@link SetRelativeTaskDate}.
+ * See also {@link SetRelativeTaskDate} and {@link RemoveTaskDate}.
  */
 export class SetTaskDate implements TaskEditingInstruction {
     private readonly newDate: Date;
@@ -48,7 +48,7 @@ export class SetTaskDate implements TaskEditingInstruction {
  * An instruction to set a date field to a date relative to the current value, or
  * relative to today, if there is no current value.
  *
- * See also {@link SetTaskDate}.
+ * See also {@link SetTaskDate} and {@link RemoveTaskDate}.
  */
 export class SetRelativeTaskDate extends SetTaskDate {
     constructor(
@@ -65,6 +65,11 @@ export class SetRelativeTaskDate extends SetTaskDate {
     }
 }
 
+/**
+ * An instruction to remove any value from a date field, if there is a current value.
+ *
+ * See also {@link SetTaskDate} and {@link SetRelativeTaskDate}.
+ */
 export class RemoveTaskDate implements TaskEditingInstruction {
     private readonly dateFieldToEdit: AllTaskDateFields;
     private readonly displayName: string;
