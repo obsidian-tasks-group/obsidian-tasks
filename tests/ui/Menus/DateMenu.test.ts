@@ -53,7 +53,9 @@ describe('DateMenu', () => {
               Scheduled in a week, on Sun 10th Dec
               Scheduled in 2 weeks, on Sun 17th Dec
               Scheduled in 3 weeks, on Sun 24th Dec
-              Scheduled in a month, on Wed 3rd Jan"
+              Scheduled in a month, on Wed 3rd Jan
+              ---
+              Remove scheduled date"
         `);
     });
 
@@ -82,7 +84,9 @@ describe('DateMenu', () => {
               Cancelled 1 week ago, on Sun 26th Nov
               Cancelled 2 weeks ago, on Sun 19th Nov
               Cancelled 3 weeks ago, on Sun 12th Nov
-              Cancelled 1 month ago, on Fri 3rd Nov"
+              Cancelled 1 month ago, on Fri 3rd Nov
+              ---
+              Remove cancelled date"
         `);
     });
 });

@@ -156,6 +156,8 @@ function allDateInstructions(task: Task, field: AllTaskDateFields, factor: numbe
         new SetRelativeTaskDate(task, field, factor * 3, 'weeks'),
         new SetRelativeTaskDate(task, field, factor, 'month'),
 
-        // TODO Add Clear
+        new MenuDividerInstruction(),
+
+        new RemoveTaskDate(task, field),
     ];
 }
