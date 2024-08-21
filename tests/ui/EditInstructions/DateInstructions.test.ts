@@ -122,7 +122,7 @@ describe('SetRelativeTaskDate', () => {
 
 describe('RemoveTaskDate', () => {
     it('should provide information to set up a menu item for removing start date', () => {
-        const instruction = new RemoveTaskDate(taskWithNoDates, 'startDate');
+        const instruction = new RemoveTaskDate('startDate', taskWithNoDates);
 
         expect(instruction.instructionDisplayName()).toEqual('Remove start date');
         expect(instruction.isCheckedForTask(taskWithNoDates)).toEqual(false);
@@ -130,7 +130,7 @@ describe('RemoveTaskDate', () => {
 
     it('should refuse to remove scheduled date from task with inferred scheduled date', () => {
         const task = new TaskBuilder().scheduledDate(today).scheduledDateIsInferred(true).build();
-        const instruction = new RemoveTaskDate(task, 'scheduledDate');
+        const instruction = new RemoveTaskDate('scheduledDate', task);
 
         expect(instruction.instructionDisplayName()).toEqual('Cannot remove inferred scheduled date');
 
@@ -151,7 +151,7 @@ describe('RemoveTaskDate', () => {
             .scheduledDate(today)
             .startDate(today)
             .build();
-        const instruction = new RemoveTaskDate(task, 'cancelledDate');
+        const instruction = new RemoveTaskDate('cancelledDate', task);
 
         // Apply
         const newTasks = instruction.apply(task);
@@ -163,7 +163,7 @@ describe('RemoveTaskDate', () => {
     });
 
     it('should create a new task with Due date removed', () => {
-        const instruction = new RemoveTaskDate(taskDueToday, 'dueDate');
+        const instruction = new RemoveTaskDate('dueDate', taskDueToday);
 
         const newTasks = instruction.apply(taskDueToday);
         expect(newTasks.length).toEqual(1);
