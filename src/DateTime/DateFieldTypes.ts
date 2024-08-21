@@ -11,3 +11,7 @@ export type AllTaskDateFields = keyof Pick<
     Task,
     'cancelledDate' | 'createdDate' | 'doneDate' | 'dueDate' | 'scheduledDate' | 'startDate' // alphabetical order, please.
 >;
+
+export function isAHappensDate(field: AllTaskDateFields) {
+    return ['startDate', 'scheduledDate', 'dueDate'].includes(field);
+}
