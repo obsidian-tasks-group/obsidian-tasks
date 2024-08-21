@@ -69,7 +69,6 @@ describe('DateMenu', () => {
 
         // Assert
         const itemsAsText = menuToString(menu);
-        // TODO Improve wording to 'Cancelled 2 days ago'
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
             x Cancelled today, on Sun 3rd Dec
