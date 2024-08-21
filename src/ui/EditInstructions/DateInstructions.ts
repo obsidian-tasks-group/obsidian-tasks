@@ -44,6 +44,31 @@ export class SetTaskDate implements TaskEditingInstruction {
     }
 }
 
+export class RemoveTaskDate implements TaskEditingInstruction {
+    private readonly dateFieldToEdit: AllTaskDateFields;
+
+    constructor(dateFieldToEdit: AllTaskDateFields) {
+        this.dateFieldToEdit = dateFieldToEdit;
+    }
+
+    apply(task: Task): Task[] {
+        return [
+            new Task({
+                ...task,
+                [this.dateFieldToEdit]: null,
+            }),
+        ];
+    }
+
+    instructionDisplayName(): string {
+        throw new Error('Method not implemented.');
+    }
+
+    isCheckedForTask(_task: Task): boolean {
+        throw new Error('Method not implemented.');
+    }
+}
+
 /**
  * An instruction to set a date field to a date relative to the current value, or
  * relative to today, if there is no current value.
