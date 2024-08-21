@@ -205,7 +205,8 @@ export function postponeMenuItemTitleFromDate(
     const amountOrArticle = amount != 1 ? amount : 'a';
     if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
         const updatedDateDisplayText = prettyPrintDateFieldName(updatedDateType);
-        return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`
+        const title = `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`;
+        return title
             .replace(' in -1 day', ' yesterday')
             .replace(' in 0 days', ' today')
             .replace('in a day', 'tomorrow');
