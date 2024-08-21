@@ -73,16 +73,16 @@ describe('DateMenu', () => {
             x Cancelled today, on Sun 3rd Dec
               Cancelled yesterday, on Sat 2nd Dec
               ---
-              Cancelled in -2 days, on Fri 1st Dec
-              Cancelled in -3 days, on Thu 30th Nov
-              Cancelled in -4 days, on Wed 29th Nov
-              Cancelled in -5 days, on Tue 28th Nov
-              Cancelled in -6 days, on Mon 27th Nov
+              Cancelled 2 days ago, on Fri 1st Dec
+              Cancelled 3 days ago, on Thu 30th Nov
+              Cancelled 4 days ago, on Wed 29th Nov
+              Cancelled 5 days ago, on Tue 28th Nov
+              Cancelled 6 days ago, on Mon 27th Nov
               ---
-              Cancelled in -1 week, on Sun 26th Nov
-              Cancelled in -2 weeks, on Sun 19th Nov
-              Cancelled in -3 weeks, on Sun 12th Nov
-              Cancelled in -1 month, on Fri 3rd Nov"
+              Cancelled 1 week ago, on Sun 26th Nov
+              Cancelled 2 weeks ago, on Sun 19th Nov
+              Cancelled 3 weeks ago, on Sun 12th Nov
+              Cancelled 1 month ago, on Fri 3rd Nov"
         `);
     });
 });
