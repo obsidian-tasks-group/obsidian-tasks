@@ -178,6 +178,10 @@ export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: uni
  */
 export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
+    return removeDateMenuItemTitleForField(updatedDateType, task);
+}
+
+export function removeDateMenuItemTitleForField(updatedDateType: AllTaskDateFields, task: Task) {
     if (updatedDateType === 'scheduledDate' && task.scheduledDateIsInferred) {
         return 'Cannot remove inferred scheduled date';
     } else {
@@ -185,7 +189,7 @@ export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: 
     }
 }
 
-function prettyPrintDateFieldName(updatedDateType: HappensDate) {
+function prettyPrintDateFieldName(updatedDateType: AllTaskDateFields) {
     return capitalizeFirstLetter(updatedDateType.replace('Date', ''));
 }
 
@@ -193,8 +197,8 @@ export function splitDateText(updatedDateType: AllTaskDateFields) {
     return updatedDateType.replace('Date', ' date');
 }
 
-function postponeMenuItemTitleFromDate(
-    updatedDateType: HappensDate,
+export function postponeMenuItemTitleFromDate(
+    updatedDateType: AllTaskDateFields,
     dateToUpdate: moment.Moment,
     amount: number,
     timeUnit: unitOfTime.DurationConstructor,
@@ -205,11 +209,19 @@ function postponeMenuItemTitleFromDate(
     const amountOrArticle = amount != 1 ? amount : 'a';
     if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
         const updatedDateDisplayText = prettyPrintDateFieldName(updatedDateType);
-        return `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`
+        const title =
+            amount >= 0
+                ? `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`
+                : `${updatedDateDisplayText} ${-amountOrArticle} ${timeUnit} ago, on ${formattedNewDate}`;
+        return title
+            .replace(' 1 day ago', ' yesterday')
             .replace(' in 0 days', ' today')
             .replace('in a day', 'tomorrow');
-    } else {
-        const updatedDateDisplayText = splitDateText(updatedDateType);
+    }
+    const updatedDateDisplayText = splitDateText(updatedDateType);
+    if (amount >= 0) {
         return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
+    } else {
+        return `Backdate ${updatedDateDisplayText} by ${-amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
     }
 }

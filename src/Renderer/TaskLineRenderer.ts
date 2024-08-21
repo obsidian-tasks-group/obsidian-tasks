@@ -13,6 +13,7 @@ import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
 import { defaultTaskSaver } from '../ui/Menus/TaskEditingMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
 import { splitDateText } from '../DateTime/Postponer';
+import { DateMenu } from '../ui/Menus/DateMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 
 /**
@@ -221,7 +222,16 @@ export class TaskLineRenderer {
                         promptForDate(li, task, componentDateField, defaultTaskSaver);
                     });
 
-                    span.setAttribute('title', `Click to edit ${splitDateText(componentDateField)}`);
+                    span.addEventListener('contextmenu', (ev: MouseEvent) => {
+                        ev.preventDefault(); // suppress the default context menu
+                        ev.stopPropagation(); // suppress further event propagation
+                        const menu = new DateMenu(componentDateField, task, defaultTaskSaver);
+                        menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+                    });
+                    span.setAttribute(
+                        'title',
+                        `Click to edit ${splitDateText(componentDateField)}, Right-click for more options`,
+                    );
                 }
             }
         }
