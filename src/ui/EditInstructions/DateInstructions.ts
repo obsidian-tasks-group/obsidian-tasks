@@ -1,7 +1,7 @@
 import type { unitOfTime } from 'moment';
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import { Task } from '../../Task/Task';
-import { postponeMenuItemTitleFromDate, splitDateText } from '../../DateTime/Postponer';
+import { postponeMenuItemTitleFromDate, removeDateMenuItemTitleForField } from '../../DateTime/Postponer';
 import { TasksDate } from '../../DateTime/TasksDate';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 import { MenuDividerInstruction } from './MenuDividerInstruction';
@@ -46,12 +46,20 @@ export class SetTaskDate implements TaskEditingInstruction {
 
 export class RemoveTaskDate implements TaskEditingInstruction {
     private readonly dateFieldToEdit: AllTaskDateFields;
+    private readonly displayName: string;
 
-    constructor(dateFieldToEdit: AllTaskDateFields) {
+    constructor(task: Task, dateFieldToEdit: AllTaskDateFields) {
         this.dateFieldToEdit = dateFieldToEdit;
+        this.displayName = removeDateMenuItemTitleForField(dateFieldToEdit, task);
     }
 
     apply(task: Task): Task[] {
+        if (this.dateFieldToEdit === 'scheduledDate' && task.scheduledDateIsInferred) {
+            // There's no point trying to remove an inferred scheduled date, as the next time
+            // Tasks starts up, it will infer the scheduled date again from the file name,
+            // which will be very confusing for users.
+            return [task];
+        }
         return [
             new Task({
                 ...task,
@@ -61,7 +69,7 @@ export class RemoveTaskDate implements TaskEditingInstruction {
     }
 
     instructionDisplayName(): string {
-        return `Remove ${splitDateText(this.dateFieldToEdit)}`;
+        return this.displayName;
     }
 
     isCheckedForTask(_task: Task): boolean {
