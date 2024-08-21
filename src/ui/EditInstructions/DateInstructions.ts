@@ -54,10 +54,12 @@ export class RemoveTaskDate implements TaskEditingInstruction {
     }
 
     apply(task: Task): Task[] {
-        if (this.dateFieldToEdit === 'scheduledDate' && task.scheduledDateIsInferred) {
-            // There's no point trying to remove an inferred scheduled date, as the next time
-            // Tasks starts up, it will infer the scheduled date again from the file name,
-            // which will be very confusing for users.
+        // There's no point trying to remove an inferred scheduled date, as the next time
+        // Tasks starts up, it will infer the scheduled date again from the file name,
+        // which will be very confusing for users.
+        const fieldIsInferred = this.dateFieldToEdit === 'scheduledDate' && task.scheduledDateIsInferred;
+        const fieldIsAlreadyNull = task[this.dateFieldToEdit] === null;
+        if (fieldIsAlreadyNull || fieldIsInferred) {
             return [task];
         }
         return [
