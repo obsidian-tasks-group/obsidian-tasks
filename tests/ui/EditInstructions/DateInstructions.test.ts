@@ -142,6 +142,26 @@ describe('RemoveTaskDate', () => {
         expect(newTask).toBe(task);
     });
 
+    it('should not edit task if already has no value in field being removed', () => {
+        // Arrange
+        const task = new TaskBuilder()
+            .createdDate(today)
+            .doneDate(today)
+            .dueDate(today)
+            .scheduledDate(today)
+            .startDate(today)
+            .build();
+        const instruction = new RemoveTaskDate(task, 'cancelledDate');
+
+        // Apply
+        const newTasks = instruction.apply(task);
+
+        // Assert
+        expect(newTasks.length).toEqual(1);
+        // Expect it is the same object
+        expect(newTasks[0]).toBe(task);
+    });
+
     it('should create a new task with Due date removed', () => {
         const instruction = new RemoveTaskDate(taskDueToday, 'dueDate');
 
@@ -152,10 +172,6 @@ describe('RemoveTaskDate', () => {
         expect(newTask['dueDate']).toBeNull();
         expect(newTask.description).toEqual(taskDueToday.description);
     });
-
-    // TODO Should return the same task if there was no date initially
-    // TODO Should have the correct title
-    // TODO Should not be checked, even for Task with no date value in the relevant field
 });
 
 describe('DateInstruction lists', () => {
