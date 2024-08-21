@@ -209,8 +209,7 @@ export function postponeMenuItemTitleFromDate(
             .replace(' in -1 day', ' yesterday')
             .replace(' in 0 days', ' today')
             .replace('in a day', 'tomorrow');
-    } else {
-        const updatedDateDisplayText = splitDateText(updatedDateType);
-        return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
     }
+    const updatedDateDisplayText = splitDateText(updatedDateType);
+    return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
 }
