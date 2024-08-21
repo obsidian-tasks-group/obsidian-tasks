@@ -121,8 +121,17 @@ describe('SetRelativeTaskDate', () => {
 });
 
 describe('RemoveTaskDate', () => {
+    it('should provide information to set up a menu item for removing start date', () => {
+        const instruction = new RemoveTaskDate('startDate');
+
+        expect(instruction.instructionDisplayName()).toEqual('Remove start date');
+        expect(instruction.isCheckedForTask(taskWithNoDates)).toEqual(false);
+    });
+
+    // TODO Should refuse to remove date from task with inferred scheduled date
+
     it('should create a new task with Due date removed', () => {
-        const instruction = new RemoveTaskDate('dueDate' as AllTaskDateFields);
+        const instruction = new RemoveTaskDate('dueDate');
 
         const newTasks = instruction.apply(taskDueToday);
         expect(newTasks.length).toEqual(1);

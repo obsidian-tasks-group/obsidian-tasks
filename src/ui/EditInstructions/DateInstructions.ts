@@ -1,7 +1,7 @@
 import type { unitOfTime } from 'moment';
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import { Task } from '../../Task/Task';
-import { postponeMenuItemTitleFromDate } from '../../DateTime/Postponer';
+import { postponeMenuItemTitleFromDate, splitDateText } from '../../DateTime/Postponer';
 import { TasksDate } from '../../DateTime/TasksDate';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 import { MenuDividerInstruction } from './MenuDividerInstruction';
@@ -61,11 +61,11 @@ export class RemoveTaskDate implements TaskEditingInstruction {
     }
 
     instructionDisplayName(): string {
-        throw new Error('Method not implemented.');
+        return `Remove ${splitDateText(this.dateFieldToEdit)}`;
     }
 
     isCheckedForTask(_task: Task): boolean {
-        throw new Error('Method not implemented.');
+        return false;
     }
 }
 
