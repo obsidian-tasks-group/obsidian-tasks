@@ -236,7 +236,9 @@ describe('DateInstruction lists', () => {
                   Due in a week, on Tue 8th Oct => 2024-10-08
                   Due in 2 weeks, on Tue 15th Oct => 2024-10-15
                   Due in 3 weeks, on Tue 22nd Oct => 2024-10-22
-                  Due in a month, on Fri 1st Nov => 2024-11-01"
+                  Due in a month, on Fri 1st Nov => 2024-11-01
+                  ---
+                  Remove due date => No Date"
             `);
         });
 
@@ -260,7 +262,9 @@ describe('DateInstruction lists', () => {
                   Scheduled in a week, on Tue 8th Oct => 2024-10-08
                   Scheduled in 2 weeks, on Tue 15th Oct => 2024-10-15
                   Scheduled in 3 weeks, on Tue 22nd Oct => 2024-10-22
-                  Scheduled in a month, on Fri 1st Nov => 2024-11-01"
+                  Scheduled in a month, on Fri 1st Nov => 2024-11-01
+                  ---
+                  Remove scheduled date => No Date"
             `);
         });
 
@@ -284,7 +288,9 @@ describe('DateInstruction lists', () => {
                   Postpone start date by a week, to Wed 9th Oct => 2024-10-09
                   Postpone start date by 2 weeks, to Wed 16th Oct => 2024-10-16
                   Postpone start date by 3 weeks, to Wed 23rd Oct => 2024-10-23
-                  Postpone start date by a month, to Sat 2nd Nov => 2024-11-02"
+                  Postpone start date by a month, to Sat 2nd Nov => 2024-11-02
+                  ---
+                  Remove start date => No Date"
             `);
         });
     });
@@ -310,7 +316,9 @@ describe('DateInstruction lists', () => {
                   Created 1 week ago, on Tue 24th Sep => 2024-09-24
                   Created 2 weeks ago, on Tue 17th Sep => 2024-09-17
                   Created 3 weeks ago, on Tue 10th Sep => 2024-09-10
-                  Created 1 month ago, on Sun 1st Sep => 2024-09-01"
+                  Created 1 month ago, on Sun 1st Sep => 2024-09-01
+                  ---
+                  Remove created date => No Date"
             `);
         });
 
@@ -334,7 +342,9 @@ describe('DateInstruction lists', () => {
                   Done 1 week ago, on Tue 24th Sep => 2024-09-24
                   Done 2 weeks ago, on Tue 17th Sep => 2024-09-17
                   Done 3 weeks ago, on Tue 10th Sep => 2024-09-10
-                  Done 1 month ago, on Sun 1st Sep => 2024-09-01"
+                  Done 1 month ago, on Sun 1st Sep => 2024-09-01
+                  ---
+                  Remove done date => No Date"
             `);
         });
 
@@ -358,7 +368,9 @@ describe('DateInstruction lists', () => {
                   Backdate cancelled date by 1 week, to Wed 25th Sep => 2024-09-25
                   Backdate cancelled date by 2 weeks, to Wed 18th Sep => 2024-09-18
                   Backdate cancelled date by 3 weeks, to Wed 11th Sep => 2024-09-11
-                  Backdate cancelled date by 1 month, to Mon 2nd Sep => 2024-09-02"
+                  Backdate cancelled date by 1 month, to Mon 2nd Sep => 2024-09-02
+                  ---
+                  Remove cancelled date => No Date"
             `);
         });
     });
