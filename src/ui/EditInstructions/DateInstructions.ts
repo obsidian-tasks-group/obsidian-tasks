@@ -74,7 +74,7 @@ export class RemoveTaskDate implements TaskEditingInstruction {
     private readonly dateFieldToEdit: AllTaskDateFields;
     private readonly displayName: string;
 
-    constructor(task: Task, dateFieldToEdit: AllTaskDateFields) {
+    constructor(dateFieldToEdit: AllTaskDateFields, task: Task) {
         this.dateFieldToEdit = dateFieldToEdit;
         this.displayName = removeDateMenuItemTitleForField(dateFieldToEdit, task);
     }
@@ -163,6 +163,6 @@ function allDateInstructions(task: Task, field: AllTaskDateFields, factor: numbe
 
         new MenuDividerInstruction(),
 
-        new RemoveTaskDate(task, field),
+        new RemoveTaskDate(field, task),
     ];
 }
