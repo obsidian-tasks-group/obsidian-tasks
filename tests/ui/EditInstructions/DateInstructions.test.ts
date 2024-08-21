@@ -6,6 +6,7 @@ import moment from 'moment';
 import type { unitOfTime } from 'moment/moment';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import {
+    RemoveTaskDate,
     SetRelativeTaskDate,
     SetTaskDate,
     allHappensDateInstructions,
@@ -117,6 +118,23 @@ describe('SetRelativeTaskDate', () => {
         const expectedTitle = 'Done today, on Tue 1st Oct';
         testSetRelativeTaskDate(taskWithNoDates, 'doneDate', 0, 'days', expectedTitle, moment(today));
     });
+});
+
+describe('RemoveTaskDate', () => {
+    it('should create a new task with Due date removed', () => {
+        const instruction = new RemoveTaskDate('dueDate' as AllTaskDateFields);
+
+        const newTasks = instruction.apply(taskDueToday);
+        expect(newTasks.length).toEqual(1);
+        const newTask = newTasks[0];
+
+        expect(newTask['dueDate']).toBeNull();
+        expect(newTask.description).toEqual(taskDueToday.description);
+    });
+
+    // TODO Should return the same task if there was no date initially
+    // TODO Should have the correct title
+    // TODO Should not be checked, even for Task with no date value in the relevant field
 });
 
 describe('DateInstruction lists', () => {
