@@ -44,6 +44,27 @@ export class SetTaskDate implements TaskEditingInstruction {
     }
 }
 
+/**
+ * An instruction to set a date field to a date relative to the current value, or
+ * relative to today, if there is no current value.
+ *
+ * See also {@link SetTaskDate}.
+ */
+export class SetRelativeTaskDate extends SetTaskDate {
+    constructor(
+        taskDueToday: Task,
+        dateFieldToEdit: AllTaskDateFields,
+        amount: number,
+        timeUnit: unitOfTime.DurationConstructor,
+    ) {
+        const currentDate = taskDueToday[dateFieldToEdit] ?? window.moment();
+        const title = postponeMenuItemTitleFromDate(dateFieldToEdit, currentDate, amount, timeUnit);
+
+        const newDate = new TasksDate(window.moment(currentDate)).postpone(timeUnit, amount).toDate();
+        super(dateFieldToEdit, newDate, title);
+    }
+}
+
 export class RemoveTaskDate implements TaskEditingInstruction {
     private readonly dateFieldToEdit: AllTaskDateFields;
     private readonly displayName: string;
@@ -76,27 +97,6 @@ export class RemoveTaskDate implements TaskEditingInstruction {
 
     isCheckedForTask(_task: Task): boolean {
         return false;
-    }
-}
-
-/**
- * An instruction to set a date field to a date relative to the current value, or
- * relative to today, if there is no current value.
- *
- * See also {@link SetTaskDate}.
- */
-export class SetRelativeTaskDate extends SetTaskDate {
-    constructor(
-        taskDueToday: Task,
-        dateFieldToEdit: AllTaskDateFields,
-        amount: number,
-        timeUnit: unitOfTime.DurationConstructor,
-    ) {
-        const currentDate = taskDueToday[dateFieldToEdit] ?? window.moment();
-        const title = postponeMenuItemTitleFromDate(dateFieldToEdit, currentDate, amount, timeUnit);
-
-        const newDate = new TasksDate(window.moment(currentDate)).postpone(timeUnit, amount).toDate();
-        super(dateFieldToEdit, newDate, title);
     }
 }
 
