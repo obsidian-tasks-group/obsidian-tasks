@@ -54,9 +54,13 @@
             };
 
             if (date) {
+                // TODO If the user had typed today, yesterday or similar, we need to get the date
+                //      from parsedDate instead.
                 options.defaultDate = new Date(date);
             }
 
+            // TODO Prevent hitting the Escape key from closing both flatpickr and the parent widget,
+            //      which would lose any of the user's earlier edits.
             flatpickrInstance = flatpickr(inputElement, options);
             flatpickrInstance.open(); // Directly open the date picker
         }
@@ -77,6 +81,8 @@
 />
 
 <!-- Separate the calendar icon from the input to allow typing in the input box -->
+<!-- TODO Suppress or fix the ally warning-->
+<!-- TODO Nicer looking icon, or at least make it a paler shade -->
 <svg
     class="calendar-icon"
     xmlns="http://www.w3.org/2000/svg"
