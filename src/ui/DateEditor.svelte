@@ -2,8 +2,7 @@
     import { doAutocomplete } from '../DateTime/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
-    // Import a calendar icon, or define an inline SVG for the calendar icon.
-    // If using an icon library, import it here. For demonstration, I'm using an inline SVG.
+    import { selectDate } from './Menus/DatePicker'; // Adjust the import path accordingly
 
     export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
     export let dateSymbol: string;
@@ -21,6 +20,19 @@
 
     // 'weekend' abbreviation omitted due to lack of space.
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
+
+    // Function to open the date-picker and update the date
+    async function openDatePicker() {
+        // TODO Position the date picker correctly.
+        // TODO Select the chosen date, not the day before.
+        const parentElement = document.getElementById(id);
+        if (parentElement) {
+            const selectedDate = await selectDate(parentElement, date ? new Date(date) : undefined);
+            if (selectedDate) {
+                date = selectedDate.toISOString().split('T')[0]; // Update date with the selected date
+            }
+        }
+    }
 </script>
 
 <label for={id}>{@html labelContentWithAccessKey(id, accesskey)}</label>
@@ -35,7 +47,7 @@
     {accesskey}
 />
 
-<!-- Add the calendar icon here -->
+<!-- Add the calendar icon here and bind click event -->
 <svg
     class="calendar-icon"
     xmlns="http://www.w3.org/2000/svg"
@@ -43,6 +55,7 @@
     fill="currentColor"
     width="24px"
     height="24px"
+    on:click={openDatePicker}
 >
     <path
         d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z"
