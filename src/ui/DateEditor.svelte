@@ -1,5 +1,5 @@
 <script lang="ts">
-    import flatpickr from 'flatpickr'; // Import flatpickr directly
+    import flatpickr from 'flatpickr';
     import { doAutocomplete } from '../DateTime/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
@@ -13,6 +13,7 @@
 
     let parsedDate: string;
     let inputElement: HTMLInputElement;
+    let flatpickrInstance: any;
 
     $: {
         date = doAutocomplete(date);
@@ -26,7 +27,11 @@
     // Function to open the date-picker and update the date
     function openDatePicker() {
         if (inputElement) {
-            flatpickr(inputElement, {
+            if (flatpickrInstance) {
+                flatpickrInstance.destroy(); // Destroy any existing instance to avoid conflicts
+            }
+
+            flatpickrInstance = flatpickr(inputElement, {
                 defaultDate: date ? new Date(date) : new Date(),
                 enableTime: false,
                 dateFormat: 'Y-m-d',
@@ -41,8 +46,13 @@
                         const day = String(selectedDate.getDate()).padStart(2, '0');
                         date = `${year}-${month}-${day}`;
                     }
+
+                    flatpickrInstance.destroy(); // Destroy the instance after the date is selected
+                    flatpickrInstance = null;
                 },
-            }).open(); // Directly open the date picker
+            });
+
+            flatpickrInstance.open(); // Directly open the date picker
         }
     }
 </script>
@@ -60,7 +70,7 @@
     {accesskey}
 />
 
-<!-- Add the calendar icon here and bind click event -->
+<!-- Separate the calendar icon from the input to allow typing in the input box -->
 <svg
     class="calendar-icon"
     xmlns="http://www.w3.org/2000/svg"
@@ -69,6 +79,7 @@
     width="24px"
     height="24px"
     on:click={openDatePicker}
+    style="cursor: pointer;"
 >
     <path
         d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z"
