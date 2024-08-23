@@ -1,8 +1,8 @@
 <script lang="ts">
+    import flatpickr from 'flatpickr'; // Import flatpickr directly
     import { doAutocomplete } from '../DateTime/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
-    import { selectDate } from './Menus/DatePicker';
 
     export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
     export let dateSymbol: string;
@@ -12,6 +12,8 @@
     export let accesskey: string | null;
 
     let parsedDate: string;
+    let inputElement: HTMLInputElement;
+
     $: {
         date = doAutocomplete(date);
         parsedDate = parseTypedDateForDisplayUsingFutureDate(id, date, forwardOnly);
@@ -22,32 +24,25 @@
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
 
     // Function to open the date-picker and update the date
-    async function openDatePicker(event: MouseEvent) {
-        // TODO Position the date picker correctly.
-        const calendarIcon = event.currentTarget as HTMLElement;
-        const parentElement = document.getElementById(id);
-
-        if (parentElement && calendarIcon) {
-            // Create and position the input element near the click location
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.style.position = 'fixed'; // Use 'fixed' for consistent positioning
-            input.style.top = `${event.clientY}px`; // Use event.clientY for vertical position
-            input.style.left = `${event.clientX}px`; // Use event.clientX for horizontal position
-            // input.style.opacity = '0';
-            input.style.pointerEvents = 'none';
-            document.body.appendChild(input);
-
-            const selectedDate = await selectDate(input, date ? new Date(date) : undefined);
-            if (selectedDate) {
-                const year = selectedDate.getFullYear();
-                const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-                const day = String(selectedDate.getDate()).padStart(2, '0');
-                date = `${year}-${month}-${day}`;
-            }
-
-            // Cleanup after the date is selected
-            input.remove();
+    function openDatePicker() {
+        if (inputElement) {
+            flatpickr(inputElement, {
+                defaultDate: date ? new Date(date) : new Date(),
+                enableTime: false,
+                dateFormat: 'Y-m-d',
+                locale: {
+                    firstDayOfWeek: 1,
+                },
+                onClose: (selectedDates) => {
+                    if (selectedDates.length > 0) {
+                        const selectedDate = selectedDates[0];
+                        const year = selectedDate.getFullYear();
+                        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+                        const day = String(selectedDate.getDate()).padStart(2, '0');
+                        date = `${year}-${month}-${day}`;
+                    }
+                },
+            }).open(); // Directly open the date picker
         }
     }
 </script>
@@ -55,6 +50,7 @@
 <label for={id}>{@html labelContentWithAccessKey(id, accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <input
+    bind:this={inputElement}
     bind:value={date}
     {id}
     type="text"
