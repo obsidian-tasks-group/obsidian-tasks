@@ -13,15 +13,11 @@ export function selectDate(parentElement: HTMLElement, defaultDate?: Date): Prom
         }
 
         const input = document.createElement('input');
-        input.type = 'text';
+        input.type = 'text'; // Flatpickr can hook into a text input
         parentElement.appendChild(input);
 
-        // Ensure the input element is properly styled for Flatpickr
-        input.style.position = 'absolute';
-        input.style.opacity = '0';
-        input.style.pointerEvents = 'none';
-        input.style.width = '1px';
-        input.style.height = '1px';
+        // Ensure styles are applied so Flatpickr can render correctly
+        input.style.minWidth = '200px'; // Ensure there's enough room for Flatpickr
 
         // Delay the initialization of Flatpickr to ensure DOM is ready
         setTimeout(() => {

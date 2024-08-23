@@ -2,7 +2,7 @@
     import { doAutocomplete } from '../DateTime/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
-    import { selectDate } from './Menus/DatePicker'; // Adjust the import path accordingly
+    import { selectDate } from './Menus/DatePicker';
 
     export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
     export let dateSymbol: string;
@@ -22,15 +22,35 @@
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
 
     // Function to open the date-picker and update the date
-    async function openDatePicker() {
+    async function openDatePicker(event: MouseEvent) {
         // TODO Position the date picker correctly.
-        // TODO Select the chosen date, not the day before.
+        const calendarIcon = event.currentTarget as HTMLElement;
         const parentElement = document.getElementById(id);
-        if (parentElement) {
-            const selectedDate = await selectDate(parentElement, date ? new Date(date) : undefined);
+
+        if (parentElement && calendarIcon) {
+            // Get the position of the calendar icon
+            const rect = calendarIcon.getBoundingClientRect();
+
+            // Create and position the input element near the calendar icon
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.style.position = 'absolute';
+            input.style.top = `${rect.bottom + window.scrollY}px`; // Position below the icon
+            input.style.left = `${rect.left + window.scrollX}px`; // Align with the icon
+            input.style.opacity = '0';
+            input.style.pointerEvents = 'none';
+            document.body.appendChild(input); // Append to body to ensure correct positioning
+
+            const selectedDate = await selectDate(input, date ? new Date(date) : undefined);
             if (selectedDate) {
-                date = selectedDate.toISOString().split('T')[0]; // Update date with the selected date
+                const year = selectedDate.getFullYear();
+                const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+                const day = String(selectedDate.getDate()).padStart(2, '0');
+                date = `${year}-${month}-${day}`;
             }
+
+            // Cleanup after the date is selected
+            input.remove();
         }
     }
 </script>
