@@ -31,14 +31,13 @@
                 flatpickrInstance.destroy(); // Destroy any existing instance to avoid conflicts
             }
 
-            flatpickrInstance = flatpickr(inputElement, {
-                defaultDate: date ? new Date(date) : new Date(),
+            const options: Record<string, any> = {
                 enableTime: false,
                 dateFormat: 'Y-m-d',
                 locale: {
                     firstDayOfWeek: 1,
                 },
-                onClose: (selectedDates) => {
+                onClose: (selectedDates: Date[]) => {
                     if (selectedDates.length > 0) {
                         const selectedDate = selectedDates[0];
                         const year = selectedDate.getFullYear();
@@ -50,8 +49,15 @@
                     flatpickrInstance.destroy(); // Destroy the instance after the date is selected
                     flatpickrInstance = null;
                 },
-            });
+                allowInput: true, // Allow manual input to keep the field empty if no selection is made
+                defaultDate: undefined, // Explicitly define defaultDate with undefined
+            };
 
+            if (date) {
+                options.defaultDate = new Date(date);
+            }
+
+            flatpickrInstance = flatpickr(inputElement, options);
             flatpickrInstance.open(); // Directly open the date picker
         }
     }
