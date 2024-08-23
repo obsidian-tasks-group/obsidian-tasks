@@ -28,18 +28,15 @@
         const parentElement = document.getElementById(id);
 
         if (parentElement && calendarIcon) {
-            // Get the position of the calendar icon
-            const rect = calendarIcon.getBoundingClientRect();
-
-            // Create and position the input element near the calendar icon
+            // Create and position the input element near the click location
             const input = document.createElement('input');
             input.type = 'text';
-            input.style.position = 'absolute';
-            input.style.top = `${rect.bottom + window.scrollY}px`; // Position below the icon
-            input.style.left = `${rect.left + window.scrollX}px`; // Align with the icon
-            input.style.opacity = '0';
+            input.style.position = 'fixed'; // Use 'fixed' for consistent positioning
+            input.style.top = `${event.clientY}px`; // Use event.clientY for vertical position
+            input.style.left = `${event.clientX}px`; // Use event.clientX for horizontal position
+            // input.style.opacity = '0';
             input.style.pointerEvents = 'none';
-            document.body.appendChild(input); // Append to body to ensure correct positioning
+            document.body.appendChild(input);
 
             const selectedDate = await selectDate(input, date ? new Date(date) : undefined);
             if (selectedDate) {
