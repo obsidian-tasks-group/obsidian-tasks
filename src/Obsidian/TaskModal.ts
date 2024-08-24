@@ -83,7 +83,7 @@ export class TaskModal extends Modal implements IFlatpickrUser {
      * the date-picker, and not the EditTask modal as well.
      */
     public onEscapeKey(): void {
-        if (this.activeFlatpickrInstance && this.activeFlatpickrInstance.isOpen) {
+        if (this.activeFlatpickrInstance?.isOpen) {
             this.activeFlatpickrInstance.close();
             this.activeFlatpickrInstance = null;
         } else {
