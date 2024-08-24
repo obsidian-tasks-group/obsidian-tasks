@@ -537,7 +537,7 @@ export class SettingsTab extends PluginSettingTab {
                     const fileContent = createStatusRegistryReport(statusSettings, statusRegistry, buttonName, version);
 
                     // Save the file
-                    const file = await app.vault.create(filename, fileContent);
+                    const file = await this.app.vault.create(filename, fileContent);
 
                     // And open the new file
                     const leaf = this.app.workspace.getLeaf(true);
