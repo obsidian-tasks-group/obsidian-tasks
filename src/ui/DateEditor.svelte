@@ -29,6 +29,10 @@
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
 
     // Function to open the date-picker and update the date
+    // TODO Reduce its complexity.
+    // TODO Can a function be extracted?
+    // TODO Can the function be moved out?
+    // TODO Can we re-use this in the pre-existing date picker function?
     function openDatePicker() {
         if (inputElement) {
             if (flatpickrInstance) {
@@ -45,6 +49,7 @@
                     dispatch('close', { instance: flatpickrInstance }); // Notify parent about close
 
                     if (selectedDates.length > 0) {
+                        // TODO can this be simplified?
                         const selectedDate = selectedDates[0];
                         const year = selectedDate.getFullYear();
                         const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
@@ -60,6 +65,7 @@
             };
 
             // Determine if `parsedDate` should be used as the default date
+            // TODO Remove repetition of regex here - do we have a helper function for this already?
             if (parsedDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
                 options.defaultDate = new Date(parsedDate);
             } else if (date.match(/^\d{4}-\d{2}-\d{2}$/)) {
