@@ -59,9 +59,10 @@
                 defaultDate: undefined, // Explicitly define defaultDate with undefined
             };
 
-            if (date) {
-                // TODO If the user had typed today, yesterday or similar, we need to get the date
-                //      from parsedDate instead.
+            // Determine if `parsedDate` should be used as the default date
+            if (parsedDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                options.defaultDate = new Date(parsedDate);
+            } else if (date.match(/^\d{4}-\d{2}-\d{2}$/)) {
                 options.defaultDate = new Date(date);
             }
 
