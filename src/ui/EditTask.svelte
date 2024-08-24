@@ -5,7 +5,7 @@
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
-    import type { IFlatpickerUser } from '../Obsidian/TaskModal';
+    import type { IFlatpickrUser } from '../Obsidian/TaskModal';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';
@@ -18,7 +18,7 @@
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
     export let allTasks: Task[];
-    export let modal: IFlatpickerUser | null = null;
+    export let modal: IFlatpickrUser | null = null;
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
