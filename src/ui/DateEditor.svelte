@@ -1,5 +1,7 @@
 <script lang="ts">
     import flatpickr from 'flatpickr';
+    import { createEventDispatcher } from 'svelte';
+
     import { doAutocomplete } from '../DateTime/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
@@ -15,6 +17,8 @@
     let inputElement: HTMLInputElement;
     let flatpickrInstance: any;
 
+    const dispatch = createEventDispatcher();
+
     $: {
         date = doAutocomplete(date);
         parsedDate = parseTypedDateForDisplayUsingFutureDate(id, date, forwardOnly);
@@ -23,19 +27,6 @@
 
     // 'weekend' abbreviation omitted due to lack of space.
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
-
-    // Function to handle the Escape key to only close the date picker
-    function handleGlobalKeyDown(event: KeyboardEvent) {
-        // TODO This line is reached for most keystrokes.
-        //      But it is never reached if the user hits the Escape key!
-        console.log(`In handleGlobalKeyDown: '${event.key}' ${JSON.stringify(event, null, 4)}`);
-        if (event.key === 'Escape' && flatpickrInstance && flatpickrInstance.isOpen) {
-            console.log('Escape key detected, closing flatpickr.');
-            event.preventDefault(); // Prevent the default behavior
-            event.stopPropagation(); // Stop the event from reaching the modal
-            flatpickrInstance.close(); // Close the date picker
-        }
-    }
 
     // Function to open the date-picker and update the date
     function openDatePicker() {
@@ -51,7 +42,7 @@
                     firstDayOfWeek: 1,
                 },
                 onClose: (selectedDates: Date[]) => {
-                    document.body.removeEventListener('keydown', handleGlobalKeyDown); // Remove listener when closed
+                    dispatch('close', { instance: flatpickrInstance }); // Notify parent about close
 
                     if (selectedDates.length > 0) {
                         const selectedDate = selectedDates[0];
@@ -74,16 +65,8 @@
                 options.defaultDate = new Date(date);
             }
 
-            // TODO Prevent hitting the Escape key from closing both flatpickr and the parent widget,
-            //      which would lose any of the user's earlier edits.
             flatpickrInstance = flatpickr(inputElement, options);
-
-            // Things tried that have not worked (with changes made both on addEventListener and removeEventListener):
-            //  - Pass in a 3rd argument, true - to trigger event at the capture phase
-            //  - Use document.addEventListener() instead of document.body.addEventListener()
-            // I have also tried it with global capture - true being passed in as the 3rd arg to
-            // removeEventListener() and addEventListener() - it still didn't trigger on Escape.
-            document.body.addEventListener('keydown', handleGlobalKeyDown); // Add global listener in capture phase when opened
+            dispatch('open', { instance: flatpickrInstance }); // Notify parent about open
 
             flatpickrInstance.open(); // Directly open the date picker
         }
