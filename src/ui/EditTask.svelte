@@ -1,5 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import type flatpickr from 'flatpickr';
+
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
@@ -147,8 +149,7 @@
         onSubmit(newTasks);
     };
 
-    // TODO Remove use of any
-    function handleOpen(event: any) {
+    function handleOpen(event: CustomEvent<{ instance: flatpickr.Instance }>) {
         modal.setActiveFlatpickrInstance(event.detail.instance);
     }
 
