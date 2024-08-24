@@ -6,7 +6,7 @@ import type { Task } from '../Task/Task';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
 
-export interface IFlatpickerUser extends Modal {
+export interface IFlatpickerUser {
     setActiveFlatpickrInstance(instance: flatpickr.Instance): void;
     clearActiveFlatpickrInstance(): void;
 }
