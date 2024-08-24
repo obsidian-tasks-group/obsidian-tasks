@@ -107,10 +107,4 @@
 <code class="tasks-modal-parsed-date">{dateSymbol} {@html parsedDate}</code>
 
 <style>
-    /* Add some basic styling for the calendar icon */
-    /* Commented out as it generates a main.css file at the root of the repo */
-    /*.calendar-icon {*/
-    /*    margin: 0 8px;*/
-    /*    vertical-align: middle;*/
-    /*}*/
 </style>
