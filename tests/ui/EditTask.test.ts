@@ -43,6 +43,7 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
         statusOptions: StatusRegistry.getInstance().registeredStatuses,
         onSubmit,
         allTasks,
+        modal: null,
     });
     const { container } = result;
     expect(() => container).toBeTruthy();
