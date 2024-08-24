@@ -6,12 +6,12 @@ import type { Task } from '../Task/Task';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
 
-export interface IFlatpickerUser {
+export interface IFlatpickrUser {
     setActiveFlatpickrInstance(instance: flatpickr.Instance): void;
     clearActiveFlatpickrInstance(): void;
 }
 
-export class TaskModal extends Modal implements IFlatpickerUser {
+export class TaskModal extends Modal implements IFlatpickrUser {
     public readonly task: Task;
     public readonly onSubmit: (updatedTasks: Task[]) => void;
     public readonly allTasks: Task[];
