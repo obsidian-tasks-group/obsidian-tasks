@@ -52,7 +52,7 @@ Necessary for a first release
 
 - [ ] Add the field to Create or edit Task dialog
 - [ ] Add to layout - show/hide
-- Add to CSS
+- [ ] Review [src/Renderer/Renderer.scss](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Renderer/Renderer.scss), in case any additions are needed.
 - [ ] Add filter(s) - see [[How do I add a new task filter]]
 
 Can be added in later releases
@@ -65,8 +65,12 @@ Can be added in later releases
 
 ## Extra steps for fields storing dates
 
-- [ ] Add to [recurrence](https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks), if appropriate
+- Code
+  - [ ] Add to [recurrence](https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks), if appropriate
+  - [ ] Update `AllTaskDateFields` in `DateFieldTypes.ts`
+  - [ ] Potentially update `HappensDate` and `isAHappensDate()` in `DateFieldTypes.ts`
+  - [ ] Update `Task.allDateFields()`
 - Documentation
-  - [ ] Update `dates.md`
+  - [ ] Update [docs/Getting Started/Dates.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/Getting%20Started/Dates.md).
 - Handling invalid dates
   - [ ] Add the new field to all sections of [resources/sample_vaults/Tasks-Demo/Manual Testing/Invalid Dates.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Manual%20Testing/Invalid%20Dates.md)
