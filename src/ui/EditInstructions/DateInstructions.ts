@@ -139,7 +139,8 @@ function allDateInstructions(task: Task, field: AllTaskDateFields, factor: numbe
     return [
         new SetTaskDate(field, todayAsDate, postponeMenuItemTitleFromDate(field, today, 0, 'days')),
 
-        // A confusing mixture of Date, Moment and TasksDate!!!
+        // TODO Fix this confusing mixture of Date, Moment and TasksDate!!!
+        //      Preferably convert everything to use TasksDate.
         new SetTaskDate(
             field,
             todayAsTasksDate.postpone('day', factor).toDate(),
