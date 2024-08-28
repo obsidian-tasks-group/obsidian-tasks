@@ -70,4 +70,3 @@ Can be added in later releases
   - [ ] Update `dates.md`
 - Handling invalid dates
   - [ ] Add the new field to all sections of [resources/sample_vaults/Tasks-Demo/Manual Testing/Invalid Dates.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Manual%20Testing/Invalid%20Dates.md)
-  - [ ] Update the query in the 'invalid dates' section of [docs/Queries/Filters.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/Queries/Filters.md)

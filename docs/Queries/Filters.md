@@ -917,9 +917,19 @@ Such tasks look like they have a date, but that date will never be found. When v
 
 Any such mistakes can be found systematically with this search:
 
-    ```tasks
-    (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
-    ```
+<!-- include: ValidateTasks.test.validate-tasks_find_problem_dates.approved.text -->
+````text
+```tasks
+# These instructions need to be all on one line:
+(cancelled date is invalid) OR (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
+
+# Optionally, uncomment this line and exclude your templates location
+# path does not include _templates
+
+group by path
+```
+````
+<!-- endInclude -->
 
 > [!warning]
 > If the above search finds any tasks with invalid dates, they are best fixed by clicking on the [[Backlinks|backlink]] to navigate
