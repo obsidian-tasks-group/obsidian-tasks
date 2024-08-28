@@ -80,6 +80,12 @@
         min-width: 15em;
     }
 
+    .tasks-modal-calendar-icon {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+    }
+
     .tasks-modal-parsed-date {
         grid-column: 4;
         font-size: var(--font-ui-small);

@@ -97,12 +97,9 @@
 <!-- TODO Suppress or fix the ally warning-->
 <!-- TODO Nicer looking icon, or at least make it a paler shade -->
 <svg
-    class="calendar-icon"
+    class="tasks-modal-calendar-icon"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    fill="currentColor"
-    width="24px"
-    height="24px"
     on:click={openDatePicker}
     style="cursor: pointer;"
 >
