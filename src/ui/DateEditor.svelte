@@ -49,12 +49,8 @@
                     dispatch('close', { instance: flatpickrInstance }); // Notify parent about close
 
                     if (selectedDates.length > 0) {
-                        // TODO can this be simplified?
                         const selectedDate = selectedDates[0];
-                        const year = selectedDate.getFullYear();
-                        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-                        const day = String(selectedDate.getDate()).padStart(2, '0');
-                        date = `${year}-${month}-${day}`;
+                        date = window.moment(selectedDate).format('YYYY-MM-DD');
                     }
 
                     flatpickrInstance.destroy(); // Destroy the instance after the date is selected
