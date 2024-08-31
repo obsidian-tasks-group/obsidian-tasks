@@ -28,11 +28,11 @@
     // 'weekend' abbreviation omitted due to lack of space.
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
 
-    // Function to open the date-picker and update the date
-    // TODO Reduce its complexity.
-    // TODO Can a function be extracted?
-    // TODO Can the function be moved out?
-    // TODO Can we re-use this in the pre-existing date picker function?
+    /**
+     * A calendar date picker which is not tied to any particular date field.
+     *
+     * See also {@link promptForDate}
+     */
     function openDatePicker() {
         if (inputElement) {
             if (flatpickrInstance) {
