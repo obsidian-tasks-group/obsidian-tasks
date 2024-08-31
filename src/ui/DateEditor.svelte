@@ -60,11 +60,18 @@
                 defaultDate: undefined, // Explicitly define defaultDate with undefined
             };
 
-            // Determine if `parsedDate` should be used as the default date
-            // TODO Remove repetition of regex here - do we have a helper function for this already?
-            if (parsedDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            // We don't use parseDate() here as we want to strictly only match exact dates,
+            // and not words like 'today' or 'tomorrow', to make sure we really
+            // are using the already-parsed date in the Modal UI:
+            const dateMatcher = /^\d{4}-\d{2}-\d{2}$/;
+            if (parsedDate.match(dateMatcher)) {
+                // This is where the user had typed, for example, 'tomorrow' in the input
+                // field, and chrono has converted that to an exact date.
                 options.defaultDate = new Date(parsedDate);
-            } else if (date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            } else if (date.match(dateMatcher)) {
+                // This is a precaution, for the unlikely event that the input field
+                // contains a parsed date, but the parsedDate does not.
+                // It's possible that it is unreachable, but we would need tests to confirm that.
                 options.defaultDate = new Date(date);
             }
 
