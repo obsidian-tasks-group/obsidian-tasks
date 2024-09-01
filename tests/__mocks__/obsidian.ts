@@ -157,3 +157,6 @@ export function prepareSimpleSearch(query: string): (text: string) => SearchResu
         return caseInsensitiveSubstringSearch(query, text);
     };
 }
+
+type IconName = string;
+export function setIcon(_parent: HTMLElement, _iconId: IconName): void {}
