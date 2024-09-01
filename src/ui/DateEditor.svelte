@@ -97,19 +97,26 @@
 />
 
 <!-- Separate the calendar icon from the input to allow typing in the input box -->
-<!-- TODO Fix the accessibility warning, ideally by converting this to a proper button -->
 <!-- TODO Nicer looking icon, or at least make it a paler shade -->
-<svg
-    class="tasks-modal-calendar-icon"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
+<button
+    class="tasks-modal-calendar-button"
     on:click={openDatePicker}
-    style="cursor: pointer;"
+    aria-label="Open date picker"
+    style="background: none; border: none; padding: 0; cursor: pointer;"
 >
-    <path
-        d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z"
-    />
-</svg>
+    <svg
+        class="tasks-modal-calendar-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        width="24px"
+        height="24px"
+    >
+        <path
+            d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z"
+        />
+    </svg>
+</button>
 
 <code class="tasks-modal-parsed-date">{dateSymbol} {@html parsedDate}</code>
 
