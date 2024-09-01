@@ -33,6 +33,13 @@ export class TaskModal extends Modal implements IFlatpickrUser {
         this.task = task;
         this.allTasks = allTasks;
         this.onSubmit = (updatedTasks: Task[]) => {
+            if (this.activeFlatpickrInstance) {
+                // Ignore onSubmit if the date-picker is open:
+                // For some unknown reason, making the date-picker lunched from a Button
+                // caused the modal to be automatically submitted before the user had
+                // even seen the date picker.
+                return;
+            }
             updatedTasks.length && onSubmit(updatedTasks);
             this.close();
         };

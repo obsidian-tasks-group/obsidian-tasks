@@ -81,11 +81,9 @@
         min-width: 15em;
     }
 
-    .tasks-modal-calendar-icon {
+    .tasks-modal-calendar-button {
         grid-column: 3;
-        width: 24px;
-        height: 24px;
-        fill: var(--text-muted);
+        color: var(--text-muted);
     }
 
     .tasks-modal-parsed-date {
@@ -164,7 +162,7 @@
             grid-column: 1;
         }
 
-        .tasks-modal-calendar-icon {
+        .tasks-modal-calendar-button {
             grid-column: 2;
         }
 
@@ -194,7 +192,7 @@
             grid-column: 1;
         }
 
-        .tasks-modal-calendar-icon {
+        .tasks-modal-calendar-button {
             grid-column: 1;
         }
 

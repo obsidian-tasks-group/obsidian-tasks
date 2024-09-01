@@ -2,6 +2,8 @@
     import flatpickr from 'flatpickr';
     import { createEventDispatcher } from 'svelte';
 
+    import { setIcon } from 'obsidian';
+
     import { doAutocomplete } from '../DateTime/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
@@ -18,6 +20,12 @@
     let flatpickrInstance: any;
 
     const dispatch = createEventDispatcher();
+
+    const iconCalendarDays = (node: HTMLElement) => {
+        // For a more general implementation, see:
+        // https://github.com/joethei/obsidian-rss/blob/b600e2ead2505d58aa3e4c7898795bbf58fa3cdc/src/view/IconComponent.svelte
+        setIcon(node, 'calendar-days');
+    };
 
     $: {
         date = doAutocomplete(date);
@@ -96,20 +104,13 @@
     {accesskey}
 />
 
-<!-- Separate the calendar icon from the input to allow typing in the input box -->
-<!-- TODO Fix the accessibility warning, ideally by converting this to a proper button -->
-<!-- TODO Nicer looking icon, or at least make it a paler shade -->
-<svg
-    class="tasks-modal-calendar-icon"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
+<button
+    class="tasks-modal-calendar-button"
+    use:iconCalendarDays
     on:click={openDatePicker}
-    style="cursor: pointer;"
->
-    <path
-        d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z"
-    />
-</svg>
+    aria-label="Open date picker"
+    style="background: none; border: none; padding: 0; cursor: pointer;"
+/>
 
 <code class="tasks-modal-parsed-date">{dateSymbol} {@html parsedDate}</code>
 
