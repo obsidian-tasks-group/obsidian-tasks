@@ -219,7 +219,7 @@ export class TaskLineRenderer {
                     span.addEventListener('click', (ev: MouseEvent) => {
                         ev.preventDefault(); // suppress the default click behavior
                         ev.stopPropagation(); // suppress further event propagation
-                        promptForDate(li, task, componentDateField, defaultTaskSaver);
+                        promptForDate(span, task, componentDateField, defaultTaskSaver);
                     });
 
                     span.addEventListener('contextmenu', (ev: MouseEvent) => {
