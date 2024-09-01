@@ -19,11 +19,6 @@ export function promptForDate(
     dateFieldToEdit: AllTaskDateFields,
     taskSaver: (originalTask: Task, newTasks: Task | Task[]) => Promise<void>,
 ) {
-    if (!parentElement) {
-        console.log('Parent element not found.');
-        return;
-    }
-
     // Delay the initialization of Flatpickr to ensure DOM is ready
     setTimeout(() => {
         const currentValue = task[dateFieldToEdit];
