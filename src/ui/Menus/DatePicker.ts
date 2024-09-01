@@ -24,21 +24,12 @@ export function promptForDate(
         return;
     }
 
-    const input = document.createElement('input');
-    input.type = 'text'; // Flatpickr can hook into a text input
-    parentElement.appendChild(input);
-
-    // Flatpickr seems to require an input element, which we don't want
-    // users to see. So make it as small as possible.
-    input.style.width = '0';
-    input.style.height = '0';
-
     // Delay the initialization of Flatpickr to ensure DOM is ready
     setTimeout(() => {
         const currentValue = task[dateFieldToEdit];
         // TODO figure out how Today's date is determined: if Obsidian is left
         //      running overnight, the flatpickr modal shows the previous day as Today.
-        const fp = flatpickr(input, {
+        const fp = flatpickr(parentElement, {
             defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
             enableTime: false, // Optional: Enable time picker
             dateFormat: 'Y-m-d', // Adjust the date and time format as needed
@@ -52,7 +43,6 @@ export function promptForDate(
                     await taskSaver(task, newTask);
                 }
                 instance.destroy(); // Proper cleanup
-                input.remove(); // Remove the elements after selection
             },
         });
 
