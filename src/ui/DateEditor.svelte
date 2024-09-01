@@ -28,11 +28,11 @@
     // 'weekend' abbreviation omitted due to lack of space.
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
 
-    // Function to open the date-picker and update the date
-    // TODO Reduce its complexity.
-    // TODO Can a function be extracted?
-    // TODO Can the function be moved out?
-    // TODO Can we re-use this in the pre-existing date picker function?
+    /**
+     * A calendar date picker which is not tied to any particular date field.
+     *
+     * See also {@link promptForDate}
+     */
     function openDatePicker() {
         if (inputElement) {
             if (flatpickrInstance) {
@@ -49,12 +49,8 @@
                     dispatch('close', { instance: flatpickrInstance }); // Notify parent about close
 
                     if (selectedDates.length > 0) {
-                        // TODO can this be simplified?
                         const selectedDate = selectedDates[0];
-                        const year = selectedDate.getFullYear();
-                        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-                        const day = String(selectedDate.getDate()).padStart(2, '0');
-                        date = `${year}-${month}-${day}`;
+                        date = window.moment(selectedDate).format('YYYY-MM-DD');
                     }
 
                     flatpickrInstance.destroy(); // Destroy the instance after the date is selected
@@ -64,11 +60,18 @@
                 defaultDate: undefined, // Explicitly define defaultDate with undefined
             };
 
-            // Determine if `parsedDate` should be used as the default date
-            // TODO Remove repetition of regex here - do we have a helper function for this already?
-            if (parsedDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            // We don't use parseDate() here as we want to strictly only match exact dates,
+            // and not words like 'today' or 'tomorrow', to make sure we really
+            // are using the already-parsed date in the Modal UI:
+            const dateMatcher = /^\d{4}-\d{2}-\d{2}$/;
+            if (parsedDate.match(dateMatcher)) {
+                // This is where the user had typed, for example, 'tomorrow' in the input
+                // field, and chrono has converted that to an exact date.
                 options.defaultDate = new Date(parsedDate);
-            } else if (date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            } else if (date.match(dateMatcher)) {
+                // This is a precaution, for the unlikely event that the input field
+                // contains a parsed date, but the parsedDate does not.
+                // It's possible that it is unreachable, but we would need tests to confirm that.
                 options.defaultDate = new Date(date);
             }
 
@@ -94,15 +97,12 @@
 />
 
 <!-- Separate the calendar icon from the input to allow typing in the input box -->
-<!-- TODO Suppress or fix the ally warning-->
+<!-- TODO Fix the accessibility warning, ideally by converting this to a proper button -->
 <!-- TODO Nicer looking icon, or at least make it a paler shade -->
 <svg
-    class="calendar-icon"
+    class="tasks-modal-calendar-icon"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    fill="currentColor"
-    width="24px"
-    height="24px"
     on:click={openDatePicker}
     style="cursor: pointer;"
 >
