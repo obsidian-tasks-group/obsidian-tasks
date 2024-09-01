@@ -19,29 +19,26 @@ export function promptForDate(
     dateFieldToEdit: AllTaskDateFields,
     taskSaver: (originalTask: Task, newTasks: Task | Task[]) => Promise<void>,
 ) {
-    // Delay the initialization of Flatpickr to ensure DOM is ready
-    setTimeout(() => {
-        const currentValue = task[dateFieldToEdit];
-        // TODO figure out how Today's date is determined: if Obsidian is left
-        //      running overnight, the flatpickr modal shows the previous day as Today.
-        const fp = flatpickr(parentElement, {
-            defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
-            enableTime: false, // Optional: Enable time picker
-            dateFormat: 'Y-m-d', // Adjust the date and time format as needed
-            locale: {
-                firstDayOfWeek: 1, // Sets Monday as the first day of the week
-            },
-            onClose: async (selectedDates, _dateStr, instance) => {
-                if (selectedDates.length > 0) {
-                    const date = selectedDates[0];
-                    const newTask = new SetTaskDate(dateFieldToEdit, date).apply(task);
-                    await taskSaver(task, newTask);
-                }
-                instance.destroy(); // Proper cleanup
-            },
-        });
+    const currentValue = task[dateFieldToEdit];
+    // TODO figure out how Today's date is determined: if Obsidian is left
+    //      running overnight, the flatpickr modal shows the previous day as Today.
+    const fp = flatpickr(parentElement, {
+        defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
+        enableTime: false, // Optional: Enable time picker
+        dateFormat: 'Y-m-d', // Adjust the date and time format as needed
+        locale: {
+            firstDayOfWeek: 1, // Sets Monday as the first day of the week
+        },
+        onClose: async (selectedDates, _dateStr, instance) => {
+            if (selectedDates.length > 0) {
+                const date = selectedDates[0];
+                const newTask = new SetTaskDate(dateFieldToEdit, date).apply(task);
+                await taskSaver(task, newTask);
+            }
+            instance.destroy(); // Proper cleanup
+        },
+    });
 
-        // Open the calendar programmatically
-        fp.open();
-    }, 0);
+    // Open the calendar programmatically
+    fp.open();
 }
