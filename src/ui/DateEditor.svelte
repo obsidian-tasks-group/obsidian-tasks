@@ -97,7 +97,7 @@
 />
 
 <!-- Separate the calendar icon from the input to allow typing in the input box -->
-<!-- TODO Suppress or fix the ally warning-->
+<!-- TODO Fix the accessibility warning, ideally by converting this to a proper button -->
 <!-- TODO Nicer looking icon, or at least make it a paler shade -->
 <svg
     class="tasks-modal-calendar-icon"
