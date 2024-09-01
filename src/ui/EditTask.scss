@@ -77,7 +77,15 @@
     }
 
     .tasks-modal-date-input {
+        grid-column: 2;
         min-width: 15em;
+    }
+
+    .tasks-modal-calendar-icon {
+        grid-column: 3;
+        width: 24px;
+        height: 24px;
+        fill: var(--text-muted);
     }
 
     .tasks-modal-parsed-date {
@@ -87,7 +95,7 @@
 
     .future-dates-only {
         grid-column-start: 1;
-        grid-column-end: 3;
+        grid-column-end: 4;
 
         input {
             margin-left: 0.67em;
@@ -143,7 +151,7 @@
     }
 }
 
-@media (max-width: 499px) {
+@media (max-width: 529px) {
     .tasks-modal-priority-section {
         grid-template-columns: 4em auto auto;
     }
@@ -156,8 +164,12 @@
             grid-column: 1;
         }
 
-        .tasks-modal-parsed-date {
+        .tasks-modal-calendar-icon {
             grid-column: 2;
+        }
+
+        .tasks-modal-parsed-date {
+            grid-column: 3;
         }
 
         .status-editor-status-selector {
@@ -179,6 +191,10 @@
 @media (max-width: 399px) {
     .tasks-modal-dates-section {
         .status-editor-status-selector {
+            grid-column: 1;
+        }
+
+        .tasks-modal-calendar-icon {
             grid-column: 1;
         }
 
