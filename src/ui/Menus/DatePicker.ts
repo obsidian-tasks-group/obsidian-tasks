@@ -28,8 +28,10 @@ export function promptForDate(
     input.type = 'text'; // Flatpickr can hook into a text input
     parentElement.appendChild(input);
 
-    // Ensure styles are applied so Flatpickr can render correctly
-    input.style.minWidth = '200px'; // Ensure there's enough room for Flatpickr
+    // Flatpickr seems to require an input element, which we don't want
+    // users to see. So make it as small as possible.
+    input.style.width = '0';
+    input.style.height = '0';
 
     // Delay the initialization of Flatpickr to ensure DOM is ready
     setTimeout(() => {
