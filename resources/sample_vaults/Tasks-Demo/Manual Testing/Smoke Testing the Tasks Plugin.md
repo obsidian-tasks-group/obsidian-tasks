@@ -1,5 +1,7 @@
 # Smoke Testing the Tasks Plugin
 
+*[[#Remaining tests|Jump to the tests...]]*
+
 ## Introduction
 
 - **Intended audience of this note**
@@ -117,6 +119,34 @@ heading includes Rendering of Task Blocks
 
 ---
 
+### Edit dates in Rendered Task Blocks
+
+> [!Example]
+>
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-09-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06
+
+- View this file in **Reading mode**...
+- On the task line above:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.
+  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.
+  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.
+- In the tasks search block below:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.
+  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.
+  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.
+- [ ] #task **check**: Checked all above steps for **editing dates** worked
+
+```tasks
+path includes {{query.file.path}}
+description includes I have all the supported date types
+hide backlink
+hide postpone button
+```
+
+---
+
 ### Create or edit Task modal
 
 - This text should copied in to the task Description, after following steps below
@@ -125,10 +155,12 @@ heading includes Rendering of Task Blocks
     2. **Check** that the text in the list item is copied in to the Description field
     3. Type some values in to the fields
     4. In one of the date fields, type `tm` (including the space afterwards) and **Check** it is expanded in to `tomorrow`
-    5. Hit Return or click **Apply**
-    6. **Check** that the list item above is converted in to a task
-    7. **Check** that values you entered in the modal have been copied in to the list item above
-    8. **Check** that the `#task` tag has been added to the start of the task
+    5. In one of the date fields, left-click the calendar button, and use the context menu to select and save a date. Check that the date is saved.
+    6. In one of the date fields, left-click the calendar button, and click outside the date picker, to confirm that the picker closes and the modal is still usable.
+    7. Hit Return or click **Apply**
+    8. **Check** that the list item above is converted in to a task
+    9. **Check** that values you entered in the modal have been copied in to the list item above
+    10. **Check** that the `#task` tag has been added to the start of the task
 - [ ] #task **check**: Checked all above steps for **creating a task via the modal** worked
 
 ---
