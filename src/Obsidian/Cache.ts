@@ -1,5 +1,5 @@
 import { MetadataCache, Notice, TAbstractFile, TFile, Vault } from 'obsidian';
-import type { CachedMetadata, EventRef } from 'obsidian';
+import type { CachedMetadata, EventRef, Workspace } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 import { TasksFile } from '../Scripting/TasksFile';
@@ -134,6 +134,7 @@ export class Cache {
     private readonly metadataCache: MetadataCache;
     private readonly metadataCacheEventReferences: EventRef[];
     private readonly vault: Vault;
+    private readonly workspace: Workspace;
     private readonly vaultEventReferences: EventRef[];
     private readonly events: TasksEvents;
     private readonly eventsEventReferences: EventRef[];
@@ -152,12 +153,23 @@ export class Cache {
      */
     private loadedAfterFirstResolve: boolean;
 
-    constructor({ metadataCache, vault, events }: { metadataCache: MetadataCache; vault: Vault; events: TasksEvents }) {
+    constructor({
+        metadataCache,
+        vault,
+        workspace,
+        events,
+    }: {
+        metadataCache: MetadataCache;
+        vault: Vault;
+        workspace: Workspace;
+        events: TasksEvents;
+    }) {
         this.logger.debug('Creating Cache object');
 
         this.metadataCache = metadataCache;
         this.metadataCacheEventReferences = [];
         this.vault = vault;
+        this.workspace = workspace;
         this.vaultEventReferences = [];
         this.events = events;
         this.eventsEventReferences = [];
@@ -171,10 +183,16 @@ export class Cache {
         this.loadedAfterFirstResolve = false;
 
         this.subscribeToCache();
-        this.subscribeToVault();
-        this.subscribeToEvents();
 
-        this.loadVault();
+        // Subscribe to vault and load cache later when workspace is ready,
+        // prevents create events for every file, but loadVault cover all files anyway.
+        // For details see: https://docs.obsidian.md/Reference/TypeScript+API/Vault/on('create')
+        this.workspace.onLayoutReady(() => {
+            this.subscribeToVault();
+            this.loadVault();
+        });
+
+        this.subscribeToEvents();
     }
 
     public unload(): void {
