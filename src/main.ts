@@ -52,6 +52,7 @@ export default class TasksPlugin extends Plugin {
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,
+            workspace: this.app.workspace,
             events,
         });
         this.inlineRenderer = new InlineRenderer({ plugin: this });
