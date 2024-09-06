@@ -12,6 +12,10 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
+- 7.10.0:
+  - Right-click on any task date field in Reading and Query Results views to:
+    - postpone Start, Scheduled and Due dates
+    - advance Created, Cancelled and Done dates
 - 7.9.0:
   - Add [[Layout|hide and show]] instructions `hide on completion` and `show on completion`.
   - Add one-click support for the [[Border Theme|Border]] theme.
