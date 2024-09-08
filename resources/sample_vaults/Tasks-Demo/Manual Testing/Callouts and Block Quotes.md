@@ -66,8 +66,10 @@ sort by description
 
 ## 5 Numbered task in unordered list
 
-- [ ] #task 1. Task 1 Numbered task in unordered list
-- [ ] #task 2. Task 2 Numbered task in unordered list
+The following tasks have extra properties on them so that, when in short mode, the tooltips have multiple lines, to demonstrate the issue
+
+- [ ] #task 1. Task 1 Numbered task in unordered list 🔁 every day when done ➕ 2024-09-08 🛫 2024-09-08 ⏳ 2024-09-08 📅 2024-09-08
+- [ ] #task 2. Task 2 Numbered task in unordered list 🔁 every day when done ➕ 2024-09-08 🛫 2024-09-08 ⏳ 2024-09-08 📅 2024-09-08
 
 ## 6 Not currently treated as a task by Tasks
 
