@@ -2,13 +2,33 @@
 
 ## 1 Query
 
-> [!NOTE] Tasks recognised by Tasks Plugin in this file
+### 1.1 Full Mode, with headings - in callout
+
+> [!NOTE] Tasks recognised by Tasks Plugin in this file - full mode
 >
 > ```tasks
-> path includes Callouts and Block Quotes
+> path includes {{query.file.path}}
 > group by heading
 > sort by description
 > ```
+
+### 1.2 Short Mode, without headings - incallout
+
+> [!NOTE] Tasks recognised by Tasks Plugin in this file - short mode
+>
+> ```tasks
+> path includes {{query.file.path}}
+> short mode
+> sort by description
+> ```
+
+### 1.3 Short Mode, without headings -  not in callout
+
+```tasks
+path includes {{query.file.path}}
+short mode
+sort by description
+```
 
 ---
 
