@@ -1555,12 +1555,16 @@ describe('Query', () => {
             expect(queryResult.searchErrorMessage).toEqual(
                 `Error: Search failed.
 The error message was:
-    "ReferenceError: wibble is not defined"`,
+    "ReferenceError: wibble is not defined"
+Problem line:
+    "${source}"`,
             );
             expect(queryResultUpper.searchErrorMessage).toEqual(
                 `Error: Search failed.
 The error message was:
-    "ReferenceError: WIBBLE is not defined"`,
+    "ReferenceError: WIBBLE is not defined"
+Problem line:
+    "${source.toUpperCase()}"`,
             );
         });
     });

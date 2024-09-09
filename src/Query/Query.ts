@@ -265,10 +265,16 @@ ${statement.explainStatement('    ')}
         this.debug(`Executing query: ${this.formatQueryForLogging()}`);
 
         const searchInfo = new SearchInfo(this.tasksFile, tasks);
+
+        // Custom filter (filter by function) does not report the instruction line in any exceptions,
+        // for performance reasons. So we keep track of it here.
+        let mayHaveThrownOnThisInstruction: string | undefined = undefined;
         try {
             this.filters.forEach((filter) => {
+                mayHaveThrownOnThisInstruction = filter.instruction;
                 tasks = tasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
+            mayHaveThrownOnThisInstruction = undefined;
 
             const { debugSettings } = getSettings();
             const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks, searchInfo);
@@ -283,7 +289,16 @@ ${statement.explainStatement('    ')}
             return new QueryResult(taskGroups, tasksSorted.length);
         } catch (e) {
             const description = 'Search failed';
-            return QueryResult.fromError(errorMessageForException(description, e));
+            let rawErrorMessage = errorMessageForException(description, e);
+
+            // if we know the filter that failed, and its text is not insider the error message,
+            // append it to aid user support.
+            if (mayHaveThrownOnThisInstruction && !rawErrorMessage.includes(mayHaveThrownOnThisInstruction)) {
+                rawErrorMessage += `
+Problem line:
+    "${mayHaveThrownOnThisInstruction}"`;
+            }
+            return QueryResult.fromError(rawErrorMessage);
         }
     }
 
