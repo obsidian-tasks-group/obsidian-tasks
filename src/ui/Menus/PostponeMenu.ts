@@ -38,9 +38,11 @@ export class PostponeMenu extends TaskEditingMenu {
             itemNamingFunction: NamingFunction,
             postponingFunction: PostponingFunction,
         ) => {
+            const postponeDateEqualsTaskFieldDate = false;
+
             const title = itemNamingFunction(task, amount, timeUnit);
             // TODO Call setChecked() to put a checkmark against the item, if it represents the current task field value.
-            item.setChecked(false)
+            item.setChecked(postponeDateEqualsTaskFieldDate)
                 .setTitle(title)
                 .onClick(() =>
                     PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit, postponingFunction, taskSaver),
