@@ -38,10 +38,18 @@ export class PostponeMenu extends TaskEditingMenu {
             itemNamingFunction: NamingFunction,
             postponingFunction: PostponingFunction,
         ) => {
-            const postponeDateEqualsTaskFieldDate = false;
+            let postponeDateEqualsTaskFieldDate = false;
+            const dateFieldToPostpone = getDateFieldToPostpone(task);
+            if (dateFieldToPostpone) {
+                const { postponedDate } = postponingFunction(task, dateFieldToPostpone!, timeUnit, amount);
+
+                if (task[dateFieldToPostpone]?.isSame(postponedDate, 'day')) {
+                    postponeDateEqualsTaskFieldDate = true;
+                }
+            }
 
             const title = itemNamingFunction(task, amount, timeUnit);
-            // TODO Call setChecked() to put a checkmark against the item, if it represents the current task field value.
+
             item.setChecked(postponeDateEqualsTaskFieldDate)
                 .setTitle(title)
                 .onClick(() =>
