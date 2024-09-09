@@ -40,9 +40,11 @@ export class PostponeMenu extends TaskEditingMenu {
         ) => {
             const title = itemNamingFunction(task, amount, timeUnit);
             // TODO Call setChecked() to put a checkmark against the item, if it represents the current task field value.
-            item.setTitle(title).onClick(() =>
-                PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit, postponingFunction, taskSaver),
-            );
+            item.setChecked(false)
+                .setTitle(title)
+                .onClick(() =>
+                    PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit, postponingFunction, taskSaver),
+                );
         };
 
         const fixedTitle = fixedDateMenuItemTitle;
