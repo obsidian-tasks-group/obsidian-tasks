@@ -246,6 +246,10 @@ ${source}`;
     }
 
     private setError(message: string, statement: Statement) {
+        this.generateErrorMessage(statement, message);
+    }
+
+    private generateErrorMessage(statement: Statement, message: string) {
         if (statement.allLinesIdentical()) {
             this._error = `${message}
 Problem line: "${statement.rawInstruction}"`;
