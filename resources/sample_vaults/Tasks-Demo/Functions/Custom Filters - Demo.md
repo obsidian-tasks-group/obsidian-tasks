@@ -53,7 +53,8 @@ This section demonstrate how Tasks handles errors when reading `filter by functi
 #### SyntaxError
 
 ```tasks
-filter by function task.due.formatAsDate(
+filter by function \
+    task.due.formatAsDate(
 ```
 
 ### Evaluation Errors
@@ -63,11 +64,13 @@ This section demonstrate how Tasks handles when evaluating `filter by function` 
 #### ReferenceError
 
 ```tasks
-filter by function hello
+filter by function \
+    hello
 ```
 
 #### Non-existent task field
 
 ```tasks
-filter by function task.nonExistentField
+filter by function \
+    task.nonExistentField
 ```
