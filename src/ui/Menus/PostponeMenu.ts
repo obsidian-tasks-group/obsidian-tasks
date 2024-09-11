@@ -39,19 +39,19 @@ export class PostponeMenu extends TaskEditingMenu {
             postponingFunction: PostponingFunction,
         ) => {
             // TODO some of the code below is duplicated in postponeOnClickCallback() and may be refactored
-            let postponeDateEqualsTaskFieldDate = false;
+            let isCurrentValue = false;
             const dateFieldToPostpone = getDateFieldToPostpone(task);
             if (dateFieldToPostpone) {
                 const { postponedDate } = postponingFunction(task, dateFieldToPostpone!, timeUnit, amount);
 
                 if (task[dateFieldToPostpone]?.isSame(postponedDate, 'day')) {
-                    postponeDateEqualsTaskFieldDate = true;
+                    isCurrentValue = true;
                 }
             }
 
             const title = itemNamingFunction(task, amount, timeUnit);
 
-            item.setChecked(postponeDateEqualsTaskFieldDate)
+            item.setChecked(isCurrentValue)
                 .setTitle(title)
                 .onClick(() =>
                     PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit, postponingFunction, taskSaver),
