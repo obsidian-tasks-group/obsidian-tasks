@@ -246,15 +246,15 @@ ${source}`;
     }
 
     private setError(message: string, statement: Statement) {
-        this.generateErrorMessage(statement, message);
+        this._error = Query.generateErrorMessage(statement, message);
     }
 
-    private generateErrorMessage(statement: Statement, message: string) {
+    private static generateErrorMessage(statement: Statement, message: string) {
         if (statement.allLinesIdentical()) {
-            this._error = `${message}
+            return `${message}
 Problem line: "${statement.rawInstruction}"`;
         } else {
-            this._error = `${message}
+            return `${message}
 Problem statement:
 ${statement.explainStatement('    ')}
 `;
