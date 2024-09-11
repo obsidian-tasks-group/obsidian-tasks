@@ -1557,15 +1557,23 @@ wibble`;
                 `Error: Search failed.
 The error message was:
     "ReferenceError: wibble is not defined"
-Problem line:
-    "filter by function wibble"`,
+Problem statement:
+    filter by function \\
+    wibble
+     =>
+    filter by function wibble
+`,
             );
             expect(queryResultUpper.searchErrorMessage).toEqual(
                 `Error: Search failed.
 The error message was:
     "ReferenceError: WIBBLE is not defined"
-Problem line:
-    "FILTER BY FUNCTION WIBBLE"`,
+Problem statement:
+    FILTER BY FUNCTION \\
+    WIBBLE
+     =>
+    FILTER BY FUNCTION WIBBLE
+`,
             );
         });
     });
