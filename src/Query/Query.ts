@@ -293,12 +293,12 @@ ${statement.explainStatement('    ')}
             return new QueryResult(taskGroups, tasksSorted.length);
         } catch (e) {
             const description = 'Search failed';
-            let rawErrorMessage = errorMessageForException(description, e);
+            let message = errorMessageForException(description, e);
 
             if (possiblyBrokenStatement) {
-                rawErrorMessage = Query.generateErrorMessage(possiblyBrokenStatement, rawErrorMessage);
+                message = Query.generateErrorMessage(possiblyBrokenStatement, message);
             }
-            return QueryResult.fromError(rawErrorMessage);
+            return QueryResult.fromError(message);
         }
     }
 
