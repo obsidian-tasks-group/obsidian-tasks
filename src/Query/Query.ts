@@ -246,11 +246,15 @@ ${source}`;
     }
 
     private setError(message: string, statement: Statement) {
+        this._error = Query.generateErrorMessage(statement, message);
+    }
+
+    private static generateErrorMessage(statement: Statement, message: string) {
         if (statement.allLinesIdentical()) {
-            this._error = `${message}
+            return `${message}
 Problem line: "${statement.rawInstruction}"`;
         } else {
-            this._error = `${message}
+            return `${message}
 Problem statement:
 ${statement.explainStatement('    ')}
 `;
@@ -265,10 +269,16 @@ ${statement.explainStatement('    ')}
         this.debug(`Executing query: ${this.formatQueryForLogging()}`);
 
         const searchInfo = new SearchInfo(this.tasksFile, tasks);
+
+        // Custom filter (filter by function) does not report the instruction line in any exceptions,
+        // for performance reasons. So we keep track of it here.
+        let possiblyBrokenStatement: Statement | undefined = undefined;
         try {
             this.filters.forEach((filter) => {
+                possiblyBrokenStatement = filter.statement;
                 tasks = tasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
+            possiblyBrokenStatement = undefined;
 
             const { debugSettings } = getSettings();
             const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks, searchInfo);
@@ -283,7 +293,12 @@ ${statement.explainStatement('    ')}
             return new QueryResult(taskGroups, tasksSorted.length);
         } catch (e) {
             const description = 'Search failed';
-            return QueryResult.fromError(errorMessageForException(description, e));
+            let message = errorMessageForException(description, e);
+
+            if (possiblyBrokenStatement) {
+                message = Query.generateErrorMessage(possiblyBrokenStatement, message);
+            }
+            return QueryResult.fromError(message);
         }
     }
 

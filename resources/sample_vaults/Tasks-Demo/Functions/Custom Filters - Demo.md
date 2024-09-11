@@ -43,3 +43,34 @@ filename includes Custom Filters - Demo
 # Infer tag from heading
 filter by function task.heading.includes('#context/home') || task.tags.find( (tag) => tag === '#context/home' ) && true || false
 ```
+
+## Demonstrate Error Handling
+
+### Parsing Errors
+
+This section demonstrate how Tasks handles errors when reading `filter by function` instructions.
+
+#### SyntaxError
+
+```tasks
+filter by function \
+    task.due.formatAsDate(
+```
+
+### Evaluation Errors
+
+This section demonstrate how Tasks handles when evaluating `filter by function` instructions during searches.
+
+#### ReferenceError
+
+```tasks
+filter by function \
+    hello
+```
+
+#### Non-existent task field
+
+```tasks
+filter by function \
+    task.nonExistentField
+```
