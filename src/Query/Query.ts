@@ -272,13 +272,13 @@ ${statement.explainStatement('    ')}
 
         // Custom filter (filter by function) does not report the instruction line in any exceptions,
         // for performance reasons. So we keep track of it here.
-        let mayHaveThrownOnThisInstruction: Statement | undefined = undefined;
+        let possiblyBrokenStatement: Statement | undefined = undefined;
         try {
             this.filters.forEach((filter) => {
-                mayHaveThrownOnThisInstruction = filter.statement;
+                possiblyBrokenStatement = filter.statement;
                 tasks = tasks.filter((task) => filter.filterFunction(task, searchInfo));
             });
-            mayHaveThrownOnThisInstruction = undefined;
+            possiblyBrokenStatement = undefined;
 
             const { debugSettings } = getSettings();
             const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks, searchInfo);
@@ -295,8 +295,8 @@ ${statement.explainStatement('    ')}
             const description = 'Search failed';
             let rawErrorMessage = errorMessageForException(description, e);
 
-            if (mayHaveThrownOnThisInstruction) {
-                rawErrorMessage = Query.generateErrorMessage(mayHaveThrownOnThisInstruction, rawErrorMessage);
+            if (possiblyBrokenStatement) {
+                rawErrorMessage = Query.generateErrorMessage(possiblyBrokenStatement, rawErrorMessage);
             }
             return QueryResult.fromError(rawErrorMessage);
         }
