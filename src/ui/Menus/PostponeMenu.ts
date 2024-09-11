@@ -38,6 +38,7 @@ export class PostponeMenu extends TaskEditingMenu {
             itemNamingFunction: NamingFunction,
             postponingFunction: PostponingFunction,
         ) => {
+            // TODO some of the code below is duplicated in postponeOnClickCallback() and may be refactored
             let postponeDateEqualsTaskFieldDate = false;
             const dateFieldToPostpone = getDateFieldToPostpone(task);
             if (dateFieldToPostpone) {
