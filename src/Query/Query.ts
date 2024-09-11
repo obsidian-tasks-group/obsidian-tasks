@@ -291,7 +291,7 @@ ${statement.explainStatement('    ')}
             const description = 'Search failed';
             let rawErrorMessage = errorMessageForException(description, e);
 
-            // if we know the filter that failed, and its text is not insider the error message,
+            // if we know the filter that failed, and its text is not inside the error message,
             // append it to aid user support.
             if (mayHaveThrownOnThisInstruction && !rawErrorMessage.includes(mayHaveThrownOnThisInstruction)) {
                 rawErrorMessage += `
