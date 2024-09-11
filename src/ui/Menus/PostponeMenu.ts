@@ -42,7 +42,7 @@ export class PostponeMenu extends TaskEditingMenu {
             let isCurrentValue = false;
             const dateFieldToPostpone = getDateFieldToPostpone(task);
             if (dateFieldToPostpone) {
-                const { postponedDate } = postponingFunction(task, dateFieldToPostpone!, timeUnit, amount);
+                const { postponedDate } = postponingFunction(task, dateFieldToPostpone, timeUnit, amount);
 
                 if (task[dateFieldToPostpone]?.isSame(postponedDate, 'day')) {
                     isCurrentValue = true;
