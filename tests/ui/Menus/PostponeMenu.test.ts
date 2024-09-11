@@ -88,7 +88,7 @@ describe('PostponeMenu', () => {
         const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().startDate(today));
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-              Start today, on Sun 3rd Dec
+            x Start today, on Sun 3rd Dec
               Start tomorrow, on Mon 4th Dec
               ---
               Start in 2 days, on Tue 5th Dec
@@ -114,7 +114,7 @@ describe('PostponeMenu', () => {
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
               Scheduled today, on Sun 3rd Dec
-              Scheduled tomorrow, on Mon 4th Dec
+            x Scheduled tomorrow, on Mon 4th Dec
               ---
               Postpone scheduled date by 2 days, to Wed 6th Dec
               Postpone scheduled date by 3 days, to Thu 7th Dec
