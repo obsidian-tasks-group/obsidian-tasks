@@ -31,7 +31,8 @@ export class Postponer {
     }
 
     public postponeButtonTitle(amount: number, timeUnit: unitOfTime.DurationConstructor): string {
-        return extracted(this.task, amount, timeUnit);
+        const buttonText = postponeMenuItemTitle(this.task, amount, timeUnit);
+        return `ℹ️ ${buttonText} (right-click for more options)`;
     }
 }
 
@@ -145,11 +146,6 @@ export function postponementSuccessMessage(postponedDate: Moment | null, dateFie
     } else {
         return `Task's ${dateFieldToPostpone} removed`;
     }
-}
-
-function extracted(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
-    const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
-    return `ℹ️ ${buttonText} (right-click for more options)`;
 }
 
 export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
