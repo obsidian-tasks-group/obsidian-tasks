@@ -351,10 +351,10 @@ export class QueryResultsRenderer {
         }
     }
 
-    private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean, _postponer: Postponer) {
+    private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean, postponer: Postponer) {
         const amount = 1;
         const timeUnit = 'day';
-        const buttonTooltipText = new Postponer(task).postponeButtonTitle(amount, timeUnit);
+        const buttonTooltipText = postponer.postponeButtonTitle(amount, timeUnit);
 
         const button = createAndAppendElement('a', listItem);
         button.classList.add('tasks-postpone');
