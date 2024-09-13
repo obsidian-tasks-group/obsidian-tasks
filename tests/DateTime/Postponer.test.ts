@@ -114,62 +114,72 @@ describe('postpone - whether to show button', () => {
 
     it('should not show button for a task with no dates', () => {
         const task = new TaskBuilder().build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(false);
+        expect(postponer.shouldShowPostponeButton()).toEqual(false);
     });
 
     it('should not show button for a task with a created date only', () => {
         const task = new TaskBuilder().createdDate('2023-11-29').build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(false);
+        expect(postponer.shouldShowPostponeButton()).toEqual(false);
     });
 
     it('should not show button for a task with a done date only', () => {
         const task = new TaskBuilder().doneDate('2023-11-30').build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(false);
+        expect(postponer.shouldShowPostponeButton()).toEqual(false);
     });
 
     it('should show button for a task with a start date only', () => {
         const task = new TaskBuilder().startDate('2023-12-01').build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(true);
+        expect(postponer.shouldShowPostponeButton()).toEqual(true);
     });
 
     it('should not show button for a task with an invalid start date', () => {
         const task = new TaskBuilder().startDate(invalidDate).build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(false);
+        expect(postponer.shouldShowPostponeButton()).toEqual(false);
     });
 
     it('should show button for a task with a scheduled date only', () => {
         const task = new TaskBuilder().scheduledDate('2023-12-02').build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(true);
+        expect(postponer.shouldShowPostponeButton()).toEqual(true);
     });
 
     it('should not show button for a task with an invalid scheduled date', () => {
         const task = new TaskBuilder().scheduledDate(invalidDate).build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(false);
+        expect(postponer.shouldShowPostponeButton()).toEqual(false);
     });
 
     it('should show button for a task with a due date only', () => {
         const task = new TaskBuilder().dueDate('2023-12-03').build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(true);
+        expect(postponer.shouldShowPostponeButton()).toEqual(true);
     });
 
     it('should not show button for a task with an invalid due date', () => {
         const task = new TaskBuilder().dueDate(invalidDate).build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(false);
+        expect(postponer.shouldShowPostponeButton()).toEqual(false);
     });
 
     it('should not show button for a task with an invalid created date', () => {
         const task = new TaskBuilder().createdDate(invalidDate).scheduledDate(today).build();
+        const postponer = new Postponer(task);
 
-        expect(new Postponer(task).shouldShowPostponeButton()).toEqual(false);
+        expect(postponer.shouldShowPostponeButton()).toEqual(false);
     });
 });
 
