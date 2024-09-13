@@ -249,7 +249,8 @@ export class QueryResultsRenderer {
         }
 
         if (!this.query.queryLayoutOptions.hidePostponeButton) {
-            if (new Postponer(task).shouldShowPostponeButton()) {
+            const postponer = new Postponer(task);
+            if (postponer.shouldShowPostponeButton()) {
                 this.addPostponeButton(extrasSpan, task, shortMode);
             }
         }
