@@ -5,6 +5,18 @@ import { DateFallback } from './DateFallback';
 import { TasksDate } from './TasksDate';
 import type { AllTaskDateFields, HappensDate } from './DateFieldTypes';
 
+export class Postponer {
+    private readonly task: Task;
+
+    constructor(task: Task) {
+        this.task = task;
+    }
+
+    public shouldShowPostponeButton(): boolean {
+        return extracted(this.task);
+    }
+}
+
 function extracted(task: Task) {
     // don't postpone if any invalid dates
     for (const dateField of Task.allDateFields()) {
@@ -24,7 +36,8 @@ function extracted(task: Task) {
 }
 
 export function shouldShowPostponeButton(task: Task) {
-    return extracted(task);
+    const postponer = new Postponer(task);
+    return postponer.shouldShowPostponeButton();
 }
 
 /**
