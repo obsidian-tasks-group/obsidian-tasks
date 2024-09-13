@@ -31,11 +31,6 @@ export class Postponer {
     }
 }
 
-export function shouldShowPostponeButton(task: Task) {
-    const postponer = new Postponer(task);
-    return postponer.shouldShowPostponeButton();
-}
-
 /**
  * Gets a {@link HappensDate} field from a {@link Task} with the following priority: due > scheduled > start.
  * If the task has no happens field {@link HappensDate}, null is returned.
