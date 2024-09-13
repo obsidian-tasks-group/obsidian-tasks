@@ -176,10 +176,12 @@ describe('postpone - whether to show button', () => {
 describe('postpone - UI text', () => {
     it('should include date type and new date in button tooltip', () => {
         const task = new TaskBuilder().dueDate(today).build();
-        expect(new Postponer(task).postponeButtonTitle(1, 'day')).toEqual(
+        const postponer = new Postponer(task);
+
+        expect(postponer.postponeButtonTitle(1, 'day')).toEqual(
             'ℹ️ Due tomorrow, on Mon 4th Dec (right-click for more options)',
         );
-        expect(new Postponer(task).postponeButtonTitle(2, 'days')).toEqual(
+        expect(postponer.postponeButtonTitle(2, 'days')).toEqual(
             'ℹ️ Due in 2 days, on Tue 5th Dec (right-click for more options)',
         );
     });
