@@ -248,8 +248,10 @@ export class QueryResultsRenderer {
             this.addEditButton(extrasSpan, task, queryRendererParameters);
         }
 
-        if (!this.query.queryLayoutOptions.hidePostponeButton && new Postponer(task).shouldShowPostponeButton()) {
-            this.addPostponeButton(extrasSpan, task, shortMode);
+        if (!this.query.queryLayoutOptions.hidePostponeButton) {
+            if (new Postponer(task).shouldShowPostponeButton()) {
+                this.addPostponeButton(extrasSpan, task, shortMode);
+            }
         }
 
         taskList.appendChild(listItem);
