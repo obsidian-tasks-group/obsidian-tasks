@@ -251,7 +251,7 @@ export class QueryResultsRenderer {
         if (!this.query.queryLayoutOptions.hidePostponeButton) {
             const postponer = new Postponer(task);
             if (postponer.shouldShowPostponeButton()) {
-                this.addPostponeButton(extrasSpan, task, shortMode);
+                this.addPostponeButton(extrasSpan, task, shortMode, postponer);
             }
         }
 
@@ -351,7 +351,7 @@ export class QueryResultsRenderer {
         }
     }
 
-    private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
+    private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean, _postponer: Postponer) {
         const amount = 1;
         const timeUnit = 'day';
         const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
