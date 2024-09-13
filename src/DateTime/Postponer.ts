@@ -5,7 +5,7 @@ import { DateFallback } from './DateFallback';
 import { TasksDate } from './TasksDate';
 import type { AllTaskDateFields, HappensDate } from './DateFieldTypes';
 
-export function shouldShowPostponeButton(task: Task) {
+function extracted(task: Task) {
     // don't postpone if any invalid dates
     for (const dateField of Task.allDateFields()) {
         const taskElement = task[dateField] as Moment;
@@ -21,6 +21,10 @@ export function shouldShowPostponeButton(task: Task) {
 
     // only postpone not done tasks
     return !task.isDone && hasAValidHappensDate;
+}
+
+export function shouldShowPostponeButton(task: Task) {
+    return extracted(task);
 }
 
 /**
