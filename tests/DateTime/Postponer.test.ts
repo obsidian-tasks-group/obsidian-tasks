@@ -99,7 +99,9 @@ describe('postpone - whether to show button', () => {
         function checkPostponeButtonVisibility(statusType: StatusType, expected: boolean) {
             const status = new Status(new StatusConfiguration('p', 'Test', 'q', true, statusType));
             const task = new TaskBuilder().dueDate('2023-10-30').status(status).build();
-            expect(new Postponer(task).shouldShowPostponeButton()).toEqual(expected);
+            const postponer = new Postponer(task);
+
+            expect(postponer.shouldShowPostponeButton()).toEqual(expected);
         }
 
         // Statuses considered as done:
