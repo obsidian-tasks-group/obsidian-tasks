@@ -103,6 +103,10 @@ export class PostponeMenu extends TaskEditingMenu {
 
         const { postponedDate, postponedTask } = postponingFunction(task, dateFieldToPostpone, timeUnit, amount);
 
+        if (task[dateFieldToPostpone]?.isSame(postponedDate, 'day')) {
+            return;
+        }
+
         await taskSaver(task, postponedTask);
         PostponeMenu.postponeSuccessCallback(button, dateFieldToPostpone, postponedDate);
     }
