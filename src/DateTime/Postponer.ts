@@ -13,26 +13,22 @@ export class Postponer {
     }
 
     public shouldShowPostponeButton(): boolean {
-        return extracted(this.task);
-    }
-}
-
-function extracted(task: Task) {
-    // don't postpone if any invalid dates
-    for (const dateField of Task.allDateFields()) {
-        const taskElement = task[dateField] as Moment;
-        if (taskElement && !taskElement.isValid()) {
-            return false;
+        // don't postpone if any invalid dates
+        for (const dateField of Task.allDateFields()) {
+            const taskElement = this.task[dateField] as Moment;
+            if (taskElement && !taskElement.isValid()) {
+                return false;
+            }
         }
+
+        // require a valid happens date to postpone
+        const hasAValidHappensDate = this.task.happensDates.some((date) => {
+            return !!date?.isValid();
+        });
+
+        // only postpone not done tasks
+        return !this.task.isDone && hasAValidHappensDate;
     }
-
-    // require a valid happens date to postpone
-    const hasAValidHappensDate = task.happensDates.some((date) => {
-        return !!date?.isValid();
-    });
-
-    // only postpone not done tasks
-    return !task.isDone && hasAValidHappensDate;
 }
 
 export function shouldShowPostponeButton(task: Task) {
