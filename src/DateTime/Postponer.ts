@@ -143,9 +143,13 @@ export function postponementSuccessMessage(postponedDate: Moment | null, dateFie
     }
 }
 
-export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
+function extracted(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
     const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
     return `ℹ️ ${buttonText} (right-click for more options)`;
+}
+
+export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
+    return extracted(task, amount, timeUnit);
 }
 
 /**
