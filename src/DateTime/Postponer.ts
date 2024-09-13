@@ -29,6 +29,10 @@ export class Postponer {
         // only postpone not done tasks
         return !this.task.isDone && hasAValidHappensDate;
     }
+
+    public postponeButtonTitle(amount: number, timeUnit: unitOfTime.DurationConstructor): string {
+        return extracted(this.task, amount, timeUnit);
+    }
 }
 
 /**
@@ -149,7 +153,7 @@ function extracted(task: Task, amount: number, timeUnit: unitOfTime.DurationCons
 }
 
 export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
-    return extracted(task, amount, timeUnit);
+    return new Postponer(task).postponeButtonTitle(amount, timeUnit);
 }
 
 /**
