@@ -148,10 +148,6 @@ export function postponementSuccessMessage(postponedDate: Moment | null, dateFie
     }
 }
 
-export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
-    return new Postponer(task).postponeButtonTitle(amount, timeUnit);
-}
-
 /**
  * Get the menu text to use when changing a task date relative to its current value.
  * @param task

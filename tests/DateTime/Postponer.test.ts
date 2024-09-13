@@ -10,7 +10,6 @@ import {
     createTaskWithDateRemoved,
     fixedDateMenuItemTitle,
     getDateFieldToPostpone,
-    postponeButtonTitle,
     postponeMenuItemTitle,
     postponementSuccessMessage,
     removeDateMenuItemTitle,
@@ -177,10 +176,10 @@ describe('postpone - whether to show button', () => {
 describe('postpone - UI text', () => {
     it('should include date type and new date in button tooltip', () => {
         const task = new TaskBuilder().dueDate(today).build();
-        expect(postponeButtonTitle(task, 1, 'day')).toEqual(
+        expect(new Postponer(task).postponeButtonTitle(1, 'day')).toEqual(
             'ℹ️ Due tomorrow, on Mon 4th Dec (right-click for more options)',
         );
-        expect(postponeButtonTitle(task, 2, 'days')).toEqual(
+        expect(new Postponer(task).postponeButtonTitle(2, 'days')).toEqual(
             'ℹ️ Due in 2 days, on Tue 5th Dec (right-click for more options)',
         );
     });

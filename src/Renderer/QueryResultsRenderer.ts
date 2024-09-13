@@ -1,7 +1,7 @@
 import type { Component, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
-import { Postponer, postponeButtonTitle } from '../DateTime/Postponer';
+import { Postponer } from '../DateTime/Postponer';
 import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
@@ -354,7 +354,7 @@ export class QueryResultsRenderer {
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean, _postponer: Postponer) {
         const amount = 1;
         const timeUnit = 'day';
-        const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
+        const buttonTooltipText = new Postponer(task).postponeButtonTitle(amount, timeUnit);
 
         const button = createAndAppendElement('a', listItem);
         button.classList.add('tasks-postpone');
