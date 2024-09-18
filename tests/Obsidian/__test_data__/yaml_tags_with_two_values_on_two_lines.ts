@@ -128,7 +128,7 @@ export const yaml_tags_with_two_values_on_two_lines = {
         },
         frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#value-1-of-2-on-two-lines', '#value-2-of-2-on-two-lines', '#task'],
     parseFrontMatterTags: ['#value-1-of-2-on-two-lines', '#value-2-of-2-on-two-lines'],
 };

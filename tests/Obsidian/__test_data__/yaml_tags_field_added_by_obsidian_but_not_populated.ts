@@ -126,7 +126,7 @@ export const yaml_tags_field_added_by_obsidian_but_not_populated = {
         },
         frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

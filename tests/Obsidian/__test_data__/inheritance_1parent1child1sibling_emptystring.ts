@@ -117,7 +117,7 @@ export const inheritance_1parent1child1sibling_emptystring = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#task', '#task', '#task'],
     parseFrontMatterTags: null,
 };

@@ -86,7 +86,7 @@ export const inheritance_task_mixed_children = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: [],
     parseFrontMatterTags: null,
 };

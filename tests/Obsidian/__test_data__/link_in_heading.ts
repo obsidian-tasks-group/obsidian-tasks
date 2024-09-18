@@ -143,7 +143,7 @@ export const link_in_heading = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

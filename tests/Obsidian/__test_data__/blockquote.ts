@@ -123,7 +123,7 @@ export const blockquote = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#task', '#task'],
     parseFrontMatterTags: null,
 };

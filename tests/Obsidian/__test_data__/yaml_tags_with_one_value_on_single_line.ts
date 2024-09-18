@@ -126,7 +126,7 @@ export const yaml_tags_with_one_value_on_single_line = {
         },
         frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#single-value-single-line', '#task'],
     parseFrontMatterTags: ['#single-value-single-line'],
 };
