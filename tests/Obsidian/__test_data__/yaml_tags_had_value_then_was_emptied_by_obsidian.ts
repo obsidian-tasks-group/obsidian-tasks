@@ -127,7 +127,7 @@ export const yaml_tags_had_value_then_was_emptied_by_obsidian = {
         },
         frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

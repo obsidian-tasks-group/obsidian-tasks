@@ -216,7 +216,7 @@ export const inheritance_1parent2children2grandchildren1sibling = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#task', '#task', '#task', '#task', '#task', '#task'],
     parseFrontMatterTags: null,
 };

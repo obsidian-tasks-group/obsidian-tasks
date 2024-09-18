@@ -128,7 +128,7 @@ export const yaml_tags_has_multiple_values = {
         },
         frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#multiple1', '#multiple2', '#task'],
     parseFrontMatterTags: ['#multiple1', '#multiple2'],
 };

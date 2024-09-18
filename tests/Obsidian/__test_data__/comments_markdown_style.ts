@@ -207,7 +207,7 @@ export const comments_markdown_style = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: ['#task', '#task', '#i-am-parsed-by-obsidian', '#task'],
     parseFrontMatterTags: null,
 };

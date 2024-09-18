@@ -122,7 +122,7 @@ export const inheritance_task_2listitem_3task = {
             },
         ],
     },
-    obsidianApiVersion: '1.6.5',
+    obsidianApiVersion: '1.7.1',
     getAllTags: [],
     parseFrontMatterTags: null,
 };
