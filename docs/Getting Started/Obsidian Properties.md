@@ -241,3 +241,5 @@ The following table shows how most of those properties are interpreted in Tasks 
 - It is not yet possible to use properties in the query file:
   - `query.file.hasProperty()` does not yet work.
   - `query.file.property()` does not yet work.
+
+We are tracking this in [issue #3083](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3083).
