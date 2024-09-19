@@ -6,8 +6,8 @@ import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { DateFallback } from '../../src/DateTime/DateFallback';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import type { Task } from '../../src/Task/Task';
 import EditTask from '../../src/ui/EditTask.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
@@ -334,9 +334,8 @@ describe('Task editing', () => {
             resetSettings();
         });
 
-        const line = '- [ ] simple';
         it('should change status to Done and add doneDate', async () => {
-            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, 'x');
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus('- [ ] simple', 'x');
             expect(getElementValue(container, 'done')).toEqual(today);
 
             submit.click();
@@ -355,7 +354,7 @@ describe('Task editing', () => {
         });
 
         it('should change status to Cancelled and add cancelledDate', async () => {
-            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(line, '-');
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus('- [ ] simple', '-');
             expect(getElementValue(container, 'cancelled')).toEqual(today);
 
             submit.click();
