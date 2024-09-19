@@ -32,14 +32,8 @@
     const _onStatusChange = () => {
         const newStatus = new Status(JSON.parse(jsonStatus).configuration as StatusConfiguration);
 
-        // Use statusSymbol to find the status to save to editableTask.status
-        const selectedStatus: Status | undefined = statusOptions.find((s) => s.symbol === newStatus.symbol);
-        if (selectedStatus) {
-            editableTask.status = selectedStatus;
-        } else {
-            console.log(`Error in EditTask: cannot find status with symbol ${newStatus.symbol}`);
-            return;
-        }
+        const selectedStatus = newStatus;
+        editableTask.status = selectedStatus;
 
         // Obtain a temporary task with the new status applied, to see what would
         // happen to the done date:
