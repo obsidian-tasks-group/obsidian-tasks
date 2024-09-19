@@ -11,7 +11,6 @@
     export let statusOptions: Status[];
     export let accesskey: string | null;
 
-    let statusSymbol = task.status.symbol;
     let jsonStatus = JSON.stringify(task.status);
 
     function setStatusRelatedDate(currentValue: string, isInStatus: boolean, editedValue: TasksDate) {
@@ -32,7 +31,7 @@
 
     const _onStatusChange = () => {
         const newStatus = new Status(JSON.parse(jsonStatus).configuration as StatusConfiguration);
-        statusSymbol = newStatus.symbol;
+        const statusSymbol = newStatus.symbol;
 
         // Use statusSymbol to find the status to save to editableTask.status
         const selectedStatus: Status | undefined = statusOptions.find((s) => s.symbol === statusSymbol);
