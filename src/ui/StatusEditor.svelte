@@ -31,23 +31,22 @@
     const _onStatusChange = () => {
         const newStatus = new Status(JSON.parse(jsonStatus).configuration);
 
-        const selectedStatus = newStatus;
-        editableTask.status = selectedStatus;
+        editableTask.status = newStatus;
 
         // Obtain a temporary task with the new status applied, to see what would
         // happen to the done date:
-        const taskWithEditedStatusApplied = task.handleNewStatus(selectedStatus).pop();
+        const taskWithEditedStatusApplied = task.handleNewStatus(newStatus).pop();
 
         if (taskWithEditedStatusApplied) {
             editableTask.doneDate = setStatusRelatedDate(
                 editableTask.doneDate,
-                selectedStatus.isCompleted(),
+                newStatus.isCompleted(),
                 taskWithEditedStatusApplied.done,
             );
 
             editableTask.cancelledDate = setStatusRelatedDate(
                 editableTask.cancelledDate,
-                selectedStatus.isCancelled(),
+                newStatus.isCancelled(),
                 taskWithEditedStatusApplied.cancelled,
             );
         }
