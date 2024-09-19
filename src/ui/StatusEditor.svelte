@@ -10,7 +10,7 @@
     export let statusOptions: Status[];
     export let accesskey: string | null;
 
-    let jsonStatus = JSON.stringify(task.status);
+    let selectedStatus = JSON.stringify(task.status);
 
     function setStatusRelatedDate(currentValue: string, isInStatus: boolean, editedValue: TasksDate) {
         const dateFieldIsEmpty = currentValue === '';
@@ -29,7 +29,7 @@
     }
 
     const _onStatusChange = () => {
-        const newStatus = new Status(JSON.parse(jsonStatus).configuration);
+        const newStatus = new Status(JSON.parse(selectedStatus).configuration);
 
         editableTask.status = newStatus;
 
@@ -56,7 +56,7 @@
 <label for="status">{@html labelContentWithAccessKey('Status', accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <select
-    bind:value={jsonStatus}
+    bind:value={selectedStatus}
     on:change={_onStatusChange}
     id="status-type"
     class="status-editor-status-selector"
