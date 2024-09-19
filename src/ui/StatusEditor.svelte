@@ -26,9 +26,18 @@
         const taskWithEditedStatusApplied = task.handleNewStatus(selectedStatus).pop();
 
         if (taskWithEditedStatusApplied) {
-            // Update the doneDate field, in case changing the status changed the value:
-            editableTask.doneDate = taskWithEditedStatusApplied.done.formatAsDate();
-            editableTask.cancelledDate = taskWithEditedStatusApplied.cancelled.formatAsDate();
+            // change the done date using XNOR logic:
+            //  done date is empty and new status is DONE
+            // OR
+            //  done date is filled and new status is not DONE
+            if ((editableTask.doneDate === '') === selectedStatus.isCompleted()) {
+                editableTask.doneDate = taskWithEditedStatusApplied.done.formatAsDate();
+            }
+
+            // same logic for cancelled date & CANCELLED status
+            if ((editableTask.cancelledDate === '') === selectedStatus.isCancelled()) {
+                editableTask.cancelledDate = taskWithEditedStatusApplied.cancelled.formatAsDate();
+            }
         }
     };
 </script>
