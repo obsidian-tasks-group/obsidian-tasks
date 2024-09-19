@@ -335,30 +335,38 @@ describe('Task editing', () => {
         });
 
         it('should change status to Done and add doneDate', async () => {
-            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus('- [ ] simple', 'x');
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] expecting done date to be added',
+                'x',
+            );
             expect(getElementValue(container, 'done')).toEqual(today);
 
             submit.click();
-            expect(await waitForClose).toMatchInlineSnapshot('"- [x] simple ✅ 2024-02-29"');
+            expect(await waitForClose).toMatchInlineSnapshot('"- [x] expecting done date to be added ✅ 2024-02-29"');
         });
 
         it('should change status to Todo and remove doneDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
-                '- [x] simple ✅ 2024-02-29',
+                '- [x] expecting done date to be removed ✅ 2024-02-29',
                 ' ',
             );
             expect(getElementValue(container, 'done')).toEqual('');
 
             submit.click();
-            expect(await waitForClose).toMatchInlineSnapshot('"- [ ] simple"');
+            expect(await waitForClose).toMatchInlineSnapshot('"- [ ] expecting done date to be removed"');
         });
 
         it('should change status to Cancelled and add cancelledDate', async () => {
-            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus('- [ ] simple', '-');
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] expecting cancelled date to be added',
+                '-',
+            );
             expect(getElementValue(container, 'cancelled')).toEqual(today);
 
             submit.click();
-            expect(await waitForClose).toMatchInlineSnapshot('"- [-] simple ❌ 2024-02-29"');
+            expect(await waitForClose).toMatchInlineSnapshot(
+                '"- [-] expecting cancelled date to be added ❌ 2024-02-29"',
+            );
         });
 
         it('should create new instance of recurring task, with doneDate set to today', async () => {
