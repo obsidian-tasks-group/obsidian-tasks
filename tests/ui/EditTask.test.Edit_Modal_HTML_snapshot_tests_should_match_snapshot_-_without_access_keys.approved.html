@@ -134,10 +134,22 @@
     <section class="tasks-modal-dates-section">
       <label for="status">Status</label>
       <select id="status-type" class="status-editor-status-selector">
-        <option value=" ">Todo [ ]</option>
-        <option value="/">In Progress [/]</option>
-        <option value="x">Done [x]</option>
-        <option value="-">Cancelled [-]</option>
+        <option
+          value='{"configuration":{"symbol":" ","name":"Todo","nextStatusSymbol":"x","availableAsCommand":true,"type":"TODO"}}'>
+          Todo [ ]
+        </option>
+        <option
+          value='{"configuration":{"symbol":"/","name":"In Progress","nextStatusSymbol":"x","availableAsCommand":true,"type":"IN_PROGRESS"}}'>
+          In Progress [/]
+        </option>
+        <option
+          value='{"configuration":{"symbol":"x","name":"Done","nextStatusSymbol":" ","availableAsCommand":true,"type":"DONE"}}'>
+          Done [x]
+        </option>
+        <option
+          value='{"configuration":{"symbol":"-","name":"Cancelled","nextStatusSymbol":" ","availableAsCommand":true,"type":"CANCELLED"}}'>
+          Cancelled [-]
+        </option>
       </select>
       <label for="created">Created</label>
       <input id="created" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />

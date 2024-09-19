@@ -7,6 +7,7 @@ import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { DateFallback } from '../../src/DateTime/DateFallback';
+import { Status } from '../../src/Statuses/Status';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import type { Task } from '../../src/Task/Task';
 import EditTask from '../../src/ui/EditTask.svelte';
@@ -144,7 +145,7 @@ async function editFieldAndSave(line: string, elementId: string, newValue: strin
     return await editInputElementAndSubmit(description, newValue, submit, waitForClose);
 }
 
-async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: string) {
+async function renderTaskModalAndChangeStatus(line: string, newStatus: Status) {
     const task = taskFromLine({ line: line, path: '' });
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
@@ -153,7 +154,7 @@ async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: str
     const submit = getAndCheckApplyButton(result);
 
     await fireEvent.change(statusSelector, {
-        target: { value: newStatusSymbol },
+        target: { value: JSON.stringify(newStatus) },
     });
     return { waitForClose, container, submit };
 }
@@ -168,9 +169,9 @@ async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: str
  * @param line
  * @param elementId - specifying the field to edit
  * @param newValue - the new value for the field
- * @param newStatusSymbol - new Status symbol value
+ * @param newStatus - new Status symbol value
  */
-async function renderChangeDateAndStatus(line: string, elementId: string, newValue: string, newStatusSymbol: string) {
+async function renderChangeDateAndStatus(line: string, elementId: string, newValue: string, newStatus: Status) {
     const task = taskFromLine({ line: line, path: '' });
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
@@ -180,7 +181,7 @@ async function renderChangeDateAndStatus(line: string, elementId: string, newVal
 
     const statusSelector = getAndCheckRenderedElement<HTMLSelectElement>(container, 'status-type');
     await fireEvent.change(statusSelector, {
-        target: { value: newStatusSymbol },
+        target: { value: JSON.stringify(newStatus) },
     });
 
     const submit = getAndCheckApplyButton(result);
@@ -366,7 +367,7 @@ describe('Task editing', () => {
         it('should change status to Done and add doneDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] expecting done date to be added',
-                'x',
+                Status.DONE,
             );
             expect(getElementValue(container, 'done')).toEqual(today);
 
@@ -377,7 +378,7 @@ describe('Task editing', () => {
         it('should change status to Done and keep doneDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] expecting done date to be kept ✅ 2024-09-19',
-                'x',
+                Status.DONE,
             );
             expect(getElementValue(container, 'done')).toEqual('2024-09-19');
 
@@ -388,7 +389,7 @@ describe('Task editing', () => {
         it('should change status to Todo and remove doneDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [x] expecting done date to be removed ✅ 2024-02-29',
-                ' ',
+                Status.TODO,
             );
             expect(getElementValue(container, 'done')).toEqual('');
 
@@ -399,7 +400,7 @@ describe('Task editing', () => {
         it('should change status to Cancelled and add cancelledDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] expecting cancelled date to be added',
-                '-',
+                Status.CANCELLED,
             );
             expect(getElementValue(container, 'cancelled')).toEqual(today);
 
@@ -412,7 +413,7 @@ describe('Task editing', () => {
         it('should change status to Cancelled and keep cancelledDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] expecting cancelled date to be kept ❌ 2024-09-20',
-                '-',
+                Status.CANCELLED,
             );
             expect(getElementValue(container, 'cancelled')).toEqual('2024-09-20');
 
@@ -425,7 +426,7 @@ describe('Task editing', () => {
         it('should change status to Todo and remove cancelledDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [-] expecting cancelled date to be removed ❌ 2024-02-29',
-                ' ',
+                Status.TODO,
             );
             expect(getElementValue(container, 'cancelled')).toEqual('');
 
@@ -440,21 +441,21 @@ describe('Task editing', () => {
          * @param line
          * @param dateElementToChange
          * @param dateValue
-         * @param newStatusSymbol
+         * @param statusSymbol
          * @param expectedTaskAfterEdits
          */
         async function testDateInputAndStatusChange(
             line: string,
             dateElementToChange: string,
             dateValue: string,
-            newStatusSymbol: string,
+            statusSymbol: Status,
             expectedTaskAfterEdits: string,
         ) {
             const { waitForClose, container, submit } = await renderChangeDateAndStatus(
                 line,
                 dateElementToChange,
                 dateValue,
-                newStatusSymbol,
+                statusSymbol,
             );
 
             expect(getElementValue(container, dateElementToChange)).toEqual(dateValue);
@@ -468,14 +469,14 @@ describe('Task editing', () => {
                 '- [ ] input done date, change status to done and expect the date to be kept',
                 'done',
                 '2024-09-20',
-                'x',
+                Status.DONE,
                 '- [x] input done date, change status to done and expect the date to be kept ✅ 2024-09-20',
             ],
             [
                 '- [ ] input cancelled date, change status to cancelled and expect the date to be kept',
                 'cancelled',
                 '2024-09-21',
-                '-',
+                Status.CANCELLED,
                 // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3089
                 '- [-] input cancelled date, change status to cancelled and expect the date to be kept ❌ 2024-09-21',
             ],
@@ -485,14 +486,14 @@ describe('Task editing', () => {
                 line: string,
                 dateElementToChange: string,
                 dateValue: string,
-                newStatusSymbol: string,
+                statusSymbol: Status,
                 expectedTaskAfterEdits: string,
             ) => {
                 await testDateInputAndStatusChange(
                     line,
                     dateElementToChange,
                     dateValue,
-                    newStatusSymbol,
+                    statusSymbol,
                     expectedTaskAfterEdits,
                 );
             },
@@ -502,7 +503,7 @@ describe('Task editing', () => {
             updateSettings({ recurrenceOnNextLine: false });
             const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] Recurring 🔁 every day 📅 2024-02-17',
-                'x',
+                Status.DONE,
             );
 
             submit.click();
@@ -516,7 +517,7 @@ describe('Task editing', () => {
             updateSettings({ recurrenceOnNextLine: true });
             const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] Recurring 🔁 every day 📅 2024-02-17',
-                'x',
+                Status.DONE,
             );
 
             submit.click();
@@ -531,7 +532,7 @@ describe('Task editing', () => {
 
             const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] Recurring 🔁 every day when done 📅 2024-02-17',
-                'x',
+                Status.DONE,
             );
 
             submit.click();
@@ -546,7 +547,7 @@ describe('Task editing', () => {
 
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] Recurring 🔁 every day when done 📅 2024-02-17',
-                'x',
+                Status.DONE,
             );
 
             const doneField = getAndCheckRenderedElement<HTMLInputElement>(container, 'done');
