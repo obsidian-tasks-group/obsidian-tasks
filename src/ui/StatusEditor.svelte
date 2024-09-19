@@ -31,14 +31,13 @@
 
     const _onStatusChange = () => {
         const newStatus = new Status(JSON.parse(jsonStatus).configuration as StatusConfiguration);
-        const statusSymbol = newStatus.symbol;
 
         // Use statusSymbol to find the status to save to editableTask.status
-        const selectedStatus: Status | undefined = statusOptions.find((s) => s.symbol === statusSymbol);
+        const selectedStatus: Status | undefined = statusOptions.find((s) => s.symbol === newStatus.symbol);
         if (selectedStatus) {
             editableTask.status = selectedStatus;
         } else {
-            console.log(`Error in EditTask: cannot find status with symbol ${statusSymbol}`);
+            console.log(`Error in EditTask: cannot find status with symbol ${newStatus.symbol}`);
             return;
         }
 
