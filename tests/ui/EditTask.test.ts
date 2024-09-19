@@ -393,6 +393,17 @@ describe('Task editing', () => {
             );
         });
 
+        it('should change status to Todo and remove cancelledDate', async () => {
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
+                '- [-] expecting cancelled date to be removed ❌ 2024-02-29',
+                ' ',
+            );
+            expect(getElementValue(container, 'cancelled')).toEqual('');
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot('"- [ ] expecting cancelled date to be removed"');
+        });
+
         it('should create new instance of recurring task, with doneDate set to today', async () => {
             updateSettings({ recurrenceOnNextLine: false });
             const { waitForClose, submit } = await renderTaskModalAndChangeStatus(
