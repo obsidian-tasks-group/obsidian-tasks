@@ -345,6 +345,17 @@ describe('Task editing', () => {
             expect(await waitForClose).toMatchInlineSnapshot('"- [x] expecting done date to be added ✅ 2024-02-29"');
         });
 
+        it('should change status to Done and change doneDate', async () => {
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] expecting done date to be changed ✅ 2024-09-19',
+                'x',
+            );
+            expect(getElementValue(container, 'done')).toEqual(today);
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot('"- [x] expecting done date to be changed ✅ 2024-02-29"');
+        });
+
         it('should change status to Todo and remove doneDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [x] expecting done date to be removed ✅ 2024-02-29',
@@ -366,6 +377,19 @@ describe('Task editing', () => {
             submit.click();
             expect(await waitForClose).toMatchInlineSnapshot(
                 '"- [-] expecting cancelled date to be added ❌ 2024-02-29"',
+            );
+        });
+
+        it('should change status to Cancelled and change cancelledDate', async () => {
+            const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
+                '- [ ] expecting cancelled date to be changed ❌ 2024-09-20',
+                '-',
+            );
+            expect(getElementValue(container, 'cancelled')).toEqual(today);
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot(
+                '"- [-] expecting cancelled date to be changed ❌ 2024-02-29"',
             );
         });
 
