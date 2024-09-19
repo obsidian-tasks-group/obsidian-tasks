@@ -32,12 +32,14 @@ At present, these "On Completion" ***actions*** are supported:
 | **Delete** | Removes the completed instance of the task.                                       |
 
 > [!tip]
-> Two additional ***actions*** are being considered for future implementation, namely moving a just-completed task to:
+> Several additional ***actions*** are being considered for future implementation, namely moving a just-completed task to:
 >
-> - either a separate "completed tasks archive" note,
-> - or to a "completed tasks list" within the original host note.
->
-> We are tracking these ideas in [issue #2855](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2855) and [issue #2856](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2856), respectively.
+> - a separate "completed tasks archive" note,
+>   - see [issue #2855](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2855)
+> - a "completed tasks list" within the original host note,
+>   - see [issue #2856](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2856)
+> - the end of the list.
+>   - see [discussion #2426](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/2426).
 
 ## Worked examples
 
