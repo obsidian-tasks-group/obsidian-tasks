@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { TasksDate } from '../DateTime/TasksDate';
     import { Status } from '../Statuses/Status';
-    import type { StatusConfiguration } from '../Statuses/StatusConfiguration';
     import type { Task } from '../Task/Task';
     import type { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
@@ -30,7 +29,7 @@
     }
 
     const _onStatusChange = () => {
-        const newStatus = new Status(JSON.parse(jsonStatus).configuration as StatusConfiguration);
+        const newStatus = new Status(JSON.parse(jsonStatus).configuration);
 
         const selectedStatus = newStatus;
         editableTask.status = selectedStatus;
