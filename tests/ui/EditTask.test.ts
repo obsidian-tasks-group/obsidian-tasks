@@ -345,7 +345,7 @@ describe('Task editing', () => {
             expect(await waitForClose).toMatchInlineSnapshot('"- [x] expecting done date to be added ✅ 2024-02-29"');
         });
 
-        it('should change status to Done and change doneDate', async () => {
+        it('should change status to Done and keep doneDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] expecting done date to be kept ✅ 2024-09-19',
                 'x',
@@ -380,7 +380,7 @@ describe('Task editing', () => {
             );
         });
 
-        it('should change status to Cancelled and change cancelledDate', async () => {
+        it('should change status to Cancelled and keep cancelledDate', async () => {
             const { waitForClose, container, submit } = await renderTaskModalAndChangeStatus(
                 '- [ ] expecting cancelled date to be kept ❌ 2024-09-20',
                 '-',
