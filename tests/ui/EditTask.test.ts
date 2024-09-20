@@ -158,6 +158,35 @@ async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: str
     return { waitForClose, container, submit };
 }
 
+/**
+ * Simulate the behaviour of:
+ *   - clicking on a line in Obsidian,
+ *   - opening the Edit task modal,
+ *   - editing a field,
+ *   - changing the status,
+ *   - and clicking Apply.
+ * @param line
+ * @param elementId - specifying the field to edit
+ * @param newValue - the new value for the field
+ * @param newStatus - new Status value
+ */
+async function renderChangeDateAndStatus(line: string, elementId: string, newValue: string, newStatus: string) {
+    const task = taskFromLine({ line: line, path: '' });
+    const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
+    const { result, container } = renderAndCheckModal(task, onSubmit);
+
+    const inputElement = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
+    await editInputElement(inputElement, newValue);
+
+    const statusSelector = getAndCheckRenderedElement<HTMLSelectElement>(container, 'status-type');
+    await fireEvent.change(statusSelector, {
+        target: { value: newStatus },
+    });
+
+    const submit = getAndCheckApplyButton(result);
+    return { waitForClose, container, submit };
+}
+
 function getElementValue(container: HTMLElement, elementId: string) {
     const element = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
     return element.value;
@@ -402,6 +431,22 @@ describe('Task editing', () => {
 
             submit.click();
             expect(await waitForClose).toMatchInlineSnapshot('"- [ ] expecting cancelled date to be removed"');
+        });
+
+        it('should keep the done date and change status to done', async () => {
+            const { waitForClose, container, submit } = await renderChangeDateAndStatus(
+                '- [ ] input done date, change status to done and expect the date to be kept',
+                'done',
+                '2024-09-20',
+                'x',
+            );
+
+            expect(getElementValue(container, 'done')).toEqual('2024-09-20');
+
+            submit.click();
+            expect(await waitForClose).toMatchInlineSnapshot(
+                '"- [x] input done date, change status to done and expect the date to be kept ✅ 2024-09-20"',
+            );
         });
 
         it('should create new instance of recurring task, with doneDate set to today', async () => {
