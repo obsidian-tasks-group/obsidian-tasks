@@ -168,9 +168,9 @@ async function renderTaskModalAndChangeStatus(line: string, newStatusSymbol: str
  * @param line
  * @param elementId - specifying the field to edit
  * @param newValue - the new value for the field
- * @param newStatus - new Status value
+ * @param newStatusSymbol - new Status symbol value
  */
-async function renderChangeDateAndStatus(line: string, elementId: string, newValue: string, newStatus: string) {
+async function renderChangeDateAndStatus(line: string, elementId: string, newValue: string, newStatusSymbol: string) {
     const task = taskFromLine({ line: line, path: '' });
     const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
     const { result, container } = renderAndCheckModal(task, onSubmit);
@@ -180,7 +180,7 @@ async function renderChangeDateAndStatus(line: string, elementId: string, newVal
 
     const statusSelector = getAndCheckRenderedElement<HTMLSelectElement>(container, 'status-type');
     await fireEvent.change(statusSelector, {
-        target: { value: newStatus },
+        target: { value: newStatusSymbol },
     });
 
     const submit = getAndCheckApplyButton(result);
