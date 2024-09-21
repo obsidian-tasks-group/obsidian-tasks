@@ -150,7 +150,7 @@ export class SampleTasks {
             new TaskBuilder().status(Status.TODO).description(desc('start')).startDate('2023-04-15'),
             new TaskBuilder().status(Status.TODO).description(desc('due')).dueDate('2023-04-16'),
             new TaskBuilder().status(Status.DONE).description(desc('done')).doneDate('2023-04-17'),
-            new TaskBuilder().status(Status.makeCancelled()).description(desc('cancelled')).cancelledDate('2023-04-18'),
+            new TaskBuilder().status(Status.makeCancelled).description(desc('cancelled')).cancelledDate('2023-04-18'),
         ];
         // If this test fails, a new date format is now supported, and needs to be added to the above list:
         const documentedDateFieldsCount = taskBuilders.length;
@@ -162,7 +162,7 @@ export class SampleTasks {
 
     public static withAllStatuses(): Task[] {
         const statuses = [
-            Status.makeCancelled(),
+            Status.makeCancelled,
             Status.DONE,
             Status.EMPTY,
             Status.makeInProgress(),

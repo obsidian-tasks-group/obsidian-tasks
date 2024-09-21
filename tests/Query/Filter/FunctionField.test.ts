@@ -583,7 +583,7 @@ describe('FunctionField - grouping - example functions', () => {
         // A single space as the character in a heading is not useful, so replace with something displayable:
         const line = 'group by function task.status.symbol.replace(" ", "space")';
         const grouper = createGrouper(line);
-        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeCancelled()), ['-']);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeCancelled), ['-']);
         toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.TODO), ['space']);
     });
 
