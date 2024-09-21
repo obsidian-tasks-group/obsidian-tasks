@@ -461,6 +461,15 @@ describe('Task editing', () => {
                 'x',
                 '- [x] input done date, change status to done and expect the date to be kept ✅ 2024-09-20',
             ],
+            [
+                '- [ ] input cancelled date, change status to cancelled and expect the date to be kept',
+                'cancelled',
+                '2024-09-21',
+                '-',
+                // TODO the difference between the date in the modal and the saved one is a bug:
+                // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3089
+                '- [-] input cancelled date, change status to cancelled and expect the date to be kept ❌ 2024-02-29',
+            ],
         ])(
             'should keep the done date and change status to done',
             async (
