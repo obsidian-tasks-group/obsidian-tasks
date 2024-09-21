@@ -31,7 +31,7 @@
             // OR
             //  done date is filled and new status is not DONE
             if ((editableTask.doneDate === '') === selectedStatus.isCompleted()) {
-                editableTask.doneDate = taskWithEditedStatusApplied.done.formatAsDate();
+                editableTask.doneDate = taskWithEditedStatusApplied['done'].formatAsDate();
             }
 
             // same logic for cancelled date & CANCELLED status
