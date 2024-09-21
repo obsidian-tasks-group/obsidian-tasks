@@ -57,9 +57,12 @@
 
         if (taskWithEditedStatusApplied) {
             setStatusRelatedDate('doneDate', selectedStatus.isCompleted(), taskWithEditedStatusApplied, 'done');
-            if ((editableTask.cancelledDate === '') === selectedStatus.isCancelled()) {
-                editableTask.cancelledDate = taskWithEditedStatusApplied.cancelled.formatAsDate();
-            }
+            setStatusRelatedDate(
+                'cancelledDate',
+                selectedStatus.isCancelled(),
+                taskWithEditedStatusApplied,
+                'cancelled',
+            );
         }
     };
 </script>
