@@ -19,7 +19,11 @@
     ) {
         const dateFieldIsEmpty = editableTask[editableTaskDateField] === '';
 
-        if (dateFieldIsEmpty === isInStatus) {
+        if (dateFieldIsEmpty && isInStatus) {
+            editableTask[editableTaskDateField] = taskWithEditedStatusApplied[taskDateField].formatAsDate();
+        }
+
+        if (!dateFieldIsEmpty && !isInStatus) {
             editableTask[editableTaskDateField] = taskWithEditedStatusApplied[taskDateField].formatAsDate();
         }
     }
