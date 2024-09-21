@@ -43,6 +43,27 @@ export class Status {
     public static TODO: Status = new Status(new StatusConfiguration(' ', 'Todo', 'x', true, StatusType.TODO));
 
     /**
+     * The default Cancelled status. Goes to Todo when toggled.
+     */
+    public static get CANCELLED(): Status {
+        return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED));
+    }
+
+    /**
+     * The default In Progress status. Goes to Done when toggled.
+     */
+    public static get IN_PROGRESS(): Status {
+        return new Status(new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS));
+    }
+
+    /**
+     * A sample Non-Task status. Goes to NON_TASK when toggled.
+     */
+    public static get NON_TASK(): Status {
+        return new Status(new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK));
+    }
+
+    /**
      * The configuration stored in the data.json file.
      *
      * @type {StatusConfiguration}
@@ -154,27 +175,6 @@ export class Status {
      */
     constructor(configuration: StatusConfiguration) {
         this.configuration = configuration;
-    }
-
-    /**
-     * The default Cancelled status. Goes to Todo when toggled.
-     */
-    public static get CANCELLED(): Status {
-        return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED));
-    }
-
-    /**
-     * The default In Progress status. Goes to Done when toggled.
-     */
-    public static get IN_PROGRESS(): Status {
-        return new Status(new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS));
-    }
-
-    /**
-     * A sample Non-Task status. Goes to NON_TASK when toggled.
-     */
-    public static get NON_TASK(): Status {
-        return new Status(new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK));
     }
 
     /**
