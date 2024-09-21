@@ -157,13 +157,6 @@ export class Status {
     }
 
     /**
-     * A default status of empty, used when things go wrong.
-     */
-    static makeEmpty(): Status {
-        return Status.EMPTY;
-    }
-
-    /**
      * The default Todo status. Goes to Done when toggled.
      * User may later be able to override this to go to In Progress instead.
      */
