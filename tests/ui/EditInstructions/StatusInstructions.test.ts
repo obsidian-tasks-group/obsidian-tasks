@@ -26,7 +26,7 @@ afterEach(() => {
 
 describe('SetStatus', () => {
     const todoTask = new TaskBuilder().status(Status.makeTodo()).build();
-    const doneTask = new TaskBuilder().status(Status.makeDone()).build();
+    const doneTask = new TaskBuilder().status(Status.DONE).build();
 
     it('should provide information to set up a menu item for setting status', () => {
         // Arrange
@@ -41,7 +41,7 @@ describe('SetStatus', () => {
 
     it('should edit status', () => {
         // Arrange
-        const instruction = new SetStatus(Status.makeDone());
+        const instruction = new SetStatus(Status.DONE);
 
         // Act
         const newTasks = instruction.apply(todoTask);

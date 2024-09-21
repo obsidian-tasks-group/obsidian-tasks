@@ -11,7 +11,7 @@ describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
     it('core-statuses', () => {
-        VerifyStatuses.verifyStatusesInMultipleFormats([Status.makeTodo(), Status.makeDone()], true);
+        VerifyStatuses.verifyStatusesInMultipleFormats([Status.makeTodo(), Status.DONE], true);
     });
 
     it('custom-statuses', () => {
@@ -97,7 +97,7 @@ describe('Status Transitions', () => {
         const statuses = [
             Status.makeTodo(),
             Status.makeInProgress(),
-            Status.makeDone(),
+            Status.DONE,
             Status.makeCancelled(),
             new Status(new StatusConfiguration('~', 'My custom status', ' ', false, StatusType.NON_TASK)),
         ];

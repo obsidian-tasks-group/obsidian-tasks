@@ -22,7 +22,7 @@ export class StatusSettings {
         this.coreStatuses = [
             // The two statuses that do not need CSS styling
             Status.makeTodo().configuration,
-            Status.makeDone().configuration,
+            Status.DONE.configuration,
         ]; // Do not modify directly: use the static mutation methods in this class.
         this.customStatuses = [
             // Any statuses that are always supported, but need custom CSS styling
