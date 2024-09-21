@@ -28,6 +28,7 @@ export class Status {
      * A default status of empty, used when things go wrong.
      *
      * @static
+     * @type {Status}
      * @memberof Status
      */
     public static EMPTY: Status = new Status(new StatusConfiguration('', 'EMPTY', '', true, StatusType.EMPTY));
@@ -44,6 +45,10 @@ export class Status {
 
     /**
      * The default Cancelled status. Goes to Todo when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
      */
     public static CANCELLED: Status = new Status(
         new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED),
@@ -51,6 +56,10 @@ export class Status {
 
     /**
      * The default In Progress status. Goes to Done when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
      */
     public static IN_PROGRESS: Status = new Status(
         new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS),
@@ -58,6 +67,10 @@ export class Status {
 
     /**
      * A sample Non-Task status. Goes to NON_TASK when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
      */
     public static NON_TASK: Status = new Status(
         new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK),
