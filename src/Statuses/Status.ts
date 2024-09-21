@@ -166,7 +166,7 @@ export class Status {
     /**
      * The default In Progress status. Goes to Done when toggled.
      */
-    static makeInProgress(): Status {
+    public static get makeInProgress(): Status {
         return new Status(new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS));
     }
 
