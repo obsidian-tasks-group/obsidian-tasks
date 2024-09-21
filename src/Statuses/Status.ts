@@ -160,14 +160,14 @@ export class Status {
      * The default Done status. Goes to Todo when toggled.
      */
     static makeDone(): Status {
-        return new Status(new StatusConfiguration('x', 'Done', ' ', true, StatusType.DONE));
+        return Status.DONE;
     }
 
     /**
      * A default status of empty, used when things go wrong.
      */
     static makeEmpty(): Status {
-        return new Status(new StatusConfiguration('', 'EMPTY', '', true, StatusType.EMPTY));
+        return Status.EMPTY;
     }
 
     /**
@@ -175,7 +175,7 @@ export class Status {
      * User may later be able to override this to go to In Progress instead.
      */
     static makeTodo(): Status {
-        return new Status(new StatusConfiguration(' ', 'Todo', 'x', true, StatusType.TODO));
+        return Status.TODO;
     }
 
     /**
