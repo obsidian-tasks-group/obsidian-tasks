@@ -24,7 +24,7 @@
         }
 
         if (!dateFieldIsEmpty && !isInStatus) {
-            editableTask[editableTaskDateField] = taskWithEditedStatusApplied[taskDateField].formatAsDate();
+            editableTask[editableTaskDateField] = '';
         }
     }
 
