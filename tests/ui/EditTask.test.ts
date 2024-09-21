@@ -481,7 +481,7 @@ describe('Task editing', () => {
                 '- [-] input cancelled date, change status to cancelled and expect the date to be kept ❌ 2024-02-29',
             ],
         ])(
-            'should keep the done date and change status to done',
+            'for "%s" task, change %s date to %s and status to %s',
             async (
                 line: string,
                 dateElementToChange: string,
