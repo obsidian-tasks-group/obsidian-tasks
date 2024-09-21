@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { TasksDate } from '../DateTime/TasksDate';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
     import type { EditableTask } from './EditableTask';
@@ -11,34 +12,20 @@
 
     let statusSymbol = task.status.symbol;
 
-    /**
-     * Set the done or cancelled date field of the editable task.
-     * These fields are connected with the status.
-     *
-     * The date should be set in either of 2 cases:
-     * - the date field is empty and the status was set (set the date from the task with the applied status)
-     * - the date field is not empty but another status was set (clean the date field)
-     *
-     * @param editableTaskDateField
-     * @param isInStatus
-     * @param taskWithEditedStatusApplied
-     * @param taskDateField
-     */
-    function setStatusRelatedDate(
-        editableTaskDateField: keyof Pick<EditableTask, 'doneDate' | 'cancelledDate'>,
-        isInStatus: boolean,
-        taskWithEditedStatusApplied: Task,
-        taskDateField: keyof Pick<Task, 'done' | 'cancelled'>,
-    ) {
-        const dateFieldIsEmpty = editableTask[editableTaskDateField] === '';
+    function setStatusRelatedDate(currentValue: string, isInStatus: boolean, editedValue: TasksDate) {
+        const dateFieldIsEmpty = currentValue === '';
 
         if (dateFieldIsEmpty && isInStatus) {
-            editableTask[editableTaskDateField] = taskWithEditedStatusApplied[taskDateField].formatAsDate();
+            // the date field is empty and the status was set (set the date from the task with the applied status)
+            return editedValue.formatAsDate();
         }
 
         if (!dateFieldIsEmpty && !isInStatus) {
-            editableTask[editableTaskDateField] = '';
+            // the date field is not empty but another status was set (clean the date field)
+            return '';
         }
+
+        return currentValue;
     }
 
     const _onStatusChange = () => {
@@ -56,12 +43,16 @@
         const taskWithEditedStatusApplied = task.handleNewStatus(selectedStatus).pop();
 
         if (taskWithEditedStatusApplied) {
-            setStatusRelatedDate('doneDate', selectedStatus.isCompleted(), taskWithEditedStatusApplied, 'done');
-            setStatusRelatedDate(
-                'cancelledDate',
+            editableTask.doneDate = setStatusRelatedDate(
+                editableTask.doneDate,
+                selectedStatus.isCompleted(),
+                taskWithEditedStatusApplied.done,
+            );
+
+            editableTask.cancelledDate = setStatusRelatedDate(
+                editableTask.cancelledDate,
                 selectedStatus.isCancelled(),
-                taskWithEditedStatusApplied,
-                'cancelled',
+                taskWithEditedStatusApplied.cancelled,
             );
         }
     };
