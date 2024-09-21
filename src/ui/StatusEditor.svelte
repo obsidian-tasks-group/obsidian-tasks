@@ -11,6 +11,17 @@
 
     let statusSymbol = task.status.symbol;
 
+    function appleSauce(
+        editableTaskDateField: keyof Pick<EditableTask, 'doneDate' | 'cancelledDate'>,
+        isInStatus: boolean,
+        taskWithEditedStatusApplied: Task,
+        taskDateField: keyof Pick<Task, 'done' | 'cancelled'>,
+    ) {
+        if ((editableTask[editableTaskDateField] === '') === isInStatus) {
+            editableTask[editableTaskDateField] = taskWithEditedStatusApplied[taskDateField].formatAsDate();
+        }
+    }
+
     const _onStatusChange = () => {
         // Use statusSymbol to find the status to save to editableTask.status
         const selectedStatus: Status | undefined = statusOptions.find((s) => s.symbol === statusSymbol);
@@ -33,9 +44,7 @@
             const editableTaskDateField = 'doneDate';
             const isInStatus = selectedStatus.isCompleted();
             const taskDateField = 'done';
-            if ((editableTask[editableTaskDateField] === '') === isInStatus) {
-                editableTask[editableTaskDateField] = taskWithEditedStatusApplied[taskDateField].formatAsDate();
-            }
+            appleSauce(editableTaskDateField, isInStatus, taskWithEditedStatusApplied, taskDateField);
 
             // same logic for cancelled date & CANCELLED status
             if ((editableTask.cancelledDate === '') === selectedStatus.isCancelled()) {
