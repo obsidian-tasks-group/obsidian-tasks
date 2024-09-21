@@ -433,13 +433,13 @@ describe('Task editing', () => {
             expect(await waitForClose).toMatchInlineSnapshot('"- [ ] expecting cancelled date to be removed"');
         });
 
-        it('should keep the done date and change status to done', async () => {
-            const line = '- [ ] input done date, change status to done and expect the date to be kept';
-            const dateElementToChange = 'done';
-            const dateValue = '2024-09-20';
-            const newStatusSymbol = 'x';
-            const expectedTaskAfterEdits =
-                '- [x] input done date, change status to done and expect the date to be kept ✅ 2024-09-20';
+        async function testDateInputAndStatusChange(
+            line: string,
+            dateElementToChange: string,
+            dateValue: string,
+            newStatusSymbol: string,
+            expectedTaskAfterEdits: string,
+        ) {
             const { waitForClose, container, submit } = await renderChangeDateAndStatus(
                 line,
                 dateElementToChange,
@@ -451,6 +451,22 @@ describe('Task editing', () => {
 
             submit.click();
             expect(await waitForClose).toEqual(expectedTaskAfterEdits);
+        }
+
+        it('should keep the done date and change status to done', async () => {
+            const line = '- [ ] input done date, change status to done and expect the date to be kept';
+            const dateElementToChange = 'done';
+            const dateValue = '2024-09-20';
+            const newStatusSymbol = 'x';
+            const expectedTaskAfterEdits =
+                '- [x] input done date, change status to done and expect the date to be kept ✅ 2024-09-20';
+            await testDateInputAndStatusChange(
+                line,
+                dateElementToChange,
+                dateValue,
+                newStatusSymbol,
+                expectedTaskAfterEdits,
+            );
         });
 
         it('should create new instance of recurring task, with doneDate set to today', async () => {
