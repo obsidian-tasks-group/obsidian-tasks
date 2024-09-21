@@ -11,7 +11,20 @@
 
     let statusSymbol = task.status.symbol;
 
-    function appleSauce(
+    /**
+     * Set the done or cancelled date field of the editable task.
+     * These fields are connected with the status.
+     *
+     * The date should be set in either of 2 cases:
+     * - the date field is empty and the status was set (set the date from the task with the applied status)
+     * - the date field is not empty but another status was set (clean the date field)
+     *
+     * @param editableTaskDateField
+     * @param isInStatus
+     * @param taskWithEditedStatusApplied
+     * @param taskDateField
+     */
+    function setStatusRelatedDate(
         editableTaskDateField: keyof Pick<EditableTask, 'doneDate' | 'cancelledDate'>,
         isInStatus: boolean,
         taskWithEditedStatusApplied: Task,
@@ -43,13 +56,7 @@
         const taskWithEditedStatusApplied = task.handleNewStatus(selectedStatus).pop();
 
         if (taskWithEditedStatusApplied) {
-            // change the done date using XNOR logic:
-            //  done date is empty and new status is DONE
-            // OR
-            //  done date is filled and new status is not DONE
-            appleSauce('doneDate', selectedStatus.isCompleted(), taskWithEditedStatusApplied, 'done');
-
-            // same logic for cancelled date & CANCELLED status
+            setStatusRelatedDate('doneDate', selectedStatus.isCompleted(), taskWithEditedStatusApplied, 'done');
             if ((editableTask.cancelledDate === '') === selectedStatus.isCancelled()) {
                 editableTask.cancelledDate = taskWithEditedStatusApplied.cancelled.formatAsDate();
             }
