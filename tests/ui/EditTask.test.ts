@@ -434,19 +434,23 @@ describe('Task editing', () => {
         });
 
         it('should keep the done date and change status to done', async () => {
+            const line = '- [ ] input done date, change status to done and expect the date to be kept';
+            const dateElementToChange = 'done';
+            const dateValue = '2024-09-20';
+            const newStatusSymbol = 'x';
+            const expectedTaskAfterEdits =
+                '"- [x] input done date, change status to done and expect the date to be kept ✅ 2024-09-20"';
             const { waitForClose, container, submit } = await renderChangeDateAndStatus(
-                '- [ ] input done date, change status to done and expect the date to be kept',
-                'done',
-                '2024-09-20',
-                'x',
+                line,
+                dateElementToChange,
+                dateValue,
+                newStatusSymbol,
             );
 
-            expect(getElementValue(container, 'done')).toEqual('2024-09-20');
+            expect(getElementValue(container, dateElementToChange)).toEqual(dateValue);
 
             submit.click();
-            expect(await waitForClose).toMatchInlineSnapshot(
-                '"- [x] input done date, change status to done and expect the date to be kept ✅ 2024-09-20"',
-            );
+            expect(await waitForClose).toMatchInlineSnapshot(expectedTaskAfterEdits);
         });
 
         it('should create new instance of recurring task, with doneDate set to today', async () => {
