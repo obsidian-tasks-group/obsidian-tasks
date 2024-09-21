@@ -528,7 +528,7 @@ describe('properties for scripting', () => {
         expect(new TaskBuilder().status(Status.TODO).build().isDone).toEqual(false);
         expect(new TaskBuilder().status(Status.makeInProgress()).build().isDone).toEqual(false);
         expect(new TaskBuilder().status(Status.DONE).build().isDone).toEqual(true);
-        expect(new TaskBuilder().status(Status.makeCancelled).build().isDone).toEqual(true);
+        expect(new TaskBuilder().status(Status.CANCELLED).build().isDone).toEqual(true);
         expect(
             new TaskBuilder()
                 .status(new Status(new StatusConfiguration('%', 'Non-task', ' ', true, StatusType.NON_TASK)))
@@ -1392,7 +1392,7 @@ describe('handle new status', () => {
             });
 
             // Act
-            const newTasks = doneTask.handleNewStatus(Status.makeCancelled);
+            const newTasks = doneTask.handleNewStatus(Status.CANCELLED);
 
             // Assert
             expect(newTasks).toMatchMarkdownLines(['- [-] Stuff 📅 2023-12-15 ❌ 2023-06-26']);
@@ -1406,7 +1406,7 @@ describe('handle new status', () => {
             });
 
             // Act
-            const newTasks = task.handleNewStatus(Status.makeCancelled);
+            const newTasks = task.handleNewStatus(Status.CANCELLED);
 
             // Assert
             expect(newTasks).toMatchMarkdownLines(['- [-] Stuff']);
@@ -1419,7 +1419,7 @@ describe('handle new status', () => {
             });
 
             // Act
-            const newTasks = cancelledTask.handleNewStatus(Status.makeCancelled);
+            const newTasks = cancelledTask.handleNewStatus(Status.CANCELLED);
 
             // Assert
             // Check that the cancelled date was not modified:

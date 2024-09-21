@@ -43,7 +43,7 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.bySymbol('x').symbol).toEqual(Status.DONE.symbol);
         expect(statusRegistry.bySymbol('').symbol).toEqual(Status.EMPTY.symbol);
         expect(statusRegistry.bySymbol(' ').symbol).toEqual(Status.TODO.symbol);
-        expect(statusRegistry.bySymbol('-').symbol).toEqual(Status.makeCancelled.symbol);
+        expect(statusRegistry.bySymbol('-').symbol).toEqual(Status.CANCELLED.symbol);
         expect(statusRegistry.bySymbol('/').symbol).toEqual(Status.makeInProgress().symbol);
 
         // Detect unrecognised symbol:
@@ -419,7 +419,7 @@ describe('StatusRegistry', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.status.symbol).toEqual(Status.makeCancelled.symbol);
+            expect(task!.status.symbol).toEqual(Status.CANCELLED.symbol);
 
             const toggledTodo = task?.toggle()[0];
             expect(toggledTodo?.status.symbol).toEqual(Status.TODO.symbol);

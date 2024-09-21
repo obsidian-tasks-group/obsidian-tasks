@@ -15,7 +15,7 @@ describe('DefaultStatuses', () => {
     });
 
     it('custom-statuses', () => {
-        VerifyStatuses.verifyStatusesInMultipleFormats([Status.makeInProgress(), Status.makeCancelled], true);
+        VerifyStatuses.verifyStatusesInMultipleFormats([Status.makeInProgress(), Status.CANCELLED], true);
     });
 
     it('important-cycle', () => {
@@ -98,7 +98,7 @@ describe('Status Transitions', () => {
             Status.TODO,
             Status.makeInProgress(),
             Status.DONE,
-            Status.makeCancelled,
+            Status.CANCELLED,
             new Status(new StatusConfiguration('~', 'My custom status', ' ', false, StatusType.NON_TASK)),
         ];
         VerifyStatuses.verifyTransitionsAsMarkdownTable(statuses);

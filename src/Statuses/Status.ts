@@ -159,7 +159,7 @@ export class Status {
     /**
      * The default Cancelled status. Goes to Todo when toggled.
      */
-    public static get makeCancelled(): Status {
+    public static get CANCELLED(): Status {
         return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED));
     }
 

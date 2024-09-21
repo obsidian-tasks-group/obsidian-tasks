@@ -25,7 +25,7 @@ describe('Status', () => {
         expect(Status.DONE.previewText()).toEqual("- [x] => [ ], name: 'Done', type: 'DONE'.");
         expect(Status.EMPTY.previewText()).toEqual("- [] => [], name: 'EMPTY', type: 'EMPTY'.");
         expect(Status.TODO.previewText()).toEqual("- [ ] => [x], name: 'Todo', type: 'TODO'.");
-        expect(Status.makeCancelled.previewText()).toEqual("- [-] => [ ], name: 'Cancelled', type: 'CANCELLED'.");
+        expect(Status.CANCELLED.previewText()).toEqual("- [-] => [ ], name: 'Cancelled', type: 'CANCELLED'.");
         expect(Status.makeInProgress().previewText()).toEqual(
             "- [/] => [x], name: 'In Progress', type: 'IN_PROGRESS'.",
         );
@@ -126,7 +126,7 @@ describe('Status', () => {
     });
 
     it('should provide text with sorting comments for convenience of custom grouping', () => {
-        const status = Status.makeCancelled;
+        const status = Status.CANCELLED;
         expect(status.typeGroupText).toEqual('%%4%%CANCELLED');
     });
 });
