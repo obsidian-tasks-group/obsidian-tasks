@@ -23,7 +23,7 @@ describe('Status', () => {
 
     it('factory methods for default statuses', () => {
         expect(Status.DONE.previewText()).toEqual("- [x] => [ ], name: 'Done', type: 'DONE'.");
-        expect(Status.makeEmpty().previewText()).toEqual("- [] => [], name: 'EMPTY', type: 'EMPTY'.");
+        expect(Status.EMPTY.previewText()).toEqual("- [] => [], name: 'EMPTY', type: 'EMPTY'.");
         expect(Status.makeTodo().previewText()).toEqual("- [ ] => [x], name: 'Todo', type: 'TODO'.");
         expect(Status.makeCancelled().previewText()).toEqual("- [-] => [ ], name: 'Cancelled', type: 'CANCELLED'.");
         expect(Status.makeInProgress().previewText()).toEqual(

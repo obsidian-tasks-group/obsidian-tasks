@@ -164,7 +164,7 @@ export class SampleTasks {
         const statuses = [
             Status.makeCancelled(),
             Status.DONE,
-            Status.makeEmpty(),
+            Status.EMPTY,
             Status.makeInProgress(),
             Status.makeTodo(),
             Status.makeNonTask(),
@@ -186,7 +186,7 @@ export class SampleTasks {
             .statusValues('^', 'non-task', 'x', false, StatusType.NON_TASK)
             .description('Non-task')
             .build();
-        const emptTask = new TaskBuilder().status(Status.makeEmpty()).description('Empty task').build();
+        const emptTask = new TaskBuilder().status(Status.EMPTY).description('Empty task').build();
 
         return [todoTask, inprTask, doneTask, cancTask, unknTask, non_Task, emptTask];
     }

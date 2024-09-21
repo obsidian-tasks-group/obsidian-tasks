@@ -41,13 +41,13 @@ describe('StatusRegistry', () => {
         expect(doneStatus.symbol).toEqual(Status.DONE.symbol);
 
         expect(statusRegistry.bySymbol('x').symbol).toEqual(Status.DONE.symbol);
-        expect(statusRegistry.bySymbol('').symbol).toEqual(Status.makeEmpty().symbol);
+        expect(statusRegistry.bySymbol('').symbol).toEqual(Status.EMPTY.symbol);
         expect(statusRegistry.bySymbol(' ').symbol).toEqual(Status.makeTodo().symbol);
         expect(statusRegistry.bySymbol('-').symbol).toEqual(Status.makeCancelled().symbol);
         expect(statusRegistry.bySymbol('/').symbol).toEqual(Status.makeInProgress().symbol);
 
         // Detect unrecognised symbol:
-        expect(statusRegistry.bySymbol('?').symbol).toEqual(Status.makeEmpty().symbol);
+        expect(statusRegistry.bySymbol('?').symbol).toEqual(Status.EMPTY.symbol);
     });
 
     it('should clear the statuses', () => {
