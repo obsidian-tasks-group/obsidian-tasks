@@ -17,7 +17,7 @@ describe('status', () => {
 
         // Assert
         expect(filter).not.toMatchTaskWithStatus(Status.makeTodo().configuration);
-        expect(filter).toMatchTaskWithStatus(Status.makeDone().configuration);
+        expect(filter).toMatchTaskWithStatus(Status.DONE.configuration);
         expect(filter).toMatchTaskWithStatus(new StatusConfiguration('X', 'Really Done', 'x', true, StatusType.DONE));
         expect(filter).not.toMatchTaskWithStatus(Status.makeInProgress().configuration);
         expect(filter).toMatchTaskWithStatus(Status.makeCancelled().configuration);
@@ -31,7 +31,7 @@ describe('status', () => {
 
         // Assert
         expect(filter).toMatchTaskWithStatus(Status.makeTodo().configuration);
-        expect(filter).not.toMatchTaskWithStatus(Status.makeDone().configuration);
+        expect(filter).not.toMatchTaskWithStatus(Status.DONE.configuration);
         expect(filter).not.toMatchTaskWithStatus(
             new StatusConfiguration('X', 'Really Done', 'x', true, StatusType.DONE),
         );

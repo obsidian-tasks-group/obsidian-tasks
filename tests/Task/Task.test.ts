@@ -527,7 +527,7 @@ describe('properties for scripting', () => {
     it('should provide isDone for convenience', () => {
         expect(new TaskBuilder().status(Status.makeTodo()).build().isDone).toEqual(false);
         expect(new TaskBuilder().status(Status.makeInProgress()).build().isDone).toEqual(false);
-        expect(new TaskBuilder().status(Status.makeDone()).build().isDone).toEqual(true);
+        expect(new TaskBuilder().status(Status.DONE).build().isDone).toEqual(true);
         expect(new TaskBuilder().status(Status.makeCancelled()).build().isDone).toEqual(true);
         expect(
             new TaskBuilder()
@@ -1339,7 +1339,7 @@ describe('handle new status', () => {
         });
 
         // Act
-        const newTasks = doneTask.handleNewStatus(Status.makeDone());
+        const newTasks = doneTask.handleNewStatus(Status.DONE);
 
         // Assert
         expect(newTasks.length).toEqual(1);
@@ -1433,7 +1433,7 @@ describe('handle new status', () => {
             });
 
             // Act
-            const newTasks = cancelledTask.handleNewStatus(Status.makeDone());
+            const newTasks = cancelledTask.handleNewStatus(Status.DONE);
 
             // Assert
             expect(newTasks).toMatchMarkdownLines([
@@ -1507,7 +1507,7 @@ describe('order of recurring tasks', () => {
 
     function expectLineToApplyDoneStatusInUsersOrder(line: string, expectedLines: string[]) {
         const task = fromLine({ line: line });
-        const tasks = task.handleNewStatusWithRecurrenceInUsersOrder(Status.makeDone());
+        const tasks = task.handleNewStatusWithRecurrenceInUsersOrder(Status.DONE);
         expect(tasks).toMatchMarkdownLines(expectedLines);
     }
 

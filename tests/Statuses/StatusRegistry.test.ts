@@ -38,9 +38,9 @@ describe('StatusRegistry', () => {
         // Assert
         expect(statusRegistry).not.toBeNull();
 
-        expect(doneStatus.symbol).toEqual(Status.makeDone().symbol);
+        expect(doneStatus.symbol).toEqual(Status.DONE.symbol);
 
-        expect(statusRegistry.bySymbol('x').symbol).toEqual(Status.makeDone().symbol);
+        expect(statusRegistry.bySymbol('x').symbol).toEqual(Status.DONE.symbol);
         expect(statusRegistry.bySymbol('').symbol).toEqual(Status.makeEmpty().symbol);
         expect(statusRegistry.bySymbol(' ').symbol).toEqual(Status.makeTodo().symbol);
         expect(statusRegistry.bySymbol('-').symbol).toEqual(Status.makeCancelled().symbol);
@@ -398,7 +398,7 @@ describe('StatusRegistry', () => {
             expect(task!.status.symbol).toEqual(Status.makeTodo().symbol);
 
             const toggledDone = task?.toggle()[0];
-            expect(toggledDone?.status.symbol).toEqual(Status.makeDone().symbol);
+            expect(toggledDone?.status.symbol).toEqual(Status.DONE.symbol);
 
             const toggledTodo = toggledDone?.toggle()[0];
             expect(toggledTodo?.status.symbol).toEqual(Status.makeTodo().symbol);

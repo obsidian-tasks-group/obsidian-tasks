@@ -333,7 +333,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     private addDefaultStatusTypes(): void {
-        const defaultStatuses = [Status.makeTodo(), Status.makeInProgress(), Status.makeDone(), Status.makeCancelled()];
+        const defaultStatuses = [Status.makeTodo(), Status.makeInProgress(), Status.DONE, Status.makeCancelled()];
 
         defaultStatuses.forEach((status) => {
             this.add(status);
