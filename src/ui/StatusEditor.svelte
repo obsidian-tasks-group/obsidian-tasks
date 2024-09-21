@@ -30,8 +30,11 @@
             //  done date is empty and new status is DONE
             // OR
             //  done date is filled and new status is not DONE
-            if ((editableTask['doneDate'] === '') === selectedStatus.isCompleted()) {
-                editableTask['doneDate'] = taskWithEditedStatusApplied['done'].formatAsDate();
+            const editableTaskDateField = 'doneDate';
+            const isInStatus = selectedStatus.isCompleted();
+            const taskDateField = 'done';
+            if ((editableTask[editableTaskDateField] === '') === isInStatus) {
+                editableTask[editableTaskDateField] = taskWithEditedStatusApplied[taskDateField].formatAsDate();
             }
 
             // same logic for cancelled date & CANCELLED status
