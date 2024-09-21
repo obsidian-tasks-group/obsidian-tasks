@@ -44,7 +44,7 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.bySymbol('').symbol).toEqual(Status.EMPTY.symbol);
         expect(statusRegistry.bySymbol(' ').symbol).toEqual(Status.TODO.symbol);
         expect(statusRegistry.bySymbol('-').symbol).toEqual(Status.CANCELLED.symbol);
-        expect(statusRegistry.bySymbol('/').symbol).toEqual(Status.makeInProgress.symbol);
+        expect(statusRegistry.bySymbol('/').symbol).toEqual(Status.IN_PROGRESS.symbol);
 
         // Detect unrecognised symbol:
         expect(statusRegistry.bySymbol('?').symbol).toEqual(Status.EMPTY.symbol);

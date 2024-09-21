@@ -97,7 +97,7 @@ describe('OnCompletion - cases where all tasks are retained', () => {
         const task = makeTask('- [ ] A recurring task with "delete" Action 🔁 every day 🏁 delete 📅 2024-02-10');
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeInProgress);
+        const tasks = applyStatusAndOnCompletionAction(task, Status.IN_PROGRESS);
 
         // Assert
         expect(tasks.length).toEqual(1);
@@ -216,7 +216,7 @@ function getCases(): ToggleCase[] {
         },
 
         {
-            nextStatus: Status.makeInProgress,
+            nextStatus: Status.IN_PROGRESS,
             line: '- [ ] A recurring task with 🏁 delete 🔁 every day 📅 2024-02-10',
         },
 
