@@ -28,7 +28,7 @@ describe('StatusMenu', () => {
 
     it('should show checkmark against the current task status', () => {
         // Arrange
-        const task = new TaskBuilder().status(Status.makeInProgress()).build();
+        const task = new TaskBuilder().status(Status.makeInProgress).build();
         const statusRegistry = new StatusRegistry();
 
         // Act

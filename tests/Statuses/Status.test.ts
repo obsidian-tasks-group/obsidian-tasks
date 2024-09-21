@@ -26,9 +26,7 @@ describe('Status', () => {
         expect(Status.EMPTY.previewText()).toEqual("- [] => [], name: 'EMPTY', type: 'EMPTY'.");
         expect(Status.TODO.previewText()).toEqual("- [ ] => [x], name: 'Todo', type: 'TODO'.");
         expect(Status.CANCELLED.previewText()).toEqual("- [-] => [ ], name: 'Cancelled', type: 'CANCELLED'.");
-        expect(Status.makeInProgress().previewText()).toEqual(
-            "- [/] => [x], name: 'In Progress', type: 'IN_PROGRESS'.",
-        );
+        expect(Status.makeInProgress.previewText()).toEqual("- [/] => [x], name: 'In Progress', type: 'IN_PROGRESS'.");
         expect(Status.makeNonTask().previewText()).toEqual("- [Q] => [A], name: 'Non-Task', type: 'NON_TASK'.");
     });
 
