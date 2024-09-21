@@ -165,7 +165,7 @@ export class SampleTasks {
             Status.CANCELLED,
             Status.DONE,
             Status.EMPTY,
-            Status.makeInProgress,
+            Status.IN_PROGRESS,
             Status.TODO,
             Status.makeNonTask(),
         ];
