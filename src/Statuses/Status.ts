@@ -45,23 +45,23 @@ export class Status {
     /**
      * The default Cancelled status. Goes to Todo when toggled.
      */
-    public static get CANCELLED(): Status {
-        return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED));
-    }
+    public static CANCELLED: Status = new Status(
+        new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED),
+    );
 
     /**
      * The default In Progress status. Goes to Done when toggled.
      */
-    public static get IN_PROGRESS(): Status {
-        return new Status(new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS));
-    }
+    public static IN_PROGRESS: Status = new Status(
+        new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS),
+    );
 
     /**
      * A sample Non-Task status. Goes to NON_TASK when toggled.
      */
-    public static get NON_TASK(): Status {
-        return new Status(new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK));
-    }
+    public static NON_TASK: Status = new Status(
+        new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK),
+    );
 
     /**
      * The configuration stored in the data.json file.
