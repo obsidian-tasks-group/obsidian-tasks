@@ -173,7 +173,7 @@ export class Status {
     /**
      * A sample Non-Task status. Goes to NON_TASK when toggled.
      */
-    static makeNonTask(): Status {
+    public static get makeNonTask(): Status {
         return new Status(new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK));
     }
 
