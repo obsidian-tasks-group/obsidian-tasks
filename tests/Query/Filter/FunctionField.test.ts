@@ -584,7 +584,7 @@ describe('FunctionField - grouping - example functions', () => {
         const line = 'group by function task.status.symbol.replace(" ", "space")';
         const grouper = createGrouper(line);
         toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeCancelled()), ['-']);
-        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeTodo()), ['space']);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.TODO), ['space']);
     });
 
     it('group by status nextStatusSymbol', () => {

@@ -26,7 +26,7 @@ import { setCurrentCacheFile } from '../__mocks__/obsidian';
  */
 export class TaskBuilder {
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    private _status: Status = Status.makeTodo();
+    private _status: Status = Status.TODO;
     private _description: string = 'my description';
     private _path: string = '';
     private _indentation: string = '';
