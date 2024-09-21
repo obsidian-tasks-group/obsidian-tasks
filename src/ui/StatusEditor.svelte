@@ -17,7 +17,9 @@
         taskWithEditedStatusApplied: Task,
         taskDateField: keyof Pick<Task, 'done' | 'cancelled'>,
     ) {
-        if ((editableTask[editableTaskDateField] === '') === isInStatus) {
+        const dateFieldIsEmpty = editableTask[editableTaskDateField] === '';
+
+        if (dateFieldIsEmpty === isInStatus) {
             editableTask[editableTaskDateField] = taskWithEditedStatusApplied[taskDateField].formatAsDate();
         }
     }
