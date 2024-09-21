@@ -27,7 +27,7 @@ export class StatusSettings {
         this.customStatuses = [
             // Any statuses that are always supported, but need custom CSS styling
             Status.makeInProgress().configuration,
-            Status.makeCancelled().configuration,
+            Status.makeCancelled.configuration,
         ]; // Do not modify directly: use the static mutation methods in this class.
     }
     readonly coreStatuses: StatusConfiguration[];

@@ -78,7 +78,7 @@ describe('StatusMenu', () => {
         // Arrange
         const onlyShowCancelled = new StatusRegistry();
         onlyShowCancelled.clearStatuses();
-        onlyShowCancelled.add(Status.makeCancelled());
+        onlyShowCancelled.add(Status.makeCancelled);
 
         const task = new TaskBuilder().status(Status.TODO).build();
         const menu = new StatusMenu(onlyShowCancelled, task, TestableTaskSaver.testableTaskSaver);
