@@ -41,10 +41,7 @@
             //  done date is empty and new status is DONE
             // OR
             //  done date is filled and new status is not DONE
-            const editableTaskDateField = 'doneDate';
-            const isInStatus = selectedStatus.isCompleted();
-            const taskDateField = 'done';
-            appleSauce(editableTaskDateField, isInStatus, taskWithEditedStatusApplied, taskDateField);
+            appleSauce('doneDate', selectedStatus.isCompleted(), taskWithEditedStatusApplied, 'done');
 
             // same logic for cancelled date & CANCELLED status
             if ((editableTask.cancelledDate === '') === selectedStatus.isCancelled()) {
