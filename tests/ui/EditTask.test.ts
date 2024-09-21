@@ -433,6 +433,16 @@ describe('Task editing', () => {
             expect(await waitForClose).toMatchInlineSnapshot('"- [ ] expecting cancelled date to be removed"');
         });
 
+        /**
+         * Test opening task modal for a given line, changing a date to a value, changing the status,
+         * clicking Apply, verifying the final line.
+         *
+         * @param line
+         * @param dateElementToChange
+         * @param dateValue
+         * @param newStatusSymbol
+         * @param expectedTaskAfterEdits
+         */
         async function testDateInputAndStatusChange(
             line: string,
             dateElementToChange: string,
