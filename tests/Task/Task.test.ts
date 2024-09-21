@@ -525,7 +525,7 @@ describe('task parsing VS global filter', () => {
 
 describe('properties for scripting', () => {
     it('should provide isDone for convenience', () => {
-        expect(new TaskBuilder().status(Status.makeTodo()).build().isDone).toEqual(false);
+        expect(new TaskBuilder().status(Status.TODO).build().isDone).toEqual(false);
         expect(new TaskBuilder().status(Status.makeInProgress()).build().isDone).toEqual(false);
         expect(new TaskBuilder().status(Status.DONE).build().isDone).toEqual(true);
         expect(new TaskBuilder().status(Status.makeCancelled()).build().isDone).toEqual(true);
@@ -1553,7 +1553,7 @@ describe('identicalTo', () => {
     // NEW_TASK_FIELD_EDIT_REQUIRED
 
     it('should check status', () => {
-        const lhs = new TaskBuilder().status(Status.makeTodo());
+        const lhs = new TaskBuilder().status(Status.TODO);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.TODO));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().status(Status.DONE));
     });

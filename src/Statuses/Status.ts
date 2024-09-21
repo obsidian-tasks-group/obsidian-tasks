@@ -157,14 +157,6 @@ export class Status {
     }
 
     /**
-     * The default Todo status. Goes to Done when toggled.
-     * User may later be able to override this to go to In Progress instead.
-     */
-    static makeTodo(): Status {
-        return Status.TODO;
-    }
-
-    /**
      * The default Cancelled status. Goes to Todo when toggled.
      */
     static makeCancelled(): Status {

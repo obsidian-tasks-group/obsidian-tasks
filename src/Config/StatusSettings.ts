@@ -21,7 +21,7 @@ export class StatusSettings {
     constructor() {
         this.coreStatuses = [
             // The two statuses that do not need CSS styling
-            Status.makeTodo().configuration,
+            Status.TODO.configuration,
             Status.DONE.configuration,
         ]; // Do not modify directly: use the static mutation methods in this class.
         this.customStatuses = [

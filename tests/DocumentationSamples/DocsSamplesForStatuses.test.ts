@@ -11,7 +11,7 @@ describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
     it('core-statuses', () => {
-        VerifyStatuses.verifyStatusesInMultipleFormats([Status.makeTodo(), Status.DONE], true);
+        VerifyStatuses.verifyStatusesInMultipleFormats([Status.TODO, Status.DONE], true);
     });
 
     it('custom-statuses', () => {
@@ -95,7 +95,7 @@ describe('Theme', () => {
 describe('Status Transitions', () => {
     it('status-types', () => {
         const statuses = [
-            Status.makeTodo(),
+            Status.TODO,
             Status.makeInProgress(),
             Status.DONE,
             Status.makeCancelled(),

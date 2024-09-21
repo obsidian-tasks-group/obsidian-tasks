@@ -145,10 +145,10 @@ export class SampleTasks {
         }
 
         const taskBuilders = [
-            new TaskBuilder().status(Status.makeTodo()).description(desc('created')).createdDate('2023-04-13'),
-            new TaskBuilder().status(Status.makeTodo()).description(desc('scheduled')).scheduledDate('2023-04-14'),
-            new TaskBuilder().status(Status.makeTodo()).description(desc('start')).startDate('2023-04-15'),
-            new TaskBuilder().status(Status.makeTodo()).description(desc('due')).dueDate('2023-04-16'),
+            new TaskBuilder().status(Status.TODO).description(desc('created')).createdDate('2023-04-13'),
+            new TaskBuilder().status(Status.TODO).description(desc('scheduled')).scheduledDate('2023-04-14'),
+            new TaskBuilder().status(Status.TODO).description(desc('start')).startDate('2023-04-15'),
+            new TaskBuilder().status(Status.TODO).description(desc('due')).dueDate('2023-04-16'),
             new TaskBuilder().status(Status.DONE).description(desc('done')).doneDate('2023-04-17'),
             new TaskBuilder().status(Status.makeCancelled()).description(desc('cancelled')).cancelledDate('2023-04-18'),
         ];
@@ -166,7 +166,7 @@ export class SampleTasks {
             Status.DONE,
             Status.EMPTY,
             Status.makeInProgress(),
-            Status.makeTodo(),
+            Status.TODO,
             Status.makeNonTask(),
         ];
 
