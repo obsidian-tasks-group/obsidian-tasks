@@ -31,7 +31,7 @@
   "devDependencies": {
     "@codemirror/view": "^6.2.0",
     "@evilmartians/lefthook": "^1.7.2",
-    "@testing-library/jest-dom": "^6.1.6",
+    "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/svelte": "^3.2.2",
     "@tsconfig/svelte": "^3.0.0",
     "@types/jest": "^29.5.8",
