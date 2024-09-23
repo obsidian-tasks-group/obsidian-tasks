@@ -22,7 +22,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static DONE: Status = new Status(new StatusConfiguration('x', 'Done', ' ', true, StatusType.DONE));
+    public static readonly DONE: Status = new Status(new StatusConfiguration('x', 'Done', ' ', true, StatusType.DONE));
 
     /**
      * A default status of empty, used when things go wrong.
@@ -31,7 +31,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static EMPTY: Status = new Status(new StatusConfiguration('', 'EMPTY', '', true, StatusType.EMPTY));
+    public static readonly EMPTY: Status = new Status(new StatusConfiguration('', 'EMPTY', '', true, StatusType.EMPTY));
 
     /**
      * The default Todo status. Goes to Done when toggled.
@@ -41,7 +41,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static TODO: Status = new Status(new StatusConfiguration(' ', 'Todo', 'x', true, StatusType.TODO));
+    public static readonly TODO: Status = new Status(new StatusConfiguration(' ', 'Todo', 'x', true, StatusType.TODO));
 
     /**
      * The default Cancelled status. Goes to Todo when toggled.
@@ -50,7 +50,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static CANCELLED: Status = new Status(
+    public static readonly CANCELLED: Status = new Status(
         new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED),
     );
 
@@ -61,7 +61,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static IN_PROGRESS: Status = new Status(
+    public static readonly IN_PROGRESS: Status = new Status(
         new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS),
     );
 
@@ -72,7 +72,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static NON_TASK: Status = new Status(
+    public static readonly NON_TASK: Status = new Status(
         new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK),
     );
 
