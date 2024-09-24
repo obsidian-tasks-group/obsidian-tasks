@@ -249,7 +249,11 @@ export class EditableTask {
     private getToday(doneDate: moment.Moment | null) {
         // If there is a 'done' date, use that for today's date for recurrence calculations.
         // Otherwise, use the current date.
-        return doneDate ? doneDate : window.moment();
+        if (doneDate) {
+            return doneDate;
+        } else {
+            return window.moment();
+        }
     }
 
     public parseAndValidateRecurrence() {
