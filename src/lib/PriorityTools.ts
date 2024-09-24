@@ -1,5 +1,5 @@
 import { Priority } from '../Task/Priority';
-import { type EditableTaskPriority, appleSauce } from '../ui/EditableTask';
+import type { EditableTaskPriority } from '../ui/EditableTask';
 
 export class PriorityTools {
     /**
@@ -42,6 +42,19 @@ export class PriorityTools {
     }
 
     public static priorityValue(priority: EditableTaskPriority) {
-        return appleSauce(priority);
+        switch (priority) {
+            case 'lowest':
+                return Priority.Lowest;
+            case 'low':
+                return Priority.Low;
+            case 'medium':
+                return Priority.Medium;
+            case 'high':
+                return Priority.High;
+            case 'highest':
+                return Priority.Highest;
+            default:
+                return Priority.None;
+        }
     }
 }
