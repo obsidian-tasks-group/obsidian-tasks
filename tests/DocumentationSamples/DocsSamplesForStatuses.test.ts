@@ -11,11 +11,11 @@ describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
     it('core-statuses', () => {
-        VerifyStatuses.verifyStatusesInMultipleFormats([Status.makeTodo(), Status.makeDone()], true);
+        VerifyStatuses.verifyStatusesInMultipleFormats([Status.TODO, Status.DONE], true);
     });
 
     it('custom-statuses', () => {
-        VerifyStatuses.verifyStatusesInMultipleFormats([Status.makeInProgress(), Status.makeCancelled()], true);
+        VerifyStatuses.verifyStatusesInMultipleFormats([Status.IN_PROGRESS, Status.CANCELLED], true);
     });
 
     it('important-cycle', () => {
@@ -95,10 +95,10 @@ describe('Theme', () => {
 describe('Status Transitions', () => {
     it('status-types', () => {
         const statuses = [
-            Status.makeTodo(),
-            Status.makeInProgress(),
-            Status.makeDone(),
-            Status.makeCancelled(),
+            Status.TODO,
+            Status.IN_PROGRESS,
+            Status.DONE,
+            Status.CANCELLED,
             new Status(new StatusConfiguration('~', 'My custom status', ' ', false, StatusType.NON_TASK)),
         ];
         VerifyStatuses.verifyTransitionsAsMarkdownTable(statuses);

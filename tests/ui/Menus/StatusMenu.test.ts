@@ -28,7 +28,7 @@ describe('StatusMenu', () => {
 
     it('should show checkmark against the current task status', () => {
         // Arrange
-        const task = new TaskBuilder().status(Status.makeInProgress()).build();
+        const task = new TaskBuilder().status(Status.IN_PROGRESS).build();
         const statusRegistry = new StatusRegistry();
 
         // Act
@@ -78,9 +78,9 @@ describe('StatusMenu', () => {
         // Arrange
         const onlyShowCancelled = new StatusRegistry();
         onlyShowCancelled.clearStatuses();
-        onlyShowCancelled.add(Status.makeCancelled());
+        onlyShowCancelled.add(Status.CANCELLED);
 
-        const task = new TaskBuilder().status(Status.makeTodo()).build();
+        const task = new TaskBuilder().status(Status.TODO).build();
         const menu = new StatusMenu(onlyShowCancelled, task, TestableTaskSaver.testableTaskSaver);
 
         // Act

@@ -38,16 +38,16 @@ describe('StatusRegistry', () => {
         // Assert
         expect(statusRegistry).not.toBeNull();
 
-        expect(doneStatus.symbol).toEqual(Status.makeDone().symbol);
+        expect(doneStatus.symbol).toEqual(Status.DONE.symbol);
 
-        expect(statusRegistry.bySymbol('x').symbol).toEqual(Status.makeDone().symbol);
-        expect(statusRegistry.bySymbol('').symbol).toEqual(Status.makeEmpty().symbol);
-        expect(statusRegistry.bySymbol(' ').symbol).toEqual(Status.makeTodo().symbol);
-        expect(statusRegistry.bySymbol('-').symbol).toEqual(Status.makeCancelled().symbol);
-        expect(statusRegistry.bySymbol('/').symbol).toEqual(Status.makeInProgress().symbol);
+        expect(statusRegistry.bySymbol('x').symbol).toEqual(Status.DONE.symbol);
+        expect(statusRegistry.bySymbol('').symbol).toEqual(Status.EMPTY.symbol);
+        expect(statusRegistry.bySymbol(' ').symbol).toEqual(Status.TODO.symbol);
+        expect(statusRegistry.bySymbol('-').symbol).toEqual(Status.CANCELLED.symbol);
+        expect(statusRegistry.bySymbol('/').symbol).toEqual(Status.IN_PROGRESS.symbol);
 
         // Detect unrecognised symbol:
-        expect(statusRegistry.bySymbol('?').symbol).toEqual(Status.makeEmpty().symbol);
+        expect(statusRegistry.bySymbol('?').symbol).toEqual(Status.EMPTY.symbol);
     });
 
     it('should clear the statuses', () => {
@@ -395,13 +395,13 @@ describe('StatusRegistry', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.status.symbol).toEqual(Status.makeTodo().symbol);
+            expect(task!.status.symbol).toEqual(Status.TODO.symbol);
 
             const toggledDone = task?.toggle()[0];
-            expect(toggledDone?.status.symbol).toEqual(Status.makeDone().symbol);
+            expect(toggledDone?.status.symbol).toEqual(Status.DONE.symbol);
 
             const toggledTodo = toggledDone?.toggle()[0];
-            expect(toggledTodo?.status.symbol).toEqual(Status.makeTodo().symbol);
+            expect(toggledTodo?.status.symbol).toEqual(Status.TODO.symbol);
         });
 
         it('should allow task to toggle from cancelled to todo', () => {
@@ -419,10 +419,10 @@ describe('StatusRegistry', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.status.symbol).toEqual(Status.makeCancelled().symbol);
+            expect(task!.status.symbol).toEqual(Status.CANCELLED.symbol);
 
             const toggledTodo = task?.toggle()[0];
-            expect(toggledTodo?.status.symbol).toEqual(Status.makeTodo().symbol);
+            expect(toggledTodo?.status.symbol).toEqual(Status.TODO.symbol);
         });
 
         it('should allow task to toggle through custom transitions', () => {

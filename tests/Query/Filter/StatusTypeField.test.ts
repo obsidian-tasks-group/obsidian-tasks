@@ -21,7 +21,7 @@ const non_Task = new TaskBuilder()
     .statusValues('^', 'non-task', 'x', false, StatusType.NON_TASK)
     .description('Non-task')
     .build();
-const emptTask = new TaskBuilder().status(Status.makeEmpty()).description('Empty task').build();
+const emptTask = new TaskBuilder().status(Status.EMPTY).description('Empty task').build();
 
 describe('status.name', () => {
     it('value', () => {

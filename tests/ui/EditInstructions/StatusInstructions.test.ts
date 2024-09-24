@@ -25,12 +25,12 @@ afterEach(() => {
 });
 
 describe('SetStatus', () => {
-    const todoTask = new TaskBuilder().status(Status.makeTodo()).build();
-    const doneTask = new TaskBuilder().status(Status.makeDone()).build();
+    const todoTask = new TaskBuilder().status(Status.TODO).build();
+    const doneTask = new TaskBuilder().status(Status.DONE).build();
 
     it('should provide information to set up a menu item for setting status', () => {
         // Arrange
-        const status = Status.makeTodo();
+        const status = Status.TODO;
         const instruction = new SetStatus(status);
 
         // Assert
@@ -41,7 +41,7 @@ describe('SetStatus', () => {
 
     it('should edit status', () => {
         // Arrange
-        const instruction = new SetStatus(Status.makeDone());
+        const instruction = new SetStatus(Status.DONE);
 
         // Act
         const newTasks = instruction.apply(todoTask);
@@ -53,7 +53,7 @@ describe('SetStatus', () => {
 
     it('should not edit task if already has chosen status', () => {
         // Arrange
-        const instruction = new SetStatus(Status.makeTodo());
+        const instruction = new SetStatus(Status.TODO);
 
         // Act
         const newTasks = instruction.apply(todoTask);

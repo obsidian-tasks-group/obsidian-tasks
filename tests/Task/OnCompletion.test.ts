@@ -58,7 +58,7 @@ describe('OnCompletion - cases where all tasks are retained', () => {
         const task = makeTask(line);
 
         // Act
-        const returnedTasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+        const returnedTasks = applyStatusAndOnCompletionAction(task, Status.DONE);
 
         // Assert
         expect(returnedTasks.length).toEqual(1);
@@ -70,7 +70,7 @@ describe('OnCompletion - cases where all tasks are retained', () => {
         const task = makeTask('- [ ] A non-recurring task with no trigger 📅 2024-02-10');
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+        const tasks = applyStatusAndOnCompletionAction(task, Status.DONE);
 
         // Assert
         expect(toMarkdown(tasks)).toMatchInlineSnapshot(
@@ -83,7 +83,7 @@ describe('OnCompletion - cases where all tasks are retained', () => {
         const task = makeTask('- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10');
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+        const tasks = applyStatusAndOnCompletionAction(task, Status.DONE);
 
         // Assert
         expect(toMarkdown(tasks)).toMatchInlineSnapshot(`
@@ -97,7 +97,7 @@ describe('OnCompletion - cases where all tasks are retained', () => {
         const task = makeTask('- [ ] A recurring task with "delete" Action 🔁 every day 🏁 delete 📅 2024-02-10');
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeInProgress());
+        const tasks = applyStatusAndOnCompletionAction(task, Status.IN_PROGRESS);
 
         // Assert
         expect(tasks.length).toEqual(1);
@@ -123,7 +123,7 @@ describe('OnCompletion - cases where all tasks are retained', () => {
         const task = makeTask('- [ ] A non-recurring task with');
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+        const tasks = applyStatusAndOnCompletionAction(task, Status.DONE);
 
         // Assert
         expect(tasks.length).toEqual(1);
@@ -136,7 +136,7 @@ describe('OnCompletion - "keep" action', () => {
         const task = makeTask('- [ ] A non-recurring task with "keep" Action 🏁 keep');
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+        const tasks = applyStatusAndOnCompletionAction(task, Status.DONE);
 
         // Assert
         expect(tasks.length).toEqual(1);
@@ -149,7 +149,7 @@ describe('OnCompletion - "delete" action', () => {
         const task = makeTask('- [ ] A recurring task with "delete" Action 🔁 every day 🏁 delete 📅 2024-02-10');
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+        const tasks = applyStatusAndOnCompletionAction(task, Status.DONE);
 
         // Assert
         expect(toMarkdown(tasks)).toMatchInlineSnapshot(
@@ -162,7 +162,7 @@ describe('OnCompletion - "delete" action', () => {
         const task = makeTask('- [ ] A non-recurring task with "delete" Action 🏁 delete');
 
         // Act
-        const tasks = applyStatusAndOnCompletionAction(task, Status.makeDone());
+        const tasks = applyStatusAndOnCompletionAction(task, Status.DONE);
 
         // Assert
         expect(tasks.length).toEqual(0);
@@ -179,51 +179,51 @@ function getCases(): ToggleCase[] {
     return [
         // Non-recurring
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '- [ ] A non-recurring task with no trigger 📅 2024-02-10',
         },
 
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '- [ ] A non-recurring task with 🏁 delete',
         },
 
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '- [ ] A non-recurring task with 🏁 delete 📅 2024-02-10',
         },
 
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '- [ ] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10',
         },
 
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '- [ ] A non-recurring task with 🏁',
         },
 
         // Recurring
 
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '- [ ] A recurring task with no trigger 🔁 every day 📅 2024-02-10',
         },
 
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '- [ ] A recurring task with 🏁 delete 🔁 every day 📅 2024-02-10',
         },
 
         {
-            nextStatus: Status.makeInProgress(),
+            nextStatus: Status.IN_PROGRESS,
             line: '- [ ] A recurring task with 🏁 delete 🔁 every day 📅 2024-02-10',
         },
 
         // Other
 
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '- [x] An already-DONE task, changing to Same      DONE status 🏁 delete 📅 2024-02-10 ✅ 2024-02-10',
         },
 
@@ -235,12 +235,12 @@ function getCases(): ToggleCase[] {
         // Indented, within callout/code block
 
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '    - [ ] An indented task with 🏁 delete',
         },
 
         {
-            nextStatus: Status.makeDone(),
+            nextStatus: Status.DONE,
             line: '> - [ ] A task within a block quote or callout and 🏁 delete',
         },
     ];

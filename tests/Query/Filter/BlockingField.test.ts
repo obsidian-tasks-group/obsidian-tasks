@@ -8,7 +8,7 @@ describe('blocking', () => {
     const notBlocking = new TaskBuilder().build();
     const child = new TaskBuilder().id('12345').build();
     const childWithoutParent = new TaskBuilder().id('23456').build();
-    const childThatIsDone = new TaskBuilder().id('34567').status(Status.makeDone()).build();
+    const childThatIsDone = new TaskBuilder().id('34567').status(Status.DONE).build();
     const parent = new TaskBuilder().dependsOn(['12345', '34567']).build();
     const allTasks = [notBlocking, child, childWithoutParent, childThatIsDone, parent];
 
