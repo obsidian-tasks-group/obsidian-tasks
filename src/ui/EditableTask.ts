@@ -243,11 +243,15 @@ export class EditableTask {
 
         // Then apply the new status to the updated task, in case a new recurrence
         // needs to be created.
-        const today = this.getToday(this.status.type, doneDate, cancelledDate);
+        const today = this.inferTodaysDate(this.status.type, doneDate, cancelledDate);
         return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(this.status, today);
     }
 
-    private getToday(newStatusType: StatusType, doneDate: moment.Moment | null, cancelledDate: moment.Moment | null) {
+    private inferTodaysDate(
+        newStatusType: StatusType,
+        doneDate: moment.Moment | null,
+        cancelledDate: moment.Moment | null,
+    ) {
         if (newStatusType === StatusType.DONE && doneDate !== null) {
             // If there is a 'done' date, use that for today's date for recurrence calculations.
             return doneDate;
