@@ -1,4 +1,5 @@
 import { Priority } from '../Task/Priority';
+import { type EditableTaskPriority, appleSauce } from '../ui/EditableTask';
 
 export class PriorityTools {
     /**
@@ -38,5 +39,9 @@ export class PriorityTools {
      */
     public static priorityNameUsingNormal(priority: Priority) {
         return PriorityTools.priorityNameUsingNone(priority).replace('None', 'Normal');
+    }
+
+    public static priorityValue(priority: EditableTaskPriority) {
+        return appleSauce(priority);
     }
 }

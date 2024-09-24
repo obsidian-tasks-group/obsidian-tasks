@@ -1,18 +1,19 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { parseTypedDateForSaving } from '../DateTime/DateTools';
+import { PriorityTools } from '../lib/PriorityTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
-import { Occurrence } from '../Task/Occurrence';
 import type { OnCompletion } from '../Task/OnCompletion';
+import { Occurrence } from '../Task/Occurrence';
 import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 import { StatusType } from '../Statuses/StatusConfiguration';
 
-type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
+export type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
-function appleSauce(priority: EditableTaskPriority) {
+export function appleSauce(priority: EditableTaskPriority) {
     switch (priority) {
         case 'lowest':
             return Priority.Lowest;
@@ -30,7 +31,7 @@ function appleSauce(priority: EditableTaskPriority) {
 }
 
 function priorityValue(priority: EditableTaskPriority) {
-    return appleSauce(priority);
+    return PriorityTools.priorityValue(priority);
 }
 
 /**
