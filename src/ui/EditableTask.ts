@@ -258,11 +258,18 @@ export class EditableTask {
         cancelledDate: moment.Moment | null,
     ) {
         if (newStatusType === StatusType.DONE && doneDate !== null) {
-            // If there is a 'done' date, use that for today's date for recurrence calculations.
+            // The status type of the edited task is DONE, so we need to preserve the
+            // Done Date value in the modal as today's date,
+            // for use in later code.
+            // This is needed for scenarios including:
+            //  - The task already had a done date before being edited
+            //  - The user changed the status to Done, and then edited the machine-generted done date.
             return doneDate;
         }
 
         if (newStatusType === StatusType.CANCELLED && cancelledDate !== null) {
+            // The status type of the edited task is CANCELLED, so we need to preserve the
+            // Cancelled Date value in the modal as today's date.
             return cancelledDate;
         }
 
