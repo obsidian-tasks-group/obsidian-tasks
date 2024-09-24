@@ -107,7 +107,7 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 | Matches `status.name includes in progress` | no | YES | no | no | no |
 | Matches `status.name includes done` | no | no | YES | no | no |
 | Matches `status.name includes cancelled` | no | no | no | YES | no |
-| Name for `group by status` | Todo | Done | Done | Done | Done |
+| Name for `group by status` | Todo | Todo | Done | Done | Done |
 | Name for `group by status.type` | %%2%%TODO | %%1%%IN_PROGRESS | %%3%%DONE | %%4%%CANCELLED | %%5%%NON_TASK |
 | Name for `group by status.name` | Todo | In Progress | Done | Cancelled | My custom status |
 
