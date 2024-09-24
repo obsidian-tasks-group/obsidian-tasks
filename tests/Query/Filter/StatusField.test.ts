@@ -114,9 +114,9 @@ describe('grouping by status', () => {
         ['- [ ] a', ['Todo']],
         ['- [x] a', ['Done']],
         ['- [X] a', ['Done']],
-        ['- [/] a', ['Done']],
+        ['- [/] a', ['Todo']],
         ['- [-] a', ['Done']],
-        ['- [!] a', ['Done']],
+        ['- [!] a', ['Todo']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
         const grouper = new StatusField().createNormalGrouper();
