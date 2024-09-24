@@ -248,12 +248,12 @@ export class EditableTask {
     }
 
     private getToday(newStatusType: StatusType, doneDate: moment.Moment | null, cancelledDate: moment.Moment | null) {
-        if (newStatusType === StatusType.DONE && doneDate) {
+        if (newStatusType === StatusType.DONE && doneDate !== null) {
             // If there is a 'done' date, use that for today's date for recurrence calculations.
             return doneDate;
         }
 
-        if (newStatusType === StatusType.CANCELLED && cancelledDate) {
+        if (newStatusType === StatusType.CANCELLED && cancelledDate !== null) {
             return cancelledDate;
         }
 
