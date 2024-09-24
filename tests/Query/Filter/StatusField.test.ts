@@ -85,13 +85,13 @@ describe('sorting by status', () => {
         expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [-] Z' }));
         expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [x] Z' }));
         expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [X] Z' }));
-        expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [!] Z' }));
+        expectTaskComparesEqual(sorter, todoTask, TestHelpers.fromLine({ line: '- [!] Z' }));
 
         expectTaskComparesEqual(sorter, doneTask, doneTask);
         expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [-] Z' }));
         expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [x] Z' }));
         expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [X] Z' }));
-        expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [!] Z' }));
+        expectTaskComparesAfter(sorter, doneTask, TestHelpers.fromLine({ line: '- [!] Z' }));
     });
 
     it('sort by status reverse', () => {
