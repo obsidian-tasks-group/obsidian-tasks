@@ -9,6 +9,8 @@ import {
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
 import { fromLine } from '../../TestingTools/TestHelpers';
+import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
+import type { StatusCollection } from '../../../src/Statuses/StatusCollection';
 
 describe('status', () => {
     it('done', () => {
@@ -88,6 +90,22 @@ describe('sorting by status', () => {
 });
 
 describe('grouping by status', () => {
+    beforeAll(() => {
+        StatusRegistry.getInstance().resetToDefaultStatuses();
+        const importantCycle: StatusCollection = [
+            ['!', 'todo', 'X', 'TODO'],
+            ['X', 'done', '!', 'DONE'],
+        ];
+        importantCycle.forEach((entry) => {
+            const status = Status.createFromImportedValue(entry);
+            StatusRegistry.getInstance().add(status);
+        });
+    });
+
+    afterAll(() => {
+        StatusRegistry.getInstance().resetToDefaultStatuses();
+    });
+
     it('supports grouping methods correctly', () => {
         expect(new StatusField()).toSupportGroupingWithProperty('status');
     });
@@ -105,6 +123,11 @@ describe('grouping by status', () => {
 
         // Assert
         const tasks = [fromLine({ line: taskLine })];
+
+        // Check this symbol has been registered, so we are not passing by luck:
+        const symbol = tasks[0].status.symbol;
+        expect(StatusRegistry.getInstance().bySymbol(symbol).type).not.toEqual(StatusType.EMPTY);
+
         expect({ grouper, tasks }).groupHeadingsToBe(groups);
     });
 
