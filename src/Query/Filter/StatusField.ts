@@ -59,7 +59,7 @@ export class StatusField extends FilterInstructionsBasedField {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            return [task.isDone ? 'Done' : 'Todo'];
+            return [StatusField.oldStatusName(task)];
         };
     }
 }
