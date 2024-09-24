@@ -13,10 +13,6 @@ import { StatusType } from '../Statuses/StatusConfiguration';
 
 export type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
-function priorityValue(priority: EditableTaskPriority) {
-    return PriorityTools.priorityValue(priority);
-}
-
 /**
  * {@link Task} objects are immutable. This class allows to create a mutable object from a {@link Task}, apply the edits,
  * and get the resulting task(s).
@@ -202,7 +198,7 @@ export class EditableTask {
             ...task,
             description,
             status: task.status,
-            priority: priorityValue(this.priority),
+            priority: PriorityTools.priorityValue(this.priority),
             onCompletion: parsedOnCompletion,
             recurrence,
             startDate,
