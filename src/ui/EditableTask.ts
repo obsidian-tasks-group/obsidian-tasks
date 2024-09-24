@@ -168,8 +168,9 @@ export class EditableTask {
             });
         }
 
+        const priority = this.priority;
         let parsedPriority: Priority;
-        switch (this.priority) {
+        switch (priority) {
             case 'lowest':
                 parsedPriority = Priority.Lowest;
                 break;
