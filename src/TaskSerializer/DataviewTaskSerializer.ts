@@ -1,5 +1,6 @@
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
-import { Priority } from '../Task/Priority';
+import { PriorityTools } from '../lib/PriorityTools';
+import type { Priority } from '../Task/Priority';
 import type { Task } from '../Task/Task';
 import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from './DefaultTaskSerializer';
 
@@ -103,20 +104,7 @@ export class DataviewTaskSerializer extends DefaultTaskSerializer {
     }
 
     protected parsePriority(p: string): Priority {
-        switch (p) {
-            case 'highest':
-                return Priority.Highest;
-            case 'high':
-                return Priority.High;
-            case 'medium':
-                return Priority.Medium;
-            case 'low':
-                return Priority.Low;
-            case 'lowest':
-                return Priority.Lowest;
-            default:
-                return Priority.None;
-        }
+        return PriorityTools.priorityValue(p);
     }
 
     public componentToString(task: Task, shortMode: boolean, component: TaskLayoutComponent) {
