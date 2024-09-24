@@ -247,6 +247,11 @@ export class EditableTask {
         return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(this.status, today);
     }
 
+    /**
+     * If the user has manually edited the Done date or Cancelled date in the modal,
+     * we need to tell Tasks to use a different `today` value in the status-editing code.
+     * Here we calculate that inferred date.
+     */
     private inferTodaysDate(
         newStatusType: StatusType,
         doneDate: moment.Moment | null,
