@@ -63,7 +63,6 @@ export class StatusField extends FilterInstructionsBasedField {
      * TODO and IN_PROGRESS types are grouped in 'Todo'.
      * Other status types are grouped in 'Done'.
      */
-
     public grouper(): GrouperFunction {
         return (task: Task) => {
             return [StatusField.oldStatusName(task)];
