@@ -13,23 +13,6 @@ import { StatusType } from '../Statuses/StatusConfiguration';
 
 export type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
-export function appleSauce(priority: EditableTaskPriority) {
-    switch (priority) {
-        case 'lowest':
-            return Priority.Lowest;
-        case 'low':
-            return Priority.Low;
-        case 'medium':
-            return Priority.Medium;
-        case 'high':
-            return Priority.High;
-        case 'highest':
-            return Priority.Highest;
-        default:
-            return Priority.None;
-    }
-}
-
 function priorityValue(priority: EditableTaskPriority) {
     return PriorityTools.priorityValue(priority);
 }
