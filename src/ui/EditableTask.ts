@@ -8,6 +8,7 @@ import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
+import { StatusType } from '../Statuses/StatusConfiguration';
 
 type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
@@ -242,10 +243,38 @@ export class EditableTask {
 
         // Then apply the new status to the updated task, in case a new recurrence
         // needs to be created.
-        // If there is a 'done' date, use that for today's date for recurrence calculations.
-        // Otherwise, use the current date.
-        const today = doneDate ? doneDate : window.moment();
+        const today = this.inferTodaysDate(this.status.type, doneDate, cancelledDate);
         return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(this.status, today);
+    }
+
+    /**
+     * If the user has manually edited the Done date or Cancelled date in the modal,
+     * we need to tell Tasks to use a different `today` value in the status-editing code.
+     * Here we calculate that inferred date.
+     */
+    private inferTodaysDate(
+        newStatusType: StatusType,
+        doneDate: moment.Moment | null,
+        cancelledDate: moment.Moment | null,
+    ) {
+        if (newStatusType === StatusType.DONE && doneDate !== null) {
+            // The status type of the edited task is DONE, so we need to preserve the
+            // Done Date value in the modal as today's date,
+            // for use in later code.
+            // This is needed for scenarios including:
+            //  - The task already had a done date before being edited
+            //  - The user changed the status to Done, and then edited the machine-generted done date.
+            return doneDate;
+        }
+
+        if (newStatusType === StatusType.CANCELLED && cancelledDate !== null) {
+            // The status type of the edited task is CANCELLED, so we need to preserve the
+            // Cancelled Date value in the modal as today's date.
+            return cancelledDate;
+        }
+
+        // Otherwise, use the current date.
+        return window.moment();
     }
 
     public parseAndValidateRecurrence() {
