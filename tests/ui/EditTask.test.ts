@@ -418,7 +418,7 @@ describe('Task editing', () => {
 
             submit.click();
             expect(await waitForClose).toMatchInlineSnapshot(
-                '"- [-] expecting cancelled date to be kept ❌ 2024-02-29"',
+                '"- [-] expecting cancelled date to be kept ❌ 2024-09-20"',
             );
         });
 
@@ -476,9 +476,8 @@ describe('Task editing', () => {
                 'cancelled',
                 '2024-09-21',
                 '-',
-                // TODO the difference between the date in the modal and the saved one is a bug:
                 // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3089
-                '- [-] input cancelled date, change status to cancelled and expect the date to be kept ❌ 2024-02-29',
+                '- [-] input cancelled date, change status to cancelled and expect the date to be kept ❌ 2024-09-21',
             ],
         ])(
             'for "%s" task, change %s date to %s and status to %s',

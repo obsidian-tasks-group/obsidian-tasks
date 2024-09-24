@@ -8,6 +8,7 @@ import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
+import { StatusType } from '../Statuses/StatusConfiguration';
 
 type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
@@ -242,16 +243,21 @@ export class EditableTask {
 
         // Then apply the new status to the updated task, in case a new recurrence
         // needs to be created.
-        const today = this.getToday(doneDate);
+        const today = this.getToday(this.status.type, doneDate, cancelledDate);
         return updatedTask.handleNewStatusWithRecurrenceInUsersOrder(this.status, today);
     }
 
-    private getToday(doneDate: moment.Moment | null) {
-        // If there is a 'done' date, use that for today's date for recurrence calculations.
-        // Otherwise, use the current date.
-        if (doneDate) {
+    private getToday(newStatusType: StatusType, doneDate: moment.Moment | null, cancelledDate: moment.Moment | null) {
+        if (newStatusType === StatusType.DONE && doneDate) {
+            // If there is a 'done' date, use that for today's date for recurrence calculations.
             return doneDate;
         }
+
+        if (newStatusType === StatusType.CANCELLED && cancelledDate) {
+            return cancelledDate;
+        }
+
+        // Otherwise, use the current date.
         return window.moment();
     }
 
