@@ -25,7 +25,7 @@ export class EditableTask {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     description: string;
     status: Status;
-    priority: EditableTaskPriority;
+    priority: string;
     recurrenceRule: string;
     onCompletion: OnCompletion;
     createdDate: string;
@@ -45,7 +45,7 @@ export class EditableTask {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: string;
         status: Status;
-        priority: EditableTaskPriority;
+        priority: string;
         onCompletion: OnCompletion;
         recurrenceRule: string;
         createdDate: string;
@@ -91,7 +91,7 @@ export class EditableTask {
         const addGlobalFilterOnSave =
             description != task.description || !GlobalFilter.getInstance().includedIn(task.description);
 
-        let priority: EditableTaskPriority = 'none';
+        let priority = 'none';
         if (task.priority === Priority.Lowest) {
             priority = 'lowest';
         } else if (task.priority === Priority.Low) {
