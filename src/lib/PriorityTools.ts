@@ -1,5 +1,4 @@
 import { Priority } from '../Task/Priority';
-import type { EditableTaskPriority } from '../ui/EditableTask';
 
 export class PriorityTools {
     /**
@@ -41,7 +40,7 @@ export class PriorityTools {
         return PriorityTools.priorityNameUsingNone(priority).replace('None', 'Normal');
     }
 
-    public static priorityValue(priority: EditableTaskPriority): Priority {
+    public static priorityValue(priority: string): Priority {
         switch (priority) {
             case 'lowest':
                 return Priority.Lowest;
