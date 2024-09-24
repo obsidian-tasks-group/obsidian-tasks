@@ -41,7 +41,7 @@ export class PriorityTools {
         return PriorityTools.priorityNameUsingNone(priority).replace('None', 'Normal');
     }
 
-    public static priorityValue(priority: EditableTaskPriority) {
+    public static priorityValue(priority: EditableTaskPriority): Priority {
         switch (priority) {
             case 'lowest':
                 return Priority.Lowest;
