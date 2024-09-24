@@ -30,11 +30,9 @@ export class StatusField extends FilterInstructionsBasedField {
 
     /**
      * Return a function to compare two Task objects, for use in sorting by status.
+     * TODO and IN_PROGRESS types are sorted before the other types.
      */
     public comparator(): Comparator {
-        // Backwards-compatibility note: In Tasks 1.22.0 and earlier, the
-        // only available status names were 'Todo' and 'Done'.
-        // And 'Todo' sorted before 'Done'.
         return (a: Task, b: Task) => {
             const oldStatusNameA = StatusField.oldStatusName(a);
             const oldStatusNameB = StatusField.oldStatusName(b);
@@ -49,7 +47,7 @@ export class StatusField extends FilterInstructionsBasedField {
     }
 
     private static oldStatusName(a: Task): string {
-        if (a.status.symbol === ' ') {
+        if (!a.isDone) {
             return 'Todo';
         } else {
             return 'Done';
@@ -60,11 +58,14 @@ export class StatusField extends FilterInstructionsBasedField {
         return true;
     }
 
+    /**
+     * Return a function to name tasks, for use in grouping by status.
+     * TODO and IN_PROGRESS types are grouped in 'Todo'.
+     * Other status types are grouped in 'Done'.
+     */
+
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            // Backwards-compatibility note: In Tasks 1.22.0 and earlier, the only
-            // names used by 'group by status' were 'Todo' and 'Done' - and
-            // any character other than a space was considered to be 'Done'.
             return [StatusField.oldStatusName(task)];
         };
     }
