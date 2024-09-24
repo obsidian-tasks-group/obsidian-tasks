@@ -12,7 +12,7 @@ import { StatusType } from '../Statuses/StatusConfiguration';
 
 type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
-function priorityValue(priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest') {
+function priorityValue(priority: EditableTaskPriority) {
     switch (priority) {
         case 'lowest':
             return Priority.Lowest;
