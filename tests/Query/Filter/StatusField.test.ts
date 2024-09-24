@@ -12,6 +12,22 @@ import { fromLine } from '../../TestingTools/TestHelpers';
 import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
 import type { StatusCollection } from '../../../src/Statuses/StatusCollection';
 
+beforeAll(() => {
+    StatusRegistry.getInstance().resetToDefaultStatuses();
+    const importantCycle: StatusCollection = [
+        ['!', 'todo', 'X', 'TODO'],
+        ['X', 'done', '!', 'DONE'],
+    ];
+    importantCycle.forEach((entry) => {
+        const status = Status.createFromImportedValue(entry);
+        StatusRegistry.getInstance().add(status);
+    });
+});
+
+afterAll(() => {
+    StatusRegistry.getInstance().resetToDefaultStatuses();
+});
+
 describe('status', () => {
     it('done', () => {
         // Arrange
@@ -90,22 +106,6 @@ describe('sorting by status', () => {
 });
 
 describe('grouping by status', () => {
-    beforeAll(() => {
-        StatusRegistry.getInstance().resetToDefaultStatuses();
-        const importantCycle: StatusCollection = [
-            ['!', 'todo', 'X', 'TODO'],
-            ['X', 'done', '!', 'DONE'],
-        ];
-        importantCycle.forEach((entry) => {
-            const status = Status.createFromImportedValue(entry);
-            StatusRegistry.getInstance().add(status);
-        });
-    });
-
-    afterAll(() => {
-        StatusRegistry.getInstance().resetToDefaultStatuses();
-    });
-
     it('supports grouping methods correctly', () => {
         expect(new StatusField()).toSupportGroupingWithProperty('status');
     });
