@@ -40,6 +40,14 @@ export class PriorityTools {
         return PriorityTools.priorityNameUsingNone(priority).replace('None', 'Normal');
     }
 
+    /**
+     * Get the {@link Priority} value from a string. A lower-case string is expected.
+     *
+     * In case the value was not recognised, {@link Priority.None} will be returned.
+     *
+     * @param priority
+     * @see priorityNameUsingNormal
+     */
     public static priorityValue(priority: string): Priority {
         switch (priority) {
             case 'lowest':
