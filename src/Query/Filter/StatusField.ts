@@ -30,6 +30,7 @@ export class StatusField extends FilterInstructionsBasedField {
 
     /**
      * Return a function to compare two Task objects, for use in sorting by status.
+     * TODO and IN_PROGRESS types are sorted before the other types.
      */
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
@@ -56,6 +57,12 @@ export class StatusField extends FilterInstructionsBasedField {
     public supportsGrouping(): boolean {
         return true;
     }
+
+    /**
+     * Return a function to name tasks, for use in grouping by status.
+     * TODO and IN_PROGRESS types are grouped in 'Todo'.
+     * Other status types are grouped in 'Done'.
+     */
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
