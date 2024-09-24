@@ -2,8 +2,8 @@ import { GlobalFilter } from '../Config/GlobalFilter';
 import { parseTypedDateForSaving } from '../DateTime/DateTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
-import type { OnCompletion } from '../Task/OnCompletion';
 import { Occurrence } from '../Task/Occurrence';
+import type { OnCompletion } from '../Task/OnCompletion';
 import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
@@ -185,8 +185,7 @@ export class EditableTask {
             });
         }
 
-        const priority = this.priority;
-        const parsedPriority = priorityValue(priority);
+        const parsedPriority = priorityValue(this.priority);
 
         const parsedOnCompletion: OnCompletion = this.onCompletion;
 
