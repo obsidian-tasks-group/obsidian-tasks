@@ -12,6 +12,30 @@ import { StatusType } from '../Statuses/StatusConfiguration';
 
 type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
+function priorityValue(priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest') {
+    let parsedPriority: Priority;
+    switch (priority) {
+        case 'lowest':
+            parsedPriority = Priority.Lowest;
+            break;
+        case 'low':
+            parsedPriority = Priority.Low;
+            break;
+        case 'medium':
+            parsedPriority = Priority.Medium;
+            break;
+        case 'high':
+            parsedPriority = Priority.High;
+            break;
+        case 'highest':
+            parsedPriority = Priority.Highest;
+            break;
+        default:
+            return Priority.None;
+    }
+    return parsedPriority;
+}
+
 /**
  * {@link Task} objects are immutable. This class allows to create a mutable object from a {@link Task}, apply the edits,
  * and get the resulting task(s).
@@ -169,26 +193,7 @@ export class EditableTask {
         }
 
         const priority = this.priority;
-        let parsedPriority: Priority;
-        switch (priority) {
-            case 'lowest':
-                parsedPriority = Priority.Lowest;
-                break;
-            case 'low':
-                parsedPriority = Priority.Low;
-                break;
-            case 'medium':
-                parsedPriority = Priority.Medium;
-                break;
-            case 'high':
-                parsedPriority = Priority.High;
-                break;
-            case 'highest':
-                parsedPriority = Priority.Highest;
-                break;
-            default:
-                parsedPriority = Priority.None;
-        }
+        const parsedPriority = priorityValue(priority);
 
         const parsedOnCompletion: OnCompletion = this.onCompletion;
 
