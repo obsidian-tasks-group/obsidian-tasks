@@ -185,8 +185,6 @@ export class EditableTask {
             });
         }
 
-        const parsedPriority = priorityValue(this.priority);
-
         const parsedOnCompletion: OnCompletion = this.onCompletion;
 
         const blockedByWithIds = [];
@@ -216,7 +214,7 @@ export class EditableTask {
             ...task,
             description,
             status: task.status,
-            priority: parsedPriority,
+            priority: priorityValue(this.priority),
             onCompletion: parsedOnCompletion,
             recurrence,
             startDate,
