@@ -23,7 +23,7 @@ window.moment = moment;
 describe('task', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const task1 = TaskBuilder.createFullyPopulatedTask();
-        const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
+        const task2 = new TaskBuilder().description('minimal task').status(Status.IN_PROGRESS).build();
         verifyFieldDataFromTasksForReferenceDocs([task1, task2], fields);
     }
 

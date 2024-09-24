@@ -583,15 +583,15 @@ describe('FunctionField - grouping - example functions', () => {
         // A single space as the character in a heading is not useful, so replace with something displayable:
         const line = 'group by function task.status.symbol.replace(" ", "space")';
         const grouper = createGrouper(line);
-        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeCancelled()), ['-']);
-        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeTodo()), ['space']);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.CANCELLED), ['-']);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.TODO), ['space']);
     });
 
     it('group by status nextStatusSymbol', () => {
         const line = 'group by function task.status.nextStatusSymbol.replace(" ", "space")';
         const grouper = createGrouper(line);
-        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeInProgress()), ['x']);
-        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeDone()), ['space']);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.IN_PROGRESS), ['x']);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.DONE), ['space']);
     });
 
     it('group by using number', () => {

@@ -21,13 +21,13 @@ export class StatusSettings {
     constructor() {
         this.coreStatuses = [
             // The two statuses that do not need CSS styling
-            Status.makeTodo().configuration,
-            Status.makeDone().configuration,
+            Status.TODO.configuration,
+            Status.DONE.configuration,
         ]; // Do not modify directly: use the static mutation methods in this class.
         this.customStatuses = [
             // Any statuses that are always supported, but need custom CSS styling
-            Status.makeInProgress().configuration,
-            Status.makeCancelled().configuration,
+            Status.IN_PROGRESS.configuration,
+            Status.CANCELLED.configuration,
         ]; // Do not modify directly: use the static mutation methods in this class.
     }
     readonly coreStatuses: StatusConfiguration[];

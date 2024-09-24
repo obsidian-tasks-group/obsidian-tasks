@@ -22,15 +22,16 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static DONE: Status = Status.makeDone();
+    public static readonly DONE: Status = new Status(new StatusConfiguration('x', 'Done', ' ', true, StatusType.DONE));
 
     /**
      * A default status of empty, used when things go wrong.
      *
      * @static
+     * @type {Status}
      * @memberof Status
      */
-    public static EMPTY: Status = Status.makeEmpty();
+    public static readonly EMPTY: Status = new Status(new StatusConfiguration('', 'EMPTY', '', true, StatusType.EMPTY));
 
     /**
      * The default Todo status. Goes to Done when toggled.
@@ -40,7 +41,40 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static TODO: Status = Status.makeTodo();
+    public static readonly TODO: Status = new Status(new StatusConfiguration(' ', 'Todo', 'x', true, StatusType.TODO));
+
+    /**
+     * The default Cancelled status. Goes to Todo when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
+     */
+    public static readonly CANCELLED: Status = new Status(
+        new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED),
+    );
+
+    /**
+     * The default In Progress status. Goes to Done when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
+     */
+    public static readonly IN_PROGRESS: Status = new Status(
+        new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS),
+    );
+
+    /**
+     * A sample Non-Task status. Goes to NON_TASK when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
+     */
+    public static readonly NON_TASK: Status = new Status(
+        new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK),
+    );
 
     /**
      * The configuration stored in the data.json file.
@@ -154,49 +188,6 @@ export class Status {
      */
     constructor(configuration: StatusConfiguration) {
         this.configuration = configuration;
-    }
-
-    /**
-     * The default Done status. Goes to Todo when toggled.
-     */
-    static makeDone(): Status {
-        return new Status(new StatusConfiguration('x', 'Done', ' ', true, StatusType.DONE));
-    }
-
-    /**
-     * A default status of empty, used when things go wrong.
-     */
-    static makeEmpty(): Status {
-        return new Status(new StatusConfiguration('', 'EMPTY', '', true, StatusType.EMPTY));
-    }
-
-    /**
-     * The default Todo status. Goes to Done when toggled.
-     * User may later be able to override this to go to In Progress instead.
-     */
-    static makeTodo(): Status {
-        return new Status(new StatusConfiguration(' ', 'Todo', 'x', true, StatusType.TODO));
-    }
-
-    /**
-     * The default Cancelled status. Goes to Todo when toggled.
-     */
-    static makeCancelled(): Status {
-        return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED));
-    }
-
-    /**
-     * The default In Progress status. Goes to Done when toggled.
-     */
-    static makeInProgress(): Status {
-        return new Status(new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS));
-    }
-
-    /**
-     * A sample Non-Task status. Goes to NON_TASK when toggled.
-     */
-    static makeNonTask(): Status {
-        return new Status(new StatusConfiguration('Q', 'Non-Task', 'A', true, StatusType.NON_TASK));
     }
 
     /**

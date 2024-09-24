@@ -16,11 +16,11 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('done');
 
         // Assert
-        expect(filter).not.toMatchTaskWithStatus(Status.makeTodo().configuration);
-        expect(filter).toMatchTaskWithStatus(Status.makeDone().configuration);
+        expect(filter).not.toMatchTaskWithStatus(Status.TODO.configuration);
+        expect(filter).toMatchTaskWithStatus(Status.DONE.configuration);
         expect(filter).toMatchTaskWithStatus(new StatusConfiguration('X', 'Really Done', 'x', true, StatusType.DONE));
-        expect(filter).not.toMatchTaskWithStatus(Status.makeInProgress().configuration);
-        expect(filter).toMatchTaskWithStatus(Status.makeCancelled().configuration);
+        expect(filter).not.toMatchTaskWithStatus(Status.IN_PROGRESS.configuration);
+        expect(filter).toMatchTaskWithStatus(Status.CANCELLED.configuration);
         expect(filter).not.toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'done' checks type.
         expect(filter).toMatchTaskWithStatus(new StatusConfiguration('^', 'Non', 'x', true, StatusType.NON_TASK));
     });
@@ -30,13 +30,13 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('not done');
 
         // Assert
-        expect(filter).toMatchTaskWithStatus(Status.makeTodo().configuration);
-        expect(filter).not.toMatchTaskWithStatus(Status.makeDone().configuration);
+        expect(filter).toMatchTaskWithStatus(Status.TODO.configuration);
+        expect(filter).not.toMatchTaskWithStatus(Status.DONE.configuration);
         expect(filter).not.toMatchTaskWithStatus(
             new StatusConfiguration('X', 'Really Done', 'x', true, StatusType.DONE),
         );
-        expect(filter).toMatchTaskWithStatus(Status.makeInProgress().configuration);
-        expect(filter).not.toMatchTaskWithStatus(Status.makeCancelled().configuration);
+        expect(filter).toMatchTaskWithStatus(Status.IN_PROGRESS.configuration);
+        expect(filter).not.toMatchTaskWithStatus(Status.CANCELLED.configuration);
         expect(filter).toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'not done' type.
         expect(filter).not.toMatchTaskWithStatus(new StatusConfiguration('^', 'Non', 'x', true, StatusType.NON_TASK));
     });

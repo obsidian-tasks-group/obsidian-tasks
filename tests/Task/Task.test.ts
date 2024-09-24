@@ -525,10 +525,10 @@ describe('task parsing VS global filter', () => {
 
 describe('properties for scripting', () => {
     it('should provide isDone for convenience', () => {
-        expect(new TaskBuilder().status(Status.makeTodo()).build().isDone).toEqual(false);
-        expect(new TaskBuilder().status(Status.makeInProgress()).build().isDone).toEqual(false);
-        expect(new TaskBuilder().status(Status.makeDone()).build().isDone).toEqual(true);
-        expect(new TaskBuilder().status(Status.makeCancelled()).build().isDone).toEqual(true);
+        expect(new TaskBuilder().status(Status.TODO).build().isDone).toEqual(false);
+        expect(new TaskBuilder().status(Status.IN_PROGRESS).build().isDone).toEqual(false);
+        expect(new TaskBuilder().status(Status.DONE).build().isDone).toEqual(true);
+        expect(new TaskBuilder().status(Status.CANCELLED).build().isDone).toEqual(true);
         expect(
             new TaskBuilder()
                 .status(new Status(new StatusConfiguration('%', 'Non-task', ' ', true, StatusType.NON_TASK)))
@@ -1339,7 +1339,7 @@ describe('handle new status', () => {
         });
 
         // Act
-        const newTasks = doneTask.handleNewStatus(Status.makeDone());
+        const newTasks = doneTask.handleNewStatus(Status.DONE);
 
         // Assert
         expect(newTasks.length).toEqual(1);
@@ -1392,7 +1392,7 @@ describe('handle new status', () => {
             });
 
             // Act
-            const newTasks = doneTask.handleNewStatus(Status.makeCancelled());
+            const newTasks = doneTask.handleNewStatus(Status.CANCELLED);
 
             // Assert
             expect(newTasks).toMatchMarkdownLines(['- [-] Stuff 📅 2023-12-15 ❌ 2023-06-26']);
@@ -1406,7 +1406,7 @@ describe('handle new status', () => {
             });
 
             // Act
-            const newTasks = task.handleNewStatus(Status.makeCancelled());
+            const newTasks = task.handleNewStatus(Status.CANCELLED);
 
             // Assert
             expect(newTasks).toMatchMarkdownLines(['- [-] Stuff']);
@@ -1419,7 +1419,7 @@ describe('handle new status', () => {
             });
 
             // Act
-            const newTasks = cancelledTask.handleNewStatus(Status.makeCancelled());
+            const newTasks = cancelledTask.handleNewStatus(Status.CANCELLED);
 
             // Assert
             // Check that the cancelled date was not modified:
@@ -1433,7 +1433,7 @@ describe('handle new status', () => {
             });
 
             // Act
-            const newTasks = cancelledTask.handleNewStatus(Status.makeDone());
+            const newTasks = cancelledTask.handleNewStatus(Status.DONE);
 
             // Assert
             expect(newTasks).toMatchMarkdownLines([
@@ -1507,7 +1507,7 @@ describe('order of recurring tasks', () => {
 
     function expectLineToApplyDoneStatusInUsersOrder(line: string, expectedLines: string[]) {
         const task = fromLine({ line: line });
-        const tasks = task.handleNewStatusWithRecurrenceInUsersOrder(Status.makeDone());
+        const tasks = task.handleNewStatusWithRecurrenceInUsersOrder(Status.DONE);
         expect(tasks).toMatchMarkdownLines(expectedLines);
     }
 
@@ -1553,7 +1553,7 @@ describe('identicalTo', () => {
     // NEW_TASK_FIELD_EDIT_REQUIRED
 
     it('should check status', () => {
-        const lhs = new TaskBuilder().status(Status.makeTodo());
+        const lhs = new TaskBuilder().status(Status.TODO);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.TODO));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().status(Status.DONE));
     });
