@@ -251,9 +251,8 @@ export class EditableTask {
         // Otherwise, use the current date.
         if (doneDate) {
             return doneDate;
-        } else {
-            return window.moment();
         }
+        return window.moment();
     }
 
     public parseAndValidateRecurrence() {
