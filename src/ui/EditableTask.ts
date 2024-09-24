@@ -13,27 +13,20 @@ import { StatusType } from '../Statuses/StatusConfiguration';
 type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
 function priorityValue(priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest') {
-    let parsedPriority: Priority;
     switch (priority) {
         case 'lowest':
-            parsedPriority = Priority.Lowest;
-            break;
+            return Priority.Lowest;
         case 'low':
-            parsedPriority = Priority.Low;
-            break;
+            return Priority.Low;
         case 'medium':
-            parsedPriority = Priority.Medium;
-            break;
+            return Priority.Medium;
         case 'high':
-            parsedPriority = Priority.High;
-            break;
+            return Priority.High;
         case 'highest':
-            parsedPriority = Priority.Highest;
-            break;
+            return Priority.Highest;
         default:
             return Priority.None;
     }
-    return parsedPriority;
 }
 
 /**
