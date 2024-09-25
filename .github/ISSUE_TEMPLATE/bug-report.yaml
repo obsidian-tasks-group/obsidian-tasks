@@ -20,24 +20,6 @@ body:
           required: true
 
   - type: textarea
-    id: expected
-    attributes:
-      label: Expected Behavior
-      description: Tell us what **should** happen.
-    validations:
-      required: true
-
-  - type: textarea
-    id: what-happened
-    attributes:
-      label: Current behaviour
-      description: |
-        Tell us what happens instead of the expected behavior.
-        Adding of screenshots really helps.
-    validations:
-      required: true
-
-  - type: textarea
     id: reproduce
     attributes:
       label: Steps to reproduce
@@ -57,6 +39,24 @@ body:
         6. Switch to Reading mode.
         7. etc
         (Mac users: a Safari bug strips newlines from this text.)
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: Tell us what **should** happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Current behaviour
+      description: |
+        Tell us what happens instead of the expected behavior.
+        Adding of screenshots really helps.
     validations:
       required: true
 
