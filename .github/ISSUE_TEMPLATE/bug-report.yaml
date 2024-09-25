@@ -77,7 +77,7 @@ body:
     attributes:
       label: Obsidian Version
       description: Which Obsidian version are you using?
-      placeholder: 0.15.9
+      placeholder: 1.6.7
     validations:
       required: true
 
