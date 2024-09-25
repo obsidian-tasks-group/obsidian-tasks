@@ -85,8 +85,8 @@ body:
     id: tasks-version
     attributes:
       label: Tasks Plugin Version
-      description: Which Tasks version are you using?
-      placeholder: 1.11.0
+      description: Which Tasks version are you using? (We only support Tasks version 7.0.0 and above)
+      placeholder: 7.0.0
     validations:
       required: true
 
