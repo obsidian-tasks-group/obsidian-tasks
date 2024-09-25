@@ -46,7 +46,7 @@ body:
     id: expected
     attributes:
       label: Expected Behavior
-      description: Tell us what **should** happen.
+      description: Tell us what **should** happen, when **exactly** following the steps above.
     validations:
       required: true
 
