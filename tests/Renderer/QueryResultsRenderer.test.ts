@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import type { Task } from 'Task/Task';
 import { State } from '../../src/Obsidian/Cache';
 import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
@@ -23,8 +24,7 @@ afterEach(() => {
 });
 
 describe('QueryResultsRenderer tests', () => {
-    it('fully populated task', async () => {
-        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+    async function verifyRenderedTasksHTML(allTasks: Task[]) {
         const renderer = new QueryResultsRenderer(
             'block-language-tasks',
             '',
@@ -45,29 +45,15 @@ describe('QueryResultsRenderer tests', () => {
 
         const prettyHTML = prettifyHTML(container.outerHTML);
         verifyWithFileExtension(prettyHTML, 'html');
+    }
+
+    it('fully populated task', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks);
     });
 
     it('parent-child items', async () => {
         const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
-        const renderer = new QueryResultsRenderer(
-            'block-language-tasks',
-            '',
-            new TasksFile('query.md'),
-            () => Promise.resolve(),
-            null,
-        );
-        const queryRendererParameters = {
-            allTasks,
-            allMarkdownFiles: [],
-            backlinksClickHandler: () => Promise.resolve(),
-            backlinksMousedownHandler: () => Promise.resolve(),
-            editTaskPencilClickHandler: () => Promise.resolve(),
-        };
-        const container = document.createElement('div');
-
-        await renderer.render(State.Warm, allTasks, container, queryRendererParameters);
-
-        const prettyHTML = prettifyHTML(container.outerHTML);
-        verifyWithFileExtension(prettyHTML, 'html');
+        await verifyRenderedTasksHTML(allTasks);
     });
 });
