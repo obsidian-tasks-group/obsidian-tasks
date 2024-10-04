@@ -24,6 +24,7 @@ afterEach(() => {
 
 describe('QueryResultsRenderer tests', () => {
     it('fully populated task', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         const renderer = new QueryResultsRenderer(
             'block-language-tasks',
             '',
@@ -31,7 +32,6 @@ describe('QueryResultsRenderer tests', () => {
             () => Promise.resolve(),
             null,
         );
-        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         const queryRendererParameters = {
             allTasks,
             allMarkdownFiles: [],
@@ -48,6 +48,7 @@ describe('QueryResultsRenderer tests', () => {
     });
 
     it('parent-child items', async () => {
+        const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
         const renderer = new QueryResultsRenderer(
             'block-language-tasks',
             '',
@@ -55,7 +56,6 @@ describe('QueryResultsRenderer tests', () => {
             () => Promise.resolve(),
             null,
         );
-        const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
         const queryRendererParameters = {
             allTasks,
             allMarkdownFiles: [],
