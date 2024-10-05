@@ -204,6 +204,7 @@ export class QueryResultsRenderer {
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
         const taskLineRenderer = new TaskLineRenderer({
+            textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
             obsidianComponent: this.obsidianComponent,
             parentUlElement: taskList,
             taskLayoutOptions: this.query.taskLayoutOptions,
