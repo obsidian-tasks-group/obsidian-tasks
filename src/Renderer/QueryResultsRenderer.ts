@@ -189,7 +189,8 @@ export class QueryResultsRenderer {
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(content, group.groupHeadings);
 
-            await this.createTaskList(group.tasks, content, queryRendererParameters);
+            const renderedTasks: Set<ListItem> = new Set();
+            await this.createTaskList(group.tasks, content, queryRendererParameters, renderedTasks);
         }
     }
 
@@ -197,6 +198,7 @@ export class QueryResultsRenderer {
         tasks: ListItem[],
         content: HTMLElement,
         queryRendererParameters: QueryRendererParameters,
+        renderedTasks: Set<ListItem>,
     ): Promise<void> {
         const taskList = createAndAppendElement('ul', content);
 
@@ -217,8 +219,6 @@ export class QueryResultsRenderer {
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
-        const renderedTasks: Set<ListItem> = new Set();
-
         for (const [taskIndex, task] of tasks.entries()) {
             if (renderedTasks.has(task)) {
                 continue;
@@ -234,7 +234,7 @@ export class QueryResultsRenderer {
             renderedTasks.add(task);
 
             if (task.children.length > 0) {
-                await this.createTaskList(task.children, listItem, queryRendererParameters);
+                await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
                 task.children.forEach((childTask) => {
                     renderedTasks.add(childTask);
                 });
