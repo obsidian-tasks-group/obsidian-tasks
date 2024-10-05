@@ -26,6 +26,7 @@ import { inheritance_2siblings } from './__test_data__/inheritance_2siblings';
 import { inheritance_listitem_listitem_task } from './__test_data__/inheritance_listitem_listitem_task';
 import { inheritance_listitem_task } from './__test_data__/inheritance_listitem_task';
 import { inheritance_listitem_task_siblings } from './__test_data__/inheritance_listitem_task_siblings';
+import { inheritance_rendering_sample } from './__test_data__/inheritance_rendering_sample';
 import { inheritance_task_2listitem_3task } from './__test_data__/inheritance_task_2listitem_3task';
 import { inheritance_task_listitem } from './__test_data__/inheritance_task_listitem';
 import { inheritance_task_listitem_mixed_grandchildren } from './__test_data__/inheritance_task_listitem_mixed_grandchildren';
@@ -89,6 +90,7 @@ export function allCacheSampleData() {
         inheritance_listitem_listitem_task,
         inheritance_listitem_task,
         inheritance_listitem_task_siblings,
+        inheritance_rendering_sample,
         inheritance_task_2listitem_3task,
         inheritance_task_listitem,
         inheritance_task_listitem_mixed_grandchildren,
