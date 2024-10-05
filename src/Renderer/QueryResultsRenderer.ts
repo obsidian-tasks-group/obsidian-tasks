@@ -12,6 +12,7 @@ import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { TasksFile } from '../Scripting/TasksFile';
+import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
@@ -193,7 +194,7 @@ export class QueryResultsRenderer {
     }
 
     private async createTaskList(
-        tasks: Task[],
+        tasks: ListItem[],
         content: HTMLElement,
         queryRendererParameters: QueryRendererParameters,
     ): Promise<void> {
@@ -217,6 +218,10 @@ export class QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
+            if (!(task instanceof Task)) {
+                continue;
+            }
+
             const listItem = await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
 
             const childTasks: Task[] = task.children
