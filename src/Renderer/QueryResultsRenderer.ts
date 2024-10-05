@@ -222,7 +222,13 @@ export class QueryResultsRenderer {
                 continue;
             }
 
-            const listItem = await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+            const listItem = await this.addTaskOrListItem(
+                taskList,
+                taskLineRenderer,
+                task,
+                taskIndex,
+                queryRendererParameters,
+            );
 
             const numberOfChildTasks = task.children.filter((listItemOrTask) => {
                 return listItemOrTask instanceof Task;
@@ -233,6 +239,16 @@ export class QueryResultsRenderer {
         }
 
         content.appendChild(taskList);
+    }
+
+    private async addTaskOrListItem(
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        task: Task,
+        taskIndex: number,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
+        return await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
     }
 
     private async addTask(
