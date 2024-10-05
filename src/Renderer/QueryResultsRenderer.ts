@@ -224,15 +224,11 @@ export class QueryResultsRenderer {
 
             const listItem = await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
 
-            const childTasks: Task[] = task.children
-                .filter((listItemOrTask) => {
-                    return listItemOrTask instanceof Task;
-                })
-                .map((listItemThatIsATask) => {
-                    return listItemThatIsATask as Task;
-                });
-            if (childTasks.length > 0) {
-                await this.createTaskList(childTasks, listItem, queryRendererParameters);
+            const numberOfChildTasks = task.children.filter((listItemOrTask) => {
+                return listItemOrTask instanceof Task;
+            }).length;
+            if (numberOfChildTasks > 0) {
+                await this.createTaskList(task.children, listItem, queryRendererParameters);
             }
         }
 
