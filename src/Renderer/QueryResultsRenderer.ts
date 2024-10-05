@@ -217,7 +217,13 @@ export class QueryResultsRenderer {
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
+        const renderedTasks: Set<ListItem> = new Set();
+
         for (const [taskIndex, task] of tasks.entries()) {
+            if (renderedTasks.has(task)) {
+                continue;
+            }
+
             const listItem = await this.addTaskOrListItem(
                 taskList,
                 taskLineRenderer,
@@ -225,9 +231,13 @@ export class QueryResultsRenderer {
                 taskIndex,
                 queryRendererParameters,
             );
+            renderedTasks.add(task);
 
             if (task.children.length > 0) {
                 await this.createTaskList(task.children, listItem, queryRendererParameters);
+                task.children.forEach((childTask) => {
+                    renderedTasks.add(childTask);
+                });
             }
         }
 
