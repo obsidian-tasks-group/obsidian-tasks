@@ -12,7 +12,7 @@ import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { TasksFile } from '../Scripting/TasksFile';
-import type { Task } from '../Task/Task';
+import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
@@ -194,7 +194,7 @@ export class QueryResultsRenderer {
 
     private async createTaskList(
         tasks: Task[],
-        content: HTMLDivElement,
+        content: HTMLElement,
         queryRendererParameters: QueryRendererParameters,
     ): Promise<void> {
         const taskList = createAndAppendElement('ul', content);
@@ -217,7 +217,18 @@ export class QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+            const listItem = await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+
+            const childTasks: Task[] = task.children
+                .filter((listItemOrTask) => {
+                    return listItemOrTask instanceof Task;
+                })
+                .map((listItemThatIsATask) => {
+                    return listItemThatIsATask as Task;
+                });
+            if (childTasks.length > 0) {
+                await this.createTaskList(childTasks, listItem, queryRendererParameters);
+            }
         }
 
         content.appendChild(taskList);
@@ -259,6 +270,8 @@ export class QueryResultsRenderer {
         }
 
         taskList.appendChild(listItem);
+
+        return listItem;
     }
 
     private addEditButton(listItem: HTMLElement, task: Task, queryRendererParameters: QueryRendererParameters) {
