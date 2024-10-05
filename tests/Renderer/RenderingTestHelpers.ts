@@ -5,3 +5,7 @@ export const mockHTMLRenderer = async (text: string, element: HTMLSpanElement, _
     // to ensure that description and tags are retained.
     element.innerHTML = text;
 };
+
+export const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
+    element.innerText = text;
+};
