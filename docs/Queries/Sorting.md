@@ -504,6 +504,35 @@ sort by function task.originalMarkdown
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+### Random sorting
+
+> [!released]
+> Random sorting was introduced in Tasks X.Y.Z.
+
+This instruction sorts tasks in a random order:
+
+- `sort by random`
+
+The order is random but deterministic, calculated from task's description, and changes each day.
+
+> [!example] Example: Randomly select a few tasks to review
+> If you have a large vault with lots of undated tasks, reviewing them can be tedious: we have found it useful to be able to view a small selection every day.
+>
+> Review your backlog each day:
+>
+> - randomly select up to 10 undated tasks,
+> - then complete, update or delete a few of them!
+>
+> ````text
+> ```tasks
+> not done
+> no happens date
+> limit 10
+>
+> sort by random
+> ```
+> ````
+
 ## Sort by File Properties
 
 ### File Path
