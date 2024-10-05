@@ -6,9 +6,9 @@ import moment from 'moment';
 import { DebugSettings } from '../../src/Config/DebugSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { DateParser } from '../../src/DateTime/DateParser';
 import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
-import { DateParser } from '../../src/DateTime/DateParser';
 import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
 import { TaskLineRenderer } from '../../src/Renderer/TaskLineRenderer';
 import type { Task } from '../../src/Task/Task';
@@ -17,6 +17,7 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
+import { mockHTMLRenderer } from './RenderingTestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -50,14 +51,6 @@ async function renderListItem(
 
 const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
     element.innerText = text;
-};
-
-const mockHTMLRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
-    // Contrary to the default mockTextRenderer(),
-    // instead of the rendered HTMLSpanElement.innerText,
-    // we need the plain HTML here like in TaskLineRenderer.renderComponentText(),
-    // to ensure that description and tags are retained.
-    element.innerHTML = text;
 };
 
 function getTextSpan(listItem: HTMLElement) {
