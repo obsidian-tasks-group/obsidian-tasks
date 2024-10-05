@@ -46,7 +46,9 @@ export class QueryResultsRenderer {
     public query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
+    // Renders the description in TaskLineRenderer:
     private readonly textRenderer;
+    // Renders the group heading in this class:
     private readonly renderMarkdown;
     private readonly obsidianComponent: Component | null;
 
