@@ -247,7 +247,7 @@ describe('Query parsing', () => {
 
         describe.each(namedFields)('has sufficient sample "filter" lines for field "%s"', ({ name, field }) => {
             function fieldDoesNotSupportFiltering() {
-                return name === 'backlink' || name === 'urgency';
+                return name === 'backlink' || name === 'urgency' || name === 'random';
             }
 
             // This is a bit weaker than the corresponding tests for 'sort by' and 'group by',
@@ -311,6 +311,8 @@ describe('Query parsing', () => {
             'sort by path reverse',
             'sort by priority',
             'sort by priority reverse',
+            'sort by random',
+            'sort by random reverse',
             'sort by recurring',
             'sort by recurring reverse',
             'sort by scheduled',
