@@ -46,6 +46,7 @@ export class QueryResultsRenderer {
     public query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
+    private readonly textRenderer = TaskLineRenderer.obsidianMarkdownRenderer;
     private readonly renderMarkdown;
     private readonly obsidianComponent: Component | null;
 
@@ -204,7 +205,7 @@ export class QueryResultsRenderer {
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
         const taskLineRenderer = new TaskLineRenderer({
-            textRenderer: TaskLineRenderer.obsidianMarkdownRenderer,
+            textRenderer: this.textRenderer,
             obsidianComponent: this.obsidianComponent,
             parentUlElement: taskList,
             taskLayoutOptions: this.query.taskLayoutOptions,
