@@ -218,10 +218,6 @@ export class QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            if (!(task instanceof Task)) {
-                continue;
-            }
-
             const listItem = await this.addTaskOrListItem(
                 taskList,
                 taskLineRenderer,
@@ -230,10 +226,7 @@ export class QueryResultsRenderer {
                 queryRendererParameters,
             );
 
-            const numberOfChildTasks = task.children.filter((listItemOrTask) => {
-                return listItemOrTask instanceof Task;
-            }).length;
-            if (numberOfChildTasks > 0) {
+            if (task.children.length > 0) {
                 await this.createTaskList(task.children, listItem, queryRendererParameters);
             }
         }
@@ -244,11 +237,21 @@ export class QueryResultsRenderer {
     private async addTaskOrListItem(
         taskList: HTMLUListElement,
         taskLineRenderer: TaskLineRenderer,
-        task: Task,
+        task: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        return await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+        if (task instanceof Task) {
+            return await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+        }
+
+        return this.addListItem(taskList, task);
+    }
+
+    private addListItem(taskList: HTMLUListElement, listItem: ListItem) {
+        const li = createAndAppendElement('li', taskList);
+        li.textContent = listItem.originalMarkdown;
+        return li;
     }
 
     private async addTask(
