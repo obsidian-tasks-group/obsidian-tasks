@@ -33,11 +33,9 @@ describe('sorting by random', () => {
     });
 
     it('should sort identical tasks the same', () => {
-        // Arrange
         const sorter = field.createNormalSorter();
         const task1 = fromLine({ line: '- [ ] Some description' });
 
-        // Assert
         expectTaskComparesEqual(sorter, task1, task1);
     });
 
