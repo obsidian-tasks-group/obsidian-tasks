@@ -12,6 +12,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
+- X.Y.Z:
+  - Add [[Sorting#Random sorting|random sorting]], with `sort by random`
 - 7.10.0:
   - Right-click on any task date field in Reading and Query Results views to:
     - postpone Start, Scheduled and Due dates
