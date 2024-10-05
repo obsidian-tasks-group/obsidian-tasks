@@ -17,7 +17,7 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
-import { mockHTMLRenderer } from './RenderingTestHelpers';
+import { mockHTMLRenderer, mockTextRenderer } from './RenderingTestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -48,10 +48,6 @@ async function renderListItem(
     });
     return await taskLineRenderer.renderTaskLine(task, 0);
 }
-
-const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
-    element.innerText = text;
-};
 
 function getTextSpan(listItem: HTMLElement) {
     return listItem.children[1] as HTMLSpanElement;
