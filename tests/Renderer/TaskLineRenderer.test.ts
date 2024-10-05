@@ -17,6 +17,7 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
+import { mockHTMLRenderer, mockTextRenderer } from './RenderingTestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -47,18 +48,6 @@ async function renderListItem(
     });
     return await taskLineRenderer.renderTaskLine(task, 0);
 }
-
-const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
-    element.innerText = text;
-};
-
-const mockHTMLRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
-    // Contrary to the default mockTextRenderer(),
-    // instead of the rendered HTMLSpanElement.innerText,
-    // we need the plain HTML here like in TaskLineRenderer.renderComponentText(),
-    // to ensure that description and tags are retained.
-    element.innerHTML = text;
-};
 
 function getTextSpan(listItem: HTMLElement) {
     return listItem.children[1] as HTMLSpanElement;

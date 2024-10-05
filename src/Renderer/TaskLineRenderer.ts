@@ -59,7 +59,7 @@ export class TaskLineRenderer {
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
-    private static async obsidianMarkdownRenderer(
+    public static async obsidianMarkdownRenderer(
         text: string,
         element: HTMLSpanElement,
         path: string,
