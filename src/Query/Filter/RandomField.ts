@@ -2,6 +2,11 @@ import type { Comparator } from '../Sort/Sorter';
 import type { Task } from '../../Task/Task';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
+/**
+ * Sort tasks in a stable, random order.
+ *
+ * The sort order changes each day.
+ */
 export class RandomField extends FilterInstructionsBasedField {
     public fieldName(): string {
         return 'random';
