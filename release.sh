@@ -33,6 +33,13 @@ fi
 NEW_VERSION=$1
 MINIMUM_OBSIDIAN_VERSION=$2
 
+if git rev-parse "$NEW_VERSION" >/dev/null 2>&1; then
+  echo "Error: Tag '$NEW_VERSION' already exists."
+  echo "Exiting."
+
+  exit 1
+fi
+
 echo "Updating to version ${NEW_VERSION} with minimum obsidian version ${MINIMUM_OBSIDIAN_VERSION}"
 
 read -p "Continue? [y/N] " -n 1 -r
