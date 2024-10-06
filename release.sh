@@ -46,6 +46,9 @@ read -p "Continue? [y/N] " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
+  echo "Running yarn in case node_modules is out-of-date"
+  yarn
+
   echo "Updating X.Y.Z version numbers in docs"
   find ./docs/ -name _meta -prune -o -type f -name '*.md' -exec sed -i '' s/X\.Y\.Z/${NEW_VERSION}/g {} +
 
