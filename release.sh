@@ -76,9 +76,10 @@ then
     git tag "${NEW_VERSION}"
     git push
     LEFTHOOK=0 git push --tags
+
+    echo "Remember to publish the documentation via Obsidian Publish!"
   fi
 
-  echo "Remember to publish the documentation via Obsidian Publish!"
 else
   echo "Exiting."
   exit 1
