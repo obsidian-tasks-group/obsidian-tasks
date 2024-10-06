@@ -507,7 +507,7 @@ sort by function task.originalMarkdown
 ### Random sorting
 
 > [!released]
-> Random sorting was introduced in Tasks X.Y.Z.
+> Random sorting was introduced in Tasks 7.11.0.
 
 This instruction sorts tasks in a random order:
 
