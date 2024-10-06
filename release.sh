@@ -2,6 +2,15 @@
 
 set -euo pipefail
 
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+if [[ "$current_branch" != "main" ]]; then
+  echo "Error: You are not on the 'main' branch. Current branch: '$current_branch'"
+  echo "Please switch to the 'main' branch to run this release."
+  echo "Exiting."
+
+  exit 1
+fi
+
 if [ "$#" -ne 2 ]; then
     echo "Must provide exactly two arguments."
     echo "First one must be the new version number."
