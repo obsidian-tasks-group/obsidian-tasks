@@ -1,5 +1,8 @@
 # Parent-Child relationships - Tasks
 
+> [!NOTE]- About numbering of headings
+> Numbers in headings need to be separate by `-` instead of `.`, as dataview replaces `.` in group headings with ``, making Dataview sort the headings differently to Tasks.
+
 ## 1 Not completed tasks
 
 - [ ] #task lonely task
@@ -12,7 +15,7 @@
 
   - [ ] #task Lonely indented task
 
-### 1.1 H3 heading
+### 1-1 H3 heading
 
 - non task parent
   - [ ] #task another lonely indented task
@@ -32,7 +35,7 @@
 
   - [x] #task Lonely indented task ✅ 2024-04-13
 
-### 2.1 H3 heading
+### 2-1 H3 heading
 
 - non task parent
   - [ ] #task another lonely indented task
@@ -47,7 +50,7 @@
 
   - [ ] #task Lonely indented task
 
-### 3.1 H3 heading
+### 3-1 H3 heading
 
 - non task parent
   - [ ] #task another lonely indented task
@@ -62,7 +65,7 @@
 
   - [ ] #task Lonely indented task
 
-### 4.1 H3 heading
+### 4-1 H3 heading
 
 - non task parent
   - [ ] #task another lonely indented task
