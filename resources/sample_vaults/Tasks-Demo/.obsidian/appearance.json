@@ -2,7 +2,10 @@
   "theme": "system",
   "enabledCssSnippets": [
     "tasks-code-block-blue-border",
-    "js-engine-code-block-border"
+    "js-engine-code-block-border",
+    "dataview-block",
+    "dataview-clare",
+    "dataview-blocks"
   ],
   "accentColor": ""
 }
