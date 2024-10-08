@@ -1,0 +1,10 @@
+{
+  "id": "reveal-active-file-button",
+  "name": "Reveal Active File Button",
+  "version": "2.0.3",
+  "minAppVersion": "0.12.11",
+  "description": "Add a button to the top of the File Explorer, to reveal the active file.",
+  "author": "Clare Macrae",
+  "authorUrl": "https://claremacrae.co.uk",
+  "isDesktopOnly": false
+}

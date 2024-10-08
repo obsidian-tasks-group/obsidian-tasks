@@ -15,5 +15,6 @@
   "obsidian-plugin-update-tracker",
   "obsidian-kanban",
   "js-engine",
-  "table-editor-obsidian"
+  "table-editor-obsidian",
+  "reveal-active-file-button"
 ]
