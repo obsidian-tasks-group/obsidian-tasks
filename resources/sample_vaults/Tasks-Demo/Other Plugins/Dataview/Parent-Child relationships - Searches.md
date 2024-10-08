@@ -1,12 +1,12 @@
 # Parent-Child relationships - Searches
 
-*See [[Parent-Child relationships]].*
+*See [[Parent-Child relationships - Tasks]].*
 
 ## 1 Completed
 
 ```dataview
 TASK
-FROM "Other Plugins/Dataview/Parent-Child relationships"
+FROM "Other Plugins/Dataview/Parent-Child relationships - Tasks"
 WHERE completed
 GROUP BY meta(section).subpath
 ```
@@ -15,7 +15,7 @@ GROUP BY meta(section).subpath
 
 ```dataview
 TASK
-FROM "Other Plugins/Dataview/Parent-Child relationships"
+FROM "Other Plugins/Dataview/Parent-Child relationships - Tasks"
 WHERE fullyCompleted
 GROUP BY meta(section).subpath
 ```
@@ -24,7 +24,7 @@ GROUP BY meta(section).subpath
 
 ```dataview
 TASK
-FROM "Other Plugins/Dataview/Parent-Child relationships"
+FROM "Other Plugins/Dataview/Parent-Child relationships - Tasks"
 WHERE !completed
 GROUP BY meta(section).subpath
 ```
@@ -33,7 +33,7 @@ GROUP BY meta(section).subpath
 
 ```dataview
 TASK
-FROM "Other Plugins/Dataview/Parent-Child relationships"
+FROM "Other Plugins/Dataview/Parent-Child relationships - Tasks"
 WHERE !fullyCompleted
 GROUP BY meta(section).subpath
 ```
