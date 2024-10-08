@@ -1,0 +1,15 @@
+:not(.callout-content) > .block-language-dataview {
+    background-color: #fcfcfc;
+    padding: 5px 5px;
+    border: 2px solid #ba55ff;
+    border-radius: 5px;
+    margin: 1em 0;
+}
+
+:not(.callout-content) > .block-language-dataviewjs {
+    background-color: #fcfcfc;
+    padding: 5px 5px;
+    border: 2px solid #ff55f1;
+    border-radius: 5px;
+    margin: 1em 0;
+}
