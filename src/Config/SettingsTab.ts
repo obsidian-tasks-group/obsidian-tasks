@@ -49,8 +49,6 @@ export class SettingsTab extends PluginSettingTab {
         containerEl.empty();
         this.containerEl.addClass('tasks-settings');
 
-        // For reasons I don't understand, 'h2' is tiny in Settings,
-        // so I have used 'h3' as the largest heading.
         containerEl.createEl('p', {
             cls: 'tasks-setting-important',
             text: 'Changing any settings requires a restart of obsidian.',
