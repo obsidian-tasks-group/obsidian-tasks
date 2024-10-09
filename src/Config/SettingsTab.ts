@@ -57,7 +57,7 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Task Format' });
+        new Setting(containerEl).setName('Task Format').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -81,7 +81,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Global filter' });
+        new Setting(containerEl).setName('Global filter').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -125,7 +125,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Global Query' });
+        new Setting(containerEl).setName('Global Query').setHeading();
         // ---------------------------------------------------------------------------
 
         makeMultilineTextSetting(
@@ -152,7 +152,7 @@ export class SettingsTab extends PluginSettingTab {
         );
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Task Statuses' });
+        new Setting(containerEl).setName('Task Statuses').setHeading();
         // ---------------------------------------------------------------------------
 
         const { headingOpened } = getSettings();
@@ -162,7 +162,7 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Date' });
+        new Setting(containerEl).setName('Date').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -269,7 +269,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Recurring task' });
+        new Setting(containerEl).setName('Recurring task').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -289,7 +289,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Auto-suggest' });
+        new Setting(containerEl).setName('Auto-suggest').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -343,7 +343,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Dialogs' });
+        new Setting(containerEl).setName('Dialogs').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
