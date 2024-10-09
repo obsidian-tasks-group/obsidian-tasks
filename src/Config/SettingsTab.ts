@@ -56,10 +56,6 @@ export class SettingsTab extends PluginSettingTab {
             text: 'Changing any settings requires a restart of obsidian.',
         });
 
-        // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Task Format').setHeading();
-        // ---------------------------------------------------------------------------
-
         new Setting(containerEl)
             .setName('Task Format')
             .setDesc(
