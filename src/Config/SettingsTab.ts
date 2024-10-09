@@ -162,7 +162,7 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Date').setHeading();
+        new Setting(containerEl).setName('Dates').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -212,6 +212,10 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+
+        // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName('Dates from file names').setHeading();
+        // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
             .setName('Use filename as Scheduled date for undated tasks')
@@ -269,7 +273,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Recurring task').setHeading();
+        new Setting(containerEl).setName('Recurring tasks').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
