@@ -57,7 +57,7 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Task Format Settings' });
+        containerEl.createEl('h4', { text: 'Task Format' });
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -81,7 +81,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Global filter Settings' });
+        containerEl.createEl('h4', { text: 'Global filter' });
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -162,7 +162,7 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Date Settings' });
+        containerEl.createEl('h4', { text: 'Date' });
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -269,7 +269,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Recurring task Settings' });
+        containerEl.createEl('h4', { text: 'Recurring task' });
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -289,7 +289,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Auto-suggest Settings' });
+        containerEl.createEl('h4', { text: 'Auto-suggest' });
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -343,7 +343,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Dialog Settings' });
+        containerEl.createEl('h4', { text: 'Dialogs' });
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
