@@ -210,6 +210,7 @@ export class SettingsTab extends PluginSettingTab {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName('Dates from file names').setHeading();
         // ---------------------------------------------------------------------------
+        let scheduledDateExtraFormat: Setting | null = null;
 
         new Setting(containerEl)
             .setName('Use filename as Scheduled date for undated tasks')
@@ -226,11 +227,14 @@ export class SettingsTab extends PluginSettingTab {
                 const settings = getSettings();
                 toggle.setValue(settings.useFilenameAsScheduledDate).onChange(async (value) => {
                     updateSettings({ useFilenameAsScheduledDate: value });
+                    // @ts-expect-error Setting.setVisibility() is private.
+                    // Source: https://discord.com/channels/686053708261228577/840286264964022302/1293725986042544139
+                    scheduledDateExtraFormat?.setVisibility(value);
                     await this.plugin.saveSettings();
                 });
             });
 
-        new Setting(containerEl)
+        scheduledDateExtraFormat = new Setting(containerEl)
             .setName('Additional filename date format as Scheduled date for undated tasks')
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
