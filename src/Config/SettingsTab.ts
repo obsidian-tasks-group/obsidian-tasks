@@ -155,7 +155,9 @@ export class SettingsTab extends PluginSettingTab {
         const { headingOpened } = getSettings();
 
         settingsJson.forEach((heading) => {
-            this.addOneSettingsBlock(containerEl, heading, headingOpened);
+            const initiallyOpen = headingOpened[heading.text] ?? true;
+            const detailsContainer = this.addOneSettingsBlock(containerEl, heading, headingOpened);
+            detailsContainer.open = initiallyOpen;
         });
 
         // ---------------------------------------------------------------------------
@@ -379,7 +381,11 @@ export class SettingsTab extends PluginSettingTab {
             });
     }
 
-    private addOneSettingsBlock(containerEl: HTMLElement, heading: any, headingOpened: HeadingState) {
+    private addOneSettingsBlock(
+        containerEl: HTMLElement,
+        heading: any,
+        headingOpened: HeadingState,
+    ): HTMLDetailsElement {
         const detailsContainer = containerEl.createEl('details', {
             cls: 'tasks-nested-settings',
             attr: {
@@ -488,6 +494,8 @@ export class SettingsTab extends PluginSettingTab {
                 }
             }
         });
+
+        return detailsContainer;
     }
 
     private static parseCommaSeparatedFolders(input: string): string[] {
