@@ -26,6 +26,7 @@ For convenience, here is a list of all those documentation pages (in the order t
 - [[Global Query#Settings]]
 - [[Status Settings#Overview]]
 - [[Dates#Date-tracking settings]]
+- [[Use Filename as Default Date#Settings]]
 - [[Recurring Tasks#Order of the new task]]
 - [[Auto-Suggest#Settings]]
 - [[Create or edit Task#Turning off keyboard shortcuts]]
