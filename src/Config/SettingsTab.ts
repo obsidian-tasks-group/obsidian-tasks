@@ -255,7 +255,6 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
-        setSettingVisibility(scheduledDateExtraFormat, getSettings().useFilenameAsScheduledDate);
 
         scheduledDateFolders = new Setting(containerEl)
             .setName('Folders with default Scheduled dates')
@@ -273,6 +272,7 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+        setSettingVisibility(scheduledDateExtraFormat, getSettings().useFilenameAsScheduledDate);
         setSettingVisibility(scheduledDateFolders, getSettings().useFilenameAsScheduledDate);
 
         // ---------------------------------------------------------------------------
@@ -335,7 +335,6 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
-        setSettingVisibility(autoSuggestMinimumMatchLength, getSettings().autoSuggestInEditor);
 
         autoSuggestMaximumSuggestions = new Setting(containerEl)
             .setName('Maximum number of auto-suggestions to show')
@@ -353,6 +352,7 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+        setSettingVisibility(autoSuggestMinimumMatchLength, getSettings().autoSuggestInEditor);
         setSettingVisibility(autoSuggestMaximumSuggestions, getSettings().autoSuggestInEditor);
 
         // ---------------------------------------------------------------------------
