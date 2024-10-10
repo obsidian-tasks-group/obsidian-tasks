@@ -298,6 +298,7 @@ export class SettingsTab extends PluginSettingTab {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName('Auto-suggest').setHeading();
         // ---------------------------------------------------------------------------
+        let autoSuggestMinimumMatchLength: Setting | null = null;
 
         new Setting(containerEl)
             .setName('Auto-suggest task content')
@@ -312,10 +313,11 @@ export class SettingsTab extends PluginSettingTab {
                 toggle.setValue(settings.autoSuggestInEditor).onChange(async (value) => {
                     updateSettings({ autoSuggestInEditor: value });
                     await this.plugin.saveSettings();
+                    setSettingVisibility(autoSuggestMinimumMatchLength, value);
                 });
             });
 
-        new Setting(containerEl)
+        autoSuggestMinimumMatchLength = new Setting(containerEl)
             .setName('Minimum match length for auto-suggest')
             .setDesc(
                 'If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.',
@@ -331,6 +333,7 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+        setSettingVisibility(autoSuggestMinimumMatchLength, getSettings().autoSuggestInEditor);
 
         new Setting(containerEl)
             .setName('Maximum number of auto-suggestions to show')
