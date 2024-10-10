@@ -227,9 +227,7 @@ export class SettingsTab extends PluginSettingTab {
                 const settings = getSettings();
                 toggle.setValue(settings.useFilenameAsScheduledDate).onChange(async (value) => {
                     updateSettings({ useFilenameAsScheduledDate: value });
-                    // @ts-expect-error Setting.setVisibility() is private.
-                    // Source: https://discord.com/channels/686053708261228577/840286264964022302/1293725986042544139
-                    scheduledDateExtraFormat?.setVisibility(value);
+                    setSettingVisibility(scheduledDateExtraFormat, value);
                     await this.plugin.saveSettings();
                 });
             });
@@ -753,4 +751,10 @@ function makeMultilineTextSetting(setting: Setting) {
     settingEl.style.display = 'block';
     infoEl.style.marginRight = '0px';
     textEl.style.minWidth = '-webkit-fill-available';
+}
+
+function setSettingVisibility(setting: Setting | null, visible: boolean) {
+    // @ts-expect-error Setting.setVisibility() is not exposed in the API.
+    // Source: https://discord.com/channels/686053708261228577/840286264964022302/1293725986042544139
+    setting?.setVisibility(visible);
 }
