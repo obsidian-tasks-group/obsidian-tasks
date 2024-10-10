@@ -55,7 +55,9 @@ meetings/rd. 2022-09-07.md
 ## Settings
 
 The following image shows the settings relating to this feature:
+
 ![Use filename as Scheduled date for undated tasks settings](../images/settings-use-filename-for-date.png)
+<span class="caption">Use filename as Scheduled date for undated tasks settings</span>
 
 ### Additional date format
 > [!released]
