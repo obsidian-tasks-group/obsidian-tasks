@@ -49,17 +49,10 @@ export class SettingsTab extends PluginSettingTab {
         containerEl.empty();
         this.containerEl.addClass('tasks-settings');
 
-        // For reasons I don't understand, 'h2' is tiny in Settings,
-        // so I have used 'h3' as the largest heading.
-        containerEl.createEl('h3', { text: 'Tasks Settings' });
         containerEl.createEl('p', {
             cls: 'tasks-setting-important',
             text: 'Changing any settings requires a restart of obsidian.',
         });
-
-        // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Task Format Settings' });
-        // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
             .setName('Task Format')
@@ -82,11 +75,12 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Global filter Settings' });
+        new Setting(containerEl).setName('Global task filter').setHeading();
         // ---------------------------------------------------------------------------
+        let globalFilterHidden: Setting | null = null;
 
         new Setting(containerEl)
-            .setName('Global task filter')
+            .setName('Global filter')
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     '<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p>' +
@@ -107,10 +101,11 @@ export class SettingsTab extends PluginSettingTab {
                         updateSettings({ globalFilter: value });
                         GlobalFilter.getInstance().set(value);
                         await this.plugin.saveSettings();
+                        setSettingVisibility(globalFilterHidden, value.length > 0);
                     });
             });
 
-        new Setting(containerEl)
+        globalFilterHidden = new Setting(containerEl)
             .setName('Remove global filter from description')
             .setDesc(
                 'Enabling this removes the string that you set as global filter from the task description when displaying a task.',
@@ -124,9 +119,10 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+        setSettingVisibility(globalFilterHidden, getSettings().globalFilter.length > 0);
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Global Query' });
+        new Setting(containerEl).setName('Global Query').setHeading();
         // ---------------------------------------------------------------------------
 
         makeMultilineTextSetting(
@@ -153,7 +149,7 @@ export class SettingsTab extends PluginSettingTab {
         );
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Task Statuses' });
+        new Setting(containerEl).setName('Task Statuses').setHeading();
         // ---------------------------------------------------------------------------
 
         const { headingOpened } = getSettings();
@@ -163,7 +159,7 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Date Settings' });
+        new Setting(containerEl).setName('Dates').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -214,6 +210,12 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
+        // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName('Dates from file names').setHeading();
+        // ---------------------------------------------------------------------------
+        let scheduledDateExtraFormat: Setting | null = null;
+        let scheduledDateFolders: Setting | null = null;
+
         new Setting(containerEl)
             .setName('Use filename as Scheduled date for undated tasks')
             .setDesc(
@@ -229,11 +231,13 @@ export class SettingsTab extends PluginSettingTab {
                 const settings = getSettings();
                 toggle.setValue(settings.useFilenameAsScheduledDate).onChange(async (value) => {
                     updateSettings({ useFilenameAsScheduledDate: value });
+                    setSettingVisibility(scheduledDateExtraFormat, value);
+                    setSettingVisibility(scheduledDateFolders, value);
                     await this.plugin.saveSettings();
                 });
             });
 
-        new Setting(containerEl)
+        scheduledDateExtraFormat = new Setting(containerEl)
             .setName('Additional filename date format as Scheduled date for undated tasks')
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
@@ -252,7 +256,7 @@ export class SettingsTab extends PluginSettingTab {
                     });
             });
 
-        new Setting(containerEl)
+        scheduledDateFolders = new Setting(containerEl)
             .setName('Folders with default Scheduled dates')
             .setDesc(
                 'Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.',
@@ -268,9 +272,11 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+        setSettingVisibility(scheduledDateExtraFormat, getSettings().useFilenameAsScheduledDate);
+        setSettingVisibility(scheduledDateFolders, getSettings().useFilenameAsScheduledDate);
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Recurring task Settings' });
+        new Setting(containerEl).setName('Recurring tasks').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -290,8 +296,10 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Auto-suggest Settings' });
+        new Setting(containerEl).setName('Auto-suggest').setHeading();
         // ---------------------------------------------------------------------------
+        let autoSuggestMinimumMatchLength: Setting | null = null;
+        let autoSuggestMaximumSuggestions: Setting | null = null;
 
         new Setting(containerEl)
             .setName('Auto-suggest task content')
@@ -306,10 +314,12 @@ export class SettingsTab extends PluginSettingTab {
                 toggle.setValue(settings.autoSuggestInEditor).onChange(async (value) => {
                     updateSettings({ autoSuggestInEditor: value });
                     await this.plugin.saveSettings();
+                    setSettingVisibility(autoSuggestMinimumMatchLength, value);
+                    setSettingVisibility(autoSuggestMaximumSuggestions, value);
                 });
             });
 
-        new Setting(containerEl)
+        autoSuggestMinimumMatchLength = new Setting(containerEl)
             .setName('Minimum match length for auto-suggest')
             .setDesc(
                 'If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.',
@@ -326,7 +336,7 @@ export class SettingsTab extends PluginSettingTab {
                     });
             });
 
-        new Setting(containerEl)
+        autoSuggestMaximumSuggestions = new Setting(containerEl)
             .setName('Maximum number of auto-suggestions to show')
             .setDesc(
                 'How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).',
@@ -342,9 +352,11 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+        setSettingVisibility(autoSuggestMinimumMatchLength, getSettings().autoSuggestInEditor);
+        setSettingVisibility(autoSuggestMaximumSuggestions, getSettings().autoSuggestInEditor);
 
         // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Dialog Settings' });
+        new Setting(containerEl).setName('Dialogs').setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
@@ -752,4 +764,14 @@ function makeMultilineTextSetting(setting: Setting) {
     settingEl.style.display = 'block';
     infoEl.style.marginRight = '0px';
     textEl.style.minWidth = '-webkit-fill-available';
+}
+
+function setSettingVisibility(setting: Setting | null, visible: boolean) {
+    if (setting) {
+        // @ts-expect-error Setting.setVisibility() is not exposed in the API.
+        // Source: https://discord.com/channels/686053708261228577/840286264964022302/1293725986042544139
+        setting.setVisibility(visible);
+    } else {
+        console.warn('Setting has not be initialised. Can update visibility of setting UI - in setSettingVisibility');
+    }
 }
