@@ -2,6 +2,13 @@
 
 ## 1 Simple lists
 
+### 1.1 Original Order
+
+```dataview
+TASK
+FROM "Other Plugins/Dataview/Parent-Child relationships - Tasks"
+```
+
 ## 2 Filtering
 
 ### 2.1 Completed
@@ -38,7 +45,27 @@ WHERE !fullyCompleted
 
 ## 3 Sorting
 
+==TODO Sort by due date==
+
+### 3.1 Original Order
+
+```dataview
+TASK
+FROM "Other Plugins/Dataview/Parent-Child relationships - Tasks"
+SORT line asc
+```
+
+### 3.2 Reverse Order
+
+```dataview
+TASK
+FROM "Other Plugins/Dataview/Parent-Child relationships - Tasks"
+SORT line desc
+```
+
 ## 4 Grouping
+
+==TODO Group by due date==
 
 ### 4.1 Completed
 
