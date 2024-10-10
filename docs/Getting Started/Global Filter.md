@@ -38,5 +38,5 @@ Note you must restart Tasks after changing any settings here.
 ![Image of the settings options for the global filter, showing the default settingsr](../images/settings-global-filter.png)
 <span class="caption">Image of the settings options for the global filter, showing the default settings</span>
 
-![Image showing the additional setting that is shown when there is a global filter](../images/settings-global-filter-with-filter.png)
-<span class="caption">Image showing the additional setting that is shown when there is a global filter</span>
+![Image showing the additional 'Remove global filter from description' setting that is shown when there is a global filter](../images/settings-global-filter-with-filter.png)
+<span class="caption">Image showing the additional 'Remove global filter from description' setting that is shown when there is a global filter</span>
