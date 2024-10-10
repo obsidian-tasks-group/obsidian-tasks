@@ -22,10 +22,10 @@ As the number of options in Tasks has grown, we have documented each setting in 
 For convenience, here is a list of all those documentation pages (in the order the options appear in the Tasks Settings pane):
 
 - [[About Task Formats#Selecting the task format]]
-- [[Global Filter]]
-- [[Global Query]]
-- [[Status Settings]]
+- [[Global Filter#Settings for the Global Filter]]
+- [[Global Query#Settings]]
+- [[Status Settings#Overview]]
 - [[Dates#Date-tracking settings]]
 - [[Recurring Tasks#Order of the new task]]
-- [[Auto-Suggest]]
+- [[Auto-Suggest#Settings]]
 - [[Create or edit Task#Turning off keyboard shortcuts]]
