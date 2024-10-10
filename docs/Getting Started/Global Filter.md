@@ -35,6 +35,8 @@ The following settings in the Tasks Options pane control the vault's global filt
 
 Note you must restart Tasks after changing any settings here.
 
-![settings-global-filter](../images/settings-global-filter.png)
+![Image of the settings options for the global filter, showing the default settingsr](../images/settings-global-filter.png)
+<span class="caption">Image of the settings options for the global filter, showing the default settings</span>
 
-Image of the settings options for the global filter, showing the default settings.
+![Image showing the additional 'Remove global filter from description' setting that is shown when there is a global filter](../images/settings-global-filter-with-filter.png)
+<span class="caption">Image showing the additional 'Remove global filter from description' setting that is shown when there is a global filter</span>
