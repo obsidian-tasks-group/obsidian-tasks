@@ -252,6 +252,7 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+        setSettingVisibility(scheduledDateExtraFormat, getSettings().useFilenameAsScheduledDate);
 
         scheduledDateFolders = new Setting(containerEl)
             .setName('Folders with default Scheduled dates')
@@ -269,6 +270,7 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+        setSettingVisibility(scheduledDateFolders, getSettings().useFilenameAsScheduledDate);
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName('Recurring tasks').setHeading();
