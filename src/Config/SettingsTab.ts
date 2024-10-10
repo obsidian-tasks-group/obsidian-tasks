@@ -77,6 +77,7 @@ export class SettingsTab extends PluginSettingTab {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName('Global task filter').setHeading();
         // ---------------------------------------------------------------------------
+        let globalFilterHidden: Setting | null = null;
 
         new Setting(containerEl)
             .setName('Global filter')
@@ -100,10 +101,11 @@ export class SettingsTab extends PluginSettingTab {
                         updateSettings({ globalFilter: value });
                         GlobalFilter.getInstance().set(value);
                         await this.plugin.saveSettings();
+                        setSettingVisibility(globalFilterHidden, value.length > 0);
                     });
             });
 
-        new Setting(containerEl)
+        globalFilterHidden = new Setting(containerEl)
             .setName('Remove global filter from description')
             .setDesc(
                 'Enabling this removes the string that you set as global filter from the task description when displaying a task.',
@@ -117,6 +119,7 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+        setSettingVisibility(globalFilterHidden, getSettings().globalFilter.length > 0);
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName('Global Query').setHeading();
