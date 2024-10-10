@@ -211,6 +211,7 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl).setName('Dates from file names').setHeading();
         // ---------------------------------------------------------------------------
         let scheduledDateExtraFormat: Setting | null = null;
+        let scheduledDateFolders: Setting | null = null;
 
         new Setting(containerEl)
             .setName('Use filename as Scheduled date for undated tasks')
@@ -228,6 +229,7 @@ export class SettingsTab extends PluginSettingTab {
                 toggle.setValue(settings.useFilenameAsScheduledDate).onChange(async (value) => {
                     updateSettings({ useFilenameAsScheduledDate: value });
                     setSettingVisibility(scheduledDateExtraFormat, value);
+                    setSettingVisibility(scheduledDateFolders, value);
                     await this.plugin.saveSettings();
                 });
             });
@@ -251,7 +253,7 @@ export class SettingsTab extends PluginSettingTab {
                     });
             });
 
-        new Setting(containerEl)
+        scheduledDateFolders = new Setting(containerEl)
             .setName('Folders with default Scheduled dates')
             .setDesc(
                 'Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.',
