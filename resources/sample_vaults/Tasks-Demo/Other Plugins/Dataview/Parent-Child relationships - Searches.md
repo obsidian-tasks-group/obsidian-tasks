@@ -6,6 +6,10 @@ Purpose: Compare the behaviour of similar Dataview and Tasks plugins, to aid in 
 
 ## 1 Simple lists
 
+| Dataview                                                                 | Tasks                                                                 |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| ![[Parent-Child relationships - Searches - Dataview#1.1 Original Order]] | ![[Parent-Child relationships - Searches - Tasks#1.1 Original Order]] |
+
 ## 2 Filtering
 
 | Dataview                                                                      | Tasks                                                                      |
@@ -16,6 +20,11 @@ Purpose: Compare the behaviour of similar Dataview and Tasks plugins, to aid in 
 | ![[Parent-Child relationships - Searches - Dataview#2.4 Not fully completed]] | ![[Parent-Child relationships - Searches - Tasks#2.4 Not fully completed]] |
 
 ## 3 Sorting
+
+| Dataview                                                                 | Tasks                                                                 |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| ![[Parent-Child relationships - Searches - Dataview#3.1 Original Order]] | ![[Parent-Child relationships - Searches - Tasks#3.1 Original Order]] |
+| ![[Parent-Child relationships - Searches - Dataview#3.2 Reverse Order]]  | ![[Parent-Child relationships - Searches - Tasks#3.2 Reverse Order]]  |
 
 ## 4 Grouping
 
