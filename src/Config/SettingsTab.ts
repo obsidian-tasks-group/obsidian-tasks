@@ -756,7 +756,11 @@ function makeMultilineTextSetting(setting: Setting) {
 }
 
 function setSettingVisibility(setting: Setting | null, visible: boolean) {
-    // @ts-expect-error Setting.setVisibility() is not exposed in the API.
-    // Source: https://discord.com/channels/686053708261228577/840286264964022302/1293725986042544139
-    setting?.setVisibility(visible);
+    if (setting) {
+        // @ts-expect-error Setting.setVisibility() is not exposed in the API.
+        // Source: https://discord.com/channels/686053708261228577/840286264964022302/1293725986042544139
+        setting.setVisibility(visible);
+    } else {
+        console.warn('Setting has not be initialised. Can update visibility of setting UI - in setSettingVisibility');
+    }
 }
