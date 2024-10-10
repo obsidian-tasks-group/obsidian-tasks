@@ -299,6 +299,7 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl).setName('Auto-suggest').setHeading();
         // ---------------------------------------------------------------------------
         let autoSuggestMinimumMatchLength: Setting | null = null;
+        let autoSuggestMaximumSuggestions: Setting | null = null;
 
         new Setting(containerEl)
             .setName('Auto-suggest task content')
@@ -314,6 +315,7 @@ export class SettingsTab extends PluginSettingTab {
                     updateSettings({ autoSuggestInEditor: value });
                     await this.plugin.saveSettings();
                     setSettingVisibility(autoSuggestMinimumMatchLength, value);
+                    setSettingVisibility(autoSuggestMaximumSuggestions, value);
                 });
             });
 
@@ -335,7 +337,7 @@ export class SettingsTab extends PluginSettingTab {
             });
         setSettingVisibility(autoSuggestMinimumMatchLength, getSettings().autoSuggestInEditor);
 
-        new Setting(containerEl)
+        autoSuggestMaximumSuggestions = new Setting(containerEl)
             .setName('Maximum number of auto-suggestions to show')
             .setDesc(
                 'How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).',
@@ -351,6 +353,7 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+        setSettingVisibility(autoSuggestMaximumSuggestions, getSettings().autoSuggestInEditor);
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName('Dialogs').setHeading();
