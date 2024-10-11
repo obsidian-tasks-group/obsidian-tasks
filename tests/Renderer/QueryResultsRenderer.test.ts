@@ -25,10 +25,10 @@ afterEach(() => {
 });
 
 describe('QueryResultsRenderer tests', () => {
-    async function verifyRenderedTasksHTML(allTasks: Task[]) {
+    async function verifyRenderedTasksHTML(allTasks: Task[], source: string = '') {
         const renderer = new QueryResultsRenderer(
             'block-language-tasks',
-            '',
+            source,
             new TasksFile('query.md'),
             () => Promise.resolve(),
             null,
