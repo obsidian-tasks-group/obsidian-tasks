@@ -56,7 +56,7 @@ describe('QueryResultsRenderer tests', () => {
 
     it('parent-child items', async () => {
         const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
-        await verifyRenderedTasksHTML(allTasks);
+        await verifyRenderedTasksHTML(allTasks, 'sort by function task.lineNumber');
     });
 
     it('parent-child items reverse sorted', async () => {
