@@ -58,4 +58,9 @@ describe('QueryResultsRenderer tests', () => {
         const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
         await verifyRenderedTasksHTML(allTasks);
     });
+
+    it('parent-child items reverse sorted', async () => {
+        const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
+        await verifyRenderedTasksHTML(allTasks, 'sort by function reverse task.lineNumber');
+    });
 });
