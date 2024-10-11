@@ -224,6 +224,11 @@ export class QueryResultsRenderer {
                 continue;
             }
 
+            const parentIsATask = task.parent instanceof Task;
+            if (parentIsATask && !renderedTasks.has(task.parent)) {
+                continue;
+            }
+
             const listItem = await this.addTaskOrListItem(
                 taskList,
                 taskLineRenderer,
