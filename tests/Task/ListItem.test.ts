@@ -75,4 +75,24 @@ describe('list item tests', () => {
         expect(parent.isRoot).toEqual(false);
         expect(child.isRoot).toEqual(false);
     });
+
+    it.each([
+        ['- ', true],
+        ['* ', true],
+        ['+ ', true],
+        ['17. ', true],
+        ['    - ', true],
+        ['>   - ', true],
+        ['> >   - ', true],
+    ])('should parse description with list item prefix: "%s"', (prefix: string, shouldPass) => {
+        const description = 'stuff';
+        const line = prefix + description;
+        const listItem = new ListItem(line, null);
+        expect(listItem.originalMarkdown).toEqual(line);
+        if (shouldPass) {
+            expect(listItem.description).toEqual(description);
+        } else {
+            expect(listItem.description).not.toEqual(description);
+        }
+    });
 });

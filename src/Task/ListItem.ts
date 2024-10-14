@@ -1,3 +1,5 @@
+import { TaskRegularExpressions } from './TaskRegularExpressions';
+
 export class ListItem {
     /** The original line read from file.
      *
@@ -7,8 +9,10 @@ export class ListItem {
 
     public readonly parent: ListItem | null = null;
     public readonly children: ListItem[] = [];
+    public readonly description: string;
 
     constructor(originalMarkdown: string, parent: ListItem | null) {
+        this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         this.originalMarkdown = originalMarkdown;
         this.parent = parent;
 

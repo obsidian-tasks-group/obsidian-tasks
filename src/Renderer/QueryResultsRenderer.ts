@@ -290,7 +290,7 @@ export class QueryResultsRenderer {
 
     private addListItem(taskList: HTMLUListElement, listItem: ListItem) {
         const li = createAndAppendElement('li', taskList);
-        li.textContent = listItem.originalMarkdown;
+        li.textContent = listItem.description;
         return li;
     }
 
