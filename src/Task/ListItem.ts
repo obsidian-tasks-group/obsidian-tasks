@@ -10,7 +10,7 @@ export class ListItem {
     public readonly description: string;
 
     constructor(originalMarkdown: string, parent: ListItem | null) {
-        this.description = originalMarkdown;
+        this.description = originalMarkdown.replace(/^- /, '');
         this.originalMarkdown = originalMarkdown;
         this.parent = parent;
 
