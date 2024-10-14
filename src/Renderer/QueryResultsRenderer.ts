@@ -233,7 +233,9 @@ export class QueryResultsRenderer {
             if (closestParent && !renderedTasks.has(closestParent)) {
                 // This task is a direct or indirect child of another task that we are waiting to draw,
                 // so don't draw it yet, it will be done recursively later.
-                continue;
+                if (tasks.includes(closestParent)) {
+                    continue;
+                }
             }
 
             const listItem = await this.addTaskOrListItem(
