@@ -250,19 +250,19 @@ export class QueryResultsRenderer {
 
     private willBeRenderedLater(task: ListItem, renderedTasks: Set<ListItem>, tasks: ListItem[]) {
         // Try to find the closest parent that is a task
-        let closestParent = task.parent;
-        while (closestParent !== null && !(closestParent instanceof Task)) {
-            closestParent = closestParent.parent;
+        let closestParentTask = task.parent;
+        while (closestParentTask !== null && !(closestParentTask instanceof Task)) {
+            closestParentTask = closestParentTask.parent;
         }
 
-        if (!closestParent) {
+        if (!closestParentTask) {
             return false;
         }
 
-        if (!renderedTasks.has(closestParent)) {
+        if (!renderedTasks.has(closestParentTask)) {
             // This task is a direct or indirect child of another task that we are waiting to draw,
             // so don't draw it yet, it will be done recursively later.
-            if (tasks.includes(closestParent)) {
+            if (tasks.includes(closestParentTask)) {
                 return true;
             }
         }
