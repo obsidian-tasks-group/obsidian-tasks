@@ -80,7 +80,7 @@ describe('list item tests', () => {
         ['- ', true],
         ['    - ', true],
         ['17. ', false],
-    ])('list item description: "%s"', (prefix: string, shouldPass) => {
+    ])('should parse description with list item prefix: "%s"', (prefix: string, shouldPass) => {
         const description = 'stuff';
         const line = prefix + description;
         const listItem = new ListItem(line, null);
