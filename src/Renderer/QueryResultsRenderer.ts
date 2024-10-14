@@ -220,7 +220,7 @@ export class QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            if (renderedTasks.has(task)) {
+            if (this.alreadyRendered(task, renderedTasks)) {
                 continue;
             }
 
@@ -256,6 +256,10 @@ export class QueryResultsRenderer {
         }
 
         content.appendChild(taskList);
+    }
+
+    private alreadyRendered(task: ListItem, renderedTasks: Set<ListItem>) {
+        return renderedTasks.has(task);
     }
 
     private async addTaskOrListItem(
