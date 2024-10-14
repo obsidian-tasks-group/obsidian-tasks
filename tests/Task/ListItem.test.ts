@@ -82,6 +82,12 @@ describe('list item tests', () => {
         expect(listItem.description).toEqual('the dash should not be in the description');
     });
 
+    it('should parse description from indented markdown line', () => {
+        const listItem = new ListItem('    - do stuff', null);
+        expect(listItem.originalMarkdown).toEqual('    - do stuff');
+        expect(listItem.description).toEqual('do stuff');
+    });
+
     it.failing('should parse description from numbered list', () => {
         const listItem = new ListItem('17. the number and the dot should not be in the description', null);
         expect(listItem.originalMarkdown).toEqual('17. the number and the dot should not be in the description');
