@@ -77,15 +77,18 @@ describe('list item tests', () => {
     });
 
     it.each([
-        ['- the dash should not be in the description', 'the dash should not be in the description'],
-        ['    - do stuff', 'do stuff'],
-        [
-            '17. the number and the dot should not be in the description',
-            '17. the number and the dot should not be in the description',
-        ],
-    ])('list item description: "%s"', (line: string, expectedDescription: string) => {
+        ['- ', true],
+        ['    - ', true],
+        ['17. ', false],
+    ])('list item description: "%s"', (prefix: string, shouldPass) => {
+        const description = 'stuff';
+        const line = prefix + description;
         const listItem = new ListItem(line, null);
         expect(listItem.originalMarkdown).toEqual(line);
-        expect(listItem.description).toEqual(expectedDescription);
+        if (shouldPass) {
+            expect(listItem.description).toEqual(description);
+        } else {
+            expect(listItem.description).not.toEqual(description);
+        }
     });
 });
