@@ -35,6 +35,7 @@ sort by description
 ## 2 Vanilla
 
 - [ ] #task Task 1 Vanilla
+  - Child list item of 'Task 1 Vanilla'
 - [ ] #task Task 2 Vanilla
 
 ## 3 Callout
@@ -42,6 +43,7 @@ sort by description
 > [!NOTE]
 >
 > - [ ] #task Task 1 Callout
+>   - Child list item of 'Task 1 Callout'
 > - [ ] #task Task 2 Callout
 
 ### 3.1 Callout containing Blockquote
@@ -49,12 +51,14 @@ sort by description
 > [!NOTE]
 > >
 > > - [ ] #task Task 1 Callout containing Blockquote
+> >   - Child list item of 'Task 1 Callout containing Blockquote'
 > > - [ ] #task Task 2 Callout containing Blockquote
 >
 
 ## 4 Blockquote
 
 > - [ ] #task Task 1 Blockquote
+>   - Child list item of 'Task 1 Blockquote'
 > - [ ] #task Task 2 Blockquote
 
 ### 4.1 Blockquote containing Callout
@@ -62,6 +66,7 @@ sort by description
 > > [!NOTE]
 > >
 > > - [ ] #task Task 1 Blockquote containing Callout
+> >   - Child list item of 'Task 1 Blockquote containing Callout'
 > > - [ ] #task Task 2 Blockquote containing Callout
 
 ## 5 Numbered task in unordered list
@@ -82,4 +87,5 @@ x - [ ] #task  wibble
 ### 6.1 Task in numbered list
 
 1. [ ] #task Task 1 Task in numbered list
+    1. Child list item of 'Task 1 Task in numbered list'
 2. [ ] #task Task 2 Task in numbered list
