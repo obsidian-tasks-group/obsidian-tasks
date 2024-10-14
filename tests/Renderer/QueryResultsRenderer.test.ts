@@ -7,6 +7,7 @@ import { State } from '../../src/Obsidian/Cache';
 import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { inheritance_rendering_sample } from '../Obsidian/__test_data__/inheritance_rendering_sample';
+import { inheritance_task_2listitem_3task } from '../Obsidian/__test_data__/inheritance_task_2listitem_3task';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -62,5 +63,11 @@ describe('QueryResultsRenderer tests', () => {
     it('parent-child items reverse sorted', async () => {
         const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
         await verifyRenderedTasksHTML(allTasks, 'sort by function reverse task.lineNumber');
+    });
+
+    it('should render tasks without their parents', async () => {
+        // example chosen to match subtasks whose parents do not match the query
+        const allTasks = readTasksFromSimulatedFile(inheritance_task_2listitem_3task);
+        await verifyRenderedTasksHTML(allTasks, 'description includes grandchild');
     });
 });
