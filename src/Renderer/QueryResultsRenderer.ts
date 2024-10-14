@@ -224,6 +224,8 @@ export class QueryResultsRenderer {
                 continue;
             }
 
+            let willBeRenderedLater = false;
+
             // Try to find the closest parent that is a task
             let closestParent = task.parent;
             while (closestParent !== null && !(closestParent instanceof Task)) {
@@ -234,8 +236,12 @@ export class QueryResultsRenderer {
                 // This task is a direct or indirect child of another task that we are waiting to draw,
                 // so don't draw it yet, it will be done recursively later.
                 if (tasks.includes(closestParent)) {
-                    continue;
+                    willBeRenderedLater = true;
                 }
+            }
+
+            if (willBeRenderedLater) {
+                continue;
             }
 
             const listItem = await this.addTaskOrListItem(
