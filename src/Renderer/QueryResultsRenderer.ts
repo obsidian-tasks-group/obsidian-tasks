@@ -257,13 +257,13 @@ export class QueryResultsRenderer {
 
         if (!closestParent) {
             return false;
-        } else {
-            if (!renderedTasks.has(closestParent)) {
-                // This task is a direct or indirect child of another task that we are waiting to draw,
-                // so don't draw it yet, it will be done recursively later.
-                if (tasks.includes(closestParent)) {
-                    return true;
-                }
+        }
+
+        if (!renderedTasks.has(closestParent)) {
+            // This task is a direct or indirect child of another task that we are waiting to draw,
+            // so don't draw it yet, it will be done recursively later.
+            if (tasks.includes(closestParent)) {
+                return true;
             }
         }
 
