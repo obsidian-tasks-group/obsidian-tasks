@@ -1,6 +1,7 @@
 import type { Component, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
+import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
@@ -10,7 +11,6 @@ import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
-import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
@@ -224,23 +224,7 @@ export class QueryResultsRenderer {
                 continue;
             }
 
-            let willBeRenderedLater = false;
-
-            // Try to find the closest parent that is a task
-            let closestParent = task.parent;
-            while (closestParent !== null && !(closestParent instanceof Task)) {
-                closestParent = closestParent.parent;
-            }
-
-            if (closestParent && !renderedTasks.has(closestParent)) {
-                // This task is a direct or indirect child of another task that we are waiting to draw,
-                // so don't draw it yet, it will be done recursively later.
-                if (tasks.includes(closestParent)) {
-                    willBeRenderedLater = true;
-                }
-            }
-
-            if (willBeRenderedLater) {
+            if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
                 continue;
             }
 
@@ -262,6 +246,25 @@ export class QueryResultsRenderer {
         }
 
         content.appendChild(taskList);
+    }
+
+    private willBeRenderedLater(task: ListItem, renderedTasks: Set<ListItem>, tasks: ListItem[]) {
+        let willBeRenderedLater = false;
+
+        // Try to find the closest parent that is a task
+        let closestParent = task.parent;
+        while (closestParent !== null && !(closestParent instanceof Task)) {
+            closestParent = closestParent.parent;
+        }
+
+        if (closestParent && !renderedTasks.has(closestParent)) {
+            // This task is a direct or indirect child of another task that we are waiting to draw,
+            // so don't draw it yet, it will be done recursively later.
+            if (tasks.includes(closestParent)) {
+                willBeRenderedLater = true;
+            }
+        }
+        return willBeRenderedLater;
     }
 
     private alreadyRendered(task: ListItem, renderedTasks: Set<ListItem>) {
