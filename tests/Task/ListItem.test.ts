@@ -76,21 +76,16 @@ describe('list item tests', () => {
         expect(child.isRoot).toEqual(false);
     });
 
-    it('should parse description from markdown line', () => {
-        const listItem = new ListItem('- the dash should not be in the description', null);
-        expect(listItem.originalMarkdown).toEqual('- the dash should not be in the description');
-        expect(listItem.description).toEqual('the dash should not be in the description');
-    });
-
-    it('should parse description from indented markdown line', () => {
-        const listItem = new ListItem('    - do stuff', null);
-        expect(listItem.originalMarkdown).toEqual('    - do stuff');
-        expect(listItem.description).toEqual('do stuff');
-    });
-
-    it.failing('should parse description from numbered list', () => {
-        const listItem = new ListItem('17. the number and the dot should not be in the description', null);
-        expect(listItem.originalMarkdown).toEqual('17. the number and the dot should not be in the description');
-        expect(listItem.description).toEqual('the number and the dot should not be in the description');
+    it.each([
+        ['- the dash should not be in the description', 'the dash should not be in the description'],
+        ['    - do stuff', 'do stuff'],
+        [
+            '17. the number and the dot should not be in the description',
+            '17. the number and the dot should not be in the description',
+        ],
+    ])('list item description: "%s"', (line: string, expectedDescription: string) => {
+        const listItem = new ListItem(line, null);
+        expect(listItem.originalMarkdown).toEqual(line);
+        expect(listItem.description).toEqual(expectedDescription);
     });
 });
