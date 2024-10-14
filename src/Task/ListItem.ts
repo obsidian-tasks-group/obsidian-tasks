@@ -7,8 +7,10 @@ export class ListItem {
 
     public readonly parent: ListItem | null = null;
     public readonly children: ListItem[] = [];
+    public readonly description: string;
 
     constructor(originalMarkdown: string, parent: ListItem | null) {
+        this.description = originalMarkdown;
         this.originalMarkdown = originalMarkdown;
         this.parent = parent;
 
