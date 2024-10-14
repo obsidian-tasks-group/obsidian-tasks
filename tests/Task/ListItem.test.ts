@@ -81,4 +81,10 @@ describe('list item tests', () => {
         expect(listItem.originalMarkdown).toEqual('- the dash should not be in the description');
         expect(listItem.description).toEqual('the dash should not be in the description');
     });
+
+    it.failing('should parse description from numbered list', () => {
+        const listItem = new ListItem('17. the number and the dot should not be in the description', null);
+        expect(listItem.originalMarkdown).toEqual('17. the number and the dot should not be in the description');
+        expect(listItem.description).toEqual('the number and the dot should not be in the description');
+    });
 });
