@@ -255,7 +255,9 @@ export class QueryResultsRenderer {
             closestParent = closestParent.parent;
         }
 
-        if (closestParent) {
+        if (!closestParent) {
+            return false;
+        } else {
             if (!renderedTasks.has(closestParent)) {
                 // This task is a direct or indirect child of another task that we are waiting to draw,
                 // so don't draw it yet, it will be done recursively later.
