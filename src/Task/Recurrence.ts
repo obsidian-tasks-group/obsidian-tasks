@@ -151,7 +151,7 @@ export class Recurrence {
         // calculates in UTC.
         // The timezone is added again before returning the next date.
         after.utc(true);
-        let next = window.moment(rrule.after(after.toDate()));
+        let next = window.moment.utc(rrule.after(after.toDate()));
 
         // If this is a monthly recurrence, treat it special.
         const asText = this.toText();
@@ -261,11 +261,11 @@ export class Recurrence {
         options.dtstart = after.startOf('day').toDate();
         rrule = new RRule(options);
 
-        return window.moment(rrule.after(after.toDate()));
+        return window.moment.utc(rrule.after(after.toDate()));
     }
 
     private static addTimezone(date: Moment): Moment {
-        const localTimeZone = window.moment.utc(date).local(true);
+        const localTimeZone = window.moment.utc(date).add(12, 'hours').local(true);
 
         return localTimeZone.startOf('day');
     }
