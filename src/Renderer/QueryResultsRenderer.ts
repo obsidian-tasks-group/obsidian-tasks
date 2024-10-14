@@ -249,8 +249,6 @@ export class QueryResultsRenderer {
     }
 
     private willBeRenderedLater(task: ListItem, renderedTasks: Set<ListItem>, tasks: ListItem[]) {
-        const willBeRenderedLater = false;
-
         // Try to find the closest parent that is a task
         let closestParent = task.parent;
         while (closestParent !== null && !(closestParent instanceof Task)) {
@@ -266,7 +264,8 @@ export class QueryResultsRenderer {
                 }
             }
         }
-        return willBeRenderedLater;
+
+        return false;
     }
 
     private alreadyRendered(task: ListItem, renderedTasks: Set<ListItem>) {
