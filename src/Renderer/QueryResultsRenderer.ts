@@ -1,6 +1,7 @@
 import type { Component, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
+import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
@@ -10,9 +11,9 @@ import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
-import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { TasksFile } from '../Scripting/TasksFile';
-import type { Task } from '../Task/Task';
+import type { ListItem } from '../Task/ListItem';
+import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
@@ -188,14 +189,16 @@ export class QueryResultsRenderer {
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(content, group.groupHeadings);
 
-            await this.createTaskList(group.tasks, content, queryRendererParameters);
+            const renderedTasks: Set<ListItem> = new Set();
+            await this.createTaskList(group.tasks, content, queryRendererParameters, renderedTasks);
         }
     }
 
     private async createTaskList(
-        tasks: Task[],
-        content: HTMLDivElement,
+        tasks: ListItem[],
+        content: HTMLElement,
         queryRendererParameters: QueryRendererParameters,
+        renderedTasks: Set<ListItem>,
     ): Promise<void> {
         const taskList = createAndAppendElement('ul', content);
 
@@ -217,10 +220,78 @@ export class QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+            if (this.alreadyRendered(task, renderedTasks)) {
+                continue;
+            }
+
+            if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
+                continue;
+            }
+
+            const listItem = await this.addTaskOrListItem(
+                taskList,
+                taskLineRenderer,
+                task,
+                taskIndex,
+                queryRendererParameters,
+            );
+            renderedTasks.add(task);
+
+            if (task.children.length > 0) {
+                await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
+                task.children.forEach((childTask) => {
+                    renderedTasks.add(childTask);
+                });
+            }
         }
 
         content.appendChild(taskList);
+    }
+
+    private willBeRenderedLater(task: ListItem, renderedTasks: Set<ListItem>, tasks: ListItem[]) {
+        // Try to find the closest parent that is a task
+        let closestParentTask = task.parent;
+        while (closestParentTask !== null && !(closestParentTask instanceof Task)) {
+            closestParentTask = closestParentTask.parent;
+        }
+
+        if (!closestParentTask) {
+            return false;
+        }
+
+        if (!renderedTasks.has(closestParentTask)) {
+            // This task is a direct or indirect child of another task that we are waiting to draw,
+            // so don't draw it yet, it will be done recursively later.
+            if (tasks.includes(closestParentTask)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private alreadyRendered(task: ListItem, renderedTasks: Set<ListItem>) {
+        return renderedTasks.has(task);
+    }
+
+    private async addTaskOrListItem(
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        task: ListItem,
+        taskIndex: number,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
+        if (task instanceof Task) {
+            return await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+        }
+
+        return this.addListItem(taskList, task);
+    }
+
+    private addListItem(taskList: HTMLUListElement, listItem: ListItem) {
+        const li = createAndAppendElement('li', taskList);
+        li.textContent = listItem.originalMarkdown;
+        return li;
     }
 
     private async addTask(
@@ -259,6 +330,8 @@ export class QueryResultsRenderer {
         }
 
         taskList.appendChild(listItem);
+
+        return listItem;
     }
 
     private addEditButton(listItem: HTMLElement, task: Task, queryRendererParameters: QueryRendererParameters) {
