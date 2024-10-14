@@ -75,4 +75,10 @@ describe('list item tests', () => {
         expect(parent.isRoot).toEqual(false);
         expect(child.isRoot).toEqual(false);
     });
+
+    it('should parse description from markdown line', () => {
+        const listItem = new ListItem('- the dash should not be in the description', null);
+        expect(listItem.originalMarkdown).toEqual('- the dash should not be in the description');
+        expect(listItem.description).toEqual('- the dash should not be in the description');
+    });
 });
