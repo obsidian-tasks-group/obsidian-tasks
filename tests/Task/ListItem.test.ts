@@ -78,12 +78,12 @@ describe('list item tests', () => {
 
     it.each([
         ['- ', true],
-        ['* ', false],
-        ['+ ', false],
-        ['17. ', false],
+        ['* ', true],
+        ['+ ', true],
+        ['17. ', true],
         ['    - ', true],
-        ['>   - ', false],
-        ['> >   - ', false],
+        ['>   - ', true],
+        ['> >   - ', true],
     ])('should parse description with list item prefix: "%s"', (prefix: string, shouldPass) => {
         const description = 'stuff';
         const line = prefix + description;
