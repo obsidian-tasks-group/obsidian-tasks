@@ -31,6 +31,10 @@ This page gathers together all the documentation on known limitations of the plu
 
 ![[Getting Started#Limitations and warnings]]
 
+## Writing Tasks: Dates
+
+![[Dates#Limitations of task date support]]
+
 ## Writing Tasks: Dependencies
 
 ![[Task Dependencies#Known Limitations]]
