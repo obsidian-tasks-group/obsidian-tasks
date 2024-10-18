@@ -220,28 +220,20 @@ export class QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            if (this.alreadyRendered(task, renderedTasks)) {
-                continue;
-            }
-
-            if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
-                continue;
-            }
-
-            const listItem = await this.addTaskOrListItem(
-                taskList,
-                taskLineRenderer,
-                task,
-                taskIndex,
-                queryRendererParameters,
-            );
-            renderedTasks.add(task);
-
-            if (task.children.length > 0) {
-                await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
-                task.children.forEach((childTask) => {
-                    renderedTasks.add(childTask);
-                });
+            if (this.query.queryLayoutOptions.hideChildren) {
+                if (task instanceof Task) {
+                    await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+                }
+            } else {
+                await this.addTaskOrListItemAndChildren(
+                    taskList,
+                    taskLineRenderer,
+                    task,
+                    taskIndex,
+                    queryRendererParameters,
+                    tasks,
+                    renderedTasks,
+                );
             }
         }
 
@@ -272,6 +264,40 @@ export class QueryResultsRenderer {
 
     private alreadyRendered(task: ListItem, renderedTasks: Set<ListItem>) {
         return renderedTasks.has(task);
+    }
+
+    private async addTaskOrListItemAndChildren(
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        task: ListItem,
+        taskIndex: number,
+        queryRendererParameters: QueryRendererParameters,
+        tasks: ListItem[],
+        renderedTasks: Set<ListItem>,
+    ) {
+        if (this.alreadyRendered(task, renderedTasks)) {
+            return;
+        }
+
+        if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
+            return;
+        }
+
+        const listItem = await this.addTaskOrListItem(
+            taskList,
+            taskLineRenderer,
+            task,
+            taskIndex,
+            queryRendererParameters,
+        );
+        renderedTasks.add(task);
+
+        if (task.children.length > 0) {
+            await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
+            task.children.forEach((childTask) => {
+                renderedTasks.add(childTask);
+            });
+        }
     }
 
     private async addTaskOrListItem(
