@@ -220,22 +220,28 @@ export class QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            if (this.alreadyRendered(task, renderedTasks)) {
-                continue;
-            }
+            if (this.query.queryLayoutOptions.hideChildren) {
+                if (task instanceof Task) {
+                    await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+                }
+            } else {
+                if (this.alreadyRendered(task, renderedTasks)) {
+                    continue;
+                }
 
-            if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
-                continue;
-            }
+                if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
+                    continue;
+                }
 
-            await this.addTaskOrListItemAndChildren(
-                taskList,
-                taskLineRenderer,
-                task,
-                taskIndex,
-                queryRendererParameters,
-                renderedTasks,
-            );
+                await this.addTaskOrListItemAndChildren(
+                    taskList,
+                    taskLineRenderer,
+                    task,
+                    taskIndex,
+                    queryRendererParameters,
+                    renderedTasks,
+                );
+            }
         }
 
         content.appendChild(taskList);

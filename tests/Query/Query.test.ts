@@ -453,6 +453,7 @@ describe('Query parsing', () => {
             'full mode',
             'hide backlink',
             'hide cancelled date',
+            'hide children',
             'hide created date',
             'hide depends on',
             'hide done date',
@@ -476,6 +477,7 @@ describe('Query parsing', () => {
             'short mode',
             'show backlink',
             'show cancelled date',
+            'show children',
             'show created date',
             'show depends on',
             'show done date',
@@ -1301,6 +1303,11 @@ describe('Query', () => {
         it('should allow to hide "on completion"', () => {
             const query = new Query('hide on completion');
             expect(query.taskLayoutOptions.isShown(TaskLayoutComponent.OnCompletion)).toEqual(false);
+        });
+
+        it('should hide "children" by default', () => {
+            const query = new Query('');
+            expect(query.queryLayoutOptions.hideChildren).toEqual(true);
         });
     });
 
