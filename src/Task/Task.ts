@@ -796,6 +796,7 @@ export class Task extends ListItem {
      * @param other
      */
     public identicalTo(other: Task) {
+        // First compare child Task and ListItem objects, and any other data in ListItem:
         if (!super.identicalTo(other)) {
             return false;
         }
