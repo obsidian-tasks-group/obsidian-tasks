@@ -99,6 +99,12 @@ describe('list item tests', () => {
     });
 });
 
+function createChildListItem(originalMarkdown: string, item1: ListItem) {
+    // This exists purely to silence WebStorm about typescript:S1848
+    // See https://sonarcloud.io/organizations/obsidian-tasks-group/rules?open=typescript%3AS1848&rule_key=typescript%3AS1848
+    new ListItem(originalMarkdown, item1);
+}
+
 describe('identicalTo', () => {
     it('should test same markdown', () => {
         const listItem1 = new ListItem('- same description', null);
@@ -123,7 +129,7 @@ describe('identicalTo', () => {
 
     it('should recognise list items with different children', () => {
         const item1 = new ListItem('- item', null);
-        new ListItem('- child of item1', item1);
+        createChildListItem('- child of item1', item1);
 
         const item2 = new ListItem('- item', null);
         new ListItem('- child of item2', item2);
