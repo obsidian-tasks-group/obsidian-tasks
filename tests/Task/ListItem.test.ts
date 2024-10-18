@@ -143,13 +143,13 @@ describe('checking if list item lists are identical', () => {
         expect(ListItem.listItemListsIdentical(list1, list2)).toBe(false);
     });
 
-    it('should detect matching tasks as same', () => {
+    it('should detect matching list items as same', () => {
         const list1: ListItem[] = [new ListItem('- 1', null)];
         const list2: ListItem[] = [new ListItem('- 1', null)];
         expect(ListItem.listItemListsIdentical(list1, list2)).toBe(true);
     });
 
-    it('- should detect non-matching tasks as different', () => {
+    it('- should detect non-matching list items as different', () => {
         const list1: ListItem[] = [new ListItem('- 1', null)];
         const list2: ListItem[] = [new ListItem('- 2', null)];
         expect(ListItem.listItemListsIdentical(list1, list2)).toBe(false);
