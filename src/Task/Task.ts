@@ -785,23 +785,6 @@ export class Task extends ListItem {
     }
 
     /**
-     * Compare two lists of Task objects, and report whether their
-     * tasks are identical in the same order.
-     *
-     * This can be useful for optimising code if it is guaranteed that
-     * there are no possible differences in the tasks in a file
-     * after an edit, for example.
-     *
-     * If any field is different in any task, it will return false.
-     *
-     * @param oldTasks
-     * @param newTasks
-     */
-    static tasksListsIdentical(oldTasks: Task[], newTasks: Task[]): boolean {
-        return ListItem.listsAreIdentical(oldTasks, newTasks);
-    }
-
-    /**
      * Compare all the fields in another Task, to detect any differences from this one.
      *
      * If any field is different in any way, it will return false.

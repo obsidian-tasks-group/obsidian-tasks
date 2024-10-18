@@ -377,7 +377,7 @@ export class Cache {
 
         // If there are no changes in any of the tasks, there's
         // nothing to do, so just return.
-        if (Task.tasksListsIdentical(oldTasks, newTasks)) {
+        if (ListItem.listsAreIdentical(oldTasks, newTasks)) {
             // This code kept for now, to allow for debugging during development.
             // It is too verbose to release to users.
             // if (this.getState() == State.Warm) {
