@@ -63,13 +63,13 @@ export class ListItem {
 
     /**
      * Compare two lists of ListItem objects, and report whether their
-     * tasks are identical in the same order.
+     * contents, including any children, are identical and in the same order.
      *
      * This can be useful for optimising code if it is guaranteed that
      * there are no possible differences in the tasks in a file
      * after an edit, for example.
      *
-     * If any field is different in any task, it will return false.
+     * If any field is different in any task or list item, it will return false.
      *
      * @param list1
      * @param list2
