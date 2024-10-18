@@ -190,3 +190,15 @@ describe('checking if task lists are identical', () => {
         expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
     });
 });
+
+describe('checking if mixed lists are identical', () => {
+    it('should recognise mixed lists as unequal', () => {
+        const list1 = [new ListItem('- [ ] description', null)];
+        const list2 = [fromLine({ line: '- [ ] description' })];
+
+        expect(ListItem.listsAreIdentical(list1, list1)).toEqual(true);
+        expect(ListItem.listsAreIdentical(list1, list2)).toEqual(false);
+        expect(ListItem.listsAreIdentical(list2, list1)).toEqual(false);
+        expect(ListItem.listsAreIdentical(list2, list2)).toEqual(true);
+    });
+});
