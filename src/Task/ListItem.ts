@@ -78,7 +78,7 @@ export class ListItem {
      * @param list1
      * @param list2
      */
-    static listsAreIdentical(list1: ListItem[], list2: ListItem[]) {
+    static listsAreIdentical(list1: ListItem[], list2: ListItem[]): boolean {
         if (list1.length !== list2.length) {
             return false;
         }
