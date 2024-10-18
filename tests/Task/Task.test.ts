@@ -1757,24 +1757,24 @@ describe('checking if task lists are identical', () => {
     it('should treat empty lists as identical', () => {
         const list1: Task[] = [];
         const list2: Task[] = [];
-        expect(Task.tasksListsIdentical(list1, list2)).toBe(true);
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
     });
 
     it('should treat different sized lists as different', () => {
         const list1: Task[] = [];
         const list2: Task[] = [new TaskBuilder().build()];
-        expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
     });
 
     it('should detect matching tasks as same', () => {
         const list1: Task[] = [new TaskBuilder().description('1').build()];
         const list2: Task[] = [new TaskBuilder().description('1').build()];
-        expect(Task.tasksListsIdentical(list1, list2)).toBe(true);
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
     });
 
     it('should detect non-matching tasks as different', () => {
         const list1: Task[] = [new TaskBuilder().description('1').build()];
         const list2: Task[] = [new TaskBuilder().description('2').build()];
-        expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
     });
 });
