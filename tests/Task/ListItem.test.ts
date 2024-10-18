@@ -98,9 +98,15 @@ describe('list item tests', () => {
 });
 
 describe('identicalTo', () => {
-    it('should test the description', () => {
-        const listItem1 = new ListItem('same description', null);
-        const listItem2 = new ListItem('same description', null);
+    it('should test same markdown', () => {
+        const listItem1 = new ListItem('- same description', null);
+        const listItem2 = new ListItem('- same description', null);
         expect(listItem1.identicalTo(listItem2)).toEqual(true);
+    });
+
+    it('should test different markdown', () => {
+        const listItem1 = new ListItem('- description', null);
+        const listItem2 = new ListItem('- description two', null);
+        expect(listItem1.identicalTo(listItem2)).toEqual(false);
     });
 });
