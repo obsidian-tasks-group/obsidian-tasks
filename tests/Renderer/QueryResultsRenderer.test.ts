@@ -55,19 +55,27 @@ describe('QueryResultsRenderer tests', () => {
         await verifyRenderedTasksHTML(allTasks);
     });
 
+    const showChildren = 'show children\n';
+    const hideChildren = 'hide children\n';
+
+    it('parent-child items hidden', async () => {
+        const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
+        await verifyRenderedTasksHTML(allTasks, hideChildren + 'sort by function task.lineNumber');
+    });
+
     it('parent-child items', async () => {
         const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
-        await verifyRenderedTasksHTML(allTasks, 'sort by function task.lineNumber');
+        await verifyRenderedTasksHTML(allTasks, showChildren + 'sort by function task.lineNumber');
     });
 
     it('parent-child items reverse sorted', async () => {
         const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
-        await verifyRenderedTasksHTML(allTasks, 'sort by function reverse task.lineNumber');
+        await verifyRenderedTasksHTML(allTasks, showChildren + 'sort by function reverse task.lineNumber');
     });
 
     it('should render tasks without their parents', async () => {
         // example chosen to match subtasks whose parents do not match the query
         const allTasks = readTasksFromSimulatedFile(inheritance_task_2listitem_3task);
-        await verifyRenderedTasksHTML(allTasks, 'description includes grandchild');
+        await verifyRenderedTasksHTML(allTasks, showChildren + 'description includes grandchild');
     });
 });
