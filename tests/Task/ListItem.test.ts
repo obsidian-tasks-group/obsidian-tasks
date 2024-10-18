@@ -6,6 +6,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { ListItem } from '../../src/Task/ListItem';
+import { fromLine } from '../TestingTools/TestHelpers';
 
 window.moment = moment;
 
@@ -127,6 +128,13 @@ describe('identicalTo', () => {
         new ListItem('- child of item2', item2);
 
         expect(item2.identicalTo(item1)).toEqual(false);
+    });
+
+    it('should recognise ListItem and Task as different', () => {
+        const listItem = new ListItem('- [ ] description', null);
+        const task = fromLine({ line: '- [ ] description' });
+
+        expect(listItem.identicalTo(task)).toEqual(false);
     });
 });
 
