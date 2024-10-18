@@ -49,7 +49,7 @@ export class ListItem {
         return this.parent === null;
     }
 
-    identicalTo(_other: ListItem) {
-        return true;
+    identicalTo(other: ListItem) {
+        return this.originalMarkdown === other.originalMarkdown;
     }
 }
