@@ -49,6 +49,15 @@ export class ListItem {
         return this.parent === null;
     }
 
+    /**
+     * Compare all the fields in another ListItem, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * @note Use {@link Task.identicalTo} to compare {@link Task} objects.
+     *
+     * @param other - if this is in fact a {@link Task}, the result of false.
+     */
     identicalTo(other: ListItem) {
         if (this.constructor.name !== other.constructor.name) {
             return false;
