@@ -5,7 +5,6 @@ import moment from 'moment';
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
-import { ListItem } from '../../src/Task/ListItem';
 import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
@@ -23,6 +22,7 @@ import type { TasksDate } from '../../src/DateTime/TasksDate';
 import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
 import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
 import { OnCompletion } from '../../src/Task/OnCompletion';
+import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
 
@@ -1735,7 +1735,7 @@ describe('identicalTo', () => {
     it('should recognise different numbers of child items', () => {
         const task1 = new TaskBuilder().build();
         const task2 = new TaskBuilder().build();
-        new ListItem('- child of task2', task2);
+        createChildListItem('- child of task2', task2);
 
         expect(task2.identicalTo(task1)).toEqual(false);
     });
@@ -1743,8 +1743,8 @@ describe('identicalTo', () => {
     it('should recognise different description in child list items', () => {
         const task1 = new TaskBuilder().build();
         const task2 = new TaskBuilder().build();
-        new ListItem('- child of task1', task1);
-        new ListItem('- child of task2', task2);
+        createChildListItem('- child of task1', task1);
+        createChildListItem('- child of task2', task2);
 
         expect(task2.identicalTo(task1)).toEqual(false);
     });
