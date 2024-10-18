@@ -48,4 +48,8 @@ export class ListItem {
     get isRoot(): boolean {
         return this.parent === null;
     }
+
+    identicalTo(_other: ListItem) {
+        return true;
+    }
 }
