@@ -56,4 +56,25 @@ export class ListItem {
 
         return this.originalMarkdown === other.originalMarkdown;
     }
+
+    /**
+     * Compare two lists of ListItem objects, and report whether their
+     * tasks are identical in the same order.
+     *
+     * This can be useful for optimising code if it is guaranteed that
+     * there are no possible differences in the tasks in a file
+     * after an edit, for example.
+     *
+     * If any field is different in any task, it will return false.
+     *
+     * @param list1
+     * @param list2
+     */
+    static listItemListsIdentical(list1: ListItem[], list2: ListItem[]) {
+        if (list1.length !== list2.length) {
+            return false;
+        }
+
+        return list1.every((item, index) => item.identicalTo(list2[index]));
+    }
 }
