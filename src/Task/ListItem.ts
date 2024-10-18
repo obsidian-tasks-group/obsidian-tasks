@@ -50,6 +50,10 @@ export class ListItem {
     }
 
     identicalTo(other: ListItem) {
+        if (this.children.length !== other.children.length) {
+            return false;
+        }
+
         return this.originalMarkdown === other.originalMarkdown;
     }
 }
