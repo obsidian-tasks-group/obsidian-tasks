@@ -5,6 +5,7 @@ import moment from 'moment';
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
+import { ListItem } from '../../src/Task/ListItem';
 import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
@@ -1729,6 +1730,14 @@ describe('identicalTo', () => {
 
         expect(task2.status.identicalTo(task1.status)).toEqual(true);
         expect(task2.identicalTo(task1)).toEqual(true);
+    });
+
+    it('should recognise different numbers of child items', () => {
+        const task1 = new TaskBuilder().build();
+        const task2 = new TaskBuilder().build();
+        new ListItem('- child of task2', task2);
+
+        expect(task2.identicalTo(task1)).toEqual(false);
     });
 });
 
