@@ -1739,6 +1739,19 @@ describe('identicalTo', () => {
 
         expect(task2.identicalTo(task1)).toEqual(false);
     });
+
+    it.failing('should recognise different description in child list items', () => {
+        const task1 = new TaskBuilder().build();
+        const task2 = new TaskBuilder().build();
+        new ListItem('- child of task1', task1);
+        new ListItem('- child of task2', task2);
+
+        expect(task2.identicalTo(task1)).toEqual(false);
+        expect(1).toEqual(2);
+    });
+
+    // 2 list items differ both have children but...
+    // ...one has a child and one doesn't
 });
 
 describe('checking if task lists are identical', () => {
