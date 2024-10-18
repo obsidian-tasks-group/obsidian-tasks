@@ -109,4 +109,13 @@ describe('identicalTo', () => {
         const listItem2 = new ListItem('- description two', null);
         expect(listItem1.identicalTo(listItem2)).toEqual(false);
     });
+
+    it('should recognise list items with different number of children', () => {
+        const item1 = new ListItem('- item', null);
+        new ListItem('- child of item1', item1);
+
+        const item2 = new ListItem('- item', null);
+
+        expect(item2.identicalTo(item1)).toEqual(false);
+    });
 });
