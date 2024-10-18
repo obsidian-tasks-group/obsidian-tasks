@@ -118,6 +118,16 @@ describe('identicalTo', () => {
 
         expect(item2.identicalTo(item1)).toEqual(false);
     });
+
+    it('should recognise list items with different children', () => {
+        const item1 = new ListItem('- item', null);
+        new ListItem('- child of item1', item1);
+
+        const item2 = new ListItem('- item', null);
+        new ListItem('- child of item2', item2);
+
+        expect(item2.identicalTo(item1)).toEqual(false);
+    });
 });
 
 describe('checking if list item lists are identical', () => {

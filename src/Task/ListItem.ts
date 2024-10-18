@@ -54,6 +54,10 @@ export class ListItem {
             return false;
         }
 
+        if (!ListItem.listItemListsIdentical(this.children, other.children)) {
+            return false;
+        }
+
         return this.originalMarkdown === other.originalMarkdown;
     }
 
