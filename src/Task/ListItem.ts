@@ -50,6 +50,10 @@ export class ListItem {
     }
 
     identicalTo(other: ListItem) {
+        if (this.constructor.name !== other.constructor.name) {
+            return false;
+        }
+
         if (this.children.length !== other.children.length) {
             return false;
         }
