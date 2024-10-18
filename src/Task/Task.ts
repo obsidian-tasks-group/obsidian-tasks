@@ -798,10 +798,7 @@ export class Task extends ListItem {
      * @param newTasks
      */
     static tasksListsIdentical(oldTasks: Task[], newTasks: Task[]): boolean {
-        if (oldTasks.length !== newTasks.length) {
-            return false;
-        }
-        return oldTasks.every((oldTask, index) => oldTask.identicalTo(newTasks[index]));
+        return ListItem.listItemListsIdentical(oldTasks, newTasks);
     }
 
     /**
