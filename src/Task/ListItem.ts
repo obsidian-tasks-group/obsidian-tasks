@@ -58,7 +58,7 @@ export class ListItem {
             return false;
         }
 
-        if (!ListItem.listItemListsIdentical(this.children, other.children)) {
+        if (!ListItem.listsAreIdentical(this.children, other.children)) {
             return false;
         }
 
@@ -78,7 +78,7 @@ export class ListItem {
      * @param list1
      * @param list2
      */
-    static listItemListsIdentical(list1: ListItem[], list2: ListItem[]) {
+    static listsAreIdentical(list1: ListItem[], list2: ListItem[]) {
         if (list1.length !== list2.length) {
             return false;
         }

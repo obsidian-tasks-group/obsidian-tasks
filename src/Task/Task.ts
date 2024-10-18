@@ -798,7 +798,7 @@ export class Task extends ListItem {
      * @param newTasks
      */
     static tasksListsIdentical(oldTasks: Task[], newTasks: Task[]): boolean {
-        return ListItem.listItemListsIdentical(oldTasks, newTasks);
+        return ListItem.listsAreIdentical(oldTasks, newTasks);
     }
 
     /**

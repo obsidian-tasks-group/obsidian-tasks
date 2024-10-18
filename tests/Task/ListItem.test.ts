@@ -142,24 +142,24 @@ describe('checking if list item lists are identical', () => {
     it('should treat empty lists as identical', () => {
         const list1: ListItem[] = [];
         const list2: ListItem[] = [];
-        expect(ListItem.listItemListsIdentical(list1, list2)).toBe(true);
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
     });
 
     it('should treat different sized lists as different', () => {
         const list1: ListItem[] = [];
         const list2: ListItem[] = [new ListItem('- x', null)];
-        expect(ListItem.listItemListsIdentical(list1, list2)).toBe(false);
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
     });
 
     it('should detect matching list items as same', () => {
         const list1: ListItem[] = [new ListItem('- 1', null)];
         const list2: ListItem[] = [new ListItem('- 1', null)];
-        expect(ListItem.listItemListsIdentical(list1, list2)).toBe(true);
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
     });
 
     it('- should detect non-matching list items as different', () => {
         const list1: ListItem[] = [new ListItem('- 1', null)];
         const list2: ListItem[] = [new ListItem('- 2', null)];
-        expect(ListItem.listItemListsIdentical(list1, list2)).toBe(false);
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
     });
 });
