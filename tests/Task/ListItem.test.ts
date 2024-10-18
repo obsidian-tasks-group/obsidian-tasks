@@ -6,6 +6,9 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { ListItem } from '../../src/Task/ListItem';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { fromLine } from '../TestingTools/TestHelpers';
+import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
 
@@ -94,5 +97,109 @@ describe('list item tests', () => {
         } else {
             expect(listItem.description).not.toEqual(description);
         }
+    });
+});
+
+describe('identicalTo', () => {
+    it('should test same markdown', () => {
+        const listItem1 = new ListItem('- same description', null);
+        const listItem2 = new ListItem('- same description', null);
+        expect(listItem1.identicalTo(listItem2)).toEqual(true);
+    });
+
+    it('should test different markdown', () => {
+        const listItem1 = new ListItem('- description', null);
+        const listItem2 = new ListItem('- description two', null);
+        expect(listItem1.identicalTo(listItem2)).toEqual(false);
+    });
+
+    it('should recognise list items with different number of children', () => {
+        const item1 = new ListItem('- item', null);
+        createChildListItem('- child of item1', item1);
+
+        const item2 = new ListItem('- item', null);
+
+        expect(item2.identicalTo(item1)).toEqual(false);
+    });
+
+    it('should recognise list items with different children', () => {
+        const item1 = new ListItem('- item', null);
+        createChildListItem('- child of item1', item1);
+
+        const item2 = new ListItem('- item', null);
+        createChildListItem('- child of item2', item2);
+
+        expect(item2.identicalTo(item1)).toEqual(false);
+    });
+
+    it('should recognise ListItem and Task as different', () => {
+        const listItem = new ListItem('- [ ] description', null);
+        const task = fromLine({ line: '- [ ] description' });
+
+        expect(listItem.identicalTo(task)).toEqual(false);
+    });
+});
+
+describe('checking if list item lists are identical', () => {
+    it('should treat empty lists as identical', () => {
+        const list1: ListItem[] = [];
+        const list2: ListItem[] = [];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
+    });
+
+    it('should treat different sized lists as different', () => {
+        const list1: ListItem[] = [];
+        const list2: ListItem[] = [new ListItem('- x', null)];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
+    });
+
+    it('should detect matching list items as same', () => {
+        const list1: ListItem[] = [new ListItem('- 1', null)];
+        const list2: ListItem[] = [new ListItem('- 1', null)];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
+    });
+
+    it('- should detect non-matching list items as different', () => {
+        const list1: ListItem[] = [new ListItem('- 1', null)];
+        const list2: ListItem[] = [new ListItem('- 2', null)];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
+    });
+});
+
+describe('checking if task lists are identical', () => {
+    it('should treat empty lists as identical', () => {
+        const list1: Task[] = [];
+        const list2: Task[] = [];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
+    });
+
+    it('should treat different sized lists as different', () => {
+        const list1: Task[] = [];
+        const list2: Task[] = [new TaskBuilder().build()];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
+    });
+
+    it('should detect matching tasks as same', () => {
+        const list1: Task[] = [new TaskBuilder().description('1').build()];
+        const list2: Task[] = [new TaskBuilder().description('1').build()];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
+    });
+
+    it('should detect non-matching tasks as different', () => {
+        const list1: Task[] = [new TaskBuilder().description('1').build()];
+        const list2: Task[] = [new TaskBuilder().description('2').build()];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
+    });
+});
+
+describe('checking if mixed lists are identical', () => {
+    it('should recognise mixed lists as unequal', () => {
+        const list1 = [new ListItem('- [ ] description', null)];
+        const list2 = [fromLine({ line: '- [ ] description' })];
+
+        expect(ListItem.listsAreIdentical(list1, list1)).toEqual(true);
+        expect(ListItem.listsAreIdentical(list1, list2)).toEqual(false);
+        expect(ListItem.listsAreIdentical(list2, list1)).toEqual(false);
+        expect(ListItem.listsAreIdentical(list2, list2)).toEqual(true);
     });
 });
