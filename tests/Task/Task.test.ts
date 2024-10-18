@@ -22,6 +22,7 @@ import type { TasksDate } from '../../src/DateTime/TasksDate';
 import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
 import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
 import { OnCompletion } from '../../src/Task/OnCompletion';
+import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
 
@@ -1730,30 +1731,21 @@ describe('identicalTo', () => {
         expect(task2.status.identicalTo(task1.status)).toEqual(true);
         expect(task2.identicalTo(task1)).toEqual(true);
     });
-});
 
-describe('checking if task lists are identical', () => {
-    it('should treat empty lists as identical', () => {
-        const list1: Task[] = [];
-        const list2: Task[] = [];
-        expect(Task.tasksListsIdentical(list1, list2)).toBe(true);
+    it('should recognise different numbers of child items', () => {
+        const task1 = new TaskBuilder().build();
+        const task2 = new TaskBuilder().build();
+        createChildListItem('- child of task2', task2);
+
+        expect(task2.identicalTo(task1)).toEqual(false);
     });
 
-    it('should treat different sized lists as different', () => {
-        const list1: Task[] = [];
-        const list2: Task[] = [new TaskBuilder().build()];
-        expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
-    });
+    it('should recognise different description in child list items', () => {
+        const task1 = new TaskBuilder().build();
+        const task2 = new TaskBuilder().build();
+        createChildListItem('- child of task1', task1);
+        createChildListItem('- child of task2', task2);
 
-    it('should detect matching tasks as same', () => {
-        const list1: Task[] = [new TaskBuilder().description('1').build()];
-        const list2: Task[] = [new TaskBuilder().description('1').build()];
-        expect(Task.tasksListsIdentical(list1, list2)).toBe(true);
-    });
-
-    it('should detect non-matching tasks as different', () => {
-        const list1: Task[] = [new TaskBuilder().description('1').build()];
-        const list2: Task[] = [new TaskBuilder().description('2').build()];
-        expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
+        expect(task2.identicalTo(task1)).toEqual(false);
     });
 });
