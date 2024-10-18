@@ -816,6 +816,10 @@ export class Task extends ListItem {
      * @param other
      */
     public identicalTo(other: Task) {
+        if (!super.identicalTo(other)) {
+            return false;
+        }
+
         // NEW_TASK_FIELD_EDIT_REQUIRED
 
         // Based on ideas from koala. AquaCat and javalent in Discord:
