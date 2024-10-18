@@ -228,21 +228,14 @@ export class QueryResultsRenderer {
                 continue;
             }
 
-            const listItem = await this.addTaskOrListItem(
+            await this.addTaskOrListItemAndChildren(
                 taskList,
                 taskLineRenderer,
                 task,
                 taskIndex,
                 queryRendererParameters,
+                renderedTasks,
             );
-            renderedTasks.add(task);
-
-            if (task.children.length > 0) {
-                await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
-                task.children.forEach((childTask) => {
-                    renderedTasks.add(childTask);
-                });
-            }
         }
 
         content.appendChild(taskList);
@@ -272,6 +265,31 @@ export class QueryResultsRenderer {
 
     private alreadyRendered(task: ListItem, renderedTasks: Set<ListItem>) {
         return renderedTasks.has(task);
+    }
+
+    private async addTaskOrListItemAndChildren(
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        task: ListItem,
+        taskIndex: number,
+        queryRendererParameters: QueryRendererParameters,
+        renderedTasks: Set<ListItem>,
+    ) {
+        const listItem = await this.addTaskOrListItem(
+            taskList,
+            taskLineRenderer,
+            task,
+            taskIndex,
+            queryRendererParameters,
+        );
+        renderedTasks.add(task);
+
+        if (task.children.length > 0) {
+            await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
+            task.children.forEach((childTask) => {
+                renderedTasks.add(childTask);
+            });
+        }
     }
 
     private async addTaskOrListItem(
