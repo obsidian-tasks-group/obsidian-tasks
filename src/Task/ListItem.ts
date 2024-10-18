@@ -54,11 +54,11 @@ export class ListItem {
             return false;
         }
 
-        if (!ListItem.listsAreIdentical(this.children, other.children)) {
+        if (this.originalMarkdown !== other.originalMarkdown) {
             return false;
         }
 
-        if (this.originalMarkdown !== other.originalMarkdown) {
+        if (!ListItem.listsAreIdentical(this.children, other.children)) {
             return false;
         }
 
