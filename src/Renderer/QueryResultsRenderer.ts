@@ -225,20 +225,13 @@ export class QueryResultsRenderer {
                     await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
                 }
             } else {
-                if (this.alreadyRendered(task, renderedTasks)) {
-                    continue;
-                }
-
-                if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
-                    continue;
-                }
-
                 await this.addTaskOrListItemAndChildren(
                     taskList,
                     taskLineRenderer,
                     task,
                     taskIndex,
                     queryRendererParameters,
+                    tasks,
                     renderedTasks,
                 );
             }
@@ -279,8 +272,17 @@ export class QueryResultsRenderer {
         task: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
+        tasks: ListItem[],
         renderedTasks: Set<ListItem>,
     ) {
+        if (this.alreadyRendered(task, renderedTasks)) {
+            return;
+        }
+
+        if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
+            return;
+        }
+
         const listItem = await this.addTaskOrListItem(
             taskList,
             taskLineRenderer,
