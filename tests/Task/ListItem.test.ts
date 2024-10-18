@@ -6,6 +6,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { ListItem } from '../../src/Task/ListItem';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 
 window.moment = moment;
@@ -160,6 +161,32 @@ describe('checking if list item lists are identical', () => {
     it('- should detect non-matching list items as different', () => {
         const list1: ListItem[] = [new ListItem('- 1', null)];
         const list2: ListItem[] = [new ListItem('- 2', null)];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
+    });
+});
+
+describe('checking if task lists are identical', () => {
+    it('should treat empty lists as identical', () => {
+        const list1: Task[] = [];
+        const list2: Task[] = [];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
+    });
+
+    it('should treat different sized lists as different', () => {
+        const list1: Task[] = [];
+        const list2: Task[] = [new TaskBuilder().build()];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
+    });
+
+    it('should detect matching tasks as same', () => {
+        const list1: Task[] = [new TaskBuilder().description('1').build()];
+        const list2: Task[] = [new TaskBuilder().description('1').build()];
+        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
+    });
+
+    it('should detect non-matching tasks as different', () => {
+        const list1: Task[] = [new TaskBuilder().description('1').build()];
+        const list2: Task[] = [new TaskBuilder().description('2').build()];
         expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
     });
 });

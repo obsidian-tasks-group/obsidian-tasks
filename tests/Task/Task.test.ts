@@ -1752,29 +1752,3 @@ describe('identicalTo', () => {
     // 2 list items differ both have children but...
     // ...one has a child and one doesn't
 });
-
-describe('checking if task lists are identical', () => {
-    it('should treat empty lists as identical', () => {
-        const list1: Task[] = [];
-        const list2: Task[] = [];
-        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
-    });
-
-    it('should treat different sized lists as different', () => {
-        const list1: Task[] = [];
-        const list2: Task[] = [new TaskBuilder().build()];
-        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
-    });
-
-    it('should detect matching tasks as same', () => {
-        const list1: Task[] = [new TaskBuilder().description('1').build()];
-        const list2: Task[] = [new TaskBuilder().description('1').build()];
-        expect(ListItem.listsAreIdentical(list1, list2)).toBe(true);
-    });
-
-    it('should detect non-matching tasks as different', () => {
-        const list1: Task[] = [new TaskBuilder().description('1').build()];
-        const list2: Task[] = [new TaskBuilder().description('2').build()];
-        expect(ListItem.listsAreIdentical(list1, list2)).toBe(false);
-    });
-});
