@@ -1748,7 +1748,4 @@ describe('identicalTo', () => {
 
         expect(task2.identicalTo(task1)).toEqual(false);
     });
-
-    // 2 list items differ both have children but...
-    // ...one has a child and one doesn't
 });
