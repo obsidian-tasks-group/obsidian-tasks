@@ -221,10 +221,26 @@ export class QueryResultsRenderer {
 
         for (const [taskIndex, task] of tasks.entries()) {
             if (this.query.queryLayoutOptions.hideTree) {
+                /* Old-style rendering of tasks:
+                 *  - What is rendered:
+                 *      - Only task lines that match the query are rendered, as a flat list
+                 *  - The order that lines are rendered:
+                 *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
+                 */
                 if (task instanceof Task) {
                     await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
                 }
             } else {
+                /* New-style rendering of tasks:
+                 *  - What is rendered:
+                 *      - Task lines that match the query are rendered, as a tree.
+                 *      - Currently, all child tasks and list items of the found tasks are shown,
+                 *        including any child tasks that did not match the query.
+                 *  - The order that lines are rendered:
+                 *      - The top-level/outermost tasks are sorted in the order specified in 'sort by'
+                 *        instructions and default sort order.
+                 *      - Child tasks (and list items) are shown in their original order in their Markdown file.
+                 */
                 await this.addTaskOrListItemAndChildren(
                     taskList,
                     taskLineRenderer,
