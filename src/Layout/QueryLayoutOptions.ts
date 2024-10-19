@@ -9,6 +9,7 @@ export class QueryLayoutOptions {
     hideBacklinks: boolean = false;
     hideEditButton: boolean = false;
     hideUrgency: boolean = true;
+    hideTree: boolean = true; // WARNING: undocumented, and not yet ready for release.
     shortMode: boolean = false;
     explainQuery: boolean = false;
 }

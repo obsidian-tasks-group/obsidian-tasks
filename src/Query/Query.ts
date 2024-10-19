@@ -36,7 +36,7 @@ export class Query implements IQuery {
     private _ignoreGlobalQuery: boolean = false;
 
     private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|cancelled date|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|postpone button|urgency|tags|depends on|id|on completion)/i;
+        /^(hide|show) (task count|backlink|priority|cancelled date|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|postpone button|urgency|tags|depends on|id|on completion|tree)/i;
     private readonly shortModeRegexp = /^short/i;
     private readonly fullModeRegexp = /^full/i;
     private readonly explainQueryRegexp = /^explain/i;
@@ -309,6 +309,10 @@ ${statement.explainStatement('    ')}
             const option = hideOptionsMatch[2].toLowerCase();
 
             switch (option) {
+                case 'tree':
+                    // WARNING: undocumented, and not yet ready for release.
+                    this._queryLayoutOptions.hideTree = hide;
+                    break;
                 case 'task count':
                     this._queryLayoutOptions.hideTaskCount = hide;
                     break;

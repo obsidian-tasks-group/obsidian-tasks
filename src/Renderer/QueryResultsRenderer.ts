@@ -220,28 +220,36 @@ export class QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            if (this.alreadyRendered(task, renderedTasks)) {
-                continue;
-            }
-
-            if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
-                continue;
-            }
-
-            const listItem = await this.addTaskOrListItem(
-                taskList,
-                taskLineRenderer,
-                task,
-                taskIndex,
-                queryRendererParameters,
-            );
-            renderedTasks.add(task);
-
-            if (task.children.length > 0) {
-                await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
-                task.children.forEach((childTask) => {
-                    renderedTasks.add(childTask);
-                });
+            if (this.query.queryLayoutOptions.hideTree) {
+                /* Old-style rendering of tasks:
+                 *  - What is rendered:
+                 *      - Only task lines that match the query are rendered, as a flat list
+                 *  - The order that lines are rendered:
+                 *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
+                 */
+                if (task instanceof Task) {
+                    await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+                }
+            } else {
+                /* New-style rendering of tasks:
+                 *  - What is rendered:
+                 *      - Task lines that match the query are rendered, as a tree.
+                 *      - Currently, all child tasks and list items of the found tasks are shown,
+                 *        including any child tasks that did not match the query.
+                 *  - The order that lines are rendered:
+                 *      - The top-level/outermost tasks are sorted in the order specified in 'sort by'
+                 *        instructions and default sort order.
+                 *      - Child tasks (and list items) are shown in their original order in their Markdown file.
+                 */
+                await this.addTaskOrListItemAndChildren(
+                    taskList,
+                    taskLineRenderer,
+                    task,
+                    taskIndex,
+                    queryRendererParameters,
+                    tasks,
+                    renderedTasks,
+                );
             }
         }
 
@@ -272,6 +280,40 @@ export class QueryResultsRenderer {
 
     private alreadyRendered(task: ListItem, renderedTasks: Set<ListItem>) {
         return renderedTasks.has(task);
+    }
+
+    private async addTaskOrListItemAndChildren(
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        task: ListItem,
+        taskIndex: number,
+        queryRendererParameters: QueryRendererParameters,
+        tasks: ListItem[],
+        renderedTasks: Set<ListItem>,
+    ) {
+        if (this.alreadyRendered(task, renderedTasks)) {
+            return;
+        }
+
+        if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
+            return;
+        }
+
+        const listItem = await this.addTaskOrListItem(
+            taskList,
+            taskLineRenderer,
+            task,
+            taskIndex,
+            queryRendererParameters,
+        );
+        renderedTasks.add(task);
+
+        if (task.children.length > 0) {
+            await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
+            task.children.forEach((childTask) => {
+                renderedTasks.add(childTask);
+            });
+        }
     }
 
     private async addTaskOrListItem(
