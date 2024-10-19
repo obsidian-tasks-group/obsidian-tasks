@@ -453,7 +453,6 @@ describe('Query parsing', () => {
             'full mode',
             'hide backlink',
             'hide cancelled date',
-            'hide children',
             'hide created date',
             'hide depends on',
             'hide done date',
@@ -467,6 +466,7 @@ describe('Query parsing', () => {
             'hide start date',
             'hide tags',
             'hide task count',
+            'hide tree',
             'hide urgency',
             'ignore global query',
             'limit 42',
@@ -477,7 +477,6 @@ describe('Query parsing', () => {
             'short mode',
             'show backlink',
             'show cancelled date',
-            'show children',
             'show created date',
             'show depends on',
             'show done date',
@@ -491,6 +490,7 @@ describe('Query parsing', () => {
             'show start date',
             'show tags',
             'show task count',
+            'show tree',
             'show urgency',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
@@ -1305,7 +1305,7 @@ describe('Query', () => {
             expect(query.taskLayoutOptions.isShown(TaskLayoutComponent.OnCompletion)).toEqual(false);
         });
 
-        it('should hide "children" by default', () => {
+        it('should hide "tree" by default', () => {
             const query = new Query('');
             expect(query.queryLayoutOptions.hideTree).toEqual(true);
         });
