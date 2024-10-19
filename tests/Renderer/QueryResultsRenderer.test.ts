@@ -55,8 +55,8 @@ describe('QueryResultsRenderer tests', () => {
         await verifyRenderedTasksHTML(allTasks);
     });
 
-    const showChildren = 'show children\n';
-    const hideChildren = 'hide children\n';
+    const showChildren = 'show tree\n';
+    const hideChildren = 'hide tree\n';
 
     it('parent-child items hidden', async () => {
         const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
