@@ -220,7 +220,7 @@ export class QueryResultsRenderer {
         });
 
         for (const [taskIndex, task] of tasks.entries()) {
-            if (this.query.queryLayoutOptions.hideChildren) {
+            if (this.query.queryLayoutOptions.hideTree) {
                 if (task instanceof Task) {
                     await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
                 }
