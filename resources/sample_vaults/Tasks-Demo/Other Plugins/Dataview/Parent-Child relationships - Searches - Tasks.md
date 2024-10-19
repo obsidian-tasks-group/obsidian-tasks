@@ -8,7 +8,7 @@
 folder includes {{query.file.folder}}
 sort by function task.lineNumber
 hide backlinks
-show children
+show tree
 ```
 
 Note: Tasks uses the due date in its default sort order,<br>so we override that by sorting by line number.
@@ -21,7 +21,7 @@ Note: Tasks uses the due date in its default sort order,<br>so we override that 
 folder includes {{query.file.folder}}
 done
 hide backlinks
-show children
+show tree
 ```
 
 ### 2.2 Fully completed
@@ -33,7 +33,7 @@ folder includes {{query.file.folder}}
 # There is no Tasks instruction for "fully done" yet
 done
 hide backlinks
-show children
+show tree
 ```
 
 ### 2.3 Not completed
@@ -42,7 +42,7 @@ show children
 folder includes {{query.file.folder}}
 not done
 hide backlinks
-show children
+show tree
 ```
 
 ### 2.4 Not fully completed
@@ -54,7 +54,7 @@ folder includes {{query.file.folder}}
 # There is no Tasks instruction for "not fully done" yet
 not done
 hide backlinks
-show children
+show tree
 ```
 
 ## 3 Sorting
@@ -67,7 +67,7 @@ show children
 folder includes {{query.file.folder}}
 sort by function task.lineNumber
 hide backlinks
-show children
+show tree
 ```
 
 ### 3.2 Reverse Order
@@ -76,7 +76,7 @@ show children
 folder includes {{query.file.folder}}
 sort by function reverse task.lineNumber
 hide backlinks
-show children
+show tree
 ```
 
 ## 4 Grouping
@@ -90,7 +90,7 @@ folder includes {{query.file.folder}}
 done
 group by heading
 hide backlinks
-show children
+show tree
 ```
 
 ### 4.2 Fully completed
@@ -103,7 +103,7 @@ folder includes {{query.file.folder}}
 done
 group by heading
 hide backlinks
-show children
+show tree
 ```
 
 ### 4.3 Not completed
@@ -113,7 +113,7 @@ folder includes {{query.file.folder}}
 not done
 group by heading
 hide backlinks
-show children
+show tree
 ```
 
 ### 4.4 Not fully completed
@@ -126,5 +126,5 @@ folder includes {{query.file.folder}}
 not done
 group by heading
 hide backlinks
-show children
+show tree
 ```
