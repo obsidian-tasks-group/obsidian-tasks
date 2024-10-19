@@ -1307,7 +1307,7 @@ describe('Query', () => {
 
         it('should hide "children" by default', () => {
             const query = new Query('');
-            expect(query.queryLayoutOptions.hideChildren).toEqual(true);
+            expect(query.queryLayoutOptions.hideTree).toEqual(true);
         });
     });
 
