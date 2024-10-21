@@ -338,7 +338,12 @@ export class QueryResultsRenderer {
         const li = createAndAppendElement('li', taskList);
 
         const span = createAndAppendElement('span', li);
-        await this.textRenderer(listItem.description, span, '', this.obsidianComponent);
+        await this.textRenderer(
+            listItem.description,
+            span,
+            findClosestParentTask(listItem)?.path ?? '',
+            this.obsidianComponent,
+        );
 
         return li;
     }
