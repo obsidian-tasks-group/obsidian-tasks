@@ -28,6 +28,15 @@ export interface QueryRendererParameters {
     editTaskPencilClickHandler: EditButtonClickHandler;
 }
 
+function findClosestParentTask(listItem: ListItem) {
+    // Try to find the closest parent that is a task
+    let closestParentTask = listItem.parent;
+    while (closestParentTask !== null && !(closestParentTask instanceof Task)) {
+        closestParentTask = closestParentTask.parent;
+    }
+    return closestParentTask;
+}
+
 export class QueryResultsRenderer {
     /**
      * The complete text in the instruction block, such as:
@@ -257,12 +266,7 @@ export class QueryResultsRenderer {
     }
 
     private willBeRenderedLater(task: ListItem, renderedTasks: Set<ListItem>, tasks: ListItem[]) {
-        // Try to find the closest parent that is a task
-        let closestParentTask = task.parent;
-        while (closestParentTask !== null && !(closestParentTask instanceof Task)) {
-            closestParentTask = closestParentTask.parent;
-        }
-
+        const closestParentTask = findClosestParentTask(task);
         if (!closestParentTask) {
             return false;
         }
@@ -327,12 +331,20 @@ export class QueryResultsRenderer {
             return await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
         }
 
-        return this.addListItem(taskList, task);
+        return await this.addListItem(taskList, task);
     }
 
-    private addListItem(taskList: HTMLUListElement, listItem: ListItem) {
+    private async addListItem(taskList: HTMLUListElement, listItem: ListItem) {
         const li = createAndAppendElement('li', taskList);
-        li.textContent = listItem.description;
+
+        const span = createAndAppendElement('span', li);
+        await this.textRenderer(
+            listItem.description,
+            span,
+            findClosestParentTask(listItem)?.path ?? '',
+            this.obsidianComponent,
+        );
+
         return li;
     }
 
