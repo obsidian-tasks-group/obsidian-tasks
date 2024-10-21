@@ -1,4 +1,4 @@
-import { type Component, MarkdownRenderer, type TFile } from 'obsidian';
+import type { Component, TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
@@ -338,7 +338,7 @@ export class QueryResultsRenderer {
             return li;
         }
 
-        await MarkdownRenderer.renderMarkdown(listItem.description, li, '', this.obsidianComponent);
+        await this.textRenderer(listItem.description, li, '', this.obsidianComponent);
         return li;
     }
 
