@@ -9,3 +9,7 @@ export const mockHTMLRenderer = async (text: string, element: HTMLSpanElement, _
 export const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
     element.innerText = text;
 };
+
+export const mockUListItemRenderer = async (text: string, element: HTMLUListElement, _path: string) => {
+    element.textContent = text;
+};

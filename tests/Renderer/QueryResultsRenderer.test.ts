@@ -12,7 +12,7 @@ import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { mockHTMLRenderer } from './RenderingTestHelpers';
+import { mockUListItemRenderer } from './RenderingTestHelpers';
 
 window.moment = moment;
 
@@ -33,7 +33,8 @@ describe('QueryResultsRenderer tests', () => {
             new TasksFile('query.md'),
             () => Promise.resolve(),
             null,
-            mockHTMLRenderer,
+            // @ts-expect-error incompatible type
+            mockUListItemRenderer,
         );
         const queryRendererParameters = {
             allTasks,

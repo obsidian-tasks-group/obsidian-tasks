@@ -333,11 +333,6 @@ export class QueryResultsRenderer {
     private async addListItem(taskList: HTMLUListElement, listItem: ListItem) {
         const li = createAndAppendElement('li', taskList);
 
-        if (!this.obsidianComponent) {
-            li.textContent = listItem.description;
-            return li;
-        }
-
         await this.textRenderer(listItem.description, li, '', this.obsidianComponent);
         return li;
     }
