@@ -333,7 +333,9 @@ export class QueryResultsRenderer {
     private async addListItem(taskList: HTMLUListElement, listItem: ListItem) {
         const li = createAndAppendElement('li', taskList);
 
-        await this.textRenderer(listItem.description, li, '', this.obsidianComponent);
+        const span = createAndAppendElement('span', li);
+        await this.textRenderer(listItem.description, span, '', this.obsidianComponent);
+
         return li;
     }
 
