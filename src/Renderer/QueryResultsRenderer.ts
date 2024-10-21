@@ -1,4 +1,4 @@
-import type { Component, TFile } from 'obsidian';
+import { type Component, MarkdownRenderer, type TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
@@ -327,12 +327,18 @@ export class QueryResultsRenderer {
             return await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
         }
 
-        return this.addListItem(taskList, task);
+        return await this.addListItem(taskList, task);
     }
 
-    private addListItem(taskList: HTMLUListElement, listItem: ListItem) {
+    private async addListItem(taskList: HTMLUListElement, listItem: ListItem) {
         const li = createAndAppendElement('li', taskList);
-        li.textContent = listItem.description;
+
+        if (!this.obsidianComponent) {
+            li.textContent = listItem.description;
+            return li;
+        }
+
+        await MarkdownRenderer.renderMarkdown(listItem.description, li, '', this.obsidianComponent);
         return li;
     }
 
