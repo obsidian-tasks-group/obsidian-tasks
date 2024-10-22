@@ -243,6 +243,12 @@ To close the modal and cancel your edits, do one of:
 
 ## Known limitations
 
+### No support for Auto Complete in the Description
+
+The Description field in the 'Create or edit Task' Modal does not yet support Obsidian's Auto Complete facility to help with adding tags, formatting, linking to other notes and so on.
+
+We are tracking this in [issue #1763](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1763).
+
 ### Need to scroll on phone screens
 
 On phone screens the 'Create or edit Task' Modal may be too tall to fit on the screen.
