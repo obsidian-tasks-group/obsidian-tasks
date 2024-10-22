@@ -30,7 +30,7 @@ jobs:
       # Reference: https://github.com/marketplace/actions/create-pull-request
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           title: "docs/contrib: Update snippets and examples in markdown"
           branch: create-pull-request/${{ github.workflow }}
