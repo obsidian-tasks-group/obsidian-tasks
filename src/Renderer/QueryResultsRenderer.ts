@@ -273,7 +273,7 @@ export class QueryResultsRenderer {
         content.appendChild(taskList);
     }
 
-    private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, tasks: ListItem[]) {
+    private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, listItems: ListItem[]) {
         const closestParentTask = findClosestParentTask(listItem);
         if (!closestParentTask) {
             return false;
@@ -282,7 +282,7 @@ export class QueryResultsRenderer {
         if (!renderedListItems.has(closestParentTask)) {
             // This task is a direct or indirect child of another task that we are waiting to draw,
             // so don't draw it yet, it will be done recursively later.
-            if (tasks.includes(closestParentTask)) {
+            if (listItems.includes(closestParentTask)) {
                 return true;
             }
         }
@@ -300,14 +300,14 @@ export class QueryResultsRenderer {
         listItem: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
-        tasks: ListItem[],
+        listItems: ListItem[],
         renderedListItems: Set<ListItem>,
     ) {
         if (this.alreadyRendered(listItem, renderedListItems)) {
             return;
         }
 
-        if (this.willBeRenderedLater(listItem, renderedListItems, tasks)) {
+        if (this.willBeRenderedLater(listItem, renderedListItems, listItems)) {
             return;
         }
 
