@@ -269,7 +269,15 @@ export class Recurrence {
         // the day of the year when DST kicks in and the time of day is before DST actually kicks in
         // (typically between midnight and very early morning, varying across geographies).
         // We workaround the bug by setting the time of day to noon before calling local(true)
-        const localTimeZone = window.moment.utc(date).set({hour:12,minute:0,second:0,millisecond:0}).local(true);
+        const localTimeZone = window.moment
+            .utc(date)
+            .set({
+                hour: 12,
+                minute: 0,
+                second: 0,
+                millisecond: 0,
+            })
+            .local(true);
 
         return localTimeZone.startOf('day');
     }
