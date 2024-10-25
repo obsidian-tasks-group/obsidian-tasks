@@ -151,7 +151,7 @@ export class Recurrence {
         // calculates in UTC.
         // The timezone is added again before returning the next date.
         after.utc(true);
-        let next = window.moment(rrule.after(after.toDate()));
+        let next = window.moment.utc(rrule.after(after.toDate()));
 
         // If this is a monthly recurrence, treat it special.
         const asText = this.toText();
@@ -261,11 +261,15 @@ export class Recurrence {
         options.dtstart = after.startOf('day').toDate();
         rrule = new RRule(options);
 
-        return window.moment(rrule.after(after.toDate()));
+        return window.moment.utc(rrule.after(after.toDate()));
     }
 
     private static addTimezone(date: Moment): Moment {
-        const localTimeZone = window.moment.utc(date).local(true);
+        // Moment's local(true) method has a bug where it returns incorrect result if the input is of
+        // the day of the year when DST kicks in and the time of day is before DST actually kicks in
+        // (typically between midnight and very early morning, varying across geographies).
+        // We workaround the bug by setting the time of day to noon before calling local(true)
+        const localTimeZone = window.moment.utc(date).set({hour:12,minute:0,second:0,millisecond:0}).local(true);
 
         return localTimeZone.startOf('day');
     }
