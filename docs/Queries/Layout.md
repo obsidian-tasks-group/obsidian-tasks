@@ -61,6 +61,7 @@ hide created date
 
 The following query elements exist:
 
+- `tree`
 - `edit button`
 - `postpone button`
 - `backlink`
@@ -70,6 +71,7 @@ The following query elements exist:
 > [!released]
 >
 > - `urgency` was introduced in Tasks 1.14.0.
+> - `tree` was introduced in Tasks X.Y.Z.
 
 All of these query elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.
@@ -79,6 +81,60 @@ For example:
 ```text
 hide task count
 ```
+
+### Hide and Show Tree
+
+> [!Tip]
+> The new instruction `show tree` is the first in a long series of steps to teach the Tasks plugin to fully handle [nested tasks and list items](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Nesting+lists).
+>
+> When you use `show tree`, Tasks shows **all** found tasks, and all their nested tasks and list items (for now, regardless of whether or not the nested tasks matched the query).
+
+#### Show Tree example
+
+Suppose you have a note called `Party Planner`, with the following list:
+
+```text
+- [ ] Have a party
+    - Planning
+        - [x] Decide who to invite ✅ 2024-10-26
+        - [ ] Send out the invites
+    - Preparation
+        - [ ] Plan the menu
+            - **Remember Sam's dietary requests**
+        - [ ] Buy the food
+    - On the day
+        - [ ] Prepare the food
+        - [ ] Tidy up
+```
+
+And you have this Tasks query:
+
+````text
+```tasks
+not done
+filename includes Party Planner
+
+show tree
+hide backlink
+```
+````
+
+The `show tree` instruction enables us to see the parent/child relationships in the tasks, and their nested tasks and list items:
+
+![Sample search results with 'show tree' instruction](../images/show-tree.png)
+<span class="caption">Sample search results with 'show tree' instruction</span>
+
+#### How Show Tree works
+
+> [!warning]
+> If using `show tree`, please be aware of its current behaviour, listed below.
+>
+> We are releasing this first version, having found to to already be valuable in our own vaults.
+
+- For now, all child tasks and list items are displayed, regardless of whether they match the query.
+  - In the screenshot above, `Decide who to invite` did not match the `not done` query, but it is still shown.
+- Any `sort by` only affect the sorting of the left-most tasks in the results list.
+  - Child tasks and list items are displayed in the order that they appear in the file. They are not affected by any `sort by` instructions.
 
 ## Example of show and hide
 
