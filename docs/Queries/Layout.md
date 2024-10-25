@@ -31,6 +31,15 @@ The following task elements exist:
 - `on completion`
 - `tags`
 
+All of these task elements are shown by default, so you will use the command `hide`
+if you do not want to show any of them.
+
+For example:
+
+```text
+hide created date
+```
+
 > [!released]
 >
 > - `created date` was introduced in Tasks 2.0.0.
@@ -62,14 +71,25 @@ The following query elements exist:
 >
 > - `urgency` was introduced in Tasks 1.14.0.
 
-All of these elements except `urgency` are shown by default, so you will use the command `hide`
+All of these query elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.
 
-Example:
+For example:
+
+```text
+hide task count
+```
+
+## Example of show and hide
+
+Multiple show and hide instructions can be used in a query, each on a separate line.
+
+For example:
 
     ```tasks
     no due date
     path includes GitHub
+    
     hide recurrence rule
     hide task count
     hide backlink
