@@ -31,6 +31,15 @@ The following task elements exist:
 - `on completion`
 - `tags`
 
+> [!released]
+>
+> - `created date` was introduced in Tasks 2.0.0.
+> - `tags` was introduced in Tasks 4.1.0.
+> - `cancelled date` was introduced in Tasks 5.5.0.
+> - `id` and `depends on` were introduced in Tasks 6.1.0.
+
+### Hide and Show Tags
+
 > [!Info] About `hide tags`
 >
 > 1. Only tags recognised by Obsidian are hidden with `hide tags`.
@@ -38,13 +47,6 @@ The following task elements exist:
 >     - However, `#123` is [not recognised as a valid Obsidian tag](https://help.obsidian.md/Editing+and+formatting/Tags#Tag+format) and so not hidden.
 >     - See [[Tags#Recognising Tags]] for more information.
 > 1. It is not possible to hide or show individual tags. We are tracking this in [discussion #848](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/848).
-
-> [!released]
->
-> - `created date` was introduced in Tasks 2.0.0.
-> - `tags` was introduced in Tasks 4.1.0.
-> - `cancelled date` was introduced in Tasks 5.5.0.
-> - `id` and `depends on` were introduced in Tasks 6.1.0.
 
 ## Query Elements
 
