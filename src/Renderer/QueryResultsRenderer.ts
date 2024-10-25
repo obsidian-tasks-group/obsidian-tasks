@@ -331,15 +331,15 @@ export class QueryResultsRenderer {
     private async addTaskOrListItem(
         taskList: HTMLUListElement,
         taskLineRenderer: TaskLineRenderer,
-        task: ListItem,
+        listItem: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        if (task instanceof Task) {
-            return await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+        if (listItem instanceof Task) {
+            return await this.addTask(taskList, taskLineRenderer, listItem, taskIndex, queryRendererParameters);
         }
 
-        return await this.addListItem(taskList, task);
+        return await this.addListItem(taskList, listItem);
     }
 
     private async addListItem(taskList: HTMLUListElement, listItem: ListItem) {
