@@ -273,8 +273,8 @@ export class QueryResultsRenderer {
         content.appendChild(taskList);
     }
 
-    private willBeRenderedLater(task: ListItem, renderedListItems: Set<ListItem>, tasks: ListItem[]) {
-        const closestParentTask = findClosestParentTask(task);
+    private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, tasks: ListItem[]) {
+        const closestParentTask = findClosestParentTask(listItem);
         if (!closestParentTask) {
             return false;
         }
@@ -290,8 +290,8 @@ export class QueryResultsRenderer {
         return false;
     }
 
-    private alreadyRendered(task: ListItem, renderedListItems: Set<ListItem>) {
-        return renderedListItems.has(task);
+    private alreadyRendered(listItem: ListItem, renderedListItems: Set<ListItem>) {
+        return renderedListItems.has(listItem);
     }
 
     private async addTaskOrListItemAndChildren(
