@@ -12,11 +12,11 @@ together with the name of the element.
 > [!released]
 The `show` commands were introduced in Tasks 1.14.0.
 
-The following elements exist:
-
 <!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
 
-### Task Elements
+## Task Elements
+
+The following task elements exist:
 
 - `id`
 - `depends on`
@@ -46,7 +46,9 @@ The following elements exist:
 > - `cancelled date` was introduced in Tasks 5.5.0.
 > - `id` and `depends on` were introduced in Tasks 6.1.0.
 
-### Query Elements
+## Query Elements
+
+The following query elements exist:
 
 - `edit button`
 - `postpone button`
