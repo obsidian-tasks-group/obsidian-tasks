@@ -206,8 +206,8 @@ export class QueryResultsRenderer {
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(content, group.groupHeadings);
 
-            const renderedTasks: Set<ListItem> = new Set();
-            await this.createTaskList(group.tasks, content, queryRendererParameters, renderedTasks);
+            const renderedListItems: Set<ListItem> = new Set();
+            await this.createTaskList(group.tasks, content, queryRendererParameters, renderedListItems);
         }
     }
 
@@ -273,13 +273,13 @@ export class QueryResultsRenderer {
         content.appendChild(taskList);
     }
 
-    private willBeRenderedLater(task: ListItem, renderedTasks: Set<ListItem>, tasks: ListItem[]) {
+    private willBeRenderedLater(task: ListItem, renderedListItems: Set<ListItem>, tasks: ListItem[]) {
         const closestParentTask = findClosestParentTask(task);
         if (!closestParentTask) {
             return false;
         }
 
-        if (!renderedTasks.has(closestParentTask)) {
+        if (!renderedListItems.has(closestParentTask)) {
             // This task is a direct or indirect child of another task that we are waiting to draw,
             // so don't draw it yet, it will be done recursively later.
             if (tasks.includes(closestParentTask)) {
@@ -290,8 +290,8 @@ export class QueryResultsRenderer {
         return false;
     }
 
-    private alreadyRendered(task: ListItem, renderedTasks: Set<ListItem>) {
-        return renderedTasks.has(task);
+    private alreadyRendered(task: ListItem, renderedListItems: Set<ListItem>) {
+        return renderedListItems.has(task);
     }
 
     private async addTaskOrListItemAndChildren(
@@ -301,13 +301,13 @@ export class QueryResultsRenderer {
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
         tasks: ListItem[],
-        renderedTasks: Set<ListItem>,
+        renderedListItems: Set<ListItem>,
     ) {
-        if (this.alreadyRendered(task, renderedTasks)) {
+        if (this.alreadyRendered(task, renderedListItems)) {
             return;
         }
 
-        if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
+        if (this.willBeRenderedLater(task, renderedListItems, tasks)) {
             return;
         }
 
@@ -318,12 +318,12 @@ export class QueryResultsRenderer {
             taskIndex,
             queryRendererParameters,
         );
-        renderedTasks.add(task);
+        renderedListItems.add(task);
 
         if (task.children.length > 0) {
-            await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
+            await this.createTaskList(task.children, listItem, queryRendererParameters, renderedListItems);
             task.children.forEach((childTask) => {
-                renderedTasks.add(childTask);
+                renderedListItems.add(childTask);
             });
         }
     }
