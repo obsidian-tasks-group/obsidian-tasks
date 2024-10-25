@@ -22,10 +22,6 @@
 1. Complete the task in this file.
 2. Check that the due date of the new task - and the new heading - is '2024-09-28 Sunday'
 
-## Test task
-
-- [ ] #task Next due date should be `2024-09-28 Sunday` 🔁 every day 📅 2024-09-28
-
 ## Tasks Plugin Search
 
 ```tasks
@@ -37,6 +33,10 @@ group by due
 
 hide backlinks
 ```
+
+## Test task
+
+- [ ] #task Next due date should be `2024-09-28 Sunday` 🔁 every day 📅 2024-09-28
 
 ## Background
 
