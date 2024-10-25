@@ -297,32 +297,32 @@ export class QueryResultsRenderer {
     private async addTaskOrListItemAndChildren(
         taskList: HTMLUListElement,
         taskLineRenderer: TaskLineRenderer,
-        task: ListItem,
+        listItem: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
         tasks: ListItem[],
         renderedListItems: Set<ListItem>,
     ) {
-        if (this.alreadyRendered(task, renderedListItems)) {
+        if (this.alreadyRendered(listItem, renderedListItems)) {
             return;
         }
 
-        if (this.willBeRenderedLater(task, renderedListItems, tasks)) {
+        if (this.willBeRenderedLater(listItem, renderedListItems, tasks)) {
             return;
         }
 
-        const listItem = await this.addTaskOrListItem(
+        const listItemElement = await this.addTaskOrListItem(
             taskList,
             taskLineRenderer,
-            task,
+            listItem,
             taskIndex,
             queryRendererParameters,
         );
-        renderedListItems.add(task);
+        renderedListItems.add(listItem);
 
-        if (task.children.length > 0) {
-            await this.createTaskList(task.children, listItem, queryRendererParameters, renderedListItems);
-            task.children.forEach((childTask) => {
+        if (listItem.children.length > 0) {
+            await this.createTaskList(listItem.children, listItemElement, queryRendererParameters, renderedListItems);
+            listItem.children.forEach((childTask) => {
                 renderedListItems.add(childTask);
             });
         }
