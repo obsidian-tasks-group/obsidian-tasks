@@ -129,12 +129,14 @@ The `show tree` instruction enables us to see the parent/child relationships in 
 > [!warning]
 > If using `show tree`, please be aware of its current behaviour, listed below.
 >
-> We are releasing this first version, having found to to already be valuable in our own vaults.
+> We are releasing this first version, having found to already be valuable in our own vaults.
 
-- For now, all child tasks and list items are displayed, regardless of whether they match the query.
+- For now, **all child tasks and list items are displayed**, regardless of whether they match the query.
   - In the screenshot above, `Decide who to invite` did not match the `not done` query, but it is still shown.
-- Any `sort by` only affect the sorting of the left-most tasks in the results list.
+- Any **sorting instructions only affect the sorting of the left-most tasks** in the results list.
   - Child tasks and list items are displayed in the order that they appear in the file. They are not affected by any `sort by` instructions.
+- For now, the **tree layout is turned off by default**, whilst we explore how it should interact with the filtering instructions.
+  - We hope to make it the default behaviour in a future release.
 
 ## Example of show and hide
 
