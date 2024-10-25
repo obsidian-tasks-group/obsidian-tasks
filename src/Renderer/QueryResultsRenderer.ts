@@ -215,7 +215,7 @@ export class QueryResultsRenderer {
         listItems: ListItem[],
         content: HTMLElement,
         queryRendererParameters: QueryRendererParameters,
-        renderedTasks: Set<ListItem>,
+        renderedListItems: Set<ListItem>,
     ): Promise<void> {
         const taskList = createAndAppendElement('ul', content);
 
@@ -265,7 +265,7 @@ export class QueryResultsRenderer {
                     listItemIndex,
                     queryRendererParameters,
                     listItems,
-                    renderedTasks,
+                    renderedListItems,
                 );
             }
         }
