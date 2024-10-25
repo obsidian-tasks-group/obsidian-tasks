@@ -212,7 +212,7 @@ export class QueryResultsRenderer {
     }
 
     private async createTaskList(
-        tasks: ListItem[],
+        listItems: ListItem[],
         content: HTMLElement,
         queryRendererParameters: QueryRendererParameters,
         renderedTasks: Set<ListItem>,
@@ -236,7 +236,7 @@ export class QueryResultsRenderer {
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
-        for (const [taskIndex, task] of tasks.entries()) {
+        for (const [taskIndex, task] of listItems.entries()) {
             if (this.query.queryLayoutOptions.hideTree) {
                 /* Old-style rendering of tasks:
                  *  - What is rendered:
@@ -264,7 +264,7 @@ export class QueryResultsRenderer {
                     task,
                     taskIndex,
                     queryRendererParameters,
-                    tasks,
+                    listItems,
                     renderedTasks,
                 );
             }
