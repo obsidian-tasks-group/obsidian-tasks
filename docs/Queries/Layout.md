@@ -73,8 +73,8 @@ The following query elements exist:
 > - `urgency` was introduced in Tasks 1.14.0.
 > - `tree` was introduced in Tasks X.Y.Z.
 
-All of these query elements except `urgency` are shown by default, so you will use the command `hide`
-if you do not want to show any of them, or the command `show` to show the urgency score.
+All of these query elements except `urgency` and `tree` are shown by default, so you will use the command `hide`
+if you do not want to show any of them, or the command `show` to show the urgency score or tree view.
 
 For example:
 
@@ -87,7 +87,7 @@ hide task count
 > [!Tip]
 > The new instruction `show tree` is the first in a long series of steps to teach the Tasks plugin to fully handle [nested tasks and list items](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Nesting+lists).
 >
-> When you use `show tree`, Tasks shows **all** found tasks, and all their nested tasks and list items (for now, regardless of whether or not the nested tasks matched the query).
+> When you use `show tree`, Tasks shows all found tasks, and **all** their nested tasks and list items (for now, regardless of whether or not the nested tasks matched the query).
 
 #### Show Tree example
 
@@ -127,7 +127,7 @@ The `show tree` instruction enables us to see the parent/child relationships in 
 #### How Show Tree works
 
 > [!warning]
-> If using `show tree`, please be aware of its current behaviour, listed below.
+> If using `show tree`, please be aware of its current behaviour, detailed below.
 >
 > We are releasing this first version, having found to already be valuable in our own vaults.
 
