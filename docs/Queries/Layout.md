@@ -13,10 +13,8 @@ The following elements exist:
 
 <!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
 
-- `edit button`
-- `postpone button`
-- `backlink`
-- `urgency`
+### Task Elements
+
 - `id`
 - `depends on`
 - `priority`
@@ -29,7 +27,6 @@ The following elements exist:
 - `recurrence rule`
 - `on completion`
 - `tags`
-- `task count`
 
 > [!Info] About `hide tags`
 >
@@ -41,11 +38,22 @@ The following elements exist:
 
 > [!released]
 >
-> - `urgency` was introduced in Tasks 1.14.0.
 > - `created date` was introduced in Tasks 2.0.0.
 > - `tags` was introduced in Tasks 4.1.0.
 > - `cancelled date` was introduced in Tasks 5.5.0.
 > - `id` and `depends on` were introduced in Tasks 6.1.0.
+
+### Query Elements
+
+- `edit button`
+- `postpone button`
+- `backlink`
+- `urgency`
+- `task count`
+
+> [!released]
+>
+> - `urgency` was introduced in Tasks 1.14.0.
 
 All of these elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.
