@@ -236,7 +236,7 @@ export class QueryResultsRenderer {
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
-        for (const [taskIndex, task] of listItems.entries()) {
+        for (const [listItemIndex, listItem] of listItems.entries()) {
             if (this.query.queryLayoutOptions.hideTree) {
                 /* Old-style rendering of tasks:
                  *  - What is rendered:
@@ -244,8 +244,8 @@ export class QueryResultsRenderer {
                  *  - The order that lines are rendered:
                  *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
                  */
-                if (task instanceof Task) {
-                    await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+                if (listItem instanceof Task) {
+                    await this.addTask(taskList, taskLineRenderer, listItem, listItemIndex, queryRendererParameters);
                 }
             } else {
                 /* New-style rendering of tasks:
@@ -261,8 +261,8 @@ export class QueryResultsRenderer {
                 await this.addTaskOrListItemAndChildren(
                     taskList,
                     taskLineRenderer,
-                    task,
-                    taskIndex,
+                    listItem,
+                    listItemIndex,
                     queryRendererParameters,
                     listItems,
                     renderedTasks,
