@@ -11,6 +11,7 @@ aliases:
 ## In this section
 
 - [[Dataview]]
+- [[Kanban Plugin]]
 - [[QuickAdd]]
   - Using the Quickadd plugin to help create tasks
 

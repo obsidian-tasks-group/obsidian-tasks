@@ -87,6 +87,8 @@ If you wanted to adopt such a convention throughout all your Tasks queries, you 
 
 ### Kanban plugin
 
+You can control how Tasks should treat tasks in [[Kanban Plugin]] files.
+
 #### Only show tasks in Kanban plugin files
 
 ```javascript
