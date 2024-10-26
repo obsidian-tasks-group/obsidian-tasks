@@ -97,10 +97,13 @@ If a query gives unexpected results, see [[Explaining Queries]] and add the `exp
 
 ### Tasks are not indented in query results
 
-> [!warning]
-> The result list will list tasks unindented.
-See [#60](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/60) for a discussion around the topic.
-Do not hesitate to contribute 😊
+By default, the result list will list tasks unindented.
+
+> [!tip]
+> Use the `show tree` instruction to indent tasks and list items in query results. See [[Layout#Hide and Show Tree|Hide and Show Tree]].
+>
+> ![Sample search results with 'show tree' instruction](../images/show-tree.png)
+<span class="caption">Sample search results with 'show tree' instruction</span>
 
 ### Footnotes are not displayed in query results
 
