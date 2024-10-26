@@ -71,7 +71,7 @@ The following query elements exist:
 > [!released]
 >
 > - `urgency` was introduced in Tasks 1.14.0.
-> - `tree` was introduced in Tasks X.Y.Z.
+> - `tree` was introduced in Tasks 7.12.0.
 
 All of these query elements except `urgency` and `tree` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score or tree view.
