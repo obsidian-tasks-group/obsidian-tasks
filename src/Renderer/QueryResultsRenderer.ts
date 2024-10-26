@@ -28,6 +28,14 @@ export interface QueryRendererParameters {
     editTaskPencilClickHandler: EditButtonClickHandler;
 }
 
+/**
+ * We want this function to be a method of ListItem but that causes a circular dependency
+ * which makes the plugin fail to load in Obsidian.
+ *
+ * Note: the tests are in ListItem.test.ts
+ *
+ * @param listItem
+ */
 function findClosestParentTask(listItem: ListItem) {
     // Try to find the closest parent that is a task
     let closestParentTask = listItem.parent;
@@ -198,16 +206,16 @@ export class QueryResultsRenderer {
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(content, group.groupHeadings);
 
-            const renderedTasks: Set<ListItem> = new Set();
-            await this.createTaskList(group.tasks, content, queryRendererParameters, renderedTasks);
+            const renderedListItems: Set<ListItem> = new Set();
+            await this.createTaskList(group.tasks, content, queryRendererParameters, renderedListItems);
         }
     }
 
     private async createTaskList(
-        tasks: ListItem[],
+        listItems: ListItem[],
         content: HTMLElement,
         queryRendererParameters: QueryRendererParameters,
-        renderedTasks: Set<ListItem>,
+        renderedListItems: Set<ListItem>,
     ): Promise<void> {
         const taskList = createAndAppendElement('ul', content);
 
@@ -228,7 +236,7 @@ export class QueryResultsRenderer {
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
-        for (const [taskIndex, task] of tasks.entries()) {
+        for (const [listItemIndex, listItem] of listItems.entries()) {
             if (this.query.queryLayoutOptions.hideTree) {
                 /* Old-style rendering of tasks:
                  *  - What is rendered:
@@ -236,8 +244,8 @@ export class QueryResultsRenderer {
                  *  - The order that lines are rendered:
                  *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
                  */
-                if (task instanceof Task) {
-                    await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+                if (listItem instanceof Task) {
+                    await this.addTask(taskList, taskLineRenderer, listItem, listItemIndex, queryRendererParameters);
                 }
             } else {
                 /* New-style rendering of tasks:
@@ -253,11 +261,11 @@ export class QueryResultsRenderer {
                 await this.addTaskOrListItemAndChildren(
                     taskList,
                     taskLineRenderer,
-                    task,
-                    taskIndex,
+                    listItem,
+                    listItemIndex,
                     queryRendererParameters,
-                    tasks,
-                    renderedTasks,
+                    listItems,
+                    renderedListItems,
                 );
             }
         }
@@ -265,16 +273,16 @@ export class QueryResultsRenderer {
         content.appendChild(taskList);
     }
 
-    private willBeRenderedLater(task: ListItem, renderedTasks: Set<ListItem>, tasks: ListItem[]) {
-        const closestParentTask = findClosestParentTask(task);
+    private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, listItems: ListItem[]) {
+        const closestParentTask = findClosestParentTask(listItem);
         if (!closestParentTask) {
             return false;
         }
 
-        if (!renderedTasks.has(closestParentTask)) {
+        if (!renderedListItems.has(closestParentTask)) {
             // This task is a direct or indirect child of another task that we are waiting to draw,
             // so don't draw it yet, it will be done recursively later.
-            if (tasks.includes(closestParentTask)) {
+            if (listItems.includes(closestParentTask)) {
                 return true;
             }
         }
@@ -282,40 +290,40 @@ export class QueryResultsRenderer {
         return false;
     }
 
-    private alreadyRendered(task: ListItem, renderedTasks: Set<ListItem>) {
-        return renderedTasks.has(task);
+    private alreadyRendered(listItem: ListItem, renderedListItems: Set<ListItem>) {
+        return renderedListItems.has(listItem);
     }
 
     private async addTaskOrListItemAndChildren(
         taskList: HTMLUListElement,
         taskLineRenderer: TaskLineRenderer,
-        task: ListItem,
+        listItem: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
-        tasks: ListItem[],
-        renderedTasks: Set<ListItem>,
+        listItems: ListItem[],
+        renderedListItems: Set<ListItem>,
     ) {
-        if (this.alreadyRendered(task, renderedTasks)) {
+        if (this.alreadyRendered(listItem, renderedListItems)) {
             return;
         }
 
-        if (this.willBeRenderedLater(task, renderedTasks, tasks)) {
+        if (this.willBeRenderedLater(listItem, renderedListItems, listItems)) {
             return;
         }
 
-        const listItem = await this.addTaskOrListItem(
+        const listItemElement = await this.addTaskOrListItem(
             taskList,
             taskLineRenderer,
-            task,
+            listItem,
             taskIndex,
             queryRendererParameters,
         );
-        renderedTasks.add(task);
+        renderedListItems.add(listItem);
 
-        if (task.children.length > 0) {
-            await this.createTaskList(task.children, listItem, queryRendererParameters, renderedTasks);
-            task.children.forEach((childTask) => {
-                renderedTasks.add(childTask);
+        if (listItem.children.length > 0) {
+            await this.createTaskList(listItem.children, listItemElement, queryRendererParameters, renderedListItems);
+            listItem.children.forEach((childTask) => {
+                renderedListItems.add(childTask);
             });
         }
     }
@@ -323,15 +331,15 @@ export class QueryResultsRenderer {
     private async addTaskOrListItem(
         taskList: HTMLUListElement,
         taskLineRenderer: TaskLineRenderer,
-        task: ListItem,
+        listItem: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        if (task instanceof Task) {
-            return await this.addTask(taskList, taskLineRenderer, task, taskIndex, queryRendererParameters);
+        if (listItem instanceof Task) {
+            return await this.addTask(taskList, taskLineRenderer, listItem, taskIndex, queryRendererParameters);
         }
 
-        return await this.addListItem(taskList, task);
+        return await this.addListItem(taskList, listItem);
     }
 
     private async addListItem(taskList: HTMLUListElement, listItem: ListItem) {
