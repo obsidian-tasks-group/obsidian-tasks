@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
-- X.Y.Z:
+- 7.12.0:
   - Add [[Layout#Hide and Show Tree|display of nested tasks]] in search results, with `show tree`
 - 7.11.0:
   - Add [[Sorting#Random sorting|random sorting]], with `sort by random`
