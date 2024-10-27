@@ -90,6 +90,19 @@ class LivePreviewExtension implements PluginValue {
         });
         this.view.dispatch(transaction);
 
+        // Dirty workaround.
+        // While the code in this method properly updates the `checked` state
+        // of the target checkbox, some Obsidian internals revert the state.
+        // This means that the checkbox would remain in its original `checked`
+        // state (`true` or `false`), even though the underlying document
+        // updates correctly.
+        // As a "fix", we set the checkbox's `checked` state *again* after a
+        // timeout to revert Obsidian's wrongful reversal.
+        const desiredCheckedStatus = target.checked;
+        setTimeout(() => {
+            target.checked = desiredCheckedStatus;
+        }, 1);
+
         return true;
     }
 }
