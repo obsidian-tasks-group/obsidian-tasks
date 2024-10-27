@@ -90,6 +90,29 @@ class LivePreviewExtension implements PluginValue {
         });
         this.view.dispatch(transaction);
 
+        // Dirty workaround.
+        // While the code in this method properly updates the `checked` state
+        // of the target checkbox, some Obsidian internals revert the state.
+        // This means that the checkbox would remain in its original `checked`
+        // state (`true` or `false`), even though the underlying document
+        // updates correctly.
+        // As a "fix", we set the checkbox's `checked` state *explicitly* after a
+        // timeout in case we need to revert Obsidian's possibly wrongful reversal.
+        const needToForceCheckedProperty = toggled.length === 1;
+        if (needToForceCheckedProperty) {
+            // The smoke tests show the workaround is only needed when the event replaces
+            // a single task line.
+            // (When one task line becomes two because of recurrence, both the
+            // edited task lines are rendered correctly by this code)
+            // Since the advent of 'on completion: delete', we cannot rely on the
+            // event target's opinion of the new status, as that facility means
+            // that the new status *may* be different from that in the event.
+            const desiredCheckedStatus = toggled[0].status.symbol !== ' ';
+            setTimeout(() => {
+                target.checked = desiredCheckedStatus;
+            }, 1);
+        }
+
         return true;
     }
 }
