@@ -98,7 +98,8 @@ class LivePreviewExtension implements PluginValue {
         // updates correctly.
         // As a "fix", we set the checkbox's `checked` state *explicitly* after a
         // timeout in case we need to revert Obsidian's possibly wrongful reversal.
-        if (toggled.length === 1) {
+        const needToForceCheckedProperty = toggled.length === 1;
+        if (needToForceCheckedProperty) {
             // The smoke tests show the workaround is only needed when the event replaces
             // a single task line.
             // (When one task line becomes two because of recurrence, both the
