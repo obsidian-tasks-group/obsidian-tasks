@@ -106,8 +106,14 @@
 <!--    aria-label="Open date picker"-->
 <!--    style="background: none; border: none; padding: 0; cursor: pointer;"-->
 <!--/>-->
-
-<code class="tasks-modal-parsed-date">{dateSymbol} {@html parsedDate}</code>
+<code class="tasks-modal-parsed-date"
+    >{dateSymbol}
+    {#if isDateValid}
+        <input type="date" bind:value={date} />
+    {:else}
+        {@html parsedDate}
+    {/if}
+</code>
 
 <style>
 </style>
