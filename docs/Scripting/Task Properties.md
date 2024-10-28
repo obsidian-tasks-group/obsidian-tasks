@@ -93,7 +93,7 @@ For more information, including adding your own customised statuses, see [[Statu
     - a fixed string, such as `'no date'`,
     - an [[Expressions|expression]], such as `task.priorityName` or `task.priorityNameGroupText`,
     - an empty string `''` or `""`, meaning 'do not add a heading for tasks missing this date property'.
-1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its implementation.
+1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/DateTime/TasksDate.ts), to explore its implementation.
 1. `task.due.toISOString(true)` prevents UTC conversion - see the [moment documentation](https://momentjs.com/docs/#/displaying/as-iso-string/)
 1. `category` divides dates in to 5 named groups:
     - `Invalid date`
