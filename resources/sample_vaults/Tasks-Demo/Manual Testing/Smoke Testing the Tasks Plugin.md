@@ -149,13 +149,13 @@ heading includes Rendering of Task Blocks
 
 - View this file in **Reading mode**...
 - On the task line above:
-  - [ ] #task ~~**left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.~~
-  - [ ] #task ~~**left**-click on a date value, and click outside the date picker, to confirm that the picker closes.~~
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.
   - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.
   - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.
 - In the tasks search block below:
-  - [ ] #task ~~**left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.~~
-  - [ ] #task ~~**left**-click on a date value, and click outside the date picker, to confirm that the picker closes.~~
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.
   - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.
   - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.
 - [ ] #task **check**: Checked all above steps for **editing dates** worked
@@ -177,8 +177,8 @@ hide postpone button
     2. **Check** that the text in the list item is copied in to the Description field
     3. Type some values in to the fields
     4. In one of the date fields, type `tm` (including the space afterwards) and **Check** it is expanded in to `tomorrow`
-    5. ~~In one of the date fields, left-click the calendar button, and use the context menu to select and save a date. Check that the date is saved.~~
-    6. ~~In one of the date fields, left-click the calendar button, and click outside the date picker, to confirm that the picker closes and the modal is still usable.~~
+    5. In one of the date fields, left-click the calendar button, and use the context menu to select and save a date. Check that the date is saved.
+    6. In one of the date fields, left-click the calendar button, and click outside the date picker, to confirm that the picker closes and the modal is still usable.
     7. Hit Return or click **Apply**
     8. **Check** that the list item above is converted in to a task
     9. **Check** that values you entered in the modal have been copied in to the list item above
