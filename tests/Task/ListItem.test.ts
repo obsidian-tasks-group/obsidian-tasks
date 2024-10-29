@@ -8,6 +8,7 @@ import { TaskLocation } from '../../src/Task/TaskLocation';
 import { ListItem } from '../../src/Task/ListItem';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
+import { findClosestParentTask } from '../../src/Renderer/QueryResultsRenderer';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
@@ -97,6 +98,28 @@ describe('list item tests', () => {
         } else {
             expect(listItem.description).not.toEqual(description);
         }
+    });
+});
+
+describe('related items', () => {
+    it('should detect if no closest parent task', () => {
+        const task = fromLine({ line: '- [ ] task' });
+        const item = new ListItem('- item', null);
+        const childOfItem = new ListItem('- child of item', item);
+
+        expect(findClosestParentTask(task)).toEqual(null);
+        expect(findClosestParentTask(item)).toEqual(null);
+        expect(findClosestParentTask(childOfItem)).toEqual(null);
+    });
+
+    it('should find the closest parent task', () => {
+        const parentTask = fromLine({ line: '- [ ] task' });
+        const child = new ListItem('- item', parentTask);
+        const grandChild = new ListItem('- item', child);
+
+        expect(findClosestParentTask(parentTask)).toEqual(null);
+        expect(findClosestParentTask(child)).toEqual(parentTask);
+        expect(findClosestParentTask(grandChild)).toEqual(parentTask);
     });
 });
 
