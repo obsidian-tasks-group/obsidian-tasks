@@ -49,8 +49,7 @@ export class Explainer {
     }
 
     public explainFilters(query: Query) {
-        const numberOfFilters = query.filters.length;
-        if (numberOfFilters === 0) {
+        if (query.filters.length === 0) {
             return this.indent('No filters supplied. All tasks will match the query.\n');
         }
 
@@ -58,8 +57,7 @@ export class Explainer {
     }
 
     public explainGroups(query: Query) {
-        const numberOfGroups = query.grouping.length;
-        if (numberOfGroups === 0) {
+        if (query.grouping.length === 0) {
             return this.indent('No grouping instructions supplied.\n');
         }
 
@@ -67,8 +65,7 @@ export class Explainer {
     }
 
     public explainSorters(query: Query) {
-        const numberOfSorters = query.sorting.length;
-        if (numberOfSorters === 0) {
+        if (query.sorting.length === 0) {
             return this.indent('No sorting instructions supplied.\n');
         }
 
