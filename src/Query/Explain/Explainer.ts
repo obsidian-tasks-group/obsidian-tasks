@@ -54,11 +54,7 @@ export class Explainer {
             return this.indent('No filters supplied. All tasks will match the query.\n');
         }
 
-        return query.filters
-            .map((filter) => {
-                return filter.explainFilterIndented(this.indentation);
-            })
-            .join('\n');
+        return query.filters.map((filter) => filter.explainFilterIndented(this.indentation)).join('\n');
     }
 
     public explainGroups(query: Query) {
