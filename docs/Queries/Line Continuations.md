@@ -115,3 +115,19 @@ Points to note:
 > | `description includes something\` | `description includes something\\` |
 >
 > For details, see [[Line Continuations#Searches needing a trailing backslash|Searches needing a trailing backslash]] in [[Line Continuations]].
+
+## Appendix: Avoid trailing backslashes at the very end of a search code block
+
+> [!Warning]
+> Since Obsidian 1.7.2, placing a **final backslash (`\`) character** just before the end of a code block may cause the query to return all tasks in the vault in the Live Preview mode instead of performing the intended query. The query will still work as intended in Reading Mode. For vaults with many tasks, this may manifest as unusually slow query processing times in Live Preview mode. Before updating from an earlier version of Obsidian to Obsidian 1.7.2 or later, remove final backslashes at the very end of tasks code block queries:
+> 
+> For example:
+>
+> | Old instruction       | Use this instruction instead |
+> | --------------------  | ---------------------------- |
+> | ```` ```tasks ````    | ```` ```tasks ````           |
+> | `{start of query}\\`  | `{start of query}\\`         |
+> | `{continued query}\\` | `{continued query}\\`        |
+> | `{end of query}\\`    | `{end of query}`             |
+> | ```` ``` ````         | ```` ``` ````                |
+> 
