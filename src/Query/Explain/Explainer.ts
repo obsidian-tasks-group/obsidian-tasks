@@ -67,11 +67,7 @@ export class Explainer {
             return this.indent('No grouping instructions supplied.\n');
         }
 
-        let result = '';
-        for (let i = 0; i < numberOfGroups; i++) {
-            result += this.indentation + query.grouping[i].instruction + '\n';
-        }
-        return result;
+        return query.grouping.map((group) => this.indentation + group.instruction).join('\n') + '\n';
     }
 
     public explainSorters(query: Query) {
