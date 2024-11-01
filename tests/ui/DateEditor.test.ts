@@ -77,7 +77,7 @@ async function testTypingInput({
     const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
     await fireEvent.input(dueDateInput, { target: { value: userTyped } });
 
-    expect(dueDateInput.value).toEqual(expectedLeftText);
+    testInputValue(container, 'due', expectedLeftText);
     testInputValue(container, 'parsedDateFromDateEditor', expectedRightText);
     testInputValue(container, 'dueDateFromDateEditor', expectedReturnedDate);
 }
