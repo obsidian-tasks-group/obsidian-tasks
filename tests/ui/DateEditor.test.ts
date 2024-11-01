@@ -56,6 +56,11 @@ afterEach(() => {
     jest.useRealTimers();
 });
 
+function testInputValue(container: HTMLElement, inputId: string, expectedText: string) {
+    const input = getAndCheckRenderedElement<HTMLInputElement>(container, inputId);
+    expect(input.value).toEqual(expectedText);
+}
+
 async function testTypingInput({
     userTyped,
     expectedLeftText,
@@ -74,11 +79,7 @@ async function testTypingInput({
 
     expect(dueDateInput.value).toEqual(expectedLeftText);
 
-    const parsedDateFromDateEditor = getAndCheckRenderedElement<HTMLInputElement>(
-        container,
-        'parsedDateFromDateEditor',
-    );
-    expect(parsedDateFromDateEditor.value).toEqual(expectedRightText);
+    testInputValue(container, 'parsedDateFromDateEditor', expectedRightText);
 
     const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'dueDateFromDateEditor');
     expect(dueDateFromDateEditorInput.value).toEqual(expectedReturnedDate);
