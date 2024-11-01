@@ -45,7 +45,7 @@ function renderDateEditorWrapper(componentOptions: { forwardOnly: boolean }) {
 
     expect(() => container).toBeTruthy();
 
-    return { result, container };
+    return { container };
 }
 
 beforeEach(() => {
