@@ -117,4 +117,13 @@ describe('date editor wrapper tests', () => {
             expectedReturnedDate: 'blah',
         });
     });
+
+    it('should select a forward date', async () => {
+        await testTypingInput({
+            userTyped: 'friday',
+            expectedLeftText: 'friday',
+            expectedRightText: '2024-04-26',
+            expectedReturnedDate: 'friday',
+        });
+    });
 });
