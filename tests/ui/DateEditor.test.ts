@@ -122,12 +122,15 @@ describe('date editor wrapper tests', () => {
     });
 
     it('should select a forward date', async () => {
-        await testTypingInput({
-            userTyped: 'friday',
-            expectedLeftText: 'friday',
-            expectedRightText: '2024-04-26',
-            expectedReturnedDate: 'friday',
-        });
+        await testTypingInput(
+            {
+                userTyped: 'friday',
+                expectedLeftText: 'friday',
+                expectedRightText: '2024-04-26',
+                expectedReturnedDate: 'friday',
+            },
+            { forwardOnly: true },
+        );
     });
 
     it('should select a backward/earlier date', async () => {
