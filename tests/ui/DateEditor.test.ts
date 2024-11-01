@@ -86,11 +86,16 @@ describe('date editor wrapper tests', () => {
             'parsedDateFromDateEditor',
         );
 
-        await fireEvent.input(dueDateInput, { target: { value: '2024-10-01' } });
+        const userTyped = '2024-10-01';
+        const expectedLeftText = '2024-10-01';
+        const expectedRightText = '2024-10-01';
+        const expectedReturnedDate = '2024-10-01';
 
-        expect(dueDateInput.value).toEqual('2024-10-01');
-        expect(dueDateFromDateEditorInput.value).toEqual('2024-10-01');
-        expect(parsedDateFromDateEditor.value).toEqual('2024-10-01');
+        await fireEvent.input(dueDateInput, { target: { value: userTyped } });
+
+        expect(dueDateInput.value).toEqual(expectedLeftText);
+        expect(dueDateFromDateEditorInput.value).toEqual(expectedReturnedDate);
+        expect(parsedDateFromDateEditor.value).toEqual(expectedRightText);
     });
 
     it('should replace an empty date field with typed abbreviation', async () => {
