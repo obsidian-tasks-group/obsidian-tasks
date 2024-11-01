@@ -78,11 +78,8 @@ async function testTypingInput({
     await fireEvent.input(dueDateInput, { target: { value: userTyped } });
 
     expect(dueDateInput.value).toEqual(expectedLeftText);
-
     testInputValue(container, 'parsedDateFromDateEditor', expectedRightText);
-
-    const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'dueDateFromDateEditor');
-    expect(dueDateFromDateEditorInput.value).toEqual(expectedReturnedDate);
+    testInputValue(container, 'dueDateFromDateEditor', expectedReturnedDate);
 }
 
 describe('date editor wrapper tests', () => {
