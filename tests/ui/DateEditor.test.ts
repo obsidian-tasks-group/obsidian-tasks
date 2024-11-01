@@ -40,7 +40,7 @@ describe('date editor tests', () => {
 });
 
 function renderDateEditorWrapper() {
-    const result: RenderResult<DateEditorWrapper> = render(DateEditorWrapper, {});
+    const result: RenderResult<DateEditorWrapper> = render(DateEditorWrapper, { forwardOnly: true });
 
     const { container } = result;
     expect(() => container).toBeTruthy();
