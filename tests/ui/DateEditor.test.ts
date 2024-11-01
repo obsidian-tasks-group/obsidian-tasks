@@ -5,6 +5,7 @@ import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import moment from 'moment/moment';
 import { TASK_FORMATS } from '../../src/Config/Settings';
 import DateEditor from '../../src/ui/DateEditor.svelte';
+import DateEditorWrapper from './DateEditorWrapper.svelte';
 
 import { getAndCheckRenderedElement } from './RenderingTestHelpers';
 
@@ -35,5 +36,32 @@ describe('date editor tests', () => {
         await fireEvent.input(dueDateInput, { target: { value: '2024-10-01' } });
 
         expect(dueDateInput.value).toEqual('2024-10-01');
+    });
+});
+
+function renderDateEditorWrapper() {
+    const result: RenderResult<DateEditorWrapper> = render(DateEditorWrapper, {});
+
+    const { container } = result;
+    expect(() => container).toBeTruthy();
+    return { result, container };
+}
+
+describe('date editor wrapper tests', () => {
+    it('should replace an empty date field with typed date value', async () => {
+        const { container } = renderDateEditorWrapper();
+        const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
+        const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(
+            container,
+            'dueDateFromDateEditor',
+        );
+
+        expect(dueDateInput.value).toEqual('');
+        expect(dueDateFromDateEditorInput.value).toEqual('');
+
+        await fireEvent.input(dueDateInput, { target: { value: '2024-10-01' } });
+
+        expect(dueDateInput.value).toEqual('2024-10-01');
+        expect(dueDateFromDateEditorInput.value).toEqual('2024-10-01');
     });
 });
