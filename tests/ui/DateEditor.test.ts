@@ -41,9 +41,10 @@ describe('date editor tests', () => {
 
 function renderDateEditorWrapper(componentOptions: { forwardOnly: boolean }) {
     const result: RenderResult<DateEditorWrapper> = render(DateEditorWrapper, componentOptions);
-
     const { container } = result;
+
     expect(() => container).toBeTruthy();
+
     return { result, container };
 }
 
