@@ -44,7 +44,7 @@ function renderDateEditorWrapper(componentOptions: { forwardOnly: boolean }) {
 
     expect(() => container).toBeTruthy();
 
-    return { container };
+    return container;
 }
 
 beforeEach(() => {
@@ -75,7 +75,7 @@ async function testTypingInput(
     },
     { forwardOnly }: { forwardOnly: boolean } = { forwardOnly: true },
 ) {
-    const { container } = renderDateEditorWrapper({ forwardOnly });
+    const container = renderDateEditorWrapper({ forwardOnly });
 
     const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
     await fireEvent.input(dueDateInput, { target: { value: userTyped } });
@@ -87,7 +87,7 @@ async function testTypingInput(
 
 describe('date editor wrapper tests', () => {
     it('should initialise fields correctly', () => {
-        const { container } = renderDateEditorWrapper({ forwardOnly: true });
+        const container = renderDateEditorWrapper({ forwardOnly: true });
 
         testInputValue(container, 'due', '');
         testInputValue(container, 'parsedDateFromDateEditor', '<i>no due date</i>');
