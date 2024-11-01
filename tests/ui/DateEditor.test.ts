@@ -110,21 +110,11 @@ describe('date editor wrapper tests', () => {
     });
 
     it('should replace an empty date field with typed abbreviation', async () => {
-        const { container } = renderDateEditorWrapper();
-        const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
-        const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(
-            container,
-            'dueDateFromDateEditor',
-        );
-        const parsedDateFromDateEditor = getAndCheckRenderedElement<HTMLInputElement>(
-            container,
-            'parsedDateFromDateEditor',
-        );
-
-        await fireEvent.input(dueDateInput, { target: { value: 'tm ' } });
-
-        expect(dueDateInput.value).toEqual('tomorrow');
-        expect(dueDateFromDateEditorInput.value).toEqual('tomorrow');
-        expect(parsedDateFromDateEditor.value).toEqual('2024-04-21');
+        await testTypingInput({
+            userTyped: 'tm ',
+            expectedLeftText: 'tomorrow',
+            expectedRightText: '2024-04-21',
+            expectedReturnedDate: 'tomorrow',
+        });
     });
 });
