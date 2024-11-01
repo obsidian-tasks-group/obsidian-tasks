@@ -117,4 +117,13 @@ describe('date editor wrapper tests', () => {
             expectedReturnedDate: 'tomorrow',
         });
     });
+
+    it('should show an error message for invalid date', async () => {
+        await testTypingInput({
+            userTyped: 'blah',
+            expectedLeftText: 'blah',
+            expectedRightText: '<i>invalid due date</i>',
+            expectedReturnedDate: 'blah',
+        });
+    });
 });
