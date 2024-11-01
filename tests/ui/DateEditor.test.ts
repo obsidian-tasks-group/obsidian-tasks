@@ -47,6 +47,15 @@ function renderDateEditorWrapper() {
     return { result, container };
 }
 
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2024-04-20'));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
+
 describe('date editor wrapper tests', () => {
     it('should replace an empty date field with typed date value', async () => {
         const { container } = renderDateEditorWrapper();
@@ -63,5 +72,22 @@ describe('date editor wrapper tests', () => {
 
         expect(dueDateInput.value).toEqual('2024-10-01');
         expect(dueDateFromDateEditorInput.value).toEqual('2024-10-01');
+    });
+
+    it('should replace an empty date field with typed abbreviation', async () => {
+        const { container } = renderDateEditorWrapper();
+        const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
+        const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(
+            container,
+            'dueDateFromDateEditor',
+        );
+
+        expect(dueDateInput.value).toEqual('');
+        expect(dueDateFromDateEditorInput.value).toEqual('');
+
+        await fireEvent.input(dueDateInput, { target: { value: 'tm ' } });
+
+        expect(dueDateInput.value).toEqual('tomorrow');
+        expect(dueDateFromDateEditorInput.value).toEqual('tomorrow');
     });
 });
