@@ -17,15 +17,6 @@ function renderDateEditorWrapper(componentOptions: { forwardOnly: boolean }) {
     return container;
 }
 
-beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2024-04-20'));
-});
-
-afterEach(() => {
-    jest.useRealTimers();
-});
-
 function testInputValue(container: HTMLElement, inputId: string, expectedText: string) {
     const input = getAndCheckRenderedElement<HTMLInputElement>(container, inputId);
     expect(input.value).toEqual(expectedText);
@@ -54,6 +45,15 @@ async function testTypingInput(
     testInputValue(container, 'parsedDateFromDateEditor', expectedRightText);
     testInputValue(container, 'dueDateFromDateEditor', expectedReturnedDate);
 }
+
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2024-04-20'));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
 
 describe('date editor wrapper tests', () => {
     it('should initialise fields correctly', () => {
