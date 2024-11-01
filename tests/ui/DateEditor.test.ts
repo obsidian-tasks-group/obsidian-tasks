@@ -39,8 +39,8 @@ describe('date editor tests', () => {
     });
 });
 
-function renderDateEditorWrapper() {
-    const result: RenderResult<DateEditorWrapper> = render(DateEditorWrapper, { forwardOnly: true });
+function renderDateEditorWrapper(componentOptions: { forwardOnly: boolean }) {
+    const result: RenderResult<DateEditorWrapper> = render(DateEditorWrapper, componentOptions);
 
     const { container } = result;
     expect(() => container).toBeTruthy();
@@ -61,18 +61,21 @@ function testInputValue(container: HTMLElement, inputId: string, expectedText: s
     expect(input.value).toEqual(expectedText);
 }
 
-async function testTypingInput({
-    userTyped,
-    expectedLeftText,
-    expectedRightText,
-    expectedReturnedDate,
-}: {
-    userTyped: string;
-    expectedLeftText: string;
-    expectedRightText: string;
-    expectedReturnedDate: string;
-}) {
-    const { container } = renderDateEditorWrapper();
+async function testTypingInput(
+    {
+        userTyped,
+        expectedLeftText,
+        expectedRightText,
+        expectedReturnedDate,
+    }: {
+        userTyped: string;
+        expectedLeftText: string;
+        expectedRightText: string;
+        expectedReturnedDate: string;
+    },
+    { forwardOnly }: { forwardOnly: boolean } = { forwardOnly: true },
+) {
+    const { container } = renderDateEditorWrapper({ forwardOnly });
 
     const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
     await fireEvent.input(dueDateInput, { target: { value: userTyped } });
@@ -84,7 +87,7 @@ async function testTypingInput({
 
 describe('date editor wrapper tests', () => {
     it('should initialise fields correctly', () => {
-        const { container } = renderDateEditorWrapper();
+        const { container } = renderDateEditorWrapper({ forwardOnly: true });
 
         testInputValue(container, 'due', '');
         testInputValue(container, 'parsedDateFromDateEditor', '<i>no due date</i>');
@@ -125,5 +128,17 @@ describe('date editor wrapper tests', () => {
             expectedRightText: '2024-04-26',
             expectedReturnedDate: 'friday',
         });
+    });
+
+    it('should select a backward/earlier date', async () => {
+        await testTypingInput(
+            {
+                userTyped: 'friday',
+                expectedLeftText: 'friday',
+                expectedRightText: '2024-04-19',
+                expectedReturnedDate: 'friday',
+            },
+            { forwardOnly: false },
+        );
     });
 });
