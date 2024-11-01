@@ -64,14 +64,20 @@ describe('date editor wrapper tests', () => {
             container,
             'dueDateFromDateEditor',
         );
+        const parsedDateFromDateEditor = getAndCheckRenderedElement<HTMLInputElement>(
+            container,
+            'parsedDateFromDateEditor',
+        );
 
         expect(dueDateInput.value).toEqual('');
         expect(dueDateFromDateEditorInput.value).toEqual('');
+        expect(parsedDateFromDateEditor.value).toEqual('<i>no due date</i>');
 
         await fireEvent.input(dueDateInput, { target: { value: '2024-10-01' } });
 
         expect(dueDateInput.value).toEqual('2024-10-01');
         expect(dueDateFromDateEditorInput.value).toEqual('2024-10-01');
+        expect(parsedDateFromDateEditor.value).toEqual('2024-10-01');
     });
 
     it('should replace an empty date field with typed abbreviation', async () => {
@@ -81,13 +87,19 @@ describe('date editor wrapper tests', () => {
             container,
             'dueDateFromDateEditor',
         );
+        const parsedDateFromDateEditor = getAndCheckRenderedElement<HTMLInputElement>(
+            container,
+            'parsedDateFromDateEditor',
+        );
 
         expect(dueDateInput.value).toEqual('');
         expect(dueDateFromDateEditorInput.value).toEqual('');
+        expect(parsedDateFromDateEditor.value).toEqual('<i>no due date</i>');
 
         await fireEvent.input(dueDateInput, { target: { value: 'tm ' } });
 
         expect(dueDateInput.value).toEqual('tomorrow');
         expect(dueDateFromDateEditorInput.value).toEqual('tomorrow');
+        expect(parsedDateFromDateEditor.value).toEqual('2024-04-21');
     });
 });
