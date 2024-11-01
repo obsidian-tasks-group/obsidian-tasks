@@ -57,7 +57,7 @@ afterEach(() => {
 });
 
 describe('date editor wrapper tests', () => {
-    it('should replace an empty date field with typed date value', async () => {
+    it('should initialise fields correctly', () => {
         const { container } = renderDateEditorWrapper();
         const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
         const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(
@@ -72,6 +72,19 @@ describe('date editor wrapper tests', () => {
         expect(dueDateInput.value).toEqual('');
         expect(dueDateFromDateEditorInput.value).toEqual('');
         expect(parsedDateFromDateEditor.value).toEqual('<i>no due date</i>');
+    });
+
+    it('should replace an empty date field with typed date value', async () => {
+        const { container } = renderDateEditorWrapper();
+        const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
+        const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(
+            container,
+            'dueDateFromDateEditor',
+        );
+        const parsedDateFromDateEditor = getAndCheckRenderedElement<HTMLInputElement>(
+            container,
+            'parsedDateFromDateEditor',
+        );
 
         await fireEvent.input(dueDateInput, { target: { value: '2024-10-01' } });
 
@@ -91,10 +104,6 @@ describe('date editor wrapper tests', () => {
             container,
             'parsedDateFromDateEditor',
         );
-
-        expect(dueDateInput.value).toEqual('');
-        expect(dueDateFromDateEditorInput.value).toEqual('');
-        expect(parsedDateFromDateEditor.value).toEqual('<i>no due date</i>');
 
         await fireEvent.input(dueDateInput, { target: { value: 'tm ' } });
 
