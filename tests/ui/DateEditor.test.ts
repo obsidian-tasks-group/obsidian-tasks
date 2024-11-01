@@ -56,6 +56,27 @@ afterEach(() => {
     jest.useRealTimers();
 });
 
+async function testTypingInput(
+    userTyped: string,
+    expectedLeftText: string,
+    expectedRightText: string,
+    expectedReturnedDate: string,
+) {
+    const { container } = renderDateEditorWrapper();
+    const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
+    const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'dueDateFromDateEditor');
+    const parsedDateFromDateEditor = getAndCheckRenderedElement<HTMLInputElement>(
+        container,
+        'parsedDateFromDateEditor',
+    );
+
+    await fireEvent.input(dueDateInput, { target: { value: userTyped } });
+
+    expect(dueDateInput.value).toEqual(expectedLeftText);
+    expect(dueDateFromDateEditorInput.value).toEqual(expectedReturnedDate);
+    expect(parsedDateFromDateEditor.value).toEqual(expectedRightText);
+}
+
 describe('date editor wrapper tests', () => {
     it('should initialise fields correctly', () => {
         const { container } = renderDateEditorWrapper();
@@ -75,27 +96,12 @@ describe('date editor wrapper tests', () => {
     });
 
     it('should replace an empty date field with typed date value', async () => {
-        const { container } = renderDateEditorWrapper();
-        const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
-        const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(
-            container,
-            'dueDateFromDateEditor',
-        );
-        const parsedDateFromDateEditor = getAndCheckRenderedElement<HTMLInputElement>(
-            container,
-            'parsedDateFromDateEditor',
-        );
-
         const userTyped = '2024-10-01';
         const expectedLeftText = '2024-10-01';
         const expectedRightText = '2024-10-01';
         const expectedReturnedDate = '2024-10-01';
 
-        await fireEvent.input(dueDateInput, { target: { value: userTyped } });
-
-        expect(dueDateInput.value).toEqual(expectedLeftText);
-        expect(dueDateFromDateEditorInput.value).toEqual(expectedReturnedDate);
-        expect(parsedDateFromDateEditor.value).toEqual(expectedRightText);
+        await testTypingInput(userTyped, expectedLeftText, expectedRightText, expectedReturnedDate);
     });
 
     it('should replace an empty date field with typed abbreviation', async () => {
