@@ -10,7 +10,8 @@
     export let forwardOnly: boolean;
     export let accesskey: string | null;
 
-    let parsedDate: string;
+    // Use this for testing purposes only
+    export let parsedDate: string = '';
     // let inputElement: HTMLInputElement;
     // let flatpickrInstance: any;
     //
