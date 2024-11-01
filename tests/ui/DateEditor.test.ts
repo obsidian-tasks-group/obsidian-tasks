@@ -85,19 +85,10 @@ async function testTypingInput({
 describe('date editor wrapper tests', () => {
     it('should initialise fields correctly', () => {
         const { container } = renderDateEditorWrapper();
-        const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
-        const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(
-            container,
-            'dueDateFromDateEditor',
-        );
-        const parsedDateFromDateEditor = getAndCheckRenderedElement<HTMLInputElement>(
-            container,
-            'parsedDateFromDateEditor',
-        );
 
-        expect(dueDateInput.value).toEqual('');
-        expect(dueDateFromDateEditorInput.value).toEqual('');
-        expect(parsedDateFromDateEditor.value).toEqual('<i>no due date</i>');
+        testInputValue(container, 'due', '');
+        testInputValue(container, 'parsedDateFromDateEditor', '<i>no due date</i>');
+        testInputValue(container, 'dueDateFromDateEditor', '');
     });
 
     it('should replace an empty date field with typed date value', async () => {
