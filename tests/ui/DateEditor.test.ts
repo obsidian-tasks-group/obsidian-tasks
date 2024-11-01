@@ -56,12 +56,17 @@ afterEach(() => {
     jest.useRealTimers();
 });
 
-async function testTypingInput(
-    userTyped: string,
-    expectedLeftText: string,
-    expectedRightText: string,
-    expectedReturnedDate: string,
-) {
+async function testTypingInput({
+    userTyped,
+    expectedLeftText,
+    expectedRightText,
+    expectedReturnedDate,
+}: {
+    userTyped: string;
+    expectedLeftText: string;
+    expectedRightText: string;
+    expectedReturnedDate: string;
+}) {
     const { container } = renderDateEditorWrapper();
     const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
     const dueDateFromDateEditorInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'dueDateFromDateEditor');
@@ -96,12 +101,12 @@ describe('date editor wrapper tests', () => {
     });
 
     it('should replace an empty date field with typed date value', async () => {
-        const userTyped = '2024-10-01';
-        const expectedLeftText = '2024-10-01';
-        const expectedRightText = '2024-10-01';
-        const expectedReturnedDate = '2024-10-01';
-
-        await testTypingInput(userTyped, expectedLeftText, expectedRightText, expectedReturnedDate);
+        await testTypingInput({
+            userTyped: '2024-10-01',
+            expectedLeftText: '2024-10-01',
+            expectedRightText: '2024-10-01',
+            expectedReturnedDate: '2024-10-01',
+        });
     });
 
     it('should replace an empty date field with typed abbreviation', async () => {
