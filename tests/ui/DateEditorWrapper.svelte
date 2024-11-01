@@ -3,6 +3,7 @@
     import DateEditor from '../../src/ui/DateEditor.svelte';
 
     let dateFromDateEditor: string = '';
+    let parsedDateFromDateEditor: string = '';
     let isDueDateValid = true;
 </script>
 
@@ -15,8 +16,10 @@
     accesskey={null}
     on:open={() => {}}
     on:close={() => {}}
+    bind:parsedDate={parsedDateFromDateEditor}
 />
 <input bind:value={dateFromDateEditor} id="dueDateFromDateEditor" />
+<input bind:value={parsedDateFromDateEditor} id="parsedDateFromDateEditor" />
 
 <style>
 </style>
