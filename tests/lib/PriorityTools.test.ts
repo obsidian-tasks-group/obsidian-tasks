@@ -17,6 +17,7 @@ describe('priority naming', () => {
         // Normal cases
         ['highest', Priority.Highest],
         ['high', Priority.High],
+        ['medium', Priority.Medium],
         ['none', Priority.None],
         ['normal', Priority.None],
         ['low', Priority.Low],
@@ -26,10 +27,10 @@ describe('priority naming', () => {
         ['', Priority.None],
         ['invalid_priority_string!', Priority.None],
 
-        // Priority string is lower-cased
+        // Priority search is case-insensitive
         ['Highest', Priority.Highest],
         ['highEst', Priority.Highest],
-    ])('should get priority value "%s"', (str, value) => {
+    ])('should get priority value for "%s"', (str, value) => {
         expect(PriorityTools.priorityValue(str)).toEqual(value);
     });
 });
