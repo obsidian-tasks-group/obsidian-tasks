@@ -12,4 +12,25 @@ describe('priority naming', () => {
         expect(PriorityTools.priorityNameUsingNone(none)).toEqual('None');
         expect(PriorityTools.priorityNameUsingNormal(none)).toEqual('Normal');
     });
+
+    it.each([
+        // Normal cases
+        ['highest', Priority.Highest],
+        ['high', Priority.High],
+        ['medium', Priority.Medium],
+        ['none', Priority.None],
+        ['normal', Priority.None],
+        ['low', Priority.Low],
+        ['lowest', Priority.Lowest],
+
+        // Erroneous cases
+        ['', Priority.None],
+        ['invalid_priority_string!', Priority.None],
+
+        // Priority search is case-insensitive
+        ['Highest', Priority.Highest],
+        ['highEst', Priority.Highest],
+    ])('should get priority value for "%s"', (str, value) => {
+        expect(PriorityTools.priorityValue(str)).toEqual(value);
+    });
 });
