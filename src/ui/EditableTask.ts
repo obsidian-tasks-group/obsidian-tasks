@@ -1,5 +1,6 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { parseTypedDateForSaving } from '../DateTime/DateTools';
+import { PriorityTools } from '../lib/PriorityTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
 import type { OnCompletion } from '../Task/OnCompletion';
@@ -9,8 +10,6 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 import { StatusType } from '../Statuses/StatusConfiguration';
-
-type EditableTaskPriority = 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
 
 /**
  * {@link Task} objects are immutable. This class allows to create a mutable object from a {@link Task}, apply the edits,
@@ -24,7 +23,7 @@ export class EditableTask {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     description: string;
     status: Status;
-    priority: EditableTaskPriority;
+    priority: string;
     recurrenceRule: string;
     onCompletion: OnCompletion;
     createdDate: string;
@@ -44,7 +43,7 @@ export class EditableTask {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: string;
         status: Status;
-        priority: EditableTaskPriority;
+        priority: string;
         onCompletion: OnCompletion;
         recurrenceRule: string;
         createdDate: string;
@@ -90,7 +89,7 @@ export class EditableTask {
         const addGlobalFilterOnSave =
             description != task.description || !GlobalFilter.getInstance().includedIn(task.description);
 
-        let priority: EditableTaskPriority = 'none';
+        let priority = 'none';
         if (task.priority === Priority.Lowest) {
             priority = 'lowest';
         } else if (task.priority === Priority.Low) {
@@ -168,27 +167,6 @@ export class EditableTask {
             });
         }
 
-        let parsedPriority: Priority;
-        switch (this.priority) {
-            case 'lowest':
-                parsedPriority = Priority.Lowest;
-                break;
-            case 'low':
-                parsedPriority = Priority.Low;
-                break;
-            case 'medium':
-                parsedPriority = Priority.Medium;
-                break;
-            case 'high':
-                parsedPriority = Priority.High;
-                break;
-            case 'highest':
-                parsedPriority = Priority.Highest;
-                break;
-            default:
-                parsedPriority = Priority.None;
-        }
-
         const parsedOnCompletion: OnCompletion = this.onCompletion;
 
         const blockedByWithIds = [];
@@ -218,7 +196,7 @@ export class EditableTask {
             ...task,
             description,
             status: task.status,
-            priority: parsedPriority,
+            priority: PriorityTools.priorityValue(this.priority),
             onCompletion: parsedOnCompletion,
             recurrence,
             startDate,
