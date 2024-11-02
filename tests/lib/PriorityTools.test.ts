@@ -28,6 +28,7 @@ describe('priority naming', () => {
 
         // Priority string has to be in lower case
         ['Highest', Priority.None],
+        ['highEst', Priority.None],
     ])('should get priority value "%s"', (str, value) => {
         expect(PriorityTools.priorityValue(str)).toEqual(value);
     });
