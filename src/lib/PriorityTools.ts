@@ -41,11 +41,12 @@ export class PriorityTools {
     }
 
     /**
-     * Get the {@link Priority} value from a string. The input string will be lower-cased.
+     * Get the {@link Priority} value from a string. The algorithm is case-insensitive.
      *
      * In case the value was not recognised, {@link Priority.None} will be returned.
      *
-     * @param priority
+     * @param priority - a string containing a name of one the supported {@link Priority} values.
+     *                   Capitalisation is ignored.
      * @see priorityNameUsingNormal
      */
     public static priorityValue(priority: string): Priority {
