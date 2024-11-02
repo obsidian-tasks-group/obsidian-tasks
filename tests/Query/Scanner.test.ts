@@ -150,6 +150,11 @@ describe('continue_lines', () => {
         expect(continueLinesFlattened(text)).toEqual('description includes one two three four five six');
     });
 
+    it('should preserve last instruction in query that ends in a continuation line = #3137', () => {
+        const text = 'due today \\';
+        expect(continueLinesFlattened(text)).toEqual('due today');
+    });
+
     it('visualise continue_lines', () => {
         const output = `
 input:
