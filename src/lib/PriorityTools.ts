@@ -41,7 +41,7 @@ export class PriorityTools {
     }
 
     /**
-     * Get the {@link Priority} value from a string. A lower-case string is expected.
+     * Get the {@link Priority} value from a string. The input string will be lower-cased.
      *
      * In case the value was not recognised, {@link Priority.None} will be returned.
      *
