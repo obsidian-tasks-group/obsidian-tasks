@@ -49,7 +49,7 @@ export class PriorityTools {
      * @see priorityNameUsingNormal
      */
     public static priorityValue(priority: string): Priority {
-        switch (priority) {
+        switch (priority.toLowerCase()) {
             case 'lowest':
                 return Priority.Lowest;
             case 'low':
