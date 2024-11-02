@@ -556,8 +556,7 @@ describe('Query parsing', () => {
         expect(new Query('short mode\nfull').queryLayoutOptions.shortMode).toEqual(false);
     });
 
-    it.failing('should cope with missing end-of-line character in query ending with continuation character', () => {
-        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3137
+    it('should cope with missing end-of-line character in query ending with continuation character - #3137', () => {
         const query = new Query('path includes query.md \\');
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].instruction).toEqual('path includes query.md');
