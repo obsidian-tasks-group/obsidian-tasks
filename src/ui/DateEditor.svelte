@@ -118,14 +118,20 @@
 <!--    aria-label="Open date picker"-->
 <!--    style="background: none; border: none; padding: 0; cursor: pointer;"-->
 <!--/>-->
-<code class="tasks-modal-parsed-date"
-    >{dateSymbol}
-    {#if isDateValid}
-        <input type="date" bind:value={pickedDate} id="date-editor-picker" on:input={onDatePicked} tabindex="-1" />
-    {:else}
-        {@html parsedDate}
-    {/if}
-</code>
+{#if isDateValid}
+    <div class="tasks-modal-parsed-date">
+        {dateSymbol}<input
+            class="tasks-modal-date-editor-picker"
+            type="date"
+            bind:value={pickedDate}
+            id="date-editor-picker"
+            on:input={onDatePicked}
+            tabindex="-1"
+        />
+    </div>
+{:else}
+    <code class="tasks-modal-parsed-date">{dateSymbol} {@html parsedDate}</code>
+{/if}
 
 <style>
 </style>
