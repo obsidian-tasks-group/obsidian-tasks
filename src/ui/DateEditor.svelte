@@ -121,7 +121,7 @@
 <code class="tasks-modal-parsed-date"
     >{dateSymbol}
     {#if isDateValid}
-        <input type="date" bind:value={pickedDate} id="date-editor-picker" on:input={onDatePicked} />
+        <input type="date" bind:value={pickedDate} id="date-editor-picker" on:input={onDatePicked} tabindex="-1" />
     {:else}
         {@html parsedDate}
     {/if}
