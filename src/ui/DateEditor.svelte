@@ -23,10 +23,15 @@
     //     setIcon(node, 'calendar-days');
     // };
 
+    let pickedDate = '';
+
     $: {
         date = doAutocomplete(date);
         parsedDate = parseTypedDateForDisplayUsingFutureDate(id, date, forwardOnly);
         isDateValid = !parsedDate.includes('invalid');
+        if (isDateValid) {
+            pickedDate = parsedDate;
+        }
     }
 
     // 'weekend' abbreviation omitted due to lack of space.
@@ -109,7 +114,7 @@
 <code class="tasks-modal-parsed-date"
     >{dateSymbol}
     {#if isDateValid}
-        <input type="date" bind:value={date} id="date-editor-picker" />
+        <input type="date" bind:value={pickedDate} id="date-editor-picker" />
     {:else}
         {@html parsedDate}
     {/if}
