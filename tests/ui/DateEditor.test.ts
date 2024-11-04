@@ -122,6 +122,7 @@ describe('date editor wrapper tests', () => {
     it('should pick a date', async () => {
         const container = renderDateEditorWrapper({ forwardOnly: false });
 
-        getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
+        const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
+        expect(datePicker.value).toEqual('');
     });
 });
