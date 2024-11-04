@@ -34,6 +34,13 @@
         }
     }
 
+    function onDatePicked(e: Event) {
+        if (e.target === null) {
+            return;
+        }
+        date = pickedDate;
+    }
+
     // 'weekend' abbreviation omitted due to lack of space.
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
 
@@ -114,7 +121,7 @@
 <code class="tasks-modal-parsed-date"
     >{dateSymbol}
     {#if isDateValid}
-        <input type="date" bind:value={pickedDate} id="date-editor-picker" />
+        <input type="date" bind:value={pickedDate} id="date-editor-picker" on:input={onDatePicked} />
     {:else}
         {@html parsedDate}
     {/if}
