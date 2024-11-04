@@ -22,6 +22,11 @@ function testInputValue(container: HTMLElement, inputId: string, expectedText: s
     expect(input.value).toEqual(expectedText);
 }
 
+function testDatePickerValue(container: HTMLElement, expectedValue: string) {
+    const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
+    expect(datePicker.value).toEqual(expectedValue);
+}
+
 async function testTypingInput(
     {
         userTyped,
@@ -66,8 +71,7 @@ describe('date editor wrapper tests', () => {
         testInputValue(container, 'parsedDateFromDateEditor', '<i>no due date</i>');
         testInputValue(container, 'dueDateFromDateEditor', '');
 
-        const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
-        expect(datePicker.value).toEqual('');
+        testDatePickerValue(container, '');
     });
 
     it('should replace an empty date field with typed date value', async () => {
