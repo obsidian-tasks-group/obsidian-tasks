@@ -28,11 +28,13 @@ async function testTypingInput(
         expectedLeftText,
         expectedRightText,
         expectedReturnedDate,
+        expectedReturnedDateValidity = 'true',
     }: {
         userTyped: string;
         expectedLeftText: string;
         expectedRightText: string;
         expectedReturnedDate: string;
+        expectedReturnedDateValidity?: 'true' | 'false';
     },
     { forwardOnly }: { forwardOnly: boolean } = { forwardOnly: true },
 ) {
@@ -44,6 +46,7 @@ async function testTypingInput(
     testInputValue(container, 'due', expectedLeftText);
     testInputValue(container, 'parsedDateFromDateEditor', expectedRightText);
     testInputValue(container, 'dueDateFromDateEditor', expectedReturnedDate);
+    testInputValue(container, 'parsedDateValidFromDateEditor', expectedReturnedDateValidity);
 }
 
 beforeEach(() => {
@@ -88,6 +91,7 @@ describe('date editor wrapper tests', () => {
             expectedLeftText: 'blah',
             expectedRightText: '<i>invalid due date</i>',
             expectedReturnedDate: 'blah',
+            expectedReturnedDateValidity: 'false',
         });
     });
 

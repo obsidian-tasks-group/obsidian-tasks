@@ -22,6 +22,7 @@
 />
 <input bind:value={dateFromDateEditor} id="dueDateFromDateEditor" />
 <input bind:value={parsedDateFromDateEditor} id="parsedDateFromDateEditor" />
+<input bind:value={isDueDateValid} id="parsedDateValidFromDateEditor" />
 
 <style>
 </style>
