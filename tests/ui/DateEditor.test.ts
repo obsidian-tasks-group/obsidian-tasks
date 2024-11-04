@@ -22,17 +22,24 @@ function testInputValue(container: HTMLElement, inputId: string, expectedText: s
     expect(input.value).toEqual(expectedText);
 }
 
+function testDatePickerValue(container: HTMLElement, expectedValue: string) {
+    const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
+    expect(datePicker.value).toEqual(expectedValue);
+}
+
 async function testTypingInput(
     {
         userTyped,
         expectedLeftText,
         expectedRightText,
         expectedReturnedDate,
+        expectedReturnedDateValidity = 'true',
     }: {
         userTyped: string;
         expectedLeftText: string;
         expectedRightText: string;
         expectedReturnedDate: string;
+        expectedReturnedDateValidity?: 'true' | 'false';
     },
     { forwardOnly }: { forwardOnly: boolean } = { forwardOnly: true },
 ) {
@@ -44,6 +51,14 @@ async function testTypingInput(
     testInputValue(container, 'due', expectedLeftText);
     testInputValue(container, 'parsedDateFromDateEditor', expectedRightText);
     testInputValue(container, 'dueDateFromDateEditor', expectedReturnedDate);
+    testInputValue(container, 'parsedDateValidFromDateEditor', expectedReturnedDateValidity);
+
+    if (expectedReturnedDateValidity === 'true') {
+        testDatePickerValue(container, expectedRightText);
+    } else {
+        const datePicker = container.ownerDocument.getElementById('date-editor-picker') as HTMLInputElement;
+        expect(datePicker).toBeNull();
+    }
 }
 
 beforeEach(() => {
@@ -62,6 +77,8 @@ describe('date editor wrapper tests', () => {
         testInputValue(container, 'due', '');
         testInputValue(container, 'parsedDateFromDateEditor', '<i>no due date</i>');
         testInputValue(container, 'dueDateFromDateEditor', '');
+
+        testDatePickerValue(container, '');
     });
 
     it('should replace an empty date field with typed date value', async () => {
@@ -88,6 +105,7 @@ describe('date editor wrapper tests', () => {
             expectedLeftText: 'blah',
             expectedRightText: '<i>invalid due date</i>',
             expectedReturnedDate: 'blah',
+            expectedReturnedDateValidity: 'false',
         });
     });
 
@@ -113,5 +131,19 @@ describe('date editor wrapper tests', () => {
             },
             { forwardOnly: false },
         );
+    });
+
+    it('should pick a date', async () => {
+        const container = renderDateEditorWrapper({ forwardOnly: false });
+        const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
+
+        await fireEvent.input(datePicker, { target: { value: '2024-11-03' } });
+
+        expect(datePicker.value).toEqual('2024-11-03');
+
+        testInputValue(container, 'due', '2024-11-03');
+        testInputValue(container, 'parsedDateFromDateEditor', '2024-11-03');
+        testInputValue(container, 'dueDateFromDateEditor', '2024-11-03');
+        testInputValue(container, 'parsedDateValidFromDateEditor', 'true');
     });
 });

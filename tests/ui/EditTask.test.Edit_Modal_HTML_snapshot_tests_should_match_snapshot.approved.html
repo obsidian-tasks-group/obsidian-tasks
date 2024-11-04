@@ -94,10 +94,10 @@
         class="tasks-modal-date-input"
         placeholder="Try 'Mon' or 'tm' then space"
         accesskey="d" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         📅
-        <i>no due date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
       <label for="scheduled">
         <span class="accesskey">S</span>
         cheduled
@@ -105,12 +105,12 @@
       <input
         id="scheduled"
         type="text"
-        class="tasks-modal-date-input"
+        class="tasks-modal-date-input tasks-modal-error"
         placeholder="Try 'Mon' or 'tm' then space"
         accesskey="s" />
       <code class="tasks-modal-parsed-date">
         ⏳
-        <i>no scheduled date</i>
+        <i>invalid scheduled date</i>
       </code>
       <label for="start">
         St
@@ -123,10 +123,10 @@
         class="tasks-modal-date-input"
         placeholder="Try 'Mon' or 'tm' then space"
         accesskey="a" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         🛫
-        <i>no start date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
       <div class="future-dates-only">
         <label for="forwardOnly">
           Only
@@ -221,10 +221,10 @@
         class="tasks-modal-date-input"
         placeholder="Try 'Mon' or 'tm' then space"
         accesskey="c" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         ➕
-        <i>no created date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
       <label for="done">
         Done (
         <span class="accesskey">x</span>
@@ -236,10 +236,10 @@
         class="tasks-modal-date-input"
         placeholder="Try 'Mon' or 'tm' then space"
         accesskey="x" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         ✅
-        <i>no done date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
       <label for="cancelled">
         Cancelled (
         <span class="accesskey">-</span>
@@ -251,13 +251,13 @@
         class="tasks-modal-date-input"
         placeholder="Try 'Mon' or 'tm' then space"
         accesskey="-" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         ❌
-        <i>no cancelled date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
     </section>
     <section class="tasks-modal-button-section">
-      <button type="submit" class="mod-cta">Apply</button>
+      <button type="submit" class="mod-cta" disabled="">Apply</button>
       <button type="button">Cancel</button>
     </section>
   </form>

@@ -56,22 +56,26 @@
       </code>
       <label for="due">Due</label>
       <input id="due" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         📅
-        <i>no due date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
       <label for="scheduled">Scheduled</label>
-      <input id="scheduled" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
+      <input
+        id="scheduled"
+        type="text"
+        class="tasks-modal-date-input tasks-modal-error"
+        placeholder="Try 'Mon' or 'tm' then space" />
       <code class="tasks-modal-parsed-date">
         ⏳
-        <i>no scheduled date</i>
+        <i>invalid scheduled date</i>
       </code>
       <label for="start">Start</label>
       <input id="start" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         🛫
-        <i>no start date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
       <div class="future-dates-only">
         <label for="forwardOnly">Only future dates:</label>
         <input id="forwardOnly" type="checkbox" class="task-list-item-checkbox tasks-modal-checkbox" />
@@ -141,25 +145,25 @@
       </select>
       <label for="created">Created</label>
       <input id="created" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         ➕
-        <i>no created date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
       <label for="done">Done</label>
       <input id="done" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         ✅
-        <i>no done date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
       <label for="cancelled">Cancelled</label>
       <input id="cancelled" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <code class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date">
         ❌
-        <i>no cancelled date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+      </div>
     </section>
     <section class="tasks-modal-button-section">
-      <button type="submit" class="mod-cta">Apply</button>
+      <button type="submit" class="mod-cta" disabled="">Apply</button>
       <button type="button">Cancel</button>
     </section>
   </form>

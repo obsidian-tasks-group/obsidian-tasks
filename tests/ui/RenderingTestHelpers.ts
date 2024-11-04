@@ -9,7 +9,7 @@ import type EditTask from '../../src/ui/EditTask.svelte';
  */
 export function getAndCheckRenderedElement<T>(container: HTMLElement, elementId: string) {
     const element = container.ownerDocument.getElementById(elementId) as T;
-    expect(() => element).toBeTruthy();
+    expect(element).not.toBeNull();
     return element;
 }
 

@@ -23,10 +23,22 @@
     //     setIcon(node, 'calendar-days');
     // };
 
+    let pickedDate = '';
+
     $: {
         date = doAutocomplete(date);
         parsedDate = parseTypedDateForDisplayUsingFutureDate(id, date, forwardOnly);
         isDateValid = !parsedDate.includes('invalid');
+        if (isDateValid) {
+            pickedDate = parsedDate;
+        }
+    }
+
+    function onDatePicked(e: Event) {
+        if (e.target === null) {
+            return;
+        }
+        date = pickedDate;
     }
 
     // 'weekend' abbreviation omitted due to lack of space.
@@ -106,8 +118,20 @@
 <!--    aria-label="Open date picker"-->
 <!--    style="background: none; border: none; padding: 0; cursor: pointer;"-->
 <!--/>-->
-
-<code class="tasks-modal-parsed-date">{dateSymbol} {@html parsedDate}</code>
+{#if isDateValid}
+    <div class="tasks-modal-parsed-date">
+        {dateSymbol}<input
+            class="tasks-modal-date-editor-picker"
+            type="date"
+            bind:value={pickedDate}
+            id="date-editor-picker"
+            on:input={onDatePicked}
+            tabindex="-1"
+        />
+    </div>
+{:else}
+    <code class="tasks-modal-parsed-date">{dateSymbol} {@html parsedDate}</code>
+{/if}
 
 <style>
 </style>
