@@ -138,5 +138,11 @@ describe('date editor wrapper tests', () => {
 
         const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
         expect(datePicker.value).toEqual('');
+
+        await fireEvent.input(datePicker, { target: { value: '2024-11-03' } });
+
+        expect(datePicker.value).toEqual('2024-11-03');
+
+        testInputValue(container, 'due', '2024-11-03');
     });
 });
