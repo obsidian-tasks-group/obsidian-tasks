@@ -52,6 +52,10 @@ async function testTypingInput(
     testInputValue(container, 'parsedDateFromDateEditor', expectedRightText);
     testInputValue(container, 'dueDateFromDateEditor', expectedReturnedDate);
     testInputValue(container, 'parsedDateValidFromDateEditor', expectedReturnedDateValidity);
+
+    if (expectedReturnedDateValidity === 'true') {
+        testDatePickerValue(container, expectedRightText);
+    }
 }
 
 beforeEach(() => {
