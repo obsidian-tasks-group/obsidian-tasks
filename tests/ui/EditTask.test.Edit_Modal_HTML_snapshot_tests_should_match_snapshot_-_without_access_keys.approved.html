@@ -61,11 +61,15 @@
         <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
       </div>
       <label for="scheduled">Scheduled</label>
-      <input id="scheduled" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <div class="tasks-modal-parsed-date">
+      <input
+        id="scheduled"
+        type="text"
+        class="tasks-modal-date-input tasks-modal-error"
+        placeholder="Try 'Mon' or 'tm' then space" />
+      <code class="tasks-modal-parsed-date">
         ⏳
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
-      </div>
+        <i>invalid scheduled date</i>
+      </code>
       <label for="start">Start</label>
       <input id="start" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
       <div class="tasks-modal-parsed-date">
@@ -159,7 +163,7 @@
       </div>
     </section>
     <section class="tasks-modal-button-section">
-      <button type="submit" class="mod-cta">Apply</button>
+      <button type="submit" class="mod-cta" disabled="">Apply</button>
       <button type="button">Cancel</button>
     </section>
   </form>

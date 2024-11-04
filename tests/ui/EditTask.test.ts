@@ -658,7 +658,9 @@ describe('Edit Modal HTML snapshot tests', () => {
     });
 
     function verifyModalHTML() {
-        const task = taskFromLine({ line: '- [ ] absolutely to do', path: '' });
+        // Populate task a valid and an invalid date. Note that the valid date value
+        // is not visible in the HTML output.
+        const task = taskFromLine({ line: '- [ ] absolutely to do 🛫 2024-01-01 ⏳ 2024-02-33', path: '' });
         const onSubmit = () => {};
         const allTasks = [task];
         const { container } = renderAndCheckModal(task, onSubmit, allTasks);

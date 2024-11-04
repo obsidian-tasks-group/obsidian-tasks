@@ -105,13 +105,13 @@
       <input
         id="scheduled"
         type="text"
-        class="tasks-modal-date-input"
+        class="tasks-modal-date-input tasks-modal-error"
         placeholder="Try 'Mon' or 'tm' then space"
         accesskey="s" />
-      <div class="tasks-modal-parsed-date">
+      <code class="tasks-modal-parsed-date">
         ⏳
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
-      </div>
+        <i>invalid scheduled date</i>
+      </code>
       <label for="start">
         St
         <span class="accesskey">a</span>
@@ -257,7 +257,7 @@
       </div>
     </section>
     <section class="tasks-modal-button-section">
-      <button type="submit" class="mod-cta">Apply</button>
+      <button type="submit" class="mod-cta" disabled="">Apply</button>
       <button type="button">Cancel</button>
     </section>
   </form>
