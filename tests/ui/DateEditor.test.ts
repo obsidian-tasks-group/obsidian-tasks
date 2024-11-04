@@ -55,6 +55,9 @@ async function testTypingInput(
 
     if (expectedReturnedDateValidity === 'true') {
         testDatePickerValue(container, expectedRightText);
+    } else {
+        const datePicker = container.ownerDocument.getElementById('date-editor-picker') as HTMLInputElement;
+        expect(datePicker).toBeNull();
     }
 }
 
