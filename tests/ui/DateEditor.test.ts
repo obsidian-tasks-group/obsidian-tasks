@@ -144,5 +144,8 @@ describe('date editor wrapper tests', () => {
         expect(datePicker.value).toEqual('2024-11-03');
 
         testInputValue(container, 'due', '2024-11-03');
+        testInputValue(container, 'parsedDateFromDateEditor', '2024-11-03');
+        testInputValue(container, 'dueDateFromDateEditor', '2024-11-03');
+        testInputValue(container, 'parsedDateValidFromDateEditor', 'true');
     });
 });
