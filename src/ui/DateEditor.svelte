@@ -109,7 +109,7 @@
 <code class="tasks-modal-parsed-date"
     >{dateSymbol}
     {#if isDateValid}
-        <input type="date" bind:value={date} />
+        <input type="date" bind:value={date} id="date-editor-picker" />
     {:else}
         {@html parsedDate}
     {/if}

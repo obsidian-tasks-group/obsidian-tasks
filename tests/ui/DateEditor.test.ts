@@ -123,6 +123,6 @@ describe('date editor wrapper tests', () => {
         const container = renderDateEditorWrapper({ forwardOnly: false });
 
         const element = container.ownerDocument.getElementById('date-editor-picker');
-        expect(element).toBeNull();
+        expect(element).not.toBeNull();
     });
 });
