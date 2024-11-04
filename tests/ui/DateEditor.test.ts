@@ -65,6 +65,9 @@ describe('date editor wrapper tests', () => {
         testInputValue(container, 'due', '');
         testInputValue(container, 'parsedDateFromDateEditor', '<i>no due date</i>');
         testInputValue(container, 'dueDateFromDateEditor', '');
+
+        const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
+        expect(datePicker.value).toEqual('');
     });
 
     it('should replace an empty date field with typed date value', async () => {
