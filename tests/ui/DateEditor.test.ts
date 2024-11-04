@@ -118,4 +118,11 @@ describe('date editor wrapper tests', () => {
             { forwardOnly: false },
         );
     });
+
+    it('should pick a date', async () => {
+        const container = renderDateEditorWrapper({ forwardOnly: false });
+
+        const element = container.ownerDocument.getElementById('date-editor-picker');
+        expect(element).toBeNull();
+    });
 });
