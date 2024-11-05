@@ -96,7 +96,21 @@ Note that relative dates will be always interpreted as being in the future, beca
 > - `Only future dates` was introduced in Tasks 1.15.0.
 > - Editing of [[Dates#Created date|created]], [[Dates#Done date|done]] and [[Dates#Cancelled date|cancelled]] dates was introduced in Tasks 5.5.0.
 
-### Date abbreviations
+#### Date picker
+
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
+The modal provides a date picker, for easy selection of dates for your tasks.
+
+It uses a native date-picker on each platform, so the exact appearance and behaviour will vary.
+
+The screenshot below is from a Mac.
+
+![The date-picker allows easy mouse and keyboard adding and editing of dates](../images/modal-date-picker.png)
+<span class="caption">The date-picker allows easy mouse and keyboard adding and editing of dates</span>
+
+#### Date abbreviations
 
 > [!released]
 Introduced in Tasks 1.8.0.
