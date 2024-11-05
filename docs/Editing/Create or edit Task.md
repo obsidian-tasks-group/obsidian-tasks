@@ -99,7 +99,7 @@ Note that relative dates will be always interpreted as being in the future, beca
 #### Date picker
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 7.13.0.
 
 The modal provides a date picker, for easy selection of dates for your tasks.
 
