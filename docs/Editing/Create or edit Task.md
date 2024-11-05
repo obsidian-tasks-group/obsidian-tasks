@@ -105,6 +105,9 @@ The modal provides a date picker, for easy selection of dates for your tasks.
 
 It uses a native date-picker on each platform, so the exact appearance and behaviour will vary.
 
+![Date-picker demonstration video](https://www.youtube.com/v/bOc6J2m6HSM)
+<span class="caption">Date-picker demonstration video</span>
+
 The screenshot below is from a Mac.
 
 ![The date-picker allows easy mouse and keyboard adding and editing of dates](../images/modal-date-picker.png)
