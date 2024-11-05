@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
-- X.Y.Z:
+- 7.13.0:
   - Add [[Create or edit Task#Date picker|date picker]] to the Edit Task modal.
 - 7.12.0:
   - Add [[Layout#Hide and Show Tree|display of nested tasks]] in search results, with `show tree`
