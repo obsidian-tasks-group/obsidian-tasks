@@ -22,13 +22,19 @@ export enum State {
 export function getTasksFromFileContent2(
     filePath: string,
     fileContent: string,
-    listItems: ListItemCache[],
+    listItems: ListItemCache[] | undefined,
     logger: Logger,
     fileCache: CachedMetadata,
     errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
 ) {
-    const tasksFile = new TasksFile(filePath, fileCache);
     const tasks: Task[] = [];
+    if (listItems === undefined) {
+        // When called via Cache, this function would never be called or files without list items.
+        // It is useful for tests to be act gracefully on sample Markdown files with no list items, however.
+        return tasks;
+    }
+
+    const tasksFile = new TasksFile(filePath, fileCache);
     const fileLines = fileContent.split('\n');
     const linesInFile = fileLines.length;
 

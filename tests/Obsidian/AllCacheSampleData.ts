@@ -44,6 +44,7 @@ import { multi_line_task_and_list_item } from './__test_data__/multi_line_task_a
 import { multiple_headings } from './__test_data__/multiple_headings';
 import { no_heading } from './__test_data__/no_heading';
 import { no_yaml } from './__test_data__/no_yaml';
+import { non_tasks } from './__test_data__/non_tasks';
 import { one_task } from './__test_data__/one_task';
 import { yaml_1_alias } from './__test_data__/yaml_1_alias';
 import { yaml_2_aliases } from './__test_data__/yaml_2_aliases';
@@ -108,6 +109,7 @@ export function allCacheSampleData() {
         multiple_headings,
         no_heading,
         no_yaml,
+        non_tasks,
         one_task,
         yaml_1_alias,
         yaml_2_aliases,

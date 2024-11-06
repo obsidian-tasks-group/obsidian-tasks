@@ -627,9 +627,13 @@ describe('all mock files', () => {
 
     it.each(listPathAndData(files))(
         'should be able to read tasks from all mock files: "%s"',
-        (_path: string, file: any) => {
+        (path: string, file: any) => {
             const tasks = readTasksFromSimulatedFile(file);
-            expect(tasks.length).toBeGreaterThan(0);
+            if (path === 'Test Data/non_tasks.md') {
+                expect(tasks.length).toEqual(0);
+            } else {
+                expect(tasks.length).toBeGreaterThan(0);
+            }
         },
     );
 });
