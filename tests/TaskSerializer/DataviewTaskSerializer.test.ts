@@ -280,7 +280,7 @@ describe('DataviewTaskSerializer', () => {
         // This is one major behavior difference between Dataview and Tasks
         // This task is marked as skipped until tasks has support for parsing fields arbitrarily
         // within a task line
-        it.skip('should recognize inline fields arbitrarily positioned in the string', () => {
+        it.failing('should recognize inline fields arbitrarily positioned in the string', () => {
             const taskDetails = deserialize('Some task that is [due::2021-08-02] and is [priority::high]');
             expect(taskDetails).toMatchTaskDetails({
                 description: 'Some task that is [due::2021-08-02] and is [priority::high]',
