@@ -54,8 +54,7 @@ export function promptForDate(
             clearButton.addEventListener('click', async () => {
                 const newTask = new RemoveTaskDate(dateFieldToEdit, task).apply(task); // Clear the date
                 await taskSaver(task, newTask);
-                instance.clear(); // Clear the Flatpickr selection
-                instance.close(); // Close the Flatpickr picker
+                instance.destroy(); // Proper cleanup
             });
 
             // Create "Today" button
@@ -68,8 +67,7 @@ export function promptForDate(
                 const today = new Date();
                 const newTask = new SetTaskDate(dateFieldToEdit, today).apply(task); // Set today's date
                 await taskSaver(task, newTask);
-                instance.setDate(today); // Set the Flatpickr picker to today
-                instance.close(); // Close the Flatpickr picker
+                instance.destroy(); // Proper cleanup
             });
 
             // Append buttons to the container
