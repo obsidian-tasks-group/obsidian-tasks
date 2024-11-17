@@ -55,6 +55,7 @@ export function promptForDate(
                 const newTask = new RemoveTaskDate(dateFieldToEdit, task).apply(task); // Clear the date
                 await taskSaver(task, newTask);
                 instance.clear(); // Clear the Flatpickr selection
+                instance.close(); // Close the Flatpickr picker
             });
         },
     });
