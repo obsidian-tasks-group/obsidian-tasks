@@ -24,6 +24,7 @@ export function promptForDate(
     //      running overnight, the flatpickr modal shows the previous day as Today.
     const fp = flatpickr(parentElement, {
         defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
+        disableMobile: true,
         enableTime: false, // Optional: Enable time picker
         dateFormat: 'Y-m-d', // Adjust the date and time format as needed
         locale: {
