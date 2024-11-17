@@ -1,6 +1,6 @@
 import flatpickr from 'flatpickr';
 import type { Task } from '../../Task/Task';
-import { SetTaskDate } from '../EditInstructions/DateInstructions';
+import { RemoveTaskDate, SetTaskDate } from '../EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 
 /**
@@ -37,6 +37,25 @@ export function promptForDate(
                 await taskSaver(task, newTask);
             }
             instance.destroy(); // Proper cleanup
+        },
+        onReady: (_selectedDates, _dateStr, instance) => {
+            // Add a "Clear" button dynamically
+            const clearButton = document.createElement('button');
+            clearButton.type = 'button';
+            clearButton.textContent = 'Clear';
+            clearButton.classList.add('flatpickr-clear-button'); // Add a custom class for styling
+            clearButton.style.margin = '10px'; // Optional styling
+
+            // Append the button to the Flatpickr calendar container
+            const calendarContainer = instance.calendarContainer;
+            calendarContainer.appendChild(clearButton);
+
+            // Add click event to clear the date
+            clearButton.addEventListener('click', async () => {
+                const newTask = new RemoveTaskDate(dateFieldToEdit, task).apply(task); // Clear the date
+                await taskSaver(task, newTask);
+                instance.clear(); // Clear the Flatpickr selection
+            });
         },
     });
 
