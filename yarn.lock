@@ -5463,10 +5463,10 @@ svelte-eslint-parser@^0.33.1:
     postcss "^8.4.29"
     postcss-scss "^4.0.8"
 
-svelte-jester@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/svelte-jester/-/svelte-jester-2.3.2.tgz#9eb818da30807bbcc940b6130d15b2c34408d64f"
-  integrity sha512-JtxSz4FWAaCRBXbPsh4LcDs4Ua7zdXgLC0TZvT1R56hRV0dymmNP+abw67DTPF7sQPyNxWsOKd0Sl7Q8SnP8kg==
+svelte-jester@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/svelte-jester/-/svelte-jester-5.0.0.tgz#85ef07ba35080aa18174e98a9442fe3933ac9c5a"
+  integrity sha512-12UnqprvUClFZHmx8O9exOK5ncHdESMIVG7FM9wRCEBzHbtigsklwKB+Q3AyKPsCrrOS920f9ZbYFk4PO0sEnQ==
 
 svelte-preprocess@^5.0.4, svelte-preprocess@^5.1.3:
   version "5.1.4"
