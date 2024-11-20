@@ -46,21 +46,11 @@ export function promptForDate(
             buttonContainer.style.marginTop = '10px';
 
             // Create "Clear" button
-            const clearButton = document.createElement('button');
-            clearButton.type = 'button';
-            clearButton.textContent = 'Clear';
-            clearButton.classList.add('flatpickr-button'); // Add a custom class for styling
-
             const clearDate = () => {
                 // Clear the date
                 return new RemoveTaskDate(dateFieldToEdit, task).apply(task);
             };
-            clearButton.addEventListener('click', async () => {
-                const newTask = clearDate();
-                await taskSaver(task, newTask);
-                instance.destroy(); // Proper cleanup
-            });
-            buttonContainer.appendChild(clearButton);
+            addButton(buttonContainer, instance, task, taskSaver, 'Clear', clearDate);
 
             // Create "Today" button
             const setDateToToday = () => {
