@@ -11,6 +11,7 @@ import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
 import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
 import { defaultTaskSaver } from '../ui/Menus/TaskEditingMenu';
+import { promptForDate } from '../ui/Menus/DatePicker';
 import { splitDateText } from '../DateTime/Postponer';
 import { DateMenu } from '../ui/Menus/DateMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
@@ -215,11 +216,11 @@ export class TaskLineRenderer {
                     const componentDateField = component as AllTaskDateFields;
 
                     // Note: The more convenient span.onClickEvent() doesn't work here, as it is not available when tests are run.
-                    // span.addEventListener('click', (ev: MouseEvent) => {
-                    //     ev.preventDefault(); // suppress the default click behavior
-                    //     ev.stopPropagation(); // suppress further event propagation
-                    //     promptForDate(span, task, componentDateField, defaultTaskSaver);
-                    // });
+                    span.addEventListener('click', (ev: MouseEvent) => {
+                        ev.preventDefault(); // suppress the default click behavior
+                        ev.stopPropagation(); // suppress further event propagation
+                        promptForDate(span, task, componentDateField, defaultTaskSaver);
+                    });
 
                     span.addEventListener('contextmenu', (ev: MouseEvent) => {
                         ev.preventDefault(); // suppress the default context menu
@@ -229,8 +230,7 @@ export class TaskLineRenderer {
                     });
                     span.setAttribute(
                         'title',
-                        // `Click to edit ${splitDateText(componentDateField)}, Right-click for more options`,
-                        `Right-click to edit ${splitDateText(componentDateField)}`,
+                        `Click to edit ${splitDateText(componentDateField)}, Right-click for more options`,
                     );
                 }
             }
