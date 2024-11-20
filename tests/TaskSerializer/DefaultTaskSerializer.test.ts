@@ -170,7 +170,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
 
         describe('should parse onCompletion', () => {
             it('should parse delete action', () => {
-                const onCompletion = `${onCompletionSymbol} delete`;
+                const onCompletion = `${onCompletionSymbol} Delete`;
                 const taskDetails = deserialize(onCompletion);
                 expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Delete });
             });
