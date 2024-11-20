@@ -64,7 +64,7 @@ export function promptForDate(
                 const today = new Date();
                 return new SetTaskDate(dateFieldToEdit, today).apply(task);
             };
-            addButton(buttonName, applyDate, taskSaver, task, instance, buttonContainer);
+            addButton(buttonContainer, instance, task, taskSaver, buttonName, applyDate);
 
             // Append buttons to the container
             buttonContainer.appendChild(clearButton);
@@ -80,12 +80,12 @@ export function promptForDate(
 }
 
 function addButton(
+    buttonContainer: HTMLDivElement,
+    instance: flatpickr.Instance,
+    task: Task,
+    taskSaver: (originalTask: Task, newTasks: Task | Task[]) => Promise<void>,
     buttonName: string,
     applyDate: () => Task[],
-    taskSaver: (originalTask: Task, newTasks: Task | Task[]) => Promise<void>,
-    task: Task,
-    instance: flatpickr.Instance,
-    buttonContainer: HTMLDivElement,
 ) {
     const button = document.createElement('button');
     button.type = 'button';
