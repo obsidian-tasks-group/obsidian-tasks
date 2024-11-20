@@ -150,11 +150,7 @@
         onSubmit(newTasks);
     };
 
-    function handleOpen(event: CustomEvent<{ instance: flatpickr.Instance }>) {
-        if (modal) {
-            modal.setActiveFlatpickrInstance(event.detail.instance);
-        }
-    }
+    function handleOpen(_event: CustomEvent<{ instance: flatpickr.Instance }>) {}
 
     function handleClose() {}
 </script>
