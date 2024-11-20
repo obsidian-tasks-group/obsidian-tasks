@@ -87,15 +87,15 @@ function addButton(
     instance: flatpickr.Instance,
     buttonContainer: HTMLDivElement,
 ) {
-    const todayButton = document.createElement('button');
-    todayButton.type = 'button';
-    todayButton.textContent = buttonName;
-    todayButton.classList.add('flatpickr-button'); // Add a custom class for styling
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = buttonName;
+    button.classList.add('flatpickr-button'); // Add a custom class for styling
 
-    todayButton.addEventListener('click', async () => {
+    button.addEventListener('click', async () => {
         const newTask = applyDate();
         await taskSaver(task, newTask);
         instance.destroy(); // Proper cleanup
     });
-    buttonContainer.appendChild(todayButton);
+    buttonContainer.appendChild(button);
 }
