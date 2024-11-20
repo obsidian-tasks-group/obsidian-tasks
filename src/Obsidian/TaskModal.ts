@@ -6,9 +6,7 @@ import type { Task } from '../Task/Task';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
 
-export interface IFlatpickrUser {}
-
-export class TaskModal extends Modal implements IFlatpickrUser {
+export class TaskModal extends Modal {
     public readonly task: Task;
     public readonly onSubmit: (updatedTasks: Task[]) => void;
     public readonly allTasks: Task[];
