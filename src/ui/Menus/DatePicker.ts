@@ -51,8 +51,12 @@ export function promptForDate(
             clearButton.textContent = 'Clear';
             clearButton.classList.add('flatpickr-button'); // Add a custom class for styling
 
+            function clearDate() {
+                // Clear the date
+                return new RemoveTaskDate(dateFieldToEdit, task).apply(task);
+            }
             clearButton.addEventListener('click', async () => {
-                const newTask = new RemoveTaskDate(dateFieldToEdit, task).apply(task); // Clear the date
+                const newTask = clearDate();
                 await taskSaver(task, newTask);
                 instance.destroy(); // Proper cleanup
             });
