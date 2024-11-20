@@ -1,11 +1,9 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import type flatpickr from 'flatpickr';
 
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
-    import type { IFlatpickrUser } from '../Obsidian/TaskModal';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';
@@ -18,7 +16,6 @@
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
     export let allTasks: Task[];
-    export let modal: IFlatpickrUser | null = null;
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -149,18 +146,6 @@
         const newTasks = await editableTask.applyEdits(task, allTasks);
         onSubmit(newTasks);
     };
-
-    function handleOpen(event: CustomEvent<{ instance: flatpickr.Instance }>) {
-        if (modal) {
-            modal.setActiveFlatpickrInstance(event.detail.instance);
-        }
-    }
-
-    function handleClose() {
-        if (modal) {
-            modal.clearActiveFlatpickrInstance();
-        }
-    }
 </script>
 
 <!--
@@ -269,8 +254,6 @@ Availability of access keys:
             bind:isDateValid={isDueDateValid}
             forwardOnly={editableTask.forwardOnly}
             accesskey={accesskey('d')}
-            on:open={handleOpen}
-            on:close={handleClose}
         />
 
         <!-- --------------------------------------------------------------------------- -->
@@ -283,8 +266,6 @@ Availability of access keys:
             bind:isDateValid={isScheduledDateValid}
             forwardOnly={editableTask.forwardOnly}
             accesskey={accesskey('s')}
-            on:open={handleOpen}
-            on:close={handleClose}
         />
 
         <!-- --------------------------------------------------------------------------- -->
@@ -297,8 +278,6 @@ Availability of access keys:
             bind:isDateValid={isStartDateValid}
             forwardOnly={editableTask.forwardOnly}
             accesskey={accesskey('a')}
-            on:open={handleOpen}
-            on:close={handleClose}
         />
 
         <!-- --------------------------------------------------------------------------- -->
@@ -372,8 +351,6 @@ Availability of access keys:
             bind:isDateValid={isCreatedDateValid}
             forwardOnly={editableTask.forwardOnly}
             accesskey={accesskey('c')}
-            on:open={handleOpen}
-            on:close={handleClose}
         />
 
         <!-- --------------------------------------------------------------------------- -->
@@ -386,8 +363,6 @@ Availability of access keys:
             bind:isDateValid={isDoneDateValid}
             forwardOnly={editableTask.forwardOnly}
             accesskey={accesskey('x')}
-            on:open={handleOpen}
-            on:close={handleClose}
         />
 
         <!-- --------------------------------------------------------------------------- -->
@@ -400,8 +375,6 @@ Availability of access keys:
             bind:isDateValid={isCancelledDateValid}
             forwardOnly={editableTask.forwardOnly}
             accesskey={accesskey('-')}
-            on:open={handleOpen}
-            on:close={handleClose}
         />
     </section>
 
