@@ -57,6 +57,10 @@ export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + ta
 
 function dateFieldRegex(symbols: string) {
     const valueRegexString = '(\\d{4}-\\d{2}-\\d{2})$';
+    return fieldRegex(symbols, valueRegexString);
+}
+
+function fieldRegex(symbols: string, valueRegexString: string) {
     return new RegExp(symbols + ' *' + valueRegexString, 'u');
 }
 
