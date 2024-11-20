@@ -51,12 +51,10 @@ export function promptForDate(
             });
 
             // Create "Today" button
-            const setDateToToday = () => {
-                // Set today's date
+            addButton(buttonContainer, instance, task, taskSaver, 'Today', () => {
                 const today = new Date();
                 return new SetTaskDate(dateFieldToEdit, today).apply(task);
-            };
-            addButton(buttonContainer, instance, task, taskSaver, 'Today', setDateToToday);
+            });
 
             // Append the button container to the Flatpickr calendar container
             const calendarContainer = instance.calendarContainer;
