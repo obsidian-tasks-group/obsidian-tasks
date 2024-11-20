@@ -58,13 +58,12 @@ export function promptForDate(
             });
 
             // Create "Today" button
-            const buttonName = 'Today';
             const applyDate = () => {
                 // Set today's date
                 const today = new Date();
                 return new SetTaskDate(dateFieldToEdit, today).apply(task);
             };
-            addButton(buttonContainer, instance, task, taskSaver, buttonName, applyDate);
+            addButton(buttonContainer, instance, task, taskSaver, 'Today', applyDate);
 
             // Append buttons to the container
             buttonContainer.appendChild(clearButton);
