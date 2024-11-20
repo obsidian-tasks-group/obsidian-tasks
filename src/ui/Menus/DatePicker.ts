@@ -46,11 +46,9 @@ export function promptForDate(
             buttonContainer.style.marginTop = '10px';
 
             // Create "Clear" button
-            const clearDate = () => {
-                // Clear the date
+            addButton(buttonContainer, instance, task, taskSaver, 'Clear', () => {
                 return new RemoveTaskDate(dateFieldToEdit, task).apply(task);
-            };
-            addButton(buttonContainer, instance, task, taskSaver, 'Clear', clearDate);
+            });
 
             // Create "Today" button
             const setDateToToday = () => {
