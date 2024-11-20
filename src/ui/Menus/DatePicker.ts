@@ -59,16 +59,15 @@ export function promptForDate(
 
             // Create "Today" button
             const buttonName = 'Today';
-            const todayButton = document.createElement('button');
-            todayButton.type = 'button';
-            todayButton.textContent = buttonName;
-            todayButton.classList.add('flatpickr-button'); // Add a custom class for styling
-
             const applyDate = () => {
                 // Set today's date
                 const today = new Date();
                 return new SetTaskDate(dateFieldToEdit, today).apply(task);
             };
+            const todayButton = document.createElement('button');
+            todayButton.type = 'button';
+            todayButton.textContent = buttonName;
+            todayButton.classList.add('flatpickr-button'); // Add a custom class for styling
 
             todayButton.addEventListener('click', async () => {
                 const newTask = applyDate();
