@@ -6,9 +6,7 @@ import type { Task } from '../Task/Task';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
 
-export interface IFlatpickrUser {
-    setActiveFlatpickrInstance(instance: flatpickr.Instance): void;
-}
+export interface IFlatpickrUser {}
 
 export class TaskModal extends Modal implements IFlatpickrUser {
     public readonly task: Task;
@@ -95,9 +93,5 @@ export class TaskModal extends Modal implements IFlatpickrUser {
         } else {
             this.close();
         }
-    }
-
-    public setActiveFlatpickrInstance(instance: flatpickr.Instance): void {
-        this.activeFlatpickrInstance = instance;
     }
 }
