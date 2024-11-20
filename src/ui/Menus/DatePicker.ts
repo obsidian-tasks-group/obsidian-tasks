@@ -64,17 +64,7 @@ export function promptForDate(
                 const today = new Date();
                 return new SetTaskDate(dateFieldToEdit, today).apply(task);
             };
-            const todayButton = document.createElement('button');
-            todayButton.type = 'button';
-            todayButton.textContent = buttonName;
-            todayButton.classList.add('flatpickr-button'); // Add a custom class for styling
-
-            todayButton.addEventListener('click', async () => {
-                const newTask = applyDate();
-                await taskSaver(task, newTask);
-                instance.destroy(); // Proper cleanup
-            });
-            buttonContainer.appendChild(todayButton);
+            addButton(buttonName, applyDate, taskSaver, task, instance, buttonContainer);
 
             // Append buttons to the container
             buttonContainer.appendChild(clearButton);
@@ -87,4 +77,25 @@ export function promptForDate(
 
     // Open the calendar programmatically
     fp.open();
+}
+
+function addButton(
+    buttonName: string,
+    applyDate: () => Task[],
+    taskSaver: (originalTask: Task, newTasks: Task | Task[]) => Promise<void>,
+    task: Task,
+    instance: flatpickr.Instance,
+    buttonContainer: HTMLDivElement,
+) {
+    const todayButton = document.createElement('button');
+    todayButton.type = 'button';
+    todayButton.textContent = buttonName;
+    todayButton.classList.add('flatpickr-button'); // Add a custom class for styling
+
+    todayButton.addEventListener('click', async () => {
+        const newTask = applyDate();
+        await taskSaver(task, newTask);
+        instance.destroy(); // Proper cleanup
+    });
+    buttonContainer.appendChild(todayButton);
 }
