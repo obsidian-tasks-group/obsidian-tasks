@@ -58,9 +58,10 @@ export function promptForDate(
             });
 
             // Create "Today" button
+            const buttonName = 'Today';
             const todayButton = document.createElement('button');
             todayButton.type = 'button';
-            todayButton.textContent = 'Today';
+            todayButton.textContent = buttonName;
             todayButton.classList.add('flatpickr-button'); // Add a custom class for styling
 
             todayButton.addEventListener('click', async () => {
