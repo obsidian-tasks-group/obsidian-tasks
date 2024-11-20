@@ -2,6 +2,7 @@ import flatpickr from 'flatpickr';
 import type { Task } from '../../Task/Task';
 import { RemoveTaskDate, SetTaskDate } from '../EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
+import type { TaskSaver } from './TaskEditingMenu';
 
 /**
  * A calendar date picker which edits a date value in a {@link Task} object.
@@ -14,7 +15,7 @@ export function promptForDate(
     parentElement: HTMLElement,
     task: Task,
     dateFieldToEdit: AllTaskDateFields,
-    taskSaver: (originalTask: Task, newTasks: Task | Task[]) => Promise<void>,
+    taskSaver: TaskSaver,
 ) {
     const currentValue = task[dateFieldToEdit];
     // TODO figure out how Today's date is determined: if Obsidian is left
@@ -67,7 +68,7 @@ function addButton(
     buttonContainer: HTMLDivElement,
     instance: flatpickr.Instance,
     task: Task,
-    taskSaver: (originalTask: Task, newTasks: Task | Task[]) => Promise<void>,
+    taskSaver: TaskSaver,
     buttonName: string,
     applyDate: () => Task[],
 ) {
