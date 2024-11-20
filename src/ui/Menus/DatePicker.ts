@@ -49,7 +49,7 @@ export function promptForDate(
             const clearButton = document.createElement('button');
             clearButton.type = 'button';
             clearButton.textContent = 'Clear';
-            clearButton.classList.add('flatpickr-clear-button'); // Add a custom class for styling
+            clearButton.classList.add('flatpickr-button'); // Add a custom class for styling
 
             clearButton.addEventListener('click', async () => {
                 const newTask = new RemoveTaskDate(dateFieldToEdit, task).apply(task); // Clear the date
@@ -61,7 +61,7 @@ export function promptForDate(
             const todayButton = document.createElement('button');
             todayButton.type = 'button';
             todayButton.textContent = 'Today';
-            todayButton.classList.add('flatpickr-today-button'); // Add a custom class for styling
+            todayButton.classList.add('flatpickr-button'); // Add a custom class for styling
 
             todayButton.addEventListener('click', async () => {
                 const today = new Date();
