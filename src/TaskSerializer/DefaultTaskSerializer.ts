@@ -55,8 +55,8 @@ export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 // The allowed characters in a comma-separated sequence of task ids:
 export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
 
-function dateRegex() {
-    return new RegExp('🛫 *(\\d{4}-\\d{2}-\\d{2})$', 'u');
+function dateRegex(symbols: string) {
+    return new RegExp(symbols + ' *(\\d{4}-\\d{2}-\\d{2})$', 'u');
 }
 
 /**
@@ -88,7 +88,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         // removed from the end until none are left.
         // \uFE0F? allows an optional Variant Selector 16 on emojis.
         priorityRegex: /([🔺⏫🔼🔽⏬])\uFE0F?$/u,
-        startDateRegex: dateRegex(),
+        startDateRegex: dateRegex('🛫'),
         createdDateRegex: /➕ *(\d{4}-\d{2}-\d{2})$/u,
         scheduledDateRegex: /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u,
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
