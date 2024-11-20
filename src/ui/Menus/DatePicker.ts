@@ -36,7 +36,7 @@ export function promptForDate(
                 const newTask = new SetTaskDate(dateFieldToEdit, date).apply(task);
                 await taskSaver(task, newTask);
             }
-            instance.destroy(); // Proper cleanup
+            instance.destroy();
         },
         onReady: (_selectedDates, _dateStr, instance) => {
             // Add custom buttons dynamically
@@ -77,12 +77,12 @@ function addButton(
     const button = document.createElement('button');
     button.type = 'button';
     button.textContent = buttonName;
-    button.classList.add('flatpickr-button'); // Add a custom class for styling
+    button.classList.add('flatpickr-button');
 
     button.addEventListener('click', async () => {
         const newTask = applyDate();
         await taskSaver(task, newTask);
-        instance.destroy(); // Proper cleanup
+        instance.destroy();
     });
     buttonContainer.appendChild(button);
 }
