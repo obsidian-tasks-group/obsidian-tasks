@@ -58,7 +58,6 @@ export class TaskModal extends Modal implements IFlatpickrUser {
                 statusOptions: statusOptions,
                 onSubmit: this.onSubmit,
                 allTasks: this.allTasks,
-                modal: this,
             },
         });
     }
