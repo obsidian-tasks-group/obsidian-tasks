@@ -5,13 +5,10 @@ import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 
 /**
  * A calendar date picker which edits a date value in a {@link Task} object.
- * See also {@link openDatePicker}
  * @param parentElement
  * @param task
  * @param dateFieldToEdit
  * @param taskSaver
- *
- * See also {@link openDatePicker}
  */
 export function promptForDate(
     parentElement: HTMLElement,
