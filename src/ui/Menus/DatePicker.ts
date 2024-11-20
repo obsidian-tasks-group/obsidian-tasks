@@ -74,10 +74,10 @@ export function promptForDate(
                 await taskSaver(task, newTask);
                 instance.destroy(); // Proper cleanup
             });
+            buttonContainer.appendChild(todayButton);
 
             // Append buttons to the container
             buttonContainer.appendChild(clearButton);
-            buttonContainer.appendChild(todayButton);
 
             // Append the button container to the Flatpickr calendar container
             const calendarContainer = instance.calendarContainer;
