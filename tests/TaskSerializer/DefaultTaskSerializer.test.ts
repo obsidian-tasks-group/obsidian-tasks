@@ -174,6 +174,12 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 const taskDetails = deserialize(onCompletion);
                 expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Delete });
             });
+
+            it.failing('should allow multiple spaces', () => {
+                const onCompletion = `${onCompletionSymbol}  Keep`;
+                const taskDetails = deserialize(onCompletion);
+                expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Keep });
+            });
         });
 
         describe('should parse depends on', () => {
