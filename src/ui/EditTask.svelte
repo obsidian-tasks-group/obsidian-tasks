@@ -156,11 +156,7 @@
         }
     }
 
-    function handleClose() {
-        if (modal) {
-            modal.clearActiveFlatpickrInstance();
-        }
-    }
+    function handleClose() {}
 </script>
 
 <!--

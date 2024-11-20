@@ -8,7 +8,6 @@ import { Status } from '../Statuses/Status';
 
 export interface IFlatpickrUser {
     setActiveFlatpickrInstance(instance: flatpickr.Instance): void;
-    clearActiveFlatpickrInstance(): void;
 }
 
 export class TaskModal extends Modal implements IFlatpickrUser {
@@ -100,9 +99,5 @@ export class TaskModal extends Modal implements IFlatpickrUser {
 
     public setActiveFlatpickrInstance(instance: flatpickr.Instance): void {
         this.activeFlatpickrInstance = instance;
-    }
-
-    public clearActiveFlatpickrInstance(): void {
-        this.activeFlatpickrInstance = null;
     }
 }
