@@ -55,6 +55,10 @@ export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 // The allowed characters in a comma-separated sequence of task ids:
 export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
 
+function dateRegex() {
+    return new RegExp('🛫 *(\\d{4}-\\d{2}-\\d{2})$', 'u');
+}
+
 /**
  * A symbol map for obsidian-task's default task style.
  * Uses emojis to concisely convey meaning
@@ -84,7 +88,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         // removed from the end until none are left.
         // \uFE0F? allows an optional Variant Selector 16 on emojis.
         priorityRegex: /([🔺⏫🔼🔽⏬])\uFE0F?$/u,
-        startDateRegex: new RegExp('🛫 *(\\d{4}-\\d{2}-\\d{2})$', 'u'),
+        startDateRegex: dateRegex(),
         createdDateRegex: /➕ *(\d{4}-\d{2}-\d{2})$/u,
         scheduledDateRegex: /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u,
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
