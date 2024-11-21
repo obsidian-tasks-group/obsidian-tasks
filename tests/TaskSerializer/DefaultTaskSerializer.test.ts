@@ -122,6 +122,15 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 expect(taskDetails).toMatchTaskDetails({ ['scheduledDate']: moment('2021-06-20', 'YYYY-MM-DD') });
             });
 
+            it.failing('should parse a scheduledDate - with Variation Selector', () => {
+                // This test showed the existence of https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3179
+                const input = '⏳️ 2024-11-18';
+                expect(hasVariantSelector16(input)).toBe(true);
+
+                const taskDetails = deserialize(input);
+                expect(taskDetails).toMatchTaskDetails({ ['scheduledDate']: moment('2024-11-18', 'YYYY-MM-DD') });
+            });
+
             it('should parse a dueDate - with non-standard emoji 1', () => {
                 const taskDetails = deserialize('📆 2021-06-20');
                 expect(taskDetails).toMatchTaskDetails({ ['dueDate']: moment('2021-06-20', 'YYYY-MM-DD') });
