@@ -13,6 +13,7 @@ import {
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
+import { escapeInvisibleCharacters } from '../../src/lib/StringHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -57,8 +58,8 @@ describe('validate emoji regular expressions', () => {
                 throw new Error(`Unexpected value for ${key}: Not a regular expression.`);
             }
         });
-        // Concatenate all entries into a single string
-        return '\n' + regexDetails.join('\n') + '\n';
+        // Concatenate all entries into a single string, with any Variation Selectors made visible
+        return escapeInvisibleCharacters('\n' + regexDetails.join('\n') + '\n');
     }
 
     it('regular expressions should have expected source', () => {
@@ -73,7 +74,7 @@ describe('validate emoji regular expressions', () => {
             cancelledDateRegex: /❌ *(\\d{4}-\\d{2}-\\d{2})$/u
             recurrenceRegex: /🔁 *([a-zA-Z0-9, !]+)$/u
             onCompletionRegex: /🏁 *([a-zA-Z]+)$/u
-            dependsOnRegex: /⛔️? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/u
+            dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/u
             idRegex: /🆔 *([a-zA-Z0-9-_]+)$/u
             "
         `);
