@@ -65,7 +65,7 @@ describe('validate emoji regular expressions', () => {
     it('regular expressions should have expected source', () => {
         expect(generateRegexApprovalTest()).toMatchInlineSnapshot(`
             "
-            priorityRegex: /([🔺⏫🔼🔽⏬])\\uFE0F?$/u
+            priorityRegex: /([🔺⏫🔼🔽⏬])\\ufe0f?$/u
             startDateRegex: /🛫 *(\\d{4}-\\d{2}-\\d{2})$/u
             createdDateRegex: /➕ *(\\d{4}-\\d{2}-\\d{2})$/u
             scheduledDateRegex: /[⏳⌛] *(\\d{4}-\\d{2}-\\d{2})$/u
