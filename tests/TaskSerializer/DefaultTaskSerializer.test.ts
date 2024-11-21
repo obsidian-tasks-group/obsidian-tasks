@@ -42,6 +42,42 @@ describe('validate emojis', () => {
     });
 });
 
+describe('validate emoji regular expressions', () => {
+    /**
+     * Generate a string representation of all regular expressions
+     * in TaskFormatRegularExpressions by concatenating their source and flags.
+     */
+    function generateRegexApprovalTest(): string {
+        const regexMap = DEFAULT_SYMBOLS.TaskFormatRegularExpressions;
+        const regexDetails = Object.entries(regexMap).map(([key, regex]) => {
+            // Get the source and flags for each regex
+            if (regex instanceof RegExp) {
+                return `${key}: /${regex.source}/${regex.flags}`;
+            } else {
+                throw new Error(`Unexpected value for ${key}: Not a regular expression.`);
+            }
+        });
+        // Concatenate all entries into a single string
+        return regexDetails.join('\n');
+    }
+
+    it('regular expressions should have expected source', () => {
+        expect(generateRegexApprovalTest()).toMatchInlineSnapshot(`
+            "priorityRegex: /([🔺⏫🔼🔽⏬])\\uFE0F?$/u
+            startDateRegex: /🛫 *(\\d{4}-\\d{2}-\\d{2})$/u
+            createdDateRegex: /➕ *(\\d{4}-\\d{2}-\\d{2})$/u
+            scheduledDateRegex: /[⏳⌛] *(\\d{4}-\\d{2}-\\d{2})$/u
+            dueDateRegex: /[📅📆🗓] *(\\d{4}-\\d{2}-\\d{2})$/u
+            doneDateRegex: /✅ *(\\d{4}-\\d{2}-\\d{2})$/u
+            cancelledDateRegex: /❌ *(\\d{4}-\\d{2}-\\d{2})$/u
+            recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu
+            onCompletionRegex: /🏁 ?([a-zA-Z]+)$/iu
+            dependsOnRegex: /⛔️? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/iu
+            idRegex: /🆔 *([a-zA-Z0-9-_]+)$/iu"
+        `);
+    });
+});
+
 // NEW_TASK_FIELD_EDIT_REQUIRED
 
 describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ symbols }) => {
