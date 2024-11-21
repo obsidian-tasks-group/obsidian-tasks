@@ -55,6 +55,19 @@ export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 // The allowed characters in a comma-separated sequence of task ids:
 export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
 
+function dateFieldRegex(symbols: string) {
+    return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2})');
+}
+
+function fieldRegex(symbols: string, valueRegexString: string) {
+    let source = symbols;
+    if (valueRegexString !== '') {
+        source += ' *' + valueRegexString;
+    }
+    source += '$';
+    return new RegExp(source, 'u');
+}
+
 /**
  * A symbol map for obsidian-task's default task style.
  * Uses emojis to concisely convey meaning
@@ -83,17 +96,17 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         // The following regex's end with `$` because they will be matched and
         // removed from the end until none are left.
         // \uFE0F? allows an optional Variant Selector 16 on emojis.
-        priorityRegex: /([🔺⏫🔼🔽⏬])\uFE0F?$/u,
-        startDateRegex: /🛫 *(\d{4}-\d{2}-\d{2})$/u,
-        createdDateRegex: /➕ *(\d{4}-\d{2}-\d{2})$/u,
-        scheduledDateRegex: /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u,
-        dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
-        doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
-        cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
-        recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        onCompletionRegex: /🏁 *([a-zA-Z]+)$/iu,
-        dependsOnRegex: new RegExp('⛔\uFE0F? *(' + taskIdSequenceRegex.source + ')$', 'iu'),
-        idRegex: new RegExp('🆔 *(' + taskIdRegex.source + ')$', 'iu'),
+        priorityRegex: fieldRegex('([🔺⏫🔼🔽⏬])\uFE0F?', ''),
+        startDateRegex: dateFieldRegex('🛫'),
+        createdDateRegex: dateFieldRegex('➕'),
+        scheduledDateRegex: dateFieldRegex('[⏳⌛]'),
+        dueDateRegex: dateFieldRegex('[📅📆🗓]'),
+        doneDateRegex: dateFieldRegex('✅'),
+        cancelledDateRegex: dateFieldRegex('❌'),
+        recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)'),
+        onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)'),
+        dependsOnRegex: fieldRegex('⛔\uFE0F?', '(' + taskIdSequenceRegex.source + ')'),
+        idRegex: fieldRegex('🆔', '(' + taskIdRegex.source + ')'),
     },
 } as const;
 
