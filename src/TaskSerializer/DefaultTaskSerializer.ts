@@ -95,7 +95,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         // The following regex's end with `$` because they will be matched and
         // removed from the end until none are left.
         // \uFE0F? allows an optional Variant Selector 16 on emojis.
-        priorityRegex: /([🔺⏫🔼🔽⏬])\uFE0F?$/u,
+        priorityRegex: fieldRegex('([🔺⏫🔼🔽⏬])\uFE0F?$', ''),
         startDateRegex: dateFieldRegex('🛫'),
         createdDateRegex: dateFieldRegex('➕'),
         scheduledDateRegex: dateFieldRegex('[⏳⌛]'),
