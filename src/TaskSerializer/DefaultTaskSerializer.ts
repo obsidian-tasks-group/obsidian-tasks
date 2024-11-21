@@ -90,10 +90,10 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         cancelledDateRegex: /❌ *(\d{4}-\d{2}-\d{2})$/u,
-        recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        onCompletionRegex: /🏁 *([a-zA-Z]+)$/iu,
-        dependsOnRegex: new RegExp('⛔\uFE0F? *(' + taskIdSequenceRegex.source + ')$', 'iu'),
-        idRegex: new RegExp('🆔 *(' + taskIdRegex.source + ')$', 'iu'),
+        recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/u,
+        onCompletionRegex: /🏁 *([a-zA-Z]+)$/u,
+        dependsOnRegex: new RegExp('⛔\uFE0F? *(' + taskIdSequenceRegex.source + ')$', 'u'),
+        idRegex: new RegExp('🆔 *(' + taskIdRegex.source + ')$', 'u'),
     },
 } as const;
 
