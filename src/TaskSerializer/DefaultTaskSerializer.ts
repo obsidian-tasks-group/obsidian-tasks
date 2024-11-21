@@ -100,7 +100,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         cancelledDateRegex: dateFieldRegex('❌'),
         recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)$'),
         onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)$'),
-        dependsOnRegex: new RegExp('⛔\uFE0F? *(' + taskIdSequenceRegex.source + ')$', 'u'),
+        dependsOnRegex: fieldRegex('⛔\uFE0F?', '(' + taskIdSequenceRegex.source + ')$'),
         idRegex: new RegExp('🆔 *(' + taskIdRegex.source + ')$', 'u'),
     },
 } as const;
