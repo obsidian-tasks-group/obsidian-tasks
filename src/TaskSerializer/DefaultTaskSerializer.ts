@@ -60,7 +60,11 @@ function dateFieldRegex(symbols: string) {
 }
 
 function fieldRegex(symbols: string, valueRegexString: string) {
-    return new RegExp(symbols + ' *' + valueRegexString, 'u');
+    let source = symbols;
+    if (valueRegexString !== '') {
+        source += ' *' + valueRegexString;
+    }
+    return new RegExp(source, 'u');
 }
 
 /**
