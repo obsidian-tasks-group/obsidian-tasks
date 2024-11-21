@@ -66,16 +66,16 @@ describe('validate emoji regular expressions', () => {
         expect(generateRegexApprovalTest()).toMatchInlineSnapshot(`
             "
             priorityRegex: /([🔺⏫🔼🔽⏬])\\ufe0f?$/u
-            startDateRegex: /🛫 *(\\d{4}-\\d{2}-\\d{2})$/u
-            createdDateRegex: /➕ *(\\d{4}-\\d{2}-\\d{2})$/u
-            scheduledDateRegex: /[⏳⌛] *(\\d{4}-\\d{2}-\\d{2})$/u
-            dueDateRegex: /[📅📆🗓] *(\\d{4}-\\d{2}-\\d{2})$/u
-            doneDateRegex: /✅ *(\\d{4}-\\d{2}-\\d{2})$/u
-            cancelledDateRegex: /❌ *(\\d{4}-\\d{2}-\\d{2})$/u
-            recurrenceRegex: /🔁 *([a-zA-Z0-9, !]+)$/u
-            onCompletionRegex: /🏁 *([a-zA-Z]+)$/u
+            startDateRegex: /🛫\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
+            createdDateRegex: /➕\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
+            scheduledDateRegex: /[⏳⌛]\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
+            dueDateRegex: /[📅📆🗓]\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
+            doneDateRegex: /✅\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
+            cancelledDateRegex: /❌\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
+            recurrenceRegex: /🔁\\ufe0f? *([a-zA-Z0-9, !]+)$/u
+            onCompletionRegex: /🏁\\ufe0f? *([a-zA-Z]+)$/u
             dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/u
-            idRegex: /🆔 *([a-zA-Z0-9-_]+)$/u
+            idRegex: /🆔\\ufe0f? *([a-zA-Z0-9-_]+)$/u
             "
         `);
     });
@@ -120,6 +120,15 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             it('should parse a scheduledDate - with non-standard emoji', () => {
                 const taskDetails = deserialize('⌛ 2021-06-20');
                 expect(taskDetails).toMatchTaskDetails({ ['scheduledDate']: moment('2021-06-20', 'YYYY-MM-DD') });
+            });
+
+            it('should parse a scheduledDate - with Variation Selector', () => {
+                // This test showed the existence of https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3179
+                const input = '⏳️ 2024-11-18';
+                expect(hasVariantSelector16(input)).toBe(true);
+
+                const taskDetails = deserialize(input);
+                expect(taskDetails).toMatchTaskDetails({ ['scheduledDate']: moment('2024-11-18', 'YYYY-MM-DD') });
             });
 
             it('should parse a dueDate - with non-standard emoji 1', () => {
