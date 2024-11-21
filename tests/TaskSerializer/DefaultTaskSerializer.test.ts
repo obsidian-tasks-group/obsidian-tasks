@@ -71,7 +71,7 @@ describe('validate emoji regular expressions', () => {
             doneDateRegex: /✅ *(\\d{4}-\\d{2}-\\d{2})$/u
             cancelledDateRegex: /❌ *(\\d{4}-\\d{2}-\\d{2})$/u
             recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu
-            onCompletionRegex: /🏁 ?([a-zA-Z]+)$/iu
+            onCompletionRegex: /🏁 *([a-zA-Z]+)$/iu
             dependsOnRegex: /⛔️? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/iu
             idRegex: /🆔 *([a-zA-Z0-9-_]+)$/iu"
         `);
@@ -170,9 +170,15 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
 
         describe('should parse onCompletion', () => {
             it('should parse delete action', () => {
-                const onCompletion = `${onCompletionSymbol} delete`;
+                const onCompletion = `${onCompletionSymbol} Delete`;
                 const taskDetails = deserialize(onCompletion);
                 expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Delete });
+            });
+
+            it('should allow multiple spaces', () => {
+                const onCompletion = `${onCompletionSymbol}  Keep`;
+                const taskDetails = deserialize(onCompletion);
+                expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Keep });
             });
         });
 
