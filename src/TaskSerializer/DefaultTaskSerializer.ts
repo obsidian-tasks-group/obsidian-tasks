@@ -65,6 +65,8 @@ function fieldRegex(symbols: string, valueRegexString: string) {
     if (valueRegexString !== '') {
         source += ' *' + valueRegexString;
     }
+    // The regexes end with `$` because they will be matched and
+    // removed from the end until none are left.
     source += '$';
     return new RegExp(source, 'u');
 }
@@ -94,8 +96,6 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     dependsOnSymbol: '⛔',
     idSymbol: '🆔',
     TaskFormatRegularExpressions: {
-        // The following regex's end with `$` because they will be matched and
-        // removed from the end until none are left.
         priorityRegex: fieldRegex('([🔺⏫🔼🔽⏬])', ''),
         startDateRegex: dateFieldRegex('🛫'),
         createdDateRegex: dateFieldRegex('➕'),
