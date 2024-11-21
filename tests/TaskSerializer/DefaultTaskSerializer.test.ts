@@ -58,12 +58,13 @@ describe('validate emoji regular expressions', () => {
             }
         });
         // Concatenate all entries into a single string
-        return regexDetails.join('\n');
+        return '\n' + regexDetails.join('\n') + '\n';
     }
 
     it('regular expressions should have expected source', () => {
         expect(generateRegexApprovalTest()).toMatchInlineSnapshot(`
-            "priorityRegex: /([🔺⏫🔼🔽⏬])\\uFE0F?$/u
+            "
+            priorityRegex: /([🔺⏫🔼🔽⏬])\\uFE0F?$/u
             startDateRegex: /🛫 *(\\d{4}-\\d{2}-\\d{2})$/u
             createdDateRegex: /➕ *(\\d{4}-\\d{2}-\\d{2})$/u
             scheduledDateRegex: /[⏳⌛] *(\\d{4}-\\d{2}-\\d{2})$/u
@@ -73,7 +74,8 @@ describe('validate emoji regular expressions', () => {
             recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/u
             onCompletionRegex: /🏁 *([a-zA-Z]+)$/u
             dependsOnRegex: /⛔️? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/u
-            idRegex: /🆔 *([a-zA-Z0-9-_]+)$/u"
+            idRegex: /🆔 *([a-zA-Z0-9-_]+)$/u
+            "
         `);
     });
 });
