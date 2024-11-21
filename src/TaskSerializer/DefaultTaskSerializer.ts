@@ -56,7 +56,7 @@ export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
 
 function dateFieldRegex(symbols: string) {
-    return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2})$');
+    return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2})');
 }
 
 function fieldRegex(symbols: string, valueRegexString: string) {
@@ -64,6 +64,7 @@ function fieldRegex(symbols: string, valueRegexString: string) {
     if (valueRegexString !== '') {
         source += ' *' + valueRegexString;
     }
+    source += '$';
     return new RegExp(source, 'u');
 }
 
@@ -95,17 +96,17 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         // The following regex's end with `$` because they will be matched and
         // removed from the end until none are left.
         // \uFE0F? allows an optional Variant Selector 16 on emojis.
-        priorityRegex: fieldRegex('([🔺⏫🔼🔽⏬])\uFE0F?$', ''),
+        priorityRegex: fieldRegex('([🔺⏫🔼🔽⏬])\uFE0F?', ''),
         startDateRegex: dateFieldRegex('🛫'),
         createdDateRegex: dateFieldRegex('➕'),
         scheduledDateRegex: dateFieldRegex('[⏳⌛]'),
         dueDateRegex: dateFieldRegex('[📅📆🗓]'),
         doneDateRegex: dateFieldRegex('✅'),
         cancelledDateRegex: dateFieldRegex('❌'),
-        recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)$'),
-        onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)$'),
-        dependsOnRegex: fieldRegex('⛔\uFE0F?', '(' + taskIdSequenceRegex.source + ')$'),
-        idRegex: fieldRegex('🆔', '(' + taskIdRegex.source + ')$'),
+        recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)'),
+        onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)'),
+        dependsOnRegex: fieldRegex('⛔\uFE0F?', '(' + taskIdSequenceRegex.source + ')'),
+        idRegex: fieldRegex('🆔', '(' + taskIdRegex.source + ')'),
     },
 } as const;
 
