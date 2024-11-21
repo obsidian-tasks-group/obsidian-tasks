@@ -60,7 +60,8 @@ function dateFieldRegex(symbols: string) {
 }
 
 function fieldRegex(symbols: string, valueRegexString: string) {
-    let source = symbols;
+    // \uFE0F? allows an optional Variant Selector 16 on emojis.
+    let source = symbols + '\uFE0F?';
     if (valueRegexString !== '') {
         source += ' *' + valueRegexString;
     }
@@ -95,8 +96,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
         // removed from the end until none are left.
-        // \uFE0F? allows an optional Variant Selector 16 on emojis.
-        priorityRegex: fieldRegex('([🔺⏫🔼🔽⏬])\uFE0F?', ''),
+        priorityRegex: fieldRegex('([🔺⏫🔼🔽⏬])', ''),
         startDateRegex: dateFieldRegex('🛫'),
         createdDateRegex: dateFieldRegex('➕'),
         scheduledDateRegex: dateFieldRegex('[⏳⌛]'),
@@ -105,7 +105,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         cancelledDateRegex: dateFieldRegex('❌'),
         recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)'),
         onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)'),
-        dependsOnRegex: fieldRegex('⛔\uFE0F?', '(' + taskIdSequenceRegex.source + ')'),
+        dependsOnRegex: fieldRegex('⛔', '(' + taskIdSequenceRegex.source + ')'),
         idRegex: fieldRegex('🆔', '(' + taskIdRegex.source + ')'),
     },
 } as const;
