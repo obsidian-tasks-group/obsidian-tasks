@@ -1,0 +1,128 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "tags": null
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 13
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_tags_is_empty",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 4,
+            "offset": 35
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 15
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 40,
+            "line": 6,
+            "offset": 77
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 37
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 13
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 4,
+            "offset": 35
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 15
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 40,
+            "line": 6,
+            "offset": 77
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 37
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 6,
+            "offset": 48
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 43
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\ntags:\n---\n\n# yaml_tags_is_empty\n\n- [ ] #task Task in 'yaml_tags_is_empty'\n",
+  "filePath": "Test Data/yaml_tags_is_empty.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

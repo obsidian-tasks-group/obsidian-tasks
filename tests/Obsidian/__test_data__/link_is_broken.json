@@ -1,0 +1,116 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "link_is_broken",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 0,
+            "offset": 16
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "links": [
+      {
+        "displayText": "broken link - do not fix me",
+        "link": "broken link - do not fix me",
+        "original": "[[broken link - do not fix me]]",
+        "position": {
+          "end": {
+            "col": 68,
+            "line": 2,
+            "offset": 86
+          },
+          "start": {
+            "col": 37,
+            "line": 2,
+            "offset": 55
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 68,
+            "line": 2,
+            "offset": 86
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 18
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 0,
+            "offset": 16
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 68,
+            "line": 2,
+            "offset": 86
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 18
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 29
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 24
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# link_is_broken\n\n- [ ] #task Task in 'link_is_broken' [[broken link - do not fix me]]\n",
+  "filePath": "Test Data/link_is_broken.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

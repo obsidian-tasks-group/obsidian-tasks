@@ -1,0 +1,135 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "non_tasks",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 4,
+            "offset": 59
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 13
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 8,
+            "offset": 116
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 61
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 122,
+            "line": 10,
+            "offset": 240
+          },
+          "start": {
+            "col": 0,
+            "line": 10,
+            "offset": 118
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 14,
+            "offset": 301
+          },
+          "start": {
+            "col": 0,
+            "line": 12,
+            "offset": 242
+          }
+        },
+        "type": "html"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 123,
+            "line": 16,
+            "offset": 426
+          },
+          "start": {
+            "col": 0,
+            "line": 16,
+            "offset": 303
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 2,
+            "line": 20,
+            "offset": 498
+          },
+          "start": {
+            "col": 0,
+            "line": 18,
+            "offset": 428
+          }
+        },
+        "type": "comment"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# non_tasks\n\n```tasks\npath includes {{query.file.path}}\n```\n\n```\n- [ ] I look like a task but am in a code block\n```\n\nBelow is an HTML comment in `<!-- .... ->`, so the \"task\" inside is not seen by Obsidian or any of its task-based plugins.\n\n<!--\n- [ ] I look like a task but am in an HTML comment\n-->\n\nBelow is an Obsidian comment in `%% ... %%`, so the \"task\" inside is not seen by Obsidian or any of its task-based plugins.\n\n%%\n- [ ] I look like a task but am in an Obsidian (percent) comment\n%%\n",
+  "filePath": "Test Data/non_tasks.md",
+  "getAllTags": [],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

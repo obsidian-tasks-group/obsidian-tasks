@@ -32,6 +32,24 @@ function showNotice(message) {
     new Notice(message);
 }
 
+/**
+ * Recursively sorts an object's keys in alphabetical order.
+ */
+function sortObjectKeys(obj) {
+    if (Array.isArray(obj)) {
+        return obj.map(sortObjectKeys);
+    }
+    if (obj && typeof obj === 'object') {
+        return Object.keys(obj)
+            .sort()
+            .reduce((acc, key) => {
+                acc[key] = sortObjectKeys(obj[key]);
+                return acc;
+            }, {});
+    }
+    return obj;
+}
+
 async function convertMarkdownFileToTestFunction(filePath, tp) {
     const tFile = vault.getAbstractFileByPath(filePath);
 
@@ -61,6 +79,16 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
         const options = { depth: null, compact: false };
         const dataAsJSSource = util.inspect(data, options);
         const content = `export const ${filename} = ${dataAsJSSource};`;
+        writeFile(testSourceFile, content);
+    }
+
+    // Write data as JSON file
+    {
+        const testSourceFile = getOutputFilePath(`__test_data__/${filename}.json`);
+
+        // Sort keys in the data object to ensure stable order
+        const sortedData = sortObjectKeys(data);
+        const content = JSON.stringify(sortedData, null, 2);
         writeFile(testSourceFile, content);
     }
 }

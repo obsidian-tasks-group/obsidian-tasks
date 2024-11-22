@@ -1,0 +1,207 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "first header",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 14,
+            "line": 0,
+            "offset": 14
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      },
+      {
+        "heading": "second header",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 5,
+            "offset": 86
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 70
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 23,
+            "line": 2,
+            "offset": 39
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 16
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 3,
+            "offset": 68
+          },
+          "start": {
+            "col": 2,
+            "line": 3,
+            "offset": 42
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -7,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 7,
+            "offset": 109
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 88
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 14,
+            "line": 0,
+            "offset": 14
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 3,
+            "offset": 68
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 16
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 5,
+            "offset": 86
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 70
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 7,
+            "offset": 109
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 88
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 27
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 22
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 15,
+            "line": 3,
+            "offset": 55
+          },
+          "start": {
+            "col": 10,
+            "line": 3,
+            "offset": 50
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 7,
+            "offset": 99
+          },
+          "start": {
+            "col": 6,
+            "line": 7,
+            "offset": 94
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# first header\n\n- [ ] #task parent task\n    - [ ] #task child task 1\n\n## second header\n\n- [ ] #task root task\n",
+  "filePath": "Test Data/inheritance_1parent1child1newroot_after_header.md",
+  "getAllTags": [
+    "#task",
+    "#task",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}
