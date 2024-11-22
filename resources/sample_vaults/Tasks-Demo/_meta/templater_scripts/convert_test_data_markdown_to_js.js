@@ -96,7 +96,7 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
 async function writeListOfAllTestFunctions(files) {
     const basenames = files.map((file) => getBasename(file));
 
-    const imports = basenames.map((filename) => `import { ${filename} } from './__test_data__/${filename}';`);
+    const imports = basenames.map((filename) => `import ${filename} from './__test_data__/${filename}.json';`);
     const functions = basenames.map((filename) => `        ${filename},`);
 
     const content = `// DO NOT EDIT!
