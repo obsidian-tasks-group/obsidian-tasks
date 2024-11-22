@@ -44,9 +44,15 @@ The Tasks plugin renders a task in the following structure (this refers to query
         - Task description and tags (span class="task-description")
           - Internal span
             - Each tag in the description is wrapped in <a href class="tag" data-tag-name="[tag-name]">
+        - Task ID (span class="task-id")
+          - Internal span
+        - Task 'depends on' (span class="task-dependsOn")
+          - Internal span
         - Task priority (span class="task-priority" + data-task-priority attribute)
           - Internal span
         - Task recurrence rule (span class="task-recurring")
+          - Internal span
+        - Task 'on completion' (span class="onCompletion")
           - Internal span
         - Task created date (span class="task-created" + data-task-created attribute)
           - Internal span
@@ -216,8 +222,10 @@ The generic classes are:
 - `task-cancelled`
 - `task-done`
 - `task-recurring`
+- `task-onCompletion`
 - `task-id`
 - `task-dependsOn`
+- `task-block-link`
 
 In addition to the generic classes, there are [**data attributes**](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) that represent the content of the various task components.
 
