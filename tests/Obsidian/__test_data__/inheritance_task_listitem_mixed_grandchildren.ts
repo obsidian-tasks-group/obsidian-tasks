@@ -26,6 +26,8 @@ export const inheritance_task_listitem_mixed_grandchildren = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -38,10 +40,9 @@ export const inheritance_task_listitem_mixed_grandchildren = {
                         offset: 17,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
             {
+                parent: 0,
                 position: {
                     start: {
                         line: 1,
@@ -54,9 +55,9 @@ export const inheritance_task_listitem_mixed_grandchildren = {
                         offset: 39,
                     },
                 },
-                parent: 0,
             },
             {
+                parent: 1,
                 position: {
                     start: {
                         line: 2,
@@ -69,9 +70,10 @@ export const inheritance_task_listitem_mixed_grandchildren = {
                         offset: 72,
                     },
                 },
-                parent: 1,
             },
             {
+                parent: 1,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -84,10 +86,9 @@ export const inheritance_task_listitem_mixed_grandchildren = {
                         offset: 102,
                     },
                 },
-                parent: 1,
-                task: ' ',
             },
             {
+                parent: 1,
                 position: {
                     start: {
                         line: 4,
@@ -100,11 +101,11 @@ export const inheritance_task_listitem_mixed_grandchildren = {
                         offset: 135,
                     },
                 },
-                parent: 1,
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: [],
     parseFrontMatterTags: null,
 };

@@ -22,6 +22,8 @@ export const inheritance_task_mixed_children = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -34,10 +36,10 @@ export const inheritance_task_mixed_children = {
                         offset: 17,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 1,
@@ -50,10 +52,9 @@ export const inheritance_task_mixed_children = {
                         offset: 40,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
             {
+                parent: 0,
                 position: {
                     start: {
                         line: 2,
@@ -66,9 +67,10 @@ export const inheritance_task_mixed_children = {
                         offset: 64,
                     },
                 },
-                parent: 0,
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -81,12 +83,11 @@ export const inheritance_task_mixed_children = {
                         offset: 87,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: [],
     parseFrontMatterTags: null,
 };

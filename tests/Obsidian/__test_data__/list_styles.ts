@@ -15,6 +15,7 @@ export const list_styles = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 0,
@@ -27,9 +28,9 @@ export const list_styles = {
                         offset: 11,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 1,
@@ -42,9 +43,9 @@ export const list_styles = {
                         offset: 53,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -57,9 +58,9 @@ export const list_styles = {
                         offset: 96,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -72,9 +73,9 @@ export const list_styles = {
                         offset: 141,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 6,
@@ -87,9 +88,9 @@ export const list_styles = {
                         offset: 187,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 7,
@@ -102,9 +103,9 @@ export const list_styles = {
                         offset: 232,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 9,
@@ -117,9 +118,9 @@ export const list_styles = {
                         offset: 279,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 10,
@@ -132,7 +133,6 @@ export const list_styles = {
                         offset: 318,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -199,6 +199,8 @@ export const list_styles = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -211,10 +213,10 @@ export const list_styles = {
                         offset: 41,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 1,
@@ -227,10 +229,10 @@ export const list_styles = {
                         offset: 83,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
             {
+                parent: -3,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -243,10 +245,10 @@ export const list_styles = {
                         offset: 129,
                     },
                 },
-                parent: -3,
-                task: ' ',
             },
             {
+                parent: -3,
+                task: ' ',
                 position: {
                     start: {
                         line: 4,
@@ -259,10 +261,10 @@ export const list_styles = {
                         offset: 174,
                     },
                 },
-                parent: -3,
-                task: ' ',
             },
             {
+                parent: -6,
+                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -275,10 +277,10 @@ export const list_styles = {
                         offset: 220,
                     },
                 },
-                parent: -6,
-                task: ' ',
             },
             {
+                parent: -6,
+                task: ' ',
                 position: {
                     start: {
                         line: 7,
@@ -291,10 +293,10 @@ export const list_styles = {
                         offset: 265,
                     },
                 },
-                parent: -6,
-                task: ' ',
             },
             {
+                parent: -9,
+                task: ' ',
                 position: {
                     start: {
                         line: 9,
@@ -307,10 +309,10 @@ export const list_styles = {
                         offset: 305,
                     },
                 },
-                parent: -9,
-                task: ' ',
             },
             {
+                parent: -9,
+                task: ' ',
                 position: {
                     start: {
                         line: 10,
@@ -323,12 +325,11 @@ export const list_styles = {
                         offset: 344,
                     },
                 },
-                parent: -9,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task', '#task', '#task', '#task', '#task', '#task', '#task'],
     parseFrontMatterTags: null,
 };

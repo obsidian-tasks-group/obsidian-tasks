@@ -36,6 +36,7 @@ export const docs_sample_for_task_properties_reference = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#tag-from-file-body',
                 position: {
                     start: {
                         line: 28,
@@ -48,9 +49,9 @@ export const docs_sample_for_task_properties_reference = {
                         offset: 680,
                     },
                 },
-                tag: '#tag-from-file-body',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 30,
@@ -63,9 +64,9 @@ export const docs_sample_for_task_properties_reference = {
                         offset: 693,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#tag-from-task-line',
                 position: {
                     start: {
                         line: 30,
@@ -78,9 +79,9 @@ export const docs_sample_for_task_properties_reference = {
                         offset: 765,
                     },
                 },
-                tag: '#tag-from-task-line',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 31,
@@ -93,11 +94,12 @@ export const docs_sample_for_task_properties_reference = {
                         offset: 777,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'docs_sample_for_task_properties_reference',
+                level: 1,
                 position: {
                     start: {
                         line: 26,
@@ -110,8 +112,6 @@ export const docs_sample_for_task_properties_reference = {
                         offset: 659,
                     },
                 },
-                heading: 'docs_sample_for_task_properties_reference',
-                level: 1,
             },
         ],
         sections: [
@@ -178,6 +178,8 @@ export const docs_sample_for_task_properties_reference = {
         ],
         listItems: [
             {
+                parent: -30,
+                task: ' ',
                 position: {
                     start: {
                         line: 30,
@@ -190,10 +192,10 @@ export const docs_sample_for_task_properties_reference = {
                         offset: 765,
                     },
                 },
-                parent: -30,
-                task: ' ',
             },
             {
+                parent: -30,
+                task: ' ',
                 position: {
                     start: {
                         line: 31,
@@ -206,8 +208,6 @@ export const docs_sample_for_task_properties_reference = {
                         offset: 837,
                     },
                 },
-                parent: -30,
-                task: ' ',
             },
         ],
         frontmatter: {
@@ -224,18 +224,6 @@ export const docs_sample_for_task_properties_reference = {
             tags: ['tag-from-file-properties'],
             'creation date': '2024-05-25T15:17:00',
             project: 'Secret Project',
-        },
-        frontmatterPosition: {
-            start: {
-                line: 0,
-                col: 0,
-                offset: 0,
-            },
-            end: {
-                line: 24,
-                col: 3,
-                offset: 614,
-            },
         },
         frontmatterLinks: [
             {
@@ -257,8 +245,21 @@ export const docs_sample_for_task_properties_reference = {
                 displayText: 'yaml_all_property_types_empty',
             },
         ],
+        v: 1,
+        frontmatterPosition: {
+            start: {
+                line: 0,
+                col: 0,
+                offset: 0,
+            },
+            end: {
+                line: 24,
+                col: 3,
+                offset: 614,
+            },
+        },
     },
-    obsidianApiVersion: '1.6.7',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#tag-from-file-properties', '#tag-from-file-body', '#task', '#tag-from-task-line', '#task'],
     parseFrontMatterTags: ['#tag-from-file-properties'],
 };

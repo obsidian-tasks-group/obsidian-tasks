@@ -27,6 +27,8 @@ export const inheritance_task_2listitem_3task = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -39,10 +41,9 @@ export const inheritance_task_2listitem_3task = {
                         offset: 17,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
             {
+                parent: 0,
                 position: {
                     start: {
                         line: 1,
@@ -55,9 +56,10 @@ export const inheritance_task_2listitem_3task = {
                         offset: 41,
                     },
                 },
-                parent: 0,
             },
             {
+                parent: 1,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -70,10 +72,10 @@ export const inheritance_task_2listitem_3task = {
                         offset: 73,
                     },
                 },
-                parent: 1,
-                task: ' ',
             },
             {
+                parent: 1,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -86,10 +88,9 @@ export const inheritance_task_2listitem_3task = {
                         offset: 105,
                     },
                 },
-                parent: 1,
-                task: ' ',
             },
             {
+                parent: 0,
                 position: {
                     start: {
                         line: 4,
@@ -102,9 +103,10 @@ export const inheritance_task_2listitem_3task = {
                         offset: 129,
                     },
                 },
-                parent: 0,
             },
             {
+                parent: 4,
+                task: ' ',
                 position: {
                     start: {
                         line: 5,
@@ -117,12 +119,11 @@ export const inheritance_task_2listitem_3task = {
                         offset: 161,
                     },
                 },
-                parent: 4,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: [],
     parseFrontMatterTags: null,
 };

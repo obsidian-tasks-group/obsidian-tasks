@@ -21,6 +21,7 @@ export const inheritance_listitem_task_siblings = {
         ],
         listItems: [
             {
+                parent: -1,
                 position: {
                     start: {
                         line: 0,
@@ -33,9 +34,10 @@ export const inheritance_listitem_task_siblings = {
                         offset: 11,
                     },
                 },
-                parent: -1,
             },
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 1,
@@ -48,12 +50,11 @@ export const inheritance_listitem_task_siblings = {
                         offset: 22,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: [],
     parseFrontMatterTags: null,
 };

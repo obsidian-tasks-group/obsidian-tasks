@@ -25,6 +25,8 @@ export const non_tasks = {
     cachedMetadata: {
         headings: [
             {
+                heading: 'non_tasks',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -37,8 +39,6 @@ export const non_tasks = {
                         offset: 11,
                     },
                 },
-                heading: 'non_tasks',
-                level: 1,
             },
         ],
         sections: [
@@ -148,8 +148,9 @@ export const non_tasks = {
                 },
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.5',
+    obsidianApiVersion: '1.7.7',
     getAllTags: [],
     parseFrontMatterTags: null,
 };

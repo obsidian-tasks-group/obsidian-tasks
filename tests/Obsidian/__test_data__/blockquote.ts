@@ -8,6 +8,7 @@ export const blockquote = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 2,
@@ -20,9 +21,9 @@ export const blockquote = {
                         offset: 27,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -35,11 +36,12 @@ export const blockquote = {
                         offset: 66,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'blockquote',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -52,8 +54,6 @@ export const blockquote = {
                         offset: 12,
                     },
                 },
-                heading: 'blockquote',
-                level: 1,
             },
         ],
         sections: [
@@ -90,6 +90,8 @@ export const blockquote = {
         ],
         listItems: [
             {
+                parent: -2,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -102,10 +104,10 @@ export const blockquote = {
                         offset: 48,
                     },
                 },
-                parent: -2,
-                task: ' ',
             },
             {
+                parent: 2,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -118,12 +120,11 @@ export const blockquote = {
                         offset: 96,
                     },
                 },
-                parent: 2,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task'],
     parseFrontMatterTags: null,
 };

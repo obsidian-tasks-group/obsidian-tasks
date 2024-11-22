@@ -20,6 +20,7 @@ export const yaml_all_property_types_empty = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 15,
@@ -32,11 +33,12 @@ export const yaml_all_property_types_empty = {
                         offset: 288,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_all_property_types_empty',
+                level: 1,
                 position: {
                     start: {
                         line: 13,
@@ -49,8 +51,6 @@ export const yaml_all_property_types_empty = {
                         offset: 275,
                     },
                 },
-                heading: 'yaml_all_property_types_empty',
-                level: 1,
             },
         ],
         sections: [
@@ -102,6 +102,8 @@ export const yaml_all_property_types_empty = {
         ],
         listItems: [
             {
+                parent: -15,
+                task: ' ',
                 position: {
                     start: {
                         line: 15,
@@ -114,8 +116,6 @@ export const yaml_all_property_types_empty = {
                         offset: 328,
                     },
                 },
-                parent: -15,
-                task: ' ',
             },
         ],
         frontmatter: {
@@ -131,6 +131,8 @@ export const yaml_all_property_types_empty = {
             tags: null,
             'creation date': null,
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -143,9 +145,8 @@ export const yaml_all_property_types_empty = {
                 offset: 243,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.6.7',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

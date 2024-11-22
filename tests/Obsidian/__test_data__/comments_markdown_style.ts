@@ -13,6 +13,9 @@ export const comments_markdown_style = {
     cachedMetadata: {
         links: [
             {
+                link: 'comments_html_style',
+                original: '[[comments_html_style]]',
+                displayText: 'comments_html_style',
                 position: {
                     start: {
                         line: 8,
@@ -25,13 +28,11 @@ export const comments_markdown_style = {
                         offset: 407,
                     },
                 },
-                link: 'comments_html_style',
-                original: '[[comments_html_style]]',
-                displayText: 'comments_html_style',
             },
         ],
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -44,9 +45,9 @@ export const comments_markdown_style = {
                         offset: 100,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 7,
@@ -59,9 +60,9 @@ export const comments_markdown_style = {
                         offset: 156,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#i-am-parsed-by-obsidian',
                 position: {
                     start: {
                         line: 7,
@@ -74,9 +75,9 @@ export const comments_markdown_style = {
                         offset: 250,
                     },
                 },
-                tag: '#i-am-parsed-by-obsidian',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 8,
@@ -89,11 +90,12 @@ export const comments_markdown_style = {
                         offset: 313,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'comments_markdown_style',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -106,8 +108,6 @@ export const comments_markdown_style = {
                         offset: 25,
                     },
                 },
-                heading: 'comments_markdown_style',
-                level: 1,
             },
         ],
         sections: [
@@ -174,6 +174,8 @@ export const comments_markdown_style = {
         ],
         listItems: [
             {
+                parent: -7,
+                task: ' ',
                 position: {
                     start: {
                         line: 7,
@@ -186,10 +188,10 @@ export const comments_markdown_style = {
                         offset: 301,
                     },
                 },
-                parent: -7,
-                task: ' ',
             },
             {
+                parent: -7,
+                task: ' ',
                 position: {
                     start: {
                         line: 8,
@@ -202,12 +204,11 @@ export const comments_markdown_style = {
                         offset: 458,
                     },
                 },
-                parent: -7,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task', '#i-am-parsed-by-obsidian', '#task'],
     parseFrontMatterTags: null,
 };

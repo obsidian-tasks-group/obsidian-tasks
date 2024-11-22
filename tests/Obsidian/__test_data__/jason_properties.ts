@@ -14,6 +14,7 @@ export const jason_properties = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 9,
@@ -26,11 +27,12 @@ export const jason_properties = {
                         offset: 84,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'jason_properties',
+                level: 1,
                 position: {
                     start: {
                         line: 7,
@@ -43,8 +45,6 @@ export const jason_properties = {
                         offset: 71,
                     },
                 },
-                heading: 'jason_properties',
-                level: 1,
             },
         ],
         sections: [
@@ -96,6 +96,8 @@ export const jason_properties = {
         ],
         listItems: [
             {
+                parent: -9,
+                task: ' ',
                 position: {
                     start: {
                         line: 9,
@@ -108,14 +110,14 @@ export const jason_properties = {
                         offset: 111,
                     },
                 },
-                parent: -9,
-                task: ' ',
             },
         ],
         frontmatter: {
             tags: 'journal',
             publish: false,
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -128,9 +130,8 @@ export const jason_properties = {
                 offset: 51,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.6.7',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#journal', '#task'],
     parseFrontMatterTags: ['#journal'],
 };

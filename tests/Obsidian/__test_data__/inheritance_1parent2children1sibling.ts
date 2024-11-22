@@ -5,6 +5,7 @@ export const inheritance_1parent2children1sibling = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 0,
@@ -17,9 +18,9 @@ export const inheritance_1parent2children1sibling = {
                         offset: 11,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 1,
@@ -32,9 +33,9 @@ export const inheritance_1parent2children1sibling = {
                         offset: 34,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 2,
@@ -47,9 +48,9 @@ export const inheritance_1parent2children1sibling = {
                         offset: 58,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -62,7 +63,6 @@ export const inheritance_1parent2children1sibling = {
                         offset: 78,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -84,6 +84,8 @@ export const inheritance_1parent2children1sibling = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -96,10 +98,10 @@ export const inheritance_1parent2children1sibling = {
                         offset: 18,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 1,
@@ -112,10 +114,10 @@ export const inheritance_1parent2children1sibling = {
                         offset: 42,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -128,10 +130,10 @@ export const inheritance_1parent2children1sibling = {
                         offset: 66,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -144,12 +146,11 @@ export const inheritance_1parent2children1sibling = {
                         offset: 86,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task', '#task', '#task'],
     parseFrontMatterTags: null,
 };

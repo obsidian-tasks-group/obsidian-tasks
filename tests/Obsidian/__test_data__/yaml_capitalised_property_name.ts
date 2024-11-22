@@ -11,6 +11,7 @@ export const yaml_capitalised_property_name = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 6,
@@ -23,11 +24,12 @@ export const yaml_capitalised_property_name = {
                         offset: 83,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_capitalised_property_name',
+                level: 1,
                 position: {
                     start: {
                         line: 4,
@@ -40,8 +42,6 @@ export const yaml_capitalised_property_name = {
                         offset: 70,
                     },
                 },
-                heading: 'yaml_capitalised_property_name',
-                level: 1,
             },
         ],
         sections: [
@@ -93,6 +93,8 @@ export const yaml_capitalised_property_name = {
         ],
         listItems: [
             {
+                parent: -6,
+                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -105,13 +107,13 @@ export const yaml_capitalised_property_name = {
                         offset: 124,
                     },
                 },
-                parent: -6,
-                task: ' ',
             },
         ],
         frontmatter: {
             CAPITAL_property: 'some value',
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -124,9 +126,8 @@ export const yaml_capitalised_property_name = {
                 offset: 36,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.6.7',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

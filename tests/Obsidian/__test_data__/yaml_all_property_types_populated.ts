@@ -28,6 +28,7 @@ export const yaml_all_property_types_populated = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 23,
@@ -40,11 +41,12 @@ export const yaml_all_property_types_populated = {
                         offset: 574,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_all_property_types_populated',
+                level: 1,
                 position: {
                     start: {
                         line: 21,
@@ -57,8 +59,6 @@ export const yaml_all_property_types_populated = {
                         offset: 561,
                     },
                 },
-                heading: 'yaml_all_property_types_populated',
-                level: 1,
             },
         ],
         sections: [
@@ -110,6 +110,8 @@ export const yaml_all_property_types_populated = {
         ],
         listItems: [
             {
+                parent: -23,
+                task: ' ',
                 position: {
                     start: {
                         line: 23,
@@ -122,8 +124,6 @@ export const yaml_all_property_types_populated = {
                         offset: 618,
                     },
                 },
-                parent: -23,
-                task: ' ',
             },
         ],
         frontmatter: {
@@ -138,18 +138,6 @@ export const yaml_all_property_types_populated = {
             aliases: ['YAML All Property Types Populated'],
             tags: ['sample/tag/value'],
             'creation date': '2024-05-25T15:17:00',
-        },
-        frontmatterPosition: {
-            start: {
-                line: 0,
-                col: 0,
-                offset: 0,
-            },
-            end: {
-                line: 19,
-                col: 3,
-                offset: 524,
-            },
         },
         frontmatterLinks: [
             {
@@ -171,8 +159,21 @@ export const yaml_all_property_types_populated = {
                 displayText: 'yaml_all_property_types_empty',
             },
         ],
+        v: 1,
+        frontmatterPosition: {
+            start: {
+                line: 0,
+                col: 0,
+                offset: 0,
+            },
+            end: {
+                line: 19,
+                col: 3,
+                offset: 524,
+            },
+        },
     },
-    obsidianApiVersion: '1.6.7',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#sample/tag/value', '#task'],
     parseFrontMatterTags: ['#sample/tag/value'],
 };

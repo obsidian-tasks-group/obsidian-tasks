@@ -13,6 +13,7 @@ export const yaml_tags_has_multiple_values = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 8,
@@ -25,11 +26,12 @@ export const yaml_tags_has_multiple_values = {
                         offset: 87,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_tags_has_multiple_values',
+                level: 1,
                 position: {
                     start: {
                         line: 6,
@@ -42,8 +44,6 @@ export const yaml_tags_has_multiple_values = {
                         offset: 74,
                     },
                 },
-                heading: 'yaml_tags_has_multiple_values',
-                level: 1,
             },
         ],
         sections: [
@@ -95,6 +95,8 @@ export const yaml_tags_has_multiple_values = {
         ],
         listItems: [
             {
+                parent: -8,
+                task: ' ',
                 position: {
                     start: {
                         line: 8,
@@ -107,13 +109,13 @@ export const yaml_tags_has_multiple_values = {
                         offset: 127,
                     },
                 },
-                parent: -8,
-                task: ' ',
             },
         ],
         frontmatter: {
             tags: ['multiple1', 'multiple2'],
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -126,9 +128,8 @@ export const yaml_tags_has_multiple_values = {
                 offset: 41,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#multiple1', '#multiple2', '#task'],
     parseFrontMatterTags: ['#multiple1', '#multiple2'],
 };

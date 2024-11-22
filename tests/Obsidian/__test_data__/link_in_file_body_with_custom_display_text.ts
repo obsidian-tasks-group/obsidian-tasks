@@ -9,6 +9,9 @@ export const link_in_file_body_with_custom_display_text = {
     cachedMetadata: {
         links: [
             {
+                link: 'yaml_tags_is_empty',
+                original: '[[yaml_tags_is_empty|a file and use custom display text]]',
+                displayText: 'a file and use custom display text',
                 position: {
                     start: {
                         line: 2,
@@ -21,13 +24,11 @@ export const link_in_file_body_with_custom_display_text = {
                         offset: 113,
                     },
                 },
-                link: 'yaml_tags_is_empty',
-                original: '[[yaml_tags_is_empty|a file and use custom display text]]',
-                displayText: 'a file and use custom display text',
             },
         ],
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -40,11 +41,12 @@ export const link_in_file_body_with_custom_display_text = {
                         offset: 126,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'link_in_file_body_with_custom_display_text',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -57,8 +59,6 @@ export const link_in_file_body_with_custom_display_text = {
                         offset: 44,
                     },
                 },
-                heading: 'link_in_file_body_with_custom_display_text',
-                level: 1,
             },
         ],
         sections: [
@@ -110,6 +110,8 @@ export const link_in_file_body_with_custom_display_text = {
         ],
         listItems: [
             {
+                parent: -4,
+                task: ' ',
                 position: {
                     start: {
                         line: 4,
@@ -122,12 +124,11 @@ export const link_in_file_body_with_custom_display_text = {
                         offset: 179,
                     },
                 },
-                parent: -4,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

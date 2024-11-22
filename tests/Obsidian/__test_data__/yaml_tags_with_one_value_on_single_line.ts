@@ -11,6 +11,7 @@ export const yaml_tags_with_one_value_on_single_line = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 6,
@@ -23,11 +24,12 @@ export const yaml_tags_with_one_value_on_single_line = {
                         offset: 94,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_tags_with_one_value_on_single_line',
+                level: 1,
                 position: {
                     start: {
                         line: 4,
@@ -40,8 +42,6 @@ export const yaml_tags_with_one_value_on_single_line = {
                         offset: 81,
                     },
                 },
-                heading: 'yaml_tags_with_one_value_on_single_line',
-                level: 1,
             },
         ],
         sections: [
@@ -93,6 +93,8 @@ export const yaml_tags_with_one_value_on_single_line = {
         ],
         listItems: [
             {
+                parent: -6,
+                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -105,13 +107,13 @@ export const yaml_tags_with_one_value_on_single_line = {
                         offset: 144,
                     },
                 },
-                parent: -6,
-                task: ' ',
             },
         ],
         frontmatter: {
             tags: 'single-value-single-line',
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -124,9 +126,8 @@ export const yaml_tags_with_one_value_on_single_line = {
                 offset: 38,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#single-value-single-line', '#task'],
     parseFrontMatterTags: ['#single-value-single-line'],
 };
