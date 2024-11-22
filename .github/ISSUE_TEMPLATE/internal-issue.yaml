@@ -1,13 +1,13 @@
 name: Internal Issue
-description: Internal issues, for helping contributors keep track of things to do
+description: Plugin developer topics, for helping contributors keep track of changes behind the scenes - NOT for user questions or requests
 labels: ["type: internal"]
 body:
   - type: markdown
     attributes:
       value: |
         ## About this form
-        This form is only for tracking developer-focussed actions, like refactoring, dependency updates and similar.
-        Rarely, these might be visible to users, such as when updating a dependency might require notifying users of a change in behaviour.
+        This form is **only** for tracking topics by developers of the Tasks plugin and other contributors to the source code, like refactoring, dependency updates and similar.
+        It is not intended for user questions, which should go in [Discussions/Q&A](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/q-a), please - and will be closed if added here.
 
   - type: textarea
     id: description
