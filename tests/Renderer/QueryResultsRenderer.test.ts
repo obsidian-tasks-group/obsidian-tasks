@@ -12,6 +12,7 @@ import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { toMarkdown } from '../TestingTools/TestHelpers';
 import { mockHTMLRenderer } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -46,8 +47,12 @@ describe('QueryResultsRenderer tests', () => {
 
         await renderer.render(State.Warm, allTasks, container, queryRendererParameters);
 
+        const taskAsMarkdown = `<!--
+${toMarkdown(allTasks)}
+-->\n\n`;
+
         const prettyHTML = prettifyHTML(container.outerHTML);
-        verifyWithFileExtension(prettyHTML, 'html');
+        verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
     }
 
     it('fully populated task', async () => {
