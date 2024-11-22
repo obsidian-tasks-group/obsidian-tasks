@@ -633,10 +633,12 @@ describe('accessing links in file', function () {
         });
 
         it('should access links in frontmatter', () => {
+            // Update to Obsidian API 1.4.0 to access cachedMetadata.frontmatterLinks
             // @ts-expect-error TS2551: Property frontmatterLinks does not exist on type CachedMetadata
             const frontMatterLinks = cachedMetadata['frontmatterLinks'];
+            expect(frontMatterLinks).toBeDefined();
 
-            const firstFrontMatterLink = frontMatterLinks[0];
+            const firstFrontMatterLink = frontMatterLinks![0];
             expect(firstFrontMatterLink.original).toEqual('[[link_in_yaml]]');
             expect(firstFrontMatterLink).toMatchInlineSnapshot(`
                             {
