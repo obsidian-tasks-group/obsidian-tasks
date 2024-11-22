@@ -1,0 +1,106 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 0,
+            "offset": 17
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 1,
+            "offset": 39
+          },
+          "start": {
+            "col": 2,
+            "line": 1,
+            "offset": 20
+          }
+        }
+      },
+      {
+        "parent": 1,
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 2,
+            "offset": 72
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 46
+          }
+        }
+      },
+      {
+        "parent": 1,
+        "position": {
+          "end": {
+            "col": 29,
+            "line": 3,
+            "offset": 102
+          },
+          "start": {
+            "col": 6,
+            "line": 3,
+            "offset": 79
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 1,
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 4,
+            "offset": 135
+          },
+          "start": {
+            "col": 6,
+            "line": 4,
+            "offset": 109
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 4,
+            "offset": 135
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "- [ ] parent task\n    - child list item\n        - grandchild list item 1\n        - [ ] grandchild task\n        - grandchild list item 2\n",
+  "filePath": "Test Data/inheritance_task_listitem_mixed_grandchildren.md",
+  "getAllTags": [],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

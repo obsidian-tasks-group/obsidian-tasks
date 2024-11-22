@@ -1,0 +1,92 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 0,
+            "offset": 17
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 22,
+            "line": 1,
+            "offset": 40
+          },
+          "start": {
+            "col": 2,
+            "line": 1,
+            "offset": 20
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 23,
+            "line": 2,
+            "offset": 64
+          },
+          "start": {
+            "col": 2,
+            "line": 2,
+            "offset": 43
+          }
+        }
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 22,
+            "line": 3,
+            "offset": 87
+          },
+          "start": {
+            "col": 2,
+            "line": 3,
+            "offset": 67
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 22,
+            "line": 3,
+            "offset": 87
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "- [ ] parent task\n    - [ ] child task 1\n    - child list item 1\n    - [ ] child task 2\n",
+  "filePath": "Test Data/inheritance_task_mixed_children.md",
+  "getAllTags": [],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

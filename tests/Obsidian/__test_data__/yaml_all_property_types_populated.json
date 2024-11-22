@@ -1,0 +1,171 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "aliases": [
+        "YAML All Property Types Populated"
+      ],
+      "creation date": "2024-05-25T15:17:00",
+      "sample_checkbox_property": true,
+      "sample_date_and_time_property": "2024-07-21T12:37:00",
+      "sample_date_property": "2024-07-21",
+      "sample_link_list_property": [
+        "[[yaml_all_property_types_populated]]",
+        "[[yaml_all_property_types_empty]]"
+      ],
+      "sample_link_property": "[[yaml_all_property_types_populated]]",
+      "sample_list_property": [
+        "Sample",
+        "List",
+        "Value"
+      ],
+      "sample_number_property": 246,
+      "sample_text_property": "Sample Text Value",
+      "tags": [
+        "sample/tag/value"
+      ]
+    },
+    "frontmatterLinks": [
+      {
+        "displayText": "yaml_all_property_types_populated",
+        "key": "sample_link_property",
+        "link": "yaml_all_property_types_populated",
+        "original": "[[yaml_all_property_types_populated]]"
+      },
+      {
+        "displayText": "yaml_all_property_types_populated",
+        "key": "sample_link_list_property.0",
+        "link": "yaml_all_property_types_populated",
+        "original": "[[yaml_all_property_types_populated]]"
+      },
+      {
+        "displayText": "yaml_all_property_types_empty",
+        "key": "sample_link_list_property.1",
+        "link": "yaml_all_property_types_empty",
+        "original": "[[yaml_all_property_types_empty]]"
+      }
+    ],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 19,
+        "offset": 524
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_all_property_types_populated",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 35,
+            "line": 21,
+            "offset": 561
+          },
+          "start": {
+            "col": 0,
+            "line": 21,
+            "offset": 526
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -23,
+        "position": {
+          "end": {
+            "col": 55,
+            "line": 23,
+            "offset": 618
+          },
+          "start": {
+            "col": 0,
+            "line": 23,
+            "offset": 563
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 19,
+            "offset": 524
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 35,
+            "line": 21,
+            "offset": 561
+          },
+          "start": {
+            "col": 0,
+            "line": 21,
+            "offset": 526
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 55,
+            "line": 23,
+            "offset": 618
+          },
+          "start": {
+            "col": 0,
+            "line": 23,
+            "offset": 563
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 23,
+            "offset": 574
+          },
+          "start": {
+            "col": 6,
+            "line": 23,
+            "offset": 569
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\nsample_checkbox_property: true\nsample_date_property: 2024-07-21\nsample_date_and_time_property: 2024-07-21T12:37:00\nsample_list_property:\n  - Sample\n  - List\n  - Value\nsample_number_property: 246\nsample_text_property: Sample Text Value\nsample_link_property: \"[[yaml_all_property_types_populated]]\"\nsample_link_list_property:\n  - \"[[yaml_all_property_types_populated]]\"\n  - \"[[yaml_all_property_types_empty]]\"\naliases:\n  - YAML All Property Types Populated\ntags:\n  - sample/tag/value\ncreation date: 2024-05-25T15:17:00\n---\n\n# yaml_all_property_types_populated\n\n- [ ] #task Task in 'yaml_all_property_types_populated'\n",
+  "filePath": "Test Data/yaml_all_property_types_populated.md",
+  "getAllTags": [
+    "#sample/tag/value",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": [
+    "#sample/tag/value"
+  ]
+}

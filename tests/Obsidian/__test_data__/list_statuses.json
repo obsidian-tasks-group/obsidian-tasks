@@ -1,0 +1,175 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 2,
+            "offset": 111
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 95
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 23,
+            "line": 3,
+            "offset": 135
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 112
+          }
+        },
+        "task": "/"
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 29,
+            "line": 4,
+            "offset": 165
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 136
+          }
+        },
+        "task": "x"
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 5,
+            "offset": 200
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 166
+          }
+        },
+        "task": "-"
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 93,
+            "line": 0,
+            "offset": 93
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 5,
+            "offset": 200
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 95
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 106
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 101
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 3,
+            "offset": 123
+          },
+          "start": {
+            "col": 6,
+            "line": 3,
+            "offset": 118
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 4,
+            "offset": 147
+          },
+          "start": {
+            "col": 6,
+            "line": 4,
+            "offset": 142
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 5,
+            "offset": 177
+          },
+          "start": {
+            "col": 6,
+            "line": 5,
+            "offset": 172
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "`cachedMetadata.listItems` have a `task` field which is the single-character \"status symbol\".\n\n- [ ] #task Todo\n- [/] #task In Progress\n- [x] #task Done ✅ 2024-05-26\n- [-] #task Cancelled ❌ 2024-05-26\n",
+  "filePath": "Test Data/list_statuses.md",
+  "getAllTags": [
+    "#task",
+    "#task",
+    "#task",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

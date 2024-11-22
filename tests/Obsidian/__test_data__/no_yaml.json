@@ -1,0 +1,97 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "no_yaml",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 9,
+            "line": 0,
+            "offset": 9
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 29,
+            "line": 2,
+            "offset": 40
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 11
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 9,
+            "line": 0,
+            "offset": 9
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 29,
+            "line": 2,
+            "offset": 40
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 11
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 22
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 17
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# no_yaml\n\n- [ ] #task Task in 'no_yaml'\n",
+  "filePath": "Test Data/no_yaml.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

@@ -1,0 +1,96 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 0,
+            "offset": 21
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 1,
+            "offset": 43
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 22
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 1,
+            "offset": 43
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 6,
+            "line": 0,
+            "offset": 6
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 1,
+            "offset": 33
+          },
+          "start": {
+            "col": 6,
+            "line": 1,
+            "offset": 28
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "- [ ] #task sibling 1\n- [ ] #task sibling 2\n",
+  "filePath": "Test Data/inheritance_2siblings.md",
+  "getAllTags": [
+    "#task",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

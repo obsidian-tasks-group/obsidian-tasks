@@ -1,0 +1,175 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -4,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 4,
+            "offset": 132
+          },
+          "start": {
+            "col": 5,
+            "line": 4,
+            "offset": 109
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -4,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 5,
+            "offset": 161
+          },
+          "start": {
+            "col": 5,
+            "line": 5,
+            "offset": 138
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -4,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 6,
+            "offset": 190
+          },
+          "start": {
+            "col": 5,
+            "line": 6,
+            "offset": 167
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -4,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 7,
+            "offset": 219
+          },
+          "start": {
+            "col": 5,
+            "line": 7,
+            "offset": 196
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 7,
+            "offset": 219
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "callout"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 12,
+            "offset": 276
+          },
+          "start": {
+            "col": 0,
+            "line": 9,
+            "offset": 221
+          }
+        },
+        "type": "code"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 4,
+            "offset": 120
+          },
+          "start": {
+            "col": 11,
+            "line": 4,
+            "offset": 115
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 5,
+            "offset": 149
+          },
+          "start": {
+            "col": 11,
+            "line": 5,
+            "offset": 144
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 6,
+            "offset": 178
+          },
+          "start": {
+            "col": 11,
+            "line": 6,
+            "offset": 173
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 7,
+            "offset": 207
+          },
+          "start": {
+            "col": 11,
+            "line": 7,
+            "offset": 202
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": " > [!Calendar]+ MONTH\n >> [!Check]+ GROUP\n >>> [!Attention]+ Correction TITLE\n >>> Some stuff goes here\n >>> - [ ] #task Correction1\n >>> - [ ] #task Correction2\n >>> - [ ] #task Correction3\n >>> - [ ] #task Correction4\n\n```tasks\nnot done\npath includes {{query.file.path}}\n```\n",
+  "filePath": "Test Data/callouts_nested_issue_2890_labelled.md",
+  "getAllTags": [
+    "#task",
+    "#task",
+    "#task",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}
