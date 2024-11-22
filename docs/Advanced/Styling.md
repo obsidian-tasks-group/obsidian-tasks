@@ -86,12 +86,13 @@ To help visualise the structure above, below is the HTML for a sample Tasks sear
 
 Below is the same Tasks search in [[Layout#Short Mode|short mode]].
 
-The differences from full mode are:
-
-- the `ul` has an extra class `tasks-layout-short-mode`,
-- any text values after Tasks emoji are omitted,
-- the backlink is shorter and has an extra class `internal-link-short-mode`,
-- the postpone button has an extra class `tasks-postpone-short-mode`.
+> [!Note]
+> The differences from Full mode are:
+>
+> - the `ul` has an extra class `tasks-layout-short-mode`,
+> - any text values after Tasks emoji are omitted,
+> - the backlink is shorter and has an extra class `internal-link-short-mode`,
+> - the postpone button has an extra class `tasks-postpone-short-mode`.
 
 > [!example]- Sample HTML: Short mode
 > ![[Sample HTML - Short mode]]
