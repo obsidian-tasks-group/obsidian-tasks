@@ -1,11 +1,11 @@
 {
-  "TAG": [
-    "value1",
-    "value2"
-  ],
   "ALIAS": [
     "test 1",
     "test 2"
+  ],
+  "TAG": [
+    "value1",
+    "value2"
   ],
   "custom_list": [
     "value 1",
@@ -15,20 +15,6 @@
     "x"
   ],
   "custom_number_prop": 42,
-  "unknown_property": [
-    "hello",
-    "world"
-  ],
-  "unknown_property_2": [
-    1,
-    2
-  ],
-  "unknown_number_property": 13,
-  "unknown_empty_property": null,
-  "unknown_list": [
-    null,
-    null
-  ],
   "parent": [
     {
       "child1": [
@@ -50,6 +36,20 @@
         }
       ]
     }
+  ],
+  "unknown_empty_property": null,
+  "unknown_list": [
+    null,
+    null
+  ],
+  "unknown_number_property": 13,
+  "unknown_property": [
+    "hello",
+    "world"
+  ],
+  "unknown_property_2": [
+    1,
+    2
   ],
   "tags": [
     "#value1",

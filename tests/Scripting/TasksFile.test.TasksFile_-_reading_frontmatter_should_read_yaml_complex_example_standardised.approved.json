@@ -1,8 +1,4 @@
 {
-  "tags": [
-    "#value1",
-    "#value2"
-  ],
   "aliases": [
     "test 1",
     "test 2"
@@ -15,17 +11,6 @@
     "x"
   ],
   "custom_number_prop": 42,
-  "unknown_property": [
-    "hello",
-    "world"
-  ],
-  "unknown_property_2": [
-    1,
-    2
-  ],
-  "unknown_number_property": 13,
-  "unknown_empty_property": null,
-  "unknown_list": null,
   "parent": [
     {
       "child1": [
@@ -47,5 +32,20 @@
         }
       ]
     }
+  ],
+  "tags": [
+    "#value1",
+    "#value2"
+  ],
+  "unknown_empty_property": null,
+  "unknown_list": null,
+  "unknown_number_property": 13,
+  "unknown_property": [
+    "hello",
+    "world"
+  ],
+  "unknown_property_2": [
+    1,
+    2
   ]
 }
