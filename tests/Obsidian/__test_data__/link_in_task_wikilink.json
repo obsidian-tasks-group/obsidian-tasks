@@ -1,0 +1,132 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "link_in_task_wikilink",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 23,
+            "line": 0,
+            "offset": 23
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "links": [
+      {
+        "displayText": "link_in_task_wikilink",
+        "link": "link_in_task_wikilink",
+        "original": "[[link_in_task_wikilink]]",
+        "position": {
+          "end": {
+            "col": 69,
+            "line": 2,
+            "offset": 94
+          },
+          "start": {
+            "col": 44,
+            "line": 2,
+            "offset": 69
+          }
+        }
+      },
+      {
+        "displayText": "multiple_headings",
+        "link": "multiple_headings",
+        "original": "[[multiple_headings]]",
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 2,
+            "offset": 116
+          },
+          "start": {
+            "col": 70,
+            "line": 2,
+            "offset": 95
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 2,
+            "offset": 116
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 25
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 23,
+            "line": 0,
+            "offset": 23
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 2,
+            "offset": 116
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 25
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 36
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 31
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# link_in_task_wikilink\n\n- [ ] #task Task in 'link_in_task_wikilink' [[link_in_task_wikilink]] [[multiple_headings]]\n",
+  "filePath": "Test Data/link_in_task_wikilink.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

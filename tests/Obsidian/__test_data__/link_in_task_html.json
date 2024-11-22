@@ -1,0 +1,96 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "link_in_task_html",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 19,
+            "line": 0,
+            "offset": 19
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 119,
+            "line": 2,
+            "offset": 140
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 21
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 19,
+            "line": 0,
+            "offset": 19
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 119,
+            "line": 2,
+            "offset": 140
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 21
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 32
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 27
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# link_in_task_html\n\n- [ ] #task Task in 'link_in_task_html' - see the [Tasks Documentation](https://publish.obsidian.md/tasks/Introduction)\n",
+  "filePath": "Test Data/link_in_task_html.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}
