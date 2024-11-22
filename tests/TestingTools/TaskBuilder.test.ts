@@ -4,8 +4,8 @@
 
 import moment from 'moment';
 import type { Task } from '../../src/Task/Task';
-import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
-import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
+import example_kanban from '../Obsidian/__test_data__/example_kanban.json';
+import jason_properties from '../Obsidian/__test_data__/jason_properties.json';
 import { TaskBuilder } from './TaskBuilder';
 
 export {};
