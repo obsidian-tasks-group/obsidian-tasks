@@ -409,7 +409,9 @@ export class QueryResultsRenderer {
 
     private addUrgency(listItem: HTMLElement, task: Task) {
         const text = new Intl.NumberFormat().format(task.urgency);
-        listItem.createSpan({ text, cls: 'tasks-urgency' });
+        const span = createAndAppendElement('span', listItem);
+        span.textContent = text;
+        span.classList.add('tasks-urgency');
     }
 
     /**
