@@ -9,6 +9,7 @@ export const inheritance_1parent2children2grandchildren = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 0,
@@ -21,9 +22,9 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 11,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 1,
@@ -36,9 +37,9 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 39,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 2,
@@ -51,9 +52,9 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 72,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -66,9 +67,9 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 101,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -81,7 +82,6 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 134,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -103,6 +103,8 @@ export const inheritance_1parent2children2grandchildren = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -115,10 +117,10 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 23,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 1,
@@ -131,10 +133,10 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 52,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
             {
+                parent: 1,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -147,10 +149,10 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 85,
                     },
                 },
-                parent: 1,
-                task: ' ',
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -163,10 +165,10 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 114,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
             {
+                parent: 3,
+                task: ' ',
                 position: {
                     start: {
                         line: 4,
@@ -179,12 +181,11 @@ export const inheritance_1parent2children2grandchildren = {
                         offset: 147,
                     },
                 },
-                parent: 3,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task', '#task', '#task', '#task'],
     parseFrontMatterTags: null,
 };

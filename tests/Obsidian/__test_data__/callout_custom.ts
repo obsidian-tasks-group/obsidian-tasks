@@ -14,6 +14,7 @@ export const callout_custom = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -26,9 +27,9 @@ export const callout_custom = {
                         offset: 51,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -41,11 +42,12 @@ export const callout_custom = {
                         offset: 94,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'callout_custom',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -58,8 +60,6 @@ export const callout_custom = {
                         offset: 16,
                     },
                 },
-                heading: 'callout_custom',
-                level: 1,
             },
         ],
         sections: [
@@ -111,6 +111,8 @@ export const callout_custom = {
         ],
         listItems: [
             {
+                parent: -3,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -123,10 +125,10 @@ export const callout_custom = {
                         offset: 76,
                     },
                 },
-                parent: -3,
-                task: ' ',
             },
             {
+                parent: 3,
+                task: ' ',
                 position: {
                     start: {
                         line: 4,
@@ -139,12 +141,11 @@ export const callout_custom = {
                         offset: 128,
                     },
                 },
-                parent: 3,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task'],
     parseFrontMatterTags: null,
 };

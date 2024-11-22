@@ -14,6 +14,7 @@ export const callout = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -26,9 +27,9 @@ export const callout = {
                         offset: 34,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -41,11 +42,12 @@ export const callout = {
                         offset: 70,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'callout',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -58,8 +60,6 @@ export const callout = {
                         offset: 9,
                     },
                 },
-                heading: 'callout',
-                level: 1,
             },
         ],
         sections: [
@@ -111,6 +111,8 @@ export const callout = {
         ],
         listItems: [
             {
+                parent: -3,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -123,10 +125,10 @@ export const callout = {
                         offset: 52,
                     },
                 },
-                parent: -3,
-                task: ' ',
             },
             {
+                parent: 3,
+                task: ' ',
                 position: {
                     start: {
                         line: 4,
@@ -139,12 +141,11 @@ export const callout = {
                         offset: 97,
                     },
                 },
-                parent: 3,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task'],
     parseFrontMatterTags: null,
 };

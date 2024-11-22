@@ -38,6 +38,7 @@ export const yaml_complex_example_standardised = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 33,
@@ -50,11 +51,12 @@ export const yaml_complex_example_standardised = {
                         offset: 459,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_complex_example_standardised',
+                level: 1,
                 position: {
                     start: {
                         line: 31,
@@ -67,8 +69,6 @@ export const yaml_complex_example_standardised = {
                         offset: 446,
                     },
                 },
-                heading: 'yaml_complex_example_standardised',
-                level: 1,
             },
         ],
         sections: [
@@ -120,6 +120,8 @@ export const yaml_complex_example_standardised = {
         ],
         listItems: [
             {
+                parent: -33,
+                task: ' ',
                 position: {
                     start: {
                         line: 33,
@@ -132,8 +134,6 @@ export const yaml_complex_example_standardised = {
                         offset: 503,
                     },
                 },
-                parent: -33,
-                task: ' ',
             },
         ],
         frontmatter: {
@@ -170,6 +170,8 @@ export const yaml_complex_example_standardised = {
                 },
             ],
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -182,9 +184,8 @@ export const yaml_complex_example_standardised = {
                 offset: 409,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#value1', '#value2', '#task'],
     parseFrontMatterTags: ['#value1', '#value2'],
 };

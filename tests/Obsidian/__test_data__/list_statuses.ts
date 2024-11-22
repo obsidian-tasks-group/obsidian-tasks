@@ -10,6 +10,7 @@ export const list_statuses = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 2,
@@ -22,9 +23,9 @@ export const list_statuses = {
                         offset: 106,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -37,9 +38,9 @@ export const list_statuses = {
                         offset: 123,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -52,9 +53,9 @@ export const list_statuses = {
                         offset: 147,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 5,
@@ -67,7 +68,6 @@ export const list_statuses = {
                         offset: 177,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -104,6 +104,8 @@ export const list_statuses = {
         ],
         listItems: [
             {
+                parent: -2,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -116,10 +118,10 @@ export const list_statuses = {
                         offset: 111,
                     },
                 },
-                parent: -2,
-                task: ' ',
             },
             {
+                parent: -2,
+                task: '/',
                 position: {
                     start: {
                         line: 3,
@@ -132,10 +134,10 @@ export const list_statuses = {
                         offset: 135,
                     },
                 },
-                parent: -2,
-                task: '/',
             },
             {
+                parent: -2,
+                task: 'x',
                 position: {
                     start: {
                         line: 4,
@@ -148,10 +150,10 @@ export const list_statuses = {
                         offset: 165,
                     },
                 },
-                parent: -2,
-                task: 'x',
             },
             {
+                parent: -2,
+                task: '-',
                 position: {
                     start: {
                         line: 5,
@@ -164,12 +166,11 @@ export const list_statuses = {
                         offset: 200,
                     },
                 },
-                parent: -2,
-                task: '-',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task', '#task', '#task'],
     parseFrontMatterTags: null,
 };

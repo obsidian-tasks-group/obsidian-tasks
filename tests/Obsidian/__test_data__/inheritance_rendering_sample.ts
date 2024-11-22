@@ -30,6 +30,7 @@ export const inheritance_rendering_sample = {
         ],
         listItems: [
             {
+                parent: -1,
                 position: {
                     start: {
                         line: 0,
@@ -42,9 +43,10 @@ export const inheritance_rendering_sample = {
                         offset: 24,
                     },
                 },
-                parent: -1,
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 1,
@@ -57,10 +59,10 @@ export const inheritance_rendering_sample = {
                         offset: 43,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
             {
+                parent: 1,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -73,10 +75,10 @@ export const inheritance_rendering_sample = {
                         offset: 65,
                     },
                 },
-                parent: 1,
-                task: ' ',
             },
             {
+                parent: 2,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -89,10 +91,9 @@ export const inheritance_rendering_sample = {
                         offset: 96,
                     },
                 },
-                parent: 2,
-                task: ' ',
             },
             {
+                parent: 3,
                 position: {
                     start: {
                         line: 4,
@@ -105,9 +106,10 @@ export const inheritance_rendering_sample = {
                         offset: 142,
                     },
                 },
-                parent: 3,
             },
             {
+                parent: 1,
+                task: ' ',
                 position: {
                     start: {
                         line: 5,
@@ -120,10 +122,9 @@ export const inheritance_rendering_sample = {
                         offset: 164,
                     },
                 },
-                parent: 1,
-                task: ' ',
             },
             {
+                parent: 5,
                 position: {
                     start: {
                         line: 6,
@@ -136,9 +137,10 @@ export const inheritance_rendering_sample = {
                         offset: 198,
                     },
                 },
-                parent: 5,
             },
             {
+                parent: 6,
+                task: ' ',
                 position: {
                     start: {
                         line: 7,
@@ -151,10 +153,10 @@ export const inheritance_rendering_sample = {
                         offset: 238,
                     },
                 },
-                parent: 6,
-                task: ' ',
             },
             {
+                parent: 0,
+                task: ' ',
                 position: {
                     start: {
                         line: 8,
@@ -167,12 +169,11 @@ export const inheritance_rendering_sample = {
                         offset: 257,
                     },
                 },
-                parent: 0,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.3',
+    obsidianApiVersion: '1.7.7',
     getAllTags: [],
     parseFrontMatterTags: null,
 };

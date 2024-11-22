@@ -28,6 +28,7 @@ export const inheritance_2roots_listitem_listitem_task = {
         ],
         listItems: [
             {
+                parent: -1,
                 position: {
                     start: {
                         line: 0,
@@ -40,9 +41,9 @@ export const inheritance_2roots_listitem_listitem_task = {
                         offset: 20,
                     },
                 },
-                parent: -1,
             },
             {
+                parent: 0,
                 position: {
                     start: {
                         line: 1,
@@ -55,9 +56,10 @@ export const inheritance_2roots_listitem_listitem_task = {
                         offset: 44,
                     },
                 },
-                parent: 0,
             },
             {
+                parent: 1,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -70,10 +72,9 @@ export const inheritance_2roots_listitem_listitem_task = {
                         offset: 76,
                     },
                 },
-                parent: 1,
-                task: ' ',
             },
             {
+                parent: -1,
                 position: {
                     start: {
                         line: 4,
@@ -86,9 +87,9 @@ export const inheritance_2roots_listitem_listitem_task = {
                         offset: 98,
                     },
                 },
-                parent: -1,
             },
             {
+                parent: 4,
                 position: {
                     start: {
                         line: 5,
@@ -101,9 +102,10 @@ export const inheritance_2roots_listitem_listitem_task = {
                         offset: 122,
                     },
                 },
-                parent: 4,
             },
             {
+                parent: 5,
+                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -116,9 +118,11 @@ export const inheritance_2roots_listitem_listitem_task = {
                         offset: 154,
                     },
                 },
-                parent: 5,
-                task: ' ',
             },
         ],
+        v: 1,
     },
+    obsidianApiVersion: '1.7.7',
+    getAllTags: [],
+    parseFrontMatterTags: null,
 };

@@ -5,6 +5,7 @@ export const yaml_custom_number_property = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -17,7 +18,6 @@ export const yaml_custom_number_property = {
                         offset: 43,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -54,6 +54,8 @@ export const yaml_custom_number_property = {
         ],
         listItems: [
             {
+                parent: -4,
+                task: ' ',
                 position: {
                     start: {
                         line: 4,
@@ -66,13 +68,13 @@ export const yaml_custom_number_property = {
                         offset: 81,
                     },
                 },
-                parent: -4,
-                task: ' ',
             },
         ],
         frontmatter: {
             custom_number_prop: 42,
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -85,9 +87,8 @@ export const yaml_custom_number_property = {
                 offset: 30,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

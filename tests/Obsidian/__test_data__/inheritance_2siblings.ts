@@ -4,6 +4,7 @@ export const inheritance_2siblings = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 0,
@@ -16,9 +17,9 @@ export const inheritance_2siblings = {
                         offset: 11,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 1,
@@ -31,7 +32,6 @@ export const inheritance_2siblings = {
                         offset: 33,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -53,6 +53,8 @@ export const inheritance_2siblings = {
         ],
         listItems: [
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 0,
@@ -65,10 +67,10 @@ export const inheritance_2siblings = {
                         offset: 21,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
             {
+                parent: -1,
+                task: ' ',
                 position: {
                     start: {
                         line: 1,
@@ -81,12 +83,11 @@ export const inheritance_2siblings = {
                         offset: 43,
                     },
                 },
-                parent: -1,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task'],
     parseFrontMatterTags: null,
 };

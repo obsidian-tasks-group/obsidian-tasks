@@ -40,6 +40,7 @@ export const yaml_complex_example = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 35,
@@ -52,11 +53,12 @@ export const yaml_complex_example = {
                         offset: 441,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_complex_example',
+                level: 1,
                 position: {
                     start: {
                         line: 33,
@@ -69,8 +71,6 @@ export const yaml_complex_example = {
                         offset: 428,
                     },
                 },
-                heading: 'yaml_complex_example',
-                level: 1,
             },
         ],
         sections: [
@@ -122,6 +122,8 @@ export const yaml_complex_example = {
         ],
         listItems: [
             {
+                parent: -35,
+                task: ' ',
                 position: {
                     start: {
                         line: 35,
@@ -134,8 +136,6 @@ export const yaml_complex_example = {
                         offset: 472,
                     },
                 },
-                parent: -35,
-                task: ' ',
             },
         ],
         frontmatter: {
@@ -172,6 +172,8 @@ export const yaml_complex_example = {
                 },
             ],
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -184,9 +186,8 @@ export const yaml_complex_example = {
                 offset: 404,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#value1', '#value2', '#task'],
     parseFrontMatterTags: ['#value1', '#value2'],
 };

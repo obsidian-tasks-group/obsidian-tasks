@@ -17,6 +17,7 @@ export const callouts_nested_issue_2890_labelled = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 4,
@@ -29,9 +30,9 @@ export const callouts_nested_issue_2890_labelled = {
                         offset: 120,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 5,
@@ -44,9 +45,9 @@ export const callouts_nested_issue_2890_labelled = {
                         offset: 149,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 6,
@@ -59,9 +60,9 @@ export const callouts_nested_issue_2890_labelled = {
                         offset: 178,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 7,
@@ -74,7 +75,6 @@ export const callouts_nested_issue_2890_labelled = {
                         offset: 207,
                     },
                 },
-                tag: '#task',
             },
         ],
         sections: [
@@ -111,6 +111,8 @@ export const callouts_nested_issue_2890_labelled = {
         ],
         listItems: [
             {
+                parent: -4,
+                task: ' ',
                 position: {
                     start: {
                         line: 4,
@@ -123,10 +125,10 @@ export const callouts_nested_issue_2890_labelled = {
                         offset: 132,
                     },
                 },
-                parent: -4,
-                task: ' ',
             },
             {
+                parent: -4,
+                task: ' ',
                 position: {
                     start: {
                         line: 5,
@@ -139,10 +141,10 @@ export const callouts_nested_issue_2890_labelled = {
                         offset: 161,
                     },
                 },
-                parent: -4,
-                task: ' ',
             },
             {
+                parent: -4,
+                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -155,10 +157,10 @@ export const callouts_nested_issue_2890_labelled = {
                         offset: 190,
                     },
                 },
-                parent: -4,
-                task: ' ',
             },
             {
+                parent: -4,
+                task: ' ',
                 position: {
                     start: {
                         line: 7,
@@ -171,12 +173,11 @@ export const callouts_nested_issue_2890_labelled = {
                         offset: 219,
                     },
                 },
-                parent: -4,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task', '#task', '#task'],
     parseFrontMatterTags: null,
 };

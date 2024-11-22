@@ -11,6 +11,7 @@ export const yaml_tags_is_empty_list = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 6,
@@ -23,11 +24,12 @@ export const yaml_tags_is_empty_list = {
                         offset: 56,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_tags_is_empty_list',
+                level: 1,
                 position: {
                     start: {
                         line: 4,
@@ -40,8 +42,6 @@ export const yaml_tags_is_empty_list = {
                         offset: 43,
                     },
                 },
-                heading: 'yaml_tags_is_empty_list',
-                level: 1,
             },
         ],
         sections: [
@@ -93,6 +93,8 @@ export const yaml_tags_is_empty_list = {
         ],
         listItems: [
             {
+                parent: -6,
+                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -105,13 +107,13 @@ export const yaml_tags_is_empty_list = {
                         offset: 90,
                     },
                 },
-                parent: -6,
-                task: ' ',
             },
         ],
         frontmatter: {
             tags: [],
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -124,9 +126,8 @@ export const yaml_tags_is_empty_list = {
                 offset: 16,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

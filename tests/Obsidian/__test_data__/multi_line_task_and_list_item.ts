@@ -15,6 +15,7 @@ export const multi_line_task_and_list_item = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 2,
@@ -27,11 +28,12 @@ export const multi_line_task_and_list_item = {
                         offset: 44,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'multi_line_task_and_list_item',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -44,8 +46,6 @@ export const multi_line_task_and_list_item = {
                         offset: 31,
                     },
                 },
-                heading: 'multi_line_task_and_list_item',
-                level: 1,
             },
         ],
         sections: [
@@ -97,6 +97,8 @@ export const multi_line_task_and_list_item = {
         ],
         listItems: [
             {
+                parent: -2,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -109,10 +111,9 @@ export const multi_line_task_and_list_item = {
                         offset: 116,
                     },
                 },
-                parent: -2,
-                task: ' ',
             },
             {
+                parent: -2,
                 position: {
                     start: {
                         line: 5,
@@ -125,11 +126,11 @@ export const multi_line_task_and_list_item = {
                         offset: 215,
                     },
                 },
-                parent: -2,
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

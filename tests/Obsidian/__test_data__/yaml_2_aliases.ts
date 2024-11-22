@@ -13,6 +13,7 @@ export const yaml_2_aliases = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 8,
@@ -25,11 +26,12 @@ export const yaml_2_aliases = {
                         offset: 81,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_2_aliases',
+                level: 1,
                 position: {
                     start: {
                         line: 6,
@@ -42,8 +44,6 @@ export const yaml_2_aliases = {
                         offset: 68,
                     },
                 },
-                heading: 'yaml_2_aliases',
-                level: 1,
             },
         ],
         sections: [
@@ -95,6 +95,8 @@ export const yaml_2_aliases = {
         ],
         listItems: [
             {
+                parent: -8,
+                task: ' ',
                 position: {
                     start: {
                         line: 8,
@@ -107,13 +109,13 @@ export const yaml_2_aliases = {
                         offset: 106,
                     },
                 },
-                parent: -8,
-                task: ' ',
             },
         ],
         frontmatter: {
             aliases: ['YAML Alias 1', 'YAML Alias 2'],
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -126,9 +128,8 @@ export const yaml_2_aliases = {
                 offset: 50,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };

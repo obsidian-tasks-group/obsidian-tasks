@@ -12,6 +12,7 @@ export const inheritance_1parent1child1newroot_after_header = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 2,
@@ -24,9 +25,9 @@ export const inheritance_1parent1child1newroot_after_header = {
                         offset: 27,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 3,
@@ -39,9 +40,9 @@ export const inheritance_1parent1child1newroot_after_header = {
                         offset: 55,
                     },
                 },
-                tag: '#task',
             },
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 7,
@@ -54,11 +55,12 @@ export const inheritance_1parent1child1newroot_after_header = {
                         offset: 99,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'first header',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -71,10 +73,10 @@ export const inheritance_1parent1child1newroot_after_header = {
                         offset: 14,
                     },
                 },
-                heading: 'first header',
-                level: 1,
             },
             {
+                heading: 'second header',
+                level: 2,
                 position: {
                     start: {
                         line: 5,
@@ -87,8 +89,6 @@ export const inheritance_1parent1child1newroot_after_header = {
                         offset: 86,
                     },
                 },
-                heading: 'second header',
-                level: 2,
             },
         ],
         sections: [
@@ -155,6 +155,8 @@ export const inheritance_1parent1child1newroot_after_header = {
         ],
         listItems: [
             {
+                parent: -2,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -167,10 +169,10 @@ export const inheritance_1parent1child1newroot_after_header = {
                         offset: 39,
                     },
                 },
-                parent: -2,
-                task: ' ',
             },
             {
+                parent: 2,
+                task: ' ',
                 position: {
                     start: {
                         line: 3,
@@ -183,10 +185,10 @@ export const inheritance_1parent1child1newroot_after_header = {
                         offset: 68,
                     },
                 },
-                parent: 2,
-                task: ' ',
             },
             {
+                parent: -7,
+                task: ' ',
                 position: {
                     start: {
                         line: 7,
@@ -199,12 +201,11 @@ export const inheritance_1parent1child1newroot_after_header = {
                         offset: 109,
                     },
                 },
-                parent: -7,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task', '#task', '#task'],
     parseFrontMatterTags: null,
 };

@@ -11,6 +11,7 @@ export const yaml_tags_with_two_values_on_one_line = {
     cachedMetadata: {
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 6,
@@ -23,11 +24,12 @@ export const yaml_tags_with_two_values_on_one_line = {
                         offset: 118,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'yaml_tags_with_two_values_on_one_line',
+                level: 1,
                 position: {
                     start: {
                         line: 4,
@@ -40,8 +42,6 @@ export const yaml_tags_with_two_values_on_one_line = {
                         offset: 105,
                     },
                 },
-                heading: 'yaml_tags_with_two_values_on_one_line',
-                level: 1,
             },
         ],
         sections: [
@@ -93,6 +93,8 @@ export const yaml_tags_with_two_values_on_one_line = {
         ],
         listItems: [
             {
+                parent: -6,
+                task: ' ',
                 position: {
                     start: {
                         line: 6,
@@ -105,13 +107,13 @@ export const yaml_tags_with_two_values_on_one_line = {
                         offset: 166,
                     },
                 },
-                parent: -6,
-                task: ' ',
             },
         ],
         frontmatter: {
             tags: 'value-1-of-2-on-one-line, value-2-of-2-on-one-line',
         },
+        frontmatterLinks: [],
+        v: 1,
         frontmatterPosition: {
             start: {
                 line: 0,
@@ -124,9 +126,8 @@ export const yaml_tags_with_two_values_on_one_line = {
                 offset: 64,
             },
         },
-        frontmatterLinks: [],
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#value-1-of-2-on-one-line', '#value-2-of-2-on-one-line', '#task'],
     parseFrontMatterTags: ['#value-1-of-2-on-one-line', '#value-2-of-2-on-one-line'],
 };

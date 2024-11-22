@@ -5,6 +5,9 @@ export const link_is_broken = {
     cachedMetadata: {
         links: [
             {
+                link: 'broken link - do not fix me',
+                original: '[[broken link - do not fix me]]',
+                displayText: 'broken link - do not fix me',
                 position: {
                     start: {
                         line: 2,
@@ -17,13 +20,11 @@ export const link_is_broken = {
                         offset: 86,
                     },
                 },
-                link: 'broken link - do not fix me',
-                original: '[[broken link - do not fix me]]',
-                displayText: 'broken link - do not fix me',
             },
         ],
         tags: [
             {
+                tag: '#task',
                 position: {
                     start: {
                         line: 2,
@@ -36,11 +37,12 @@ export const link_is_broken = {
                         offset: 29,
                     },
                 },
-                tag: '#task',
             },
         ],
         headings: [
             {
+                heading: 'link_is_broken',
+                level: 1,
                 position: {
                     start: {
                         line: 0,
@@ -53,8 +55,6 @@ export const link_is_broken = {
                         offset: 16,
                     },
                 },
-                heading: 'link_is_broken',
-                level: 1,
             },
         ],
         sections: [
@@ -91,6 +91,8 @@ export const link_is_broken = {
         ],
         listItems: [
             {
+                parent: -2,
+                task: ' ',
                 position: {
                     start: {
                         line: 2,
@@ -103,12 +105,11 @@ export const link_is_broken = {
                         offset: 86,
                     },
                 },
-                parent: -2,
-                task: ' ',
             },
         ],
+        v: 1,
     },
-    obsidianApiVersion: '1.7.1',
+    obsidianApiVersion: '1.7.7',
     getAllTags: ['#task'],
     parseFrontMatterTags: null,
 };
