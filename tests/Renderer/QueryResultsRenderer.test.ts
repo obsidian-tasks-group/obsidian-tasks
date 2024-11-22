@@ -55,6 +55,11 @@ describe('QueryResultsRenderer tests', () => {
         await verifyRenderedTasksHTML(allTasks, 'show urgency');
     });
 
+    it('fully populated task - short mode', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks, 'show urgency\nshort mode');
+    });
+
     const showTree = 'show tree\n';
     const hideTree = 'hide tree\n';
 
