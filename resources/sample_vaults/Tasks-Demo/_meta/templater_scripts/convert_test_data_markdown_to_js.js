@@ -1,5 +1,5 @@
 const fs = require('node:fs');
-const util = require('util');
+const path = require('node:path');
 
 const vault = app.vault;
 
@@ -10,20 +10,18 @@ async function getMarkdownFiles() {
 }
 
 function getBasename(filePath) {
-    return filePath.split('/')[1].replace('.md', '');
+    return path.basename(filePath, '.md');
 }
 
 function getOutputFilePath(outputFile) {
     const rootOfVault = vault.adapter.getBasePath();
-    return rootOfVault + '/../../../tests/Obsidian/' + outputFile;
+    return path.join(rootOfVault, '../../../tests/Obsidian', outputFile);
 }
 
 function writeFile(testSourceFile, content) {
     fs.writeFile(testSourceFile, content, (err) => {
         if (err) {
             console.error(err);
-        } else {
-            // file written successfully
         }
     });
 }
