@@ -1,0 +1,138 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "aliases": null,
+      "creation date": null,
+      "sample_checkbox_property": null,
+      "sample_date_and_time_property": null,
+      "sample_date_property": null,
+      "sample_link_list_property": null,
+      "sample_link_property": null,
+      "sample_list_property": null,
+      "sample_number_property": null,
+      "sample_text_property": null,
+      "tags": null
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 12,
+        "offset": 243
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_all_property_types_empty",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 13,
+            "offset": 275
+          },
+          "start": {
+            "col": 0,
+            "line": 13,
+            "offset": 244
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -15,
+        "position": {
+          "end": {
+            "col": 51,
+            "line": 15,
+            "offset": 328
+          },
+          "start": {
+            "col": 0,
+            "line": 15,
+            "offset": 277
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 12,
+            "offset": 243
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 13,
+            "offset": 275
+          },
+          "start": {
+            "col": 0,
+            "line": 13,
+            "offset": 244
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 51,
+            "line": 15,
+            "offset": 328
+          },
+          "start": {
+            "col": 0,
+            "line": 15,
+            "offset": 277
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 15,
+            "offset": 288
+          },
+          "start": {
+            "col": 6,
+            "line": 15,
+            "offset": 283
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\nsample_checkbox_property: \nsample_date_property: \nsample_date_and_time_property: \nsample_list_property: \nsample_number_property: \nsample_text_property: \nsample_link_property: \nsample_link_list_property: \naliases: \ntags: \ncreation date:\n---\n# yaml_all_property_types_empty\n\n- [ ] #task Task in 'yaml_all_property_types_empty'\n",
+  "filePath": "Test Data/yaml_all_property_types_empty.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

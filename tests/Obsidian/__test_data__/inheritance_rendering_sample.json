@@ -1,0 +1,170 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 24,
+            "line": 0,
+            "offset": 24
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 1,
+            "offset": 43
+          },
+          "start": {
+            "col": 3,
+            "line": 1,
+            "offset": 28
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 1,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 2,
+            "offset": 65
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 50
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 30,
+            "line": 3,
+            "offset": 96
+          },
+          "start": {
+            "col": 10,
+            "line": 3,
+            "offset": 76
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 3,
+        "position": {
+          "end": {
+            "col": 45,
+            "line": 4,
+            "offset": 142
+          },
+          "start": {
+            "col": 14,
+            "line": 4,
+            "offset": 111
+          }
+        }
+      },
+      {
+        "parent": 1,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 5,
+            "offset": 164
+          },
+          "start": {
+            "col": 6,
+            "line": 5,
+            "offset": 149
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 5,
+        "position": {
+          "end": {
+            "col": 33,
+            "line": 6,
+            "offset": 198
+          },
+          "start": {
+            "col": 10,
+            "line": 6,
+            "offset": 175
+          }
+        }
+      },
+      {
+        "parent": 6,
+        "position": {
+          "end": {
+            "col": 39,
+            "line": 7,
+            "offset": 238
+          },
+          "start": {
+            "col": 14,
+            "line": 7,
+            "offset": 213
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 8,
+            "offset": 257
+          },
+          "start": {
+            "col": 3,
+            "line": 8,
+            "offset": 242
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 8,
+            "offset": 257
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "-  grandparent list item\n    - [ ] parent 1\n        - [ ] child 1\n            - [ ] grandchild 1\n                - list item grand grand child\n        - [ ] child 2\n            - non task grandchild\n                - [ ] grand grand child\n    - [ ] parent 2\n",
+  "filePath": "Test Data/inheritance_rendering_sample.md",
+  "getAllTags": [],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

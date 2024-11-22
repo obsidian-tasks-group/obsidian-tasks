@@ -1,0 +1,132 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "publish": false,
+      "tags": "journal"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 5,
+        "offset": 51
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "jason_properties",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 7,
+            "offset": 71
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 53
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -9,
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 9,
+            "offset": 111
+          },
+          "start": {
+            "col": 0,
+            "line": 9,
+            "offset": 73
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 5,
+            "offset": 51
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 7,
+            "offset": 71
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 53
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 9,
+            "offset": 111
+          },
+          "start": {
+            "col": 0,
+            "line": 9,
+            "offset": 73
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 9,
+            "offset": 84
+          },
+          "start": {
+            "col": 6,
+            "line": 9,
+            "offset": 79
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\n{\n  \"tags\": \"journal\",\n  \"publish\": false\n}\n---\n\n# jason_properties\n\n- [ ] #task Task in 'jason_properties'\n",
+  "filePath": "Test Data/jason_properties.md",
+  "getAllTags": [
+    "#journal",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": [
+    "#journal"
+  ]
+}

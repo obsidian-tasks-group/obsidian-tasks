@@ -1,0 +1,127 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "multi_line_task_and_list_item",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 0,
+            "offset": 31
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 15,
+            "line": 4,
+            "offset": 116
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 33
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 7,
+            "offset": 215
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 117
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 0,
+            "offset": 31
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 7,
+            "offset": 215
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 33
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 106,
+            "line": 10,
+            "offset": 396
+          },
+          "start": {
+            "col": 0,
+            "line": 9,
+            "offset": 217
+          }
+        },
+        "type": "paragraph"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 44
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 39
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# multi_line_task_and_list_item\n\n- [ ] #task Task in 'multi_line_task_and_list_item'\n    task line 1\n    task line 2\n- muli-line list item in 'multi_line_task_and_list_item'\n    list item line 1\n    list item line 2\n\nSee: https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2061:\nMulti-line tasks (indented lines below a task items) are not shown in Reading mode and Tasks query results\n",
+  "filePath": "Test Data/multi_line_task_and_list_item.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

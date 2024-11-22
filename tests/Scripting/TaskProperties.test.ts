@@ -13,7 +13,7 @@ import { makeQueryContextWithTasks } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
-import { docs_sample_for_task_properties_reference } from '../Obsidian/__test_data__/docs_sample_for_task_properties_reference';
+import docs_sample_for_task_properties_reference from '../Obsidian/__test_data__/docs_sample_for_task_properties_reference.json';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;

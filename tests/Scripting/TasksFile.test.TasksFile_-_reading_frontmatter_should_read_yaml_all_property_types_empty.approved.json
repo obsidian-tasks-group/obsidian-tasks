@@ -1,13 +1,13 @@
 {
+  "aliases": null,
+  "creation date": null,
   "sample_checkbox_property": null,
-  "sample_date_property": null,
   "sample_date_and_time_property": null,
+  "sample_date_property": null,
+  "sample_link_list_property": null,
+  "sample_link_property": null,
   "sample_list_property": null,
   "sample_number_property": null,
   "sample_text_property": null,
-  "sample_link_property": null,
-  "sample_link_list_property": null,
-  "aliases": null,
-  "tags": [],
-  "creation date": null
+  "tags": []
 }

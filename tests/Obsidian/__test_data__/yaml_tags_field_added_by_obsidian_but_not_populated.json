@@ -1,0 +1,128 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "tags": null
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 13
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_tags_field_added_by_obsidian_but_not_populated",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 53,
+            "line": 4,
+            "offset": 68
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 15
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 73,
+            "line": 6,
+            "offset": 143
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 70
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 13
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 53,
+            "line": 4,
+            "offset": 68
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 15
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 73,
+            "line": 6,
+            "offset": 143
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 70
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 6,
+            "offset": 81
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 76
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\ntags:\n---\n\n# yaml_tags_field_added_by_obsidian_but_not_populated\n\n- [ ] #task Task in 'yaml_tags_field_added_by_obsidian_but_not_populated'\n",
+  "filePath": "Test Data/yaml_tags_field_added_by_obsidian_but_not_populated.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}
