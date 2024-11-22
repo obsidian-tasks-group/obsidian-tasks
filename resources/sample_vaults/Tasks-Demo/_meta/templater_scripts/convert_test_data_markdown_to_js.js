@@ -54,12 +54,15 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
         return '';
     }
 
-    const testSourceFile = getOutputFilePath('__test_data__/' + filename + '.ts');
+    // Write data as Typescript source
+    {
+        const testSourceFile = getOutputFilePath('__test_data__/' + filename + '.ts');
 
-    const options = { depth: null, compact: false };
-    const dataAsJSSource = util.inspect(data, options);
-    const content = `export const ${filename} = ${dataAsJSSource};`;
-    writeFile(testSourceFile, content);
+        const options = { depth: null, compact: false };
+        const dataAsJSSource = util.inspect(data, options);
+        const content = `export const ${filename} = ${dataAsJSSource};`;
+        writeFile(testSourceFile, content);
+    }
 }
 
 async function writeListOfAllTestFunctions(files) {
