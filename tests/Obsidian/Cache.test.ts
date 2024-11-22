@@ -616,6 +616,22 @@ describe('accessing links in file', function () {
 
         const cachedMetadata: CachedMetadata = task.file.cachedMetadata;
 
+        /**
+         * I am thinking of the following, to evantually make links accessible to users.
+         * 1. Provide a class or interface called Link, with fields:
+         *      - displayText, e.g. "link_in_yaml"
+         *      - link, e.g. "link_in_yaml"
+         *      - original, e.g. "[[link_in_yaml]]"
+         * 2. Add some getters that construct the relevant Link objects from cached metadata on demand, such as:
+         *      - task.file.linksInBody
+         *      - task.file.linksInFrontMatter
+         *      - task.file.allLinks
+         *      - task.links
+         * 3. Consider the vocabulary - some dataview users talk about inlines and outlinks.
+         *    The above are all outlinks - but do we want to name them as such, to prepare
+         *    for if or when inlinks are also supported?
+         */
+
         it('see source', () => {
             expect(data.fileContents).toMatchInlineSnapshot(`
                             "---
