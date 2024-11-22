@@ -1,0 +1,132 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "link_in_task_markdown_link",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 0,
+            "offset": 28
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "links": [
+      {
+        "displayText": "jason_properties",
+        "link": "jason_properties",
+        "original": "[jason_properties](jason_properties)",
+        "position": {
+          "end": {
+            "col": 85,
+            "line": 2,
+            "offset": 115
+          },
+          "start": {
+            "col": 49,
+            "line": 2,
+            "offset": 79
+          }
+        }
+      },
+      {
+        "displayText": "multiple_headings",
+        "link": "multiple_headings",
+        "original": "[multiple_headings](multiple_headings)",
+        "position": {
+          "end": {
+            "col": 124,
+            "line": 2,
+            "offset": 154
+          },
+          "start": {
+            "col": 86,
+            "line": 2,
+            "offset": 116
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 124,
+            "line": 2,
+            "offset": 154
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 30
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 0,
+            "offset": 28
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 124,
+            "line": 2,
+            "offset": 154
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 30
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 41
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 36
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# link_in_task_markdown_link\n\n- [ ] #task Task in 'link_in_task_markdown_link' [jason_properties](jason_properties) [multiple_headings](multiple_headings)\n",
+  "filePath": "Test Data/link_in_task_markdown_link.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}
