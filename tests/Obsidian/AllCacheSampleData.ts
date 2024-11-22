@@ -36,8 +36,12 @@ import jason_properties from './__test_data__/jason_properties.json';
 import link_in_file_body from './__test_data__/link_in_file_body.json';
 import link_in_file_body_with_custom_display_text from './__test_data__/link_in_file_body_with_custom_display_text.json';
 import link_in_heading from './__test_data__/link_in_heading.json';
+import link_in_task_html from './__test_data__/link_in_task_html.json';
+import link_in_task_markdown_link from './__test_data__/link_in_task_markdown_link.json';
+import link_in_task_wikilink from './__test_data__/link_in_task_wikilink.json';
 import link_in_yaml from './__test_data__/link_in_yaml.json';
 import link_is_broken from './__test_data__/link_is_broken.json';
+import links_everywhere from './__test_data__/links_everywhere.json';
 import list_statuses from './__test_data__/list_statuses.json';
 import list_styles from './__test_data__/list_styles.json';
 import multi_line_task_and_list_item from './__test_data__/multi_line_task_and_list_item.json';
@@ -101,8 +105,12 @@ export function allCacheSampleData() {
         link_in_file_body,
         link_in_file_body_with_custom_display_text,
         link_in_heading,
+        link_in_task_html,
+        link_in_task_markdown_link,
+        link_in_task_wikilink,
         link_in_yaml,
         link_is_broken,
+        links_everywhere,
         list_statuses,
         list_styles,
         multi_line_task_and_list_item,

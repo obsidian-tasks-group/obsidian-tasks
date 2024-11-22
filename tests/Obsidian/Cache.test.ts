@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment/moment';
+import type { CachedMetadata } from 'obsidian';
 import type { ListItem } from '../../src/Task/ListItem';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import inheritance_1parent1child from './__test_data__/inheritance_1parent1child.json';
@@ -29,8 +30,9 @@ import callout from './__test_data__/callout.json';
 import callout_labelled from './__test_data__/callout_labelled.json';
 import callout_custom from './__test_data__/callout_custom.json';
 import callouts_nested_issue_2890_unlabelled from './__test_data__/callouts_nested_issue_2890_unlabelled.json';
+import links_everywhere from './__test_data__/links_everywhere.json';
 import { allCacheSampleData } from './AllCacheSampleData';
-import { readTasksFromSimulatedFile } from './SimulatedFile';
+import { type SimulatedFile, readTasksFromSimulatedFile } from './SimulatedFile';
 
 window.moment = moment;
 
@@ -601,6 +603,112 @@ describe('cache', () => {
             "
         `);
         expect(tasks.length).toEqual(4);
+    });
+});
+
+describe('accessing links in file', function () {
+    describe('explore accessing links in file "links_everywhere.md"', () => {
+        const data = links_everywhere as unknown as SimulatedFile;
+
+        const tasks = readTasksFromSimulatedFile(data);
+        expect(tasks.length).toEqual(1);
+        const task = tasks[0];
+
+        const cachedMetadata: CachedMetadata = task.file.cachedMetadata;
+
+        it('see source', () => {
+            expect(data.fileContents).toMatchInlineSnapshot(`
+                            "---
+                            link-in-frontmatter: "[[link_in_yaml]]"
+                            ---
+                            # links_everywhere
+
+                            A link in the file body: [[link_in_file_body]]
+
+                            ## A link in a [[link_in_heading]]
+
+                            - [ ] #task Task in 'links_everywhere' - a link on the task: [[link_in_task_wikilink]]
+                            "
+                    `);
+        });
+
+        it('should access links in frontmatter', () => {
+            // @ts-expect-error TS2551: Property frontmatterLinks does not exist on type CachedMetadata
+            const frontMatterLinks = cachedMetadata['frontmatterLinks'];
+
+            const firstFrontMatterLink = frontMatterLinks[0];
+            expect(firstFrontMatterLink.original).toEqual('[[link_in_yaml]]');
+            expect(firstFrontMatterLink).toMatchInlineSnapshot(`
+                            {
+                              "displayText": "link_in_yaml",
+                              "key": "link-in-frontmatter",
+                              "link": "link_in_yaml",
+                              "original": "[[link_in_yaml]]",
+                            }
+                    `);
+        });
+
+        it('should access links in file body', () => {
+            const fileBodyLinks = cachedMetadata.links;
+
+            const originalLinkText = fileBodyLinks?.map((link) => link.original).join('\n');
+            expect(originalLinkText).toMatchInlineSnapshot(`
+                            "[[link_in_file_body]]
+                            [[link_in_heading]]
+                            [[link_in_task_wikilink]]"
+                    `);
+
+            const firstFileBodyLink = fileBodyLinks![0];
+            expect(firstFileBodyLink).toMatchInlineSnapshot(`
+                            {
+                              "displayText": "link_in_file_body",
+                              "link": "link_in_file_body",
+                              "original": "[[link_in_file_body]]",
+                              "position": {
+                                "end": {
+                                  "col": 46,
+                                  "line": 5,
+                                  "offset": 114,
+                                },
+                                "start": {
+                                  "col": 25,
+                                  "line": 5,
+                                  "offset": 93,
+                                },
+                              },
+                            }
+                    `);
+        });
+
+        it('should access links in task line', () => {
+            const fileBodyLinks = cachedMetadata.links;
+            const linksOnTask = fileBodyLinks?.filter((link) => link.position.start.line === task.lineNumber);
+
+            expect(linksOnTask).toBeDefined();
+            expect(linksOnTask?.length).toEqual(1);
+
+            const firstLinkOnTask = linksOnTask![0];
+            expect(firstLinkOnTask.original).toEqual('[[link_in_task_wikilink]]');
+            expect(firstLinkOnTask).toMatchInlineSnapshot(`
+                {
+                  "displayText": "link_in_task_wikilink",
+                  "link": "link_in_task_wikilink",
+                  "original": "[[link_in_task_wikilink]]",
+                  "position": {
+                    "end": {
+                      "col": 86,
+                      "line": 9,
+                      "offset": 238,
+                    },
+                    "start": {
+                      "col": 61,
+                      "line": 9,
+                      "offset": 213,
+                    },
+                  },
+                }
+            `);
+        });
     });
 });
 
