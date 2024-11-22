@@ -52,7 +52,7 @@ describe('QueryResultsRenderer tests', () => {
 
     it('fully populated task', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks);
+        await verifyRenderedTasksHTML(allTasks, 'show urgency');
     });
 
     const showTree = 'show tree\n';
