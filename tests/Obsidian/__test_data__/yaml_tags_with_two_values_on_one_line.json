@@ -1,0 +1,133 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "tags": "value-1-of-2-on-one-line, value-2-of-2-on-one-line"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 64
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_tags_with_two_values_on_one_line",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 39,
+            "line": 4,
+            "offset": 105
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 66
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 59,
+            "line": 6,
+            "offset": 166
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 107
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 64
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 39,
+            "line": 4,
+            "offset": 105
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 66
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 59,
+            "line": 6,
+            "offset": 166
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 107
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 6,
+            "offset": 118
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 113
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\ntags: value-1-of-2-on-one-line, value-2-of-2-on-one-line\n---\n\n# yaml_tags_with_two_values_on_one_line\n\n- [ ] #task Task in 'yaml_tags_with_two_values_on_one_line'\n",
+  "filePath": "Test Data/yaml_tags_with_two_values_on_one_line.md",
+  "getAllTags": [
+    "#value-1-of-2-on-one-line",
+    "#value-2-of-2-on-one-line",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": [
+    "#value-1-of-2-on-one-line",
+    "#value-2-of-2-on-one-line"
+  ]
+}

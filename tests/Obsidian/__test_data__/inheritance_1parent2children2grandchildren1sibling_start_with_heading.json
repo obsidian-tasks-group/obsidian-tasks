@@ -1,0 +1,257 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "Test heading",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 14,
+            "line": 0,
+            "offset": 14
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 23,
+            "line": 2,
+            "offset": 39
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 16
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 3,
+            "offset": 68
+          },
+          "start": {
+            "col": 2,
+            "line": 3,
+            "offset": 42
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 3,
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 4,
+            "offset": 101
+          },
+          "start": {
+            "col": 6,
+            "line": 4,
+            "offset": 75
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 5,
+            "offset": 130
+          },
+          "start": {
+            "col": 2,
+            "line": 5,
+            "offset": 104
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 5,
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 6,
+            "offset": 163
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 137
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 19,
+            "line": 7,
+            "offset": 183
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 164
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 14,
+            "line": 0,
+            "offset": 14
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 19,
+            "line": 7,
+            "offset": 183
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 16
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 27
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 22
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 15,
+            "line": 3,
+            "offset": 55
+          },
+          "start": {
+            "col": 10,
+            "line": 3,
+            "offset": 50
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 19,
+            "line": 4,
+            "offset": 88
+          },
+          "start": {
+            "col": 14,
+            "line": 4,
+            "offset": 83
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 15,
+            "line": 5,
+            "offset": 117
+          },
+          "start": {
+            "col": 10,
+            "line": 5,
+            "offset": 112
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 19,
+            "line": 6,
+            "offset": 150
+          },
+          "start": {
+            "col": 14,
+            "line": 6,
+            "offset": 145
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 7,
+            "offset": 175
+          },
+          "start": {
+            "col": 6,
+            "line": 7,
+            "offset": 170
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# Test heading\n\n- [ ] #task parent task\n    - [ ] #task child task 1\n        - [ ] #task grandchild 1\n    - [ ] #task child task 2\n        - [ ] #task grandchild 2\n- [ ] #task sibling\n",
+  "filePath": "Test Data/inheritance_1parent2children2grandchildren1sibling_start_with_heading.md",
+  "getAllTags": [
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

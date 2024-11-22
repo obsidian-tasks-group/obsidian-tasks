@@ -1,0 +1,128 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "CAPITAL_property": "some value"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 36
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_capitalised_property_name",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 4,
+            "offset": 70
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 38
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 52,
+            "line": 6,
+            "offset": 124
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 72
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 36
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 4,
+            "offset": 70
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 38
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 52,
+            "line": 6,
+            "offset": 124
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 72
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 6,
+            "offset": 83
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 78
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\nCAPITAL_property: some value\n---\n\n# yaml_capitalised_property_name\n\n- [ ] #task Task in 'yaml_capitalised_property_name'\n",
+  "filePath": "Test Data/yaml_capitalised_property_name.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

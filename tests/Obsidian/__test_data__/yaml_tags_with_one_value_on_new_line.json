@@ -1,0 +1,133 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "tags": [
+        "single-value-new-line"
+      ]
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 3,
+        "offset": 39
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_tags_with_one_value_on_new_line",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 6,
+            "offset": 80
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 42
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -8,
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 8,
+            "offset": 140
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 82
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 3,
+            "offset": 39
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 6,
+            "offset": 80
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 42
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 8,
+            "offset": 140
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 82
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 8,
+            "offset": 93
+          },
+          "start": {
+            "col": 6,
+            "line": 8,
+            "offset": 88
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\ntags:\n  - single-value-new-line\n---\n\n\n# yaml_tags_with_one_value_on_new_line\n\n- [ ] #task Task in 'yaml_tags_with_one_value_on_new_line'\n",
+  "filePath": "Test Data/yaml_tags_with_one_value_on_new_line.md",
+  "getAllTags": [
+    "#single-value-new-line",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": [
+    "#single-value-new-line"
+  ]
+}

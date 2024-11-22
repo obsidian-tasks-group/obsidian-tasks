@@ -1,0 +1,147 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "link_in_heading",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 0,
+            "offset": 17
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      },
+      {
+        "heading": "I link to [[multiple_headings]]",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 2,
+            "offset": 53
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 19
+          }
+        }
+      }
+    ],
+    "links": [
+      {
+        "displayText": "multiple_headings",
+        "link": "multiple_headings",
+        "original": "[[multiple_headings]]",
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 2,
+            "offset": 53
+          },
+          "start": {
+            "col": 13,
+            "line": 2,
+            "offset": 32
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -4,
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 4,
+            "offset": 92
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 55
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 0,
+            "offset": 17
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 2,
+            "offset": 53
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 19
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 4,
+            "offset": 92
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 55
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 4,
+            "offset": 66
+          },
+          "start": {
+            "col": 6,
+            "line": 4,
+            "offset": 61
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# link_in_heading\n\n## I link to [[multiple_headings]]\n\n- [ ] #task Task in 'link_in_heading'\n",
+  "filePath": "Test Data/link_in_heading.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

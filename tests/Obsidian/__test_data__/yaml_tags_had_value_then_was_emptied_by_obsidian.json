@@ -1,0 +1,128 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "tags": []
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 16
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_tags_had_value_then_was_emptied_by_obsidian",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 50,
+            "line": 5,
+            "offset": 69
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 19
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -7,
+        "position": {
+          "end": {
+            "col": 70,
+            "line": 7,
+            "offset": 141
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 71
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 16
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 50,
+            "line": 5,
+            "offset": 69
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 19
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 70,
+            "line": 7,
+            "offset": 141
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 71
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 7,
+            "offset": 82
+          },
+          "start": {
+            "col": 6,
+            "line": 7,
+            "offset": 77
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\ntags: []\n---\n\n\n# yaml_tags_had_value_then_was_emptied_by_obsidian\n\n- [ ] #task Task in 'yaml_tags_had_value_then_was_emptied_by_obsidian'\n",
+  "filePath": "Test Data/yaml_tags_had_value_then_was_emptied_by_obsidian.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

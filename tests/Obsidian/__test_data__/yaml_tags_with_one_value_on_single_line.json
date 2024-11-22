@@ -1,0 +1,131 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "tags": "single-value-single-line"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 38
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_tags_with_one_value_on_single_line",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 41,
+            "line": 4,
+            "offset": 81
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 40
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 61,
+            "line": 6,
+            "offset": 144
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 83
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 38
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 41,
+            "line": 4,
+            "offset": 81
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 40
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 61,
+            "line": 6,
+            "offset": 144
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 83
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 6,
+            "offset": 94
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 89
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\ntags: single-value-single-line\n---\n\n# yaml_tags_with_one_value_on_single_line\n\n- [ ] #task Task in 'yaml_tags_with_one_value_on_single_line'\n",
+  "filePath": "Test Data/yaml_tags_with_one_value_on_single_line.md",
+  "getAllTags": [
+    "#single-value-single-line",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": [
+    "#single-value-single-line"
+  ]
+}

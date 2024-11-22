@@ -1,25 +1,25 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { TasksFile } from '../../src/Scripting/TasksFile';
-import { callouts_nested_issue_2890_unlabelled } from '../Obsidian/__test_data__/callouts_nested_issue_2890_unlabelled';
-import { no_yaml } from '../Obsidian/__test_data__/no_yaml';
-import { empty_yaml } from '../Obsidian/__test_data__/empty_yaml';
-import { yaml_capitalised_property_name } from '../Obsidian/__test_data__/yaml_capitalised_property_name';
-import { yaml_tags_has_multiple_values } from '../Obsidian/__test_data__/yaml_tags_has_multiple_values';
-import { yaml_custom_number_property } from '../Obsidian/__test_data__/yaml_custom_number_property';
-import { yaml_tags_with_one_value_on_new_line } from '../Obsidian/__test_data__/yaml_tags_with_one_value_on_new_line';
-import { yaml_tags_field_added_by_obsidian_but_not_populated } from '../Obsidian/__test_data__/yaml_tags_field_added_by_obsidian_but_not_populated';
-import { yaml_tags_had_value_then_was_emptied_by_obsidian } from '../Obsidian/__test_data__/yaml_tags_had_value_then_was_emptied_by_obsidian';
-import { yaml_tags_is_empty_list } from '../Obsidian/__test_data__/yaml_tags_is_empty_list';
-import { yaml_tags_is_empty } from '../Obsidian/__test_data__/yaml_tags_is_empty';
-import { example_kanban } from '../Obsidian/__test_data__/example_kanban';
+import callouts_nested_issue_2890_unlabelled from '../Obsidian/__test_data__/callouts_nested_issue_2890_unlabelled.json';
+import no_yaml from '../Obsidian/__test_data__/no_yaml.json';
+import empty_yaml from '../Obsidian/__test_data__/empty_yaml.json';
+import yaml_capitalised_property_name from '../Obsidian/__test_data__/yaml_capitalised_property_name.json';
+import yaml_tags_has_multiple_values from '../Obsidian/__test_data__/yaml_tags_has_multiple_values.json';
+import yaml_custom_number_property from '../Obsidian/__test_data__/yaml_custom_number_property.json';
+import yaml_tags_with_one_value_on_new_line from '../Obsidian/__test_data__/yaml_tags_with_one_value_on_new_line.json';
+import yaml_tags_field_added_by_obsidian_but_not_populated from '../Obsidian/__test_data__/yaml_tags_field_added_by_obsidian_but_not_populated.json';
+import yaml_tags_had_value_then_was_emptied_by_obsidian from '../Obsidian/__test_data__/yaml_tags_had_value_then_was_emptied_by_obsidian.json';
+import yaml_tags_is_empty_list from '../Obsidian/__test_data__/yaml_tags_is_empty_list.json';
+import yaml_tags_is_empty from '../Obsidian/__test_data__/yaml_tags_is_empty.json';
+import example_kanban from '../Obsidian/__test_data__/example_kanban.json';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
-import { jason_properties } from '../Obsidian/__test_data__/jason_properties';
-import { yaml_complex_example } from '../Obsidian/__test_data__/yaml_complex_example';
-import { yaml_complex_example_standardised } from '../Obsidian/__test_data__/yaml_complex_example_standardised';
-import { yaml_all_property_types_empty } from '../Obsidian/__test_data__/yaml_all_property_types_empty';
-import { yaml_all_property_types_populated } from '../Obsidian/__test_data__/yaml_all_property_types_populated';
-import { yaml_1_alias } from '../Obsidian/__test_data__/yaml_1_alias';
-import { yaml_2_aliases } from '../Obsidian/__test_data__/yaml_2_aliases';
+import jason_properties from '../Obsidian/__test_data__/jason_properties.json';
+import yaml_complex_example from '../Obsidian/__test_data__/yaml_complex_example.json';
+import yaml_complex_example_standardised from '../Obsidian/__test_data__/yaml_complex_example_standardised.json';
+import yaml_all_property_types_empty from '../Obsidian/__test_data__/yaml_all_property_types_empty.json';
+import yaml_all_property_types_populated from '../Obsidian/__test_data__/yaml_all_property_types_populated.json';
+import yaml_1_alias from '../Obsidian/__test_data__/yaml_1_alias.json';
+import yaml_2_aliases from '../Obsidian/__test_data__/yaml_2_aliases.json';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('TasksFile', () => {
@@ -201,17 +201,17 @@ describe('TasksFile - reading frontmatter', () => {
         );
         expect(propertyValueTypes).toMatchInlineSnapshot(`
             [
+              "aliases => string[] = ['YAML All Property Types Populated']",
+              "creation date => string = '2024-05-25T15:17:00'",
               "sample_checkbox_property => boolean = true",
-              "sample_date_property => string = '2024-07-21'",
               "sample_date_and_time_property => string = '2024-07-21T12:37:00'",
+              "sample_date_property => string = '2024-07-21'",
+              "sample_link_list_property => string[] = ['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']",
+              "sample_link_property => string = '[[yaml_all_property_types_populated]]'",
               "sample_list_property => string[] = ['Sample', 'List', 'Value']",
               "sample_number_property => number = 246",
               "sample_text_property => string = 'Sample Text Value'",
-              "sample_link_property => string = '[[yaml_all_property_types_populated]]'",
-              "sample_link_list_property => string[] = ['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']",
-              "aliases => string[] = ['YAML All Property Types Populated']",
               "tags => string[] = ['#sample/tag/value']",
-              "creation date => string = '2024-05-25T15:17:00'",
             ]
         `);
     });

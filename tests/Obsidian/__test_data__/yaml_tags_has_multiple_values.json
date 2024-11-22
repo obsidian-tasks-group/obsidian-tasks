@@ -1,0 +1,136 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "tags": [
+        "multiple1",
+        "multiple2"
+      ]
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 4,
+        "offset": 41
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_tags_has_multiple_values",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 6,
+            "offset": 74
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 43
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -8,
+        "position": {
+          "end": {
+            "col": 51,
+            "line": 8,
+            "offset": 127
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 76
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 4,
+            "offset": 41
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 6,
+            "offset": 74
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 43
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 51,
+            "line": 8,
+            "offset": 127
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 76
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 8,
+            "offset": 87
+          },
+          "start": {
+            "col": 6,
+            "line": 8,
+            "offset": 82
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\ntags:\n  - multiple1\n  - multiple2\n---\n\n# yaml_tags_has_multiple_values\n\n- [ ] #task Task in 'yaml_tags_has_multiple_values'\n",
+  "filePath": "Test Data/yaml_tags_has_multiple_values.md",
+  "getAllTags": [
+    "#multiple1",
+    "#multiple2",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": [
+    "#multiple1",
+    "#multiple2"
+  ]
+}

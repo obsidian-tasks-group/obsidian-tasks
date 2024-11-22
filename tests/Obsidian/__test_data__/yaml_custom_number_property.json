@@ -1,0 +1,95 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "custom_number_prop": 42
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 30
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "listItems": [
+      {
+        "parent": -4,
+        "position": {
+          "end": {
+            "col": 49,
+            "line": 4,
+            "offset": 81
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 32
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 30
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 49,
+            "line": 4,
+            "offset": 81
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 32
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 4,
+            "offset": 43
+          },
+          "start": {
+            "col": 6,
+            "line": 4,
+            "offset": 38
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\ncustom_number_prop: 42\n---\n\n- [ ] #task Task in 'yaml_custom_number_property'\n",
+  "filePath": "Test Data/yaml_custom_number_property.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

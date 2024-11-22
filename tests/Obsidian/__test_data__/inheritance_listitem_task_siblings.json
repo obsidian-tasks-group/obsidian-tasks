@@ -1,0 +1,60 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      },
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 1,
+            "offset": 22
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 12
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 1,
+            "offset": 22
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "- list item\n- [ ] task\n",
+  "filePath": "Test Data/inheritance_listitem_task_siblings.md",
+  "getAllTags": [],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

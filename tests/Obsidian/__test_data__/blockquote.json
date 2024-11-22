@@ -1,0 +1,129 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "blockquote",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 0,
+            "offset": 12
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 2,
+            "offset": 48
+          },
+          "start": {
+            "col": 2,
+            "line": 2,
+            "offset": 16
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 47,
+            "line": 3,
+            "offset": 96
+          },
+          "start": {
+            "col": 4,
+            "line": 3,
+            "offset": 53
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 0,
+            "offset": 12
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 47,
+            "line": 3,
+            "offset": 96
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 14
+          }
+        },
+        "type": "blockquote"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 2,
+            "offset": 27
+          },
+          "start": {
+            "col": 8,
+            "line": 2,
+            "offset": 22
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 3,
+            "offset": 66
+          },
+          "start": {
+            "col": 12,
+            "line": 3,
+            "offset": 61
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# blockquote\n\n> - [ ] #task Task in 'blockquote'\n>     - [ ] #task Task indented in 'blockquote'\n",
+  "filePath": "Test Data/blockquote.md",
+  "getAllTags": [
+    "#task",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

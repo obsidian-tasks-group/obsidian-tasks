@@ -1,0 +1,131 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "link_in_file_body_with_custom_display_text",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 0,
+            "offset": 44
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "links": [
+      {
+        "displayText": "a file and use custom display text",
+        "link": "yaml_tags_is_empty",
+        "original": "[[yaml_tags_is_empty|a file and use custom display text]]",
+        "position": {
+          "end": {
+            "col": 67,
+            "line": 2,
+            "offset": 113
+          },
+          "start": {
+            "col": 10,
+            "line": 2,
+            "offset": 56
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -4,
+        "position": {
+          "end": {
+            "col": 64,
+            "line": 4,
+            "offset": 179
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 115
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 0,
+            "offset": 44
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 67,
+            "line": 2,
+            "offset": 113
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 46
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 64,
+            "line": 4,
+            "offset": 179
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 115
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 4,
+            "offset": 126
+          },
+          "start": {
+            "col": 6,
+            "line": 4,
+            "offset": 121
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# link_in_file_body_with_custom_display_text\n\nI link to [[yaml_tags_is_empty|a file and use custom display text]]\n\n- [ ] #task Task in 'link_in_file_body_with_custom_display_text'\n",
+  "filePath": "Test Data/link_in_file_body_with_custom_display_text.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

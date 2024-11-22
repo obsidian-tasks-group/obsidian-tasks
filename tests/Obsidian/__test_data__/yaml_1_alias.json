@@ -1,0 +1,130 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "aliases": [
+        "YAML Alias 1"
+      ]
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 3,
+        "offset": 33
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_1_alias",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 14,
+            "line": 5,
+            "offset": 49
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 35
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -7,
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 7,
+            "offset": 85
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 51
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 3,
+            "offset": 33
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 14,
+            "line": 5,
+            "offset": 49
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 35
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 7,
+            "offset": 85
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 51
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 7,
+            "offset": 62
+          },
+          "start": {
+            "col": 6,
+            "line": 7,
+            "offset": 57
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\naliases:\n  - YAML Alias 1\n---\n\n# yaml_1_alias\n\n- [ ] #task Task in 'yaml_1_alias'\n",
+  "filePath": "Test Data/yaml_1_alias.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

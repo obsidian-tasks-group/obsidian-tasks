@@ -1,5 +1,5 @@
 const fs = require('node:fs');
-const util = require('util');
+const path = require('node:path');
 
 const vault = app.vault;
 
@@ -10,26 +10,42 @@ async function getMarkdownFiles() {
 }
 
 function getBasename(filePath) {
-    return filePath.split('/')[1].replace('.md', '');
+    return path.basename(filePath, '.md');
 }
 
 function getOutputFilePath(outputFile) {
     const rootOfVault = vault.adapter.getBasePath();
-    return rootOfVault + '/../../../tests/Obsidian/' + outputFile;
+    return path.join(rootOfVault, '../../../tests/Obsidian', outputFile);
 }
 
 function writeFile(testSourceFile, content) {
     fs.writeFile(testSourceFile, content, (err) => {
         if (err) {
             console.error(err);
-        } else {
-            // file written successfully
         }
     });
 }
 
 function showNotice(message) {
     new Notice(message);
+}
+
+/**
+ * Recursively sorts an object's keys in alphabetical order.
+ */
+function sortObjectKeys(obj) {
+    if (Array.isArray(obj)) {
+        return obj.map(sortObjectKeys);
+    }
+    if (obj && typeof obj === 'object') {
+        return Object.keys(obj)
+            .sort()
+            .reduce((acc, key) => {
+                acc[key] = sortObjectKeys(obj[key]);
+                return acc;
+            }, {});
+    }
+    return obj;
 }
 
 async function convertMarkdownFileToTestFunction(filePath, tp) {
@@ -54,18 +70,18 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
         return '';
     }
 
-    const testSourceFile = getOutputFilePath('__test_data__/' + filename + '.ts');
+    const testSourceFile = getOutputFilePath(`__test_data__/${filename}.json`);
 
-    const options = { depth: null, compact: false };
-    const dataAsJSSource = util.inspect(data, options);
-    const content = `export const ${filename} = ${dataAsJSSource};`;
+    // Sort keys in the data object to ensure stable order
+    const sortedData = sortObjectKeys(data);
+    const content = JSON.stringify(sortedData, null, 2);
     writeFile(testSourceFile, content);
 }
 
 async function writeListOfAllTestFunctions(files) {
     const basenames = files.map((file) => getBasename(file));
 
-    const imports = basenames.map((filename) => `import { ${filename} } from './__test_data__/${filename}';`);
+    const imports = basenames.map((filename) => `import ${filename} from './__test_data__/${filename}.json';`);
     const functions = basenames.map((filename) => `        ${filename},`);
 
     const content = `// DO NOT EDIT!
@@ -93,7 +109,7 @@ async function export_files(tp) {
 
     await writeListOfAllTestFunctions(markdownFiles);
 
-    showNotice('Success - now run "yarn lint:test-data" to format the generated files.');
+    showNotice('Success.');
     return '';
 }
 

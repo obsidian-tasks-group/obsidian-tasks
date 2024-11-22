@@ -1,0 +1,159 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "comments_html_style",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 0,
+            "offset": 21
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -7,
+        "position": {
+          "end": {
+            "col": 178,
+            "line": 7,
+            "offset": 318
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 140
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -7,
+        "position": {
+          "end": {
+            "col": 156,
+            "line": 8,
+            "offset": 475
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 319
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 0,
+            "offset": 21
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 2,
+            "offset": 81
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 23
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 5,
+            "offset": 138
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 82
+          }
+        },
+        "type": "html"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 156,
+            "line": 8,
+            "offset": 475
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 140
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 7,
+            "offset": 151
+          },
+          "start": {
+            "col": 6,
+            "line": 7,
+            "offset": 146
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 8,
+            "offset": 330
+          },
+          "start": {
+            "col": 6,
+            "line": 8,
+            "offset": 325
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# comments_html_style\n\nWhole task line is ignored by Obsidian's `cachedMetadata`:\n<!--\n- [ ] #task Whole task in 'comments_html_style'\n-->\n\n- [ ] #task Whole task in 'comments_html_style' - with commented-out tag: <!-- #i-am-ignored-by-obsidian  --> - is ignored by Obsidian's `cachedMetadata`, but Tasks recognises it\n- [ ] #task Whole task in 'comments_html_style' - with commented-out link: <!-- [[comments_markdown_style]]  --> - is ignored by Obsidian's `cachedMetadata`\n",
+  "filePath": "Test Data/comments_html_style.md",
+  "getAllTags": [
+    "#task",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

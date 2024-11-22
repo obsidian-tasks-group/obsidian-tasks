@@ -1,0 +1,210 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "comments_markdown_style",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 25,
+            "line": 0,
+            "offset": 25
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "links": [
+      {
+        "displayText": "comments_html_style",
+        "link": "comments_html_style",
+        "original": "[[comments_html_style]]",
+        "position": {
+          "end": {
+            "col": 105,
+            "line": 8,
+            "offset": 407
+          },
+          "start": {
+            "col": 82,
+            "line": 8,
+            "offset": 384
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -7,
+        "position": {
+          "end": {
+            "col": 156,
+            "line": 7,
+            "offset": 301
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 145
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -7,
+        "position": {
+          "end": {
+            "col": 156,
+            "line": 8,
+            "offset": 458
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 302
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 25,
+            "line": 0,
+            "offset": 25
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 2,
+            "offset": 85
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 27
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 2,
+            "line": 5,
+            "offset": 143
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 86
+          }
+        },
+        "type": "comment"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 156,
+            "line": 8,
+            "offset": 458
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 145
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 4,
+            "offset": 100
+          },
+          "start": {
+            "col": 6,
+            "line": 4,
+            "offset": 95
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 7,
+            "offset": 156
+          },
+          "start": {
+            "col": 6,
+            "line": 7,
+            "offset": 151
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 105,
+            "line": 7,
+            "offset": 250
+          },
+          "start": {
+            "col": 81,
+            "line": 7,
+            "offset": 226
+          }
+        },
+        "tag": "#i-am-parsed-by-obsidian"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 8,
+            "offset": 313
+          },
+          "start": {
+            "col": 6,
+            "line": 8,
+            "offset": 308
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "# comments_markdown_style\n\nWhole task line is ignored by Obsidian's `cachedMetadata`:\n%%\n- [ ] #task Whole task in 'comments_markdown_style'\n%%\n\n- [ ] #task Whole task in 'comments_markdown_style' - with commented-out tag: %% #i-am-parsed-by-obsidian  %% - is recognised by Obsidian's `cachedMetadata`\n- [ ] #task Whole task in 'comments_markdown_style' - with commented-out link: %% [[comments_html_style]]  %% - is recognised by Obsidian's `cachedMetadata`\n",
+  "filePath": "Test Data/comments_markdown_style.md",
+  "getAllTags": [
+    "#task",
+    "#task",
+    "#i-am-parsed-by-obsidian",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

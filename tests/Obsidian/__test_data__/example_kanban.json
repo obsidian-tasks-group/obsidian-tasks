@@ -1,0 +1,143 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "kanban-plugin": "basic"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 4,
+        "offset": 30
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "Backlog",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 6,
+            "offset": 42
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 32
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -8,
+        "position": {
+          "end": {
+            "col": 36,
+            "line": 8,
+            "offset": 80
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 44
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 4,
+            "offset": 30
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 6,
+            "offset": 42
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 32
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 36,
+            "line": 8,
+            "offset": 80
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 44
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 2,
+            "line": 15,
+            "offset": 138
+          },
+          "start": {
+            "col": 0,
+            "line": 11,
+            "offset": 83
+          }
+        },
+        "type": "comment"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 8,
+            "offset": 55
+          },
+          "start": {
+            "col": 6,
+            "line": 8,
+            "offset": 50
+          }
+        },
+        "tag": "#task"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "---\n\nkanban-plugin: basic\n\n---\n\n## Backlog\n\n- [ ] #task Task in 'example_kanban'\n\n\n%% kanban:settings\n```\n{\"kanban-plugin\":\"basic\"}\n```\n%%\n",
+  "filePath": "Test Data/example_kanban.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

@@ -1,0 +1,123 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 0,
+            "offset": 17
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 23,
+            "line": 1,
+            "offset": 41
+          },
+          "start": {
+            "col": 2,
+            "line": 1,
+            "offset": 20
+          }
+        }
+      },
+      {
+        "parent": 1,
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 2,
+            "offset": 73
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 48
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 1,
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 3,
+            "offset": 105
+          },
+          "start": {
+            "col": 6,
+            "line": 3,
+            "offset": 80
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 23,
+            "line": 4,
+            "offset": 129
+          },
+          "start": {
+            "col": 2,
+            "line": 4,
+            "offset": 108
+          }
+        }
+      },
+      {
+        "parent": 4,
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 5,
+            "offset": 161
+          },
+          "start": {
+            "col": 6,
+            "line": 5,
+            "offset": 136
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 5,
+            "offset": 161
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "v": 1
+  },
+  "fileContents": "- [ ] parent task\n    - child list item 1\n        - [ ] grandchild task 1\n        - [ ] grandchild task 2\n    - child list item 2\n        - [ ] grandchild task 3\n",
+  "filePath": "Test Data/inheritance_task_2listitem_3task.md",
+  "getAllTags": [],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}
