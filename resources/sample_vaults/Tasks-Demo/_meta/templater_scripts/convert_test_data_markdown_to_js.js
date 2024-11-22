@@ -72,15 +72,12 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
         return '';
     }
 
-    // Write data as JSON file
-    {
-        const testSourceFile = getOutputFilePath(`__test_data__/${filename}.json`);
+    const testSourceFile = getOutputFilePath(`__test_data__/${filename}.json`);
 
-        // Sort keys in the data object to ensure stable order
-        const sortedData = sortObjectKeys(data);
-        const content = JSON.stringify(sortedData, null, 2);
-        writeFile(testSourceFile, content);
-    }
+    // Sort keys in the data object to ensure stable order
+    const sortedData = sortObjectKeys(data);
+    const content = JSON.stringify(sortedData, null, 2);
+    writeFile(testSourceFile, content);
 }
 
 async function writeListOfAllTestFunctions(files) {
