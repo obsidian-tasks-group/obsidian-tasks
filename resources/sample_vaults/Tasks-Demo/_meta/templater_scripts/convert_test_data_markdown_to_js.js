@@ -72,16 +72,6 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
         return '';
     }
 
-    // Write data as Typescript source
-    {
-        const testSourceFile = getOutputFilePath('__test_data__/' + filename + '.ts');
-
-        const options = { depth: null, compact: false };
-        const dataAsJSSource = util.inspect(data, options);
-        const content = `export const ${filename} = ${dataAsJSSource};`;
-        writeFile(testSourceFile, content);
-    }
-
     // Write data as JSON file
     {
         const testSourceFile = getOutputFilePath(`__test_data__/${filename}.json`);
@@ -124,7 +114,7 @@ async function export_files(tp) {
 
     await writeListOfAllTestFunctions(markdownFiles);
 
-    showNotice('Success - now run "yarn lint:test-data" to format the generated files.');
+    showNotice('Success.');
     return '';
 }
 
