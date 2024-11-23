@@ -17,7 +17,7 @@ There is a [[#Date-picker on task dates]] and a [[#Context menu on task dates]],
 ## Date-picker on task dates
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 7.14.0.
 
 **Left-click on any task date field** in **Reading mode** and **Tasks query search results** to use a date-picker and calendar to edit or remove a date.
 

@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
-- X.Y.Z:
+- 7.14.0:
   - Add [[Editing Dates#Date-picker on task dates|date picker]] to Reading mode and Tasks query search results.
 - 7.13.0:
   - Add [[Create or edit Task#Date picker|date picker]] to the Edit Task modal.
