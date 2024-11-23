@@ -19,5 +19,7 @@ Tasks has a growing number of ways to conveniently add data to your task lines.
 
 - [[Toggling and Editing Statuses]]
   - All the ways to edit task statuses.
+- [[Editing Dates]]
+  - All the ways to edit dates on tasks.
 - [[Postponing]]
   - Easy deferring or snoozing of due, scheduled and start dates.
