@@ -93,6 +93,13 @@ See the [syntax reference](https://momentjs.com/docs/#/displaying/format/) for s
 > dddd, MMMM Do YYYY
 > ```
 
+> [!example] Example 3 - Weekly notes
+> If you use Weekly notes, you can specify the format of the weekly note name, and then Tasks will select the first day of the week as the default scheduled date. For example, if using typical weekly note names like `2024-W49`:
+>
+> ```text
+> YYYY-[W]ww
+> ```
+
 ### Folders setting
 
 If the `Folders with default Scheduled dates` field is left empty in the settings dialog, default dates are applied to un-dated tasks all the
