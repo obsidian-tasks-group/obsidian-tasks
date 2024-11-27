@@ -32,7 +32,7 @@
     "@evilmartians/lefthook": "^1.7.2",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/svelte": "^3.2.2",
-    "@tsconfig/svelte": "^3.0.0",
+    "@tsconfig/svelte": "^5.0.4",
     "@types/jest": "^29.5.8",
     "@types/mustache": "^4.2.5",
     "@types/prettier": "^2.7.3",
