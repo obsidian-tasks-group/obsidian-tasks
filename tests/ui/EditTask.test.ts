@@ -543,6 +543,15 @@ describe('Task editing', () => {
     });
 
     describe('Date editing', () => {
+        beforeEach(() => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date('2024-11-27'));
+        });
+
+        afterEach(() => {
+            jest.useRealTimers();
+        });
+
         const line = '- [ ] simple';
 
         it('should edit and save cancelled date', async () => {
@@ -567,6 +576,21 @@ describe('Task editing', () => {
 
         it('should edit and save start date', async () => {
             expect(await editFieldAndSave(line, 'start', '2024-01-01')).toEqual('- [ ] simple 🛫 2024-01-01');
+        });
+
+        it('should edit and save start date "today"', async () => {
+            expect(await editFieldAndSave(line, 'start', 'today')).toEqual('- [ ] simple 🛫 2024-11-27');
+        });
+
+        it('should edit and save start date "this week"', async () => {
+            // Confirm understanding that today's date is a Wednesday
+            expect(moment().format('YYYY-MM-DD dddd')).toEqual('2024-11-27 Wednesday');
+
+            // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2588
+            // With 'only future dates' being on by default, the selection of a date
+            // earlier than today is unexpected.
+            // This was written with Tasks using "chrono-node": "2.3.9"
+            expect(await editFieldAndSave(line, 'start', 'this week')).toEqual('- [ ] simple 🛫 2024-11-24');
         });
     });
 
