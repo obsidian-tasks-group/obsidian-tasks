@@ -537,15 +537,13 @@ describe('Query parsing', () => {
         });
     });
 
-    it.failing('should allow spaces between show or hide and a Query option', () => {
-        // This fails as the regular-expression approach in Query.hideOptionsRegexp does not allow multiple spaces
+    it('should allow spaces between show or hide and a Query option', () => {
         const query1 = new Query('show  tree');
         expect(query1.queryLayoutOptions.hideTree).toBe(false);
         expect(query1.error).toBeUndefined();
     });
 
-    it.failing('should allow spaces between show or hide and a Task option', () => {
-        // This fails as the regular-expression approach in Query.hideOptionsRegexp does not allow multiple spaces
+    it('should allow spaces between show or hide and a Task option', () => {
         const query1 = new Query('hide  priority');
         expect(query1.taskLayoutOptions.isShown(TaskLayoutComponent.Priority)).toBe(false);
         expect(query1.error).toBeUndefined();
@@ -639,7 +637,7 @@ Problem line: "${source}"`,
 
         it('for invalid hide', () => {
             const source = 'hide nonsense';
-            isInvalidQueryInstructionLowerAndUpper(getQueryError, source);
+            isInvalidQueryInstructionLowerAndUpper(getQueryError, source, 'do not understand hide/show option');
         });
 
         it('for unknown instruction', () => {
