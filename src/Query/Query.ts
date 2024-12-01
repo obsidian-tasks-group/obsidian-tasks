@@ -44,7 +44,7 @@ export class Query implements IQuery {
 
     logger = logging.getLogger('tasks.Query');
     // Used internally to uniquely log each query execution in the console.
-    private _queryId: string = '';
+    private _queryId: string;
 
     private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/i;
 
