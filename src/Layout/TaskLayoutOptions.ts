@@ -100,6 +100,7 @@ export class TaskLayoutOptions {
  * @param option - must already have been lower-cased
  * @param visible - whether the option should be shown
  * @return True if the option was recognised, and false otherwise
+ * @see parseQueryShowHideOptions
  */
 export function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, option: string, visible: boolean) {
     if (option.startsWith('priority')) {

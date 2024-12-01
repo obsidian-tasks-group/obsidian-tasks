@@ -20,6 +20,7 @@ export class QueryLayoutOptions {
  * @param option - must already have been lower-cased
  * @param hide - whether the option should be hidden
  * @return True if the option was recognised, and false otherwise
+ * @see parseTaskShowHideOptions
  */
 export function parseQueryShowHideOptions(queryLayoutOptions: QueryLayoutOptions, option: string, hide: boolean) {
     if (option.startsWith('tree')) {
