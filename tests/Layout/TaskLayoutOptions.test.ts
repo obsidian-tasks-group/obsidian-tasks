@@ -153,16 +153,26 @@ describe('TaskLayoutOptions', () => {
 });
 
 describe('parsing task show/hide layout options', () => {
-    it.each([['priority', TaskLayoutComponent.Priority]])(
-        'should parse option: %s',
-        (option: string, component: TaskLayoutComponent) => {
-            const options = new TaskLayoutOptions();
+    it.each([
+        // Alphabetical order
+        ['cancelled date', TaskLayoutComponent.CancelledDate],
+        ['created date', TaskLayoutComponent.CreatedDate],
+        ['depends on', TaskLayoutComponent.DependsOn],
+        ['done date', TaskLayoutComponent.DoneDate],
+        ['due date', TaskLayoutComponent.DueDate],
+        ['id', TaskLayoutComponent.Id],
+        ['on completion', TaskLayoutComponent.OnCompletion],
+        ['priority', TaskLayoutComponent.Priority],
+        ['recurrence rule', TaskLayoutComponent.RecurrenceRule],
+        ['scheduled date', TaskLayoutComponent.ScheduledDate],
+        ['start date', TaskLayoutComponent.StartDate],
+    ])('should parse option: %s', (option: string, component: TaskLayoutComponent) => {
+        const options = new TaskLayoutOptions();
 
-            parseTaskShowHideOptions(options, option, false);
-            expect(options.isShown(component)).toEqual(false);
+        parseTaskShowHideOptions(options, option, false);
+        expect(options.isShown(component)).toEqual(false);
 
-            parseTaskShowHideOptions(options, option, true);
-            expect(options.isShown(component)).toEqual(true);
-        },
-    );
+        parseTaskShowHideOptions(options, option, true);
+        expect(options.isShown(component)).toEqual(true);
+    });
 });
