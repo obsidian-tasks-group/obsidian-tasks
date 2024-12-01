@@ -87,15 +87,16 @@ function isValidQueryGroup(filter: string) {
 function isInvalidQueryInstruction(
     getQueryError: (source: string) => string | undefined,
     source: string,
-    expectedErrorMessage: string = 'do not understand query',
+    expectedErrorMessage: string,
 ) {
     expect(getQueryError(source)).toEqual(`${expectedErrorMessage}
 Problem line: "${source}"`);
 }
 
 function isInvalidQueryInstructionLowerAndUpper(getQueryError: (source: string) => string | undefined, source: string) {
-    isInvalidQueryInstruction(getQueryError, source);
-    isInvalidQueryInstruction(getQueryError, source.toUpperCase());
+    const expectedErrorMessage = 'do not understand query';
+    isInvalidQueryInstruction(getQueryError, source, expectedErrorMessage);
+    isInvalidQueryInstruction(getQueryError, source.toUpperCase(), expectedErrorMessage);
 }
 
 describe('Query parsing', () => {
