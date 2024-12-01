@@ -1,6 +1,6 @@
 import { getSettings } from '../Config/Settings';
 import type { IQuery } from '../IQuery';
-import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
+import { QueryLayoutOptions, parseQueryShowHideOptions } from '../Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { errorMessageForException } from '../lib/ExceptionTools';
 import { logging } from '../lib/logging';
@@ -19,34 +19,6 @@ import { SearchInfo } from './SearchInfo';
 import { Sort } from './Sort/Sort';
 import type { Sorter } from './Sort/Sorter';
 import { Statement } from './Statement';
-
-function parseQueryShowHideOptions(queryLayoutOptions: QueryLayoutOptions, option: string, hide: boolean) {
-    if (option.startsWith('tree')) {
-        queryLayoutOptions.hideTree = hide;
-        return true;
-    }
-    if (option.startsWith('task count')) {
-        queryLayoutOptions.hideTaskCount = hide;
-        return true;
-    }
-    if (option.startsWith('backlink')) {
-        queryLayoutOptions.hideBacklinks = hide;
-        return true;
-    }
-    if (option.startsWith('postpone button')) {
-        queryLayoutOptions.hidePostponeButton = hide;
-        return true;
-    }
-    if (option.startsWith('edit button')) {
-        queryLayoutOptions.hideEditButton = hide;
-        return true;
-    }
-    if (option.startsWith('urgency')) {
-        queryLayoutOptions.hideUrgency = hide;
-        return true;
-    }
-    return false;
-}
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
