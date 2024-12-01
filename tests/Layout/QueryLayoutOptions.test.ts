@@ -7,11 +7,12 @@ describe('parsing query show/hide layout options', () => {
     }
 
     const testCases: [string, keyof QueryLayoutOptions, boolean][] = [
-        ['tree', 'hideTree', true],
-        ['task count', 'hideTaskCount', false],
+        // Alphabetical order
         ['backlink', 'hideBacklinks', false],
-        ['postpone button', 'hidePostponeButton', false],
         ['edit button', 'hideEditButton', false],
+        ['postpone button', 'hidePostponeButton', false],
+        ['task count', 'hideTaskCount', false],
+        ['tree', 'hideTree', true],
         ['urgency', 'hideUrgency', true],
     ];
 
