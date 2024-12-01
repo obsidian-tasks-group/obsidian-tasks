@@ -20,6 +20,13 @@ import { Sort } from './Sort/Sort';
 import type { Sorter } from './Sort/Sorter';
 import { Statement } from './Statement';
 
+/**
+ * Parse show/hide options for Task layout options
+ * @param taskLayoutOptions
+ * @param option - must already have been lower-cased
+ * @param visible - whether the option should be shown
+ * @return True if the option was recognised, and false otherwise
+ */
 function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, option: string, visible: boolean) {
     if (option.startsWith('priority')) {
         taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, visible);
@@ -369,12 +376,7 @@ ${statement.explainStatement('    ')}
         }
         this.setError('do not understand hide/show option', new Statement(line, line));
     }
-    /**
-     * Parse show/hide options for Task layout options
-     * @param option - must already have been lower-cased
-     * @param visible - whether the option should be shown
-     * @return True if the option was recognised, and false otherwise
-     */
+
     private parseTaskShowHideOptions(option: string, visible: boolean): boolean {
         const taskLayoutOptions = this._taskLayoutOptions;
         return parseTaskShowHideOptions(taskLayoutOptions, option, visible);
