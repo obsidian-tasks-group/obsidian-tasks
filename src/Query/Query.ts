@@ -303,84 +303,85 @@ ${statement.explainStatement('    ')}
 
     private parseHideOptions(line: string): void {
         const hideOptionsMatch = line.match(this.hideOptionsRegexp);
-        if (hideOptionsMatch !== null) {
-            const hide = hideOptionsMatch[1].toLowerCase() === 'hide';
-            const option = hideOptionsMatch[2].toLowerCase();
-
-            if (option.startsWith('tree')) {
-                this._queryLayoutOptions.hideTree = hide;
-                return;
-            }
-            if (option.startsWith('task count')) {
-                this._queryLayoutOptions.hideTaskCount = hide;
-                return;
-            }
-            if (option.startsWith('backlink')) {
-                this._queryLayoutOptions.hideBacklinks = hide;
-                return;
-            }
-            if (option.startsWith('postpone button')) {
-                this._queryLayoutOptions.hidePostponeButton = hide;
-                return;
-            }
-            if (option.startsWith('edit button')) {
-                this._queryLayoutOptions.hideEditButton = hide;
-                return;
-            }
-            if (option.startsWith('urgency')) {
-                this._queryLayoutOptions.hideUrgency = hide;
-                return;
-            }
-            if (option.startsWith('priority')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, !hide);
-                return;
-            }
-            if (option.startsWith('cancelled date')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CancelledDate, !hide);
-                return;
-            }
-            if (option.startsWith('created date')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CreatedDate, !hide);
-                return;
-            }
-            if (option.startsWith('start date')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.StartDate, !hide);
-                return;
-            }
-            if (option.startsWith('scheduled date')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.ScheduledDate, !hide);
-                return;
-            }
-            if (option.startsWith('due date')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, !hide);
-                return;
-            }
-            if (option.startsWith('done date')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, !hide);
-                return;
-            }
-            if (option.startsWith('recurrence rule')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, !hide);
-                return;
-            }
-            if (option.startsWith('tags')) {
-                this._taskLayoutOptions.setTagsVisibility(!hide);
-                return;
-            }
-            if (option.startsWith('id')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, !hide);
-                return;
-            }
-            if (option.startsWith('depends on')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, !hide);
-                return;
-            }
-            if (option.startsWith('on completion')) {
-                this._taskLayoutOptions.setVisibility(TaskLayoutComponent.OnCompletion, !hide);
-                return;
-            }
-            this.setError('do not understand hide/show option', new Statement(line, line));
+        if (hideOptionsMatch === null) {
+            return;
         }
+        const hide = hideOptionsMatch[1].toLowerCase() === 'hide';
+        const option = hideOptionsMatch[2].toLowerCase();
+
+        if (option.startsWith('tree')) {
+            this._queryLayoutOptions.hideTree = hide;
+            return;
+        }
+        if (option.startsWith('task count')) {
+            this._queryLayoutOptions.hideTaskCount = hide;
+            return;
+        }
+        if (option.startsWith('backlink')) {
+            this._queryLayoutOptions.hideBacklinks = hide;
+            return;
+        }
+        if (option.startsWith('postpone button')) {
+            this._queryLayoutOptions.hidePostponeButton = hide;
+            return;
+        }
+        if (option.startsWith('edit button')) {
+            this._queryLayoutOptions.hideEditButton = hide;
+            return;
+        }
+        if (option.startsWith('urgency')) {
+            this._queryLayoutOptions.hideUrgency = hide;
+            return;
+        }
+        if (option.startsWith('priority')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, !hide);
+            return;
+        }
+        if (option.startsWith('cancelled date')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CancelledDate, !hide);
+            return;
+        }
+        if (option.startsWith('created date')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CreatedDate, !hide);
+            return;
+        }
+        if (option.startsWith('start date')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.StartDate, !hide);
+            return;
+        }
+        if (option.startsWith('scheduled date')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.ScheduledDate, !hide);
+            return;
+        }
+        if (option.startsWith('due date')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, !hide);
+            return;
+        }
+        if (option.startsWith('done date')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, !hide);
+            return;
+        }
+        if (option.startsWith('recurrence rule')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, !hide);
+            return;
+        }
+        if (option.startsWith('tags')) {
+            this._taskLayoutOptions.setTagsVisibility(!hide);
+            return;
+        }
+        if (option.startsWith('id')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, !hide);
+            return;
+        }
+        if (option.startsWith('depends on')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, !hide);
+            return;
+        }
+        if (option.startsWith('on completion')) {
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.OnCompletion, !hide);
+            return;
+        }
+        this.setError('do not understand hide/show option', new Statement(line, line));
     }
 
     private parseFilter(line: string, statement: Statement) {
