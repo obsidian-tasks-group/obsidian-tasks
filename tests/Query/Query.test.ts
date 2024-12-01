@@ -537,6 +537,20 @@ describe('Query parsing', () => {
         });
     });
 
+    it.failing('should allow spaces between show or hide and a Query option', () => {
+        // This fails as the regular-expression approach in Query.hideOptionsRegexp does not allow multiple spaces
+        const query1 = new Query('show  tree');
+        expect(query1.queryLayoutOptions.hideTree).toBe(false);
+        expect(query1.error).toBeUndefined();
+    });
+
+    it.failing('should allow spaces between show or hide and a Task option', () => {
+        // This fails as the regular-expression approach in Query.hideOptionsRegexp does not allow multiple spaces
+        const query1 = new Query('hide  priority');
+        expect(query1.taskLayoutOptions.isShown(TaskLayoutComponent.Priority)).toBe(false);
+        expect(query1.error).toBeUndefined();
+    });
+
     it('should parse ambiguous sort by queries correctly', () => {
         expect(new Query('sort by status').sorting[0].property).toEqual('status');
         expect(new Query('SORT BY STATUS').sorting[0].property).toEqual('status');
