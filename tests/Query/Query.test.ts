@@ -84,14 +84,22 @@ function isValidQueryGroup(filter: string) {
     lowerCaseFilterGaveExpectionInstruction(filter, query.grouping[0].instruction);
 }
 
-function isInvalidQueryInstruction(getQueryError: (source: string) => string | undefined, source: string) {
-    expect(getQueryError(source)).toEqual(`do not understand query
+function isInvalidQueryInstruction(
+    getQueryError: (source: string) => string | undefined,
+    source: string,
+    expectedErrorMessage: string,
+) {
+    expect(getQueryError(source)).toEqual(`${expectedErrorMessage}
 Problem line: "${source}"`);
 }
 
-function isInvalidQueryInstructionLowerAndUpper(getQueryError: (source: string) => string | undefined, source: string) {
-    isInvalidQueryInstruction(getQueryError, source);
-    isInvalidQueryInstruction(getQueryError, source.toUpperCase());
+function isInvalidQueryInstructionLowerAndUpper(
+    getQueryError: (source: string) => string | undefined,
+    source: string,
+    expectedErrorMessage: string = 'do not understand query',
+) {
+    isInvalidQueryInstruction(getQueryError, source, expectedErrorMessage);
+    isInvalidQueryInstruction(getQueryError, source.toUpperCase(), expectedErrorMessage);
 }
 
 describe('Query parsing', () => {
@@ -452,6 +460,7 @@ describe('Query parsing', () => {
             'full',
             'full mode',
             'hide backlink',
+            'hide backlinks',
             'hide cancelled date',
             'hide created date',
             'hide depends on',
@@ -476,6 +485,7 @@ describe('Query parsing', () => {
             'short',
             'short mode',
             'show backlink',
+            'show backlinks',
             'show cancelled date',
             'show created date',
             'show depends on',
@@ -525,6 +535,18 @@ describe('Query parsing', () => {
             // Assert
             expect(query.error).toBeUndefined();
         });
+    });
+
+    it('should allow spaces between show or hide and a Query option', () => {
+        const query1 = new Query('show  tree');
+        expect(query1.queryLayoutOptions.hideTree).toBe(false);
+        expect(query1.error).toBeUndefined();
+    });
+
+    it('should allow spaces between show or hide and a Task option', () => {
+        const query1 = new Query('hide  priority');
+        expect(query1.taskLayoutOptions.isShown(TaskLayoutComponent.Priority)).toBe(false);
+        expect(query1.error).toBeUndefined();
     });
 
     it('should parse ambiguous sort by queries correctly', () => {
@@ -615,7 +637,7 @@ Problem line: "${source}"`,
 
         it('for invalid hide', () => {
             const source = 'hide nonsense';
-            isInvalidQueryInstructionLowerAndUpper(getQueryError, source);
+            isInvalidQueryInstructionLowerAndUpper(getQueryError, source, 'do not understand hide/show option');
         });
 
         it('for unknown instruction', () => {
