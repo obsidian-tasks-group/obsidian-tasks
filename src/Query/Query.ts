@@ -340,7 +340,7 @@ ${statement.explainStatement('    ')}
     }
 
     /**
-     * Parse show/hide options for Task properties
+     * Parse show/hide options for Task layout options
      * @param option - must already have been lower-cased
      * @param visible - whether the option should be shown
      * @return True if the option was recognised, and false otherwise
