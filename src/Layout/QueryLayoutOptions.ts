@@ -24,11 +24,12 @@ export class QueryLayoutOptions {
  */
 export function parseQueryShowHideOptions(queryLayoutOptions: QueryLayoutOptions, option: string, hide: boolean) {
     const optionMap = new Map<string, keyof QueryLayoutOptions>([
-        ['tree', 'hideTree'],
-        ['task count', 'hideTaskCount'],
+        // Alphabetical order
         ['backlink', 'hideBacklinks'],
-        ['postpone button', 'hidePostponeButton'],
         ['edit button', 'hideEditButton'],
+        ['postpone button', 'hidePostponeButton'],
+        ['task count', 'hideTaskCount'],
+        ['tree', 'hideTree'],
         ['urgency', 'hideUrgency'],
     ]);
 
