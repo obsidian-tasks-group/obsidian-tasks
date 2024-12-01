@@ -1,8 +1,8 @@
 import type { GlobalFilter } from '../Config/GlobalFilter';
 import type { GlobalQuery } from '../Config/GlobalQuery';
-import { Query } from '../Query/Query';
-import { Explainer } from '../Query/Explain/Explainer';
 import type { OptionalTasksFile } from '../Scripting/TasksFile';
+import { Query } from './Query';
+import { Explainer } from './Explain/Explainer';
 
 /**
  * @summary

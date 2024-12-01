@@ -3,7 +3,7 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { Query } from '../../src/Query/Query';
-import { explainResults } from '../../src/lib/QueryRendererHelper';
+import { explainResults } from '../../src/Query/QueryRendererHelper';
 import type { Task } from '../../src/Task/Task';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyMarkdown } from './VerifyMarkdown';
