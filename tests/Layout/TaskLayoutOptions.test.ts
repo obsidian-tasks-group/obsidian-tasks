@@ -175,4 +175,14 @@ describe('parsing task show/hide layout options', () => {
         parseTaskShowHideOptions(options, option, true);
         expect(options.isShown(component)).toEqual(true);
     });
+
+    it('should parse tags option', () => {
+        const options = new TaskLayoutOptions();
+
+        parseTaskShowHideOptions(options, 'tags', false);
+        expect(options.areTagsShown()).toEqual(false);
+
+        parseTaskShowHideOptions(options, 'tags', true);
+        expect(options.areTagsShown()).toEqual(true);
+    });
 });
