@@ -103,49 +103,25 @@ export class TaskLayoutOptions {
  * @see parseQueryShowHideOptions
  */
 export function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, option: string, visible: boolean) {
-    if (option.startsWith('priority')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, visible);
-        return true;
-    }
-    if (option.startsWith('cancelled date')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.CancelledDate, visible);
-        return true;
-    }
-    if (option.startsWith('created date')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.CreatedDate, visible);
-        return true;
-    }
-    if (option.startsWith('start date')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.StartDate, visible);
-        return true;
-    }
-    if (option.startsWith('scheduled date')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.ScheduledDate, visible);
-        return true;
-    }
-    if (option.startsWith('due date')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, visible);
-        return true;
-    }
-    if (option.startsWith('done date')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, visible);
-        return true;
-    }
-    if (option.startsWith('recurrence rule')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, visible);
-        return true;
-    }
-    if (option.startsWith('id')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, visible);
-        return true;
-    }
-    if (option.startsWith('depends on')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, visible);
-        return true;
-    }
-    if (option.startsWith('on completion')) {
-        taskLayoutOptions.setVisibility(TaskLayoutComponent.OnCompletion, visible);
-        return true;
+    const optionMap = new Map<string, TaskLayoutComponent>([
+        ['priority', TaskLayoutComponent.Priority],
+        ['cancelled date', TaskLayoutComponent.CancelledDate],
+        ['created date', TaskLayoutComponent.CreatedDate],
+        ['start date', TaskLayoutComponent.StartDate],
+        ['scheduled date', TaskLayoutComponent.ScheduledDate],
+        ['due date', TaskLayoutComponent.DueDate],
+        ['done date', TaskLayoutComponent.DoneDate],
+        ['recurrence rule', TaskLayoutComponent.RecurrenceRule],
+        ['id', TaskLayoutComponent.Id],
+        ['depends on', TaskLayoutComponent.DependsOn],
+        ['on completion', TaskLayoutComponent.OnCompletion],
+    ]);
+
+    for (const [key, component] of optionMap.entries()) {
+        if (option.startsWith(key)) {
+            taskLayoutOptions.setVisibility(component, visible);
+            return true;
+        }
     }
 
     if (option.startsWith('tags')) {
