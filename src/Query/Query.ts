@@ -312,15 +312,10 @@ ${statement.explainStatement('    ')}
         if (parseQueryShowHideOptions(this._queryLayoutOptions, option, hide)) {
             return;
         }
-        if (this.parseTaskShowHideOptions(option, !hide)) {
+        if (parseTaskShowHideOptions(this._taskLayoutOptions, option, !hide)) {
             return;
         }
         this.setError('do not understand hide/show option', new Statement(line, line));
-    }
-
-    private parseTaskShowHideOptions(option: string, visible: boolean): boolean {
-        const taskLayoutOptions = this._taskLayoutOptions;
-        return parseTaskShowHideOptions(taskLayoutOptions, option, visible);
     }
 
     private parseFilter(line: string, statement: Statement) {
