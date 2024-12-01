@@ -153,16 +153,16 @@ describe('TaskLayoutOptions', () => {
 });
 
 describe('parsing task show/hide layout options', () => {
-    it('should parse priority', () => {
-        const option = 'priority';
-        const component = TaskLayoutComponent.Priority;
+    it.each([['priority', TaskLayoutComponent.Priority]])(
+        'should parse option: %s',
+        (option: string, component: TaskLayoutComponent) => {
+            const options = new TaskLayoutOptions();
 
-        const options = new TaskLayoutOptions();
+            parseTaskShowHideOptions(options, option, false);
+            expect(options.isShown(component)).toEqual(false);
 
-        parseTaskShowHideOptions(options, option, false);
-        expect(options.isShown(component)).toEqual(false);
-
-        parseTaskShowHideOptions(options, option, true);
-        expect(options.isShown(component)).toEqual(true);
-    });
+            parseTaskShowHideOptions(options, option, true);
+            expect(options.isShown(component)).toEqual(true);
+        },
+    );
 });
