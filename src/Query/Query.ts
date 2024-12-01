@@ -321,6 +321,13 @@ ${statement.explainStatement('    ')}
                 case 'postpone button':
                     this._queryLayoutOptions.hidePostponeButton = hide;
                     return;
+                case 'edit button':
+                    this._queryLayoutOptions.hideEditButton = hide;
+                    return;
+                case 'urgency':
+                    this._queryLayoutOptions.hideUrgency = hide;
+                    return;
+
                 case 'priority':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, !hide);
                     return;
@@ -344,12 +351,6 @@ ${statement.explainStatement('    ')}
                     return;
                 case 'recurrence rule':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, !hide);
-                    return;
-                case 'edit button':
-                    this._queryLayoutOptions.hideEditButton = hide;
-                    return;
-                case 'urgency':
-                    this._queryLayoutOptions.hideUrgency = hide;
                     return;
                 case 'tags':
                     this._taskLayoutOptions.setTagsVisibility(!hide);
