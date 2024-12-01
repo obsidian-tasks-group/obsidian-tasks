@@ -135,10 +135,6 @@ export function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, o
         taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, visible);
         return true;
     }
-    if (option.startsWith('tags')) {
-        taskLayoutOptions.setTagsVisibility(visible);
-        return true;
-    }
     if (option.startsWith('id')) {
         taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, visible);
         return true;
@@ -151,5 +147,11 @@ export function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, o
         taskLayoutOptions.setVisibility(TaskLayoutComponent.OnCompletion, visible);
         return true;
     }
+
+    if (option.startsWith('tags')) {
+        taskLayoutOptions.setTagsVisibility(visible);
+        return true;
+    }
+
     return false;
 }
