@@ -104,17 +104,18 @@ export class TaskLayoutOptions {
  */
 export function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, option: string, visible: boolean) {
     const optionMap = new Map<string, TaskLayoutComponent>([
-        ['priority', TaskLayoutComponent.Priority],
+        // Alphabetical order
         ['cancelled date', TaskLayoutComponent.CancelledDate],
         ['created date', TaskLayoutComponent.CreatedDate],
-        ['start date', TaskLayoutComponent.StartDate],
-        ['scheduled date', TaskLayoutComponent.ScheduledDate],
-        ['due date', TaskLayoutComponent.DueDate],
-        ['done date', TaskLayoutComponent.DoneDate],
-        ['recurrence rule', TaskLayoutComponent.RecurrenceRule],
-        ['id', TaskLayoutComponent.Id],
         ['depends on', TaskLayoutComponent.DependsOn],
+        ['done date', TaskLayoutComponent.DoneDate],
+        ['due date', TaskLayoutComponent.DueDate],
+        ['id', TaskLayoutComponent.Id],
         ['on completion', TaskLayoutComponent.OnCompletion],
+        ['priority', TaskLayoutComponent.Priority],
+        ['recurrence rule', TaskLayoutComponent.RecurrenceRule],
+        ['scheduled date', TaskLayoutComponent.ScheduledDate],
+        ['start date', TaskLayoutComponent.StartDate],
     ]);
 
     for (const [key, component] of optionMap.entries()) {
