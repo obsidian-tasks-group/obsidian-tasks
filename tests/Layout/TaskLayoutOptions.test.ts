@@ -1,4 +1,4 @@
-import { TaskLayoutComponent, TaskLayoutOptions } from '../../src/Layout/TaskLayoutOptions';
+import { TaskLayoutComponent, TaskLayoutOptions, parseTaskShowHideOptions } from '../../src/Layout/TaskLayoutOptions';
 
 describe('TaskLayoutOptions', () => {
     it('should be constructable', () => {
@@ -149,5 +149,20 @@ describe('TaskLayoutOptions', () => {
             cancelledDate
             doneDate"
         `);
+    });
+});
+
+describe('parsing task show/hide layout options', () => {
+    it('should parse priority', () => {
+        const option = 'priority';
+        const component = TaskLayoutComponent.Priority;
+
+        const options = new TaskLayoutOptions();
+
+        parseTaskShowHideOptions(options, option, false);
+        expect(options.isShown(component)).toEqual(false);
+
+        parseTaskShowHideOptions(options, option, true);
+        expect(options.isShown(component)).toEqual(true);
     });
 });
