@@ -86,7 +86,7 @@ export function verifyQueryExplanation(instructions: string, options?: Options):
  * @param instructions
  * @param globalFilter
  * @param globalQuery
- * @param options?
+ * @param options
  */
 export function verifyTaskBlockExplanation(
     instructions: string,
