@@ -311,58 +311,58 @@ ${statement.explainStatement('    ')}
             switch (option) {
                 case 'tree':
                     this._queryLayoutOptions.hideTree = hide;
-                    break;
+                    return;
                 case 'task count':
                     this._queryLayoutOptions.hideTaskCount = hide;
-                    break;
+                    return;
                 case 'backlink':
                     this._queryLayoutOptions.hideBacklinks = hide;
-                    break;
+                    return;
                 case 'postpone button':
                     this._queryLayoutOptions.hidePostponeButton = hide;
-                    break;
+                    return;
                 case 'priority':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, !hide);
-                    break;
+                    return;
                 case 'cancelled date':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CancelledDate, !hide);
-                    break;
+                    return;
                 case 'created date':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CreatedDate, !hide);
-                    break;
+                    return;
                 case 'start date':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.StartDate, !hide);
-                    break;
+                    return;
                 case 'scheduled date':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.ScheduledDate, !hide);
-                    break;
+                    return;
                 case 'due date':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, !hide);
-                    break;
+                    return;
                 case 'done date':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, !hide);
-                    break;
+                    return;
                 case 'recurrence rule':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, !hide);
-                    break;
+                    return;
                 case 'edit button':
                     this._queryLayoutOptions.hideEditButton = hide;
-                    break;
+                    return;
                 case 'urgency':
                     this._queryLayoutOptions.hideUrgency = hide;
-                    break;
+                    return;
                 case 'tags':
                     this._taskLayoutOptions.setTagsVisibility(!hide);
-                    break;
+                    return;
                 case 'id':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, !hide);
-                    break;
+                    return;
                 case 'depends on':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, !hide);
-                    break;
+                    return;
                 case 'on completion':
                     this._taskLayoutOptions.setVisibility(TaskLayoutComponent.OnCompletion, !hide);
-                    break;
+                    return;
                 default:
                     this.setError('do not understand hide/show option', new Statement(line, line));
             }
