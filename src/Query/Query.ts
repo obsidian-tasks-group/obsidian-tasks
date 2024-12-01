@@ -309,34 +309,47 @@ ${statement.explainStatement('    ')}
         const hide = hideOptionsMatch[1].toLowerCase() === 'hide';
         const option = hideOptionsMatch[2].toLowerCase();
 
-        if (option.startsWith('tree')) {
-            this._queryLayoutOptions.hideTree = hide;
-            return;
-        }
-        if (option.startsWith('task count')) {
-            this._queryLayoutOptions.hideTaskCount = hide;
-            return;
-        }
-        if (option.startsWith('backlink')) {
-            this._queryLayoutOptions.hideBacklinks = hide;
-            return;
-        }
-        if (option.startsWith('postpone button')) {
-            this._queryLayoutOptions.hidePostponeButton = hide;
-            return;
-        }
-        if (option.startsWith('edit button')) {
-            this._queryLayoutOptions.hideEditButton = hide;
-            return;
-        }
-        if (option.startsWith('urgency')) {
-            this._queryLayoutOptions.hideUrgency = hide;
+        if (this.parseQueryShowHideOptions(option, hide)) {
             return;
         }
         if (this.parseTaskShowHideOptions(option, !hide)) {
             return;
         }
         this.setError('do not understand hide/show option', new Statement(line, line));
+    }
+
+    /**
+     * Parse show/hide options for Query Layout options
+     * @param option - must already have been lower-cased
+     * @param hide - whether the option should be hidden
+     * @return True if the option was recognised, and false otherwise
+     */
+    private parseQueryShowHideOptions(option: string, hide: boolean): boolean {
+        if (option.startsWith('tree')) {
+            this._queryLayoutOptions.hideTree = hide;
+            return true;
+        }
+        if (option.startsWith('task count')) {
+            this._queryLayoutOptions.hideTaskCount = hide;
+            return true;
+        }
+        if (option.startsWith('backlink')) {
+            this._queryLayoutOptions.hideBacklinks = hide;
+            return true;
+        }
+        if (option.startsWith('postpone button')) {
+            this._queryLayoutOptions.hidePostponeButton = hide;
+            return true;
+        }
+        if (option.startsWith('edit button')) {
+            this._queryLayoutOptions.hideEditButton = hide;
+            return true;
+        }
+        if (option.startsWith('urgency')) {
+            this._queryLayoutOptions.hideUrgency = hide;
+            return true;
+        }
+        return false;
     }
 
     /**
