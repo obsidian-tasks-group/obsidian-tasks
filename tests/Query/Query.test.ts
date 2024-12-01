@@ -93,8 +93,11 @@ function isInvalidQueryInstruction(
 Problem line: "${source}"`);
 }
 
-function isInvalidQueryInstructionLowerAndUpper(getQueryError: (source: string) => string | undefined, source: string) {
-    const expectedErrorMessage = 'do not understand query';
+function isInvalidQueryInstructionLowerAndUpper(
+    getQueryError: (source: string) => string | undefined,
+    source: string,
+    expectedErrorMessage: string = 'do not understand query',
+) {
     isInvalidQueryInstruction(getQueryError, source, expectedErrorMessage);
     isInvalidQueryInstruction(getQueryError, source.toUpperCase(), expectedErrorMessage);
 }
