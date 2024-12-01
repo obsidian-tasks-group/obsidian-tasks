@@ -309,7 +309,7 @@ ${statement.explainStatement('    ')}
         const hide = hideOptionsMatch[1].toLowerCase() === 'hide';
         const option = hideOptionsMatch[2].toLowerCase();
 
-        if (this.parseQueryShowHideOptions(option, hide)) {
+        if (parseQueryShowHideOptions(this._queryLayoutOptions, option, hide)) {
             return;
         }
         if (this.parseTaskShowHideOptions(option, !hide)) {
@@ -317,12 +317,6 @@ ${statement.explainStatement('    ')}
         }
         this.setError('do not understand hide/show option', new Statement(line, line));
     }
-
-    private parseQueryShowHideOptions(option: string, hide: boolean): boolean {
-        const queryLayoutOptions = this._queryLayoutOptions;
-        return parseQueryShowHideOptions(queryLayoutOptions, option, hide);
-    }
-
     /**
      * Parse show/hide options for Task layout options
      * @param option - must already have been lower-cased
