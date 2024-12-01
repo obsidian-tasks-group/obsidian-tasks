@@ -1,7 +1,7 @@
 import { type EventRef, type MarkdownPostProcessorContext, MarkdownRenderChild, MarkdownRenderer } from 'obsidian';
 import { App, Keymap } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
-import { getQueryForQueryRenderer } from '../lib/QueryRendererHelper';
+import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type TasksPlugin from '../main';
 import type { State } from '../Obsidian/Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';

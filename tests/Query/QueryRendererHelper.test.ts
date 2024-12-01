@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
-import { explainResults, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
+import { explainResults, getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { TasksFile } from '../../src/Scripting/TasksFile';
