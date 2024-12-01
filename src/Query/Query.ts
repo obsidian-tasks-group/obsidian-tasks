@@ -1,7 +1,7 @@
 import { getSettings } from '../Config/Settings';
 import type { IQuery } from '../IQuery';
-import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
-import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
+import { QueryLayoutOptions, parseQueryShowHideOptions } from '../Layout/QueryLayoutOptions';
+import { TaskLayoutOptions, parseTaskShowHideOptions } from '../Layout/TaskLayoutOptions';
 import { errorMessageForException } from '../lib/ExceptionTools';
 import { logging } from '../lib/logging';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
@@ -27,16 +27,15 @@ export class Query implements IQuery {
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
-    private _taskLayoutOptions: TaskLayoutOptions = new TaskLayoutOptions();
-    private _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
-    private _filters: Filter[] = [];
+    private readonly _taskLayoutOptions: TaskLayoutOptions = new TaskLayoutOptions();
+    private readonly _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
+    private readonly _filters: Filter[] = [];
     private _error: string | undefined = undefined;
-    private _sorting: Sorter[] = [];
-    private _grouping: Grouper[] = [];
+    private readonly _sorting: Sorter[] = [];
+    private readonly _grouping: Grouper[] = [];
     private _ignoreGlobalQuery: boolean = false;
 
-    private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|cancelled date|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|postpone button|urgency|tags|depends on|id|on completion|tree)/i;
+    private readonly hideOptionsRegexp = /^(hide|show) +(.*)/i;
     private readonly shortModeRegexp = /^short/i;
     private readonly fullModeRegexp = /^full/i;
     private readonly explainQueryRegexp = /^explain/i;
@@ -44,7 +43,7 @@ export class Query implements IQuery {
 
     logger = logging.getLogger('tasks.Query');
     // Used internally to uniquely log each query execution in the console.
-    private _queryId: string = '';
+    private readonly _queryId: string;
 
     private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/i;
 
@@ -304,70 +303,19 @@ ${statement.explainStatement('    ')}
 
     private parseHideOptions(line: string): void {
         const hideOptionsMatch = line.match(this.hideOptionsRegexp);
-        if (hideOptionsMatch !== null) {
-            const hide = hideOptionsMatch[1].toLowerCase() === 'hide';
-            const option = hideOptionsMatch[2].toLowerCase();
-
-            switch (option) {
-                case 'tree':
-                    // WARNING: undocumented, and not yet ready for release.
-                    this._queryLayoutOptions.hideTree = hide;
-                    break;
-                case 'task count':
-                    this._queryLayoutOptions.hideTaskCount = hide;
-                    break;
-                case 'backlink':
-                    this._queryLayoutOptions.hideBacklinks = hide;
-                    break;
-                case 'postpone button':
-                    this._queryLayoutOptions.hidePostponeButton = hide;
-                    break;
-                case 'priority':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, !hide);
-                    break;
-                case 'cancelled date':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CancelledDate, !hide);
-                    break;
-                case 'created date':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CreatedDate, !hide);
-                    break;
-                case 'start date':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.StartDate, !hide);
-                    break;
-                case 'scheduled date':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.ScheduledDate, !hide);
-                    break;
-                case 'due date':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, !hide);
-                    break;
-                case 'done date':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, !hide);
-                    break;
-                case 'recurrence rule':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, !hide);
-                    break;
-                case 'edit button':
-                    this._queryLayoutOptions.hideEditButton = hide;
-                    break;
-                case 'urgency':
-                    this._queryLayoutOptions.hideUrgency = hide;
-                    break;
-                case 'tags':
-                    this._taskLayoutOptions.setTagsVisibility(!hide);
-                    break;
-                case 'id':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, !hide);
-                    break;
-                case 'depends on':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, !hide);
-                    break;
-                case 'on completion':
-                    this._taskLayoutOptions.setVisibility(TaskLayoutComponent.OnCompletion, !hide);
-                    break;
-                default:
-                    this.setError('do not understand hide/show option', new Statement(line, line));
-            }
+        if (hideOptionsMatch === null) {
+            return;
         }
+        const hide = hideOptionsMatch[1].toLowerCase() === 'hide';
+        const option = hideOptionsMatch[2].toLowerCase();
+
+        if (parseQueryShowHideOptions(this._queryLayoutOptions, option, hide)) {
+            return;
+        }
+        if (parseTaskShowHideOptions(this._taskLayoutOptions, option, !hide)) {
+            return;
+        }
+        this.setError('do not understand hide/show option', new Statement(line, line));
     }
 
     private parseFilter(line: string, statement: Statement) {
