@@ -346,52 +346,53 @@ ${statement.explainStatement('    ')}
      * @return True if the option was recognised, and false otherwise
      */
     private parseTaskShowHideOptions(option: string, hide: boolean): boolean {
+        const visible = !hide;
         if (option.startsWith('priority')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, visible);
             return true;
         }
         if (option.startsWith('cancelled date')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CancelledDate, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CancelledDate, visible);
             return true;
         }
         if (option.startsWith('created date')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CreatedDate, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CreatedDate, visible);
             return true;
         }
         if (option.startsWith('start date')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.StartDate, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.StartDate, visible);
             return true;
         }
         if (option.startsWith('scheduled date')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.ScheduledDate, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.ScheduledDate, visible);
             return true;
         }
         if (option.startsWith('due date')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, visible);
             return true;
         }
         if (option.startsWith('done date')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, visible);
             return true;
         }
         if (option.startsWith('recurrence rule')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, visible);
             return true;
         }
         if (option.startsWith('tags')) {
-            this._taskLayoutOptions.setTagsVisibility(!hide);
+            this._taskLayoutOptions.setTagsVisibility(visible);
             return true;
         }
         if (option.startsWith('id')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, visible);
             return true;
         }
         if (option.startsWith('depends on')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, visible);
             return true;
         }
         if (option.startsWith('on completion')) {
-            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.OnCompletion, !hide);
+            this._taskLayoutOptions.setVisibility(TaskLayoutComponent.OnCompletion, visible);
             return true;
         }
         return false;
