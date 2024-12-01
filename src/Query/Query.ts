@@ -333,7 +333,7 @@ ${statement.explainStatement('    ')}
             this._queryLayoutOptions.hideUrgency = hide;
             return;
         }
-        if (this.parseTaskShowHideOptions(option, hide)) {
+        if (this.parseTaskShowHideOptions(option, !hide)) {
             return;
         }
         this.setError('do not understand hide/show option', new Statement(line, line));
@@ -342,11 +342,10 @@ ${statement.explainStatement('    ')}
     /**
      * Parse show/hide options for Task properties
      * @param option - must already have been lower-cased
-     * @param hide
+     * @param visible - whether the option should be shown
      * @return True if the option was recognised, and false otherwise
      */
-    private parseTaskShowHideOptions(option: string, hide: boolean): boolean {
-        const visible = !hide;
+    private parseTaskShowHideOptions(option: string, visible: boolean): boolean {
         if (option.startsWith('priority')) {
             this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, visible);
             return true;
