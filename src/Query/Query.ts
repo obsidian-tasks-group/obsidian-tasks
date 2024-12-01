@@ -20,6 +20,34 @@ import { Sort } from './Sort/Sort';
 import type { Sorter } from './Sort/Sorter';
 import { Statement } from './Statement';
 
+function parseQueryShowHideOptions(queryLayoutOptions: QueryLayoutOptions, option: string, hide: boolean) {
+    if (option.startsWith('tree')) {
+        queryLayoutOptions.hideTree = hide;
+        return true;
+    }
+    if (option.startsWith('task count')) {
+        queryLayoutOptions.hideTaskCount = hide;
+        return true;
+    }
+    if (option.startsWith('backlink')) {
+        queryLayoutOptions.hideBacklinks = hide;
+        return true;
+    }
+    if (option.startsWith('postpone button')) {
+        queryLayoutOptions.hidePostponeButton = hide;
+        return true;
+    }
+    if (option.startsWith('edit button')) {
+        queryLayoutOptions.hideEditButton = hide;
+        return true;
+    }
+    if (option.startsWith('urgency')) {
+        queryLayoutOptions.hideUrgency = hide;
+        return true;
+    }
+    return false;
+}
+
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
@@ -326,31 +354,7 @@ ${statement.explainStatement('    ')}
      */
     private parseQueryShowHideOptions(option: string, hide: boolean): boolean {
         const queryLayoutOptions = this._queryLayoutOptions;
-        if (option.startsWith('tree')) {
-            queryLayoutOptions.hideTree = hide;
-            return true;
-        }
-        if (option.startsWith('task count')) {
-            queryLayoutOptions.hideTaskCount = hide;
-            return true;
-        }
-        if (option.startsWith('backlink')) {
-            queryLayoutOptions.hideBacklinks = hide;
-            return true;
-        }
-        if (option.startsWith('postpone button')) {
-            queryLayoutOptions.hidePostponeButton = hide;
-            return true;
-        }
-        if (option.startsWith('edit button')) {
-            queryLayoutOptions.hideEditButton = hide;
-            return true;
-        }
-        if (option.startsWith('urgency')) {
-            queryLayoutOptions.hideUrgency = hide;
-            return true;
-        }
-        return false;
+        return parseQueryShowHideOptions(queryLayoutOptions, option, hide);
     }
 
     /**
