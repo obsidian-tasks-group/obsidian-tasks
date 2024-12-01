@@ -310,7 +310,6 @@ ${statement.explainStatement('    ')}
 
             switch (option) {
                 case 'tree':
-                    // WARNING: undocumented, and not yet ready for release.
                     this._queryLayoutOptions.hideTree = hide;
                     break;
                 case 'task count':
