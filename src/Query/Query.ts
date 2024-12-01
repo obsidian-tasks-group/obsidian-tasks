@@ -311,60 +311,76 @@ ${statement.explainStatement('    ')}
             if (option === 'tree') {
                 this._queryLayoutOptions.hideTree = hide;
                 return;
-            } else if (option === 'task count') {
+            }
+            if (option === 'task count') {
                 this._queryLayoutOptions.hideTaskCount = hide;
                 return;
-            } else if (option === 'backlink') {
+            }
+            if (option === 'backlink') {
                 this._queryLayoutOptions.hideBacklinks = hide;
                 return;
-            } else if (option === 'postpone button') {
+            }
+            if (option === 'postpone button') {
                 this._queryLayoutOptions.hidePostponeButton = hide;
                 return;
-            } else if (option === 'edit button') {
+            }
+            if (option === 'edit button') {
                 this._queryLayoutOptions.hideEditButton = hide;
                 return;
-            } else if (option === 'urgency') {
+            }
+            if (option === 'urgency') {
                 this._queryLayoutOptions.hideUrgency = hide;
                 return;
-            } else if (option === 'priority') {
+            }
+            if (option === 'priority') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, !hide);
                 return;
-            } else if (option === 'cancelled date') {
+            }
+            if (option === 'cancelled date') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CancelledDate, !hide);
                 return;
-            } else if (option === 'created date') {
+            }
+            if (option === 'created date') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.CreatedDate, !hide);
                 return;
-            } else if (option === 'start date') {
+            }
+            if (option === 'start date') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.StartDate, !hide);
                 return;
-            } else if (option === 'scheduled date') {
+            }
+            if (option === 'scheduled date') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.ScheduledDate, !hide);
                 return;
-            } else if (option === 'due date') {
+            }
+            if (option === 'due date') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DueDate, !hide);
                 return;
-            } else if (option === 'done date') {
+            }
+            if (option === 'done date') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DoneDate, !hide);
                 return;
-            } else if (option === 'recurrence rule') {
+            }
+            if (option === 'recurrence rule') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.RecurrenceRule, !hide);
                 return;
-            } else if (option === 'tags') {
+            }
+            if (option === 'tags') {
                 this._taskLayoutOptions.setTagsVisibility(!hide);
                 return;
-            } else if (option === 'id') {
+            }
+            if (option === 'id') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.Id, !hide);
                 return;
-            } else if (option === 'depends on') {
+            }
+            if (option === 'depends on') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.DependsOn, !hide);
                 return;
-            } else if (option === 'on completion') {
+            }
+            if (option === 'on completion') {
                 this._taskLayoutOptions.setVisibility(TaskLayoutComponent.OnCompletion, !hide);
                 return;
-            } else {
-                this.setError('do not understand hide/show option', new Statement(line, line));
             }
+            this.setError('do not understand hide/show option', new Statement(line, line));
         }
     }
 
