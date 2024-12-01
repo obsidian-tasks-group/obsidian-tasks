@@ -6,31 +6,23 @@ describe('parsing query show/hide layout options', () => {
         expect(success).toEqual(true);
     }
 
-    it('should parse "tree" option', () => {
-        const option = 'tree';
-        const hiddenByDefault = true;
+    const testCases: [string, keyof QueryLayoutOptions, boolean][] = [
+        ['tree', 'hideTree', true],
+        ['task count', 'hideTaskCount', false],
+        ['backlink', 'hideBacklinks', false],
+        ['postpone button', 'hidePostponeButton', false],
+        ['edit button', 'hideEditButton', false],
+        ['urgency', 'hideUrgency', true],
+    ];
 
+    it.each(testCases)('should parse "%s" option', (option, property, hiddenByDefault) => {
         const options = new QueryLayoutOptions();
-        expect(options.hideTree).toBe(hiddenByDefault);
+        expect(options[property]).toBe(hiddenByDefault);
 
         parseOptionAndCheck(options, option, !hiddenByDefault);
-        expect(options.hideTree).toEqual(!hiddenByDefault);
+        expect(options[property]).toEqual(!hiddenByDefault);
 
         parseOptionAndCheck(options, option, hiddenByDefault);
-        expect(options.hideTree).toEqual(hiddenByDefault);
-    });
-
-    it('should parse "task count" option', () => {
-        const option = 'task count';
-        const hiddenByDefault = false;
-
-        const options = new QueryLayoutOptions();
-        expect(options.hideTaskCount).toBe(hiddenByDefault);
-
-        parseOptionAndCheck(options, option, !hiddenByDefault);
-        expect(options.hideTaskCount).toEqual(!hiddenByDefault);
-
-        parseOptionAndCheck(options, option, hiddenByDefault);
-        expect(options.hideTaskCount).toEqual(hiddenByDefault);
+        expect(options[property]).toEqual(hiddenByDefault);
     });
 });
