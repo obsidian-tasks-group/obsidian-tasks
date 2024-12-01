@@ -84,8 +84,12 @@ function isValidQueryGroup(filter: string) {
     lowerCaseFilterGaveExpectionInstruction(filter, query.grouping[0].instruction);
 }
 
-function isInvalidQueryInstruction(getQueryError: (source: string) => string | undefined, source: string) {
-    expect(getQueryError(source)).toEqual(`do not understand query
+function isInvalidQueryInstruction(
+    getQueryError: (source: string) => string | undefined,
+    source: string,
+    expectedErrorMessage: string = 'do not understand query',
+) {
+    expect(getQueryError(source)).toEqual(`${expectedErrorMessage}
 Problem line: "${source}"`);
 }
 
