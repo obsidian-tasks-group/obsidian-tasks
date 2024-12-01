@@ -325,28 +325,29 @@ ${statement.explainStatement('    ')}
      * @return True if the option was recognised, and false otherwise
      */
     private parseQueryShowHideOptions(option: string, hide: boolean): boolean {
+        const queryLayoutOptions = this._queryLayoutOptions;
         if (option.startsWith('tree')) {
-            this._queryLayoutOptions.hideTree = hide;
+            queryLayoutOptions.hideTree = hide;
             return true;
         }
         if (option.startsWith('task count')) {
-            this._queryLayoutOptions.hideTaskCount = hide;
+            queryLayoutOptions.hideTaskCount = hide;
             return true;
         }
         if (option.startsWith('backlink')) {
-            this._queryLayoutOptions.hideBacklinks = hide;
+            queryLayoutOptions.hideBacklinks = hide;
             return true;
         }
         if (option.startsWith('postpone button')) {
-            this._queryLayoutOptions.hidePostponeButton = hide;
+            queryLayoutOptions.hidePostponeButton = hide;
             return true;
         }
         if (option.startsWith('edit button')) {
-            this._queryLayoutOptions.hideEditButton = hide;
+            queryLayoutOptions.hideEditButton = hide;
             return true;
         }
         if (option.startsWith('urgency')) {
-            this._queryLayoutOptions.hideUrgency = hide;
+            queryLayoutOptions.hideUrgency = hide;
             return true;
         }
         return false;
