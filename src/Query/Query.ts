@@ -318,12 +318,6 @@ ${statement.explainStatement('    ')}
         this.setError('do not understand hide/show option', new Statement(line, line));
     }
 
-    /**
-     * Parse show/hide options for Query Layout options
-     * @param option - must already have been lower-cased
-     * @param hide - whether the option should be hidden
-     * @return True if the option was recognised, and false otherwise
-     */
     private parseQueryShowHideOptions(option: string, hide: boolean): boolean {
         const queryLayoutOptions = this._queryLayoutOptions;
         return parseQueryShowHideOptions(queryLayoutOptions, option, hide);
