@@ -27,12 +27,12 @@ export class Query implements IQuery {
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
-    private _taskLayoutOptions: TaskLayoutOptions = new TaskLayoutOptions();
-    private _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
-    private _filters: Filter[] = [];
+    private readonly _taskLayoutOptions: TaskLayoutOptions = new TaskLayoutOptions();
+    private readonly _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
+    private readonly _filters: Filter[] = [];
     private _error: string | undefined = undefined;
-    private _sorting: Sorter[] = [];
-    private _grouping: Grouper[] = [];
+    private readonly _sorting: Sorter[] = [];
+    private readonly _grouping: Grouper[] = [];
     private _ignoreGlobalQuery: boolean = false;
 
     private readonly hideOptionsRegexp =
@@ -44,7 +44,7 @@ export class Query implements IQuery {
 
     logger = logging.getLogger('tasks.Query');
     // Used internally to uniquely log each query execution in the console.
-    private _queryId: string;
+    private readonly _queryId: string;
 
     private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/i;
 
