@@ -20,7 +20,7 @@ import { Sort } from './Sort/Sort';
 import type { Sorter } from './Sort/Sorter';
 import { Statement } from './Statement';
 
-function parseTaskShowHideOptions(option: string, taskLayoutOptions: TaskLayoutOptions, visible: boolean) {
+function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, option: string, visible: boolean) {
     if (option.startsWith('priority')) {
         taskLayoutOptions.setVisibility(TaskLayoutComponent.Priority, visible);
         return true;
@@ -377,7 +377,7 @@ ${statement.explainStatement('    ')}
      */
     private parseTaskShowHideOptions(option: string, visible: boolean): boolean {
         const taskLayoutOptions = this._taskLayoutOptions;
-        return parseTaskShowHideOptions(option, taskLayoutOptions, visible);
+        return parseTaskShowHideOptions(taskLayoutOptions, option, visible);
     }
 
     private parseFilter(line: string, statement: Statement) {
