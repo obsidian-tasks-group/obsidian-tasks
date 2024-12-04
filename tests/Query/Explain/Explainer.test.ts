@@ -215,6 +215,9 @@ describe('explain groupers', () => {
             group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");
             "
         `);
+        expect(query.grouping[0].instruction).toEqual(
+            'group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");',
+        );
     });
 });
 
