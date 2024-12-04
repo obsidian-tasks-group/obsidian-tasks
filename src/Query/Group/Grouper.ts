@@ -1,5 +1,6 @@
 import type { Task } from '../../Task/Task';
 import type { SearchInfo } from '../SearchInfo';
+import { Statement } from '../Statement';
 
 /**
  * A group-naming function, that takes a Task object and returns zero or more
@@ -26,6 +27,7 @@ export type GrouperFunction = (task: Task, searchInfo: SearchInfo) => string[];
  */
 export class Grouper {
     private readonly _instruction: string;
+    public statement: Statement;
 
     /**
      * The type of grouper, for example 'tags' or 'due'.
@@ -47,6 +49,7 @@ export class Grouper {
 
     constructor(instruction: string, property: string, grouper: GrouperFunction, reverse: boolean) {
         this._instruction = instruction;
+        this.statement = new Statement(instruction, instruction);
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;
