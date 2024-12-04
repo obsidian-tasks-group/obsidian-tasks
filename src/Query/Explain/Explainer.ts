@@ -69,7 +69,7 @@ export class Explainer {
             return this.indent('No sorting instructions supplied.\n');
         }
 
-        return query.sorting.map((group) => this.indentation + group.instruction).join('\n') + '\n';
+        return query.sorting.map((group) => group.statement.explainStatement(this.indentation)).join('\n') + '\n';
     }
 
     public explainQueryLimits(query: Query) {

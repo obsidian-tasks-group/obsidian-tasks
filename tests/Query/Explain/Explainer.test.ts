@@ -227,7 +227,7 @@ describe('explain sorters', () => {
         const query = new Query(source);
         expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
             "sort by due
-            sort by priority
+            sort by priority()
             "
         `);
     });
@@ -243,9 +243,15 @@ describe('explain sorters', () => {
         ];
         const query = makeQueryFromContinuationLines(lines);
 
-        // TODO Make this also show the original instruction, including continuations. See #2349.
         expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
-            "sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;
+            "sort by function                                                   \\
+                const priorities = [..."🟥🟧🟨🟩🟦"];                        \\
+                for (let i = 0; i < priorities.length; i++) {                  \\
+                    if (task.description.includes(priorities[i])) return i;    \\
+                }                                                              \\
+                return 999;
+             =>
+            sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;
             "
         `);
     });
