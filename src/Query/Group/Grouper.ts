@@ -54,10 +54,6 @@ export class Grouper {
         this.reverse = reverse;
     }
 
-    public get statement(): Statement {
-        return this._statement;
-    }
-
     /**
      * Optionally record more detail about the source statement.
      *
@@ -66,6 +62,10 @@ export class Grouper {
      */
     public setStatement(statement: Statement) {
         this._statement = statement;
+    }
+
+    public get statement(): Statement {
+        return this._statement;
     }
 
     public get instruction(): string {
