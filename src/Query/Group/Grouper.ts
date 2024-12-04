@@ -27,6 +27,7 @@ export type GrouperFunction = (task: Task, searchInfo: SearchInfo) => string[];
  */
 export class Grouper {
     private readonly _instruction: string;
+    /** statement may be updated later with {@link setStatement} */
     public statement: Statement;
 
     /**
@@ -53,6 +54,16 @@ export class Grouper {
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;
+    }
+
+    /**
+     * Optionally record more detail about the source statement.
+     *
+     * In tests, we only care about the actual instruction being parsed and executed.
+     * However, in {@link Query}, we want the ability to show user more information.
+     */
+    public setStatement(statement: Statement) {
+        this.statement = statement;
     }
 
     public get instruction(): string {

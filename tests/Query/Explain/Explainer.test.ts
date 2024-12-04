@@ -199,9 +199,20 @@ describe('explain groupers', () => {
         ];
         const query = makeQueryFromContinuationLines(lines);
 
-        // TODO Make this also show the original instruction, including continuations. See #2349.
         expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
-            "group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");
+            "group by function                                   \\
+                const date = task.due;                          \\
+                if (!date.moment) {                             \\
+                    return "Undated";                           \\
+                }                                               \\
+                if (date.moment.day() === 0) {                  \\
+                    {{! Put the Sunday group last: }}           \\
+                    return date.format("[%%][8][%%]dddd");      \\
+                }                                               \\
+                return date.format("[%%]d[%%]dddd");
+             =>
+            group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) { {{! Put the Sunday group last: }} return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd"); =>
+            group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");
             "
         `);
     });
