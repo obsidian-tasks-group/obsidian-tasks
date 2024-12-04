@@ -56,7 +56,7 @@ export class Sorter {
     }
 
     public get instruction(): string {
-        return this.statement.anyPlaceholdersExpanded;
+        return this._statement.anyPlaceholdersExpanded;
     }
 
     private static maybeReverse(reverse: boolean, comparator: Comparator) {
