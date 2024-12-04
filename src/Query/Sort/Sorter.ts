@@ -20,7 +20,7 @@ export type Comparator = (a: Task, b: Task, searchInfo: SearchInfo) => number;
  * It stores the comparison function as a {@link Comparator}.
  */
 export class Sorter {
-    public readonly instruction: string;
+    private readonly _instruction: string;
     public readonly property: string;
     public readonly comparator: Comparator;
 
@@ -34,9 +34,13 @@ export class Sorter {
      * @param reverse - whether the sort order should be reversed.
      */
     constructor(instruction: string, property: string, comparator: Comparator, reverse: boolean) {
-        this.instruction = instruction;
+        this._instruction = instruction;
         this.property = property;
         this.comparator = Sorter.maybeReverse(reverse, comparator);
+    }
+
+    public get instruction(): string {
+        return this._instruction;
     }
 
     private static maybeReverse(reverse: boolean, comparator: Comparator) {
