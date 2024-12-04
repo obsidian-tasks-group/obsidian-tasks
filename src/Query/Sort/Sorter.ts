@@ -22,7 +22,8 @@ export type Comparator = (a: Task, b: Task, searchInfo: SearchInfo) => number;
  */
 export class Sorter {
     private readonly _instruction: string;
-    private readonly _statement: Statement;
+    /** _statement may be updated later with {@link setStatement} */
+    private _statement: Statement;
     public readonly property: string;
     public readonly comparator: Comparator;
 
@@ -44,6 +45,16 @@ export class Sorter {
 
     public get statement(): Statement {
         return this._statement;
+    }
+
+    /**
+     * Optionally record more detail about the source statement.
+     *
+     * In tests, we only care about the actual instruction being parsed and executed.
+     * However, in {@link Query}, we want the ability to show user more information.
+     */
+    public setStatement(statement: Statement) {
+        this._statement = statement;
     }
 
     public get instruction(): string {
