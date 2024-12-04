@@ -41,10 +41,6 @@ export class Sorter {
         this.comparator = Sorter.maybeReverse(reverse, comparator);
     }
 
-    public get statement(): Statement {
-        return this._statement;
-    }
-
     /**
      * Optionally record more detail about the source statement.
      *
@@ -53,6 +49,10 @@ export class Sorter {
      */
     public setStatement(statement: Statement) {
         this._statement = statement;
+    }
+
+    public get statement(): Statement {
+        return this._statement;
     }
 
     public get instruction(): string {
