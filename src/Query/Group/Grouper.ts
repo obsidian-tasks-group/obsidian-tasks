@@ -26,8 +26,8 @@ export type GrouperFunction = (task: Task, searchInfo: SearchInfo) => string[];
  * @see {@link TaskGroups} for how to use {@link Grouper} objects to group tasks together.
  */
 export class Grouper {
-    /** statement may be updated later with {@link setStatement} */
-    public statement: Statement;
+    /** _statement may be updated later with {@link setStatement} */
+    private _statement: Statement;
 
     /**
      * The type of grouper, for example 'tags' or 'due'.
@@ -48,10 +48,14 @@ export class Grouper {
     public readonly reverse: boolean;
 
     constructor(instruction: string, property: string, grouper: GrouperFunction, reverse: boolean) {
-        this.statement = new Statement(instruction, instruction);
+        this._statement = new Statement(instruction, instruction);
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;
+    }
+
+    public get statement(): Statement {
+        return this._statement;
     }
 
     /**
@@ -61,10 +65,10 @@ export class Grouper {
      * However, in {@link Query}, we want the ability to show user more information.
      */
     public setStatement(statement: Statement) {
-        this.statement = statement;
+        this._statement = statement;
     }
 
     public get instruction(): string {
-        return this.statement.anyPlaceholdersExpanded;
+        return this._statement.anyPlaceholdersExpanded;
     }
 }
