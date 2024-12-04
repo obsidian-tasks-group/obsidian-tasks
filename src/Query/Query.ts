@@ -366,6 +366,7 @@ ${statement.explainStatement('    ')}
      * classes.
      *
      * @param line
+     * @param statement
      * @private
      */
     private parseGroupBy(line: string, statement: Statement): boolean {
