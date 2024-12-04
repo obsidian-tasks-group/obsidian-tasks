@@ -11,5 +11,6 @@ describe('Sorter', () => {
         const sorter = new Sorter('sort by lineNumber', 'lineNumber', comparator, false);
 
         expect(sorter.instruction).toBe('sort by lineNumber');
+        expect(sorter.statement.rawInstruction).toBe('sort by lineNumber');
     });
 });

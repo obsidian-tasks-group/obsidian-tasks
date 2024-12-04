@@ -1,5 +1,6 @@
 import type { Task } from '../../Task/Task';
 import type { SearchInfo } from '../SearchInfo';
+import { Statement } from '../Statement';
 
 /**
  * A sorting function, that takes two Task objects and returns
@@ -21,6 +22,7 @@ export type Comparator = (a: Task, b: Task, searchInfo: SearchInfo) => number;
  */
 export class Sorter {
     private readonly _instruction: string;
+    public readonly statement: Statement;
     public readonly property: string;
     public readonly comparator: Comparator;
 
@@ -35,6 +37,7 @@ export class Sorter {
      */
     constructor(instruction: string, property: string, comparator: Comparator, reverse: boolean) {
         this._instruction = instruction;
+        this.statement = new Statement(instruction, instruction);
         this.property = property;
         this.comparator = Sorter.maybeReverse(reverse, comparator);
     }
