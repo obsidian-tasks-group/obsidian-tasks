@@ -254,6 +254,9 @@ describe('explain sorters', () => {
             sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;
             "
         `);
+        expect(query.sorting[0].instruction).toEqual(
+            'sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;',
+        );
     });
 });
 
