@@ -273,6 +273,9 @@ describe('explain sorters', () => {
     it('should explain "sort by" options', () => {
         const source = 'sort by due\nsort by priority()';
         const query = new Query(source);
+        // This shows the accidental presence of stray () characters after 'sort by priority'.
+        // They are not *required* in the explanation, but are retained here to help in user support
+        // when I ask users to supply an explanation of their query.
         expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
             "sort by due
 
