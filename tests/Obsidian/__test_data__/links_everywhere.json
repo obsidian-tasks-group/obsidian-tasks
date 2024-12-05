@@ -221,7 +221,8 @@
         },
         "tag": "#task"
       }
-    ]
+    ],
+    "v": 1
   },
   "fileContents": "---\nlink-in-frontmatter: \"[[link_in_yaml]]\"\n---\n# links_everywhere\n\nA link in the file body: [[link_in_file_body]]\n\n## A link in a [[link_in_heading]]\n\n- [ ] #task Task in 'links_everywhere' - a link on the task: [[link_in_task_wikilink]]\n",
   "filePath": "Test Data/links_everywhere.md",
