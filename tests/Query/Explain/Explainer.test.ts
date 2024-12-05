@@ -75,9 +75,11 @@ limit groups 3
                 description includes some
 
             group by priority reverse
+
             group by happens
 
             sort by description reverse
+
             sort by path
 
             At most 50 tasks.
@@ -104,9 +106,11 @@ limit groups 3
                   description includes some
 
               group by priority reverse
+
               group by happens
 
               sort by description reverse
+
               sort by path
 
               At most 50 tasks.
@@ -178,7 +182,9 @@ describe('explain groupers', () => {
         const query = new Query(source);
         expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
             "group by due
+
             group by status.name reverse
+
             group by function task.description.toUpperCase()
             "
         `);
@@ -227,6 +233,7 @@ describe('explain sorters', () => {
         const query = new Query(source);
         expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
             "sort by due
+
             sort by priority()
             "
         `);
