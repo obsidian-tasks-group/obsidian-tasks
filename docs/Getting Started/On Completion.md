@@ -103,4 +103,4 @@ At present, these "On Completion" ***actions*** are supported:
 
 The "On Completion" signifier and desired **Action** identifier can be added with [[Auto-Suggest]], to save typing them manually.
 
-We will also eventually enable the [[Create or edit Task|'Create or Edit Task' modal dialog]] to edit the "On Completion" **Action**.
+We will also eventually enable the [[Create or edit Task|'Create or Edit Task' modal dialog]] to edit the "On Completion" **Action**. We are tracking this in [issue #3222](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3222).
