@@ -46,12 +46,18 @@ describe('explain errors', () => {
 
 describe('explain everything', () => {
     const sampleOfAllInstructionTypes = `
+filter by function \\
+     task.path === '{{query.file.path}}'
 not done
 (has start date) AND (description includes some)
 
+group by function \\
+    task.path.includes('{{query.file.path}}')
 group by priority reverse
 group by happens
 
+sort by function \\
+    task.path.includes('{{query.file.path}}')
 sort by description reverse
 sort by path
 
@@ -65,18 +71,36 @@ limit groups 3
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(true) });
 
-        const query = new Query(sampleOfAllInstructionTypes);
+        const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
         expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-            "not done
+            "filter by function \\
+                 task.path === '{{query.file.path}}'
+             =>
+            filter by function task.path === '{{query.file.path}}' =>
+            filter by function task.path === 'sample.md'
+
+            not done
 
             (has start date) AND (description includes some) =>
               AND (All of):
                 has start date
                 description includes some
 
+            group by function \\
+                task.path.includes('{{query.file.path}}')
+             =>
+            group by function task.path.includes('{{query.file.path}}') =>
+            group by function task.path.includes('sample.md')
+
             group by priority reverse
 
             group by happens
+
+            sort by function \\
+                task.path.includes('{{query.file.path}}')
+             =>
+            sort by function task.path.includes('{{query.file.path}}') =>
+            sort by function task.path.includes('sample.md')
 
             sort by description reverse
 
@@ -95,19 +119,37 @@ limit groups 3
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(true) });
 
-        const query = new Query(sampleOfAllInstructionTypes);
+        const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
         const indentedExplainer = new Explainer('  ');
         expect(indentedExplainer.explainQuery(query)).toMatchInlineSnapshot(`
-            "  not done
+            "  filter by function \\
+                   task.path === '{{query.file.path}}'
+               =>
+              filter by function task.path === '{{query.file.path}}' =>
+              filter by function task.path === 'sample.md'
+
+              not done
 
               (has start date) AND (description includes some) =>
                 AND (All of):
                   has start date
                   description includes some
 
+              group by function \\
+                  task.path.includes('{{query.file.path}}')
+               =>
+              group by function task.path.includes('{{query.file.path}}') =>
+              group by function task.path.includes('sample.md')
+
               group by priority reverse
 
               group by happens
+
+              sort by function \\
+                  task.path.includes('{{query.file.path}}')
+               =>
+              sort by function task.path.includes('{{query.file.path}}') =>
+              sort by function task.path.includes('sample.md')
 
               sort by description reverse
 
