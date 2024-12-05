@@ -1,5 +1,6 @@
 import type { Task } from '../../Task/Task';
 import type { SearchInfo } from '../SearchInfo';
+import { Statement } from '../Statement';
 
 /**
  * A sorting function, that takes two Task objects and returns
@@ -20,7 +21,8 @@ export type Comparator = (a: Task, b: Task, searchInfo: SearchInfo) => number;
  * It stores the comparison function as a {@link Comparator}.
  */
 export class Sorter {
-    public readonly instruction: string;
+    /** _statement may be updated later with {@link setStatement} */
+    private _statement: Statement;
     public readonly property: string;
     public readonly comparator: Comparator;
 
@@ -34,9 +36,27 @@ export class Sorter {
      * @param reverse - whether the sort order should be reversed.
      */
     constructor(instruction: string, property: string, comparator: Comparator, reverse: boolean) {
-        this.instruction = instruction;
+        this._statement = new Statement(instruction, instruction);
         this.property = property;
         this.comparator = Sorter.maybeReverse(reverse, comparator);
+    }
+
+    /**
+     * Optionally record more detail about the source statement.
+     *
+     * In tests, we only care about the actual instruction being parsed and executed.
+     * However, in {@link Query}, we want the ability to show user more information.
+     */
+    public setStatement(statement: Statement) {
+        this._statement = statement;
+    }
+
+    public get statement(): Statement {
+        return this._statement;
+    }
+
+    public get instruction(): string {
+        return this._statement.anyPlaceholdersExpanded;
     }
 
     private static maybeReverse(reverse: boolean, comparator: Comparator) {

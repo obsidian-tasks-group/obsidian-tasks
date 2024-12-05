@@ -46,12 +46,18 @@ describe('explain errors', () => {
 
 describe('explain everything', () => {
     const sampleOfAllInstructionTypes = `
+filter by function \\
+     task.path === '{{query.file.path}}'
 not done
 (has start date) AND (description includes some)
 
+group by function \\
+    task.path.includes('{{query.file.path}}')
 group by priority reverse
 group by happens
 
+sort by function \\
+    task.path.includes('{{query.file.path}}')
 sort by description reverse
 sort by path
 
@@ -65,19 +71,39 @@ limit groups 3
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(true) });
 
-        const query = new Query(sampleOfAllInstructionTypes);
+        const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
         expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-            "not done
+            "filter by function \\
+                 task.path === '{{query.file.path}}'
+             =>
+            filter by function task.path === '{{query.file.path}}' =>
+            filter by function task.path === 'sample.md'
+
+            not done
 
             (has start date) AND (description includes some) =>
               AND (All of):
                 has start date
                 description includes some
 
+            group by function \\
+                task.path.includes('{{query.file.path}}')
+             =>
+            group by function task.path.includes('{{query.file.path}}') =>
+            group by function task.path.includes('sample.md')
+
             group by priority reverse
+
             group by happens
 
+            sort by function \\
+                task.path.includes('{{query.file.path}}')
+             =>
+            sort by function task.path.includes('{{query.file.path}}') =>
+            sort by function task.path.includes('sample.md')
+
             sort by description reverse
+
             sort by path
 
             At most 50 tasks.
@@ -93,20 +119,40 @@ limit groups 3
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(true) });
 
-        const query = new Query(sampleOfAllInstructionTypes);
+        const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
         const indentedExplainer = new Explainer('  ');
         expect(indentedExplainer.explainQuery(query)).toMatchInlineSnapshot(`
-            "  not done
+            "  filter by function \\
+                   task.path === '{{query.file.path}}'
+               =>
+              filter by function task.path === '{{query.file.path}}' =>
+              filter by function task.path === 'sample.md'
+
+              not done
 
               (has start date) AND (description includes some) =>
                 AND (All of):
                   has start date
                   description includes some
 
+              group by function \\
+                  task.path.includes('{{query.file.path}}')
+               =>
+              group by function task.path.includes('{{query.file.path}}') =>
+              group by function task.path.includes('sample.md')
+
               group by priority reverse
+
               group by happens
 
+              sort by function \\
+                  task.path.includes('{{query.file.path}}')
+               =>
+              sort by function task.path.includes('{{query.file.path}}') =>
+              sort by function task.path.includes('sample.md')
+
               sort by description reverse
+
               sort by path
 
               At most 50 tasks.
@@ -178,7 +224,9 @@ describe('explain groupers', () => {
         const query = new Query(source);
         expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
             "group by due
+
             group by status.name reverse
+
             group by function task.description.toUpperCase()
             "
         `);
@@ -199,11 +247,25 @@ describe('explain groupers', () => {
         ];
         const query = makeQueryFromContinuationLines(lines);
 
-        // TODO Make this also show the original instruction, including continuations. See #2349.
         expect(explainer.explainGroups(query)).toMatchInlineSnapshot(`
-            "group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");
+            "group by function                                   \\
+                const date = task.due;                          \\
+                if (!date.moment) {                             \\
+                    return "Undated";                           \\
+                }                                               \\
+                if (date.moment.day() === 0) {                  \\
+                    {{! Put the Sunday group last: }}           \\
+                    return date.format("[%%][8][%%]dddd");      \\
+                }                                               \\
+                return date.format("[%%]d[%%]dddd");
+             =>
+            group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) { {{! Put the Sunday group last: }} return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd"); =>
+            group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");
             "
         `);
+        expect(query.grouping[0].instruction).toEqual(
+            'group by function const date = task.due; if (!date.moment) { return "Undated"; } if (date.moment.day() === 0) {  return date.format("[%%][8][%%]dddd"); } return date.format("[%%]d[%%]dddd");',
+        );
     });
 });
 
@@ -211,9 +273,13 @@ describe('explain sorters', () => {
     it('should explain "sort by" options', () => {
         const source = 'sort by due\nsort by priority()';
         const query = new Query(source);
+        // This shows the accidental presence of stray () characters after 'sort by priority'.
+        // They are not *required* in the explanation, but are retained here to help in user support
+        // when I ask users to supply an explanation of their query.
         expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
             "sort by due
-            sort by priority
+
+            sort by priority()
             "
         `);
     });
@@ -229,11 +295,20 @@ describe('explain sorters', () => {
         ];
         const query = makeQueryFromContinuationLines(lines);
 
-        // TODO Make this also show the original instruction, including continuations. See #2349.
         expect(explainer.explainSorters(query)).toMatchInlineSnapshot(`
-            "sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;
+            "sort by function                                                   \\
+                const priorities = [..."🟥🟧🟨🟩🟦"];                        \\
+                for (let i = 0; i < priorities.length; i++) {                  \\
+                    if (task.description.includes(priorities[i])) return i;    \\
+                }                                                              \\
+                return 999;
+             =>
+            sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;
             "
         `);
+        expect(query.sorting[0].instruction).toEqual(
+            'sort by function const priorities = [..."🟥🟧🟨🟩🟦"]; for (let i = 0; i < priorities.length; i++) { if (task.description.includes(priorities[i])) return i; } return 999;',
+        );
     });
 });
 

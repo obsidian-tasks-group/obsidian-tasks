@@ -105,9 +105,9 @@ export class Query implements IQuery {
             case this.limitRegexp.test(line):
                 this.parseLimit(line);
                 break;
-            case this.parseSortBy(line):
+            case this.parseSortBy(line, statement):
                 break;
-            case this.parseGroupBy(line):
+            case this.parseGroupBy(line, statement):
                 break;
             case this.hideOptionsRegexp.test(line):
                 this.parseHideOptions(line);
@@ -352,9 +352,10 @@ ${statement.explainStatement('    ')}
         }
     }
 
-    private parseSortBy(line: string): boolean {
+    private parseSortBy(line: string, statement: Statement): boolean {
         const sortingMaybe = FilterParser.parseSorter(line);
         if (sortingMaybe) {
+            sortingMaybe.setStatement(statement);
             this._sorting.push(sortingMaybe);
             return true;
         }
@@ -366,11 +367,13 @@ ${statement.explainStatement('    ')}
      * classes.
      *
      * @param line
+     * @param statement
      * @private
      */
-    private parseGroupBy(line: string): boolean {
+    private parseGroupBy(line: string, statement: Statement): boolean {
         const groupingMaybe = FilterParser.parseGrouper(line);
         if (groupingMaybe) {
+            groupingMaybe.setStatement(statement);
             this._grouping.push(groupingMaybe);
             return true;
         }
