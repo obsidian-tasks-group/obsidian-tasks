@@ -120,7 +120,8 @@
         },
         "tag": "#task"
       }
-    ]
+    ],
+    "v": 1
   },
   "fileContents": "# link_in_task_wikilink\n\n- [ ] #task Task in 'link_in_task_wikilink' [[link_in_task_wikilink]] [[multiple_headings]]\n",
   "filePath": "Test Data/link_in_task_wikilink.md",
