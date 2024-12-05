@@ -1,5 +1,6 @@
 import type { Task } from '../../Task/Task';
 import type { SearchInfo } from '../SearchInfo';
+import { Statement } from '../Statement';
 
 /**
  * A group-naming function, that takes a Task object and returns zero or more
@@ -25,7 +26,8 @@ export type GrouperFunction = (task: Task, searchInfo: SearchInfo) => string[];
  * @see {@link TaskGroups} for how to use {@link Grouper} objects to group tasks together.
  */
 export class Grouper {
-    public instruction: string;
+    /** _statement may be updated later with {@link setStatement} */
+    private _statement: Statement;
 
     /**
      * The type of grouper, for example 'tags' or 'due'.
@@ -46,9 +48,27 @@ export class Grouper {
     public readonly reverse: boolean;
 
     constructor(instruction: string, property: string, grouper: GrouperFunction, reverse: boolean) {
-        this.instruction = instruction;
+        this._statement = new Statement(instruction, instruction);
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;
+    }
+
+    /**
+     * Optionally record more detail about the source statement.
+     *
+     * In tests, we only care about the actual instruction being parsed and executed.
+     * However, in {@link Query}, we want the ability to show user more information.
+     */
+    public setStatement(statement: Statement) {
+        this._statement = statement;
+    }
+
+    public get statement(): Statement {
+        return this._statement;
+    }
+
+    public get instruction(): string {
+        return this._statement.anyPlaceholdersExpanded;
     }
 }
