@@ -1,6 +1,6 @@
 import type { CachedMetadata } from 'obsidian';
 import { logging } from '../../src/lib/logging';
-import { parseFileContent } from '../../src/Obsidian/FileParser';
+import { FileParser } from '../../src/Obsidian/FileParser';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
 
 export interface SimulatedFile {
@@ -18,7 +18,7 @@ export interface SimulatedFile {
 export function readTasksFromSimulatedFile(testData: SimulatedFile) {
     const logger = logging.getLogger('testCache');
     setCurrentCacheFile(testData);
-    return parseFileContent(
+    const fileParser = new FileParser(
         testData.filePath,
         testData.fileContents,
         testData.cachedMetadata.listItems!,
@@ -26,6 +26,7 @@ export function readTasksFromSimulatedFile(testData: SimulatedFile) {
         testData.cachedMetadata,
         errorReporter,
     );
+    return fileParser.parseFileContent();
 }
 
 function errorReporter() {
