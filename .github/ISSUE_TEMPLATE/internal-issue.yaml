@@ -9,6 +9,19 @@ body:
         This form is **only** for tracking topics by developers of the Tasks plugin and other contributors to the source code, like refactoring, dependency updates and similar.
         It is not intended for user questions, which should go in [Discussions/Q&A](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/q-a), please - and will be closed if added here.
 
+  - type: checkboxes
+    id: no-invalid-issues
+    attributes:
+      label: "⚠️ Check request is valid."
+      description: "This repository is not about the Obsidian app!"
+      options:
+        - label: "My request is about the [Tasks plugin for Obsidian](https://publish.obsidian.md/tasks/Introduction)."
+          required: true
+        - label: "I am a developer/programmer on the Tasks plugin."
+          required: true
+        - label: "I am recording required changes to the implementation details of the Tasks plugin."
+          required: true
+
   - type: textarea
     id: description
     attributes:
