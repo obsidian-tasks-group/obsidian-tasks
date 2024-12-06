@@ -139,15 +139,15 @@ export class FileParser {
                     }
 
                     this.line2ListItem.set(lineNumber, task);
+
+                    if (task !== null) {
+                        sectionIndex++;
+                        this.tasks.push(task);
+                    }
                 }
             } catch (e) {
                 this.errorReporter(e, this.filePath, listItem, line);
                 return sectionIndex;
-            }
-
-            if (task !== null) {
-                sectionIndex++;
-                this.tasks.push(task);
             }
         } else {
             const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
