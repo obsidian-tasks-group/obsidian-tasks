@@ -11,14 +11,21 @@ body:
         Also, please make sure you **read and understand the [guide for good bug reports](https://publish.obsidian.md/tasks/Support+and+Help/Report+a+Bug)**.
 
   - type: checkboxes
-    id: no-duplicate-issues
+    id: no-invalid-issues
     attributes:
-      label: "Please check that this issue hasn't been reported before."
-      description: "The **Label filters** may help make your search more focussed."
+      label: "⚠️ Check issue is valid."
+      description: "This repository is not about the Obsidian app!"
       options:
         - label: "My request is about the [Tasks plugin for Obsidian](https://publish.obsidian.md/tasks/Introduction)."
           required: true
-        - label: "I searched previous [Bug Reports](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+bug%22+sort%3Acomments-desc) didn't find any similar reports."
+
+  - type: checkboxes
+    id: no-duplicate-issues
+    attributes:
+      label: "⚠️ Check that this issue hasn't been reported before."
+      description: "The **Label filters** may help make your search more focussed."
+      options:
+        - label: "I searched previous [Tasks plugin Bug Reports](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+bug%22+sort%3Acomments-desc) didn't find any similar reports."
           required: true
 
   - type: textarea
