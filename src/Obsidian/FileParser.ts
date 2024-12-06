@@ -32,14 +32,7 @@ export class FileParser {
         this.errorReporter = errorReporter;
     }
 
-    public parseFileContent(
-        _filePath: string,
-        _fileContent: string,
-        _listItems: ListItemCache[] | undefined,
-        _logger: Logger,
-        _fileCache: CachedMetadata,
-        _errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
-    ) {
+    public parseFileContent() {
         return parseFileContent(
             this.filePath,
             this.fileContent,
