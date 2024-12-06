@@ -122,37 +122,36 @@ export class FileParser {
             const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
             this.line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
             return sectionIndex;
-        } else {
-            let task;
-            try {
-                task = Task.fromLine({
-                    line,
-                    taskLocation: taskLocation,
-                    fallbackDate: this.dateFromFileName.value,
-                });
+        }
+        let task;
+        try {
+            task = Task.fromLine({
+                line,
+                taskLocation: taskLocation,
+                fallbackDate: this.dateFromFileName.value,
+            });
+
+            if (task !== null) {
+                // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
+                // That is not a problem, as we never put a negative number in line2ListItem map, so parent will be null.
+                const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
+                if (parentListItem !== null) {
+                    task = new Task({
+                        ...task,
+                        parent: parentListItem,
+                    });
+                }
+
+                this.line2ListItem.set(lineNumber, task);
 
                 if (task !== null) {
-                    // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
-                    // That is not a problem, as we never put a negative number in line2ListItem map, so parent will be null.
-                    const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
-                    if (parentListItem !== null) {
-                        task = new Task({
-                            ...task,
-                            parent: parentListItem,
-                        });
-                    }
-
-                    this.line2ListItem.set(lineNumber, task);
-
-                    if (task !== null) {
-                        sectionIndex++;
-                        this.tasks.push(task);
-                    }
+                    sectionIndex++;
+                    this.tasks.push(task);
                 }
-            } catch (e) {
-                this.errorReporter(e, this.filePath, listItem, line);
-                return sectionIndex;
             }
+        } catch (e) {
+            this.errorReporter(e, this.filePath, listItem, line);
+            return sectionIndex;
         }
         return sectionIndex;
     }
