@@ -1,10 +1,7 @@
 import { TaskRegularExpressions } from './TaskRegularExpressions';
 
 export class ListItem {
-    /** The original line read from file.
-     *
-     * Will be empty if Task was created programmatically
-     * (for example, by Create or Edit Task, or in tests, including via {@link TaskBuilder}). */
+    // The original line read from file.
     public readonly originalMarkdown: string;
 
     public readonly parent: ListItem | null = null;
