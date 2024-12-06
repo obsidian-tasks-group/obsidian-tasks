@@ -151,7 +151,6 @@ export class FileParser {
             }
         } catch (e) {
             this.errorReporter(e, this.filePath, listItem, line);
-            return sectionIndex;
         }
         return sectionIndex;
     }
