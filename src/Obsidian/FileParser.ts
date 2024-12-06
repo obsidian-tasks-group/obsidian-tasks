@@ -131,10 +131,7 @@ export class FileParser {
                     tasks.push(task);
                 }
             } else {
-                const lineNumber = listItem.position.start.line;
-
                 const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
-
                 line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
             }
         }
