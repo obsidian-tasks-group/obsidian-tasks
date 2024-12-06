@@ -18,6 +18,7 @@ export class FileParser {
 
     private readonly fileLines: string[];
     private readonly tasks: Task[] = [];
+    private readonly dateFromFileName: Lazy<moment.Moment | null>;
 
     constructor(
         filePath: string,
@@ -34,6 +35,7 @@ export class FileParser {
         this.fileCache = fileCache;
         this.errorReporter = errorReporter;
         this.fileLines = this.fileContent.split('\n');
+        this.dateFromFileName = new Lazy(() => DateFallback.fromPath(this.filePath));
     }
 
     public parseFileContent() {
@@ -48,7 +50,7 @@ export class FileParser {
 
         // Lazily store date extracted from filename to avoid parsing more than needed
         // this.logger.debug(`FileParser.parseFileContent() reading ${this.filePath}`);
-        const dateFromFileName = new Lazy(() => DateFallback.fromPath(this.filePath));
+        const dateFromFileName = this.dateFromFileName;
 
         // We want to store section information with every task so
         // that we can use that when we post process the markdown
