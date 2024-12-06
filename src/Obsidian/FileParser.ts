@@ -15,7 +15,9 @@ export class FileParser {
     private readonly logger: Logger;
     private readonly fileCache: CachedMetadata;
     private readonly errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void;
+
     private readonly fileLines: string[];
+    private readonly tasks: Task[] = [];
 
     constructor(
         filePath: string,
@@ -35,7 +37,7 @@ export class FileParser {
     }
 
     public parseFileContent() {
-        const tasks: Task[] = [];
+        const tasks: Task[] = this.tasks;
         if (this.listItems === undefined) {
             // When called via Cache, this function would never be called or files without list items.
             // It is useful for tests to be act gracefully on sample Markdown files with no list items, however.
