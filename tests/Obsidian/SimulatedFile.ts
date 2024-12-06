@@ -1,6 +1,6 @@
 import type { CachedMetadata } from 'obsidian';
 import { logging } from '../../src/lib/logging';
-import { getTasksFromFileContent2 } from '../../src/Obsidian/Cache';
+import { getTasksFromFileContent2 } from '../../src/Obsidian/FileParser';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
 
 export interface SimulatedFile {
