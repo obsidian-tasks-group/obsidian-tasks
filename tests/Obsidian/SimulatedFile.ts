@@ -26,14 +26,7 @@ export function readTasksFromSimulatedFile(testData: SimulatedFile) {
         testData.cachedMetadata,
         errorReporter,
     );
-    return fileParser.parseFileContent(
-        testData.filePath,
-        testData.fileContents,
-        testData.cachedMetadata.listItems!,
-        logger,
-        testData.cachedMetadata,
-        errorReporter,
-    );
+    return fileParser.parseFileContent();
 }
 
 function errorReporter() {
