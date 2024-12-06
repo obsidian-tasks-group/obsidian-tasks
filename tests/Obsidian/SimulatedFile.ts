@@ -18,7 +18,7 @@ export interface SimulatedFile {
 export function readTasksFromSimulatedFile(testData: SimulatedFile) {
     const logger = logging.getLogger('testCache');
     setCurrentCacheFile(testData);
-    const fileParser = new FileParser();
+    const fileParser = new FileParser(testData.filePath);
     return fileParser.parseFileContent(
         testData.filePath,
         testData.fileContents,

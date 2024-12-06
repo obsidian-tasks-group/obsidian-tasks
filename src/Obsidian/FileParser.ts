@@ -9,15 +9,21 @@ import { TaskLocation } from '../Task/TaskLocation';
 import { Cache } from './Cache';
 
 export class FileParser {
+    private readonly filePath: string;
+
+    constructor(filePath: string) {
+        this.filePath = filePath;
+    }
+
     public parseFileContent(
-        filePath: string,
+        _filePath: string,
         fileContent: string,
         listItems: ListItemCache[] | undefined,
         logger: Logger,
         fileCache: CachedMetadata,
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
-        return parseFileContent(filePath, fileContent, listItems, logger, fileCache, errorReporter);
+        return parseFileContent(this.filePath, fileContent, listItems, logger, fileCache, errorReporter);
     }
 }
 
