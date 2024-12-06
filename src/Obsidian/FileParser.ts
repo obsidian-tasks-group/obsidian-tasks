@@ -11,7 +11,14 @@ import { Cache } from './Cache';
 export class FileParser {
     private readonly filePath: string;
 
-    constructor(filePath: string) {
+    constructor(
+        filePath: string,
+        _fileContent: string,
+        _listItems: ListItemCache[],
+        _logger: Logger,
+        _fileCache: CachedMetadata,
+        _errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+    ) {
         this.filePath = filePath;
     }
 
