@@ -8,6 +8,19 @@ import { ListItem } from '../Task/ListItem';
 import { TaskLocation } from '../Task/TaskLocation';
 import { Cache } from './Cache';
 
+export class FileParser {
+    public parseFileContent(
+        filePath: string,
+        fileContent: string,
+        listItems: ListItemCache[] | undefined,
+        logger: Logger,
+        fileCache: CachedMetadata,
+        errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+    ) {
+        return parseFileContent(filePath, fileContent, listItems, logger, fileCache, errorReporter);
+    }
+}
+
 export function parseFileContent(
     filePath: string,
     fileContent: string,
