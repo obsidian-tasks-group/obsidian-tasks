@@ -118,7 +118,10 @@ export class FileParser {
         lineNumber: number,
         sectionIndex: number,
     ) {
-        if (listItem.task !== undefined) {
+        if (listItem.task === undefined) {
+            const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
+            this.line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
+        } else {
             let task;
             try {
                 task = Task.fromLine({
@@ -149,9 +152,6 @@ export class FileParser {
                 this.errorReporter(e, this.filePath, listItem, line);
                 return sectionIndex;
             }
-        } else {
-            const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
-            this.line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
         }
         return sectionIndex;
     }
