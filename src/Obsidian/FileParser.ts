@@ -102,43 +102,54 @@ export class FileParser {
                 sectionIndex,
                 Cache.getPrecedingHeader(lineNumber, this.fileCache.headings),
             );
-            if (listItem.task !== undefined) {
-                let task;
-                try {
-                    task = Task.fromLine({
-                        line,
-                        taskLocation: taskLocation,
-                        fallbackDate: this.dateFromFileName.value,
-                    });
-
-                    if (task !== null) {
-                        // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
-                        // That is not a problem, as we never put a negative number in line2ListItem map, so parent will be null.
-                        const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
-                        if (parentListItem !== null) {
-                            task = new Task({
-                                ...task,
-                                parent: parentListItem,
-                            });
-                        }
-
-                        this.line2ListItem.set(lineNumber, task);
-                    }
-                } catch (e) {
-                    this.errorReporter(e, this.filePath, listItem, line);
-                    continue;
-                }
-
-                if (task !== null) {
-                    sectionIndex++;
-                    this.tasks.push(task);
-                }
-            } else {
-                const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
-                this.line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
-            }
+            sectionIndex = this.parseLine(listItem, line, taskLocation, lineNumber, sectionIndex);
         }
 
         return this.tasks;
+    }
+
+    private parseLine(
+        listItem: ListItemCache,
+        line: string,
+        taskLocation: TaskLocation,
+        lineNumber: number,
+        sectionIndex: number,
+    ) {
+        if (listItem.task !== undefined) {
+            let task;
+            try {
+                task = Task.fromLine({
+                    line,
+                    taskLocation: taskLocation,
+                    fallbackDate: this.dateFromFileName.value,
+                });
+
+                if (task !== null) {
+                    // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
+                    // That is not a problem, as we never put a negative number in line2ListItem map, so parent will be null.
+                    const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
+                    if (parentListItem !== null) {
+                        task = new Task({
+                            ...task,
+                            parent: parentListItem,
+                        });
+                    }
+
+                    this.line2ListItem.set(lineNumber, task);
+                }
+            } catch (e) {
+                this.errorReporter(e, this.filePath, listItem, line);
+                return sectionIndex;
+            }
+
+            if (task !== null) {
+                sectionIndex++;
+                this.tasks.push(task);
+            }
+        } else {
+            const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
+            this.line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
+        }
+        return sectionIndex;
     }
 }
