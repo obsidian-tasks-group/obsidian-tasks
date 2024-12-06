@@ -58,7 +58,6 @@ export class FileParser {
         // rendered lists.
         let currentSection: SectionCache | null = null;
         let sectionIndex = 0;
-        const line2ListItem: Map<number, ListItem> = this.line2ListItem;
         for (const listItem of this.listItems) {
             const lineNumber = listItem.position.start.line;
             if (lineNumber >= linesInFile) {
@@ -115,7 +114,7 @@ export class FileParser {
                     if (task !== null) {
                         // listItem.parent could be negative if the parent is not found (in other words, it is a root task).
                         // That is not a problem, as we never put a negative number in line2ListItem map, so parent will be null.
-                        const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
+                        const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
                         if (parentListItem !== null) {
                             task = new Task({
                                 ...task,
@@ -123,7 +122,7 @@ export class FileParser {
                             });
                         }
 
-                        line2ListItem.set(lineNumber, task);
+                        this.line2ListItem.set(lineNumber, task);
                     }
                 } catch (e) {
                     this.errorReporter(e, this.filePath, listItem, line);
@@ -135,8 +134,8 @@ export class FileParser {
                     this.tasks.push(task);
                 }
             } else {
-                const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
-                line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
+                const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
+                this.line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
             }
         }
 
