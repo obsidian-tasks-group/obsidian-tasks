@@ -45,27 +45,27 @@ export class FileParser {
 }
 
 export function parseFileContent(
-    filePath: string,
-    fileContent: string,
-    listItems: ListItemCache[] | undefined,
-    logger: Logger,
-    fileCache: CachedMetadata,
-    errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+    thisDotfilePath: string,
+    thisDotfileContent: string,
+    thisDotlistItems: ListItemCache[] | undefined,
+    thisDotlogger: Logger,
+    thisDotfileCache: CachedMetadata,
+    thisDoterrorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
 ) {
     const tasks: Task[] = [];
-    if (listItems === undefined) {
+    if (thisDotlistItems === undefined) {
         // When called via Cache, this function would never be called or files without list items.
         // It is useful for tests to be act gracefully on sample Markdown files with no list items, however.
         return tasks;
     }
 
-    const tasksFile = new TasksFile(filePath, fileCache);
-    const fileLines = fileContent.split('\n');
+    const tasksFile = new TasksFile(thisDotfilePath, thisDotfileCache);
+    const fileLines = thisDotfileContent.split('\n');
     const linesInFile = fileLines.length;
 
     // Lazily store date extracted from filename to avoid parsing more than needed
     // this.logger.debug(`getTasksFromFileContent() reading ${file.path}`);
-    const dateFromFileName = new Lazy(() => DateFallback.fromPath(filePath));
+    const dateFromFileName = new Lazy(() => DateFallback.fromPath(thisDotfilePath));
 
     // We want to store section information with every task so
     // that we can use that when we post process the markdown
@@ -73,7 +73,7 @@ export function parseFileContent(
     let currentSection: SectionCache | null = null;
     let sectionIndex = 0;
     const line2ListItem: Map<number, ListItem> = new Map();
-    for (const listItem of listItems) {
+    for (const listItem of thisDotlistItems) {
         const lineNumber = listItem.position.start.line;
         if (lineNumber >= linesInFile) {
             /*
@@ -87,15 +87,15 @@ export function parseFileContent(
                 when Obsidian started up, it got the new file content, but still had the old cached
                 data about locations of list items in the file.
              */
-            logger.debug(
-                `${filePath} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
+            thisDotlogger.debug(
+                `${thisDotfilePath} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
             );
             return tasks;
         }
         if (currentSection === null || currentSection.position.end.line < lineNumber) {
             // We went past the current section (or this is the first task).
             // Find the section that is relevant for this task and the following of the same section.
-            currentSection = Cache.getSection(lineNumber, fileCache.sections);
+            currentSection = Cache.getSection(lineNumber, thisDotfileCache.sections);
             sectionIndex = 0;
         }
 
@@ -106,7 +106,7 @@ export function parseFileContent(
 
         const line = fileLines[lineNumber];
         if (line === undefined) {
-            logger.debug(`${filePath}: line ${lineNumber} - ignoring 'undefined' line.`);
+            thisDotlogger.debug(`${thisDotfilePath}: line ${lineNumber} - ignoring 'undefined' line.`);
             continue;
         }
 
@@ -115,7 +115,7 @@ export function parseFileContent(
             lineNumber,
             currentSection.position.start.line,
             sectionIndex,
-            Cache.getPrecedingHeader(lineNumber, fileCache.headings),
+            Cache.getPrecedingHeader(lineNumber, thisDotfileCache.headings),
         );
         if (listItem.task !== undefined) {
             let task;
@@ -140,7 +140,7 @@ export function parseFileContent(
                     line2ListItem.set(lineNumber, task);
                 }
             } catch (e) {
-                errorReporter(e, filePath, listItem, line);
+                thisDoterrorReporter(e, thisDotfilePath, listItem, line);
                 continue;
             }
 
