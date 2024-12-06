@@ -87,7 +87,7 @@ export class TaskLocation {
     }
 
     public allFieldsExceptTasksFileForTesting() {
-        const { _tasksFile, ...rest } = Object.assign({}, this);
+        const { _tasksFile, ...rest } = { ...this };
         return rest;
     }
 }
