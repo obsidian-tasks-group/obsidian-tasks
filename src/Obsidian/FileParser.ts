@@ -15,6 +15,7 @@ export class FileParser {
     private readonly logger: Logger;
     private readonly fileCache: CachedMetadata;
     private readonly errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void;
+    private readonly fileLines: string[];
 
     constructor(
         filePath: string,
@@ -30,6 +31,7 @@ export class FileParser {
         this.logger = logger;
         this.fileCache = fileCache;
         this.errorReporter = errorReporter;
+        this.fileLines = this.fileContent.split('\n');
     }
 
     public parseFileContent() {
@@ -41,7 +43,7 @@ export class FileParser {
         }
 
         const tasksFile = new TasksFile(this.filePath, this.fileCache);
-        const fileLines = this.fileContent.split('\n');
+        const fileLines = this.fileLines;
         const linesInFile = fileLines.length;
 
         // Lazily store date extracted from filename to avoid parsing more than needed
