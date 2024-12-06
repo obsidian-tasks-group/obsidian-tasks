@@ -74,18 +74,19 @@ export function parseFileContent(
             continue;
         }
 
+        const taskLocation = new TaskLocation(
+            tasksFile,
+            lineNumber,
+            currentSection.position.start.line,
+            sectionIndex,
+            Cache.getPrecedingHeader(lineNumber, fileCache.headings),
+        );
         if (listItem.task !== undefined) {
             let task;
             try {
                 task = Task.fromLine({
                     line,
-                    taskLocation: new TaskLocation(
-                        tasksFile,
-                        lineNumber,
-                        currentSection.position.start.line,
-                        sectionIndex,
-                        Cache.getPrecedingHeader(lineNumber, fileCache.headings),
-                    ),
+                    taskLocation: taskLocation,
                     fallbackDate: dateFromFileName.value,
                 });
 
