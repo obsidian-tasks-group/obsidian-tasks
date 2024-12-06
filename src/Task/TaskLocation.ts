@@ -85,4 +85,9 @@ export class TaskLocation {
     public get hasKnownPath(): boolean {
         return this.path !== '';
     }
+
+    public allFieldsExceptTasksFileForTesting() {
+        const { _tasksFile, ...rest } = { ...this };
+        return rest;
+    }
 }
