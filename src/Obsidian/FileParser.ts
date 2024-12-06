@@ -37,11 +37,10 @@ export class FileParser {
     }
 
     public parseFileContent() {
-        const tasks: Task[] = this.tasks;
         if (this.listItems === undefined) {
             // When called via Cache, this function would never be called or files without list items.
             // It is useful for tests to be act gracefully on sample Markdown files with no list items, however.
-            return tasks;
+            return this.tasks;
         }
 
         const tasksFile = new TasksFile(this.filePath, this.fileCache);
@@ -74,7 +73,7 @@ export class FileParser {
                 this.logger.debug(
                     `${this.filePath} Obsidian gave us a line number ${lineNumber} past the end of the file. ${linesInFile}.`,
                 );
-                return tasks;
+                return this.tasks;
             }
             if (currentSection === null || currentSection.position.end.line < lineNumber) {
                 // We went past the current section (or this is the first task).
@@ -130,7 +129,7 @@ export class FileParser {
 
                 if (task !== null) {
                     sectionIndex++;
-                    tasks.push(task);
+                    this.tasks.push(task);
                 }
             } else {
                 const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
@@ -138,6 +137,6 @@ export class FileParser {
             }
         }
 
-        return tasks;
+        return this.tasks;
     }
 }
