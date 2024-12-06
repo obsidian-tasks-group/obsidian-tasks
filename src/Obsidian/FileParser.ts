@@ -8,7 +8,7 @@ import { ListItem } from '../Task/ListItem';
 import { TaskLocation } from '../Task/TaskLocation';
 import { Cache } from './Cache';
 
-export function getTasksFromFileContent2(
+export function parseFileContent(
     filePath: string,
     fileContent: string,
     listItems: ListItemCache[] | undefined,

@@ -10,7 +10,7 @@ import { getSettings } from '../Config/Settings';
 import { Lazy } from '../lib/Lazy';
 import { Logger, logging } from '../lib/logging';
 import type { TasksEvents } from './TasksEvents';
-import { getTasksFromFileContent2 } from './FileParser';
+import { parseFileContent } from './FileParser';
 
 export enum State {
     Cold = 'Cold',
@@ -307,7 +307,7 @@ export class Cache {
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
         logger: Logger,
     ): Task[] {
-        return getTasksFromFileContent2(filePath, fileContent, listItems, logger, fileCache, errorReporter);
+        return parseFileContent(filePath, fileContent, listItems, logger, fileCache, errorReporter);
     }
 
     private reportTaskParsingErrorToUser(e: any, filePath: string, listItem: ListItemCache, line: string) {
