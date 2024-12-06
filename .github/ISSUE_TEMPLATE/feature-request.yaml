@@ -10,9 +10,9 @@ body:
       options:
         - label: "My request is about the [Tasks plugin for Obsidian](https://publish.obsidian.md/tasks/Introduction)."
           required: true
-        - label: "I am only requesting a single feature in the Tasks plugin. Multiple changes should be split into individual requests, with links between them."
+        - label: "I am only requesting a single feature in the Tasks plugin.<br>Multiple changes should be split into individual requests, with links between them."
           required: true
-        - label: "I believe my requested feature will be generally applicable to other Tasks plugin users, not just me: it is not uniquely tied to my personal workflow."
+        - label: "I believe my requested feature will be generally applicable to other Tasks plugin users, not just me:<br>it is not uniquely tied to my personal workflow."
           required: true
 
   - type: checkboxes
