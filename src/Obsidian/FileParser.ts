@@ -33,13 +33,19 @@ export class FileParser {
     }
 
     public parseFileContent() {
+        const thisDotfilePath = this.filePath;
+        const thisDotfileContent = this.fileContent;
+        const thisDotlistItems = this.listItems;
+        const thisDotlogger = this.logger;
+        const thisDotfileCache = this.fileCache;
+        const thisDoterrorReporter = this.errorReporter;
         return parseFileContent(
-            this.filePath,
-            this.fileContent,
-            this.listItems,
-            this.logger,
-            this.fileCache,
-            this.errorReporter,
+            thisDotfilePath,
+            thisDotfileContent,
+            thisDotlistItems,
+            thisDotlogger,
+            thisDotfileCache,
+            thisDoterrorReporter,
         );
     }
 }
