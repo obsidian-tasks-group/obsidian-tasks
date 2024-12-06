@@ -121,6 +121,7 @@ export class FileParser {
         if (listItem.task === undefined) {
             const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
             this.line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
+            return sectionIndex;
         } else {
             let task;
             try {
