@@ -43,8 +43,7 @@ export class FileParser {
         }
 
         const tasksFile = new TasksFile(this.filePath, this.fileCache);
-        const fileLines = this.fileLines;
-        const linesInFile = fileLines.length;
+        const linesInFile = this.fileLines.length;
 
         // Lazily store date extracted from filename to avoid parsing more than needed
         // this.logger.debug(`getTasksFromFileContent() reading ${file.path}`);
@@ -87,7 +86,7 @@ export class FileParser {
                 continue;
             }
 
-            const line = fileLines[lineNumber];
+            const line = this.fileLines[lineNumber];
             if (line === undefined) {
                 this.logger.debug(`${this.filePath}: line ${lineNumber} - ignoring 'undefined' line.`);
                 continue;
@@ -136,7 +135,7 @@ export class FileParser {
 
                 const parentListItem: ListItem | null = line2ListItem.get(listItem.parent) ?? null;
 
-                line2ListItem.set(lineNumber, new ListItem(fileLines[lineNumber], parentListItem));
+                line2ListItem.set(lineNumber, new ListItem(this.fileLines[lineNumber], parentListItem));
             }
         }
 
