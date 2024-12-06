@@ -10,27 +10,44 @@ import { Cache } from './Cache';
 
 export class FileParser {
     private readonly filePath: string;
+    private readonly fileContent: string;
+    private readonly listItems: ListItemCache[];
+    private readonly logger: Logger;
+    private readonly fileCache: CachedMetadata;
+    private readonly errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void;
 
     constructor(
         filePath: string,
-        _fileContent: string,
-        _listItems: ListItemCache[],
-        _logger: Logger,
-        _fileCache: CachedMetadata,
-        _errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
-    ) {
-        this.filePath = filePath;
-    }
-
-    public parseFileContent(
-        _filePath: string,
         fileContent: string,
-        listItems: ListItemCache[] | undefined,
+        listItems: ListItemCache[],
         logger: Logger,
         fileCache: CachedMetadata,
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
-        return parseFileContent(this.filePath, fileContent, listItems, logger, fileCache, errorReporter);
+        this.filePath = filePath;
+        this.fileContent = fileContent;
+        this.listItems = listItems;
+        this.logger = logger;
+        this.fileCache = fileCache;
+        this.errorReporter = errorReporter;
+    }
+
+    public parseFileContent(
+        _filePath: string,
+        _fileContent: string,
+        _listItems: ListItemCache[] | undefined,
+        _logger: Logger,
+        _fileCache: CachedMetadata,
+        _errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+    ) {
+        return parseFileContent(
+            this.filePath,
+            this.fileContent,
+            this.listItems,
+            this.logger,
+            this.fileCache,
+            this.errorReporter,
+        );
     }
 }
 
