@@ -17,6 +17,7 @@ export class FileParser {
     private readonly errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void;
 
     private readonly fileLines: string[];
+    private line2ListItem: Map<number, ListItem> = new Map();
     private readonly tasks: Task[] = [];
     private readonly dateFromFileName: Lazy<moment.Moment | null>;
 
@@ -57,7 +58,7 @@ export class FileParser {
         // rendered lists.
         let currentSection: SectionCache | null = null;
         let sectionIndex = 0;
-        const line2ListItem: Map<number, ListItem> = new Map();
+        const line2ListItem: Map<number, ListItem> = this.line2ListItem;
         for (const listItem of this.listItems) {
             const lineNumber = listItem.position.start.line;
             if (lineNumber >= linesInFile) {
