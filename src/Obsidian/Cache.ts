@@ -307,7 +307,7 @@ export class Cache {
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
         logger: Logger,
     ): Task[] {
-        const fileParser = new FileParser(filePath);
+        const fileParser = new FileParser(filePath, fileContent, listItems, logger, fileCache, errorReporter);
         return fileParser.parseFileContent(filePath, fileContent, listItems, logger, fileCache, errorReporter);
     }
 
