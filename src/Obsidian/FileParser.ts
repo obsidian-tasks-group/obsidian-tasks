@@ -47,7 +47,7 @@ export class FileParser {
         const linesInFile = this.fileLines.length;
 
         // Lazily store date extracted from filename to avoid parsing more than needed
-        // this.logger.debug(`getTasksFromFileContent() reading ${file.path}`);
+        // this.logger.debug(`FileParser.parseFileContent() reading ${this.filePath}`);
         const dateFromFileName = new Lazy(() => DateFallback.fromPath(this.filePath));
 
         // We want to store section information with every task so
