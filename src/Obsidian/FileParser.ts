@@ -17,7 +17,7 @@ export class FileParser {
     private readonly errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void;
 
     private readonly fileLines: string[];
-    private line2ListItem: Map<number, ListItem> = new Map();
+    private readonly line2ListItem: Map<number, ListItem> = new Map();
     private readonly tasks: Task[] = [];
     private readonly dateFromFileName: Lazy<moment.Moment | null>;
 
