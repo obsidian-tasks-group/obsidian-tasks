@@ -41,6 +41,9 @@ export class FileParser {
         this.dateFromFileName = new Lazy(() => DateFallback.fromPath(this.filePath));
     }
 
+    /**
+     * **Warning**: This is designed to only be called **once per {@link FileParser} instance**.
+     */
     public parseFileContent() {
         if (this.listItems === undefined) {
             // When called via Cache, this function would never be called or files without list items.
