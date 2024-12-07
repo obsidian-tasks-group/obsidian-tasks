@@ -39,12 +39,14 @@ export interface QueryRendererParameters {
 export function findClosestParentTask(listItem: ListItem): Task | null {
     // Try to find the closest parent that is a task
     let closestParentTask = listItem.parent;
+
     while (closestParentTask !== null) {
         if (closestParentTask instanceof Task) {
             return closestParentTask as Task;
         }
         closestParentTask = closestParentTask.parent;
     }
+
     return null;
 }
 
