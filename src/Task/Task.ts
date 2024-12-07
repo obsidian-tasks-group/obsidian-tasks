@@ -493,6 +493,15 @@ export class Task extends ListItem {
     }
 
     /**
+     * Return whether this object is a {@link Task}.
+     *
+     * This is useful at run-time to discover whether a {@link ListItem} reference is in fact a {@link Task}.
+     */
+    get isTask() {
+        return true;
+    }
+
+    /**
      * Return whether the task is considered done.
      * @returns true if the status type is {@link StatusType.DONE}, {@link StatusType.CANCELLED} or {@link StatusType.NON_TASK}, and false otherwise.
      */
