@@ -16,7 +16,8 @@
     "test:dev": "jest --watch",
     "deploy:local": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1",
     "circular-deps-text": "madge --circular --extensions ts ./src > circular-deps.txt",
-    "circular-deps-image": "madge --circular --extensions ts ./src --image circular-deps.png"
+    "circular-deps-image": "madge --circular --extensions ts ./src --image circular-deps.png",
+    "code-docs": "typedoc --out code-docs \"src/**/*\""
   },
   "keywords": [
     "obsidian",
