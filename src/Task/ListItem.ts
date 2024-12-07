@@ -1,5 +1,5 @@
 import { TaskRegularExpressions } from './TaskRegularExpressions';
-import { Task } from './Task';
+import type { Task } from './Task';
 
 export class ListItem {
     // The original line read from file.
@@ -107,6 +107,8 @@ export function findClosestParentTask(listItem: ListItem): Task | null {
     let closestParentTask = listItem.parent;
 
     while (closestParentTask !== null) {
+        // Lazy load the Task class to avoid circular dependencies
+        const { Task } = require('./Task');
         if (closestParentTask instanceof Task) {
             return closestParentTask as Task;
         }
