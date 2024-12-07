@@ -28,23 +28,6 @@ export interface QueryRendererParameters {
     editTaskPencilClickHandler: EditButtonClickHandler;
 }
 
-/**
- * We want this function to be a method of ListItem but that causes a circular dependency
- * which makes the plugin fail to load in Obsidian.
- *
- * Note: the tests are in ListItem.test.ts
- *
- * @param listItem
- */
-export function findClosestParentTask(listItem: ListItem) {
-    // Try to find the closest parent that is a task
-    let closestParentTask = listItem.parent;
-    while (closestParentTask !== null && !(closestParentTask instanceof Task)) {
-        closestParentTask = closestParentTask.parent;
-    }
-    return closestParentTask;
-}
-
 export class QueryResultsRenderer {
     /**
      * The complete text in the instruction block, such as:
@@ -274,7 +257,7 @@ export class QueryResultsRenderer {
     }
 
     private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, listItems: ListItem[]) {
-        const closestParentTask = findClosestParentTask(listItem);
+        const closestParentTask = listItem.findClosestParentTask();
         if (!closestParentTask) {
             return false;
         }
@@ -349,7 +332,7 @@ export class QueryResultsRenderer {
         await this.textRenderer(
             listItem.description,
             span,
-            findClosestParentTask(listItem)?.path ?? '',
+            listItem.findClosestParentTask()?.path ?? '',
             this.obsidianComponent,
         );
 

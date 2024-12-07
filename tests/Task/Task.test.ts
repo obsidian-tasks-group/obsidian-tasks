@@ -67,6 +67,13 @@ describe('immutability', () => {
     });
 });
 
+describe('list item-related tests', () => {
+    it('should be a task', () => {
+        const task = fromLine({ line: '- [ ] A Task' });
+        expect(task.isTask).toBe(true);
+    });
+});
+
 describe('parsing', () => {
     it('parses a task from a line starting with hyphen', () => {
         // Arrange
