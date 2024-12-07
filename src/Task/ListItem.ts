@@ -1,4 +1,5 @@
 import { TaskRegularExpressions } from './TaskRegularExpressions';
+import type { Task } from './Task';
 
 export class ListItem {
     // The original line read from file.
@@ -44,6 +45,28 @@ export class ListItem {
      */
     get isRoot(): boolean {
         return this.parent === null;
+    }
+
+    /**
+     * Find to find the closest parent that is a {@link Task}
+     */
+    public findClosestParentTask(): Task | null {
+        let closestParentTask = this.parent;
+
+        while (closestParentTask !== null) {
+            // Lazy load the Task class to avoid circular dependencies
+            const { Task } = require('./Task');
+            if (closestParentTask instanceof Task) {
+                return closestParentTask as Task;
+            }
+            closestParentTask = closestParentTask.parent;
+        }
+
+        return null;
+    }
+
+    get isTask() {
+        return false;
     }
 
     /**
