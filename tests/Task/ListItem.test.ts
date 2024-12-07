@@ -80,6 +80,11 @@ describe('list item tests', () => {
         expect(child.isRoot).toEqual(false);
     });
 
+    it('should not be a task', () => {
+        const listItem = new ListItem('- list item', null);
+        expect(listItem.isTask).toBe(false);
+    });
+
     it.each([
         ['- ', true],
         ['* ', true],

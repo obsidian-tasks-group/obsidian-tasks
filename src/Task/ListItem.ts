@@ -46,6 +46,10 @@ export class ListItem {
         return this.parent === null;
     }
 
+    get isTask() {
+        return false;
+    }
+
     /**
      * Compare all the fields in another ListItem, to detect any differences from this one.
      *
