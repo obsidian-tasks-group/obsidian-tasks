@@ -5,7 +5,7 @@ import moment from 'moment/moment';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
-import { ListItem, findClosestParentTask } from '../../src/Task/ListItem';
+import { ListItem } from '../../src/Task/ListItem';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { createChildListItem } from './ListItemHelpers';
@@ -111,9 +111,9 @@ describe('related items', () => {
         const item = new ListItem('- item', null);
         const childOfItem = new ListItem('- child of item', item);
 
-        expect(findClosestParentTask(task)).toEqual(null);
-        expect(findClosestParentTask(item)).toEqual(null);
-        expect(findClosestParentTask(childOfItem)).toEqual(null);
+        expect(task.findClosestParentTask()).toEqual(null);
+        expect(item.findClosestParentTask()).toEqual(null);
+        expect(childOfItem.findClosestParentTask()).toEqual(null);
     });
 
     it('should find the closest parent task', () => {
@@ -121,9 +121,9 @@ describe('related items', () => {
         const child = new ListItem('- item', parentTask);
         const grandChild = new ListItem('- item', child);
 
-        expect(findClosestParentTask(parentTask)).toEqual(null);
-        expect(findClosestParentTask(child)).toEqual(parentTask);
-        expect(findClosestParentTask(grandChild)).toEqual(parentTask);
+        expect(parentTask.findClosestParentTask()).toEqual(null);
+        expect(child.findClosestParentTask()).toEqual(parentTask);
+        expect(grandChild.findClosestParentTask()).toEqual(parentTask);
     });
 });
 

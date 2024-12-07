@@ -47,6 +47,10 @@ export class ListItem {
         return this.parent === null;
     }
 
+    public findClosestParentTask(): Task | null {
+        return findClosestParentTask(this);
+    }
+
     get isTask() {
         return false;
     }
