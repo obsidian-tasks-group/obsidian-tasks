@@ -12,7 +12,7 @@ import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
-import { type ListItem, findClosestParentTask } from '../Task/ListItem';
+import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
@@ -257,7 +257,7 @@ export class QueryResultsRenderer {
     }
 
     private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, listItems: ListItem[]) {
-        const closestParentTask = findClosestParentTask(listItem);
+        const closestParentTask = listItem.findClosestParentTask();
         if (!closestParentTask) {
             return false;
         }
@@ -332,7 +332,7 @@ export class QueryResultsRenderer {
         await this.textRenderer(
             listItem.description,
             span,
-            findClosestParentTask(listItem)?.path ?? '',
+            listItem.findClosestParentTask()?.path ?? '',
             this.obsidianComponent,
         );
 
