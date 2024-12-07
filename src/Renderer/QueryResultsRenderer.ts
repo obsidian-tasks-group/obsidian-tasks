@@ -45,7 +45,7 @@ export function findClosestParentTask(listItem: ListItem) {
         }
         closestParentTask = closestParentTask.parent;
     }
-    return closestParentTask;
+    return null;
 }
 
 export class QueryResultsRenderer {
