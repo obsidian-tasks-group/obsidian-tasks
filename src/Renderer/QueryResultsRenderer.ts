@@ -12,7 +12,7 @@ import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
-import type { ListItem } from '../Task/ListItem';
+import { type ListItem, findClosestParentTask } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
@@ -26,28 +26,6 @@ export interface QueryRendererParameters {
     backlinksClickHandler: BacklinksEventHandler;
     backlinksMousedownHandler: BacklinksEventHandler;
     editTaskPencilClickHandler: EditButtonClickHandler;
-}
-
-/**
- * We want this function to be a method of ListItem but that causes a circular dependency
- * which makes the plugin fail to load in Obsidian.
- *
- * Note: the tests are in ListItem.test.ts
- *
- * @param listItem
- */
-export function findClosestParentTask(listItem: ListItem): Task | null {
-    // Try to find the closest parent that is a task
-    let closestParentTask = listItem.parent;
-
-    while (closestParentTask !== null) {
-        if (closestParentTask instanceof Task) {
-            return closestParentTask as Task;
-        }
-        closestParentTask = closestParentTask.parent;
-    }
-
-    return null;
 }
 
 export class QueryResultsRenderer {

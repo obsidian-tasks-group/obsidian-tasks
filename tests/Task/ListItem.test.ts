@@ -5,10 +5,9 @@ import moment from 'moment/moment';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
-import { ListItem } from '../../src/Task/ListItem';
+import { ListItem, findClosestParentTask } from '../../src/Task/ListItem';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
-import { findClosestParentTask } from '../../src/Renderer/QueryResultsRenderer';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;

@@ -1,4 +1,5 @@
 import { TaskRegularExpressions } from './TaskRegularExpressions';
+import { Task } from './Task';
 
 export class ListItem {
     // The original line read from file.
@@ -91,4 +92,26 @@ export class ListItem {
 
         return list1.every((item, index) => item.identicalTo(list2[index]));
     }
+}
+
+/**
+ * We want this function to be a method of ListItem but that causes a circular dependency
+ * which makes the plugin fail to load in Obsidian.
+ *
+ * Note: the tests are in ListItem.test.ts
+ *
+ * @param listItem
+ */
+export function findClosestParentTask(listItem: ListItem): Task | null {
+    // Try to find the closest parent that is a task
+    let closestParentTask = listItem.parent;
+
+    while (closestParentTask !== null) {
+        if (closestParentTask instanceof Task) {
+            return closestParentTask as Task;
+        }
+        closestParentTask = closestParentTask.parent;
+    }
+
+    return null;
 }
