@@ -46,6 +46,7 @@
   "typedocOptions": {
     "name": "Tasks plugin",
     "out": "code-docs",
+    "gitRevision": "main",
     "sourceLinkExternal": false
   }
 }
