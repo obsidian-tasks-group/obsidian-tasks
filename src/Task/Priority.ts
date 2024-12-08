@@ -6,7 +6,6 @@
  * - {@link priorityNameUsingNone} in {@link PriorityTools}
  * - {@link priorityNameUsingNormal} in {@link PriorityTools}
  *
- * @export
  * @enum {number}
  */
 export enum Priority {

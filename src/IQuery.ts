@@ -9,7 +9,6 @@ import type { QueryResult } from './Query/QueryResult';
  * engines can be created by using this and then updating the
  * Query Render class to handle the syntax for the new query engine.
  *
- * @export
  * @interface IQuery
  */
 export interface IQuery {

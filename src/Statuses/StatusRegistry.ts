@@ -15,7 +15,6 @@ import { StatusConfiguration, StatusType } from './StatusConfiguration';
  *   They should use `new StatusRegistry()`, which makes for simpler, more readable
  *   tests that can be run in parallel.
  *
- * @export
  * @class StatusRegistry
  */
 export class StatusRegistry {

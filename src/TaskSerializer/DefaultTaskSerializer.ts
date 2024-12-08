@@ -11,7 +11,6 @@ import type { TaskDetails, TaskSerializer } from '.';
 /* Interface describing the symbols that {@link DefaultTaskSerializer}
  * uses to serialize and deserialize tasks.
  *
- * @export
  * @interface DefaultTaskSerializerSymbols
  */
 export interface DefaultTaskSerializerSymbols {

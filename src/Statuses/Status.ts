@@ -11,7 +11,6 @@ import type { StatusCollectionEntry } from './StatusCollection';
  * @see StatusSettingsHelpers.ts
  * @see CustomStatusModal
  *
- * @export
  * @class Status
  */
 export class Status {
