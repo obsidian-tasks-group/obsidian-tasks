@@ -203,10 +203,8 @@ export class QueryResultsRenderer {
         const taskList = createAndAppendElement('ul', content);
 
         taskList.classList.add('contains-task-list', 'plugin-tasks-query-result');
-        const taskLayout = new TaskLayout(this.query.taskLayoutOptions);
-        taskList.classList.add(...taskLayout.generateHiddenClasses());
-        const queryLayout = new QueryLayout(this.query.queryLayoutOptions);
-        taskList.classList.add(...queryLayout.getHiddenClasses());
+        taskList.classList.add(...new TaskLayout(this.query.taskLayoutOptions).generateHiddenClasses());
+        taskList.classList.add(...new QueryLayout(this.query.queryLayoutOptions).getHiddenClasses());
 
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
