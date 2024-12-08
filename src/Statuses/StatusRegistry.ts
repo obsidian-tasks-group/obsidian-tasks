@@ -30,7 +30,6 @@ export class StatusRegistry {
      * Code in the plugin should use {@link getInstance} to use and modify the global
      * StatusRegistry.
      *
-     * @memberof StatusRegistry
      */
     public constructor() {
         this.addDefaultStatusTypes();
@@ -54,7 +53,6 @@ export class StatusRegistry {
      *
      * @readonly
      * @type {Status[]}
-     * @memberof StatusRegistry
      */
     public get registeredStatuses(): Status[] {
         return this._registeredStatuses.filter(({ symbol }) => symbol !== Status.EMPTY.symbol);
@@ -65,7 +63,6 @@ export class StatusRegistry {
      *
      * @static
      * @return {*}  {StatusRegistry}
-     * @memberof StatusRegistry
      */
     public static getInstance(): StatusRegistry {
         if (!StatusRegistry.instance) {
@@ -79,7 +76,6 @@ export class StatusRegistry {
      * Adds a new Status to the registry if not already registered.
      *
      * @param {StatusConfiguration | Status} status
-     * @memberof StatusRegistry
      */
     public add(status: StatusConfiguration | Status): void {
         if (!this.hasSymbol(status.symbol)) {
@@ -100,7 +96,6 @@ export class StatusRegistry {
      *
      * @param {string} symbol
      * @return {*}  {Status}
-     * @memberof StatusRegistry
      */
     public bySymbol(symbol: string): Status {
         if (this.hasSymbol(symbol)) {
@@ -121,7 +116,6 @@ export class StatusRegistry {
      *
      * @param {string} symbol
      * @return {*}  {Status}
-     * @memberof StatusRegistry
      */
     public bySymbolOrCreate(symbol: string): Status {
         if (this.hasSymbol(symbol)) {
@@ -136,7 +130,6 @@ export class StatusRegistry {
      *
      * @param {string} nameToFind
      * @return {*}  {Status}
-     * @memberof StatusRegistry
      */
     public byName(nameToFind: string): Status {
         if (this._registeredStatuses.filter(({ name }) => name === nameToFind).length > 0) {
@@ -149,7 +142,6 @@ export class StatusRegistry {
     /**
      * Resets the array of Status types to the default statuses.
      *
-     * @memberof StatusRegistry
      */
     public resetToDefaultStatuses(): void {
         this.clearStatuses();
@@ -168,7 +160,6 @@ export class StatusRegistry {
      * which status can come after it as a state transition.
      *
      * @return {*}  {Status}
-     * @memberof StatusRegistry
      * @see getNextStatusOrCreate
      */
     public getNextStatus(status: Status): Status {
@@ -186,7 +177,6 @@ export class StatusRegistry {
      * TODO status using the requested next symbol.
      *
      * @return {*}  {Status}
-     * @memberof StatusRegistry
      * @see getNextStatus
      */
     public getNextStatusOrCreate(status: Status): Status {
@@ -304,7 +294,6 @@ export class StatusRegistry {
      * @private
      * @param {string} symbolToFind
      * @return {*}  {Status}
-     * @memberof StatusRegistry
      */
     private getSymbol(symbolToFind: string): Status {
         return this._registeredStatuses.filter(({ symbol }) => symbol === symbolToFind)[0];
@@ -316,7 +305,6 @@ export class StatusRegistry {
      * @private
      * @param {string} symbolToFind
      * @return {*}  {boolean}
-     * @memberof StatusRegistry
      */
     private hasSymbol(symbolToFind: string): boolean {
         return (
@@ -330,7 +318,6 @@ export class StatusRegistry {
      * Checks the registry and adds the default status types.
      *
      * @private
-     * @memberof StatusRegistry
      */
     private addDefaultStatusTypes(): void {
         const defaultStatuses = [Status.TODO, Status.IN_PROGRESS, Status.DONE, Status.CANCELLED];

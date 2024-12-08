@@ -31,7 +31,6 @@ export class Feature {
      * @readonly
      * @static
      * @type {Feature[]}
-     * @memberof Feature
      */
     static get values(): Feature[] {
         let availableFeatures: Feature[] = [];
@@ -58,7 +57,6 @@ export class Feature {
      * @readonly
      * @static
      * @type {FeatureFlag}
-     * @memberof Feature
      */
     static get settingsFlags(): FeatureFlag {
         const featureFlags: { [internalName: string]: boolean } = {};

@@ -521,7 +521,6 @@ export class SettingsTab extends PluginSettingTab {
      *
      * @param {HTMLElement} containerEl
      * @param {SettingsTab} settings
-     * @memberof SettingsTab
      */
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         const { statusSettings } = getSettings();
@@ -575,7 +574,6 @@ export class SettingsTab extends PluginSettingTab {
      *
      * @param {HTMLElement} containerEl
      * @param {SettingsTab} settings
-     * @memberof SettingsTab
      */
     insertCustomTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         const { statusSettings } = getSettings();
