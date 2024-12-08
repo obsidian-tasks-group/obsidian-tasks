@@ -42,5 +42,18 @@
   ],
   "exclude": [
     "node_modules/*"
-  ]
+  ],
+  "typedocOptions": {
+    "name": "Tasks plugin",
+    "readme": "src/README-code-docs.md",
+    "excludePrivate": false,
+    "excludeProtected": false,
+    "excludeReferences": true,
+    "out": "code-docs",
+    "gitRevision": "main",
+    "plugin": [
+      "typedoc-plugin-mdn-links"
+    ],
+    "sourceLinkExternal": false
+  }
 }
