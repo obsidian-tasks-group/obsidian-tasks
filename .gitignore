@@ -20,6 +20,9 @@ yarn-error.log
 # jest coverage files
 /coverage
 
+# Machine-generated documentation of source code
+/code-docs/
+
 # Code analysis output files
 /circular-deps.png
 #/circular-deps.txt
