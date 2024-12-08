@@ -1,0 +1,5 @@
+I created this branch - add-typedoc-umlclass - as part of a bug report
+https://github.com/krisztianb/typedoc-umlclass/issues/37
+
+So do not delete it until that issue is no longer needed.
+And add a comment in that issue when/if I delete this branch.
