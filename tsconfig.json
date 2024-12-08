@@ -45,6 +45,7 @@
   ],
   "typedocOptions": {
     "name": "Tasks plugin",
+    "readme": "src/README-code-docs.md",
     "excludePrivate": false,
     "excludeProtected": false,
     "out": "code-docs",
