@@ -45,6 +45,8 @@
   ],
   "typedocOptions": {
     "name": "Tasks plugin",
+    "excludePrivate": false,
+    "excludeProtected": false,
     "out": "code-docs",
     "gitRevision": "main",
     "plugin": [
