@@ -52,8 +52,9 @@
     "out": "code-docs",
     "gitRevision": "main",
     "plugin": [
-      "typedoc-plugin-mdn-links"
+      "typedoc-plugin-mdn-links",
+      "typedoc-umlclass"
     ],
-    "sourceLinkExternal": false
+    "sourceLinkExternal": false,
   }
 }
