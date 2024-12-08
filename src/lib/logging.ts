@@ -82,7 +82,6 @@ export class LogManager extends EventEmitter2 {
      *
      * @param {LogOptions} options
      * @return {*}  {LogManager}
-     * @memberof LogManager
      */
     public configure(options: LogOptions): LogManager {
         this.options = Object.assign({}, this.options, options);
@@ -94,7 +93,6 @@ export class LogManager extends EventEmitter2 {
      *
      * @param {string} module
      * @return {*}  {Logger}
-     * @memberof LogManager
      */
     public getLogger(module: string): Logger {
         let minLevel = 'none';
@@ -114,7 +112,6 @@ export class LogManager extends EventEmitter2 {
      *
      * @param {(logEntry: LogEntry) => void} listener
      * @return {*}  {LogManager}
-     * @memberof LogManager
      */
     public onLogEntry(listener: (logEntry: LogEntry) => void): LogManager {
         this.on('log', listener);
@@ -127,7 +124,6 @@ export class LogManager extends EventEmitter2 {
      * Registers a logger that write to the console.
      *
      * @return {*}  {LogManager}
-     * @memberof LogManager
      */
     public registerConsoleLogger(): LogManager {
         if (this.consoleLoggerRegistered) return this;
@@ -196,7 +192,6 @@ export class Logger {
      * @param {EventEmitter2} logManager
      * @param {string} module
      * @param {string} minLevel
-     * @memberof Logger
      */
     constructor(logManager: EventEmitter2, module: string, minLevel: string) {
         this.logManager = logManager;

@@ -165,7 +165,6 @@ export class Task extends ListItem {
      * @param {TaskLocation} taskLocation - The location of the task line
      * @param {(Moment | null)} fallbackDate - The date to use as the scheduled date if no other date is set
      * @return {*}  {(Task | null)}
-     * @memberof Task
      * @see parseTaskSignifiers
      */
     public static fromLine({
@@ -280,7 +279,6 @@ export class Task extends ListItem {
      *
      * @note Output depends on {@link Settings.taskFormat}
      * @return {*}  {string}
-     * @memberof Task
      */
     public toString(): string {
         return getUserSelectedTaskFormat().taskSerializer.serialize(this);
@@ -291,7 +289,6 @@ export class Task extends ListItem {
      *
      * @note Output depends on {@link Settings.taskFormat}
      * @return {*}  {string}
-     * @memberof Task
      */
     public toFileLineString(): string {
         return `${this.indentation}${this.listMarker} [${this.status.symbol}] ${this.toString()}`;

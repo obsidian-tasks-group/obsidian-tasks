@@ -386,7 +386,6 @@ ${statement.explainStatement('    ')}
      * @private
      * @param {number} length
      * @return {*}  {string}
-     * @memberof Query
      */
     private generateQueryId(length: number): string {
         const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
