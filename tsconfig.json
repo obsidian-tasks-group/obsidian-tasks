@@ -47,6 +47,9 @@
     "name": "Tasks plugin",
     "out": "code-docs",
     "gitRevision": "main",
+    "plugin": [
+      "typedoc-plugin-mdn-links"
+    ],
     "sourceLinkExternal": false
   }
 }
