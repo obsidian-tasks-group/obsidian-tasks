@@ -14,7 +14,6 @@ export enum StatusType {
  * This is the object stored by the Obsidian configuration and used to create the status
  * objects for the session
  *
- * @export
  * @class StatusConfiguration
  */
 export class StatusConfiguration {

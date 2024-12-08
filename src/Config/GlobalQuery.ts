@@ -11,7 +11,6 @@ import type { OptionalTasksFile } from '../Scripting/TasksFile';
  *   They should use `new GlobalQuery()`, which makes simpler, more readable
  *   tests that can be run in parallel.
  *
- * @export
  * @class GlobalQuery
  */
 export class GlobalQuery {
