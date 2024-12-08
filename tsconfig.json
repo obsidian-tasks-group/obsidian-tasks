@@ -42,5 +42,9 @@
   ],
   "exclude": [
     "node_modules/*"
-  ]
+  ],
+  "typedocOptions": {
+    "name": "Tasks plugin",
+    "out": "code-docs"
+  }
 }
