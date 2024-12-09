@@ -1,0 +1,145 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "root_dirs_to_search": [
+        "Formats/",
+        "Filters/"
+      ]
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 4,
+        "offset": 54
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "query_list_property_in_custom_filter",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 6,
+            "offset": 94
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 56
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -8,
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 8,
+            "offset": 154
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 96
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 4,
+            "offset": 54
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 6,
+            "offset": 94
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 56
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 8,
+            "offset": 154
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 96
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 23,
+            "offset": 542
+          },
+          "start": {
+            "col": 0,
+            "line": 10,
+            "offset": 156
+          }
+        },
+        "type": "code"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 8,
+            "offset": 107
+          },
+          "start": {
+            "col": 6,
+            "line": 8,
+            "offset": 102
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\n---\n\n# query_list_property_in_custom_filter\n\n- [ ] #task Task in 'query_list_property_in_custom_filter'\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
+  "filePath": "Test Data/query_list_property_in_custom_filter.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}
