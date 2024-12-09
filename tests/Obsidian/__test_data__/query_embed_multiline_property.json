@@ -1,0 +1,157 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "task_instructions": "group by root\ngroup by folder\ngroup by filename\n"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 5,
+        "offset": 82
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "query_embed_multiline_property",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 6,
+            "offset": 115
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 83
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -8,
+        "position": {
+          "end": {
+            "col": 52,
+            "line": 8,
+            "offset": 169
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 117
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 5,
+            "offset": 82
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 6,
+            "offset": 115
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 83
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 52,
+            "line": 8,
+            "offset": 169
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 117
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 130,
+            "line": 10,
+            "offset": 301
+          },
+          "start": {
+            "col": 0,
+            "line": 10,
+            "offset": 171
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 17,
+            "offset": 414
+          },
+          "start": {
+            "col": 0,
+            "line": 12,
+            "offset": 303
+          }
+        },
+        "type": "code"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 8,
+            "offset": 128
+          },
+          "start": {
+            "col": 6,
+            "line": 8,
+            "offset": 123
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\ntask_instructions: |\n  group by root\n  group by folder\n  group by filename\n---\n# query_embed_multiline_property\n\n- [ ] #task Task in 'query_embed_multiline_property'\n\nOnce query.file.frontmatter is accessible, this will fail, as placeholders are applied after the query is split at line-endings...\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.frontmatter.task_instructions}}\n```\n",
+  "filePath": "Test Data/query_embed_multiline_property.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}

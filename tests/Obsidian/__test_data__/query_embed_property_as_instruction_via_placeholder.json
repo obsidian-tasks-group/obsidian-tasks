@@ -1,0 +1,142 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "task_instruction": "group by filename"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 43
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "query_embed_property_as_instruction_via_placeholder",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 53,
+            "line": 3,
+            "offset": 97
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 44
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -5,
+        "position": {
+          "end": {
+            "col": 73,
+            "line": 5,
+            "offset": 172
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 99
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 43
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 53,
+            "line": 3,
+            "offset": 97
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 44
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 73,
+            "line": 5,
+            "offset": 172
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 99
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 12,
+            "offset": 267
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 174
+          }
+        },
+        "type": "code"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 5,
+            "offset": 110
+          },
+          "start": {
+            "col": 6,
+            "line": 5,
+            "offset": 105
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\ntask_instruction: group by filename\n---\n# query_embed_property_as_instruction_via_placeholder\n\n- [ ] #task Task in 'query_embed_property_as_instruction_via_placeholder'\n\n```tasks\nexplain\nignore global query\n{{query.file.frontmatter.task_instruction}}\nlimit 10\n```\n",
+  "filePath": "Test Data/query_embed_property_as_instruction_via_placeholder.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}
