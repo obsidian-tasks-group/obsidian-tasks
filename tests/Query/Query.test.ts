@@ -772,10 +772,11 @@ Problem statement:
     });
 
     describe('properties in the query file', () => {
+        const file = getTasksFileFromMockData(query_using_properties);
+
         describe('via placeholders - used with query.file.property() - documented', () => {
             it('cannot currently use query.file.property() via placeholder', () => {
                 // Arrange
-                const file = getTasksFileFromMockData(query_using_properties);
                 expect(file.property('task_instruction')).toEqual('group by filename');
 
                 // Act
@@ -807,7 +808,6 @@ Problem statement:
         describe('via placeholders - used with query.file.frontmatter() - UNDOCUMENTED', () => {
             it('should access query.file.frontmatter via placeholder', () => {
                 // Arrange
-                const file = getTasksFileFromMockData(query_using_properties);
                 expect(file.frontmatter.task_instruction).toEqual('group by filename');
 
                 // Act
