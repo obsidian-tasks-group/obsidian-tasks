@@ -63,9 +63,9 @@
     "svelte-preprocess": "^5.0.4",
     "ts-jest": "^29.2.5",
     "tslib": "^2.5.2",
-    "typedoc": "^0.26.11",
+    "typedoc": "^0.27.3",
     "typedoc-plugin-mdn-links": "^4.0.4",
-    "typedoc-umlclass": "^0.10.0",
+    "typedoc-umlclass": "^0.10.1",
     "typescript": "^5.0.4"
   },
   "dependencies": {
