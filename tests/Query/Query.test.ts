@@ -852,9 +852,36 @@ group by filename
             });
         });
 
-        // TODO resources/sample_vaults/Tasks-Demo/Test Data/query_list_property_in_custom_filter.md
+        describe('via "filter by function"', () => {
+            it('should use a list property in a custom filter', () => {
+                // Act
+                const source = `
+filter by function \\
+    if (!query.file.hasProperty('root_dirs_to_search')) { \\
+        throw Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); \\
+    } \\
+    const roots = query.file.property('root_dirs_to_search'); \\
+    return roots.includes(task.file.root);
+`;
+                const query = new Query(source, file);
 
-        // TODO resources/sample_vaults/Tasks-Demo/Test Data/query_embed_multiline_property.md
+                // Assert
+                expect(file.frontmatter.root_dirs_to_search).toEqual(['Formats/', 'Filters/']);
+
+                expect(query.error).toBeUndefined();
+                expect(query.filters.length).toEqual(1);
+
+                function checkNumberOfMatches(expectedNumberOfMatches: number, path: string) {
+                    const queryResult = query.applyQueryToTasks([new TaskBuilder().path(path).build()]);
+                    expect(queryResult.totalTasksCount).toEqual(expectedNumberOfMatches);
+                }
+
+                checkNumberOfMatches(1, 'Formats/Some Sample file.md');
+                checkNumberOfMatches(1, 'Filters/Another file.md');
+                checkNumberOfMatches(0, 'filters/Another file.md'); // it is case-sensitive
+                checkNumberOfMatches(0, 'Somewhere/Place/Else.md');
+            });
+        });
     });
 });
 
