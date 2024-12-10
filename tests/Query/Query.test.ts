@@ -22,6 +22,8 @@ import { shouldSupportFiltering } from '../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
+import query_embed_property_as_instruction_via_placeholder from '../Obsidian/__test_data__/query_embed_property_as_instruction_via_placeholder.json';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
 window.moment = moment;
 
@@ -767,6 +769,64 @@ Problem statement:
             );
             expect(query.filters.length).toEqual(0);
         });
+    });
+
+    describe('properties in the query file', () => {
+        describe('via placeholders - used with query.file.property() - documented', () => {
+            it('cannot currently use query.file.property() via placeholder', () => {
+                // Arrange
+                const file = getTasksFileFromMockData(query_embed_property_as_instruction_via_placeholder);
+                expect(file.property('task_instruction')).toEqual('group by filename');
+
+                // Act
+                const source = "{{query.file.property('task_instruction')}}";
+                const query = new Query(source, file);
+
+                // Unfortunately, this placeholder FAILS because the mustache.js templating library
+                // does not support function calls.
+                // Which is a shame, because TasksFile.property() and TasksFile.hasProperty() have some nice logic
+                // for various special cases.
+                // TODO Consider switching to a different templating library that supports function calls.
+
+                // Assert
+                expect(query.error).not.toBeUndefined();
+                expect(query.error).toMatchInlineSnapshot(`
+                "There was an error expanding one or more placeholders.
+
+                The error message was:
+                    Unknown property: query.file.property('task_instruction')
+
+                The problem is in:
+                    {{query.file.property('task_instruction')}}"
+            `);
+            });
+        });
+
+        describe('via placeholders - used with query.file.frontmatter() - UNDOCUMENTED', () => {
+            it('should access query.file.frontmatter via placeholder', () => {
+                // Arrange
+                const file = getTasksFileFromMockData(query_embed_property_as_instruction_via_placeholder);
+                expect(file.frontmatter.task_instruction).toEqual('group by filename');
+
+                // Act
+                const source = '{{query.file.frontmatter.task_instruction}}';
+                const query = new Query(source, file);
+
+                // This use of query.file.frontmatter does work in placeholders, as it is raw data.
+                // So far, I have not documented use of query.file.frontmatter (and task.file.frontmatter)
+                // because there are a lot of special cases to understand in the handling of raw frontmatter data:
+                // it is too error-prone for the average user...
+
+                // Assert
+                expect(query.error).toBeUndefined();
+                expect(query.grouping.length).toEqual(1);
+                expect(query.grouping[0].instruction).toEqual('group by filename');
+            });
+        });
+
+        // TODO resources/sample_vaults/Tasks-Demo/Test Data/query_list_property_in_custom_filter.md
+
+        // TODO resources/sample_vaults/Tasks-Demo/Test Data/query_embed_multiline_property.md
     });
 });
 
