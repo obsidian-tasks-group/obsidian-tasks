@@ -776,9 +776,6 @@ Problem statement:
 
         describe('via placeholders - used with query.file.property() - documented', () => {
             it('cannot currently use query.file.property() via placeholder', () => {
-                // Arrange
-                expect(file.property('task_instruction')).toEqual('group by filename');
-
                 // Act
                 const source = "{{query.file.property('task_instruction')}}";
                 const query = new Query(source, file);
@@ -792,6 +789,8 @@ Problem statement:
                 //      with the result of the function call.
 
                 // Assert
+                expect(file.property('task_instruction')).toEqual('group by filename');
+
                 expect(query.error).not.toBeUndefined();
                 expect(query.error).toMatchInlineSnapshot(`
                 "There was an error expanding one or more placeholders.
@@ -807,9 +806,6 @@ Problem statement:
 
         describe('via placeholders - used with query.file.frontmatter() - UNDOCUMENTED', () => {
             it('should access query.file.frontmatter via placeholder', () => {
-                // Arrange
-                expect(file.frontmatter.task_instruction).toEqual('group by filename');
-
                 // Act
                 const source = '{{query.file.frontmatter.task_instruction}}';
                 const query = new Query(source, file);
@@ -820,6 +816,8 @@ Problem statement:
                 // it is too error-prone for the average user...
 
                 // Assert
+                expect(file.frontmatter.task_instruction).toEqual('group by filename');
+
                 expect(query.error).toBeUndefined();
                 expect(query.grouping.length).toEqual(1);
                 expect(query.grouping[0].instruction).toEqual('group by filename');
