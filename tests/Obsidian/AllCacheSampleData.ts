@@ -50,9 +50,7 @@ import no_heading from './__test_data__/no_heading.json';
 import no_yaml from './__test_data__/no_yaml.json';
 import non_tasks from './__test_data__/non_tasks.json';
 import one_task from './__test_data__/one_task.json';
-import query_embed_multiline_property from './__test_data__/query_embed_multiline_property.json';
-import query_embed_property_as_instruction_via_placeholder from './__test_data__/query_embed_property_as_instruction_via_placeholder.json';
-import query_list_property_in_custom_filter from './__test_data__/query_list_property_in_custom_filter.json';
+import query_using_properties from './__test_data__/query_using_properties.json';
 import yaml_1_alias from './__test_data__/yaml_1_alias.json';
 import yaml_2_aliases from './__test_data__/yaml_2_aliases.json';
 import yaml_all_property_types_empty from './__test_data__/yaml_all_property_types_empty.json';
@@ -122,9 +120,7 @@ export function allCacheSampleData() {
         no_yaml,
         non_tasks,
         one_task,
-        query_embed_multiline_property,
-        query_embed_property_as_instruction_via_placeholder,
-        query_list_property_in_custom_filter,
+        query_using_properties,
         yaml_1_alias,
         yaml_2_aliases,
         yaml_all_property_types_empty,

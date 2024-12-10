@@ -22,7 +22,7 @@ import { shouldSupportFiltering } from '../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
-import query_embed_property_as_instruction_via_placeholder from '../Obsidian/__test_data__/query_embed_property_as_instruction_via_placeholder.json';
+import query_using_properties from '../Obsidian/__test_data__/query_using_properties.json';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
 window.moment = moment;
@@ -775,7 +775,7 @@ Problem statement:
         describe('via placeholders - used with query.file.property() - documented', () => {
             it('cannot currently use query.file.property() via placeholder', () => {
                 // Arrange
-                const file = getTasksFileFromMockData(query_embed_property_as_instruction_via_placeholder);
+                const file = getTasksFileFromMockData(query_using_properties);
                 expect(file.property('task_instruction')).toEqual('group by filename');
 
                 // Act
@@ -805,7 +805,7 @@ Problem statement:
         describe('via placeholders - used with query.file.frontmatter() - UNDOCUMENTED', () => {
             it('should access query.file.frontmatter via placeholder', () => {
                 // Arrange
-                const file = getTasksFileFromMockData(query_embed_property_as_instruction_via_placeholder);
+                const file = getTasksFileFromMockData(query_using_properties);
                 expect(file.frontmatter.task_instruction).toEqual('group by filename');
 
                 // Act
