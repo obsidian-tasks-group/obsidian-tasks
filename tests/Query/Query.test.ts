@@ -787,6 +787,8 @@ Problem statement:
                 // Which is a shame, because TasksFile.property() and TasksFile.hasProperty() have some nice logic
                 // for various special cases.
                 // TODO Consider switching to a different templating library that supports function calls.
+                //      Or see if the Tasks placeholder code can detect function calls, and replace them somehow
+                //      with the result of the function call.
 
                 // Assert
                 expect(query.error).not.toBeUndefined();
