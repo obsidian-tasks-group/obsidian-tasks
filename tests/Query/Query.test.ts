@@ -823,7 +823,7 @@ Problem statement:
                 expect(query.grouping[0].instruction).toEqual('group by filename');
             });
 
-            it('should access multi-line property with query.file.frontmatter via placeholder', () => {
+            it('should not access multi-line property with query.file.frontmatter via placeholder', () => {
                 // Act
                 const source = '{{query.file.frontmatter.task_instructions}}';
                 const query = new Query(source, file);
