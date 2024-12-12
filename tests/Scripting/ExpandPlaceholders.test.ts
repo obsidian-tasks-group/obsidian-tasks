@@ -66,3 +66,17 @@ The problem is in:
         );
     });
 });
+
+describe('ExpandTemplate with functions', () => {
+    it('Simple property access', () => {
+        const output = expandPlaceholders('Hello, {{name}}!', { name: 'World' });
+        expect(output).toEqual('Hello, World!');
+    });
+
+    it('Valid function call', () => {
+        const output = expandPlaceholders("Result: {{math.square('4')}}", {
+            math: { square: (x: string) => parseInt(x) ** 2 },
+        });
+        expect(output).toEqual('Result: 16');
+    });
+});
