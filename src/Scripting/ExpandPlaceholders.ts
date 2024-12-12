@@ -39,7 +39,10 @@ export function expandPlaceholders(template: string, view: any): string {
         // Check if the function exists on the resolved object
         if (obj && typeof obj[functionName] === 'function') {
             // Parse the arguments from the placeholder, stripping quotes and trimming whitespace
-            const argValues = args.split(',').map((arg: any) => arg.trim().replace(/^['"]|['"]$/g, ''));
+            // ^['"]: Removes quotes from the start of the string.
+            // ['"]$: Removes quotes from the end of the string.
+            const argValues = args.split(',').map((arg: any) => arg.trim().replace(/^['"]/, '').replace(/['"]$/, ''));
+
             // Call the function with the parsed arguments and return the result
             return obj[functionName](...argValues);
         }
