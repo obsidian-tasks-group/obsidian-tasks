@@ -98,4 +98,11 @@ describe('ExpandTemplate with functions', () => {
         // Received: "Command: Running Hello"
         expect(output).toEqual("Command: Running Hello, 'world'");
     });
+
+    it('Whitespace in arguments', () => {
+        const output = expandPlaceholders("Path: {{file.get('   /my path/   ')}}", {
+            file: { get: (x: string) => x.trim() },
+        });
+        expect(output).toEqual('Path: /my path/');
+    });
 });
