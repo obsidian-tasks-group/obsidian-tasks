@@ -775,32 +775,17 @@ Problem statement:
         const file = getTasksFileFromMockData(query_using_properties);
 
         describe('via placeholders - used with query.file.property() - documented', () => {
-            it('cannot currently use query.file.property() via placeholder', () => {
+            it('should query.file.property() via placeholder', () => {
                 // Act
                 const source = "{{query.file.property('task_instruction')}}";
                 const query = new Query(source, file);
 
-                // Unfortunately, this placeholder FAILS because the mustache.js templating library
-                // does not support function calls.
-                // Which is a shame, because TasksFile.property() and TasksFile.hasProperty() have some nice logic
-                // for various special cases.
-                // TODO Consider switching to a different templating library that supports function calls.
-                //      Or see if the Tasks placeholder code can detect function calls, and replace them somehow
-                //      with the result of the function call.
-
                 // Assert
                 expect(file.property('task_instruction')).toEqual('group by filename');
 
-                expect(query.error).not.toBeUndefined();
-                expect(query.error).toMatchInlineSnapshot(`
-                "There was an error expanding one or more placeholders.
-
-                The error message was:
-                    Unknown property: query.file.property('task_instruction')
-
-                The problem is in:
-                    {{query.file.property('task_instruction')}}"
-            `);
+                expect(query.error).toBeUndefined();
+                expect(query.grouping.length).toEqual(1);
+                expect(query.grouping[0].instruction).toEqual('group by filename');
             });
         });
 
