@@ -30,7 +30,7 @@ export function expandPlaceholders(template: string, view: any): string {
     const evaluatedTemplate = template.replace(functionRegex, (_match, functionPath, args) => {
         const pathParts = functionPath.split('.');
         const functionName = pathParts.pop();
-        const obj = pathParts.reduce((acc: any, part: any) => acc && acc[part], view);
+        const obj = pathParts.reduce((acc: any, part: any) => acc?.[part], view);
 
         if (obj && typeof obj[functionName] === 'function') {
             const argValues = args.split(',').map((arg: any) => arg.trim().replace(/^['"]|['"]$/g, ''));
