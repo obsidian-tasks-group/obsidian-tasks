@@ -90,4 +90,12 @@ describe('ExpandTemplate with functions', () => {
         });
         expect(output).toEqual('Value: Result for arg');
     });
+
+    it.failing('Mixed quotes in arguments', () => {
+        const output = expandPlaceholders("Command: {{cmd.run('Hello, \\'world\\'')}}", {
+            cmd: { run: (x: string) => `Running ${x}` },
+        });
+        // Received: "Command: Running Hello"
+        expect(output).toEqual("Command: Running Hello, 'world'");
+    });
 });
