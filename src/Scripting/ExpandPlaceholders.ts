@@ -24,8 +24,25 @@ export function expandPlaceholders(template: string, view: any): string {
         return text;
     };
 
+    // Regex to detect function calls in placeholders
+    const functionRegex = /{{\s*([\w.]+)\(([^)]*)\)\s*}}/g;
+
+    const evaluatedTemplate = template.replace(functionRegex, (_match, functionPath, args) => {
+        const pathParts = functionPath.split('.');
+        const functionName = pathParts.pop();
+        const obj = pathParts.reduce((acc: any, part: any) => acc && acc[part], view);
+
+        if (obj && typeof obj[functionName] === 'function') {
+            const argValues = args.split(',').map((arg: any) => arg.trim().replace(/^['"]|['"]$/g, ''));
+            return obj[functionName](...argValues);
+        }
+
+        throw new Error(`Unknown property or invalid function: ${functionPath}`);
+    });
+
+    // Render the preprocessed template
     try {
-        return Mustache.render(template, proxyData(view));
+        return Mustache.render(evaluatedTemplate, proxyData(view));
     } catch (error) {
         let message = '';
         if (error instanceof Error) {
