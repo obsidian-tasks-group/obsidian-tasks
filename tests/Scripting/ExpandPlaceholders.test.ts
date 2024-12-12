@@ -79,4 +79,15 @@ describe('ExpandTemplate with functions', () => {
         });
         expect(output).toEqual('Result: 16');
     });
+
+    it('Nested object function access', () => {
+        const output = expandPlaceholders("Value: {{data.subData.func('arg')}}", {
+            data: {
+                subData: {
+                    func: (x: string) => `Result for ${x}`,
+                },
+            },
+        });
+        expect(output).toEqual('Value: Result for arg');
+    });
 });
