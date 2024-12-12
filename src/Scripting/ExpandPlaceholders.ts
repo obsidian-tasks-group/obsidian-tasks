@@ -27,16 +27,24 @@ export function expandPlaceholders(template: string, view: any): string {
     // Regex to detect function calls in placeholders
     const functionRegex = /{{\s*([\w.]+)\(([^)]*)\)\s*}}/g;
 
+    // Preprocess the template to evaluate any placeholders that involve function calls
     const evaluatedTemplate = template.replace(functionRegex, (_match, functionPath, args) => {
+        // Split the function path (e.g., "query.file.property") into parts
         const pathParts = functionPath.split('.');
+        // Extract the function name (last part of the path)
         const functionName = pathParts.pop();
+        // Traverse the view object to find the object containing the function
         const obj = pathParts.reduce((acc: any, part: any) => acc?.[part], view);
 
+        // Check if the function exists on the resolved object
         if (obj && typeof obj[functionName] === 'function') {
+            // Parse the arguments from the placeholder, stripping quotes and trimming whitespace
             const argValues = args.split(',').map((arg: any) => arg.trim().replace(/^['"]|['"]$/g, ''));
+            // Call the function with the parsed arguments and return the result
             return obj[functionName](...argValues);
         }
 
+        // Throw an error if the function does not exist or is invalid
         throw new Error(`Unknown property or invalid function: ${functionPath}`);
     });
 
