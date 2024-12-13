@@ -25,8 +25,10 @@ const FUNCTION_REGEX = new RegExp(
  * Expand any placeholder strings - {{....}} - in the given template, and return the result.
  *
  * The template implementation is currently provided by: [mustache.js](https://github.com/janl/mustache.js).
+ * This is augmented by also allowing the templates to contain function calls.
  *
- * @param template - A template string, typically with placeholders such as {{query.task.folder}}
+ * @param template - A template string, typically with placeholders such as {{query.task.folder}} or
+ *                  {{query.file.property('task_instruction')}}
  * @param view - The property values
  *
  * @throws Error
