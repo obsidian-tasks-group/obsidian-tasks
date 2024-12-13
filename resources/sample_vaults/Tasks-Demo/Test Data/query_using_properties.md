@@ -20,19 +20,19 @@ Read a Tasks instruction from a property in this file, and embed it in to any nu
 ```tasks
 explain
 ignore global query
-{{query.file.frontmatter.task_instruction}}
+{{query.file.property('task_instruction')}}
 limit 10
 ```
 
 ## Use a multi-line property: task_instructions
 
-Once query.file.frontmatter is accessible, this will fail, as placeholders are applied after the query is split at line-endings...
+This fails as the `task_instructions` contains multiple lines , and placeholders are applied after the query is split at line-endings...
 
 ```tasks
 ignore global query
 folder includes Test Data
 explain
-{{query.file.frontmatter.task_instructions}}
+{{query.file.property('task_instructions')}}
 ```
 
 ## Use a list property in a custom filter: root_dirs_to_search
