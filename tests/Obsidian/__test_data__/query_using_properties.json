@@ -77,12 +77,12 @@
           "end": {
             "col": 62,
             "line": 37,
-            "offset": 846
+            "offset": 852
           },
           "start": {
             "col": 0,
             "line": 37,
-            "offset": 784
+            "offset": 790
           }
         }
       }
@@ -214,9 +214,9 @@
       {
         "position": {
           "end": {
-            "col": 130,
+            "col": 136,
             "line": 28,
-            "offset": 669
+            "offset": 675
           },
           "start": {
             "col": 0,
@@ -231,12 +231,12 @@
           "end": {
             "col": 3,
             "line": 35,
-            "offset": 782
+            "offset": 788
           },
           "start": {
             "col": 0,
             "line": 30,
-            "offset": 671
+            "offset": 677
           }
         },
         "type": "code"
@@ -246,12 +246,12 @@
           "end": {
             "col": 62,
             "line": 37,
-            "offset": 846
+            "offset": 852
           },
           "start": {
             "col": 0,
             "line": 37,
-            "offset": 784
+            "offset": 790
           }
         },
         "type": "heading"
@@ -261,12 +261,12 @@
           "end": {
             "col": 3,
             "line": 52,
-            "offset": 1234
+            "offset": 1240
           },
           "start": {
             "col": 0,
             "line": 39,
-            "offset": 848
+            "offset": 854
           }
         },
         "type": "code"
@@ -290,7 +290,7 @@
       }
     ]
   },
-  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n  group by filename\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.frontmatter.task_instruction}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nOnce query.file.frontmatter is accessible, this will fail, as placeholders are applied after the query is split at line-endings...\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.frontmatter.task_instructions}}\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
+  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n  group by filename\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nThis fails as the `task_instructions` contains multiple lines , and placeholders are applied after the query is split at line-endings...\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
   "filePath": "Test Data/query_using_properties.md",
   "getAllTags": [
     "#task"
