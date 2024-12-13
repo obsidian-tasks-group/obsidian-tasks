@@ -72,6 +72,23 @@ The problem is in:
     }
 }
 
-function parseArgs(args: any) {
-    return args.split(',').map((arg: any) => arg.trim().replace(/^['"]/, '').replace(/['"]$/, ''));
+function parseArgs(args: string): string[] {
+    const argRegex = /'((?:\\'|[^'])*)'|"((?:\\"|[^"])*)"|([^,]+)/g;
+    const parsedArgs: string[] = [];
+    let match;
+
+    while ((match = argRegex.exec(args)) !== null) {
+        if (match[1] !== undefined) {
+            // Single-quoted argument
+            parsedArgs.push(match[1].replace(/\\'/g, "'"));
+        } else if (match[2] !== undefined) {
+            // Double-quoted argument
+            parsedArgs.push(match[2].replace(/\\"/g, '"'));
+        } else if (match[3] !== undefined) {
+            // Unquoted argument
+            parsedArgs.push(match[3].trim());
+        }
+    }
+
+    return parsedArgs;
 }
