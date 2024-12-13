@@ -39,9 +39,9 @@ export class QueryRenderer {
         // Issues with this first implementation of accessing properties in query files:
         //  - If the file was created in the last second or two, any CachedMetadata is probably
         //    not yet available, so empty.
-        //  - It does not list out for edits the properties, so if a property is edited,
+        //  - It does not listen out for edits the properties, so if a property is edited,
         //    the user needs to close and re-open the file.
-        //  - See lso a bunch of limitations listed in comments added to Query.test.ts tests of
+        //  - See any limitations listed in comments added to Query.test.ts tests of
         //    query.file to access properties in query instructions.
         const app = this.app;
         const filePath = context.sourcePath;
