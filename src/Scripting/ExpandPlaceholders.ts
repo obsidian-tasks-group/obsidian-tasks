@@ -107,7 +107,16 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
         // Extract the function name (last part of the path)
         const functionName = pathParts.pop();
         // Traverse the view object to find the object containing the function
-        const obj = pathParts.reduce((acc: any, part: any) => acc?.[part], view);
+        let obj = view; // Start at the root of the view object
+        for (const part of pathParts) {
+            if (obj == null) {
+                // Stop traversal if obj is null or undefined
+                obj = undefined;
+                break;
+            }
+            obj = obj[part]; // Move to the next level of the object
+        }
+        // At the end of the loop, obj contains the resolved value or undefined if any part of the path was invalid
 
         // Check if the function exists on the resolved object
         if (obj && typeof obj[functionName] === 'function') {
