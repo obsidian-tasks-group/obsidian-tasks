@@ -3,6 +3,24 @@ import proxyData from 'mustache-validator';
 
 // https://github.com/janl/mustache.js
 
+// Regex to detect function calls in placeholders
+const FUNCTION_REGEX = new RegExp(
+    [
+        // Match opening double curly braces with optional whitespace
+        '{{\\s*',
+
+        // Match and capture the function path (e.g., "object.path.toFunction")
+        '([\\w.]+)',
+
+        // Match the opening parenthesis and capture arguments inside
+        '\\(([^)]*)\\)',
+
+        // Match optional whitespace followed by closing double curly braces
+        '\\s*}}',
+    ].join(''), // Combine all parts without additional separators
+    'g', // Global flag to match all instances in the template
+);
+
 /**
  * Expand any placeholder strings - {{....}} - in the given template, and return the result.
  *
@@ -24,26 +42,8 @@ export function expandPlaceholders(template: string, view: any): string {
         return text;
     };
 
-    // Regex to detect function calls in placeholders
-    const functionRegex = new RegExp(
-        [
-            // Match opening double curly braces with optional whitespace
-            '{{\\s*',
-
-            // Match and capture the function path (e.g., "object.path.toFunction")
-            '([\\w.]+)',
-
-            // Match the opening parenthesis and capture arguments inside
-            '\\(([^)]*)\\)',
-
-            // Match optional whitespace followed by closing double curly braces
-            '\\s*}}',
-        ].join(''), // Combine all parts without additional separators
-        'g', // Global flag to match all instances in the template
-    );
-
     // Preprocess the template to evaluate any placeholders that involve function calls
-    const evaluatedTemplate = template.replace(functionRegex, (_match, functionPath, args) => {
+    const evaluatedTemplate = template.replace(FUNCTION_REGEX, (_match, functionPath, args) => {
         // Split the function path (e.g., "query.file.property") into parts
         const pathParts = functionPath.split('.');
         // Extract the function name (last part of the path)
