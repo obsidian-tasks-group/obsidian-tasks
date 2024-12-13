@@ -104,8 +104,10 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
     return template.replace(FUNCTION_REGEX, (_match, functionPath, args) => {
         // Split the function path (e.g., "query.file.property") into parts
         const pathParts = functionPath.split('.');
+
         // Extract the function name (last part of the path)
         const functionName = pathParts.pop();
+
         // Traverse the view object to find the object containing the function
         let obj = view; // Start at the root of the view object
         for (const part of pathParts) {
