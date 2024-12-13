@@ -105,4 +105,91 @@ describe('ExpandTemplate with functions', () => {
         });
         expect(output).toEqual('Path: /my path/');
     });
+
+    // Section 4: Error Handling
+
+    it('Non-existent function', () => {
+        expect(() => {
+            expandPlaceholders('Call: {{invalid.func()}}', { invalid: {} });
+        }).toThrow('Unknown property or invalid function: invalid.func');
+    });
+
+    it('Missing arguments', () => {
+        const output = expandPlaceholders('Result: {{calc.add()}}', {
+            calc: { add: () => 'No args' },
+        });
+        expect(output).toEqual('Result: No args');
+    });
+
+    it('Function that throws an error', () => {
+        expect(() => {
+            expandPlaceholders('Test: {{bug.trigger()}}', {
+                bug: {
+                    trigger: () => {
+                        throw new Error('Something broke');
+                    },
+                },
+            });
+        }).toThrow('Something broke');
+    });
+
+    // Section 5: Edge Cases
+
+    it('Empty template', () => {
+        const output = expandPlaceholders('', { key: 'value' });
+        expect(output).toEqual('');
+    });
+
+    it('Function with no arguments', () => {
+        const output = expandPlaceholders('Version: {{sys.getVersion()}}', {
+            sys: { getVersion: () => '1.0.0' },
+        });
+        expect(output).toEqual('Version: 1.0.0');
+    });
+
+    it('Template with no placeholders', () => {
+        const output = expandPlaceholders('Static text.', { anything: 'irrelevant' });
+        expect(output).toEqual('Static text.');
+    });
+
+    it('Reserved characters', () => {
+        const output = expandPlaceholders("Escape: {{text.replace('&')}}", {
+            text: { replace: (x: string) => x.replace('&', '&amp;') },
+        });
+        expect(output).toEqual('Escape: &amp;');
+    });
+
+    // Section 6: Multiple Placeholders
+
+    it('Mixed property and function calls', () => {
+        const output = expandPlaceholders("{{user.name}}: {{math.square('5')}}", {
+            user: { name: 'Alice' },
+            math: { square: (x: string) => parseInt(x) ** 2 },
+        });
+        expect(output).toEqual('Alice: 25');
+    });
+
+    // Section 7: Unsupported Syntax
+
+    it.failing('Unsupported Mustache syntax', () => {
+        expect(() => {
+            expandPlaceholders("Invalid: {{unsupported.func['key']}}", {
+                unsupported: { func: { key: 'value' } },
+            });
+        }).toThrow('Unknown property or invalid function: unsupported.func');
+    });
+
+    // Section 8: Security and Performance
+
+    it.failing('Prototype pollution prevention', () => {
+        expect(() => {
+            expandPlaceholders('{{__proto__.polluted}}', {});
+        }).toThrow('Unknown property or invalid function');
+    });
+
+    it('Large templates', () => {
+        const largeTemplate = Array(1001).fill('{{value}}').join(' and ');
+        const output = expandPlaceholders(largeTemplate, { value: 'test' });
+        expect(output).toEqual('test and '.repeat(1000).trim() + ' test');
+    });
 });
