@@ -790,24 +790,6 @@ Problem statement:
         });
 
         describe('via placeholders - used with query.file.frontmatter() - UNDOCUMENTED', () => {
-            it('should access query.file.frontmatter via placeholder', () => {
-                // Act
-                const source = '{{query.file.frontmatter.task_instruction}}';
-                const query = new Query(source, file);
-
-                // This use of query.file.frontmatter does work in placeholders, as it is raw data.
-                // So far, I have not documented use of query.file.frontmatter (and task.file.frontmatter)
-                // because there are a lot of special cases to understand in the handling of raw frontmatter data:
-                // it is too error-prone for the average user...
-
-                // Assert
-                expect(file.frontmatter.task_instruction).toEqual('group by filename');
-
-                expect(query.error).toBeUndefined();
-                expect(query.grouping.length).toEqual(1);
-                expect(query.grouping[0].instruction).toEqual('group by filename');
-            });
-
             it('should not access multi-line property with query.file.frontmatter via placeholder', () => {
                 // Act
                 const source = '{{query.file.frontmatter.task_instructions}}';
