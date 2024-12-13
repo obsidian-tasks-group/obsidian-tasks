@@ -41,7 +41,7 @@ export function expandPlaceholders(template: string, view: any): string {
             // Parse the arguments from the placeholder, stripping quotes and trimming whitespace
             // ^['"]: Removes quotes from the start of the string.
             // ['"]$: Removes quotes from the end of the string.
-            const argValues = args.split(',').map((arg: any) => arg.trim().replace(/^['"]/, '').replace(/['"]$/, ''));
+            const argValues = parseArgs(args);
 
             // Call the function with the parsed arguments and return the result
             return obj[functionName](...argValues);
@@ -70,4 +70,8 @@ The problem is in:
     ${template}`;
         throw Error(message);
     }
+}
+
+function parseArgs(args: any) {
+    return args.split(',').map((arg: any) => arg.trim().replace(/^['"]/, '').replace(/['"]$/, ''));
 }
