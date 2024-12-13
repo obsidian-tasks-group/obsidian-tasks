@@ -193,10 +193,16 @@ The problem is in:
 
     // Section 8: Security and Performance
 
-    it.failing('Prototype pollution prevention', () => {
+    it('Prototype pollution prevention', () => {
         expect(() => {
             expandPlaceholders('{{__proto__.polluted}}', {});
-        }).toThrow('Unknown property or invalid function');
+        }).toThrow(`There was an error expanding one or more placeholders.
+
+The error message was:
+    Unknown property: __proto__.polluted
+
+The problem is in:
+    {{__proto__.polluted}}`);
     });
 
     it('Large templates', () => {
