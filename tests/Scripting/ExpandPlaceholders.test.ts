@@ -68,6 +68,8 @@ The problem is in:
 });
 
 describe('ExpandTemplate with functions', () => {
+    // 1. Basic Functionality
+
     it('Simple property access', () => {
         const output = expandPlaceholders('Hello, {{name}}!', { name: 'World' });
         expect(output).toEqual('Hello, World!');
@@ -80,6 +82,8 @@ describe('ExpandTemplate with functions', () => {
         expect(output).toEqual('Result: 16');
     });
 
+    // 2. Complex Nested Paths
+
     it('Nested object function access', () => {
         const output = expandPlaceholders("Value: {{data.subData.func('arg')}}", {
             data: {
@@ -90,6 +94,8 @@ describe('ExpandTemplate with functions', () => {
         });
         expect(output).toEqual('Value: Result for arg');
     });
+
+    // 3. Special Characters in Arguments
 
     it.failing('Mixed quotes in arguments', () => {
         const output = expandPlaceholders("Command: {{cmd.run('Hello, \\'world\\'')}}", {
