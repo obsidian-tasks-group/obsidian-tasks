@@ -97,11 +97,10 @@ describe('ExpandTemplate with functions', () => {
 
     // 3. Special Characters in Arguments
 
-    it.failing('Mixed quotes in arguments', () => {
+    it('Mixed quotes in arguments', () => {
         const output = expandPlaceholders("Command: {{cmd.run('Hello, \\'world\\'')}}", {
             cmd: { run: (x: string) => `Running ${x}` },
         });
-        // Received: "Command: Running Hello"
         expect(output).toEqual("Command: Running Hello, 'world'");
     });
 
