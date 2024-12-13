@@ -775,7 +775,7 @@ Problem statement:
         const file = getTasksFileFromMockData(query_using_properties);
 
         describe('via placeholders', () => {
-            it('should query.file.property() via placeholder', () => {
+            it('should use query.file.property() via placeholder', () => {
                 // Act
                 const source = "{{query.file.property('task_instruction')}}";
                 const query = new Query(source, file);
