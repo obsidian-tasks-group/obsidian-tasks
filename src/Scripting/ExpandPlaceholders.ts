@@ -25,7 +25,22 @@ export function expandPlaceholders(template: string, view: any): string {
     };
 
     // Regex to detect function calls in placeholders
-    const functionRegex = /{{\s*([\w.]+)\(([^)]*)\)\s*}}/g;
+    const functionRegex = new RegExp(
+        [
+            // Match opening double curly braces with optional whitespace
+            '{{\\s*',
+
+            // Match and capture the function path (e.g., "object.path.toFunction")
+            '([\\w.]+)',
+
+            // Match the opening parenthesis and capture arguments inside
+            '\\(([^)]*)\\)',
+
+            // Match optional whitespace followed by closing double curly braces
+            '\\s*}}',
+        ].join(''), // Combine all parts without additional separators
+        'g', // Global flag to match all instances in the template
+    );
 
     // Preprocess the template to evaluate any placeholders that involve function calls
     const evaluatedTemplate = template.replace(functionRegex, (_match, functionPath, args) => {
