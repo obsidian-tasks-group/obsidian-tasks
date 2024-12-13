@@ -177,12 +177,18 @@ describe('ExpandTemplate with functions', () => {
 
     // Section 7: Unsupported Syntax
 
-    it.failing('Unsupported Mustache syntax', () => {
+    it('Unsupported Mustache syntax', () => {
         expect(() => {
             expandPlaceholders("Invalid: {{unsupported.func['key']}}", {
                 unsupported: { func: { key: 'value' } },
             });
-        }).toThrow('Unknown property or invalid function: unsupported.func');
+        }).toThrow(`There was an error expanding one or more placeholders.
+
+The error message was:
+    Unknown property: unsupported.func['key']
+
+The problem is in:
+    Invalid: {{unsupported.func['key']}}`);
     });
 
     // Section 8: Security and Performance
