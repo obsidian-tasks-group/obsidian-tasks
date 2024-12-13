@@ -108,7 +108,17 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
         // Extract the function name (last part of the path)
         const functionName = pathParts.pop();
 
-        // Traverse the view object to find the object containing the function
+        // Traverse the view object to find the object containing the function.
+        //
+        // This is needed because JavaScript/TypeScript doesn’t provide a direct way
+        // to access view['query']['file']['property'] based on such a dynamic path.
+        //
+        // So we need the loop to "walk" through the view object step by step,
+        // accessing each level as specified by the pathParts.
+        //
+        // Also, if any part of the path is missing (e.g., view.query.file exists,
+        // but view.query.file.property does not), the loop ensures the traversal
+        // stops early, and obj becomes undefined instead of throwing an error.
         let obj = view; // Start at the root of the view object
         for (const part of pathParts) {
             if (obj == null) {
