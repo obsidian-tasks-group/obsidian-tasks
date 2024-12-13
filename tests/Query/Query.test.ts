@@ -787,12 +787,10 @@ Problem statement:
                 expect(query.grouping.length).toEqual(1);
                 expect(query.grouping[0].instruction).toEqual('group by filename');
             });
-        });
 
-        describe('via placeholders - used with query.file.frontmatter() - UNDOCUMENTED', () => {
-            it('should not access multi-line property with query.file.frontmatter via placeholder', () => {
+            it('cannot yet access multi-line property with query.file.property via placeholder', () => {
                 // Act
-                const source = '{{query.file.frontmatter.task_instructions}}';
+                const source = '{{query.file.property("task_instructions")}}';
                 const query = new Query(source, file);
 
                 // This fails because the placeholder is replaced by multiple lines.
@@ -809,7 +807,7 @@ group by filename
                 expect(query.error).toMatchInlineSnapshot(`
                     "do not understand query
                     Problem statement:
-                        {{query.file.frontmatter.task_instructions}} =>
+                        {{query.file.property("task_instructions")}} =>
                         group by root
                     group by folder
                     group by filename
