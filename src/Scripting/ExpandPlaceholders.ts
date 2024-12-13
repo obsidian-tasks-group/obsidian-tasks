@@ -72,25 +72,25 @@ The problem is in:
     }
 }
 
+const ARGUMENTS_REGEX = new RegExp(
+    [
+        // Match single-quoted arguments
+        "'((?:\\\\'|[^'])*)'",
+
+        // Match double-quoted arguments
+        '"((?:\\\\"|[^"])*)"',
+
+        // Match unquoted arguments (non-commas)
+        '([^,]+)',
+    ].join('|'), // Combine all parts with OR (|)
+    'g', // Global flag for multiple matches
+);
+
 function parseArgs(args: string): string[] {
-    const argRegex = new RegExp(
-        [
-            // Match single-quoted arguments
-            "'((?:\\\\'|[^'])*)'",
-
-            // Match double-quoted arguments
-            '"((?:\\\\"|[^"])*)"',
-
-            // Match unquoted arguments (non-commas)
-            '([^,]+)',
-        ].join('|'), // Combine all parts with OR (|)
-        'g', // Global flag for multiple matches
-    );
-
     const parsedArgs: string[] = [];
     let match;
 
-    while ((match = argRegex.exec(args)) !== null) {
+    while ((match = ARGUMENTS_REGEX.exec(args)) !== null) {
         if (match[1] !== undefined) {
             // Single-quoted argument
             parsedArgs.push(match[1].replace(/\\'/g, "'"));
