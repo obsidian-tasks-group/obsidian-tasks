@@ -3,24 +3,6 @@ import proxyData from 'mustache-validator';
 
 // https://github.com/janl/mustache.js
 
-// Regex to detect function calls in placeholders
-const FUNCTION_REGEX = new RegExp(
-    [
-        // Match opening double curly braces with optional whitespace
-        '{{\\s*',
-
-        // Match and capture the function path (e.g., "object.path.toFunction")
-        '([\\w.]+)',
-
-        // Match the opening parenthesis and capture arguments inside
-        '\\(([^)]*)\\)',
-
-        // Match optional whitespace followed by closing double curly braces
-        '\\s*}}',
-    ].join(''), // Combine all parts without additional separators
-    'g', // Global flag to match all instances in the template
-);
-
 /**
  * Expand any placeholder strings - {{....}} - in the given template, and return the result.
  *
@@ -101,6 +83,24 @@ function parseArgs(args: string): string[] {
 
     return parsedArgs;
 }
+
+// Regex to detect function calls in placeholders
+const FUNCTION_REGEX = new RegExp(
+    [
+        // Match opening double curly braces with optional whitespace
+        '{{\\s*',
+
+        // Match and capture the function path (e.g., "object.path.toFunction")
+        '([\\w.]+)',
+
+        // Match the opening parenthesis and capture arguments inside
+        '\\(([^)]*)\\)',
+
+        // Match optional whitespace followed by closing double curly braces
+        '\\s*}}',
+    ].join(''), // Combine all parts without additional separators
+    'g', // Global flag to match all instances in the template
+);
 
 function evaluateAnyFunctionCalls(template: string, view: any) {
     return template.replace(FUNCTION_REGEX, (_match, functionPath, args) => {
