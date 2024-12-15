@@ -69,7 +69,7 @@ This section describes the *how*...
 
 ### Tags
 
-#### Show files from tasks with a specific tag in frontmatter
+#### Show tasks from files with a specific tag in frontmatter
 
 ```javascript
 filter by function task.file.property('tags').includes('#sample-tag')
