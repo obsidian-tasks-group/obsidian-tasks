@@ -786,6 +786,16 @@ Problem statement:
                 expect(query.error).toBeUndefined();
                 expect(query.grouping.length).toEqual(1);
                 expect(query.grouping[0].instruction).toEqual('group by filename');
+
+                expect(query.explainQuery()).toMatchInlineSnapshot(`
+                    "No filters supplied. All tasks will match the query.
+
+                    {{query.file.property('task_instruction')}} =>
+                    group by filename
+
+                    No sorting instructions supplied.
+                    "
+                `);
             });
 
             it('cannot yet access multi-line property with query.file.property via placeholder', () => {
@@ -814,6 +824,19 @@ group by filename
 
                     "
                 `);
+
+                expect(query.explainQuery()).toMatchInlineSnapshot(`
+                    "Query has an error:
+                    do not understand query
+                    Problem statement:
+                        {{query.file.property("task_instructions")}} =>
+                        group by root
+                    group by folder
+                    group by filename
+
+
+                    "
+                `);
             });
         });
 
@@ -835,6 +858,22 @@ filter by function \\
 
                 expect(query.error).toBeUndefined();
                 expect(query.filters.length).toEqual(1);
+
+                expect(query.explainQuery()).toMatchInlineSnapshot(`
+                    "filter by function \\
+                        if (!query.file.hasProperty('root_dirs_to_search')) { \\
+                            throw Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); \\
+                        } \\
+                        const roots = query.file.property('root_dirs_to_search'); \\
+                        return roots.includes(task.file.root);
+                     =>
+                    filter by function if (!query.file.hasProperty('root_dirs_to_search')) { throw Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); } const roots = query.file.property('root_dirs_to_search'); return roots.includes(task.file.root);
+
+                    No grouping instructions supplied.
+
+                    No sorting instructions supplied.
+                    "
+                `);
 
                 function checkNumberOfMatches(expectedNumberOfMatches: number, path: string) {
                     const queryResult = query.applyQueryToTasks([new TaskBuilder().path(path).build()]);
