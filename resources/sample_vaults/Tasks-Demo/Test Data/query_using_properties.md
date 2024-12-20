@@ -26,13 +26,14 @@ limit 10
 
 ## Use a multi-line property: task_instructions
 
-This fails as the `task_instructions` contains multiple lines , and placeholders are applied after the query is split at line-endings...
+Read multiple Tasks instructions from a property in this file, and embed them in to any number of queries in the file:
 
 ```tasks
 ignore global query
 folder includes Test Data
 explain
 {{query.file.property('task_instructions')}}
+limit 10
 ```
 
 ## Use a list property in a custom filter: root_dirs_to_search

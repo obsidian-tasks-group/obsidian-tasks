@@ -76,13 +76,13 @@
         "position": {
           "end": {
             "col": 62,
-            "line": 37,
-            "offset": 852
+            "line": 38,
+            "offset": 843
           },
           "start": {
             "col": 0,
-            "line": 37,
-            "offset": 790
+            "line": 38,
+            "offset": 781
           }
         }
       }
@@ -214,9 +214,9 @@
       {
         "position": {
           "end": {
-            "col": 136,
+            "col": 118,
             "line": 28,
-            "offset": 675
+            "offset": 657
           },
           "start": {
             "col": 0,
@@ -230,13 +230,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 35,
-            "offset": 788
+            "line": 36,
+            "offset": 779
           },
           "start": {
             "col": 0,
             "line": 30,
-            "offset": 677
+            "offset": 659
           }
         },
         "type": "code"
@@ -245,13 +245,13 @@
         "position": {
           "end": {
             "col": 62,
-            "line": 37,
-            "offset": 852
+            "line": 38,
+            "offset": 843
           },
           "start": {
             "col": 0,
-            "line": 37,
-            "offset": 790
+            "line": 38,
+            "offset": 781
           }
         },
         "type": "heading"
@@ -260,13 +260,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 52,
-            "offset": 1240
+            "line": 53,
+            "offset": 1231
           },
           "start": {
             "col": 0,
-            "line": 39,
-            "offset": 854
+            "line": 40,
+            "offset": 845
           }
         },
         "type": "code"
@@ -290,7 +290,7 @@
       }
     ]
   },
-  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n  group by filename\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nThis fails as the `task_instructions` contains multiple lines , and placeholders are applied after the query is split at line-endings...\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
+  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n  group by filename\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nRead multiple Tasks instructions from a property in this file, and embed them in to any number of queries in the file:\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\nlimit 10\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
   "filePath": "Test Data/query_using_properties.md",
   "getAllTags": [
     "#task"
