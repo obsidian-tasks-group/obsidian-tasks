@@ -61,12 +61,11 @@ export class Query implements IQuery {
 
         const anyPlaceholdersExpanded: Statement[] = [];
         for (const statement of anyContinuationLinesRemoved) {
-            this.expandPlaceholders(statement, tasksFile);
+            const expandedStatements = this.expandPlaceholders(statement, tasksFile);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
             }
-            const expandedStatements = [statement];
             for (const expandedStatement of expandedStatements) {
                 anyPlaceholdersExpanded.push(expandedStatement);
             }
@@ -136,7 +135,7 @@ export class Query implements IQuery {
         return `[${this.source.split('\n').join(' ; ')}]`;
     }
 
-    private expandPlaceholders(statement: Statement, tasksFile: OptionalTasksFile) {
+    private expandPlaceholders(statement: Statement, tasksFile: OptionalTasksFile): Statement[] {
         const source = statement.anyContinuationLinesRemoved;
         if (source.includes('{{') && source.includes('}}')) {
             if (this.tasksFile === undefined) {
@@ -144,7 +143,7 @@ export class Query implements IQuery {
 but no file path has been supplied, so cannot expand placeholder values.
 The query is:
 ${source}`;
-                return source;
+                return [statement];
             }
         }
 
@@ -161,13 +160,13 @@ ${source}`;
                 } else {
                     this._error = 'Internal error. expandPlaceholders() threw something other than Error.';
                 }
-                return source;
+                return [statement];
             }
         }
 
         // Save any expanded text back in to the statement:
         statement.recordExpandedPlaceholders(expandedSource);
-        return expandedSource;
+        return [statement];
     }
 
     /**
