@@ -64,7 +64,9 @@ export class Query implements IQuery {
                 // There was an error expanding placeholders.
                 return;
             }
+        }
 
+        for (const statement of anyContinuationLinesRemoved) {
             try {
                 this.parseLine(statement);
             } catch (e) {
