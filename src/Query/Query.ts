@@ -58,7 +58,7 @@ export class Query implements IQuery {
         this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
         const anyContinuationLinesRemoved = continueLines(source);
-        anyContinuationLinesRemoved.forEach((statement: Statement) => {
+        for (const statement of anyContinuationLinesRemoved) {
             this.expandPlaceholders(statement, tasksFile);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
@@ -78,7 +78,7 @@ export class Query implements IQuery {
                 this.setError(message, statement);
                 return;
             }
-        });
+        }
     }
 
     public get filePath(): string | undefined {
