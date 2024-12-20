@@ -41,8 +41,6 @@ export class QueryRenderer {
         //    not yet available, so empty.
         //  - It does not listen out for edits the properties, so if a property is edited,
         //    the user needs to close and re-open the file.
-        //  - Only single-line properties work. Multiple-line properties give an error message
-        //    'do not understand query'.
         const app = this.app;
         const filePath = context.sourcePath;
         const tFile = app.vault.getAbstractFileByPath(filePath);
