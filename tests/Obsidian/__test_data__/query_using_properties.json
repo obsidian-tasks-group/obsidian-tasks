@@ -1,0 +1,300 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "root_dirs_to_search": [
+        "Formats/",
+        "Filters/"
+      ],
+      "task_instruction": "group by filename",
+      "task_instructions": "group by root\ngroup by folder\ngroup by filename\n"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 9,
+        "offset": 165
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "query_using_properties",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 24,
+            "line": 11,
+            "offset": 191
+          },
+          "start": {
+            "col": 0,
+            "line": 11,
+            "offset": 167
+          }
+        }
+      },
+      {
+        "heading": "Use a one-line property: task_instruction",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 15,
+            "offset": 283
+          },
+          "start": {
+            "col": 0,
+            "line": 15,
+            "offset": 239
+          }
+        }
+      },
+      {
+        "heading": "Use a multi-line property: task_instructions",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 47,
+            "line": 26,
+            "offset": 537
+          },
+          "start": {
+            "col": 0,
+            "line": 26,
+            "offset": 490
+          }
+        }
+      },
+      {
+        "heading": "Use a list property in a custom filter: root_dirs_to_search",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 62,
+            "line": 37,
+            "offset": 852
+          },
+          "start": {
+            "col": 0,
+            "line": 37,
+            "offset": 790
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -13,
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 13,
+            "offset": 237
+          },
+          "start": {
+            "col": 0,
+            "line": 13,
+            "offset": 193
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 9,
+            "offset": 165
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 24,
+            "line": 11,
+            "offset": 191
+          },
+          "start": {
+            "col": 0,
+            "line": 11,
+            "offset": 167
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 13,
+            "offset": 237
+          },
+          "start": {
+            "col": 0,
+            "line": 13,
+            "offset": 193
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 15,
+            "offset": 283
+          },
+          "start": {
+            "col": 0,
+            "line": 15,
+            "offset": 239
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 108,
+            "line": 17,
+            "offset": 393
+          },
+          "start": {
+            "col": 0,
+            "line": 17,
+            "offset": 285
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 24,
+            "offset": 488
+          },
+          "start": {
+            "col": 0,
+            "line": 19,
+            "offset": 395
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 47,
+            "line": 26,
+            "offset": 537
+          },
+          "start": {
+            "col": 0,
+            "line": 26,
+            "offset": 490
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 136,
+            "line": 28,
+            "offset": 675
+          },
+          "start": {
+            "col": 0,
+            "line": 28,
+            "offset": 539
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 35,
+            "offset": 788
+          },
+          "start": {
+            "col": 0,
+            "line": 30,
+            "offset": 677
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 62,
+            "line": 37,
+            "offset": 852
+          },
+          "start": {
+            "col": 0,
+            "line": 37,
+            "offset": 790
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 52,
+            "offset": 1240
+          },
+          "start": {
+            "col": 0,
+            "line": 39,
+            "offset": 854
+          }
+        },
+        "type": "code"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 13,
+            "offset": 204
+          },
+          "start": {
+            "col": 6,
+            "line": 13,
+            "offset": 199
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n  group by filename\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nThis fails as the `task_instructions` contains multiple lines , and placeholders are applied after the query is split at line-endings...\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
+  "filePath": "Test Data/query_using_properties.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.7.7",
+  "parseFrontMatterTags": null
+}
