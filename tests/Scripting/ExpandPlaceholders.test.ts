@@ -66,3 +66,147 @@ The problem is in:
         );
     });
 });
+
+describe('ExpandTemplate with functions', () => {
+    describe('Basic Functionality', () => {
+        it('Simple property access', () => {
+            const output = expandPlaceholders('Hello, {{name}}!', { name: 'World' });
+            expect(output).toEqual('Hello, World!');
+        });
+
+        it('Valid function call', () => {
+            const output = expandPlaceholders("Result: {{math.square('4')}}", {
+                math: { square: (x: string) => parseInt(x) ** 2 },
+            });
+            expect(output).toEqual('Result: 16');
+        });
+    });
+
+    describe('Complex Nested Paths', () => {
+        it('Nested object function access', () => {
+            const output = expandPlaceholders("Value: {{data.subData.func('arg')}}", {
+                data: {
+                    subData: {
+                        func: (x: string) => `Result for ${x}`,
+                    },
+                },
+            });
+            expect(output).toEqual('Value: Result for arg');
+        });
+    });
+
+    describe('Special Characters in Arguments', () => {
+        it('Mixed quotes in arguments', () => {
+            const output = expandPlaceholders("Command: {{cmd.run('Hello, \\'world\\'')}}", {
+                cmd: { run: (x: string) => `Running ${x}` },
+            });
+            expect(output).toEqual("Command: Running Hello, 'world'");
+        });
+
+        it('Whitespace in arguments', () => {
+            const output = expandPlaceholders("Path: {{file.get('   /my path/   ')}}", {
+                file: { get: (x: string) => x.trim() },
+            });
+            expect(output).toEqual('Path: /my path/');
+        });
+    });
+
+    describe('Error Handling', () => {
+        it('Non-existent function', () => {
+            expect(() => {
+                expandPlaceholders('Call: {{invalid.func()}}', { invalid: {} });
+            }).toThrow('Unknown property or invalid function: invalid.func');
+        });
+
+        it('Missing arguments', () => {
+            const output = expandPlaceholders('Result: {{calc.add()}}', {
+                calc: { add: () => 'No args' },
+            });
+            expect(output).toEqual('Result: No args');
+        });
+
+        it('Function that throws an error', () => {
+            expect(() => {
+                expandPlaceholders('Test: {{bug.trigger()}}', {
+                    bug: {
+                        trigger: () => {
+                            throw new Error('Something broke');
+                        },
+                    },
+                });
+            }).toThrow('Something broke');
+        });
+    });
+
+    describe('Edge Cases', () => {
+        it('Empty template', () => {
+            const output = expandPlaceholders('', { key: 'value' });
+            expect(output).toEqual('');
+        });
+
+        it('Function with no arguments', () => {
+            const output = expandPlaceholders('Version: {{sys.getVersion()}}', {
+                sys: { getVersion: () => '1.0.0' },
+            });
+            expect(output).toEqual('Version: 1.0.0');
+        });
+
+        it('Template with no placeholders', () => {
+            const output = expandPlaceholders('Static text.', { anything: 'irrelevant' });
+            expect(output).toEqual('Static text.');
+        });
+
+        it('Reserved characters', () => {
+            const output = expandPlaceholders("Escape: {{text.replace('&')}}", {
+                text: { replace: (x: string) => x.replace('&', '&amp;') },
+            });
+            expect(output).toEqual('Escape: &amp;');
+        });
+    });
+
+    describe('Multiple Placeholders', () => {
+        it('Mixed property and function calls', () => {
+            const output = expandPlaceholders("{{user.name}}: {{math.square('5')}}", {
+                user: { name: 'Alice' },
+                math: { square: (x: string) => parseInt(x) ** 2 },
+            });
+            expect(output).toEqual('Alice: 25');
+        });
+    });
+
+    describe('Unsupported Syntax', () => {
+        it('Unsupported Mustache syntax', () => {
+            expect(() => {
+                expandPlaceholders("Invalid: {{unsupported.func['key']}}", {
+                    unsupported: { func: { key: 'value' } },
+                });
+            }).toThrow(`There was an error expanding one or more placeholders.
+
+The error message was:
+    Unknown property: unsupported.func['key']
+
+The problem is in:
+    Invalid: {{unsupported.func['key']}}`);
+        });
+    });
+
+    describe('Security and Performance', () => {
+        it('Prototype pollution prevention', () => {
+            expect(() => {
+                expandPlaceholders('{{__proto__.polluted}}', {});
+            }).toThrow(`There was an error expanding one or more placeholders.
+
+The error message was:
+    Unknown property: __proto__.polluted
+
+The problem is in:
+    {{__proto__.polluted}}`);
+        });
+
+        it('Large templates', () => {
+            const largeTemplate = Array(1001).fill('{{value}}').join(' and ');
+            const output = expandPlaceholders(largeTemplate, { value: 'test' });
+            expect(output).toEqual('test and '.repeat(1000).trim() + ' test');
+        });
+    });
+});
