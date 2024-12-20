@@ -770,7 +770,7 @@ Problem statement:
             expect(query.filters.length).toEqual(0);
         });
 
-        it.failing('should report first error if non-existent placeholder used', () => {
+        it('should report first error if non-existent placeholder used', () => {
             // Arrange
             const source = `{{error 1}}
 {{error 2}}
@@ -782,7 +782,6 @@ Problem statement:
 
             // Assert
             expect(query).not.toBeValid();
-            // TODO This currently shows 'error 3', not 'error 1'
             expect(query.error).toEqual(
                 'There was an error expanding one or more placeholders.\n' +
                     '\n' +
