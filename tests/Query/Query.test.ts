@@ -822,14 +822,10 @@ Problem statement:
                 `);
             });
 
-            it('cannot yet access multi-line property with query.file.property via placeholder', () => {
+            it('should access multi-line property with query.file.property via placeholder', () => {
                 // Act
                 const source = '{{query.file.property("task_instructions")}}';
                 const query = new Query(source, file);
-
-                // This fails because the placeholder is replaced by multiple lines.
-                // And currently, the parsing of lines in Query assumes that placeholders
-                // do not increase the number of lines in the query.
 
                 // Assert
                 expect(file.frontmatter.task_instructions).toEqual(`group by root
@@ -837,28 +833,20 @@ group by folder
 group by filename
 `);
 
-                expect(query.error).not.toBeUndefined();
-                expect(query.error).toMatchInlineSnapshot(`
-                    "do not understand query
-                    Problem statement:
-                        {{query.file.property("task_instructions")}} =>
-                        group by root
-                    group by folder
-                    group by filename
-
-                    "
-                `);
-
+                expect(query.error).toBeUndefined();
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
-                    "Query has an error:
-                    do not understand query
-                    Problem statement:
-                        {{query.file.property("task_instructions")}} =>
-                        group by root
+                    "No filters supplied. All tasks will match the query.
+
+                    {{query.file.property("task_instructions")}} =>
+                    group by root
+
+                    {{query.file.property("task_instructions")}} =>
                     group by folder
+
+                    {{query.file.property("task_instructions")}} =>
                     group by filename
 
-
+                    No sorting instructions supplied.
                     "
                 `);
             });
