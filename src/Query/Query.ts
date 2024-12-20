@@ -59,14 +59,14 @@ export class Query implements IQuery {
 
         const anyContinuationLinesRemoved = continueLines(source);
         anyContinuationLinesRemoved.forEach((statement: Statement) => {
-            const line = this.expandPlaceholders(statement, tasksFile);
+            this.expandPlaceholders(statement, tasksFile);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
             }
 
             try {
-                this.parseLine(line, statement);
+                this.parseLine(statement);
             } catch (e) {
                 let message;
                 if (e instanceof Error) {
@@ -89,7 +89,7 @@ export class Query implements IQuery {
         return this._queryId;
     }
 
-    private parseLine(_line: string, statement: Statement) {
+    private parseLine(statement: Statement) {
         const line = statement.anyPlaceholdersExpanded;
         switch (true) {
             case this.shortModeRegexp.test(line):
