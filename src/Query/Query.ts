@@ -89,7 +89,8 @@ export class Query implements IQuery {
         return this._queryId;
     }
 
-    private parseLine(line: string, statement: Statement) {
+    private parseLine(_line: string, statement: Statement) {
+        const line = statement.anyPlaceholdersExpanded;
         switch (true) {
             case this.shortModeRegexp.test(line):
                 this._queryLayoutOptions.shortMode = true;
