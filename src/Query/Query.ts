@@ -58,15 +58,18 @@ export class Query implements IQuery {
         this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
         const anyContinuationLinesRemoved = continueLines(source);
+
+        const anyPlaceholdersExpanded: Statement[] = [];
         for (const statement of anyContinuationLinesRemoved) {
             this.expandPlaceholders(statement, tasksFile);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
             }
+            anyPlaceholdersExpanded.push(statement);
         }
 
-        for (const statement of anyContinuationLinesRemoved) {
+        for (const statement of anyPlaceholdersExpanded) {
             try {
                 this.parseLine(statement);
             } catch (e) {
