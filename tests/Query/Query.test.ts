@@ -769,6 +769,31 @@ Problem statement:
             );
             expect(query.filters.length).toEqual(0);
         });
+
+        it.failing('should report first error if non-existent placeholder used', () => {
+            // Arrange
+            const source = `{{error 1}}
+{{error 2}}
+{{error 3}}`;
+            const tasksFile = new TasksFile('a/b/path with space.md');
+
+            // Act
+            const query = new Query(source, tasksFile);
+
+            // Assert
+            expect(query).not.toBeValid();
+            // TODO This currently shows 'error 3', not 'error 1'
+            expect(query.error).toEqual(
+                'There was an error expanding one or more placeholders.\n' +
+                    '\n' +
+                    'The error message was:\n' +
+                    '    Unknown property: error 1\n' +
+                    '\n' +
+                    'The problem is in:\n' +
+                    '    {{error 1}}',
+            );
+            expect(query.filters.length).toEqual(0);
+        });
     });
 
     describe('properties in the query file', () => {
