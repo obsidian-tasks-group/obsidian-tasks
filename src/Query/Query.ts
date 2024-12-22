@@ -181,17 +181,15 @@ ${source}`;
 
         // The expanded source is more than one line, so we will need to create multiple statements.
         // This only happens if the placeholder was a multiple-line property from the query file.
-        const newStatements: Statement[] = [];
-        expandedSourceLines.forEach((expandedSourceLine, index) => {
+        return expandedSourceLines.map((expandedSourceLine, index) => {
             const counter = `: statement ${index + 1} after expansion of placeholder`;
             const newStatement = new Statement(
                 statement.rawInstruction + counter,
                 statement.anyContinuationLinesRemoved + counter,
             );
             newStatement.recordExpandedPlaceholders(expandedSourceLine);
-            newStatements.push(newStatement);
+            return newStatement;
         });
-        return newStatements;
     }
 
     /**
