@@ -184,9 +184,6 @@ ${source}`;
         const newStatements: Statement[] = [];
         let countOfValidStatements = 0;
         for (const expandedSourceLine of expandedSourceLines) {
-            if (expandedSourceLine.length <= 0) {
-                continue;
-            }
             countOfValidStatements += 1;
             const counter = `: statement ${countOfValidStatements} after expansion of placeholder`;
             const newStatement = new Statement(
