@@ -22,7 +22,7 @@ import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
     private readonly app: App;
-    private plugin: TasksPlugin;
+    private readonly plugin: TasksPlugin;
     private readonly events: TasksEvents;
 
     constructor({ plugin, events }: { plugin: TasksPlugin; events: TasksEvents }) {
@@ -67,13 +67,13 @@ export class QueryRenderer {
 
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
-    private plugin: TasksPlugin;
+    private readonly plugin: TasksPlugin;
     private readonly events: TasksEvents;
 
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
-    private queryResultsRenderer: QueryResultsRenderer;
+    private readonly queryResultsRenderer: QueryResultsRenderer;
 
     constructor({
         app,
