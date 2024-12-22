@@ -823,7 +823,7 @@ Problem statement:
                 `);
             });
 
-            it.failing('should use query.file.property() via placeholder that has spaces around value', () => {
+            it('should use query.file.property() via placeholder that has spaces around value', () => {
                 const propertyValue = '  path includes query_using_properties  ';
                 const query = makeQueryFromPropertyWithValue('task_instruction_with_spaces', propertyValue);
 
