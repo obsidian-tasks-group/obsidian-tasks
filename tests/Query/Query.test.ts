@@ -862,11 +862,12 @@ group by folder
 
             it('does not work with continuation lines in multi-line property with query.file.property via placeholder', () => {
                 // Act
+                const propertyName = 'task_instructions_with_continuation_line';
                 const source = '{{query.file.property("task_instructions_with_continuation_line")}}';
                 const query = new Query(source, file);
 
                 // Assert
-                expect(file.property('task_instructions_with_continuation_line')).toEqual(
+                expect(file.property(propertyName)).toEqual(
                     `path \\
   includes query_using_properties
 `,
