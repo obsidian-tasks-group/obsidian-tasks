@@ -806,7 +806,7 @@ Problem statement:
                 const query = new Query(source, file);
 
                 // Assert
-                expect(file.property('task_instruction')).toEqual('group by filename');
+                expect(file.property(propertyName)).toEqual('group by filename');
 
                 expect(query.error).toBeUndefined();
                 expect(query.grouping.length).toEqual(1);
