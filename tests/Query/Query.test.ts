@@ -863,11 +863,7 @@ group by folder
                 const propertyValue = `path \\
   includes query_using_properties
 `;
-                const source = "{{query.file.property('task_instructions_with_continuation_line')}}";
-                const query = new Query(source, file);
-
-                // Assert
-                expect(file.property(propertyName)).toEqual(propertyValue);
+                const query = createQueryFromObsidianPropertyWithValue(propertyName, propertyValue);
 
                 expect(query.error).not.toBeUndefined();
                 expect(query.error).toMatchInlineSnapshot(`
