@@ -7,6 +7,7 @@ task_instructions: |
   group by root
   group by folder
   group by filename
+  # a comment
 ---
 
 # query_using_properties
