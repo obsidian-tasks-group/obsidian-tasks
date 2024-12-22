@@ -854,6 +854,30 @@ group by folder
                     "
                 `);
             });
+
+            it('does not work with continuation lines in multi-line property with query.file.property via placeholder', () => {
+                // Act
+                const source = '{{query.file.property("task_instructions_with_continuation_line")}}';
+                const query = new Query(source, file);
+
+                // Assert
+                expect(file.frontmatter.task_instructions_with_continuation_line).toEqual(
+                    `path \\
+  includes query_using_properties
+`,
+                );
+
+                expect(query.error).not.toBeUndefined();
+                // Note: The first problem line is actually the incomplete 'path' line.
+                //       Currently, the last error is shown, rather than the first one.
+                expect(query.error).toMatchInlineSnapshot(`
+                    "do not understand query
+                    Problem statement:
+                        {{query.file.property("task_instructions_with_continuation_line")}} =>
+                        includes query_using_properties
+                    "
+                `);
+            });
         });
 
         describe('via "filter by function"', () => {
