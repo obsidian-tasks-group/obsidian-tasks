@@ -830,11 +830,12 @@ Problem statement:
 
             it('should access multi-line property with query.file.property via placeholder', () => {
                 // Act
+                const propertyName = 'task_instructions';
                 const source = '{{query.file.property("task_instructions")}}';
                 const query = new Query(source, file);
 
                 // Assert
-                expect(file.property('task_instructions')).toEqual(`group by root
+                expect(file.property(propertyName)).toEqual(`group by root
 group by folder
   group by filename
 # a comment
