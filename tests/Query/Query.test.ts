@@ -830,7 +830,7 @@ Problem statement:
                 // Assert
                 expect(file.frontmatter.task_instructions).toEqual(`group by root
 group by folder
-group by filename
+  group by filename
 # a comment
 `);
 

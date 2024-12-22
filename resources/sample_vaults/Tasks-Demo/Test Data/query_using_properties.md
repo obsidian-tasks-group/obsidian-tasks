@@ -6,7 +6,7 @@ task_instruction: group by filename
 task_instructions: |
   group by root
   group by folder
-  group by filename
+    group by filename
   # a comment
 ---
 
