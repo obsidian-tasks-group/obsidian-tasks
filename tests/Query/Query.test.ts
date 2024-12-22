@@ -868,13 +868,11 @@ group by folder
                 );
 
                 expect(query.error).not.toBeUndefined();
-                // Note: The first problem line is actually the incomplete 'path' line.
-                //       Currently, the last error is shown, rather than the first one.
                 expect(query.error).toMatchInlineSnapshot(`
                     "do not understand query
                     Problem statement:
                         {{query.file.property("task_instructions_with_continuation_line")}} =>
-                        includes query_using_properties
+                        path \\
                     "
                 `);
             });
