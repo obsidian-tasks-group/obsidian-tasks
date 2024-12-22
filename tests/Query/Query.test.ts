@@ -836,18 +836,16 @@ group by folder
 `);
 
                 expect(query.error).toBeUndefined();
-                // It is not clear that this is a multi-line property that has been expanded.
-                // Might it be worth adding line numbers after the placeholdert?
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
                     "No filters supplied. All tasks will match the query.
 
-                    {{query.file.property("task_instructions")}} =>
+                    {{query.file.property("task_instructions")}}: statement 1 after expansion of placeholder =>
                     group by root
 
-                    {{query.file.property("task_instructions")}} =>
+                    {{query.file.property("task_instructions")}}: statement 2 after expansion of placeholder =>
                     group by folder
 
-                    {{query.file.property("task_instructions")}} =>
+                    {{query.file.property("task_instructions")}}: statement 3 after expansion of placeholder =>
                     group by filename
 
                     No sorting instructions supplied.
@@ -871,7 +869,7 @@ group by folder
                 expect(query.error).toMatchInlineSnapshot(`
                     "do not understand query
                     Problem statement:
-                        {{query.file.property("task_instructions_with_continuation_line")}} =>
+                        {{query.file.property("task_instructions_with_continuation_line")}}: statement 1 after expansion of placeholder =>
                         path \\
                     "
                 `);

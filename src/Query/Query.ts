@@ -176,12 +176,18 @@ ${source}`;
 
         // The expanded source is more than one line, so we will need to create multiple statements
         const newStatements: Statement[] = [];
+        let countOfValidStatements = 0;
         for (const expandedSourceLine of expandedSourceLines) {
             const trimmedExpandedSourceLine = expandedSourceLine.trim();
             if (trimmedExpandedSourceLine.length <= 0) {
                 continue;
             }
-            const newStatement = new Statement(statement.rawInstruction, statement.anyContinuationLinesRemoved);
+            countOfValidStatements += 1;
+            const counter = `: statement ${countOfValidStatements} after expansion of placeholder`;
+            const newStatement = new Statement(
+                statement.rawInstruction + counter,
+                statement.anyContinuationLinesRemoved + counter,
+            );
             newStatement.recordExpandedPlaceholders(trimmedExpandedSourceLine);
             newStatements.push(newStatement);
         }
