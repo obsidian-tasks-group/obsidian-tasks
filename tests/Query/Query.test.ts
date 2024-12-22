@@ -832,6 +832,7 @@ Problem statement:
 group by folder
   group by filename
 # a comment
+  # an indented comment
 `);
 
                 expect(query.error).toBeUndefined();
