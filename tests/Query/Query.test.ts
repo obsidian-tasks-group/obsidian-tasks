@@ -837,11 +837,7 @@ group by folder
 # a comment
   # an indented comment
 `;
-                const source = "{{query.file.property('task_instructions')}}";
-                const query = new Query(source, file);
-
-                // Assert
-                expect(file.property(propertyName)).toEqual(propertyValue);
+                const query = createQueryFromObsidianPropertyWithValue(propertyName, propertyValue);
 
                 expect(query.error).toBeUndefined();
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
