@@ -12,6 +12,7 @@ task_instructions: |
 task_instructions_with_continuation_line: |
   path \
     includes query_using_properties
+task_instruction_with_spaces: "  path includes query_using_properties  "
 ---
 
 # query_using_properties
@@ -26,6 +27,17 @@ Read a Tasks instruction from a property in this file, and embed it in to any nu
 explain
 ignore global query
 {{query.file.property('task_instruction')}}
+limit 10
+```
+
+## Use a one-line property: task_instruction_with_spaces
+
+Read a Tasks instruction **that is surrounded by extra spaces** from a property in this file, and embed it in to any number of queries in the file:
+
+```tasks
+explain
+ignore global query
+{{query.file.property('task_instruction_with_spaces')}}
 limit 10
 ```
 
