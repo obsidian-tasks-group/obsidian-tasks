@@ -183,7 +183,7 @@ ${source}`;
         // This only happens if the placeholder was a multiple-line property from the query file.
         const newStatements: Statement[] = [];
         let countOfValidStatements = 0;
-        for (const expandedSourceLine of expandedSourceLines) {
+        expandedSourceLines.forEach((expandedSourceLine) => {
             countOfValidStatements += 1;
             const counter = `: statement ${countOfValidStatements} after expansion of placeholder`;
             const newStatement = new Statement(
@@ -192,7 +192,7 @@ ${source}`;
             );
             newStatement.recordExpandedPlaceholders(expandedSourceLine);
             newStatements.push(newStatement);
-        }
+        });
         return newStatements;
     }
 
