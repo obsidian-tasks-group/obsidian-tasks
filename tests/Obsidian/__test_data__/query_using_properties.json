@@ -6,14 +6,15 @@
         "Filters/"
       ],
       "task_instruction": "group by filename",
-      "task_instructions": "group by root\ngroup by folder\n  group by filename\n# a comment\n  # an indented comment\n"
+      "task_instructions": "group by root\ngroup by folder\n  group by filename\n# a comment\n  # an indented comment\n",
+      "task_instructions_with_continuation_line": "path \\\n  includes query_using_properties\n"
     },
     "frontmatterLinks": [],
     "frontmatterPosition": {
       "end": {
         "col": 3,
-        "line": 11,
-        "offset": 207
+        "line": 14,
+        "offset": 296
       },
       "start": {
         "col": 0,
@@ -28,13 +29,13 @@
         "position": {
           "end": {
             "col": 24,
-            "line": 13,
-            "offset": 233
+            "line": 16,
+            "offset": 322
           },
           "start": {
             "col": 0,
-            "line": 13,
-            "offset": 209
+            "line": 16,
+            "offset": 298
           }
         }
       },
@@ -44,13 +45,13 @@
         "position": {
           "end": {
             "col": 44,
-            "line": 17,
-            "offset": 325
+            "line": 20,
+            "offset": 414
           },
           "start": {
             "col": 0,
-            "line": 17,
-            "offset": 281
+            "line": 20,
+            "offset": 370
           }
         }
       },
@@ -60,13 +61,29 @@
         "position": {
           "end": {
             "col": 47,
-            "line": 28,
-            "offset": 579
+            "line": 31,
+            "offset": 668
           },
           "start": {
             "col": 0,
-            "line": 28,
-            "offset": 532
+            "line": 31,
+            "offset": 621
+          }
+        }
+      },
+      {
+        "heading": "Use a multi-line property: task_instructions_with_continuation_line",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 70,
+            "line": 43,
+            "offset": 982
+          },
+          "start": {
+            "col": 0,
+            "line": 43,
+            "offset": 912
           }
         }
       },
@@ -76,30 +93,30 @@
         "position": {
           "end": {
             "col": 62,
-            "line": 40,
-            "offset": 885
+            "line": 57,
+            "offset": 1399
           },
           "start": {
             "col": 0,
-            "line": 40,
-            "offset": 823
+            "line": 57,
+            "offset": 1337
           }
         }
       }
     ],
     "listItems": [
       {
-        "parent": -15,
+        "parent": -18,
         "position": {
           "end": {
             "col": 44,
-            "line": 15,
-            "offset": 279
+            "line": 18,
+            "offset": 368
           },
           "start": {
             "col": 0,
-            "line": 15,
-            "offset": 235
+            "line": 18,
+            "offset": 324
           }
         },
         "task": " "
@@ -110,8 +127,8 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 11,
-            "offset": 207
+            "line": 14,
+            "offset": 296
           },
           "start": {
             "col": 0,
@@ -125,13 +142,13 @@
         "position": {
           "end": {
             "col": 24,
-            "line": 13,
-            "offset": 233
+            "line": 16,
+            "offset": 322
           },
           "start": {
             "col": 0,
-            "line": 13,
-            "offset": 209
+            "line": 16,
+            "offset": 298
           }
         },
         "type": "heading"
@@ -140,13 +157,13 @@
         "position": {
           "end": {
             "col": 44,
-            "line": 15,
-            "offset": 279
+            "line": 18,
+            "offset": 368
           },
           "start": {
             "col": 0,
-            "line": 15,
-            "offset": 235
+            "line": 18,
+            "offset": 324
           }
         },
         "type": "list"
@@ -155,13 +172,13 @@
         "position": {
           "end": {
             "col": 44,
-            "line": 17,
-            "offset": 325
+            "line": 20,
+            "offset": 414
           },
           "start": {
             "col": 0,
-            "line": 17,
-            "offset": 281
+            "line": 20,
+            "offset": 370
           }
         },
         "type": "heading"
@@ -170,13 +187,13 @@
         "position": {
           "end": {
             "col": 108,
-            "line": 19,
-            "offset": 435
+            "line": 22,
+            "offset": 524
           },
           "start": {
             "col": 0,
-            "line": 19,
-            "offset": 327
+            "line": 22,
+            "offset": 416
           }
         },
         "type": "paragraph"
@@ -185,13 +202,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 26,
-            "offset": 530
+            "line": 29,
+            "offset": 619
           },
           "start": {
             "col": 0,
-            "line": 21,
-            "offset": 437
+            "line": 24,
+            "offset": 526
           }
         },
         "type": "code"
@@ -200,13 +217,13 @@
         "position": {
           "end": {
             "col": 47,
-            "line": 28,
-            "offset": 579
+            "line": 31,
+            "offset": 668
           },
           "start": {
             "col": 0,
-            "line": 28,
-            "offset": 532
+            "line": 31,
+            "offset": 621
           }
         },
         "type": "heading"
@@ -215,13 +232,13 @@
         "position": {
           "end": {
             "col": 118,
-            "line": 30,
-            "offset": 699
+            "line": 33,
+            "offset": 788
           },
           "start": {
             "col": 0,
-            "line": 30,
-            "offset": 581
+            "line": 33,
+            "offset": 670
           }
         },
         "type": "paragraph"
@@ -230,13 +247,73 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 38,
-            "offset": 821
+            "line": 41,
+            "offset": 910
           },
           "start": {
             "col": 0,
-            "line": 32,
-            "offset": 701
+            "line": 35,
+            "offset": 790
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 70,
+            "line": 43,
+            "offset": 982
+          },
+          "start": {
+            "col": 0,
+            "line": 43,
+            "offset": 912
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 143,
+            "line": 45,
+            "offset": 1127
+          },
+          "start": {
+            "col": 0,
+            "line": 45,
+            "offset": 984
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 61,
+            "line": 47,
+            "offset": 1190
+          },
+          "start": {
+            "col": 0,
+            "line": 47,
+            "offset": 1129
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 55,
+            "offset": 1335
+          },
+          "start": {
+            "col": 0,
+            "line": 49,
+            "offset": 1192
           }
         },
         "type": "code"
@@ -245,13 +322,13 @@
         "position": {
           "end": {
             "col": 62,
-            "line": 40,
-            "offset": 885
+            "line": 57,
+            "offset": 1399
           },
           "start": {
             "col": 0,
-            "line": 40,
-            "offset": 823
+            "line": 57,
+            "offset": 1337
           }
         },
         "type": "heading"
@@ -260,13 +337,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 55,
-            "offset": 1273
+            "line": 72,
+            "offset": 1787
           },
           "start": {
             "col": 0,
-            "line": 42,
-            "offset": 887
+            "line": 59,
+            "offset": 1401
           }
         },
         "type": "code"
@@ -277,20 +354,20 @@
         "position": {
           "end": {
             "col": 11,
-            "line": 15,
-            "offset": 246
+            "line": 18,
+            "offset": 335
           },
           "start": {
             "col": 6,
-            "line": 15,
-            "offset": 241
+            "line": 18,
+            "offset": 330
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n    group by filename\n  # a comment\n    # an indented comment\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nRead multiple Tasks instructions from a property in this file, and embed them in to any number of queries in the file:\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\nlimit 10\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
+  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n    group by filename\n  # a comment\n    # an indented comment\ntask_instructions_with_continuation_line: |\n  path \\\n    includes query_using_properties\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nRead multiple Tasks instructions from a property in this file, and embed them in to any number of queries in the file:\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions_with_continuation_line\n\nRead multiple Tasks instructions with a continuation line from a property in this file, and embed them in to any number of queries in the file.\n\nContinuation lines are currently unsupported in placeholders.\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions_with_continuation_line')}}\nlimit 10\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
   "filePath": "Test Data/query_using_properties.md",
   "getAllTags": [
     "#task"

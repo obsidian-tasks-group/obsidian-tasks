@@ -41,6 +41,8 @@ export class QueryRenderer {
         //    not yet available, so empty.
         //  - It does not listen out for edits the properties, so if a property is edited,
         //    the user needs to close and re-open the file.
+        //  - Multi-line properties are supported, but they cannot contain
+        //    continuation lines.
         const app = this.app;
         const filePath = context.sourcePath;
         const tFile = app.vault.getAbstractFileByPath(filePath);

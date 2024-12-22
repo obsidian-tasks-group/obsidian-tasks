@@ -9,6 +9,9 @@ task_instructions: |
     group by filename
   # a comment
     # an indented comment
+task_instructions_with_continuation_line: |
+  path \
+    includes query_using_properties
 ---
 
 # query_using_properties
@@ -35,6 +38,20 @@ ignore global query
 folder includes Test Data
 explain
 {{query.file.property('task_instructions')}}
+limit 10
+```
+
+## Use a multi-line property: task_instructions_with_continuation_line
+
+Read multiple Tasks instructions with a continuation line from a property in this file, and embed them in to any number of queries in the file.
+
+Continuation lines are currently unsupported in placeholders.
+
+```tasks
+ignore global query
+folder includes Test Data
+explain
+{{query.file.property('task_instructions_with_continuation_line')}}
 limit 10
 ```
 
