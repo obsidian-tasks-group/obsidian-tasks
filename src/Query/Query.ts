@@ -169,7 +169,10 @@ ${source}`;
     }
 
     private createStatementsFromExpandedPlaceholders(expandedSource: string, statement: Statement) {
-        const expandedSourceLines = expandedSource.split('\n').map((line) => line.trim());
+        const expandedSourceLines = expandedSource
+            .split('\n')
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0);
         if (expandedSourceLines.length === 1) {
             // Save any expanded text back in to the statement:
             statement.recordExpandedPlaceholders(expandedSourceLines[0]);
