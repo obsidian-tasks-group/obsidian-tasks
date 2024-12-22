@@ -798,16 +798,20 @@ Problem statement:
     describe('properties in the query file', () => {
         const file = getTasksFileFromMockData(query_using_properties);
 
+        function createQueryFromObsidianPropertyWithValue(propertyName: string, propertyValue: string) {
+            const source = "{{query.file.property('" + propertyName + "')}}";
+            const query = new Query(source, file);
+
+            expect(file.property(propertyName)).toEqual(propertyValue);
+            return query;
+        }
+
         describe('via placeholders', () => {
             it('should use query.file.property() via placeholder', () => {
                 // Act
                 const propertyName = 'task_instruction';
                 const propertyValue = 'group by filename';
-                const source = "{{query.file.property('" + propertyName + "')}}";
-                const query = new Query(source, file);
-
-                // Assert
-                expect(file.property(propertyName)).toEqual(propertyValue);
+                const query = createQueryFromObsidianPropertyWithValue(propertyName, propertyValue);
 
                 expect(query.error).toBeUndefined();
                 expect(query.grouping.length).toEqual(1);
