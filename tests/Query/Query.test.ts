@@ -798,7 +798,7 @@ Problem statement:
     describe('properties in the query file', () => {
         const file = getTasksFileFromMockData(query_using_properties);
 
-        function createQueryFromObsidianPropertyWithValue(propertyName: string, propertyValue: string) {
+        function makeQueryFromPropertyWithValue(propertyName: string, propertyValue: string) {
             const source = "{{query.file.property('" + propertyName + "')}}";
             const query = new Query(source, file);
 
@@ -811,7 +811,7 @@ Problem statement:
                 // Act
                 const propertyName = 'task_instruction';
                 const propertyValue = 'group by filename';
-                const query = createQueryFromObsidianPropertyWithValue(propertyName, propertyValue);
+                const query = makeQueryFromPropertyWithValue(propertyName, propertyValue);
 
                 expect(query.error).toBeUndefined();
                 expect(query.grouping.length).toEqual(1);
@@ -837,7 +837,7 @@ group by folder
 # a comment
   # an indented comment
 `;
-                const query = createQueryFromObsidianPropertyWithValue(propertyName, propertyValue);
+                const query = makeQueryFromPropertyWithValue(propertyName, propertyValue);
 
                 expect(query.error).toBeUndefined();
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
@@ -863,7 +863,7 @@ group by folder
                 const propertyValue = `path \\
   includes query_using_properties
 `;
-                const query = createQueryFromObsidianPropertyWithValue(propertyName, propertyValue);
+                const query = makeQueryFromPropertyWithValue(propertyName, propertyValue);
 
                 expect(query.error).not.toBeUndefined();
                 expect(query.error).toMatchInlineSnapshot(`
