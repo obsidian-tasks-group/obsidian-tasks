@@ -57,15 +57,24 @@ export class Query implements IQuery {
 
         this.debug(`Creating query: ${this.formatQueryForLogging()}`);
 
-        continueLines(source).forEach((statement: Statement) => {
-            const line = this.expandPlaceholders(statement, tasksFile);
+        const anyContinuationLinesRemoved = continueLines(source);
+
+        const anyPlaceholdersExpanded: Statement[] = [];
+        for (const statement of anyContinuationLinesRemoved) {
+            const expandedStatements = this.expandPlaceholders(statement, tasksFile);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
             }
+            anyPlaceholdersExpanded.push(...expandedStatements);
+        }
 
+        for (const statement of anyPlaceholdersExpanded) {
             try {
-                this.parseLine(line, statement);
+                this.parseLine(statement);
+                if (this.error !== undefined) {
+                    return;
+                }
             } catch (e) {
                 let message;
                 if (e instanceof Error) {
@@ -77,7 +86,7 @@ export class Query implements IQuery {
                 this.setError(message, statement);
                 return;
             }
-        });
+        }
     }
 
     public get filePath(): string | undefined {
@@ -88,7 +97,8 @@ export class Query implements IQuery {
         return this._queryId;
     }
 
-    private parseLine(line: string, statement: Statement) {
+    private parseLine(statement: Statement) {
+        const line = statement.anyPlaceholdersExpanded;
         switch (true) {
             case this.shortModeRegexp.test(line):
                 this._queryLayoutOptions.shortMode = true;
@@ -126,7 +136,7 @@ export class Query implements IQuery {
         return `[${this.source.split('\n').join(' ; ')}]`;
     }
 
-    private expandPlaceholders(statement: Statement, tasksFile: OptionalTasksFile) {
+    private expandPlaceholders(statement: Statement, tasksFile: OptionalTasksFile): Statement[] {
         const source = statement.anyContinuationLinesRemoved;
         if (source.includes('{{') && source.includes('}}')) {
             if (this.tasksFile === undefined) {
@@ -134,12 +144,11 @@ export class Query implements IQuery {
 but no file path has been supplied, so cannot expand placeholder values.
 The query is:
 ${source}`;
-                return source;
+                return [statement];
             }
         }
 
         // TODO Do not complain about any placeholder errors in comment lines
-        // TODO Show the original and expanded text in explanations
         // TODO Give user error info if they try and put a string in a regex search
         let expandedSource: string = source;
         if (tasksFile) {
@@ -152,13 +161,36 @@ ${source}`;
                 } else {
                     this._error = 'Internal error. expandPlaceholders() threw something other than Error.';
                 }
-                return source;
+                return [statement];
             }
         }
 
-        // Save any expanded text back in to the statement:
-        statement.recordExpandedPlaceholders(expandedSource);
-        return expandedSource;
+        return this.createStatementsFromExpandedPlaceholders(expandedSource, statement);
+    }
+
+    private createStatementsFromExpandedPlaceholders(expandedSource: string, statement: Statement) {
+        // Trim and filter empty lines in one step.
+        const expandedSourceLines = expandedSource
+            .split('\n')
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0);
+
+        if (expandedSourceLines.length === 1) {
+            // Save the single expanded line back into the statement.
+            statement.recordExpandedPlaceholders(expandedSourceLines[0]);
+            return [statement];
+        }
+
+        // Handle multiple-line placeholders.
+        return expandedSourceLines.map((expandedSourceLine, index) => {
+            const counter = `: statement ${index + 1} after expansion of placeholder`;
+            const newStatement = new Statement(
+                statement.rawInstruction + counter,
+                statement.anyContinuationLinesRemoved + counter,
+            );
+            newStatement.recordExpandedPlaceholders(expandedSourceLine);
+            return newStatement;
+        });
     }
 
     /**
