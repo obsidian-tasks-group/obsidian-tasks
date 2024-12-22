@@ -176,7 +176,8 @@ ${source}`;
             return [statement];
         }
 
-        // The expanded source is more than one line, so we will need to create multiple statements
+        // The expanded source is more than one line, so we will need to create multiple statements.
+        // This only happens if the placeholder was a multiple-line property from the query file.
         const newStatements: Statement[] = [];
         let countOfValidStatements = 0;
         for (const expandedSourceLine of expandedSourceLines) {
