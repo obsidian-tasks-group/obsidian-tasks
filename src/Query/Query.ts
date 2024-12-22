@@ -181,8 +181,7 @@ ${source}`;
         const newStatements: Statement[] = [];
         let countOfValidStatements = 0;
         for (const expandedSourceLine of expandedSourceLines) {
-            const trimmedExpandedSourceLine = expandedSourceLine.trim();
-            if (trimmedExpandedSourceLine.length <= 0) {
+            if (expandedSourceLine.length <= 0) {
                 continue;
             }
             countOfValidStatements += 1;
@@ -191,7 +190,7 @@ ${source}`;
                 statement.rawInstruction + counter,
                 statement.anyContinuationLinesRemoved + counter,
             );
-            newStatement.recordExpandedPlaceholders(trimmedExpandedSourceLine);
+            newStatement.recordExpandedPlaceholders(expandedSourceLine);
             newStatements.push(newStatement);
         }
         return newStatements;
