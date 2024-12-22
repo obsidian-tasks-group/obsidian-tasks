@@ -169,18 +169,19 @@ ${source}`;
     }
 
     private createStatementsFromExpandedPlaceholders(expandedSource: string, statement: Statement) {
+        // Trim and filter empty lines in one step.
         const expandedSourceLines = expandedSource
             .split('\n')
             .map((line) => line.trim())
             .filter((line) => line.length > 0);
+
         if (expandedSourceLines.length === 1) {
-            // Save any expanded text back in to the statement:
+            // Save the single expanded line back into the statement.
             statement.recordExpandedPlaceholders(expandedSourceLines[0]);
             return [statement];
         }
 
-        // The expanded source is more than one line, so we will need to create multiple statements.
-        // This only happens if the placeholder was a multiple-line property from the query file.
+        // Handle multiple-line placeholders.
         return expandedSourceLines.map((expandedSourceLine, index) => {
             const counter = `: statement ${index + 1} after expansion of placeholder`;
             const newStatement = new Statement(
