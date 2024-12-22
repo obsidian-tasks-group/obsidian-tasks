@@ -836,6 +836,8 @@ group by folder
 `);
 
                 expect(query.error).toBeUndefined();
+                // It is not clear that this is a multi-line property that has been expanded.
+                // Might it be worth adding line numbers after the placeholdert?
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
                     "No filters supplied. All tasks will match the query.
 
