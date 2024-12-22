@@ -165,6 +165,10 @@ ${source}`;
             }
         }
 
+        return this.createStatementsFromExpandedPlaceholders(expandedSource, statement);
+    }
+
+    private createStatementsFromExpandedPlaceholders(expandedSource: string, statement: Statement) {
         const expandedSourceLines = expandedSource.split('\n');
         if (expandedSourceLines.length === 1) {
             // Save any expanded text back in to the statement:
