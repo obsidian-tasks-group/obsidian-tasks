@@ -66,9 +66,7 @@ export class Query implements IQuery {
                 // There was an error expanding placeholders.
                 return;
             }
-            for (const expandedStatement of expandedStatements) {
-                anyPlaceholdersExpanded.push(expandedStatement);
-            }
+            anyPlaceholdersExpanded.push(...expandedStatements);
         }
 
         for (const statement of anyPlaceholdersExpanded) {
