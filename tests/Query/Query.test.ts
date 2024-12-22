@@ -812,9 +812,6 @@ Problem statement:
                 const query = makeQueryFromPropertyWithValue('task_instruction', propertyValue);
 
                 expect(query.error).toBeUndefined();
-                expect(query.grouping.length).toEqual(1);
-                expect(query.grouping[0].instruction).toEqual('group by filename');
-
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
                     "No filters supplied. All tasks will match the query.
 
