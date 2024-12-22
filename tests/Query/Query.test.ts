@@ -837,7 +837,7 @@ group by folder
 # a comment
   # an indented comment
 `;
-                const source = '{{query.file.property("task_instructions")}}';
+                const source = "{{query.file.property('task_instructions')}}";
                 const query = new Query(source, file);
 
                 // Assert
@@ -847,13 +847,13 @@ group by folder
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
                     "No filters supplied. All tasks will match the query.
 
-                    {{query.file.property("task_instructions")}}: statement 1 after expansion of placeholder =>
+                    {{query.file.property('task_instructions')}}: statement 1 after expansion of placeholder =>
                     group by root
 
-                    {{query.file.property("task_instructions")}}: statement 2 after expansion of placeholder =>
+                    {{query.file.property('task_instructions')}}: statement 2 after expansion of placeholder =>
                     group by folder
 
-                    {{query.file.property("task_instructions")}}: statement 3 after expansion of placeholder =>
+                    {{query.file.property('task_instructions')}}: statement 3 after expansion of placeholder =>
                     group by filename
 
                     No sorting instructions supplied.
