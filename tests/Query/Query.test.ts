@@ -867,7 +867,7 @@ group by folder
                 const propertyValue = `path \\
   includes query_using_properties
 `;
-                const source = '{{query.file.property("task_instructions_with_continuation_line")}}';
+                const source = "{{query.file.property('task_instructions_with_continuation_line')}}";
                 const query = new Query(source, file);
 
                 // Assert
@@ -877,7 +877,7 @@ group by folder
                 expect(query.error).toMatchInlineSnapshot(`
                     "do not understand query
                     Problem statement:
-                        {{query.file.property("task_instructions_with_continuation_line")}}: statement 1 after expansion of placeholder =>
+                        {{query.file.property('task_instructions_with_continuation_line')}}: statement 1 after expansion of placeholder =>
                         path \\
                     "
                 `);
