@@ -828,7 +828,7 @@ Problem statement:
                 const query = new Query(source, file);
 
                 // Assert
-                expect(file.frontmatter.task_instructions).toEqual(`group by root
+                expect(file.property('task_instructions')).toEqual(`group by root
 group by folder
   group by filename
 # a comment
@@ -859,7 +859,7 @@ group by folder
                 const query = new Query(source, file);
 
                 // Assert
-                expect(file.frontmatter.task_instructions_with_continuation_line).toEqual(
+                expect(file.property('task_instructions_with_continuation_line')).toEqual(
                     `path \\
   includes query_using_properties
 `,
