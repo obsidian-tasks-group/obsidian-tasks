@@ -802,11 +802,12 @@ Problem statement:
             it('should use query.file.property() via placeholder', () => {
                 // Act
                 const propertyName = 'task_instruction';
+                const propertyValue = 'group by filename';
                 const source = "{{query.file.property('" + propertyName + "')}}";
                 const query = new Query(source, file);
 
                 // Assert
-                expect(file.property(propertyName)).toEqual('group by filename');
+                expect(file.property(propertyName)).toEqual(propertyValue);
 
                 expect(query.error).toBeUndefined();
                 expect(query.grouping.length).toEqual(1);
