@@ -831,6 +831,7 @@ Problem statement:
                 expect(file.frontmatter.task_instructions).toEqual(`group by root
 group by folder
 group by filename
+# a comment
 `);
 
                 expect(query.error).toBeUndefined();
