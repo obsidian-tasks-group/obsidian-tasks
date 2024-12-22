@@ -74,6 +74,9 @@ export class Query implements IQuery {
         for (const statement of anyPlaceholdersExpanded) {
             try {
                 this.parseLine(statement);
+                if (this.error !== undefined) {
+                    return;
+                }
             } catch (e) {
                 let message;
                 if (e instanceof Error) {
