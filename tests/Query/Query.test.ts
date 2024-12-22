@@ -769,24 +769,49 @@ Problem statement:
             );
             expect(query.filters.length).toEqual(0);
         });
+
+        it('should report first error if non-existent placeholder used', () => {
+            // Arrange
+            const source = `{{error 1}}
+{{error 2}}
+{{error 3}}`;
+            const tasksFile = new TasksFile('a/b/path with space.md');
+
+            // Act
+            const query = new Query(source, tasksFile);
+
+            // Assert
+            expect(query).not.toBeValid();
+            expect(query.error).toEqual(
+                'There was an error expanding one or more placeholders.\n' +
+                    '\n' +
+                    'The error message was:\n' +
+                    '    Unknown property: error 1\n' +
+                    '\n' +
+                    'The problem is in:\n' +
+                    '    {{error 1}}',
+            );
+            expect(query.filters.length).toEqual(0);
+        });
     });
 
     describe('properties in the query file', () => {
         const file = getTasksFileFromMockData(query_using_properties);
 
+        function makeQueryFromPropertyWithValue(propertyName: string, propertyValue: string) {
+            const source = "{{query.file.property('" + propertyName + "')}}";
+            const query = new Query(source, file);
+
+            expect(file.property(propertyName)).toEqual(propertyValue);
+            return query;
+        }
+
         describe('via placeholders', () => {
             it('should use query.file.property() via placeholder', () => {
-                // Act
-                const source = "{{query.file.property('task_instruction')}}";
-                const query = new Query(source, file);
-
-                // Assert
-                expect(file.property('task_instruction')).toEqual('group by filename');
+                const propertyValue = 'group by filename';
+                const query = makeQueryFromPropertyWithValue('task_instruction', propertyValue);
 
                 expect(query.error).toBeUndefined();
-                expect(query.grouping.length).toEqual(1);
-                expect(query.grouping[0].instruction).toEqual('group by filename');
-
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
                     "No filters supplied. All tasks will match the query.
 
@@ -798,43 +823,61 @@ Problem statement:
                 `);
             });
 
-            it('cannot yet access multi-line property with query.file.property via placeholder', () => {
-                // Act
-                const source = '{{query.file.property("task_instructions")}}';
-                const query = new Query(source, file);
+            it('should use query.file.property() via placeholder that has spaces around value', () => {
+                const propertyValue = '  path includes query_using_properties  ';
+                const query = makeQueryFromPropertyWithValue('task_instruction_with_spaces', propertyValue);
 
-                // This fails because the placeholder is replaced by multiple lines.
-                // And currently, the parsing of lines in Query assumes that placeholders
-                // do not increase the number of lines in the query.
+                expect(query.error).toBeUndefined();
+                expect(query.explainQuery()).toMatchInlineSnapshot(`
+                    "{{query.file.property('task_instruction_with_spaces')}} =>
+                    path includes query_using_properties
 
-                // Assert
-                expect(file.frontmatter.task_instructions).toEqual(`group by root
+                    No grouping instructions supplied.
+
+                    No sorting instructions supplied.
+                    "
+                `);
+            });
+
+            it('should access multi-line property with query.file.property via placeholder', () => {
+                const propertyValue = `group by root
 group by folder
-group by filename
-`);
+  group by filename
+# a comment
+  # an indented comment
+`;
+                const query = makeQueryFromPropertyWithValue('task_instructions', propertyValue);
+
+                expect(query.error).toBeUndefined();
+                expect(query.explainQuery()).toMatchInlineSnapshot(`
+                    "No filters supplied. All tasks will match the query.
+
+                    {{query.file.property('task_instructions')}}: statement 1 after expansion of placeholder =>
+                    group by root
+
+                    {{query.file.property('task_instructions')}}: statement 2 after expansion of placeholder =>
+                    group by folder
+
+                    {{query.file.property('task_instructions')}}: statement 3 after expansion of placeholder =>
+                    group by filename
+
+                    No sorting instructions supplied.
+                    "
+                `);
+            });
+
+            it('does not work with continuation lines in multi-line property with query.file.property via placeholder', () => {
+                const propertyValue = `path \\
+  includes query_using_properties
+`;
+                const query = makeQueryFromPropertyWithValue('task_instructions_with_continuation_line', propertyValue);
 
                 expect(query.error).not.toBeUndefined();
                 expect(query.error).toMatchInlineSnapshot(`
                     "do not understand query
                     Problem statement:
-                        {{query.file.property("task_instructions")}} =>
-                        group by root
-                    group by folder
-                    group by filename
-
-                    "
-                `);
-
-                expect(query.explainQuery()).toMatchInlineSnapshot(`
-                    "Query has an error:
-                    do not understand query
-                    Problem statement:
-                        {{query.file.property("task_instructions")}} =>
-                        group by root
-                    group by folder
-                    group by filename
-
-
+                        {{query.file.property('task_instructions_with_continuation_line')}}: statement 1 after expansion of placeholder =>
+                        path \\
                     "
                 `);
             });
