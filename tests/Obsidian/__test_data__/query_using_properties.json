@@ -6,14 +6,14 @@
         "Filters/"
       ],
       "task_instruction": "group by filename",
-      "task_instructions": "group by root\ngroup by folder\ngroup by filename\n# a comment\n"
+      "task_instructions": "group by root\ngroup by folder\n  group by filename\n# a comment\n"
     },
     "frontmatterLinks": [],
     "frontmatterPosition": {
       "end": {
         "col": 3,
         "line": 10,
-        "offset": 179
+        "offset": 181
       },
       "start": {
         "col": 0,
@@ -29,12 +29,12 @@
           "end": {
             "col": 24,
             "line": 12,
-            "offset": 205
+            "offset": 207
           },
           "start": {
             "col": 0,
             "line": 12,
-            "offset": 181
+            "offset": 183
           }
         }
       },
@@ -45,12 +45,12 @@
           "end": {
             "col": 44,
             "line": 16,
-            "offset": 297
+            "offset": 299
           },
           "start": {
             "col": 0,
             "line": 16,
-            "offset": 253
+            "offset": 255
           }
         }
       },
@@ -61,12 +61,12 @@
           "end": {
             "col": 47,
             "line": 27,
-            "offset": 551
+            "offset": 553
           },
           "start": {
             "col": 0,
             "line": 27,
-            "offset": 504
+            "offset": 506
           }
         }
       },
@@ -77,12 +77,12 @@
           "end": {
             "col": 62,
             "line": 39,
-            "offset": 857
+            "offset": 859
           },
           "start": {
             "col": 0,
             "line": 39,
-            "offset": 795
+            "offset": 797
           }
         }
       }
@@ -94,12 +94,12 @@
           "end": {
             "col": 44,
             "line": 14,
-            "offset": 251
+            "offset": 253
           },
           "start": {
             "col": 0,
             "line": 14,
-            "offset": 207
+            "offset": 209
           }
         },
         "task": " "
@@ -111,7 +111,7 @@
           "end": {
             "col": 3,
             "line": 10,
-            "offset": 179
+            "offset": 181
           },
           "start": {
             "col": 0,
@@ -126,12 +126,12 @@
           "end": {
             "col": 24,
             "line": 12,
-            "offset": 205
+            "offset": 207
           },
           "start": {
             "col": 0,
             "line": 12,
-            "offset": 181
+            "offset": 183
           }
         },
         "type": "heading"
@@ -141,12 +141,12 @@
           "end": {
             "col": 44,
             "line": 14,
-            "offset": 251
+            "offset": 253
           },
           "start": {
             "col": 0,
             "line": 14,
-            "offset": 207
+            "offset": 209
           }
         },
         "type": "list"
@@ -156,12 +156,12 @@
           "end": {
             "col": 44,
             "line": 16,
-            "offset": 297
+            "offset": 299
           },
           "start": {
             "col": 0,
             "line": 16,
-            "offset": 253
+            "offset": 255
           }
         },
         "type": "heading"
@@ -171,12 +171,12 @@
           "end": {
             "col": 108,
             "line": 18,
-            "offset": 407
+            "offset": 409
           },
           "start": {
             "col": 0,
             "line": 18,
-            "offset": 299
+            "offset": 301
           }
         },
         "type": "paragraph"
@@ -186,12 +186,12 @@
           "end": {
             "col": 3,
             "line": 25,
-            "offset": 502
+            "offset": 504
           },
           "start": {
             "col": 0,
             "line": 20,
-            "offset": 409
+            "offset": 411
           }
         },
         "type": "code"
@@ -201,12 +201,12 @@
           "end": {
             "col": 47,
             "line": 27,
-            "offset": 551
+            "offset": 553
           },
           "start": {
             "col": 0,
             "line": 27,
-            "offset": 504
+            "offset": 506
           }
         },
         "type": "heading"
@@ -216,12 +216,12 @@
           "end": {
             "col": 118,
             "line": 29,
-            "offset": 671
+            "offset": 673
           },
           "start": {
             "col": 0,
             "line": 29,
-            "offset": 553
+            "offset": 555
           }
         },
         "type": "paragraph"
@@ -231,12 +231,12 @@
           "end": {
             "col": 3,
             "line": 37,
-            "offset": 793
+            "offset": 795
           },
           "start": {
             "col": 0,
             "line": 31,
-            "offset": 673
+            "offset": 675
           }
         },
         "type": "code"
@@ -246,12 +246,12 @@
           "end": {
             "col": 62,
             "line": 39,
-            "offset": 857
+            "offset": 859
           },
           "start": {
             "col": 0,
             "line": 39,
-            "offset": 795
+            "offset": 797
           }
         },
         "type": "heading"
@@ -261,12 +261,12 @@
           "end": {
             "col": 3,
             "line": 54,
-            "offset": 1245
+            "offset": 1247
           },
           "start": {
             "col": 0,
             "line": 41,
-            "offset": 859
+            "offset": 861
           }
         },
         "type": "code"
@@ -278,19 +278,19 @@
           "end": {
             "col": 11,
             "line": 14,
-            "offset": 218
+            "offset": 220
           },
           "start": {
             "col": 6,
             "line": 14,
-            "offset": 213
+            "offset": 215
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n  group by filename\n  # a comment\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nRead multiple Tasks instructions from a property in this file, and embed them in to any number of queries in the file:\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\nlimit 10\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
+  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n    group by filename\n  # a comment\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nRead multiple Tasks instructions from a property in this file, and embed them in to any number of queries in the file:\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\nlimit 10\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
   "filePath": "Test Data/query_using_properties.md",
   "getAllTags": [
     "#task"

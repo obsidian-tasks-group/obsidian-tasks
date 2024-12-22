@@ -174,11 +174,12 @@ ${source}`;
         // The expanded source is more than one line, so we will need to create multiple statements
         const newStatements: Statement[] = [];
         for (const expandedSourceLine of expandedSourceLines) {
-            if (expandedSourceLine.length <= 0) {
+            const trimmedExpandedSourceLine = expandedSourceLine.trim();
+            if (trimmedExpandedSourceLine.length <= 0) {
                 continue;
             }
             const newStatement = new Statement(statement.rawInstruction, statement.anyContinuationLinesRemoved);
-            newStatement.recordExpandedPlaceholders(expandedSourceLine);
+            newStatement.recordExpandedPlaceholders(trimmedExpandedSourceLine);
             newStatements.push(newStatement);
         }
         return newStatements;
