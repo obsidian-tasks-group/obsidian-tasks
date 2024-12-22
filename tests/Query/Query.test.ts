@@ -801,7 +801,8 @@ Problem statement:
         describe('via placeholders', () => {
             it('should use query.file.property() via placeholder', () => {
                 // Act
-                const source = "{{query.file.property('task_instruction')}}";
+                const propertyName = 'task_instruction';
+                const source = "{{query.file.property('" + propertyName + "')}}";
                 const query = new Query(source, file);
 
                 // Assert
