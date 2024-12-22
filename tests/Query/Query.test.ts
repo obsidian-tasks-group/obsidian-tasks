@@ -808,7 +808,6 @@ Problem statement:
 
         describe('via placeholders', () => {
             it('should use query.file.property() via placeholder', () => {
-                // Act
                 const propertyValue = 'group by filename';
                 const query = makeQueryFromPropertyWithValue('task_instruction', propertyValue);
 
@@ -828,7 +827,6 @@ Problem statement:
             });
 
             it('should access multi-line property with query.file.property via placeholder', () => {
-                // Act
                 const propertyValue = `group by root
 group by folder
   group by filename
@@ -856,7 +854,6 @@ group by folder
             });
 
             it('does not work with continuation lines in multi-line property with query.file.property via placeholder', () => {
-                // Act
                 const propertyValue = `path \\
   includes query_using_properties
 `;
