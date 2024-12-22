@@ -172,7 +172,7 @@ ${source}`;
         const expandedSourceLines = expandedSource.split('\n').map((line) => line.trim());
         if (expandedSourceLines.length === 1) {
             // Save any expanded text back in to the statement:
-            statement.recordExpandedPlaceholders(expandedSource.trim());
+            statement.recordExpandedPlaceholders(expandedSourceLines[0]);
             return [statement];
         }
 
