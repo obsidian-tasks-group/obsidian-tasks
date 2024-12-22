@@ -809,9 +809,8 @@ Problem statement:
         describe('via placeholders', () => {
             it('should use query.file.property() via placeholder', () => {
                 // Act
-                const propertyName = 'task_instruction';
                 const propertyValue = 'group by filename';
-                const query = makeQueryFromPropertyWithValue(propertyName, propertyValue);
+                const query = makeQueryFromPropertyWithValue('task_instruction', propertyValue);
 
                 expect(query.error).toBeUndefined();
                 expect(query.grouping.length).toEqual(1);
@@ -830,14 +829,13 @@ Problem statement:
 
             it('should access multi-line property with query.file.property via placeholder', () => {
                 // Act
-                const propertyName = 'task_instructions';
                 const propertyValue = `group by root
 group by folder
   group by filename
 # a comment
   # an indented comment
 `;
-                const query = makeQueryFromPropertyWithValue(propertyName, propertyValue);
+                const query = makeQueryFromPropertyWithValue('task_instructions', propertyValue);
 
                 expect(query.error).toBeUndefined();
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
@@ -859,11 +857,10 @@ group by folder
 
             it('does not work with continuation lines in multi-line property with query.file.property via placeholder', () => {
                 // Act
-                const propertyName = 'task_instructions_with_continuation_line';
                 const propertyValue = `path \\
   includes query_using_properties
 `;
-                const query = makeQueryFromPropertyWithValue(propertyName, propertyValue);
+                const query = makeQueryFromPropertyWithValue('task_instructions_with_continuation_line', propertyValue);
 
                 expect(query.error).not.toBeUndefined();
                 expect(query.error).toMatchInlineSnapshot(`
