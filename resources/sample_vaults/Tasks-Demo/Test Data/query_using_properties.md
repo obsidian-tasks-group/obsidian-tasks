@@ -8,6 +8,7 @@ task_instructions: |
   group by folder
     group by filename
   # a comment
+    # an indented comment
 ---
 
 # query_using_properties
