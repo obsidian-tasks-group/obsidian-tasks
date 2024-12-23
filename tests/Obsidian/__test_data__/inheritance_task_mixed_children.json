@@ -87,6 +87,6 @@
   "fileContents": "- [ ] parent task\n    - [ ] child task 1\n    - child list item 1\n    - [ ] child task 2\n",
   "filePath": "Test Data/inheritance_task_mixed_children.md",
   "getAllTags": [],
-  "obsidianApiVersion": "1.7.7",
+  "obsidianApiVersion": "1.8.0",
   "parseFrontMatterTags": null
 }
