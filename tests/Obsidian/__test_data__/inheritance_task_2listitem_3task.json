@@ -118,6 +118,6 @@
   "fileContents": "- [ ] parent task\n    - child list item 1\n        - [ ] grandchild task 1\n        - [ ] grandchild task 2\n    - child list item 2\n        - [ ] grandchild task 3\n",
   "filePath": "Test Data/inheritance_task_2listitem_3task.md",
   "getAllTags": [],
-  "obsidianApiVersion": "1.7.7",
+  "obsidianApiVersion": "1.8.0",
   "parseFrontMatterTags": null
 }

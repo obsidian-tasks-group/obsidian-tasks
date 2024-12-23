@@ -55,6 +55,6 @@
   "fileContents": "- [ ] parent task\n    - child list item\n",
   "filePath": "Test Data/inheritance_task_listitem.md",
   "getAllTags": [],
-  "obsidianApiVersion": "1.7.7",
+  "obsidianApiVersion": "1.8.0",
   "parseFrontMatterTags": null
 }

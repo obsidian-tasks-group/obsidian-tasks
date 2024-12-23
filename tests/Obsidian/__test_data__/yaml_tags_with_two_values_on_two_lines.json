@@ -128,7 +128,7 @@
     "#value-2-of-2-on-two-lines",
     "#task"
   ],
-  "obsidianApiVersion": "1.7.7",
+  "obsidianApiVersion": "1.8.0",
   "parseFrontMatterTags": [
     "#value-1-of-2-on-two-lines",
     "#value-2-of-2-on-two-lines"
