@@ -20,6 +20,8 @@ import { Sort } from './Sort/Sort';
 import type { Sorter } from './Sort/Sorter';
 import { Statement } from './Statement';
 
+let queryInstanceCounter = 0;
+
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
@@ -420,11 +422,8 @@ ${statement.explainStatement('    ')}
      * @return {*}  {string}
      */
     private generateQueryId(length: number): string {
-        const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-        const randomArray = Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]);
-
-        const randomString = randomArray.join('');
-        return randomString;
+        queryInstanceCounter += 1;
+        return queryInstanceCounter.toString().padStart(length, '0');
     }
 
     public debug(message: string, objects?: any): void {
