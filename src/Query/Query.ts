@@ -135,7 +135,11 @@ export class Query implements IQuery {
     }
 
     private formatQueryForLogging() {
-        return `[${this.source.split('\n').join(' ; ')}]`;
+        return `
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+${this.source}
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+`;
     }
 
     private expandPlaceholders(statement: Statement, tasksFile: OptionalTasksFile): Statement[] {
