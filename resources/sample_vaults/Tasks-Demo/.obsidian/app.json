@@ -9,5 +9,6 @@
   "showInlineTitle": false,
   "showLineNumber": true,
   "alwaysUpdateLinks": true,
-  "showUnsupportedFiles": true
+  "showUnsupportedFiles": true,
+  "promptDelete": false
 }
