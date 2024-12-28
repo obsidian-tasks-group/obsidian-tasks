@@ -164,3 +164,10 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
 > [!warning]
 > If the `Editor` is not a `MarkdownView`, the functionality is slightly limited.
 > It won't be possible to create [[Task Dependencies]] fields `id` and `dependsOn`.
+
+## Limitations of the Tasks API
+
+- Editing tasks:
+  - It is not yet possible to use the API to edit an *existing task line* with Tasks [[Create or edit Task|Create or edit task UI]]. We are tracking this in [issue #1945](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1945).
+- Searching tasks:
+  - It is not yet possible to run Tasks searches via the API. We are tracking this in [issue #2459](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2459).

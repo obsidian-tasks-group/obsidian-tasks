@@ -106,3 +106,7 @@ This page gathers together all the documentation on known limitations of the plu
 ## Advanced: Urgency
 
 ![[Urgency#Limitations of the Urgency Score]]
+
+## Advanced: Tasks API
+
+![[Tasks Api#Limitations of the Tasks API]]
