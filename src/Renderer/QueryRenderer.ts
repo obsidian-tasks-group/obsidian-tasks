@@ -17,7 +17,7 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
-import { QueryResultsRenderer } from './QueryResultsRenderer';
+import { type BacklinksEventHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -155,7 +155,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         await this.queryResultsRenderer.render(state, tasks, content, {
             allTasks: this.plugin.getTasks(),
             allMarkdownFiles: this.app.vault.getMarkdownFiles(),
-            backlinksClickHandler,
+            backlinksClickHandler: createBacklinksClickHandler(this.app),
             backlinksMousedownHandler,
             editTaskPencilClickHandler,
         });
@@ -184,18 +184,20 @@ function editTaskPencilClickHandler(event: MouseEvent, task: Task, allTasks: Tas
     taskModal.open();
 }
 
-async function backlinksClickHandler(ev: MouseEvent, task: Task) {
-    const result = await getTaskLineAndFile(task, app.vault);
-    if (result) {
-        const [line, file] = result;
-        const leaf = app.workspace.getLeaf(Keymap.isModEvent(ev));
-        // When the corresponding task has been found,
-        // suppress the default behavior of the mouse click event
-        // (which would interfere e.g. if the query is rendered inside a callout).
-        ev.preventDefault();
-        // Instead of the default behavior, open the file with the required line highlighted.
-        await leaf.openFile(file, { eState: { line: line } });
-    }
+function createBacklinksClickHandler(app: App): BacklinksEventHandler {
+    return async function backlinksClickHandler(ev: MouseEvent, task: Task) {
+        const result = await getTaskLineAndFile(task, app.vault);
+        if (result) {
+            const [line, file] = result;
+            const leaf = app.workspace.getLeaf(Keymap.isModEvent(ev));
+            // When the corresponding task has been found,
+            // suppress the default behavior of the mouse click event
+            // (which would interfere e.g. if the query is rendered inside a callout).
+            ev.preventDefault();
+            // Instead of the default behavior, open the file with the required line highlighted.
+            await leaf.openFile(file, { eState: { line } });
+        }
+    };
 }
 
 async function backlinksMousedownHandler(ev: MouseEvent, task: Task) {
