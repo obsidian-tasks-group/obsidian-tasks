@@ -154,6 +154,7 @@ describe('TaskLayoutOptions', () => {
 
 describe('parsing task show/hide layout options', () => {
     it.each([
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         // Alphabetical order
         ['cancelled date', TaskLayoutComponent.CancelledDate],
         ['created date', TaskLayoutComponent.CreatedDate],
