@@ -156,7 +156,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             allTasks: this.plugin.getTasks(),
             allMarkdownFiles: this.app.vault.getMarkdownFiles(),
             backlinksClickHandler: createBacklinksClickHandler(this.app),
-            backlinksMousedownHandler,
+            backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
             editTaskPencilClickHandler,
         });
 
@@ -200,19 +200,21 @@ function createBacklinksClickHandler(app: App): BacklinksEventHandler {
     };
 }
 
-async function backlinksMousedownHandler(ev: MouseEvent, task: Task) {
-    // Open in a new tab on middle-click.
-    // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
-    // solely for this.
-    // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
-    // the 'click' event is more generic for touch devices etc.)
-    if (ev.button === 1) {
-        const result = await getTaskLineAndFile(task, app.vault);
-        if (result) {
-            const [line, file] = result;
-            const leaf = app.workspace.getLeaf('tab');
-            ev.preventDefault();
-            await leaf.openFile(file, { eState: { line: line } });
+function createBacklinksMousedownHandler(app: App): BacklinksEventHandler {
+    return async function backlinksMousedownHandler(ev: MouseEvent, task: Task) {
+        // Open in a new tab on middle-click.
+        // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
+        // solely for this.
+        // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
+        // the 'click' event is more generic for touch devices etc.)
+        if (ev.button === 1) {
+            const result = await getTaskLineAndFile(task, app.vault);
+            if (result) {
+                const [line, file] = result;
+                const leaf = app.workspace.getLeaf('tab');
+                ev.preventDefault();
+                await leaf.openFile(file, { eState: { line: line } });
+            }
         }
-    }
+    };
 }
