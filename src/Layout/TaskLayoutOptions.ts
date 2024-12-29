@@ -104,6 +104,7 @@ export class TaskLayoutOptions {
  */
 export function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, option: string, visible: boolean) {
     const optionMap = new Map<string, TaskLayoutComponent>([
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         // Alphabetical order
         ['cancelled date', TaskLayoutComponent.CancelledDate],
         ['created date', TaskLayoutComponent.CreatedDate],
