@@ -17,7 +17,7 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
-import { type BacklinksEventHandler, QueryResultsRenderer } from './QueryResultsRenderer';
+import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -157,31 +157,33 @@ class QueryRenderChild extends MarkdownRenderChild {
             allMarkdownFiles: this.app.vault.getMarkdownFiles(),
             backlinksClickHandler: createBacklinksClickHandler(this.app),
             backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
-            editTaskPencilClickHandler,
+            editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),
         });
 
         this.containerEl.firstChild?.replaceWith(content);
     }
 }
 
-function editTaskPencilClickHandler(event: MouseEvent, task: Task, allTasks: Task[]) {
-    event.preventDefault();
+function createEditTaskPencilClickHandler(app: App): EditButtonClickHandler {
+    return function editTaskPencilClickHandler(event: MouseEvent, task: Task, allTasks: Task[]) {
+        event.preventDefault();
 
-    const onSubmit = async (updatedTasks: Task[]): Promise<void> => {
-        await replaceTaskWithTasks({
-            originalTask: task,
-            newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
+        const onSubmit = async (updatedTasks: Task[]): Promise<void> => {
+            await replaceTaskWithTasks({
+                originalTask: task,
+                newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
+            });
+        };
+
+        // Need to create a new instance every time, as cursor/task can change.
+        const taskModal = new TaskModal({
+            app,
+            task,
+            onSubmit,
+            allTasks,
         });
+        taskModal.open();
     };
-
-    // Need to create a new instance every time, as cursor/task can change.
-    const taskModal = new TaskModal({
-        app,
-        task,
-        onSubmit,
-        allTasks,
-    });
-    taskModal.open();
 }
 
 function createBacklinksClickHandler(app: App): BacklinksEventHandler {
