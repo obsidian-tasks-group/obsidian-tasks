@@ -362,6 +362,10 @@ See [[Task Properties#Values for Task Dependencies|Task property values for Task
 
 ## Known Limitations
 
+Adding dependencies:
+
+- Using the edit task modal, adding lots of dependencies in one step (perhaps 4 or more) can cause an error and some broken dependencies. We are tracking this in [issue #3252](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3252).
+
 Visualising dependencies:
 
 - It's not yet possible to directly navigate from a task to the tasks it depends on.
