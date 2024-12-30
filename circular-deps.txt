@@ -1,4 +1,4 @@
-Processed 166 files (1.1s) (17 warnings)
+Processed 173 files (392ms) (18 warnings)
 
 1) Config/Settings.ts > Suggestor/Suggestor.ts
 2) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts
@@ -8,12 +8,14 @@ Processed 166 files (1.1s) (17 warnings)
 6) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > ui/DependencyHelpers.ts
 7) Task/Task.ts > Config/Settings.ts > TaskSerializer/DataviewTaskSerializer.ts
 8) Task/Task.ts > DateTime/DateFallback.ts
-9) Task/Task.ts > Task/Urgency.ts
-10) Task/Task.ts > lib/LogTasksHelper.ts
-11) Query/Query.ts > Query/Explain/Explainer.ts
-12) Query/FilterParser.ts > Query/Filter/BooleanField.ts
-13) main.ts > Config/SettingsTab.ts
-14) Obsidian/Cache.ts > Obsidian/TasksEvents.ts
-15) main.ts > Renderer/QueryRenderer.ts
-16) main.ts > Suggestor/EditorSuggestorPopup.ts
+9) Task/Task.ts > Task/ListItem.ts
+10) Task/Task.ts > Task/Urgency.ts
+11) Task/Task.ts > lib/LogTasksHelper.ts
+12) Query/Query.ts > Query/Explain/Explainer.ts
+13) Query/FilterParser.ts > Query/Filter/BooleanField.ts
+14) main.ts > Config/SettingsTab.ts
+15) Obsidian/Cache.ts > Obsidian/FileParser.ts
+16) Obsidian/Cache.ts > Obsidian/TasksEvents.ts
+17) main.ts > Renderer/QueryRenderer.ts
+18) main.ts > Suggestor/EditorSuggestorPopup.ts
 
