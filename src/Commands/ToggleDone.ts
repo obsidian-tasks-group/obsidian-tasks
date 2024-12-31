@@ -75,7 +75,8 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
     });
     if (task !== null) {
         const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
-        return { text: lines.join('\n'), moveTo: { line: lines.length - 1 } };
+        const newLineNumber = lines.length > 0 ? lines.length - 1 : 0;
+        return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
     } else {
         // If the task is null this means that we have one of:
         // 1. a regular checklist item
