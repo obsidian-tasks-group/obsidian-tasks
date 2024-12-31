@@ -183,7 +183,7 @@ describe('ToggleDone', () => {
     });
 
     describe('on completion', () => {
-        it.failing('should delete a self-deleting task - cursor at start of line', () => {
+        it('should delete a self-deleting task - cursor at start of line', () => {
             // Issue #3256 - traceback occurred.
             testToggleLine(
                 // Force linebreak
@@ -192,7 +192,7 @@ describe('ToggleDone', () => {
             );
         });
 
-        it.failing('should delete a self-deleting task - cursor at end of line', () => {
+        it('should delete a self-deleting task - cursor at end of line', () => {
             // Issue #3256 - traceback occurred.
             testToggleLine(
                 // Force linebreak
