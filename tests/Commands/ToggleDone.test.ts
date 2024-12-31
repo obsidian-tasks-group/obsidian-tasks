@@ -182,6 +182,40 @@ describe('ToggleDone', () => {
         );
     });
 
+    describe('on completion', () => {
+        it('should delete a self-deleting task - cursor at start of line', () => {
+            // Issue #3256 - traceback occurred.
+            testToggleLine(
+                // Force linebreak
+                '|- [ ] #task Delete me 🏁 delete',
+                '|',
+            );
+        });
+
+        it('should delete a self-deleting task - cursor at end of line', () => {
+            // Issue #3256 - traceback occurred.
+            testToggleLine(
+                // Force linebreak
+                '- [ ] #task Delete me 🏁 delete|',
+                '|',
+            );
+        });
+
+        it('should discard completed recurring task - cursor at start of line', () => {
+            testToggleLine(
+                '|- [ ] #task Delete my completed task 🔁 every day 🏁 delete ⏳ 2024-12-31',
+                '|- [ ] #task Delete my completed task 🔁 every day 🏁 delete ⏳ 2025-01-01',
+            );
+        });
+
+        it('should discard completed recurring task - cursor at end of line', () => {
+            testToggleLine(
+                '- [ ] #task Delete my completed task 🔁 every day 🏁 delete ⏳ 2024-12-31|',
+                '- [ ] #task Delete my completed task 🔁 every day 🏁 delete ⏳ 2025-01-01|',
+            );
+        });
+    });
+
     describe('should honour next status character', () => {
         afterEach(() => {
             GlobalFilter.getInstance().reset();
