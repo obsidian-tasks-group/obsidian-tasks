@@ -1,0 +1,489 @@
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:39.127][debug][tasks.Task] toggle(): task line number: 0. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:39.128][debug][tasks.Task] toggle() original: - [ ] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:39.128][debug][tasks.Task] toggle() ==> 1   : - [x] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:41.147][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:41.149][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:41.149][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:41.150][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.203][debug][tasks.Task] toggle(): task line number: 65. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.203][debug][tasks.Task] toggle() original: - [ ] #task Mark this task complete by clicking on it in **Reading view** 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.204][debug][tasks.Task] toggle() ==> 1   : - [x] #task Mark this task complete by clicking on it in **Reading view** ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.204][debug][tasks.File] replaceTaskWithTasks(): task line number: 65. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.204][debug][tasks.File] replaceTaskWithTasks() original: - [ ] #task Mark this task complete by clicking on it in **Reading view** 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.204][debug][tasks.File] replaceTaskWithTasks() ==> 1   : - [x] #task Mark this task complete by clicking on it in **Reading view** ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.205][debug][tasks.File] tryRepetitive after 0 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.209][debug][tasks.File] Found original markdown at original line number 65 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.255][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.256][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.256][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:42.256][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:47.903][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:47.903][debug][tasks.Task] toggle() original: - [ ] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:47.903][debug][tasks.Task] toggle() ==> 1   : - [x] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:48.843][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:48.843][debug][tasks.Task] toggle() original: - [ ] #task **check**: Checked all above methods for **completing tasks** - and they worked 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:48.844][debug][tasks.Task] toggle() ==> 1   : - [x] #task **check**: Checked all above methods for **completing tasks** - and they worked ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:49.920][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:49.923][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:49.923][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:49.923][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:53.002][debug][tasks.Task] toggle(): task line number: 0. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:53.003][debug][tasks.Task] toggle() original: * [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:53.003][debug][tasks.Task] toggle() ==> 1   : * [ ] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.026][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.029][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.029][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.029][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.243][debug][tasks.Task] toggle(): task line number: 74. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.243][debug][tasks.Task] toggle() original: * [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.243][debug][tasks.Task] toggle() ==> 1   : * [ ] #task Mark this task not complete by clicking on it in **Reading view** 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.244][debug][tasks.File] replaceTaskWithTasks(): task line number: 74. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.244][debug][tasks.File] replaceTaskWithTasks() original: * [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.244][debug][tasks.File] replaceTaskWithTasks() ==> 1   : * [ ] #task Mark this task not complete by clicking on it in **Reading view** 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.244][debug][tasks.File] tryRepetitive after 0 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.247][debug][tasks.File] Found original markdown at original line number 74 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.294][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.295][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.295][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:55.295][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:56.942][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:56.942][debug][tasks.Task] toggle() original: * [x] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2022-07-05 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:56.943][debug][tasks.Task] toggle() ==> 1   : * [ ] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:58.041][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:58.041][debug][tasks.Task] toggle() original: * [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:58.042][debug][tasks.Task] toggle() ==> 1   : * [x] #task **check**: Checked all above methods for **un-completing tasks** - and they worked ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:58.960][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:58.963][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:58.963][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:12:58.963][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:09.203][debug][tasks.Task] toggle(): task line number: 0. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:09.204][debug][tasks.Task] toggle() original: > - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:09.207][debug][tasks.Task] toggle() ==> 1   : > - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:09.207][debug][tasks.Task] toggle() ==> 2   : > - [x] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:11.230][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:11.232][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 38 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:11.232][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:11.232][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.303][debug][tasks.Task] toggle(): task line number: 89. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.304][debug][tasks.Task] toggle() original: > > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.305][debug][tasks.Task] toggle() ==> 1   : > > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.306][debug][tasks.Task] toggle() ==> 2   : > > - [x] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.306][debug][tasks.File] replaceTaskWithTasks(): task line number: 89. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.306][debug][tasks.File] replaceTaskWithTasks() original: > > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.306][debug][tasks.File] replaceTaskWithTasks() ==> 1   : > > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.306][debug][tasks.File] replaceTaskWithTasks() ==> 2   : > > - [x] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.306][debug][tasks.File] tryRepetitive after 0 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.309][debug][tasks.File] Found original markdown at original line number 89 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.374][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.375][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 39 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.376][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:14.376][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:16.463][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:16.464][debug][tasks.Task] toggle() original: - [ ] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:16.465][debug][tasks.Task] toggle() ==> 1   : - [ ] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:16.465][debug][tasks.Task] toggle() ==> 2   : - [x] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.241][debug][tasks.Task] toggle(): task line number: 92. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.241][debug][tasks.Task] toggle() original: > - [ ] #task **check**: Checked all above steps for **recurring tasks** worked 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.242][debug][tasks.Task] toggle() ==> 1   : > - [x] #task **check**: Checked all above steps for **recurring tasks** worked ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.242][debug][tasks.File] replaceTaskWithTasks(): task line number: 92. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.242][debug][tasks.File] replaceTaskWithTasks() original: > - [ ] #task **check**: Checked all above steps for **recurring tasks** worked 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.242][debug][tasks.File] replaceTaskWithTasks() ==> 1   : > - [x] #task **check**: Checked all above steps for **recurring tasks** worked ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.242][debug][tasks.File] tryRepetitive after 0 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.301][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.302][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 39 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.302][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.302][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.505][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.506][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 40 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.506][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:18.506][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:19.376][debug][tasks.Events] TasksEvents.triggerRequestCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:19.378][debug][tasks.Events] TasksEvents.onCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:22.526][debug][tasks.Task] toggle(): task line number: 0. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:22.526][debug][tasks.Task] toggle() original: - [ ] #task Complete this auto-deleting non-recurring task in **Source view** using **Tasks: Toggle task done** command 🏁 delete 📅 2024-10-27 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:22.527][debug][tasks.Task] toggle() ==> 1   : - [x] #task Complete this auto-deleting non-recurring task in **Source view** using **Tasks: Toggle task done** command 🏁 delete 📅 2024-10-27 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.560][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.561][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 39 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.562][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.562][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.883][debug][tasks.Task] toggle(): task line number: 104. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.884][debug][tasks.Task] toggle() original: - [ ] #task Complete this auto-deleting non-recurring task in **Reading view** 🏁 delete 📅 2024-10-27 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.884][debug][tasks.Task] toggle() ==> 1   : - [x] #task Complete this auto-deleting non-recurring task in **Reading view** 🏁 delete 📅 2024-10-27 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.884][debug][tasks.File] replaceTaskWithTasks(): task line number: 104. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.884][debug][tasks.File] replaceTaskWithTasks() original: - [ ] #task Complete this auto-deleting non-recurring task in **Reading view** 🏁 delete 📅 2024-10-27 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.885][debug][tasks.File] tryRepetitive after 0 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.889][debug][tasks.File] Found original markdown at original line number 104 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.945][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.946][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 38 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.946][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:24.946][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:28.843][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:28.843][debug][tasks.Task] toggle() original: - [ ] #task Complete this auto-deleting non-recurring task in **Live Preview** 🏁 delete 📅 2024-10-27 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:28.844][debug][tasks.Task] toggle() ==> 1   : - [x] #task Complete this auto-deleting non-recurring task in **Live Preview** 🏁 delete 📅 2024-10-27 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:30.683][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:30.684][debug][tasks.Task] toggle() original: - [ ] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:30.684][debug][tasks.Task] toggle() ==> 1   : - [x] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:30.868][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:30.870][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:30.870][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:30.870][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:40.545][debug][tasks.Task] toggle(): task line number: 0. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:40.546][debug][tasks.Task] toggle() original: - [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-27 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:40.549][debug][tasks.Task] toggle() ==> 1   : - [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-28 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:40.550][debug][tasks.Task] toggle() ==> 2   : - [x] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-27 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:42.577][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:42.578][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:42.578][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:42.579][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.423][debug][tasks.Task] toggle(): task line number: 112. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.424][debug][tasks.Task] toggle() original: - [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-27 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.425][debug][tasks.Task] toggle() ==> 1   : - [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-28 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.425][debug][tasks.Task] toggle() ==> 2   : - [x] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-27 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.426][debug][tasks.File] replaceTaskWithTasks(): task line number: 112. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.426][debug][tasks.File] replaceTaskWithTasks() original: - [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-27 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.426][debug][tasks.File] replaceTaskWithTasks() ==> 1   : - [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-28 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.426][debug][tasks.File] tryRepetitive after 0 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.431][debug][tasks.File] Found original markdown at original line number 112 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.477][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.478][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.478][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:45.478][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:49.123][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:49.123][debug][tasks.Task] toggle() original: - [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-27 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:49.124][debug][tasks.Task] toggle() ==> 1   : - [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-28 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:49.125][debug][tasks.Task] toggle() ==> 2   : - [x] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-27 ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:50.463][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:50.464][debug][tasks.Task] toggle() original: - [ ] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:50.464][debug][tasks.Task] toggle() ==> 1   : - [x] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:51.149][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:51.150][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:51.150][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:51.150][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.323][debug][tasks.Task] toggle(): task line number: 122. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.323][debug][tasks.Task] toggle() original: + [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.323][debug][tasks.Task] toggle() ==> 1   : + [x] #task View this file in **Reading view** and confirm that the tasks in this section are listed ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.323][debug][tasks.File] replaceTaskWithTasks(): task line number: 122. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.323][debug][tasks.File] replaceTaskWithTasks() original: + [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.323][debug][tasks.File] replaceTaskWithTasks() ==> 1   : + [x] #task View this file in **Reading view** and confirm that the tasks in this section are listed ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.323][debug][tasks.File] tryRepetitive after 0 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.328][debug][tasks.File] Found original markdown at original line number 122 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.382][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.383][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.383][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:53.383][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:56.683][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:56.683][debug][tasks.Task] toggle() original: + [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:56.684][debug][tasks.Task] toggle() ==> 1   : + [x] #task View this file in **Live Preview** and confirm that the tasks in this section are listed ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:57.743][debug][tasks.Task] toggle(): task line number: 0. file path: "" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:57.744][debug][tasks.Task] toggle() original: + [ ] #task **check**: Checked all above steps for **viewing task blocks** worked 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:57.744][debug][tasks.Task] toggle() ==> 1   : + [x] #task **check**: Checked all above steps for **viewing task blocks** worked ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:58.709][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:58.710][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:58.711][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:13:58.711][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:04.184][debug][tasks.File] replaceTaskWithTasks(): task line number: 147. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:04.185][debug][tasks.File] replaceTaskWithTasks() original: > - [ ] #task Sample task: I have all the supported date types ➕ 2024-09-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:04.185][debug][tasks.File] replaceTaskWithTasks() ==> 1   : > - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:04.185][debug][tasks.File] tryRepetitive after 0 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:04.240][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:04.241][debug][tasks.Cache] Cache.indexFile: Manual Testing/Smoke Testing the Tasks Plugin.md: read 37 task(s) 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:04.241][debug][tasks.Cache] Cache.notifySubscribers() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:04.241][debug][tasks.Events] TasksEvents.triggerCacheUpdate() 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.603][debug][tasks.Task] toggle(): task line number: 151. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.604][debug][tasks.Task] toggle() original:   - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated. 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.604][debug][tasks.Task] toggle() ==> 1   :   - [x] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated. ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.605][debug][tasks.File] replaceTaskWithTasks(): task line number: 151. file path: "Manual Testing/Smoke Testing the Tasks Plugin.md" 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.605][debug][tasks.File] replaceTaskWithTasks() original:   - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated. 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.605][debug][tasks.File] replaceTaskWithTasks() ==> 1   :   - [x] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated. ✅ 2024-12-31 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.606][debug][tasks.File] tryRepetitive after 0 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.613][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.613][debug][tasks.File] timeout = 1 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.615][debug][tasks.File] tryRepetitive after 1 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.615][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.616][debug][tasks.File] timeout = 10 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.626][debug][tasks.File] tryRepetitive after 2 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.627][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.627][debug][tasks.File] timeout = 100 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.728][debug][tasks.File] tryRepetitive after 3 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.729][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.729][debug][tasks.File] timeout = 100 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.831][debug][tasks.File] tryRepetitive after 4 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.832][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.832][debug][tasks.File] timeout = 100 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.933][debug][tasks.File] tryRepetitive after 5 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.934][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:06.934][debug][tasks.File] timeout = 100 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.036][debug][tasks.File] tryRepetitive after 6 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.038][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.038][debug][tasks.File] timeout = 100 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.140][debug][tasks.File] tryRepetitive after 7 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.142][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.142][debug][tasks.File] timeout = 100 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.244][debug][tasks.File] tryRepetitive after 8 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.246][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.246][debug][tasks.File] timeout = 100 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.348][debug][tasks.File] tryRepetitive after 9 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.350][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.350][debug][tasks.File] timeout = 100 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.451][debug][tasks.File] tryRepetitive after 10 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.455][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.455][debug][tasks.File] timeout = 100 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.557][debug][tasks.File] tryRepetitive after 11 previous tries 
+plugin:obsidian-tasks-plugin:15966 [2024-12-31-23:14:07.558][debug][tasks.File] Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-12-31 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06 
+plugin:obsidian-tasks-plugin:20924 Tasks: Could not find the correct task line to update.
+
+The task line not updated is:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+
+In this markdown file:
+"Manual Testing/Smoke Testing the Tasks Plugin.md"
+
+Note: further clicks on this checkbox will usually now be ignored until the file is opened (or certain, specific edits are made - it's complicated).
+
+Recommendations:
+
+1. Close all panes that have the above file open, and then re-open the file.
+
+2. Check for exactly identical copies of the task line, in this file, and see if you can make them different.
+
+errorAndNotice @ plugin:obsidian-tasks-plugin:20924
+eval @ plugin:obsidian-tasks-plugin:20967
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20973
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+eval @ plugin:obsidian-tasks-plugin:20972
+setTimeout (async)
+eval @ plugin:obsidian-tasks-plugin:20972
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+retry @ plugin:obsidian-tasks-plugin:20949
+eval @ plugin:obsidian-tasks-plugin:20998
+rejected @ plugin:obsidian-tasks-plugin:220
+Promise.then (async)
+step @ plugin:obsidian-tasks-plugin:225
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+tryRepetitive @ plugin:obsidian-tasks-plugin:20939
+eval @ plugin:obsidian-tasks-plugin:20914
+eval @ plugin:obsidian-tasks-plugin:226
+__async @ plugin:obsidian-tasks-plugin:210
+replaceTaskWithTasks @ plugin:obsidian-tasks-plugin:20899
+eval @ plugin:obsidian-tasks-plugin:29691
