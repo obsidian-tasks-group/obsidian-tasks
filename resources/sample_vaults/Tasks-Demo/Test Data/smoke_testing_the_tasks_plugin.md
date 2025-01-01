@@ -2,7 +2,7 @@
 
 *[[#Remaining tests|Jump to the tests...]]*
 
-## Introduction
+## 1 Introduction
 
 - **Intended audience of this note**
   - Developers working on the Tasks plugin, reviewing a Pull Request (especially ones that change dependencies), or making a release, and who wish to do some basic tests of the plugin to make sure there are no glaring show-stopper errors.
@@ -13,9 +13,9 @@
 - **Why not test on every platform?**
   - It's not feasible nor a good use of limited volunteer time on a free tool.
 
-## How the tests work
+## 2 How the tests work
 
-### Get the Tasks-Demo vault with the build to be tested
+### 2.1 Get the Tasks-Demo vault with the build to be tested
 
 You can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 1.
 
@@ -31,7 +31,7 @@ Or you can install a download of the build's Tasks plugin inside your clone of t
 - Install the candidate build for the pull request or release inside the `Tasks-Demo` vault
   - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.
 
-### Follow the tests
+### 2.2 Follow the tests
 
 - This note is a self-contained set of steps to check. You should check off tasks beginning `- [ ] check:` as you complete each section.
 
@@ -40,7 +40,7 @@ Or you can install a download of the build's Tasks plugin inside your clone of t
 
 ---
 
-## Remaining tests
+## 3 Remaining tests
 
 Work through all the tasks below, until zero tasks remain in this query:
 
@@ -56,18 +56,18 @@ Work through all the tasks below, until zero tasks remain in this query:
 
 ---
 
-## The Smoke Tests
+## 4 The Smoke Tests
 
-### Toggling tasks
+### 4.1 Toggling tasks
 
-#### Completion of tasks
+#### 4.1.1 Completion of tasks
 
 - [ ] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command
 - [ ] #task Mark this task complete by clicking on it in **Reading view**
 - [ ] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly==
 - [ ] #task **check**: Checked all above methods for **completing tasks** - and they worked
 
-#### Un-completion of tasks
+#### 4.1.2 Un-completion of tasks
 
 <!-- markdownlint-disable ul-style -->
 
@@ -78,7 +78,7 @@ Work through all the tasks below, until zero tasks remain in this query:
 
 <!-- markdownlint-enable ul-style -->
 
-#### Recurring Tasks
+#### 4.1.3 Recurring Tasks
 
 Confirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is unchanged.
 
@@ -92,9 +92,9 @@ Confirm that when a recurring task is completed, a new task is created, all the 
 
 > - [ ] #task **check**: Checked all above steps for **recurring tasks** worked
 
-### On Completion
+### 4.2 On Completion
 
-#### On Completion Delete: Non-recurring tasks
+#### 4.2.1 On Completion Delete: Non-recurring tasks
 
 Confirm that the **task line is deleted**.
 
@@ -103,7 +103,7 @@ Confirm that the **task line is deleted**.
 - [ ] #task Complete this auto-deleting non-recurring task in **Live Preview** 🏁 delete 📅 2024-10-27
 - [ ] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked
 
-#### On Completion Delete: Recurring Tasks
+#### 4.2.2 On Completion Delete: Recurring Tasks
 
 Confirm that when an auto-deleting recurring task is completed, a **new task is created replacing the old task**, and the checkbox remains not-done.
 
@@ -112,7 +112,7 @@ Confirm that when an auto-deleting recurring task is completed, a **new task is 
 - [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-27
 - [ ] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked
 
-### Rendering of Task Blocks
+### 4.3 Rendering of Task Blocks
 
 Steps to do:
 
@@ -135,13 +135,13 @@ heading includes Rendering of Task Blocks
 
 ---
 
-### Styling of Rendered Task Blocks
+### 4.4 Styling of Rendered Task Blocks
 
 - [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there
 
 ---
 
-### Edit dates in Rendered Task Blocks
+### 4.5 Edit dates in Rendered Task Blocks
 
 > [!Example]
 >
@@ -169,7 +169,7 @@ hide postpone button
 
 ---
 
-### Create or edit Task modal
+### 4.6 Create or edit Task modal
 
 - This text should copied in to the task Description, after following steps below
 - [ ] #task Switch to **Live Preview** or **Source mode**, Click on the list item above, then do the following numbered steps and checks:
@@ -187,7 +187,7 @@ hide postpone button
 
 ---
 
-## Check the plugin starts OK with no `data.json` settings file
+## 5 Check the plugin starts OK with no `data.json` settings file
 
 - Preparation
   - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**

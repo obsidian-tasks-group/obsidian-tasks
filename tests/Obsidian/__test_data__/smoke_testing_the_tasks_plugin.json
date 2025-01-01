@@ -18,13 +18,13 @@
         }
       },
       {
-        "heading": "Introduction",
+        "heading": "1 Introduction",
         "level": 2,
         "position": {
           "end": {
-            "col": 15,
+            "col": 17,
             "line": 4,
-            "offset": 94
+            "offset": 96
           },
           "start": {
             "col": 0,
@@ -34,274 +34,274 @@
         }
       },
       {
-        "heading": "How the tests work",
+        "heading": "2 How the tests work",
         "level": 2,
         "position": {
           "end": {
-            "col": 21,
+            "col": 23,
             "line": 15,
-            "offset": 1064
+            "offset": 1068
           },
           "start": {
             "col": 0,
             "line": 15,
-            "offset": 1043
+            "offset": 1045
           }
         }
       },
       {
-        "heading": "Get the Tasks-Demo vault with the build to be tested",
+        "heading": "2.1 Get the Tasks-Demo vault with the build to be tested",
         "level": 3,
         "position": {
           "end": {
-            "col": 56,
+            "col": 60,
             "line": 17,
-            "offset": 1122
+            "offset": 1130
           },
           "start": {
             "col": 0,
             "line": 17,
-            "offset": 1066
+            "offset": 1070
           }
         }
       },
       {
-        "heading": "Follow the tests",
+        "heading": "2.2 Follow the tests",
         "level": 3,
-        "position": {
-          "end": {
-            "col": 20,
-            "line": 33,
-            "offset": 2102
-          },
-          "start": {
-            "col": 0,
-            "line": 33,
-            "offset": 2082
-          }
-        }
-      },
-      {
-        "heading": "Remaining tests",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 18,
-            "line": 42,
-            "offset": 2416
-          },
-          "start": {
-            "col": 0,
-            "line": 42,
-            "offset": 2398
-          }
-        }
-      },
-      {
-        "heading": "The Smoke Tests",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 18,
-            "line": 58,
-            "offset": 2670
-          },
-          "start": {
-            "col": 0,
-            "line": 58,
-            "offset": 2652
-          }
-        }
-      },
-      {
-        "heading": "Toggling tasks",
-        "level": 3,
-        "position": {
-          "end": {
-            "col": 18,
-            "line": 60,
-            "offset": 2690
-          },
-          "start": {
-            "col": 0,
-            "line": 60,
-            "offset": 2672
-          }
-        }
-      },
-      {
-        "heading": "Completion of tasks",
-        "level": 4,
         "position": {
           "end": {
             "col": 24,
-            "line": 62,
-            "offset": 2716
+            "line": 33,
+            "offset": 2114
           },
           "start": {
             "col": 0,
-            "line": 62,
-            "offset": 2692
+            "line": 33,
+            "offset": 2090
           }
         }
       },
       {
-        "heading": "Un-completion of tasks",
-        "level": 4,
-        "position": {
-          "end": {
-            "col": 27,
-            "line": 69,
-            "offset": 3130
-          },
-          "start": {
-            "col": 0,
-            "line": 69,
-            "offset": 3103
-          }
-        }
-      },
-      {
-        "heading": "Recurring Tasks",
-        "level": 4,
-        "position": {
-          "end": {
-            "col": 20,
-            "line": 80,
-            "offset": 3670
-          },
-          "start": {
-            "col": 0,
-            "line": 80,
-            "offset": 3650
-          }
-        }
-      },
-      {
-        "heading": "On Completion",
-        "level": 3,
-        "position": {
-          "end": {
-            "col": 17,
-            "line": 94,
-            "offset": 4369
-          },
-          "start": {
-            "col": 0,
-            "line": 94,
-            "offset": 4352
-          }
-        }
-      },
-      {
-        "heading": "On Completion Delete: Non-recurring tasks",
-        "level": 4,
-        "position": {
-          "end": {
-            "col": 46,
-            "line": 96,
-            "offset": 4417
-          },
-          "start": {
-            "col": 0,
-            "line": 96,
-            "offset": 4371
-          }
-        }
-      },
-      {
-        "heading": "On Completion Delete: Recurring Tasks",
-        "level": 4,
-        "position": {
-          "end": {
-            "col": 42,
-            "line": 105,
-            "offset": 4952
-          },
-          "start": {
-            "col": 0,
-            "line": 105,
-            "offset": 4910
-          }
-        }
-      },
-      {
-        "heading": "Rendering of Task Blocks",
-        "level": 3,
-        "position": {
-          "end": {
-            "col": 28,
-            "line": 114,
-            "offset": 5649
-          },
-          "start": {
-            "col": 0,
-            "line": 114,
-            "offset": 5621
-          }
-        }
-      },
-      {
-        "heading": "Styling of Rendered Task Blocks",
-        "level": 3,
-        "position": {
-          "end": {
-            "col": 35,
-            "line": 137,
-            "offset": 6251
-          },
-          "start": {
-            "col": 0,
-            "line": 137,
-            "offset": 6216
-          }
-        }
-      },
-      {
-        "heading": "Edit dates in Rendered Task Blocks",
-        "level": 3,
-        "position": {
-          "end": {
-            "col": 38,
-            "line": 143,
-            "offset": 6384
-          },
-          "start": {
-            "col": 0,
-            "line": 143,
-            "offset": 6346
-          }
-        }
-      },
-      {
-        "heading": "Create or edit Task modal",
-        "level": 3,
-        "position": {
-          "end": {
-            "col": 29,
-            "line": 171,
-            "offset": 7921
-          },
-          "start": {
-            "col": 0,
-            "line": 171,
-            "offset": 7892
-          }
-        }
-      },
-      {
-        "heading": "Check the plugin starts OK with no `data.json` settings file",
+        "heading": "3 Remaining tests",
         "level": 2,
         "position": {
           "end": {
-            "col": 63,
+            "col": 20,
+            "line": 42,
+            "offset": 2430
+          },
+          "start": {
+            "col": 0,
+            "line": 42,
+            "offset": 2410
+          }
+        }
+      },
+      {
+        "heading": "4 The Smoke Tests",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 58,
+            "offset": 2686
+          },
+          "start": {
+            "col": 0,
+            "line": 58,
+            "offset": 2666
+          }
+        }
+      },
+      {
+        "heading": "4.1 Toggling tasks",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 22,
+            "line": 60,
+            "offset": 2710
+          },
+          "start": {
+            "col": 0,
+            "line": 60,
+            "offset": 2688
+          }
+        }
+      },
+      {
+        "heading": "4.1.1 Completion of tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 30,
+            "line": 62,
+            "offset": 2742
+          },
+          "start": {
+            "col": 0,
+            "line": 62,
+            "offset": 2712
+          }
+        }
+      },
+      {
+        "heading": "4.1.2 Un-completion of tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 33,
+            "line": 69,
+            "offset": 3162
+          },
+          "start": {
+            "col": 0,
+            "line": 69,
+            "offset": 3129
+          }
+        }
+      },
+      {
+        "heading": "4.1.3 Recurring Tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 26,
+            "line": 80,
+            "offset": 3708
+          },
+          "start": {
+            "col": 0,
+            "line": 80,
+            "offset": 3682
+          }
+        }
+      },
+      {
+        "heading": "4.2 On Completion",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 94,
+            "offset": 4411
+          },
+          "start": {
+            "col": 0,
+            "line": 94,
+            "offset": 4390
+          }
+        }
+      },
+      {
+        "heading": "4.2.1 On Completion Delete: Non-recurring tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 52,
+            "line": 96,
+            "offset": 4465
+          },
+          "start": {
+            "col": 0,
+            "line": 96,
+            "offset": 4413
+          }
+        }
+      },
+      {
+        "heading": "4.2.2 On Completion Delete: Recurring Tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 48,
+            "line": 105,
+            "offset": 5006
+          },
+          "start": {
+            "col": 0,
+            "line": 105,
+            "offset": 4958
+          }
+        }
+      },
+      {
+        "heading": "4.3 Rendering of Task Blocks",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 114,
+            "offset": 5707
+          },
+          "start": {
+            "col": 0,
+            "line": 114,
+            "offset": 5675
+          }
+        }
+      },
+      {
+        "heading": "4.4 Styling of Rendered Task Blocks",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 39,
+            "line": 137,
+            "offset": 6313
+          },
+          "start": {
+            "col": 0,
+            "line": 137,
+            "offset": 6274
+          }
+        }
+      },
+      {
+        "heading": "4.5 Edit dates in Rendered Task Blocks",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 143,
+            "offset": 6450
+          },
+          "start": {
+            "col": 0,
+            "line": 143,
+            "offset": 6408
+          }
+        }
+      },
+      {
+        "heading": "4.6 Create or edit Task modal",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 33,
+            "line": 171,
+            "offset": 7991
+          },
+          "start": {
+            "col": 0,
+            "line": 171,
+            "offset": 7958
+          }
+        }
+      },
+      {
+        "heading": "5 Check the plugin starts OK with no `data.json` settings file",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 65,
             "line": 189,
-            "offset": 9191
+            "offset": 9263
           },
           "start": {
             "col": 0,
             "line": 189,
-            "offset": 9128
+            "offset": 9198
           }
         }
       }
@@ -332,12 +332,12 @@
           "end": {
             "col": 59,
             "line": 139,
-            "offset": 6312
+            "offset": 6374
           },
           "start": {
             "col": 37,
             "line": 139,
-            "offset": 6290
+            "offset": 6352
           }
         }
       }
@@ -349,12 +349,12 @@
           "end": {
             "col": 36,
             "line": 6,
-            "offset": 132
+            "offset": 134
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 96
+            "offset": 98
           }
         }
       },
@@ -364,12 +364,12 @@
           "end": {
             "col": 238,
             "line": 7,
-            "offset": 371
+            "offset": 373
           },
           "start": {
             "col": 2,
             "line": 7,
-            "offset": 135
+            "offset": 137
           }
         }
       },
@@ -379,12 +379,12 @@
           "end": {
             "col": 27,
             "line": 8,
-            "offset": 399
+            "offset": 401
           },
           "start": {
             "col": 0,
             "line": 8,
-            "offset": 372
+            "offset": 374
           }
         }
       },
@@ -394,12 +394,12 @@
           "end": {
             "col": 217,
             "line": 9,
-            "offset": 617
+            "offset": 619
           },
           "start": {
             "col": 2,
             "line": 9,
-            "offset": 402
+            "offset": 404
           }
         }
       },
@@ -409,12 +409,12 @@
           "end": {
             "col": 30,
             "line": 10,
-            "offset": 648
+            "offset": 650
           },
           "start": {
             "col": 0,
             "line": 10,
-            "offset": 618
+            "offset": 620
           }
         }
       },
@@ -424,12 +424,12 @@
           "end": {
             "col": 275,
             "line": 11,
-            "offset": 924
+            "offset": 926
           },
           "start": {
             "col": 2,
             "line": 11,
-            "offset": 651
+            "offset": 653
           }
         }
       },
@@ -439,12 +439,12 @@
           "end": {
             "col": 37,
             "line": 12,
-            "offset": 962
+            "offset": 964
           },
           "start": {
             "col": 0,
             "line": 12,
-            "offset": 925
+            "offset": 927
           }
         }
       },
@@ -454,12 +454,12 @@
           "end": {
             "col": 78,
             "line": 13,
-            "offset": 1041
+            "offset": 1043
           },
           "start": {
             "col": 2,
             "line": 13,
-            "offset": 965
+            "offset": 967
           }
         }
       },
@@ -469,12 +469,12 @@
           "end": {
             "col": 141,
             "line": 23,
-            "offset": 1570
+            "offset": 1578
           },
           "start": {
             "col": 0,
             "line": 23,
-            "offset": 1429
+            "offset": 1437
           }
         }
       },
@@ -484,12 +484,12 @@
           "end": {
             "col": 56,
             "line": 24,
-            "offset": 1627
+            "offset": 1635
           },
           "start": {
             "col": 0,
             "line": 24,
-            "offset": 1571
+            "offset": 1579
           }
         }
       },
@@ -499,12 +499,12 @@
           "end": {
             "col": 17,
             "line": 25,
-            "offset": 1645
+            "offset": 1653
           },
           "start": {
             "col": 2,
             "line": 25,
-            "offset": 1630
+            "offset": 1638
           }
         }
       },
@@ -514,12 +514,12 @@
           "end": {
             "col": 37,
             "line": 26,
-            "offset": 1683
+            "offset": 1691
           },
           "start": {
             "col": 2,
             "line": 26,
-            "offset": 1648
+            "offset": 1656
           }
         }
       },
@@ -529,12 +529,12 @@
           "end": {
             "col": 39,
             "line": 27,
-            "offset": 1723
+            "offset": 1731
           },
           "start": {
             "col": 2,
             "line": 27,
-            "offset": 1686
+            "offset": 1694
           }
         }
       },
@@ -544,12 +544,12 @@
           "end": {
             "col": 67,
             "line": 28,
-            "offset": 1791
+            "offset": 1799
           },
           "start": {
             "col": 2,
             "line": 28,
-            "offset": 1726
+            "offset": 1734
           }
         }
       },
@@ -559,12 +559,12 @@
           "end": {
             "col": 16,
             "line": 29,
-            "offset": 1808
+            "offset": 1816
           },
           "start": {
             "col": 2,
             "line": 29,
-            "offset": 1794
+            "offset": 1802
           }
         }
       },
@@ -574,12 +574,12 @@
           "end": {
             "col": 91,
             "line": 30,
-            "offset": 1900
+            "offset": 1908
           },
           "start": {
             "col": 0,
             "line": 30,
-            "offset": 1809
+            "offset": 1817
           }
         }
       },
@@ -589,12 +589,12 @@
           "end": {
             "col": 179,
             "line": 31,
-            "offset": 2080
+            "offset": 2088
           },
           "start": {
             "col": 2,
             "line": 31,
-            "offset": 1903
+            "offset": 1911
           }
         }
       },
@@ -604,12 +604,12 @@
           "end": {
             "col": 136,
             "line": 35,
-            "offset": 2240
+            "offset": 2252
           },
           "start": {
             "col": 0,
             "line": 35,
-            "offset": 2104
+            "offset": 2116
           }
         }
       },
@@ -619,12 +619,12 @@
           "end": {
             "col": 96,
             "line": 64,
-            "offset": 2814
+            "offset": 2840
           },
           "start": {
             "col": 0,
             "line": 64,
-            "offset": 2718
+            "offset": 2744
           }
         },
         "task": " "
@@ -635,12 +635,12 @@
           "end": {
             "col": 73,
             "line": 65,
-            "offset": 2888
+            "offset": 2914
           },
           "start": {
             "col": 0,
             "line": 65,
-            "offset": 2815
+            "offset": 2841
           }
         },
         "task": " "
@@ -651,12 +651,12 @@
           "end": {
             "col": 120,
             "line": 66,
-            "offset": 3009
+            "offset": 3035
           },
           "start": {
             "col": 0,
             "line": 66,
-            "offset": 2889
+            "offset": 2915
           }
         },
         "task": " "
@@ -667,12 +667,12 @@
           "end": {
             "col": 91,
             "line": 67,
-            "offset": 3101
+            "offset": 3127
           },
           "start": {
             "col": 0,
             "line": 67,
-            "offset": 3010
+            "offset": 3036
           }
         },
         "task": " "
@@ -683,12 +683,12 @@
           "end": {
             "col": 113,
             "line": 73,
-            "offset": 3285
+            "offset": 3317
           },
           "start": {
             "col": 0,
             "line": 73,
-            "offset": 3172
+            "offset": 3204
           }
         },
         "task": "x"
@@ -699,12 +699,12 @@
           "end": {
             "col": 90,
             "line": 74,
-            "offset": 3376
+            "offset": 3408
           },
           "start": {
             "col": 0,
             "line": 74,
-            "offset": 3286
+            "offset": 3318
           }
         },
         "task": "x"
@@ -715,12 +715,12 @@
           "end": {
             "col": 137,
             "line": 75,
-            "offset": 3514
+            "offset": 3546
           },
           "start": {
             "col": 0,
             "line": 75,
-            "offset": 3377
+            "offset": 3409
           }
         },
         "task": "x"
@@ -731,12 +731,12 @@
           "end": {
             "col": 94,
             "line": 76,
-            "offset": 3609
+            "offset": 3641
           },
           "start": {
             "col": 0,
             "line": 76,
-            "offset": 3515
+            "offset": 3547
           }
         },
         "task": " "
@@ -747,12 +747,12 @@
           "end": {
             "col": 157,
             "line": 86,
-            "offset": 3985
+            "offset": 4023
           },
           "start": {
             "col": 2,
             "line": 86,
-            "offset": 3830
+            "offset": 3868
           }
         },
         "task": " "
@@ -763,12 +763,12 @@
           "end": {
             "col": 118,
             "line": 88,
-            "offset": 4106
+            "offset": 4144
           },
           "start": {
             "col": 4,
             "line": 88,
-            "offset": 3992
+            "offset": 4030
           }
         },
         "task": " "
@@ -779,12 +779,12 @@
           "end": {
             "col": 161,
             "line": 90,
-            "offset": 4269
+            "offset": 4307
           },
           "start": {
             "col": 0,
             "line": 90,
-            "offset": 4108
+            "offset": 4146
           }
         },
         "task": " "
@@ -795,12 +795,12 @@
           "end": {
             "col": 79,
             "line": 92,
-            "offset": 4350
+            "offset": 4388
           },
           "start": {
             "col": 2,
             "line": 92,
-            "offset": 4273
+            "offset": 4311
           }
         },
         "task": " "
@@ -811,12 +811,12 @@
           "end": {
             "col": 143,
             "line": 100,
-            "offset": 4606
+            "offset": 4654
           },
           "start": {
             "col": 0,
             "line": 100,
-            "offset": 4463
+            "offset": 4511
           }
         },
         "task": " "
@@ -827,12 +827,12 @@
           "end": {
             "col": 102,
             "line": 101,
-            "offset": 4709
+            "offset": 4757
           },
           "start": {
             "col": 0,
             "line": 101,
-            "offset": 4607
+            "offset": 4655
           }
         },
         "task": " "
@@ -843,12 +843,12 @@
           "end": {
             "col": 102,
             "line": 102,
-            "offset": 4812
+            "offset": 4860
           },
           "start": {
             "col": 0,
             "line": 102,
-            "offset": 4710
+            "offset": 4758
           }
         },
         "task": " "
@@ -859,12 +859,12 @@
           "end": {
             "col": 95,
             "line": 103,
-            "offset": 4908
+            "offset": 4956
           },
           "start": {
             "col": 0,
             "line": 103,
-            "offset": 4813
+            "offset": 4861
           }
         },
         "task": " "
@@ -875,12 +875,12 @@
           "end": {
             "col": 152,
             "line": 109,
-            "offset": 5256
+            "offset": 5310
           },
           "start": {
             "col": 0,
             "line": 109,
-            "offset": 5104
+            "offset": 5158
           }
         },
         "task": " "
@@ -891,12 +891,12 @@
           "end": {
             "col": 111,
             "line": 110,
-            "offset": 5368
+            "offset": 5422
           },
           "start": {
             "col": 0,
             "line": 110,
-            "offset": 5257
+            "offset": 5311
           }
         },
         "task": " "
@@ -907,12 +907,12 @@
           "end": {
             "col": 158,
             "line": 111,
-            "offset": 5527
+            "offset": 5581
           },
           "start": {
             "col": 0,
             "line": 111,
-            "offset": 5369
+            "offset": 5423
           }
         },
         "task": " "
@@ -923,12 +923,12 @@
           "end": {
             "col": 91,
             "line": 112,
-            "offset": 5619
+            "offset": 5673
           },
           "start": {
             "col": 0,
             "line": 112,
-            "offset": 5528
+            "offset": 5582
           }
         },
         "task": " "
@@ -939,12 +939,12 @@
           "end": {
             "col": 100,
             "line": 120,
-            "offset": 5805
+            "offset": 5863
           },
           "start": {
             "col": 0,
             "line": 120,
-            "offset": 5705
+            "offset": 5763
           }
         },
         "task": " "
@@ -955,12 +955,12 @@
           "end": {
             "col": 100,
             "line": 121,
-            "offset": 5906
+            "offset": 5964
           },
           "start": {
             "col": 0,
             "line": 121,
-            "offset": 5806
+            "offset": 5864
           }
         },
         "task": " "
@@ -971,12 +971,12 @@
           "end": {
             "col": 81,
             "line": 122,
-            "offset": 5988
+            "offset": 6046
           },
           "start": {
             "col": 0,
             "line": 122,
-            "offset": 5907
+            "offset": 5965
           }
         },
         "task": " "
@@ -987,12 +987,12 @@
           "end": {
             "col": 86,
             "line": 139,
-            "offset": 6339
+            "offset": 6401
           },
           "start": {
             "col": 0,
             "line": 139,
-            "offset": 6253
+            "offset": 6315
           }
         },
         "task": " "
@@ -1003,12 +1003,12 @@
           "end": {
             "col": 142,
             "line": 147,
-            "offset": 6543
+            "offset": 6609
           },
           "start": {
             "col": 2,
             "line": 147,
-            "offset": 6403
+            "offset": 6469
           }
         },
         "task": " "
@@ -1019,12 +1019,12 @@
           "end": {
             "col": 39,
             "line": 149,
-            "offset": 6584
+            "offset": 6650
           },
           "start": {
             "col": 0,
             "line": 149,
-            "offset": 6545
+            "offset": 6611
           }
         }
       },
@@ -1034,12 +1034,12 @@
           "end": {
             "col": 25,
             "line": 150,
-            "offset": 6610
+            "offset": 6676
           },
           "start": {
             "col": 0,
             "line": 150,
-            "offset": 6585
+            "offset": 6651
           }
         }
       },
@@ -1049,12 +1049,12 @@
           "end": {
             "col": 138,
             "line": 151,
-            "offset": 6749
+            "offset": 6815
           },
           "start": {
             "col": 2,
             "line": 151,
-            "offset": 6613
+            "offset": 6679
           }
         },
         "task": " "
@@ -1065,12 +1065,12 @@
           "end": {
             "col": 115,
             "line": 152,
-            "offset": 6865
+            "offset": 6931
           },
           "start": {
             "col": 2,
             "line": 152,
-            "offset": 6752
+            "offset": 6818
           }
         },
         "task": " "
@@ -1081,12 +1081,12 @@
           "end": {
             "col": 140,
             "line": 153,
-            "offset": 7006
+            "offset": 7072
           },
           "start": {
             "col": 2,
             "line": 153,
-            "offset": 6868
+            "offset": 6934
           }
         },
         "task": " "
@@ -1097,12 +1097,12 @@
           "end": {
             "col": 115,
             "line": 154,
-            "offset": 7122
+            "offset": 7188
           },
           "start": {
             "col": 2,
             "line": 154,
-            "offset": 7009
+            "offset": 7075
           }
         },
         "task": " "
@@ -1113,12 +1113,12 @@
           "end": {
             "col": 34,
             "line": 155,
-            "offset": 7157
+            "offset": 7223
           },
           "start": {
             "col": 0,
             "line": 155,
-            "offset": 7123
+            "offset": 7189
           }
         }
       },
@@ -1128,12 +1128,12 @@
           "end": {
             "col": 138,
             "line": 156,
-            "offset": 7296
+            "offset": 7362
           },
           "start": {
             "col": 2,
             "line": 156,
-            "offset": 7160
+            "offset": 7226
           }
         },
         "task": " "
@@ -1144,12 +1144,12 @@
           "end": {
             "col": 115,
             "line": 157,
-            "offset": 7412
+            "offset": 7478
           },
           "start": {
             "col": 2,
             "line": 157,
-            "offset": 7299
+            "offset": 7365
           }
         },
         "task": " "
@@ -1160,12 +1160,12 @@
           "end": {
             "col": 140,
             "line": 158,
-            "offset": 7553
+            "offset": 7619
           },
           "start": {
             "col": 2,
             "line": 158,
-            "offset": 7415
+            "offset": 7481
           }
         },
         "task": " "
@@ -1176,12 +1176,12 @@
           "end": {
             "col": 115,
             "line": 159,
-            "offset": 7669
+            "offset": 7735
           },
           "start": {
             "col": 2,
             "line": 159,
-            "offset": 7556
+            "offset": 7622
           }
         },
         "task": " "
@@ -1192,12 +1192,12 @@
           "end": {
             "col": 75,
             "line": 160,
-            "offset": 7745
+            "offset": 7811
           },
           "start": {
             "col": 0,
             "line": 160,
-            "offset": 7670
+            "offset": 7736
           }
         },
         "task": " "
@@ -1208,12 +1208,12 @@
           "end": {
             "col": 81,
             "line": 173,
-            "offset": 8004
+            "offset": 8074
           },
           "start": {
             "col": 0,
             "line": 173,
-            "offset": 7923
+            "offset": 7993
           }
         }
       },
@@ -1223,12 +1223,12 @@
           "end": {
             "col": 137,
             "line": 174,
-            "offset": 8142
+            "offset": 8212
           },
           "start": {
             "col": 0,
             "line": 174,
-            "offset": 8005
+            "offset": 8075
           }
         },
         "task": " "
@@ -1239,12 +1239,12 @@
           "end": {
             "col": 41,
             "line": 175,
-            "offset": 8184
+            "offset": 8254
           },
           "start": {
             "col": 2,
             "line": 175,
-            "offset": 8145
+            "offset": 8215
           }
         }
       },
@@ -1254,12 +1254,12 @@
           "end": {
             "col": 85,
             "line": 176,
-            "offset": 8270
+            "offset": 8340
           },
           "start": {
             "col": 2,
             "line": 176,
-            "offset": 8187
+            "offset": 8257
           }
         }
       },
@@ -1269,12 +1269,12 @@
           "end": {
             "col": 40,
             "line": 177,
-            "offset": 8311
+            "offset": 8381
           },
           "start": {
             "col": 2,
             "line": 177,
-            "offset": 8273
+            "offset": 8343
           }
         }
       },
@@ -1284,12 +1284,12 @@
           "end": {
             "col": 122,
             "line": 178,
-            "offset": 8434
+            "offset": 8504
           },
           "start": {
             "col": 2,
             "line": 178,
-            "offset": 8314
+            "offset": 8384
           }
         }
       },
@@ -1299,12 +1299,12 @@
           "end": {
             "col": 147,
             "line": 179,
-            "offset": 8582
+            "offset": 8652
           },
           "start": {
             "col": 2,
             "line": 179,
-            "offset": 8437
+            "offset": 8507
           }
         }
       },
@@ -1314,12 +1314,12 @@
           "end": {
             "col": 165,
             "line": 180,
-            "offset": 8748
+            "offset": 8818
           },
           "start": {
             "col": 2,
             "line": 180,
-            "offset": 8585
+            "offset": 8655
           }
         }
       },
@@ -1329,12 +1329,12 @@
           "end": {
             "col": 36,
             "line": 181,
-            "offset": 8785
+            "offset": 8855
           },
           "start": {
             "col": 2,
             "line": 181,
-            "offset": 8751
+            "offset": 8821
           }
         }
       },
@@ -1344,12 +1344,12 @@
           "end": {
             "col": 67,
             "line": 182,
-            "offset": 8853
+            "offset": 8923
           },
           "start": {
             "col": 2,
             "line": 182,
-            "offset": 8788
+            "offset": 8858
           }
         }
       },
@@ -1359,12 +1359,12 @@
           "end": {
             "col": 96,
             "line": 183,
-            "offset": 8950
+            "offset": 9020
           },
           "start": {
             "col": 2,
             "line": 183,
-            "offset": 8856
+            "offset": 8926
           }
         }
       },
@@ -1374,12 +1374,12 @@
           "end": {
             "col": 78,
             "line": 184,
-            "offset": 9029
+            "offset": 9099
           },
           "start": {
             "col": 2,
             "line": 184,
-            "offset": 8953
+            "offset": 9023
           }
         }
       },
@@ -1389,12 +1389,12 @@
           "end": {
             "col": 91,
             "line": 185,
-            "offset": 9121
+            "offset": 9191
           },
           "start": {
             "col": 0,
             "line": 185,
-            "offset": 9030
+            "offset": 9100
           }
         },
         "task": " "
@@ -1405,12 +1405,12 @@
           "end": {
             "col": 13,
             "line": 191,
-            "offset": 9206
+            "offset": 9278
           },
           "start": {
             "col": 0,
             "line": 191,
-            "offset": 9193
+            "offset": 9265
           }
         }
       },
@@ -1420,12 +1420,12 @@
           "end": {
             "col": 115,
             "line": 192,
-            "offset": 9322
+            "offset": 9394
           },
           "start": {
             "col": 2,
             "line": 192,
-            "offset": 9209
+            "offset": 9281
           }
         }
       },
@@ -1435,12 +1435,12 @@
           "end": {
             "col": 17,
             "line": 193,
-            "offset": 9340
+            "offset": 9412
           },
           "start": {
             "col": 2,
             "line": 193,
-            "offset": 9325
+            "offset": 9397
           }
         }
       },
@@ -1450,12 +1450,12 @@
           "end": {
             "col": 43,
             "line": 194,
-            "offset": 9384
+            "offset": 9456
           },
           "start": {
             "col": 2,
             "line": 194,
-            "offset": 9343
+            "offset": 9415
           }
         }
       },
@@ -1465,12 +1465,12 @@
           "end": {
             "col": 22,
             "line": 195,
-            "offset": 9407
+            "offset": 9479
           },
           "start": {
             "col": 2,
             "line": 195,
-            "offset": 9387
+            "offset": 9459
           }
         }
       },
@@ -1480,12 +1480,12 @@
           "end": {
             "col": 6,
             "line": 196,
-            "offset": 9414
+            "offset": 9486
           },
           "start": {
             "col": 0,
             "line": 196,
-            "offset": 9408
+            "offset": 9480
           }
         }
       },
@@ -1495,12 +1495,12 @@
           "end": {
             "col": 20,
             "line": 197,
-            "offset": 9435
+            "offset": 9507
           },
           "start": {
             "col": 2,
             "line": 197,
-            "offset": 9417
+            "offset": 9489
           }
         }
       },
@@ -1510,12 +1510,12 @@
           "end": {
             "col": 18,
             "line": 198,
-            "offset": 9454
+            "offset": 9526
           },
           "start": {
             "col": 2,
             "line": 198,
-            "offset": 9438
+            "offset": 9510
           }
         }
       },
@@ -1525,12 +1525,12 @@
           "end": {
             "col": 68,
             "line": 199,
-            "offset": 9523
+            "offset": 9595
           },
           "start": {
             "col": 2,
             "line": 199,
-            "offset": 9457
+            "offset": 9529
           }
         }
       },
@@ -1540,12 +1540,12 @@
           "end": {
             "col": 34,
             "line": 200,
-            "offset": 9558
+            "offset": 9630
           },
           "start": {
             "col": 2,
             "line": 200,
-            "offset": 9526
+            "offset": 9598
           }
         }
       },
@@ -1555,12 +1555,12 @@
           "end": {
             "col": 20,
             "line": 201,
-            "offset": 9579
+            "offset": 9651
           },
           "start": {
             "col": 2,
             "line": 201,
-            "offset": 9561
+            "offset": 9633
           }
         }
       },
@@ -1570,12 +1570,12 @@
           "end": {
             "col": 59,
             "line": 202,
-            "offset": 9639
+            "offset": 9711
           },
           "start": {
             "col": 2,
             "line": 202,
-            "offset": 9582
+            "offset": 9654
           }
         }
       },
@@ -1585,12 +1585,12 @@
           "end": {
             "col": 98,
             "line": 203,
-            "offset": 9738
+            "offset": 9810
           },
           "start": {
             "col": 0,
             "line": 203,
-            "offset": 9640
+            "offset": 9712
           }
         },
         "task": " "
@@ -1630,9 +1630,9 @@
       {
         "position": {
           "end": {
-            "col": 15,
+            "col": 17,
             "line": 4,
-            "offset": 94
+            "offset": 96
           },
           "start": {
             "col": 0,
@@ -1647,12 +1647,12 @@
           "end": {
             "col": 78,
             "line": 13,
-            "offset": 1041
+            "offset": 1043
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 96
+            "offset": 98
           }
         },
         "type": "list"
@@ -1660,14 +1660,14 @@
       {
         "position": {
           "end": {
-            "col": 21,
+            "col": 23,
             "line": 15,
-            "offset": 1064
+            "offset": 1068
           },
           "start": {
             "col": 0,
             "line": 15,
-            "offset": 1043
+            "offset": 1045
           }
         },
         "type": "heading"
@@ -1675,14 +1675,14 @@
       {
         "position": {
           "end": {
-            "col": 56,
+            "col": 60,
             "line": 17,
-            "offset": 1122
+            "offset": 1130
           },
           "start": {
             "col": 0,
             "line": 17,
-            "offset": 1066
+            "offset": 1070
           }
         },
         "type": "heading"
@@ -1692,12 +1692,12 @@
           "end": {
             "col": 207,
             "line": 19,
-            "offset": 1331
+            "offset": 1339
           },
           "start": {
             "col": 0,
             "line": 19,
-            "offset": 1124
+            "offset": 1132
           }
         },
         "type": "paragraph"
@@ -1707,12 +1707,12 @@
           "end": {
             "col": 94,
             "line": 21,
-            "offset": 1427
+            "offset": 1435
           },
           "start": {
             "col": 0,
             "line": 21,
-            "offset": 1333
+            "offset": 1341
           }
         },
         "type": "paragraph"
@@ -1722,12 +1722,12 @@
           "end": {
             "col": 179,
             "line": 31,
-            "offset": 2080
+            "offset": 2088
           },
           "start": {
             "col": 0,
             "line": 23,
-            "offset": 1429
+            "offset": 1437
           }
         },
         "type": "list"
@@ -1735,14 +1735,14 @@
       {
         "position": {
           "end": {
-            "col": 20,
+            "col": 24,
             "line": 33,
-            "offset": 2102
+            "offset": 2114
           },
           "start": {
             "col": 0,
             "line": 33,
-            "offset": 2082
+            "offset": 2090
           }
         },
         "type": "heading"
@@ -1752,12 +1752,12 @@
           "end": {
             "col": 136,
             "line": 35,
-            "offset": 2240
+            "offset": 2252
           },
           "start": {
             "col": 0,
             "line": 35,
-            "offset": 2104
+            "offset": 2116
           }
         },
         "type": "list"
@@ -1767,12 +1767,12 @@
           "end": {
             "col": 134,
             "line": 38,
-            "offset": 2391
+            "offset": 2403
           },
           "start": {
             "col": 0,
             "line": 37,
-            "offset": 2242
+            "offset": 2254
           }
         },
         "type": "callout"
@@ -1782,12 +1782,12 @@
           "end": {
             "col": 3,
             "line": 40,
-            "offset": 2396
+            "offset": 2408
           },
           "start": {
             "col": 0,
             "line": 40,
-            "offset": 2393
+            "offset": 2405
           }
         },
         "type": "thematicBreak"
@@ -1795,14 +1795,14 @@
       {
         "position": {
           "end": {
-            "col": 18,
+            "col": 20,
             "line": 42,
-            "offset": 2416
+            "offset": 2430
           },
           "start": {
             "col": 0,
             "line": 42,
-            "offset": 2398
+            "offset": 2410
           }
         },
         "type": "heading"
@@ -1812,12 +1812,12 @@
           "end": {
             "col": 72,
             "line": 44,
-            "offset": 2490
+            "offset": 2504
           },
           "start": {
             "col": 0,
             "line": 44,
-            "offset": 2418
+            "offset": 2432
           }
         },
         "type": "paragraph"
@@ -1827,12 +1827,12 @@
           "end": {
             "col": 5,
             "line": 54,
-            "offset": 2645
+            "offset": 2659
           },
           "start": {
             "col": 0,
             "line": 46,
-            "offset": 2492
+            "offset": 2506
           }
         },
         "type": "callout"
@@ -1842,12 +1842,12 @@
           "end": {
             "col": 3,
             "line": 56,
-            "offset": 2650
+            "offset": 2664
           },
           "start": {
             "col": 0,
             "line": 56,
-            "offset": 2647
+            "offset": 2661
           }
         },
         "type": "thematicBreak"
@@ -1855,14 +1855,14 @@
       {
         "position": {
           "end": {
-            "col": 18,
+            "col": 20,
             "line": 58,
-            "offset": 2670
+            "offset": 2686
           },
           "start": {
             "col": 0,
             "line": 58,
-            "offset": 2652
+            "offset": 2666
           }
         },
         "type": "heading"
@@ -1870,14 +1870,14 @@
       {
         "position": {
           "end": {
-            "col": 18,
+            "col": 22,
             "line": 60,
-            "offset": 2690
+            "offset": 2710
           },
           "start": {
             "col": 0,
             "line": 60,
-            "offset": 2672
+            "offset": 2688
           }
         },
         "type": "heading"
@@ -1885,14 +1885,14 @@
       {
         "position": {
           "end": {
-            "col": 24,
+            "col": 30,
             "line": 62,
-            "offset": 2716
+            "offset": 2742
           },
           "start": {
             "col": 0,
             "line": 62,
-            "offset": 2692
+            "offset": 2712
           }
         },
         "type": "heading"
@@ -1902,12 +1902,12 @@
           "end": {
             "col": 91,
             "line": 67,
-            "offset": 3101
+            "offset": 3127
           },
           "start": {
             "col": 0,
             "line": 64,
-            "offset": 2718
+            "offset": 2744
           }
         },
         "type": "list"
@@ -1915,14 +1915,14 @@
       {
         "position": {
           "end": {
-            "col": 27,
+            "col": 33,
             "line": 69,
-            "offset": 3130
+            "offset": 3162
           },
           "start": {
             "col": 0,
             "line": 69,
-            "offset": 3103
+            "offset": 3129
           }
         },
         "type": "heading"
@@ -1932,12 +1932,12 @@
           "end": {
             "col": 38,
             "line": 71,
-            "offset": 3170
+            "offset": 3202
           },
           "start": {
             "col": 0,
             "line": 71,
-            "offset": 3132
+            "offset": 3164
           }
         },
         "type": "html"
@@ -1947,12 +1947,12 @@
           "end": {
             "col": 94,
             "line": 76,
-            "offset": 3609
+            "offset": 3641
           },
           "start": {
             "col": 0,
             "line": 73,
-            "offset": 3172
+            "offset": 3204
           }
         },
         "type": "list"
@@ -1962,12 +1962,12 @@
           "end": {
             "col": 37,
             "line": 78,
-            "offset": 3648
+            "offset": 3680
           },
           "start": {
             "col": 0,
             "line": 78,
-            "offset": 3611
+            "offset": 3643
           }
         },
         "type": "html"
@@ -1975,14 +1975,14 @@
       {
         "position": {
           "end": {
-            "col": 20,
+            "col": 26,
             "line": 80,
-            "offset": 3670
+            "offset": 3708
           },
           "start": {
             "col": 0,
             "line": 80,
-            "offset": 3650
+            "offset": 3682
           }
         },
         "type": "heading"
@@ -1992,12 +1992,12 @@
           "end": {
             "col": 142,
             "line": 82,
-            "offset": 3814
+            "offset": 3852
           },
           "start": {
             "col": 0,
             "line": 82,
-            "offset": 3672
+            "offset": 3710
           }
         },
         "type": "paragraph"
@@ -2007,12 +2007,12 @@
           "end": {
             "col": 118,
             "line": 88,
-            "offset": 4106
+            "offset": 4144
           },
           "start": {
             "col": 0,
             "line": 84,
-            "offset": 3816
+            "offset": 3854
           }
         },
         "type": "callout"
@@ -2022,12 +2022,12 @@
           "end": {
             "col": 161,
             "line": 90,
-            "offset": 4269
+            "offset": 4307
           },
           "start": {
             "col": 0,
             "line": 90,
-            "offset": 4108
+            "offset": 4146
           }
         },
         "type": "list"
@@ -2037,12 +2037,12 @@
           "end": {
             "col": 79,
             "line": 92,
-            "offset": 4350
+            "offset": 4388
           },
           "start": {
             "col": 0,
             "line": 92,
-            "offset": 4271
+            "offset": 4309
           }
         },
         "type": "blockquote"
@@ -2050,14 +2050,14 @@
       {
         "position": {
           "end": {
-            "col": 17,
+            "col": 21,
             "line": 94,
-            "offset": 4369
+            "offset": 4411
           },
           "start": {
             "col": 0,
             "line": 94,
-            "offset": 4352
+            "offset": 4390
           }
         },
         "type": "heading"
@@ -2065,14 +2065,14 @@
       {
         "position": {
           "end": {
-            "col": 46,
+            "col": 52,
             "line": 96,
-            "offset": 4417
+            "offset": 4465
           },
           "start": {
             "col": 0,
             "line": 96,
-            "offset": 4371
+            "offset": 4413
           }
         },
         "type": "heading"
@@ -2082,12 +2082,12 @@
           "end": {
             "col": 42,
             "line": 98,
-            "offset": 4461
+            "offset": 4509
           },
           "start": {
             "col": 0,
             "line": 98,
-            "offset": 4419
+            "offset": 4467
           }
         },
         "type": "paragraph"
@@ -2097,12 +2097,12 @@
           "end": {
             "col": 95,
             "line": 103,
-            "offset": 4908
+            "offset": 4956
           },
           "start": {
             "col": 0,
             "line": 100,
-            "offset": 4463
+            "offset": 4511
           }
         },
         "type": "list"
@@ -2110,14 +2110,14 @@
       {
         "position": {
           "end": {
-            "col": 42,
+            "col": 48,
             "line": 105,
-            "offset": 4952
+            "offset": 5006
           },
           "start": {
             "col": 0,
             "line": 105,
-            "offset": 4910
+            "offset": 4958
           }
         },
         "type": "heading"
@@ -2127,12 +2127,12 @@
           "end": {
             "col": 148,
             "line": 107,
-            "offset": 5102
+            "offset": 5156
           },
           "start": {
             "col": 0,
             "line": 107,
-            "offset": 4954
+            "offset": 5008
           }
         },
         "type": "paragraph"
@@ -2142,12 +2142,12 @@
           "end": {
             "col": 91,
             "line": 112,
-            "offset": 5619
+            "offset": 5673
           },
           "start": {
             "col": 0,
             "line": 109,
-            "offset": 5104
+            "offset": 5158
           }
         },
         "type": "list"
@@ -2155,14 +2155,14 @@
       {
         "position": {
           "end": {
-            "col": 28,
+            "col": 32,
             "line": 114,
-            "offset": 5649
+            "offset": 5707
           },
           "start": {
             "col": 0,
             "line": 114,
-            "offset": 5621
+            "offset": 5675
           }
         },
         "type": "heading"
@@ -2172,12 +2172,12 @@
           "end": {
             "col": 12,
             "line": 116,
-            "offset": 5663
+            "offset": 5721
           },
           "start": {
             "col": 0,
             "line": 116,
-            "offset": 5651
+            "offset": 5709
           }
         },
         "type": "paragraph"
@@ -2187,12 +2187,12 @@
           "end": {
             "col": 38,
             "line": 118,
-            "offset": 5703
+            "offset": 5761
           },
           "start": {
             "col": 0,
             "line": 118,
-            "offset": 5665
+            "offset": 5723
           }
         },
         "type": "html"
@@ -2202,12 +2202,12 @@
           "end": {
             "col": 81,
             "line": 122,
-            "offset": 5988
+            "offset": 6046
           },
           "start": {
             "col": 0,
             "line": 120,
-            "offset": 5705
+            "offset": 5763
           }
         },
         "type": "list"
@@ -2217,12 +2217,12 @@
           "end": {
             "col": 37,
             "line": 124,
-            "offset": 6027
+            "offset": 6085
           },
           "start": {
             "col": 0,
             "line": 124,
-            "offset": 5990
+            "offset": 6048
           }
         },
         "type": "html"
@@ -2232,12 +2232,12 @@
           "end": {
             "col": 3,
             "line": 126,
-            "offset": 6032
+            "offset": 6090
           },
           "start": {
             "col": 0,
             "line": 126,
-            "offset": 6029
+            "offset": 6087
           }
         },
         "type": "thematicBreak"
@@ -2247,12 +2247,12 @@
           "end": {
             "col": 85,
             "line": 128,
-            "offset": 6119
+            "offset": 6177
           },
           "start": {
             "col": 0,
             "line": 128,
-            "offset": 6034
+            "offset": 6092
           }
         },
         "type": "paragraph"
@@ -2262,12 +2262,12 @@
           "end": {
             "col": 3,
             "line": 133,
-            "offset": 6209
+            "offset": 6267
           },
           "start": {
             "col": 0,
             "line": 130,
-            "offset": 6121
+            "offset": 6179
           }
         },
         "type": "code"
@@ -2277,12 +2277,12 @@
           "end": {
             "col": 3,
             "line": 135,
-            "offset": 6214
+            "offset": 6272
           },
           "start": {
             "col": 0,
             "line": 135,
-            "offset": 6211
+            "offset": 6269
           }
         },
         "type": "thematicBreak"
@@ -2290,14 +2290,14 @@
       {
         "position": {
           "end": {
-            "col": 35,
+            "col": 39,
             "line": 137,
-            "offset": 6251
+            "offset": 6313
           },
           "start": {
             "col": 0,
             "line": 137,
-            "offset": 6216
+            "offset": 6274
           }
         },
         "type": "heading"
@@ -2307,12 +2307,12 @@
           "end": {
             "col": 86,
             "line": 139,
-            "offset": 6339
+            "offset": 6401
           },
           "start": {
             "col": 0,
             "line": 139,
-            "offset": 6253
+            "offset": 6315
           }
         },
         "type": "list"
@@ -2322,12 +2322,12 @@
           "end": {
             "col": 3,
             "line": 141,
-            "offset": 6344
+            "offset": 6406
           },
           "start": {
             "col": 0,
             "line": 141,
-            "offset": 6341
+            "offset": 6403
           }
         },
         "type": "thematicBreak"
@@ -2335,14 +2335,14 @@
       {
         "position": {
           "end": {
-            "col": 38,
+            "col": 42,
             "line": 143,
-            "offset": 6384
+            "offset": 6450
           },
           "start": {
             "col": 0,
             "line": 143,
-            "offset": 6346
+            "offset": 6408
           }
         },
         "type": "heading"
@@ -2352,12 +2352,12 @@
           "end": {
             "col": 142,
             "line": 147,
-            "offset": 6543
+            "offset": 6609
           },
           "start": {
             "col": 0,
             "line": 145,
-            "offset": 6386
+            "offset": 6452
           }
         },
         "type": "callout"
@@ -2367,12 +2367,12 @@
           "end": {
             "col": 75,
             "line": 160,
-            "offset": 7745
+            "offset": 7811
           },
           "start": {
             "col": 0,
             "line": 149,
-            "offset": 6545
+            "offset": 6611
           }
         },
         "type": "list"
@@ -2382,12 +2382,12 @@
           "end": {
             "col": 3,
             "line": 167,
-            "offset": 7885
+            "offset": 7951
           },
           "start": {
             "col": 0,
             "line": 162,
-            "offset": 7747
+            "offset": 7813
           }
         },
         "type": "code"
@@ -2397,12 +2397,12 @@
           "end": {
             "col": 3,
             "line": 169,
-            "offset": 7890
+            "offset": 7956
           },
           "start": {
             "col": 0,
             "line": 169,
-            "offset": 7887
+            "offset": 7953
           }
         },
         "type": "thematicBreak"
@@ -2410,14 +2410,14 @@
       {
         "position": {
           "end": {
-            "col": 29,
+            "col": 33,
             "line": 171,
-            "offset": 7921
+            "offset": 7991
           },
           "start": {
             "col": 0,
             "line": 171,
-            "offset": 7892
+            "offset": 7958
           }
         },
         "type": "heading"
@@ -2427,12 +2427,12 @@
           "end": {
             "col": 91,
             "line": 185,
-            "offset": 9121
+            "offset": 9191
           },
           "start": {
             "col": 0,
             "line": 173,
-            "offset": 7923
+            "offset": 7993
           }
         },
         "type": "list"
@@ -2442,12 +2442,12 @@
           "end": {
             "col": 3,
             "line": 187,
-            "offset": 9126
+            "offset": 9196
           },
           "start": {
             "col": 0,
             "line": 187,
-            "offset": 9123
+            "offset": 9193
           }
         },
         "type": "thematicBreak"
@@ -2455,14 +2455,14 @@
       {
         "position": {
           "end": {
-            "col": 63,
+            "col": 65,
             "line": 189,
-            "offset": 9191
+            "offset": 9263
           },
           "start": {
             "col": 0,
             "line": 189,
-            "offset": 9128
+            "offset": 9198
           }
         },
         "type": "heading"
@@ -2472,12 +2472,12 @@
           "end": {
             "col": 98,
             "line": 203,
-            "offset": 9738
+            "offset": 9810
           },
           "start": {
             "col": 0,
             "line": 191,
-            "offset": 9193
+            "offset": 9265
           }
         },
         "type": "list"
@@ -2489,12 +2489,12 @@
           "end": {
             "col": 11,
             "line": 64,
-            "offset": 2729
+            "offset": 2755
           },
           "start": {
             "col": 6,
             "line": 64,
-            "offset": 2724
+            "offset": 2750
           }
         },
         "tag": "#task"
@@ -2504,12 +2504,12 @@
           "end": {
             "col": 11,
             "line": 65,
-            "offset": 2826
+            "offset": 2852
           },
           "start": {
             "col": 6,
             "line": 65,
-            "offset": 2821
+            "offset": 2847
           }
         },
         "tag": "#task"
@@ -2519,12 +2519,12 @@
           "end": {
             "col": 11,
             "line": 66,
-            "offset": 2900
+            "offset": 2926
           },
           "start": {
             "col": 6,
             "line": 66,
-            "offset": 2895
+            "offset": 2921
           }
         },
         "tag": "#task"
@@ -2534,12 +2534,12 @@
           "end": {
             "col": 11,
             "line": 67,
-            "offset": 3021
+            "offset": 3047
           },
           "start": {
             "col": 6,
             "line": 67,
-            "offset": 3016
+            "offset": 3042
           }
         },
         "tag": "#task"
@@ -2549,12 +2549,12 @@
           "end": {
             "col": 11,
             "line": 73,
-            "offset": 3183
+            "offset": 3215
           },
           "start": {
             "col": 6,
             "line": 73,
-            "offset": 3178
+            "offset": 3210
           }
         },
         "tag": "#task"
@@ -2564,12 +2564,12 @@
           "end": {
             "col": 11,
             "line": 74,
-            "offset": 3297
+            "offset": 3329
           },
           "start": {
             "col": 6,
             "line": 74,
-            "offset": 3292
+            "offset": 3324
           }
         },
         "tag": "#task"
@@ -2579,12 +2579,12 @@
           "end": {
             "col": 11,
             "line": 75,
-            "offset": 3388
+            "offset": 3420
           },
           "start": {
             "col": 6,
             "line": 75,
-            "offset": 3383
+            "offset": 3415
           }
         },
         "tag": "#task"
@@ -2594,12 +2594,12 @@
           "end": {
             "col": 11,
             "line": 76,
-            "offset": 3526
+            "offset": 3558
           },
           "start": {
             "col": 6,
             "line": 76,
-            "offset": 3521
+            "offset": 3553
           }
         },
         "tag": "#task"
@@ -2609,12 +2609,12 @@
           "end": {
             "col": 13,
             "line": 86,
-            "offset": 3841
+            "offset": 3879
           },
           "start": {
             "col": 8,
             "line": 86,
-            "offset": 3836
+            "offset": 3874
           }
         },
         "tag": "#task"
@@ -2624,12 +2624,12 @@
           "end": {
             "col": 15,
             "line": 88,
-            "offset": 4003
+            "offset": 4041
           },
           "start": {
             "col": 10,
             "line": 88,
-            "offset": 3998
+            "offset": 4036
           }
         },
         "tag": "#task"
@@ -2639,12 +2639,12 @@
           "end": {
             "col": 11,
             "line": 90,
-            "offset": 4119
+            "offset": 4157
           },
           "start": {
             "col": 6,
             "line": 90,
-            "offset": 4114
+            "offset": 4152
           }
         },
         "tag": "#task"
@@ -2654,12 +2654,12 @@
           "end": {
             "col": 13,
             "line": 92,
-            "offset": 4284
+            "offset": 4322
           },
           "start": {
             "col": 8,
             "line": 92,
-            "offset": 4279
+            "offset": 4317
           }
         },
         "tag": "#task"
@@ -2669,12 +2669,12 @@
           "end": {
             "col": 11,
             "line": 100,
-            "offset": 4474
+            "offset": 4522
           },
           "start": {
             "col": 6,
             "line": 100,
-            "offset": 4469
+            "offset": 4517
           }
         },
         "tag": "#task"
@@ -2684,12 +2684,12 @@
           "end": {
             "col": 11,
             "line": 101,
-            "offset": 4618
+            "offset": 4666
           },
           "start": {
             "col": 6,
             "line": 101,
-            "offset": 4613
+            "offset": 4661
           }
         },
         "tag": "#task"
@@ -2699,12 +2699,12 @@
           "end": {
             "col": 11,
             "line": 102,
-            "offset": 4721
+            "offset": 4769
           },
           "start": {
             "col": 6,
             "line": 102,
-            "offset": 4716
+            "offset": 4764
           }
         },
         "tag": "#task"
@@ -2714,12 +2714,12 @@
           "end": {
             "col": 11,
             "line": 103,
-            "offset": 4824
+            "offset": 4872
           },
           "start": {
             "col": 6,
             "line": 103,
-            "offset": 4819
+            "offset": 4867
           }
         },
         "tag": "#task"
@@ -2729,12 +2729,12 @@
           "end": {
             "col": 11,
             "line": 109,
-            "offset": 5115
+            "offset": 5169
           },
           "start": {
             "col": 6,
             "line": 109,
-            "offset": 5110
+            "offset": 5164
           }
         },
         "tag": "#task"
@@ -2744,12 +2744,12 @@
           "end": {
             "col": 11,
             "line": 110,
-            "offset": 5268
+            "offset": 5322
           },
           "start": {
             "col": 6,
             "line": 110,
-            "offset": 5263
+            "offset": 5317
           }
         },
         "tag": "#task"
@@ -2759,12 +2759,12 @@
           "end": {
             "col": 11,
             "line": 111,
-            "offset": 5380
+            "offset": 5434
           },
           "start": {
             "col": 6,
             "line": 111,
-            "offset": 5375
+            "offset": 5429
           }
         },
         "tag": "#task"
@@ -2774,12 +2774,12 @@
           "end": {
             "col": 11,
             "line": 112,
-            "offset": 5539
+            "offset": 5593
           },
           "start": {
             "col": 6,
             "line": 112,
-            "offset": 5534
+            "offset": 5588
           }
         },
         "tag": "#task"
@@ -2789,12 +2789,12 @@
           "end": {
             "col": 11,
             "line": 120,
-            "offset": 5716
+            "offset": 5774
           },
           "start": {
             "col": 6,
             "line": 120,
-            "offset": 5711
+            "offset": 5769
           }
         },
         "tag": "#task"
@@ -2804,12 +2804,12 @@
           "end": {
             "col": 11,
             "line": 121,
-            "offset": 5817
+            "offset": 5875
           },
           "start": {
             "col": 6,
             "line": 121,
-            "offset": 5812
+            "offset": 5870
           }
         },
         "tag": "#task"
@@ -2819,12 +2819,12 @@
           "end": {
             "col": 11,
             "line": 122,
-            "offset": 5918
+            "offset": 5976
           },
           "start": {
             "col": 6,
             "line": 122,
-            "offset": 5913
+            "offset": 5971
           }
         },
         "tag": "#task"
@@ -2834,12 +2834,12 @@
           "end": {
             "col": 11,
             "line": 139,
-            "offset": 6264
+            "offset": 6326
           },
           "start": {
             "col": 6,
             "line": 139,
-            "offset": 6259
+            "offset": 6321
           }
         },
         "tag": "#task"
@@ -2849,12 +2849,12 @@
           "end": {
             "col": 13,
             "line": 147,
-            "offset": 6414
+            "offset": 6480
           },
           "start": {
             "col": 8,
             "line": 147,
-            "offset": 6409
+            "offset": 6475
           }
         },
         "tag": "#task"
@@ -2864,12 +2864,12 @@
           "end": {
             "col": 13,
             "line": 151,
-            "offset": 6624
+            "offset": 6690
           },
           "start": {
             "col": 8,
             "line": 151,
-            "offset": 6619
+            "offset": 6685
           }
         },
         "tag": "#task"
@@ -2879,12 +2879,12 @@
           "end": {
             "col": 13,
             "line": 152,
-            "offset": 6763
+            "offset": 6829
           },
           "start": {
             "col": 8,
             "line": 152,
-            "offset": 6758
+            "offset": 6824
           }
         },
         "tag": "#task"
@@ -2894,12 +2894,12 @@
           "end": {
             "col": 13,
             "line": 153,
-            "offset": 6879
+            "offset": 6945
           },
           "start": {
             "col": 8,
             "line": 153,
-            "offset": 6874
+            "offset": 6940
           }
         },
         "tag": "#task"
@@ -2909,12 +2909,12 @@
           "end": {
             "col": 13,
             "line": 154,
-            "offset": 7020
+            "offset": 7086
           },
           "start": {
             "col": 8,
             "line": 154,
-            "offset": 7015
+            "offset": 7081
           }
         },
         "tag": "#task"
@@ -2924,12 +2924,12 @@
           "end": {
             "col": 13,
             "line": 156,
-            "offset": 7171
+            "offset": 7237
           },
           "start": {
             "col": 8,
             "line": 156,
-            "offset": 7166
+            "offset": 7232
           }
         },
         "tag": "#task"
@@ -2939,12 +2939,12 @@
           "end": {
             "col": 13,
             "line": 157,
-            "offset": 7310
+            "offset": 7376
           },
           "start": {
             "col": 8,
             "line": 157,
-            "offset": 7305
+            "offset": 7371
           }
         },
         "tag": "#task"
@@ -2954,12 +2954,12 @@
           "end": {
             "col": 13,
             "line": 158,
-            "offset": 7426
+            "offset": 7492
           },
           "start": {
             "col": 8,
             "line": 158,
-            "offset": 7421
+            "offset": 7487
           }
         },
         "tag": "#task"
@@ -2969,12 +2969,12 @@
           "end": {
             "col": 13,
             "line": 159,
-            "offset": 7567
+            "offset": 7633
           },
           "start": {
             "col": 8,
             "line": 159,
-            "offset": 7562
+            "offset": 7628
           }
         },
         "tag": "#task"
@@ -2984,12 +2984,12 @@
           "end": {
             "col": 11,
             "line": 160,
-            "offset": 7681
+            "offset": 7747
           },
           "start": {
             "col": 6,
             "line": 160,
-            "offset": 7676
+            "offset": 7742
           }
         },
         "tag": "#task"
@@ -2999,12 +2999,12 @@
           "end": {
             "col": 11,
             "line": 174,
-            "offset": 8016
+            "offset": 8086
           },
           "start": {
             "col": 6,
             "line": 174,
-            "offset": 8011
+            "offset": 8081
           }
         },
         "tag": "#task"
@@ -3014,12 +3014,12 @@
           "end": {
             "col": 11,
             "line": 185,
-            "offset": 9041
+            "offset": 9111
           },
           "start": {
             "col": 6,
             "line": 185,
-            "offset": 9036
+            "offset": 9106
           }
         },
         "tag": "#task"
@@ -3029,19 +3029,19 @@
           "end": {
             "col": 11,
             "line": 203,
-            "offset": 9651
+            "offset": 9723
           },
           "start": {
             "col": 6,
             "line": 203,
-            "offset": 9646
+            "offset": 9718
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "# Smoke Testing the Tasks Plugin\n\n*[[#Remaining tests|Jump to the tests...]]*\n\n## Introduction\n\n- **Intended audience of this note**\n  - Developers working on the Tasks plugin, reviewing a Pull Request (especially ones that change dependencies), or making a release, and who wish to do some basic tests of the plugin to make sure there are no glaring show-stopper errors.\n- **What is a Smoke Test?**\n  - As [Wikipedia](https://en.wikipedia.org/wiki/Smoke_testing_(software)) says: smoke testing ... is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release.\n- **Why not test everything?**\n  - The Tasks plugin is run by volunteers in our finite spare time. We take care during development to write automated tests for the algorithms in our code, but there are some kinds of changes, such as in tools the project depends on, that we do not have automated tests for.\n- **Why not test on every platform?**\n  - It's not feasible nor a good use of limited volunteer time on a free tool.\n\n## How the tests work\n\n### Get the Tasks-Demo vault with the build to be tested\n\nYou can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 1.\n\nOr you can install a download of the build's Tasks plugin inside your clone of the Tasks repo:\n\n- Make sure you have the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) cloned and up-to-date on your machine.\n- Open the Tasks-Demo vault on a machine of your choice:\n  - Open Obsidian\n  - Click 'Open another vault' button\n  - Click 'Open folder as vault' button\n  - Navigate to `obsidian-tasks/resources/sample_vaults/Tasks-Demo`\n  - Click 'Open'\n- Install the candidate build for the pull request or release inside the `Tasks-Demo` vault\n  - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.\n\n### Follow the tests\n\n- This note is a self-contained set of steps to check. You should check off tasks beginning `- [ ] check:` as you complete each section.\n\n> [!Important]\n> Several task blocks in this file depend of the the file name being unchanged. Please don't rename the file before running the tests.\n\n---\n\n## Remaining tests\n\nWork through all the tasks below, until zero tasks remain in this query:\n\n> [!Todo] Remaining groups of tests\n>\n> ```tasks\n> not done\n> path includes {{query.file.path}}\n> description includes **check**:\n>\n> short display\n> ```\n\n---\n\n## The Smoke Tests\n\n### Toggling tasks\n\n#### Completion of tasks\n\n- [ ] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command\n- [ ] #task Mark this task complete by clicking on it in **Reading view**\n- [ ] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly==\n- [ ] #task **check**: Checked all above methods for **completing tasks** - and they worked\n\n#### Un-completion of tasks\n\n<!-- markdownlint-disable ul-style -->\n\n* [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05\n* [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05\n* [x] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2022-07-05\n* [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked\n\n<!-- markdownlint-enable ul-style -->\n\n#### Recurring Tasks\n\nConfirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is unchanged.\n\n> [!Todo]\n>\n> - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19\n>\n> > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19\n\n- [ ] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19\n\n> - [ ] #task **check**: Checked all above steps for **recurring tasks** worked\n\n### On Completion\n\n#### On Completion Delete: Non-recurring tasks\n\nConfirm that the **task line is deleted**.\n\n- [ ] #task Complete this auto-deleting non-recurring task in **Source view** using **Tasks: Toggle task done** command 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting non-recurring task in **Reading view** 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting non-recurring task in **Live Preview** 🏁 delete 📅 2024-10-27\n- [ ] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked\n\n#### On Completion Delete: Recurring Tasks\n\nConfirm that when an auto-deleting recurring task is completed, a **new task is created replacing the old task**, and the checkbox remains not-done.\n\n- [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-27\n- [ ] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked\n\n### Rendering of Task Blocks\n\nSteps to do:\n\n<!-- markdownlint-disable ul-style -->\n\n+ [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed\n+ [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed\n+ [ ] #task **check**: Checked all above steps for **viewing task blocks** worked\n\n<!-- markdownlint-enable ul-style -->\n\n---\n\nTasks block to check - should list all the tasks in this section, regardless of state\n\n```tasks\npath includes {{query.file.path}}\nheading includes Rendering of Task Blocks\n```\n\n---\n\n### Styling of Rendered Task Blocks\n\n- [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there\n\n---\n\n### Edit dates in Rendered Task Blocks\n\n> [!Example]\n>\n> - [ ] #task Sample task: I have all the supported date types ➕ 2024-09-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06\n\n- View this file in **Reading mode**...\n- On the task line above:\n  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- In the tasks search block below:\n  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- [ ] #task **check**: Checked all above steps for **editing dates** worked\n\n```tasks\npath includes {{query.file.path}}\ndescription includes I have all the supported date types\nhide backlink\nhide postpone button\n```\n\n---\n\n### Create or edit Task modal\n\n- This text should copied in to the task Description, after following steps below\n- [ ] #task Switch to **Live Preview** or **Source mode**, Click on the list item above, then do the following numbered steps and checks:\n    1. run **Tasks: Create or edit task**\n    2. **Check** that the text in the list item is copied in to the Description field\n    3. Type some values in to the fields\n    4. In one of the date fields, type `tm` (including the space afterwards) and **Check** it is expanded in to `tomorrow`\n    5. In one of the date fields, left-click the calendar button, and use the context menu to select and save a date. Check that the date is saved.\n    6. In one of the date fields, left-click the calendar button, and click outside the date picker, to confirm that the picker closes and the modal is still usable.\n    7. Hit Return or click **Apply**\n    8. **Check** that the list item above is converted in to a task\n    9. **Check** that values you entered in the modal have been copied in to the list item above\n    10. **Check** that the `#task` tag has been added to the start of the task\n- [ ] #task **check**: Checked all above steps for **creating a task via the modal** worked\n\n---\n\n## Check the plugin starts OK with no `data.json` settings file\n\n- Preparation\n  - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**\n  - Quit Obsidian\n  - Open the `obsidian-tasks-plugin` folder\n  - Delete `data.json`\n- Test\n  - Restart obsidian\n  - Go to Settings\n  - Check that `Tasks` is shown in the list of **Community plugins**\n  - View -> Toggle Developer Tools\n  - Open the console\n  - Confirm that there are no red messages mentioning Tasks\n- [ ] #task **check**: Checked that Tasks works correctly when **there is no `data.json` present**\n",
+  "fileContents": "# Smoke Testing the Tasks Plugin\n\n*[[#Remaining tests|Jump to the tests...]]*\n\n## 1 Introduction\n\n- **Intended audience of this note**\n  - Developers working on the Tasks plugin, reviewing a Pull Request (especially ones that change dependencies), or making a release, and who wish to do some basic tests of the plugin to make sure there are no glaring show-stopper errors.\n- **What is a Smoke Test?**\n  - As [Wikipedia](https://en.wikipedia.org/wiki/Smoke_testing_(software)) says: smoke testing ... is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release.\n- **Why not test everything?**\n  - The Tasks plugin is run by volunteers in our finite spare time. We take care during development to write automated tests for the algorithms in our code, but there are some kinds of changes, such as in tools the project depends on, that we do not have automated tests for.\n- **Why not test on every platform?**\n  - It's not feasible nor a good use of limited volunteer time on a free tool.\n\n## 2 How the tests work\n\n### 2.1 Get the Tasks-Demo vault with the build to be tested\n\nYou can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 1.\n\nOr you can install a download of the build's Tasks plugin inside your clone of the Tasks repo:\n\n- Make sure you have the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) cloned and up-to-date on your machine.\n- Open the Tasks-Demo vault on a machine of your choice:\n  - Open Obsidian\n  - Click 'Open another vault' button\n  - Click 'Open folder as vault' button\n  - Navigate to `obsidian-tasks/resources/sample_vaults/Tasks-Demo`\n  - Click 'Open'\n- Install the candidate build for the pull request or release inside the `Tasks-Demo` vault\n  - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.\n\n### 2.2 Follow the tests\n\n- This note is a self-contained set of steps to check. You should check off tasks beginning `- [ ] check:` as you complete each section.\n\n> [!Important]\n> Several task blocks in this file depend of the the file name being unchanged. Please don't rename the file before running the tests.\n\n---\n\n## 3 Remaining tests\n\nWork through all the tasks below, until zero tasks remain in this query:\n\n> [!Todo] Remaining groups of tests\n>\n> ```tasks\n> not done\n> path includes {{query.file.path}}\n> description includes **check**:\n>\n> short display\n> ```\n\n---\n\n## 4 The Smoke Tests\n\n### 4.1 Toggling tasks\n\n#### 4.1.1 Completion of tasks\n\n- [ ] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command\n- [ ] #task Mark this task complete by clicking on it in **Reading view**\n- [ ] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly==\n- [ ] #task **check**: Checked all above methods for **completing tasks** - and they worked\n\n#### 4.1.2 Un-completion of tasks\n\n<!-- markdownlint-disable ul-style -->\n\n* [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05\n* [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05\n* [x] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2022-07-05\n* [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked\n\n<!-- markdownlint-enable ul-style -->\n\n#### 4.1.3 Recurring Tasks\n\nConfirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is unchanged.\n\n> [!Todo]\n>\n> - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19\n>\n> > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19\n\n- [ ] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19\n\n> - [ ] #task **check**: Checked all above steps for **recurring tasks** worked\n\n### 4.2 On Completion\n\n#### 4.2.1 On Completion Delete: Non-recurring tasks\n\nConfirm that the **task line is deleted**.\n\n- [ ] #task Complete this auto-deleting non-recurring task in **Source view** using **Tasks: Toggle task done** command 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting non-recurring task in **Reading view** 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting non-recurring task in **Live Preview** 🏁 delete 📅 2024-10-27\n- [ ] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked\n\n#### 4.2.2 On Completion Delete: Recurring Tasks\n\nConfirm that when an auto-deleting recurring task is completed, a **new task is created replacing the old task**, and the checkbox remains not-done.\n\n- [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-27\n- [ ] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked\n\n### 4.3 Rendering of Task Blocks\n\nSteps to do:\n\n<!-- markdownlint-disable ul-style -->\n\n+ [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed\n+ [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed\n+ [ ] #task **check**: Checked all above steps for **viewing task blocks** worked\n\n<!-- markdownlint-enable ul-style -->\n\n---\n\nTasks block to check - should list all the tasks in this section, regardless of state\n\n```tasks\npath includes {{query.file.path}}\nheading includes Rendering of Task Blocks\n```\n\n---\n\n### 4.4 Styling of Rendered Task Blocks\n\n- [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there\n\n---\n\n### 4.5 Edit dates in Rendered Task Blocks\n\n> [!Example]\n>\n> - [ ] #task Sample task: I have all the supported date types ➕ 2024-09-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06\n\n- View this file in **Reading mode**...\n- On the task line above:\n  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- In the tasks search block below:\n  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- [ ] #task **check**: Checked all above steps for **editing dates** worked\n\n```tasks\npath includes {{query.file.path}}\ndescription includes I have all the supported date types\nhide backlink\nhide postpone button\n```\n\n---\n\n### 4.6 Create or edit Task modal\n\n- This text should copied in to the task Description, after following steps below\n- [ ] #task Switch to **Live Preview** or **Source mode**, Click on the list item above, then do the following numbered steps and checks:\n    1. run **Tasks: Create or edit task**\n    2. **Check** that the text in the list item is copied in to the Description field\n    3. Type some values in to the fields\n    4. In one of the date fields, type `tm` (including the space afterwards) and **Check** it is expanded in to `tomorrow`\n    5. In one of the date fields, left-click the calendar button, and use the context menu to select and save a date. Check that the date is saved.\n    6. In one of the date fields, left-click the calendar button, and click outside the date picker, to confirm that the picker closes and the modal is still usable.\n    7. Hit Return or click **Apply**\n    8. **Check** that the list item above is converted in to a task\n    9. **Check** that values you entered in the modal have been copied in to the list item above\n    10. **Check** that the `#task` tag has been added to the start of the task\n- [ ] #task **check**: Checked all above steps for **creating a task via the modal** worked\n\n---\n\n## 5 Check the plugin starts OK with no `data.json` settings file\n\n- Preparation\n  - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**\n  - Quit Obsidian\n  - Open the `obsidian-tasks-plugin` folder\n  - Delete `data.json`\n- Test\n  - Restart obsidian\n  - Go to Settings\n  - Check that `Tasks` is shown in the list of **Community plugins**\n  - View -> Toggle Developer Tools\n  - Open the console\n  - Confirm that there are no red messages mentioning Tasks\n- [ ] #task **check**: Checked that Tasks works correctly when **there is no `data.json` present**\n",
   "filePath": "Test Data/smoke_testing_the_tasks_plugin.md",
   "getAllTags": [
     "#task",
