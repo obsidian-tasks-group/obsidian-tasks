@@ -35,5 +35,14 @@
       ],
       "key": "T"
     }
+  ],
+  "editor:toggle-source": [
+    {
+      "modifiers": [
+        "Ctrl",
+        "Mod"
+      ],
+      "key": "/"
+    }
   ]
 }
