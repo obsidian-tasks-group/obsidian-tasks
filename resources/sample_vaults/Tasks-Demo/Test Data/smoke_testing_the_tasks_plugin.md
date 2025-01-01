@@ -147,7 +147,7 @@ heading includes Rendering of Task Blocks
 
 > [!Example]
 >
-> - [ ] #task Sample task: I have all the supported date types ➕ 2024-09-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06
+> - [ ] #task Sample task: I have all the supported date types ➕ 2025-01-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06
 
 - View this file in **Reading mode**...
 - On the task line above:
