@@ -1,0 +1,10 @@
+{
+	"id": "shortcut-edit-mode",
+	"name": "Edit mode switch",
+	"version": "0.0.5",
+	"minAppVersion": "1.5.12",
+	"description": "Add a button in file header in edit mode, to switch between source & live-preview",
+	"author": "Mara-Li",
+	"authorUrl": "https//github.com/Mara-Li",
+	"isDesktopOnly": false
+}
