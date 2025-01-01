@@ -62,19 +62,19 @@ Work through all the tasks below, until zero tasks remain in this query:
 
 #### 4.1.1 Completion of tasks
 
-- [ ] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command
-- [ ] #task Mark this task complete by clicking on it in **Reading view**
-- [ ] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly==
-- [ ] #task **check**: Checked all above methods for **completing tasks** - and they worked
+- [x] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command ✅ 2025-01-01
+- [x] #task Mark this task complete by clicking on it in **Reading view** ✅ 2025-01-01
+- [x] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2025-01-01
+- [x] #task **check**: Checked all above methods for **completing tasks** - and they worked ✅ 2025-01-01
 
 #### 4.1.2 Un-completion of tasks
 
 <!-- markdownlint-disable ul-style -->
 
-* [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05
-* [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05
-* [x] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2022-07-05
-* [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked
+* [ ] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command
+* [ ] #task Mark this task not complete by clicking on it in **Reading view**
+* [ ] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly==
+* [x] #task **check**: Checked all above methods for **un-completing tasks** - and they worked ✅ 2025-01-01
 
 <!-- markdownlint-enable ul-style -->
 
@@ -84,13 +84,16 @@ Confirm that when a recurring task is completed, a new task is created, all the 
 
 > [!Todo]
 >
-> - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19
+> - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20
+> - [x] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2025-01-01
 >
-> > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19
+> > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20
+> > - [x] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2025-01-01
 
-- [ ] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19
+- [ ] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20
+- [x] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2025-01-01
 
-> - [ ] #task **check**: Checked all above steps for **recurring tasks** worked
+> - [x] #task **check**: Checked all above steps for **recurring tasks** worked ✅ 2025-01-01
 
 ### 4.2 On Completion
 
@@ -98,19 +101,18 @@ Confirm that when a recurring task is completed, a new task is created, all the 
 
 Confirm that the **task line is deleted**.
 
-- [ ] #task Complete this auto-deleting non-recurring task in **Source view** using **Tasks: Toggle task done** command 🏁 delete 📅 2024-10-27
-- [ ] #task Complete this auto-deleting non-recurring task in **Reading view** 🏁 delete 📅 2024-10-27
-- [ ] #task Complete this auto-deleting non-recurring task in **Live Preview** 🏁 delete 📅 2024-10-27
-- [ ] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked
+
+
+- [x] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked ✅ 2025-01-01
 
 #### 4.2.2 On Completion Delete: Recurring Tasks
 
 Confirm that when an auto-deleting recurring task is completed, a **new task is created replacing the old task**, and the checkbox remains not-done.
 
-- [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-27
-- [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-27
-- [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-27
-- [ ] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked
+- [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-28
+- [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-28
+- [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-28
+- [x] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked ✅ 2025-01-01
 
 ### 4.3 Rendering of Task Blocks
 
@@ -118,9 +120,9 @@ Steps to do:
 
 <!-- markdownlint-disable ul-style -->
 
-+ [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
-+ [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
-+ [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
++ [x] #task View this file in **Reading view** and confirm that the tasks in this section are listed ✅ 2025-01-01
++ [x] #task View this file in **Live Preview** and confirm that the tasks in this section are listed ✅ 2025-01-01
++ [x] #task **check**: Checked all above steps for **viewing task blocks** worked ✅ 2025-01-01
 
 <!-- markdownlint-enable ul-style -->
 
