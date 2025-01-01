@@ -48,7 +48,7 @@ Work through all the tasks below, until zero tasks remain in this query:
 >
 > ```tasks
 > not done
-> path includes Smoke Testing the Tasks Plugin
+> path includes {{query.file.path}}
 > description includes **check**:
 >
 > short display
@@ -129,7 +129,7 @@ Steps to do:
 Tasks block to check - should list all the tasks in this section, regardless of state
 
 ```tasks
-path includes Smoke Testing the Tasks Plugin
+path includes {{query.file.path}}
 heading includes Rendering of Task Blocks
 ```
 
