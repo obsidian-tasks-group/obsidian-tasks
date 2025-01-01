@@ -1,0 +1,3087 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "Smoke Testing the Tasks Plugin",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 0,
+            "offset": 32
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      },
+      {
+        "heading": "Introduction",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 15,
+            "line": 4,
+            "offset": 94
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 79
+          }
+        }
+      },
+      {
+        "heading": "How the tests work",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 15,
+            "offset": 1064
+          },
+          "start": {
+            "col": 0,
+            "line": 15,
+            "offset": 1043
+          }
+        }
+      },
+      {
+        "heading": "Get the Tasks-Demo vault with the build to be tested",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 56,
+            "line": 17,
+            "offset": 1122
+          },
+          "start": {
+            "col": 0,
+            "line": 17,
+            "offset": 1066
+          }
+        }
+      },
+      {
+        "heading": "Follow the tests",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 33,
+            "offset": 2102
+          },
+          "start": {
+            "col": 0,
+            "line": 33,
+            "offset": 2082
+          }
+        }
+      },
+      {
+        "heading": "Remaining tests",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 42,
+            "offset": 2416
+          },
+          "start": {
+            "col": 0,
+            "line": 42,
+            "offset": 2398
+          }
+        }
+      },
+      {
+        "heading": "The Smoke Tests",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 58,
+            "offset": 2681
+          },
+          "start": {
+            "col": 0,
+            "line": 58,
+            "offset": 2663
+          }
+        }
+      },
+      {
+        "heading": "Toggling tasks",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 60,
+            "offset": 2701
+          },
+          "start": {
+            "col": 0,
+            "line": 60,
+            "offset": 2683
+          }
+        }
+      },
+      {
+        "heading": "Completion of tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 24,
+            "line": 62,
+            "offset": 2727
+          },
+          "start": {
+            "col": 0,
+            "line": 62,
+            "offset": 2703
+          }
+        }
+      },
+      {
+        "heading": "Un-completion of tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 27,
+            "line": 69,
+            "offset": 3141
+          },
+          "start": {
+            "col": 0,
+            "line": 69,
+            "offset": 3114
+          }
+        }
+      },
+      {
+        "heading": "Recurring Tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 80,
+            "offset": 3681
+          },
+          "start": {
+            "col": 0,
+            "line": 80,
+            "offset": 3661
+          }
+        }
+      },
+      {
+        "heading": "On Completion",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 94,
+            "offset": 4380
+          },
+          "start": {
+            "col": 0,
+            "line": 94,
+            "offset": 4363
+          }
+        }
+      },
+      {
+        "heading": "On Completion Delete: Non-recurring tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 46,
+            "line": 96,
+            "offset": 4428
+          },
+          "start": {
+            "col": 0,
+            "line": 96,
+            "offset": 4382
+          }
+        }
+      },
+      {
+        "heading": "On Completion Delete: Recurring Tasks",
+        "level": 4,
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 105,
+            "offset": 4963
+          },
+          "start": {
+            "col": 0,
+            "line": 105,
+            "offset": 4921
+          }
+        }
+      },
+      {
+        "heading": "Rendering of Task Blocks",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 114,
+            "offset": 5660
+          },
+          "start": {
+            "col": 0,
+            "line": 114,
+            "offset": 5632
+          }
+        }
+      },
+      {
+        "heading": "Styling of Rendered Task Blocks",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 35,
+            "line": 137,
+            "offset": 6273
+          },
+          "start": {
+            "col": 0,
+            "line": 137,
+            "offset": 6238
+          }
+        }
+      },
+      {
+        "heading": "Edit dates in Rendered Task Blocks",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 143,
+            "offset": 6406
+          },
+          "start": {
+            "col": 0,
+            "line": 143,
+            "offset": 6368
+          }
+        }
+      },
+      {
+        "heading": "Create or edit Task modal",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 29,
+            "line": 171,
+            "offset": 7943
+          },
+          "start": {
+            "col": 0,
+            "line": 171,
+            "offset": 7914
+          }
+        }
+      },
+      {
+        "heading": "Check the plugin starts OK with no `data.json` settings file",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 63,
+            "line": 189,
+            "offset": 9213
+          },
+          "start": {
+            "col": 0,
+            "line": 189,
+            "offset": 9150
+          }
+        }
+      }
+    ],
+    "links": [
+      {
+        "displayText": "Jump to the tests...",
+        "link": "#Remaining tests",
+        "original": "[[#Remaining tests|Jump to the tests...]]",
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 2,
+            "offset": 76
+          },
+          "start": {
+            "col": 1,
+            "line": 2,
+            "offset": 35
+          }
+        }
+      },
+      {
+        "displayText": "Styling of Queries",
+        "link": "Styling of Queries",
+        "original": "[[Styling of Queries]]",
+        "position": {
+          "end": {
+            "col": 59,
+            "line": 139,
+            "offset": 6334
+          },
+          "start": {
+            "col": 37,
+            "line": 139,
+            "offset": 6312
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 36,
+            "line": 6,
+            "offset": 132
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 96
+          }
+        }
+      },
+      {
+        "parent": 6,
+        "position": {
+          "end": {
+            "col": 238,
+            "line": 7,
+            "offset": 371
+          },
+          "start": {
+            "col": 2,
+            "line": 7,
+            "offset": 135
+          }
+        }
+      },
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 27,
+            "line": 8,
+            "offset": 399
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 372
+          }
+        }
+      },
+      {
+        "parent": 8,
+        "position": {
+          "end": {
+            "col": 217,
+            "line": 9,
+            "offset": 617
+          },
+          "start": {
+            "col": 2,
+            "line": 9,
+            "offset": 402
+          }
+        }
+      },
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 30,
+            "line": 10,
+            "offset": 648
+          },
+          "start": {
+            "col": 0,
+            "line": 10,
+            "offset": 618
+          }
+        }
+      },
+      {
+        "parent": 10,
+        "position": {
+          "end": {
+            "col": 275,
+            "line": 11,
+            "offset": 924
+          },
+          "start": {
+            "col": 2,
+            "line": 11,
+            "offset": 651
+          }
+        }
+      },
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 12,
+            "offset": 962
+          },
+          "start": {
+            "col": 0,
+            "line": 12,
+            "offset": 925
+          }
+        }
+      },
+      {
+        "parent": 12,
+        "position": {
+          "end": {
+            "col": 78,
+            "line": 13,
+            "offset": 1041
+          },
+          "start": {
+            "col": 2,
+            "line": 13,
+            "offset": 965
+          }
+        }
+      },
+      {
+        "parent": -23,
+        "position": {
+          "end": {
+            "col": 141,
+            "line": 23,
+            "offset": 1570
+          },
+          "start": {
+            "col": 0,
+            "line": 23,
+            "offset": 1429
+          }
+        }
+      },
+      {
+        "parent": -23,
+        "position": {
+          "end": {
+            "col": 56,
+            "line": 24,
+            "offset": 1627
+          },
+          "start": {
+            "col": 0,
+            "line": 24,
+            "offset": 1571
+          }
+        }
+      },
+      {
+        "parent": 24,
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 25,
+            "offset": 1645
+          },
+          "start": {
+            "col": 2,
+            "line": 25,
+            "offset": 1630
+          }
+        }
+      },
+      {
+        "parent": 24,
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 26,
+            "offset": 1683
+          },
+          "start": {
+            "col": 2,
+            "line": 26,
+            "offset": 1648
+          }
+        }
+      },
+      {
+        "parent": 24,
+        "position": {
+          "end": {
+            "col": 39,
+            "line": 27,
+            "offset": 1723
+          },
+          "start": {
+            "col": 2,
+            "line": 27,
+            "offset": 1686
+          }
+        }
+      },
+      {
+        "parent": 24,
+        "position": {
+          "end": {
+            "col": 67,
+            "line": 28,
+            "offset": 1791
+          },
+          "start": {
+            "col": 2,
+            "line": 28,
+            "offset": 1726
+          }
+        }
+      },
+      {
+        "parent": 24,
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 29,
+            "offset": 1808
+          },
+          "start": {
+            "col": 2,
+            "line": 29,
+            "offset": 1794
+          }
+        }
+      },
+      {
+        "parent": -23,
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 30,
+            "offset": 1900
+          },
+          "start": {
+            "col": 0,
+            "line": 30,
+            "offset": 1809
+          }
+        }
+      },
+      {
+        "parent": 30,
+        "position": {
+          "end": {
+            "col": 179,
+            "line": 31,
+            "offset": 2080
+          },
+          "start": {
+            "col": 2,
+            "line": 31,
+            "offset": 1903
+          }
+        }
+      },
+      {
+        "parent": -35,
+        "position": {
+          "end": {
+            "col": 136,
+            "line": 35,
+            "offset": 2240
+          },
+          "start": {
+            "col": 0,
+            "line": 35,
+            "offset": 2104
+          }
+        }
+      },
+      {
+        "parent": -64,
+        "position": {
+          "end": {
+            "col": 96,
+            "line": 64,
+            "offset": 2825
+          },
+          "start": {
+            "col": 0,
+            "line": 64,
+            "offset": 2729
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -64,
+        "position": {
+          "end": {
+            "col": 73,
+            "line": 65,
+            "offset": 2899
+          },
+          "start": {
+            "col": 0,
+            "line": 65,
+            "offset": 2826
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -64,
+        "position": {
+          "end": {
+            "col": 120,
+            "line": 66,
+            "offset": 3020
+          },
+          "start": {
+            "col": 0,
+            "line": 66,
+            "offset": 2900
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -64,
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 67,
+            "offset": 3112
+          },
+          "start": {
+            "col": 0,
+            "line": 67,
+            "offset": 3021
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -73,
+        "position": {
+          "end": {
+            "col": 113,
+            "line": 73,
+            "offset": 3296
+          },
+          "start": {
+            "col": 0,
+            "line": 73,
+            "offset": 3183
+          }
+        },
+        "task": "x"
+      },
+      {
+        "parent": -73,
+        "position": {
+          "end": {
+            "col": 90,
+            "line": 74,
+            "offset": 3387
+          },
+          "start": {
+            "col": 0,
+            "line": 74,
+            "offset": 3297
+          }
+        },
+        "task": "x"
+      },
+      {
+        "parent": -73,
+        "position": {
+          "end": {
+            "col": 137,
+            "line": 75,
+            "offset": 3525
+          },
+          "start": {
+            "col": 0,
+            "line": 75,
+            "offset": 3388
+          }
+        },
+        "task": "x"
+      },
+      {
+        "parent": -73,
+        "position": {
+          "end": {
+            "col": 94,
+            "line": 76,
+            "offset": 3620
+          },
+          "start": {
+            "col": 0,
+            "line": 76,
+            "offset": 3526
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -86,
+        "position": {
+          "end": {
+            "col": 157,
+            "line": 86,
+            "offset": 3996
+          },
+          "start": {
+            "col": 2,
+            "line": 86,
+            "offset": 3841
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -88,
+        "position": {
+          "end": {
+            "col": 118,
+            "line": 88,
+            "offset": 4117
+          },
+          "start": {
+            "col": 4,
+            "line": 88,
+            "offset": 4003
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -90,
+        "position": {
+          "end": {
+            "col": 161,
+            "line": 90,
+            "offset": 4280
+          },
+          "start": {
+            "col": 0,
+            "line": 90,
+            "offset": 4119
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -92,
+        "position": {
+          "end": {
+            "col": 79,
+            "line": 92,
+            "offset": 4361
+          },
+          "start": {
+            "col": 2,
+            "line": 92,
+            "offset": 4284
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -100,
+        "position": {
+          "end": {
+            "col": 143,
+            "line": 100,
+            "offset": 4617
+          },
+          "start": {
+            "col": 0,
+            "line": 100,
+            "offset": 4474
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -100,
+        "position": {
+          "end": {
+            "col": 102,
+            "line": 101,
+            "offset": 4720
+          },
+          "start": {
+            "col": 0,
+            "line": 101,
+            "offset": 4618
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -100,
+        "position": {
+          "end": {
+            "col": 102,
+            "line": 102,
+            "offset": 4823
+          },
+          "start": {
+            "col": 0,
+            "line": 102,
+            "offset": 4721
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -100,
+        "position": {
+          "end": {
+            "col": 95,
+            "line": 103,
+            "offset": 4919
+          },
+          "start": {
+            "col": 0,
+            "line": 103,
+            "offset": 4824
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -109,
+        "position": {
+          "end": {
+            "col": 152,
+            "line": 109,
+            "offset": 5267
+          },
+          "start": {
+            "col": 0,
+            "line": 109,
+            "offset": 5115
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -109,
+        "position": {
+          "end": {
+            "col": 111,
+            "line": 110,
+            "offset": 5379
+          },
+          "start": {
+            "col": 0,
+            "line": 110,
+            "offset": 5268
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -109,
+        "position": {
+          "end": {
+            "col": 158,
+            "line": 111,
+            "offset": 5538
+          },
+          "start": {
+            "col": 0,
+            "line": 111,
+            "offset": 5380
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -109,
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 112,
+            "offset": 5630
+          },
+          "start": {
+            "col": 0,
+            "line": 112,
+            "offset": 5539
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -120,
+        "position": {
+          "end": {
+            "col": 100,
+            "line": 120,
+            "offset": 5816
+          },
+          "start": {
+            "col": 0,
+            "line": 120,
+            "offset": 5716
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -120,
+        "position": {
+          "end": {
+            "col": 100,
+            "line": 121,
+            "offset": 5917
+          },
+          "start": {
+            "col": 0,
+            "line": 121,
+            "offset": 5817
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -120,
+        "position": {
+          "end": {
+            "col": 81,
+            "line": 122,
+            "offset": 5999
+          },
+          "start": {
+            "col": 0,
+            "line": 122,
+            "offset": 5918
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -139,
+        "position": {
+          "end": {
+            "col": 86,
+            "line": 139,
+            "offset": 6361
+          },
+          "start": {
+            "col": 0,
+            "line": 139,
+            "offset": 6275
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -147,
+        "position": {
+          "end": {
+            "col": 142,
+            "line": 147,
+            "offset": 6565
+          },
+          "start": {
+            "col": 2,
+            "line": 147,
+            "offset": 6425
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -149,
+        "position": {
+          "end": {
+            "col": 39,
+            "line": 149,
+            "offset": 6606
+          },
+          "start": {
+            "col": 0,
+            "line": 149,
+            "offset": 6567
+          }
+        }
+      },
+      {
+        "parent": -149,
+        "position": {
+          "end": {
+            "col": 25,
+            "line": 150,
+            "offset": 6632
+          },
+          "start": {
+            "col": 0,
+            "line": 150,
+            "offset": 6607
+          }
+        }
+      },
+      {
+        "parent": 150,
+        "position": {
+          "end": {
+            "col": 138,
+            "line": 151,
+            "offset": 6771
+          },
+          "start": {
+            "col": 2,
+            "line": 151,
+            "offset": 6635
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 150,
+        "position": {
+          "end": {
+            "col": 115,
+            "line": 152,
+            "offset": 6887
+          },
+          "start": {
+            "col": 2,
+            "line": 152,
+            "offset": 6774
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 150,
+        "position": {
+          "end": {
+            "col": 140,
+            "line": 153,
+            "offset": 7028
+          },
+          "start": {
+            "col": 2,
+            "line": 153,
+            "offset": 6890
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 150,
+        "position": {
+          "end": {
+            "col": 115,
+            "line": 154,
+            "offset": 7144
+          },
+          "start": {
+            "col": 2,
+            "line": 154,
+            "offset": 7031
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -149,
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 155,
+            "offset": 7179
+          },
+          "start": {
+            "col": 0,
+            "line": 155,
+            "offset": 7145
+          }
+        }
+      },
+      {
+        "parent": 155,
+        "position": {
+          "end": {
+            "col": 138,
+            "line": 156,
+            "offset": 7318
+          },
+          "start": {
+            "col": 2,
+            "line": 156,
+            "offset": 7182
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 155,
+        "position": {
+          "end": {
+            "col": 115,
+            "line": 157,
+            "offset": 7434
+          },
+          "start": {
+            "col": 2,
+            "line": 157,
+            "offset": 7321
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 155,
+        "position": {
+          "end": {
+            "col": 140,
+            "line": 158,
+            "offset": 7575
+          },
+          "start": {
+            "col": 2,
+            "line": 158,
+            "offset": 7437
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 155,
+        "position": {
+          "end": {
+            "col": 115,
+            "line": 159,
+            "offset": 7691
+          },
+          "start": {
+            "col": 2,
+            "line": 159,
+            "offset": 7578
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -149,
+        "position": {
+          "end": {
+            "col": 75,
+            "line": 160,
+            "offset": 7767
+          },
+          "start": {
+            "col": 0,
+            "line": 160,
+            "offset": 7692
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -173,
+        "position": {
+          "end": {
+            "col": 81,
+            "line": 173,
+            "offset": 8026
+          },
+          "start": {
+            "col": 0,
+            "line": 173,
+            "offset": 7945
+          }
+        }
+      },
+      {
+        "parent": -173,
+        "position": {
+          "end": {
+            "col": 137,
+            "line": 174,
+            "offset": 8164
+          },
+          "start": {
+            "col": 0,
+            "line": 174,
+            "offset": 8027
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 41,
+            "line": 175,
+            "offset": 8206
+          },
+          "start": {
+            "col": 2,
+            "line": 175,
+            "offset": 8167
+          }
+        }
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 85,
+            "line": 176,
+            "offset": 8292
+          },
+          "start": {
+            "col": 2,
+            "line": 176,
+            "offset": 8209
+          }
+        }
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 40,
+            "line": 177,
+            "offset": 8333
+          },
+          "start": {
+            "col": 2,
+            "line": 177,
+            "offset": 8295
+          }
+        }
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 122,
+            "line": 178,
+            "offset": 8456
+          },
+          "start": {
+            "col": 2,
+            "line": 178,
+            "offset": 8336
+          }
+        }
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 147,
+            "line": 179,
+            "offset": 8604
+          },
+          "start": {
+            "col": 2,
+            "line": 179,
+            "offset": 8459
+          }
+        }
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 165,
+            "line": 180,
+            "offset": 8770
+          },
+          "start": {
+            "col": 2,
+            "line": 180,
+            "offset": 8607
+          }
+        }
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 36,
+            "line": 181,
+            "offset": 8807
+          },
+          "start": {
+            "col": 2,
+            "line": 181,
+            "offset": 8773
+          }
+        }
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 67,
+            "line": 182,
+            "offset": 8875
+          },
+          "start": {
+            "col": 2,
+            "line": 182,
+            "offset": 8810
+          }
+        }
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 96,
+            "line": 183,
+            "offset": 8972
+          },
+          "start": {
+            "col": 2,
+            "line": 183,
+            "offset": 8878
+          }
+        }
+      },
+      {
+        "parent": 174,
+        "position": {
+          "end": {
+            "col": 78,
+            "line": 184,
+            "offset": 9051
+          },
+          "start": {
+            "col": 2,
+            "line": 184,
+            "offset": 8975
+          }
+        }
+      },
+      {
+        "parent": -173,
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 185,
+            "offset": 9143
+          },
+          "start": {
+            "col": 0,
+            "line": 185,
+            "offset": 9052
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -191,
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 191,
+            "offset": 9228
+          },
+          "start": {
+            "col": 0,
+            "line": 191,
+            "offset": 9215
+          }
+        }
+      },
+      {
+        "parent": 191,
+        "position": {
+          "end": {
+            "col": 115,
+            "line": 192,
+            "offset": 9344
+          },
+          "start": {
+            "col": 2,
+            "line": 192,
+            "offset": 9231
+          }
+        }
+      },
+      {
+        "parent": 191,
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 193,
+            "offset": 9362
+          },
+          "start": {
+            "col": 2,
+            "line": 193,
+            "offset": 9347
+          }
+        }
+      },
+      {
+        "parent": 191,
+        "position": {
+          "end": {
+            "col": 43,
+            "line": 194,
+            "offset": 9406
+          },
+          "start": {
+            "col": 2,
+            "line": 194,
+            "offset": 9365
+          }
+        }
+      },
+      {
+        "parent": 191,
+        "position": {
+          "end": {
+            "col": 22,
+            "line": 195,
+            "offset": 9429
+          },
+          "start": {
+            "col": 2,
+            "line": 195,
+            "offset": 9409
+          }
+        }
+      },
+      {
+        "parent": -191,
+        "position": {
+          "end": {
+            "col": 6,
+            "line": 196,
+            "offset": 9436
+          },
+          "start": {
+            "col": 0,
+            "line": 196,
+            "offset": 9430
+          }
+        }
+      },
+      {
+        "parent": 196,
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 197,
+            "offset": 9457
+          },
+          "start": {
+            "col": 2,
+            "line": 197,
+            "offset": 9439
+          }
+        }
+      },
+      {
+        "parent": 196,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 198,
+            "offset": 9476
+          },
+          "start": {
+            "col": 2,
+            "line": 198,
+            "offset": 9460
+          }
+        }
+      },
+      {
+        "parent": 196,
+        "position": {
+          "end": {
+            "col": 68,
+            "line": 199,
+            "offset": 9545
+          },
+          "start": {
+            "col": 2,
+            "line": 199,
+            "offset": 9479
+          }
+        }
+      },
+      {
+        "parent": 196,
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 200,
+            "offset": 9580
+          },
+          "start": {
+            "col": 2,
+            "line": 200,
+            "offset": 9548
+          }
+        }
+      },
+      {
+        "parent": 196,
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 201,
+            "offset": 9601
+          },
+          "start": {
+            "col": 2,
+            "line": 201,
+            "offset": 9583
+          }
+        }
+      },
+      {
+        "parent": 196,
+        "position": {
+          "end": {
+            "col": 59,
+            "line": 202,
+            "offset": 9661
+          },
+          "start": {
+            "col": 2,
+            "line": 202,
+            "offset": 9604
+          }
+        }
+      },
+      {
+        "parent": -191,
+        "position": {
+          "end": {
+            "col": 98,
+            "line": 203,
+            "offset": 9760
+          },
+          "start": {
+            "col": 0,
+            "line": 203,
+            "offset": 9662
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 32,
+            "line": 0,
+            "offset": 32
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 43,
+            "line": 2,
+            "offset": 77
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 34
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 15,
+            "line": 4,
+            "offset": 94
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 79
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 78,
+            "line": 13,
+            "offset": 1041
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 96
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 15,
+            "offset": 1064
+          },
+          "start": {
+            "col": 0,
+            "line": 15,
+            "offset": 1043
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 56,
+            "line": 17,
+            "offset": 1122
+          },
+          "start": {
+            "col": 0,
+            "line": 17,
+            "offset": 1066
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 207,
+            "line": 19,
+            "offset": 1331
+          },
+          "start": {
+            "col": 0,
+            "line": 19,
+            "offset": 1124
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 94,
+            "line": 21,
+            "offset": 1427
+          },
+          "start": {
+            "col": 0,
+            "line": 21,
+            "offset": 1333
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 179,
+            "line": 31,
+            "offset": 2080
+          },
+          "start": {
+            "col": 0,
+            "line": 23,
+            "offset": 1429
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 33,
+            "offset": 2102
+          },
+          "start": {
+            "col": 0,
+            "line": 33,
+            "offset": 2082
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 136,
+            "line": 35,
+            "offset": 2240
+          },
+          "start": {
+            "col": 0,
+            "line": 35,
+            "offset": 2104
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 134,
+            "line": 38,
+            "offset": 2391
+          },
+          "start": {
+            "col": 0,
+            "line": 37,
+            "offset": 2242
+          }
+        },
+        "type": "callout"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 40,
+            "offset": 2396
+          },
+          "start": {
+            "col": 0,
+            "line": 40,
+            "offset": 2393
+          }
+        },
+        "type": "thematicBreak"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 42,
+            "offset": 2416
+          },
+          "start": {
+            "col": 0,
+            "line": 42,
+            "offset": 2398
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 72,
+            "line": 44,
+            "offset": 2490
+          },
+          "start": {
+            "col": 0,
+            "line": 44,
+            "offset": 2418
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 5,
+            "line": 54,
+            "offset": 2656
+          },
+          "start": {
+            "col": 0,
+            "line": 46,
+            "offset": 2492
+          }
+        },
+        "type": "callout"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 56,
+            "offset": 2661
+          },
+          "start": {
+            "col": 0,
+            "line": 56,
+            "offset": 2658
+          }
+        },
+        "type": "thematicBreak"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 58,
+            "offset": 2681
+          },
+          "start": {
+            "col": 0,
+            "line": 58,
+            "offset": 2663
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 60,
+            "offset": 2701
+          },
+          "start": {
+            "col": 0,
+            "line": 60,
+            "offset": 2683
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 24,
+            "line": 62,
+            "offset": 2727
+          },
+          "start": {
+            "col": 0,
+            "line": 62,
+            "offset": 2703
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 67,
+            "offset": 3112
+          },
+          "start": {
+            "col": 0,
+            "line": 64,
+            "offset": 2729
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 27,
+            "line": 69,
+            "offset": 3141
+          },
+          "start": {
+            "col": 0,
+            "line": 69,
+            "offset": 3114
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 71,
+            "offset": 3181
+          },
+          "start": {
+            "col": 0,
+            "line": 71,
+            "offset": 3143
+          }
+        },
+        "type": "html"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 94,
+            "line": 76,
+            "offset": 3620
+          },
+          "start": {
+            "col": 0,
+            "line": 73,
+            "offset": 3183
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 78,
+            "offset": 3659
+          },
+          "start": {
+            "col": 0,
+            "line": 78,
+            "offset": 3622
+          }
+        },
+        "type": "html"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 80,
+            "offset": 3681
+          },
+          "start": {
+            "col": 0,
+            "line": 80,
+            "offset": 3661
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 142,
+            "line": 82,
+            "offset": 3825
+          },
+          "start": {
+            "col": 0,
+            "line": 82,
+            "offset": 3683
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 118,
+            "line": 88,
+            "offset": 4117
+          },
+          "start": {
+            "col": 0,
+            "line": 84,
+            "offset": 3827
+          }
+        },
+        "type": "callout"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 161,
+            "line": 90,
+            "offset": 4280
+          },
+          "start": {
+            "col": 0,
+            "line": 90,
+            "offset": 4119
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 79,
+            "line": 92,
+            "offset": 4361
+          },
+          "start": {
+            "col": 0,
+            "line": 92,
+            "offset": 4282
+          }
+        },
+        "type": "blockquote"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 94,
+            "offset": 4380
+          },
+          "start": {
+            "col": 0,
+            "line": 94,
+            "offset": 4363
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 46,
+            "line": 96,
+            "offset": 4428
+          },
+          "start": {
+            "col": 0,
+            "line": 96,
+            "offset": 4382
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 98,
+            "offset": 4472
+          },
+          "start": {
+            "col": 0,
+            "line": 98,
+            "offset": 4430
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 95,
+            "line": 103,
+            "offset": 4919
+          },
+          "start": {
+            "col": 0,
+            "line": 100,
+            "offset": 4474
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 105,
+            "offset": 4963
+          },
+          "start": {
+            "col": 0,
+            "line": 105,
+            "offset": 4921
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 148,
+            "line": 107,
+            "offset": 5113
+          },
+          "start": {
+            "col": 0,
+            "line": 107,
+            "offset": 4965
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 112,
+            "offset": 5630
+          },
+          "start": {
+            "col": 0,
+            "line": 109,
+            "offset": 5115
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 114,
+            "offset": 5660
+          },
+          "start": {
+            "col": 0,
+            "line": 114,
+            "offset": 5632
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 116,
+            "offset": 5674
+          },
+          "start": {
+            "col": 0,
+            "line": 116,
+            "offset": 5662
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 118,
+            "offset": 5714
+          },
+          "start": {
+            "col": 0,
+            "line": 118,
+            "offset": 5676
+          }
+        },
+        "type": "html"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 81,
+            "line": 122,
+            "offset": 5999
+          },
+          "start": {
+            "col": 0,
+            "line": 120,
+            "offset": 5716
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 124,
+            "offset": 6038
+          },
+          "start": {
+            "col": 0,
+            "line": 124,
+            "offset": 6001
+          }
+        },
+        "type": "html"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 126,
+            "offset": 6043
+          },
+          "start": {
+            "col": 0,
+            "line": 126,
+            "offset": 6040
+          }
+        },
+        "type": "thematicBreak"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 85,
+            "line": 128,
+            "offset": 6130
+          },
+          "start": {
+            "col": 0,
+            "line": 128,
+            "offset": 6045
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 133,
+            "offset": 6231
+          },
+          "start": {
+            "col": 0,
+            "line": 130,
+            "offset": 6132
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 135,
+            "offset": 6236
+          },
+          "start": {
+            "col": 0,
+            "line": 135,
+            "offset": 6233
+          }
+        },
+        "type": "thematicBreak"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 35,
+            "line": 137,
+            "offset": 6273
+          },
+          "start": {
+            "col": 0,
+            "line": 137,
+            "offset": 6238
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 86,
+            "line": 139,
+            "offset": 6361
+          },
+          "start": {
+            "col": 0,
+            "line": 139,
+            "offset": 6275
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 141,
+            "offset": 6366
+          },
+          "start": {
+            "col": 0,
+            "line": 141,
+            "offset": 6363
+          }
+        },
+        "type": "thematicBreak"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 143,
+            "offset": 6406
+          },
+          "start": {
+            "col": 0,
+            "line": 143,
+            "offset": 6368
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 142,
+            "line": 147,
+            "offset": 6565
+          },
+          "start": {
+            "col": 0,
+            "line": 145,
+            "offset": 6408
+          }
+        },
+        "type": "callout"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 75,
+            "line": 160,
+            "offset": 7767
+          },
+          "start": {
+            "col": 0,
+            "line": 149,
+            "offset": 6567
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 167,
+            "offset": 7907
+          },
+          "start": {
+            "col": 0,
+            "line": 162,
+            "offset": 7769
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 169,
+            "offset": 7912
+          },
+          "start": {
+            "col": 0,
+            "line": 169,
+            "offset": 7909
+          }
+        },
+        "type": "thematicBreak"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 29,
+            "line": 171,
+            "offset": 7943
+          },
+          "start": {
+            "col": 0,
+            "line": 171,
+            "offset": 7914
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 91,
+            "line": 185,
+            "offset": 9143
+          },
+          "start": {
+            "col": 0,
+            "line": 173,
+            "offset": 7945
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 187,
+            "offset": 9148
+          },
+          "start": {
+            "col": 0,
+            "line": 187,
+            "offset": 9145
+          }
+        },
+        "type": "thematicBreak"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 63,
+            "line": 189,
+            "offset": 9213
+          },
+          "start": {
+            "col": 0,
+            "line": 189,
+            "offset": 9150
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 98,
+            "line": 203,
+            "offset": 9760
+          },
+          "start": {
+            "col": 0,
+            "line": 191,
+            "offset": 9215
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 64,
+            "offset": 2740
+          },
+          "start": {
+            "col": 6,
+            "line": 64,
+            "offset": 2735
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 65,
+            "offset": 2837
+          },
+          "start": {
+            "col": 6,
+            "line": 65,
+            "offset": 2832
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 66,
+            "offset": 2911
+          },
+          "start": {
+            "col": 6,
+            "line": 66,
+            "offset": 2906
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 67,
+            "offset": 3032
+          },
+          "start": {
+            "col": 6,
+            "line": 67,
+            "offset": 3027
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 73,
+            "offset": 3194
+          },
+          "start": {
+            "col": 6,
+            "line": 73,
+            "offset": 3189
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 74,
+            "offset": 3308
+          },
+          "start": {
+            "col": 6,
+            "line": 74,
+            "offset": 3303
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 75,
+            "offset": 3399
+          },
+          "start": {
+            "col": 6,
+            "line": 75,
+            "offset": 3394
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 76,
+            "offset": 3537
+          },
+          "start": {
+            "col": 6,
+            "line": 76,
+            "offset": 3532
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 86,
+            "offset": 3852
+          },
+          "start": {
+            "col": 8,
+            "line": 86,
+            "offset": 3847
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 15,
+            "line": 88,
+            "offset": 4014
+          },
+          "start": {
+            "col": 10,
+            "line": 88,
+            "offset": 4009
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 90,
+            "offset": 4130
+          },
+          "start": {
+            "col": 6,
+            "line": 90,
+            "offset": 4125
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 92,
+            "offset": 4295
+          },
+          "start": {
+            "col": 8,
+            "line": 92,
+            "offset": 4290
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 100,
+            "offset": 4485
+          },
+          "start": {
+            "col": 6,
+            "line": 100,
+            "offset": 4480
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 101,
+            "offset": 4629
+          },
+          "start": {
+            "col": 6,
+            "line": 101,
+            "offset": 4624
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 102,
+            "offset": 4732
+          },
+          "start": {
+            "col": 6,
+            "line": 102,
+            "offset": 4727
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 103,
+            "offset": 4835
+          },
+          "start": {
+            "col": 6,
+            "line": 103,
+            "offset": 4830
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 109,
+            "offset": 5126
+          },
+          "start": {
+            "col": 6,
+            "line": 109,
+            "offset": 5121
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 110,
+            "offset": 5279
+          },
+          "start": {
+            "col": 6,
+            "line": 110,
+            "offset": 5274
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 111,
+            "offset": 5391
+          },
+          "start": {
+            "col": 6,
+            "line": 111,
+            "offset": 5386
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 112,
+            "offset": 5550
+          },
+          "start": {
+            "col": 6,
+            "line": 112,
+            "offset": 5545
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 120,
+            "offset": 5727
+          },
+          "start": {
+            "col": 6,
+            "line": 120,
+            "offset": 5722
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 121,
+            "offset": 5828
+          },
+          "start": {
+            "col": 6,
+            "line": 121,
+            "offset": 5823
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 122,
+            "offset": 5929
+          },
+          "start": {
+            "col": 6,
+            "line": 122,
+            "offset": 5924
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 139,
+            "offset": 6286
+          },
+          "start": {
+            "col": 6,
+            "line": 139,
+            "offset": 6281
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 147,
+            "offset": 6436
+          },
+          "start": {
+            "col": 8,
+            "line": 147,
+            "offset": 6431
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 151,
+            "offset": 6646
+          },
+          "start": {
+            "col": 8,
+            "line": 151,
+            "offset": 6641
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 152,
+            "offset": 6785
+          },
+          "start": {
+            "col": 8,
+            "line": 152,
+            "offset": 6780
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 153,
+            "offset": 6901
+          },
+          "start": {
+            "col": 8,
+            "line": 153,
+            "offset": 6896
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 154,
+            "offset": 7042
+          },
+          "start": {
+            "col": 8,
+            "line": 154,
+            "offset": 7037
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 156,
+            "offset": 7193
+          },
+          "start": {
+            "col": 8,
+            "line": 156,
+            "offset": 7188
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 157,
+            "offset": 7332
+          },
+          "start": {
+            "col": 8,
+            "line": 157,
+            "offset": 7327
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 158,
+            "offset": 7448
+          },
+          "start": {
+            "col": 8,
+            "line": 158,
+            "offset": 7443
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 159,
+            "offset": 7589
+          },
+          "start": {
+            "col": 8,
+            "line": 159,
+            "offset": 7584
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 160,
+            "offset": 7703
+          },
+          "start": {
+            "col": 6,
+            "line": 160,
+            "offset": 7698
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 174,
+            "offset": 8038
+          },
+          "start": {
+            "col": 6,
+            "line": 174,
+            "offset": 8033
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 185,
+            "offset": 9063
+          },
+          "start": {
+            "col": 6,
+            "line": 185,
+            "offset": 9058
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 203,
+            "offset": 9673
+          },
+          "start": {
+            "col": 6,
+            "line": 203,
+            "offset": 9668
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# Smoke Testing the Tasks Plugin\n\n*[[#Remaining tests|Jump to the tests...]]*\n\n## Introduction\n\n- **Intended audience of this note**\n  - Developers working on the Tasks plugin, reviewing a Pull Request (especially ones that change dependencies), or making a release, and who wish to do some basic tests of the plugin to make sure there are no glaring show-stopper errors.\n- **What is a Smoke Test?**\n  - As [Wikipedia](https://en.wikipedia.org/wiki/Smoke_testing_(software)) says: smoke testing ... is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release.\n- **Why not test everything?**\n  - The Tasks plugin is run by volunteers in our finite spare time. We take care during development to write automated tests for the algorithms in our code, but there are some kinds of changes, such as in tools the project depends on, that we do not have automated tests for.\n- **Why not test on every platform?**\n  - It's not feasible nor a good use of limited volunteer time on a free tool.\n\n## How the tests work\n\n### Get the Tasks-Demo vault with the build to be tested\n\nYou can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 1.\n\nOr you can install a download of the build's Tasks plugin inside your clone of the Tasks repo:\n\n- Make sure you have the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) cloned and up-to-date on your machine.\n- Open the Tasks-Demo vault on a machine of your choice:\n  - Open Obsidian\n  - Click 'Open another vault' button\n  - Click 'Open folder as vault' button\n  - Navigate to `obsidian-tasks/resources/sample_vaults/Tasks-Demo`\n  - Click 'Open'\n- Install the candidate build for the pull request or release inside the `Tasks-Demo` vault\n  - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.\n\n### Follow the tests\n\n- This note is a self-contained set of steps to check. You should check off tasks beginning `- [ ] check:` as you complete each section.\n\n> [!Important]\n> Several task blocks in this file depend of the the file name being unchanged. Please don't rename the file before running the tests.\n\n---\n\n## Remaining tests\n\nWork through all the tasks below, until zero tasks remain in this query:\n\n> [!Todo] Remaining groups of tests\n>\n> ```tasks\n> not done\n> path includes Smoke Testing the Tasks Plugin\n> description includes **check**:\n>\n> short display\n> ```\n\n---\n\n## The Smoke Tests\n\n### Toggling tasks\n\n#### Completion of tasks\n\n- [ ] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command\n- [ ] #task Mark this task complete by clicking on it in **Reading view**\n- [ ] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly==\n- [ ] #task **check**: Checked all above methods for **completing tasks** - and they worked\n\n#### Un-completion of tasks\n\n<!-- markdownlint-disable ul-style -->\n\n* [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05\n* [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05\n* [x] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2022-07-05\n* [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked\n\n<!-- markdownlint-enable ul-style -->\n\n#### Recurring Tasks\n\nConfirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is unchanged.\n\n> [!Todo]\n>\n> - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19\n>\n> > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19\n\n- [ ] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19\n\n> - [ ] #task **check**: Checked all above steps for **recurring tasks** worked\n\n### On Completion\n\n#### On Completion Delete: Non-recurring tasks\n\nConfirm that the **task line is deleted**.\n\n- [ ] #task Complete this auto-deleting non-recurring task in **Source view** using **Tasks: Toggle task done** command 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting non-recurring task in **Reading view** 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting non-recurring task in **Live Preview** 🏁 delete 📅 2024-10-27\n- [ ] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked\n\n#### On Completion Delete: Recurring Tasks\n\nConfirm that when an auto-deleting recurring task is completed, a **new task is created replacing the old task**, and the checkbox remains not-done.\n\n- [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-27\n- [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-27\n- [ ] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked\n\n### Rendering of Task Blocks\n\nSteps to do:\n\n<!-- markdownlint-disable ul-style -->\n\n+ [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed\n+ [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed\n+ [ ] #task **check**: Checked all above steps for **viewing task blocks** worked\n\n<!-- markdownlint-enable ul-style -->\n\n---\n\nTasks block to check - should list all the tasks in this section, regardless of state\n\n```tasks\npath includes Smoke Testing the Tasks Plugin\nheading includes Rendering of Task Blocks\n```\n\n---\n\n### Styling of Rendered Task Blocks\n\n- [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there\n\n---\n\n### Edit dates in Rendered Task Blocks\n\n> [!Example]\n>\n> - [ ] #task Sample task: I have all the supported date types ➕ 2024-09-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06\n\n- View this file in **Reading mode**...\n- On the task line above:\n  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- In the tasks search block below:\n  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- [ ] #task **check**: Checked all above steps for **editing dates** worked\n\n```tasks\npath includes {{query.file.path}}\ndescription includes I have all the supported date types\nhide backlink\nhide postpone button\n```\n\n---\n\n### Create or edit Task modal\n\n- This text should copied in to the task Description, after following steps below\n- [ ] #task Switch to **Live Preview** or **Source mode**, Click on the list item above, then do the following numbered steps and checks:\n    1. run **Tasks: Create or edit task**\n    2. **Check** that the text in the list item is copied in to the Description field\n    3. Type some values in to the fields\n    4. In one of the date fields, type `tm` (including the space afterwards) and **Check** it is expanded in to `tomorrow`\n    5. In one of the date fields, left-click the calendar button, and use the context menu to select and save a date. Check that the date is saved.\n    6. In one of the date fields, left-click the calendar button, and click outside the date picker, to confirm that the picker closes and the modal is still usable.\n    7. Hit Return or click **Apply**\n    8. **Check** that the list item above is converted in to a task\n    9. **Check** that values you entered in the modal have been copied in to the list item above\n    10. **Check** that the `#task` tag has been added to the start of the task\n- [ ] #task **check**: Checked all above steps for **creating a task via the modal** worked\n\n---\n\n## Check the plugin starts OK with no `data.json` settings file\n\n- Preparation\n  - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**\n  - Quit Obsidian\n  - Open the `obsidian-tasks-plugin` folder\n  - Delete `data.json`\n- Test\n  - Restart obsidian\n  - Go to Settings\n  - Check that `Tasks` is shown in the list of **Community plugins**\n  - View -> Toggle Developer Tools\n  - Open the console\n  - Confirm that there are no red messages mentioning Tasks\n- [ ] #task **check**: Checked that Tasks works correctly when **there is no `data.json` present**\n",
+  "filePath": "Test Data/smoke_testing_the_tasks_plugin.md",
+  "getAllTags": [
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task"
+  ],
+  "obsidianApiVersion": "1.8.0",
+  "parseFrontMatterTags": null
+}
