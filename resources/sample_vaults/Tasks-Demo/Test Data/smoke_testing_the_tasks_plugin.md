@@ -151,7 +151,7 @@ heading includes Rendering of Task Blocks
 
 - View this file in **Reading mode**...
 - On the task line above:
-  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+  - [x] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated. ✅ 2025-01-01
   - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.
   - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.
   - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.

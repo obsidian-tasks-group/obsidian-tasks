@@ -280,12 +280,12 @@
           "end": {
             "col": 33,
             "line": 173,
-            "offset": 8225
+            "offset": 8238
           },
           "start": {
             "col": 0,
             "line": 173,
-            "offset": 8192
+            "offset": 8205
           }
         }
       },
@@ -296,12 +296,12 @@
           "end": {
             "col": 65,
             "line": 191,
-            "offset": 9497
+            "offset": 9510
           },
           "start": {
             "col": 0,
             "line": 191,
-            "offset": 9432
+            "offset": 9445
           }
         }
       }
@@ -1047,9 +1047,9 @@
         "parent": 152,
         "position": {
           "end": {
-            "col": 138,
+            "col": 151,
             "line": 153,
-            "offset": 7049
+            "offset": 7062
           },
           "start": {
             "col": 2,
@@ -1057,7 +1057,7 @@
             "offset": 6913
           }
         },
-        "task": " "
+        "task": "x"
       },
       {
         "parent": 152,
@@ -1065,12 +1065,12 @@
           "end": {
             "col": 115,
             "line": 154,
-            "offset": 7165
+            "offset": 7178
           },
           "start": {
             "col": 2,
             "line": 154,
-            "offset": 7052
+            "offset": 7065
           }
         },
         "task": " "
@@ -1081,12 +1081,12 @@
           "end": {
             "col": 140,
             "line": 155,
-            "offset": 7306
+            "offset": 7319
           },
           "start": {
             "col": 2,
             "line": 155,
-            "offset": 7168
+            "offset": 7181
           }
         },
         "task": " "
@@ -1097,12 +1097,12 @@
           "end": {
             "col": 115,
             "line": 156,
-            "offset": 7422
+            "offset": 7435
           },
           "start": {
             "col": 2,
             "line": 156,
-            "offset": 7309
+            "offset": 7322
           }
         },
         "task": " "
@@ -1113,12 +1113,12 @@
           "end": {
             "col": 34,
             "line": 157,
-            "offset": 7457
+            "offset": 7470
           },
           "start": {
             "col": 0,
             "line": 157,
-            "offset": 7423
+            "offset": 7436
           }
         }
       },
@@ -1128,12 +1128,12 @@
           "end": {
             "col": 138,
             "line": 158,
-            "offset": 7596
+            "offset": 7609
           },
           "start": {
             "col": 2,
             "line": 158,
-            "offset": 7460
+            "offset": 7473
           }
         },
         "task": " "
@@ -1144,12 +1144,12 @@
           "end": {
             "col": 115,
             "line": 159,
-            "offset": 7712
+            "offset": 7725
           },
           "start": {
             "col": 2,
             "line": 159,
-            "offset": 7599
+            "offset": 7612
           }
         },
         "task": " "
@@ -1160,12 +1160,12 @@
           "end": {
             "col": 140,
             "line": 160,
-            "offset": 7853
+            "offset": 7866
           },
           "start": {
             "col": 2,
             "line": 160,
-            "offset": 7715
+            "offset": 7728
           }
         },
         "task": " "
@@ -1176,12 +1176,12 @@
           "end": {
             "col": 115,
             "line": 161,
-            "offset": 7969
+            "offset": 7982
           },
           "start": {
             "col": 2,
             "line": 161,
-            "offset": 7856
+            "offset": 7869
           }
         },
         "task": " "
@@ -1192,12 +1192,12 @@
           "end": {
             "col": 75,
             "line": 162,
-            "offset": 8045
+            "offset": 8058
           },
           "start": {
             "col": 0,
             "line": 162,
-            "offset": 7970
+            "offset": 7983
           }
         },
         "task": " "
@@ -1208,12 +1208,12 @@
           "end": {
             "col": 81,
             "line": 175,
-            "offset": 8308
+            "offset": 8321
           },
           "start": {
             "col": 0,
             "line": 175,
-            "offset": 8227
+            "offset": 8240
           }
         }
       },
@@ -1223,12 +1223,12 @@
           "end": {
             "col": 137,
             "line": 176,
-            "offset": 8446
+            "offset": 8459
           },
           "start": {
             "col": 0,
             "line": 176,
-            "offset": 8309
+            "offset": 8322
           }
         },
         "task": " "
@@ -1239,12 +1239,12 @@
           "end": {
             "col": 41,
             "line": 177,
-            "offset": 8488
+            "offset": 8501
           },
           "start": {
             "col": 2,
             "line": 177,
-            "offset": 8449
+            "offset": 8462
           }
         }
       },
@@ -1254,12 +1254,12 @@
           "end": {
             "col": 85,
             "line": 178,
-            "offset": 8574
+            "offset": 8587
           },
           "start": {
             "col": 2,
             "line": 178,
-            "offset": 8491
+            "offset": 8504
           }
         }
       },
@@ -1269,12 +1269,12 @@
           "end": {
             "col": 40,
             "line": 179,
-            "offset": 8615
+            "offset": 8628
           },
           "start": {
             "col": 2,
             "line": 179,
-            "offset": 8577
+            "offset": 8590
           }
         }
       },
@@ -1284,12 +1284,12 @@
           "end": {
             "col": 122,
             "line": 180,
-            "offset": 8738
+            "offset": 8751
           },
           "start": {
             "col": 2,
             "line": 180,
-            "offset": 8618
+            "offset": 8631
           }
         }
       },
@@ -1299,12 +1299,12 @@
           "end": {
             "col": 147,
             "line": 181,
-            "offset": 8886
+            "offset": 8899
           },
           "start": {
             "col": 2,
             "line": 181,
-            "offset": 8741
+            "offset": 8754
           }
         }
       },
@@ -1314,12 +1314,12 @@
           "end": {
             "col": 165,
             "line": 182,
-            "offset": 9052
+            "offset": 9065
           },
           "start": {
             "col": 2,
             "line": 182,
-            "offset": 8889
+            "offset": 8902
           }
         }
       },
@@ -1329,12 +1329,12 @@
           "end": {
             "col": 36,
             "line": 183,
-            "offset": 9089
+            "offset": 9102
           },
           "start": {
             "col": 2,
             "line": 183,
-            "offset": 9055
+            "offset": 9068
           }
         }
       },
@@ -1344,12 +1344,12 @@
           "end": {
             "col": 67,
             "line": 184,
-            "offset": 9157
+            "offset": 9170
           },
           "start": {
             "col": 2,
             "line": 184,
-            "offset": 9092
+            "offset": 9105
           }
         }
       },
@@ -1359,12 +1359,12 @@
           "end": {
             "col": 96,
             "line": 185,
-            "offset": 9254
+            "offset": 9267
           },
           "start": {
             "col": 2,
             "line": 185,
-            "offset": 9160
+            "offset": 9173
           }
         }
       },
@@ -1374,12 +1374,12 @@
           "end": {
             "col": 78,
             "line": 186,
-            "offset": 9333
+            "offset": 9346
           },
           "start": {
             "col": 2,
             "line": 186,
-            "offset": 9257
+            "offset": 9270
           }
         }
       },
@@ -1389,12 +1389,12 @@
           "end": {
             "col": 91,
             "line": 187,
-            "offset": 9425
+            "offset": 9438
           },
           "start": {
             "col": 0,
             "line": 187,
-            "offset": 9334
+            "offset": 9347
           }
         },
         "task": " "
@@ -1405,12 +1405,12 @@
           "end": {
             "col": 13,
             "line": 193,
-            "offset": 9512
+            "offset": 9525
           },
           "start": {
             "col": 0,
             "line": 193,
-            "offset": 9499
+            "offset": 9512
           }
         }
       },
@@ -1420,12 +1420,12 @@
           "end": {
             "col": 115,
             "line": 194,
-            "offset": 9628
+            "offset": 9641
           },
           "start": {
             "col": 2,
             "line": 194,
-            "offset": 9515
+            "offset": 9528
           }
         }
       },
@@ -1435,12 +1435,12 @@
           "end": {
             "col": 17,
             "line": 195,
-            "offset": 9646
+            "offset": 9659
           },
           "start": {
             "col": 2,
             "line": 195,
-            "offset": 9631
+            "offset": 9644
           }
         }
       },
@@ -1450,12 +1450,12 @@
           "end": {
             "col": 43,
             "line": 196,
-            "offset": 9690
+            "offset": 9703
           },
           "start": {
             "col": 2,
             "line": 196,
-            "offset": 9649
+            "offset": 9662
           }
         }
       },
@@ -1465,12 +1465,12 @@
           "end": {
             "col": 22,
             "line": 197,
-            "offset": 9713
+            "offset": 9726
           },
           "start": {
             "col": 2,
             "line": 197,
-            "offset": 9693
+            "offset": 9706
           }
         }
       },
@@ -1480,12 +1480,12 @@
           "end": {
             "col": 6,
             "line": 198,
-            "offset": 9720
+            "offset": 9733
           },
           "start": {
             "col": 0,
             "line": 198,
-            "offset": 9714
+            "offset": 9727
           }
         }
       },
@@ -1495,12 +1495,12 @@
           "end": {
             "col": 20,
             "line": 199,
-            "offset": 9741
+            "offset": 9754
           },
           "start": {
             "col": 2,
             "line": 199,
-            "offset": 9723
+            "offset": 9736
           }
         }
       },
@@ -1510,12 +1510,12 @@
           "end": {
             "col": 18,
             "line": 200,
-            "offset": 9760
+            "offset": 9773
           },
           "start": {
             "col": 2,
             "line": 200,
-            "offset": 9744
+            "offset": 9757
           }
         }
       },
@@ -1525,12 +1525,12 @@
           "end": {
             "col": 68,
             "line": 201,
-            "offset": 9829
+            "offset": 9842
           },
           "start": {
             "col": 2,
             "line": 201,
-            "offset": 9763
+            "offset": 9776
           }
         }
       },
@@ -1540,12 +1540,12 @@
           "end": {
             "col": 34,
             "line": 202,
-            "offset": 9864
+            "offset": 9877
           },
           "start": {
             "col": 2,
             "line": 202,
-            "offset": 9832
+            "offset": 9845
           }
         }
       },
@@ -1555,12 +1555,12 @@
           "end": {
             "col": 20,
             "line": 203,
-            "offset": 9885
+            "offset": 9898
           },
           "start": {
             "col": 2,
             "line": 203,
-            "offset": 9867
+            "offset": 9880
           }
         }
       },
@@ -1570,12 +1570,12 @@
           "end": {
             "col": 59,
             "line": 204,
-            "offset": 9945
+            "offset": 9958
           },
           "start": {
             "col": 2,
             "line": 204,
-            "offset": 9888
+            "offset": 9901
           }
         }
       },
@@ -1585,12 +1585,12 @@
           "end": {
             "col": 98,
             "line": 205,
-            "offset": 10044
+            "offset": 10057
           },
           "start": {
             "col": 0,
             "line": 205,
-            "offset": 9946
+            "offset": 9959
           }
         },
         "task": " "
@@ -2367,7 +2367,7 @@
           "end": {
             "col": 75,
             "line": 162,
-            "offset": 8045
+            "offset": 8058
           },
           "start": {
             "col": 0,
@@ -2382,12 +2382,12 @@
           "end": {
             "col": 3,
             "line": 169,
-            "offset": 8185
+            "offset": 8198
           },
           "start": {
             "col": 0,
             "line": 164,
-            "offset": 8047
+            "offset": 8060
           }
         },
         "type": "code"
@@ -2397,12 +2397,12 @@
           "end": {
             "col": 3,
             "line": 171,
-            "offset": 8190
+            "offset": 8203
           },
           "start": {
             "col": 0,
             "line": 171,
-            "offset": 8187
+            "offset": 8200
           }
         },
         "type": "thematicBreak"
@@ -2412,12 +2412,12 @@
           "end": {
             "col": 33,
             "line": 173,
-            "offset": 8225
+            "offset": 8238
           },
           "start": {
             "col": 0,
             "line": 173,
-            "offset": 8192
+            "offset": 8205
           }
         },
         "type": "heading"
@@ -2427,12 +2427,12 @@
           "end": {
             "col": 91,
             "line": 187,
-            "offset": 9425
+            "offset": 9438
           },
           "start": {
             "col": 0,
             "line": 175,
-            "offset": 8227
+            "offset": 8240
           }
         },
         "type": "list"
@@ -2442,12 +2442,12 @@
           "end": {
             "col": 3,
             "line": 189,
-            "offset": 9430
+            "offset": 9443
           },
           "start": {
             "col": 0,
             "line": 189,
-            "offset": 9427
+            "offset": 9440
           }
         },
         "type": "thematicBreak"
@@ -2457,12 +2457,12 @@
           "end": {
             "col": 65,
             "line": 191,
-            "offset": 9497
+            "offset": 9510
           },
           "start": {
             "col": 0,
             "line": 191,
-            "offset": 9432
+            "offset": 9445
           }
         },
         "type": "heading"
@@ -2472,12 +2472,12 @@
           "end": {
             "col": 98,
             "line": 205,
-            "offset": 10044
+            "offset": 10057
           },
           "start": {
             "col": 0,
             "line": 193,
-            "offset": 9499
+            "offset": 9512
           }
         },
         "type": "list"
@@ -2879,12 +2879,12 @@
           "end": {
             "col": 13,
             "line": 154,
-            "offset": 7063
+            "offset": 7076
           },
           "start": {
             "col": 8,
             "line": 154,
-            "offset": 7058
+            "offset": 7071
           }
         },
         "tag": "#task"
@@ -2894,12 +2894,12 @@
           "end": {
             "col": 13,
             "line": 155,
-            "offset": 7179
+            "offset": 7192
           },
           "start": {
             "col": 8,
             "line": 155,
-            "offset": 7174
+            "offset": 7187
           }
         },
         "tag": "#task"
@@ -2909,12 +2909,12 @@
           "end": {
             "col": 13,
             "line": 156,
-            "offset": 7320
+            "offset": 7333
           },
           "start": {
             "col": 8,
             "line": 156,
-            "offset": 7315
+            "offset": 7328
           }
         },
         "tag": "#task"
@@ -2924,12 +2924,12 @@
           "end": {
             "col": 13,
             "line": 158,
-            "offset": 7471
+            "offset": 7484
           },
           "start": {
             "col": 8,
             "line": 158,
-            "offset": 7466
+            "offset": 7479
           }
         },
         "tag": "#task"
@@ -2939,12 +2939,12 @@
           "end": {
             "col": 13,
             "line": 159,
-            "offset": 7610
+            "offset": 7623
           },
           "start": {
             "col": 8,
             "line": 159,
-            "offset": 7605
+            "offset": 7618
           }
         },
         "tag": "#task"
@@ -2954,12 +2954,12 @@
           "end": {
             "col": 13,
             "line": 160,
-            "offset": 7726
+            "offset": 7739
           },
           "start": {
             "col": 8,
             "line": 160,
-            "offset": 7721
+            "offset": 7734
           }
         },
         "tag": "#task"
@@ -2969,12 +2969,12 @@
           "end": {
             "col": 13,
             "line": 161,
-            "offset": 7867
+            "offset": 7880
           },
           "start": {
             "col": 8,
             "line": 161,
-            "offset": 7862
+            "offset": 7875
           }
         },
         "tag": "#task"
@@ -2984,12 +2984,12 @@
           "end": {
             "col": 11,
             "line": 162,
-            "offset": 7981
+            "offset": 7994
           },
           "start": {
             "col": 6,
             "line": 162,
-            "offset": 7976
+            "offset": 7989
           }
         },
         "tag": "#task"
@@ -2999,12 +2999,12 @@
           "end": {
             "col": 11,
             "line": 176,
-            "offset": 8320
+            "offset": 8333
           },
           "start": {
             "col": 6,
             "line": 176,
-            "offset": 8315
+            "offset": 8328
           }
         },
         "tag": "#task"
@@ -3014,12 +3014,12 @@
           "end": {
             "col": 11,
             "line": 187,
-            "offset": 9345
+            "offset": 9358
           },
           "start": {
             "col": 6,
             "line": 187,
-            "offset": 9340
+            "offset": 9353
           }
         },
         "tag": "#task"
@@ -3029,19 +3029,19 @@
           "end": {
             "col": 11,
             "line": 205,
-            "offset": 9957
+            "offset": 9970
           },
           "start": {
             "col": 6,
             "line": 205,
-            "offset": 9952
+            "offset": 9965
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "# Smoke Testing the Tasks Plugin\n\n*[[#Remaining tests|Jump to the tests...]]*\n\n## 1 Introduction\n\n- **Intended audience of this note**\n  - Developers working on the Tasks plugin, reviewing a Pull Request (especially ones that change dependencies), or making a release, and who wish to do some basic tests of the plugin to make sure there are no glaring show-stopper errors.\n- **What is a Smoke Test?**\n  - As [Wikipedia](https://en.wikipedia.org/wiki/Smoke_testing_(software)) says: smoke testing ... is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release.\n- **Why not test everything?**\n  - The Tasks plugin is run by volunteers in our finite spare time. We take care during development to write automated tests for the algorithms in our code, but there are some kinds of changes, such as in tools the project depends on, that we do not have automated tests for.\n- **Why not test on every platform?**\n  - It's not feasible nor a good use of limited volunteer time on a free tool.\n\n## 2 How the tests work\n\n### 2.1 Get the Tasks-Demo vault with the build to be tested\n\nYou can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 1.\n\nOr you can install a download of the build's Tasks plugin inside your clone of the Tasks repo:\n\n- Make sure you have the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) cloned and up-to-date on your machine.\n- Open the Tasks-Demo vault on a machine of your choice:\n  - Open Obsidian\n  - Click 'Open another vault' button\n  - Click 'Open folder as vault' button\n  - Navigate to `obsidian-tasks/resources/sample_vaults/Tasks-Demo`\n  - Click 'Open'\n- Install the candidate build for the pull request or release inside the `Tasks-Demo` vault\n  - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.\n\n### 2.2 Follow the tests\n\n- This note is a self-contained set of steps to check. You should check off tasks beginning `- [ ] check:` as you complete each section.\n\n> [!Important]\n> Several task blocks in this file depend of the the file name being unchanged. Please don't rename the file before running the tests.\n\n---\n\n## 3 Remaining tests\n\nWork through all the tasks below, until zero tasks remain in this query:\n\n> [!Todo] Remaining groups of tests\n>\n> ```tasks\n> not done\n> path includes {{query.file.path}}\n> description includes **check**:\n>\n> short display\n> ```\n\n---\n\n## 4 The Smoke Tests\n\n### 4.1 Toggling tasks\n\n#### 4.1.1 Completion of tasks\n\n- [x] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command ✅ 2025-01-01\n- [x] #task Mark this task complete by clicking on it in **Reading view** ✅ 2025-01-01\n- [x] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2025-01-01\n- [x] #task **check**: Checked all above methods for **completing tasks** - and they worked ✅ 2025-01-01\n\n#### 4.1.2 Un-completion of tasks\n\n<!-- markdownlint-disable ul-style -->\n\n* [ ] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command\n* [ ] #task Mark this task not complete by clicking on it in **Reading view**\n* [ ] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly==\n* [x] #task **check**: Checked all above methods for **un-completing tasks** - and they worked ✅ 2025-01-01\n\n<!-- markdownlint-enable ul-style -->\n\n#### 4.1.3 Recurring Tasks\n\nConfirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is unchanged.\n\n> [!Todo]\n>\n> - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20\n> - [x] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2025-01-01\n>\n> > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20\n> > - [x] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2025-01-01\n\n- [ ] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20\n- [x] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2025-01-01\n\n> - [x] #task **check**: Checked all above steps for **recurring tasks** worked ✅ 2025-01-01\n\n### 4.2 On Completion\n\n#### 4.2.1 On Completion Delete: Non-recurring tasks\n\nConfirm that the **task line is deleted**.\n\n\n\n- [x] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked ✅ 2025-01-01\n\n#### 4.2.2 On Completion Delete: Recurring Tasks\n\nConfirm that when an auto-deleting recurring task is completed, a **new task is created replacing the old task**, and the checkbox remains not-done.\n\n- [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-28\n- [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-28\n- [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-28\n- [x] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked ✅ 2025-01-01\n\n### 4.3 Rendering of Task Blocks\n\nSteps to do:\n\n<!-- markdownlint-disable ul-style -->\n\n+ [x] #task View this file in **Reading view** and confirm that the tasks in this section are listed ✅ 2025-01-01\n+ [x] #task View this file in **Live Preview** and confirm that the tasks in this section are listed ✅ 2025-01-01\n+ [x] #task **check**: Checked all above steps for **viewing task blocks** worked ✅ 2025-01-01\n\n<!-- markdownlint-enable ul-style -->\n\n---\n\nTasks block to check - should list all the tasks in this section, regardless of state\n\n```tasks\npath includes {{query.file.path}}\nheading includes Rendering of Task Blocks\n```\n\n---\n\n### 4.4 Styling of Rendered Task Blocks\n\n- [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there\n\n---\n\n### 4.5 Edit dates in Rendered Task Blocks\n\n> [!Example]\n>\n> - [ ] #task Sample task: I have all the supported date types ➕ 2025-01-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06\n\n- View this file in **Reading mode**...\n- On the task line above:\n  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- In the tasks search block below:\n  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- [ ] #task **check**: Checked all above steps for **editing dates** worked\n\n```tasks\npath includes {{query.file.path}}\ndescription includes I have all the supported date types\nhide backlink\nhide postpone button\n```\n\n---\n\n### 4.6 Create or edit Task modal\n\n- This text should copied in to the task Description, after following steps below\n- [ ] #task Switch to **Live Preview** or **Source mode**, Click on the list item above, then do the following numbered steps and checks:\n    1. run **Tasks: Create or edit task**\n    2. **Check** that the text in the list item is copied in to the Description field\n    3. Type some values in to the fields\n    4. In one of the date fields, type `tm` (including the space afterwards) and **Check** it is expanded in to `tomorrow`\n    5. In one of the date fields, left-click the calendar button, and use the context menu to select and save a date. Check that the date is saved.\n    6. In one of the date fields, left-click the calendar button, and click outside the date picker, to confirm that the picker closes and the modal is still usable.\n    7. Hit Return or click **Apply**\n    8. **Check** that the list item above is converted in to a task\n    9. **Check** that values you entered in the modal have been copied in to the list item above\n    10. **Check** that the `#task` tag has been added to the start of the task\n- [ ] #task **check**: Checked all above steps for **creating a task via the modal** worked\n\n---\n\n## 5 Check the plugin starts OK with no `data.json` settings file\n\n- Preparation\n  - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**\n  - Quit Obsidian\n  - Open the `obsidian-tasks-plugin` folder\n  - Delete `data.json`\n- Test\n  - Restart obsidian\n  - Go to Settings\n  - Check that `Tasks` is shown in the list of **Community plugins**\n  - View -> Toggle Developer Tools\n  - Open the console\n  - Confirm that there are no red messages mentioning Tasks\n- [ ] #task **check**: Checked that Tasks works correctly when **there is no `data.json` present**\n",
+  "fileContents": "# Smoke Testing the Tasks Plugin\n\n*[[#Remaining tests|Jump to the tests...]]*\n\n## 1 Introduction\n\n- **Intended audience of this note**\n  - Developers working on the Tasks plugin, reviewing a Pull Request (especially ones that change dependencies), or making a release, and who wish to do some basic tests of the plugin to make sure there are no glaring show-stopper errors.\n- **What is a Smoke Test?**\n  - As [Wikipedia](https://en.wikipedia.org/wiki/Smoke_testing_(software)) says: smoke testing ... is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release.\n- **Why not test everything?**\n  - The Tasks plugin is run by volunteers in our finite spare time. We take care during development to write automated tests for the algorithms in our code, but there are some kinds of changes, such as in tools the project depends on, that we do not have automated tests for.\n- **Why not test on every platform?**\n  - It's not feasible nor a good use of limited volunteer time on a free tool.\n\n## 2 How the tests work\n\n### 2.1 Get the Tasks-Demo vault with the build to be tested\n\nYou can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 1.\n\nOr you can install a download of the build's Tasks plugin inside your clone of the Tasks repo:\n\n- Make sure you have the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) cloned and up-to-date on your machine.\n- Open the Tasks-Demo vault on a machine of your choice:\n  - Open Obsidian\n  - Click 'Open another vault' button\n  - Click 'Open folder as vault' button\n  - Navigate to `obsidian-tasks/resources/sample_vaults/Tasks-Demo`\n  - Click 'Open'\n- Install the candidate build for the pull request or release inside the `Tasks-Demo` vault\n  - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.\n\n### 2.2 Follow the tests\n\n- This note is a self-contained set of steps to check. You should check off tasks beginning `- [ ] check:` as you complete each section.\n\n> [!Important]\n> Several task blocks in this file depend of the the file name being unchanged. Please don't rename the file before running the tests.\n\n---\n\n## 3 Remaining tests\n\nWork through all the tasks below, until zero tasks remain in this query:\n\n> [!Todo] Remaining groups of tests\n>\n> ```tasks\n> not done\n> path includes {{query.file.path}}\n> description includes **check**:\n>\n> short display\n> ```\n\n---\n\n## 4 The Smoke Tests\n\n### 4.1 Toggling tasks\n\n#### 4.1.1 Completion of tasks\n\n- [x] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command ✅ 2025-01-01\n- [x] #task Mark this task complete by clicking on it in **Reading view** ✅ 2025-01-01\n- [x] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2025-01-01\n- [x] #task **check**: Checked all above methods for **completing tasks** - and they worked ✅ 2025-01-01\n\n#### 4.1.2 Un-completion of tasks\n\n<!-- markdownlint-disable ul-style -->\n\n* [ ] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command\n* [ ] #task Mark this task not complete by clicking on it in **Reading view**\n* [ ] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly==\n* [x] #task **check**: Checked all above methods for **un-completing tasks** - and they worked ✅ 2025-01-01\n\n<!-- markdownlint-enable ul-style -->\n\n#### 4.1.3 Recurring Tasks\n\nConfirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is unchanged.\n\n> [!Todo]\n>\n> - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20\n> - [x] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2025-01-01\n>\n> > - [ ] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20\n> > - [x] #task Complete this recurring task in **Reading view** 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2025-01-01\n\n- [ ] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-18 ⏳ 2022-02-19 📅 2022-02-20\n- [x] #task Complete this recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19 ✅ 2025-01-01\n\n> - [x] #task **check**: Checked all above steps for **recurring tasks** worked ✅ 2025-01-01\n\n### 4.2 On Completion\n\n#### 4.2.1 On Completion Delete: Non-recurring tasks\n\nConfirm that the **task line is deleted**.\n\n\n\n- [x] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked ✅ 2025-01-01\n\n#### 4.2.2 On Completion Delete: Recurring Tasks\n\nConfirm that when an auto-deleting recurring task is completed, a **new task is created replacing the old task**, and the checkbox remains not-done.\n\n- [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-28\n- [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-28\n- [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-28\n- [x] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked ✅ 2025-01-01\n\n### 4.3 Rendering of Task Blocks\n\nSteps to do:\n\n<!-- markdownlint-disable ul-style -->\n\n+ [x] #task View this file in **Reading view** and confirm that the tasks in this section are listed ✅ 2025-01-01\n+ [x] #task View this file in **Live Preview** and confirm that the tasks in this section are listed ✅ 2025-01-01\n+ [x] #task **check**: Checked all above steps for **viewing task blocks** worked ✅ 2025-01-01\n\n<!-- markdownlint-enable ul-style -->\n\n---\n\nTasks block to check - should list all the tasks in this section, regardless of state\n\n```tasks\npath includes {{query.file.path}}\nheading includes Rendering of Task Blocks\n```\n\n---\n\n### 4.4 Styling of Rendered Task Blocks\n\n- [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there\n\n---\n\n### 4.5 Edit dates in Rendered Task Blocks\n\n> [!Example]\n>\n> - [ ] #task Sample task: I have all the supported date types ➕ 2025-01-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2024-09-06\n\n- View this file in **Reading mode**...\n- On the task line above:\n  - [x] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated. ✅ 2025-01-01\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- In the tasks search block below:\n  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.\n  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.\n  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.\n  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.\n- [ ] #task **check**: Checked all above steps for **editing dates** worked\n\n```tasks\npath includes {{query.file.path}}\ndescription includes I have all the supported date types\nhide backlink\nhide postpone button\n```\n\n---\n\n### 4.6 Create or edit Task modal\n\n- This text should copied in to the task Description, after following steps below\n- [ ] #task Switch to **Live Preview** or **Source mode**, Click on the list item above, then do the following numbered steps and checks:\n    1. run **Tasks: Create or edit task**\n    2. **Check** that the text in the list item is copied in to the Description field\n    3. Type some values in to the fields\n    4. In one of the date fields, type `tm` (including the space afterwards) and **Check** it is expanded in to `tomorrow`\n    5. In one of the date fields, left-click the calendar button, and use the context menu to select and save a date. Check that the date is saved.\n    6. In one of the date fields, left-click the calendar button, and click outside the date picker, to confirm that the picker closes and the modal is still usable.\n    7. Hit Return or click **Apply**\n    8. **Check** that the list item above is converted in to a task\n    9. **Check** that values you entered in the modal have been copied in to the list item above\n    10. **Check** that the `#task` tag has been added to the start of the task\n- [ ] #task **check**: Checked all above steps for **creating a task via the modal** worked\n\n---\n\n## 5 Check the plugin starts OK with no `data.json` settings file\n\n- Preparation\n  - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**\n  - Quit Obsidian\n  - Open the `obsidian-tasks-plugin` folder\n  - Delete `data.json`\n- Test\n  - Restart obsidian\n  - Go to Settings\n  - Check that `Tasks` is shown in the list of **Community plugins**\n  - View -> Toggle Developer Tools\n  - Open the console\n  - Confirm that there are no red messages mentioning Tasks\n- [ ] #task **check**: Checked that Tasks works correctly when **there is no `data.json` present**\n",
   "filePath": "Test Data/smoke_testing_the_tasks_plugin.md",
   "getAllTags": [
     "#task",
