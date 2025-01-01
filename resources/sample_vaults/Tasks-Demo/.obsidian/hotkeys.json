@@ -23,6 +23,12 @@
         "Mod"
       ],
       "key": "M"
+    },
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "Enter"
     }
   ],
   "editor:toggle-checklist-status": [],
@@ -44,5 +50,6 @@
       ],
       "key": "/"
     }
-  ]
+  ],
+  "editor:open-link-in-new-leaf": []
 }
