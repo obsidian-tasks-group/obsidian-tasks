@@ -66,10 +66,10 @@
       "": "info",
       "tasks": "info",
       "tasks.Query": "info",
-      "tasks.Cache": "info",
-      "tasks.Events": "info",
-      "tasks.File": "info",
-      "tasks.Task": "info"
+      "tasks.Cache": "debug",
+      "tasks.Events": "debug",
+      "tasks.File": "debug",
+      "tasks.Task": "debug"
     }
   }
 }
