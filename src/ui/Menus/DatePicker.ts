@@ -26,7 +26,9 @@ export function promptForDate(
         enableTime: false, // Optional: Enable time picker
         dateFormat: 'Y-m-d', // Adjust the date and time format as needed
         locale: {
-            firstDayOfWeek: 1, // Sets Monday as the first day of the week
+            // Try to determine the first day of the week based on the locale, or use Monday
+            // if unavailable
+            firstDayOfWeek: (new Intl.Locale(navigator.language) as any).weekInfo.firstDay ?? 1,
         },
         onClose: async (selectedDates, _dateStr, instance) => {
             if (selectedDates.length > 0) {
