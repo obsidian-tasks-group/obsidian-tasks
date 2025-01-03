@@ -17,8 +17,8 @@ import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
-type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
-type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
+export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
+export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
 
 export interface QueryRendererParameters {
     allTasks: Task[];

@@ -24,6 +24,8 @@ export class TasksEvents {
 
     public onCacheUpdate(handler: (cacheData: CacheUpdateData) => void): EventRef {
         this.logger.debug('TasksEvents.onCacheUpdate()');
+        // @ts-expect-error: error TS2345: Argument of type '(cacheData: CacheUpdateData) => void'
+        // is not assignable to parameter of type '(...data: unknown[]) => unknown'.
         return this.obsidianEvents.on(Event.CacheUpdate, handler);
     }
 
@@ -34,6 +36,8 @@ export class TasksEvents {
 
     public onRequestCacheUpdate(handler: (fn: (cacheData: CacheUpdateData) => void) => void): EventRef {
         this.logger.debug('TasksEvents.onRequestCacheUpdate()');
+        // @ts-expect-error: error TS2345: Argument of type '(cacheData: CacheUpdateData) => void'
+        // is not assignable to parameter of type '(...data: unknown[]) => unknown'.
         return this.obsidianEvents.on(Event.RequestCacheUpdate, handler);
     }
 
