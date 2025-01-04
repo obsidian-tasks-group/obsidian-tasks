@@ -23,6 +23,19 @@ ul.contains-task-list .task-list-item-checkbox {
     padding-left: 20px;
 }
 
+
+span.tasks-debug {
+    color: #f64747 !important;
+    border-radius: var(--radius-s);
+    background-color: var(--background-secondary);
+}
+
+code.tasks-debug {
+    color: #477ef6 !important;
+    border-radius: var(--radius-s);
+    background-color: var(--background-secondary);
+}
+
 /* Tooltip pop up above the description in short mode */
 .tooltip.pop-up {
     animation: pop-up-animation 200ms forwards ease-in-out;

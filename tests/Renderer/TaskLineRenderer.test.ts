@@ -317,7 +317,7 @@ describe('task line rendering - debug info rendering', () => {
         const listItem = await renderListItem(task);
         const renderedDescription = getDescriptionText(listItem);
         expect(renderedDescription).toEqual(
-            "Task with debug info<br>🐛 <b>0</b> . 0 . 0 . '<code>- [ ] Task with debug info</code>'<br>'<code>a/b/c.d</code>' > '<code>Previous Heading</code>'<br>",
+            'Task with debug info<br><span class="tasks-debug">🐛 <b>0</b> . 0 . 0</span> . \'<code class="tasks-debug">- [ ] Task with debug info</code>\'<br>\'<code class="tasks-debug">a/b/c.d</code>\' > \'<code class="tasks-debug">Previous Heading</code>\'<br>',
         );
     });
 });
