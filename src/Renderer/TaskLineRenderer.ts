@@ -270,7 +270,7 @@ export class TaskLineRenderer {
                 const location = `<span class="tasks-debug">🐛 <b>${task.lineNumber}</b> ${joiner} ${task.sectionStart} ${joiner} ${task.sectionIndex}</span>`;
                 const originalMarkdown = `'<code class="tasks-debug">${task.originalMarkdown}</code>'`;
                 const pathAndHeader = `'<code class="tasks-debug">${task.path}</code>' > '<code class="tasks-debug">${task.precedingHeader}</code>'`;
-                componentString += `<br>${location} ${joiner} ${originalMarkdown}<br>${pathAndHeader}<br>`;
+                componentString += `<br>${location}<br>${originalMarkdown}<br>${pathAndHeader}<br>`;
             }
             await this.textRenderer(componentString, span, task.path, this.obsidianComponent);
 
