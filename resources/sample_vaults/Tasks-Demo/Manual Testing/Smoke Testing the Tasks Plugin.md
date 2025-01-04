@@ -38,12 +38,6 @@ Confirm that when a recurring task is completed, a new task is created, all the 
 
 ---
 
-### Styling of Rendered Task Blocks
-
-- [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there
-
----
-
 ### Edit dates in Rendered Task Blocks
 
 > [!Example]
@@ -69,39 +63,3 @@ description includes I have all the supported date types
 hide backlink
 hide postpone button
 ```
-
----
-
-### Create or edit Task modal
-
-- This text should copied in to the task Description, after following steps below
-- [ ] #task Switch to **Live Preview** or **Source mode**, Click on the list item above, then do the following numbered steps and checks:
-    1. run **Tasks: Create or edit task**
-    2. **Check** that the text in the list item is copied in to the Description field
-    3. Type some values in to the fields
-    4. In one of the date fields, type `tm` (including the space afterwards) and **Check** it is expanded in to `tomorrow`
-    5. In one of the date fields, left-click the calendar button, and use the context menu to select and save a date. Check that the date is saved.
-    6. In one of the date fields, left-click the calendar button, and click outside the date picker, to confirm that the picker closes and the modal is still usable.
-    7. Hit Return or click **Apply**
-    8. **Check** that the list item above is converted in to a task
-    9. **Check** that values you entered in the modal have been copied in to the list item above
-    10. **Check** that the `#task` tag has been added to the start of the task
-- [ ] #task **check**: Checked all above steps for **creating a task via the modal** worked
-
----
-
-## Check the plugin starts OK with no `data.json` settings file
-
-- Preparation
-  - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**
-  - Quit Obsidian
-  - Open the `obsidian-tasks-plugin` folder
-  - Delete `data.json`
-- Test
-  - Restart obsidian
-  - Go to Settings
-  - Check that `Tasks` is shown in the list of **Community plugins**
-  - View -> Toggle Developer Tools
-  - Open the console
-  - Confirm that there are no red messages mentioning Tasks
-- [ ] #task **check**: Checked that Tasks works correctly when **there is no `data.json` present**
