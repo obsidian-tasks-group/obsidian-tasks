@@ -268,8 +268,8 @@ export class TaskLineRenderer {
                 // Add some debug output to enable hidden information in the task to be inspected.
                 const joiner = '.';
                 const location = `<span class="tasks-debug">🐛 <b>${task.lineNumber}</b> ${joiner} ${task.sectionStart} ${joiner} ${task.sectionIndex}</span>`;
-                const originalMarkdown = `'<code class="tasks-debug">${task.originalMarkdown}</code>'`;
-                const pathAndHeader = `'<code class="tasks-debug">${task.path}</code>' > '<code class="tasks-debug">${task.precedingHeader}</code>'`;
+                const originalMarkdown = `<code class="tasks-debug">'${task.originalMarkdown}'</code>`;
+                const pathAndHeader = `<code class="tasks-debug">'${task.path}' > '${task.precedingHeader}'</code>`;
                 componentString += `<br>${location}<br>${originalMarkdown}<br>${pathAndHeader}<br>`;
             }
             await this.textRenderer(componentString, span, task.path, this.obsidianComponent);
