@@ -47,14 +47,8 @@ Confirm that when a recurring task is completed, a new task is created, all the 
 - View this file in **Reading mode**...
 - On the task line above:
   - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
-  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.
-  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.
-  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.
 - In the tasks search block below:
   - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
-  - [ ] #task **left**-click on a date value, and click outside the date picker, to confirm that the picker closes.
-  - [ ] #task **right**-click on a date value, and use the context menu to select and save a different date. Check that the date is updated.
-  - [ ] #task **right**-click on a date value, and click outside the context menu, to confirm that the menu closes.
 - [ ] #task **check**: Checked all above steps for **editing dates** worked
 
 ```tasks
