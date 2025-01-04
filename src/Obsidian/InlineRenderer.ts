@@ -95,6 +95,12 @@ export class InlineRenderer {
             }
         }
 
+        /*
+            How can we pass in to TaskLineRenderer the ability to convert a MouseEvent to an EditorPosition,
+            by using BaseEditor.posAtMouse():
+                https://fevol.github.io/obsidian-typings/api/namespaces/internals/interfaces/baseeditor/#posatmouse
+            Ah - except we are in Reading mode, so don't have an editor!
+         */
         const taskLineRenderer = new TaskLineRenderer({
             obsidianComponent: childComponent,
             parentUlElement: element,

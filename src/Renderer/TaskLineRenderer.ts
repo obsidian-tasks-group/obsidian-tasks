@@ -151,6 +151,24 @@ export class TaskLineRenderer {
                 // checkbox (un)checked. Obsidian would write after us and overwrite our change.
                 event.stopPropagation();
 
+                /*
+                    task.taskLocation.lineNumber will be out-of-date if the user has added or removed lines
+                    before the task in the file, and has not subsequently edited the task line.
+
+                    This is because Reading mode does not redraw task lines when other parts of the file are
+                    edited.
+
+                    So we COULD make this whole process more reliable by getting the task's current line number
+                    from the event.
+
+                    This can be done with:
+                        https://fevol.github.io/obsidian-typings/api/namespaces/internals/interfaces/baseeditor/#posatmouse
+
+                    Except that this file cannot access the Obsidian API.
+
+                    Oh, and in Reading mode, there is no editor.
+                 */
+
                 // Should be re-rendered as enabled after update in file.
                 checkbox.disabled = true;
                 const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
