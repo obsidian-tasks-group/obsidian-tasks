@@ -58,7 +58,7 @@
   },
   "debugSettings": {
     "ignoreSortInstructions": false,
-    "showTaskHiddenData": false,
+    "showTaskHiddenData": true,
     "recordTimings": false
   },
   "loggingOptions": {
