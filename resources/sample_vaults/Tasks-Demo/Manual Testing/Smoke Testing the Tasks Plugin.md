@@ -1,30 +1,6 @@
 # Smoke Testing the Tasks Plugin
 
-*[[#Remaining tests|Jump to the tests...]]*
-
-## Remaining tests
-
-Work through all the tasks below, until zero tasks remain in this query:
-
-> [!Todo] Remaining groups of tests
->
-> ```tasks
-> not done
-> path includes Smoke Testing the Tasks Plugin
-> description includes **check**:
->
-> short display
-> ```
-
----
-
-## The Smoke Tests
-
-### Toggling tasks
-
-#### Recurring Tasks
-
-Confirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is unchanged.
+## Toggling tasks - Recurring Tasks
 
 > [!Todo]
 >
@@ -38,7 +14,7 @@ Confirm that when a recurring task is completed, a new task is created, all the 
 
 ---
 
-### Edit dates in Rendered Task Blocks
+## Edit dates in Rendered Task Blocks
 
 > [!Example]
 >
