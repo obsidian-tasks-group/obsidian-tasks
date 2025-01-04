@@ -293,7 +293,8 @@ export class Cache {
         });
 
         this.tasks.push(...newTasks);
-        this.logger.debug('Cache.indexFile: ' + file.path + `: read ${newTasks.length} task(s)`);
+        // Temporarily make the updating of the cache stand out in the console, in colour:
+        this.logger.warn('Cache.indexFile: ' + file.path + `: read ${newTasks.length} task(s)`);
 
         // All updated, inform our subscribers.
         this.notifySubscribers();

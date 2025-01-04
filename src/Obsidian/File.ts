@@ -93,7 +93,8 @@ function warnAndNotice(message: string) {
 
 function debugLog(message: string) {
     const logger = getFileLogger();
-    logger.debug(message);
+    // Temporarily make debug messages from File.ts stand out in the console, in colour:
+    logger.warn(message);
 }
 
 // When this exception is thrown, it is meant to indicate that the caller should consider to try the operation
