@@ -25,11 +25,15 @@ ul.contains-task-list .task-list-item-checkbox {
 
 
 span.tasks-debug {
-    color: #f64747 !important;
+    color: #cc7878 !important;
+    font-size: var(--font-ui-small);
+    margin-left: 1em;
 }
 
 code.tasks-debug {
-    color: #477ef6 !important;
+    color: #9aacb3 !important;
+    font-size: var(--font-ui-smaller);
+    margin-left: 1em;
 }
 
 /* Tooltip pop up above the description in short mode */
