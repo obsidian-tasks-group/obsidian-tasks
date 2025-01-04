@@ -1,0 +1,5 @@
+Tasks: Unable to find task in file Manual Testing/Smoke Testing the Tasks Plugin.md.
+Expected task:
+  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.
+Found task:
+> - [ ] #task Sample task: I have all the supported date types ➕ 2024-09-01 🛫 2024-09-02 ⏳ 2024-09-03 📅 2024-09-04 ❌ 2024-09-05 ✅ 2025-01-04

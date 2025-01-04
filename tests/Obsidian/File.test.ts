@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { findLineNumberOfTaskToToggle } from '../../src/Obsidian/File';
 import type { MockTogglingDataForTesting } from '../../src/lib/MockDataCreator';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 
 /**
  * A function to help test File.findLineNumberOfTaskToToggle()
@@ -39,6 +40,7 @@ function testFindLineNumberOfTaskToToggle(
 
     // Act
     const originalTask = everything.taskData;
+    // originalTask.taskLocation.precedingHeader is null
     const fileLines = everything.fileData.fileLines;
     const listItemsCache = everything.cacheData.listItemsCache;
 
@@ -76,6 +78,10 @@ function testFindLineNumberOfTaskToToggle(
     }
 }
 
+afterEach(() => {
+    resetSettings();
+});
+
 describe('replaceTaskWithTasks', () => {
     it('valid 2-task test', () => {
         const jsonFileName = 'single_task_valid_data.json';
@@ -101,6 +107,31 @@ describe('replaceTaskWithTasks', () => {
         const taskLineToToggle = '- [ ] #task Section 2/Task 2';
 
         const expectedLineNumber = 9;
+        testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
+    });
+
+    // --------------------------------------------------------------------------------
+    // Issue not yet logged - editing a task in callout seems to break line numbers
+    it('smoke test failure', () => {
+        const debuggingEnabled = {
+            minLevels: {
+                '': 'info',
+                tasks: 'info',
+                'tasks.Query': 'info',
+                'tasks.Cache': 'debug',
+                'tasks.Events': 'debug',
+                'tasks.File': 'debug',
+                'tasks.Task': 'debug',
+            },
+        };
+
+        updateSettings({ loggingOptions: debuggingEnabled });
+
+        const jsonFileName = 'smoke_test_post_date_edit_failure.json';
+        const taskLineToToggle =
+            '  - [ ] #task **left**-click on a date value, and use the date picker to select and save a different date. Check that the date is updated.';
+
+        const expectedLineNumber = undefined;
         testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
     });
 
