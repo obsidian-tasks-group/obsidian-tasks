@@ -80,12 +80,14 @@ export const replaceTaskWithTasks = async ({
  * @param message
  */
 function errorAndNotice(message: string) {
-    console.error(message);
+    const logger = getFileLogger();
+    logger.error(message);
     new Notice(message, 15000);
 }
 
 function warnAndNotice(message: string) {
-    console.warn(message);
+    const logger = getFileLogger();
+    logger.warn(message);
     new Notice(message, 10000);
 }
 
@@ -189,27 +191,40 @@ Recommendations:
  * or an Error exception in case of an unrecoverable error.
  */
 async function getTaskAndFileLines(task: Task, vault: Vault): Promise<[number, TFile, string[]]> {
-    if (metadataCache === undefined) throw new WarningWorthRetrying();
+    const functionName = 'getTaskAndFileLines()';
+    if (metadataCache === undefined) {
+        const message = `metadataCache is undefined: '${task.description}'. Retrying ...`;
+        debugLog(`${functionName} called: WarningWorthRetrying - ${message}`);
+        throw new WarningWorthRetrying();
+    }
     // Validate our inputs.
     // For permanent failures, return nothing.
     // For failures that might be fixed if we wait for a little while, return retry().
     const file = vault.getAbstractFileByPath(task.path);
     if (!(file instanceof TFile)) {
-        throw new WarningWorthRetrying(`Tasks: No file found for task ${task.description}. Retrying ...`);
+        const message = `Tasks: No file found for task ${task.description}. Retrying ...`;
+        debugLog(`${functionName} called: WarningWorthRetrying - ${message}`);
+        throw new WarningWorthRetrying(message);
     }
 
     if (!supportedFileExtensions.includes(file.extension)) {
-        throw new Error(`Tasks: Does not support files with the ${file.extension} file extension.`);
+        const message = `Tasks: Does not support files with the ${file.extension} file extension. Stopping...`;
+        debugLog(`${functionName} called: Error - ${message}`);
+        throw new Error(message);
     }
 
     const fileCache = metadataCache.getFileCache(file);
     if (fileCache == undefined || fileCache === null) {
-        throw new WarningWorthRetrying(`Tasks: No file cache found for file ${file.path}. Retrying ...`);
+        const message = `Tasks: No file cache found for file ${file.path}. Retrying ...`;
+        debugLog(`${functionName} called: WarningWorthRetrying - ${message}`);
+        throw new WarningWorthRetrying(message);
     }
 
     const listItemsCache = fileCache.listItems;
     if (listItemsCache === undefined || listItemsCache.length === 0) {
-        throw new WarningWorthRetrying(`Tasks: No list items found in file cache of ${file.path}. Retrying ...`);
+        const message = `Tasks: No list items found in file cache of ${file.path}. Retrying ...`;
+        debugLog(`${functionName} called: WarningWorthRetrying - ${message}`);
+        throw new WarningWorthRetrying(message);
     }
 
     // We can now try and find which line in the file currently contains originalTask,
@@ -219,7 +234,7 @@ async function getTaskAndFileLines(task: Task, vault: Vault): Promise<[number, T
     const taskLineNumber = findLineNumberOfTaskToToggle(task, fileLines, listItemsCache, debugLog);
 
     if (taskLineNumber === undefined) {
-        const logDataForMocking = false;
+        const logDataForMocking = true;
         if (logDataForMocking) {
             // There was an error finding the correct line to toggle,
             // so write out to the console a representation of the data needed to reconstruct the above
@@ -227,6 +242,8 @@ async function getTaskAndFileLines(task: Task, vault: Vault): Promise<[number, T
             // to a JSON file and then re-used in a 'unit' test.
             saveMockDataForTesting(task, fileLines, listItemsCache);
         }
+        const message = `taskLineNumber is undefined after findLineNumberOfTaskToToggle() - cannot find ${task.description}`;
+        debugLog(`${functionName} called: RetryWithoutWarning - ${message}`);
         throw new RetryWithoutWarning();
     }
     return [taskLineNumber, file, fileLines];
@@ -298,10 +315,12 @@ function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask,
     if (isValidLineNumber(originalTaskLineNumber, fileLines)) {
         if (fileLines[originalTaskLineNumber] === originalTask.originalMarkdown) {
             const logger = getFileLogger();
-            logger.debug(`Found original markdown at original line number ${originalTaskLineNumber}`);
+            logger.debug(`SUCCESS: Found original markdown at original line number ${originalTaskLineNumber}`);
             return originalTaskLineNumber;
         }
     }
+    const message = `Could not find ${(originalTask as Task).description} at line ${originalTaskLineNumber}`;
+    debugLog(`tryFindingExactMatchAtOriginalLineNumber() called: ${message}`);
     return undefined;
 }
 
@@ -314,16 +333,26 @@ function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask,
  * @param fileLines
  */
 function tryFindingIdenticalUniqueMarkdownLineInFile(originalTask: Task | MockTask, fileLines: string[]) {
+    const functionName = 'tryFindingIdenticalUniqueMarkdownLineInFile()';
     const matchingLineNumbers = [];
     for (let i = 0; i < fileLines.length; i++) {
         if (fileLines[i] === originalTask.originalMarkdown) {
+            const message = `Found ${(originalTask as Task).description} at line ${i}`;
+            debugLog(`${functionName} called: ${message}`);
             matchingLineNumbers.push(i);
         }
     }
     if (matchingLineNumbers.length === 1) {
         // There is only one instance of the line in the file, so it must be the
         // line we are looking for.
+        const message = `SUCCESS: Found UNIQUE ${(originalTask as Task).description}`;
+        debugLog(`${functionName} called: ${message}`);
         return matchingLineNumbers[0];
+    }
+
+    if (matchingLineNumbers.length > 0) {
+        const message = `Found MULTIPLE ${(originalTask as Task).description}`;
+        debugLog(`${functionName} called: ${message}`);
     }
     return undefined;
 }
@@ -341,7 +370,8 @@ function tryFindingLineNumberFromTaskSectionInfo(
     fileLines: string[],
     listItemsCache: ListItemCache[] | MockListItemCache[],
     errorLoggingFunction: ErrorLoggingFunction,
-) {
+): number | undefined {
+    const functionName = 'tryFindingLineNumberFromTaskSectionInfo()';
     let taskLineNumber: number | undefined;
     let sectionIndex = 0;
     for (const listItemCache of listItemsCache) {
@@ -350,6 +380,7 @@ function tryFindingLineNumberFromTaskSectionInfo(
             // One or more lines has been deleted since the cache was populated,
             // so there is at least one list item in the cache that is beyond
             // the end of the actual file on disk.
+            debugLog(`${functionName} called: returning undefined`);
             return undefined;
         }
 
@@ -367,13 +398,13 @@ function tryFindingLineNumberFromTaskSectionInfo(
                 if (line === originalTask.originalMarkdown) {
                     taskLineNumber = listItemLineNumber;
                 } else {
-                    errorLoggingFunction(
-                        `Tasks: Unable to find task in file ${originalTask.taskLocation.path}.
+                    const message = `Tasks: Unable to find task in file ${originalTask.taskLocation.path}.
 Expected task:
 ${originalTask.originalMarkdown}
 Found task:
-${line}`,
-                    );
+${line}`;
+                    debugLog(`${functionName} called: undefined - ${message}`);
+                    errorLoggingFunction(message);
                     return;
                 }
                 break;
