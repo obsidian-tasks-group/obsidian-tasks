@@ -2,44 +2,6 @@
 
 *[[#Remaining tests|Jump to the tests...]]*
 
-## Introduction
-
-- **Intended audience of this note**
-  - Developers working on the Tasks plugin, reviewing a Pull Request (especially ones that change dependencies), or making a release, and who wish to do some basic tests of the plugin to make sure there are no glaring show-stopper errors.
-- **What is a Smoke Test?**
-  - As [Wikipedia](https://en.wikipedia.org/wiki/Smoke_testing_(software)) says: smoke testing ... is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release.
-- **Why not test everything?**
-  - The Tasks plugin is run by volunteers in our finite spare time. We take care during development to write automated tests for the algorithms in our code, but there are some kinds of changes, such as in tools the project depends on, that we do not have automated tests for.
-- **Why not test on every platform?**
-  - It's not feasible nor a good use of limited volunteer time on a free tool.
-
-## How the tests work
-
-### Get the Tasks-Demo vault with the build to be tested
-
-You can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 1.
-
-Or you can install a download of the build's Tasks plugin inside your clone of the Tasks repo:
-
-- Make sure you have the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) cloned and up-to-date on your machine.
-- Open the Tasks-Demo vault on a machine of your choice:
-  - Open Obsidian
-  - Click 'Open another vault' button
-  - Click 'Open folder as vault' button
-  - Navigate to `obsidian-tasks/resources/sample_vaults/Tasks-Demo`
-  - Click 'Open'
-- Install the candidate build for the pull request or release inside the `Tasks-Demo` vault
-  - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.
-
-### Follow the tests
-
-- This note is a self-contained set of steps to check. You should check off tasks beginning `- [ ] check:` as you complete each section.
-
-> [!Important]
-> Several task blocks in this file depend of the the file name being unchanged. Please don't rename the file before running the tests.
-
----
-
 ## Remaining tests
 
 Work through all the tasks below, until zero tasks remain in this query:
@@ -59,24 +21,6 @@ Work through all the tasks below, until zero tasks remain in this query:
 ## The Smoke Tests
 
 ### Toggling tasks
-
-#### Completion of tasks
-
-- [ ] #task Mark this task complete in **Source view** using **Tasks: Toggle task done** command
-- [ ] #task Mark this task complete by clicking on it in **Reading view**
-- [ ] #task Mark this task complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly==
-- [ ] #task **check**: Checked all above methods for **completing tasks** - and they worked
-
-#### Un-completion of tasks
-
-<!-- markdownlint-disable ul-style -->
-
-* [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05
-* [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05
-* [x] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2022-07-05
-* [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked
-
-<!-- markdownlint-enable ul-style -->
 
 #### Recurring Tasks
 
