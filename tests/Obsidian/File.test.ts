@@ -42,6 +42,15 @@ function testFindLineNumberOfTaskToToggle(
     const originalTask = everything.taskData;
     // originalTask.taskLocation.precedingHeader is null
     const fileLines = everything.fileData.fileLines;
+
+    // @ts-expect-error unused
+    const lineNumberInOriginalTask = originalTask.taskLocation.lineNumber;
+
+    // @ts-expect-error unused
+    const lineIndexInFileLines = fileLines.indexOf(taskLineToToggle);
+
+    // expect(lineNumberInOriginalTask).toEqual(lineIndexInFileLines);
+
     const listItemsCache = everything.cacheData.listItemsCache;
 
     let errorString: string | undefined;
