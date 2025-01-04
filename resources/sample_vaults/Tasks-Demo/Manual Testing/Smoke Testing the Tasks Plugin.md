@@ -56,27 +56,6 @@ Confirm that when an auto-deleting recurring task is completed, a **new task is 
 - [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-27
 - [ ] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked
 
-### Rendering of Task Blocks
-
-Steps to do:
-
-<!-- markdownlint-disable ul-style -->
-
-+ [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
-+ [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
-+ [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
-
-<!-- markdownlint-enable ul-style -->
-
----
-
-Tasks block to check - should list all the tasks in this section, regardless of state
-
-```tasks
-path includes Smoke Testing the Tasks Plugin
-heading includes Rendering of Task Blocks
-```
-
 ---
 
 ### Styling of Rendered Task Blocks
