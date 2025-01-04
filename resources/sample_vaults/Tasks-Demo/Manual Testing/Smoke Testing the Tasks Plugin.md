@@ -36,26 +36,6 @@ Confirm that when a recurring task is completed, a new task is created, all the 
 
 > - [ ] #task **check**: Checked all above steps for **recurring tasks** worked
 
-### On Completion
-
-#### On Completion Delete: Non-recurring tasks
-
-Confirm that the **task line is deleted**.
-
-- [ ] #task Complete this auto-deleting non-recurring task in **Source view** using **Tasks: Toggle task done** command 🏁 delete 📅 2024-10-27
-- [ ] #task Complete this auto-deleting non-recurring task in **Reading view** 🏁 delete 📅 2024-10-27
-- [ ] #task Complete this auto-deleting non-recurring task in **Live Preview** 🏁 delete 📅 2024-10-27
-- [ ] #task **check**: Checked all above steps for **auto-deleting non-recurring tasks** worked
-
-#### On Completion Delete: Recurring Tasks
-
-Confirm that when an auto-deleting recurring task is completed, a **new task is created replacing the old task**, and the checkbox remains not-done.
-
-- [ ] #task Complete this auto-deleting recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🏁 delete 📅 2024-10-27
-- [ ] #task Complete this auto-deleting recurring task in **Reading view** 🔁 every day 🏁 delete 📅 2024-10-27
-- [ ] #task Complete this auto-deleting recurring task in **Live Preview** - ==ensure the checkbox is redrawn correctly== 🔁 every day 🏁 delete 📅 2024-10-27
-- [ ] #task **check**: Checked all above steps for **auto-deleting recurring tasks** worked
-
 ---
 
 ### Styling of Rendered Task Blocks
