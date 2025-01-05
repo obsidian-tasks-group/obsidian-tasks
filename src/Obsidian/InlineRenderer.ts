@@ -1,11 +1,11 @@
-import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import type { MarkdownPostProcessorContext, MarkdownSectionInformation, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { TasksFile } from '../Scripting/TasksFile';
 import { Task } from '../Task/Task';
-import { TaskLineRenderer } from '../Renderer/TaskLineRenderer';
+import { type LineNumberResolver, TaskLineRenderer } from '../Renderer/TaskLineRenderer';
 import { TaskLocation } from '../Task/TaskLocation';
 
 export class InlineRenderer {
@@ -101,11 +101,30 @@ export class InlineRenderer {
                 https://fevol.github.io/obsidian-typings/api/namespaces/internals/interfaces/baseeditor/#posatmouse
             Ah - except we are in Reading mode, so don't have an editor!
          */
+        const lineNumberResolver: LineNumberResolver = (event: MouseEvent) => {
+            const targetElement = event.target as HTMLElement;
+            const sectionInfo: MarkdownSectionInformation | null = context.getSectionInfo(targetElement);
+            if (sectionInfo) {
+                console.error(`real section info:
+'${sectionInfo.text}'
+${sectionInfo.lineStart}
+${sectionInfo.lineEnd}`);
+            } else {
+                console.error('real section info not found');
+            }
+            // Calling this result a line number is misleading.
+            // It currently returns the start line of the section containing
+            // the task being toggled, rather than the actual line number
+            // of the task.
+            return sectionInfo ? sectionInfo.lineStart : null;
+        };
+
         const taskLineRenderer = new TaskLineRenderer({
             obsidianComponent: childComponent,
             parentUlElement: element,
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
+            lineNumberResolver,
         });
 
         // The section index is the nth task within this section.

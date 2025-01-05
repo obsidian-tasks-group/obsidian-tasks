@@ -215,6 +215,7 @@ export class QueryResultsRenderer {
             parentUlElement: taskList,
             taskLayoutOptions: this.query.taskLayoutOptions,
             queryLayoutOptions: this.query.queryLayoutOptions,
+            lineNumberResolver: null,
         });
 
         for (const [listItemIndex, listItem] of listItems.entries()) {

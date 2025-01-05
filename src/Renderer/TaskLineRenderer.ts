@@ -53,12 +53,19 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     return el;
 }
 
+// This name is misleading. It should return the section information,
+// not just the line number.
+// Or maybe the implementation should be more specific, and should
+// do all the work of identifying the line.
+export type LineNumberResolver = (event: MouseEvent) => number | null;
+
 export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
+    private readonly lineNumberResolver: LineNumberResolver | null;
 
     public static async obsidianMarkdownRenderer(
         text: string,
@@ -86,6 +93,8 @@ export class TaskLineRenderer {
      * @param taskLayoutOptions See {@link TaskLayoutOptions}.
      *
      * @param queryLayoutOptions See {@link QueryLayoutOptions}.
+     *
+     * @param lineNumberResolver See {@link LineNumberResolver}.
      */
     constructor({
         textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
@@ -93,18 +102,21 @@ export class TaskLineRenderer {
         parentUlElement,
         taskLayoutOptions,
         queryLayoutOptions,
+        lineNumberResolver,
     }: {
         textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         taskLayoutOptions: TaskLayoutOptions;
         queryLayoutOptions: QueryLayoutOptions;
+        lineNumberResolver: LineNumberResolver | null;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
         this.taskLayoutOptions = taskLayoutOptions;
         this.queryLayoutOptions = queryLayoutOptions;
+        this.lineNumberResolver = lineNumberResolver;
     }
 
     /**
@@ -169,6 +181,10 @@ export class TaskLineRenderer {
                     Oh, and in Reading mode, there is no editor.
                  */
 
+                if (this.lineNumberResolver?.(event)) {
+                    const realLineNumber = this.lineNumberResolver(event);
+                    console.error(`>>>>> Current section starts at: ${realLineNumber}: ${task.description}`);
+                }
                 // Should be re-rendered as enabled after update in file.
                 checkbox.disabled = true;
                 const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
