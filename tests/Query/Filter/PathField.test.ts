@@ -43,11 +43,11 @@ describe('path', () => {
 
         // Assert
         expect(filter).toBeValid();
-        expect(filter).toMatchTaskWithPath('/some/path/wibble.md');
-        expect(filter).toMatchTaskWithPath('/some/path/wobble.md');
+        expect(filter).toMatchTaskWithPath('some/path/wibble.md');
+        expect(filter).toMatchTaskWithPath('some/path/wobble.md');
         expect(filter).not.toMatchTaskWithPath('');
-        expect(filter).not.toMatchTaskWithPath('/some/path/WobblE.md'); // confirm case-sensitive
-        expect(filter).not.toMatchTaskWithPath('/other/path/file.md');
+        expect(filter).not.toMatchTaskWithPath('some/path/WobblE.md'); // confirm case-sensitive
+        expect(filter).not.toMatchTaskWithPath('other/path/file.md');
     });
 
     it('by path (regex matches) with flags', () => {
@@ -56,11 +56,11 @@ describe('path', () => {
 
         // Assert
         expect(filter).toBeValid();
-        expect(filter).toMatchTaskWithPath('/some/path/wibble.md');
-        expect(filter).toMatchTaskWithPath('/some/path/wobble.md');
+        expect(filter).toMatchTaskWithPath('some/path/wibble.md');
+        expect(filter).toMatchTaskWithPath('some/path/wobble.md');
         expect(filter).not.toMatchTaskWithPath('');
-        expect(filter).toMatchTaskWithPath('/some/path/WobblE.md'); // confirm case-insensitive (flag)
-        expect(filter).not.toMatchTaskWithPath('/other/path/file.md');
+        expect(filter).toMatchTaskWithPath('some/path/WobblE.md'); // confirm case-insensitive (flag)
+        expect(filter).not.toMatchTaskWithPath('other/path/file.md');
     });
 
     it('by path (regex does not match)', () => {
@@ -69,11 +69,11 @@ describe('path', () => {
 
         // Assert
         expect(filter).toBeValid();
-        expect(filter).not.toMatchTaskWithPath('/some/path/wibble.md');
-        expect(filter).not.toMatchTaskWithPath('/some/path/wobble.md');
+        expect(filter).not.toMatchTaskWithPath('some/path/wibble.md');
+        expect(filter).not.toMatchTaskWithPath('some/path/wobble.md');
         expect(filter).toMatchTaskWithPath('');
-        expect(filter).toMatchTaskWithPath('/some/path/WobblE.md'); // confirm case-sensitive
-        expect(filter).toMatchTaskWithPath('/other/path/file.md');
+        expect(filter).toMatchTaskWithPath('some/path/WobblE.md'); // confirm case-sensitive
+        expect(filter).toMatchTaskWithPath('other/path/file.md');
     });
 });
 
@@ -88,8 +88,8 @@ describe('should use whole path with un-escaped slashes in query', () => {
     });
 
     it('should match the requested path', () => {
-        expect(filterWithUnescapedSlashes).toMatchTaskWithPath('/a/b/c/d/e.md');
-        expect(filterWithUnescapedSlashes).not.toMatchTaskWithPath('/a/b.md');
+        expect(filterWithUnescapedSlashes).toMatchTaskWithPath('a/b/c/d/e.md');
+        expect(filterWithUnescapedSlashes).not.toMatchTaskWithPath('a/b.md');
     });
 });
 
