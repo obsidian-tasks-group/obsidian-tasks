@@ -26,8 +26,8 @@ describe('folder', () => {
         // Assert
         expect(filter).toBeValid();
         expect(filter).not.toMatchTaskWithPath('');
-        expect(filter).toMatchTaskWithPath('/some/SeArch_Text/some file name.md');
-        expect(filter).not.toMatchTaskWithPath('/other/folder/search_text.md'); // Ignores text in file names
+        expect(filter).toMatchTaskWithPath('some/SeArch_Text/some file name.md');
+        expect(filter).not.toMatchTaskWithPath('other/folder/search_text.md'); // Ignores text in file names
     });
 });
 

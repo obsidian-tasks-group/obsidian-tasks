@@ -205,6 +205,10 @@ export function toMatchTaskWithHeading(filter: FilterOrErrorMessage, heading: st
 }
 
 export function toMatchTaskWithPath(filter: FilterOrErrorMessage, path: string) {
+    // Validate the path supplied. Obsidian vault paths do not begin with a '/',
+    // so check for any unrealistic examples in tests:
+    expect(path[0]).not.toBe('/');
+
     const builder = new TaskBuilder();
     const task = builder.path(path).build();
     return toMatchTask(filter, task);
