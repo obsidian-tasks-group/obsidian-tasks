@@ -51,7 +51,6 @@ import no_yaml from './__test_data__/no_yaml.json';
 import non_tasks from './__test_data__/non_tasks.json';
 import one_task from './__test_data__/one_task.json';
 import query_using_properties from './__test_data__/query_using_properties.json';
-import smoke_testing_the_tasks_plugin from './__test_data__/smoke_testing_the_tasks_plugin.json';
 import yaml_1_alias from './__test_data__/yaml_1_alias.json';
 import yaml_2_aliases from './__test_data__/yaml_2_aliases.json';
 import yaml_all_property_types_empty from './__test_data__/yaml_all_property_types_empty.json';
@@ -122,7 +121,6 @@ export function allCacheSampleData() {
         non_tasks,
         one_task,
         query_using_properties,
-        smoke_testing_the_tasks_plugin,
         yaml_1_alias,
         yaml_2_aliases,
         yaml_all_property_types_empty,
