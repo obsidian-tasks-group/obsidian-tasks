@@ -17,7 +17,7 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
-import { QueryResultsRenderer } from './QueryResultsRenderer';
+import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export class QueryRenderer {
@@ -155,62 +155,68 @@ class QueryRenderChild extends MarkdownRenderChild {
         await this.queryResultsRenderer.render(state, tasks, content, {
             allTasks: this.plugin.getTasks(),
             allMarkdownFiles: this.app.vault.getMarkdownFiles(),
-            backlinksClickHandler,
-            backlinksMousedownHandler,
-            editTaskPencilClickHandler,
+            backlinksClickHandler: createBacklinksClickHandler(this.app),
+            backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
+            editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),
         });
 
         this.containerEl.firstChild?.replaceWith(content);
     }
 }
 
-function editTaskPencilClickHandler(event: MouseEvent, task: Task, allTasks: Task[]) {
-    event.preventDefault();
+function createEditTaskPencilClickHandler(app: App): EditButtonClickHandler {
+    return function editTaskPencilClickHandler(event: MouseEvent, task: Task, allTasks: Task[]) {
+        event.preventDefault();
 
-    const onSubmit = async (updatedTasks: Task[]): Promise<void> => {
-        await replaceTaskWithTasks({
-            originalTask: task,
-            newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
+        const onSubmit = async (updatedTasks: Task[]): Promise<void> => {
+            await replaceTaskWithTasks({
+                originalTask: task,
+                newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
+            });
+        };
+
+        // Need to create a new instance every time, as cursor/task can change.
+        const taskModal = new TaskModal({
+            app,
+            task,
+            onSubmit,
+            allTasks,
         });
+        taskModal.open();
     };
-
-    // Need to create a new instance every time, as cursor/task can change.
-    const taskModal = new TaskModal({
-        app,
-        task,
-        onSubmit,
-        allTasks,
-    });
-    taskModal.open();
 }
 
-async function backlinksClickHandler(ev: MouseEvent, task: Task) {
-    const result = await getTaskLineAndFile(task, app.vault);
-    if (result) {
-        const [line, file] = result;
-        const leaf = app.workspace.getLeaf(Keymap.isModEvent(ev));
-        // When the corresponding task has been found,
-        // suppress the default behavior of the mouse click event
-        // (which would interfere e.g. if the query is rendered inside a callout).
-        ev.preventDefault();
-        // Instead of the default behavior, open the file with the required line highlighted.
-        await leaf.openFile(file, { eState: { line: line } });
-    }
-}
-
-async function backlinksMousedownHandler(ev: MouseEvent, task: Task) {
-    // Open in a new tab on middle-click.
-    // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
-    // solely for this.
-    // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
-    // the 'click' event is more generic for touch devices etc.)
-    if (ev.button === 1) {
+function createBacklinksClickHandler(app: App): BacklinksEventHandler {
+    return async function backlinksClickHandler(ev: MouseEvent, task: Task) {
         const result = await getTaskLineAndFile(task, app.vault);
         if (result) {
             const [line, file] = result;
-            const leaf = app.workspace.getLeaf('tab');
+            const leaf = app.workspace.getLeaf(Keymap.isModEvent(ev));
+            // When the corresponding task has been found,
+            // suppress the default behavior of the mouse click event
+            // (which would interfere e.g. if the query is rendered inside a callout).
             ev.preventDefault();
-            await leaf.openFile(file, { eState: { line: line } });
+            // Instead of the default behavior, open the file with the required line highlighted.
+            await leaf.openFile(file, { eState: { line } });
         }
-    }
+    };
+}
+
+function createBacklinksMousedownHandler(app: App): BacklinksEventHandler {
+    return async function backlinksMousedownHandler(ev: MouseEvent, task: Task) {
+        // Open in a new tab on middle-click.
+        // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
+        // solely for this.
+        // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
+        // the 'click' event is more generic for touch devices etc.)
+        if (ev.button === 1) {
+            const result = await getTaskLineAndFile(task, app.vault);
+            if (result) {
+                const [line, file] = result;
+                const leaf = app.workspace.getLeaf('tab');
+                ev.preventDefault();
+                await leaf.openFile(file, { eState: { line: line } });
+            }
+        }
+    };
 }
