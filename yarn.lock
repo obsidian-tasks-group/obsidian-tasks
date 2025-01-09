@@ -4573,6 +4573,11 @@ object.values@^1.1.7:
     define-properties "^1.2.0"
     es-abstract "^1.22.1"
 
+obsidian-typings@^2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/obsidian-typings/-/obsidian-typings-2.11.1.tgz#83285273597734c284488aab3c62a818058cdb1a"
+  integrity sha512-TJP03xLrQ49gm9PqnJH7Dtxk0E+DISWIoX1qGdfC8Z0BtupynLKDCD1NNThAC/i55zhn9NTfzT2MdWBlnmCNhg==
+
 obsidian@^1.4.0:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-1.7.2.tgz#2d989288742ae7a65760fd87a953d1ff2a402808"
