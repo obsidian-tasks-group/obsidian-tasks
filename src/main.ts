@@ -1,7 +1,7 @@
 import { Plugin } from 'obsidian';
 
 import type { Task } from 'Task/Task';
-import i18next from 'i18next';
+import { i18n, initializeI18n } from './i18n/i18n';
 import { Cache } from './Obsidian/Cache';
 import { Commands } from './Commands';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -29,24 +29,11 @@ export default class TasksPlugin extends Plugin {
     }
 
     async onload() {
+        await initializeI18n();
+
         logging.registerConsoleLogger();
         log('info', `loading plugin "${this.manifest.name}" v${this.manifest.version}`);
-
-        // Basic initialisation with inline translations
-        i18next
-            .init({
-                lng: 'en', // Set default language
-                resources: {
-                    en: {
-                        translation: {
-                            welcome: 'Welcome to the Tasks plugin',
-                        },
-                    },
-                },
-            })
-            .catch((err) => console.error('i18next initialization failed:', err));
-
-        console.log(i18next.t('welcome'));
+        log('info', i18n.t('welcome'));
 
         await this.loadSettings();
 
