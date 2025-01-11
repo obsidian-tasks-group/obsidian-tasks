@@ -12,6 +12,7 @@ export const initializeI18n = async () => {
             .use(LanguageDetector) // Use language detector to determine user's language
             .init({
                 fallbackLng: 'en', // Fallback language if detection fails or translation is missing
+                returnEmptyString: false, // Use fallback language if i18next-parser put in empty value for untranslated text
                 resources: {
                     en: { translation: en },
                     zh_cn: { translation: zh_cn },
