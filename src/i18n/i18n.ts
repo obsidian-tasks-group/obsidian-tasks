@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import en from './locales/en.json';
+import zh_cn from './locales/zh_cn.json';
 
 let isInitialized = false;
 
@@ -7,10 +8,11 @@ let isInitialized = false;
 export const initializeI18n = async () => {
     if (!isInitialized) {
         await i18next.init({
-            lng: 'en',
-            fallbackLng: 'en',
+            lng: 'en', // Default language
+            fallbackLng: 'en', // Fallback language if translation is missing
             resources: {
                 en: { translation: en },
+                zh_cn: { translation: zh_cn },
             },
         });
         isInitialized = true;
