@@ -73,7 +73,7 @@ export default class TasksPlugin extends Plugin {
     }
 
     onunload() {
-        log('info', `unloading plugin "${this.manifest.name}" v${this.manifest.version}`);
+        log('info', i18n.t('unloadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
         this.cache?.unload();
     }
 

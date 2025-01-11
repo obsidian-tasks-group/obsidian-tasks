@@ -1,4 +1,5 @@
 {
   "welcome": "Welcome to the plugin",
-  "loadingPlugin": "Loading plugin: {{name}} v{{version}}"
+  "loadingPlugin": "Loading plugin: {{name}} v{{version}}",
+  "unloadingPlugin": "unloading plugin: {{name}} v{{version}}"
 }
