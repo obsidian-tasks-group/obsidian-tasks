@@ -32,7 +32,7 @@ export default class TasksPlugin extends Plugin {
         await initializeI18n();
 
         logging.registerConsoleLogger();
-        log('info', `loading plugin "${this.manifest.name}" v${this.manifest.version}`);
+        log('info', i18n.t('loadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
         log('info', i18n.t('welcome'));
 
         await this.loadSettings();
