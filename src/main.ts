@@ -32,7 +32,7 @@ export default class TasksPlugin extends Plugin {
         await initializeI18n();
 
         logging.registerConsoleLogger();
-        log('info', i18n.t('loadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
+        log('info', i18n.t('main.loadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
 
         await this.loadSettings();
 
@@ -72,7 +72,7 @@ export default class TasksPlugin extends Plugin {
     }
 
     onunload() {
-        log('info', i18n.t('unloadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
+        log('info', i18n.t('main.unloadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
         this.cache?.unload();
     }
 

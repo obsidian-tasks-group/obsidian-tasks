@@ -1,4 +1,6 @@
 {
-  "loadingPlugin": "Loading plugin: {{name}} v{{version}}",
-  "unloadingPlugin": "unloading plugin: {{name}} v{{version}}"
+  "main": {
+    "loadingPlugin": "Loading plugin: {{name}} v{{version}}",
+    "unloadingPlugin": "Unloading plugin: {{name}} v{{version}}"
+  }
 }
