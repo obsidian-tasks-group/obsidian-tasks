@@ -1,4 +1,6 @@
 {
-  "loadingPlugin": "加载插件: {{name}} v{{version}}",
-  "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
+  "main": {
+    "loadingPlugin": "加载插件: {{name}} v{{version}}",
+    "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
+  }
 }
