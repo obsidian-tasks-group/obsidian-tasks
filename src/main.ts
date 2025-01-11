@@ -33,7 +33,6 @@ export default class TasksPlugin extends Plugin {
 
         logging.registerConsoleLogger();
         log('info', i18n.t('loadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
-        log('info', i18n.t('welcome'));
 
         await this.loadSettings();
 
