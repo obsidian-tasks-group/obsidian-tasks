@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import en from './locales/en.json';
 import zh_cn from './locales/zh_cn.json';
 
@@ -7,14 +8,15 @@ let isInitialized = false;
 // Define a function to initialize i18next
 export const initializeI18n = async () => {
     if (!isInitialized) {
-        await i18next.init({
-            lng: 'en', // Default language
-            fallbackLng: 'en', // Fallback language if translation is missing
-            resources: {
-                en: { translation: en },
-                zh_cn: { translation: zh_cn },
-            },
-        });
+        await i18next
+            .use(LanguageDetector) // Use language detector to determine user's language
+            .init({
+                fallbackLng: 'en', // Fallback language if detection fails or translation is missing
+                resources: {
+                    en: { translation: en },
+                    zh_cn: { translation: zh_cn },
+                },
+            });
         isInitialized = true;
     }
 };
