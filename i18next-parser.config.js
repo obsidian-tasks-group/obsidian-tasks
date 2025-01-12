@@ -12,7 +12,7 @@ module.exports = {
     useKeysAsDefaultValue: true, // Use keys for default values if no translation exists
     resetDefaultValueLocale: null, // Retain existing default values
     sort: true, // Sort keys alphabetically
-    keepRemoved: false, // Discard keys not found in source files
+    keepRemoved: true, // Keep keys not found in source files
     jsonIndent: 2, // Pretty-print JSON
     lexers: {
         ts: ['JavascriptLexer'], // TypeScript files
