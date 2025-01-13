@@ -97,7 +97,7 @@ export class SettingsTab extends PluginSettingTab {
                 // I wanted to make this say 'for example, #task or TODO'
                 // but wasn't able to figure out how to make the text box
                 // wide enough for the whole string to be visible.
-                text.setPlaceholder('e.g. #task or TODO')
+                text.setPlaceholder(i18n.t('settings.globalFilter.filter.placeholder'))
                     .setValue(GlobalFilter.getInstance().get())
                     .onChange(async (value) => {
                         updateSettings({ globalFilter: value });
