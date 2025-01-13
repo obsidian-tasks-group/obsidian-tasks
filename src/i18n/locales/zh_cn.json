@@ -3,5 +3,6 @@
   "main.unloadingPlugin": "卸载插件: {{name}} v{{version}}",
   "settings.changeRequiresRestart": "",
   "settings.format.description.line1": "",
+  "settings.format.description.line2": "",
   "settings.format.name": ""
 }
