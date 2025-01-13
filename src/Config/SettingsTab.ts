@@ -86,7 +86,7 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.globalFilter.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    '<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p>' +
+                    `<p><b>${i18n.t('settings.globalFilter.description.line1')}</b></p>` +
                         `<p>${i18n.t('settings.globalFilter.description.line2')}<p>` +
                         `<p>${i18n.t('settings.globalFilter.description.line3')}</br>` +
                         `${i18n.t('settings.globalFilter.description.line4')}</p>` +
