@@ -203,7 +203,8 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.dates.cancelledDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.</br>' +
+                    i18n.t('settings.dates.cancelledDate.description') +
+                        '</br>' +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
                         ),
