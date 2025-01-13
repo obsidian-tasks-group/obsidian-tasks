@@ -186,7 +186,8 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.dates.doneDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.</br>' +
+                    i18n.t('settings.dates.doneDate.description') +
+                        '</br>' +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date'),
                 ),
             )

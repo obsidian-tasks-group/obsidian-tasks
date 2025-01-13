@@ -5,6 +5,7 @@
   "settings.dates.cancelledDate.name": "Set cancelled date on every cancelled task",
   "settings.dates.createdDate.description": "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.",
   "settings.dates.createdDate.name": "Set created date on every added task",
+  "settings.dates.doneDate.description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
   "settings.dates.doneDate.name": "Set done date on every completed task",
   "settings.dates.heading": "Dates",
   "settings.format.description.line1": "The format that Tasks uses to read and write tasks.",
