@@ -87,8 +87,7 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     '<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p>' +
-                        '<p>Use a global filter if you want Tasks to only act on a subset of your "<code>- [ ]</code>" checklist items, so that ' +
-                        'a checklist item must include the specified string in its description in order to be considered a task.<p>' +
+                        `<p>${i18n.t('settings.globalFilter.description.line1')}<p>` +
                         '<p>For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.</br>' +
                         'Other checklist items will remain normal checklist items and not appear in queries or get a done date set.</p>' +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
