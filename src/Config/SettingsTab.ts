@@ -68,7 +68,7 @@ export class SettingsTab extends PluginSettingTab {
             )
             .addDropdown((dropdown) => {
                 for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
-                    dropdown.addOption(key, TASK_FORMATS[key].displayName);
+                    dropdown.addOption(key, TASK_FORMATS[key].getDisplayName());
                 }
 
                 dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
