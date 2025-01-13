@@ -160,7 +160,7 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Dates').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.dates.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)

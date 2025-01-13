@@ -2,6 +2,7 @@
   "main.loadingPlugin": "Loading plugin: {{name}} v{{version}}",
   "main.unloadingPlugin": "Unloading plugin: {{name}} v{{version}}",
   "settings.changeRequiresRestart": "Changing any settings requires a restart of obsidian.",
+  "settings.dates.heading": "Dates",
   "settings.format.description.line1": "The format that Tasks uses to read and write tasks.",
   "settings.format.description.line2": "<b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>.",
   "settings.format.displayName.dataview": "Dataview",
