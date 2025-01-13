@@ -167,7 +167,8 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.dates.createdDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.</br>" +
+                    i18n.t('settings.dates.createdDate.description') +
+                        '</br>' +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date',
                         ),
