@@ -13,5 +13,7 @@
   "settings.globalFilter.filter.description.line4": "Other checklist items will remain normal checklist items and not appear in queries or get a done date set.",
   "settings.globalFilter.filter.name": "Global filter",
   "settings.globalFilter.filter.placeholder": "e.g. #task or TODO",
-  "settings.globalFilter.heading": "Global task filter"
+  "settings.globalFilter.heading": "Global task filter",
+  "settings.globalFilter.removeFilter.description": "Enabling this removes the string that you set as global filter from the task description when displaying a task.",
+  "settings.globalFilter.removeFilter.name": "Remove global filter from description"
 }
