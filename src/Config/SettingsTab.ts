@@ -91,7 +91,7 @@ export class SettingsTab extends PluginSettingTab {
                         'a checklist item must include the specified string in its description in order to be considered a task.<p>' +
                         '<p>For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.</br>' +
                         'Other checklist items will remain normal checklist items and not appear in queries or get a done date set.</p>' +
-                        '<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Global+Filter">See the documentation</a>.</p>',
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
                 ),
             )
             .addText((text) => {
@@ -134,7 +134,7 @@ export class SettingsTab extends PluginSettingTab {
                     SettingsTab.createFragmentWithHTML(
                         '<p>A query that is automatically included at the start of every Tasks block in the vault.' +
                             ' Useful for adding default filters, or layout options.</p>' +
-                            '<p><a href="https://publish.obsidian.md/tasks/Queries/Global+Query">See the documentation</a>.</p>',
+                            this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Global+Query'),
                     ),
                 )
                 .addTextArea((text) => {
@@ -172,7 +172,9 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.</br>" +
-                        '<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date">See the documentation</a>.</p>',
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -188,7 +190,7 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     'Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.</br>' +
-                        '<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date">See the documentation</a>.</p>',
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date'),
                 ),
             )
             .addToggle((toggle) => {
@@ -204,7 +206,9 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     'Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.</br>' +
-                        '<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date">See the documentation</a>.</p>',
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -229,7 +233,9 @@ export class SettingsTab extends PluginSettingTab {
                         'If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.</br>' +
                         'By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats.</br>' +
                         'Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.</br>' +
-                        '<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date">See the documentation</a>.</p>',
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -289,7 +295,7 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     'Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.</br>' +
-                        '<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks">See the documentation</a>.</p>',
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
                 ),
             )
             .addToggle((toggle) => {
@@ -311,7 +317,7 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     'Enabling this will open an intelligent suggest menu while typing inside a recognized task line.</br>' +
-                        '<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest">See the documentation</a>.</p>',
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
                 ),
             )
             .addToggle((toggle) => {
@@ -372,7 +378,9 @@ export class SettingsTab extends PluginSettingTab {
                         ' in dialog boxes conflict with system keyboard shortcuts' +
                         ' or assistive technology functionality that is important for you,' +
                         ' you may want to deactivate them here.</br>' +
-                        '<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts">See the documentation</a>.</p>',
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
