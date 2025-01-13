@@ -17,7 +17,7 @@
   "settings.globalFilter.removeFilter.description": "Enabling this removes the string that you set as global filter from the task description when displaying a task.",
   "settings.globalFilter.removeFilter.name": "Remove global filter from description",
   "settings.globalQuery.heading": "Global Query",
-  "settings.globalQuery.query.description": "",
+  "settings.globalQuery.query.description": "A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.",
   "settings.globalQuery.query.name": "",
   "settings.globalQuery.query.placeholder": ""
 }
