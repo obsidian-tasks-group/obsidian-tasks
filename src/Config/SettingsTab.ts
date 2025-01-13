@@ -59,7 +59,7 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.format.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    '<p>The format that Tasks uses to read and write tasks.</p>' +
+                    `<p>${i18n.t('settings.format.description.line1')}</p>` +
                         '<p><b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>.</p>' +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
