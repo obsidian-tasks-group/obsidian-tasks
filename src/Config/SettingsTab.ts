@@ -129,8 +129,7 @@ export class SettingsTab extends PluginSettingTab {
             new Setting(containerEl)
                 .setDesc(
                     SettingsTab.createFragmentWithHTML(
-                        '<p>A query that is automatically included at the start of every Tasks block in the vault.' +
-                            ' Useful for adding default filters, or layout options.</p>' +
+                        `<p>${i18n.t('settings.globalQuery.query.description')}</p>` +
                             this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Global+Query'),
                     ),
                 )
