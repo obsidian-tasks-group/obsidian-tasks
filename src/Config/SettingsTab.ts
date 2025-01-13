@@ -164,7 +164,7 @@ export class SettingsTab extends PluginSettingTab {
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName('Set created date on every added task')
+            .setName(i18n.t('settings.dates.createdDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.</br>" +
