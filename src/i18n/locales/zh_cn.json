@@ -17,5 +17,6 @@
   "settings.globalFilter.removeFilter.description": "",
   "settings.globalFilter.removeFilter.name": "",
   "settings.globalQuery.heading": "",
-  "settings.globalQuery.query.description": ""
+  "settings.globalQuery.query.description": "",
+  "settings.globalQuery.query.placeholder": ""
 }
