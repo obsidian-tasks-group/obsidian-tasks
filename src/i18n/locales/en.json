@@ -2,6 +2,7 @@
   "main.loadingPlugin": "Loading plugin: {{name}} v{{version}}",
   "main.unloadingPlugin": "Unloading plugin: {{name}} v{{version}}",
   "settings.changeRequiresRestart": "Changing any settings requires a restart of obsidian.",
+  "settings.dates.cancelledDate.description": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
   "settings.dates.cancelledDate.name": "Set cancelled date on every cancelled task",
   "settings.dates.createdDate.description": "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.",
   "settings.dates.createdDate.name": "Set created date on every added task",
