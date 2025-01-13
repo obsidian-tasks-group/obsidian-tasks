@@ -29,8 +29,8 @@ export type HeadingState = {
  *
  */
 interface TaskFormat {
-    /** User facing name of the {@link TaskFormat} */
-    displayName: string;
+    /** Function that returns the user facing name of the {@link TaskFormat} */
+    getDisplayName: () => string;
     /** {@link TaskSerializer} responsible for reading Tasks from text and writing them back into text */
     taskSerializer: TaskSerializer;
     /** Function that generates Intellisense-like suggestions as a user is typing a Task */
@@ -40,12 +40,12 @@ interface TaskFormat {
 /** Map of all defined {@link TaskFormat}s */
 export const TASK_FORMATS = {
     tasksPluginEmoji: {
-        displayName: 'Tasks Emoji Format',
+        getDisplayName: () => 'Tasks Emoji Format',
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
         buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, false),
     },
     dataview: {
-        displayName: 'Dataview',
+        getDisplayName: () => 'Dataview',
         taskSerializer: new DataviewTaskSerializer(),
         buildSuggestions: onlySuggestIfBracketOpen(
             makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, true),
