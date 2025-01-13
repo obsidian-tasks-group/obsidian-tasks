@@ -5,6 +5,7 @@ import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
 import type { StatusCollection } from '../Statuses/StatusCollection';
 import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
+import { i18n } from '../i18n/i18n';
 import * as Themes from './Themes';
 import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
@@ -51,7 +52,7 @@ export class SettingsTab extends PluginSettingTab {
 
         containerEl.createEl('p', {
             cls: 'tasks-setting-important',
-            text: 'Changing any settings requires a restart of obsidian.',
+            text: i18n.t('settings.changeRequiresRestart'),
         });
 
         new Setting(containerEl)
