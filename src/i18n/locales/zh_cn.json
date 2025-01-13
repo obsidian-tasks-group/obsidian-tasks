@@ -26,5 +26,6 @@
   "settings.globalQuery.heading": "全局查询",
   "settings.globalQuery.query.description": "自动包含在库中每个“任务”块开头的查询.用于添加默认过滤器或布局选项.",
   "settings.globalQuery.query.placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency",
+  "settings.seeTheDocumentation": "请参阅文档",
   "settings.statuses.heading": "任务状态"
 }
