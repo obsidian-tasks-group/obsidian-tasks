@@ -11,6 +11,7 @@ import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import type { SuggestionBuilder } from '../Suggestor';
 import type { LogOptions } from '../lib/logging';
 import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
+import { i18n } from '../i18n/i18n';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
@@ -40,7 +41,7 @@ interface TaskFormat {
 /** Map of all defined {@link TaskFormat}s */
 export const TASK_FORMATS = {
     tasksPluginEmoji: {
-        getDisplayName: () => 'Tasks Emoji Format',
+        getDisplayName: () => i18n.t('settings.format.displayName.tasksEmojiFormat'),
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
         buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, false),
     },
