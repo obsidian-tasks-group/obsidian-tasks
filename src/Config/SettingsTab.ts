@@ -392,7 +392,7 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     private seeTheDocumentation(url: string) {
-        return `<p><a href="${url}">See the documentation</a>.</p>`;
+        return `<p><a href="${url}">${i18n.t('settings.seeTheDocumentation')}</a>.</p>`;
     }
 
     private addOneSettingsBlock(
