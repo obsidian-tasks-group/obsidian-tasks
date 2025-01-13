@@ -137,7 +137,7 @@ export class SettingsTab extends PluginSettingTab {
                     const settings = getSettings();
 
                     text.inputEl.rows = 4;
-                    text.setPlaceholder('# For example...\npath does not include _templates/\nlimit 300\nshow urgency')
+                    text.setPlaceholder('# ' + i18n.t('settings.globalQuery.query.placeholder'))
                         .setValue(settings.globalQuery)
                         .onChange(async (value) => {
                             updateSettings({ globalQuery: value });
