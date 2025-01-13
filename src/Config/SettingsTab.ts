@@ -122,7 +122,7 @@ export class SettingsTab extends PluginSettingTab {
         setSettingVisibility(globalFilterHidden, getSettings().globalFilter.length > 0);
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Global Query').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.globalQuery.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         makeMultilineTextSetting(

@@ -15,5 +15,6 @@
   "settings.globalFilter.filter.placeholder": "",
   "settings.globalFilter.heading": "",
   "settings.globalFilter.removeFilter.description": "",
-  "settings.globalFilter.removeFilter.name": ""
+  "settings.globalFilter.removeFilter.name": "",
+  "settings.globalQuery.heading": ""
 }
