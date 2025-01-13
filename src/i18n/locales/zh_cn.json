@@ -1,4 +1,5 @@
 {
   "main.loadingPlugin": "加载插件: {{name}} v{{version}}",
-  "main.unloadingPlugin": "卸载插件: {{name}} v{{version}}"
+  "main.unloadingPlugin": "卸载插件: {{name}} v{{version}}",
+  "settings.changeRequiresRestart": ""
 }
