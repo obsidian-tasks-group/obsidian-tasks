@@ -7,10 +7,10 @@
   "settings.format.displayName.dataview": "Dataview",
   "settings.format.displayName.tasksEmojiFormat": "Tasks Emoji Format",
   "settings.format.name": "Task Format",
-  "settings.globalFilter.description.line1": "Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.",
-  "settings.globalFilter.description.line2": "Use a global filter if you want Tasks to only act on a subset of your \"<code>- [ ]</code>\" checklist items, so that a checklist item must include the specified string in its description in order to be considered a task.",
-  "settings.globalFilter.description.line3": "For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.",
-  "settings.globalFilter.description.line4": "Other checklist items will remain normal checklist items and not appear in queries or get a done date set.",
-  "settings.globalFilter.heading": "Global task filter",
-  "settings.globalFilter.name": "Global filter"
+  "settings.globalFilter.filter.description.line1": "Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.",
+  "settings.globalFilter.filter.description.line2": "Use a global filter if you want Tasks to only act on a subset of your \"<code>- [ ]</code>\" checklist items, so that a checklist item must include the specified string in its description in order to be considered a task.",
+  "settings.globalFilter.filter.description.line3": "For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.",
+  "settings.globalFilter.filter.description.line4": "Other checklist items will remain normal checklist items and not appear in queries or get a done date set.",
+  "settings.globalFilter.filter.name": "Global filter",
+  "settings.globalFilter.heading": "Global task filter"
 }

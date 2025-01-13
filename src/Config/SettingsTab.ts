@@ -83,13 +83,13 @@ export class SettingsTab extends PluginSettingTab {
         let globalFilterHidden: Setting | null = null;
 
         new Setting(containerEl)
-            .setName(i18n.t('settings.globalFilter.name'))
+            .setName(i18n.t('settings.globalFilter.filter.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p><b>${i18n.t('settings.globalFilter.description.line1')}</b></p>` +
-                        `<p>${i18n.t('settings.globalFilter.description.line2')}<p>` +
-                        `<p>${i18n.t('settings.globalFilter.description.line3')}</br>` +
-                        `${i18n.t('settings.globalFilter.description.line4')}</p>` +
+                    `<p><b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
+                        `<p>${i18n.t('settings.globalFilter.filter.description.line2')}<p>` +
+                        `<p>${i18n.t('settings.globalFilter.filter.description.line3')}</br>` +
+                        `${i18n.t('settings.globalFilter.filter.description.line4')}</p>` +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
                 ),
             )

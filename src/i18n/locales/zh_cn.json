@@ -7,10 +7,10 @@
   "settings.format.displayName.dataview": "",
   "settings.format.displayName.tasksEmojiFormat": "",
   "settings.format.name": "",
-  "settings.globalFilter.description.line1": "",
-  "settings.globalFilter.description.line2": "",
-  "settings.globalFilter.description.line3": "",
-  "settings.globalFilter.description.line4": "",
-  "settings.globalFilter.heading": "",
-  "settings.globalFilter.name": ""
+  "settings.globalFilter.filter.description.line1": "",
+  "settings.globalFilter.filter.description.line2": "",
+  "settings.globalFilter.filter.description.line3": "",
+  "settings.globalFilter.filter.description.line4": "",
+  "settings.globalFilter.filter.name": "",
+  "settings.globalFilter.heading": ""
 }
