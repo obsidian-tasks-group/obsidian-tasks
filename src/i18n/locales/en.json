@@ -2,6 +2,7 @@
   "main.loadingPlugin": "Loading plugin: {{name}} v{{version}}",
   "main.unloadingPlugin": "Unloading plugin: {{name}} v{{version}}",
   "settings.changeRequiresRestart": "Changing any settings requires a restart of obsidian.",
+  "settings.dates.cancelledDate.name": "Set cancelled date on every cancelled task",
   "settings.dates.createdDate.name": "Set created date on every added task",
   "settings.dates.heading": "Dates",
   "settings.format.description.line1": "The format that Tasks uses to read and write tasks.",

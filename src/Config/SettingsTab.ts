@@ -198,7 +198,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Set cancelled date on every cancelled task')
+            .setName(i18n.t('settings.dates.cancelledDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     'Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.</br>' +
