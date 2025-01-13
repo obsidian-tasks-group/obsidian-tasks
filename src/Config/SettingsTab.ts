@@ -56,7 +56,7 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         new Setting(containerEl)
-            .setName('Task Format')
+            .setName(i18n.t('settings.format.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     '<p>The format that Tasks uses to read and write tasks.</p>' +
