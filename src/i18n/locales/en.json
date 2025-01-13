@@ -2,5 +2,6 @@
   "main.loadingPlugin": "Loading plugin: {{name}} v{{version}}",
   "main.unloadingPlugin": "Unloading plugin: {{name}} v{{version}}",
   "settings.changeRequiresRestart": "Changing any settings requires a restart of obsidian.",
+  "settings.format.description.line1": "The format that Tasks uses to read and write tasks.",
   "settings.format.name": "Task Format"
 }
