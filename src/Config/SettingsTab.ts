@@ -89,7 +89,7 @@ export class SettingsTab extends PluginSettingTab {
                     '<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p>' +
                         `<p>${i18n.t('settings.globalFilter.description.line1')}<p>` +
                         `<p>${i18n.t('settings.globalFilter.description.line2')}</br>` +
-                        'Other checklist items will remain normal checklist items and not appear in queries or get a done date set.</p>' +
+                        `${i18n.t('settings.globalFilter.description.line3')}</p>` +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
                 ),
             )
