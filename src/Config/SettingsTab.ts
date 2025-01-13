@@ -108,10 +108,8 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         globalFilterHidden = new Setting(containerEl)
-            .setName('Remove global filter from description')
-            .setDesc(
-                'Enabling this removes the string that you set as global filter from the task description when displaying a task.',
-            )
+            .setName(i18n.t('settings.globalFilter.removeFilter.name'))
+            .setDesc(i18n.t('settings.globalFilter.removeFilter.description'))
             .addToggle((toggle) => {
                 const settings = getSettings();
 

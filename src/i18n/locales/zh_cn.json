@@ -13,5 +13,7 @@
   "settings.globalFilter.filter.description.line4": "",
   "settings.globalFilter.filter.name": "",
   "settings.globalFilter.filter.placeholder": "",
-  "settings.globalFilter.heading": ""
+  "settings.globalFilter.heading": "",
+  "settings.globalFilter.removeFilter.description": "",
+  "settings.globalFilter.removeFilter.name": ""
 }
