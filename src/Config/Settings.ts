@@ -46,7 +46,7 @@ export const TASK_FORMATS = {
         buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, false),
     },
     dataview: {
-        getDisplayName: () => 'Dataview',
+        getDisplayName: () => i18n.t('settings.format.displayName.dataview'),
         taskSerializer: new DataviewTaskSerializer(),
         buildSuggestions: onlySuggestIfBracketOpen(
             makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, true),
