@@ -8,6 +8,7 @@
   "settings.format.displayName.tasksEmojiFormat": "Tasks Emoji Format",
   "settings.format.name": "Task Format",
   "settings.globalFilter.description.line1": "Use a global filter if you want Tasks to only act on a subset of your \"<code>- [ ]</code>\" checklist items, so that a checklist item must include the specified string in its description in order to be considered a task.",
+  "settings.globalFilter.description.line2": "For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.",
   "settings.globalFilter.heading": "Global task filter",
   "settings.globalFilter.name": "Global filter"
 }
