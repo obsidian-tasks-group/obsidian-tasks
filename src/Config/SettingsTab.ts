@@ -148,7 +148,7 @@ export class SettingsTab extends PluginSettingTab {
         );
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Task Statuses').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         const { headingOpened } = getSettings();

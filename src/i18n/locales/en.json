@@ -18,5 +18,6 @@
   "settings.globalFilter.removeFilter.name": "Remove global filter from description",
   "settings.globalQuery.heading": "Global Query",
   "settings.globalQuery.query.description": "A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.",
-  "settings.globalQuery.query.placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency"
+  "settings.globalQuery.query.placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency",
+  "settings.statuses.heading": "Task Statuses"
 }
