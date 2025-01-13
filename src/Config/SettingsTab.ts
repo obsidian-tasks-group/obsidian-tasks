@@ -182,7 +182,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Set done date on every completed task')
+            .setName(i18n.t('settings.dates.doneDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     'Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.</br>' +
