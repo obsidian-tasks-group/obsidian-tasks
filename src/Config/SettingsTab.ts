@@ -61,7 +61,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     '<p>The format that Tasks uses to read and write tasks.</p>' +
                         '<p><b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>.</p>' +
-                        '<p><a href="https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats">See the documentation</a>.</p>',
+                        this.seeTheDocumentation(),
                 ),
             )
             .addDropdown((dropdown) => {
@@ -380,6 +380,10 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+    }
+
+    private seeTheDocumentation() {
+        return '<p><a href="https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats">See the documentation</a>.</p>';
     }
 
     private addOneSettingsBlock(
