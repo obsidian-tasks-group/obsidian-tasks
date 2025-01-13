@@ -78,12 +78,12 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Global task filter').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.globalFilter.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let globalFilterHidden: Setting | null = null;
 
         new Setting(containerEl)
-            .setName('Global filter')
+            .setName(i18n.t('settings.globalFilter.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     '<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p>' +

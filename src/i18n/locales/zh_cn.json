@@ -6,5 +6,7 @@
   "settings.format.description.line2": "",
   "settings.format.displayName.dataview": "",
   "settings.format.displayName.tasksEmojiFormat": "",
-  "settings.format.name": ""
+  "settings.format.name": "",
+  "settings.globalFilter.heading": "",
+  "settings.globalFilter.name": ""
 }
