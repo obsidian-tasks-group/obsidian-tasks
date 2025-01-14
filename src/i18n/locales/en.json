@@ -1,31 +1,63 @@
 {
-  "main.loadingPlugin": "Loading plugin: {{name}} v{{version}}",
-  "main.unloadingPlugin": "Unloading plugin: {{name}} v{{version}}",
-  "settings.changeRequiresRestart": "Changing any settings requires a restart of obsidian.",
-  "settings.dates.cancelledDate.description": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
-  "settings.dates.cancelledDate.name": "Set cancelled date on every cancelled task",
-  "settings.dates.createdDate.description": "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.",
-  "settings.dates.createdDate.name": "Set created date on every added task",
-  "settings.dates.doneDate.description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
-  "settings.dates.doneDate.name": "Set done date on every completed task",
-  "settings.dates.heading": "Dates",
-  "settings.format.description.line1": "The format that Tasks uses to read and write tasks.",
-  "settings.format.description.line2": "<b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>.",
-  "settings.format.displayName.dataview": "Dataview",
-  "settings.format.displayName.tasksEmojiFormat": "Tasks Emoji Format",
-  "settings.format.name": "Task Format",
-  "settings.globalFilter.filter.description.line1": "Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.",
-  "settings.globalFilter.filter.description.line2": "Use a global filter if you want Tasks to only act on a subset of your \"<code>- [ ]</code>\" checklist items, so that a checklist item must include the specified string in its description in order to be considered a task.",
-  "settings.globalFilter.filter.description.line3": "For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.",
-  "settings.globalFilter.filter.description.line4": "Other checklist items will remain normal checklist items and not appear in queries or get a done date set.",
-  "settings.globalFilter.filter.name": "Global filter",
-  "settings.globalFilter.filter.placeholder": "e.g. #task or TODO",
-  "settings.globalFilter.heading": "Global task filter",
-  "settings.globalFilter.removeFilter.description": "Enabling this removes the string that you set as global filter from the task description when displaying a task.",
-  "settings.globalFilter.removeFilter.name": "Remove global filter from description",
-  "settings.globalQuery.heading": "Global Query",
-  "settings.globalQuery.query.description": "A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.",
-  "settings.globalQuery.query.placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency",
-  "settings.seeTheDocumentation": "See the documentation",
-  "settings.statuses.heading": "Task Statuses"
+  "main": {
+    "loadingPlugin": "Loading plugin: {{name}} v{{version}}",
+    "unloadingPlugin": "Unloading plugin: {{name}} v{{version}}"
+  },
+  "settings": {
+    "changeRequiresRestart": "Changing any settings requires a restart of obsidian.",
+    "dates": {
+      "cancelledDate": {
+        "description": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
+        "name": "Set cancelled date on every cancelled task"
+      },
+      "createdDate": {
+        "description": "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.",
+        "name": "Set created date on every added task"
+      },
+      "doneDate": {
+        "description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
+        "name": "Set done date on every completed task"
+      },
+      "heading": "Dates"
+    },
+    "format": {
+      "description": {
+        "line1": "The format that Tasks uses to read and write tasks.",
+        "line2": "<b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>."
+      },
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Tasks Emoji Format"
+      },
+      "name": "Task Format"
+    },
+    "globalFilter": {
+      "filter": {
+        "description": {
+          "line1": "Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.",
+          "line2": "Use a global filter if you want Tasks to only act on a subset of your \"<code>- [ ]</code>\" checklist items, so that a checklist item must include the specified string in its description in order to be considered a task.",
+          "line3": "For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.",
+          "line4": "Other checklist items will remain normal checklist items and not appear in queries or get a done date set."
+        },
+        "name": "Global filter",
+        "placeholder": "e.g. #task or TODO"
+      },
+      "heading": "Global task filter",
+      "removeFilter": {
+        "description": "Enabling this removes the string that you set as global filter from the task description when displaying a task.",
+        "name": "Remove global filter from description"
+      }
+    },
+    "globalQuery": {
+      "heading": "Global Query",
+      "query": {
+        "description": "A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.",
+        "placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency"
+      }
+    },
+    "seeTheDocumentation": "See the documentation",
+    "statuses": {
+      "heading": "Task Statuses"
+    }
+  }
 }
