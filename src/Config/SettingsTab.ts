@@ -192,13 +192,15 @@ export class SettingsTab extends PluginSettingTab {
                     text: null,
                     html:
                         '<p>' +
-                        'You should first <b>select and install a CSS Snippet or Theme</b> to style custom checkboxes.' +
+                        i18n.t('settings.statuses.customStatuses.description.line1') +
                         '</p><p>' +
-                        'Then, use the buttons below to set up your custom statuses, to match your chosen CSS checkboxes.' +
+                        i18n.t('settings.statuses.customStatuses.description.line2') +
                         '</p><p>' +
-                        "<b>Note</b> Any statuses with the same symbol as any earlier statuses will be ignored. You can confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down." +
+                        i18n.t('settings.statuses.customStatuses.description.line3') +
                         '</p><p></p><p>' +
-                        '<a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">See the documentation to get started!</a></p>',
+                        `<a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">${i18n.t(
+                            'settings.statuses.customStatuses.description.line4',
+                        )}</a></p>`,
                 },
                 settings: [
                     {
