@@ -31,6 +31,10 @@
           "name": "Additional filename date format as Scheduled date for undated tasks",
           "placeholder": "example: MMM DD YYYY"
         },
+        "folders": {
+          "description": "Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.",
+          "name": "Folders with default Scheduled dates"
+        },
         "toggle": {
           "description": {
             "line1": "Save time entering Scheduled (⏳) dates.",

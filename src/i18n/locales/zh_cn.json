@@ -31,6 +31,10 @@
           "name": "",
           "placeholder": ""
         },
+        "folders": {
+          "description": "",
+          "name": ""
+        },
         "toggle": {
           "description": {
             "line1": "",
