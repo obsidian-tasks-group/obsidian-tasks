@@ -113,6 +113,10 @@
     "seeTheDocumentation": "请参阅文档",
     "statuses": {
       "coreStatuses": {
+        "description": {
+          "line1": "",
+          "line2": ""
+        },
         "heading": ""
       },
       "heading": "任务状态"

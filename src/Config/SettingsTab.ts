@@ -164,9 +164,9 @@ export class SettingsTab extends PluginSettingTab {
                     text: null,
                     html:
                         '<p>' +
-                        'These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.' +
+                        i18n.t('settings.statuses.coreStatuses.description.line1') +
                         '</p><p>' +
-                        'You can add edit and add your own custom statuses in the section below.' +
+                        i18n.t('settings.statuses.coreStatuses.description.line2') +
                         '</p>',
                 },
                 settings: [
