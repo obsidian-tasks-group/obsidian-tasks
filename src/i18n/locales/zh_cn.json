@@ -4,6 +4,21 @@
     "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
   },
   "settings": {
+    "autoSuggest": {
+      "heading": "",
+      "maxSuggestions": {
+        "description": "",
+        "name": ""
+      },
+      "minLength": {
+        "description": "",
+        "name": ""
+      },
+      "toggle": {
+        "description": "",
+        "name": ""
+      }
+    },
     "changeRequiresRestart": "更改任何设置都需要重新启动Obsidian.",
     "dates": {
       "cancelledDate": {

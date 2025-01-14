@@ -4,6 +4,21 @@
     "unloadingPlugin": "Unloading plugin: {{name}} v{{version}}"
   },
   "settings": {
+    "autoSuggest": {
+      "heading": "Auto-suggest",
+      "maxSuggestions": {
+        "description": "How many suggestions should be shown when an auto-suggest menu pops up (including the \"⏎\" option).",
+        "name": "Maximum number of auto-suggestions to show"
+      },
+      "minLength": {
+        "description": "If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.",
+        "name": "Minimum match length for auto-suggest"
+      },
+      "toggle": {
+        "description": "Enabling this will open an intelligent suggest menu while typing inside a recognized task line.",
+        "name": "Auto-suggest task content"
+      }
+    },
     "changeRequiresRestart": "Changing any settings requires a restart of obsidian.",
     "dates": {
       "cancelledDate": {
