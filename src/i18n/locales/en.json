@@ -119,6 +119,9 @@
         },
         "heading": "Core Statuses"
       },
+      "customStatuses": {
+        "heading": "Custom Statuses"
+      },
       "heading": "Task Statuses"
     }
   }

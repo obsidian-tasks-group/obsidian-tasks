@@ -119,6 +119,9 @@
         },
         "heading": ""
       },
+      "customStatuses": {
+        "heading": ""
+      },
       "heading": "任务状态"
     }
   }
