@@ -112,6 +112,9 @@
     },
     "seeTheDocumentation": "See the documentation",
     "statuses": {
+      "coreStatuses": {
+        "heading": "Core Statuses"
+      },
       "heading": "Task Statuses"
     }
   }
