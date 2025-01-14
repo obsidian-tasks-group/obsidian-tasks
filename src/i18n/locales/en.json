@@ -113,6 +113,10 @@
     "seeTheDocumentation": "See the documentation",
     "statuses": {
       "coreStatuses": {
+        "description": {
+          "line1": "These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.",
+          "line2": "You can add edit and add your own custom statuses in the section below."
+        },
         "heading": "Core Statuses"
       },
       "heading": "Task Statuses"
