@@ -155,7 +155,7 @@ export class SettingsTab extends PluginSettingTab {
         // Directly define the JSON data as a constant object
         const settingsJson = [
             {
-                text: 'Core Statuses',
+                text: i18n.t('settings.statuses.coreStatuses.heading'),
                 level: 'h3',
                 class: '',
                 open: true,

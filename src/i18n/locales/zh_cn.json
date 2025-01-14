@@ -112,6 +112,9 @@
     },
     "seeTheDocumentation": "请参阅文档",
     "statuses": {
+      "coreStatuses": {
+        "heading": ""
+      },
       "heading": "任务状态"
     }
   }
