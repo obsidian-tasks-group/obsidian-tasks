@@ -3,7 +3,7 @@ module.exports = {
     output: 'src/i18n/locales/$LOCALE.json', // Output files
     locales: ['en', 'zh_cn'], // Supported locales
     defaultNamespace: 'translation',
-    keySeparator: false, // Disable nested keys if you’re using flat keys
+    keySeparator: '.', // Use dots to represent nested keys
     namespaceSeparator: false, // Disable namespace separation
     interpolation: {
         prefix: '{{', // Preserve placeholders like {{name}}
