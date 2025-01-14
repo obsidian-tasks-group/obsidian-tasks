@@ -228,10 +228,14 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.datesFromFileNames.scheduledDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Save time entering Scheduled (⏳) dates.</br>' +
-                        'If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.</br>' +
-                        'By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats.</br>' +
-                        'Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.</br>' +
+                    'Save time entering Scheduled (⏳) dates.' +
+                        '</br>' +
+                        'If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.' +
+                        '</br>' +
+                        'By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats.' +
+                        '</br>' +
+                        'Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.' +
+                        '</br>' +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
                         ),
