@@ -17,6 +17,9 @@ export const initializeI18n = async () => {
                     en: { translation: en },
                     zh_cn: { translation: zh_cn },
                 },
+                interpolation: {
+                    escapeValue: false, // Disable escaping of strings, like '&' -> '&amp;'
+                },
             });
         isInitialized = true;
     }
