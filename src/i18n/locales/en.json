@@ -129,6 +129,12 @@
         "buttons": {
           "addAllUnknown": {
             "name": "Add All Unknown Status Types"
+          },
+          "addNewStatus": {
+            "name": "Add New Task Status"
+          },
+          "resetCustomStatuses": {
+            "name": "Reset Custom Status Types to Defaults"
           }
         },
         "description": {

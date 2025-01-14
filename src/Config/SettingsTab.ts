@@ -680,7 +680,7 @@ export class SettingsTab extends PluginSettingTab {
         /* -------------------- 'Add New Task Status' button -------------------- */
         const setting = new Setting(containerEl).addButton((button) => {
             button
-                .setButtonText('Add New Task Status')
+                .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addNewStatus.name'))
                 .setCta()
                 .onClick(async () => {
                     StatusSettings.addStatus(
@@ -741,7 +741,7 @@ export class SettingsTab extends PluginSettingTab {
         /* -------------------- 'Reset Custom Status Types to Defaults' button -------------------- */
         const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
             button
-                .setButtonText('Reset Custom Status Types to Defaults')
+                .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.name'))
                 .setWarning()
                 .onClick(async () => {
                     StatusSettings.resetAllCustomStatuses(statusSettings);

@@ -129,6 +129,12 @@
         "buttons": {
           "addAllUnknown": {
             "name": ""
+          },
+          "addNewStatus": {
+            "name": ""
+          },
+          "resetCustomStatuses": {
+            "name": ""
           }
         },
         "description": {
