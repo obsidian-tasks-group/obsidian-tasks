@@ -11,7 +11,6 @@ import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
-import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
@@ -152,6 +151,63 @@ export class SettingsTab extends PluginSettingTab {
         // ---------------------------------------------------------------------------
 
         const { headingOpened } = getSettings();
+
+        // Directly define the JSON data as a constant object
+        const settingsJson = [
+            {
+                text: 'Core Statuses',
+                level: 'h3',
+                class: '',
+                open: true,
+                notice: {
+                    class: 'setting-item-description',
+                    text: null,
+                    html: '<p>These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.</p><p>You can add edit and add your own custom statuses in the section below.</p>',
+                },
+                settings: [
+                    {
+                        name: '',
+                        description: '',
+                        type: 'function',
+                        initialValue: '',
+                        placeholder: '',
+                        settingName: 'insertTaskCoreStatusSettings',
+                        featureFlag: '',
+                        notice: null,
+                    },
+                ],
+            },
+            {
+                text: 'Custom Statuses',
+                level: 'h3',
+                class: '',
+                open: true,
+                notice: {
+                    class: 'setting-item-description',
+                    text: null,
+                    html: '<p>You should first <b>select and install a CSS Snippet or Theme</b> to style custom checkboxes.</p><p>Then, use the buttons below to set up your custom statuses, to match your chosen CSS checkboxes.</p><p><b>Note</b> Any statuses with the same symbol as any earlier statuses will be ignored. You can confirm the actually loaded statuses by running the \'Create or edit task\' command and looking at the Status drop-down.</p><p></p><p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">documentation</a> to get started!</p>',
+                },
+                settings: [
+                    {
+                        name: '',
+                        description: '',
+                        type: 'function',
+                        initialValue: '',
+                        placeholder: '',
+                        settingName: 'insertCustomTaskStatusSettings',
+                        featureFlag: '',
+                        notice: null,
+                    },
+                ],
+            },
+        ];
+
+        // Original usage remains unchanged
+        settingsJson.forEach((heading) => {
+            const initiallyOpen = headingOpened[heading.text] ?? true;
+            const detailsContainer = this.addOneSettingsBlock(containerEl, heading, headingOpened);
+            detailsContainer.open = initiallyOpen;
+        });
 
         settingsJson.forEach((heading) => {
             const initiallyOpen = headingOpened[heading.text] ?? true;
