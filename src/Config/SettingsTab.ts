@@ -626,7 +626,7 @@ export class SettingsTab extends PluginSettingTab {
 
         /* -------------------- 'Review and check your Statuses' button -------------------- */
         const createMermaidDiagram = new Setting(containerEl).addButton((button) => {
-            const buttonName = 'Review and check your Statuses';
+            const buttonName = i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.name');
             button
                 .setButtonText(buttonName)
                 .setCta()
@@ -648,9 +648,7 @@ export class SettingsTab extends PluginSettingTab {
                     const leaf = this.app.workspace.getLeaf(true);
                     await leaf.openFile(file);
                 });
-            button.setTooltip(
-                'Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings.',
-            );
+            button.setTooltip(i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.tooltip'));
         });
         createMermaidDiagram.infoEl.remove();
     }
