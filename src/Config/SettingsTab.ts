@@ -708,15 +708,10 @@ export class SettingsTab extends PluginSettingTab {
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
-                // Old implementation:
-                const labelOld = `${name}: Add ${collection.length} supported Statuses`;
-                // New implementation:
                 const label = i18n.t('settings.statuses.collections.buttons.addCollection.name', {
                     themeName: name,
                     numberOfStatuses: collection.length,
                 });
-                console.debug('Before: ', labelOld);
-                console.debug('After : ', label);
                 button.setButtonText(label).onClick(async () => {
                     await addCustomStatesToSettings(collection, statusSettings, settings);
                 });
