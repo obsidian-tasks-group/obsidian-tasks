@@ -225,16 +225,16 @@ export class SettingsTab extends PluginSettingTab {
         let scheduledDateFolders: Setting | null = null;
 
         new Setting(containerEl)
-            .setName(i18n.t('settings.datesFromFileNames.scheduledDate.name'))
+            .setName(i18n.t('settings.datesFromFileNames.scheduledDate.toggle.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.datesFromFileNames.scheduledDate.description.line1') +
+                    i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1') +
                         '</br>' +
-                        i18n.t('settings.datesFromFileNames.scheduledDate.description.line2') +
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2') +
                         '</br>' +
-                        i18n.t('settings.datesFromFileNames.scheduledDate.description.line3') +
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3') +
                         '</br>' +
-                        i18n.t('settings.datesFromFileNames.scheduledDate.description.line4') +
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4') +
                         '</br>' +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
