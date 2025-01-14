@@ -20,6 +20,12 @@
       },
       "heading": "Dates"
     },
+    "datesFromFileNames": {
+      "heading": "Dates from file names",
+      "scheduledDate": {
+        "name": "Use filename as Scheduled date for undated tasks"
+      }
+    },
     "format": {
       "description": {
         "line1": "The format that Tasks uses to read and write tasks.",

@@ -219,13 +219,13 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Dates from file names').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.datesFromFileNames.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let scheduledDateExtraFormat: Setting | null = null;
         let scheduledDateFolders: Setting | null = null;
 
         new Setting(containerEl)
-            .setName('Use filename as Scheduled date for undated tasks')
+            .setName(i18n.t('settings.datesFromFileNames.scheduledDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     'Save time entering Scheduled (⏳) dates.</br>' +
