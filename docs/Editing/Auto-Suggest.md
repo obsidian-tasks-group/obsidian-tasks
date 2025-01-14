@@ -138,6 +138,8 @@ There are some Auto-Suggest behaviours that might be improved in future releases
 - It currently pops up when editing NON_TASK tasks. This may be changed in future.
   - We are tracking this in [issue #1509](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1509).
 - The [[Create or edit Task#Date abbreviations|date abbreviations offered by "Create or edit task"]] only work after a space is typed.
+- When Auto-Suggest is used in [[Kanban plugin]] cards (or any other plugins that use the [[Tasks Api#Auto-Suggest Integration|auto-suggest integration]]), the [[Task Dependencies|dependencies]] suggestions are not available, because there is not yet a mechanism for plugins to access all the tasks in the vault.
+  - We are tracking this in [issue #3274](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3274).
 
 ## Common Questions
 
