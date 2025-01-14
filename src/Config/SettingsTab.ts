@@ -291,14 +291,15 @@ export class SettingsTab extends PluginSettingTab {
         setSettingVisibility(scheduledDateFolders, getSettings().useFilenameAsScheduledDate);
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Recurring tasks').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.recurringTasks.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName('Next recurrence appears on the line below')
+            .setName(i18n.t('settings.recurringTasks.nextLine.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.</br>' +
+                    i18n.t('settings.recurringTasks.nextLine.description') +
+                        '</br>' +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
                 ),
             )

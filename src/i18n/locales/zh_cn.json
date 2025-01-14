@@ -81,6 +81,13 @@
         "placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency"
       }
     },
+    "recurringTasks": {
+      "heading": "",
+      "nextLine": {
+        "description": "",
+        "name": ""
+      }
+    },
     "seeTheDocumentation": "请参阅文档",
     "statuses": {
       "heading": "任务状态"
