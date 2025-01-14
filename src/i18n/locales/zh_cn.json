@@ -20,6 +20,12 @@
       },
       "heading": "日期"
     },
+    "datesFromFileNames": {
+      "heading": "",
+      "scheduledDate": {
+        "name": ""
+      }
+    },
     "format": {
       "description": {
         "line1": "任务用于读取和写入任务的格式.",
