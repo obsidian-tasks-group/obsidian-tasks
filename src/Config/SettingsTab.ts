@@ -312,16 +312,17 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Auto-suggest').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.autoSuggest.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let autoSuggestMinimumMatchLength: Setting | null = null;
         let autoSuggestMaximumSuggestions: Setting | null = null;
 
         new Setting(containerEl)
-            .setName('Auto-suggest task content')
+            .setName(i18n.t('settings.autoSuggest.toggle.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Enabling this will open an intelligent suggest menu while typing inside a recognized task line.</br>' +
+                    i18n.t('settings.autoSuggest.toggle.description') +
+                        '</br>' +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
                 ),
             )
@@ -336,10 +337,8 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         autoSuggestMinimumMatchLength = new Setting(containerEl)
-            .setName('Minimum match length for auto-suggest')
-            .setDesc(
-                'If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.',
-            )
+            .setName(i18n.t('settings.autoSuggest.minLength.name'))
+            .setDesc(i18n.t('settings.autoSuggest.minLength.description'))
             .addSlider((slider) => {
                 const settings = getSettings();
                 slider
@@ -353,10 +352,8 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         autoSuggestMaximumSuggestions = new Setting(containerEl)
-            .setName('Maximum number of auto-suggestions to show')
-            .setDesc(
-                'How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).',
-            )
+            .setName(i18n.t('settings.autoSuggest.maxSuggestions.name'))
+            .setDesc(i18n.t('settings.autoSuggest.maxSuggestions.description'))
             .addSlider((slider) => {
                 const settings = getSettings();
                 slider
