@@ -112,6 +112,16 @@
     },
     "seeTheDocumentation": "See the documentation",
     "statuses": {
+      "collections": {
+        "anuppuccinTheme": "AnuPpuccin Theme",
+        "auraTheme": "Aura Theme",
+        "borderTheme": "Border Theme",
+        "ebullientworksTheme": "Ebullientworks Theme",
+        "itsThemeAndSlrvbCheckboxes": "ITS Theme & SlRvb Checkboxes",
+        "lytModeTheme": "LYT Mode Theme (Dark mode only)",
+        "minimalTheme": "Minimal Theme",
+        "thingsTheme": "Things Theme"
+      },
       "coreStatuses": {
         "buttons": {
           "checkStatuses": {
