@@ -5,18 +5,18 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "",
+      "heading": "自动建议",
       "maxSuggestions": {
-        "description": "",
-        "name": ""
+        "description": "当自动建议菜单弹出时,应显示多少条建议 (包含 \"\\u23CE\" 选项).",
+        "name": "要显示的最大自动建议数"
       },
       "minLength": {
-        "description": "",
-        "name": ""
+        "description": "如果高于0,则只有在识别出任何支持的关键字的开头时才会触发自动建议.",
+        "name": "自动建议的最小匹配长度"
       },
       "toggle": {
-        "description": "",
-        "name": ""
+        "description": "启用此选项将打开一个智能建议菜单,同时在已识别的任务行中键入.",
+        "name": "自动建议任务内容"
       }
     },
     "changeRequiresRestart": "更改任何设置都需要重新启动Obsidian.",
@@ -36,37 +36,37 @@
       "heading": "日期"
     },
     "datesFromFileNames": {
-      "heading": "",
+      "heading": "从文件名中提取日期",
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "",
-            "line2": ""
+            "line1": "当使用文件名作为未注明日期的任务的计划日期时,任务插件将识别的另一种日期格式.",
+            "line2": "语法参考"
           },
-          "name": "",
-          "placeholder": ""
+          "name": "为无日期任务添加文件名日期格式作为计划日期",
+          "placeholder": "示例:MMM DD YYYY"
         },
         "folders": {
-          "description": "",
-          "name": ""
+          "description": "如果要处处使用默认的“计划日期”,请保留为空,或者输入以逗号分隔的文件夹列表",
+          "name": "具有默认计划日期的文件夹"
         },
         "toggle": {
           "description": {
-            "line1": "",
-            "line2": "",
+            "line1": "输入计划 (⏳) 日期节省时间",
+            "line2": "如果启用此选项,则任何未注明日期的任务都将获得从其文件名中提取的默认“计划日期”.",
             "line3": "",
             "line4": ""
           },
-          "name": ""
+          "name": "将文件名用作未注明日期的任务的计划日期"
         }
       }
     },
     "dialogs": {
       "accessKeys": {
-        "description": "",
-        "name": ""
+        "description": "如果对话框中各种控件的访问键(键盘快捷键)与系统键盘快捷键或对您很重要的辅助技术功能相冲突,您可能需要在此处停用它们.",
+        "name": "在对话框中提供访问密钥"
       },
-      "heading": ""
+      "heading": "对话框"
     },
     "format": {
       "description": {
@@ -104,10 +104,10 @@
       }
     },
     "recurringTasks": {
-      "heading": "",
+      "heading": "重复性任务",
       "nextLine": {
-        "description": "",
-        "name": ""
+        "description": "启用此选项将使任务的下一个重复出现在已完成任务下方的行中.否则,下一次重复将出现在已完成的重复之前.",
+        "name": "下一个重复出现在下一行"
       }
     },
     "seeTheDocumentation": "请参阅文档",
