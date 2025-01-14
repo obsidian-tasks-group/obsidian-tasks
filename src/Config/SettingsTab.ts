@@ -198,7 +198,7 @@ export class SettingsTab extends PluginSettingTab {
                         '</p><p>' +
                         "<b>Note</b> Any statuses with the same symbol as any earlier statuses will be ignored. You can confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down." +
                         '</p><p></p><p>' +
-                        'See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">documentation</a> to get started!</p>',
+                        '<a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">See the documentation to get started!</a></p>',
                 },
                 settings: [
                     {
