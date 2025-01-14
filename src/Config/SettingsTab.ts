@@ -274,10 +274,8 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         scheduledDateFolders = new Setting(containerEl)
-            .setName('Folders with default Scheduled dates')
-            .setDesc(
-                'Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.',
-            )
+            .setName(i18n.t('settings.datesFromFileNames.scheduledDate.folders.name'))
+            .setDesc(i18n.t('settings.datesFromFileNames.scheduledDate.folders.description'))
             .addText(async (input) => {
                 const settings = getSettings();
                 await this.plugin.saveSettings();
