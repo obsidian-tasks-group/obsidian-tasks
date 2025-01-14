@@ -61,6 +61,13 @@
         }
       }
     },
+    "dialogs": {
+      "accessKeys": {
+        "description": "",
+        "name": ""
+      },
+      "heading": ""
+    },
     "format": {
       "description": {
         "line1": "任务用于读取和写入任务的格式.",

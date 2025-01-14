@@ -369,17 +369,15 @@ export class SettingsTab extends PluginSettingTab {
         setSettingVisibility(autoSuggestMaximumSuggestions, getSettings().autoSuggestInEditor);
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Dialogs').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.dialogs.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName('Provide access keys in dialogs')
+            .setName(i18n.t('settings.dialogs.accessKeys.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'If the access keys (keyboard shortcuts) for various controls' +
-                        ' in dialog boxes conflict with system keyboard shortcuts' +
-                        ' or assistive technology functionality that is important for you,' +
-                        ' you may want to deactivate them here.</br>' +
+                    i18n.t('settings.dialogs.accessKeys.description') +
+                        '</br>' +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts',
                         ),
