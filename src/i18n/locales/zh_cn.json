@@ -126,6 +126,11 @@
         "heading": "核心状态"
       },
       "customStatuses": {
+        "buttons": {
+          "addAllUnknown": {
+            "name": ""
+          }
+        },
         "description": {
           "line1": "您应该首先<b>选择并安装CSS代码段或主题<b>以设置自定义复选框的样式",
           "line2": "然后,使用下面的按钮设置您的自定义状态,以匹配您选择的CSS复选框.",

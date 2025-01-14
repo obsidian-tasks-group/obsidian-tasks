@@ -719,7 +719,7 @@ export class SettingsTab extends PluginSettingTab {
         /* -------------------- 'Add All Unknown Status Types' button -------------------- */
         const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {
             button
-                .setButtonText('Add All Unknown Status Types')
+                .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.name'))
                 .setCta()
                 .onClick(async () => {
                     const tasks = this.plugin.getTasks();

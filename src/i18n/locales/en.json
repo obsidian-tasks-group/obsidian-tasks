@@ -126,6 +126,11 @@
         "heading": "Core Statuses"
       },
       "customStatuses": {
+        "buttons": {
+          "addAllUnknown": {
+            "name": "Add All Unknown Status Types"
+          }
+        },
         "description": {
           "line1": "You should first <b>select and install a CSS Snippet or Theme</b> to style custom checkboxes.",
           "line2": "Then, use the buttons below to set up your custom statuses, to match your chosen CSS checkboxes.",
