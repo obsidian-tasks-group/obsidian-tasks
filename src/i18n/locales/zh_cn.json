@@ -115,8 +115,8 @@
       "coreStatuses": {
         "buttons": {
           "checkStatuses": {
-            "name": "",
-            "tooltip": ""
+            "name": "查看并检查您的状态",
+            "tooltip": "在库的根目录下创建一个新文件,包含当前状态设置的 Mermaid 图表."
           }
         },
         "description": {
@@ -128,13 +128,13 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "name": ""
+            "name": "添加所有未知状态类型"
           },
           "addNewStatus": {
-            "name": ""
+            "name": "添加新任务状态"
           },
           "resetCustomStatuses": {
-            "name": ""
+            "name": "重置自定义状态类型为默认值"
           }
         },
         "description": {
