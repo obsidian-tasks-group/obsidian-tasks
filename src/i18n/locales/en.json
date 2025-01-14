@@ -81,6 +81,13 @@
         "placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency"
       }
     },
+    "recurringTasks": {
+      "heading": "Recurring tasks",
+      "nextLine": {
+        "description": "Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.",
+        "name": "Next recurrence appears on the line below"
+      }
+    },
     "seeTheDocumentation": "See the documentation",
     "statuses": {
       "heading": "Task Statuses"
