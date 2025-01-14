@@ -116,6 +116,11 @@
         "anuppuccinTheme": "AnuPpuccin Theme",
         "auraTheme": "Aura Theme",
         "borderTheme": "Border Theme",
+        "buttons": {
+          "addCollection": {
+            "name": "{{themeName}}: Add {{numberOfStatuses}} supported Statuses"
+          }
+        },
         "ebullientworksTheme": "Ebullientworks Theme",
         "itsThemeAndSlrvbCheckboxes": "ITS Theme & SlRvb Checkboxes",
         "lytModeTheme": "LYT Mode Theme (Dark mode only)",
