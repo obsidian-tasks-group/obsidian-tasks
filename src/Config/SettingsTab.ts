@@ -696,15 +696,15 @@ export class SettingsTab extends PluginSettingTab {
         type NamedTheme = [string, StatusCollection];
         const themes: NamedTheme[] = [
             // Light and Dark themes - alphabetical order
-            ['AnuPpuccin Theme', Themes.anuppuccinSupportedStatuses()],
-            ['Aura Theme', Themes.auraSupportedStatuses()],
-            ['Border Theme', Themes.borderSupportedStatuses()],
-            ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
-            ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
-            ['Minimal Theme', Themes.minimalSupportedStatuses()],
-            ['Things Theme', Themes.thingsSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.anuppuccinTheme'), Themes.anuppuccinSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.auraTheme'), Themes.auraSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.borderTheme'), Themes.borderSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.ebullientworksTheme'), Themes.ebullientworksSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.itsThemeAndSlrvbCheckboxes'), Themes.itsSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.minimalTheme'), Themes.minimalSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.thingsTheme'), Themes.thingsSupportedStatuses()],
             // Dark only themes - alphabetical order
-            ['LYT Mode Theme (Dark mode only)', Themes.lytModeSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.lytModeTheme'), Themes.lytModeSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {

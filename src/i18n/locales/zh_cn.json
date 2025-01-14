@@ -112,6 +112,16 @@
     },
     "seeTheDocumentation": "请参阅文档",
     "statuses": {
+      "collections": {
+        "anuppuccinTheme": "",
+        "auraTheme": "",
+        "borderTheme": "",
+        "ebullientworksTheme": "",
+        "itsThemeAndSlrvbCheckboxes": "",
+        "lytModeTheme": "",
+        "minimalTheme": "",
+        "thingsTheme": ""
+      },
       "coreStatuses": {
         "buttons": {
           "checkStatuses": {
@@ -145,7 +155,17 @@
         },
         "heading": "自定义状态"
       },
-      "heading": "任务状态"
+      "heading": "任务状态",
+      "statusCollections": {
+        "anuppuccinTheme": "",
+        "auraTheme": "",
+        "borderTheme": "",
+        "ebullientworksTheme": "",
+        "itsThemeAndSlrvbCheckboxes": "",
+        "lytModeTheme": "",
+        "minimalTheme": "",
+        "thingsTheme": ""
+      }
     }
   }
 }
