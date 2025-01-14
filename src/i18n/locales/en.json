@@ -23,6 +23,14 @@
     "datesFromFileNames": {
       "heading": "Dates from file names",
       "scheduledDate": {
+        "extraFormat": {
+          "description": {
+            "line1": "An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.",
+            "line2": "Syntax Reference"
+          },
+          "name": "Additional filename date format as Scheduled date for undated tasks",
+          "placeholder": "example: MMM DD YYYY"
+        },
         "toggle": {
           "description": {
             "line1": "Save time entering Scheduled (⏳) dates.",
