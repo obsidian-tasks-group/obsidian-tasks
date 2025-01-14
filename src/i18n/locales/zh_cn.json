@@ -23,6 +23,14 @@
     "datesFromFileNames": {
       "heading": "",
       "scheduledDate": {
+        "extraFormat": {
+          "description": {
+            "line1": "",
+            "line2": ""
+          },
+          "name": "",
+          "placeholder": ""
+        },
         "toggle": {
           "description": {
             "line1": "",

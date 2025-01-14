@@ -252,17 +252,20 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         scheduledDateExtraFormat = new Setting(containerEl)
-            .setName('Additional filename date format as Scheduled date for undated tasks')
+            .setName(i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.</br>' +
-                        '<p><a href="https://momentjs.com/docs/#/displaying/format/">Syntax Reference</a></p>',
+                    i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.description.line1') +
+                        '</br>' +
+                        `<p><a href="https://momentjs.com/docs/#/displaying/format/">${i18n.t(
+                            'settings.datesFromFileNames.scheduledDate.extraFormat.description.line2',
+                        )}</a></p>`,
                 ),
             )
             .addText((text) => {
                 const settings = getSettings();
 
-                text.setPlaceholder('example: MMM DD YYYY')
+                text.setPlaceholder(i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.placeholder'))
                     .setValue(settings.filenameAsScheduledDateFormat)
                     .onChange(async (value) => {
                         updateSettings({ filenameAsScheduledDateFormat: value });
