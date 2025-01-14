@@ -113,6 +113,12 @@
     "seeTheDocumentation": "请参阅文档",
     "statuses": {
       "coreStatuses": {
+        "buttons": {
+          "checkStatuses": {
+            "name": "",
+            "tooltip": ""
+          }
+        },
         "description": {
           "line1": "这些是Tasks本机支持的核心状态,不需要自定义CSS样式或主题.",
           "line2": "您可以在下面的部分中添加编辑和添加自己的自定义状态."

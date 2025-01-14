@@ -113,6 +113,12 @@
     "seeTheDocumentation": "See the documentation",
     "statuses": {
       "coreStatuses": {
+        "buttons": {
+          "checkStatuses": {
+            "name": "Review and check your Statuses",
+            "tooltip": "Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings."
+          }
+        },
         "description": {
           "line1": "These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.",
           "line2": "You can add edit and add your own custom statuses in the section below."
