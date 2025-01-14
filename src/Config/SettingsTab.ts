@@ -183,7 +183,7 @@ export class SettingsTab extends PluginSettingTab {
                 ],
             },
             {
-                text: 'Custom Statuses',
+                text: i18n.t('settings.statuses.customStatuses.heading'),
                 level: 'h3',
                 class: '',
                 open: true,
