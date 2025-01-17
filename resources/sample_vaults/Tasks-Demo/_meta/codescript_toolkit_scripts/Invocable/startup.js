@@ -1,5 +1,5 @@
-import * as Tasks from '../Tasks.js'
-import * as TasksNew from '../TasksNew.ts'
+import * as Tasks from '../Tasks.js';
+import * as TasksNew from '../TasksNew.ts';
 
 export async function invoke(app) {
     console.log('In invoke()');
