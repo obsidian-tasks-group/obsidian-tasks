@@ -89,6 +89,9 @@ hide task count
 >
 > When you use `show tree`, Tasks shows all found tasks, and **all** their nested tasks and list items (for now, regardless of whether or not the nested tasks matched the query).
 
+> [!released]
+> `show tree` was introduced in Tasks 7.12.0.
+
 #### Show Tree example
 
 Suppose you have a note called `Party Planner`, with the following list:
