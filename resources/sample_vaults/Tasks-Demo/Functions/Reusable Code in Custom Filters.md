@@ -27,3 +27,8 @@ limit 1
 group by function require('/Tasks.js').parentDescription(task)
 limit 1
 ```
+
+```tasks
+group by function Tasks.parentDescription(task)
+limit 1
+```

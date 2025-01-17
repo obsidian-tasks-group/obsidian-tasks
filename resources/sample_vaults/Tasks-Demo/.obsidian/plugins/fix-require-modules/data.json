@@ -1,6 +1,6 @@
 {
-  "invocableScriptsDirectory": "",
+  "invocableScriptsDirectory": "./Invocable",
   "mobileChangesCheckingIntervalInSeconds": 30,
   "modulesRoot": "_meta/codescript_toolkit_scripts",
-  "startupScriptPath": ""
+  "startupScriptPath": "./Invocable/startup.js"
 }
