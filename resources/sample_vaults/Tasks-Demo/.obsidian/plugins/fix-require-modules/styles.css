@@ -1,0 +1,99 @@
+:root {
+  --console-log-entry-debug-color: #3c763d;
+  --console-log-entry-debug-background-color: #dff0d8;
+  --console-log-entry-error-color: #a94442;
+  --console-log-entry-error-background-color: #f2dede;
+  --console-log-entry-info-color: #31708f;
+  --console-log-entry-info-background-color: #d9edf7;
+  --console-log-entry-log-color: #333333;
+  --console-log-entry-warn-color: #8a6d3b;
+  --console-log-entry-warn-background-color: #fcf8e3;
+  --console-log-entry-system-background-color: #0078d7;
+  --console-log-entry-system-color: #ffffff;
+  --console-log-container-border-color: #cccccc;
+  --console-log-container-background-color: #ffffff;
+}
+
+.console-log-container {
+  font-family: "Courier New", monospace;
+  line-height: 1.5;
+  border: 1px solid var(--console-log-container-border-color);
+  border-radius: 6px;
+  background-color: var(--console-log-container-background-color);
+  padding: 10px;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: pre-wrap;
+}
+
+.console-log-container .system-message {
+  background-color: var(--console-log-entry-system-background-color);
+  color: var(--console-log-entry-system-color);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-style: italic;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.console-log-container .console-log-entry::before {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.console-log-container .console-log-entry {
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 3px;
+}
+
+.console-log-container .console-log-entry-log {
+  color: var(--console-log-entry-log-color);
+}
+
+.console-log-container .console-log-entry-debug {
+  color: var(--console-log-entry-debug-color);
+  background-color: var(--console-log-entry-debug-background-color);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.console-log-container .console-log-entry-info {
+  color: var(--console-log-entry-info-color);
+  background-color: var(--console-log-entry-info-background-color);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.console-log-container .console-log-entry-warn {
+  color: var(--console-log-entry-warn-color);
+  background-color: var(--console-log-entry-warn-background-color);
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.console-log-container .console-log-entry-error {
+  color: var(--console-log-entry-error-color);
+  background-color: var(--console-log-entry-error-background-color);
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.console-log-container .console-log-entry-error::before {
+  content: "✖ ";
+}
+
+.console-log-container .console-log-entry-warn::before {
+  content: "⚠ ";
+}
+
+.console-log-container .console-log-entry-info::before {
+  content: "ℹ ";
+}
+
+.console-log-container .console-log-entry-debug::before {
+  content: "🐞 ";
+}
