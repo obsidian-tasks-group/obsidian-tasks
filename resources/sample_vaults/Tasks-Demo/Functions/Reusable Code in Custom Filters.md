@@ -32,3 +32,8 @@ limit 1
 group by function Tasks.parentDescription(task)
 limit 1
 ```
+
+```tasks
+group by function TasksNew.parentDescription(task)
+limit 1
+```
