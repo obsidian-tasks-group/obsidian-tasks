@@ -55,8 +55,14 @@ export default class TasksPlugin extends Plugin {
             workspace: this.app.workspace,
             events,
         });
-        this.inlineRenderer = new InlineRenderer({ plugin: this });
-        this.queryRenderer = new QueryRenderer({ plugin: this, events });
+
+        this.app.workspace.onLayoutReady(() => {
+            // Only execute searches once all plugins are loaded.
+            // This fixed use of a "CodeScript Toolkit" startup script inside
+            // notes that were already open in Reading mode when Obsdian was starting up.
+            this.inlineRenderer = new InlineRenderer({ plugin: this });
+            this.queryRenderer = new QueryRenderer({ plugin: this, events });
+        });
 
         this.registerEditorExtension(newLivePreviewExtension());
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
