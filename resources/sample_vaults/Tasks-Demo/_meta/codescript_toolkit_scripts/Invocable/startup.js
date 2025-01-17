@@ -1,7 +1,7 @@
-import {parentDescription} from '../Tasks.js';
+import * as Tasks from '../Tasks.js'
 export async function invoke(app) {
     console.log('In invoke()');
-    window.Tasks = {parentDescription};
+    window.Tasks = Tasks;
 }
 
 export async function cleanup(app) {
