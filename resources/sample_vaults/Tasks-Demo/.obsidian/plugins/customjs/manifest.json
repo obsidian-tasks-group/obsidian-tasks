@@ -1,0 +1,10 @@
+{
+  "id": "customjs",
+  "name": "CustomJS",
+  "version": "1.0.21",
+  "minAppVersion": "0.9.12",
+  "description": "This plugin lets you use custom javascript files inside your vault.",
+  "author": "Sam Lewis",
+  "authorUrl": "https://github.com/samlewis0602",
+  "isDesktopOnly": false
+}
