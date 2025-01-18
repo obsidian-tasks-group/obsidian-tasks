@@ -99,12 +99,17 @@ class QueryRenderChild extends MarkdownRenderChild {
             MarkdownRenderer.renderMarkdown,
             this,
         );
+
+        this.queryResultsRenderer.query.debug('[render] QueryRenderChild.constructor() entered');
+
         this.app = app;
         this.plugin = plugin;
         this.events = events;
     }
 
     onload() {
+        this.queryResultsRenderer.query.debug('[render] QueryRenderChild.onload() entered');
+
         // Process the current cache state:
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
         // Listen to future cache changes:
@@ -114,6 +119,8 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     onunload() {
+        this.queryResultsRenderer.query.debug('[render] QueryRenderChild.onunload() entered');
+
         if (this.renderEventRef !== undefined) {
             this.events.off(this.renderEventRef);
         }
