@@ -57,8 +57,6 @@ export class Query implements IQuery {
         this.source = source;
         this.tasksFile = tasksFile;
 
-        this.debug(`Creating query: ${this.formatQueryForLogging()}`);
-
         const anyContinuationLinesRemoved = continueLines(source);
 
         const anyPlaceholdersExpanded: Statement[] = [];
