@@ -303,7 +303,7 @@ ${statement.explainStatement('    ')}
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
-        this.debug(`Executing query: ${this.formatQueryForLogging()}`);
+        this.debug(`[search] Executing query: ${this.formatQueryForLogging()}`);
 
         const searchInfo = new SearchInfo(this.tasksFile, tasks);
 
