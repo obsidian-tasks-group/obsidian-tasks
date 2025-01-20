@@ -26,16 +26,20 @@ afterEach(() => {
     jest.useRealTimers();
 });
 
+function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
+    return new QueryResultsRenderer(
+        'block-language-tasks',
+        source,
+        tasksFile,
+        () => Promise.resolve(),
+        null,
+        mockHTMLRenderer,
+    );
+}
+
 describe('QueryResultsRenderer tests', () => {
     async function verifyRenderedTasksHTML(allTasks: Task[], source: string = '') {
-        const renderer = new QueryResultsRenderer(
-            'block-language-tasks',
-            source,
-            new TasksFile('query.md'),
-            () => Promise.resolve(),
-            null,
-            mockHTMLRenderer,
-        );
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
         const queryRendererParameters = {
             allTasks,
             allMarkdownFiles: [],
@@ -87,5 +91,20 @@ ${toMarkdown(allTasks)}
         // example chosen to match subtasks whose parents do not match the query
         const allTasks = readTasksFromSimulatedFile(inheritance_task_2listitem_3task);
         await verifyRenderedTasksHTML(allTasks, showTree + 'description includes grandchild');
+    });
+});
+
+describe('QueryResultsRenderer - responding to file edits', () => {
+    it('should update the query its file path is changed', () => {
+        // Arrange
+        const source = 'path includes {{query.file.path}}';
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('oldPath.md'));
+        expect(renderer.query.explainQuery()).toContain('path includes oldPath.md');
+
+        // Act
+        renderer.setTasksFile(new TasksFile('newPath.md'));
+
+        // Assert
+        expect(renderer.query.explainQuery()).toContain('path includes newPath.md');
     });
 });

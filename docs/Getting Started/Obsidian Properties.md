@@ -183,6 +183,57 @@ group by function \
     return value ? window.moment(value).format('YYYY MMMM') : 'no date'
 ```
 
+## Using Query Properties in Placeholders
+
+> [!released]
+> Use of Obsidian properties in placeholders was introduced in Tasks X.Y.Z.
+
+- It is now possible to use properties in the query file:
+  - `query.file.hasProperty()` works.
+  - `query.file.property()` works.
+
+Imagine this text at the top of the note containing the query:
+
+```yaml
+---
+search-text: exercise
+---
+```
+
+It can be used in your query in two ways:
+
+1. A search term from front-matter embedded via placeholder:
+
+    ```javascript
+    description includes {{query.file.property('search-text')}}
+    ```
+
+1. Scripting, which allows creation of a custom filter, which works when the search term is empty
+
+    ```javascript
+    filter by function \
+        if (!query.file.hasProperty('search-text')) return true; \
+        const propertyLower = query.file.property('search-text').toLowerCase(); \
+        if (propertyLower === '') return true; \
+        return task.description.toLowerCase().includes(propertyLower);
+    ```
+
+> [!warning] Using properties with no value
+> Currently when a property in a placeholder is not set:
+>
+> - in text instructions, the string used is currently `null`, which is not likely to be the intent
+> - in numeric instructions, the value used is `null` which gives an error
+
+> [!Info]
+> In a future release, we will likely allow Tasks to silently ignore built filters created from properties that have no value.
+
+> [!Info]
+> In a future release, we will likely introduce standard property names for instructions that will automatically be included inside Tasks queries.
+> Perhaps:
+>
+> - tasks-search-explain: true/false
+> - tasks-search-limit: number
+
 ## How does Tasks interpret Obsidian Properties?
 
 Consider a file with the following example properties (or "Frontmatter"):
@@ -237,11 +288,3 @@ The following table shows how most of those properties are interpreted in Tasks 
 | `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
-
-## Limitations
-
-- It is not yet possible to use properties in the query file:
-  - `query.file.hasProperty()` does not yet work.
-  - `query.file.property()` does not yet work.
-
-We are tracking this in [issue #3083](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3083).
