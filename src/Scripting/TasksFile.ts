@@ -57,8 +57,9 @@ export class TasksFile {
      * See [FrontMatterCache](https://docs.obsidian.md/Reference/TypeScript+API/FrontMatterCache).
      * But prefer using {@link frontmatter} where possible.
      *
-     * @note This is currently only populated for Task objects when read in the Obsidian plugin.
-     *       It's not populated for queries in the plugin, nor in most unit tests.
+     * @note This is currently only populated for Task objects when read in the Obsidian plugin,
+     *       and queries in the plugin.
+     *       It's not populated in most unit tests.
      *       If not available, it returns an empty object, {}.
      *
      * @see frontmatter, which provides a cleaned-up version of the raw frontmatter.
@@ -167,6 +168,11 @@ export class TasksFile {
         return this.withoutExtension(this.filename);
     }
 
+    /**
+     * This is documented for users and so must not be changed.
+     * https://publish.obsidian.md/tasks/Getting+Started/Obsidian+Properties#How+does+Tasks+treat+Obsidian+Properties%3F
+     * @param key
+     */
     public hasProperty(key: string): boolean {
         const foundKey = this.findKeyInFrontmatter(key);
         if (foundKey === undefined) {
@@ -185,6 +191,11 @@ export class TasksFile {
         return true;
     }
 
+    /**
+     * This is documented for users and so must not be changed.
+     * https://publish.obsidian.md/tasks/Getting+Started/Obsidian+Properties#How+does+Tasks+treat+Obsidian+Properties%3F
+     * @param key
+     */
     public property(key: string): any {
         const foundKey = this.findKeyInFrontmatter(key);
         if (foundKey === undefined) {
