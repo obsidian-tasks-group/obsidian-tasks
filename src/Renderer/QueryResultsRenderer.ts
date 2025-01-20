@@ -42,7 +42,7 @@ export class QueryResultsRenderer {
     public readonly source: string;
 
     // The path of the file that contains the instruction block, and cached data from that file.
-    public readonly tasksFile: TasksFile;
+    public tasksFile: TasksFile;
 
     public query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
