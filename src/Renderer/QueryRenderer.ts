@@ -132,9 +132,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 //      this query, regardless of whether the frontmatter has changed or not.
                 // TODO It may even create duplicate refreshes when the query itself is edited
                 // TODO Only do this if the metadata has changed - as this also gets called when the note body is changed.
-                const newTasksFile = new TasksFile(filePath, fileCache ?? {});
-                this.queryResultsRenderer.setTasksFile(newTasksFile);
-                this.events.triggerRequestCacheUpdate(this.render.bind(this));
+                this.handleMetadataOrFilePathChange(filePath, fileCache);
             }),
         );
 
