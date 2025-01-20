@@ -119,14 +119,14 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.reloadQueryAtMidnight();
 
         this.registerEvent(
-            this.app.metadataCache.on('changed', (sourceFile, data, fileCache) => {
+            this.app.metadataCache.on('changed', (sourceFile, _data, fileCache) => {
                 const filePath = sourceFile.path;
                 if (filePath !== this.queryResultsRenderer.filePath) {
-                    console.log(`Different file - ignore the edit: '${filePath}'; ${data}'`);
+                    // We get notified of edits to all files, and are only interested in the
+                    // file where our query is.
                     return;
                 }
 
-                console.log(`Metadata changed - regenerating all queries in: '${filePath}'; ${data}'`);
                 // TODO We need to debounce this.
                 // TODO This very primitive first version redraws all queries for *every* edit to the file containing
                 //      this query, regardless of whether the frontmatter has changed or not.
