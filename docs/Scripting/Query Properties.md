@@ -34,6 +34,10 @@ This page documents all the available pieces of information in Queries that you 
 | `query.file.folder` | `string` | `'root/sub-folder/'` |
 | `query.file.filename` | `string` | `'file containing query.md'` |
 | `query.file.filenameWithoutExtension` | `string` | `'file containing query'` |
+| `query.file.hasProperty('task_instruction')` | `boolean` | `true` |
+| `query.file.hasProperty('non_existent_property')` | `boolean` | `false` |
+| `query.file.property('task_instruction')` | `string` | `'group by filename'` |
+| `query.file.property('non_existent_property')` | `null` | `null` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -42,6 +46,8 @@ This page documents all the available pieces of information in Queries that you 
 1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
 1. `query.file.pathWithoutExtension` was added in Tasks 4.8.0.
 1. `query.file.filenameWithoutExtension` was added in Tasks 4.8.0.
+1. `query.file.hasProperty()` was added in Tasks X.Y.Z.
+1. `query.file.property()` was added in Tasks X.Y.Z.
 
 ## Values for Query Search Properties
 
