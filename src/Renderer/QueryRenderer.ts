@@ -141,11 +141,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.registerEvent(
             this.app.vault.on('rename', (tFile: TAbstractFile, _oldPath: string) => {
                 const filePath = tFile.path;
-                if (filePath === this.queryResultsRenderer.filePath) {
-                    // The path actually hadn't changed
-                    return;
-                }
-
                 const app = this.app;
                 let fileCache: CachedMetadata | null = null;
                 if (tFile && tFile instanceof TFile) {
