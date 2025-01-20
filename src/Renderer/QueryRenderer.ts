@@ -138,13 +138,11 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         this.registerEvent(
             this.app.vault.on('rename', (tFile: TAbstractFile, _oldPath: string) => {
-                const filePath = tFile.path;
-                const app = this.app;
                 let fileCache: CachedMetadata | null = null;
                 if (tFile && tFile instanceof TFile) {
-                    fileCache = app.metadataCache.getFileCache(tFile);
+                    fileCache = this.app.metadataCache.getFileCache(tFile);
                 }
-                this.handleMetadataOrFilePathChange(filePath, fileCache);
+                this.handleMetadataOrFilePathChange(tFile.path, fileCache);
             }),
         );
     }
