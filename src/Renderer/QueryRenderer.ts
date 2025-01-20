@@ -39,10 +39,10 @@ export class QueryRenderer {
         // Issues with this first implementation of accessing properties in query files:
         //  - If the file was created in the last second or two, any CachedMetadata is probably
         //    not yet available, so empty.
-        //  - It does not listen out for edits the properties, so if a property is edited,
-        //    the user needs to close and re-open the file.
         //  - Multi-line properties are supported, but they cannot contain
         //    continuation lines.
+        // TODO Some of this the following code will need to be repeated in metadataCache.on('changed')
+        //      so need to separate out the logic somehow.
         const app = this.app;
         const filePath = context.sourcePath;
         const tFile = app.vault.getAbstractFileByPath(filePath);
@@ -116,6 +116,31 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.renderEventRef = this.events.onCacheUpdate(this.render.bind(this));
 
         this.reloadQueryAtMidnight();
+
+        this.registerEvent(
+            this.app.metadataCache.on('changed', (sourceFile, data, fileCache) => {
+                const filePath = sourceFile.path;
+                if (filePath !== this.queryResultsRenderer.filePath) {
+                    console.log(`Different file - ignore the edit: '${filePath}'; ${data}'`);
+                    return;
+                }
+
+                console.log(`Metadata changed - regenerating all queries in: '${filePath}'; ${data}'`);
+                // TODO We need to debounce this.
+                // TODO This very primitive first version redraws all queries for *every* edit to the file containing
+                //      this query, regardless of whether the frontmatter has changed or not.
+                // TODO It may even create duplicate refreshes when the query itself is edited
+                const oldTasksFile = this.queryResultsRenderer.tasksFile;
+                const newTasksFile = new TasksFile(filePath, fileCache ?? {});
+                console.log(`TasksFile Old: ${oldTasksFile}`);
+                console.log(`TasksFile New: ${newTasksFile}`);
+                console.log('Done...');
+
+                // TODO Only do this if the metadata has changed.
+                this.queryResultsRenderer.setTasksFile(newTasksFile);
+                this.events.triggerRequestCacheUpdate(this.render.bind(this));
+            }),
+        );
     }
 
     onunload() {
