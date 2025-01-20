@@ -131,13 +131,8 @@ class QueryRenderChild extends MarkdownRenderChild {
                 // TODO This very primitive first version redraws all queries for *every* edit to the file containing
                 //      this query, regardless of whether the frontmatter has changed or not.
                 // TODO It may even create duplicate refreshes when the query itself is edited
-                const oldTasksFile = this.queryResultsRenderer.tasksFile;
+                // TODO Only do this if the metadata has changed - as this also gets called when the note body is changed.
                 const newTasksFile = new TasksFile(filePath, fileCache ?? {});
-                console.log(`TasksFile Old: ${oldTasksFile}`);
-                console.log(`TasksFile New: ${newTasksFile}`);
-                console.log('Done...');
-
-                // TODO Only do this if the metadata has changed.
                 this.queryResultsRenderer.setTasksFile(newTasksFile);
                 this.events.triggerRequestCacheUpdate(this.render.bind(this));
             }),
@@ -150,7 +145,6 @@ class QueryRenderChild extends MarkdownRenderChild {
                     // The path actually hadn't changed
                     return;
                 }
-                console.log(`File renamed - regenerating all queries in: '${filePath}'`);
 
                 const app = this.app;
                 let fileCache: CachedMetadata | null = null;
