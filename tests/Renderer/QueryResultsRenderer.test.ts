@@ -93,3 +93,18 @@ ${toMarkdown(allTasks)}
         await verifyRenderedTasksHTML(allTasks, showTree + 'description includes grandchild');
     });
 });
+
+describe('QueryResultsRenderer - responding to file edits', () => {
+    it.failing('should update the query its file path is changed', () => {
+        // Arrange
+        const source = 'path includes {{query.file.path}}';
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('oldPath.md'));
+        expect(renderer.query.explainQuery()).toContain('path includes oldPath.md');
+
+        // Act
+        renderer.tasksFile = new TasksFile('newPath.md');
+
+        // Assert
+        expect(renderer.query.explainQuery()).toContain('path includes newPath.md');
+    });
+});
