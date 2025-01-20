@@ -4,6 +4,7 @@ import {
     type MarkdownPostProcessorContext,
     MarkdownRenderChild,
     MarkdownRenderer,
+    type TAbstractFile,
     TFile,
 } from 'obsidian';
 import { App, Keymap } from 'obsidian';
@@ -137,6 +138,26 @@ class QueryRenderChild extends MarkdownRenderChild {
                 console.log('Done...');
 
                 // TODO Only do this if the metadata has changed.
+                this.queryResultsRenderer.setTasksFile(newTasksFile);
+                this.events.triggerRequestCacheUpdate(this.render.bind(this));
+            }),
+        );
+
+        this.registerEvent(
+            this.app.vault.on('rename', (tFile: TAbstractFile, _oldPath: string) => {
+                const filePath = tFile.path;
+                if (filePath === this.queryResultsRenderer.filePath) {
+                    // The path actually hadn't changed
+                    return;
+                }
+                console.log(`File renamed - regenerating all queries in: '${filePath}'`);
+
+                const app = this.app;
+                let fileCache: CachedMetadata | null = null;
+                if (tFile && tFile instanceof TFile) {
+                    fileCache = app.metadataCache.getFileCache(tFile);
+                }
+                const newTasksFile = new TasksFile(filePath, fileCache ?? {});
                 this.queryResultsRenderer.setTasksFile(newTasksFile);
                 this.events.triggerRequestCacheUpdate(this.render.bind(this));
             }),
