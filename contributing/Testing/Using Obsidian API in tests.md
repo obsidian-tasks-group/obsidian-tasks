@@ -14,7 +14,7 @@ So we need a way to access Obsidian-generated data in our tests. This page tries
 
 1. [resources/sample_vaults/Tasks-Demo/Test Data](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo/Test%20Data) contains representative samples Markdown files for different scenarios.
 2. The process described in [[#Test data creation sequence]] converts these files to matching JSON files in [tests/Obsidian/\_\_test_data\_\_](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__).
-3. So far the files that use this mechanism are [tests/Obsidian/Cache.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/Cache.test.ts) and [tests/Scripting/TasksFile.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Scripting/TasksFile.test.ts). Refer to these files for examples.
+3. See all the [uses of this data so far, in Tasks tests](https://github.com/search?q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+__test_data__+language%3ATypeScript&type=code&l=TypeScript).
 
 ## Test data creation sequence
   
