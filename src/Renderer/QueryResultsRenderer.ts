@@ -72,15 +72,19 @@ export class QueryResultsRenderer {
         // added later.
         switch (className) {
             case 'block-language-tasks':
-                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
+                this.query = this.makeQueryFromSourceAndTasksFile();
                 this.queryType = 'tasks';
                 break;
 
             default:
-                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
+                this.query = this.makeQueryFromSourceAndTasksFile();
                 this.queryType = 'tasks';
                 break;
         }
+    }
+
+    private makeQueryFromSourceAndTasksFile() {
+        return getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
     }
 
     public get filePath(): string | undefined {
