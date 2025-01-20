@@ -42,8 +42,6 @@ export class QueryRenderer {
         //    not yet available, so empty.
         //  - Multi-line properties are supported, but they cannot contain
         //    continuation lines.
-        // TODO Some of this the following code will need to be repeated in metadataCache.on('changed')
-        //      so need to separate out the logic somehow.
         const app = this.app;
         const filePath = context.sourcePath;
         const tFile = app.vault.getAbstractFileByPath(filePath);
@@ -127,7 +125,6 @@ class QueryRenderChild extends MarkdownRenderChild {
                     return;
                 }
 
-                // TODO We need to debounce this.
                 this.handleMetadataOrFilePathChange(filePath, fileCache);
             }),
         );

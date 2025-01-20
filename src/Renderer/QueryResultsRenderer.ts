@@ -42,7 +42,8 @@ export class QueryResultsRenderer {
     public readonly source: string;
 
     // The path of the file that contains the instruction block, and cached data from that file.
-    // This is updated when the query file's frontmatter is modified.
+    // This can be updated when the query file's frontmatter is modified.
+    // It is up to the caller to determine when to do this though.
     private _tasksFile: TasksFile;
 
     public query: IQuery;
@@ -92,16 +93,13 @@ export class QueryResultsRenderer {
         return this._tasksFile;
     }
 
+    /**
+     * Reload the query with new file information, such as to update query placeholders.
+     * @param newFile
+     */
     public setTasksFile(newFile: TasksFile) {
-        // For now, this always updates the query when the TasksFile changes.
-        // TODO For efficiency, only update if either the path or raw frontmatter has been changed.
-
         this._tasksFile = newFile;
-        // Recreate the query, as placeholders and file properties may have changed.
         this.query = this.makeQueryFromSourceAndTasksFile();
-
-        // It is up to the caller to ensure that any search results are re-rendered.
-        // TODO Somehow provide information back to the caller to say whether query has been changed.
     }
 
     public get filePath(): string | undefined {
