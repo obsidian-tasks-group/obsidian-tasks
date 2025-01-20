@@ -42,7 +42,7 @@ export class QueryResultsRenderer {
     public readonly source: string;
 
     // The path of the file that contains the instruction block, and cached data from that file.
-    public tasksFile: TasksFile;
+    private _tasksFile: TasksFile;
 
     public query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
@@ -62,7 +62,7 @@ export class QueryResultsRenderer {
         textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
     ) {
         this.source = source;
-        this.tasksFile = tasksFile;
+        this._tasksFile = tasksFile;
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.textRenderer = textRenderer;
@@ -85,6 +85,14 @@ export class QueryResultsRenderer {
 
     private makeQueryFromSourceAndTasksFile() {
         return getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
+    }
+
+    public get tasksFile(): TasksFile {
+        return this._tasksFile;
+    }
+
+    public set tasksFile(value: TasksFile) {
+        this._tasksFile = value;
     }
 
     public get filePath(): string | undefined {
