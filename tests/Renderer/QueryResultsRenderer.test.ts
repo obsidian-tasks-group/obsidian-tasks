@@ -26,16 +26,20 @@ afterEach(() => {
     jest.useRealTimers();
 });
 
+function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
+    return new QueryResultsRenderer(
+        'block-language-tasks',
+        source,
+        tasksFile,
+        () => Promise.resolve(),
+        null,
+        mockHTMLRenderer,
+    );
+}
+
 describe('QueryResultsRenderer tests', () => {
     async function verifyRenderedTasksHTML(allTasks: Task[], source: string = '') {
-        const renderer = new QueryResultsRenderer(
-            'block-language-tasks',
-            source,
-            new TasksFile('query.md'),
-            () => Promise.resolve(),
-            null,
-            mockHTMLRenderer,
-        );
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
         const queryRendererParameters = {
             allTasks,
             allMarkdownFiles: [],
