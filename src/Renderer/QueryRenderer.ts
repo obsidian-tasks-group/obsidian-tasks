@@ -128,10 +128,6 @@ class QueryRenderChild extends MarkdownRenderChild {
                 }
 
                 // TODO We need to debounce this.
-                // TODO This very primitive first version redraws all queries for *every* edit to the file containing
-                //      this query, regardless of whether the frontmatter has changed or not.
-                // TODO It may even create duplicate refreshes when the query itself is edited
-                // TODO Only do this if the metadata has changed - as this also gets called when the note body is changed.
                 this.handleMetadataOrFilePathChange(filePath, fileCache);
             }),
         );
@@ -148,9 +144,18 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private handleMetadataOrFilePathChange(filePath: string, fileCache: CachedMetadata | null) {
+        const oldTasksFile = this.queryResultsRenderer.tasksFile;
         const newTasksFile = new TasksFile(filePath, fileCache ?? {});
-        this.queryResultsRenderer.setTasksFile(newTasksFile);
-        this.events.triggerRequestCacheUpdate(this.render.bind(this));
+
+        // Has anything changed which might change the query results?
+        const differentPath = oldTasksFile.path !== newTasksFile.path;
+        const differentFrontmatter = !oldTasksFile.rawFrontmatterIdenticalTo(newTasksFile);
+        const queryNeedsReloading = differentPath || differentFrontmatter;
+
+        if (queryNeedsReloading) {
+            this.queryResultsRenderer.setTasksFile(newTasksFile);
+            this.events.triggerRequestCacheUpdate(this.render.bind(this));
+        }
     }
 
     onunload() {
