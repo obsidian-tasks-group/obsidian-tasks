@@ -146,11 +146,15 @@ class QueryRenderChild extends MarkdownRenderChild {
                 if (tFile && tFile instanceof TFile) {
                     fileCache = app.metadataCache.getFileCache(tFile);
                 }
-                const newTasksFile = new TasksFile(filePath, fileCache ?? {});
-                this.queryResultsRenderer.setTasksFile(newTasksFile);
-                this.events.triggerRequestCacheUpdate(this.render.bind(this));
+                this.handleMetadataOrFilePathChange(filePath, fileCache);
             }),
         );
+    }
+
+    private handleMetadataOrFilePathChange(filePath: string, fileCache: CachedMetadata | null) {
+        const newTasksFile = new TasksFile(filePath, fileCache ?? {});
+        this.queryResultsRenderer.setTasksFile(newTasksFile);
+        this.events.triggerRequestCacheUpdate(this.render.bind(this));
     }
 
     onunload() {
