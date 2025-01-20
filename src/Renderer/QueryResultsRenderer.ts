@@ -42,7 +42,9 @@ export class QueryResultsRenderer {
     public readonly source: string;
 
     // The path of the file that contains the instruction block, and cached data from that file.
-    public readonly tasksFile: TasksFile;
+    // This can be updated when the query file's frontmatter is modified.
+    // It is up to the caller to determine when to do this though.
+    private _tasksFile: TasksFile;
 
     public query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
@@ -62,7 +64,7 @@ export class QueryResultsRenderer {
         textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
     ) {
         this.source = source;
-        this.tasksFile = tasksFile;
+        this._tasksFile = tasksFile;
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.textRenderer = textRenderer;
@@ -72,15 +74,32 @@ export class QueryResultsRenderer {
         // added later.
         switch (className) {
             case 'block-language-tasks':
-                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
+                this.query = this.makeQueryFromSourceAndTasksFile();
                 this.queryType = 'tasks';
                 break;
 
             default:
-                this.query = getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
+                this.query = this.makeQueryFromSourceAndTasksFile();
                 this.queryType = 'tasks';
                 break;
         }
+    }
+
+    private makeQueryFromSourceAndTasksFile() {
+        return getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
+    }
+
+    public get tasksFile(): TasksFile {
+        return this._tasksFile;
+    }
+
+    /**
+     * Reload the query with new file information, such as to update query placeholders.
+     * @param newFile
+     */
+    public setTasksFile(newFile: TasksFile) {
+        this._tasksFile = newFile;
+        this.query = this.makeQueryFromSourceAndTasksFile();
     }
 
     public get filePath(): string | undefined {

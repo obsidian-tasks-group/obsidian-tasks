@@ -4,6 +4,7 @@ import {
     type MarkdownPostProcessorContext,
     MarkdownRenderChild,
     MarkdownRenderer,
+    type TAbstractFile,
     TFile,
 } from 'obsidian';
 import { App, Keymap } from 'obsidian';
@@ -39,8 +40,6 @@ export class QueryRenderer {
         // Issues with this first implementation of accessing properties in query files:
         //  - If the file was created in the last second or two, any CachedMetadata is probably
         //    not yet available, so empty.
-        //  - It does not listen out for edits the properties, so if a property is edited,
-        //    the user needs to close and re-open the file.
         //  - Multi-line properties are supported, but they cannot contain
         //    continuation lines.
         const app = this.app;
@@ -116,6 +115,44 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.renderEventRef = this.events.onCacheUpdate(this.render.bind(this));
 
         this.reloadQueryAtMidnight();
+
+        this.registerEvent(
+            this.app.metadataCache.on('changed', (sourceFile, _data, fileCache) => {
+                const filePath = sourceFile.path;
+                if (filePath !== this.queryResultsRenderer.filePath) {
+                    // We get notified of edits to all files, and are only interested in the
+                    // file where our query is.
+                    return;
+                }
+
+                this.handleMetadataOrFilePathChange(filePath, fileCache);
+            }),
+        );
+
+        this.registerEvent(
+            this.app.vault.on('rename', (tFile: TAbstractFile, _oldPath: string) => {
+                let fileCache: CachedMetadata | null = null;
+                if (tFile && tFile instanceof TFile) {
+                    fileCache = this.app.metadataCache.getFileCache(tFile);
+                }
+                this.handleMetadataOrFilePathChange(tFile.path, fileCache);
+            }),
+        );
+    }
+
+    private handleMetadataOrFilePathChange(filePath: string, fileCache: CachedMetadata | null) {
+        const oldTasksFile = this.queryResultsRenderer.tasksFile;
+        const newTasksFile = new TasksFile(filePath, fileCache ?? {});
+
+        // Has anything changed which might change the query results?
+        const differentPath = oldTasksFile.path !== newTasksFile.path;
+        const differentFrontmatter = !oldTasksFile.rawFrontmatterIdenticalTo(newTasksFile);
+        const queryNeedsReloading = differentPath || differentFrontmatter;
+
+        if (queryNeedsReloading) {
+            this.queryResultsRenderer.setTasksFile(newTasksFile);
+            this.events.triggerRequestCacheUpdate(this.render.bind(this));
+        }
     }
 
     onunload() {
