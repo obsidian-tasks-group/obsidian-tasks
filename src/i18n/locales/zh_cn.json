@@ -5,6 +5,10 @@
   },
   "modals": {
     "customStatusModal": {
+      "editNextStatusSymbol": {
+        "description": "",
+        "name": ""
+      },
       "editStatusName": {
         "description": "",
         "name": ""
