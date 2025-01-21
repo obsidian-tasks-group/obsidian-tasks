@@ -119,8 +119,7 @@ export class FileParser {
         sectionIndex: number,
     ) {
         if (listItem.task === undefined) {
-            const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
-            this.line2ListItem.set(lineNumber, new ListItem(line, parentListItem));
+            this.createListItem(listItem, line, lineNumber);
             return sectionIndex;
         }
         let task;
@@ -157,5 +156,10 @@ export class FileParser {
             this.errorReporter(e, this.filePath, listItem, line);
         }
         return sectionIndex;
+    }
+
+    private createListItem(listItem: ListItemCache, line: string, lineNumber: number) {
+        const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
+        this.line2ListItem.set(lineNumber, new ListItem(line, parentListItem));
     }
 }
