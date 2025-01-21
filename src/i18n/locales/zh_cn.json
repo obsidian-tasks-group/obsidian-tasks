@@ -32,7 +32,13 @@
     "statusRegistry": {
       "about": {
         "createdBy": "",
-        "title": ""
+        "deleteFileAnyTime": "",
+        "title": "",
+        "updateReport": {
+          "line1": "",
+          "line2": "",
+          "line3": ""
+        }
       }
     }
   },

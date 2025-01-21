@@ -23,12 +23,12 @@ export function createStatusRegistryReport(
 
 ${i18n.t('reports.statusRegistry.about.createdBy', { version: versionString })}
 
-If you change the Tasks status settings, you can get an updated report by:
+${i18n.t('reports.statusRegistry.about.updateReport.line1')}
 
-- Going to \`Settings\` -> \`Tasks\`.
-- Clicking on \`Review and check your Statuses\`.
+- ${i18n.t('reports.statusRegistry.about.updateReport.line2')}
+- ${i18n.t('reports.statusRegistry.about.updateReport.line3')}
 
-You can delete this file any time.
+${i18n.t('reports.statusRegistry.about.deleteFileAnyTime')}
 
 ## Status Settings
 
