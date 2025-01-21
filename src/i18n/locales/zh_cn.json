@@ -28,6 +28,13 @@
       "fixErrorsBeforeSaving": ""
     }
   },
+  "reports": {
+    "statusRegistry": {
+      "about": {
+        "title": ""
+      }
+    }
+  },
   "settings": {
     "autoSuggest": {
       "heading": "自动建议",
