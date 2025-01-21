@@ -21,7 +21,7 @@ export function createStatusRegistryReport(
 
 ## ${i18n.t('reports.statusRegistry.about.title')}
 
-This file was created by the Obsidian Tasks plugin (version ${versionString}) to help visualise the task statuses in this vault.
+${i18n.t('reports.statusRegistry.about.createdBy', { version: versionString })}
 
 If you change the Tasks status settings, you can get an updated report by:
 

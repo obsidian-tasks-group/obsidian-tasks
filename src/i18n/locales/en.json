@@ -31,6 +31,7 @@
   "reports": {
     "statusRegistry": {
       "about": {
+        "createdBy": "This file was created by the Obsidian Tasks plugin (version {{version}}) to help visualise the task statuses in this vault.",
         "title": "About this file"
       }
     }
