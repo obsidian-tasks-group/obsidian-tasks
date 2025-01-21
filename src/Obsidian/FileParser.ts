@@ -148,6 +148,10 @@ export class FileParser {
                     sectionIndex++;
                     this.tasks.push(task);
                 }
+            } else {
+                // Treat tasks without the global filter as list items
+                const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
+                this.line2ListItem.set(lineNumber, new ListItem(line, parentListItem));
             }
         } catch (e) {
             this.errorReporter(e, this.filePath, listItem, line);

@@ -503,6 +503,7 @@ describe('cache', () => {
         expect(printRoots(tasks)).toMatchInlineSnapshot(`
             "-  [ ] #task task parent : Task
                 - [ ] #task task child : Task
+                - [ ] non-task child : ListItem
             "
         `);
     });
