@@ -67,8 +67,8 @@ export class CustomStatusModal extends Modal {
 
         let statusNameText: TextComponent;
         new Setting(settingDiv)
-            .setName('Task Status Name')
-            .setDesc('This is the friendly name of the task status.')
+            .setName(i18n.t('modals.customStatusModal.editStatusName.name'))
+            .setDesc(i18n.t('modals.customStatusModal.editStatusName.description'))
             .addText((text) => {
                 statusNameText = text;
                 text.setValue(this.statusName).onChange((v) => {

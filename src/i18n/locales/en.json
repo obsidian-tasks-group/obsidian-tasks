@@ -5,6 +5,10 @@
   },
   "modals": {
     "customStatusModal": {
+      "editStatusName": {
+        "description": "This is the friendly name of the task status.",
+        "name": "Task Status Name"
+      },
       "editStatusSymbol": {
         "description": "This is the character between the square braces. (It can only be edited for Custom statuses, and not Core statuses.)",
         "name": "Task Status Symbol"
