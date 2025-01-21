@@ -30,15 +30,15 @@ ${i18n.t('reports.statusRegistry.about.updateReport.line1')}
 
 ${i18n.t('reports.statusRegistry.about.deleteFileAnyTime')}
 
-## Status Settings
+## ${i18n.t('reports.statusRegistry.statusSettings.title')}
 
 <!--
-Switch to Live Preview or Reading Mode to see the table.
-If there are any Markdown formatting characters in status names, such as '*' or '_',
-Obsidian may only render the table correctly in Reading Mode.
+${i18n.t('reports.statusRegistry.statusSettings.comment.line1')}
+${i18n.t('reports.statusRegistry.statusSettings.comment.line2')}
+${i18n.t('reports.statusRegistry.statusSettings.comment.line3')}
 -->
 
-These are the status values in the Core and Custom statuses sections.
+${i18n.t('reports.statusRegistry.statusSettings.theseAreStatusValues')}
 
 ${settingsTable}
 ## Loaded Settings
