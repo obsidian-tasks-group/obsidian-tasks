@@ -6,24 +6,24 @@
   "modals": {
     "customStatusModal": {
       "editAvailableAsCommand": {
-        "description": "",
-        "name": ""
+        "description": "如果启用,此状态将作为命令可用,因此您可以指定热键并使用它切换状态.",
+        "name": "可用作命令"
       },
       "editNextStatusSymbol": {
-        "description": "",
-        "name": ""
+        "description": "单击时,这是下一步应该使用的符号.",
+        "name": "任务下一个状态符号"
       },
       "editStatusName": {
-        "description": "",
-        "name": ""
+        "description": "这是任务状态的友好名称.",
+        "name": "任务状态名称"
       },
       "editStatusSymbol": {
-        "description": "",
-        "name": ""
+        "description": "这是方括号中的字符.(仅可编辑自定义状态,不可编辑核心状态.)",
+        "name": "任务状态符号"
       },
       "editStatusType": {
-        "description": "",
-        "name": ""
+        "description": "控制搜索和切换状态的行为.",
+        "name": "任务状态类型"
       },
       "fixErrorsBeforeSaving": ""
     }
