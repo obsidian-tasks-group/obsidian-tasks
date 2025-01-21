@@ -118,11 +118,11 @@ export class CustomStatusModal extends Modal {
             });
 
         if (Status.tasksPluginCanCreateCommandsForStatuses()) {
+            // This feature is disabled as not-yet implemented.
+            // But we will apply the translation string now, for possible later use.
             new Setting(settingDiv)
-                .setName('Available as command')
-                .setDesc(
-                    'If enabled this status will be available as a command so you can assign a hotkey and toggle the status using it.',
-                )
+                .setName(i18n.t('modals.customStatusModal.editAvailableAsCommand.name'))
+                .setDesc(i18n.t('modals.customStatusModal.editAvailableAsCommand.description'))
                 .addToggle((toggle) => {
                     toggle.setValue(this.statusAvailableAsCommand).onChange(async (value) => {
                         this.statusAvailableAsCommand = value;
@@ -138,7 +138,8 @@ export class CustomStatusModal extends Modal {
                 .onClick(async () => {
                     const errors = validator.validate(this.statusConfiguration());
                     if (errors.length > 0) {
-                        const message = errors.join('\n') + '\n\n' + 'Fix errors before saving.';
+                        const message =
+                            errors.join('\n') + '\n\n' + i18n.t('modals.customStatusModal.fixErrorsBeforeSaving');
                         // console.debug(message);
                         new Notice(message);
                         return;
