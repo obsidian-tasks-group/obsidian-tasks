@@ -82,8 +82,8 @@ export class CustomStatusModal extends Modal {
 
         let statusNextSymbolText: TextComponent;
         new Setting(settingDiv)
-            .setName('Task Next Status Symbol')
-            .setDesc('When clicked on this is the symbol that should be used next.')
+            .setName(i18n.t('modals.customStatusModal.editNextStatusSymbol.name'))
+            .setDesc(i18n.t('modals.customStatusModal.editNextStatusSymbol.description'))
             .addText((text) => {
                 statusNextSymbolText = text;
                 text.setValue(this.statusNextSymbol).onChange((v) => {

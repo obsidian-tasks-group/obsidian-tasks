@@ -5,6 +5,10 @@
   },
   "modals": {
     "customStatusModal": {
+      "editNextStatusSymbol": {
+        "description": "When clicked on this is the symbol that should be used next.",
+        "name": "Task Next Status Symbol"
+      },
       "editStatusName": {
         "description": "This is the friendly name of the task status.",
         "name": "Task Status Name"
