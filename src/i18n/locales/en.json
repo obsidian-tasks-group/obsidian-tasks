@@ -5,6 +5,10 @@
   },
   "modals": {
     "customStatusModal": {
+      "editAvailableAsCommand": {
+        "description": "If enabled this status will be available as a command so you can assign a hotkey and toggle the status using it.",
+        "name": "Available as command"
+      },
       "editNextStatusSymbol": {
         "description": "When clicked on this is the symbol that should be used next.",
         "name": "Task Next Status Symbol"
@@ -20,7 +24,8 @@
       "editStatusType": {
         "description": "Control how the status behaves for searching and toggling.",
         "name": "Task Status Type"
-      }
+      },
+      "fixErrorsBeforeSaving": "Fix errors before saving."
     }
   },
   "settings": {
