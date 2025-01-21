@@ -1,4 +1,5 @@
 import type { StatusSettings } from '../Config/StatusSettings';
+import { i18n } from '../i18n/i18n';
 import type { StatusRegistry } from './StatusRegistry';
 import { tabulateStatusSettings } from './StatusSettingsReport';
 
@@ -18,7 +19,7 @@ export function createStatusRegistryReport(
     const mermaidText = statusRegistry.mermaidDiagram(detailed);
     return `# ${buttonName}
 
-## About this file
+## ${i18n.t('reports.statusRegistry.about.title')}
 
 This file was created by the Obsidian Tasks plugin (version ${versionString}) to help visualise the task statuses in this vault.
 

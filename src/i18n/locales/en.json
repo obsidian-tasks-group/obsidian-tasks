@@ -28,6 +28,13 @@
       "fixErrorsBeforeSaving": "Fix errors before saving."
     }
   },
+  "reports": {
+    "statusRegistry": {
+      "about": {
+        "title": "About this file"
+      }
+    }
+  },
   "settings": {
     "autoSuggest": {
       "heading": "Auto-suggest",
