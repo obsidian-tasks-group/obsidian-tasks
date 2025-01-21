@@ -39,6 +39,15 @@
           "line2": "",
           "line3": ""
         }
+      },
+      "statusSettings": {
+        "comment": {
+          "line1": "",
+          "line2": "",
+          "line3": ""
+        },
+        "theseAreStatusValues": "",
+        "title": ""
       }
     }
   },
