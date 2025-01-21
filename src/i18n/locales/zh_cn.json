@@ -16,6 +16,10 @@
       "editStatusSymbol": {
         "description": "",
         "name": ""
+      },
+      "editStatusType": {
+        "description": "",
+        "name": ""
       }
     }
   },
