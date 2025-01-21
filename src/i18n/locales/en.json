@@ -3,6 +3,14 @@
     "loadingPlugin": "Loading plugin: {{name}} v{{version}}",
     "unloadingPlugin": "Unloading plugin: {{name}} v{{version}}"
   },
+  "modals": {
+    "customStatusModal": {
+      "editStatusSymbol": {
+        "description": "This is the character between the square braces. (It can only be edited for Custom statuses, and not Core statuses.)",
+        "name": "Task Status Symbol"
+      }
+    }
+  },
   "settings": {
     "autoSuggest": {
       "heading": "Auto-suggest",

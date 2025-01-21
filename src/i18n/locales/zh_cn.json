@@ -3,6 +3,14 @@
     "loadingPlugin": "加载插件: {{name}} v{{version}}",
     "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
   },
+  "modals": {
+    "customStatusModal": {
+      "editStatusSymbol": {
+        "description": "",
+        "name": ""
+      }
+    }
+  },
   "settings": {
     "autoSuggest": {
       "heading": "自动建议",
