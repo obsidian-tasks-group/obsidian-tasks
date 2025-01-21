@@ -3,6 +3,7 @@ import type { Plugin } from 'obsidian';
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
 import { StatusValidator } from '../Statuses/StatusValidator';
 import { Status } from '../Statuses/Status';
+import { i18n } from '../i18n/i18n';
 
 const validator = new StatusValidator();
 
@@ -49,10 +50,8 @@ export class CustomStatusModal extends Modal {
 
         let statusSymbolText: TextComponent;
         new Setting(settingDiv)
-            .setName('Task Status Symbol')
-            .setDesc(
-                'This is the character between the square braces. (It can only be edited for Custom statuses, and not Core statuses.)',
-            )
+            .setName(i18n.t('modals.customStatusModal.editStatusSymbol.name'))
+            .setDesc(i18n.t('modals.customStatusModal.editStatusSymbol.description'))
             .addText((text) => {
                 statusSymbolText = text;
                 text.setValue(this.statusSymbol).onChange((v) => {
