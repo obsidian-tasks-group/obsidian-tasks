@@ -32,7 +32,13 @@
     "statusRegistry": {
       "about": {
         "createdBy": "This file was created by the Obsidian Tasks plugin (version {{version}}) to help visualise the task statuses in this vault.",
-        "title": "About this file"
+        "deleteFileAnyTime": "You can delete this file any time.",
+        "title": "About this file",
+        "updateReport": {
+          "line1": "If you change the Tasks status settings, you can get an updated report by:",
+          "line2": "Going to `Settings` -> `Tasks`.",
+          "line3": "Clicking on `Review and check your Statuses`."
+        }
       }
     }
   },
