@@ -47,7 +47,7 @@
       },
       "messages": {
         "duplicateSymbol": "Duplicate symbol '{{symbol}}': this status will be ignored.",
-        "emptySymol": "Empty symbol: this status will be ignored.",
+        "emptySymbol": "Empty symbol: this status will be ignored.",
         "nextSymbolUnknown": "Next symbol {{symbol}} is unknown: create a status with symbol {{symbol}}.",
         "notConventionalType": "For information, the conventional type for status symbol {{symbol}} is {{type}}: you may wish to review this type.",
         "wrongTypeAfterDone": {
