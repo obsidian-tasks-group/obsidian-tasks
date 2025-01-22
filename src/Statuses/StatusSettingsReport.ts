@@ -80,7 +80,8 @@ function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusCon
 
     const firstIndex = getFirstIndex(statuses, status.symbol);
     if (firstIndex != index) {
-        problems.push(`Duplicate symbol '${getPrintableSymbol(status.symbol)}': this status will be ignored.`);
+        const symbol = getPrintableSymbol(status.symbol);
+        problems.push(`Duplicate symbol '${symbol}': this status will be ignored.`);
         return problems;
     }
 
