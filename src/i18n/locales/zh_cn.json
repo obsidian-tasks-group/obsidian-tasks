@@ -46,6 +46,7 @@
         "title": "已加载设置"
       },
       "messages": {
+        "duplicateSymbol": "",
         "emptySymol": "",
         "nextSymbolUnknown": "",
         "notConventionalType": "",
