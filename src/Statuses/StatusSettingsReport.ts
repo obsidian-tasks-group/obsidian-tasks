@@ -40,12 +40,13 @@ function checkIfConventionalType(status: StatusConfiguration, problems: string[]
 
 function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusConfiguration, problems: string[]) {
     // Check if next symbol is known
-    const indexOfNextSymbol = getFirstIndex(statuses, status.nextStatusSymbol);
+    const nextStatusSymbol = status.nextStatusSymbol;
+    const indexOfNextSymbol = getFirstIndex(statuses, nextStatusSymbol);
     if (indexOfNextSymbol === -1) {
         problems.push(
             `Next symbol ${getPrintableSymbol(
-                status.nextStatusSymbol,
-            )} is unknown: create a status with symbol ${getPrintableSymbol(status.nextStatusSymbol)}.`,
+                nextStatusSymbol,
+            )} is unknown: create a status with symbol ${getPrintableSymbol(nextStatusSymbol)}.`,
         );
         return;
     }
