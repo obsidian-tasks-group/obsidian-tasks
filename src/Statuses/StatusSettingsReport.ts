@@ -81,7 +81,7 @@ function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusCon
     const firstIndex = getFirstIndex(statuses, status.symbol);
     if (firstIndex != index) {
         const symbol = getPrintableSymbol(status.symbol);
-        problems.push(`Duplicate symbol '${symbol}': this status will be ignored.`);
+        problems.push(i18n.t('reports.statusRegistry.messages.duplicateSymbol', { symbol: symbol }));
         return problems;
     }
 
