@@ -47,7 +47,10 @@
       },
       "messages": {
         "nextSymbolUnknown": "",
-        "notConventionalType": ""
+        "notConventionalType": "",
+        "wrongTypeAfterDone": {
+          "line1": ""
+        }
       },
       "statusSettings": {
         "comment": {

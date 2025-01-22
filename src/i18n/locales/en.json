@@ -47,7 +47,10 @@
       },
       "messages": {
         "nextSymbolUnknown": "Next symbol {{symbol}} is unknown: create a status with symbol {{symbol}}.",
-        "notConventionalType": "For information, the conventional type for status symbol {{symbol}} is {{type}}: you may wish to review this type."
+        "notConventionalType": "For information, the conventional type for status symbol {{symbol}} is {{type}}: you may wish to review this type.",
+        "wrongTypeAfterDone": {
+          "line1": "This `DONE` status is followed by {{nextType}}, not `TODO` or `IN_PROGRESS`."
+        }
       },
       "statusSettings": {
         "comment": {
