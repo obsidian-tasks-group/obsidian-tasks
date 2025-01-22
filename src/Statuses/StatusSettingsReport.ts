@@ -34,9 +34,7 @@ function checkIfConventionalType(status: StatusConfiguration, problems: string[]
 
     const symbol = getPrintableSymbol(status.symbol);
     const type = getPrintableSymbol(conventionalType);
-    problems.push(
-        `For information, the conventional type for status symbol ${symbol} is ${type}: you may wish to review this type.`,
-    );
+    problems.push(i18n.t('reports.statusRegistry.messages.notConventionalType', { symbol, type }));
 }
 
 function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusConfiguration, problems: string[]) {

@@ -46,7 +46,8 @@
         "title": "Loaded Settings"
       },
       "messages": {
-        "nextSymbolUnknown": "Next symbol {{symbol}} is unknown: create a status with symbol {{symbol}}."
+        "nextSymbolUnknown": "Next symbol {{symbol}} is unknown: create a status with symbol {{symbol}}.",
+        "notConventionalType": "For information, the conventional type for status symbol {{symbol}} is {{type}}: you may wish to review this type."
       },
       "statusSettings": {
         "comment": {
