@@ -46,7 +46,8 @@
         "title": "已加载设置"
       },
       "messages": {
-        "nextSymbolUnknown": ""
+        "nextSymbolUnknown": "",
+        "notConventionalType": ""
       },
       "statusSettings": {
         "comment": {
