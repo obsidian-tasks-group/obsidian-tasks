@@ -74,7 +74,7 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
 function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusConfiguration, index: number) {
     const problems: string[] = [];
     if (status.symbol === Status.EMPTY.symbol) {
-        problems.push(i18n.t('reports.statusRegistry.messages.emptySymol'));
+        problems.push(i18n.t('reports.statusRegistry.messages.emptySymbol'));
         return problems;
     }
 
