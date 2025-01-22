@@ -49,7 +49,8 @@
         "nextSymbolUnknown": "Next symbol {{symbol}} is unknown: create a status with symbol {{symbol}}.",
         "notConventionalType": "For information, the conventional type for status symbol {{symbol}} is {{type}}: you may wish to review this type.",
         "wrongTypeAfterDone": {
-          "line1": "This `DONE` status is followed by {{nextType}}, not `TODO` or `IN_PROGRESS`."
+          "line1": "This `DONE` status is followed by {{nextType}}, not `TODO` or `IN_PROGRESS`.",
+          "line2": "If used to complete a recurring task, it will instead be followed by `TODO` or `IN_PROGRESS`, to ensure the next task matches the `not done` filter."
         }
       },
       "statusSettings": {
