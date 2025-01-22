@@ -40,6 +40,13 @@
           "line3": "点击 \\`查看并检查您的状态\\"
         }
       },
+      "columnHeadings": {
+        "nextStatusSymbol": "",
+        "problems": "",
+        "statusName": "",
+        "statusSymbol": "",
+        "statusType": ""
+      },
       "loadedSettings": {
         "settingsActuallyUsed": "这些是任务实际使用的设置.",
         "switchToLivePreview": "切换到实时预览或阅读模式以查看图表.",

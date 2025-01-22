@@ -40,6 +40,13 @@
           "line3": "Clicking on `Review and check your Statuses`."
         }
       },
+      "columnHeadings": {
+        "nextStatusSymbol": "Next Status Symbol",
+        "problems": "Problems (if any)",
+        "statusName": "Status Name",
+        "statusSymbol": "Status Symbol",
+        "statusType": "Status Type"
+      },
       "loadedSettings": {
         "settingsActuallyUsed": "These are the settings actually used by Tasks.",
         "switchToLivePreview": "Switch to Live Preview or Reading Mode to see the diagram.",

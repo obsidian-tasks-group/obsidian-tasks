@@ -95,11 +95,11 @@ export function tabulateStatusSettings(statusSettings: StatusSettings) {
     //       Maybe try unifying the common code one day?
 
     const table = new MarkdownTable([
-        'Status Symbol',
-        'Next Status Symbol',
-        'Status Name',
-        'Status Type',
-        'Problems (if any)',
+        i18n.t('reports.statusRegistry.columnHeadings.statusSymbol'),
+        i18n.t('reports.statusRegistry.columnHeadings.nextStatusSymbol'),
+        i18n.t('reports.statusRegistry.columnHeadings.statusName'),
+        i18n.t('reports.statusRegistry.columnHeadings.statusType'),
+        i18n.t('reports.statusRegistry.columnHeadings.problems'),
     ]);
 
     const statuses: StatusConfiguration[] = StatusSettings.allStatuses(statusSettings);
