@@ -62,7 +62,7 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
             const message = [
                 i18n.t('reports.statusRegistry.messages.wrongTypeAfterDone.line1', { nextType }),
                 i18n.t('reports.statusRegistry.messages.wrongTypeAfterDone.line2'),
-                `See [Recurring Tasks and Custom Statuses](${helpURL}).`,
+                i18n.t('reports.statusRegistry.messages.wrongTypeAfterDone.line3', { helpURL }),
             ].join('<br>');
             problems.push(message);
         }

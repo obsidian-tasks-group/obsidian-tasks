@@ -50,7 +50,8 @@
         "notConventionalType": "For information, the conventional type for status symbol {{symbol}} is {{type}}: you may wish to review this type.",
         "wrongTypeAfterDone": {
           "line1": "This `DONE` status is followed by {{nextType}}, not `TODO` or `IN_PROGRESS`.",
-          "line2": "If used to complete a recurring task, it will instead be followed by `TODO` or `IN_PROGRESS`, to ensure the next task matches the `not done` filter."
+          "line2": "If used to complete a recurring task, it will instead be followed by `TODO` or `IN_PROGRESS`, to ensure the next task matches the `not done` filter.",
+          "line3": "See [Recurring Tasks and Custom Statuses]({{helpURL}})."
         }
       },
       "statusSettings": {
