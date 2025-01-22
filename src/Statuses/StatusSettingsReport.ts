@@ -32,10 +32,10 @@ function checkIfConventionalType(status: StatusConfiguration, problems: string[]
         return;
     }
 
+    const symbol = getPrintableSymbol(status.symbol);
+    const type = getPrintableSymbol(conventionalType);
     problems.push(
-        `For information, the conventional type for status symbol ${getPrintableSymbol(
-            status.symbol,
-        )} is ${getPrintableSymbol(conventionalType)}: you may wish to review this type.`,
+        `For information, the conventional type for status symbol ${symbol} is ${type}: you may wish to review this type.`,
     );
 }
 
