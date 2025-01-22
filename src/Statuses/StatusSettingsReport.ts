@@ -67,7 +67,7 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
             problems.push(message);
         }
     } else {
-        problems.push('Unexpected failure to find the next status.');
+        problems.push(i18n.t('reports.statusRegistry.messages.cannotFindNextStatus'));
     }
 }
 

@@ -46,6 +46,7 @@
         "title": "Loaded Settings"
       },
       "messages": {
+        "cannotFindNextStatus": "Unexpected failure to find the next status.",
         "duplicateSymbol": "Duplicate symbol '{{symbol}}': this status will be ignored.",
         "emptySymbol": "Empty symbol: this status will be ignored.",
         "nextSymbolUnknown": "Next symbol {{symbol}} is unknown: create a status with symbol {{symbol}}.",
