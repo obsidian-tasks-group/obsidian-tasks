@@ -61,7 +61,7 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
             const nextType = getPrintableSymbol(nextStatus.type);
             const message = [
                 i18n.t('reports.statusRegistry.messages.wrongTypeAfterDone.line1', { nextType }),
-                'If used to complete a recurring task, it will instead be followed by `TODO` or `IN_PROGRESS`, to ensure the next task matches the `not done` filter.',
+                i18n.t('reports.statusRegistry.messages.wrongTypeAfterDone.line2'),
                 `See [Recurring Tasks and Custom Statuses](${helpURL}).`,
             ].join('<br>');
             problems.push(message);
