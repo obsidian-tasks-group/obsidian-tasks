@@ -43,11 +43,8 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
     const nextStatusSymbol = status.nextStatusSymbol;
     const indexOfNextSymbol = getFirstIndex(statuses, nextStatusSymbol);
     if (indexOfNextSymbol === -1) {
-        problems.push(
-            `Next symbol ${getPrintableSymbol(
-                nextStatusSymbol,
-            )} is unknown: create a status with symbol ${getPrintableSymbol(nextStatusSymbol)}.`,
-        );
+        const printableSymbol = getPrintableSymbol(nextStatusSymbol);
+        problems.push(`Next symbol ${printableSymbol} is unknown: create a status with symbol ${printableSymbol}.`);
         return;
     }
 
