@@ -53,11 +53,11 @@
         "title": "已加载设置"
       },
       "messages": {
-        "cannotFindNextStatus": "",
-        "duplicateSymbol": "",
-        "emptySymbol": "",
-        "nextSymbolUnknown": "",
-        "notConventionalType": "",
+        "cannotFindNextStatus": "未能意外找到下一个状态.",
+        "duplicateSymbol": "重复的符号 '{{symbol}}':此状态将被忽略.",
+        "emptySymbol": "空符号:此状态将被忽略.",
+        "nextSymbolUnknown": "下一个符号 {{symbol}} 未知:请创建符号为 {{symbol}} 的状态.",
+        "notConventionalType": "供参考,状态符号 {{symbol}} 的常规类型是 {{type}}:您可能希望查看此类型.",
         "wrongTypeAfterDone": {
           "line1": "",
           "line2": "",
