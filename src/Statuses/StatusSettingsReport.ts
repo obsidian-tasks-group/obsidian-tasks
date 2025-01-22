@@ -1,5 +1,6 @@
 import { StatusSettings } from '../Config/StatusSettings';
 import { MarkdownTable } from '../lib/MarkdownTable';
+import { i18n } from '../i18n/i18n';
 import type { StatusConfiguration } from './StatusConfiguration';
 import { StatusType } from './StatusConfiguration';
 import { Status } from './Status';
@@ -44,7 +45,7 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
     const indexOfNextSymbol = getFirstIndex(statuses, nextStatusSymbol);
     if (indexOfNextSymbol === -1) {
         const printableSymbol = getPrintableSymbol(nextStatusSymbol);
-        problems.push(`Next symbol ${printableSymbol} is unknown: create a status with symbol ${printableSymbol}.`);
+        problems.push(i18n.t('reports.statusRegistry.messages.nextSymbolUnknown', { symbol: printableSymbol }));
         return;
     }
 
