@@ -60,7 +60,7 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
                 'https://publish.obsidian.md/tasks/Getting+Started/Statuses/Recurring+Tasks+and+Custom+Statuses';
             const nextType = getPrintableSymbol(nextStatus.type);
             const message = [
-                `This \`DONE\` status is followed by ${nextType}, not \`TODO\` or \`IN_PROGRESS\`.`,
+                i18n.t('reports.statusRegistry.messages.wrongTypeAfterDone.line1', { nextType }),
                 'If used to complete a recurring task, it will instead be followed by `TODO` or `IN_PROGRESS`, to ensure the next task matches the `not done` filter.',
                 `See [Recurring Tasks and Custom Statuses](${helpURL}).`,
             ].join('<br>');
