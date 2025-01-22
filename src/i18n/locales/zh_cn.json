@@ -40,6 +40,11 @@
           "line3": ""
         }
       },
+      "loadedSettings": {
+        "settingsActuallyUsed": "",
+        "switchToLivePreview": "",
+        "title": ""
+      },
       "statusSettings": {
         "comment": {
           "line1": "",
