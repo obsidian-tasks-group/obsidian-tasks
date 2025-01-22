@@ -41,10 +41,10 @@ ${i18n.t('reports.statusRegistry.statusSettings.comment.line3')}
 ${i18n.t('reports.statusRegistry.statusSettings.theseAreStatusValues')}
 
 ${settingsTable}
-## Loaded Settings
+## ${i18n.t('reports.statusRegistry.loadedSettings.title')}
 
-<!-- Switch to Live Preview or Reading Mode to see the diagram. -->
+<!-- ${i18n.t('reports.statusRegistry.loadedSettings.switchToLivePreview')} -->
 
-These are the settings actually used by Tasks.
+${i18n.t('reports.statusRegistry.loadedSettings.settingsActuallyUsed')}
 ${mermaidText}`;
 }

@@ -40,6 +40,11 @@
           "line3": "Clicking on `Review and check your Statuses`."
         }
       },
+      "loadedSettings": {
+        "settingsActuallyUsed": "These are the settings actually used by Tasks.",
+        "switchToLivePreview": "Switch to Live Preview or Reading Mode to see the diagram.",
+        "title": "Loaded Settings"
+      },
       "statusSettings": {
         "comment": {
           "line1": "Switch to Live Preview or Reading Mode to see the table.",
