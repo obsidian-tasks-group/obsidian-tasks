@@ -45,6 +45,9 @@
         "switchToLivePreview": "切换到实时预览或阅读模式以查看图表.",
         "title": "已加载设置"
       },
+      "messages": {
+        "nextSymbolUnknown": ""
+      },
       "statusSettings": {
         "comment": {
           "line1": "切换到实时预览或阅读模式以查看图表.",
