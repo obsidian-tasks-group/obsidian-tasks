@@ -121,8 +121,6 @@ The problem is in:
 - It complains about any unrecognised placeholders in comments, even though comments are then ignored.
 - Use in regular expressions is allowed
   - but due to [[Regular Expressions#Special characters|characters with special meanings]] in regular expressions, it is not recommended to use them.
-- When you rename a file containing a tasks query block with variable names in, the query block is not automatically updated:
-  - the workaround is to close and re-open the file containing the query.
 
 ## Missing Features
 
