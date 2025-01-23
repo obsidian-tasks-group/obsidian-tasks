@@ -64,6 +64,13 @@ Explanation of this Tasks code block query:
 ```
 <!-- endSnippet -->
 
+## Using Query Properties in Placeholders
+
+> [!released]
+> Use of Obsidian properties in placeholders was introduced in Tasks X.Y.Z.
+
+It is now possible to use properties in the query file. See [[Obsidian Properties#Using Query Properties in Placeholders]]
+
 ## Error checking: invalid variables
 
 If there are any unknown properties in the placeholders, a clear message is written.
