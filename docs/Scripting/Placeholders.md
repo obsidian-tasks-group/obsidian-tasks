@@ -29,9 +29,11 @@ For example, when the following query with [[Query Properties]] in [[Placeholder
 ```text
 explain
 path includes {{query.file.path}}
+path includes {{query.file.pathWithoutExtension}}
 root includes {{query.file.root}}
 folder includes {{query.file.folder}}
 filename includes {{query.file.filename}}
+filename includes {{query.file.filenameWithoutExtension}}
 
 description includes Some Cryptic String {{! Inline comments are removed before search }}
 ```
@@ -46,6 +48,9 @@ Explanation of this Tasks code block query:
   path includes {{query.file.path}} =>
   path includes some/sample/file path.md
 
+  path includes {{query.file.pathWithoutExtension}} =>
+  path includes some/sample/file path
+
   root includes {{query.file.root}} =>
   root includes some/
 
@@ -54,6 +59,9 @@ Explanation of this Tasks code block query:
 
   filename includes {{query.file.filename}} =>
   filename includes file path.md
+
+  filename includes {{query.file.filenameWithoutExtension}} =>
+  filename includes file path
 
   description includes Some Cryptic String {{! Inline comments are removed before search }} =>
   description includes Some Cryptic String
