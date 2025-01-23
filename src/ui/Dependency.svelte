@@ -55,6 +55,8 @@
                 }
                 break;
             case 'Enter':
+                if (e.isComposing) return;
+
                 if (searchIndex !== null) {
                     e.preventDefault();
                     addTask(searchResults[searchIndex]);
