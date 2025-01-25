@@ -224,12 +224,6 @@ export class SettingsTab extends PluginSettingTab {
             detailsContainer.open = initiallyOpen;
         });
 
-        settingsJson.forEach((heading) => {
-            const initiallyOpen = headingOpened[heading.text] ?? true;
-            const detailsContainer = this.addOneSettingsBlock(containerEl, heading, headingOpened);
-            detailsContainer.open = initiallyOpen;
-        });
-
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.dates.heading')).setHeading();
         // ---------------------------------------------------------------------------
