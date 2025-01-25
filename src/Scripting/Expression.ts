@@ -12,8 +12,8 @@ export class FunctionOrError extends QueryComponentOrError<Function> {}
  * @see evaluateExpressionOrCatch
  */
 export function parseExpression(paramsArgs: [string, any][], arg: string): FunctionOrError {
-    const params = paramsArgs.map(([p]) => p);
     try {
+        const params = paramsArgs.map(([p]) => p);
         const input = arg.includes('return') ? arg : `return ${arg}`;
         const expression: '' | null | Function = arg && new Function(...params, input);
         if (expression instanceof Function) {
